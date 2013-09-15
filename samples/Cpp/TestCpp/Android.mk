@@ -7,11 +7,16 @@ LOCAL_MODULE := cocos_testcpp_common
 LOCAL_MODULE_FILENAME := libtestcppcommon
 
 LOCAL_SRC_FILES := \
+Classes/AppDelegate.cpp \
+Classes/BaseTest.cpp \
+Classes/controller.cpp \
+Classes/testBasic.cpp \
+Classes/VisibleRect.cpp \
 Classes/AccelerometerTest/AccelerometerTest.cpp \
 Classes/ActionManagerTest/ActionManagerTest.cpp \
-Classes/ActionsTest/ActionsTest.cpp \
 Classes/ActionsEaseTest/ActionsEaseTest.cpp \
 Classes/ActionsProgressTest/ActionsProgressTest.cpp \
+Classes/ActionsTest/ActionsTest.cpp \
 Classes/Box2DTest/Box2dTest.cpp \
 Classes/Box2DTestBed/Box2dView.cpp \
 Classes/Box2DTestBed/GLES-Render.cpp \
@@ -32,13 +37,20 @@ Classes/ChipmunkTest/ChipmunkTest.cpp \
 Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/ClippingNodeTest/ClippingNodeTest.cpp \
 Classes/CocosDenshionTest/CocosDenshionTest.cpp \
+Classes/ConfigurationTest/ConfigurationTest.cpp \
 Classes/CurlTest/CurlTest.cpp \
 Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
+Classes/DataVisitorTest/DataVisitorTest.cpp \
 Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 Classes/EffectsTest/EffectsTest.cpp \
-Classes/ExtensionsTest/ExtensionsTest.cpp \
-Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
@@ -47,39 +59,38 @@ Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest/CCControl
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest/CCControlStepperTest.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
-Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
-Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp \
-Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
-Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
-Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
-Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
-Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
-Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
-Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
-Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
+Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
+Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp \
+Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
+Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
+Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
-Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
-\
-Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
-Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
-Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
-Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
-Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
-Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
-\
+Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
+Classes/ExtensionsTest/ExtensionsTest.cpp \
+Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
+Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
+Classes/KeyboardTest/KeyboardTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
 Classes/LabelTest/LabelTest.cpp \
+Classes/LabelTest/LabelTestNew.cpp \
 Classes/LayerTest/LayerTest.cpp \
-Classes/NodeTest/NodeTest.cpp \
-Classes/TextInputTest/TextInputTest.cpp \
 Classes/MenuTest/MenuTest.cpp \
 Classes/MotionStreakTest/MotionStreakTest.cpp \
 Classes/MutiTouchTest/MutiTouchTest.cpp \
+Classes/NodeTest/NodeTest.cpp \
 Classes/ParallaxTest/ParallaxTest.cpp \
 Classes/ParticleTest/ParticleTest.cpp \
+Classes/PerformanceTest/PerformanceAllocTest.cpp \
 Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
 Classes/PerformanceTest/PerformanceParticleTest.cpp \
 Classes/PerformanceTest/PerformanceSpriteTest.cpp \
@@ -91,10 +102,12 @@ Classes/RotateWorldTest/RotateWorldTest.cpp \
 Classes/SceneTest/SceneTest.cpp \
 Classes/SchedulerTest/SchedulerTest.cpp \
 Classes/ShaderTest/ShaderTest.cpp \
+Classes/ShaderTest/ShaderTest2.cpp \
 Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
-Classes/TextureCacheTest/TextureCacheTest.cpp \
+Classes/TextInputTest/TextInputTest.cpp \
 Classes/Texture2dTest/Texture2dTest.cpp \
+Classes/TextureCacheTest/TextureCacheTest.cpp \
 Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 Classes/TileMapTest/TileMapTest.cpp \
 Classes/TouchesTest/Ball.cpp \
@@ -102,14 +115,9 @@ Classes/TouchesTest/Paddle.cpp \
 Classes/TouchesTest/TouchesTest.cpp \
 Classes/TransitionsTest/TransitionsTest.cpp \
 Classes/UserDefaultTest/UserDefaultTest.cpp \
-Classes/ZwoptexTest/ZwoptexTest.cpp \
-Classes/FileUtilsTest/FileUtilsTest.cpp \
-Classes/DataVisitorTest/DataVisitorTest.cpp \
-Classes/ConfigurationTest/ConfigurationTest.cpp \
-Classes/controller.cpp \
-Classes/testBasic.cpp \
-Classes/AppDelegate.cpp \
-Classes/VisibleRect.cpp
+Classes/ZwoptexTest/ZwoptexTest.cpp
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/Classes
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

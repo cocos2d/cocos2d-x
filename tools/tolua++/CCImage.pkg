@@ -3,6 +3,7 @@ class CCImage : public CCObject
     CCImage();
     ~CCImage();
 
+/*
     typedef enum
     {
         kFmtJpg = 0,
@@ -26,12 +27,15 @@ class CCImage : public CCObject
         kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
     }ETextAlign;
 
+	typedef enum
+	{
+		kColorGray = 0,
+		kColorRGB,
+	}EColorType;
 
-    bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
-    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFile(const char * strPath);
     bool initWithImageData(void * pData,
                            int nDataLen,
-                           EImageFormat eFmt = kFmtUnKnown,
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
@@ -43,13 +47,14 @@ class CCImage : public CCObject
         const char *    pFontName = 0,
         int             nSize = 0);
 
+*/
     unsigned char *   getData();
     int         getDataLen();
 
     bool hasAlpha();
     bool isPremultipliedAlpha();
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
-    unsigned short getWidth();
-    unsigned short getHeight();
-    int getBitsPerComponent();
+    int getWidth();
+    int getHeight();
+    int getBitPerPixel();
 };

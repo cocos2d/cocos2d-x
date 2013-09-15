@@ -8,22 +8,65 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CCParticleSystemQuadLoader : public CCNodeLoader {
-    public:
-        virtual ~CCParticleSystemQuadLoader() {};
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCParticleSystemQuadLoader, loader);
+class ParticleSystemQuadLoader : public NodeLoader {
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ParticleSystemQuadLoader() {};
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(ParticleSystemQuadLoader, loader);
 
-    protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCParticleSystemQuad);
-
-        virtual void onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader);
-        virtual void onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCPoint pPoint, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float pFloat, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, const char * pPropertyName, int pInteger, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeFloatVar(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float * pFloatVar, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeColor4FVar(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor4F * pCCColor4FVar, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeTexture(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCTexture2D * pCCTexture2D, CCBReader * pCCBReader);
+protected:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(ParticleSystemQuad);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * ccbReader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Point pPoint, CCBReader * ccbReader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeFloat(Node * pNode, Node * pParent, const char * pPropertyName, float pFloat, CCBReader * ccbReader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeInteger(Node * pNode, Node * pParent, const char * pPropertyName, int pInteger, CCBReader * ccbReader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeFloatVar(Node * pNode, Node * pParent, const char * pPropertyName, float * pFloatVar, CCBReader * ccbReader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char * pPropertyName, Color4F * pColor4FVar, CCBReader * ccbReader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * ccbReader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeTexture(Node * pNode, Node * pParent, const char * pPropertyName, Texture2D * pTexture2D, CCBReader * ccbReader);
 };
 
 NS_CC_EXT_END

@@ -1,5 +1,5 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- *
+ * vim: set ts=8 sts=4 et sw=4 tw=99:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -24,10 +24,8 @@
 #include "jsapi.h"
 #include "jsutil.h"
 
-#ifdef __cplusplus
 #include "js/HashTable.h"
 #include "js/Vector.h"
-#endif
 
 /*
  * Convenience constants.
@@ -65,10 +63,6 @@ typedef struct JSSpecializedNative  JSSpecializedNative;
  * may possibly be wrapped in an extern "C" block which does not agree with
  * templates.
  */
-#ifdef __cplusplus
-
-extern "C++" {
-
 class JSDependentString;
 class JSExtensibleString;
 class JSExternalString;
@@ -158,11 +152,12 @@ class FunctionBox;
 class ObjectBox;
 struct Token;
 struct TokenPos;
-struct TokenPtr;
 class TokenStream;
-struct Parser;
 class ParseMapPool;
 struct ParseNode;
+
+template <typename ParseHandler>
+struct Parser;
 
 } /* namespace frontend */
 
@@ -194,10 +189,10 @@ typedef JS::Handle<PropertyName*>      HandlePropertyName;
 typedef JS::MutableHandle<Shape*>      MutableHandleShape;
 typedef JS::MutableHandle<JSAtom*>     MutableHandleAtom;
 
-typedef js::Rooted<Shape*>             RootedShape;
-typedef js::Rooted<types::TypeObject*> RootedTypeObject;
-typedef js::Rooted<JSAtom*>            RootedAtom;
-typedef js::Rooted<PropertyName*>      RootedPropertyName;
+typedef JS::Rooted<Shape*>             RootedShape;
+typedef JS::Rooted<types::TypeObject*> RootedTypeObject;
+typedef JS::Rooted<JSAtom*>            RootedAtom;
+typedef JS::Rooted<PropertyName*>      RootedPropertyName;
 
 enum XDRMode {
     XDR_ENCODE,
@@ -208,6 +203,17 @@ template <XDRMode mode>
 class XDRState;
 
 class FreeOp;
+
+struct IdValuePair
+{
+    jsid id;
+    Value value;
+
+    IdValuePair() {}
+    IdValuePair(jsid idArg)
+      : id(idArg), value(UndefinedValue())
+    {}
+};
 
 } /* namespace js */
 
@@ -222,14 +228,6 @@ namespace WTF {
 class BumpPointerAllocator;
 
 } /* namespace WTF */
-
-} /* export "C++" */
-
-#else
-
-typedef struct JSAtom JSAtom;
-
-#endif  /* __cplusplus */
 
 /* "Friend" types used by jscntxt.h and jsdbgapi.h. */
 typedef enum JSTrapStatus {

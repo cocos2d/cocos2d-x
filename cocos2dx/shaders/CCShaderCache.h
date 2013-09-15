@@ -27,32 +27,48 @@ THE SOFTWARE.
 #ifndef __CCSHADERCACHE_H__
 #define __CCSHADERCACHE_H__
 
+#include <string>
+#include <unordered_map>
+
 #include "cocoa/CCDictionary.h"
 
 NS_CC_BEGIN
 
-class CCGLProgram;
+class GLProgram;
 
 /**
  * @addtogroup shaders
  * @{
  */
 
-/** CCShaderCache
+/** ShaderCache
  Singleton that stores manages GL shaders
  @since v2.0
  */
-class CC_DLL CCShaderCache : public CCObject 
+class CC_DLL ShaderCache : public Object 
 {
 public:
-    CCShaderCache();
+    /**
+     * @js ctor
+     */
+    ShaderCache();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ShaderCache();
 
-    virtual ~CCShaderCache();
     /** returns the shared instance */
-    static CCShaderCache* sharedShaderCache();
+    static ShaderCache* getInstance();
 
     /** purges the cache. It releases the retained instance. */
-    static void purgeSharedShaderCache();
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static ShaderCache* sharedShaderCache();
+
+    /** @deprecated Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedShaderCache();
 
     /** loads the default shaders */
     void loadDefaultShaders();
@@ -60,18 +76,24 @@ public:
     /** reload the default shaders */
     void reloadDefaultShaders();
 
-    /** returns a GL program for a given key */
-    CCGLProgram * programForKey(const char* key);
+    /** returns a GL program for a given key 
+     */
+    GLProgram * getProgram(const std::string &key);
+    /** @deprecated Use getProgram() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE GLProgram * programForKey(const std::string &key){ return getProgram(key); }
 
-    /** adds a CCGLProgram to the cache for a given name */
-    void addProgram(CCGLProgram* program, const char* key);
+    /** adds a GLProgram to the cache for a given name */
+    void addProgram(GLProgram* program, const std::string &key);
 
 private:
     bool init();
-    void loadDefaultShader(CCGLProgram *program, int type);
+    void loadDefaultShader(GLProgram *program, int type);
 
-    CCDictionary* m_pPrograms;
-
+//    Dictionary* _programs;
+    std::unordered_map<std::string, GLProgram*> _programs;
 };
 
 // end of shaders group

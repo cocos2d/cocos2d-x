@@ -29,7 +29,7 @@ SubTest::~SubTest()
     }
 }
 
-void SubTest::initWithSubTest(int nSubTest, CCNode* p)
+void SubTest::initWithSubTest(int nSubTest, Node* p)
 {
     subtestNumber = nSubTest;
     parent = p;
@@ -53,7 +53,7 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
     */
 
     // purge textures
-    CCTextureCache *mgr = CCTextureCache::sharedTextureCache();
+    auto mgr = TextureCache::getInstance();
     //        [mgr removeAllTextures];
     mgr->removeTexture(mgr->addImage("Images/grossinis_sister1.png"));
     mgr->removeTexture(mgr->addImage("Images/grossini_dance_atlas.png"));
@@ -67,37 +67,37 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
             break;
             ///
         case 2:
-            CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
-            batchNode = CCSpriteBatchNode::create("Images/grossinis_sister1.png", 100);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
+            batchNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             p->addChild(batchNode, 0);
             break;
         case 3:
-            CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-            batchNode = CCSpriteBatchNode::create("Images/grossinis_sister1.png", 100);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
+            batchNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             p->addChild(batchNode, 0);
             break;
 
             ///
         case 5:
-            CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
-            batchNode = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
+            batchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
             break;                
         case 6:
-            CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-            batchNode = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
+            batchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
             break;
 
             ///
         case 8:
-            CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
-            batchNode = CCSpriteBatchNode::create("Images/spritesheet1.png", 100);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
+            batchNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
             p->addChild(batchNode, 0);
             break;
         case 9:
-            CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-            batchNode = CCSpriteBatchNode::create("Images/spritesheet1.png", 100);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
+            batchNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
             p->addChild(batchNode, 0);
             break;
 
@@ -110,27 +110,27 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
         batchNode->retain();
     }
 
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_Default);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
 }
 
-CCSprite* SubTest::createSpriteWithTag(int tag)
+Sprite* SubTest::createSpriteWithTag(int tag)
 {
     // create 
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 
-    CCSprite* sprite = NULL;
+    Sprite* sprite = NULL;
     switch (subtestNumber)
     {
         case 1:
             {
-                sprite = CCSprite::create("Images/grossinis_sister1.png");
+                sprite = Sprite::create("Images/grossinis_sister1.png");
                 parent->addChild(sprite, 0, tag+100);
                 break;
             }
         case 2:
         case 3: 
             {
-                sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 52, 139));
+                sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0, 0, 52, 139));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -139,7 +139,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
                 int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
                 char str[32] = {0};
                 sprintf(str, "Images/grossini_dance_%02d.png", idx);
-                sprite = CCSprite::create(str);
+                sprite = Sprite::create(str);
                 parent->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -154,7 +154,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 85;
                 y *= 121;
-                sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(x,y,85,121));
+                sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(x,y,85,121));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -169,7 +169,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 char str[40] = {0};
                 sprintf(str, "Images/sprites_test/sprite-%d-%d.png", x, y);
-                sprite = CCSprite::create(str);
+                sprite = Sprite::create(str);
                 parent->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -185,7 +185,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 32;
                 y *= 32;
-                sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(x,y,32,32));
+                sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(x,y,32,32));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -194,7 +194,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
             break;
     }
 
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_Default);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
 
     return sprite;
 }
@@ -229,42 +229,42 @@ void SubTest::removeByTag(int tag)
 ////////////////////////////////////////////////////////
 void SpriteMenuLayer::showCurrentTest()
 {
-    SpriteMainScene* pScene = NULL;
-    SpriteMainScene* pPreScene = (SpriteMainScene*) getParent();
+    SpriteMainScene* scene = NULL;
+    auto pPreScene = (SpriteMainScene*) getParent();
     int nSubTest = pPreScene->getSubTestNum();
     int nNodes   = pPreScene->getNodesNum();
 
-    switch (m_nCurCase)
+    switch (_curCase)
     {
     case 0:
-        pScene = new SpritePerformTest1;
+        scene = new SpritePerformTest1;
         break;
     case 1:
-        pScene = new SpritePerformTest2;
+        scene = new SpritePerformTest2;
         break;
     case 2:
-        pScene = new SpritePerformTest3;
+        scene = new SpritePerformTest3;
         break;
     case 3:
-        pScene = new SpritePerformTest4;
+        scene = new SpritePerformTest4;
         break;
     case 4:
-        pScene = new SpritePerformTest5;
+        scene = new SpritePerformTest5;
         break;
     case 5:
-        pScene = new SpritePerformTest6;
+        scene = new SpritePerformTest6;
         break;
     case 6:
-        pScene = new SpritePerformTest7;
+        scene = new SpritePerformTest7;
         break;
     }
-    s_nSpriteCurCase = m_nCurCase;
+    s_nSpriteCurCase = _curCase;
 
-    if (pScene)
+    if (scene)
     {
-        pScene->initWithSubTest(nSubTest, nNodes);
-        CCDirector::sharedDirector()->replaceScene(pScene);
-        pScene->release();
+        scene->initWithSubTest(nSubTest, nNodes);
+        Director::getInstance()->replaceScene(scene);
+        scene->release();
     }
 }
 
@@ -278,63 +278,63 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     //srandom(0);
 
     subtestNumber = asubtest;
-    m_pSubTest = new SubTest;
-    m_pSubTest->initWithSubTest(asubtest, this);
+    _subTest = new SubTest;
+    _subTest->initWithSubTest(asubtest, this);
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     lastRenderedCount = 0;
     quantityNodes = 0;
 
-    CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(SpriteMainScene::onDecrease));
-    decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(SpriteMainScene::onIncrease));
-    increase->setColor(ccc3(0,200,20));
+    MenuItemFont::setFontSize(65);
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(SpriteMainScene::onDecrease, this));
+    decrease->setColor(Color3B(0,200,20));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(SpriteMainScene::onIncrease, this));
+    increase->setColor(Color3B(0,200,20));
 
-    CCMenu *menu = CCMenu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
-    menu->setPosition(ccp(s.width/2, s.height-65));
+    menu->setPosition(Point(s.width/2, s.height-65));
     addChild(menu, 1);
 
-    CCLabelTTF *infoLabel = CCLabelTTF::create("0 nodes", "Marker Felt", 30);
-    infoLabel->setColor(ccc3(0,200,20));
-    infoLabel->setPosition(ccp(s.width/2, s.height-90));
+    auto infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
+    infoLabel->setColor(Color3B(0,200,20));
+    infoLabel->setPosition(Point(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // add menu
-    SpriteMenuLayer* pMenu = new SpriteMenuLayer(true, TEST_COUNT, s_nSpriteCurCase);
-    addChild(pMenu, 1, kTagMenuLayer);
-    pMenu->release();
+    auto menuLayer = new SpriteMenuLayer(true, TEST_COUNT, s_nSpriteCurCase);
+    addChild(menuLayer, 1, kTagMenuLayer);
+    menuLayer->release();
 
     // Sub Tests
-    CCMenuItemFont::setFontSize(32);
-    CCMenu* pSubMenu = CCMenu::create();
+    MenuItemFont::setFontSize(32);
+    auto subMenu = Menu::create();
     for (int i = 1; i <= 9; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, this, menu_selector(SpriteMainScene::testNCallback));
+        auto itemFont = MenuItemFont::create(str, CC_CALLBACK_1(SpriteMainScene::testNCallback, this));
         itemFont->setTag(i);
-        pSubMenu->addChild(itemFont, 10);
+        subMenu->addChild(itemFont, 10);
 
         if( i<= 3)
-            itemFont->setColor(ccc3(200,20,20));
+            itemFont->setColor(Color3B(200,20,20));
         else if(i <= 6)
-            itemFont->setColor(ccc3(0,200,20));
+            itemFont->setColor(Color3B(0,200,20));
         else
-            itemFont->setColor(ccc3(0,20,200));
+            itemFont->setColor(Color3B(0,20,200));
     }
 
-    pSubMenu->alignItemsHorizontally();
-    pSubMenu->setPosition(ccp(s.width/2, 80));
-    addChild(pSubMenu, 2);
+    subMenu->alignItemsHorizontally();
+    subMenu->setPosition(Point(s.width/2, 80));
+    addChild(subMenu, 2);
 
     // add title label
-    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-32));
-    label->setColor(ccc3(255,255,40));
+    label->setPosition(Point(s.width/2, s.height-32));
+    label->setColor(Color3B(255,255,40));
 
     while(quantityNodes < nNodes)
         onIncrease(this);
@@ -347,25 +347,25 @@ std::string SpriteMainScene::title()
 
 SpriteMainScene::~SpriteMainScene()
 {
-    if (m_pSubTest)
+    if (_subTest)
     {
-        delete m_pSubTest;
-        m_pSubTest = NULL;
+        delete _subTest;
+        _subTest = NULL;
     }
 }
 
-void SpriteMainScene::testNCallback(CCObject* pSender)
+void SpriteMainScene::testNCallback(Object* sender)
 {
-    subtestNumber = ((CCMenuItemFont*) pSender)->getTag();
-    SpriteMenuLayer* pMenu = (SpriteMenuLayer*)getChildByTag(kTagMenuLayer);
-    pMenu->restartCallback(pSender);
+    subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
+    auto menu = static_cast<SpriteMenuLayer*>( getChildByTag(kTagMenuLayer) );
+    menu->restartCallback(sender);
 }
 
 void SpriteMainScene::updateNodes()
 {
     if( quantityNodes != lastRenderedCount )
     {
-        CCLabelTTF *infoLabel = (CCLabelTTF *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
         char str[16] = {0};
         sprintf(str, "%u nodes", quantityNodes);
         infoLabel->setString(str);
@@ -374,14 +374,14 @@ void SpriteMainScene::updateNodes()
     }
 }
 
-void SpriteMainScene::onIncrease(CCObject* pSender)
+void SpriteMainScene::onIncrease(Object* sender)
 {
     if( quantityNodes >= kMaxNodes)
         return;
 
     for( int i=0;i< kNodesIncrease;i++)
     {
-        CCSprite *sprite = m_pSubTest->createSpriteWithTag(quantityNodes);
+        auto sprite = _subTest->createSpriteWithTag(quantityNodes);
         doTest(sprite);
         quantityNodes++;
     }
@@ -389,7 +389,7 @@ void SpriteMainScene::onIncrease(CCObject* pSender)
     updateNodes();
 }
 
-void SpriteMainScene::onDecrease(CCObject* pSender)
+void SpriteMainScene::onDecrease(Object* sender)
 {
     if( quantityNodes <= 0 )
         return;
@@ -397,7 +397,7 @@ void SpriteMainScene::onDecrease(CCObject* pSender)
     for( int i=0;i < kNodesIncrease;i++)
     {
         quantityNodes--;
-        m_pSubTest->removeByTag(quantityNodes);
+        _subTest->removeByTag(quantityNodes);
     }
 
     updateNodes();
@@ -408,77 +408,77 @@ void SpriteMainScene::onDecrease(CCObject* pSender)
 // For test functions
 //
 ////////////////////////////////////////////////////////
-void performanceActions(CCSprite* pSprite)
+void performanceActions(Sprite* sprite)
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+    auto size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
-    CCRotateBy* rot = CCRotateBy::create(period, 360.0f * CCRANDOM_0_1());
-    CCActionInterval* rot_back = rot->reverse();
-    CCAction *permanentRotation = CCRepeatForever::create(CCSequence::create(rot, rot_back, NULL));
-    pSprite->runAction(permanentRotation);
+    auto rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
+    auto rot_back = rot->reverse();
+    auto permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
-    CCActionInterval *grow = CCScaleBy::create(growDuration, 0.5f, 0.5f);
-    CCAction *permanentScaleLoop = CCRepeatForever::create(CCSequence::create(grow, grow->reverse(), NULL));
-    pSprite->runAction(permanentScaleLoop);
+    auto grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
+    auto permanentScaleLoop = RepeatForever::create(Sequence::create(grow, grow->reverse(), NULL));
+    sprite->runAction(permanentScaleLoop);
 }
 
-void performanceActions20(CCSprite* pSprite)
+void performanceActions20(Sprite* sprite)
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     if( CCRANDOM_0_1() < 0.2f )
-        pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+        sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        pSprite->setPosition(ccp( -1000, -1000));
+        sprite->setPosition(Point( -1000, -1000));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
-    CCRotateBy* rot = CCRotateBy::create(period, 360.0f * CCRANDOM_0_1());
-    CCActionInterval* rot_back = rot->reverse();
-    CCAction *permanentRotation = CCRepeatForever::create(CCSequence::create(rot, rot_back, NULL));
-    pSprite->runAction(permanentRotation);
+    auto rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
+    auto rot_back = rot->reverse();
+    auto permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
-    CCActionInterval *grow = CCScaleBy::create(growDuration, 0.5f, 0.5f);
-    CCAction *permanentScaleLoop = CCRepeatForever::create(CCSequence::createWithTwoActions(grow, grow->reverse()));
-    pSprite->runAction(permanentScaleLoop);
+    auto grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
+    auto permanentScaleLoop = RepeatForever::create(Sequence::createWithTwoActions(grow, grow->reverse()));
+    sprite->runAction(permanentScaleLoop);
 }
 
-void performanceRotationScale(CCSprite* pSprite)
+void performanceRotationScale(Sprite* sprite)
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
-    pSprite->setRotation(CCRANDOM_0_1() * 360);
-    pSprite->setScale(CCRANDOM_0_1() * 2);
+    auto size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setRotation(CCRANDOM_0_1() * 360);
+    sprite->setScale(CCRANDOM_0_1() * 2);
 }
 
-void performancePosition(CCSprite* pSprite)
+void performancePosition(Sprite* sprite)
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+    auto size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 }
 
-void performanceout20(CCSprite* pSprite)
+void performanceout20(Sprite* sprite)
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
 
     if( CCRANDOM_0_1() < 0.2f )
-        pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
+        sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        pSprite->setPosition(ccp( -1000, -1000));
+        sprite->setPosition(Point( -1000, -1000));
 }
 
-void performanceOut100(CCSprite* pSprite)
+void performanceOut100(Sprite* sprite)
 {
-    pSprite->setPosition(ccp( -1000, -1000));
+    sprite->setPosition(Point( -1000, -1000));
 }
 
-void performanceScale(CCSprite* pSprite)
+void performanceScale(Sprite* sprite)
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
-    pSprite->setScale(CCRANDOM_0_1() * 100 / 50);
+    auto size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setScale(CCRANDOM_0_1() * 100 / 50);
 }
 
 ////////////////////////////////////////////////////////
@@ -494,7 +494,7 @@ std::string SpritePerformTest1::title()
     return strRet;
 }
 
-void SpritePerformTest1::doTest(CCSprite* sprite)
+void SpritePerformTest1::doTest(Sprite* sprite)
 {
     performancePosition(sprite);
 }
@@ -512,7 +512,7 @@ std::string SpritePerformTest2::title()
     return strRet;
 }
 
-void SpritePerformTest2::doTest(CCSprite* sprite)
+void SpritePerformTest2::doTest(Sprite* sprite)
 {
     performanceScale(sprite);
 }
@@ -530,7 +530,7 @@ std::string SpritePerformTest3::title()
     return strRet;
 }
 
-void SpritePerformTest3::doTest(CCSprite* sprite)
+void SpritePerformTest3::doTest(Sprite* sprite)
 {
     performanceRotationScale(sprite);
 }
@@ -548,7 +548,7 @@ std::string SpritePerformTest4::title()
     return strRet;
 }
 
-void SpritePerformTest4::doTest(CCSprite* sprite)
+void SpritePerformTest4::doTest(Sprite* sprite)
 {
     performanceOut100(sprite);
 }
@@ -566,7 +566,7 @@ std::string SpritePerformTest5::title()
     return strRet;
 }
 
-void SpritePerformTest5::doTest(CCSprite* sprite)
+void SpritePerformTest5::doTest(Sprite* sprite)
 {
     performanceout20(sprite);
 }
@@ -584,7 +584,7 @@ std::string SpritePerformTest6::title()
     return strRet;
 }
 
-void SpritePerformTest6::doTest(CCSprite* sprite)
+void SpritePerformTest6::doTest(Sprite* sprite)
 {
     performanceActions(sprite);
 }
@@ -602,15 +602,15 @@ std::string SpritePerformTest7::title()
     return strRet;
 }
 
-void SpritePerformTest7::doTest(CCSprite* sprite)
+void SpritePerformTest7::doTest(Sprite* sprite)
 {
     performanceActions20(sprite);
 }
 
 void runSpriteTest()
 {
-    SpriteMainScene* pScene = new SpritePerformTest1;
-    pScene->initWithSubTest(1, 50);
-    CCDirector::sharedDirector()->replaceScene(pScene);
-    pScene->release();
+    auto scene = new SpritePerformTest1;
+    scene->initWithSubTest(1, 50);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }

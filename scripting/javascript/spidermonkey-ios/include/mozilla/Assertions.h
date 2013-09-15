@@ -10,6 +10,7 @@
 
 #include "mozilla/Attributes.h"
 #include "mozilla/Compiler.h"
+#include "mozilla/Likely.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -76,6 +77,16 @@
 #  endif
 #endif
 #ifndef MOZ_STATIC_ASSERT
+   /*
+    * Some of the definitions below create an otherwise-unused typedef.  This
+    * triggers compiler warnings with some versions of gcc, so mark the typedefs
+    * as permissibly-unused to disable the warnings.
+    */
+#  if defined(__GNUC__)
+#    define MOZ_STATIC_ASSERT_UNUSED_ATTRIBUTE __attribute__((unused))
+#  else
+#    define MOZ_STATIC_ASSERT_UNUSED_ATTRIBUTE /* nothing */
+#  endif
 #  define MOZ_STATIC_ASSERT_GLUE1(x, y)          x##y
 #  define MOZ_STATIC_ASSERT_GLUE(x, y)           MOZ_STATIC_ASSERT_GLUE1(x, y)
 #  if defined(__SUNPRO_CC)
@@ -108,10 +119,10 @@
       * code.
       */
 #    define MOZ_STATIC_ASSERT(cond, reason) \
-       typedef int MOZ_STATIC_ASSERT_GLUE(moz_static_assert, __COUNTER__)[(cond) ? 1 : -1]
+       typedef int MOZ_STATIC_ASSERT_GLUE(moz_static_assert, __COUNTER__)[(cond) ? 1 : -1] MOZ_STATIC_ASSERT_UNUSED_ATTRIBUTE
 #  else
 #    define MOZ_STATIC_ASSERT(cond, reason) \
-       extern void MOZ_STATIC_ASSERT_GLUE(moz_static_assert, __LINE__)(int arg[(cond) ? 1 : -1])
+       extern void MOZ_STATIC_ASSERT_GLUE(moz_static_assert, __LINE__)(int arg[(cond) ? 1 : -1]) MOZ_STATIC_ASSERT_UNUSED_ATTRIBUTE
 #  endif
 #endif
 
@@ -238,7 +249,7 @@ MOZ_ReportAssertionFailure(const char* s, const char* file, int ln)
    /* First the single-argument form. */
 #  define MOZ_ASSERT_HELPER1(expr) \
      do { \
-       if (!(expr)) { \
+       if (MOZ_UNLIKELY(!(expr))) { \
          MOZ_ReportAssertionFailure(#expr, __FILE__, __LINE__); \
          MOZ_CRASH(); \
        } \
@@ -246,7 +257,7 @@ MOZ_ReportAssertionFailure(const char* s, const char* file, int ln)
    /* Now the two-argument form. */
 #  define MOZ_ASSERT_HELPER2(expr, explain) \
      do { \
-       if (!(expr)) { \
+       if (MOZ_UNLIKELY(!(expr))) { \
          MOZ_ReportAssertionFailure(#expr " (" explain ")", __FILE__, __LINE__); \
          MOZ_CRASH(); \
        } \

@@ -40,21 +40,26 @@ using namespace Tizen::Base;
 using namespace Tizen::Io;
 using namespace Tizen::Text;
 
-CCFileUtils* CCFileUtils::sharedFileUtils()
+FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsTizen();
-        s_sharedFileUtils->init();
+        s_sharedFileUtils = new FileUtilsTizen();
+        if(!s_sharedFileUtils->init())
+        {
+          delete s_sharedFileUtils;
+          s_sharedFileUtils = NULL;
+          CCLOG("ERROR: Could not init CCFileUtilsTizen");
+        }
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsTizen::CCFileUtilsTizen()
+FileUtilsTizen::FileUtilsTizen()
 {
 }
 
-bool CCFileUtilsTizen::init()
+bool FileUtilsTizen::init()
 {
     UiApp* pApp = UiApp::GetInstance();
     if (!pApp)
@@ -62,7 +67,7 @@ bool CCFileUtilsTizen::init()
         return false;
     }
 
-    String resPath = pApp->GetAppResourcePath();
+    Tizen::Base::String resPath = pApp->GetAppResourcePath();
     if (resPath.IsEmpty())
     {
         return false;
@@ -70,12 +75,12 @@ bool CCFileUtilsTizen::init()
 
     AsciiEncoding ascii;
     ByteBuffer* buffer = ascii.GetBytesN(resPath);
-    m_strDefaultResRootPath = (const char *)buffer->GetPointer();
+    _defaultResRootPath = (const char *)buffer->GetPointer();
     delete buffer;
-    return CCFileUtils::init();
+    return FileUtils::init();
 }
 
-string CCFileUtilsTizen::getWritablePath()
+string FileUtilsTizen::getWritablePath() const
 {
     UiApp* pApp = UiApp::GetInstance();
     if (!pApp)
@@ -85,7 +90,7 @@ string CCFileUtilsTizen::getWritablePath()
 
     string path("");
     AsciiEncoding ascii;
-    String dataPath = pApp->GetAppDataPath();
+    Tizen::Base::String dataPath = pApp->GetAppDataPath();
     if (!dataPath.IsEmpty())
     {
         ByteBuffer* buffer = ascii.GetBytesN(dataPath);
@@ -96,12 +101,12 @@ string CCFileUtilsTizen::getWritablePath()
     return path;
 }
 
-bool CCFileUtilsTizen::isFileExist(const std::string& strFilePath)
+bool FileUtilsTizen::isFileExist(const std::string& strFilePath) const
 {
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
     { // Not absolute path, add the default root path at the beginning.
-        strPath.insert(0, m_strDefaultResRootPath);
+        strPath.insert(0, _defaultResRootPath);
     }
 
     return File::IsFileExist(strPath.c_str());

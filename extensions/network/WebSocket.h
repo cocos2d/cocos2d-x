@@ -32,8 +32,11 @@
 
 #include "ExtensionMacros.h"
 #include "cocos2d.h"
-#include "libwebsockets.h"
 #include <list>
+
+struct libwebsocket;
+struct libwebsocket_context;
+struct libwebsocket_protocols;
 
 NS_CC_EXT_BEGIN
 
@@ -43,7 +46,14 @@ class WsMessage;
 class WebSocket
 {
 public:
+    /**
+     * @js ctor
+     */
     WebSocket();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~WebSocket();
     
     /**
@@ -60,11 +70,22 @@ public:
     /**
      *  @brief Errors in websocket
      */
-    enum ErrorCode
+    enum class ErrorCode
     {
-        kErrorTimeout = 0,
-        kErrorConnectionFailure,
-        kErrorUnknown
+        TIME_OUT,
+        CONNECTION_FAILURE,
+        UNKNOWN,
+    };
+    
+    /**
+     *  Websocket state
+     */
+    enum class State
+    {
+        CONNECTING,
+        OPEN,
+        CLOSING,
+        CLOSED,
     };
 
     /**
@@ -106,22 +127,12 @@ public:
      *  @brief Closes the connection to server.
      */
     void close();
-
-    /**
-     *  Websocket state
-     */
-    enum State
-    {
-        kStateConnecting = 0,
-        kStateOpen,
-        kStateClosing,
-        kStateClosed
-    };
     
     /**
      *  @brief Gets current state of connection.
      */
     State getReadyState();
+    
 private:
     virtual void onSubThreadStarted();
     virtual int onSubThreadLoop();
@@ -132,7 +143,7 @@ private:
     friend class WebSocketCallbackWrapper;
     int onSocketCallback(struct libwebsocket_context *ctx,
                          struct libwebsocket *wsi,
-                         enum libwebsocket_callback_reasons reason,
+                         int reason,
                          void *user, void *in, size_t len);
     
 private:

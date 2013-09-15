@@ -96,8 +96,8 @@ void CCSkeletonAnimation::addAnimationState (AnimationStateData* stateData) {
 }
 
 void CCSkeletonAnimation::setAnimationStateData (AnimationStateData* stateData, int stateIndex) {
-	CCAssert(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
-	CCAssert(stateData, "stateData cannot be null.");
+	CCASSERT(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
+	CCASSERT(stateData, "stateData cannot be null.");
 
 	AnimationState* state = states[stateIndex];
 	for (std::vector<AnimationStateData*>::iterator iter = stateDatas.begin(); iter != stateDatas.end(); ++iter) {
@@ -120,22 +120,22 @@ void CCSkeletonAnimation::setAnimationStateData (AnimationStateData* stateData, 
 }
 
 void CCSkeletonAnimation::setMix (const char* fromAnimation, const char* toAnimation, float duration, int stateIndex) {
-	CCAssert(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
+	CCASSERT(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
 	AnimationStateData_setMixByName(states[stateIndex]->data, fromAnimation, toAnimation, duration);
 }
 
 void CCSkeletonAnimation::setAnimation (const char* name, bool loop, int stateIndex) {
-	CCAssert(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
+	CCASSERT(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
 	AnimationState_setAnimationByName(states[stateIndex], name, loop);
 }
 
 void CCSkeletonAnimation::addAnimation (const char* name, bool loop, float delay, int stateIndex) {
-	CCAssert(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
+	CCASSERT(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
 	AnimationState_addAnimationByName(states[stateIndex], name, loop, delay);
 }
 
 void CCSkeletonAnimation::clearAnimation (int stateIndex) {
-	CCAssert(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
+	CCASSERT(stateIndex >= 0 && stateIndex < (int)states.size(), "stateIndex out of range.");
 	AnimationState_clearAnimation(states[stateIndex]);
 }
 

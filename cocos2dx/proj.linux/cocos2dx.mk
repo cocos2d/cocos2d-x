@@ -1,12 +1,39 @@
+################################################################################
+#
+# LINUX MAKEFILE
+#
+# Available options are:
+# - CLANG=1  : Compiles with clang instead of gcc. Clang must be in your PATH.
+# - V=1      : Enables the verbose mode.
+# - DEBUG=1  : Enables the debug mode, disable compiler optimizations.
+# - OPENAL=1 : Uses OpenAL instead of FMOD as sound engine.
+#
+################################################################################
+
 all:
 
+# Remove -Wall, because it enables -Wunused-function, and this warning exists in webp.h
+# when enable c++11. I don't know why.
+# GCC 4.6 is primary platform for cocos2d v.3, because it's default compiler for Android, 
+# Blackberry, some Linux distributions.It supports all important features of c++11, but have 
+# no flag "-std=c++11" (which was turned on in version 4.7).
+CCFLAGS  += -MMD -Wno-deprecated-declarations -fPIC
+CXXFLAGS += -MMD -Wno-deprecated-declarations -fPIC -std=gnu++0x
+
+ifeq ($(CLANG), 1)
+CC := clang
+CXX := clang++
+DEFINES += -D__STRICT_ANSI__ # Allows clang 3.3 to use __float128
+else
 CC = gcc
 CXX = g++
-CCFLAGS += -MMD -Wall -Werror -fPIC
-CXXFLAGS += -MMD -Wall -Werror -fPIC
+CCFLAGS  += -Werror
+CXXFLAGS += -Werror
+endif
+
 ARFLAGS = cr
 
-DEFINES += -DLINUX
+DEFINES += -DLINUX -DCC_KEYBOARD_SUPPORT
 
 ifdef USE_BOX2D
 DEFINES += -DCC_ENABLE_BOX2D_INTEGRATION=1
@@ -30,9 +57,8 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/include \
     -I$(COCOS_SRC)/kazmath/include \
     -I$(COCOS_SRC)/platform/linux \
-    -I$(COCOS_SRC)/platform/third_party/linux/libpng \
     -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
-    -I$(COCOS_SRC)/platform/third_party/linux/libtiff/include \
+    -I$(COCOS_SRC)/platform/third_party/linux/libtiff \
     -I$(COCOS_SRC)/platform/third_party/linux/libwebp
 
 LBITS := $(shell getconf LONG_BIT)
@@ -80,7 +106,6 @@ else
 STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/linux/libraries
 endif
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-    $(STATICLIBS_DIR)/libpng.a \
     $(STATICLIBS_DIR)/libjpeg.a \
     $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libwebp.a
@@ -95,7 +120,7 @@ SHAREDLIBS += -lfmodex
 endif
 endif
 
-SHAREDLIBS += -lglfw -lGLEW -lfontconfig -lpthread -lGL
+SHAREDLIBS += -lSDL2 -lGLEW -lfontconfig -lpthread -lGL -lpng `pkg-config --libs glfw3`
 SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(abspath $(FMOD_LIBDIR))
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(abspath $(LIB_DIR))
 

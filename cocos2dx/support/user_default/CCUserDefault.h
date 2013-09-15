@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 #include <string>
+#include "cocoa/CCData.h"
 
 NS_CC_BEGIN
 
@@ -35,91 +36,162 @@ NS_CC_BEGIN
  */
 
 /**
- * CCUserDefault acts as a tiny database. You can save and get base type values by it.
+ * UserDefault acts as a tiny database. You can save and get base type values by it.
  * For example, setBoolForKey("played", true) will add a bool value true into the database.
  * Its key is "played". You can get the value of the key by getBoolForKey("played").
  * 
  * It supports the following base types:
  * bool, int, float, double, string
  */
-class CC_DLL CCUserDefault
+class CC_DLL UserDefault
 {
 public:
-    ~CCUserDefault();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~UserDefault();
 
     // get value methods
 
     /**
     @brief Get bool value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is false.
+    * @js NA
     */
     bool    getBoolForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     bool    getBoolForKey(const char* pKey, bool defaultValue);
     /**
     @brief Get integer value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is 0.
+    * @js NA
     */
     int     getIntegerForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     int     getIntegerForKey(const char* pKey, int defaultValue);
     /**
     @brief Get float value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is 0.0f.
+    * @js NA
     */
     float    getFloatForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     float    getFloatForKey(const char* pKey, float defaultValue);
     /**
     @brief Get double value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is 0.0.
+    * @js NA
     */
     double  getDoubleForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     double  getDoubleForKey(const char* pKey, double defaultValue);
     /**
     @brief Get string value by key, if the key doesn't exist, a default value will return.
     You can set the default value, or it is "".
+    * @js NA
     */
     std::string getStringForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     std::string getStringForKey(const char* pKey, const std::string & defaultValue);
+    /**
+     @brief Get binary data value by key, if the key doesn't exist, a default value will return.
+     You can set the default value, or it is null.
+     * @js NA
+     * @lua NA
+     */
+    Data* getDataForKey(const char* pKey);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    Data* getDataForKey(const char* pKey, Data* defaultValue);
 
     // set value methods
 
     /**
-    @brief Set bool value by key.
-    */
+     @brief Set bool value by key.
+     * @js NA
+     */
     void    setBoolForKey(const char* pKey, bool value);
     /**
-    @brief Set integer value by key.
-    */
+     @brief Set integer value by key.
+     * @js NA
+     */
     void    setIntegerForKey(const char* pKey, int value);
     /**
-    @brief Set float value by key.
-    */
+     @brief Set float value by key.
+     * @js NA
+     */
     void    setFloatForKey(const char* pKey, float value);
     /**
-    @brief Set double value by key.
-    */
+     @brief Set double value by key.
+     * @js NA
+     */
     void    setDoubleForKey(const char* pKey, double value);
     /**
-    @brief Set string value by key.
-    */
+     @brief Set string value by key.
+     * @js NA
+     */
     void    setStringForKey(const char* pKey, const std::string & value);
     /**
+     @brief Set binary data value by key.
+     * @js NA
+     * @lua NA
+     */
+    void    setDataForKey(const char* pKey, const Data& value);
+    /**
      @brief Save content to xml file
+     * @js NA
      */
     void    flush();
 
-    static CCUserDefault* sharedUserDefault();
-    static void purgeSharedUserDefault();
+    /** returns the singleton 
+     * @js NA
+     * @lua NA
+     */
+    static UserDefault* getInstance();
+    /**
+     * @js NA
+     */
+    static void destroyInstance();
+
+    /** deprecated. Use getInstace() instead 
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static UserDefault* sharedUserDefault();
+    /**
+     * @js NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedUserDefault();
+    /**
+     * @js NA
+     */
     const static std::string& getXMLFilePath();
+    /**
+     * @js NA
+     */
     static bool isXMLFileExist();
 
 private:
-    CCUserDefault();
+    UserDefault();
     static bool createXMLFile();
     static void initXMLFilePath();
     
-    static CCUserDefault* m_spUserDefault;
-    static std::string m_sFilePath;
-    static bool m_sbIsFilePathInitialized;
+    static UserDefault* _userDefault;
+    static std::string _filePath;
+    static bool _isFilePathInitialized;
 };
 
 // end of data_storage group

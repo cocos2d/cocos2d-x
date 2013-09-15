@@ -29,18 +29,25 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCComponent;
-class CCNode;
+class Component;
+class Node;
 
-class CC_DLL CCComponentContainer
+class CC_DLL ComponentContainer
 {
 protected:
-    CCComponentContainer(CCNode *pNode);
+    /**
+     * @js ctor
+     */
+    ComponentContainer(Node *pNode);
     
 public:
-    virtual ~CCComponentContainer(void);
-    virtual CCComponent* get(const char *pName) const;
-    virtual bool add(CCComponent *pCom);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ComponentContainer(void);
+    virtual Component* get(const char *pName) const;
+    virtual bool add(Component *pCom);
     virtual bool remove(const char *pName);
     virtual void removeAll();
     virtual void visit(float fDelta);
@@ -51,10 +58,10 @@ private:
     void alloc(void);
     
 private:
-    CCDictionary *m_pComponents;        ///< Dictionary of components
-    CCNode *m_pOwner;
+    Dictionary *_components;        ///< Dictionary of components
+    Node *_owner;
     
-    friend class CCNode;
+    friend class Node;
 };
 
 NS_CC_END

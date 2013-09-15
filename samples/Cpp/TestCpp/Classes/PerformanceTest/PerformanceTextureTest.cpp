@@ -25,19 +25,19 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 ////////////////////////////////////////////////////////
 void TextureMenuLayer::showCurrentTest()
 {
-    CCScene* pScene = NULL;
+    Scene* scene = NULL;
 
-    switch (m_nCurCase)
+    switch (_curCase)
     {
     case 0:
-        pScene = TextureTest::scene();
+        scene = TextureTest::scene();
         break;
     }
-    s_nTexCurCase = m_nCurCase;
+    s_nTexCurCase = _curCase;
 
-    if (pScene)
+    if (scene)
     {
-        CCDirector::sharedDirector()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -45,21 +45,21 @@ void TextureMenuLayer::onEnter()
 {
     PerformBasicLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     // Title
-    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
-    label->setPosition(ccp(s.width/2, s.height-32));
-    label->setColor(ccc3(255,255,40));
+    label->setPosition(Point(s.width/2, s.height-32));
+    label->setColor(Color3B(255,255,40));
 
     // Subtitle
     std::string strSubTitle = subtitle();
     if(strSubTitle.length())
     {
-        CCLabelTTF *l = CCLabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
+        auto l = LabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-80));
+        l->setPosition(Point(s.width/2, s.height-80));
     }
 
     performTests();
@@ -83,110 +83,110 @@ std::string TextureMenuLayer::subtitle()
 void TextureTest::performTestsPNG(const char* filename)
 {
     struct timeval now;
-    CCTexture2D *texture;
-    CCTextureCache *cache = CCTextureCache::sharedTextureCache();
+    Texture2D *texture;
+    auto cache = TextureCache::getInstance();
 
-    CCLog("RGBA 8888");
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+    log("RGBA 8888");
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
     gettimeofday(&now, NULL);
     texture = cache->addImage(filename);
     if( texture )
-        CCLog("  ms:%f", calculateDeltaTime(&now) );
+        log("  ms:%f", calculateDeltaTime(&now) );
     else
-        CCLog(" ERROR");
+        log(" ERROR");
     cache->removeTexture(texture);
 
-    CCLog("RGBA 4444");
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+    log("RGBA 4444");
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
     gettimeofday(&now, NULL);
     texture = cache->addImage(filename);
     if( texture )
-        CCLog("  ms:%f", calculateDeltaTime(&now) );
+        log("  ms:%f", calculateDeltaTime(&now) );
     else
-        CCLog(" ERROR");
+        log(" ERROR");
     cache->removeTexture(texture);
 
-    CCLog("RGBA 5551");
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
+    log("RGBA 5551");
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
     gettimeofday(&now, NULL);
     texture = cache->addImage(filename);
     if( texture )
-        CCLog("  ms:%f", calculateDeltaTime(&now) );
+        log("  ms:%f", calculateDeltaTime(&now) );
     else
-        CCLog(" ERROR");
+        log(" ERROR");
     cache->removeTexture(texture);
 
-    CCLog("RGB 565");
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565);
+    log("RGB 565");
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
     gettimeofday(&now, NULL);    
     texture = cache->addImage(filename);
     if( texture )
-        CCLog("  ms:%f", calculateDeltaTime(&now) );
+        log("  ms:%f", calculateDeltaTime(&now) );
     else
-        CCLog(" ERROR");
+        log(" ERROR");
     cache->removeTexture(texture);
 }
 
 void TextureTest::performTests()
 {
-//     CCTexture2D *texture;
+//     Texture2D *texture;
 //     struct timeval now;
-//     CCTextureCache *cache = CCTextureCache::sharedTextureCache();
+//     auto cache = TextureCache::getInstance();
 
-    CCLog("--------");
+    log("--------");
 
-    CCLog("--- PNG 128x128 ---");
+    log("--- PNG 128x128 ---");
     performTestsPNG("Images/test_image.png");
 
-//     CCLog("--- PVR 128x128 ---");
-//     CCLog("RGBA 8888");
+//     log("--- PVR 128x128 ---");
+//     log("RGBA 8888");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/test_image_rgba8888.pvr");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 // 
-//     CCLog("BGRA 8888");
+//     log("BGRA 8888");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/test_image_bgra8888.pvr");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 // 
-//     CCLog("RGBA 4444");
+//     log("RGBA 4444");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/test_image_rgba4444.pvr");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 // 
-//     CCLog("RGB 565");
+//     log("RGB 565");
 //     gettimeofday(&now, NULL);
 //     texture = cache->addImage("Images/test_image_rgb565.pvr");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 
 
-    CCLog("--- PNG 512x512 ---");
+    log("--- PNG 512x512 ---");
     performTestsPNG("Images/texture512x512.png");
 
-//     CCLog("--- PVR 512x512 ---");
-//     CCLog("RGBA 4444");
+//     log("--- PVR 512x512 ---");
+//     log("RGBA 4444");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/texture512x512_rgba4444.pvr");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 
     //
@@ -195,38 +195,38 @@ void TextureTest::performTests()
     // Empty image
     //
 
-    CCLog("EMPTY IMAGE");
-    CCLog("--- PNG 1024x1024 ---");
+    log("EMPTY IMAGE");
+    log("--- PNG 1024x1024 ---");
     performTestsPNG("Images/texture1024x1024.png");
 
-//     CCLog("--- PVR 1024x1024 ---");
-//     CCLog("RGBA 4444");
+//     log("--- PVR 1024x1024 ---");
+//     log("RGBA 4444");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/texture1024x1024_rgba4444.pvr");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 // 
-//     CCLog("--- PVR.GZ 1024x1024 ---");
-//     CCLog("RGBA 4444");
+//     log("--- PVR.GZ 1024x1024 ---");
+//     log("RGBA 4444");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/texture1024x1024_rgba4444.pvr.gz");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 // 
-//     CCLog("--- PVR.CCZ 1024x1024 ---");
-//     CCLog("RGBA 4444");
+//     log("--- PVR.CCZ 1024x1024 ---");
+//     log("RGBA 4444");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/texture1024x1024_rgba4444.pvr.ccz");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 
     //
@@ -235,38 +235,38 @@ void TextureTest::performTests()
     // SpriteSheet images
     //
 
-    CCLog("SPRITESHEET IMAGE");
-    CCLog("--- PNG 1024x1024 ---");
+    log("SPRITESHEET IMAGE");
+    log("--- PNG 1024x1024 ---");
     performTestsPNG("Images/PlanetCute-1024x1024.png");
 
-//     CCLog("--- PVR 1024x1024 ---");
-//     CCLog("RGBA 4444");
+//     log("--- PVR 1024x1024 ---");
+//     log("RGBA 4444");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/PlanetCute-1024x1024-rgba4444.pvr");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 // 
-//     CCLog("--- PVR.GZ 1024x1024 ---");
-//     CCLog("RGBA 4444");
+//     log("--- PVR.GZ 1024x1024 ---");
+//     log("RGBA 4444");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/PlanetCute-1024x1024-rgba4444.pvr.gz");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 // 
-//     CCLog("--- PVR.CCZ 1024x1024 ---");
-//     CCLog("RGBA 4444");
+//     log("--- PVR.CCZ 1024x1024 ---");
+//     log("RGBA 4444");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/PlanetCute-1024x1024-rgba4444.pvr.ccz");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 
 
@@ -276,39 +276,39 @@ void TextureTest::performTests()
     // Landscape Image
     //
 
-    CCLog("LANDSCAPE IMAGE");
+    log("LANDSCAPE IMAGE");
 
-    CCLog("--- PNG 1024x1024 ---");
+    log("--- PNG 1024x1024 ---");
     performTestsPNG("Images/landscape-1024x1024.png");
 
-//     CCLog("--- PVR 1024x1024 ---");
-//     CCLog("RGBA 8888");
+//     log("--- PVR 1024x1024 ---");
+//     log("RGBA 8888");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/landscape-1024x1024-rgba8888.pvr");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 // 
-//     CCLog("--- PVR.GZ 1024x1024 ---");
-//     CCLog("RGBA 8888");
+//     log("--- PVR.GZ 1024x1024 ---");
+//     log("RGBA 8888");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/landscape-1024x1024-rgba8888.pvr.gz");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 // 
-//     CCLog("--- PVR.CCZ 1024x1024 ---");
-//     CCLog("RGBA 8888");
+//     log("--- PVR.CCZ 1024x1024 ---");
+//     log("RGBA 8888");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/landscape-1024x1024-rgba8888.pvr.ccz");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 
 
@@ -318,17 +318,17 @@ void TextureTest::performTests()
     //
 
 // most platform don't support texture with width/height is 2048
-//     CCLog("--- PNG 2048x2048 ---");
+//     log("--- PNG 2048x2048 ---");
 //     performTestsPNG("Images/texture2048x2048.png");
 
-//     CCLog("--- PVR 2048x2048 ---");
-//     CCLog("RGBA 4444");
+//     log("--- PVR 2048x2048 ---");
+//     log("RGBA 4444");
 //     gettimeofday(&now, NULL);    
 //     texture = cache->addImage("Images/texture2048x2048_rgba4444.pvr");
 //     if( texture )
-//         CCLog("  ms:%f", calculateDeltaTime(&now) );
+//         log("  ms:%f", calculateDeltaTime(&now) );
 //     else
-//         CCLog("ERROR");
+//         log("ERROR");
 //     cache->removeTexture(texture);
 }
 
@@ -342,19 +342,19 @@ std::string TextureTest::subtitle()
     return "See console for results";
 }
 
-CCScene* TextureTest::scene()
+Scene* TextureTest::scene()
 {
-    CCScene *pScene = CCScene::create();
+    auto scene = Scene::create();
     TextureTest *layer = new TextureTest(false, TEST_COUNT, s_nTexCurCase);
-    pScene->addChild(layer);
+    scene->addChild(layer);
     layer->release();
 
-    return pScene;
+    return scene;
 }
 
 void runTextureTest()
 {
     s_nTexCurCase = 0;
-    CCScene* pScene = TextureTest::scene();
-    CCDirector::sharedDirector()->replaceScene(pScene);
+    auto scene = TextureTest::scene();
+    Director::getInstance()->replaceScene(scene);
 }

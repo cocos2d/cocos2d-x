@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 {
     // create the application instance
     AppDelegate app;
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
-    eglView->setFrameSize(800, 480);
-    return CCApplication::sharedApplication()->run();
+    EGLView* eglView = new EGLView();
+    eglView->init("TestCPP",900,640);
+    return Application::getInstance()->run();
 }

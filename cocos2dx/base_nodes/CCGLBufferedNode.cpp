@@ -24,57 +24,72 @@ THE SOFTWARE.
 
 #include "CCGLBufferedNode.h"
 
-CCGLBufferedNode::CCGLBufferedNode(void)
+GLBufferedNode::GLBufferedNode()
 {
     for(int i = 0; i < BUFFER_SLOTS; i++)
     {
-        m_bufferObject[i] = 0;
-        m_bufferSize[i] = 0;
-        m_indexBufferObject[i] = 0;
-        m_indexBufferSize[i] = 0;
+        _bufferObject[i] = 0;
+        _bufferSize[i] = 0;
+        _indexBufferObject[i] = 0;
+        _indexBufferSize[i] = 0;
     }
 }
 
-void CCGLBufferedNode::setGLBufferData(void *buf, GLuint bufSize, int slot)
+GLBufferedNode::~GLBufferedNode()
+{
+    for(int i = 0; i < BUFFER_SLOTS; i++)
+    {
+        if(_bufferSize[i])
+        {
+            glDeleteBuffers(1, &(_bufferObject[i]));
+        }
+        if(_indexBufferSize[i])
+        {
+            glDeleteBuffers(1, &(_indexBufferObject[i]));
+        }
+    }
+}
+
+void GLBufferedNode::setGLBufferData(void *buf, GLuint bufSize, int slot)
 {
     // WebGL doesn't support client-side arrays, so generate a buffer and load the data first.
-    if(m_bufferSize[slot] < bufSize)
+    if(_bufferSize[slot] < bufSize)
     {
-        if(m_bufferObject[slot])
+        if(_bufferObject[slot])
         {
-            glDeleteBuffers(1, &(m_bufferObject[slot]));
+            glDeleteBuffers(1, &(_bufferObject[slot]));
         }
-        glGenBuffers(1, &(m_bufferObject[slot]));
-        m_bufferSize[slot] = bufSize;
+        glGenBuffers(1, &(_bufferObject[slot]));
+        _bufferSize[slot] = bufSize;
 
-        glBindBuffer(GL_ARRAY_BUFFER, m_bufferObject[slot]);
+        glBindBuffer(GL_ARRAY_BUFFER, _bufferObject[slot]);
         glBufferData(GL_ARRAY_BUFFER, bufSize, buf, GL_DYNAMIC_DRAW);
     }
     else
     {
-        glBindBuffer(GL_ARRAY_BUFFER, m_bufferObject[slot]);
+        glBindBuffer(GL_ARRAY_BUFFER, _bufferObject[slot]);
         glBufferSubData(GL_ARRAY_BUFFER, 0, bufSize, buf);
     }
 }
 
-void CCGLBufferedNode::setGLIndexData(void *buf, GLuint bufSize, int slot)
+void GLBufferedNode::setGLIndexData(void *buf, GLuint bufSize, int slot)
 {
     // WebGL doesn't support client-side arrays, so generate a buffer and load the data first.
-    if(m_indexBufferSize[slot] < bufSize)
+    if(_indexBufferSize[slot] < bufSize)
     {
-        if(m_indexBufferObject[slot])
+        if(_indexBufferObject[slot])
         {
-            glDeleteBuffers(1, &(m_indexBufferObject[slot]));
+            glDeleteBuffers(1, &(_indexBufferObject[slot]));
         }
-        glGenBuffers(1, &(m_indexBufferObject[slot]));
-        m_indexBufferSize[slot] = bufSize;
+        glGenBuffers(1, &(_indexBufferObject[slot]));
+        _indexBufferSize[slot] = bufSize;
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferObject[slot]);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBufferObject[slot]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, bufSize, buf, GL_DYNAMIC_DRAW);
     }
     else
     {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferObject[slot]);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBufferObject[slot]);
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, bufSize, buf);
     }
 }

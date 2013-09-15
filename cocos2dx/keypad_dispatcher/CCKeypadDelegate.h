@@ -35,39 +35,63 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCKeypadDelegate
+class CC_DLL KeypadDelegate
 {
 public:
-    // The back key clicked
+    /** The back key clicked
+    * @js NA
+    * @lua NA
+    */
+    
     virtual void keyBackClicked() {}
 
-    // The menu key clicked. only available on wophone & android
+    /** The menu key clicked. only available on wophone & android
+    * @js NA
+    * @lua NA
+    */
     virtual void keyMenuClicked() {};
 };
 
 /**
 @brief
-CCKeypadHandler
-Object than contains the CCKeypadDelegate.
+KeypadHandler
+Object than contains the KeypadDelegate.
 */
-class CC_DLL CCKeypadHandler : public CCObject
+class CC_DLL KeypadHandler : public Object
 {
 public:
-    virtual ~CCKeypadHandler(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~KeypadHandler(void);
 
-    /** delegate */
-    CCKeypadDelegate* getDelegate();
-    void setDelegate(CCKeypadDelegate *pDelegate);
+    /** delegate
+     * @js NA
+     * @lua NA
+     */
+    KeypadDelegate* getDelegate();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void setDelegate(KeypadDelegate *pDelegate);
 
-    /** initializes a CCKeypadHandler with a delegate */
-    virtual bool initWithDelegate(CCKeypadDelegate *pDelegate);
+    /** initializes a KeypadHandler with a delegate 
+     * @js NA
+     * @lua NA
+     */
+    virtual bool initWithDelegate(KeypadDelegate *pDelegate);
 
 public:
-    /** allocates a CCKeypadHandler with a delegate */
-    static CCKeypadHandler* handlerWithDelegate(CCKeypadDelegate *pDelegate);
+    /** allocates a KeypadHandler with a delegate 
+     * @js NA
+     * @lua NA
+     */
+    static KeypadHandler* handlerWithDelegate(KeypadDelegate *pDelegate);
 
 protected:
-    CCKeypadDelegate* m_pDelegate;
+    KeypadDelegate* _delegate;
 };
 
 // end of input group

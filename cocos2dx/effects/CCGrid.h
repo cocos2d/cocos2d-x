@@ -38,9 +38,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCTexture2D;
-class CCGrabber;
-class CCGLProgram;
+class Texture2D;
+class Grabber;
+class GLProgram;
 
 /**
  * @addtogroup effects
@@ -49,133 +49,185 @@ class CCGLProgram;
 
 /** Base class for other
 */
-class CC_DLL CCGridBase : public CCObject
+class CC_DLL GridBase : public Object
 {
 public:
-    virtual ~CCGridBase(void);
+    /** create one Grid */
+    static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
+    /** create one Grid */
+    static GridBase* create(const Size& gridSize);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~GridBase(void);
+
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool bFlipped);
+    bool initWithSize(const Size& gridSize);
 
     /** whether or not the grid is active */
-    inline bool isActive(void) { return m_bActive; }
+    inline bool isActive(void) { return _active; }
     void setActive(bool bActive);
 
     /** number of times that the grid will be reused */
-    inline int getReuseGrid(void) { return m_nReuseGrid; }
-    inline void setReuseGrid(int nReuseGrid) { m_nReuseGrid = nReuseGrid; }
+    inline int getReuseGrid(void) { return _reuseGrid; }
+    inline void setReuseGrid(int nReuseGrid) { _reuseGrid = nReuseGrid; }
 
     /** size of the grid */
-    inline const CCSize& getGridSize(void) { return m_sGridSize; }
-    inline void setGridSize(const CCSize& gridSize) { m_sGridSize = gridSize; }
+    inline const Size& getGridSize(void) { return _gridSize; }
+    inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
     /** pixels between the grids */
-    inline const CCPoint& getStep(void) { return m_obStep; }
-    inline void setStep(const CCPoint& step) { m_obStep = step; }
+    inline const Point& getStep(void) { return _step; }
+    inline void setStep(const Point& step) { _step = step; }
 
     /** is texture flipped */
-    inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
+    inline bool isTextureFlipped(void) { return _isTextureFlipped; }
     void setTextureFlipped(bool bFlipped);
 
-    bool initWithSize(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
-    bool initWithSize(const CCSize& gridSize);
-
     void beforeDraw(void);
-    void afterDraw(CCNode *pTarget);
+    void afterDraw(Node *target);
     virtual void blit(void);
     virtual void reuse(void);
     virtual void calculateVertexPoints(void);
-
-public:
-
-    /** create one Grid */
-    static CCGridBase* create(const CCSize& gridSize, CCTexture2D *texture, bool flipped);
-    /** create one Grid */
-    static CCGridBase* create(const CCSize& gridSize);
 
     void set2DProjection(void);
 
 protected:
-    bool m_bActive;
-    int  m_nReuseGrid;
-    CCSize m_sGridSize;
-    CCTexture2D *m_pTexture;
-    CCPoint m_obStep;
-    CCGrabber *m_pGrabber;
-    bool m_bIsTextureFlipped;
-    CCGLProgram* m_pShaderProgram;
-    ccDirectorProjection m_directorProjection;
+    bool _active;
+    int  _reuseGrid;
+    Size _gridSize;
+    Texture2D *_texture;
+    Point _step;
+    Grabber *_grabber;
+    bool _isTextureFlipped;
+    GLProgram* _shaderProgram;
+    Director::Projection _directorProjection;
 };
 
 /**
- CCGrid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
+ Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
  */
-class CC_DLL CCGrid3D : public CCGridBase
+class CC_DLL Grid3D : public GridBase
 #ifdef EMSCRIPTEN
-, public CCGLBufferedNode
+, public GLBufferedNode
 #endif // EMSCRIPTEN
 {
 public:
-    CCGrid3D();
-    ~CCGrid3D(void);
-
-    /** returns the vertex at a given position */
-    ccVertex3F vertex(const CCPoint& pos);
-    /** returns the original (non-transformed) vertex at a given position */
-    ccVertex3F originalVertex(const CCPoint& pos);
-    /** sets a new vertex at a given position */
-    void setVertex(const CCPoint& pos, const ccVertex3F& vertex);
-
-    virtual void blit(void);
-    virtual void reuse(void);
-    virtual void calculateVertexPoints(void);
-
-public:
     /** create one Grid */
-    static CCGrid3D* create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
     /** create one Grid */
-    static CCGrid3D* create(const CCSize& gridSize);
-    
+    static Grid3D* create(const Size& gridSize);
+    /**
+     * @js ctor
+     */
+    Grid3D();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~Grid3D(void);
+
+    /** returns the vertex at a given position 
+     * @js NA
+     * @lua NA
+     */
+    Vertex3F getVertex(const Point& pos) const;
+    /** @deprecated Use getVertex() instead 
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE Vertex3F vertex(const Point& pos) const { return getVertex(pos); }
+    /** returns the original (non-transformed) vertex at a given position
+     * @js NA
+     * @lua NA
+     */
+    Vertex3F getOriginalVertex(const Point& pos) const;
+    /** @deprecated Use getOriginalVertex() instead 
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE Vertex3F originalVertex(const Point& pos) const { return getOriginalVertex(pos); }
+
+    /** sets a new vertex at a given position 
+     * @js NA
+     * @lua NA
+     */
+    void setVertex(const Point& pos, const Vertex3F& vertex);
+
+    // Overrides
+    virtual void blit() override;
+    virtual void reuse() override;
+    virtual void calculateVertexPoints() override;
+
 protected:
-    GLvoid *m_pTexCoordinates;
-    GLvoid *m_pVertices;
-    GLvoid *m_pOriginalVertices;
-    GLushort *m_pIndices;
+    GLvoid *_texCoordinates;
+    GLvoid *_vertices;
+    GLvoid *_originalVertices;
+    GLushort *_indices;
 };
 
 /**
- CCTiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
+ TiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
  the tiles can be separated from the grid.
 */
-class CC_DLL CCTiledGrid3D : public CCGridBase
+class CC_DLL TiledGrid3D : public GridBase
 #ifdef EMSCRIPTEN
-, public CCGLBufferedNode
+, public GLBufferedNode
 #endif // EMSCRIPTEN
 {
 public:
-    CCTiledGrid3D();
-    ~CCTiledGrid3D(void);
-
-    /** returns the tile at the given position */
-    ccQuad3 tile(const CCPoint& pos);
-    /** returns the original tile (untransformed) at the given position */
-    ccQuad3 originalTile(const CCPoint& pos);
-    /** sets a new tile */
-    void setTile(const CCPoint& pos, const ccQuad3& coords);
-
-    virtual void blit(void);
-    virtual void reuse(void);
-    virtual void calculateVertexPoints(void);
-
-public:
-
     /** create one Grid */
-    static CCTiledGrid3D* create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
     /** create one Grid */
-    static CCTiledGrid3D* create(const CCSize& gridSize);
-    
+    static TiledGrid3D* create(const Size& gridSize);
+    /**
+     * @js ctor
+     */
+    TiledGrid3D();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~TiledGrid3D();
+
+    /** returns the tile at the given position 
+     * @js NA
+     * @lua NA
+     */
+    Quad3 getTile(const Point& pos) const;
+    /** returns the tile at the given position 
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Point& pos) const { return getTile(pos); }
+    /** returns the original tile (untransformed) at the given position 
+     * @js NA
+     * @lua NA
+     */
+    Quad3 getOriginalTile(const Point& pos) const;
+    /** returns the original tile (untransformed) at the given position 
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Point& pos) const { return getOriginalTile(pos); }
+
+    /** sets a new tile 
+     * @js NA
+     * @lua NA
+     */
+    void setTile(const Point& pos, const Quad3& coords);
+
+    // Overrides
+    virtual void blit() override;
+    virtual void reuse() override;
+    virtual void calculateVertexPoints() override;
+
 protected:
-    GLvoid *m_pTexCoordinates;
-    GLvoid *m_pVertices;
-    GLvoid *m_pOriginalVertices;
-    GLushort *m_pIndices;
+    GLvoid *_texCoordinates;
+    GLvoid *_vertices;
+    GLvoid *_originalVertices;
+    GLushort *_indices;
 };
 
 // end of effects group

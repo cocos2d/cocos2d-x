@@ -7,7 +7,7 @@
 local function RenderTextureSave()
     local ret = createTestLayer("Touch the screen",
                                 "Press 'Save Image' to create an snapshot of the render texture")
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
     local m_pTarget = nil
     local m_pBrush = nil
     local m_pTarget = nil
@@ -20,20 +20,20 @@ local function RenderTextureSave()
         local png = string.format("image-%d.png", counter)
         local jpg = string.format("image-%d.jpg", counter)
 
-        m_pTarget:saveToFile(png, kCCImageFormatPNG)
-        m_pTarget:saveToFile(jpg, kCCImageFormatJPEG)
+        m_pTarget:saveToFile(png, cc.IMAGE_FORMAT_PNG)
+        m_pTarget:saveToFile(jpg, cc.IMAGE_FORMAT_JPEG)
 
-        local pImage = m_pTarget:newCCImage()
+        local pImage = m_pTarget:newImage()
 
-        local tex = CCTextureCache:sharedTextureCache():addUIImage(pImage, png)
+        local tex = cc.TextureCache:getInstance():addUIImage(pImage, png)
 
         pImage:release()
 
-        local sprite = CCSprite:createWithTexture(tex)
+        local sprite = cc.Sprite:createWithTexture(tex)
 
         sprite:setScale(0.3)
         ret:addChild(sprite)
-        sprite:setPosition(ccp(40, 40))
+        sprite:setPosition(cc.p(40, 40))
         sprite:setRotation(counter * 3)
 
         cclog("Image saved %s and %s", png, jpg)
@@ -44,25 +44,25 @@ local function RenderTextureSave()
         if event == "exit" then
             m_pBrush:release()
             m_pTarget:release()
-            CCTextureCache:sharedTextureCache():removeUnusedTextures()
+            cc.TextureCache:getInstance():removeUnusedTextures()
         end
     end
 
     ret:registerScriptHandler(onNodeEvent)
 
     -- create a render texture, this is what we are going to draw into
-    m_pTarget = CCRenderTexture:create(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888)
+    m_pTarget = cc.RenderTexture:create(s.width, s.height, cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     m_pTarget:retain()
-    m_pTarget:setPosition(ccp(s.width / 2, s.height / 2))
+    m_pTarget:setPosition(cc.p(s.width / 2, s.height / 2))
 
-    -- note that the render texture is a CCNode, and contains a sprite of its texture for convience,
-    -- so we can just parent it to the scene like any other CCNode
+    -- note that the render texture is a cc.Node, and contains a sprite of its texture for convience,
+    -- so we can just parent it to the scene like any other cc.Node
     ret:addChild(m_pTarget, -1)
 
     -- create a brush image to draw into the texture with
-    m_pBrush = CCSprite:create("Images/fire.png")
+    m_pBrush = cc.Sprite:create("Images/fire.png")
     m_pBrush:retain()
-    m_pBrush:setColor(ccc3(255, 0, 0))
+    m_pBrush:setColor(cc.c3b(255, 0, 0))
     m_pBrush:setOpacity(20)
 
 
@@ -76,15 +76,15 @@ local function RenderTextureSave()
             local diffX = x - prev.x
             local diffY = y - prev.y
 
-            local startP = ccp(x, y)
-            local endP = ccp(prev.x, prev.y)
+            local startP = cc.p(x, y)
+            local endP = cc.p(prev.x, prev.y)
 
             -- begin drawing to the render texture
             m_pTarget:begin()
 
             -- for extra points, we'll draw this smoothly from the last position and vary the sprite's
             -- scale/rotation/offset
-            local distance = ccpDistance(startP, endP)
+            local distance = cc.pGetDistance(startP, endP)
             if distance > 1 then
                 local d = distance
                 local i = 0
@@ -92,13 +92,13 @@ local function RenderTextureSave()
                     local difx = endP.x - startP.x
                     local dify = endP.y - startP.y
                     local delta = i / distance
-                    m_pBrush:setPosition(ccp(startP.x + (difx * delta), startP.y + (dify * delta)))
+                    m_pBrush:setPosition(cc.p(startP.x + (difx * delta), startP.y + (dify * delta)))
                     m_pBrush:setRotation(math.random(0, 359))
                     local r = math.random(0, 49) / 50.0 + 0.25
                     m_pBrush:setScale(r)
 
-                    -- Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-                    m_pBrush:setColor(ccc3(math.random(0, 126) + 128, 255, 255))
+                    -- Use cc.RANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
+                    m_pBrush:setColor(cc.c3b(math.random(0, 126) + 128, 255, 255))
                     -- Call visit to draw the brush, don't call draw..
                     m_pBrush:visit()
                 end
@@ -115,18 +115,15 @@ local function RenderTextureSave()
     ret:setTouchEnabled(true)
     ret:registerScriptTouchHandler(onTouchEvent)
     -- Save Image menu
-    CCMenuItemFont:setFontSize(16)
-    local item1 = CCMenuItemFont:create("Save Image")
+    cc.MenuItemFont:setFontSize(16)
+    local item1 = cc.MenuItemFont:create("Save Image")
     item1:registerScriptTapHandler(saveImage)
-    local item2 = CCMenuItemFont:create("Clear")
+    local item2 = cc.MenuItemFont:create("Clear")
     item2:registerScriptTapHandler(clearImage)
-    local arr = CCArray:create()
-    arr:addObject(item1)
-    arr:addObject(item2)
-    local menu = CCMenu:createWithArray(arr)
+    local menu = cc.Menu:create(item1, item2)
     ret:addChild(menu)
     menu:alignItemsVertically()
-    menu:setPosition(ccp(VisibleRect:rightTop().x - 80, VisibleRect:rightTop().y - 30))
+    menu:setPosition(cc.p(VisibleRect:rightTop().x - 80, VisibleRect:rightTop().y - 30))
     return ret
 end
 
@@ -150,20 +147,20 @@ end
 --         *  B1: non-premulti sprite
 --         *  B2: non-premulti render
 --     */
---     local background = CCLayerColor:create(ccc4(200,200,200,255))
+--     local background = cc.LayerColor:create(cc.c4b(200,200,200,255))
 --     addChild(background)
 
---     local spr_premulti = CCSprite:create("Images/fire.png")
---     spr_premulti:setPosition(ccp(16,48))
+--     local spr_premulti = cc.Sprite:create("Images/fire.png")
+--     spr_premulti:setPosition(cc.p(16,48))
 
---     local spr_nonpremulti = CCSprite:create("Images/fire.png")
---     spr_nonpremulti:setPosition(ccp(16,16))
+--     local spr_nonpremulti = cc.Sprite:create("Images/fire.png")
+--     spr_nonpremulti:setPosition(cc.p(16,16))
 
 
 
 
 --     /* A2 & B2 setup */
---     local rend = CCRenderTexture:create(32, 64, kCCTexture2DPixelFormat_RGBA8888)
+--     local rend = cc.RenderTexture:create(32, 64, cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
 
 --     if (NULL == rend)
 
@@ -171,21 +168,21 @@ end
 -- end
 
 -- -- It's possible to modify the RenderTexture blending function by
--- --        [[rend sprite] setBlendFunc:(ccBlendFunc) GL_ONE, GL_ONE_MINUS_SRC_ALPHAend]
+-- --        [[rend sprite] setBlendFunc:(BlendFunc) GL_ONE, GL_ONE_MINUS_SRC_ALPHAend]
 
 -- rend:begin()
 -- spr_premulti:visit()
 -- spr_nonpremulti:visit()
 -- rend:end()
 
--- local s = CCDirector:sharedDirector():getWinSize()
+-- local s = cc.Director:getInstance():getWinSize()
 
 -- --/* A1: setup */
--- spr_premulti:setPosition(ccp(s.width/2-16, s.height/2+16))
+-- spr_premulti:setPosition(cc.p(s.width/2-16, s.height/2+16))
 -- --/* B1: setup */
--- spr_nonpremulti:setPosition(ccp(s.width/2-16, s.height/2-16))
+-- spr_nonpremulti:setPosition(cc.p(s.width/2-16, s.height/2-16))
 
--- rend:setPosition(ccp(s.width/2+16, s.height/2))
+-- rend:setPosition(cc.p(s.width/2+16, s.height/2))
 
 -- addChild(spr_nonpremulti)
 -- addChild(spr_premulti)
@@ -207,7 +204,7 @@ end
 --     local  pLayer = nextTestCase()
 --     addChild(pLayer)
 
---     CCDirector:sharedDirector():replaceScene(this)
+--     cc.Director:getInstance():replaceScene(this)
 -- end
 
 -- --/**
@@ -217,35 +214,35 @@ end
 -- local function RenderTextureZbuffer()
 
 --     this:setTouchEnabled(true)
---     local size = CCDirector:sharedDirector():getWinSize()
---     local label = CCLabelTTF:create("vertexZ = 50", "Marker Felt", 64)
---     label:setPosition(ccp(size.width / 2, size.height * 0.25))
+--     local size = cc.Director:getInstance():getWinSize()
+--     local label = cc.LabelTTF:create("vertexZ = 50", "Marker Felt", 64)
+--     label:setPosition(cc.p(size.width / 2, size.height * 0.25))
 --     this:addChild(label)
 
---     local label2 = CCLabelTTF:create("vertexZ = 0", "Marker Felt", 64)
---     label2:setPosition(ccp(size.width / 2, size.height * 0.5))
+--     local label2 = cc.LabelTTF:create("vertexZ = 0", "Marker Felt", 64)
+--     label2:setPosition(cc.p(size.width / 2, size.height * 0.5))
 --     this:addChild(label2)
 
---     local label3 = CCLabelTTF:create("vertexZ = -50", "Marker Felt", 64)
---     label3:setPosition(ccp(size.width / 2, size.height * 0.75))
+--     local label3 = cc.LabelTTF:create("vertexZ = -50", "Marker Felt", 64)
+--     label3:setPosition(cc.p(size.width / 2, size.height * 0.75))
 --     this:addChild(label3)
 
 --     label:setVertexZ(50)
 --     label2:setVertexZ(0)
 --     label3:setVertexZ(-50)
 
---     CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("Images/bugs/circle.plist")
---     mgr = CCSpriteBatchNode:create("Images/bugs/circle.png", 9)
+--     cc.SpriteFrameCache:getInstance():addSpriteFramesWithFile("Images/bugs/circle.plist")
+--     mgr = cc.SpriteBatchNode:create("Images/bugs/circle.png", 9)
 --     this:addChild(mgr)
---     sp1 = CCSprite:createWithSpriteFrameName("circle.png")
---     sp2 = CCSprite:createWithSpriteFrameName("circle.png")
---     sp3 = CCSprite:createWithSpriteFrameName("circle.png")
---     sp4 = CCSprite:createWithSpriteFrameName("circle.png")
---     sp5 = CCSprite:createWithSpriteFrameName("circle.png")
---     sp6 = CCSprite:createWithSpriteFrameName("circle.png")
---     sp7 = CCSprite:createWithSpriteFrameName("circle.png")
---     sp8 = CCSprite:createWithSpriteFrameName("circle.png")
---     sp9 = CCSprite:createWithSpriteFrameName("circle.png")
+--     sp1 = cc.Sprite:createWithSpriteFrameName("circle.png")
+--     sp2 = cc.Sprite:createWithSpriteFrameName("circle.png")
+--     sp3 = cc.Sprite:createWithSpriteFrameName("circle.png")
+--     sp4 = cc.Sprite:createWithSpriteFrameName("circle.png")
+--     sp5 = cc.Sprite:createWithSpriteFrameName("circle.png")
+--     sp6 = cc.Sprite:createWithSpriteFrameName("circle.png")
+--     sp7 = cc.Sprite:createWithSpriteFrameName("circle.png")
+--     sp8 = cc.Sprite:createWithSpriteFrameName("circle.png")
+--     sp9 = cc.Sprite:createWithSpriteFrameName("circle.png")
 
 --     mgr:addChild(sp1, 9)
 --     mgr:addChild(sp2, 8)
@@ -268,7 +265,7 @@ end
 --     sp9:setVertexZ(-400)
 
 --     sp9:setScale(2)
---     sp9:setColor(ccYELLOW)
+--     sp9:setColor(cc.c3b::YELLOW)
 -- end
 
 -- local function title()
@@ -281,13 +278,13 @@ end
 --     return "Touch screen. It should be green"
 -- end
 
--- local function ccTouchesBegan(cocos2d:CCSet *touches, cocos2d:CCEvent *event)
+-- local function ccTouchesBegan(cocos2d:cc.Set *touches, cocos2d:cc.Event *event)
 
---     CCSetIterator iter
---     CCTouch *touch
+--     cc.SetIterator iter
+--     cc.Touch *touch
 --     for (iter = touches:begin() iter != touches:end() ++iter)
 
--- touch = (CCTouch *)(*iter)
+-- touch = (cc.Touch *)(*iter)
 -- local location = touch:getLocation()
 
 -- sp1:setPosition(location)
@@ -302,13 +299,13 @@ end
 -- end
 -- end
 
--- local function ccTouchesMoved(CCSet* touches, CCEvent* event)
+-- local function ccTouchesMoved(cc.Set* touches, cc.Event* event)
 
---     CCSetIterator iter
---     CCTouch *touch
+--     cc.SetIterator iter
+--     cc.Touch *touch
 --     for (iter = touches:begin() iter != touches:end() ++iter)
 
--- touch = (CCTouch *)(*iter)
+-- touch = (cc.Touch *)(*iter)
 -- local location = touch:getLocation()
 
 -- sp1:setPosition(location)
@@ -323,35 +320,35 @@ end
 -- end
 -- end
 
--- local function ccTouchesEnded(CCSet* touches, CCEvent* event)
+-- local function ccTouchesEnded(cc.Set* touches, cc.Event* event)
 
 --     this:renderScreenShot()
 -- end
 
 -- local function renderScreenShot()
 
---     local texture = CCRenderTexture:create(512, 512)
+--     local texture = cc.RenderTexture:create(512, 512)
 --     if (NULL == texture)
 
 --     return
 -- end
--- texture:setAnchorPoint(ccp(0, 0))
+-- texture:setAnchorPoint(cc.p(0, 0))
 -- texture:begin()
 
 -- this:visit()
 
 -- texture:end()
 
--- local sprite = CCSprite:createWithTexture(texture:getSprite():getTexture())
+-- local sprite = cc.Sprite:createWithTexture(texture:getSprite():getTexture())
 
--- sprite:setPosition(ccp(256, 256))
+-- sprite:setPosition(cc.p(256, 256))
 -- sprite:setOpacity(182)
 -- sprite:setFlipY(1)
 -- this:addChild(sprite, 999999)
--- sprite:setColor(ccGREEN)
+-- sprite:setColor(cc.c3b::GREEN)
 
--- sprite:runAction(CCSequence:create(CCFadeTo:create(2, 0),
---                                    CCHide:create(),
+-- sprite:runAction(cc.Sequence:create(cc.FadeTo:create(2, 0),
+--                                    cc.Hide:create(),
 --                                    NULL))
 -- end
 
@@ -359,12 +356,12 @@ end
 
 -- local function RenderTextureTestDepthStencil()
 
---     local s = CCDirector:sharedDirector():getWinSize()
+--     local s = cc.Director:getInstance():getWinSize()
 
---     local sprite = CCSprite:create("Images/fire.png")
---     sprite:setPosition(ccp(s.width * 0.25, 0))
+--     local sprite = cc.Sprite:create("Images/fire.png")
+--     sprite:setPosition(cc.p(s.width * 0.25, 0))
 --     sprite:setScale(10)
---     local rend = CCRenderTexture:create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444, GL_DEPTH24_STENCIL8)
+--     local rend = cc.RenderTexture:create(s.width, s.height, kcc.Texture2DPixelFormat_RGBA4444, GL_DEPTH24_STENCIL8)
 
 --     glStencilMask(0xFF)
 --     rend:beginWithClear(0, 0, 0, 0, 0, 0)
@@ -377,7 +374,7 @@ end
 --     sprite:visit()
 
 --     --! move sprite half width and height, and draw only where not marked
---     sprite:setPosition(ccpAdd(sprite:getPosition(), ccpMult(ccp(sprite:getContentSize().width * sprite:getScale(), sprite:getContentSize().height * sprite:getScale()), 0.5)))
+--     sprite:setPosition(cc.p__add(sprite:getPosition(), cc.p__mul(cc.p(sprite:getContentSize().width * sprite:getScale(), sprite:getContentSize().height * sprite:getScale()), 0.5)))
 --     glStencilFunc(GL_NOTEQUAL, 1, 0xFF)
 --     glColorMask(1, 1, 1, 1)
 --     sprite:visit()
@@ -386,7 +383,7 @@ end
 
 -- glDisable(GL_STENCIL_TEST)
 
--- rend:setPosition(ccp(s.width * 0.5, s.height * 0.5))
+-- rend:setPosition(cc.p(s.width * 0.5, s.height * 0.5))
 
 -- this:addChild(rend)
 -- end
@@ -416,29 +413,29 @@ end
 --         *  B1: non-premulti sprite
 --         *  B2: non-premulti render
 --     */
---     local background = CCLayerColor:create(ccc4(40,40,40,255))
+--     local background = cc.LayerColor:create(cc.c4b(40,40,40,255))
 --     addChild(background)
 
 --     -- sprite 1
---     sprite1 = CCSprite:create("Images/fire.png")
+--     sprite1 = cc.Sprite:create("Images/fire.png")
 
 --     -- sprite 2
---     sprite2 = CCSprite:create("Images/fire_rgba8888.pvr")
+--     sprite2 = cc.Sprite:create("Images/fire_rgba8888.pvr")
 
---     local s = CCDirector:sharedDirector():getWinSize()
+--     local s = cc.Director:getInstance():getWinSize()
 
 --     /* Create the render texture */
---     local renderTexture = CCRenderTexture:create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444)
+--     local renderTexture = cc.RenderTexture:create(s.width, s.height, kcc.Texture2DPixelFormat_RGBA4444)
 --     this:renderTexture = renderTexture
 
---     renderTexture:setPosition(ccp(s.width/2, s.height/2))
---     --          [renderTexture setPosition:ccp(s.width, s.height)]
+--     renderTexture:setPosition(cc.p(s.width/2, s.height/2))
+--     --          [renderTexture setPosition:cc.p(s.width, s.height)]
 --     --          renderTexture.scale = 2
 
 --     /* add the sprites to the render texture */
 --     renderTexture:addChild(sprite1)
 --     renderTexture:addChild(sprite2)
---     renderTexture:setClearColor(ccc4f(0, 0, 0, 0))
+--     renderTexture:setClearColor(cc.c4f(0, 0, 0, 0))
 --     renderTexture:setClearFlags(GL_COLOR_BUFFER_BIT)
 
 --     /* add the render texture to the scene */
@@ -449,14 +446,14 @@ end
 --     scheduleUpdate()
 
 --     -- Toggle clear on / off
---     local item = CCMenuItemFont:create("Clear On/Off", this, menu_selector(RenderTextureTargetNode:touched))
---     local menu = CCMenu:create(item, NULL)
+--     local item = cc.MenuItemFont:create("Clear On/Off", this, menu_selector(RenderTextureTargetNode:touched))
+--     local menu = cc.Menu:create(item, NULL)
 --     addChild(menu)
 
---     menu:setPosition(ccp(s.width/2, s.height/2))
+--     menu:setPosition(cc.p(s.width/2, s.height/2))
 -- end
 
--- local function touched(CCObject* sender)
+-- local function touched(cc.Object* sender)
 
 --     if (renderTexture:getClearFlags() == 0)
 
@@ -465,7 +462,7 @@ end
 -- else
 
 --     renderTexture:setClearFlags(0)
---     renderTexture:setClearColor(ccc4f( CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1))
+--     renderTexture:setClearColor(cc.c4f( cc.RANDOM_0_1(), cc.RANDOM_0_1(), cc.RANDOM_0_1(), 1))
 --     end
 -- end
 
@@ -473,8 +470,8 @@ end
 
 --     static float time = 0
 --     float r = 80
---     sprite1:setPosition(ccp(cosf(time * 2) * r, sinf(time * 2) * r))
---     sprite2:setPosition(ccp(sinf(time * 2) * r, cosf(time * 2) * r))
+--     sprite1:setPosition(cc.p(cosf(time * 2) * r, sinf(time * 2) * r))
+--     sprite2:setPosition(cc.p(sinf(time * 2) * r, cosf(time * 2) * r))
 
 --     time += dt
 -- end
@@ -493,7 +490,7 @@ end
 
 -- local function SimpleSprite() : rt(NULL) {}
 
---     local function SimpleSprite* SpriteRenderTextureBug:SimpleSprite:create(const char* filename, const CCRect &rect)
+--     local function SimpleSprite* SpriteRenderTextureBug:SimpleSprite:create(const char* filename, const cc.rect &rect)
 
 --         SimpleSprite *sprite = new SimpleSprite()
 --         if (sprite && sprite:initWithFile(filename, rect))
@@ -502,7 +499,7 @@ end
 --     end
 --     else
 
---         CC_SAFE_DELETE(sprite)
+--         cc._SAFE_DELETE(sprite)
 --         end
 
 -- return sprite
@@ -512,16 +509,16 @@ end
 
 --     if (rt == NULL)
 
---     local s = CCDirector:sharedDirector():getWinSize()
---     rt = new CCRenderTexture()
---     rt:initWithWidthAndHeight(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888)
+--     local s = cc.Director:getInstance():getWinSize()
+--     rt = new cc.RenderTexture()
+--     rt:initWithWidthAndHeight(s.width, s.height, cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
 -- end
 -- rt:beginWithClear(0.0, 0.0, 0.0, 1.0)
 -- rt:end()
 
--- CC_NODE_DRAW_SETUP()
+-- cc._NODE_DRAW_SETUP()
 
--- ccBlendFunc blend = getBlendFunc()
+-- BlendFunc blend = getBlendFunc()
 -- ccGLBlendFunc(blend.src, blend.dst)
 
 -- ccGLBindTexture2D(getTexture():getName())
@@ -530,22 +527,22 @@ end
 -- -- Attributes
 -- --
 
--- ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex)
+-- ccGLEnableVertexAttribs(kcc.VertexAttribFlag_PosColorTex)
 
 -- #define kQuadSize sizeof(m_sQuad.bl)
 -- long offset = (long)&m_sQuad
 
 -- -- vertex
--- int diff = offsetof( ccV3F_C4B_T2F, vertices)
--- glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff))
+-- int diff = offsetof( V3F_C4B_T2F, vertices)
+-- glVertexAttribPointer(kcc.VertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff))
 
 -- -- texCoods
--- diff = offsetof( ccV3F_C4B_T2F, texCoords)
--- glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff))
+-- diff = offsetof( V3F_C4B_T2F, texCoords)
+-- glVertexAttribPointer(kcc.VertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff))
 
 -- -- color
--- diff = offsetof( ccV3F_C4B_T2F, colors)
--- glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff))
+-- diff = offsetof( V3F_C4B_T2F, colors)
+-- glVertexAttribPointer(kcc.VertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff))
 
 -- glDrawArrays(GL_TRIANGLE_STRIP, 0, 4)
 -- end
@@ -554,51 +551,51 @@ end
 
 --     setTouchEnabled(true)
 
---     local s = CCDirector:sharedDirector():getWinSize()
---     addNewSpriteWithCoords(ccp(s.width/2, s.height/2))
+--     local s = cc.Director:getInstance():getWinSize()
+--     addNewSpriteWithCoords(cc.p(s.width/2, s.height/2))
 -- end
 
--- local function SimpleSprite* SpriteRenderTextureBug:addNewSpriteWithCoords(const CCPoint& p)
+-- local function SimpleSprite* SpriteRenderTextureBug:addNewSpriteWithCoords(const cc.p& p)
 
---     int idx = CCRANDOM_0_1() * 1400 / 100
+--     int idx = cc.RANDOM_0_1() * 1400 / 100
 --     int x = (idx%5) * 85
 --     int y = (idx/5) * 121
 
 --     SpriteRenderTextureBug:SimpleSprite *sprite = SpriteRenderTextureBug:SimpleSprite:create("Images/grossini_dance_atlas.png",
---                                                                                              CCRectMake(x,y,85,121))
+--                                                                                              cc.rect(x,y,85,121))
 --     addChild(sprite)
 
 --     sprite:setPosition(p)
 
 --     local action = NULL
---     float rd = CCRANDOM_0_1()
+--     float rd = cc.RANDOM_0_1()
 
 --     if (rd < 0.20)
---     action = CCScaleBy:create(3, 2)
+--     action = cc.ScaleBy:create(3, 2)
 --     else if (rd < 0.40)
---         action = CCRotateBy:create(3, 360)
+--         action = cc.RotateBy:create(3, 360)
 --         else if (rd < 0.60)
---             action = CCBlink:create(1, 3)
+--             action = cc.Blink:create(1, 3)
 --             else if (rd < 0.8 )
---                 action = CCTintBy:create(2, 0, -255, -255)
+--                 action = cc.TintBy:create(2, 0, -255, -255)
 --                 else
---                     action = CCFadeOut:create(2)
+--                     action = cc.FadeOut:create(2)
 
 --                     local action_back = action:reverse()
---                     local seq = CCSequence:create(action, action_back, NULL)
+--                     local seq = cc.Sequence:create(action, action_back, NULL)
 
---                     sprite:runAction(CCRepeatForever:create(seq))
+--                     sprite:runAction(cc.RepeatForever:create(seq))
 
 --                     --return sprite
 --                     return NULL
 --                     end
 
--- local function ccTouchesEnded(CCSet* touches, CCEvent* event)
+-- local function ccTouchesEnded(cc.Set* touches, cc.Event* event)
 
---     CCSetIterator iter = touches:begin()
+--     cc.SetIterator iter = touches:begin()
 --     for( iter != touches:end() ++iter)
 
--- local location = ((CCTouch*)(*iter)):getLocation()
+-- local location = ((cc.Touch*)(*iter)):getLocation()
 -- addNewSpriteWithCoords(location)
 -- end
 -- end
@@ -616,7 +613,7 @@ end
 function RenderTextureTestMain()
     cclog("RenderTextureTestMain")
     Helper.index = 1
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     Helper.createFunctionTable = {
 
         RenderTextureSave,

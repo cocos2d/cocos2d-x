@@ -27,7 +27,6 @@
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "ccTypes.h"
-#include "ccTypeInfo.h"
 #include <string>
 #include <vector>
 
@@ -39,16 +38,16 @@ NS_CC_BEGIN
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL CCFileUtilsLinux : public CCFileUtils
+class CC_DLL FileUtilsLinux : public FileUtils
 {
-    friend class CCFileUtils;
-    CCFileUtilsLinux();
-    std::string m_writablePath;
+    friend class FileUtils;
+    FileUtilsLinux();
+    std::string _writablePath;
 public:
     /* override funtions */
     bool init();
-    virtual std::string getWritablePath();
-    virtual bool isFileExist(const std::string& strFilePath);
+    virtual std::string getWritablePath() const;
+    virtual bool isFileExist(const std::string& strFilePath) const;
 };
 
 // end of platform group

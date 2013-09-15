@@ -2,8 +2,6 @@ enum {
     kCCParticleDurationInfinity = -1,
     kCCParticleStartSizeEqualToEndSize = -1,
     kCCParticleStartRadiusEqualToEndRadius = -1,
-    kParticleStartSizeEqualToEndSize = kCCParticleStartSizeEqualToEndSize,
-    kParticleDurationInfinity = kCCParticleDurationInfinity,
 };
 
 enum {
@@ -17,10 +15,6 @@ typedef enum {
     kCCPositionTypeGrouped,
 }tCCPositionType;
 
-enum {
-    kPositionTypeFree = kCCPositionTypeFree,
-    kPositionTypeGrouped = kCCPositionTypeGrouped,
-};
 
 class CCParticleSystem : public CCNode
 {
@@ -87,14 +81,14 @@ class CCParticleSystem : public CCNode
     float getEndSizeVar();
 	void  setEndSizeVar(float size);
 
-	void  setStartColor(const ccColor4F var);
-    const ccColor4F & getStartColor();
-	void  setStartColorVar(const ccColor4F var);
-    const ccColor4F & getStartColorVar();
-	void  setEndColor(const ccColor4F var);
-    const ccColor4F & getEndColor();
-	void  setEndColorVar(const ccColor4F var);
-    const ccColor4F & getEndColorVar();
+	void  setStartColor(const Color4F var);
+    const Color4F & getStartColor();
+	void  setStartColorVar(const Color4F var);
+    const Color4F & getStartColorVar();
+	void  setEndColor(const Color4F var);
+    const Color4F & getEndColor();
+	void  setEndColorVar(const Color4F var);
+    const Color4F & getEndColorVar();
 	void  setStartSpin(float var);
     float getStartSpin();
 	void  setStartSpinVar(float var);
@@ -115,8 +109,8 @@ class CCParticleSystem : public CCNode
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D* var);
 
-    ccBlendFunc getBlendFunc(void);
-    void setBlendFunc(ccBlendFunc var);
+    BlendFunc getBlendFunc(void);
+    void setBlendFunc(BlendFunc var);
 
     void setScale(float s);
     void setRotation(float newRotation);

@@ -32,22 +32,57 @@ NS_CC_BEGIN
 
 
 
-class CC_DLL CCEGLView : public CCEGLViewProtocol
+class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
-    CCEGLView();
-   ~CCEGLView();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
+    EGLView();
+    /**
+     * @js NA
+     * @lua NA
+     */
+   ~EGLView();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool    isOpenGLReady();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool    setContentScaleFactor(float contentScaleFactor);
     
     // keep compatible
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void    end();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void    swapBuffers();
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setIMEKeyboardState(bool bOpen);
-    
-    static CCEGLView* sharedOpenGLView();
+
+    /** returns the singleton
+     * @js NA
+     */
+    static EGLView* getInstance();
+
+    /** @deprecated Use getInstance() instead 
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
 
 };
 

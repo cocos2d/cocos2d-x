@@ -1,58 +1,85 @@
+/****************************************************************************
+ Copyright (c) 2010-2012 cocos2d-x.org
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "CCString.h"
 #include "platform/CCFileUtils.h"
 #include "ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "CCArray.h"
 
 NS_CC_BEGIN
 
 #define kMaxStringLen (1024*100)
 
-CCString::CCString()
-    :m_sString("")
+String::String()
+    :_string("")
 {}
 
-CCString::CCString(const char * str)
-    :m_sString(str)
+String::String(const char * str)
+    :_string(str)
 {}
 
-CCString::CCString(const std::string& str)
-    :m_sString(str)
+String::String(const std::string& str)
+    :_string(str)
 {}
 
-CCString::CCString(const CCString& str)
-    :m_sString(str.getCString())
+String::String(const String& str)
+    :_string(str.getCString())
 {}
 
-CCString::~CCString()
-{ 
-    m_sString.clear();
+String::~String()
+{
+    CCLOGINFO("deallocing String: %p", this);
+
+    _string.clear();
 }
 
-CCString& CCString::operator= (const CCString& other)
+String& String::operator= (const String& other)
 {
-    m_sString = other.m_sString;
+    _string = other._string;
     return *this;
 }
 
-bool CCString::initWithFormatAndValist(const char* format, va_list ap)
+bool String::initWithFormatAndValist(const char* format, va_list ap)
 {
     bool bRet = false;
     char* pBuf = (char*)malloc(kMaxStringLen);
     if (pBuf != NULL)
     {
         vsnprintf(pBuf, kMaxStringLen, format, ap);
-        m_sString = pBuf;
+        _string = pBuf;
         free(pBuf);
         bRet = true;
     }
     return bRet;
 }
 
-bool CCString::initWithFormat(const char* format, ...)
+bool String::initWithFormat(const char* format, ...)
 {
     bool bRet = false;
-    m_sString.clear();
+    _string.clear();
 
     va_list ap;
     va_start(ap, format);
@@ -64,85 +91,122 @@ bool CCString::initWithFormat(const char* format, ...)
     return bRet;
 }
 
-int CCString::intValue() const
+int String::intValue() const
 {
     if (length() == 0)
     {
         return 0;
     }
-    return atoi(m_sString.c_str());
+    return atoi(_string.c_str());
 }
 
-unsigned int CCString::uintValue() const
+unsigned int String::uintValue() const
 {
     if (length() == 0)
     {
         return 0;
     }
-    return (unsigned int)atoi(m_sString.c_str());
+    return (unsigned int)atoi(_string.c_str());
 }
 
-float CCString::floatValue() const
+float String::floatValue() const
 {
     if (length() == 0)
     {
         return 0.0f;
     }
-    return (float)atof(m_sString.c_str());
+    return (float)atof(_string.c_str());
 }
 
-double CCString::doubleValue() const
+double String::doubleValue() const
 {
     if (length() == 0)
     {
         return 0.0;
     }
-    return atof(m_sString.c_str());
+    return atof(_string.c_str());
 }
 
-bool CCString::boolValue() const
+bool String::boolValue() const
 {
     if (length() == 0)
     {
         return false;
     }
 
-    if (0 == strcmp(m_sString.c_str(), "0") || 0 == strcmp(m_sString.c_str(), "false"))
+    if (0 == strcmp(_string.c_str(), "0") || 0 == strcmp(_string.c_str(), "false"))
     {
         return false;
     }
     return true;
 }
 
-const char* CCString::getCString() const
+const char* String::getCString() const
 {
-    return m_sString.c_str();
+    return _string.c_str();
 }
 
-unsigned int CCString::length() const
+unsigned int String::length() const
 {
-    return m_sString.length();
+    return _string.length();
 }
 
-int CCString::compare(const char * pStr) const
+int String::compare(const char * pStr) const
 {
     return strcmp(getCString(), pStr);
 }
 
-CCObject* CCString::copyWithZone(CCZone* pZone)
+void String::append(const std::string& str)
 {
-    CCAssert(pZone == NULL, "CCString should not be inherited.");
-    CCString* pStr = new CCString(m_sString.c_str());
-    return pStr;
+    _string.append(str);
 }
 
-bool CCString::isEqual(const CCObject* pObject)
+void String::appendWithFormat(const char* format, ...)
+{
+    va_list ap;
+    va_start(ap, format);
+    
+    char* pBuf = (char*)malloc(kMaxStringLen);
+    if (pBuf != NULL)
+    {
+        vsnprintf(pBuf, kMaxStringLen, format, ap);
+        _string.append(pBuf);
+        free(pBuf);
+    }
+    
+    va_end(ap);
+    
+}
+
+Array* String::componentsSeparatedByString(const char *delimiter)
+{
+    Array* result = Array::create();
+    
+    int cutAt;
+    while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
+    {
+        if(cutAt > 0)
+        {
+            result->addObject(String::create(_string.substr(0, cutAt)));
+        }
+        _string = _string.substr(cutAt + 1);
+    }
+    
+    if(_string.length() > 0)
+    {
+        result->addObject(String::create(_string));
+    }
+    
+    return result;
+}
+
+bool String::isEqual(const Object* pObject)
 {
     bool bRet = false;
-    const CCString* pStr = dynamic_cast<const CCString*>(pObject);
+    const String* pStr = dynamic_cast<const String*>(pObject);
     if (pStr != NULL)
     {
-        if (0 == m_sString.compare(pStr->m_sString))
+        if (0 == _string.compare(pStr->_string))
         {
             bRet = true;
         }
@@ -150,16 +214,16 @@ bool CCString::isEqual(const CCObject* pObject)
     return bRet;
 }
 
-CCString* CCString::create(const std::string& str)
+String* String::create(const std::string& str)
 {
-    CCString* pRet = new CCString(str);
+    String* pRet = new String(str);
     pRet->autorelease();
     return pRet;
 }
 
-CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLen)
+String* String::createWithData(const unsigned char* pData, unsigned long nLen)
 {
-    CCString* pRet = NULL;
+    String* pRet = NULL;
     if (pData != NULL)
     {
         char* pStr = (char*)malloc(nLen+1);
@@ -171,16 +235,16 @@ CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLe
                 memcpy(pStr, pData, nLen);
             }
             
-            pRet = CCString::create(pStr);
+            pRet = String::create(pStr);
             free(pStr);
         }
     }
     return pRet;
 }
 
-CCString* CCString::createWithFormat(const char* format, ...)
+String* String::createWithFormat(const char* format, ...)
 {
-    CCString* pRet = CCString::create("");
+    String* pRet = String::create("");
     va_list ap;
     va_start(ap, format);
     pRet->initWithFormatAndValist(format, ap);
@@ -189,20 +253,25 @@ CCString* CCString::createWithFormat(const char* format, ...)
     return pRet;
 }
 
-CCString* CCString::createWithContentsOfFile(const char* pszFileName)
+String* String::createWithContentsOfFile(const char* filename)
 {
     unsigned long size = 0;
     unsigned char* pData = 0;
-    CCString* pRet = NULL;
-    pData = CCFileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
-    pRet = CCString::createWithData(pData, size);
+    String* pRet = NULL;
+    pData = FileUtils::getInstance()->getFileData(filename, "rb", &size);
+    pRet = String::createWithData(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;
 }
 
-void CCString::acceptVisitor(CCDataVisitor &visitor)
+void String::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
+}
+
+String* String::clone() const
+{
+    return String::create(_string);
 }
 
 NS_CC_END

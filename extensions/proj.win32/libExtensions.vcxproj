@@ -19,7 +19,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
@@ -65,7 +64,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -73,6 +72,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -88,33 +88,11 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
-    <ClCompile Include="..\CCArmature\animation\CCArmatureAnimation.cpp" />
-    <ClCompile Include="..\CCArmature\animation\CCProcessBase.cpp" />
-    <ClCompile Include="..\CCArmature\animation\CCTween.cpp" />
-    <ClCompile Include="..\CCArmature\CCArmature.cpp" />
-    <ClCompile Include="..\CCArmature\CCBone.cpp" />
-    <ClCompile Include="..\CCArmature\datas\CCDatas.cpp" />
-    <ClCompile Include="..\CCArmature\display\CCBatchNode.cpp" />
-    <ClCompile Include="..\CCArmature\display\CCDecorativeDisplay.cpp" />
-    <ClCompile Include="..\CCArmature\display\CCDisplayFactory.cpp" />
-    <ClCompile Include="..\CCArmature\display\CCDisplayManager.cpp" />
-    <ClCompile Include="..\CCArmature\display\CCSkin.cpp" />
-    <ClCompile Include="..\CCArmature\external_tool\CCTexture2DMutable.cpp" />
-    <ClCompile Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.cpp" />
-    <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_reader.cpp" />
-    <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_value.cpp" />
-    <ClCompile Include="..\CCArmature\external_tool\Json\lib_json\json_writer.cpp" />
-    <ClCompile Include="..\CCArmature\physics\CCColliderDetector.cpp" />
-    <ClCompile Include="..\CCArmature\utils\CCArmatureDataManager.cpp" />
-    <ClCompile Include="..\CCArmature\utils\CCDataReaderHelper.cpp" />
-    <ClCompile Include="..\CCArmature\utils\CCSpriteFrameCacheHelper.cpp" />
-    <ClCompile Include="..\CCArmature\utils\CCTransformHelp.cpp" />
-    <ClCompile Include="..\CCArmature\utils\CCTweenFunction.cpp" />
-    <ClCompile Include="..\CCArmature\utils\CCUtilMath.cpp" />
     <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCBKeyframe.cpp" />
@@ -124,7 +102,6 @@
     <ClCompile Include="..\CCBReader\CCBValue.cpp" />
     <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCControlLoader.cpp" />
-    <ClCompile Include="..\CCBReader\CCData.cpp" />
     <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp" />
@@ -139,10 +116,37 @@
     <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
-    <ClCompile Include="..\Components\CCComAttribute.cpp" />
-    <ClCompile Include="..\Components\CCComAudio.cpp" />
-    <ClCompile Include="..\Components\CCComController.cpp" />
-    <ClCompile Include="..\Components\CCInputDelegate.cpp" />
+    <ClCompile Include="..\CCDeprecated-ext.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\animation\CCArmatureAnimation.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\animation\CCProcessBase.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\animation\CCTween.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\CCArmature.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\CCBone.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\datas\CCDatas.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCBatchNode.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCDecorativeDisplay.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCDisplayFactory.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCDisplayManager.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCSkin.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\physics\CCColliderDetector.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDefine.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCSpriteFrameCacheHelper.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCTransformHelp.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCTweenFunction.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCUtilMath.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCComAttribute.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCComAudio.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCComController.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCComRender.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCInputDelegate.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\CSContentJsonDictionary.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\lib_json\json_value.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp" />
+    <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
@@ -163,6 +167,7 @@
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp" />
     <ClCompile Include="..\LocalStorage\LocalStorage.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
+    <ClCompile Include="..\network\SocketIO.cpp" />
     <ClCompile Include="..\network\Websocket.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
@@ -191,39 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h" />
-    <ClInclude Include="..\CCArmature\animation\CCArmatureAnimation.h" />
-    <ClInclude Include="..\CCArmature\animation\CCProcessBase.h" />
-    <ClInclude Include="..\CCArmature\animation\CCTween.h" />
-    <ClInclude Include="..\CCArmature\CCArmature.h" />
-    <ClInclude Include="..\CCArmature\CCBone.h" />
-    <ClInclude Include="..\CCArmature\datas\CCDatas.h" />
-    <ClInclude Include="..\CCArmature\display\CCBatchNode.h" />
-    <ClInclude Include="..\CCArmature\display\CCDecorativeDisplay.h" />
-    <ClInclude Include="..\CCArmature\display\CCDisplayFactory.h" />
-    <ClInclude Include="..\CCArmature\display\CCDisplayManager.h" />
-    <ClInclude Include="..\CCArmature\display\CCSkin.h" />
-    <ClInclude Include="..\CCArmature\external_tool\CCTexture2DMutable.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\autolink.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\config.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\features.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\forwards.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\json_batchallocator.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\json_lib.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\json_tool.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\reader.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\value.h" />
-    <ClInclude Include="..\CCArmature\external_tool\Json\lib_json\writer.h" />
-    <ClInclude Include="..\CCArmature\external_tool\sigslot.h" />
-    <ClInclude Include="..\CCArmature\physics\CCColliderDetector.h" />
-    <ClInclude Include="..\CCArmature\utils\CCArmatureDataManager.h" />
-    <ClInclude Include="..\CCArmature\utils\CCArmatureDefine.h" />
-    <ClInclude Include="..\CCArmature\utils\CCConstValue.h" />
-    <ClInclude Include="..\CCArmature\utils\CCDataReaderHelper.h" />
-    <ClInclude Include="..\CCArmature\utils\CCSpriteFrameCacheHelper.h" />
-    <ClInclude Include="..\CCArmature\utils\CCTransformHelp.h" />
-    <ClInclude Include="..\CCArmature\utils\CCTweenFunction.h" />
-    <ClInclude Include="..\CCArmature\utils\CCUtilMath.h" />
     <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
     <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
     <ClInclude Include="..\CCBReader\CCBKeyframe.h" />
@@ -235,7 +207,6 @@
     <ClInclude Include="..\CCBReader\CCBValue.h" />
     <ClInclude Include="..\CCBReader\CCControlButtonLoader.h" />
     <ClInclude Include="..\CCBReader\CCControlLoader.h" />
-    <ClInclude Include="..\CCBReader\CCData.h" />
     <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h" />
     <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h" />
     <ClInclude Include="..\CCBReader\CCLayerColorLoader.h" />
@@ -252,10 +223,45 @@
     <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h" />
     <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
     <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
-    <ClInclude Include="..\Components\CCComAttribute.h" />
-    <ClInclude Include="..\Components\CCComAudio.h" />
-    <ClInclude Include="..\Components\CCComController.h" />
-    <ClInclude Include="..\Components\CCInputDelegate.h" />
+    <ClInclude Include="..\CocoStudio\Armature\animation\CCArmatureAnimation.h" />
+    <ClInclude Include="..\CocoStudio\Armature\animation\CCProcessBase.h" />
+    <ClInclude Include="..\CocoStudio\Armature\animation\CCTween.h" />
+    <ClInclude Include="..\CocoStudio\Armature\CCArmature.h" />
+    <ClInclude Include="..\CocoStudio\Armature\CCBone.h" />
+    <ClInclude Include="..\CocoStudio\Armature\datas\CCDatas.h" />
+    <ClInclude Include="..\CocoStudio\Armature\display\CCBatchNode.h" />
+    <ClInclude Include="..\CocoStudio\Armature\display\CCDecorativeDisplay.h" />
+    <ClInclude Include="..\CocoStudio\Armature\display\CCDisplayFactory.h" />
+    <ClInclude Include="..\CocoStudio\Armature\display\CCDisplayManager.h" />
+    <ClInclude Include="..\CocoStudio\Armature\display\CCSkin.h" />
+    <ClInclude Include="..\CocoStudio\Armature\external_tool\sigslot.h" />
+    <ClInclude Include="..\CocoStudio\Armature\physics\CCColliderDetector.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDefine.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCConstValue.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCSpriteFrameCacheHelper.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCTransformHelp.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCTweenFunction.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCUtilMath.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComAttribute.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComAudio.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComController.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComRender.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h" />
+    <ClInclude Include="..\CocoStudio\Json\CSContentJsonDictionary.h" />
+    <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\autolink.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\config.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\features.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\forwards.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\json_batchallocator.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\json_lib.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\json_tool.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\reader.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\value.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h" />
+    <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />
@@ -282,6 +288,7 @@
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
+    <ClInclude Include="..\network\SocketIO.h" />
     <ClInclude Include="..\network\Websocket.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />
@@ -310,10 +317,10 @@
     <ClInclude Include="Win32InputBox.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\CCArmature\external_tool\Json\lib_json\json_internalarray.inl" />
-    <None Include="..\CCArmature\external_tool\Json\lib_json\json_internalmap.inl" />
-    <None Include="..\CCArmature\external_tool\Json\lib_json\json_valueiterator.inl" />
-    <None Include="..\CCArmature\external_tool\Json\lib_json\sconscript" />
+    <None Include="..\CocoStudio\Json\lib_json\json_internalarray.inl" />
+    <None Include="..\CocoStudio\Json\lib_json\json_internalmap.inl" />
+    <None Include="..\CocoStudio\Json\lib_json\json_valueiterator.inl" />
+    <None Include="..\CocoStudio\Json\lib_json\sconscript" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

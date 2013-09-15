@@ -3,11 +3,11 @@ local kTagSprite2 = 2
 local kTagSprite3 = 3
 local kTagSlider  = 4
 
-local s = CCDirector:sharedDirector():getWinSize()
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local s = cc.Director:getInstance():getWinSize()
+local scheduler = cc.Director:getInstance():getScheduler()
 
 local function getBaseLayer()
-	local layer = CCLayer:create()
+	local layer = cc.Layer:create()
 
 	Helper.initWithLayer(layer)
 
@@ -21,50 +21,50 @@ local function CameraCenterTest()
 	local layer = getBaseLayer()
 
     -- LEFT-TOP
-    local sprite = CCSprite:create("Images/white-512x512.png")
+    local sprite = cc.Sprite:create("Images/white-512x512.png")
     layer:addChild(sprite, 0)
-    sprite:setPosition(CCPointMake(s.width / 5 * 1, s.height / 5 * 1))
-    sprite:setColor(ccc3(255, 0, 0))
-    sprite:setTextureRect(CCRectMake(0, 0, 120, 50))
-    local orbit = CCOrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
-    sprite:runAction(CCRepeatForever:create(orbit))
-	-- [sprite setAnchorPoint: CCPointMake(0,1))
+    sprite:setPosition(cc.p(s.width / 5 * 1, s.height / 5 * 1))
+    sprite:setColor(cc.c3b(255, 0, 0))
+    sprite:setTextureRect(cc.rect(0, 0, 120, 50))
+    local orbit = cc.OrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
+    sprite:runAction(cc.RepeatForever:create(orbit))
+	-- [sprite setAnchorPoint: cc.p(0,1))
 
     -- LEFT-BOTTOM
-    sprite = CCSprite:create("Images/white-512x512.png")
+    sprite = cc.Sprite:create("Images/white-512x512.png")
     layer:addChild(sprite, 0, 40)
-    sprite:setPosition(CCPointMake(s.width / 5 * 1, s.height / 5 * 4))
-    sprite:setColor(ccc3(0, 0, 255))
-    sprite:setTextureRect(CCRectMake(0, 0, 120, 50))
-    orbit = CCOrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
-    sprite:runAction(CCRepeatForever:create(orbit))
+    sprite:setPosition(cc.p(s.width / 5 * 1, s.height / 5 * 4))
+    sprite:setColor(cc.c3b(0, 0, 255))
+    sprite:setTextureRect(cc.rect(0, 0, 120, 50))
+    orbit = cc.OrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
+    sprite:runAction(cc.RepeatForever:create(orbit))
 
     -- RIGHT-TOP
-    sprite = CCSprite:create("Images/white-512x512.png")
+    sprite = cc.Sprite:create("Images/white-512x512.png")
     layer:addChild(sprite, 0)
-    sprite:setPosition(CCPointMake(s.width / 5 * 4, s.height / 5 * 1))
-    sprite:setColor(ccc3(255, 255, 0))
-    sprite:setTextureRect(CCRectMake(0, 0, 120, 50))
-    orbit = CCOrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
-    sprite:runAction(CCRepeatForever:create(orbit))
+    sprite:setPosition(cc.p(s.width / 5 * 4, s.height / 5 * 1))
+    sprite:setColor(cc.c3b(255, 255, 0))
+    sprite:setTextureRect(cc.rect(0, 0, 120, 50))
+    orbit = cc.OrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
+    sprite:runAction(cc.RepeatForever:create(orbit))
 
     -- RIGHT-BOTTOM
-    sprite = CCSprite:create("Images/white-512x512.png")
+    sprite = cc.Sprite:create("Images/white-512x512.png")
     layer:addChild(sprite, 0, 40)
-    sprite:setPosition(CCPointMake(s.width / 5 * 4, s.height / 5 * 4))
-    sprite:setColor(ccc3(0, 255, 0))
-    sprite:setTextureRect(CCRectMake(0, 0, 120, 50))
-    orbit = CCOrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
-    sprite:runAction(CCRepeatForever:create(orbit))
+    sprite:setPosition(cc.p(s.width / 5 * 4, s.height / 5 * 4))
+    sprite:setColor(cc.c3b(0, 255, 0))
+    sprite:setTextureRect(cc.rect(0, 0, 120, 50))
+    orbit = cc.OrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
+    sprite:runAction(cc.RepeatForever:create(orbit))
 
     -- CENTER
-    sprite = CCSprite:create("Images/white-512x512.png")
+    sprite = cc.Sprite:create("Images/white-512x512.png")
     layer:addChild(sprite, 0, 40)
-    sprite:setPosition(CCPointMake(s.width / 2, s.height / 2))
-    sprite:setColor(ccc3(255, 255, 255))
-    sprite:setTextureRect(CCRectMake(0, 0, 120, 50))
-    orbit = CCOrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
-    sprite:runAction(CCRepeatForever:create(orbit))
+    sprite:setPosition(cc.p(s.width / 2, s.height / 2))
+    sprite:setColor(cc.c3b(255, 255, 255))
+    sprite:setTextureRect(cc.rect(0, 0, 120, 50))
+    orbit = cc.OrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
+    sprite:runAction(cc.RepeatForever:create(orbit))
 
 	Helper.titleLabel:setString("Camera Center test")
 	Helper.subtitleLabel:setString("Sprites should rotate at the same speed")
@@ -77,13 +77,13 @@ end
 local function Test2()
 	local layer = getBaseLayer()
 
-	local sp1 = CCSprite:create(s_pPathSister1)
-    local sp2 = CCSprite:create(s_pPathSister2)
-    local sp3 = CCSprite:create(s_pPathSister1)
-    local sp4 = CCSprite:create(s_pPathSister2)
+	local sp1 = cc.Sprite:create(s_pPathSister1)
+    local sp2 = cc.Sprite:create(s_pPathSister2)
+    local sp3 = cc.Sprite:create(s_pPathSister1)
+    local sp4 = cc.Sprite:create(s_pPathSister2)
 
-    sp1:setPosition(CCPointMake(100, s.height /2))
-    sp2:setPosition(CCPointMake(380, s.height /2))
+    sp1:setPosition(cc.p(100, s.height /2))
+    sp2:setPosition(cc.p(380, s.height /2))
     layer:addChild(sp1)
     layer:addChild(sp2)
 
@@ -92,22 +92,13 @@ local function Test2()
     sp1:addChild(sp3)
     sp2:addChild(sp4)
 
-    local a1 = CCRotateBy:create(2, 360)
-    local a2 = CCScaleBy:create(2, 2)
+    local a1 = cc.RotateBy:create(2, 360)
+    local a2 = cc.ScaleBy:create(2, 2)
 
-	local array1 = CCArray:create()
-	array1:addObject(a1)
-	array1:addObject(a2)
-	array1:addObject(a2:reverse())
-    local action1 = CCRepeatForever:create(CCSequence:create(array1))
+    local action1 = cc.RepeatForever:create(cc.Sequence:create(a1, a2, a2:reverse()))
+    local action2 = cc.RepeatForever:create(cc.Sequence:create(a1:clone(), a2:clone(), a2:reverse()))
 
-	local array2 = CCArray:create()
-	array2:addObject(a1:copy():autorelease())
-	array2:addObject(a2:copy():autorelease())
-	array2:addObject(a2:reverse())
-    local action2 = CCRepeatForever:create(CCSequence:create(array2))
-
-    sp2:setAnchorPoint(CCPointMake(0,0))
+    sp2:setAnchorPoint(cc.p(0,0))
 
     sp1:runAction(action1)
     sp2:runAction(action2)
@@ -125,7 +116,7 @@ local Test4_delay4Entry = nil
 
 local function delay2(dt)
 	node = Test4_layer:getChildByTag(2)
-    local action1 = CCRotateBy:create(1, 360)
+    local action1 = cc.RotateBy:create(1, 360)
     node:runAction(action1)
 end
 
@@ -147,10 +138,10 @@ end
 local function Test4()
 	Test4_layer = getBaseLayer()
 
-	local sp1 = CCSprite:create(s_pPathSister1)
-    local sp2 = CCSprite:create(s_pPathSister2)
-    sp1:setPosition(CCPointMake(100, 160))
-    sp2:setPosition(CCPointMake(380, 160))
+	local sp1 = cc.Sprite:create(s_pPathSister1)
+    local sp2 = cc.Sprite:create(s_pPathSister2)
+    sp1:setPosition(cc.p(100, 160))
+    sp2:setPosition(cc.p(380, 160))
 
     Test4_layer:addChild(sp1, 0, 2)
     Test4_layer:addChild(sp2, 0, 3)
@@ -195,19 +186,19 @@ end
 local function Test5()
 	Test5_layer = getBaseLayer()
 
-	local sp1 = CCSprite:create(s_pPathSister1)
-    local sp2 = CCSprite:create(s_pPathSister2)
+	local sp1 = cc.Sprite:create(s_pPathSister1)
+    local sp2 = cc.Sprite:create(s_pPathSister2)
 
-    sp1:setPosition(CCPointMake(100, 160))
-    sp2:setPosition(CCPointMake(380, 160))
+    sp1:setPosition(cc.p(100, 160))
+    sp2:setPosition(cc.p(380, 160))
 
-    local rot = CCRotateBy:create(2, 360)
+    local rot = cc.RotateBy:create(2, 360)
     local rot_back = rot:reverse()
-    local forever = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot_back))
+    local forever = cc.RepeatForever:create(cc.Sequence:create(rot, rot_back))
 
-	local rot2 = CCRotateBy:create(2, 360)
+	local rot2 = cc.RotateBy:create(2, 360)
 	local rot2_back = rot2:reverse()
-	local forever2 = CCRepeatForever:create(CCSequence:createWithTwoActions(rot2, rot2_back))
+	local forever2 = cc.RepeatForever:create(cc.Sequence:create(rot2, rot2_back))
 
 	forever:setTag(101)
     forever2:setTag(102)
@@ -258,22 +249,22 @@ end
 local function Test6()
 	Test6_layer = getBaseLayer()
 
-	local sp1 = CCSprite:create(s_pPathSister1)
-    local sp11 = CCSprite:create(s_pPathSister1)
+	local sp1 = cc.Sprite:create(s_pPathSister1)
+    local sp11 = cc.Sprite:create(s_pPathSister1)
 
-    local sp2 = CCSprite:create(s_pPathSister2)
-    local sp21 = CCSprite:create(s_pPathSister2)
+    local sp2 = cc.Sprite:create(s_pPathSister2)
+    local sp21 = cc.Sprite:create(s_pPathSister2)
 
-    sp1:setPosition(CCPointMake(100, 160))
-    sp2:setPosition(CCPointMake(380, 160))
+    sp1:setPosition(cc.p(100, 160))
+    sp2:setPosition(cc.p(380, 160))
 
-    local rot = CCRotateBy:create(2, 360)
+    local rot = cc.RotateBy:create(2, 360)
     local rot_back = rot:reverse()
-    local forever1 = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot_back))
-    local forever11 = tolua.cast(forever1:copy():autorelease(), "CCRepeatForever")
+    local forever1 = cc.RepeatForever:create(cc.Sequence:create(rot, rot_back))
+    local forever11 = tolua.cast(forever1:clone(), "RepeatForever")
 
-    local forever2 = tolua.cast(forever1:copy():autorelease(), "CCRepeatForever")
-    local forever21 = tolua.cast(forever1:copy():autorelease(), "CCRepeatForever")
+    local forever2 = tolua.cast(forever1:clone(), "RepeatForever")
+    local forever21 = tolua.cast(forever1:clone(), "RepeatForever")
 
     Test6_layer:addChild(sp1, 0, kTagSprite1)
     sp1:addChild(sp11)
@@ -307,13 +298,14 @@ local function shouldNotCrash(dt)
 	scheduler:unscheduleScriptEntry(StressTest1_entry)
 
     -- if the node has timers, it crashes
-    local explosion = CCParticleSun:create()
-    explosion:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+    local explosion = cc.ParticleSun:create()
+    explosion:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
 
     explosion:setPosition(s.width / 2, s.height / 2)
 
-	StressTest1_layer:setAnchorPoint(ccp(0, 0))
-    StressTest1_layer:runAction(CCSequence:createWithTwoActions(CCRotateBy:create(2, 360), CCCallFuncN:create(removeMe)))
+	StressTest1_layer:setAnchorPoint(cc.p(0, 0))
+    local callFunc = cc.CallFunc:create(removeMe)
+    StressTest1_layer:runAction(cc.Sequence:create(cc.RotateBy:create(2, 360), callFunc))
 
     StressTest1_layer:addChild(explosion)
 end
@@ -329,10 +321,10 @@ end
 local function StressTest1()
 	StressTest1_layer = getBaseLayer()
 
-	sp1 = CCSprite:create(s_pPathSister1)
+	sp1 = cc.Sprite:create(s_pPathSister1)
     StressTest1_layer:addChild(sp1, 0, kTagSprite1)
 
-    sp1:setPosition(CCPointMake(s.width / 2, s.height / 2))
+    sp1:setPosition(cc.p(s.width / 2, s.height / 2))
 
     StressTest1_layer:registerScriptHandler(StressTest1_onEnterOrExit)
 
@@ -364,25 +356,25 @@ end
 local function StressTest2()
 	StressTest2_layer = getBaseLayer()
 
-	sublayer = CCLayer:create()
+	sublayer = cc.Layer:create()
 
-    local sp1 = CCSprite:create(s_pPathSister1)
-    sp1:setPosition(CCPointMake(80, s.height / 2))
+    local sp1 = cc.Sprite:create(s_pPathSister1)
+    sp1:setPosition(cc.p(80, s.height / 2))
 
-    local move = CCMoveBy:create(3, CCPointMake(350, 0))
-    local move_ease_inout3 = CCEaseInOut:create(CCMoveBy:create(3, CCPointMake(350, 0)), 2.0)
+    local move = cc.MoveBy:create(3, cc.p(350, 0))
+    local move_ease_inout3 = cc.EaseInOut:create(cc.MoveBy:create(3, cc.p(350, 0)), 2.0)
     local move_ease_inout_back3 = move_ease_inout3:reverse()
-    local seq3 = CCSequence:createWithTwoActions(move_ease_inout3, move_ease_inout_back3)
-    sp1:runAction(CCRepeatForever:create(seq3))
+    local seq3 = cc.Sequence:create(move_ease_inout3, move_ease_inout_back3)
+    sp1:runAction(cc.RepeatForever:create(seq3))
     sublayer:addChild(sp1, 1)
 
-    local fire = CCParticleFire:create()
-    fire:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
-	fire = tolua.cast(fire, "CCNode")
+    local fire = cc.ParticleFire:create()
+    fire:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
+	fire = tolua.cast(fire, "Node")
     fire:setPosition(80, s.height / 2 - 50)
 
-    local copy_seq3 = tolua.cast(seq3:copy():autorelease(), "CCSequence")
-    fire:runAction(CCRepeatForever:create(copy_seq3))
+    local copy_seq3 = tolua.cast(seq3:clone(), "Sequence")
+    fire:runAction(cc.RepeatForever:create(copy_seq3))
     sublayer:addChild(fire, 2)
 
     StressTest2_layer:registerScriptHandler(StressTest2_onEnterOrExit)
@@ -403,26 +395,26 @@ local function NodeToWorld()
     --  - It tests different anchor Points
     --  - It tests different children anchor points
 
-    local back = CCSprite:create(s_back3)
+    local back = cc.Sprite:create(s_back3)
     layer:addChild(back, -10)
-    back:setAnchorPoint(CCPointMake(0, 0))
+    back:setAnchorPoint(cc.p(0, 0))
     local backSize = back:getContentSize()
 
-    local item = CCMenuItemImage:create(s_PlayNormal, s_PlaySelect)
-    local menu = CCMenu:create()
+    local item = cc.MenuItemImage:create(s_PlayNormal, s_PlaySelect)
+    local menu = cc.Menu:create()
 	menu:addChild(item)
     menu:alignItemsVertically()
-    menu:setPosition(ccp(backSize.width / 2, backSize.height / 2))
+    menu:setPosition(cc.p(backSize.width / 2, backSize.height / 2))
     back:addChild(menu)
 
-    local rot = CCRotateBy:create(5, 360)
-    local fe = CCRepeatForever:create(rot)
+    local rot = cc.RotateBy:create(5, 360)
+    local fe = cc.RepeatForever:create(rot)
     item:runAction(fe)
 
-    local move = CCMoveBy:create(3, CCPointMake(200, 0))
+    local move = cc.MoveBy:create(3, cc.p(200, 0))
     local move_back = move:reverse()
-    local seq = CCSequence:createWithTwoActions(move, move_back)
-    local fe2 = CCRepeatForever:create(seq)
+    local seq = cc.Sequence:create(move, move_back)
+    local fe2 = cc.RepeatForever:create(seq)
     back:runAction(fe2)
 
 	Helper.titleLabel:setString("nodeToParent transform")
@@ -434,50 +426,50 @@ end
 -----------------------------------
 local function CameraOrbitTest_onEnterOrExit(tag)
 	if tag == "enter" then
-		CCDirector:sharedDirector():setProjection(kCCDirectorProjection3D)
+		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION3_D)
 	elseif tag == "exit" then
-		CCDirector:sharedDirector():setProjection(kCCDirectorProjection2D)
+		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D)
 	end
 end
 
 local function CameraOrbitTest()
 	local layer = getBaseLayer()
 
-	local p = CCSprite:create(s_back3)
+	local p = cc.Sprite:create(s_back3)
     layer:addChild(p, 0)
-    p:setPosition(CCPointMake(s.width / 2, s.height / 2))
+    p:setPosition(cc.p(s.width / 2, s.height / 2))
     p:setOpacity(128)
 
     -- LEFT
     local s = p:getContentSize()
-    local sprite = CCSprite:create(s_pPathGrossini)
+    local sprite = cc.Sprite:create(s_pPathGrossini)
     sprite:setScale(0.5)
     p:addChild(sprite, 0)
-    sprite:setPosition(CCPointMake(s.width / 4 * 1, s.height / 2))
+    sprite:setPosition(cc.p(s.width / 4 * 1, s.height / 2))
     local cam = sprite:getCamera()
-    local orbit = CCOrbitCamera:create(2, 1, 0, 0, 360, 0, 0)
-    sprite:runAction(CCRepeatForever:create(orbit))
+    local orbit = cc.OrbitCamera:create(2, 1, 0, 0, 360, 0, 0)
+    sprite:runAction(cc.RepeatForever:create(orbit))
 
     -- CENTER
-    sprite = CCSprite:create(s_pPathGrossini)
+    sprite = cc.Sprite:create(s_pPathGrossini)
     sprite:setScale(1.0)
     p:addChild(sprite, 0)
-    sprite:setPosition(CCPointMake(s.width / 4 * 2, s.height / 2))
-    orbit = CCOrbitCamera:create(2, 1, 0, 0, 360, 45, 0)
-    sprite:runAction(CCRepeatForever:create(orbit))
+    sprite:setPosition(cc.p(s.width / 4 * 2, s.height / 2))
+    orbit = cc.OrbitCamera:create(2, 1, 0, 0, 360, 45, 0)
+    sprite:runAction(cc.RepeatForever:create(orbit))
 
     -- RIGHT
-    sprite = CCSprite:create(s_pPathGrossini)
+    sprite = cc.Sprite:create(s_pPathGrossini)
     sprite:setScale(2.0)
     p:addChild(sprite, 0)
-    sprite:setPosition(CCPointMake(s.width / 4 * 3, s.height / 2))
+    sprite:setPosition(cc.p(s.width / 4 * 3, s.height / 2))
     local ss = sprite:getContentSize()
-    orbit = CCOrbitCamera:create(2, 1, 0, 0, 360, 90, -45)
-    sprite:runAction(CCRepeatForever:create(orbit))
+    orbit = cc.OrbitCamera:create(2, 1, 0, 0, 360, 90, -45)
+    sprite:runAction(cc.RepeatForever:create(orbit))
 
     -- PARENT
-    orbit = CCOrbitCamera:create(10, 1, 0, 0, 360, 0, 90)
-    p:runAction(CCRepeatForever:create(orbit))
+    orbit = cc.OrbitCamera:create(10, 1, 0, 0, 360, 0, 90)
+    p:runAction(cc.RepeatForever:create(orbit))
 
     layer:setScale(1)
 
@@ -497,19 +489,19 @@ local function CameraZoomTest_update(dt)
 
     local sprite = CameraZoomTest_layer:getChildByTag(20)
     local cam = sprite:getCamera()
-    cam:setEyeXYZ(0, 0, z)
+    cam:setEye(0, 0, z)
 
     sprite = CameraZoomTest_layer:getChildByTag(40)
     cam = sprite:getCamera()
-    cam:setEyeXYZ(0, 0, -z)
+    cam:setEye(0, 0, -z)
 end
 
 local function CameraZoomTest_onEnterOrExit(tag)
 	if tag == "enter" then
-		CCDirector:sharedDirector():setProjection(kCCDirectorProjection3D)
+		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION3_D)
 		CameraZoomTest_entry = scheduler:scheduleScriptFunc(CameraZoomTest_update, 0.0, false)
 	elseif tag == "exit" then
-		CCDirector:sharedDirector():setProjection(kCCDirectorProjection2D)
+		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D)
 		scheduler:unscheduleScriptEntry(CameraZoomTest_entry)
 	end
 end
@@ -520,22 +512,22 @@ local function CameraZoomTest()
 	z = 0
 
     -- LEFT
-    local sprite = CCSprite:create(s_pPathGrossini)
+    local sprite = cc.Sprite:create(s_pPathGrossini)
     CameraZoomTest_layer:addChild(sprite, 0)
-    sprite:setPosition(ccp(s.width / 4 * 1, s.height / 2))
+    sprite:setPosition(cc.p(s.width / 4 * 1, s.height / 2))
     local cam = sprite:getCamera()
-    cam:setEyeXYZ(0, 0, 415 / 2)
-    cam:setCenterXYZ(0, 0, 0)
+    cam:setEye(0, 0, 415 / 2)
+    cam:setCenter(0, 0, 0)
 
     -- CENTER
-    sprite = CCSprite:create(s_pPathGrossini)
+    sprite = cc.Sprite:create(s_pPathGrossini)
     CameraZoomTest_layer:addChild(sprite, 0, 40)
-    sprite:setPosition(ccp(s.width / 4 * 2, s.height / 2))
+    sprite:setPosition(cc.p(s.width / 4 * 2, s.height / 2))
 
     -- RIGHT
-    sprite = CCSprite:create(s_pPathGrossini)
+    sprite = cc.Sprite:create(s_pPathGrossini)
     CameraZoomTest_layer:addChild(sprite, 0, 20)
-    sprite:setPosition(ccp(s.width / 4 * 3, s.height / 2))
+    sprite:setPosition(cc.p(s.width / 4 * 3, s.height / 2))
 
 	CameraZoomTest_layer:scheduleUpdateWithPriorityLua(CameraZoomTest_update, 0)
 	CameraZoomTest_layer:registerScriptHandler(CameraZoomTest_onEnterOrExit)
@@ -552,28 +544,28 @@ local ConvertToNode_layer = nil
 local function ConvertToNode()
 	ConvertToNode_layer = getBaseLayer()
 
-    local rotate = CCRotateBy:create(10, 360)
-    local action = CCRepeatForever:create(rotate)
+    local rotate = cc.RotateBy:create(10, 360)
+    local action = cc.RepeatForever:create(rotate)
     for i = 0, 2 do
-        local sprite = CCSprite:create("Images/grossini.png")
-        sprite:setPosition(ccp(s.width / 4 * (i + 1), s.height / 2))
+        local sprite = cc.Sprite:create("Images/grossini.png")
+        sprite:setPosition(cc.p(s.width / 4 * (i + 1), s.height / 2))
 
-        local point = CCSprite:create("Images/r1.png")
+        local point = cc.Sprite:create("Images/r1.png")
         point:setScale(0.25)
         point:setPosition(sprite:getPosition())
         ConvertToNode_layer:addChild(point, 10, 100 + i)
 
         if i == 0 then
-			sprite:setAnchorPoint(ccp(0, 0))
+			sprite:setAnchorPoint(cc.p(0, 0))
 		elseif i == 1 then
-            sprite:setAnchorPoint(ccp(0.5, 0.5))
+            sprite:setAnchorPoint(cc.p(0.5, 0.5))
         elseif i == 2 then
-            sprite:setAnchorPoint(ccp(1,1))
+            sprite:setAnchorPoint(cc.p(1,1))
 		end
 
         point:setPosition(sprite:getPosition())
 
-        local copy = tolua.cast(action:copy():autorelease(), "CCRepeatForever")
+        local copy = tolua.cast(action:clone(), "RepeatForever")
         sprite:runAction(copy)
         ConvertToNode_layer:addChild(sprite, i)
     end
@@ -582,8 +574,8 @@ local function ConvertToNode()
 		for i = 0, 2 do
             local node = ConvertToNode_layer:getChildByTag(100 + i)
             local p1, p2
-            p1 = node:convertToNodeSpaceAR(ccp(x, y))
-            p2 = node:convertToNodeSpace(ccp(x, y))
+            p1 = node:convertToNodeSpaceAR(cc.p(x, y))
+            p2 = node:convertToNodeSpace(cc.p(x, y))
 
             cclog("AR: x=" .. p1.x .. ", y=" .. p1.y .. " -- Not AR: x=" .. p2.x .. ", y=" .. p2.y)
         end
@@ -612,12 +604,9 @@ local function NodeOpaqueTest()
 	local layer = getBaseLayer()
 
     for i = 0, 49 do
-        local background = CCSprite:create("Images/background1.png")
-        local blendFunc = ccBlendFunc:new()
-        blendFunc.src = GL_ONE
-        blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA 
-        background:setBlendFunc(blendFunc)
-        background:setAnchorPoint(ccp(0, 0))
+        local background = cc.Sprite:create("Images/background1.png")
+        background:setBlendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+        background:setAnchorPoint(cc.p(0, 0))
         layer:addChild(background)
     end
 
@@ -633,12 +622,9 @@ local function NodeNonOpaqueTest()
 	local layer = getBaseLayer()
 
     for i = 0, 49 do
-        background = CCSprite:create("Images/background1.jpg")
-        local blendFunc = ccBlendFunc:new()
-        blendFunc.src = GL_ONE
-        blendFunc.dst = GL_ZERO
-        background:setBlendFunc(blendFunc)
-        background:setAnchorPoint(ccp(0, 0))
+        background = cc.Sprite:create("Images/background1.jpg")
+        background:setBlendFunc(gl.ONE, gl.ZERO)
+        background:setAnchorPoint(cc.p(0, 0))
         layer:addChild(background)
     end
 	Helper.titleLabel:setString("Node Non Opaque Test")
@@ -647,7 +633,7 @@ local function NodeNonOpaqueTest()
 end
 
 function CocosNodeTest()
-	local scene = CCScene:create()
+	local scene = cc.Scene:create()
 
     Helper.createFunctionTable = {
         CameraCenterTest,

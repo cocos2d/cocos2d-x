@@ -34,13 +34,10 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "CCConfiguration.h"
-#include "platform/platform.h"
 #include "platform/CCImage.h"
 #include "CCGL.h"
 #include "support/ccUtils.h"
 #include "platform/CCPlatformMacros.h"
-#include "textures/CCTexturePVR.h"
-#include "textures/CCTextureETC.h"
 #include "CCDirector.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
@@ -52,585 +49,1124 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+namespace {
+    typedef Texture2D::PixelFormatInfoMap::value_type PixelFormatInfoMapValue;
+    static const PixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
+    {
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::BGRA8888, Texture2D::PixelFormatInfo(GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA8888, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA4444, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGB5A1, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGB565, Texture2D::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGB888, Texture2D::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::A8, Texture2D::PixelFormatInfo(GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::I8, Texture2D::PixelFormatInfo(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::AI88, Texture2D::PixelFormatInfo(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true)),
+        
+#ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC2, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC2A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC4, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC4A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true)),
+#endif
+        
+#ifdef GL_ETC1_RGB8_OES
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 24, true, false)),
+#endif
+        
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT1, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+#endif
+        
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT3, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
+        
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT5, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
+        
+#ifdef GL_ATC_RGB_AMD
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_RGB, Texture2D::PixelFormatInfo(GL_ATC_RGB_AMD,
+            0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+#endif
+        
+#ifdef GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_EXPLICIT_ALPHA_AMD,
+            0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
+        
+#ifdef GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD,
+            0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
+    };
+}
+
 //CLASS IMPLEMENTATIONS:
+
+//The PixpelFormat corresponding information
+const Texture2D::PixelFormatInfoMap Texture2D::_pixelFormatInfoTables(TexturePixelFormatInfoTablesValue,
+                                                                     TexturePixelFormatInfoTablesValue + sizeof(TexturePixelFormatInfoTablesValue) / sizeof(TexturePixelFormatInfoTablesValue[0]));
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelFormat_Default;
+static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
 
-// By default PVR images are treated as if they don't have the alpha channel premultiplied
-static bool PVRHaveAlphaPremultiplied_ = false;
+static bool _PVRHaveAlphaPremultiplied = false;
 
-CCTexture2D::CCTexture2D()
-: m_bPVRHaveAlphaPremultiplied(true)
-, m_uPixelsWide(0)
-, m_uPixelsHigh(0)
-, m_uName(0)
-, m_fMaxS(0.0)
-, m_fMaxT(0.0)
-, m_bHasPremultipliedAlpha(false)
-, m_bHasMipmaps(false)
-, m_pShaderProgram(NULL)
+//////////////////////////////////////////////////////////////////////////
+//conventer function
+
+// IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBB
+void Texture2D::convertI8ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i=0; i < dataLen; ++i)
+    {
+        *outData++ = data[i];     //R
+        *outData++ = data[i];     //G
+        *outData++ = data[i];     //B
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
+void Texture2D::convertAI88ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *outData++ = data[i];     //R
+        *outData++ = data[i];     //G
+        *outData++ = data[i];     //B
+    }
+}
+
+// IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBBAAAAAAAA
+void Texture2D::convertI8ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0; i < dataLen; ++i)
+    {
+        *outData++ = data[i];     //R
+        *outData++ = data[i];     //G
+        *outData++ = data[i];     //B
+        *outData++ = 0xFF;        //A
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
+void Texture2D::convertAI88ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *outData++ = data[i];     //R
+        *outData++ = data[i];     //G
+        *outData++ = data[i];     //B
+        *outData++ = data[i + 1]; //A
+    }
+}
+
+// IIIIIIII -> RRRRRGGGGGGBBBBB
+void Texture2D::convertI8ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0; i < dataLen; ++i)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+            | (data[i] & 0x00FC) << 3         //G
+            | (data[i] & 0x00F8) >> 3;        //B
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRGGGGGGBBBBB
+void Texture2D::convertAI88ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+            | (data[i] & 0x00FC) << 3         //G
+            | (data[i] & 0x00F8) >> 3;        //B
+    }
+}
+
+// IIIIIIII -> RRRRGGGGBBBBAAAA
+void Texture2D::convertI8ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0; i < dataLen; ++i)
+    {
+        *out16++ = (data[i] & 0x00F0) << 8    //R
+        | (data[i] & 0x00F0) << 4             //G
+        | (data[i] & 0x00F0)                  //B
+        | 0x000F;                             //A
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRGGGGBBBBAAAA
+void Texture2D::convertAI88ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *out16++ = (data[i] & 0x00F0) << 8    //R
+        | (data[i] & 0x00F0) << 4             //G
+        | (data[i] & 0x00F0)                  //B
+        | (data[i+1] & 0x00F0) >> 4;          //A
+    }
+}
+
+// IIIIIIII -> RRRRRGGGGGBBBBBA
+void Texture2D::convertI8ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0; i < dataLen; ++i)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+            | (data[i] & 0x00F8) << 3         //G
+            | (data[i] & 0x00F8) >> 2         //B
+            | 0x0001;                         //A
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRGGGGGBBBBBA
+void Texture2D::convertAI88ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+            | (data[i] & 0x00F8) << 3         //G
+            | (data[i] & 0x00F8) >> 2         //B
+            | (data[i + 1] & 0x0080) >> 7;    //A
+    }
+}
+
+// IIIIIIII -> IIIIIIIIAAAAAAAA
+void Texture2D::convertI8ToAI88(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0; i < dataLen; ++i)
+    {
+        *out16++ = 0xFF00     //A
+        | data[i];            //I
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> AAAAAAAA
+void Texture2D::convertAI88ToA8(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 1; i < dataLen; i += 2)
+    {
+        *outData++ = data[i]; //A
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> IIIIIIII
+void Texture2D::convertAI88ToI8(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *outData++ = data[i]; //R
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
+void Texture2D::convertRGB888ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *outData++ = data[i];         //R
+        *outData++ = data[i + 1];     //G
+        *outData++ = data[i + 2];     //B
+        *outData++ = 0xFF;            //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
+void Texture2D::convertRGBA8888ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *outData++ = data[i];         //R
+        *outData++ = data[i + 1];     //G
+        *outData++ = data[i + 2];     //B
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGGBBBBB
+void Texture2D::convertRGB888ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+            | (data[i + 1] & 0x00FC) << 3     //G
+            | (data[i + 2] & 0x00F8) >> 3;    //B
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRGGGGGGBBBBB
+void Texture2D::convertRGBA8888ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+            | (data[i + 1] & 0x00FC) << 3     //G
+            | (data[i + 2] & 0x00F8) >> 3;    //B
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIII
+void Texture2D::convertRGB888ToI8(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *outData++ = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIII
+void Texture2D::convertRGBA8888ToI8(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *outData++ = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> AAAAAAAA
+void Texture2D::convertRGBA8888ToA8(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen -3; i < l; i += 4)
+    {
+        *outData++ = data[i + 3]; //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIIIAAAAAAAA
+void Texture2D::convertRGB888ToAI88(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *outData++ = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+        *outData++ = 0xFF;
+    }
+}
+
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIIIAAAAAAAA
+void Texture2D::convertRGBA8888ToAI88(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    for (int i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *outData++ = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+        *outData++ = data[i + 3];
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRGGGGBBBBAAAA
+void Texture2D::convertRGB888ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *out16++ = ((data[i] & 0x00F0) << 8           //R
+                    | (data[i + 1] & 0x00F0) << 4     //G
+                    | (data[i + 2] & 0xF0)            //B
+                    |  0x0F);                         //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRGGGGBBBBAAAA
+void Texture2D::convertRGBA8888ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *out16++ = (data[i] & 0x00F0) << 8    //R
+        | (data[i + 1] & 0x00F0) << 4         //G
+        | (data[i + 2] & 0xF0)                //B
+        |  (data[i + 3] & 0xF0) >> 4;         //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGBBBBBA
+void Texture2D::convertRGB888ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+            | (data[i + 1] & 0x00F8) << 3     //G
+            | (data[i + 2] & 0x00F8) >> 2     //B
+            |  0x01;                          //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGBBBBBA
+void Texture2D::convertRGBA8888ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0, l = dataLen - 2; i < l; i += 4)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+            | (data[i + 1] & 0x00F8) << 3     //G
+            | (data[i + 2] & 0x00F8) >> 2     //B
+            |  (data[i + 3] & 0x0080) >> 7;   //A
+    }
+}
+// conventer function end
+//////////////////////////////////////////////////////////////////////////
+
+Texture2D::Texture2D()
+: _pixelFormat(Texture2D::PixelFormat::DEFAULT)
+, _pixelsWide(0)
+, _pixelsHigh(0)
+, _name(0)
+, _maxS(0.0)
+, _maxT(0.0)
+, _hasPremultipliedAlpha(false)
+, _hasMipmaps(false)
+, _shaderProgram(NULL)
 {
 }
 
-CCTexture2D::~CCTexture2D()
+Texture2D::~Texture2D()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::removeTexture(this);
 #endif
 
-    CCLOGINFO("cocos2d: deallocing CCTexture2D %u.", m_uName);
-    CC_SAFE_RELEASE(m_pShaderProgram);
+    CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
+    CC_SAFE_RELEASE(_shaderProgram);
 
-    if(m_uName)
+    if(_name)
     {
-        ccGLDeleteTexture(m_uName);
+        GL::deleteTexture(_name);
     }
 }
 
-CCTexture2DPixelFormat CCTexture2D::getPixelFormat()
+Texture2D::PixelFormat Texture2D::getPixelFormat() const
 {
-    return m_ePixelFormat;
+    return _pixelFormat;
 }
 
-unsigned int CCTexture2D::getPixelsWide()
+unsigned int Texture2D::getPixelsWide() const
 {
-    return m_uPixelsWide;
+    return _pixelsWide;
 }
 
-unsigned int CCTexture2D::getPixelsHigh()
+unsigned int Texture2D::getPixelsHigh() const
 {
-    return m_uPixelsHigh;
+    return _pixelsHigh;
 }
 
-GLuint CCTexture2D::getName()
+GLuint Texture2D::getName() const
 {
-    return m_uName;
+    return _name;
 }
 
-CCSize CCTexture2D::getContentSize()
+Size Texture2D::getContentSize() const
 {
-
-    CCSize ret;
-    ret.width = m_tContentSize.width / CC_CONTENT_SCALE_FACTOR();
-    ret.height = m_tContentSize.height / CC_CONTENT_SCALE_FACTOR();
+    Size ret;
+    ret.width = _contentSize.width / CC_CONTENT_SCALE_FACTOR();
+    ret.height = _contentSize.height / CC_CONTENT_SCALE_FACTOR();
     
     return ret;
 }
 
-const CCSize& CCTexture2D::getContentSizeInPixels()
+const Size& Texture2D::getContentSizeInPixels()
 {
-    return m_tContentSize;
+    return _contentSize;
 }
 
-GLfloat CCTexture2D::getMaxS()
+GLfloat Texture2D::getMaxS() const
 {
-    return m_fMaxS;
+    return _maxS;
 }
 
-void CCTexture2D::setMaxS(GLfloat maxS)
+void Texture2D::setMaxS(GLfloat maxS)
 {
-    m_fMaxS = maxS;
+    _maxS = maxS;
 }
 
-GLfloat CCTexture2D::getMaxT()
+GLfloat Texture2D::getMaxT() const
 {
-    return m_fMaxT;
+    return _maxT;
 }
 
-void CCTexture2D::setMaxT(GLfloat maxT)
+void Texture2D::setMaxT(GLfloat maxT)
 {
-    m_fMaxT = maxT;
+    _maxT = maxT;
 }
 
-CCGLProgram* CCTexture2D::getShaderProgram(void)
+GLProgram* Texture2D::getShaderProgram() const
 {
-    return m_pShaderProgram;
+    return _shaderProgram;
 }
 
-void CCTexture2D::setShaderProgram(CCGLProgram* pShaderProgram)
+void Texture2D::setShaderProgram(GLProgram* pShaderProgram)
 {
     CC_SAFE_RETAIN(pShaderProgram);
-    CC_SAFE_RELEASE(m_pShaderProgram);
-    m_pShaderProgram = pShaderProgram;
+    CC_SAFE_RELEASE(_shaderProgram);
+    _shaderProgram = pShaderProgram;
 }
 
-void CCTexture2D::releaseData(void *data)
+void Texture2D::releaseData(void *data)
 {
     free(data);
 }
 
-void* CCTexture2D::keepData(void *data, unsigned int length)
+void* Texture2D::keepData(void *data, unsigned int length)
 {
     CC_UNUSED_PARAM(length);
     //The texture data mustn't be saved because it isn't a mutable texture.
     return data;
 }
 
-bool CCTexture2D::hasPremultipliedAlpha()
+bool Texture2D::hasPremultipliedAlpha() const
 {
-    return m_bHasPremultipliedAlpha;
+    return _hasPremultipliedAlpha;
 }
 
-bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
+bool Texture2D::initWithData(const void *data, int dataLen, Texture2D::PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize)
 {
-    unsigned int bitsPerPixel;
-    //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
-    if(pixelFormat == kCCTexture2DPixelFormat_RGB888)
+    //if data has no mipmaps, we will consider it has only one mipmap
+    MipmapInfo mipmap;
+    mipmap.address = (unsigned char*)data;
+    mipmap.len = dataLen;
+    return initWithMipmaps(&mipmap, 1, pixelFormat, pixelsWide, pixelsHigh);
+
+    //update information
+    _contentSize = contentSize;
+    _maxS = contentSize.width / (float)(pixelsWide);
+    _maxT = contentSize.height / (float)(pixelsHigh);
+
+}
+
+bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh)
+{
+    //the pixelFormat must be a certain value 
+    CCAssert(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
+
+    if (mipmapsNum <= 0)
     {
-        bitsPerPixel = 24;
+        CCLOG("cocos2d: WARNING: mipmap number is less than 1");
+        return false;
     }
-    else
+    
+
+    if(_pixelFormatInfoTables.find(pixelFormat) == _pixelFormatInfoTables.end())
     {
-        bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
+        CCLOG("cocos2d: WARNING: unsupported pixelformat: %lx", (unsigned long)pixelFormat );
+        return false;
     }
 
-    unsigned int bytesPerRow = pixelsWide * bitsPerPixel / 8;
+    const PixelFormatInfo& info = _pixelFormatInfoTables.at(pixelFormat);
 
-    if(bytesPerRow % 8 == 0)
+    if (info.compressed && !Configuration::getInstance()->supportsPVRTC()
+                        && !Configuration::getInstance()->supportsETC()
+                        && !Configuration::getInstance()->supportsS3TC()
+                        && !Configuration::getInstance()->supportsATITC())
     {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+        CCLOG("cocos2d: WARNING: PVRTC/ETC images are not supported");
+        return false;
     }
-    else if(bytesPerRow % 4 == 0)
+
+    //Set the row align only when mipmapsNum == 1 and the data is uncompressed
+    if (mipmapsNum == 1 && !info.compressed)
     {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-    }
-    else if(bytesPerRow % 2 == 0)
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
-    }
-    else
+        unsigned int bytesPerRow = pixelsWide * info.bpp / 8;
+
+        if(bytesPerRow % 8 == 0)
+        {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+        }
+        else if(bytesPerRow % 4 == 0)
+        {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        }
+        else if(bytesPerRow % 2 == 0)
+        {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
+        }
+        else
+        {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        }
+    }else
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
+    
 
 
-    glGenTextures(1, &m_uName);
-    ccGLBindTexture2D(m_uName);
+    glGenTextures(1, &_name);
+    GL::bindTexture2D(_name);
 
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    if (mipmapsNum == 1)
+    {
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    }else
+    {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+    }
+    
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
+    CHECK_GL_ERROR_DEBUG(); // clean possible GL error
+    
     // Specify OpenGL texture image
-
-    switch(pixelFormat)
+    int width = pixelsWide;
+    int height = pixelsHigh;
+    
+    for (int i = 0; i < mipmapsNum; ++i)
     {
-    case kCCTexture2DPixelFormat_RGBA8888:
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-        break;
-    case kCCTexture2DPixelFormat_RGB888:
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        break;
-    case kCCTexture2DPixelFormat_RGBA4444:
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
-        break;
-    case kCCTexture2DPixelFormat_RGB5A1:
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
-        break;
-    case kCCTexture2DPixelFormat_RGB565:
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
-        break;
-    case kCCTexture2DPixelFormat_AI88:
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
-        break;
-    case kCCTexture2DPixelFormat_A8:
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
-        break;
-    case kCCTexture2DPixelFormat_I8:
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
-        break;
-    default:
-        CCAssert(0, "NSInternalInconsistencyException");
+        unsigned char *data = mipmaps[i].address;
+        GLsizei datalen = mipmaps[i].len;
 
+        if (info.compressed)
+        {
+            glCompressedTexImage2D(GL_TEXTURE_2D, i, info.internalFormat, (GLsizei)width, (GLsizei)height, 0, datalen, data);
+        }
+        else
+        {
+            glTexImage2D(GL_TEXTURE_2D, i, info.internalFormat, (GLsizei)width, (GLsizei)height, 0, info.format, info.type, data);
+        }
+
+        if (i > 0 && (width != height || ccNextPOT(width) != width ))
+        {
+            CCLOG("cocos2d: Texture2D. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%u != height=%u", i, width, height);
+        }
+
+        GLenum err = glGetError();
+        if (err != GL_NO_ERROR)
+        {
+            CCLOG("cocos2d: Texture2D: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
+            return false;
+        }
+
+        width = MAX(width >> 1, 1);
+        height = MAX(height >> 1, 1);
     }
 
-    m_tContentSize = contentSize;
-    m_uPixelsWide = pixelsWide;
-    m_uPixelsHigh = pixelsHigh;
-    m_ePixelFormat = pixelFormat;
-    m_fMaxS = contentSize.width / (float)(pixelsWide);
-    m_fMaxT = contentSize.height / (float)(pixelsHigh);
+    _contentSize = Size((float)pixelsWide, (float)pixelsHigh);
+    _pixelsWide = pixelsWide;
+    _pixelsHigh = pixelsHigh;
+    _pixelFormat = pixelFormat;
+    _maxS = 1;
+    _maxT = 1;
 
-    m_bHasPremultipliedAlpha = false;
-    m_bHasMipmaps = false;
+    _hasPremultipliedAlpha = false;
+    _hasMipmaps = mipmapsNum > 1;
 
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE));
 
     return true;
 }
 
 
-const char* CCTexture2D::description(void)
+const char* Texture2D::description(void) const
 {
-    return CCString::createWithFormat("<CCTexture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT)->getCString();
+    return String::createWithFormat("<Texture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", _name, _pixelsWide, _pixelsHigh, _maxS, _maxT)->getCString();
 }
 
-// implementation CCTexture2D (Image)
-
-bool CCTexture2D::initWithImage(CCImage *uiImage)
+// implementation Texture2D (Image)
+bool Texture2D::initWithImage(Image *image)
 {
-    if (uiImage == NULL)
+    return initWithImage(image, PixelFormat::NONE);
+}
+
+bool Texture2D::initWithImage(Image *image, PixelFormat format)
+{
+    if (image == NULL)
     {
-        CCLOG("cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
+        CCLOG("cocos2d: Texture2D. Can't create Texture. UIImage is nil");
         return false;
     }
-    
-    unsigned int imageWidth = uiImage->getWidth();
-    unsigned int imageHeight = uiImage->getHeight();
-    
-    CCConfiguration *conf = CCConfiguration::sharedConfiguration();
-    
-    unsigned maxTextureSize = conf->getMaxTextureSize();
+
+    int imageWidth = image->getWidth();
+    int imageHeight = image->getHeight();
+
+    Configuration *conf = Configuration::getInstance();
+
+    int maxTextureSize = conf->getMaxTextureSize();
     if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) 
     {
         CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
         return false;
     }
-    
-    // always load premultiplied images
-    return initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight);
-}
 
-bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned int width, unsigned int height)
-{
-    unsigned char*            tempData = image->getData();
-    unsigned int*             inPixel32  = NULL;
-    unsigned char*            inPixel8 = NULL;
-    unsigned short*           outPixel16 = NULL;
-    bool                      hasAlpha = image->hasAlpha();
-    CCSize                    imageSize = CCSizeMake((float)(image->getWidth()), (float)(image->getHeight()));
-    CCTexture2DPixelFormat    pixelFormat;
-    size_t                    bpp = image->getBitsPerComponent();
+    unsigned char*   tempData = image->getData();
+    Size             imageSize = Size((float)imageWidth, (float)imageHeight);
+    PixelFormat      pixelFormat = PixelFormat::NONE;
+    PixelFormat      renderFormat = image->getRenderFormat();
+    size_t	         tempDataLen = image->getDataLen();
 
-    // compute pixel format
-    if (hasAlpha)
+
+    if (image->getNumberOfMipmaps() > 1)
     {
-    	pixelFormat = g_defaultAlphaPixelFormat;
+        if (format != PixelFormat::NONE)
+        {
+            CCLOG("cocos2d: WARNING: This image has more than 1 mipmaps and we will not convert the data format");
+        }
+
+        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight);
+        
+        return true;
+    }
+    else if (image->isCompressed())
+    {
+        if (format != PixelFormat::NONE)
+        {
+            CCLOG("cocos2d: WARNING: This image is compressed and we cann't convert it for now");
+        }
+
+        initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize);
+        return true;
     }
     else
     {
-        if (bpp >= 8)
+        // compute pixel format
+        if (format != PixelFormat::NONE)
         {
-            pixelFormat = kCCTexture2DPixelFormat_RGB888;
-        }
-        else 
+            pixelFormat = format;
+        }else
         {
-            pixelFormat = kCCTexture2DPixelFormat_RGB565;
+            pixelFormat = g_defaultAlphaPixelFormat;
         }
-        
-    }
-    
-    // Repack the pixel data into the right format
-    unsigned int length = width * height;
 
-    if (pixelFormat == kCCTexture2DPixelFormat_RGB565)
-    {
-        if (hasAlpha)
+        unsigned char* outTempData = NULL;
+        int outTempDataLen = 0;
+
+        pixelFormat = convertDataToFormat(tempData, tempDataLen, renderFormat, pixelFormat, &outTempData, &outTempDataLen);
+
+        initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize);
+
+
+        if (outTempData != NULL && outTempData != tempData)
         {
-            // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-            
-            tempData = new unsigned char[width * height * 2];
-            outPixel16 = (unsigned short*)tempData;
-            inPixel32 = (unsigned int*)image->getData();
-            
-            for(unsigned int i = 0; i < length; ++i, ++inPixel32)
+
+            delete [] outTempData;
+        }
+
+        // set the premultiplied tag
+        if (!image->hasPremultipliedAlpha())
+        {
+            if (image->getFileType() == Image::Format::PVR)
             {
-                *outPixel16++ = 
-                ((((*inPixel32 >>  0) & 0xFF) >> 3) << 11) |  // R
-                ((((*inPixel32 >>  8) & 0xFF) >> 2) << 5)  |  // G
-                ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);    // B
-            }
-        }
-        else 
-        {
-            // Convert "RRRRRRRRRGGGGGGGGBBBBBBBB" to "RRRRRGGGGGGBBBBB"
-            
-            tempData = new unsigned char[width * height * 2];
-            outPixel16 = (unsigned short*)tempData;
-            inPixel8 = (unsigned char*)image->getData();
-            
-            for(unsigned int i = 0; i < length; ++i)
+                _hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
+            }else
             {
-                *outPixel16++ = 
-                (((*inPixel8++ & 0xFF) >> 3) << 11) |  // R
-                (((*inPixel8++ & 0xFF) >> 2) << 5)  |  // G
-                (((*inPixel8++ & 0xFF) >> 3) << 0);    // B
+                CCLOG("wanning: We cann't find the data is premultiplied or not, we will assume it's false.");
+                _hasPremultipliedAlpha = false;
             }
-        }    
-    }
-    else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-        
-        inPixel32 = (unsigned int*)image->getData();  
-        tempData = new unsigned char[width * height * 2];
-        outPixel16 = (unsigned short*)tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
+        }else
         {
-            *outPixel16++ = 
-            ((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
-            ((((*inPixel32 >> 8) & 0xFF) >> 4) <<  8) | // G
-            ((((*inPixel32 >> 16) & 0xFF) >> 4) << 4) | // B
-            ((((*inPixel32 >> 24) & 0xFF) >> 4) << 0);  // A
+            _hasPremultipliedAlpha = image->isPremultipliedAlpha();
         }
+        return true;
     }
-    else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-        inPixel32 = (unsigned int*)image->getData();   
-        tempData = new unsigned char[width * height * 2];
-        outPixel16 = (unsigned short*)tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel16++ = 
-            ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
-            ((((*inPixel32 >> 8) & 0xFF) >> 3) <<  6) | // G
-            ((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) | // B
-            ((((*inPixel32 >> 24) & 0xFF) >> 7) << 0);  // A
-        }
-    }
-    else if (pixelFormat == kCCTexture2DPixelFormat_A8)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "AAAAAAAA"
-        inPixel32 = (unsigned int*)image->getData();
-        tempData = new unsigned char[width * height];
-        unsigned char *outPixel8 = tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel8++ = (*inPixel32 >> 24) & 0xFF;  // A
-        }
-    }
-    
-    if (hasAlpha && pixelFormat == kCCTexture2DPixelFormat_RGB888)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
-        inPixel32 = (unsigned int*)image->getData();
-        tempData = new unsigned char[width * height * 3];
-        unsigned char *outPixel8 = tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel8++ = (*inPixel32 >> 0) & 0xFF; // R
-            *outPixel8++ = (*inPixel32 >> 8) & 0xFF; // G
-            *outPixel8++ = (*inPixel32 >> 16) & 0xFF; // B
-        }
-    }
-    
-    initWithData(tempData, pixelFormat, width, height, imageSize);
-    
-    if (tempData != image->getData())
-    {
-        delete [] tempData;
-    }
-
-    m_bHasPremultipliedAlpha = image->isPremultipliedAlpha();
-    return true;
 }
 
-// implementation CCTexture2D (Text)
-bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize)
+Texture2D::PixelFormat Texture2D::convertI8ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
 {
-    return initWithString(text,  fontName, fontSize, CCSizeMake(0,0), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
+    switch (format)
+    {
+    case PixelFormat::RGBA8888:
+        *outDataLen = dataLen*4;
+        *outData = new unsigned char[*outDataLen];
+        convertI8ToRGBA8888(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB888:
+        *outDataLen = dataLen*3;
+        *outData = new unsigned char[*outDataLen];
+        convertI8ToRGB888(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB565:
+        *outDataLen = dataLen*2;
+        *outData = new unsigned char[*outDataLen];
+        convertI8ToRGB565(data, dataLen, *outData);
+        break;
+    case PixelFormat::AI88:
+        *outDataLen = dataLen*2;
+        *outData = new unsigned char[*outDataLen];
+        convertI8ToAI88(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGBA4444:
+        *outDataLen = dataLen*2;
+        *outData = new unsigned char[*outDataLen];
+        convertI8ToRGBA4444(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB5A1:
+        *outDataLen = dataLen*2;
+        *outData = new unsigned char[*outDataLen];
+        convertI8ToRGB5A1(data, dataLen, *outData);
+        break;
+    default:
+        // unsupport convertion or don't need to convert
+        if (format != PixelFormat::AUTO && format != PixelFormat::I8)
+        {
+            CCLOG("Can not convert image format PixelFormat::I8 to format ID:%d, we will use it's origin format PixelFormat::I8", format);
+        }
+
+        *outData = (unsigned char*)data;
+        *outDataLen = dataLen;
+        return PixelFormat::I8;
+    }
+
+    return format;
 }
 
-bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment)
+Texture2D::PixelFormat Texture2D::convertAI88ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
 {
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    
-        ccFontDefinition tempDef;
-        
-        tempDef.m_shadow.m_shadowEnabled = false;
-        tempDef.m_stroke.m_strokeEnabled = false;
-       
-        
-        tempDef.m_fontName      = std::string(fontName);
-        tempDef.m_fontSize      = fontSize;
-        tempDef.m_dimensions    = dimensions;
-        tempDef.m_alignment     = hAlignment;
-        tempDef.m_vertAlignment = vAlignment;
-        tempDef.m_fontFillColor = ccWHITE;
-    
-        return initWithString(text, &tempDef);
-    
-    
-    #else
-    
-    
-    #if CC_ENABLE_CACHE_TEXTURE_DATA
-        // cache the texture data
-        VolatileTexture::addStringTexture(this, text, dimensions, hAlignment, vAlignment, fontName, fontSize);
-    #endif
-        
-        bool bRet = false;
-        CCImage::ETextAlign eAlign;
-        
-        if (kCCVerticalTextAlignmentTop == vAlignment)
+    switch (format)
+    {
+    case PixelFormat::RGBA8888:
+        *outDataLen = dataLen*2;
+        *outData = new unsigned char[*outDataLen];
+        convertAI88ToRGBA8888(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB888:
+        *outDataLen = dataLen/2*3;
+        *outData = new unsigned char[*outDataLen];
+        convertAI88ToRGB888(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB565:
+        *outDataLen = dataLen;
+        *outData = new unsigned char[*outDataLen];
+        convertAI88ToRGB565(data, dataLen, *outData);
+        break;
+    case PixelFormat::A8:
+        *outDataLen = dataLen/2;
+        *outData = new unsigned char[*outDataLen];
+        convertAI88ToA8(data, dataLen, *outData);
+        break;
+    case PixelFormat::I8:
+        *outDataLen = dataLen/2;
+        *outData = new unsigned char[*outDataLen];
+        convertAI88ToI8(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGBA4444:
+        *outDataLen = dataLen;
+        *outData = new unsigned char[*outDataLen];
+        convertAI88ToRGBA4444(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB5A1:
+        *outDataLen = dataLen;
+        *outData = new unsigned char[*outDataLen];
+        convertAI88ToRGB5A1(data, dataLen, *outData);
+        break;
+    default:
+        // unsupport convertion or don't need to convert
+        if (format != PixelFormat::AUTO && format != PixelFormat::AI88)
         {
-            eAlign = (kCCTextAlignmentCenter == hAlignment) ? CCImage::kAlignTop
-            : (kCCTextAlignmentLeft == hAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
+            CCLOG("Can not convert image format PixelFormat::AI88 to format ID:%d, we will use it's origin format PixelFormat::AI88", format);
         }
-        else if (kCCVerticalTextAlignmentCenter == vAlignment)
-        {
-            eAlign = (kCCTextAlignmentCenter == hAlignment) ? CCImage::kAlignCenter
-            : (kCCTextAlignmentLeft == hAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
-        }
-        else if (kCCVerticalTextAlignmentBottom == vAlignment)
-        {
-            eAlign = (kCCTextAlignmentCenter == hAlignment) ? CCImage::kAlignBottom
-            : (kCCTextAlignmentLeft == hAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
-        }
-        else
-        {
-            CCAssert(false, "Not supported alignment format!");
-            return false;
-        }
-        
-        do
-        {
-            CCImage* pImage = new CCImage();
-            CC_BREAK_IF(NULL == pImage);
-            bRet = pImage->initWithString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize);
-            CC_BREAK_IF(!bRet);
-            bRet = initWithImage(pImage);
-            CC_SAFE_RELEASE(pImage);
-        } while (0);
-    
-    
-        return bRet;
-    
-    
-    #endif
-    
+
+        *outData = (unsigned char*)data;
+        *outDataLen = dataLen;
+        return PixelFormat::AI88;
+        break;
+    }
+
+    return format;
 }
 
-bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinition)
+Texture2D::PixelFormat Texture2D::convertRGB888ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
 {
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    switch (format)
+    {
+    case PixelFormat::RGBA8888:
+        *outDataLen = dataLen/3*4;
+        *outData = new unsigned char[*outDataLen];
+        convertRGB888ToRGBA8888(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB565:
+        *outDataLen = dataLen/3*2;
+        *outData = new unsigned char[*outDataLen];
+        convertRGB888ToRGB565(data, dataLen, *outData);
+        break;
+    case PixelFormat::I8:
+        *outDataLen = dataLen/3;
+        *outData = new unsigned char[*outDataLen];
+        convertRGB888ToI8(data, dataLen, *outData);
+        break;
+    case PixelFormat::AI88:
+        *outDataLen = dataLen/3*2;
+        *outData = new unsigned char[*outDataLen];
+        convertRGB888ToAI88(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGBA4444:
+        *outDataLen = dataLen/3*2;
+        *outData = new unsigned char[*outDataLen];
+        convertRGB888ToRGBA4444(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB5A1:
+        *outDataLen = dataLen;
+        *outData = new unsigned char[*outDataLen];
+        convertRGB888ToRGB5A1(data, dataLen, *outData);
+        break;
+    default:
+        // unsupport convertion or don't need to convert
+        if (format != PixelFormat::AUTO && format != PixelFormat::RGB888)
+        {
+            CCLOG("Can not convert image format PixelFormat::RGB888 to format ID:%d, we will use it's origin format PixelFormat::RGB888", format);
+        }
+
+        *outData = (unsigned char*)data;
+        *outDataLen = dataLen;
+        return PixelFormat::RGB888;
+    }
+    return format;
+}
+
+Texture2D::PixelFormat Texture2D::convertRGBA8888ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
+{
+
+    switch (format)
+    {
+    case PixelFormat::RGB888:
+        *outDataLen = dataLen/4*3;
+        *outData = new unsigned char[*outDataLen];
+        convertRGBA8888ToRGB888(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB565:
+        *outDataLen = dataLen/2;
+        *outData = new unsigned char[*outDataLen];
+        convertRGBA8888ToRGB565(data, dataLen, *outData);
+        break;
+    case PixelFormat::A8:
+        *outDataLen = dataLen/4;
+        *outData = new unsigned char[*outDataLen];
+        convertRGBA8888ToA8(data, dataLen, *outData);
+        break;
+    case PixelFormat::I8:
+        *outDataLen = dataLen/4;
+        *outData = new unsigned char[*outDataLen];
+        convertRGBA8888ToI8(data, dataLen, *outData);
+        break;
+    case PixelFormat::AI88:
+        *outDataLen = dataLen/2;
+        *outData = new unsigned char[*outDataLen];
+        convertRGBA8888ToAI88(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGBA4444:
+        *outDataLen = dataLen/2;
+        *outData = new unsigned char[*outDataLen];
+        convertRGBA8888ToRGBA4444(data, dataLen, *outData);
+        break;
+    case PixelFormat::RGB5A1:
+        *outDataLen = dataLen/2;
+        *outData = new unsigned char[*outDataLen];
+        convertRGBA8888ToRGB5A1(data, dataLen, *outData);
+        break;
+    default:
+        // unsupport convertion or don't need to convert
+        if (format != PixelFormat::AUTO && format != PixelFormat::RGBA8888)
+        {
+            CCLOG("Can not convert image format PixelFormat::RGBA8888 to format ID:%d, we will use it's origin format PixelFormat::RGBA8888", format);
+        }
+
+        *outData = (unsigned char*)data;
+        *outDataLen = dataLen;
+        return PixelFormat::RGBA8888;
+    }
+
+    return format;
+}
+
+/*
+convert map:
+1.PixelFormat::RGBA8888
+2.PixelFormat::RGB888
+3.PixelFormat::RGB565
+4.PixelFormat::A8
+5.PixelFormat::I8
+6.PixelFormat::AI88
+7.PixelFormat::RGBA4444
+8.PixelFormat::RGB5A1
+
+gray(5) -> 1235678
+gray alpha(6) -> 12345678
+rgb(2) -> 1235678
+rgba(1) -> 12345678
+
+*/
+Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data, int dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, int* outDataLen)
+{
+    switch (originFormat)
+    {
+    case PixelFormat::I8:
+        return convertI8ToFormat(data, dataLen, format, outData, outDataLen);
+    case PixelFormat::AI88:
+        return convertAI88ToFormat(data, dataLen, format, outData, outDataLen);
+    case PixelFormat::RGB888:
+        return convertRGB888ToFormat(data, dataLen, format, outData, outDataLen);
+    case PixelFormat::RGBA8888:
+        return convertRGBA8888ToFormat(data, dataLen, format, outData, outDataLen);
+    default:
+        CCLOG("unsupport convert for format %d to format %d", originFormat, format);
+        *outData = (unsigned char*)data;
+        *outDataLen = dataLen;
+        return originFormat;
+    }
+}
+
+// implementation Texture2D (Text)
+bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextHAlignment hAlignment/* =  TextHAlignment::CENTER */, TextVAlignment vAlignment/* =  TextVAlignment::TOP */)
+{
+    FontDefinition tempDef;
     
-    #if CC_ENABLE_CACHE_TEXTURE_DATA
-        // cache the texture data
-        VolatileTexture::addStringTexture(this, text, dimensions, hAlignment, vAlignment, fontName, fontSize);
-    #endif
-        
-        bool bRet = false;
-        CCImage::ETextAlign eAlign;
-        
-        if (kCCVerticalTextAlignmentTop == textDefinition->m_vertAlignment)
-        {
-            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignTop
-            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
-        }
-        else if (kCCVerticalTextAlignmentCenter == textDefinition->m_vertAlignment)
-        {
-            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignCenter
-            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
-        }
-        else if (kCCVerticalTextAlignmentBottom == textDefinition->m_vertAlignment)
-        {
-            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignBottom
-            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
-        }
-        else
-        {
-            CCAssert(false, "Not supported alignment format!");
-            return false;
-        }
-        
-        // handle shadow parameters
-        bool  shadowEnabled =  false;
-        float shadowDX      = 0.0;
-        float shadowDY      = 0.0;
-        float shadowBlur    = 0.0;
-        float shadowOpacity = 0.0;
-        
-        if ( textDefinition->m_shadow.m_shadowEnabled )
-        {
-            shadowEnabled =  true;
-            shadowDX      = textDefinition->m_shadow.m_shadowOffset.width;
-            shadowDY      = textDefinition->m_shadow.m_shadowOffset.height;
-            shadowBlur    = textDefinition->m_shadow.m_shadowBlur;
-            shadowOpacity = textDefinition->m_shadow.m_shadowOpacity;
-        }
-        
-        // handle stroke parameters
-        bool strokeEnabled = false;
-        float strokeColorR = 0.0;
-        float strokeColorG = 0.0;
-        float strokeColorB = 0.0;
-        float strokeSize   = 0.0;
-        
-        if ( textDefinition->m_stroke.m_strokeEnabled )
-        {
-            strokeEnabled = true;
-            strokeColorR = textDefinition->m_stroke.m_strokeColor.r / 255;
-            strokeColorG = textDefinition->m_stroke.m_strokeColor.g / 255;
-            strokeColorB = textDefinition->m_stroke.m_strokeColor.b / 255;
-            strokeSize   = textDefinition->m_stroke.m_strokeSize;
-        }
-        
-        CCImage* pImage = new CCImage();
-        do
-        {
-            CC_BREAK_IF(NULL == pImage);
-            
-            bRet = pImage->initWithStringShadowStroke(text,
-                                                      (int)textDefinition->m_dimensions.width,
-                                                      (int)textDefinition->m_dimensions.height,
-                                                      eAlign,
-                                                      textDefinition->m_fontName.c_str(),
-                                                      textDefinition->m_fontSize,
-                                                      textDefinition->m_fontFillColor.r / 255,
-                                                      textDefinition->m_fontFillColor.g / 255,
-                                                      textDefinition->m_fontFillColor.b / 255,
-                                                      shadowEnabled,
-                                                      shadowDX,
-                                                      shadowDY,
-                                                      shadowOpacity,
-                                                      shadowBlur,
-                                                      strokeEnabled,
-                                                      strokeColorR,
-                                                      strokeColorG,
-                                                      strokeColorB,
-                                                      strokeSize);
-            
-            
-            CC_BREAK_IF(!bRet);
-            bRet = initWithImage(pImage);
-            
-        } while (0);
-        
-        CC_SAFE_RELEASE(pImage);
-        
-        return bRet;
+    tempDef._shadow._shadowEnabled = false;
+    tempDef._stroke._strokeEnabled = false;
+   
     
+    tempDef._fontName      = std::string(fontName);
+    tempDef._fontSize      = fontSize;
+    tempDef._dimensions    = dimensions;
+    tempDef._alignment     = hAlignment;
+    tempDef._vertAlignment = vAlignment;
+    tempDef._fontFillColor = Color3B::WHITE;
+
+    return initWithString(text, tempDef);
+}
+
+bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // cache the texture data
+    VolatileTexture::addStringTexture(this, text, textDefinition);
+#endif
+
+    bool bRet = false;
+    Image::TextAlign eAlign;
     
-    #else
-    
-        CCAssert(false, "Currently only supported on iOS and Android!");
+    if (TextVAlignment::TOP == textDefinition._vertAlignment)
+    {
+        eAlign = (TextHAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::TOP
+        : (TextHAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::TOP_LEFT : Image::TextAlign::TOP_RIGHT;
+    }
+    else if (TextVAlignment::CENTER == textDefinition._vertAlignment)
+    {
+        eAlign = (TextHAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::CENTER
+        : (TextHAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::LEFT : Image::TextAlign::RIGHT;
+    }
+    else if (TextVAlignment::BOTTOM == textDefinition._vertAlignment)
+    {
+        eAlign = (TextHAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::BOTTOM
+        : (TextHAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::BOTTOM_LEFT : Image::TextAlign::BOTTOM_RIGHT;
+    }
+    else
+    {
+        CCASSERT(false, "Not supported alignment format!");
         return false;
+    }
     
-    #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+    // handle shadow parameters
+    bool  shadowEnabled = false;
+    float shadowDX      = 0.0f;
+    float shadowDY      = 0.0f;
+    float shadowBlur    = 0.0f;
+    float shadowOpacity = 0.0f;
+    
+    if ( textDefinition._shadow._shadowEnabled )
+    {
+        shadowEnabled =  true;
+        shadowDX      = textDefinition._shadow._shadowOffset.width;
+        shadowDY      = textDefinition._shadow._shadowOffset.height;
+        shadowBlur    = textDefinition._shadow._shadowBlur;
+        shadowOpacity = textDefinition._shadow._shadowOpacity;
+    }
+    
+    // handle stroke parameters
+    bool strokeEnabled = false;
+    float strokeColorR = 0.0f;
+    float strokeColorG = 0.0f;
+    float strokeColorB = 0.0f;
+    float strokeSize   = 0.0f;
+    
+    if ( textDefinition._stroke._strokeEnabled )
+    {
+        strokeEnabled = true;
+        strokeColorR = textDefinition._stroke._strokeColor.r / 255.0f;
+        strokeColorG = textDefinition._stroke._strokeColor.g / 255.0f;
+        strokeColorB = textDefinition._stroke._strokeColor.b / 255.0f;
+        strokeSize   = textDefinition._stroke._strokeSize;
+    }
+    
+    Image* pImage = new Image();
+    do
+    {
+        CC_BREAK_IF(NULL == pImage);
+        
+        bRet = pImage->initWithStringShadowStroke(text,
+                                                  (int)textDefinition._dimensions.width,
+                                                  (int)textDefinition._dimensions.height,
+                                                  eAlign,
+                                                  textDefinition._fontName.c_str(),
+                                                  textDefinition._fontSize,
+                                                  textDefinition._fontFillColor.r / 255.0f,
+                                                  textDefinition._fontFillColor.g / 255.0f,
+                                                  textDefinition._fontFillColor.b / 255.0f,
+                                                  shadowEnabled,
+                                                  shadowDX,
+                                                  shadowDY,
+                                                  shadowOpacity,
+                                                  shadowBlur,
+                                                  strokeEnabled,
+                                                  strokeColorR,
+                                                  strokeColorG,
+                                                  strokeColorB,
+                                                  strokeSize);
+        
+        
+        CC_BREAK_IF(!bRet);
+        bRet = initWithImage(pImage);
+        
+    } while (0);
+    
+    CC_SAFE_RELEASE(pImage);
+    
+    return bRet;
+
+#else
+    bool requestUnsupported = textDefinition._shadow._shadowEnabled || textDefinition._stroke._strokeEnabled;
+
+    CCASSERT(requestUnsupported == false, "Currently shadow and stroke only supported on iOS and Android!");
+
+    Image* pImage = new Image();
+    do
+    {
+        CC_BREAK_IF(NULL == pImage);
+        bRet = pImage->initWithString(text, (int)textDefinition._dimensions.width, (int)textDefinition._dimensions.height, eAlign, textDefinition._fontName.c_str(), (int)textDefinition._fontSize);
+        CC_BREAK_IF(!bRet);
+        bRet = initWithImage(pImage);
+    } while (0);
+    
+    CC_SAFE_RELEASE(pImage);
+
+    return bRet;    
+#endif
 }
 
 
-// implementation CCTexture2D (Drawing)
+// implementation Texture2D (Drawing)
 
-void CCTexture2D::drawAtPoint(const CCPoint& point)
+void Texture2D::drawAtPoint(const Point& point)
 {
-    GLfloat    coordinates[] = {    
-        0.0f,    m_fMaxT,
-        m_fMaxS,m_fMaxT,
+    GLfloat    coordinates[] = {
+        0.0f,    _maxT,
+        _maxS,_maxT,
         0.0f,    0.0f,
-        m_fMaxS,0.0f };
+        _maxS,0.0f };
 
-    GLfloat    width = (GLfloat)m_uPixelsWide * m_fMaxS,
-        height = (GLfloat)m_uPixelsHigh * m_fMaxT;
+    GLfloat    width = (GLfloat)_pixelsWide * _maxS,
+        height = (GLfloat)_pixelsHigh * _maxT;
 
     GLfloat        vertices[] = {    
         point.x,            point.y,
@@ -638,165 +1174,105 @@ void CCTexture2D::drawAtPoint(const CCPoint& point)
         point.x,            height  + point.y,
         width + point.x,    height  + point.y };
 
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-    m_pShaderProgram->use();
-    m_pShaderProgram->setUniformsForBuiltins();
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    _shaderProgram->use();
+    _shaderProgram->setUniformsForBuiltins();
 
-    ccGLBindTexture2D( m_uName );
+    GL::bindTexture2D( _name );
 
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 #endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-void CCTexture2D::drawInRect(const CCRect& rect)
+void Texture2D::drawInRect(const Rect& rect)
 {
     GLfloat    coordinates[] = {    
-        0.0f,    m_fMaxT,
-        m_fMaxS,m_fMaxT,
+        0.0f,    _maxT,
+        _maxS,_maxT,
         0.0f,    0.0f,
-        m_fMaxS,0.0f };
+        _maxS,0.0f };
 
     GLfloat    vertices[] = {    rect.origin.x,        rect.origin.y,                            /*0.0f,*/
         rect.origin.x + rect.size.width,        rect.origin.y,                            /*0.0f,*/
         rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
         rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
 
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-    m_pShaderProgram->use();
-    m_pShaderProgram->setUniformsForBuiltins();
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    _shaderProgram->use();
+    _shaderProgram->setUniformsForBuiltins();
 
-    ccGLBindTexture2D( m_uName );
+    GL::bindTexture2D( _name );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 #endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-bool CCTexture2D::initWithPVRFile(const char* file)
+void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
-    bool bRet = false;
-    // nothing to do with CCObject::init
-    
-    CCTexturePVR *pvr = new CCTexturePVR;
-    bRet = pvr->initWithContentsOfFile(file);
-        
-    if (bRet)
-    {
-        pvr->setRetainName(true); // don't dealloc texture on release
-        
-        m_uName = pvr->getName();
-        m_fMaxS = 1.0f;
-        m_fMaxT = 1.0f;
-        m_uPixelsWide = pvr->getWidth();
-        m_uPixelsHigh = pvr->getHeight();
-        m_tContentSize = CCSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
-        m_bHasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
-        m_ePixelFormat = pvr->getFormat();
-        m_bHasMipmaps = pvr->getNumberOfMipmaps() > 1;       
-
-        pvr->release();
-    }
-    else
-    {
-        CCLOG("cocos2d: Couldn't load PVR image %s", file);
-    }
-
-    return bRet;
-}
-
-bool CCTexture2D::initWithETCFile(const char* file)
-{
-    bool bRet = false;
-    // nothing to do with CCObject::init
-    
-    CCTextureETC *etc = new CCTextureETC;
-    bRet = etc->initWithFile(file);
-    
-    if (bRet)
-    {
-        m_uName = etc->getName();
-        m_fMaxS = 1.0f;
-        m_fMaxT = 1.0f;
-        m_uPixelsWide = etc->getWidth();
-        m_uPixelsHigh = etc->getHeight();
-        m_tContentSize = CCSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
-        m_bHasPremultipliedAlpha = true;
-        
-        etc->release();
-    }
-    else
-    {
-        CCLOG("cocos2d: Couldn't load ETC image %s", file);
-    }
-    
-    return bRet;
-}
-
-void CCTexture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
-{
-    PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
+    _PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
 }
 
     
 //
 // Use to apply MIN/MAG filter
 //
-// implementation CCTexture2D (GLFilter)
+// implementation Texture2D (GLFilter)
 
-void CCTexture2D::generateMipmap()
+void Texture2D::generateMipmap()
 {
-    CCAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mipmap texture only works in POT textures");
-    ccGLBindTexture2D( m_uName );
+    CCASSERT( _pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
+    GL::bindTexture2D( _name );
     glGenerateMipmap(GL_TEXTURE_2D);
-    m_bHasMipmaps = true;
+    _hasMipmaps = true;
 }
 
-bool CCTexture2D::hasMipmaps()
+bool Texture2D::hasMipmaps() const
 {
-    return m_bHasMipmaps;
+    return _hasMipmaps;
 }
 
-void CCTexture2D::setTexParameters(ccTexParams *texParams)
+void Texture2D::setTexParameters(const TexParams &texParams)
 {
-    CCAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) || texParams->wrapS == GL_CLAMP_TO_EDGE) &&
-        (m_uPixelsHigh == ccNextPOT(m_uPixelsHigh) || texParams->wrapT == GL_CLAMP_TO_EDGE),
+    CCASSERT( (_pixelsWide == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
+        (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
         "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
-    ccGLBindTexture2D( m_uName );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
+    GL::bindTexture2D( _name );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams.minFilter );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams.magFilter );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams.wrapS );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams.wrapT );
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::setTexParameters(this, texParams);
 #endif
 }
 
-void CCTexture2D::setAliasTexParameters()
+void Texture2D::setAliasTexParameters()
 {
-    ccGLBindTexture2D( m_uName );
+    GL::bindTexture2D( _name );
 
-    if( ! m_bHasMipmaps )
+    if( ! _hasMipmaps )
     {
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
     }
@@ -807,16 +1283,16 @@ void CCTexture2D::setAliasTexParameters()
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    ccTexParams texParams = {m_bHasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST,GL_NEAREST,GL_NONE,GL_NONE};
-    VolatileTexture::setTexParameters(this, &texParams);
+    TexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
+    VolatileTexture::setTexParameters(this, texParams);
 #endif
 }
 
-void CCTexture2D::setAntiAliasTexParameters()
+void Texture2D::setAntiAliasTexParameters()
 {
-    ccGLBindTexture2D( m_uName );
+    GL::bindTexture2D( _name );
 
-    if( ! m_bHasMipmaps )
+    if( ! _hasMipmaps )
     {
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     }
@@ -827,48 +1303,48 @@ void CCTexture2D::setAntiAliasTexParameters()
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    ccTexParams texParams = {m_bHasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR,GL_LINEAR,GL_NONE,GL_NONE};
-    VolatileTexture::setTexParameters(this, &texParams);
+    TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
+    VolatileTexture::setTexParameters(this, texParams);
 #endif
 }
 
-const char* CCTexture2D::stringForFormat()
+const char* Texture2D::getStringForFormat() const
 {
-	switch (m_ePixelFormat) 
+	switch (_pixelFormat) 
 	{
-		case kCCTexture2DPixelFormat_RGBA8888:
+		case Texture2D::PixelFormat::RGBA8888:
 			return  "RGBA8888";
 
-		case kCCTexture2DPixelFormat_RGB888:
+		case Texture2D::PixelFormat::RGB888:
 			return  "RGB888";
 
-		case kCCTexture2DPixelFormat_RGB565:
+		case Texture2D::PixelFormat::RGB565:
 			return  "RGB565";
 
-		case kCCTexture2DPixelFormat_RGBA4444:
+		case Texture2D::PixelFormat::RGBA4444:
 			return  "RGBA4444";
 
-		case kCCTexture2DPixelFormat_RGB5A1:
+		case Texture2D::PixelFormat::RGB5A1:
 			return  "RGB5A1";
 
-		case kCCTexture2DPixelFormat_AI88:
+		case Texture2D::PixelFormat::AI88:
 			return  "AI88";
 
-		case kCCTexture2DPixelFormat_A8:
+		case Texture2D::PixelFormat::A8:
 			return  "A8";
 
-		case kCCTexture2DPixelFormat_I8:
+		case Texture2D::PixelFormat::I8:
 			return  "I8";
 
-		case kCCTexture2DPixelFormat_PVRTC4:
+		case Texture2D::PixelFormat::PVRTC4:
 			return  "PVRTC4";
 
-		case kCCTexture2DPixelFormat_PVRTC2:
+		case Texture2D::PixelFormat::PVRTC2:
 			return  "PVRTC2";
 
 		default:
-			CCAssert(false , "unrecognized pixel format");
-			CCLOG("stringForFormat: %ld, cannot give useful result", (long)m_ePixelFormat);
+			CCASSERT(false , "unrecognized pixel format");
+			CCLOG("stringForFormat: %ld, cannot give useful result", (long)_pixelFormat);
 			break;
 	}
 
@@ -878,66 +1354,36 @@ const char* CCTexture2D::stringForFormat()
 //
 // Texture options for images that contains alpha
 //
-// implementation CCTexture2D (PixelFormat)
+// implementation Texture2D (PixelFormat)
 
-void CCTexture2D::setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format)
+void Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat format)
 {
     g_defaultAlphaPixelFormat = format;
 }
 
-CCTexture2DPixelFormat CCTexture2D::defaultAlphaPixelFormat()
+Texture2D::PixelFormat Texture2D::getDefaultAlphaPixelFormat()
 {
     return g_defaultAlphaPixelFormat;
 }
 
-unsigned int CCTexture2D::bitsPerPixelForFormat(CCTexture2DPixelFormat format)
+unsigned int Texture2D::getBitsPerPixelForFormat(Texture2D::PixelFormat format) const
 {
-	unsigned int ret=0;
-
-	switch (format) {
-		case kCCTexture2DPixelFormat_RGBA8888:
-			ret = 32;
-			break;
-		case kCCTexture2DPixelFormat_RGB888:
-			// It is 32 and not 24, since its internal representation uses 32 bits.
-			ret = 32;
-			break;
-		case kCCTexture2DPixelFormat_RGB565:
-			ret = 16;
-			break;
-		case kCCTexture2DPixelFormat_RGBA4444:
-			ret = 16;
-			break;
-		case kCCTexture2DPixelFormat_RGB5A1:
-			ret = 16;
-			break;
-		case kCCTexture2DPixelFormat_AI88:
-			ret = 16;
-			break;
-		case kCCTexture2DPixelFormat_A8:
-			ret = 8;
-			break;
-		case kCCTexture2DPixelFormat_I8:
-			ret = 8;
-			break;
-		case kCCTexture2DPixelFormat_PVRTC4:
-			ret = 4;
-			break;
-		case kCCTexture2DPixelFormat_PVRTC2:
-			ret = 2;
-			break;
-		default:
-			ret = -1;
-			CCAssert(false , "unrecognized pixel format");
-			CCLOG("bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
-			break;
-	}
-	return ret;
+    if (format == PixelFormat::NONE)
+    {
+        return 0;
+    }
+    
+	return _pixelFormatInfoTables.at(format).bpp;
 }
 
-unsigned int CCTexture2D::bitsPerPixelForFormat()
+unsigned int Texture2D::getBitsPerPixelForFormat() const
 {
-	return this->bitsPerPixelForFormat(m_ePixelFormat);
+	return this->getBitsPerPixelForFormat(_pixelFormat);
+}
+
+const Texture2D::PixelFormatInfoMap& Texture2D::getPixelFormatInfoMap()
+{
+    return _pixelFormatInfoTables;
 }
 
 

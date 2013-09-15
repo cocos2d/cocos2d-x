@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'chipmunk' target in the 'chipmunk' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

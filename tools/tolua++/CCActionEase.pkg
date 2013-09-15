@@ -2,15 +2,11 @@
 class CCActionEase : public CCActionInterval
 {
 	CCActionInterval* reverse(void);
-
-    static CCActionEase* create(CCActionInterval *pAction);
 };
 
 class CCEaseRateAction : public CCActionEase
 {
 	CCActionInterval* reverse(void);
-
-    static CCEaseRateAction* create(CCActionInterval* pAction, float fRate);
 };
 
 class CCEaseIn : public CCEaseRateAction
@@ -82,8 +78,6 @@ class CCEaseElastic : public CCActionEase
 
 	float getPeriod(void);
 	void setPeriod(float fPeriod);
-
-    static CCEaseElastic* create(CCActionInterval *pAction, float fPeriod = 0.3);
 };
 
 class CCEaseElasticIn : public CCEaseElastic
@@ -110,8 +104,6 @@ class CCEaseElasticInOut : public CCEaseElastic
 class CCEaseBounce : public CCActionEase
 {
 	CCActionInterval* reverse(void);
-
-    static CCEaseBounce* create(CCActionInterval* pAction);
 };
 
 class CCEaseBounceIn : public CCEaseBounce

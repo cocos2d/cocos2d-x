@@ -3,7 +3,7 @@
 
 NS_CC_BEGIN
 
-int CCDevice::getDPI()
+int Device::getDPI()
 {
     static int dpi = -1;
     if (dpi == -1)

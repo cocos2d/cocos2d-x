@@ -13,6 +13,9 @@
     <Filter Include="luajit\include">
       <UniqueIdentifier>{b7025611-420a-4414-b567-f7496eec5f57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocos2dx_support\generated">
+      <UniqueIdentifier>{19f563f0-e0ff-4500-890b-1755841d4ddb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\tolua\tolua_event.c">
@@ -36,9 +39,6 @@
     <ClCompile Include="..\cocos2dx_support\Cocos2dxLuaLoader.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp">
-      <Filter>cocos2dx_support</Filter>
-    </ClCompile>
     <ClCompile Include="..\cocos2dx_support\tolua_fix.c">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
@@ -51,13 +51,34 @@
     <ClCompile Include="..\cocos2dx_support\CCLuaValue.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\Lua_extensions_CCB.cpp">
-      <Filter>cocos2dx_support</Filter>
-    </ClCompile>
     <ClCompile Include="..\cocos2dx_support\CCBProxy.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
     <ClCompile Include="..\cocos2dx_support\Lua_web_socket.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\LuaOpengl.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\LuaScriptHandlerMgr.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_extension_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\LuaBasicConversions.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.cpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.cpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_deprecated.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,9 +93,6 @@
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\Cocos2dxLuaLoader.h">
-      <Filter>cocos2dx_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\tolua_fix.h">
@@ -101,14 +119,43 @@
     <ClInclude Include="..\luajit\include\lualib.h">
       <Filter>luajit\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\Lua_extensions_CCB.h">
-      <Filter>cocos2dx_support</Filter>
-    </ClInclude>
     <ClInclude Include="..\cocos2dx_support\CCBProxy.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\Lua_web_socket.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\LuaOpengl.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\LuaScriptHandlerMgr.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_extension_manual.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_manual.hpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\LuaBasicConversions.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.hpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.hpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_deprecated.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto_api.js">
+      <Filter>cocos2dx_support\generated</Filter>
+    </None>
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto_api.js">
+      <Filter>cocos2dx_support\generated</Filter>
+    </None>
   </ItemGroup>
 </Project>

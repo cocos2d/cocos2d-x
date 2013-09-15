@@ -24,17 +24,19 @@ THE SOFTWARE.
 
 #include "CCThread.h"
 
-// iOS and Mac already has a CCThread.mm
+// iOS and Mac already has a Thread.mm
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
 NS_CC_BEGIN
 
-CCThread::~CCThread()
+Thread::~Thread()
 {
-
+    // To prevent warning: private field '_autoreasePool' is not
+    // used [-Wunused-private-field] by CLANG.
+    _autoReleasePool = nullptr;
 }
 
-void CCThread::createAutoreleasePool()
+void Thread::createAutoreleasePool()
 {
 
 }

@@ -5,10 +5,10 @@
 
 NS_CC_BEGIN
 
-class CC_DLL CCDevice
+class CC_DLL Device
 {
 private:
-    CCDevice();
+    Device();
 public:
     /**
      *  Gets the DPI of device

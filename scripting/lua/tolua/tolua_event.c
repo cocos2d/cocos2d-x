@@ -344,7 +344,7 @@ static int class_add_event (lua_State* L)
     return do_operator(L,".add");
 }
 
-static int class_sub_event (lua_State* L)
+int class_sub_event (lua_State* L)
 {
     return do_operator(L,".sub");
 }

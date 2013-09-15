@@ -54,15 +54,6 @@ static void its_finalize(JSFreeOp *fop, JSObject *obj)
 	CCLOGINFO("Finalizing global class");
 }
 
-static JSClass global_class = {
-	"__global", JSCLASS_GLOBAL_FLAGS,
-	JS_PropertyStub, JS_PropertyStub,
-	JS_PropertyStub, JS_StrictPropertyStub,
-	JS_EnumerateStub, JS_ResolveStub,
-	JS_ConvertStub, its_finalize,
-	JSCLASS_NO_OPTIONAL_MEMBERS
-};
-
 //#pragma mark JSBCore - Helper free functions
 static void reportError(JSContext *cx, const char *message, JSErrorReport *report)
 {
@@ -86,7 +77,7 @@ void* jsb_get_proxy_for_jsobject(JSObject *obj)
 
 void jsb_set_proxy_for_jsobject(void *proxy, JSObject *obj)
 {
-	CCAssert( !jsb_get_proxy_for_jsobject(obj), "Already added. abort");
+	CCASSERT( !jsb_get_proxy_for_jsobject(obj), "Already added. abort");
 	
 //	printf("Setting proxy for: %p - %p (%s)\n", obj, proxy, [[proxy description] UTF8String] );
 	
@@ -125,7 +116,7 @@ JSObject* jsb_get_jsobject_for_proxy(void *proxy)
 
 void jsb_set_jsobject_for_proxy(JSObject *jsobj, void* proxy)
 {
-	CCAssert( !jsb_get_jsobject_for_proxy(proxy), "Already added. abort");
+	CCASSERT( !jsb_get_jsobject_for_proxy(proxy), "Already added. abort");
 	
 	tHashJSObject *element = (tHashJSObject*) malloc( sizeof( *element ) );
 	
@@ -160,7 +151,7 @@ struct jsb_c_proxy_s* jsb_get_c_proxy_for_jsobject( JSObject *jsobj )
 void jsb_del_c_proxy_for_jsobject( JSObject *jsobj )
 {
 	struct jsb_c_proxy_s *proxy = (struct jsb_c_proxy_s *) JS_GetPrivate(jsobj);
-	CCAssert(proxy, "Invalid proxy for JSObject");
+	CCASSERT(proxy, "Invalid proxy for JSObject");
 	JS_SetPrivate(jsobj, NULL);
 	
 	free(proxy);
@@ -169,7 +160,7 @@ void jsb_del_c_proxy_for_jsobject( JSObject *jsobj )
 void jsb_set_c_proxy_for_jsobject( JSObject *jsobj, void *handle, unsigned long flags)
 {
 	struct jsb_c_proxy_s *proxy = (struct jsb_c_proxy_s*) malloc(sizeof(*proxy));
-	CCAssert(proxy, "No memory for proxy");
+	CCASSERT(proxy, "No memory for proxy");
 	
 	proxy->handle = handle;
 	proxy->flags = flags;

@@ -2,7 +2,7 @@ require "luaScript/extern"
 require "luaScript/VisibleRect"
 
 Paddle = class("Paddle", function(texture)
-    return CCSprite:createWithTexture(texture)
+    return cc.Sprite:createWithTexture(texture)
 end)
 
 Paddle.__index = Paddle
@@ -15,14 +15,14 @@ Paddle.m_state = kPaddleStateGrabbed
 
 function Paddle:rect()
     local  s = self:getTexture():getContentSize()
-    return CCRectMake(-s.width / 2, -s.height / 2, s.width, s.height)
+    return cc.rect(-s.width / 2, -s.height / 2, s.width, s.height)
 end
 
 function Paddle:containsTouchLocation(x,y)
-    local position = ccp(self:getPosition())
+    local position = cc.p(self:getPosition())
     local  s = self:getTexture():getContentSize()
-    local touchRect = CCRectMake(-s.width / 2 + position.x, -s.height / 2 + position.y, s.width, s.height)
-    local b = touchRect:containsPoint(ccp(x,y))
+    local touchRect = cc.rect(-s.width / 2 + position.x, -s.height / 2 + position.y, s.width, s.height)
+    local b = cc.rectContainsPoint(touchRect, cc.p(x,y))
     return b
 end
 
@@ -36,7 +36,7 @@ function Paddle:ccTouchBegan(x, y)
 end
 
 function Paddle:ccTouchMoved(x, y)
-    self:setPosition( ccp(x,y) );
+    self:setPosition( cc.p(x,y) );
 end
 
 function Paddle:ccTouchEnded(x, y)

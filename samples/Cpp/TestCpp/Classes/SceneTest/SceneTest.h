@@ -4,7 +4,7 @@
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
 
-class SceneTestLayer1 : public CCLayer
+class SceneTestLayer1 : public Layer
 {
 public:
     SceneTestLayer1();
@@ -14,37 +14,37 @@ public:
     virtual void onEnterTransitionDidFinish();
 
     void testDealloc(float dt);
-    void onPushScene(CCObject* pSender);
-    void onPushSceneTran(CCObject* pSender);
-    void onQuit(CCObject* pSender);
+    void onPushScene(Object* sender);
+    void onPushSceneTran(Object* sender);
+    void onQuit(Object* sender);
 
     //CREATE_NODE(SceneTestLayer1);
 } ;
 
-class SceneTestLayer2 : public CCLayer
+class SceneTestLayer2 : public Layer
 {
-    float    m_timeCounter;
+    float    _timeCounter;
 public:
     SceneTestLayer2();
 
     void testDealloc(float dt);
-    void onGoBack(CCObject* pSender);
-    void onReplaceScene(CCObject* pSender);
-    void onReplaceSceneTran(CCObject* pSender);
+    void onGoBack(Object* sender);
+    void onReplaceScene(Object* sender);
+    void onReplaceSceneTran(Object* sender);
 
     //CREATE_NODE(SceneTestLayer2);
 } ;
 
-class SceneTestLayer3 : public CCLayerColor
+class SceneTestLayer3 : public LayerColor
 {
 public:
     SceneTestLayer3();
     bool init();
     virtual void testDealloc(float dt);
-    void item0Clicked(CCObject* pSender);
-    void item1Clicked(CCObject* pSender);
-    void item2Clicked(CCObject* pSender);
-    void item3Clicked(CCObject* pSender);
+    void item0Clicked(Object* sender);
+    void item1Clicked(Object* sender);
+    void item2Clicked(Object* sender);
+    void item3Clicked(Object* sender);
     CREATE_FUNC(SceneTestLayer3)
 } ;
 

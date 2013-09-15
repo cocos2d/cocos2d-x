@@ -61,21 +61,41 @@ typedef struct
  * @{
  */
 
-//helper class to store ccColor3B's in mutable arrays
-class CCColor3bObject : public CCObject
+//helper class to store Color3B's in mutable arrays
+class Color3bObject : public Object
 {
 public:
-    ccColor3B value;
-    CCColor3bObject(ccColor3B s_value):value(s_value){}
+    Color3B value;
+    /**
+     * @js NA
+     * @lua NA
+     */
+    Color3bObject(Color3B s_value):value(s_value){}
 };
 
-class CCControlUtils
+class ControlUtils
 {
 public:
-    static CCSprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, CCNode * target, CCPoint pos, CCPoint anchor);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static Sprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, Node * target, Point pos, Point anchor);
+    /**
+     * @js NA
+     * @lua NA
+     */
     static HSV HSVfromRGB(RGBA value);
+    /**
+     * @js NA
+     * @lua NA
+     */
     static RGBA RGBfromHSV(HSV value);
-    static CCRect CCRectUnion(const CCRect& src1, const CCRect& src2);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static Rect RectUnion(const Rect& src1, const Rect& src2);
 };
 
 // end of GUI group

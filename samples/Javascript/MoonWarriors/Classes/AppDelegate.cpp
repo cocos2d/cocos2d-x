@@ -3,8 +3,14 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
+#include "js_bindings_ccbreader.h"
+#include "js_bindings_system_registration.h"
+#include "js_bindings_chipmunk_registration.h"
+#include "jsb_opengl_registration.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -15,18 +21,18 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+	ScriptEngineManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
-    pDirector->setProjection(kCCDirectorProjection2D);
+    auto pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
+    pDirector->setProjection(Director::Projection::_2D);
 
     // Set the design resolution
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(320, 480, kResolutionShowAll);
+    EGLView::getInstance()->setDesignResolutionSize(320, 480, ResolutionPolicy::SHOW_ALL);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -36,13 +42,19 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
+    sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
+    sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+    sc->addRegisterCallback(register_CCBuilderReader);
+    sc->addRegisterCallback(jsb_register_system);
+    sc->addRegisterCallback(JSB_register_opengl);
+    
     sc->start();
     
-    CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    auto pEngine = ScriptingCore::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 #if JSB_ENABLE_DEBUGGER
-    ScriptingCore::getInstance()->enableDebugger();
     ScriptingCore::getInstance()->runScript("main.debug.js");
 #else
     ScriptingCore::getInstance()->runScript("MoonWarriors-jsb.js");
@@ -55,11 +67,11 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    CCDirector* director = CCDirector::sharedDirector();
+    auto director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
-        CCPoolManager::sharedPoolManager()->finalize();
+        PoolManager::sharedPoolManager()->finalize();
         if (internal_state == 0) {
             //sc->dumpRoot(NULL, 0, NULL);
             sc->start();
@@ -74,15 +86,15 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    Director::getInstance()->stopAnimation();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    Director::getInstance()->startAnimation();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

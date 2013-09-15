@@ -47,7 +47,7 @@ extern "C"
         filename.append(".lua");
         
         unsigned long codeBufferSize = 0;
-        unsigned char* codeBuffer = CCFileUtils::sharedFileUtils()->getFileData(filename.c_str(), "rb", &codeBufferSize);
+        unsigned char* codeBuffer = FileUtils::getInstance()->getFileData(filename.c_str(), "rb", &codeBufferSize);
         
         if (codeBuffer)
         {
@@ -60,7 +60,7 @@ extern "C"
         }
         else
         {
-            CCLog("can not get file data of %s", filename.c_str());
+            log("can not get file data of %s", filename.c_str());
         }
         
         return 1;

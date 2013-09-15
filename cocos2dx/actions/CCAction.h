@@ -33,34 +33,45 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-enum {
-    //! Default tag
-    kCCActionTagInvalid = -1,
-};
-
 /**
  * @addtogroup actions
  * @{
  */
 
 /** 
-@brief Base class for CCAction objects.
+@brief Base class for Action objects.
  */
-class CC_DLL CCAction : public CCObject 
+class CC_DLL Action : public Object, public Clonable
 {
 public:
-    CCAction(void);
-    virtual ~CCAction(void);
+    /// Default tag used for all the actions
+    static const int INVALID_TAG = -1;
+    /**
+     * @js ctor
+     */
+    Action(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Action(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    const char* description() const;
 
-    const char* description();
+	/** returns a clone of action */
+	virtual Action* clone() const = 0;
 
-    virtual CCObject* copyWithZone(CCZone *pZone);
+    /** returns a new action that performs the exactly the reverse action */
+	virtual Action* reverse() const = 0;
 
     //! return true if the action has finished
-    virtual bool isDone(void);
+    virtual bool isDone(void) const;
 
     //! called before the action start. It will also set the target.
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(Node *target);
 
     /** 
     called after the action has finished. It will set the 'target' to nil.
@@ -81,34 +92,31 @@ public:
     */
     virtual void update(float time);
     
-    inline CCNode* getTarget(void) { return m_pTarget; }
+    inline Node* getTarget(void) const { return _target; }
     /** The action will modify the target properties. */
-    inline void setTarget(CCNode *pTarget) { m_pTarget = pTarget; }
+    inline void setTarget(Node *target) { _target = target; }
     
-    inline CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
+    inline Node* getOriginalTarget(void) const { return _originalTarget; }
     /** Set the original target, since target can be nil.
-    Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
+    Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
     The target is 'assigned', it is not 'retained'.
     @since v0.8.2
     */
-    inline void setOriginalTarget(CCNode *pOriginalTarget) { m_pOriginalTarget = pOriginalTarget; }
+    inline void setOriginalTarget(Node *pOriginalTarget) { _originalTarget = pOriginalTarget; }
 
-    inline int getTag(void) { return m_nTag; }
-    inline void setTag(int nTag) { m_nTag = nTag; }
+    inline int getTag(void) const { return _tag; }
+    inline void setTag(int nTag) { _tag = nTag; }
 
-public:
-    /** Create an action */
-    static CCAction* create();
 protected:
-    CCNode    *m_pOriginalTarget;
+    Node    *_originalTarget;
     /** The "target".
     The target will be set with the 'startWithTarget' method.
     When the 'stop' method is called, target will be set to nil.
     The target is 'assigned', it is not 'retained'.
     */
-    CCNode    *m_pTarget;
+    Node    *_target;
     /** The action tag. An identifier of the action */
-    int     m_nTag;
+    int     _tag;
 };
 
 /** 
@@ -120,131 +128,170 @@ protected:
 
  Infinite time actions are valid
  */
-class CC_DLL CCFiniteTimeAction : public CCAction
+class CC_DLL FiniteTimeAction : public Action
 {
 public:
-    CCFiniteTimeAction()
-        : m_fDuration(0)
+    /**
+     * @js ctor
+     */
+    FiniteTimeAction()
+	: _duration(0)
     {}
-    virtual ~CCFiniteTimeAction(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~FiniteTimeAction(){}
     //! get duration in seconds of the action
-    inline float getDuration(void) { return m_fDuration; }
+    inline float getDuration(void) const { return _duration; }
     //! set duration in seconds of the action
-    inline void setDuration(float duration) { m_fDuration = duration; }
+    inline void setDuration(float duration) { _duration = duration; }
 
-    /** returns a reversed action */
-    virtual CCFiniteTimeAction* reverse(void);
+    //
+    // Overrides
+    //
+    virtual FiniteTimeAction* reverse() const override = 0;
+	virtual FiniteTimeAction* clone() const override = 0;
+
 protected:
     //! duration in seconds
-    float m_fDuration;
+    float _duration;
 };
 
-class CCActionInterval;
-class CCRepeatForever;
+class ActionInterval;
+class RepeatForever;
 
 /** 
  @brief Changes the speed of an action, making it take longer (speed>1)
  or less (speed<1) time.
  Useful to simulate 'slow motion' or 'fast forward' effect.
- @warning This action can't be Sequenceable because it is not an CCIntervalAction
+ @warning This action can't be Sequenceable because it is not an IntervalAction
  */
-class CC_DLL CCSpeed : public CCAction
+class CC_DLL Speed : public Action
 {
 public:
-    CCSpeed()
-        : m_fSpeed(0.0)
-        , m_pInnerAction(NULL)
-    {}
-    virtual ~CCSpeed(void);
+    /** create the action */
+    static Speed* create(ActionInterval* pAction, float fSpeed);
+    /**
+     * @js ctor
+     */
+    Speed();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Speed(void);
 
-    inline float getSpeed(void) { return m_fSpeed; }
+    inline float getSpeed(void) const { return _speed; }
     /** alter the speed of the inner function in runtime */
-    inline void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
+    inline void setSpeed(float fSpeed) { _speed = fSpeed; }
 
     /** initializes the action */
-    bool initWithAction(CCActionInterval *pAction, float fSpeed);
+    bool initWithAction(ActionInterval *pAction, float fSpeed);
 
-    virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void startWithTarget(CCNode* pTarget);
-    virtual void stop();
-    virtual void step(float dt);
-    virtual bool isDone(void);
-    virtual CCActionInterval* reverse(void);
+    void setInnerAction(ActionInterval *pAction);
 
-    void setInnerAction(CCActionInterval *pAction);
+    inline ActionInterval* getInnerAction() const { return _innerAction; }
 
-    inline CCActionInterval* getInnerAction()
-    {
-        return m_pInnerAction;
-    }
+    //
+    // Override
+    //
+	virtual Speed* clone() const override;
+    virtual Speed* reverse() const override;
+    virtual void startWithTarget(Node* target) override;
+    virtual void stop() override;
+    virtual void step(float dt) override;
+    virtual bool isDone(void) const  override;
 
-public:
-    /** create the action */
-    static CCSpeed* create(CCActionInterval* pAction, float fSpeed);
 protected:
-    float m_fSpeed;
-    CCActionInterval *m_pInnerAction;
+    float _speed;
+    ActionInterval *_innerAction;
 };
 
 /** 
-@brief CCFollow is an action that "follows" a node.
+@brief Follow is an action that "follows" a node.
 
 Eg:
-layer->runAction(CCFollow::actionWithTarget(hero));
+@code
+layer->runAction(Follow::actionWithTarget(hero));
+@endcode
 
-Instead of using CCCamera as a "follower", use this action instead.
+Instead of using Camera as a "follower", use this action instead.
 @since v0.99.2
 */
-class CC_DLL CCFollow : public CCAction
+class CC_DLL Follow : public Action
 {
 public:
-    CCFollow()
-        : m_pobFollowedNode(NULL)
-        , m_bBoundarySet(false)
-        , m_bBoundaryFullyCovered(false)        
-        , m_fLeftBoundary(0.0)
-        , m_fRightBoundary(0.0)
-        , m_fTopBoundary(0.0)
-        , m_fBottomBoundary(0.0)
+    /**
+     * Creates the action with a set boundary or with no boundary.
+     *
+     * @param followedNode  The node to be followed.
+     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
+     */
+    static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO);
+    /**
+     * @js ctor
+     */
+    Follow()
+		: _followedNode(NULL)
+        , _boundarySet(false)
+        , _boundaryFullyCovered(false)        
+        , _leftBoundary(0.0)
+        , _rightBoundary(0.0)
+        , _topBoundary(0.0)
+        , _bottomBoundary(0.0)
+		, _worldRect(Rect::ZERO)
     {}
-    virtual ~CCFollow(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Follow(void);
     
-    inline bool isBoundarySet(void) { return m_bBoundarySet; }
+    inline bool isBoundarySet(void) const { return _boundarySet; }
     /** alter behavior - turn on/off boundary */
-    inline void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
+    inline void setBoudarySet(bool bValue) { _boundarySet = bValue; }
 
-    /** initializes the action with a set boundary */
-    bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
+    /**
+     * Initializes the action with a set boundary or with no boundary.
+     *
+     * @param followedNode  The node to be followed.
+     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
+     */
+    bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO);
 
-    virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void step(float dt);
-    virtual bool isDone(void);
-    virtual void stop(void);
+    //
+    // Override
+    //
+	virtual Follow* clone() const override;
+	virtual Follow* reverse() const override;
+    virtual void step(float dt) override;
+    virtual bool isDone(void) const override;
+    virtual void stop(void) override;
 
-public:
-    /** creates the action with a set boundary,
-    It will work with no boundary if @param rect is equal to CCRectZero.
-    */
-    static CCFollow* create(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
 protected:
     // node to follow
-    CCNode *m_pobFollowedNode;
+    Node *_followedNode;
 
     // whether camera should be limited to certain area
-    bool m_bBoundarySet;
+    bool _boundarySet;
 
     // if screen size is bigger than the boundary - update not needed
-    bool m_bBoundaryFullyCovered;
+    bool _boundaryFullyCovered;
 
     // fast access to the screen dimensions
-    CCPoint m_obHalfScreenSize;
-    CCPoint m_obFullScreenSize;
+    Point _halfScreenSize;
+    Point _fullScreenSize;
 
     // world boundaries
-    float m_fLeftBoundary;
-    float m_fRightBoundary;
-    float m_fTopBoundary;
-    float m_fBottomBoundary;
+    float _leftBoundary;
+    float _rightBoundary;
+    float _topBoundary;
+    float _bottomBoundary;
+	Rect _worldRect;
+
 };
 
 // end of actions group

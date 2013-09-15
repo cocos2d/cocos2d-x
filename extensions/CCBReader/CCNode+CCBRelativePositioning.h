@@ -3,12 +3,13 @@
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
+#include "CCBReader.h"
 
 NS_CC_EXT_BEGIN
 
-extern CCPoint getAbsolutePosition(const CCPoint &pt, int nType, const CCSize &containerSize, const char *pPropName);
+extern Point getAbsolutePosition(const Point &pt, CCBReader::PositionType type, const Size &containerSize, const char *propName);
 
-extern void setRelativeScale(CCNode *pNode, float fScaleX, float fScaleY, int nType, const char* pPropName);
+extern void setRelativeScale(Node *node, float scaleX, float scaleY, CCBReader::ScaleType type, const char* propName);
 
 NS_CC_EXT_END
 

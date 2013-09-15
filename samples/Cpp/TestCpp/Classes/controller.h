@@ -5,21 +5,21 @@
 
 USING_NS_CC;
 
-class TestController : public CCLayer
+class TestController : public Layer
 {
 public:
     TestController();
     ~TestController();
 
-    void menuCallback(CCObject * pSender);
-    void closeCallback(CCObject * pSender);
+    void menuCallback(Object * sender);
+    void closeCallback(Object * sender);
 
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesBegan(Set  *touches, Event  *event);
+    virtual void ccTouchesMoved(Set  *touches, Event  *event);
 
 private:
-    CCPoint m_tBeginPos;
-    CCMenu* m_pItemMenu;
+    Point _beginPos;
+    Menu* _itemMenu;
 };
 
 #endif

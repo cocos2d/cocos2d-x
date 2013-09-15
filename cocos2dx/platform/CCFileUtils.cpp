@@ -46,50 +46,50 @@ typedef enum
     SAX_REAL,
     SAX_STRING,
     SAX_ARRAY
-}CCSAXState;
+}SAXState;
 
 typedef enum
 {
     SAX_RESULT_NONE = 0,
     SAX_RESULT_DICT,
     SAX_RESULT_ARRAY
-}CCSAXResult;
+}SAXResult;
 
-class CCDictMaker : public CCSAXDelegator
+class DictMaker : public SAXDelegator
 {
 public:
-    CCSAXResult m_eResultType;
-    CCArray* m_pRootArray;
-    CCDictionary *m_pRootDict;
-    CCDictionary *m_pCurDict;
-    std::stack<CCDictionary*> m_tDictStack;
-    std::string m_sCurKey;   ///< parsed key
-    std::string m_sCurValue; // parsed value
-    CCSAXState m_tState;
-    CCArray* m_pArray;
+    SAXResult _resultType;
+    Array* _rootArray;
+    Dictionary *_rootDict;
+    Dictionary *_curDict;
+    std::stack<Dictionary*> _dictStack;
+    std::string _curKey;   ///< parsed key
+    std::string _curValue; // parsed value
+    SAXState _state;
+    Array* _array;
 
-    std::stack<CCArray*> m_tArrayStack;
-    std::stack<CCSAXState>  m_tStateStack;
+    std::stack<Array*> _arrayStack;
+    std::stack<SAXState>  _stateStack;
 
 public:
-    CCDictMaker()        
-        : m_eResultType(SAX_RESULT_NONE),
-          m_pRootArray(NULL), 
-          m_pRootDict(NULL),
-          m_pCurDict(NULL),
-          m_tState(SAX_NONE),
-          m_pArray(NULL)
+    DictMaker()        
+        : _resultType(SAX_RESULT_NONE),
+          _rootArray(NULL), 
+          _rootDict(NULL),
+          _curDict(NULL),
+          _state(SAX_NONE),
+          _array(NULL)
     {
     }
 
-    ~CCDictMaker()
+    ~DictMaker()
     {
     }
 
-    CCDictionary* dictionaryWithContentsOfFile(const char *pFileName)
+    Dictionary* dictionaryWithContentsOfFile(const char *pFileName)
     {
-        m_eResultType = SAX_RESULT_DICT;
-        CCSAXParser parser;
+        _resultType = SAX_RESULT_DICT;
+        SAXParser parser;
 
         if (false == parser.init("UTF-8"))
         {
@@ -98,13 +98,13 @@ public:
         parser.setDelegator(this);
 
         parser.parse(pFileName);
-        return m_pRootDict;
+        return _rootDict;
     }
 
-    CCArray* arrayWithContentsOfFile(const char* pFileName)
+    Array* arrayWithContentsOfFile(const char* pFileName)
     {
-        m_eResultType = SAX_RESULT_ARRAY;
-        CCSAXParser parser;
+        _resultType = SAX_RESULT_ARRAY;
+        SAXParser parser;
 
         if (false == parser.init("UTF-8"))
         {
@@ -113,7 +113,7 @@ public:
         parser.setDelegator(this);
 
         parser.parse(pFileName);
-        return m_pArray;
+        return _array;
     }
 
     void startElement(void *ctx, const char *name, const char **atts)
@@ -123,176 +123,177 @@ public:
         std::string sName((char*)name);
         if( sName == "dict" )
         {
-            m_pCurDict = new CCDictionary();
-            if(m_eResultType == SAX_RESULT_DICT && m_pRootDict == NULL)
+            _curDict = new Dictionary();
+            if(_resultType == SAX_RESULT_DICT && _rootDict == NULL)
             {
-                // Because it will call m_pCurDict->release() later, so retain here.
-                m_pRootDict = m_pCurDict;
-                m_pRootDict->retain();
+                // Because it will call _curDict->release() later, so retain here.
+                _rootDict = _curDict;
+                _rootDict->retain();
             }
-            m_tState = SAX_DICT;
+            _state = SAX_DICT;
 
-            CCSAXState preState = SAX_NONE;
-            if (! m_tStateStack.empty())
+            SAXState preState = SAX_NONE;
+            if (! _stateStack.empty())
             {
-                preState = m_tStateStack.top();
+                preState = _stateStack.top();
             }
 
             if (SAX_ARRAY == preState)
             {
                 // add the dictionary into the array
-                m_pArray->addObject(m_pCurDict);
+                _array->addObject(_curDict);
             }
             else if (SAX_DICT == preState)
             {
                 // add the dictionary into the pre dictionary
-                CCAssert(! m_tDictStack.empty(), "The state is wrong!");
-                CCDictionary* pPreDict = m_tDictStack.top();
-                pPreDict->setObject(m_pCurDict, m_sCurKey.c_str());
+                CCASSERT(! _dictStack.empty(), "The state is wrong!");
+                Dictionary* pPreDict = _dictStack.top();
+                pPreDict->setObject(_curDict, _curKey.c_str());
             }
 
-            m_pCurDict->release();
+            _curDict->release();
 
             // record the dict state
-            m_tStateStack.push(m_tState);
-            m_tDictStack.push(m_pCurDict);
+            _stateStack.push(_state);
+            _dictStack.push(_curDict);
         }
         else if(sName == "key")
         {
-            m_tState = SAX_KEY;
+            _state = SAX_KEY;
         }
         else if(sName == "integer")
         {
-            m_tState = SAX_INT;
+            _state = SAX_INT;
         }
         else if(sName == "real")
         {
-            m_tState = SAX_REAL;
+            _state = SAX_REAL;
         }
         else if(sName == "string")
         {
-            m_tState = SAX_STRING;
+            _state = SAX_STRING;
         }
         else if (sName == "array")
         {
-            m_tState = SAX_ARRAY;
-            m_pArray = new CCArray();
-            if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray == NULL)
+            _state = SAX_ARRAY;
+            _array = new Array();
+            _array->init();
+            if (_resultType == SAX_RESULT_ARRAY && _rootArray == NULL)
             {
-                m_pRootArray = m_pArray;
-                m_pRootArray->retain();
+                _rootArray = _array;
+                _rootArray->retain();
             }
-            CCSAXState preState = SAX_NONE;
-            if (! m_tStateStack.empty())
+            SAXState preState = SAX_NONE;
+            if (! _stateStack.empty())
             {
-                preState = m_tStateStack.top();
+                preState = _stateStack.top();
             }
 
             if (preState == SAX_DICT)
             {
-                m_pCurDict->setObject(m_pArray, m_sCurKey.c_str());
+                _curDict->setObject(_array, _curKey.c_str());
             }
             else if (preState == SAX_ARRAY)
             {
-                CCAssert(! m_tArrayStack.empty(), "The state is wrong!");
-                CCArray* pPreArray = m_tArrayStack.top();
-                pPreArray->addObject(m_pArray);
+                CCASSERT(! _arrayStack.empty(), "The state is wrong!");
+                Array* pPreArray = _arrayStack.top();
+                pPreArray->addObject(_array);
             }
-            m_pArray->release();
+            _array->release();
             // record the array state
-            m_tStateStack.push(m_tState);
-            m_tArrayStack.push(m_pArray);
+            _stateStack.push(_state);
+            _arrayStack.push(_array);
         }
         else
         {
-            m_tState = SAX_NONE;
+            _state = SAX_NONE;
         }
     }
 
     void endElement(void *ctx, const char *name)
     {
         CC_UNUSED_PARAM(ctx);
-        CCSAXState curState = m_tStateStack.empty() ? SAX_DICT : m_tStateStack.top();
+        SAXState curState = _stateStack.empty() ? SAX_DICT : _stateStack.top();
         std::string sName((char*)name);
         if( sName == "dict" )
         {
-            m_tStateStack.pop();
-            m_tDictStack.pop();
-            if ( !m_tDictStack.empty())
+            _stateStack.pop();
+            _dictStack.pop();
+            if ( !_dictStack.empty())
             {
-                m_pCurDict = m_tDictStack.top();
+                _curDict = _dictStack.top();
             }
         }
         else if (sName == "array")
         {
-            m_tStateStack.pop();
-            m_tArrayStack.pop();
-            if (! m_tArrayStack.empty())
+            _stateStack.pop();
+            _arrayStack.pop();
+            if (! _arrayStack.empty())
             {
-                m_pArray = m_tArrayStack.top();
+                _array = _arrayStack.top();
             }
         }
         else if (sName == "true")
         {
-            CCString *str = new CCString("1");
+            String *str = new String("1");
             if (SAX_ARRAY == curState)
             {
-                m_pArray->addObject(str);
+                _array->addObject(str);
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(str, m_sCurKey.c_str());
+                _curDict->setObject(str, _curKey.c_str());
             }
             str->release();
         }
         else if (sName == "false")
         {
-            CCString *str = new CCString("0");
+            String *str = new String("0");
             if (SAX_ARRAY == curState)
             {
-                m_pArray->addObject(str);
+                _array->addObject(str);
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(str, m_sCurKey.c_str());
+                _curDict->setObject(str, _curKey.c_str());
             }
             str->release();
         }
         else if (sName == "string" || sName == "integer" || sName == "real")
         {
-            CCString* pStrValue = new CCString(m_sCurValue);
+            String* pStrValue = new String(_curValue);
 
             if (SAX_ARRAY == curState)
             {
-                m_pArray->addObject(pStrValue);
+                _array->addObject(pStrValue);
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(pStrValue, m_sCurKey.c_str());
+                _curDict->setObject(pStrValue, _curKey.c_str());
             }
 
             pStrValue->release();
-            m_sCurValue.clear();
+            _curValue.clear();
         }
         
-        m_tState = SAX_NONE;
+        _state = SAX_NONE;
     }
 
     void textHandler(void *ctx, const char *ch, int len)
     {
         CC_UNUSED_PARAM(ctx);
-        if (m_tState == SAX_NONE)
+        if (_state == SAX_NONE)
         {
             return;
         }
 
-        CCSAXState curState = m_tStateStack.empty() ? SAX_DICT : m_tStateStack.top();
-        CCString *pText = new CCString(std::string((char*)ch,0,len));
+        SAXState curState = _stateStack.empty() ? SAX_DICT : _stateStack.top();
+        String *pText = new String(std::string((char*)ch,0,len));
 
-        switch(m_tState)
+        switch(_state)
         {
         case SAX_KEY:
-            m_sCurKey = pText->getCString();
+            _curKey = pText->getCString();
             break;
         case SAX_INT:
         case SAX_REAL:
@@ -300,10 +301,10 @@ public:
             {
                 if (curState == SAX_DICT)
                 {
-                    CCAssert(!m_sCurKey.empty(), "key not found : <integer/real>");
+                    CCASSERT(!_curKey.empty(), "key not found : <integer/real>");
                 }
                 
-                m_sCurValue.append(pText->getCString());
+                _curValue.append(pText->getCString());
             }
             break;
         default:
@@ -313,32 +314,33 @@ public:
     }
 };
 
-CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename)
+Dictionary* FileUtils::createDictionaryWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
-    CCDictMaker tMaker;
+    DictMaker tMaker;
     return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
 }
 
-CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename)
+Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
-    CCDictMaker tMaker;
+    DictMaker tMaker;
     return tMaker.arrayWithContentsOfFile(fullPath.c_str());
 }
+
 
 /*
  * forward statement
  */
-static tinyxml2::XMLElement* generateElementForArray(cocos2d::CCArray *array, tinyxml2::XMLDocument *pDoc);
-static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForArray(cocos2d::Array *array, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForDict(cocos2d::Dictionary *dict, tinyxml2::XMLDocument *pDoc);
 
 /*
  * Use tinyxml2 to write plist files
  */
-bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fullPath)
+bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPath)
 {
-    //CCLOG("tinyxml2 CCDictionary %d writeToFile %s", dict->m_uID, fullPath.c_str());
+    //CCLOG("tinyxml2 Dictionary %d writeToFile %s", dict->_ID, fullPath.c_str());
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
     if (NULL == pDoc)
         return false;
@@ -378,12 +380,12 @@ bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fu
 }
 
 /*
- * Generate tinyxml2::XMLElement for CCObject through a tinyxml2::XMLDocument
+ * Generate tinyxml2::XMLElement for Object through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForObject(cocos2d::CCObject *object, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForObject(cocos2d::Object *object, tinyxml2::XMLDocument *pDoc)
 {
-    // object is CCString
-    if (CCString *str = dynamic_cast<CCString *>(object))
+    // object is String
+    if (String *str = dynamic_cast<String *>(object))
     {
         tinyxml2::XMLElement* node = pDoc->NewElement("string");
         tinyxml2::XMLText* content = pDoc->NewText(str->getCString());
@@ -391,12 +393,12 @@ static tinyxml2::XMLElement* generateElementForObject(cocos2d::CCObject *object,
         return node;
     }
     
-    // object is CCArray
-    if (CCArray *array = dynamic_cast<CCArray *>(object))
+    // object is Array
+    if (Array *array = dynamic_cast<Array *>(object))
         return generateElementForArray(array, pDoc);
     
-    // object is CCDictionary
-    if (CCDictionary *innerDict = dynamic_cast<CCDictionary *>(object))
+    // object is Dictionary
+    if (Dictionary *innerDict = dynamic_cast<Dictionary *>(object))
         return generateElementForDict(innerDict, pDoc);
     
     CCLOG("This type cannot appear in property list");
@@ -404,13 +406,13 @@ static tinyxml2::XMLElement* generateElementForObject(cocos2d::CCObject *object,
 }
 
 /*
- * Generate tinyxml2::XMLElement for CCDictionary through a tinyxml2::XMLDocument
+ * Generate tinyxml2::XMLElement for Dictionary through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForDict(cocos2d::Dictionary *dict, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
     
-    CCDictElement *dictElement = NULL;
+    DictElement *dictElement = NULL;
     CCDICT_FOREACH(dict, dictElement)
     {
         tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
@@ -418,7 +420,7 @@ static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict,
         tinyxml2::XMLText* content = pDoc->NewText(dictElement->getStrKey());
         tmpNode->LinkEndChild(content);
         
-        CCObject *object = dictElement->getObject();
+        Object *object = dictElement->getObject();
         tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
         if (element)
             rootNode->LinkEndChild(element);
@@ -427,13 +429,13 @@ static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict,
 }
 
 /*
- * Generate tinyxml2::XMLElement for CCArray through a tinyxml2::XMLDocument
+ * Generate tinyxml2::XMLElement for Array through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForArray(cocos2d::CCArray *array, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForArray(cocos2d::Array *array, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
     
-    CCObject *object = NULL;
+    Object *object = NULL;
     CCARRAY_FOREACH(array, object)
     {
         tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
@@ -447,88 +449,90 @@ static tinyxml2::XMLElement* generateElementForArray(cocos2d::CCArray *array, ti
 #else
 NS_CC_BEGIN
 
-/* The subclass CCFileUtilsIOS and CCFileUtilsMac should override these two method. */
-CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
-bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fullPath) {return NULL;}
-CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {return NULL;}
+/* The subclass FileUtilsApple should override these two method. */
+Dictionary* FileUtils::createDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
+bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPath) {return NULL;}
+Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename) {return NULL;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
 
-CCFileUtils* CCFileUtils::s_sharedFileUtils = NULL;
+FileUtils* FileUtils::s_sharedFileUtils = NULL;
 
-void CCFileUtils::purgeFileUtils()
+
+void FileUtils::destroyInstance()
 {
     CC_SAFE_DELETE(s_sharedFileUtils);
 }
 
-CCFileUtils::CCFileUtils()
-: m_pFilenameLookupDict(NULL)
+FileUtils::FileUtils()
+: _filenameLookupDict(NULL)
 {
 }
 
-CCFileUtils::~CCFileUtils()
+FileUtils::~FileUtils()
 {
-    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    CC_SAFE_RELEASE(_filenameLookupDict);
 }
 
-bool CCFileUtils::init()
+
+bool FileUtils::init()
 {
-    m_searchPathArray.push_back(m_strDefaultResRootPath);
-    m_searchResolutionsOrderArray.push_back("");
+    _searchPathArray.push_back(_defaultResRootPath);
+    _searchResolutionsOrderArray.push_back("");
     return true;
 }
 
-void CCFileUtils::purgeCachedEntries()
+void FileUtils::purgeCachedEntries()
 {
-    m_fullPathCache.clear();
+    _fullPathCache.clear();
 }
 
-unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtils::getFileData(const char* filename, const char* mode, unsigned long * size)
 {
-    unsigned char * pBuffer = NULL;
-    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
-    *pSize = 0;
+    unsigned char * buffer = NULL;
+    CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
+    *size = 0;
     do
     {
         // read the file from hardware
-        std::string fullPath = fullPathForFilename(pszFileName);
-        FILE *fp = fopen(fullPath.c_str(), pszMode);
+        std::string fullPath = fullPathForFilename(filename);
+        FILE *fp = fopen(fullPath.c_str(), mode);
         CC_BREAK_IF(!fp);
         
         fseek(fp,0,SEEK_END);
-        *pSize = ftell(fp);
+        *size = ftell(fp);
         fseek(fp,0,SEEK_SET);
-        pBuffer = new unsigned char[*pSize];
-        *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
+        buffer = new unsigned char[*size];
+        *size = fread(buffer,sizeof(unsigned char), *size,fp);
         fclose(fp);
     } while (0);
     
-    if (! pBuffer)
+    if (! buffer)
     {
         std::string msg = "Get data from file(";
-        msg.append(pszFileName).append(") failed!");
+        msg.append(filename).append(") failed!");
         
         CCLOG("%s", msg.c_str());
     }
-    return pBuffer;
+    return buffer;
 }
 
-unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
+unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, unsigned long * size)
 {
-    unsigned char * pBuffer = NULL;
+    unsigned char * buffer = NULL;
     unzFile pFile = NULL;
-    *pSize = 0;
+    *size = 0;
 
     do 
     {
-        CC_BREAK_IF(!pszZipFilePath || !pszFileName);
-        CC_BREAK_IF(strlen(pszZipFilePath) == 0);
+        CC_BREAK_IF(!zipFilePath || !filename);
+        CC_BREAK_IF(strlen(zipFilePath) == 0);
 
-        pFile = unzOpen(pszZipFilePath);
+        pFile = unzOpen(zipFilePath);
         CC_BREAK_IF(!pFile);
 
-        int nRet = unzLocateFile(pFile, pszFileName, 1);
+        int nRet = unzLocateFile(pFile, filename, 1);
         CC_BREAK_IF(UNZ_OK != nRet);
 
         char szFilePathA[260];
@@ -539,11 +543,11 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
         nRet = unzOpenCurrentFile(pFile);
         CC_BREAK_IF(UNZ_OK != nRet);
 
-        pBuffer = new unsigned char[FileInfo.uncompressed_size];
-        int CC_UNUSED nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
-        CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
+        buffer = new unsigned char[FileInfo.uncompressed_size];
+        int CC_UNUSED nSize = unzReadCurrentFile(pFile, buffer, FileInfo.uncompressed_size);
+        CCASSERT(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
 
-        *pSize = FileInfo.uncompressed_size;
+        *size = FileInfo.uncompressed_size;
         unzCloseCurrentFile(pFile);
     } while (0);
 
@@ -552,25 +556,25 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
         unzClose(pFile);
     }
 
-    return pBuffer;
+    return buffer;
 }
 
-std::string CCFileUtils::getNewFilename(const char* pszFileName)
+std::string FileUtils::getNewFilename(const std::string &filename)
 {
-    const char* pszNewFileName = NULL;
+    std::string newFileName;
+    
     // in Lookup Filename dictionary ?
-    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
+    String* fileNameFound = _filenameLookupDict ? (String*)_filenameLookupDict->objectForKey(filename) : NULL;
     if( NULL == fileNameFound || fileNameFound->length() == 0) {
-        pszNewFileName = pszFileName;
+        newFileName = filename;
     }
     else {
-        pszNewFileName = fileNameFound->getCString();
-        //CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
+        newFileName = fileNameFound->getCString();
     }
-    return pszNewFileName;
+    return newFileName;
 }
 
-std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
+std::string FileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
 {
     std::string file = filename;
     std::string file_path = "";
@@ -593,74 +597,62 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
 }
 
 
-std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
+std::string FileUtils::fullPathForFilename(const std::string &filename)
 {
-    CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
-    
-    std::string strFileName = pszFileName;
-    if (isAbsolutePath(pszFileName))
+    if (isAbsolutePath(filename))
     {
-        //CCLOG("Return absolute path( %s ) directly.", pszFileName);
-        return pszFileName;
+        return filename;
     }
-    
+
     // Already Cached ?
-    std::map<std::string, std::string>::iterator cacheIter = m_fullPathCache.find(pszFileName);
-    if (cacheIter != m_fullPathCache.end())
+    auto cacheIter = _fullPathCache.find(filename);
+    if( cacheIter != _fullPathCache.end() )
     {
-        //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
     }
     
     // Get the new file name.
-    std::string newFilename = getNewFilename(pszFileName);
+    std::string newFilename( getNewFilename(filename) );
     
     string fullpath = "";
     
-    for (std::vector<std::string>::iterator searchPathsIter = m_searchPathArray.begin();
-         searchPathsIter != m_searchPathArray.end(); ++searchPathsIter) {
-        for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
-             resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
+    for (auto searchIt = _searchPathArray.begin(); searchIt != _searchPathArray.end(); ++searchIt) {
+        for (auto resolutionIt = _searchResolutionsOrderArray.begin(); resolutionIt != _searchResolutionsOrderArray.end(); ++resolutionIt) {
             
-            //CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
-            
-            fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
+            fullpath = this->getPathForFilename(newFilename, *resolutionIt, *searchIt);
             
             if (fullpath.length() > 0)
             {
                 // Using the filename passed in as key.
-                m_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
-                //CCLOG("Returning path: %s", fullpath.c_str());
+                _fullPathCache.insert(std::pair<std::string, std::string>(filename, fullpath));
                 return fullpath;
             }
         }
     }
     
-    //CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", pszFileName);
+    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
 
+    // XXX: Should it return nullptr ? or an empty string ?
     // The file wasn't found, return the file name passed in.
-    return pszFileName;
+    return filename;
 }
 
-const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile)
 {
-    std::string relativeFile = pszRelativeFile;
-    CCString *pRet = CCString::create("");
-    pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-    pRet->m_sString += getNewFilename(pszFilename);
-    return pRet->getCString();
+    return relativeFile.substr(0, relativeFile.rfind('/')+1) + getNewFilename(filename);
 }
 
-void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
+void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
-    bool bExistDefault = false;
-    m_searchResolutionsOrderArray.clear();
-    for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
+    bool existDefault = false;
+    _fullPathCache.clear();
+    _searchResolutionsOrderArray.clear();
+    for(auto iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
     {
         std::string resolutionDirectory = *iter;
-        if (!bExistDefault && resolutionDirectory == "")
+        if (!existDefault && resolutionDirectory == "")
         {
-            bExistDefault = true;
+            existDefault = true;
         }
         
         if (resolutionDirectory.length() > 0 && resolutionDirectory[resolutionDirectory.length()-1] != '/')
@@ -668,131 +660,139 @@ void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& sear
             resolutionDirectory += "/";
         }
         
-        m_searchResolutionsOrderArray.push_back(resolutionDirectory);
+        _searchResolutionsOrderArray.push_back(resolutionDirectory);
     }
-    if (!bExistDefault)
+    if (!existDefault)
     {
-        m_searchResolutionsOrderArray.push_back("");
+        _searchResolutionsOrderArray.push_back("");
     }
 }
 
-void CCFileUtils::addSearchResolutionsOrder(const char* order)
+void FileUtils::addSearchResolutionsOrder(const std::string &order)
 {
-    m_searchResolutionsOrderArray.push_back(order);
+    _searchResolutionsOrderArray.push_back(order);
 }
 
-const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
+const std::vector<std::string>& FileUtils::getSearchResolutionsOrder()
 {
-    return m_searchResolutionsOrderArray;
+    return _searchResolutionsOrderArray;
 }
 
-const std::vector<std::string>& CCFileUtils::getSearchPaths()
+const std::vector<std::string>& FileUtils::getSearchPaths() const
 {
-    return m_searchPathArray;
+    return _searchPathArray;
 }
 
-void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
+void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
-    bool bExistDefaultRootPath = false;
+    bool existDefaultRootPath = false;
     
-    m_searchPathArray.clear();
-    for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
+    _fullPathCache.clear();
+    _searchPathArray.clear();
+    for (auto iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
     {
         std::string strPrefix;
         std::string path;
+        
         if (!isAbsolutePath(*iter))
         { // Not an absolute path
-            strPrefix = m_strDefaultResRootPath;
+            strPrefix = _defaultResRootPath;
         }
-        path = strPrefix+(*iter);
+        path = strPrefix + (*iter);
         if (path.length() > 0 && path[path.length()-1] != '/')
         {
             path += "/";
         }
-        if (!bExistDefaultRootPath && path == m_strDefaultResRootPath)
+        if (!existDefaultRootPath && path == _defaultResRootPath)
         {
-            bExistDefaultRootPath = true;
+            existDefaultRootPath = true;
         }
-        m_searchPathArray.push_back(path);
+        _searchPathArray.push_back(path);
     }
     
-    if (!bExistDefaultRootPath)
+    if (!existDefaultRootPath)
     {
         //CCLOG("Default root path doesn't exist, adding it.");
-        m_searchPathArray.push_back(m_strDefaultResRootPath);
+        _searchPathArray.push_back(_defaultResRootPath);
     }
 }
 
-void CCFileUtils::addSearchPath(const char* path_)
+void FileUtils::addSearchPath(const std::string &searchpath)
 {
     std::string strPrefix;
-    std::string path(path_);
-    if (!isAbsolutePath(path))
-    { // Not an absolute path
-        strPrefix = m_strDefaultResRootPath;
-    }
-    path = strPrefix + path;
+    if (!isAbsolutePath(searchpath))
+        strPrefix = _defaultResRootPath;
+
+    std::string path = strPrefix + searchpath;
     if (path.length() > 0 && path[path.length()-1] != '/')
     {
         path += "/";
     }
-    m_searchPathArray.push_back(path);
+    _searchPathArray.push_back(path);
 }
 
-void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
+void FileUtils::setFilenameLookupDictionary(Dictionary* pFilenameLookupDict)
 {
-    CC_SAFE_RELEASE(m_pFilenameLookupDict);
-    m_pFilenameLookupDict = pFilenameLookupDict;
-    CC_SAFE_RETAIN(m_pFilenameLookupDict);
+    _fullPathCache.clear();    
+    CC_SAFE_RELEASE(_filenameLookupDict);
+    _filenameLookupDict = pFilenameLookupDict;
+    CC_SAFE_RETAIN(_filenameLookupDict);
 }
 
-void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename)
 {
-    std::string fullPath = this->fullPathForFilename(filename);
+    std::string fullPath = fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
-        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(fullPath.c_str());
-        if (pDict)
+        Dictionary* dict = Dictionary::createWithContentsOfFile(fullPath.c_str());
+        if (dict)
         {
-            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
-            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            Dictionary* metadata = static_cast<Dictionary*>( dict->objectForKey("metadata") );
+            int version = static_cast<String*>( metadata->objectForKey("version"))->intValue();
             if (version != 1)
             {
-                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename.c_str());
                 return;
             }
-            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
+            setFilenameLookupDictionary( static_cast<Dictionary*>( dict->objectForKey("filenames")) );
         }
     }
 }
 
-std::string CCFileUtils::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
+std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
 {
-    std::string ret = strDirectory+strFilename;
+    // get directory+filename, safely adding '/' as necessary 
+    std::string ret = strDirectory;
+    if (strDirectory.size() && strDirectory[strDirectory.size()-1] != '/'){
+        ret += '/';
+    }
+    ret += strFilename;
+    
+    // if the file doesn't exist, return an empty string
     if (!isFileExist(ret)) {
         ret = "";
     }
     return ret;
 }
 
-bool CCFileUtils::isAbsolutePath(const std::string& strPath)
+bool FileUtils::isAbsolutePath(const std::string& strPath) const
 {
-    return strPath[0] == '/' ? true : false;
+    return (strPath[0] == '/');
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.
 //////////////////////////////////////////////////////////////////////////
-static bool s_bPopupNotify = true;
+static bool s_popupNotify = true;
 
-void CCFileUtils::setPopupNotify(bool bNotify)
+void FileUtils::setPopupNotify(bool notify)
 {
-    s_bPopupNotify = bNotify;
+    s_popupNotify = notify;
 }
 
-bool CCFileUtils::isPopupNotify()
+bool FileUtils::isPopupNotify()
 {
-    return s_bPopupNotify;
+    return s_popupNotify;
 }
 
 NS_CC_END

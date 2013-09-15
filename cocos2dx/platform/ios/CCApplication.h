@@ -30,13 +30,20 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCRect;
+class Rect;
 
-class CC_DLL CCApplication : public CCApplicationProtocol
+class CC_DLL Application : public ApplicationProtocol
 {
 public:
-    CCApplication();
-    virtual ~CCApplication();
+    /**
+     * @js ctor
+     */
+    Application();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Application();
         
     /**
     @brief    Run the message loop.
@@ -47,11 +54,14 @@ public:
     @brief    Get the current application instance.
     @return Current application instance pointer.
     */
-    static CCApplication* sharedApplication();
+    static Application* getInstance();
+    
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
     /**
-     @brief    Callback by CCDirector for limit FPS.
-     @interval       The time, expressed in seconds, between current frame and next. 
+     @brief    Callback by Director for limit FPS.
+     @param interval    The time, expressed in seconds, between current frame and next.
      */
     virtual void setAnimationInterval(double interval);
 
@@ -59,15 +69,15 @@ public:
     @brief Get current language config
     @return Current language config
     */
-    virtual ccLanguageType getCurrentLanguage();
+    virtual LanguageType getCurrentLanguage();
     
     /**
      @brief Get target platform
      */
-    virtual TargetPlatform getTargetPlatform();
+    virtual Platform getTargetPlatform();
 
 protected:
-    static CCApplication * sm_pSharedApplication;
+    static Application * sm_pSharedApplication;
 };
 
 NS_CC_END

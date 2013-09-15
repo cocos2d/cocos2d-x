@@ -5,11 +5,18 @@
 
 NS_CC_EXT_BEGIN
 
-class CCNodeLoaderListener {
+class NodeLoaderListener {
     public:
-        virtual ~CCNodeLoaderListener() {};
-
-        virtual void onNodeLoaded(CCNode * pNode, CCNodeLoader * pNodeLoader) = 0;
+        /**
+         * @js NA
+         * @lua NA
+         */
+        virtual ~NodeLoaderListener() {};
+        /**
+         * @js NA
+         * @lua NA
+         */
+        virtual void onNodeLoaded(Node * pNode, NodeLoader * pNodeLoader) = 0;
 };
 
 NS_CC_EXT_END

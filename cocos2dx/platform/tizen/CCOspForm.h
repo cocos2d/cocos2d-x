@@ -31,14 +31,21 @@ THE SOFTWARE.
 
 typedef void (*EditTextCallback)(const char* pText, void* ctx);
 
-class CCOspForm
+class OspForm
     : public Tizen::Ui::Controls::Form
     , public Tizen::Ui::ITouchEventListener
     , public Tizen::Ui::ITextEventListener
 {
 public:
-    CCOspForm();
-    ~CCOspForm();
+    /**
+     * @js ctor
+     */
+    OspForm();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~OspForm();
 
     virtual result OnInitializing(void);
     virtual result OnTerminating(void);
@@ -59,8 +66,8 @@ public:
     void CloseKeypad();
 
     Tizen::Ui::Controls::Keypad*__pKeypad;
-    EditTextCallback m_pfEditTextCallback;
-    void* m_pCtx;
+    EditTextCallback _editTextCallback;
+    void* _ctx;
 };
 
 #endif  // _CCOSPFORM_H_

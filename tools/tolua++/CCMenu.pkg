@@ -23,8 +23,8 @@ class CCMenu : public CCLayerRGBA
 
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity(void);
-    void setColor(ccColor3B color);
-    ccColor3B getColor(void);
+    void setColor(Color3B color);
+    Color3B getColor(void);
 
     void setOpacityModifyRGB(bool bValue);
     bool isOpacityModifyRGB(void);

@@ -21,9 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "CCImageCommon_cpp.h"
+
 #import "CCImage.h"
 #import "CCFileUtils.h"
-#import "CCCommon.h"
+#import "platform/CCCommon.h"
 #import <string>
 
 #import <Foundation/Foundation.h>
@@ -36,8 +38,6 @@ typedef struct
 {
     unsigned int height;
     unsigned int width;
-    int          bitsPerComponent;
-    bool         hasAlpha;
     bool         isPremultipliedAlpha;
     bool         hasShadow;
     CGSize       shadowOffset;
@@ -55,114 +55,6 @@ typedef struct
     unsigned char*  data;
     
 } tImageInfo;
-
-static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
-{
-    if(cgImage == NULL) 
-    {
-        return false;
-    }
-    
-    // get image info
-    
-    pImageinfo->width = CGImageGetWidth(cgImage);
-    pImageinfo->height = CGImageGetHeight(cgImage);
-    
-    CGImageAlphaInfo info = CGImageGetAlphaInfo(cgImage);
-    pImageinfo->hasAlpha = (info == kCGImageAlphaPremultipliedLast) 
-                            || (info == kCGImageAlphaPremultipliedFirst) 
-                            || (info == kCGImageAlphaLast) 
-                            || (info == kCGImageAlphaFirst);
-    
-    // If OS version < 5.x, add condition to support jpg
-    float systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
-    if(systemVersion < 5.0f)
-    {
-        pImageinfo->hasAlpha = (pImageinfo->hasAlpha || (info == kCGImageAlphaNoneSkipLast));
-    }
-    
-    CGColorSpaceRef colorSpace = CGImageGetColorSpace(cgImage);
-    if (colorSpace)
-    {
-        if (pImageinfo->hasAlpha)
-        {
-            info = kCGImageAlphaPremultipliedLast;
-            pImageinfo->isPremultipliedAlpha = true;
-        }
-        else 
-        {
-            info = kCGImageAlphaNoneSkipLast;
-            pImageinfo->isPremultipliedAlpha = false;
-        }
-    }
-    else
-    {
-        return false;
-    }
-    
-    // change to RGBA8888
-    pImageinfo->hasAlpha = true;
-    pImageinfo->bitsPerComponent = 8;
-    pImageinfo->data = new unsigned char[pImageinfo->width * pImageinfo->height * 4];
-    colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(pImageinfo->data, 
-                                                 pImageinfo->width, 
-                                                 pImageinfo->height,
-                                                 8, 
-                                                 4 * pImageinfo->width, 
-                                                 colorSpace, 
-                                                 info | kCGBitmapByteOrder32Big);
-    
-    CGContextClearRect(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height));
-    //CGContextTranslateCTM(context, 0, 0);
-    CGContextDrawImage(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height), cgImage);
-    
-    CGContextRelease(context);
-    CFRelease(colorSpace);
-  
-    return true;
-}
-
-static bool _initWithFile(const char* path, tImageInfo *pImageinfo)
-{
-    CGImageRef                CGImage;    
-    UIImage                    *jpg;
-    UIImage                    *png;
-    bool            ret;
-    
-    // convert jpg to png before loading the texture
-    
-    NSString *fullPath = [NSString stringWithUTF8String:path];
-    jpg = [[UIImage alloc] initWithContentsOfFile: fullPath];
-    png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
-    CGImage = png.CGImage;    
-    
-    ret = _initWithImage(CGImage, pImageinfo);
-    
-    [png release];
-    [jpg release];
-    
-    return ret;
-}
-
-
-static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
-{
-    bool ret = false;
-    
-    if (pBuffer) 
-    {
-        CGImageRef CGImage;
-        NSData *data;
-        
-        data = [NSData dataWithBytes:pBuffer length:length];
-        CGImage = [[UIImage imageWithData:data] CGImage];
-        
-        ret = _initWithImage(CGImage, pImageinfo);
-    }
-    
-    return ret;
-}
 
 static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
@@ -190,12 +82,12 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
     return dim;
 }
 
-// refer CCImage::ETextAlign
+// refer Image::ETextAlign
 #define ALIGN_TOP    1
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
-static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
+static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
     do 
@@ -244,7 +136,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         if (constrainSize.height > dim.height)
         {
             // vertical alignment
-            unsigned int vAlignment = (eAlign >> 4) & 0x0F;
+            unsigned int vAlignment = ((int)eAlign >> 4) & 0x0F;
             if (vAlignment == ALIGN_TOP)
             {
                 startH = 0;
@@ -282,8 +174,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         if ( pInfo->hasShadow )
         {
-            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)abs(pInfo->shadowOffset.width));
-            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)abs(pInfo->shadowOffset.height));
+            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)fabs(pInfo->shadowOffset.width));
+            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)fabs(pInfo->shadowOffset.height));
         }
         
         // add the padding (this could be 0 if no shadow and no stroke)
@@ -300,14 +192,12 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                                                             dim.width,
                                                             dim.height,
                                                             8,
-                                                            dim.width * 4,
+                                                            (int)(dim.width) * 4,
                                                             colorSpace,
-                                                            kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-        
-        CGColorSpaceRelease(colorSpace);
-        
+                                                            kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);                
         if (!context)
         {
+            CGColorSpaceRelease(colorSpace);
             delete[] data;
             break;
         }
@@ -322,7 +212,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         UIGraphicsPushContext(context);
         
         // measure text size with specified font and determine the rectangle to draw text in
-        unsigned uHoriFlag = eAlign & 0x0f;
+        unsigned uHoriFlag = (int)eAlign & 0x0f;
         UITextAlignment align = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft);
@@ -342,9 +232,15 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             CGSize offset;
             offset.height = pInfo->shadowOffset.height;
             offset.width  = pInfo->shadowOffset.width;
-            CGContextSetShadow(context, offset, pInfo->shadowBlur);
+            CGFloat shadowColorValues[] = {0, 0, 0, pInfo->shadowOpacity};
+            CGColorRef shadowColor = CGColorCreate (colorSpace, shadowColorValues);
+            
+            CGContextSetShadowWithColor(context, offset, pInfo->shadowBlur, shadowColor);
+            
+            CGColorRelease (shadowColor);
         }
         
+        CGColorSpaceRelease(colorSpace);        
         
         
         // normal fonts
@@ -388,9 +284,14 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             textOrigingY = startH - shadowStrokePaddingY;
         }
         
+        CGRect rect = CGRectMake(textOriginX, textOrigingY, textWidth, textHeight);
         
+        CGContextBeginTransparencyLayerWithRect(context, rect, NULL);
         // actually draw the text in the context
-        [str drawInRect:CGRectMake(textOriginX, textOrigingY, textWidth, textHeight) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
+		// XXX: ios7 casting
+        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
+
+        CGContextEndTransparencyLayer(context);
         
         // pop the context
         UIGraphicsPopContext();
@@ -400,9 +301,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                
         // output params
         pInfo->data                 = data;
-        pInfo->hasAlpha             = true;
         pInfo->isPremultipliedAlpha = true;
-        pInfo->bitsPerComponent     = 8;
         pInfo->width                = dim.width;
         pInfo->height               = dim.height;
         bRet                        = true;
@@ -414,161 +313,22 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 
 NS_CC_BEGIN
 
-CCImage::CCImage()
-: m_nWidth(0)
-, m_nHeight(0)
-, m_nBitsPerComponent(0)
-, m_pData(0)
-, m_bHasAlpha(false)
-, m_bPreMulti(false)
-{
-    
-}
-
-CCImage::~CCImage()
-{
-    CC_SAFE_DELETE_ARRAY(m_pData);
-}
-
-bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
-{
-	bool bRet = false;
-    unsigned long nSize = 0;
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(
-				CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath).c_str(),
-				"rb",
-				&nSize);
-				
-    if (pBuffer != NULL && nSize > 0)
-    {
-        bRet = initWithImageData(pBuffer, nSize, eImgFmt);
-    }
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    return bRet;
-}
-
-bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
-{
-    /*
-     * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
-     */
-    bool bRet = false;
-    unsigned long nSize = 0;
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
-    if (pBuffer != NULL && nSize > 0)
-    {
-        bRet = initWithImageData(pBuffer, nSize, imageType);
-    }
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    return bRet;
-}
-
-bool CCImage::initWithImageData(void * pData, 
-                                int nDataLen, 
-                                EImageFormat eFmt,
-                                int nWidth,
-                                int nHeight,
-                                int nBitsPerComponent)
-{
-    bool bRet = false;
-    tImageInfo info = {0};
-    
-    info.hasShadow = false;
-    info.hasStroke = false;
-    
-    do 
-    {
-        CC_BREAK_IF(! pData || nDataLen <= 0);
-        if (eFmt == kFmtRawData)
-        {
-            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
-        }
-        else if (eFmt == kFmtWebp)
-        {
-            bRet = _initWithWebpData(pData, nDataLen);
-        }
-        else // init with png or jpg file data
-        {
-            bRet = _initWithData(pData, nDataLen, &info);
-            if (bRet)
-            {
-                m_nHeight = (short)info.height;
-                m_nWidth = (short)info.width;
-                m_nBitsPerComponent = info.bitsPerComponent;
-                m_bHasAlpha = info.hasAlpha;
-                m_bPreMulti = info.isPremultipliedAlpha;
-                m_pData = info.data;
-            }
-        }
-    } while (0);
-    
-    return bRet;
-}
-
-bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
-{
-    bool bRet = false;
-    do 
-    {
-        CC_BREAK_IF(0 == nWidth || 0 == nHeight);
-
-        m_nBitsPerComponent = nBitsPerComponent;
-        m_nHeight   = (short)nHeight;
-        m_nWidth    = (short)nWidth;
-        m_bHasAlpha = true;
-
-        // only RGBA8888 supported
-        int nBytesPerComponent = 4;
-        int nSize = nHeight * nWidth * nBytesPerComponent;
-        m_pData = new unsigned char[nSize];
-        CC_BREAK_IF(! m_pData);
-        memcpy(m_pData, pData, nSize);
-
-        bRet = true;
-    } while (0);
-    return bRet;
-}
-
-bool CCImage::_initWithJpgData(void *pData, int nDatalen)
-{
-    assert(0);
-	return false;
-}
-
-bool CCImage::_initWithPngData(void *pData, int nDatalen)
-{
-    assert(0);
-	return false;
-}
-
-bool CCImage::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
-{
-    assert(0);
-	return false;
-}
-
-bool CCImage::_saveImageToJPG(const char *pszFilePath)
-{
-    assert(0);
-	return false;
-}
-
-bool CCImage::initWithString(
+bool Image::initWithString(
                             const char * pText,
                             int         nWidth /* = 0 */,
                             int         nHeight /* = 0 */,
-                            ETextAlign eAlignMask /* = kAlignCenter */,
+                            TextAlign   eAlignMask /* = kAlignCenter */,
                             const char * pFontName /* = nil */,
                             int         nSize /* = 0 */)
 {
     return initWithStringShadowStroke(pText, nWidth, nHeight, eAlignMask , pFontName, nSize);
 }
 
-bool CCImage::initWithStringShadowStroke(
+bool Image::initWithStringShadowStroke(
                                          const char * pText,
                                          int         nWidth ,
                                          int         nHeight ,
-                                         ETextAlign eAlignMask ,
+                                         TextAlign   eAlignMask ,
                                          const char * pFontName ,
                                          int         nSize ,
                                          float       textTintR,
@@ -586,7 +346,7 @@ bool CCImage::initWithStringShadowStroke(
                                          float strokeSize)
 {
     
-   
+    
     
     tImageInfo info = {0};
     info.width                  = nWidth;
@@ -610,18 +370,16 @@ bool CCImage::initWithStringShadowStroke(
     {
         return false;
     }
-    m_nHeight = (short)info.height;
-    m_nWidth = (short)info.width;
-    m_nBitsPerComponent = info.bitsPerComponent;
-    m_bHasAlpha = info.hasAlpha;
-    m_bPreMulti = info.isPremultipliedAlpha;
-    m_pData = info.data;
+    _height = (short)info.height;
+    _width = (short)info.width;
+    _renderFormat = Texture2D::PixelFormat::RGBA8888;
+    _preMulti = info.isPremultipliedAlpha;
+    _data = info.data;
     
     return true;
 }
 
-
-bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
     bool saveToPNG = false;
     bool needToCopyPixels = false;
@@ -632,31 +390,31 @@ bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
     }
         
     int bitsPerComponent = 8;            
-    int bitsPerPixel = m_bHasAlpha ? 32 : 24;
+    int bitsPerPixel = hasAlpha() ? 32 : 24;
     if ((! saveToPNG) || bIsToRGB)
     {
         bitsPerPixel = 24;
     }            
     
-    int bytesPerRow    = (bitsPerPixel/8) * m_nWidth;
-    int myDataLength = bytesPerRow * m_nHeight;
+    int bytesPerRow    = (bitsPerPixel/8) * _width;
+    int myDataLength = bytesPerRow * _height;
     
-    unsigned char *pixels    = m_pData;
+    unsigned char *pixels    = _data;
     
     // The data has alpha channel, and want to save it with an RGB png file,
     // or want to save as jpg,  remove the alpha channel.
-    if ((saveToPNG && m_bHasAlpha && bIsToRGB)
+    if ((saveToPNG && hasAlpha() && bIsToRGB)
        || (! saveToPNG))
     {
         pixels = new unsigned char[myDataLength];
         
-        for (int i = 0; i < m_nHeight; ++i)
+        for (int i = 0; i < _height; ++i)
         {
-            for (int j = 0; j < m_nWidth; ++j)
+            for (int j = 0; j < _width; ++j)
             {
-                pixels[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
-                pixels[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
-                pixels[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
+                pixels[(i * _width + j) * 3] = _data[(i * _width + j) * 4];
+                pixels[(i * _width + j) * 3 + 1] = _data[(i * _width + j) * 4 + 1];
+                pixels[(i * _width + j) * 3 + 2] = _data[(i * _width + j) * 4 + 2];
             }
         }
         
@@ -665,13 +423,13 @@ bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
         
     // make data provider with data.
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
-    if (saveToPNG && m_bHasAlpha && (! bIsToRGB))
+    if (saveToPNG && hasAlpha() && (! bIsToRGB))
     {
         bitmapInfo |= kCGImageAlphaPremultipliedLast;
     }
     CGDataProviderRef provider        = CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
     CGColorSpaceRef colorSpaceRef    = CGColorSpaceCreateDeviceRGB();
-    CGImageRef iref                    = CGImageCreate(m_nWidth, m_nHeight,
+    CGImageRef iref                    = CGImageCreate(_width, _height,
                                                         bitsPerComponent, bitsPerPixel, bytesPerRow,
                                                         colorSpaceRef, bitmapInfo, provider,
                                                         NULL, false,

@@ -4,58 +4,58 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 ButtonTestLayer::ButtonTestLayer()
-: mCCControlEventLabel(NULL)
+: mControlEventLabel(NULL)
 {}
 
 ButtonTestLayer::~ButtonTestLayer()
 {
-    CC_SAFE_RELEASE(mCCControlEventLabel);
+    CC_SAFE_RELEASE(mControlEventLabel);
 }
 
-SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char * pSelectorName) {
+SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName) {
     return NULL;    
 }
 
-SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName) {
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonClicked", ButtonTestLayer::onCCControlButtonClicked);
+Control::Handler ButtonTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonClicked", ButtonTestLayer::onControlButtonClicked);
 
     return NULL;
 }
 
-bool ButtonTestLayer::onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode) {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCCControlEventLabel", CCLabelBMFont *, this->mCCControlEventLabel);
+bool ButtonTestLayer::onAssignCCBMemberVariable(Object * pTarget, const char * pMemberVariableName, Node * pNode) {
+    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCCControlEventLabel", LabelBMFont *, this->mControlEventLabel);
 
     return false;
 }
 
-void ButtonTestLayer::onCCControlButtonClicked(cocos2d::CCObject *pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    switch(pCCControlEvent) {
-        case CCControlEventTouchDown:
-            this->mCCControlEventLabel->setString("Touch Down.");
+void ButtonTestLayer::onControlButtonClicked(cocos2d::Object *pSender, cocos2d::extension::Control::EventType pControlEvent) {
+    switch(pControlEvent) {
+        case Control::EventType::TOUCH_DOWN:
+            this->mControlEventLabel->setString("Touch Down.");
             break;
-        case CCControlEventTouchDragInside:
-            this->mCCControlEventLabel->setString("Touch Drag Inside.");
+        case Control::EventType::DRAG_INSIDE:
+            this->mControlEventLabel->setString("Touch Drag Inside.");
             break;
-        case CCControlEventTouchDragOutside:
-            this->mCCControlEventLabel->setString("Touch Drag Outside.");
+        case Control::EventType::DRAG_OUTSIDE:
+            this->mControlEventLabel->setString("Touch Drag Outside.");
             break;
-        case CCControlEventTouchDragEnter:
-            this->mCCControlEventLabel->setString("Touch Drag Enter.");
+        case Control::EventType::DRAG_ENTER:
+            this->mControlEventLabel->setString("Touch Drag Enter.");
             break;
-        case CCControlEventTouchDragExit:
-            this->mCCControlEventLabel->setString("Touch Drag Exit.");
+        case Control::EventType::DRAG_EXIT:
+            this->mControlEventLabel->setString("Touch Drag Exit.");
             break;
-        case CCControlEventTouchUpInside:
-            this->mCCControlEventLabel->setString("Touch Up Inside.");
+        case Control::EventType::TOUCH_UP_INSIDE:
+            this->mControlEventLabel->setString("Touch Up Inside.");
             break;
-        case CCControlEventTouchUpOutside:
-            this->mCCControlEventLabel->setString("Touch Up Outside.");
+        case Control::EventType::TOUCH_UP_OUTSIDE:
+            this->mControlEventLabel->setString("Touch Up Outside.");
             break;
-        case CCControlEventTouchCancel:
-            this->mCCControlEventLabel->setString("Touch Cancel.");
+        case Control::EventType::TOUCH_CANCEL:
+            this->mControlEventLabel->setString("Touch Cancel.");
             break;
-        case CCControlEventValueChanged:
-            this->mCCControlEventLabel->setString("Value Changed.");
+        case Control::EventType::VALUE_CHANGED:
+            this->mControlEventLabel->setString("Value Changed.");
             break;
         default:
             assert(false); // OH SHIT!

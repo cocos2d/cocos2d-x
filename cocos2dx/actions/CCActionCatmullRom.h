@@ -51,116 +51,177 @@ NS_CC_BEGIN;
  */
 
 /** An Array that contain control points.
- Used by CCCardinalSplineTo and (By) and CCCatmullRomTo (and By) actions.
+ Used by CardinalSplineTo and (By) and CatmullRomTo (and By) actions.
 @ingroup Actions
  */
-class CC_DLL CCPointArray : public CCObject
+class CC_DLL PointArray : public Object, public Clonable
 {
 public:
     
-    /** creates and initializes a Points array with capacity */
-    static CCPointArray* create(unsigned int capacity);
-
-    virtual ~CCPointArray();
-    CCPointArray();
+    /** creates and initializes a Points array with capacity 
+     * @js NA
+     */
+    static PointArray* create(unsigned int capacity);
     
-    /** initializes a Catmull Rom config with a capacity hint */
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~PointArray();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    PointArray();
+    
+    /** initializes a Catmull Rom config with a capacity hint 
+     * @js NA
+     */
     bool initWithCapacity(unsigned int capacity);
     
-    /** appends a control point */
-    void addControlPoint(CCPoint controlPoint);
+    /** appends a control point 
+     * @js NA
+     */
+    void addControlPoint(Point controlPoint);
     
-    /** inserts a controlPoint at index */
-    void insertControlPoint(CCPoint &controlPoint, unsigned int index);
+    /** inserts a controlPoint at index 
+     * @js NA
+     */
+    void insertControlPoint(Point &controlPoint, unsigned int index);
     
-    /** replaces an existing controlPoint at index */
-    void replaceControlPoint(CCPoint &controlPoint, unsigned int index);
+    /** replaces an existing controlPoint at index 
+     * @js NA
+     */
+    void replaceControlPoint(Point &controlPoint, unsigned int index);
     
-    /** get the value of a controlPoint at a given index */
-    CCPoint getControlPointAtIndex(unsigned int index);
+    /** get the value of a controlPoint at a given index 
+     * @js NA
+     */
+    Point getControlPointAtIndex(unsigned int index);
     
-    /** deletes a control point at a given index */
+    /** deletes a control point at a given index 
+     * @js NA
+     */
     void removeControlPointAtIndex(unsigned int index);
     
-    /** returns the number of objects of the control point array */
-    unsigned int count();
+    /** returns the number of objects of the control point array 
+     * @js NA
+     */
+    unsigned int count() const;
     
-    /** returns a new copy of the array reversed. User is responsible for releasing this copy */
-    CCPointArray* reverse();
+    /** returns a new copy of the array reversed. User is responsible for releasing this copy 
+     * @js NA
+     */
+    PointArray* reverse() const;
     
-    /** reverse the current control point array inline, without generating a new one */
+    /** reverse the current control point array inline, without generating a new one 
+     * @js NA
+     */
     void reverseInline();
-    
-    virtual CCObject* copyWithZone(CCZone *zone);
-    
-    const std::vector<CCPoint*>* getControlPoints();
-
-    void setControlPoints(std::vector<CCPoint*> *controlPoints);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual PointArray* clone() const;
+    /**
+     * @js NA
+     */
+    const std::vector<Point*>* getControlPoints() const;
+    /**
+     * @js NA
+     */
+    void setControlPoints(std::vector<Point*> *controlPoints);
 private:
     /** Array that contains the control points */
-    std::vector<CCPoint*> *m_pControlPoints;
+    std::vector<Point*> *_controlPoints;
 };
 
 /** Cardinal Spline path.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
 @ingroup Actions
  */
-class CC_DLL CCCardinalSplineTo : public CCActionInterval
+class CC_DLL CardinalSplineTo : public ActionInterval
 {
 public:
 
-    /** creates an action with a Cardinal Spline array of points and tension */
-    static CCCardinalSplineTo* create(float duration, CCPointArray* points, float tension);
-
-    virtual ~CCCardinalSplineTo();
-    CCCardinalSplineTo();
+    /** creates an action with a Cardinal Spline array of points and tension 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var t,var table)
+     * in lua: lcaol create(local t, local table)
+     * @endcode
+     */
+    static CardinalSplineTo* create(float duration, PointArray* points, float tension);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~CardinalSplineTo();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CardinalSplineTo();
     
     /** initializes the action with a duration and an array of points */
-    bool initWithDuration(float duration, CCPointArray* points, float tension);
-    
-    // super virtual functions
-    virtual CCCardinalSplineTo* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
-    virtual CCActionInterval* reverse();
-    
-    virtual void updatePosition(CCPoint &newPos);
-    
-    inline CCPointArray* getPoints() { return m_pPoints; }
-    inline void  setPoints(CCPointArray* points) 
+    bool initWithDuration(float duration, PointArray* points, float tension);
+
+    virtual void updatePosition(Point &newPos);
+
+    inline PointArray* getPoints() { return _points; }
+    /**
+     * @js NA
+     * @lua NA
+     */
+    inline void setPoints(PointArray* points)
     {
         CC_SAFE_RETAIN(points);
-        CC_SAFE_RELEASE(m_pPoints);
-        m_pPoints = points;
+        CC_SAFE_RELEASE(_points);
+        _points = points;
     }
-    
+
+    // Overrides
+	virtual CardinalSplineTo *clone() const override;
+    virtual CardinalSplineTo* reverse() const override;
+    virtual void startWithTarget(Node *target) override;
+    virtual void update(float time) override;
+
 protected:
     /** Array of control points */
-    CCPointArray *m_pPoints;
-    float m_fDeltaT;
-    float m_fTension;
-    CCPoint	m_previousPosition;
-    CCPoint	m_accumulatedDiff;
+    PointArray *_points;
+    float _deltaT;
+    float _tension;
+    Point	_previousPosition;
+    Point	_accumulatedDiff;
 };
 
 /** Cardinal Spline path.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
  @ingroup Actions
  */
-class CC_DLL CCCardinalSplineBy : public CCCardinalSplineTo 
+class CC_DLL CardinalSplineBy : public CardinalSplineTo 
 {
 public:
     
-    /** creates an action with a Cardinal Spline array of points and tension */
-    static CCCardinalSplineBy* create(float duration, CCPointArray* points, float tension);
+    /** creates an action with a Cardinal Spline array of points and tension 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var t,var table)
+     * in lua: lcaol create(local t, local table)
+     * @endcode
+     */
+    static CardinalSplineBy* create(float duration, PointArray* points, float tension);
 
-    CCCardinalSplineBy();
+    CardinalSplineBy();
     
-    virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval* reverse();
-    virtual void updatePosition(CCPoint &newPos);
+    // Overrides
+    virtual void startWithTarget(Node *target) override;
+    virtual void updatePosition(Point &newPos) override;
+	virtual CardinalSplineBy *clone() const override;
+    virtual CardinalSplineBy* reverse() const override;
+
 protected:
-    CCPoint m_startPosition;
+    Point _startPosition;
 };
 
 /** An action that moves the target with a CatmullRom curve to a destination point.
@@ -168,15 +229,25 @@ protected:
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  @ingroup Actions
  */
-class CC_DLL CCCatmullRomTo : public CCCardinalSplineTo
+class CC_DLL CatmullRomTo : public CardinalSplineTo
 {
 public:
     
-    /** creates an action with a Cardinal Spline array of points and tension */
-    static CCCatmullRomTo* create(float dt, CCPointArray* points);
+    /** creates an action with a Cardinal Spline array of points and tension 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var dt,var table)
+     * in lua: lcaol create(local dt, local table)
+     * @endcode
+     */
+    static CatmullRomTo* create(float dt, PointArray* points);
 
     /** initializes the action with a duration and an array of points */
-    bool initWithDuration(float dt, CCPointArray* points);
+    bool initWithDuration(float dt, PointArray* points);
+
+    // Override
+	virtual CatmullRomTo *clone() const override;
+	virtual CatmullRomTo *reverse() const override;
 };
 
 /** An action that moves the target with a CatmullRom curve by a certain distance.
@@ -184,19 +255,29 @@ public:
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  @ingroup Actions
  */
-class CC_DLL CCCatmullRomBy : public CCCardinalSplineBy
+class CC_DLL CatmullRomBy : public CardinalSplineBy
 {
 public:
-    
-    /** creates an action with a Cardinal Spline array of points and tension */
-    static CCCatmullRomBy* create(float dt, CCPointArray* points);
+    /** creates an action with a Cardinal Spline array of points and tension 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var dt,var table)
+     * in lua: lcaol create(local dt, local table)
+     * @endcode
+     */
+    static CatmullRomBy* create(float dt, PointArray* points);
 
     /** initializes the action with a duration and an array of points */
-    bool initWithDuration(float dt, CCPointArray* points);
+    bool initWithDuration(float dt, PointArray* points);
+
+    // Override
+	virtual CatmullRomBy *clone() const override;
+	virtual CatmullRomBy *reverse() const override;
+
 };
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
-extern CC_DLL CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, float tension, float t);
+extern CC_DLL Point ccCardinalSplineAt(Point &p0, Point &p1, Point &p2, Point &p3, float tension, float t);
 
 // end of actions group
 /// @}

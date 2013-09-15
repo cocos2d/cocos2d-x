@@ -38,35 +38,53 @@ struct _ccArray;
  * @{
  */
 
-/** @brief CCParallaxNode: A node that simulates a parallax scroller
+/** @brief ParallaxNode: A node that simulates a parallax scroller
 
 The children will be moved faster / slower than the parent according the the parallax ratio.
 
 */
-class CC_DLL CCParallaxNode : public CCNode 
+class CC_DLL ParallaxNode : public Node 
 {
-    /** array that holds the offset / ratio of the children */
-    CC_SYNTHESIZE(struct _ccArray *, m_pParallaxArray, ParallaxArray)
-
 public:
+    // Create a Parallax node
+    static ParallaxNode * create();
+    
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset
     It returns self, so you can chain several addChilds.
     @since v0.8
+    * @js ctor
     */
-    CCParallaxNode();
-    virtual ~CCParallaxNode();
+    ParallaxNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ParallaxNode();
 
-    static CCParallaxNode * create();
-    virtual void addChild(CCNode * child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
-    // super methods
-    virtual void addChild(CCNode * child, unsigned int zOrder, int tag);
-    virtual void removeChild(CCNode* child, bool cleanup);
-    virtual void removeAllChildrenWithCleanup(bool cleanup);
-    virtual void visit(void);
-private:
-    CCPoint absolutePosition();
+    // prevents compiler warning: "Included function hides overloaded virtual functions"
+    using Node::addChild;
+
+    void addChild(Node * child, int z, const Point& parallaxRatio, const Point& positionOffset);
+
+    /** Sets an array of layers for the Parallax node */
+    void setParallaxArray( struct _ccArray *parallaxArray) { _parallaxArray = parallaxArray; }
+    /** Returns the array of layers of the Parallax node */
+    struct _ccArray* getParallaxArray() { return _parallaxArray; }
+    const struct _ccArray* getParallaxArray() const { return _parallaxArray; }
+
+    //
+    // Overrides
+    //
+    virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual void removeChild(Node* child, bool cleanup) override;
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+    virtual void visit(void) override;
+
 protected:
-    CCPoint    m_tLastPosition;
+    Point absolutePosition();
+
+    Point    _lastPosition;
+    struct _ccArray* _parallaxArray;
 };
 
 // end of tilemap_parallax_nodes group

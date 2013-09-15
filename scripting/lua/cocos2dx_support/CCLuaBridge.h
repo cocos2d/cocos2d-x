@@ -38,22 +38,22 @@ using namespace std;
 NS_CC_BEGIN
 
 typedef enum {
-    kCCLuaBridgeErrorOk                   = 0,
-    kCCLuaBridgeErrorInvalidParameters    = -1,
-    kCCLuaBridgeErrorClassNotFound        = -2,
-    kCCLuaBridgeErrorMethodNotFound       = -3,
-    kCCLuaBridgeErrorExceptionOccurred    = -4,
-    kCCLuaBridgeErrorMethodSignature      = -5,
-    kCCLuaBridgeErrorJavaVMError          = -6,
-} CCLuaBridgeError;
+    kLuaBridgeErrorOk                   = 0,
+    kLuaBridgeErrorInvalidParameters    = -1,
+    kLuaBridgeErrorClassNotFound        = -2,
+    kLuaBridgeErrorMethodNotFound       = -3,
+    kLuaBridgeErrorExceptionOccurred    = -4,
+    kLuaBridgeErrorMethodSignature      = -5,
+    kLuaBridgeErrorJavaVMError          = -6,
+} LuaBridgeError;
 
 #define LUA_BRIDGE_REGISTRY_FUNCTION    "lua_bridge_function_id"        // table[function] = id
 #define LUA_BRIDGE_REGISTRY_RETAIN      "lua_bridge_function_id_retain" // table[id] = retain count
 
-class CCLuaBridge
+class LuaBridge
 {
 public:
-    static CCLuaStack *getStack(void);
+    static LuaStack *getStack(void);
     static int pushLuaFunctionById(int functionId);
 
     static int retainLuaFunctionById(int functionId);

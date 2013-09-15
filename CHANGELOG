@@ -1,3 +1,174 @@
+cocos2d-x-3.0alpha0-pre @Jul.30 2013
+[all platforms]
+     [FIX]      #2124: Image::initWithImageFileThreadSafe is not thread safe
+     [FIX]      #2230: Node::onEnterTransitionDidFinish was called twice when a node is added in Node::onEnter
+     [FIX]      #2237: calculation offset in font rendering
+     [FIX]      #2303: missing precision when getting strokeColor and fontFillColor
+     [FIX]      #2312: WebSocket can not parse url like "ws://domain.com/websocket"
+     [FIX]      #2327: implement Node::isScheduled
+     [FIX]      #2338: ccbRootPath is not passed to sub ccb nodes
+     [FIX]      #2346: OpenGL error 0x0502 in  TextureAtlas::drawNumberOfQuads
+     [FIX]      #2359: Sprite will become white block when using ControlSwitch
+     [FIX]      #2361: some bug fixed of the Set class
+     [FIX]      #2366: text shadow
+     [FIX]      #2367: ClippingNode works differently on different platforms
+     [FIX]      #2370: Pivotjoint constructor and pointQueryFirst in Space class will return false instead of invalid shape object
+     [FIX]      #2381: ControlSwitch wasn't displayed correctly when adding more than one switch
+     [FIX]      #2384: The submenu of ExtensionTest in TestCpp can't scroll
+     [FIX]      #2386: ClippingNode works wrongly when being set as a child
+     [FIX]      #2396: Scale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame
+     [FIX]      #2401: LabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads randombly
+     [FIX]      #2410: Black screen appears on android randomly
+     [FIX]      #2411: Opacity option for shadow in CCLabelTTF is not working
+     [FIX]      #2406: Color and Opacity of Scale9Sprite will not be changed when it's added to NodeRGBA and run with FadeIn/Out actions
+     [FIX]      #2415: Warning of AL_INVALID_NAME and AL_INVALID_OPERATION in SimpleAudioEngineOpenAL.cpp
+     [FIX]      #2418: Unused spriteframes also need to be removed when purgeCachedData
+     [FIX]      #2431: Potential crash when loading js files
+     [FIX]      #2229: Explicitly initialising CCAcceleration structure
+     [FIX]      #2234: Add destructor to CCGLBufferedNode
+     [Feature]  #2232: adding Norwegian language support
+     [Feature]  #2235: Ability to save/retrieve CCData into/from CCUserDefault
+     [Feature]  #2250: add support for std::function<> in CCMemuItem and CCCallFunc
+     [Feature]  #2273: Hardware keyboard support
+     [Feature]  #2278: Adds CALLBACK_0, CALLBACK_1 and CALLBACK_2 macros for MenuItems
+     [Feature]  #2279: Updates chipmunk2d to v6.1.5
+     [Feature]  #2283: Adds Polish language support
+     [Feature]  #2289: Uses clone() pattern for actions
+     [Feature]  #2332: Adding project for QtCreator
+     [Feature]  #2364: Adds DrawPrimitives::DrawSolidCircle
+     [Feature]  #2365: Adds Rect::unionWithRect
+     [Feature]  #2385: Implemented pitch, pan and gain for SimpleAudioEngine
+     [Feature]  #2389: Adding cookie support for HttpClient
+     [Feature]  #2392: Adds append() function for String class
+     [Feature]  #2395: Adds Scale9SpriteTest for TestCpp
+     [Feature]  #2399: Adds SocketIO support
+     [Feature]  #2408: Adds String::componentsSeparatedByString function for splitting string
+     [Feature]  #2414: Bindings-generator could bind std::function<> argument
+     [Refactor] #2129: Removes Hungarian notation from ivars. Removes CC and cc prefixes from name classes and free functions.
+     [Refactor] #2242: Enables c++11
+     [Refactor] #2300: Using clone() pattern instead of 'copyWithZone' pattern
+     [Refactor] #2305: Use std::thread instead of pthread
+     [Refactor] #2328: ETC support for all platforms
+     [Refactor] #2373: Change some member functions to const
+     [Refactor] #2378: Remove the usage of CC_PROPERTY_XXX in engine code
+     [Refactor] #2388: Creating a default texture for CCSprite if setTexture(nullptr) is invoked
+     [Refactor] #2397: Singleton refactor, sharedXXX --> getInstance, purgeXXX --> destroyInstance
+     [Refactor] #2404: Move all deprecated global functions and variables into CCDeprecated.h
+     [Refactor] #2430: Uses strongly typed enums (enum class) instead of simple enums
+[iOS]
+     [FIX]      #2274: compile and run for iOS7 and Xcode5
+     [Refactor] #2371: use one single Xcode project for iOS and Mac projects
+[Android]
+     [FIX]      #2306: CCLabelTTF::setString crash
+     [Refactor] #2329: use Android "asset manager" to improve file system read performance
+     [Refactor] #2400: use onWindowFocusChanged(bool) instead of onResume()/onPause()
+[OS X]
+     [FIX]      #2275: LabelTTF vertical alignment
+     [FIX]      #2398: Add support for initializing Image with raw data
+[windows]
+     [FIX]      #2322: link error becasue of using multiply inheritance
+[javascript binding]
+     [FIX]      #2307: PhysicsSprite::getCPBody return wrong type
+     [FIX]      #2313: bind cc.ClippingNode
+     [FIX]      #2315: iterating through cc.Node children crash
+     [Feature]  #2285: bind MontionStreak
+     [Feature]  #2340: Updates SpiderMonekey to Firefox v22 (JS Bindings)
+     [Feature]  #2427: bind FileUtils.getInstance().createDictionaryWithContentsOfFile
+[lua binding]
+     [Feature]  #2276: Add CCScrollView lua binding and corresponding test sample
+     [Feature]  #2277: Add OpenGL lua binding and corresponding test sample
+     [Feature]  #2324: Add OpenGL lua module
+     [Feature]  #2343: Redesign the mechanism of invoking lua func from c++
+     [Feature]  #2344: make some execute functions into one function in ScriptEngineProtocol
+     [Feature]  #2426: Add DrawPrimitives test sample
+     [Feature]  #2429: LuaWebSocket supports sending binary string
+[plugin-x]
+     [FIX]      #2348: event will not be sent to server when paramMap argument of logEvent function is nil
+[Emscript]
+     [Feature]  #2289: Asynchronous Image loading
+
+
+2.1rc0-x-2.1.4 @Jnue.12 2013
+[all platforms]
+     Bug      #2098: fix TouchPriority issue of CCScrollView
+     Bug      #2107: fix crash in HttpClient request on 64Bit
+     Bug      #2115: fix linking errors for TestCPP with libcurl
+     Bug      #2128: remove setting ignoreAnchorPoint for child CCB files and fix crash while trying to load sprite frame when the file is missing
+     Bug      #2140: fix a bug that the displayed color of CCDrawNode is incorrect when VAO is disabled
+     Bug      #2142: adding CCDataVisitor and implementing CCPrettyPrinter
+     Bug      #2143: fix a crash caused by ScrollView.setDelegate(tmp function)
+     Bug      #2146: unpack texture data correctly
+     Bug      #2147: fix null pointer access in CCBAnimationManager::getRunningSequenceName()
+     Bug      #2150: fix a bug that setColor and setOpacity of CCControlButton and CCScale9Sprite are broken
+     Bug      #2251: fix a logical error in CCDrawNode::drawPolygon()
+     Bug      #2271: fix memory leak as possible
+     Feature  #1859: make AssetsManager download resources in a new thread
+     Feature  #2086: make CCLabelTTF supports shadows and stroke
+     Feature  #2100: add CCDirector::popToSceneStackLevel(int level)
+     Feature  #2105: add Travis build support
+     Feature  #2108: add example for russian language in TestCpp
+     Feature  #2111: add CC_DISABLE_COPY macro
+     Feature  #2114: add __attribute__(__format__()) for CCLog and CCString
+     Feature  #2116: support negative node scales for CCScrollView
+     Feature  #2117: implement CCDictionary::writeToFile()
+     Feature  #2122: add method to create a CCMenuItemToggle from a CCArray with a target selector
+     Feature  #2132: add encrypted PVR.CCZ support to ZipUtils + Tests
+     Feature  #2157: add Mingw-crt Support without breaking VS SDK
+     Feature  #2265: add CCLabelTTF::createWithFontDefinition()
+     Feature  #2270: add Armature(CocoStudio runtime) support
+     Refactor #2109: add const modifier for classes CCArray, CCObject
+     Refactor #2118: move ccpX functions to CCPoint methods and operators
+     Refactor #2119: use httpresponse_selector instead of callfuncND_selector for the callback function of CCHttpRequest
+     Refactor #2123: refactor network extension, fixing unlikely memory leaks, adding PUT/DELETE methods
+     Refactor #2127: add CCLOG before original path is returned in CCFileUtils::fullPathForFileName to aid in debugging
+     Refactor #2149: add const qualification to some CCNode's getters
+     Refactor #2189: CCLabelTTF::enableShadow() const update
+     Refactor #2215: refactor CCConfiguration
+     Refactor #2217: use CCLabelAtlas instead of CCLabelTTF to show FPS
+     Refactor #2231: implement a format of CCConfiguration
+     Refactor #2233: add support for "CCString" types for boolean and integers in CCConfiguration
+     Refactor #2236: fix memory hot spot of CCTextureAtlas::updateQuad()
+[android]
+     Bug      #1284: fix a bug that SimpleAudioEngine may cause crash on i9100
+     Bug      #2151: fix custom font loading on Android for resource mapped font files
+     Bug      #2190: updat .classpath of Android project to latest ADT 22 build tool compatibility
+     Bug      #2266: fix a bug that CCFileUtils::getFileData() may not get file data correctly on Android
+     Feature  #2161: add ETC1 image format
+[iOS]
+     Bug      #2102: fix missing protocol method warning for iOS 6.0 addition
+     Bug      #2104: fix a bug that JPEG picture not displayed correctly on iOS 4.3
+     Bug      #2260: fix a bug that CCDirectory::createWithContentsOfFile() returns a valid pointer though the file is missing on iOS
+     Refactor #2101: update cocos2dx Xcode project to detect more warnings
+     Refactor #2253: add UITextField only when keyboard was opened, removing it when keyboard was closed
+[mac]
+     Bug      #2249: fix linebreaks on Mac OSX
+[win32]
+     Bug      #2131: fix memory leak of SimpleAudioEngine::preloadEffect()
+     Bug      #2145: center the window correctly on windows
+[emscripten]
+     Feature  #2120: compile c++ to js
+     Bug      #2159: use browser font rendering instead of FreeType
+     Refactor #2133: compile for Emscripten in asm.js mode
+     Document #2121: write a document to describe the usage of emscriptenate port
+[tizen]
+     Feature  #2185: add support for Tizen
+[javascript binding]
+     Bug      #2099: fix a bug in ScriptingCore::evalString() not setting the outval
+     Bug      #2179: fix a bug that pointQueryFirst returns invalid Shape when a shape is not found
+     Bug      #2186: fix a bug that new PivotJoint can't access 4 parameters like in html5 version
+     Bug      #2187: JavaScript debugger improved and bug fixed
+     Bug      #2243: fix a bug that XMLHttpRequest dones't support non-ascii characters
+     Bug      #2244: fix a bug that cc.Camera.getEyeXYZ, cc.Camera.getCenterXYZ, cc.Camera.getUpXYZ return bad values
+     Feature  #1647: Bind websocket to javascript
+     Feature  #2092: add XMLHttpRequest and bind it to JSB
+     Feature  #2106: add support for javascript byte code
+     Feature  #2162: add command line tool for generating javascript bytecode
+     Feature  #2214: upgrade Spidermonkey to Firefox v21
+     Refactor #2152: log assert messages to the console and renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert
+     Refactor #2247: use functions instead of macros to speeding up building for JSB project
+[lua binding]
+     Feature  #2103: implement most test cases
+
 cocos2d-2.1rc0-x-2.1.3 @May.01 2013
 [all platforms]
      Bug      #1853: use SHELLOPTS instead of "-o igncr" for Android Eclipse project

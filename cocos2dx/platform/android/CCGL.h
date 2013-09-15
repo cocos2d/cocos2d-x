@@ -52,7 +52,7 @@ typedef char GLchar;
 #define GL_BGRA  0x80E1
 #endif
 
-//declare here while define in CCEGLView_android.cpp
+//declare here while define in EGLView_android.cpp
 extern PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOESEXT;
 extern PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOESEXT;
 extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;

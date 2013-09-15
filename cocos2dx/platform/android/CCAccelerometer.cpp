@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCAccelerometer.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "nativeactivity.h"
 #include <stdio.h>
 #include <android/log.h>
 
@@ -32,45 +32,43 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-    CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
+    Accelerometer::Accelerometer() : _function(nullptr)
     {
     }
 
-    CCAccelerometer::~CCAccelerometer() 
+    Accelerometer::~Accelerometer() 
     {
 
     }
 
-    void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
+    void Accelerometer::setDelegate(std::function<void(Acceleration*)> function) 
     {
-        m_pAccelDelegate = pDelegate;
+        _function = function;
 
-        if (pDelegate)
-        {        
-            enableAccelerometerJNI();
+        if (_function) {
+            enableAccelerometer();
         }
-        else
-        {
-            disableAccelerometerJNI();
+        else {
+            disableAccelerometer();
         }
     }
 
-    void CCAccelerometer::setAccelerometerInterval(float interval) 
+    void Accelerometer::setAccelerometerInterval(float interval) 
     {
-        setAccelerometerIntervalJNI(interval);
+        setAccelerometerInterval(interval);
     }
 
 
-    void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
+    void Accelerometer::update(float x, float y, float z, long sensorTimeStamp) 
     {
-        if (m_pAccelDelegate)
+        if (_function)
         {
-            m_obAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
-            m_obAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
-            m_obAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
-            m_obAccelerationValue.timestamp = (double)sensorTimeStamp;
+            _accelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
+            _accelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
+            _accelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
+            _accelerationValue.timestamp = (double)sensorTimeStamp;
 
-            m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+            _function(&_accelerationValue);
         }    
     }
 } // end of namespace cococs2d

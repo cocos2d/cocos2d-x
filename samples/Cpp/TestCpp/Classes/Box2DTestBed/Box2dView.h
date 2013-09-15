@@ -4,7 +4,7 @@
 //#include "cocos2d.h"
 #include "../testBasic.h"
 
-class MenuLayer : public CCLayer
+class MenuLayer : public Layer
 {
     int        m_entryID;
 
@@ -14,14 +14,14 @@ public:
 
     bool initWithEntryID(int entryId);
 
-    void restartCallback(CCObject* sender);
-    void nextCallback(CCObject* sender);
-    void backCallback(CCObject* sender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 
     virtual void registerWithTouchDispatcher();
 
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual bool ccTouchBegan(Touch* touch, Event* event);
+    virtual void ccTouchMoved(Touch* touch, Event* event);
 
 public:
     static MenuLayer* menuWithEntryID(int entryId);
@@ -29,7 +29,7 @@ public:
 
 struct TestEntry;
 class Test;
-class Box2DView : public CCLayer
+class Box2DView : public Layer
 {
     TestEntry*    m_entry;
     Test*        m_test;
@@ -44,10 +44,10 @@ public:
     void draw();
 
     virtual void registerWithTouchDispatcher();
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
-    //virtual void accelerometer(UIAccelerometer* accelerometer, CCAcceleration* acceleration);
+    virtual bool ccTouchBegan(Touch* touch, Event* event);
+    virtual void ccTouchMoved(Touch* touch, Event* event);
+    virtual void ccTouchEnded(Touch* touch, Event* event);
+    //virtual void accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration);
 
     static Box2DView* viewWithEntryID(int entryId);
 };

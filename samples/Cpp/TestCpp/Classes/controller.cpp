@@ -1,175 +1,129 @@
+
+// C++ includes
+#include <map>
+#include <functional>
+#include <string>
+
+// test inclues
 #include "controller.h"
 #include "testResource.h"
 #include "tests.h"
 
+
+struct {
+	const char *test_name;
+	std::function<TestScene*()> callback;
+} g_aTestNames[] = {
+
+	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
+	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
+	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
+	{ "ActionsProgressTest", [](){return new ProgressActionsTestScene(); } },
+	{ "ActionsTest", [](){ return new ActionsTestScene(); } },
+	{ "Box2dTest", []() { return new Box2DTestScene(); } },
+	{ "Box2dTestBed", []() { return new Box2dTestBedScene(); } },
+	{ "BugsTest", []() { return new BugsTestScene(); } },
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+	{ "ChipmunkTest", []() { return new ChipmunkAccelTouchTestScene(); } },
+#endif
+	{ "ClickAndMoveTest", [](){return new ClickAndMoveTestScene(); } },
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+	{ "ClippingNodeTest", []() { return new ClippingNodeTestScene(); } },
+#endif
+	{ "CocosDenshionTest", []() { return new CocosDenshionTestScene(); } },
+	{ "ConfigurationTest", []() { return new ConfigurationTestScene(); } },
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
+	{ "CurlTest", []() { return new CurlTestScene(); } },
+#endif
+#endif
+#endif
+#endif
+	{ "CurrentLanguageTest", []() { return new CurrentLanguageTestScene(); } },
+	{ "DrawPrimitivesTest", [](){return new DrawPrimitivesTestScene();} },
+	{ "EffectAdvancedTest", []() { return new EffectAdvanceScene(); } },
+	{ "EffectsTest", [](){return new EffectTestScene();} },
+	{ "ExtensionsTest", []() { return new ExtensionsTestScene(); } },
+	{ "FileUtilsTest", []() { return new FileUtilsTestScene(); } },
+	{ "FontTest", []() { return new FontTestScene(); } },
+	{ "IntervalTest", [](){return new IntervalTestScene(); } },
+#ifdef CC_KEYBOARD_SUPPORT
+	{ "KeyboardTest", []() { return new KeyboardTestScene(); } },
+#endif
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
+	{ "KeypadTest", []() { return new KeypadTestScene(); } },
+#endif
+	{ "LabelTest", [](){return new AtlasTestScene(); } },
+    { "LabelTestNew", [](){return new AtlasTestSceneNew(); } },
+	{ "LayerTest", [](){return new LayerTestScene();} },
+	{ "MenuTest", [](){return new MenuTestScene();} },
+	{ "MotionStreakTest", [](){return new MotionStreakTestScene();} },
+	{ "MutiTouchTest", []() { return new MutiTouchTestScene(); } },
+	{ "NodeTest", [](){return new CocosNodeTestScene();} },
+	{ "ParallaxTest", [](){return new ParallaxTestScene(); } },
+	{ "ParticleTest", [](){return new ParticleTestScene(); } },
+	{ "PerformanceTest", []() { return new PerformanceTestScene(); } },
+	{ "RenderTextureTest", [](){return new RenderTextureScene(); } },
+	{ "RotateWorldTest", [](){return new RotateWorldTestScene(); } },
+	{ "SceneTest", [](){return new SceneTestScene();} },
+	{ "SchedulerTest", [](){return new SchedulerTestScene(); } },
+	{ "ShaderTest", []() { return new ShaderTestScene(); } },
+    { "ShaderTestSprite", []() { return new ShaderTestScene2(); } },
+	{ "SpineTest", []() { return new SpineTestScene(); } },
+	{ "SpriteTest", [](){return new SpriteTestScene(); } },
+	{ "TextInputTest", [](){return new TextInputTestScene(); } },
+	{ "Texture2DTest", [](){return new TextureTestScene(); } },
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+	{ "TextureCacheTest", []() { return new TextureCacheTestScene(); } },
+#endif
+	{ "TexturePackerEncryption", []() { return new TextureAtlasEncryptionTestScene(); } },
+	{ "TileMapTest", [](){return new TileMapTestScene(); } },
+	{ "TouchesTest", [](){return new PongScene();} },
+	{ "TransitionsTest", [](){return new TransitionsTestScene();} },
+	{ "UserDefaultTest", []() { return new UserDefaultTestScene(); } },
+	{ "ZwoptexTest", []() { return new ZwoptexTestScene(); } },
+};
+
+static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
+
 #define LINE_SPACE          40
 
-static CCPoint s_tCurPos = CCPointZero;
-
-static TestScene* CreateTestScene(int nIdx)
-{
-    CCDirector::sharedDirector()->purgeCachedData();
-
-    TestScene* pScene = NULL;
-
-    switch (nIdx)
-    {
-    case TEST_ACTIONS:
-        pScene = new ActionsTestScene(); break;
-    case TEST_TRANSITIONS:
-        pScene = new TransitionsTestScene(); break;
-     case TEST_PROGRESS_ACTIONS:
-         pScene = new ProgressActionsTestScene(); break;
-    case TEST_EFFECTS:
-        pScene = new EffectTestScene(); break;
-    case TEST_CLICK_AND_MOVE:
-        pScene = new ClickAndMoveTestScene(); break;
-    case TEST_ROTATE_WORLD:
-        pScene = new RotateWorldTestScene(); break;
-    case TEST_PARTICLE:
-        pScene = new ParticleTestScene(); break;
-    case TEST_EASE_ACTIONS:
-        pScene = new ActionsEaseTestScene(); break;
-    case TEST_MOTION_STREAK:
-        pScene = new MotionStreakTestScene(); break;
-    case TEST_DRAW_PRIMITIVES:
-        pScene = new DrawPrimitivesTestScene(); break;
-    case TEST_COCOSNODE:
-        pScene = new CocosNodeTestScene(); break;
-    case TEST_TOUCHES:
-        pScene = new PongScene(); break;
-    case TEST_MENU:
-        pScene = new MenuTestScene(); break;
-    case TEST_ACTION_MANAGER:
-        pScene = new ActionManagerTestScene(); break;
-    case TEST_LAYER:
-        pScene = new LayerTestScene(); break;
-    case TEST_SCENE:
-        pScene = new SceneTestScene(); break;
-    case TEST_PARALLAX:
-        pScene = new ParallaxTestScene(); break;
-    case TEST_TILE_MAP:
-        pScene = new TileMapTestScene(); break;
-    case TEST_INTERVAL:
-        pScene = new IntervalTestScene(); break;
-    case TEST_LABEL:
-        pScene = new AtlasTestScene(); break;
-    case TEST_TEXT_INPUT:
-        pScene = new TextInputTestScene(); break;
-    case TEST_SPRITE:
-        pScene = new SpriteTestScene(); break;
-    case TEST_SCHEDULER:
-        pScene = new SchedulerTestScene(); break;
-    case TEST_RENDERTEXTURE:
-        pScene = new RenderTextureScene(); break;
-    case TEST_TEXTURE2D:
-        pScene = new TextureTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    case TEST_CHIPMUNK:
-        pScene = new ChipmunkAccelTouchTestScene(); break;
-#endif
-    case TEST_BOX2D:
-        pScene = new Box2DTestScene(); break;
-    case TEST_BOX2DBED:
-        pScene = new Box2dTestBedScene(); break;
-    case TEST_EFFECT_ADVANCE:
-        pScene = new EffectAdvanceScene(); break;
-    case TEST_ACCELEROMRTER:
-        pScene = new AccelerometerTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-    case TEST_KEYPAD:
-        pScene = new KeypadTestScene(); break;
-#endif
-    case TEST_COCOSDENSHION:
-        pScene = new CocosDenshionTestScene(); break;
-    case TEST_PERFORMANCE:
-        pScene = new PerformanceTestScene(); break;
-    case TEST_ZWOPTEX:
-        pScene = new ZwoptexTestScene(); break;
-// bada don't support libcurl
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
-    case TEST_CURL:
-        pScene = new CurlTestScene(); break;
-#endif
-    case TEST_USERDEFAULT:
-        pScene = new UserDefaultTestScene(); break;
-    case TEST_BUGS:
-        pScene = new BugsTestScene(); break;
-    case TEST_FONTS:
-        pScene = new FontTestScene(); break;
-    case TEST_CURRENT_LANGUAGE:
-        pScene = new CurrentLanguageTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    case TEST_TEXTURECACHE: pScene = new TextureCacheTestScene(); break;
-#endif
-    case TEST_EXTENSIONS:
-        pScene = new ExtensionsTestScene();
-        break;
-    case TEST_SHADER:
-        pScene = new ShaderTestScene();
-        break;
-    case TEST_MUTITOUCH:
-        pScene = new MutiTouchTestScene();
-        break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    case TEST_CLIPPINGNODE:
-        pScene = new ClippingNodeTestScene();
-        break;
-#endif
-    case TEST_FILEUTILS:
-        pScene = new FileUtilsTestScene();
-        break;
-    case TEST_SPINE:
-        pScene = new SpineTestScene();
-        break;
-    case TEST_TEXTUREPACKER_ENCRYPTION:
-        pScene = new TextureAtlasEncryptionTestScene();
-        break;
-    case TEST_DATAVISTOR:
-        pScene = new DataVisitorTestScene();
-        break;
-	case TEST_CONFIGURATION:
-		pScene = new ConfigurationTestScene();
-		break;
-	default:
-        break;
-    }
-
-    return pScene;
-}
+static Point s_tCurPos = Point::ZERO;
 
 TestController::TestController()
-: m_tBeginPos(CCPointZero)
+: _beginPos(Point::ZERO)
 {
     // add close menu
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
-    CCMenu* pMenu =CCMenu::create(pCloseItem, NULL);
+    auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
+    auto menu =Menu::create(closeItem, NULL);
 
-    pMenu->setPosition( CCPointZero );
-    pCloseItem->setPosition(ccp( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
+    menu->setPosition( Point::ZERO );
+    closeItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
-    m_pItemMenu = CCMenu::create();
-    for (int i = 0; i < TESTS_COUNT; ++i)
+    _itemMenu = Menu::create();
+    for (int i = 0; i < g_testCount; ++i)
     {
 // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//         CCLabelBMFont* label = CCLabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+//         auto label = LabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 // #else
-        CCLabelTTF* label = CCLabelTTF::create(g_aTestNames[i].c_str(), "Arial", 24);
+        auto label = LabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
 // #endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestController::menuCallback));
+        auto menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
-        m_pItemMenu->addChild(pMenuItem, i + 10000);
-        pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
+        _itemMenu->addChild(menuItem, i + 10000);
+        menuItem->setPosition( Point( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
-    m_pItemMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
-    m_pItemMenu->setPosition(s_tCurPos);
-    addChild(m_pItemMenu);
+    _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
+    _itemMenu->setPosition(s_tCurPos);
+    addChild(_itemMenu);
 
     setTouchEnabled(true);
 
-    addChild(pMenu, 1);
+    addChild(menu, 1);
 
 }
 
@@ -177,61 +131,63 @@ TestController::~TestController()
 {
 }
 
-void TestController::menuCallback(CCObject * pSender)
+void TestController::menuCallback(Object * sender)
 {
+
+	Director::getInstance()->purgeCachedData();
+
     // get the userdata, it's the index of the menu item clicked
-    CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
-    int nIdx = pMenuItem->getZOrder() - 10000;
+    auto menuItem = static_cast<MenuItem *>(sender);
+    int idx = menuItem->getZOrder() - 10000;
 
     // create the test scene and run it
-    TestScene* pScene = CreateTestScene(nIdx);
-    if (pScene)
+    auto scene = g_aTestNames[idx].callback();
+
+    if (scene)
     {
-        pScene->runThisTest();
-        pScene->release();
+        scene->runThisTest();
+        scene->release();
     }
 }
 
-void TestController::closeCallback(CCObject * pSender)
+void TestController::closeCallback(Object * sender)
 {
-    CCDirector::sharedDirector()->end();
+    Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
 }
 
-void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void TestController::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
+    auto touch = static_cast<Touch*>(touches->anyObject());
 
-    m_tBeginPos = touch->getLocation();    
+    _beginPos = touch->getLocation();    
 }
 
-void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void TestController::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    CCSetIterator it = pTouches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
+    auto touch = static_cast<Touch*>(touches->anyObject());
 
-    CCPoint touchLocation = touch->getLocation();    
-    float nMoveY = touchLocation.y - m_tBeginPos.y;
+    auto touchLocation = touch->getLocation();    
+    float nMoveY = touchLocation.y - _beginPos.y;
 
-    CCPoint curPos  = m_pItemMenu->getPosition();
-    CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    auto curPos  = _itemMenu->getPosition();
+    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        m_pItemMenu->setPosition(CCPointZero);
+        _itemMenu->setPosition(Point::ZERO);
         return;
     }
 
-    if (nextPos.y > ((TESTS_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        m_pItemMenu->setPosition(ccp(0, ((TESTS_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Point(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
-    m_pItemMenu->setPosition(nextPos);
-    m_tBeginPos = touchLocation;
+    _itemMenu->setPosition(nextPos);
+    _beginPos = touchLocation;
     s_tCurPos   = nextPos;
 }

@@ -6,62 +6,62 @@ local function doTest()
 
     -- set default value
 
-    CCUserDefault:sharedUserDefault():setStringForKey("string", "value1")
-    CCUserDefault:sharedUserDefault():setIntegerForKey("integer", 10)
-    CCUserDefault:sharedUserDefault():setFloatForKey("float", 2.3)
-    CCUserDefault:sharedUserDefault():setDoubleForKey("double", 2.4)
-    CCUserDefault:sharedUserDefault():setBoolForKey("bool", true)
+    cc.UserDefault:getInstance():setStringForKey("string", "value1")
+    cc.UserDefault:getInstance():setIntegerForKey("integer", 10)
+    cc.UserDefault:getInstance():setFloatForKey("float", 2.3)
+    cc.UserDefault:getInstance():setDoubleForKey("double", 2.4)
+    cc.UserDefault:getInstance():setBoolForKey("bool", true)
 
     -- print value
 
-    local ret = CCUserDefault:sharedUserDefault():getStringForKey("string")
+    local ret = cc.UserDefault:getInstance():getStringForKey("string")
     cclog("string is %s", ret)
 
-    local d = CCUserDefault:sharedUserDefault():getDoubleForKey("double")
+    local d = cc.UserDefault:getInstance():getDoubleForKey("double")
     cclog("double is %f", d)
 
-    local i = CCUserDefault:sharedUserDefault():getIntegerForKey("integer")
+    local i = cc.UserDefault:getInstance():getIntegerForKey("integer")
     cclog("integer is %d", i)
 
-    local f = CCUserDefault:sharedUserDefault():getFloatForKey("float")
+    local f = cc.UserDefault:getInstance():getFloatForKey("float")
     cclog("float is %f", f)
 
-    local b = CCUserDefault:sharedUserDefault():getBoolForKey("bool")
+    local b = cc.UserDefault:getInstance():getBoolForKey("bool")
     if b == true then
         cclog("bool is true")
     else
         cclog("bool is false")
     end
 
-    --CCUserDefault:sharedUserDefault():flush()
+    --cc.UserDefault:getInstance():flush()
 
     cclog("********************** after change value ***********************")
 
     -- change the value
 
-    CCUserDefault:sharedUserDefault():setStringForKey("string", "value2")
-    CCUserDefault:sharedUserDefault():setIntegerForKey("integer", 11)
-    CCUserDefault:sharedUserDefault():setFloatForKey("float", 2.5)
-    CCUserDefault:sharedUserDefault():setDoubleForKey("double", 2.6)
-    CCUserDefault:sharedUserDefault():setBoolForKey("bool", false)
+    cc.UserDefault:getInstance():setStringForKey("string", "value2")
+    cc.UserDefault:getInstance():setIntegerForKey("integer", 11)
+    cc.UserDefault:getInstance():setFloatForKey("float", 2.5)
+    cc.UserDefault:getInstance():setDoubleForKey("double", 2.6)
+    cc.UserDefault:getInstance():setBoolForKey("bool", false)
 
-    CCUserDefault:sharedUserDefault():flush()
+    cc.UserDefault:getInstance():flush()
 
     -- print value
 
-    ret = CCUserDefault:sharedUserDefault():getStringForKey("string")
+    ret = cc.UserDefault:getInstance():getStringForKey("string")
     cclog("string is %s", ret)
 
-    d = CCUserDefault:sharedUserDefault():getDoubleForKey("double")
+    d = cc.UserDefault:getInstance():getDoubleForKey("double")
     cclog("double is %f", d)
 
-    i = CCUserDefault:sharedUserDefault():getIntegerForKey("integer")
+    i = cc.UserDefault:getInstance():getIntegerForKey("integer")
     cclog("integer is %d", i)
 
-    f = CCUserDefault:sharedUserDefault():getFloatForKey("float")
+    f = cc.UserDefault:getInstance():getFloatForKey("float")
     cclog("float is %f", f)
 
-    b = CCUserDefault:sharedUserDefault():getBoolForKey("bool")
+    b = cc.UserDefault:getInstance():getBoolForKey("bool")
     if b == true then
         cclog("bool is true")
     else
@@ -70,11 +70,11 @@ local function doTest()
 end
 
 function UserDefaultTestMain()
-    local ret = CCScene:create()
-    local s = CCDirector:sharedDirector():getWinSize()
-    local  label = CCLabelTTF:create("CCUserDefault test see log", "Arial", 28)
+    local ret = cc.Scene:create()
+    local s = cc.Director:getInstance():getWinSize()
+    local  label = cc.LabelTTF:create("UserDefault test see log", "Arial", 28)
     ret:addChild(label, 0)
-    label:setPosition( ccp(s.width/2, s.height-50) )
+    label:setPosition( cc.p(s.width/2, s.height-50) )
     doTest()
     return ret
 end

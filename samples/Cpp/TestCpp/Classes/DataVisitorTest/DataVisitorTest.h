@@ -5,7 +5,7 @@
 
 #include <string>
 
-class PrettyPrinterDemo : public CCLayer
+class PrettyPrinterDemo : public Layer
 {
 public:
     virtual std::string title();
@@ -13,7 +13,7 @@ public:
     virtual void onEnter();
     void addSprite();
 protected:
-    std::string    m_strTitle;
+    std::string    _title;
 };
 
 class DataVisitorTestScene : public TestScene

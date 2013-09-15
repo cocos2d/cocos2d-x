@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'extensions' target in the 'extensions' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

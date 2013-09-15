@@ -2,8 +2,10 @@
 #define _ATLAS_TEST_H_
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class AtlasDemo : public CCLayer
+
+class AtlasDemo : public BaseTest
 {
 protected:
 
@@ -15,15 +17,15 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 };
 
 
 class Atlas1 : public AtlasDemo
 {
-    CCTextureAtlas*        m_textureAtlas;
+    TextureAtlas*        _textureAtlas;
 public:
     Atlas1();
     ~Atlas1();
@@ -34,7 +36,7 @@ public:
 
 class LabelAtlasTest : public AtlasDemo
 {
-    float        m_time;
+    float        _time;
 public:
     LabelAtlasTest();
 
@@ -46,7 +48,7 @@ public:
 
 class LabelAtlasColorTest : public AtlasDemo
 {
-    float        m_time;
+    float        _time;
 public:
     LabelAtlasColorTest();
     virtual void step(float dt);
@@ -66,7 +68,7 @@ public:
 
 class Atlas3 : public AtlasDemo
 {
-    float        m_time;
+    float        _time;
 public:
     Atlas3();
 
@@ -78,7 +80,7 @@ public:
 
 class Atlas4 : public AtlasDemo
 {
-    float        m_time;
+    float        _time;
 public:
     Atlas4();
     virtual void step(float dt);
@@ -180,18 +182,18 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    void  setAlignmentLeft(CCObject* pSender);
-    void  setAlignmentCenter(CCObject* pSender);
-    void  setAlignmentRight(CCObject* pSender);
-    void  setAlignmentTop(CCObject* pSender);
-    void  setAlignmentMiddle(CCObject* pSender);
-    void  setAlignmentBottom(CCObject* pSender);
+    void  setAlignmentLeft(Object* sender);
+    void  setAlignmentCenter(Object* sender);
+    void  setAlignmentRight(Object* sender);
+    void  setAlignmentTop(Object* sender);
+    void  setAlignmentMiddle(Object* sender);
+    void  setAlignmentBottom(Object* sender);
     void  updateAlignment();
     const char* getCurrentAlignment();
 private:
-    CCLabelTTF* m_plabel;
-    CCTextAlignment m_eHorizAlign;
-    CCVerticalTextAlignment m_eVertAlign;
+    LabelTTF* _plabel;
+    TextHAlignment _horizAlign;
+    TextVAlignment _vertAlign;
 };
 
 class LabelTTFMultiline : public AtlasDemo
@@ -224,18 +226,18 @@ public:
     void snapArrowsToEdge();
     virtual std::string title();
     virtual std::string subtitle();
-    void stringChanged(CCObject *sender);
-    void alignmentChanged(CCObject *sender);
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    void stringChanged(Object *sender);
+    void alignmentChanged(Object *sender);
+    virtual void ccTouchesBegan(Set  *touches, Event  *event);
+    virtual void ccTouchesEnded(Set  *touches, Event  *event);
+    virtual void ccTouchesMoved(Set  *touches, Event  *event);
 
 public:
-    CCLabelBMFont *m_pLabelShouldRetain;
-    CCSprite *m_pArrowsBarShouldRetain;
-    CCSprite *m_pArrowsShouldRetain;
-    CCMenuItemFont *m_pLastSentenceItem, *m_pLastAlignmentItem;
-    bool m_drag;
+    LabelBMFont *_labelShouldRetain;
+    Sprite *_arrowsBarShouldRetain;
+    Sprite *_arrowsShouldRetain;
+    MenuItemFont *_lastSentenceItem, *_lastAlignmentItem;
+    bool _drag;
 };
 
 class LabelTTFA8Test : public AtlasDemo
@@ -311,8 +313,51 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    CCLabelBMFont *label1;
+    LabelBMFont *label1;
 };
+
+class NewLabelTTFUnicode : public AtlasDemo
+{
+public:
+    
+    NewLabelTTFUnicode();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class NewLabelBMFontTest : public AtlasDemo
+{
+public:
+
+    NewLabelBMFontTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+};
+
+class NewLabelFontDefTest : public AtlasDemo
+{
+public:
+
+    NewLabelFontDefTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+};
+
+class LabelBMFontCrashTest : public AtlasDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 
 // we don't support linebreak mode
 

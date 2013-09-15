@@ -3,8 +3,8 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
-#include "generated/jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_chipmunk_registration.h"
@@ -12,6 +12,7 @@
 #include "jsb_opengl_registration.h"
 #include "XMLHTTPRequest.h"
 #include "jsb_websocket.h"
+#include "js_bindings_ccbreader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -23,15 +24,17 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+    ScriptEngineManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    auto pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
 
+    // JS-Test in Html5 uses 800x450 as design resolution
+    EGLView::getInstance()->setDesignResolutionSize(800, 450, ResolutionPolicy::FIXED_HEIGHT);
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
@@ -48,17 +51,17 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     sc->addRegisterCallback(register_jsb_websocket);
-
+    sc->addRegisterCallback(register_CCBuilderReader);
+    
     sc->start();
 
-    CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    FileUtils::getInstance()->addSearchPath("res");
+    
+    auto pEngine = ScriptingCore::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 #ifdef JS_OBFUSCATED
     ScriptingCore::getInstance()->runScript("game.js");
 #else
-#if JSB_ENABLE_DEBUGGER
-    ScriptingCore::getInstance()->enableDebugger();
-#endif // JSB_ENABLE_DEBUGGER
     ScriptingCore::getInstance()->runScript("tests-boot-jsb.js");
 #endif
     return true;
@@ -68,11 +71,11 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    CCDirector* director = CCDirector::sharedDirector();
+    auto director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
-        CCPoolManager::sharedPoolManager()->finalize();
+        PoolManager::sharedPoolManager()->finalize();
         if (internal_state == 0) {
             //sc->dumpRoot(NULL, 0, NULL);
             sc->start();
@@ -87,15 +90,15 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    Director::getInstance()->stopAnimation();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    Director::getInstance()->startAnimation();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

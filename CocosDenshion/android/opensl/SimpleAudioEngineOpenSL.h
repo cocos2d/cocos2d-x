@@ -19,7 +19,7 @@ public:
 
 	void setEffectsVolume(float volume);
 
-	unsigned int playEffect(const char* pszFilePath, bool bLoop = false);
+    unsigned int playEffect(const char* pszFilePath, bool bLoop, float pitch, float pan, float gain);
 
 	void pauseEffect(unsigned int nSoundId);
 

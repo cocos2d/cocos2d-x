@@ -1,0 +1,19 @@
+################################################################################
+# Do not include this file in your project: see cocos2dx.pri.
+################################################################################
+
+linux {
+    # We will compile chipmunk on demand using Makefile.
+    build_chipmunk.name = Build chipmunk static library
+    build_chipmunk.input = $$PWD/Makefile
+    build_chipmunk.output = $$CC_LIBRARY_DIR/libchipmunk.a
+    build_chipmunk.target = $$CC_LIBRARY_DIR/libchipmunk.a
+    build_chipmunk.CONFIG = no_link target_predeps
+    build_chipmunk.commands = cd $$PWD && make $$CC_MAKE_FLAGS
+
+    QMAKE_EXTRA_COMPILERS += build_chipmunk
+    QMAKE_EXTRA_TARGETS += build_chipmunk
+
+    PRE_TARGETDEPS += $$CC_LIBRARY_DIR/libchipmunk.a
+    LIBS += -Wl,-Bstatic -lchipmunk -Wl,-Bdynamic
+}

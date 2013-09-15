@@ -8,13 +8,21 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CCMenuLoader : public CCLayerLoader {
-    public:
-        virtual ~CCMenuLoader() {};
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCMenuLoader, loader);
+class MenuLoader : public LayerLoader {
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~MenuLoader() {};
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(MenuLoader, loader);
 
-    protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCMenu);
+protected:
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Menu);
 };
 
 NS_CC_EXT_END

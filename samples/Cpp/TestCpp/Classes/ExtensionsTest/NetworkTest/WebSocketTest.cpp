@@ -22,55 +22,55 @@ WebSocketTestLayer::WebSocketTestLayer()
 , _sendTextTimes(0)
 , _sendBinaryTimes(0)
 {
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
     
     const int MARGIN = 40;
     const int SPACE = 35;
     
-    CCLabelTTF *label = CCLabelTTF::create("WebSocket Test", "Arial", 28);
-    label->setPosition(ccp(winSize.width / 2, winSize.height - MARGIN));
+    auto label = LabelTTF::create("WebSocket Test", "Arial", 28);
+    label->setPosition(Point(winSize.width / 2, winSize.height - MARGIN));
     addChild(label, 0);
     
-    CCMenu *menuRequest = CCMenu::create();
-    menuRequest->setPosition(CCPointZero);
+    auto menuRequest = Menu::create();
+    menuRequest->setPosition(Point::ZERO);
     addChild(menuRequest);
     
     // Send Text
-    CCLabelTTF *labelSendText = CCLabelTTF::create("Send Text", "Arial", 22);
-    CCMenuItemLabel *itemSendText = CCMenuItemLabel::create(labelSendText, this, menu_selector(WebSocketTestLayer::onMenuSendTextClicked));
-    itemSendText->setPosition(ccp(winSize.width / 2, winSize.height - MARGIN - SPACE));
+    auto labelSendText = LabelTTF::create("Send Text", "Arial", 22);
+    auto itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendTextClicked, this));
+    itemSendText->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSendText);
     
     // Send Binary
-    CCLabelTTF *labelSendBinary = CCLabelTTF::create("Send Binary", "Arial", 22);
-    CCMenuItemLabel *itemSendBinary = CCMenuItemLabel::create(labelSendBinary, this, menu_selector(WebSocketTestLayer::onMenuSendBinaryClicked));
-    itemSendBinary->setPosition(ccp(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
+    auto labelSendBinary = LabelTTF::create("Send Binary", "Arial", 22);
+    auto itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendBinaryClicked, this));
+    itemSendBinary->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemSendBinary);
     
 
     // Send Text Status Label
-    _sendTextStatus = CCLabelTTF::create("Send Text WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
-    _sendTextStatus->setAnchorPoint(ccp(0, 0));
-    _sendTextStatus->setPosition(ccp(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
+    _sendTextStatus = LabelTTF::create("Send Text WS is waiting...", "Arial", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _sendTextStatus->setAnchorPoint(Point(0, 0));
+    _sendTextStatus->setPosition(Point(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendTextStatus);
     
     // Send Binary Status Label
-    _sendBinaryStatus = CCLabelTTF::create("Send Binary WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
-    _sendBinaryStatus->setAnchorPoint(ccp(0, 0));
-    _sendBinaryStatus->setPosition(ccp(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
+    _sendBinaryStatus = LabelTTF::create("Send Binary WS is waiting...", "Arial", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _sendBinaryStatus->setAnchorPoint(Point(0, 0));
+    _sendBinaryStatus->setPosition(Point(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendBinaryStatus);
     
     // Error Label
-    _errorStatus = CCLabelTTF::create("Error WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
-    _errorStatus->setAnchorPoint(ccp(0, 0));
-    _errorStatus->setPosition(ccp(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
+    _errorStatus = LabelTTF::create("Error WS is waiting...", "Arial", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _errorStatus->setAnchorPoint(Point(0, 0));
+    _errorStatus->setPosition(Point(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
     this->addChild(_errorStatus);
     
     // Back Menu
-    CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(WebSocketTestLayer::toExtensionsMainLayer));
-    itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    CCMenu *menuBack = CCMenu::create(itemBack, NULL);
-    menuBack->setPosition(CCPointZero);
+    auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(WebSocketTestLayer::toExtensionsMainLayer, this));
+    itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    auto menuBack = Menu::create(itemBack, NULL);
+    menuBack->setPosition(Point::ZERO);
     addChild(menuBack);
     
     _wsiSendText = new WebSocket();
@@ -109,7 +109,7 @@ WebSocketTestLayer::~WebSocketTestLayer()
 // Delegate methods
 void WebSocketTestLayer::onOpen(cocos2d::extension::WebSocket* ws)
 {
-    CCLog("Websocket (%p) opened", ws);
+    log("Websocket (%p) opened", ws);
     if (ws == _wsiSendText)
     {
         _sendTextStatus->setString("Send Text WS was opened.");
@@ -120,7 +120,7 @@ void WebSocketTestLayer::onOpen(cocos2d::extension::WebSocket* ws)
     }
     else if (ws == _wsiError)
     {
-        CCAssert(0, "error test will never go here.");
+        CCASSERT(0, "error test will never go here.");
     }
 }
 
@@ -132,7 +132,7 @@ void WebSocketTestLayer::onMessage(cocos2d::extension::WebSocket* ws, const coco
         char times[100] = {0};
         sprintf(times, "%d", _sendTextTimes);
         std::string textStr = std::string("response text msg: ")+data.bytes+", "+times;
-        CCLog("%s", textStr.c_str());
+        log("%s", textStr.c_str());
         
         _sendTextStatus->setString(textStr.c_str());
     }
@@ -156,14 +156,14 @@ void WebSocketTestLayer::onMessage(cocos2d::extension::WebSocket* ws, const coco
         }
         
         binaryStr += std::string(", ")+times;
-        CCLog("%s", binaryStr.c_str());
+        log("%s", binaryStr.c_str());
         _sendBinaryStatus->setString(binaryStr.c_str());
     }
 }
 
 void WebSocketTestLayer::onClose(cocos2d::extension::WebSocket* ws)
 {
-    CCLog("websocket instance (%p) closed.", ws);
+    log("websocket instance (%p) closed.", ws);
     if (ws == _wsiSendText)
     {
         _wsiSendText = NULL;
@@ -182,7 +182,7 @@ void WebSocketTestLayer::onClose(cocos2d::extension::WebSocket* ws)
 
 void WebSocketTestLayer::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error)
 {
-    CCLog("Error was fired, error code: %d", error);
+    log("Error was fired, error code: %d", error);
     if (ws == _wsiError)
     {
         char buf[100] = {0};
@@ -191,17 +191,17 @@ void WebSocketTestLayer::onError(cocos2d::extension::WebSocket* ws, const cocos2
     }
 }
 
-void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::CCObject *sender)
+void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-    ExtensionsTestScene *pScene = new ExtensionsTestScene();
-    pScene->runThisTest();
-    pScene->release();
+    auto scene = new ExtensionsTestScene();
+    scene->runThisTest();
+    scene->release();
 }
 
 // Menu Callbacks
-void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::CCObject *sender)
+void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
 {
-    if (_wsiSendText->getReadyState() == WebSocket::kStateOpen)
+    if (_wsiSendText->getReadyState() == WebSocket::State::OPEN)
     {
         _sendTextStatus->setString("Send Text WS is waiting...");
         _wsiSendText->send("Hello WebSocket, I'm a text message.");
@@ -209,14 +209,14 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::CCObject *sender)
     else
     {
         std::string warningStr = "send text websocket instance wasn't ready...";
-        CCLog("%s", warningStr.c_str());
+        log("%s", warningStr.c_str());
         _sendTextStatus->setString(warningStr.c_str());
     }
 }
 
-void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::CCObject *sender)
+void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Object *sender)
 {
-    if (_wsiSendBinary->getReadyState() == WebSocket::kStateOpen)
+    if (_wsiSendBinary->getReadyState() == WebSocket::State::OPEN)
     {
         _sendBinaryStatus->setString("Send Binary WS is waiting...");
         char buf[] = "Hello WebSocket,\0 I'm\0 a\0 binary\0 message\0.";
@@ -225,17 +225,17 @@ void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::CCObject *sender)
     else
     {
         std::string warningStr = "send binary websocket instance wasn't ready...";
-        CCLog("%s", warningStr.c_str());
+        log("%s", warningStr.c_str());
         _sendBinaryStatus->setString(warningStr.c_str());
     }
 }
 
 void runWebSocketTest()
 {
-    CCScene *pScene = CCScene::create();
-    WebSocketTestLayer *pLayer = new WebSocketTestLayer();
-    pScene->addChild(pLayer);
+    auto scene = Scene::create();
+    auto layer = new WebSocketTestLayer();
+    scene->addChild(layer);
     
-    CCDirector::sharedDirector()->replaceScene(pScene);
-    pLayer->release();
+    Director::getInstance()->replaceScene(scene);
+    layer->release();
 }

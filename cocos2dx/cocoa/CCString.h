@@ -40,95 +40,167 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCString : public CCObject
+class CC_DLL String : public Object, public Clonable
 {
 public:
-    CCString();
-    CCString(const char* str);
-    CCString(const std::string& str);
-    CCString(const CCString& str);
-
-    virtual ~CCString();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    String();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    String(const char* str);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    String(const std::string& str);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    String(const String& str);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~String();
     
-    /* override assignment operator */
-    CCString& operator= (const CCString& other);
+    /* override assignment operator 
+     * @js NA
+     * @lua NA
+     */
+    String& operator= (const String& other);
 
-    /** init a string with format, it's similar with the c function 'sprintf' */ 
+    /** init a string with format, it's similar with the c function 'sprintf' 
+     * @js NA
+     * @lua NA
+     */
     bool initWithFormat(const char* format, ...) CC_FORMAT_PRINTF(2, 3);
 
-    /** convert to int value */
+    /** convert to int value 
+     * @js NA
+     */
     int intValue() const;
 
-    /** convert to unsigned int value */
+    /** convert to unsigned int value 
+     * @js NA
+     */
     unsigned int uintValue() const;
 
-    /** convert to float value */
+    /** convert to float value 
+     * @js NA
+     */
     float floatValue() const;
 
-    /** convert to double value */
+    /** convert to double value 
+     * @js NA
+     */
     double doubleValue() const;
 
-    /** convert to bool value */
+    /** convert to bool value 
+     * @js NA
+     */
     bool boolValue() const;
 
-    /** get the C string */
+    /** get the C string 
+     * @js NA
+     */
     const char* getCString() const;
 
-    /** get the length of string */
+    /** get the length of string 
+     * @js NA
+     */
     unsigned int length() const;
 
-    /** compare to a c string */
+    /** compare to a c string 
+     * @js NA
+     */
     int compare(const char *) const;
 
-    /* override functions */
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual bool isEqual(const CCObject* pObject);
+    /** append additional characters at the end of its current value 
+     * @js NA
+     * @lua NA
+     */
+    void append(const std::string& str);
+
+    /** append(w/ format) additional characters at the end of its current value 
+     * @js NA
+     * @lua NA
+     */
+    void appendWithFormat(const char* format, ...);
+
+    /** split a string 
+     * @js NA
+     * @lua NA
+     */
+    Array* componentsSeparatedByString(const char *delimiter);
+    
+    /* override functions 
+     * @js NA
+     */
+    virtual bool isEqual(const Object* pObject);
 
     /** create a string with std string, you can also pass a c string pointer because the default constructor of std::string can access a c string pointer. 
-     *  @return A CCString pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
+     * @js NA
      */
-    static CCString* create(const std::string& str);
+    static String* create(const std::string& str);
 
     /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
-     *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.
-     *  @return A CCString pointer which is an autorelease object pointer,
+     *  if you want to change it, you should modify the kMaxStringLen macro in String.cpp file.
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
-     */ 
-    static CCString* createWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
+     * @js NA
+     */
+    static String* createWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
 
     /** create a string with binary data 
-     *  @return A CCString pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
+     * @js NA
      */
-    static CCString* createWithData(const unsigned char* pData, unsigned long nLen);
+    static String* createWithData(const unsigned char* pData, unsigned long nLen);
 
     /** create a string with a file, 
-     *  @return A CCString pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
+     * @js NA
      */
-    static CCString* createWithContentsOfFile(const char* pszFileName);
-
-    virtual void acceptVisitor(CCDataVisitor &visitor);
-
+    static String* createWithContentsOfFile(const char* filename);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void acceptVisitor(DataVisitor &visitor);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual String* clone() const;
+    
 private:
 
     /** only for internal use */
     bool initWithFormatAndValist(const char* format, va_list ap);
 
 public:
-    std::string m_sString;
+    std::string _string;
 };
 
-struct CCStringCompare : public std::binary_function<CCString *, CCString *, bool> {
+struct StringCompare : public std::binary_function<String *, String *, bool> {
     public:
-        bool operator() (CCString * a, CCString * b) const {
+        bool operator() (String * a, String * b) const {
             return strcmp(a->getCString(), b->getCString()) < 0;
         }
 };
 
-#define CCStringMake(str) CCString::create(str)
-#define ccs               CCStringMake
+#define StringMake(str) String::create(str)
+#define ccs               StringMake
 
 // end of data_structure group
 /// @}

@@ -8,15 +8,30 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CCMenuItemLoader : public CCNodeLoader {
-    public:
-        virtual ~CCMenuItemLoader() {};
+class MenuItemLoader : public NodeLoader {
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~MenuItemLoader() {};
 
-    protected:
-        CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCMenuItem);
-
-        virtual void onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader);
+protected:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(MenuItem);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeBlock(Node * pNode, Node * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * ccbReader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
 };
 
 NS_CC_EXT_END

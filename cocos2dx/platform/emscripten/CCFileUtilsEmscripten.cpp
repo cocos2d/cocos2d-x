@@ -9,26 +9,31 @@ using namespace std;
 
 NS_CC_BEGIN
 
-CCFileUtils* CCFileUtils::sharedFileUtils()
+FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsEmscripten();
-        s_sharedFileUtils->init();
+        s_sharedFileUtils = new FileUtilsEmscripten();
+        if(!s_sharedFileUtils->init())
+        {
+          delete s_sharedFileUtils;
+          s_sharedFileUtils = NULL;
+          CCLOG("ERROR: Could not init CCFileUtilsEmscripten");
+        }
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsEmscripten::CCFileUtilsEmscripten()
+FileUtilsEmscripten::FileUtilsEmscripten()
 {}
 
-bool CCFileUtilsEmscripten::init()
+bool FileUtilsEmscripten::init()
 {
-    m_strDefaultResRootPath = "app/native/Resources/";
-    return CCFileUtils::init();
+    _defaultResRootPath = "/";
+    return FileUtils::init();
 }
 
-string CCFileUtilsEmscripten::getWritablePath()
+string FileUtilsEmscripten::getWritablePath() const
 {
     // Let's write it in the current working directory's data folder
     char cwd[FILENAME_MAX] = {0};
@@ -42,23 +47,23 @@ string CCFileUtilsEmscripten::getWritablePath()
     return path;
 }
 
-bool CCFileUtilsEmscripten::isAbsolutePath(const std::string& strPath)
+bool FileUtilsEmscripten::isAbsolutePath(const std::string& strPath) const
 {
-    if (strPath[0] == '/' || strPath.find(m_strDefaultResRootPath) == 0)
+    if (strPath[0] == '/' || strPath.find(_defaultResRootPath) == 0)
     {
         return true;
     }
     return false;
 }
 
-bool CCFileUtilsEmscripten::isFileExist(const std::string& strFilePath)
+bool FileUtilsEmscripten::isFileExist(const std::string& strFilePath) const
 {
     std::string strPath = strFilePath;
     if (strPath[0] != '/')
     { // Not absolute path, add the default root path at the beginning.
-        if (strPath.find(m_strDefaultResRootPath) != 0)
+        if (strPath.find(_defaultResRootPath) != 0)
         {// Didn't find "assets/" at the beginning of the path, adding it.
-            strPath.insert(0, m_strDefaultResRootPath);
+            strPath.insert(0, _defaultResRootPath);
         }
     }
 

@@ -1,33 +1,29 @@
 --Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects. 
-local modename = "AudioEngine"
 local M = {}
-_G[modename] = M
-package.loaded[modename] = M
-
-local sharedEngine = SimpleAudioEngine:sharedEngine()
+local audioEngineInstance = cc.SimpleAudioEngine:getInstance()
 
 function M.stopAllEffects()
-    sharedEngine:stopAllEffects()
+    audioEngineInstance:stopAllEffects()
 end
 
 function M.getMusicVolume()
-    return sharedEngine:getBackgroundMusicVolume()
+    return audioEngineInstance:getMusicVolume()
 end
 
 function M.isMusicPlaying()
-    return sharedEngine:isBackgroundMusicPlaying()
+    return audioEngineInstance:isMusicPlaying()
 end
 
 function M.getEffectsVolume()
-    return sharedEngine:getEffectsVolume()
+    return audioEngineInstance:getEffectsVolume()
 end
 
 function M.setMusicVolume(volume)
-    sharedEngine:setBackgroundMusicVolume(volume)
+    audioEngineInstance:setMusicVolume(volume)
 end
 
 function M.stopEffect(handle)
-    sharedEngine:stopEffect(handle)
+    audioEngineInstance:stopEffect(handle)
 end
 
 function M.stopMusic(isReleaseData)
@@ -35,7 +31,7 @@ function M.stopMusic(isReleaseData)
     if nil ~= isReleaseData then
         releaseDataValue = isReleaseData
     end
-    sharedEngine:stopBackgroundMusic(releaseDataValue)
+    audioEngineInstance:stopMusic(releaseDataValue)
 end
 
 function M.playMusic(filename, isLoop)
@@ -43,19 +39,19 @@ function M.playMusic(filename, isLoop)
     if nil ~= isLoop then
         loopValue = isLoop
     end
-    sharedEngine:playBackgroundMusic(filename, loopValue)
+    audioEngineInstance:playMusic(filename, loopValue)
 end
 
 function M.pauseAllEffects()
-    sharedEngine:pauseAllEffects()
+    audioEngineInstance:pauseAllEffects()
 end
 
 function M.preloadMusic(filename)
-    sharedEngine:preloadBackgroundMusic(filename)
+    audioEngineInstance:preloadMusic(filename)
 end
 
 function M.resumeMusic()
-    sharedEngine:resumeBackgroundMusic()
+    audioEngineInstance:resumeMusic()
 end
 
 function M.playEffect(filename, isLoop)
@@ -63,43 +59,55 @@ function M.playEffect(filename, isLoop)
     if nil ~= isLoop then
         loopValue = isLoop
     end
-    return sharedEngine:playEffect(filename, loopValue)
+    return audioEngineInstance:playEffect(filename, loopValue)
 end
 
 function M.rewindMusic()
-    sharedEngine:rewindBackgroundMusic()
+    audioEngineInstance:rewindMusic()
 end
 
 function M.willPlayMusic()
-    return sharedEngine:willPlayBackgroundMusic()
+    return audioEngineInstance:willPlayMusic()
 end
 
 function M.unloadEffect(filename)
-    sharedEngine:unloadEffect(filename)
+    audioEngineInstance:unloadEffect(filename)
 end
 
 function M.preloadEffect(filename)
-    sharedEngine:preloadEffect(filename)
+    audioEngineInstance:preloadEffect(filename)
 end
 
 function M.setEffectsVolume(volume)
-    sharedEngine:setEffectsVolume(volume)
+    audioEngineInstance:setEffectsVolume(volume)
 end
 
 function M.pauseEffect(handle)
-    sharedEngine:pauseEffect(handle)
+    audioEngineInstance:pauseEffect(handle)
 end
 
 function M.resumeAllEffects(handle)
-    sharedEngine:resumeAllEffects()
+    audioEngineInstance:resumeAllEffects()
 end
 
 function M.pauseMusic()
-    sharedEngine:pauseBackgroundMusic()
+    audioEngineInstance:pauseMusic()
 end
 
 function M.resumeEffect(handle)
-    sharedEngine:resumeEffect(handle)
+    audioEngineInstance:resumeEffect(handle)
 end
+
+local modename = "AudioEngine"
+local proxy = {}
+local mt    = {
+    __index = M,
+    __newindex =  function (t ,k ,v)
+        print("attemp to update a read-only table")
+    end
+} 
+setmetatable(proxy,mt)
+_G[modename] = proxy
+package.loaded[modename] = proxy
 
 

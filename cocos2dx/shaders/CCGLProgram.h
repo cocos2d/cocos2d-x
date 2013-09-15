@@ -40,71 +40,85 @@ NS_CC_BEGIN
  * @{
  */
 
-enum {
-    kCCVertexAttrib_Position,
-    kCCVertexAttrib_Color,
-    kCCVertexAttrib_TexCoords,
-
-    kCCVertexAttrib_MAX,
-};
-
-enum {
-	kCCUniformPMatrix,
-	kCCUniformMVMatrix,
-	kCCUniformMVPMatrix,
-	kCCUniformTime,
-	kCCUniformSinTime,
-	kCCUniformCosTime,
-	kCCUniformRandom01,
-	kCCUniformSampler,
-    
-	kCCUniform_MAX,
-};
-
-#define kCCShader_PositionTextureColor              "ShaderPositionTextureColor"
-#define kCCShader_PositionTextureColorAlphaTest     "ShaderPositionTextureColorAlphaTest"
-#define kCCShader_PositionColor                     "ShaderPositionColor"
-#define kCCShader_PositionTexture                   "ShaderPositionTexture"
-#define kCCShader_PositionTexture_uColor            "ShaderPositionTexture_uColor"
-#define kCCShader_PositionTextureA8Color            "ShaderPositionTextureA8Color"
-#define kCCShader_Position_uColor                   "ShaderPosition_uColor"
-#define kCCShader_PositionLengthTexureColor         "ShaderPositionLengthTextureColor"
-
-// uniform names
-#define kCCUniformPMatrix_s				"CC_PMatrix"
-#define kCCUniformMVMatrix_s			"CC_MVMatrix"
-#define kCCUniformMVPMatrix_s			"CC_MVPMatrix"
-#define kCCUniformTime_s				"CC_Time"
-#define kCCUniformSinTime_s				"CC_SinTime"
-#define kCCUniformCosTime_s				"CC_CosTime"
-#define kCCUniformRandom01_s			"CC_Random01"
-#define kCCUniformSampler_s				"CC_Texture0"
-#define kCCUniformAlphaTestValue		"CC_alpha_value"
-
-// Attribute names
-#define    kCCAttributeNameColor           "a_color"
-#define    kCCAttributeNamePosition        "a_position"
-#define    kCCAttributeNameTexCoord        "a_texCoord"
-
 struct _hashUniformEntry;
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
-/** CCGLProgram
+/** GLProgram
  Class that implements a glProgram
  
  
  @since v2.0.0
  */
-class CC_DLL CCGLProgram : public CCObject
+class CC_DLL GLProgram : public Object
 {
 public:
-    CCGLProgram();
-    virtual ~CCGLProgram();
-    /** Initializes the CCGLProgram with a vertex and fragment with bytes array */
+    enum
+    {
+        VERTEX_ATTRIB_POSITION,
+        VERTEX_ATTRIB_COLOR,
+        VERTEX_ATTRIB_TEX_COORDS,
+        
+        VERTEX_ATTRIB_MAX,
+    };
+    
+    enum
+    {
+        UNIFORM_P_MATRIX,
+        UNIFORM_MV_MATRIX,
+        UNIFORM_MVP_MATRIX,
+        UNIFORM_TIME,
+        UNIFORM_SIN_TIME,
+        UNIFORM_COS_TIME,
+        UNIFORM_RANDOM01,
+        UNIFORM_SAMPLER,
+        
+        UNIFORM_MAX,
+    };
+    
+    static const char* SHADER_NAME_POSITION_TEXTURE_COLOR;
+    static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
+    static const char* SHADER_NAME_POSITION_COLOR;
+    static const char* SHADER_NAME_POSITION_TEXTURE;
+    static const char* SHADER_NAME_POSITION_TEXTURE_U_COLOR;
+    static const char* SHADER_NAME_POSITION_TEXTURE_A8_COLOR;
+    static const char* SHADER_NAME_POSITION_U_COLOR;
+    static const char* SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR;
+    
+    // uniform names
+    static const char* UNIFORM_NAME_P_MATRIX;
+    static const char* UNIFORM_NAME_MV_MATRIX;
+    static const char* UNIFORM_NAME_MVP_MATRIX;
+    static const char* UNIFORM_NAME_TIME;
+    static const char* UNIFORM_NAME_SIN_TIME;
+    static const char* UNIFORM_NAME_COS_TIME;
+    static const char* UNIFORM_NAME_RANDOM01;
+    static const char* UNIFORM_NAME_SAMPLER;
+    static const char* UNIFORM_NAME_ALPHA_TEST_VALUE;
+    
+    // Attribute names
+    static const char* ATTRIBUTE_NAME_COLOR;
+    static const char* ATTRIBUTE_NAME_POSITION;
+    static const char* ATTRIBUTE_NAME_TEX_COORD;
+    /**
+     * @js ctor
+     */
+    GLProgram();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~GLProgram();
+    /** Initializes the GLProgram with a vertex and fragment with bytes array 
+     * @js initWithString
+     * @lua initWithString
+     */
     bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    /** Initializes the CCGLProgram with a vertex and fragment with contents of filenames */
+    /** Initializes the GLProgram with a vertex and fragment with contents of filenames 
+     * @js init
+     * @lua init
+     */
     bool initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename);
     /**  It will add a new attribute to the shader */
     void addAttribute(const char* attributeName, GLuint index);
@@ -113,20 +127,23 @@ public:
     /** it will call glUseProgram() */
     void use();
 /** It will create 4 uniforms:
-    - kCCUniformPMatrix
-    - kCCUniformMVMatrix
-    - kCCUniformMVPMatrix
-    - kCCUniformSampler
+    - kUniformPMatrix
+    - kUniformMVMatrix
+    - kUniformMVPMatrix
+    - GLProgram::UNIFORM_SAMPLER
 
- And it will bind "kCCUniformSampler" to 0
+ And it will bind "GLProgram::UNIFORM_SAMPLER" to 0
 
  */
     void updateUniforms();
     
     /** calls retrieves the named uniform location for this shader program. */
-    GLint getUniformLocationForName(const char* name);
+    GLint getUniformLocationForName(const char* name) const;
     
-    /** calls glUniform1i only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform1i only if the values are different than the previous call for this same shader program. 
+     * @js setUniformLocationI32
+     * @lua setUniformLocationI32
+     */
     void setUniformLocationWith1i(GLint location, GLint i1);
     
     /** calls glUniform2i only if the values are different than the previous call for this same shader program. */
@@ -148,16 +165,28 @@ public:
     
     void setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays);
 
-    /** calls glUniform1f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform1f only if the values are different than the previous call for this same shader program. 
+     * In js or lua,please use setUniformLocationF32
+     * @js NA
+     */
     void setUniformLocationWith1f(GLint location, GLfloat f1);
 
-    /** calls glUniform2f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform2f only if the values are different than the previous call for this same shader program. 
+     * In js or lua,please use setUniformLocationF32
+     * @js NA
+     */
     void setUniformLocationWith2f(GLint location, GLfloat f1, GLfloat f2);
 
-    /** calls glUniform3f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform3f only if the values are different than the previous call for this same shader program. 
+     * In js or lua,please use setUniformLocationF32
+     * @js NA
+     */
     void setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3);
 
-    /** calls glUniform4f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform4f only if the values are different than the previous call for this same shader program. 
+     * In js or lua,please use setUniformLocationF32
+     * @js NA
+     */
     void setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4);
 
     /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
@@ -176,31 +205,46 @@ public:
     void setUniformsForBuiltins();
 
     /** returns the vertexShader error log */
-    const char* vertexShaderLog();
+    const char* getVertexShaderLog() const;
+    /** @deprecated. Use getVertexShaderLog() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE const char* vertexShaderLog() const { return getVertexShaderLog(); }
     /** returns the fragmentShader error log */
-    const char* fragmentShaderLog();
+    const char* getFragmentShaderLog() const;
+    /** @deprecated. Use getFragmentShaderLog() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE const char* fragmentShaderLog() const{ return getFragmentShaderLog();}
     /** returns the program error log */
-    const char* programLog();
+    const char* getProgramLog() const;
+    /** @deprecated. Use getProgramLog() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE const char* programLog() const { return getProgramLog(); }
     
     // reload all shaders, this function is designed for android
     // when opengl context lost, so don't call it.
     void reset();
     
-    inline const GLuint getProgram() { return m_uProgram; }
+    inline const GLuint getProgram() const { return _program; }
 
 private:
     bool updateUniformLocation(GLint location, GLvoid* data, unsigned int bytes);
-    const char* description();
+    const char* description() const;
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
-    const char* logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc);
+    const char* logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
 private:
-    GLuint            m_uProgram;
-    GLuint            m_uVertShader;
-    GLuint            m_uFragShader;
-    GLint             m_uUniforms[kCCUniform_MAX];
-    struct _hashUniformEntry* m_pHashForUniforms;
-    bool              m_bUsesTime;
+    GLuint            _program;
+    GLuint            _vertShader;
+    GLuint            _fragShader;
+    GLint             _uniforms[UNIFORM_MAX];
+    struct _hashUniformEntry* _hashForUniforms;
+    bool              _usesTime;
 };
 
 // end of shaders group

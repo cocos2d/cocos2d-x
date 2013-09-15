@@ -1,54 +1,49 @@
 ccb = ccb or {}
 
-function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
+function CCBReaderLoad(strFilePath,proxy,owner)
     if nil == proxy then
         return
     end
 
     local ccbReader = proxy:createCCBReader()
-    local node      = proxy:readCCBFromFile(strFilePath,ccbReader,bSetOwner)
-    local owner     = ccbReader:getOwner()
+    local node      = ccbReader:load(strFilePath)
     local rootName  = "" 
     --owner set in readCCBFromFile is proxy
     if nil ~= owner then
-
         --Callbacks
-        local ownerCallbackNames = tolua.cast(ccbReader:getOwnerCallbackNames(),"CCArray")
-        local ownerCallbackNodes = tolua.cast(ccbReader:getOwnerCallbackNodes(),"CCArray")
+        local ownerCallbackNames = ccbReader:getOwnerCallbackNames() 
+        local ownerCallbackNodes = ccbReader:getOwnerCallbackNodes()
+        local ownerCallbackControlEvents = ccbReader:getOwnerCallbackControlEvents()
         local i = 1
-        for i = 1,ownerCallbackNames:count() do
-            local callbackName = tolua.cast(ownerCallbackNames:objectAtIndex(i - 1),"CCString")
-            local callbackNode = tolua.cast(ownerCallbackNodes:objectAtIndex(i - 1),"CCNode")
-            if "" ~= strOwnerName and nil ~= ccb[strOwnerName] then
-            	local cbName = callbackName:getCString()
-            	if "function" == type(ccb[strOwnerName][cbName]) then
-                	proxy:setCallback(callbackNode,ccb[strOwnerName][cbName])
-                else
-                	print("WARNING: Cannot found lua function [" .. strOwnerName .. "." .. cbName .. "] for owner selector")
-                end
+        for i = 1,table.getn(ownerCallbackNames) do
+            local callbackName =  ownerCallbackNames[i]
+            local callbackNode =  tolua.cast(ownerCallbackNodes[i],"Node")
+
+            if "function" == type(owner[callbackName]) then
+                proxy:setCallback(callbackNode, owner[callbackName], ownerCallbackControlEvents[i])
+            else
+                print("Warning: Cannot find owner's lua function:" .. ":" .. callbackName .. " for ownerVar selector")
             end
+
         end
 
         --Variables
-        local ownerOutletNames = tolua.cast(ccbReader:getOwnerOutletNames(),"CCArray")
-        local ownerOutletNodes = tolua.cast(ccbReader:getOwnerOutletNodes(),"CCArray")
+        local ownerOutletNames = ccbReader:getOwnerOutletNames() 
+        local ownerOutletNodes = ccbReader:getOwnerOutletNodes()
 
-        for i = 1, ownerOutletNames:count() do
-            local outletName = tolua.cast(ownerOutletNames:objectAtIndex(i - 1),"CCString")
-            local outletNode = tolua.cast(ownerOutletNodes:objectAtIndex(i - 1),"CCNode")
-
-            if "" ~= strOwnerName and nil ~= ccb[strOwnerName] then
-                ccb[strOwnerName][outletName:getCString()] = tolua.cast(outletNode, proxy:getNodeTypeName(outletNode))
-            end
+        for i = 1, table.getn(ownerOutletNames) do
+            local outletName = ownerOutletNames[i]
+            local outletNode = tolua.cast(ownerOutletNodes[i],"Node")
+            owner[outletName] = outletNode
         end
     end
 
-    local nodesWithAnimationManagers = tolua.cast(ccbReader:getNodesWithAnimationManagers(),"CCArray")
-    local animationManagersForNodes  = tolua.cast(ccbReader:getAnimationManagersForNodes(),"CCArray")
+    local nodesWithAnimationManagers = ccbReader:getNodesWithAnimationManagers()
+    local animationManagersForNodes  = ccbReader:getAnimationManagersForNodes()
 
-    for i = 1 , nodesWithAnimationManagers:count() do
-        local innerNode = tolua.cast(nodesWithAnimationManagers:objectAtIndex(i - 1),"CCNode")
-        local animationManager = tolua.cast(animationManagersForNodes:objectAtIndex(i - 1),"CCBAnimationManager")
+    for i = 1 , table.getn(nodesWithAnimationManagers) do
+        local innerNode = tolua.cast(nodesWithAnimationManagers[i], "Node")
+        local animationManager = tolua.cast(animationManagersForNodes[i], "CCBAnimationManager")
         local documentControllerName = animationManager:getDocumentControllerName()
         if "" == documentControllerName then
             
@@ -58,33 +53,32 @@ function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
         end
         
         --Callbacks
-        local documentCallbackNames = tolua.cast(animationManager:getDocumentCallbackNames(),"CCArray")
-        local documentCallbackNodes = tolua.cast(animationManager:getDocumentCallbackNodes(),"CCArray")
+        local documentCallbackNames = animationManager:getDocumentCallbackNames()
+        local documentCallbackNodes = animationManager:getDocumentCallbackNodes()
+        local documentCallbackControlEvents = animationManager:getDocumentCallbackControlEvents()
 
-        for i = 1,documentCallbackNames:count() do
-            local callbackName = tolua.cast(documentCallbackNames:objectAtIndex(i - 1),"CCString")
-            local callbackNode = tolua.cast(documentCallbackNodes:objectAtIndex(i - 1),"CCNode")
+        for i = 1,table.getn(documentCallbackNames) do
+            local callbackName = documentCallbackNames[i]
+            local callbackNode = tolua.cast(documentCallbackNodes[i],"Node")
             if "" ~= documentControllerName and nil ~= ccb[documentControllerName] then
-                --proxy:setCallback(callbackNode,ccb[documentControllerName][callbackName:getCString()])
-          		local cbName = callbackName:getCString()
-            	if "function" == type(ccb[documentControllerName][cbName]) then
-                	proxy:setCallback(callbackNode,ccb[documentControllerName][cbName])
+                if "function" == type(ccb[documentControllerName][callbackName]) then
+                    proxy:setCallback(callbackNode, ccb[documentControllerName][callbackName], documentCallbackControlEvents[i])
                 else
-                	print("WARNING: Cannot found lua function [" .. documentControllerName .. "." .. cbName .. "] for docRoot selector")
+                    print("Warning: Cannot found lua function [" .. documentControllerName .. ":" .. callbackName .. "] for docRoot selector")
                 end
             end
         end
 
         --Variables
-        local documentOutletNames = tolua.cast(animationManager:getDocumentOutletNames(),"CCArray")
-        local documentOutletNodes = tolua.cast(animationManager:getDocumentOutletNodes(),"CCArray")
+        local documentOutletNames = animationManager:getDocumentOutletNames()
+        local documentOutletNodes = animationManager:getDocumentOutletNodes()
 
-        for i = 1, documentOutletNames:count() do
-            local outletName = tolua.cast(documentOutletNames:objectAtIndex(i - 1),"CCString")
-            local outletNode = tolua.cast(documentOutletNodes:objectAtIndex(i - 1),"CCNode")
-
+        for i = 1, table.getn(documentOutletNames) do
+            local outletName = documentOutletNames[i]
+            local outletNode = tolua.cast(documentOutletNodes[i],"Node")
+            
             if nil ~= ccb[documentControllerName] then
-                ccb[documentControllerName][outletName:getCString()] = tolua.cast(outletNode, proxy:getNodeTypeName(outletNode))
+                ccb[documentControllerName][outletName] = tolua.cast(outletNode, proxy:getNodeTypeName(outletNode))
             end 
         end
         --[[
@@ -94,18 +88,18 @@ function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
         --Setup timeline callbacks
         local keyframeCallbacks = animationManager:getKeyframeCallbacks()
 
-        for i = 1 , keyframeCallbacks:count() do
-            local callbackCombine = tolua.cast(keyframeCallbacks:objectAtIndex(i - 1),"CCString"):getCString()
+        for i = 1 , table.getn(keyframeCallbacks) do
+            local callbackCombine = keyframeCallbacks[i]
             local beignIndex,endIndex = string.find(callbackCombine,":")
             local callbackType    = tonumber(string.sub(callbackCombine,1,beignIndex - 1))
             local callbackName    = string.sub(callbackCombine,endIndex + 1, -1)
             --Document callback
 
             if 1 == callbackType and nil ~= ccb[documentControllerName] then
-                local callfunc = CCCallFunc:create(ccb[documentControllerName][callbackName])
+                local callfunc = cc.CallFunc:create(ccb[documentControllerName][callbackName])
                 animationManager:setCallFuncForLuaCallbackNamed(callfunc, callbackCombine);
             elseif 2 == callbackType and nil ~= owner then --Owner callback
-                local callfunc = CCCallFunc:create(ccb[strOwnerName][callbackName])
+                local callfunc = cc.CallFunc:create(owner[callbackName])--need check
                 animationManager:setCallFuncForLuaCallbackNamed(callfunc, callbackCombine)
             end
         end

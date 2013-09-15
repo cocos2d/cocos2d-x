@@ -1,6 +1,5 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- * vim: set ts=8 sw=4 et tw=78:
- *
+ * vim: set ts=8 sts=4 et sw=4 tw=99:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -74,6 +73,14 @@ class UTF8CharsZ : public mozilla::RangedPtr<unsigned char>
     {
         JS_ASSERT(aBytes[aLength] == '\0');
     }
+
+    UTF8CharsZ(unsigned char *aBytes, size_t aLength)
+      : Base(aBytes, aLength)
+    {
+        JS_ASSERT(aBytes[aLength] == '\0');
+    }
+
+    char *c_str() { return reinterpret_cast<char *>(get()); }
 };
 
 /*
@@ -137,8 +144,12 @@ class TwoByteCharsZ : public mozilla::RangedPtr<jschar>
 extern Latin1CharsZ
 LossyTwoByteCharsToNewLatin1CharsZ(JSContext *cx, TwoByteChars tbchars);
 
+extern UTF8CharsZ
+TwoByteCharsToNewUTF8CharsZ(JSContext *cx, TwoByteChars tbchars);
+
 } // namespace JS
 
 inline void JS_free(JS::Latin1CharsZ &ptr) { js_free((void*)ptr.get()); }
+inline void JS_free(JS::UTF8CharsZ &ptr) { js_free((void*)ptr.get()); }
 
 #endif // js_CharacterEncoding_h___

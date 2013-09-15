@@ -29,8 +29,6 @@ THE SOFTWARE.
 #include <FGraphicsOpengl2.h>
 using namespace Tizen::Graphics::Opengl;
 
-typedef char             GLchar;
-
 #define GL_DEPTH24_STENCIL8 GL_DEPTH24_STENCIL8_OES
 
 #define glClearDepth glClearDepthf

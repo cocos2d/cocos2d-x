@@ -4,7 +4,7 @@ require "luaScript/TransitionsTest/TransitionsName"
 local SceneIdx = -1
 local CurSceneNo = 2
 local TRANSITION_DURATION = 1.2
-local s = CCDirector:sharedDirector():getWinSize()
+local s = cc.Director:getInstance():getWinSize()
 
 local function switchSceneTypeNo()
     if CurSceneNo == 1 then
@@ -38,56 +38,56 @@ end
 
 local function backCallback(sender)
     local scene = backAction()
-    CCDirector:sharedDirector():replaceScene(scene)
+    cc.Director:getInstance():replaceScene(scene)
 end
 
 local function restartCallback(sender)
     local scene = restartAction()
-    CCDirector:sharedDirector():replaceScene(scene)
+    cc.Director:getInstance():replaceScene(scene)
 end
 
 local function nextCallback(sender)
     local scene = nextAction()
-    CCDirector:sharedDirector():replaceScene(scene)
+    cc.Director:getInstance():replaceScene(scene)
 end
 
 -----------------------------
 -- TestLayer1
 -----------------------------
 local function createLayer1()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     local x, y = s.width, s.height
 
-    local bg1 = CCSprite:create(s_back1)
-    bg1:setPosition(CCPointMake(s.width / 2, s.height / 2))
+    local bg1 = cc.Sprite:create(s_back1)
+    bg1:setPosition(cc.p(s.width / 2, s.height / 2))
     layer:addChild(bg1, -1)
 
-    local titleLabel = CCLabelTTF:create(Transition_Name[SceneIdx], "Thonburi", 32)
+    local titleLabel = cc.LabelTTF:create(Transition_Name[SceneIdx], "Thonburi", 32)
     layer:addChild(titleLabel)
-    titleLabel:setColor(ccc3(255,32,32))
+    titleLabel:setColor(cc.c3b(255,32,32))
     titleLabel:setPosition(x / 2, y - 100)
 
-    local label = CCLabelTTF:create("SCENE 1", "Marker Felt", 38)
-    label:setColor(ccc3(16,16,255))
+    local label = cc.LabelTTF:create("SCENE 1", "Marker Felt", 38)
+    label:setColor(cc.c3b(16,16,255))
     label:setPosition(x / 2, y / 2)
     layer:addChild(label)
 
     -- menu
-    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
+    local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
+    local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
     item1:registerScriptTapHandler(backCallback)
     item2:registerScriptTapHandler(restartCallback)
     item3:registerScriptTapHandler(nextCallback)
 
-    local menu = CCMenu:create()
+    local menu = cc.Menu:create()
     menu:addChild(item1)
     menu:addChild(item2)
     menu:addChild(item3)
-    menu:setPosition(CCPointMake(0, 0))
-    item1:setPosition(CCPointMake(s.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(CCPointMake(s.width / 2, item2:getContentSize().height / 2))
-    item3:setPosition(CCPointMake(s.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    menu:setPosition(cc.p(0, 0))
+    item1:setPosition(cc.p(s.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    item2:setPosition(cc.p(s.width / 2, item2:getContentSize().height / 2))
+    item3:setPosition(cc.p(s.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
 
     layer:addChild(menu, 1)
 
@@ -98,39 +98,39 @@ end
 -- TestLayer2
 -----------------------------
 local function createLayer2()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     local x, y = s.width, s.height
 
-    local bg1 = CCSprite:create(s_back2)
-    bg1:setPosition(CCPointMake(s.width / 2, s.height / 2))
+    local bg1 = cc.Sprite:create(s_back2)
+    bg1:setPosition(cc.p(s.width / 2, s.height / 2))
     layer:addChild(bg1, -1)
 
-    local titleLabel = CCLabelTTF:create(Transition_Name[SceneIdx], "Thonburi", 32 )
+    local titleLabel = cc.LabelTTF:create(Transition_Name[SceneIdx], "Thonburi", 32 )
     layer:addChild(titleLabel)
-    titleLabel:setColor(ccc3(255,32,32))
+    titleLabel:setColor(cc.c3b(255,32,32))
     titleLabel:setPosition(x / 2, y - 100)
 
-    local label = CCLabelTTF:create("SCENE 2", "Marker Felt", 38)
-    label:setColor(ccc3(16,16,255))
+    local label = cc.LabelTTF:create("SCENE 2", "Marker Felt", 38)
+    label:setColor(cc.c3b(16,16,255))
     label:setPosition(x / 2, y / 2)
     layer:addChild(label)
 
     -- menu
-    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
+    local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
+    local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
     item1:registerScriptTapHandler(backCallback)
     item2:registerScriptTapHandler(restartCallback)
     item3:registerScriptTapHandler(nextCallback)
 
-    local menu = CCMenu:create()
+    local menu = cc.Menu:create()
     menu:addChild(item1)
     menu:addChild(item2)
     menu:addChild(item3)
-    menu:setPosition(CCPointMake(0, 0))
-    item1:setPosition(CCPointMake(s.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(CCPointMake(s.width / 2, item2:getContentSize().height / 2))
-    item3:setPosition(CCPointMake(s.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    menu:setPosition(cc.p(0, 0))
+    item1:setPosition(cc.p(s.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    item2:setPosition(cc.p(s.width / 2, item2:getContentSize().height / 2))
+    item3:setPosition(cc.p(s.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
 
     layer:addChild(menu, 1)
 
@@ -141,7 +141,7 @@ end
 -- Create Transition Test
 -----------------------------
 local function createTransition(index, t, scene)
-    CCDirector:sharedDirector():setDepthTest(false)
+    cc.Director:getInstance():setDepthTest(false)
 
     if firstEnter == true then
         firstEnter = false
@@ -149,96 +149,96 @@ local function createTransition(index, t, scene)
     end
 
     if index == Transition_Table.CCTransitionJumpZoom then
-        scene = CCTransitionJumpZoom:create(t, scene)
+        scene = cc.TransitionJumpZoom:create(t, scene)
     elseif index == Transition_Table.CCTransitionProgressRadialCCW then
-        scene = CCTransitionProgressRadialCCW:create(t, scene)
+        scene = cc.TransitionProgressRadialCCW:create(t, scene)
     elseif index == Transition_Table.CCTransitionProgressRadialCW then
-        scene = CCTransitionProgressRadialCW:create(t, scene)
+        scene = cc.TransitionProgressRadialCW:create(t, scene)
     elseif index == Transition_Table.CCTransitionProgressHorizontal then
-        scene = CCTransitionProgressHorizontal:create(t, scene)
+        scene = cc.TransitionProgressHorizontal:create(t, scene)
     elseif index == Transition_Table.CCTransitionProgressVertical then
-        scene = CCTransitionProgressVertical:create(t, scene)
+        scene = cc.TransitionProgressVertical:create(t, scene)
     elseif index == Transition_Table.CCTransitionProgressInOut then
-        scene = CCTransitionProgressInOut:create(t, scene)
+        scene = cc.TransitionProgressInOut:create(t, scene)
     elseif index == Transition_Table.CCTransitionProgressOutIn then
-        scene = CCTransitionProgressOutIn:create(t, scene)
+        scene = cc.TransitionProgressOutIn:create(t, scene)
     elseif index == Transition_Table.CCTransitionCrossFade then
-        scene = CCTransitionCrossFade:create(t, scene)
+        scene = cc.TransitionCrossFade:create(t, scene)
     elseif index == Transition_Table.TransitionPageForward then
-        CCDirector:sharedDirector():setDepthTest(true)
-        scene = CCTransitionPageTurn:create(t, scene, false)
+        cc.Director:getInstance():setDepthTest(true)
+        scene = cc.TransitionPageTurn:create(t, scene, false)
     elseif index == Transition_Table.TransitionPageBackward then
-        CCDirector:sharedDirector():setDepthTest(true)
-        scene = CCTransitionPageTurn:create(t, scene, true)
+        cc.Director:getInstance():setDepthTest(true)
+        scene = cc.TransitionPageTurn:create(t, scene, true)
     elseif index == Transition_Table.CCTransitionFadeTR then
-        scene = CCTransitionFadeTR:create(t, scene)
+        scene = cc.TransitionFadeTR:create(t, scene)
     elseif index == Transition_Table.CCTransitionFadeBL then
-        scene = CCTransitionFadeBL:create(t, scene)
+        scene = cc.TransitionFadeBL:create(t, scene)
     elseif index == Transition_Table.CCTransitionFadeUp then
-        scene = CCTransitionFadeUp:create(t, scene)
+        scene = cc.TransitionFadeUp:create(t, scene)
     elseif index == Transition_Table.CCTransitionFadeDown then
-        scene = CCTransitionFadeDown:create(t, scene)
+        scene = cc.TransitionFadeDown:create(t, scene)
     elseif index == Transition_Table.CCTransitionTurnOffTiles then
-        scene = CCTransitionTurnOffTiles:create(t, scene)
+        scene = cc.TransitionTurnOffTiles:create(t, scene)
     elseif index == Transition_Table.CCTransitionSplitRows then
-        scene = CCTransitionSplitRows:create(t, scene)
+        scene = cc.TransitionSplitRows:create(t, scene)
     elseif index == Transition_Table.CCTransitionSplitCols then
-        scene = CCTransitionSplitCols:create(t, scene)
+        scene = cc.TransitionSplitCols:create(t, scene)
     elseif index == Transition_Table.CCTransitionFade then
-        scene = CCTransitionFade:create(t, scene)
+        scene = cc.TransitionFade:create(t, scene)
     elseif index == Transition_Table.FadeWhiteTransition then
-        scene = CCTransitionFade:create(t, scene, ccc3(255, 255, 255))
+        scene = cc.TransitionFade:create(t, scene, cc.c3b(255, 255, 255))
     elseif index == Transition_Table.FlipXLeftOver then
-        scene = CCTransitionFlipX:create(t, scene, kCCTransitionOrientationLeftOver)
+        scene = cc.TransitionFlipX:create(t, scene, cc.TRANSITION_ORIENTATION_LEFT_OVER )
     elseif index == Transition_Table.FlipXRightOver then
-        scene = CCTransitionFlipX:create(t, scene, kCCTransitionOrientationRightOver)
+        scene = cc.TransitionFlipX:create(t, scene, cc.TRANSITION_ORIENTATION_RIGHT_OVER )
     elseif index == Transition_Table.FlipYUpOver then
-        scene = CCTransitionFlipY:create(t, scene, kCCTransitionOrientationUpOver)
+        scene = cc.TransitionFlipY:create(t, scene, cc.TRANSITION_ORIENTATION_UP_OVER)
     elseif index == Transition_Table.FlipYDownOver then
-        scene = CCTransitionFlipY:create(t, scene, kCCTransitionOrientationDownOver)
+        scene = cc.TransitionFlipY:create(t, scene, cc.TRANSITION_ORIENTATION_DOWN_OVER )
     elseif index == Transition_Table.FlipAngularLeftOver then
-        scene = CCTransitionFlipAngular:create(t, scene, kCCTransitionOrientationLeftOver)
+        scene = cc.TransitionFlipAngular:create(t, scene, cc.TRANSITION_ORIENTATION_LEFT_OVER )
     elseif index == Transition_Table.FlipAngularRightOver then
-        scene = CCTransitionFlipAngular:create(t, scene, kCCTransitionOrientationRightOver)
+        scene = cc.TransitionFlipAngular:create(t, scene, cc.TRANSITION_ORIENTATION_RIGHT_OVER )
     elseif index == Transition_Table.ZoomFlipXLeftOver then
-        scene = CCTransitionZoomFlipX:create(t, scene, kCCTransitionOrientationLeftOver)
+        scene = cc.TransitionZoomFlipX:create(t, scene, cc.TRANSITION_ORIENTATION_LEFT_OVER )
     elseif index == Transition_Table.ZoomFlipXRightOver then
-        scene = CCTransitionZoomFlipX:create(t, scene, kCCTransitionOrientationRightOver)
+        scene = cc.TransitionZoomFlipX:create(t, scene, cc.TRANSITION_ORIENTATION_RIGHT_OVER )
     elseif index == Transition_Table.ZoomFlipYUpOver then
-        scene = CCTransitionZoomFlipY:create(t, scene, kCCTransitionOrientationUpOver)
+        scene = cc.TransitionZoomFlipY:create(t, scene, cc.TRANSITION_ORIENTATION_UP_OVER)
     elseif index == Transition_Table.ZoomFlipYDownOver then
-        scene = CCTransitionZoomFlipY:create(t, scene, kCCTransitionOrientationDownOver)
+        scene = cc.TransitionZoomFlipY:create(t, scene, cc.TRANSITION_ORIENTATION_DOWN_OVER )
     elseif index == Transition_Table.ZoomFlipAngularLeftOver then
-        scene = CCTransitionZoomFlipAngular:create(t, scene, kCCTransitionOrientationLeftOver)
+        scene = cc.TransitionZoomFlipAngular:create(t, scene, cc.TRANSITION_ORIENTATION_LEFT_OVER )
     elseif index == Transition_Table.ZoomFlipAngularRightOver then
-        scene = CCTransitionZoomFlipAngular:create(t, scene, kCCTransitionOrientationRightOver)
+        scene = cc.TransitionZoomFlipAngular:create(t, scene, cc.TRANSITION_ORIENTATION_RIGHT_OVER )
     elseif index == Transition_Table.CCTransitionShrinkGrow then
-        scene = CCTransitionShrinkGrow:create(t, scene)
+        scene = cc.TransitionShrinkGrow:create(t, scene)
     elseif index == Transition_Table.CCTransitionRotoZoom then
-        scene = CCTransitionRotoZoom:create(t, scene)
+        scene = cc.TransitionRotoZoom:create(t, scene)
     elseif index == Transition_Table.CCTransitionMoveInL then
-        scene = CCTransitionMoveInL:create(t, scene)
+        scene = cc.TransitionMoveInL:create(t, scene)
     elseif index == Transition_Table.CCTransitionMoveInR then
-        scene = CCTransitionMoveInR:create(t, scene)
+        scene = cc.TransitionMoveInR:create(t, scene)
     elseif index == Transition_Table.CCTransitionMoveInT then
-        scene = CCTransitionMoveInT:create(t, scene)
+        scene = cc.TransitionMoveInT:create(t, scene)
     elseif index == Transition_Table.CCTransitionMoveInB then
-        scene = CCTransitionMoveInB:create(t, scene)
+        scene = cc.TransitionMoveInB:create(t, scene)
     elseif index == Transition_Table.CCTransitionSlideInL then
-        scene = CCTransitionSlideInL:create(t, scene)
+        scene = cc.TransitionSlideInL:create(t, scene)
     elseif index == Transition_Table.CCTransitionSlideInR then
-        scene = CCTransitionSlideInR:create(t, scene)
+        scene = cc.TransitionSlideInR:create(t, scene)
     elseif index == Transition_Table.CCTransitionSlideInT then
-        scene = CCTransitionSlideInT:create(t, scene)
+        scene = cc.TransitionSlideInT:create(t, scene)
     elseif index == Transition_Table.CCTransitionSlideInB then
-        scene = CCTransitionSlideInB:create(t, scene)
+        scene = cc.TransitionSlideInB:create(t, scene)
     end
 
     return scene
 end
 
 function generateTranScene()
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     local layer = nil
 
     if CurSceneNo == 1 then
@@ -255,7 +255,7 @@ end
 
 function TransitionsTest()
     cclog("TransitionsTest")
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
 
     SceneIdx = -1
     CurSceneNo = 2

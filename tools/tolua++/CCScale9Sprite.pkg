@@ -84,7 +84,7 @@ class CCScale9Sprite : public CCNodeRGBA
     
     virtual bool isOpacityModifyRGB(void);
     virtual void setOpacity(GLubyte opacity);
-    virtual void setColor(const ccColor3B& color);
+    virtual void setColor(const Color3B& color);
 
     virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
 

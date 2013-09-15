@@ -7,10 +7,6 @@ LOCAL_MODULE := box2d_static
 LOCAL_MODULE_FILENAME := libbox2d
 
 LOCAL_SRC_FILES := \
-Collision/Shapes/b2ChainShape.cpp \
-Collision/Shapes/b2CircleShape.cpp \
-Collision/Shapes/b2EdgeShape.cpp \
-Collision/Shapes/b2PolygonShape.cpp \
 Collision/b2BroadPhase.cpp \
 Collision/b2CollideCircle.cpp \
 Collision/b2CollideEdge.cpp \
@@ -19,12 +15,22 @@ Collision/b2Collision.cpp \
 Collision/b2Distance.cpp \
 Collision/b2DynamicTree.cpp \
 Collision/b2TimeOfImpact.cpp \
+Collision/Shapes/b2ChainShape.cpp \
+Collision/Shapes/b2CircleShape.cpp \
+Collision/Shapes/b2EdgeShape.cpp \
+Collision/Shapes/b2PolygonShape.cpp \
 Common/b2BlockAllocator.cpp \
 Common/b2Draw.cpp \
 Common/b2Math.cpp \
 Common/b2Settings.cpp \
 Common/b2StackAllocator.cpp \
 Common/b2Timer.cpp \
+Dynamics/b2Body.cpp \
+Dynamics/b2ContactManager.cpp \
+Dynamics/b2Fixture.cpp \
+Dynamics/b2Island.cpp \
+Dynamics/b2World.cpp \
+Dynamics/b2WorldCallbacks.cpp \
 Dynamics/Contacts/b2ChainAndCircleContact.cpp \
 Dynamics/Contacts/b2ChainAndPolygonContact.cpp \
 Dynamics/Contacts/b2CircleContact.cpp \
@@ -45,13 +51,7 @@ Dynamics/Joints/b2RevoluteJoint.cpp \
 Dynamics/Joints/b2RopeJoint.cpp \
 Dynamics/Joints/b2WeldJoint.cpp \
 Dynamics/Joints/b2WheelJoint.cpp \
-Dynamics/b2Body.cpp \
-Dynamics/b2ContactManager.cpp \
-Dynamics/b2Fixture.cpp \
-Dynamics/b2Island.cpp \
-Dynamics/b2World.cpp \
-Dynamics/b2WorldCallbacks.cpp \
-Rope/b2Rope.cpp 
+Rope/b2Rope.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 

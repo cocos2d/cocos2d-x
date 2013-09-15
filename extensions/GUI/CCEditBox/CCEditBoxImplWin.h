@@ -35,59 +35,74 @@
 
 NS_CC_EXT_BEGIN
 
-class CCEditBox;
+class EditBox;
 
-class CCEditBoxImplWin : public CCEditBoxImpl
+class EditBoxImplWin : public EditBoxImpl
 {
 public:
-    CCEditBoxImplWin(CCEditBox* pEditText);
-    virtual ~CCEditBoxImplWin();
+    /**
+     * @js NA
+     */
+    EditBoxImplWin(EditBox* pEditText);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~EditBoxImplWin();
     
-    virtual bool initWithSize(const CCSize& size);
+    virtual bool initWithSize(const Size& size);
 	virtual void setFont(const char* pFontName, int fontSize);
-    virtual void setFontColor(const ccColor3B& color);
+    virtual void setFontColor(const Color3B& color);
     virtual void setPlaceholderFont(const char* pFontName, int fontSize);
-    virtual void setPlaceholderFontColor(const ccColor3B& color);
-    virtual void setInputMode(EditBoxInputMode inputMode);
-    virtual void setInputFlag(EditBoxInputFlag inputFlag);
+    virtual void setPlaceholderFontColor(const Color3B& color);
+    virtual void setInputMode(EditBox::InputMode inputMode);
+    virtual void setInputFlag(EditBox::InputFlag inputFlag);
     virtual void setMaxLength(int maxLength);
     virtual int  getMaxLength();
-    virtual void setReturnType(KeyboardReturnType returnType);
+    virtual void setReturnType(EditBox::KeyboardReturnType returnType);
     virtual bool isEditing();
     
     virtual void setText(const char* pText);
     virtual const char* getText(void);
     virtual void setPlaceHolder(const char* pText);
-    virtual void setPosition(const CCPoint& pos);
+    virtual void setPosition(const Point& pos);
 	virtual void setVisible(bool visible);
-    virtual void setContentSize(const CCSize& size);
-    virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    virtual void setContentSize(const Size& size);
+    virtual void setAnchorPoint(const Point& anchorPoint);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter(void);
 private:
 
-    CCLabelTTF* m_pLabel;
-    CCLabelTTF* m_pLabelPlaceHolder;
-    EditBoxInputMode    m_eEditBoxInputMode;
-    EditBoxInputFlag    m_eEditBoxInputFlag;
-    KeyboardReturnType  m_eKeyboardReturnType;
+    LabelTTF* _label;
+    LabelTTF* _labelPlaceHolder;
+    EditBox::InputMode    _editBoxInputMode;
+    EditBox::InputFlag    _editBoxInputFlag;
+    EditBox::KeyboardReturnType  _keyboardReturnType;
     
-    std::string m_strText;
-    std::string m_strPlaceHolder;
+    std::string _text;
+    std::string _placeHolder;
     
-    ccColor3B m_colText;
-    ccColor3B m_colPlaceHolder;
+    Color3B _colText;
+    Color3B _colPlaceHolder;
 
-    int   m_nMaxLength;
-    CCSize m_EditSize;
+    int   _maxLength;
+    Size _editSize;
 
 	/*
-    CCSize     m_tContentSize;
-    HWND       m_pSysEdit;
-    int        m_nMaxTextLength;
+    Size     _contentSize;
+    HWND       _sysEdit;
+    int        _maxTextLength;
 	*/
 };
 

@@ -86,6 +86,6 @@ class CCEGLViewProtocol
 
 class CCEGLView : public CCEGLViewProtocol
 {
-    static CCEGLView* sharedOpenGLView(void);
+    static CCEGLView* getInstance();
 };
 
