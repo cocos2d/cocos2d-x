@@ -27,30 +27,30 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
+SpriteFrameCacheHelper *SpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
 
-CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
+SpriteFrameCacheHelper *SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
 {
     if(!s_SpriteFrameCacheHelper)
     {
-        s_SpriteFrameCacheHelper = new CCSpriteFrameCacheHelper();
+        s_SpriteFrameCacheHelper = new SpriteFrameCacheHelper();
     }
 
     return s_SpriteFrameCacheHelper;
 }
 
-void CCSpriteFrameCacheHelper::purge()
+void SpriteFrameCacheHelper::purge()
 {
     delete s_SpriteFrameCacheHelper;
     s_SpriteFrameCacheHelper = NULL;
 }
 
-void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
+void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
     CCSpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath, imagePath);
 }
 
-TextureAtlas *CCSpriteFrameCacheHelper::getTexureAtlasWithTexture(Texture2D *texture)
+TextureAtlas *SpriteFrameCacheHelper::getTexureAtlasWithTexture(Texture2D *texture)
 {
     int key = texture->getName();
     TextureAtlas *atlas = (TextureAtlas *)m_pTextureAtlasDic->objectForKey(key);
@@ -62,12 +62,12 @@ TextureAtlas *CCSpriteFrameCacheHelper::getTexureAtlasWithTexture(Texture2D *tex
     return atlas;
 }
 
-CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()
+SpriteFrameCacheHelper::SpriteFrameCacheHelper()
 {
     m_pTextureAtlasDic = new Dictionary();
 }
 
-CCSpriteFrameCacheHelper::~CCSpriteFrameCacheHelper()
+SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
 {
     CC_SAFE_RELEASE_NULL(m_pTextureAtlasDic);
 }

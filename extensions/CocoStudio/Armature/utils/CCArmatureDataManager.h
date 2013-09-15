@@ -34,36 +34,36 @@ NS_CC_EXT_ARMATURE_BEGIN
 /**
  *	@brief	format and manage armature configuration and armature animation
  */
-class  CCArmatureDataManager : public Object
+class  ArmatureDataManager : public Object
 {
 public:
-    static CCArmatureDataManager *sharedArmatureDataManager();
+    static ArmatureDataManager *sharedArmatureDataManager();
 
     static void purge();
 private:
-    CCArmatureDataManager(void);
-    ~CCArmatureDataManager(void);
+    ArmatureDataManager(void);
+    ~ArmatureDataManager(void);
 
 public:
 
     /**
-     * Init CCArmatureDataManager
+     * Init ArmatureDataManager
      */
     virtual bool init();
 
     /**
      * Add armature data
      * @param id The id of the armature data
-     * @param armatureData CCArmatureData *
+     * @param armatureData ArmatureData *
      */
-    void addArmatureData(const char *id, CCArmatureData *armatureData);
+    void addArmatureData(const char *id, ArmatureData *armatureData);
 
     /**
      *	@brief	get armature data
      *	@param	id the id of the armature data you want to get
-     *  @return	CCArmatureData *
+     *  @return	ArmatureData *
      */
-    CCArmatureData *getArmatureData(const char *id);
+    ArmatureData *getArmatureData(const char *id);
 
     /**
      *	@brief	remove armature data
@@ -74,16 +74,16 @@ public:
     /**
      *	@brief	add animation data
      *	@param 	id the id of the animation data
-     *  @return CCAnimationData *
+     *  @return AnimationData *
      */
-    void addAnimationData(const char *id, CCAnimationData *animationData);
+    void addAnimationData(const char *id, AnimationData *animationData);
 
     /**
      *	@brief	get animation data from m_pAnimationDatas(Dictionary)
      *	@param 	id the id of the animation data you want to get
-     *  @return CCAnimationData *
+     *  @return AnimationData *
      */
-    CCAnimationData *getAnimationData(const char *id);
+    AnimationData *getAnimationData(const char *id);
 
     /**
      *	@brief	remove animation data
@@ -94,16 +94,16 @@ public:
     /**
      *	@brief	add texture data
      *	@param 	id the id of the texture data
-     *  @return CCTextureData *
+     *  @return TextureData *
      */
-    void addTextureData(const char *id, CCTextureData *textureData);
+    void addTextureData(const char *id, TextureData *textureData);
 
     /**
      *	@brief	get texture data
      *	@param 	id the id of the texture data you want to get
-     *  @return CCTextureData *
+     *  @return TextureData *
      */
-    CCTextureData *getTextureData(const char *id);
+    TextureData *getTextureData(const char *id);
 
     /**
      *	@brief	remove texture data
@@ -112,23 +112,23 @@ public:
     void removeTextureData(const char *id);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      */
     void addArmatureFileInfo(const char *configFilePath);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      *			It will load data in a new thread
      */
     void addArmatureFileInfoAsync(const char *configFilePath, Object *target, SEL_SCHEDULE selector);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      */
     void addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      *			It will load data in a new thread
      */
     void addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, Object *target, SEL_SCHEDULE selector);
@@ -157,21 +157,21 @@ private:
     /**
      *	@brief	save amature datas
      *  @key	std::string
-     *  @value	CCArmatureData *
+     *  @value	ArmatureData *
      */
     Dictionary *m_pArmarureDatas;
 
     /**
      *	@brief	save animation datas
      *  @key	std::string
-     *  @value	CCAnimationData *
+     *  @value	AnimationData *
      */
     Dictionary *m_pAnimationDatas;
 
     /**
      *	@brief	save texture datas
      *  @key	std::string
-     *  @value	CCTextureData *
+     *  @value	TextureData *
      */
     Dictionary *m_pTextureDatas;
 

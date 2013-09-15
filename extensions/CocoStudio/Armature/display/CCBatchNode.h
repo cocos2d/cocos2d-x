@@ -29,12 +29,12 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-class CCBatchNode : public Node
+class BatchNode : public Node
 {
 public:
-    static CCBatchNode *create();
+    static BatchNode *create();
 public:
-    CCBatchNode();
+    BatchNode();
 
     virtual bool init();
     virtual void addChild(Node *child, int zOrder, int tag);

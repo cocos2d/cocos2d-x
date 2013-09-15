@@ -28,9 +28,9 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-CCBatchNode *CCBatchNode::create()
+BatchNode *BatchNode::create()
 {
-    CCBatchNode *batchNode = new CCBatchNode();
+    BatchNode *batchNode = new BatchNode();
     if (batchNode && batchNode->init())
     {
         batchNode->autorelease();
@@ -40,29 +40,29 @@ CCBatchNode *CCBatchNode::create()
     return NULL;
 }
 
-CCBatchNode::CCBatchNode()
+BatchNode::BatchNode()
     : m_pAtlas(NULL)
 {
 }
 
-bool CCBatchNode::init()
+bool BatchNode::init()
 {
     bool ret = Node::init();
     setShaderProgram(CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return ret;
 }
 
-void CCBatchNode::addChild(Node *child, int zOrder, int tag)
+void BatchNode::addChild(Node *child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
-    CCArmature *armature = dynamic_cast<CCArmature *>(child);
+    Armature *armature = dynamic_cast<Armature *>(child);
     if (armature != NULL)
     {
         armature->setBatchNode(this);
     }
 }
 
-void CCBatchNode::visit()
+void BatchNode::visit()
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -91,13 +91,13 @@ void CCBatchNode::visit()
     kmGLPopMatrix();
 }
 
-void CCBatchNode::draw()
+void BatchNode::draw()
 {
     CC_NODE_DRAW_SETUP();
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        CCArmature *armature = dynamic_cast<CCArmature *>(object);
+        Armature *armature = dynamic_cast<Armature *>(object);
         if (armature)
         {
             armature->visit();

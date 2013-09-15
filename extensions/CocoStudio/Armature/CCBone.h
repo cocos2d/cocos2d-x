@@ -34,36 +34,36 @@ THE SOFTWARE.
 NS_CC_EXT_ARMATURE_BEGIN
 
 
-class CCArmature;
+class Armature;
 
-class CCBone : public NodeRGBA
+class Bone : public NodeRGBA
 {
 public:
     /**
      * Allocates and initializes a bone.
      * @return A initialized bone which is marked as "autorelease".
      */
-    static CCBone *create();
+    static Bone *create();
     /**
      * Allocates and initializes a bone.
      *
      * @param  name If name is not null, then set name to the bone's name
      * @return A initialized bone which is marked as "autorelease".
      */
-    static CCBone *create(const char *name);
+    static Bone *create(const char *name);
 
 public:
-    CCBone();
-    virtual ~CCBone(void);
+    Bone();
+    virtual ~Bone(void);
 
     /**
-     * Initializes an empty CCBone with nothing init.
+     * Initializes an empty Bone with nothing init.
      */
     virtual bool init();
 
     /**
-     * Initializes a CCBone with the specified name
-     * @param name CCBone's name.
+     * Initializes a Bone with the specified name
+     * @param name Bone's name.
      */
     virtual bool init(const char *name);
 
@@ -73,38 +73,38 @@ public:
      * If index is current display index, then also change display to _index
      *
      * @param displayData it include the display information, like DisplayType.
-     *          If you want to create a sprite display, then create a CCSpriteDisplayData param
+     *          If you want to create a sprite display, then create a SpriteDisplayData param
      *
      * @param index the index of the display you want to replace or add to
      *          -1 : append display from back
      */
-    void addDisplay(CCDisplayData *displayData, int index);
+    void addDisplay(DisplayData *displayData, int index);
 
     void addDisplay(Node *display, int index);
 
     void changeDisplayByIndex(int index, bool force);
 
     /**
-     * Add a child to this bone, and it will let this child call setParent(CCBone *parent) function to set self to it's parent
+     * Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent
      * @param 	child  the child you want to add
      */
-    void addChildBone(CCBone *child);
+    void addChildBone(Bone *child);
 
     /**
      * Set parent bone.
      * If parent is NUll, then also remove this bone from armature.
-     * It will not set the CCArmature, if you want to add the bone to a CCArmature, you should use CCArmature::addBone(CCBone *bone, const char* parentName).
+     * It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).
      *
      * @param parent  the parent bone.
      *          NULL : remove this bone from armature
      */
-    void setParentBone(CCBone *parent);
+    void setParentBone(Bone *parent);
 
     /**
      * Get parent bone
      * @return parent bone
      */
-    CCBone *getParentBone();
+    Bone *getParentBone();
 
     /**
      * Remove itself from its parent.
@@ -113,10 +113,10 @@ public:
     void removeFromParent(bool recursion);
 
     /**
-     * Removes a child CCBone
+     * Removes a child Bone
      * @param 	bone   the bone you want to remove
      */
-    void removeChildBone(CCBone *bone, bool recursion);
+    void removeChildBone(Bone *bone, bool recursion);
 
     void update(float delta);
 
@@ -131,7 +131,7 @@ public:
 
     virtual void setZOrder(int zOrder);
 
-    CCTween *getTween();
+    Tween *getTween();
 
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
@@ -152,35 +152,35 @@ public:
 
 public:
     /*
-     *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
-     *  when call setData function, it will copy from the CCBoneData.
+     *  The origin state of the Bone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
+     *  when call setData function, it will copy from the BoneData.
      */
-    CC_PROPERTY(CCBoneData *, m_pBoneData, BoneData);
+    CC_PROPERTY(BoneData *, m_pBoneData, BoneData);
 
-    //! A weak reference to the CCArmature
-    CC_PROPERTY(CCArmature *, m_pArmature, Armature);
+    //! A weak reference to the Armature
+    CC_PROPERTY(Armature *, m_pArmature, Armature);
 
-    //! A weak reference to the child CCArmature
-    CC_PROPERTY(CCArmature *, m_pChildArmature, ChildArmature);
+    //! A weak reference to the child Armature
+    CC_PROPERTY(Armature *, m_pChildArmature, ChildArmature);
 
-    CC_SYNTHESIZE(CCDisplayManager *, m_pDisplayManager, DisplayManager)
+    CC_SYNTHESIZE(DisplayManager *, m_pDisplayManager, DisplayManager)
 
     /*
-     *	When CCArmature play an animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will be hidden.
+     *	When Armature play an animation, if there is not a MovementBoneData of this bone in this MovementData, this bone will be hidden.
      *	Set IgnoreMovementBoneData to true, then this bone will also be shown.
      */
     CC_SYNTHESIZE(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
 
-    CC_SYNTHESIZE(CCBlendType, m_eBlendType, BlendType)
+    CC_SYNTHESIZE(BlendType, m_eBlendType, BlendType)
 protected:
-    CCTween *m_pTween;				//! Calculate tween effect
+    Tween *m_pTween;				//! Calculate tween effect
 
     //! Used for making tween effect in every frame
-    CC_SYNTHESIZE_READONLY(CCFrameData *, m_pTweenData, TweenData);
+    CC_SYNTHESIZE_READONLY(FrameData *, m_pTweenData, TweenData);
 
     CC_SYNTHESIZE(std::string, m_strName, Name);
 
-    CCBone *m_pParentBone;	             //! A weak reference to its parent
+    Bone *m_pParentBone;	             //! A weak reference to its parent
     bool m_bBoneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state

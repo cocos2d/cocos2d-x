@@ -39,33 +39,33 @@ enum MovementEventType
 };
 
 
-class CCArmature;
-class CCBone;
+class Armature;
+class Bone;
 
-typedef void (Object::*SEL_MovementEventCallFunc)(CCArmature *, MovementEventType, const char *);
-typedef void (Object::*SEL_FrameEventCallFunc)(CCBone *, const char *, int, int);
+typedef void (Object::*SEL_MovementEventCallFunc)(Armature *, MovementEventType, const char *);
+typedef void (Object::*SEL_FrameEventCallFunc)(Bone *, const char *, int, int);
 
 #define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
 
 
-class  CCArmatureAnimation : public CCProcessBase
+class  ArmatureAnimation : public ProcessBase
 {
 public:
     /**
-     * Create with a CCArmature
-     * @param armature The CCArmature CCArmatureAnimation will bind to
+     * Create with a Armature
+     * @param armature The Armature ArmatureAnimation will bind to
      */
-    static CCArmatureAnimation *create(CCArmature *armature);
+    static ArmatureAnimation *create(Armature *armature);
 public:
-    CCArmatureAnimation();
-    virtual ~CCArmatureAnimation(void);
+    ArmatureAnimation();
+    virtual ~ArmatureAnimation(void);
 
     /**
-     * Init with a CCArmature
-     * @param armature The CCArmature CCArmatureAnimation will bind to
+     * Init with a Armature
+     * @param armature The Armature ArmatureAnimation will bind to
      */
-    virtual bool init(CCArmature *armature);
+    virtual bool init(Armature *armature);
 
     /**
      * Scale animation play speed.
@@ -91,21 +91,21 @@ public:
      * @param  durationTo The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     *         -1 : use the value from MovementData get from flash design panel
      * @param  durationTween  The frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     *         -1 : use the value from MovementData get from flash design panel
      *
      * @param  loop   Whether the animation is loop
      *
-     *         loop < 0 : use the value from CCMovementData get from flash design panel
+     *         loop < 0 : use the value from MovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
-     * @param  tweenEasing CCTween easing is used for calculate easing effect
+     * @param  tweenEasing Tween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
@@ -174,30 +174,30 @@ protected:
     /**
      * Emit a frame event
      */
-    void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
+    void frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
-    friend class CCTween;
+    friend class Tween;
 protected:
-    //! CCAnimationData save all MovementDatas this animation used.
-    CC_SYNTHESIZE_RETAIN(CCAnimationData *, m_pAnimationData, AnimationData);
+    //! AnimationData save all MovementDatas this animation used.
+    CC_SYNTHESIZE_RETAIN(AnimationData *, m_pAnimationData, AnimationData);
 
     //! Scale the animation speed
     float m_fSpeedScale;
 
-    CCMovementData *m_pMovementData;				//! CCMovementData save all MovementFrameDatas this animation used.
+    MovementData *m_pMovementData;				//! MovementData save all MovementFrameDatas this animation used.
 
-    CCArmature *m_pArmature;						//! A weak reference of armature
+    Armature *m_pArmature;						//! A weak reference of armature
 
     std::string m_strMovementID;				//! Current movment's name
 
-    int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+    int m_iToIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
     Array *m_pTweenList;
 
 protected:
     /**
      * MovementEvent CallFunc.
-     * @param CCArmature* a CCArmature
+     * @param Armature* a Armature
      * @param MovementEventType, Event Type, like START, COMPLETE.
      * @param const char*, Movement ID, also called Movement Name
      */
@@ -205,7 +205,7 @@ protected:
 
     /**
      * FrameEvent CallFunc.
-     * @param CCBone*, a CCBone
+     * @param Bone*, a Bone
      * @param const char*, the name of this frame event
      * @param int, origin frame index
      * @param int, current frame index, animation may be delayed

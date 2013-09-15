@@ -238,7 +238,6 @@
     <ClInclude Include="..\CocoStudio\Armature\physics\CCColliderDetector.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDefine.h" />
-    <ClInclude Include="..\CocoStudio\Armature\utils\CCConstValue.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCSpriteFrameCacheHelper.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCTransformHelp.h" />

@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-void CCDisplayFactory::addDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
+void DisplayFactory::addDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
 {
     switch(displayData->displayType)
     {
@@ -50,7 +50,7 @@ void CCDisplayFactory::addDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay
     }
 }
 
-void CCDisplayFactory::createDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay)
+void DisplayFactory::createDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
 {
     switch(decoDisplay->getDisplayData()->displayType)
     {
@@ -68,14 +68,14 @@ void CCDisplayFactory::createDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
     }
 }
 
-void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty)
+void DisplayFactory::updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty)
 {
     CS_RETURN_IF(!decoDisplay);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (dirty)
     {
-        CCColliderDetector *detector = decoDisplay->getColliderDetector();
+        ColliderDetector *detector = decoDisplay->getColliderDetector();
         if (detector)
         {
             do
@@ -122,19 +122,19 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
 
 
 
-void CCDisplayFactory::addSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
+void DisplayFactory::addSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
 {
-    CCSpriteDisplayData *sdp = CCSpriteDisplayData::create();
-    sdp->copy((CCSpriteDisplayData *)displayData);
+    SpriteDisplayData *sdp = SpriteDisplayData::create();
+    sdp->copy((SpriteDisplayData *)displayData);
     decoDisplay->setDisplayData(sdp);
     createSpriteDisplay(bone, decoDisplay);
 }
 
-void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay)
+void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
 {
-    CCSkin *skin = NULL;
+    Skin *skin = NULL;
 
-    CCSpriteDisplayData *displayData = (CCSpriteDisplayData *)decoDisplay->getDisplayData();
+    SpriteDisplayData *displayData = (SpriteDisplayData *)decoDisplay->getDisplayData();
 
     std::string textureName = displayData->displayName;
     size_t startPos = textureName.find_last_of(".");
@@ -147,18 +147,18 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
     //! create display
     if(textureName.length() == 0)
     {
-        skin = CCSkin::create();
+        skin = Skin::create();
     }
     else
     {
-        skin = CCSkin::createWithSpriteFrameName((textureName + ".png").c_str());
+        skin = Skin::createWithSpriteFrameName((textureName + ".png").c_str());
     }
 
     skin->setBone(bone);
 
     initSpriteDisplay(bone, decoDisplay, displayData->displayName.c_str(), skin);
 
-    CCArmature *armature = bone->getArmature();
+    Armature *armature = bone->getArmature();
     if (armature)
     {
         if (armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
@@ -175,7 +175,7 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 
 }
 
-void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, const char *displayName, CCSkin *skin)
+void DisplayFactory::initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, const char *displayName, Skin *skin)
 {
     //! remove .xxx
     std::string textureName = displayName;
@@ -186,7 +186,7 @@ void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *deco
         textureName = textureName.erase(startPos);
     }
 
-    CCTextureData *textureData = CCArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
+    TextureData *textureData = ArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
     if(textureData)
     {
         //! Init display anchorPoint, every Texture have a anchor point
@@ -199,7 +199,7 @@ void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *deco
     {
 
         //! create ContourSprite
-        CCColliderDetector *colliderDetector = CCColliderDetector::create(bone);
+        ColliderDetector *colliderDetector = ColliderDetector::create(bone);
         colliderDetector->addContourDataList(&textureData->contourDataList);
 
         decoDisplay->setColliderDetector(colliderDetector);
@@ -207,39 +207,39 @@ void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *deco
 #endif
 }
 
-void CCDisplayFactory::updateSpriteDisplay(CCBone *bone, Node *display, float dt, bool dirty)
+void DisplayFactory::updateSpriteDisplay(Bone *bone, Node *display, float dt, bool dirty)
 {
     CS_RETURN_IF(!dirty);
-    CCSkin *skin = (CCSkin *)display;
+    Skin *skin = (Skin *)display;
     skin->updateArmatureTransform();
 }
 
 
-void CCDisplayFactory::addArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
+void DisplayFactory::addArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
 {
-    CCArmatureDisplayData *adp = CCArmatureDisplayData::create(); ;
-    adp->copy((CCArmatureDisplayData *)displayData);
+    ArmatureDisplayData *adp = ArmatureDisplayData::create(); ;
+    adp->copy((ArmatureDisplayData *)displayData);
     decoDisplay->setDisplayData(adp);
 
     createArmatureDisplay(bone, decoDisplay);
 }
-void CCDisplayFactory::createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay)
+void DisplayFactory::createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
 {
-    CCArmatureDisplayData *displayData = (CCArmatureDisplayData *)decoDisplay->getDisplayData();
+    ArmatureDisplayData *displayData = (ArmatureDisplayData *)decoDisplay->getDisplayData();
 
-    CCArmature *armature = CCArmature::create(displayData->displayName.c_str(), bone);
+    Armature *armature = Armature::create(displayData->displayName.c_str(), bone);
 
     /*
      *  because this bone have called this name, so armature should change it's name, or it can't add to
-     *  CCArmature's bone children.
+     *  Armature's bone children.
      */
     armature->setName((bone->getName() + "_armatureChild").c_str());
 
     decoDisplay->setDisplay(armature);
 }
-void CCDisplayFactory::updateArmatureDisplay(CCBone *bone, Node *display, float dt, bool dirty)
+void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt, bool dirty)
 {
-    CCArmature *armature = (CCArmature *)display;
+    Armature *armature = (Armature *)display;
     if(armature)
     {
         armature->sortAllChildren();
@@ -249,25 +249,25 @@ void CCDisplayFactory::updateArmatureDisplay(CCBone *bone, Node *display, float 
 
 
 
-void CCDisplayFactory::addParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
+void DisplayFactory::addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
 {
-    CCParticleDisplayData *adp = CCParticleDisplayData::create(); ;
-    adp->copy((CCParticleDisplayData *)displayData);
+    ParticleDisplayData *adp = ParticleDisplayData::create(); ;
+    adp->copy((ParticleDisplayData *)displayData);
     decoDisplay->setDisplayData(adp);
 
     createParticleDisplay(bone, decoDisplay);
 }
-void CCDisplayFactory::createParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay)
+void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
 {
-    CCParticleDisplayData *displayData = (CCParticleDisplayData *)decoDisplay->getDisplayData();
+    ParticleDisplayData *displayData = (ParticleDisplayData *)decoDisplay->getDisplayData();
     ParticleSystem *system = ParticleSystemQuad::create(displayData->plist.c_str());
     decoDisplay->setDisplay(system);
 }
-void CCDisplayFactory::updateParticleDisplay(CCBone *bone, Node *display, float dt, bool dirty)
+void DisplayFactory::updateParticleDisplay(Bone *bone, Node *display, float dt, bool dirty)
 {
     ParticleSystem *system = (ParticleSystem *)display;
-    CCBaseData node;
-    CCTransformHelp::matrixToNode(bone->getNodeToArmatureTransform(), node);
+    BaseData node;
+    TransformHelp::matrixToNode(bone->getNodeToArmatureTransform(), node);
     system->setPosition(node.x, node.y);
     system->setScaleX(node.scaleX);
     system->setScaleY(node.scaleY);

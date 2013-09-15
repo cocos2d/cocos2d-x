@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-CCProcessBase::CCProcessBase(void)
+ProcessBase::ProcessBase(void)
     : m_fProcessScale(1)
     , m_bIsPause(true)
     , m_bIsComplete(true)
@@ -49,25 +49,25 @@ CCProcessBase::CCProcessBase(void)
 }
 
 
-CCProcessBase::~CCProcessBase(void)
+ProcessBase::~ProcessBase(void)
 {
 }
 
 
-void CCProcessBase::pause()
+void ProcessBase::pause()
 {
     m_bIsPause = true;
     m_bIsPlaying = false;
 }
 
 
-void CCProcessBase::resume()
+void ProcessBase::resume()
 {
     m_bIsPause = false;
     m_bIsPlaying = true;
 }
 
-void CCProcessBase::stop()
+void ProcessBase::stop()
 {
     m_bIsComplete = true;
     m_bIsPlaying = false;
@@ -75,7 +75,7 @@ void CCProcessBase::stop()
     m_fCurrentPercent = 0;
 }
 
-void CCProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     m_bIsComplete = false;
     m_bIsPause = false;
@@ -91,7 +91,7 @@ void CCProcessBase::play(void *animation, int durationTo, int durationTween,  in
 
 }
 
-void CCProcessBase::update(float dt)
+void ProcessBase::update(float dt)
 {
 
     if (m_bIsComplete || m_bIsPause)
@@ -137,13 +137,13 @@ void CCProcessBase::update(float dt)
 
 
 
-void CCProcessBase::gotoFrame(int frameIndex)
+void ProcessBase::gotoFrame(int frameIndex)
 {
     m_iCurFrameIndex = frameIndex;
     pause();
 }
 
-int CCProcessBase::getCurrentFrameIndex()
+int ProcessBase::getCurrentFrameIndex()
 {
     m_iCurFrameIndex = m_iRawDuration * m_fCurrentPercent;
     return m_iCurFrameIndex;

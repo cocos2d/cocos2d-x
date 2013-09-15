@@ -33,22 +33,22 @@ NS_CC_EXT_ARMATURE_BEGIN
 /*
  * use to calculate the matrix of node from parent node
  */
-class  CCTransformHelp
+class  TransformHelp
 {
 public:
-    CCTransformHelp();
+    TransformHelp();
 
-    static void transformFromParent(CCBaseData &node, const CCBaseData &parentNode);
-    static void transformToParent(CCBaseData &node, const CCBaseData &parentNode);
+    static void transformFromParent(BaseData &node, const BaseData &parentNode);
+    static void transformToParent(BaseData &node, const BaseData &parentNode);
 
-    static void transformFromParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode);
-    static void transformToParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode);
+    static void transformFromParentWithoutScale(BaseData &node, const BaseData &parentNode);
+    static void transformToParentWithoutScale(BaseData &node, const BaseData &parentNode);
 
-    static void nodeToMatrix(const CCBaseData &_node, AffineTransform &_matrix);
-    static void matrixToNode(const AffineTransform &_matrix, CCBaseData &_node);
+    static void nodeToMatrix(const BaseData &_node, AffineTransform &_matrix);
+    static void matrixToNode(const AffineTransform &_matrix, BaseData &_node);
 
-    static void nodeConcat(CCBaseData &target, CCBaseData &source);
-    static void nodeSub(CCBaseData &target, CCBaseData &source);
+    static void nodeConcat(BaseData &target, BaseData &source);
+    static void nodeSub(BaseData &target, BaseData &source);
 public:
     static AffineTransform helpMatrix1;
     static AffineTransform helpMatrix2;

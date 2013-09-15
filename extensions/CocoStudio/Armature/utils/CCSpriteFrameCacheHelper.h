@@ -31,10 +31,10 @@ using namespace std;
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-class  CCSpriteFrameCacheHelper
+class  SpriteFrameCacheHelper
 {
 public:
-    static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
+    static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
 
     static void purge();
 public:
@@ -47,12 +47,12 @@ public:
     TextureAtlas *getTexureAtlasWithTexture(Texture2D *texture);
 
 private:
-    CCSpriteFrameCacheHelper();
-    ~CCSpriteFrameCacheHelper();
+    SpriteFrameCacheHelper();
+    ~SpriteFrameCacheHelper();
 
     Dictionary *m_pTextureAtlasDic;
 
-    static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
+    static SpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };
 
 NS_CC_EXT_ARMATURE_END
