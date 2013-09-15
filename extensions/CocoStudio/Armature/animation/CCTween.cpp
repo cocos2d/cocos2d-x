@@ -34,9 +34,9 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-CCTween *CCTween::create(CCBone *bone)
+Tween *Tween::create(Bone *bone)
 {
-    CCTween *pTween = new CCTween();
+    Tween *pTween = new Tween();
     if (pTween && pTween->init(bone))
     {
         pTween->autorelease();
@@ -49,7 +49,7 @@ CCTween *CCTween::create(CCBone *bone)
 
 
 
-CCTween::CCTween()
+Tween::Tween()
     : m_pMovementBoneData(NULL)
     , m_pTweenData(NULL)
     , m_pFrom(NULL)
@@ -66,20 +66,20 @@ CCTween::CCTween()
 }
 
 
-CCTween::~CCTween(void)
+Tween::~Tween(void)
 {
     CC_SAFE_DELETE( m_pFrom );
     CC_SAFE_DELETE( m_pBetween );
 }
 
 
-bool CCTween::init(CCBone *bone)
+bool Tween::init(Bone *bone)
 {
     bool bRet = false;
     do
     {
-        m_pFrom = new CCFrameData();
-        m_pBetween = new CCFrameData();
+        m_pFrom = new FrameData();
+        m_pBetween = new FrameData();
 
         m_pBone = bone;
         m_pTweenData = m_pBone->getTweenData();
@@ -95,9 +95,9 @@ bool CCTween::init(CCBone *bone)
 }
 
 
-void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing)
+void Tween::play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    CCProcessBase::play(NULL, durationTo, durationTween, loop, tweenEasing);
+    ProcessBase::play(NULL, durationTo, durationTween, loop, tweenEasing);
 
     m_eLoopType = (AnimationType)loop;
 
@@ -110,12 +110,12 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
     setMovementBoneData(movementBoneData);
     m_iRawDuration = m_pMovementBoneData->duration;
 
-    CCFrameData *nextKeyFrame = m_pMovementBoneData->getFrameData(0);
+    FrameData *nextKeyFrame = m_pMovementBoneData->getFrameData(0);
     m_pTweenData->displayIndex = nextKeyFrame->displayIndex;
 
     if (m_pBone->getArmature()->getArmatureData()->dataVersion >= VERSION_COMBINED)
     {
-        CCTransformHelp::nodeSub(*m_pTweenData, *m_pBone->getBoneData());
+        TransformHelp::nodeSub(*m_pTweenData, *m_pBone->getBoneData());
         m_pTweenData->scaleX += 1;
         m_pTweenData->scaleY += 1;
     }
@@ -166,7 +166,7 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
     tweenNodeTo(0);
 }
 
-void CCTween::updateHandler()
+void Tween::updateHandler()
 {
     if (m_fCurrentPercent >= 1)
     {
@@ -271,7 +271,7 @@ void CCTween::updateHandler()
     }
 }
 
-void CCTween::setBetween(CCFrameData *from, CCFrameData *to)
+void Tween::setBetween(FrameData *from, FrameData *to)
 {
     do
     {
@@ -297,11 +297,11 @@ void CCTween::setBetween(CCFrameData *from, CCFrameData *to)
 }
 
 
-void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
+void Tween::arriveKeyFrame(FrameData *keyFrameData)
 {
     if(keyFrameData)
     {
-        CCDisplayManager *displayManager = m_pBone->getDisplayManager();
+        DisplayManager *displayManager = m_pBone->getDisplayManager();
 
         //! Change bone's display
         int displayIndex = keyFrameData->displayIndex;
@@ -319,7 +319,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
         m_pBone->setBlendType(keyFrameData->blendType);
 
         //! Update child armature's movement
-        CCArmature *childAramture = m_pBone->getChildArmature();
+        Armature *childAramture = m_pBone->getChildArmature();
         if(childAramture)
         {
             if(keyFrameData->strMovement.length() != 0)
@@ -330,7 +330,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
     }
 }
 
-CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
+FrameData *Tween::tweenNodeTo(float percent, FrameData *node)
 {
     node = node == NULL ? m_pTweenData : node;
 
@@ -351,7 +351,7 @@ CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
     return node;
 }
 
-void CCTween::tweenColorTo(float percent, CCFrameData *node)
+void Tween::tweenColorTo(float percent, FrameData *node)
 {
     node->a = m_pFrom->a + percent * m_pBetween->a;
     node->r = m_pFrom->r + percent * m_pBetween->r;
@@ -360,7 +360,7 @@ void CCTween::tweenColorTo(float percent, CCFrameData *node)
     m_pBone->updateColor();
 }
 
-float CCTween::updateFrameData(float currentPercent)
+float Tween::updateFrameData(float currentPercent)
 {
     if (currentPercent > 1 && m_pMovementBoneData->delay != 0)
     {
@@ -378,10 +378,10 @@ float CCTween::updateFrameData(float currentPercent)
          *  m_iToIndex is next index will play
          */
         int length = m_pMovementBoneData->frameList.count();
-        CCFrameData **frames = (CCFrameData **)m_pMovementBoneData->frameList.data->arr;
+        FrameData **frames = (FrameData **)m_pMovementBoneData->frameList.data->arr;
 
-        CCFrameData *from = NULL;
-        CCFrameData *to = NULL;
+        FrameData *from = NULL;
+        FrameData *to = NULL;
 
         if (playedTime < frames[0]->frameID)
         {
@@ -444,7 +444,7 @@ float CCTween::updateFrameData(float currentPercent)
         tweenType = (m_eTweenEasing == TWEEN_EASING_MAX) ? m_eFrameTweenEasing : m_eTweenEasing;
         if (tweenType != TWEEN_EASING_MAX && tweenType != Linear)
         {
-            currentPercent = CCTweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
+            currentPercent = TweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
         }
     }
 

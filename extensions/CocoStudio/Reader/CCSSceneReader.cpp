@@ -245,11 +245,11 @@ NS_CC_EXT_BEGIN
 						textupath += file_path;
 						textupath.append(textureFileName);
 
-						cocos2d::extension::armature::CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
+						cocos2d::extension::armature::ArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
 
 					}
 
-					cocos2d::extension::armature::CCArmature *pAr = cocos2d::extension::armature::CCArmature::create(name);
+					cocos2d::extension::armature::Armature *pAr = cocos2d::extension::armature::Armature::create(name);
 					ComRender *pRender = ComRender::create(pAr, "CCArmature");
 					if (pComName != NULL)
 					{

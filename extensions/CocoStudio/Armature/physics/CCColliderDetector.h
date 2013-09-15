@@ -42,7 +42,7 @@ struct cpShape;
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-class CCBone;
+class Bone;
 
 class ColliderBody : public Object
 {
@@ -56,36 +56,36 @@ public:
 #endif
 
 public:
-    ColliderBody(CCContourData *contourData);
+    ColliderBody(ContourData *contourData);
     ~ColliderBody();
 
-    inline CCContourData *getContourData()
+    inline ContourData *getContourData()
     {
         return m_pContourData;
     }
 private:
-    CCContourData *m_pContourData;
+    ContourData *m_pContourData;
 };
 
 /*
  *  @brief  ContourSprite used to draw the contour of the display
  */
-class CCColliderDetector : public Object
+class ColliderDetector : public Object
 {
 public:
-    static CCColliderDetector *create();
-    static CCColliderDetector *create(CCBone *bone);
+    static ColliderDetector *create();
+    static ColliderDetector *create(Bone *bone);
 public:
-    CCColliderDetector();
-    ~CCColliderDetector(void);
+    ColliderDetector();
+    ~ColliderDetector(void);
 
     virtual bool init();
-    virtual bool init(CCBone *bone);
+    virtual bool init(Bone *bone);
 
-    void addContourData(CCContourData *contourData);
+    void addContourData(ContourData *contourData);
     void addContourDataList(Array *contourDataList);
 
-    void removeContourData(CCContourData *contourData);
+    void removeContourData(ContourData *contourData);
     void removeAll();
 
     void updateTransform(AffineTransform &t);
@@ -97,7 +97,7 @@ public:
 
 protected:
     Array *m_pColliderBodyList;
-    CC_SYNTHESIZE(CCBone *, m_pBone, Bone);
+    CC_SYNTHESIZE(Bone *, m_pBone, Bone);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     CC_PROPERTY(b2Body *, m_pBody, Body);

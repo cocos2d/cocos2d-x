@@ -35,9 +35,9 @@ NS_CC_EXT_ARMATURE_BEGIN
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-CCSkin *CCSkin::create()
+Skin *Skin::create()
 {
-    CCSkin *skin = new CCSkin();
+    Skin *skin = new Skin();
     if(skin && skin->init())
     {
         skin->autorelease();
@@ -47,9 +47,9 @@ CCSkin *CCSkin::create()
     return NULL;
 }
 
-CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
+Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    CCSkin *skin = new CCSkin();
+    Skin *skin = new Skin();
     if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
     {
         skin->autorelease();
@@ -59,9 +59,9 @@ CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
     return NULL;
 }
 
-CCSkin *CCSkin::create(const char *pszFileName)
+Skin *Skin::create(const char *pszFileName)
 {
-    CCSkin *skin = new CCSkin();
+    Skin *skin = new Skin();
     if(skin && skin->initWithFile(pszFileName))
     {
         skin->autorelease();
@@ -71,20 +71,20 @@ CCSkin *CCSkin::create(const char *pszFileName)
     return NULL;
 }
 
-CCSkin::CCSkin()
+Skin::Skin()
     : m_pBone(NULL)
     , m_strDisplayName("")
 {
     m_tSkinTransform = AffineTransformIdentity;
 }
 
-bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
+bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
     bool ret = Sprite::initWithSpriteFrameName(pszSpriteFrameName);
 
     if (ret)
     {
-		TextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
+		TextureAtlas *atlas = SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
 		setTextureAtlas(atlas);
 
 		m_strDisplayName = pszSpriteFrameName;
@@ -93,13 +93,13 @@ bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
     return ret;
 }
 
-bool CCSkin::initWithFile(const char *pszFilename)
+bool Skin::initWithFile(const char *pszFilename)
 {
     bool ret = Sprite::initWithFile(pszFilename);
 
     if (ret)
     {
-		TextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
+		TextureAtlas *atlas = SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
 		setTextureAtlas(atlas);
 
 		m_strDisplayName = pszFilename;
@@ -108,7 +108,7 @@ bool CCSkin::initWithFile(const char *pszFilename)
     return ret;
 }
 
-void CCSkin::setSkinData(const CCBaseData &var)
+void Skin::setSkinData(const BaseData &var)
 {
     m_sSkinData = var;
 
@@ -120,17 +120,17 @@ void CCSkin::setSkinData(const CCBaseData &var)
     m_tSkinTransform = getNodeToParentTransform();
 }
 
-const CCBaseData &CCSkin::getSkinData() const
+const BaseData &Skin::getSkinData() const
 {
     return m_sSkinData;
 }
 
-void CCSkin::updateArmatureTransform()
+void Skin::updateArmatureTransform()
 {
     _transform = AffineTransformConcat(m_tSkinTransform, m_pBone->getNodeToArmatureTransform());
 }
 
-void CCSkin::updateTransform()
+void Skin::updateTransform()
 {
     // If it is not visible, or one of its ancestors is not visible, then do nothing:
     if( !_visible)
@@ -183,12 +183,12 @@ void CCSkin::updateTransform()
     }
 }
 
-AffineTransform CCSkin::getNodeToWorldTransform() const
+AffineTransform Skin::getNodeToWorldTransform() const
 {
     return AffineTransformConcat(_transform, m_pBone->getArmature()->getNodeToWorldTransform());
 }
 
-AffineTransform CCSkin::getNodeToWorldTransformAR() const
+AffineTransform Skin::getNodeToWorldTransformAR() const
 {
     AffineTransform displayTransform = _transform;
     Point anchorPoint =  _anchorPointInPoints;

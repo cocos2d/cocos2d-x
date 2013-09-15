@@ -37,7 +37,7 @@ NS_CC_EXT_ARMATURE_BEGIN
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-ColliderBody::ColliderBody(CCContourData *contourData)
+ColliderBody::ColliderBody(ContourData *contourData)
     : m_pFixture(NULL)
     , m_pFilter(NULL)
     , m_pContourData(contourData)
@@ -46,7 +46,7 @@ ColliderBody::ColliderBody(CCContourData *contourData)
 }
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 
-ColliderBody::ColliderBody(CCContourData *contourData)
+ColliderBody::ColliderBody(ContourData *contourData)
     : m_pShape(NULL)
     , m_pContourData(contourData)
 {
@@ -65,9 +65,9 @@ ColliderBody::~ColliderBody()
 
 
 
-CCColliderDetector *CCColliderDetector::create()
+ColliderDetector *ColliderDetector::create()
 {
-    CCColliderDetector *pColliderDetector = new CCColliderDetector();
+    ColliderDetector *pColliderDetector = new ColliderDetector();
     if (pColliderDetector && pColliderDetector->init())
     {
         pColliderDetector->autorelease();
@@ -77,9 +77,9 @@ CCColliderDetector *CCColliderDetector::create()
     return NULL;
 }
 
-CCColliderDetector *CCColliderDetector::create(CCBone *bone)
+ColliderDetector *ColliderDetector::create(Bone *bone)
 {
-    CCColliderDetector *pColliderDetector = new CCColliderDetector();
+    ColliderDetector *pColliderDetector = new ColliderDetector();
     if (pColliderDetector && pColliderDetector->init(bone))
     {
         pColliderDetector->autorelease();
@@ -89,7 +89,7 @@ CCColliderDetector *CCColliderDetector::create(CCBone *bone)
     return NULL;
 }
 
-CCColliderDetector::CCColliderDetector()
+ColliderDetector::ColliderDetector()
     : m_pColliderBodyList(NULL)
     , m_bActive(false)
 {
@@ -100,13 +100,13 @@ CCColliderDetector::CCColliderDetector()
 #endif
 }
 
-CCColliderDetector::~CCColliderDetector()
+ColliderDetector::~ColliderDetector()
 {
     m_pColliderBodyList->removeAllObjects();
     CC_SAFE_DELETE(m_pColliderBodyList);
 }
 
-bool CCColliderDetector::init()
+bool ColliderDetector::init()
 {
     m_pColliderBodyList = Array::create();
     CCAssert(m_pColliderBodyList, "create m_pColliderBodyList failed!");
@@ -115,7 +115,7 @@ bool CCColliderDetector::init()
     return true;
 }
 
-bool CCColliderDetector::init(CCBone *bone)
+bool ColliderDetector::init(Bone *bone)
 {
     init();
     setBone(bone);
@@ -123,23 +123,23 @@ bool CCColliderDetector::init(CCBone *bone)
     return true;
 }
 
-void CCColliderDetector::addContourData(CCContourData *contourData)
+void ColliderDetector::addContourData(ContourData *contourData)
 {
     ColliderBody *colliderBody = new ColliderBody(contourData);
     m_pColliderBodyList->addObject(colliderBody);
     colliderBody->release();
 }
 
-void CCColliderDetector::addContourDataList(Array *contourDataList)
+void ColliderDetector::addContourDataList(Array *contourDataList)
 {
     Object *object = NULL;
     CCARRAY_FOREACH(contourDataList, object)
     {
-        addContourData((CCContourData *)object);
+        addContourData((ContourData *)object);
     }
 }
 
-void CCColliderDetector::removeContourData(CCContourData *contourData)
+void ColliderDetector::removeContourData(ContourData *contourData)
 {
 	Object *object = NULL;
 	CCARRAY_FOREACH(m_pColliderBodyList, object)
@@ -152,13 +152,13 @@ void CCColliderDetector::removeContourData(CCContourData *contourData)
 	}
 }
 
-void CCColliderDetector::removeAll()
+void ColliderDetector::removeAll()
 {
     m_pColliderBodyList->removeAllObjects();
 }
 
 
-void CCColliderDetector::setActive(bool active)
+void ColliderDetector::setActive(bool active)
 {
     if (m_bActive == active)
     {
@@ -216,12 +216,12 @@ void CCColliderDetector::setActive(bool active)
 #endif
 }
 
-bool CCColliderDetector::getActive()
+bool ColliderDetector::getActive()
 {
     return m_bActive;
 }
 
-Array *CCColliderDetector::getColliderBodyList()
+Array *ColliderDetector::getColliderBodyList()
 {
     return m_pColliderBodyList;
 }
@@ -229,7 +229,7 @@ Array *CCColliderDetector::getColliderBodyList()
 
 Point helpPoint;
 
-void CCColliderDetector::updateTransform(AffineTransform &t)
+void ColliderDetector::updateTransform(AffineTransform &t)
 {
     if (!m_bActive)
     {
@@ -240,7 +240,7 @@ void CCColliderDetector::updateTransform(AffineTransform &t)
     CCARRAY_FOREACH(m_pColliderBodyList, object)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
-        CCContourData *contourData = colliderBody->getContourData();
+        ContourData *contourData = colliderBody->getContourData();
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
         b2PolygonShape *shape = NULL;
@@ -257,7 +257,7 @@ void CCColliderDetector::updateTransform(AffineTransform &t)
 #endif
 
         int num = contourData->vertexList.count();
-        CCContourVertex2 **vs = (CCContourVertex2 **)contourData->vertexList.data->arr;
+        ContourVertex2 **vs = (ContourVertex2 **)contourData->vertexList.data->arr;
 
         for (int i = 0; i < num; i++)
         {
@@ -298,7 +298,7 @@ void CCColliderDetector::updateTransform(AffineTransform &t)
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 
-void CCColliderDetector::setBody(b2Body *pBody)
+void ColliderDetector::setBody(b2Body *pBody)
 {
     m_pBody = pBody;
 
@@ -307,7 +307,7 @@ void CCColliderDetector::setBody(b2Body *pBody)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
 
-        CCContourData *contourData = colliderBody->getContourData();
+        ContourData *contourData = colliderBody->getContourData();
         const Array *array = &contourData->vertexList;
         Object *object = NULL;
 
@@ -316,7 +316,7 @@ void CCColliderDetector::setBody(b2Body *pBody)
         int i = 0;
         CCARRAY_FOREACH(array, object)
         {
-            CCContourVertex2 *v = (CCContourVertex2 *)object;
+            ContourVertex2 *v = (ContourVertex2 *)object;
             b2bv[i].Set(v->x / PT_RATIO, v->y / PT_RATIO);
             i++;
         }
@@ -351,13 +351,13 @@ void CCColliderDetector::setBody(b2Body *pBody)
     }
 }
 
-b2Body *CCColliderDetector::getBody()
+b2Body *ColliderDetector::getBody()
 {
     return m_pBody;
 }
 
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-void CCColliderDetector::setBody(cpBody *pBody)
+void ColliderDetector::setBody(cpBody *pBody)
 {
     m_pBody = pBody;
 
@@ -366,10 +366,10 @@ void CCColliderDetector::setBody(cpBody *pBody)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
 
-        CCContourData *contourData = colliderBody->getContourData();
+        ContourData *contourData = colliderBody->getContourData();
 
         int num = contourData->vertexList.count();
-        CCContourVertex2 **vs = (CCContourVertex2 **)contourData->vertexList.data->arr;
+        ContourVertex2 **vs = (ContourVertex2 **)contourData->vertexList.data->arr;
         cpVect *verts = new cpVect[num];
         for (int i = 0; i < num; i++)
         {
@@ -389,7 +389,7 @@ void CCColliderDetector::setBody(cpBody *pBody)
     }
 }
 
-cpBody *CCColliderDetector::getBody()
+cpBody *ColliderDetector::getBody()
 {
     return m_pBody;
 }

@@ -36,23 +36,23 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-class  CCDecorativeDisplay: public Object
+class  DecorativeDisplay: public Object
 {
 public:
-    static CCDecorativeDisplay *create();
+    static DecorativeDisplay *create();
 public:
-    CCDecorativeDisplay(void);
-    ~CCDecorativeDisplay(void);
+    DecorativeDisplay(void);
+    ~DecorativeDisplay(void);
 
     virtual bool init();
 
 protected:
 
     CC_SYNTHESIZE_RETAIN(Node *, m_pDisplay, Display);
-    CC_SYNTHESIZE_RETAIN(CCDisplayData *, m_pDisplayData, DisplayData);
+    CC_SYNTHESIZE_RETAIN(DisplayData *, m_pDisplayData, DisplayData);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_SYNTHESIZE_RETAIN(CCColliderDetector *, m_pColliderDetector, ColliderDetector);
+    CC_SYNTHESIZE_RETAIN(ColliderDetector *, m_pColliderDetector, ColliderDetector);
 #endif
 };
 

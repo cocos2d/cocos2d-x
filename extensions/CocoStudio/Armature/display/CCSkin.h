@@ -30,14 +30,14 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-class CCSkin : public Sprite
+class Skin : public Sprite
 {
 public:
-    static CCSkin *create();
-    static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
-    static CCSkin *create(const char *pszFileName);
+    static Skin *create();
+    static Skin *createWithSpriteFrameName(const char *pszSpriteFrameName);
+    static Skin *create(const char *pszFileName);
 public:
-    CCSkin();
+    Skin();
 
     bool initWithSpriteFrameName(const char *pszSpriteFrameName);
     bool initWithFile(const char *pszFilename);
@@ -48,8 +48,8 @@ public:
     AffineTransform getNodeToWorldTransform() const;
     AffineTransform getNodeToWorldTransformAR() const;
 
-    CC_PROPERTY_PASS_BY_REF(CCBaseData, m_sSkinData, SkinData);
-    CC_SYNTHESIZE(CCBone *, m_pBone, Bone);
+    CC_PROPERTY_PASS_BY_REF(BaseData, m_sSkinData, SkinData);
+    CC_SYNTHESIZE(Bone *, m_pBone, Bone);
 
 protected:
     AffineTransform m_tSkinTransform;

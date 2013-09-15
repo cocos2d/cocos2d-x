@@ -31,26 +31,26 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-class CCBone;
+class Bone;
 
-//! CCDisplayManager manages CCBone's display
-class  CCDisplayManager : public Object
+//! DisplayManager manages Bone's display
+class  DisplayManager : public Object
 {
 public:
-    static CCDisplayManager *create(CCBone *bone);
+    static DisplayManager *create(Bone *bone);
 
 public:
-    CCDisplayManager();
-    ~CCDisplayManager();
+    DisplayManager();
+    ~DisplayManager();
 
-    bool init(CCBone *bone);
+    bool init(Bone *bone);
 
     /**
-     * Use CCBoneData to init the display list.
+     * Use BoneData to init the display list.
      * If display is a sprite, and it have texture info in the TexutreData, then use TexutreData to init the display's anchor point
-     * If the display is a CCArmature, then create a new CCArmature
+     * If the display is a Armature, then create a new Armature
      */
-    virtual void initDisplayList(CCBoneData *boneData);
+    virtual void initDisplayList(BoneData *boneData);
 
     /**
      * Add display and use  _DisplayData init the display.
@@ -58,12 +58,12 @@ public:
      * If index is current display index, then also change display to _index
      *
      *	@param 	displayData it include the display information, like DisplayType.
-     *					If you want to create a sprite display, then create a CCSpriteDisplayData param
+     *					If you want to create a sprite display, then create a SpriteDisplayData param
      *
      *	@param 	index the index of the display you want to replace or add to
      *					-1 : append display from back
      */
-    void addDisplay(CCDisplayData *displayData, int index);
+    void addDisplay(DisplayData *displayData, int index);
 
     void addDisplay(Node *display, int index);
 
@@ -87,9 +87,9 @@ public:
 
     int getCurrentDisplayIndex();
 
-    virtual void setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay);
-    virtual CCDecorativeDisplay *getCurrentDecorativeDisplay();
-    virtual CCDecorativeDisplay *getDecorativeDisplayByIndex( int index);
+    virtual void setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay);
+    virtual DecorativeDisplay *getCurrentDecorativeDisplay();
+    virtual DecorativeDisplay *getDecorativeDisplayByIndex( int index);
 
     /**
      * Sets whether the display is visible
@@ -127,7 +127,7 @@ protected:
     //! Display render node.
     Node *m_pDisplayRenderNode;
     //! Include current display information, like contour sprite, etc.
-    CCDecorativeDisplay *m_pCurrentDecoDisplay;
+    DecorativeDisplay *m_pCurrentDecoDisplay;
     //! Current display index
     int m_iDisplayIndex;
 
@@ -136,7 +136,7 @@ protected:
     //! Whether of not the bone is visible. Default is true
     bool m_bVisible;
 
-    CCBone *m_pBone;
+    Bone *m_pBone;
 };
 
 NS_CC_EXT_ARMATURE_END

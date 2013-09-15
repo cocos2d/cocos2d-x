@@ -81,7 +81,7 @@ enum CCTweenType
     TWEEN_EASING_MAX = 10000
 };
 
-class  CCTweenFunction
+class  TweenFunction
 {
 public:
 

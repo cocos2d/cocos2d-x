@@ -29,7 +29,7 @@ THE SOFTWARE.
 NS_CC_EXT_ARMATURE_BEGIN
 
 
-CCBaseData::CCBaseData()
+BaseData::BaseData()
     : x(0.0f)
     , y(0.0f)
     , zOrder(0)
@@ -49,11 +49,11 @@ CCBaseData::CCBaseData()
 {
 }
 
-CCBaseData::~CCBaseData()
+BaseData::~BaseData()
 {
 }
 
-void CCBaseData::copy(const CCBaseData *node )
+void BaseData::copy(const BaseData *node )
 {
     x = node->x;
     y = node->y;
@@ -74,7 +74,7 @@ void CCBaseData::copy(const CCBaseData *node )
 }
 
 
-void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
+void BaseData::subtract(BaseData *from, BaseData *to)
 {
     x = to->x - from->x;
     y = to->y - from->y;
@@ -123,7 +123,7 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
     }
 }
 
-void CCBaseData::setColor(const Color4B &color)
+void BaseData::setColor(const Color4B &color)
 {
     r = color.r;
     g = color.g;
@@ -131,12 +131,12 @@ void CCBaseData::setColor(const Color4B &color)
     a = color.a;
 }
 
-Color4B CCBaseData::getColor()
+Color4B BaseData::getColor()
 {
     return Color4B(r, g, b, a);
 }
 
-const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
+const char *DisplayData::changeDisplayToTexture(const char *displayName)
 {
     // remove .xxx
     std::string textureName = displayName;
@@ -150,26 +150,26 @@ const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
     return textureName.c_str();
 }
 
-CCDisplayData::CCDisplayData(void)
+DisplayData::DisplayData(void)
     : displayType(CS_DISPLAY_MAX)
 {
 }
 
-CCDisplayData::~CCDisplayData(void)
+DisplayData::~DisplayData(void)
 {
 }
 
-CCSpriteDisplayData::CCSpriteDisplayData(void)
+SpriteDisplayData::SpriteDisplayData(void)
     : displayName("")
 {
     displayType = CS_DISPLAY_SPRITE;
 }
 
-CCSpriteDisplayData::~CCSpriteDisplayData()
+SpriteDisplayData::~SpriteDisplayData()
 {
 }
 
-void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
+void SpriteDisplayData::copy(SpriteDisplayData *displayData)
 {
     displayName = displayData->displayName;
     displayType = displayData->displayType;
@@ -177,87 +177,87 @@ void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
     skinData = displayData->skinData;
 }
 
-CCArmatureDisplayData::CCArmatureDisplayData(void)
+ArmatureDisplayData::ArmatureDisplayData(void)
     : displayName("")
 {
     displayType = CS_DISPLAY_ARMATURE;
 }
 
-CCArmatureDisplayData::~CCArmatureDisplayData()
+ArmatureDisplayData::~ArmatureDisplayData()
 {
 }
 
-void CCArmatureDisplayData::copy(CCArmatureDisplayData *displayData)
+void ArmatureDisplayData::copy(ArmatureDisplayData *displayData)
 {
     displayName = displayData->displayName;
     displayType = displayData->displayType;
 }
 
-CCParticleDisplayData::CCParticleDisplayData(void)
+ParticleDisplayData::ParticleDisplayData(void)
     : plist("")
 {
     displayType = CS_DISPLAY_PARTICLE;
 }
 
-void CCParticleDisplayData::copy(CCParticleDisplayData *displayData)
+void ParticleDisplayData::copy(ParticleDisplayData *displayData)
 {
     plist = displayData->plist;
     displayType = displayData->displayType;
 }
 
 
-CCBoneData::CCBoneData(void)
+BoneData::BoneData(void)
     : name("")
     , parentName("")
 {
 }
 
-CCBoneData::~CCBoneData(void)
+BoneData::~BoneData(void)
 {
 }
 
-bool CCBoneData::init()
+bool BoneData::init()
 {
     displayDataList.init();
     return true;
 }
 
-void CCBoneData::addDisplayData(CCDisplayData *displayData)
+void BoneData::addDisplayData(DisplayData *displayData)
 {
     displayDataList.addObject(displayData);
 }
 
-CCDisplayData *CCBoneData::getDisplayData(int index)
+DisplayData *BoneData::getDisplayData(int index)
 {
-    return (CCDisplayData *)displayDataList.getObjectAtIndex(index);
+    return (DisplayData *)displayDataList.getObjectAtIndex(index);
 }
 
 
-CCArmatureData::CCArmatureData()
+ArmatureData::ArmatureData()
     : dataVersion(0.1f)
 {
 }
 
-CCArmatureData::~CCArmatureData()
+ArmatureData::~ArmatureData()
 {
 }
 
-bool CCArmatureData::init()
+bool ArmatureData::init()
 {
     return true;
 }
 
-void CCArmatureData::addBoneData(CCBoneData *boneData)
+void ArmatureData::addBoneData(BoneData *boneData)
 {
     boneDataDic.setObject(boneData, boneData->name);
 }
 
-CCBoneData *CCArmatureData::getBoneData(const char *boneName)
+BoneData *ArmatureData::getBoneData(const char *boneName)
 {
-    return (CCBoneData *)boneDataDic.objectForKey(boneName);
+    return (BoneData *)boneDataDic.objectForKey(boneName);
 }
 
-CCFrameData::CCFrameData(void)
+FrameData::FrameData(void)
     : frameID(0)
     , duration(1)
     , tweenEasing(Linear)
@@ -271,15 +271,15 @@ CCFrameData::CCFrameData(void)
 {
 }
 
-CCFrameData::~CCFrameData(void)
+FrameData::~FrameData(void)
 {
 }
 
-void CCFrameData::copy(const CCBaseData *baseData)
+void FrameData::copy(const BaseData *baseData)
 {
-    CCBaseData::copy(baseData);
+    BaseData::copy(baseData);
     
-    if (const CCFrameData *frameData = dynamic_cast<const CCFrameData*>(baseData))
+    if (const FrameData *frameData = dynamic_cast<const FrameData*>(baseData))
     {
         duration = frameData->duration;
         displayIndex = frameData->displayIndex;
@@ -288,7 +288,7 @@ void CCFrameData::copy(const CCBaseData *baseData)
     }
 }
 
-CCMovementBoneData::CCMovementBoneData()
+MovementBoneData::MovementBoneData()
     : delay(0.0f)
     , scale(1.0f)
     , duration(0)
@@ -296,28 +296,28 @@ CCMovementBoneData::CCMovementBoneData()
 {
 }
 
-CCMovementBoneData::~CCMovementBoneData(void)
+MovementBoneData::~MovementBoneData(void)
 {
 }
 
-bool CCMovementBoneData::init()
+bool MovementBoneData::init()
 {
     return frameList.init();
 }
 
-void CCMovementBoneData::addFrameData(CCFrameData *frameData)
+void MovementBoneData::addFrameData(FrameData *frameData)
 {
     frameList.addObject(frameData);
 }
 
-CCFrameData *CCMovementBoneData::getFrameData(int index)
+FrameData *MovementBoneData::getFrameData(int index)
 {
-    return (CCFrameData *)frameList.getObjectAtIndex(index);
+    return (FrameData *)frameList.getObjectAtIndex(index);
 }
 
 
 
-CCMovementData::CCMovementData(void)
+MovementData::MovementData(void)
     : name("")
     , duration(0)
     , scale(1.0f)
@@ -328,70 +328,70 @@ CCMovementData::CCMovementData(void)
 {
 }
 
-CCMovementData::~CCMovementData(void)
+MovementData::~MovementData(void)
 {
 }
 
-void CCMovementData::addMovementBoneData(CCMovementBoneData *movBoneData)
+void MovementData::addMovementBoneData(MovementBoneData *movBoneData)
 {
     movBoneDataDic.setObject(movBoneData, movBoneData->name);
 }
 
-CCMovementBoneData *CCMovementData::getMovementBoneData(const char *boneName)
+MovementBoneData *MovementData::getMovementBoneData(const char *boneName)
 {
-    return (CCMovementBoneData *)movBoneDataDic.objectForKey(boneName);
+    return (MovementBoneData *)movBoneDataDic.objectForKey(boneName);
 }
 
 
 
-CCAnimationData::CCAnimationData(void)
+AnimationData::AnimationData(void)
 {
 }
 
-CCAnimationData::~CCAnimationData(void)
+AnimationData::~AnimationData(void)
 {
 }
 
-void CCAnimationData::addMovement(CCMovementData *movData)
+void AnimationData::addMovement(MovementData *movData)
 {
     movementDataDic.setObject(movData, movData->name);
     movementNames.push_back(movData->name);
 }
 
-CCMovementData *CCAnimationData::getMovement(const char *movementName)
+MovementData *AnimationData::getMovement(const char *movementName)
 {
-    return (CCMovementData *)movementDataDic.objectForKey(movementName);
+    return (MovementData *)movementDataDic.objectForKey(movementName);
 }
 
-int CCAnimationData::getMovementCount()
+int AnimationData::getMovementCount()
 {
     return movementDataDic.count();
 }
 
 
 
-CCContourData::CCContourData()
+ContourData::ContourData()
 {
 }
 
-CCContourData::~CCContourData()
+ContourData::~ContourData()
 {
 }
 
-bool CCContourData::init()
+bool ContourData::init()
 {
     return vertexList.init();
 }
 
-void CCContourData::addVertex(Point *vertex)
+void ContourData::addVertex(Point *vertex)
 {
-    CCContourVertex2 *vertex2 = new CCContourVertex2(vertex->x, vertex->y);
+    ContourVertex2 *vertex2 = new ContourVertex2(vertex->x, vertex->y);
     vertex2->autorelease();
 
     vertexList.addObject(vertex2);
 }
 
-CCTextureData::CCTextureData()
+TextureData::TextureData()
     : height(0.0f)
     , width(0.0f)
     , pivotX(0.5f)
@@ -400,23 +400,23 @@ CCTextureData::CCTextureData()
 {
 }
 
-CCTextureData::~CCTextureData()
+TextureData::~TextureData()
 {
 }
 
-bool CCTextureData::init()
+bool TextureData::init()
 {
     return contourDataList.init();
 }
 
-void CCTextureData::addContourData(CCContourData *contourData)
+void TextureData::addContourData(ContourData *contourData)
 {
     contourDataList.addObject(contourData);
 }
 
-CCContourData *CCTextureData::getContourData(int index)
+ContourData *TextureData::getContourData(int index)
 {
-    return (CCContourData *)contourDataList.getObjectAtIndex(index);
+    return (ContourData *)contourDataList.getObjectAtIndex(index);
 }
 
 

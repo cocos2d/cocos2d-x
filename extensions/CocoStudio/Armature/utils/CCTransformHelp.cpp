@@ -27,19 +27,19 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-AffineTransform CCTransformHelp::helpMatrix1;
-AffineTransform CCTransformHelp::helpMatrix2;
+AffineTransform TransformHelp::helpMatrix1;
+AffineTransform TransformHelp::helpMatrix2;
 
-Point CCTransformHelp::helpPoint1;
-Point CCTransformHelp::helpPoint2;
+Point TransformHelp::helpPoint1;
+Point TransformHelp::helpPoint2;
 
-CCBaseData helpParentNode;
+BaseData helpParentNode;
 
-CCTransformHelp::CCTransformHelp()
+TransformHelp::TransformHelp()
 {
 }
 
-void CCTransformHelp::transformFromParent(CCBaseData &node, const CCBaseData &parentNode)
+void TransformHelp::transformFromParent(BaseData &node, const BaseData &parentNode)
 {
     nodeToMatrix(node, helpMatrix1);
     nodeToMatrix(parentNode, helpMatrix2);
@@ -50,7 +50,7 @@ void CCTransformHelp::transformFromParent(CCBaseData &node, const CCBaseData &pa
     matrixToNode(helpMatrix1, node);
 }
 
-void CCTransformHelp::transformToParent(CCBaseData &node, const CCBaseData &parentNode)
+void TransformHelp::transformToParent(BaseData &node, const BaseData &parentNode)
 {
 
     nodeToMatrix(node, helpMatrix1);
@@ -61,7 +61,7 @@ void CCTransformHelp::transformToParent(CCBaseData &node, const CCBaseData &pare
     matrixToNode(helpMatrix1, node);
 }
 
-void CCTransformHelp::transformFromParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode)
+void TransformHelp::transformFromParentWithoutScale(BaseData &node, const BaseData &parentNode)
 {
 
     helpParentNode.copy(&parentNode);
@@ -77,7 +77,7 @@ void CCTransformHelp::transformFromParentWithoutScale(CCBaseData &node, const CC
     matrixToNode(helpMatrix1, node);
 }
 
-void CCTransformHelp::transformToParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode)
+void TransformHelp::transformToParentWithoutScale(BaseData &node, const BaseData &parentNode)
 {
 
     helpParentNode.copy(&parentNode);
@@ -92,7 +92,7 @@ void CCTransformHelp::transformToParentWithoutScale(CCBaseData &node, const CCBa
     matrixToNode(helpMatrix1, node);
 }
 
-void CCTransformHelp::nodeToMatrix(const CCBaseData &node, AffineTransform &matrix)
+void TransformHelp::nodeToMatrix(const BaseData &node, AffineTransform &matrix)
 {
     matrix.a = node.scaleX * cos(node.skewY);
     matrix.b = node.scaleX * sin(node.skewY);
@@ -103,7 +103,7 @@ void CCTransformHelp::nodeToMatrix(const CCBaseData &node, AffineTransform &matr
     matrix.ty = node.y;
 }
 
-void CCTransformHelp::matrixToNode(const AffineTransform &matrix, CCBaseData &node)
+void TransformHelp::matrixToNode(const AffineTransform &matrix, BaseData &node)
 {
     /*
      *  In as3 language, there is a function called "deltaTransformPoint", it calculate a point used give Transform
@@ -129,7 +129,7 @@ void CCTransformHelp::matrixToNode(const AffineTransform &matrix, CCBaseData &no
     node.y = matrix.ty;
 }
 
-void CCTransformHelp::nodeConcat(CCBaseData &target, CCBaseData &source)
+void TransformHelp::nodeConcat(BaseData &target, BaseData &source)
 {
     target.x += source.x;
     target.y += source.y;
@@ -139,7 +139,7 @@ void CCTransformHelp::nodeConcat(CCBaseData &target, CCBaseData &source)
     target.scaleY += source.scaleY;
 }
 
-void CCTransformHelp::nodeSub(CCBaseData &target, CCBaseData &source)
+void TransformHelp::nodeSub(BaseData &target, BaseData &source)
 {
     target.x -= source.x;
     target.y -= source.y;

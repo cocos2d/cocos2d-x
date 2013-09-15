@@ -30,9 +30,9 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-CCDisplayManager *CCDisplayManager::create(CCBone *bone)
+DisplayManager *DisplayManager::create(Bone *bone)
 {
-    CCDisplayManager *pDisplayManager = new CCDisplayManager();
+    DisplayManager *pDisplayManager = new DisplayManager();
     if (pDisplayManager && pDisplayManager->init(bone))
     {
         pDisplayManager->autorelease();
@@ -43,7 +43,7 @@ CCDisplayManager *CCDisplayManager::create(CCBone *bone)
 }
 
 
-CCDisplayManager::CCDisplayManager()
+DisplayManager::DisplayManager()
     : m_pDecoDisplayList(NULL)
     , m_pDisplayRenderNode(NULL)
     , m_pCurrentDecoDisplay(NULL)
@@ -54,7 +54,7 @@ CCDisplayManager::CCDisplayManager()
 {
 }
 
-CCDisplayManager::~CCDisplayManager()
+DisplayManager::~DisplayManager()
 {
     CC_SAFE_DELETE(m_pDecoDisplayList);
 
@@ -67,7 +67,7 @@ CCDisplayManager::~CCDisplayManager()
 
 }
 
-bool CCDisplayManager::init(CCBone *bone)
+bool DisplayManager::init(Bone *bone)
 {
     bool ret = false;
 
@@ -86,21 +86,21 @@ bool CCDisplayManager::init(CCBone *bone)
 }
 
 
-void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
+void DisplayManager::addDisplay(DisplayData *displayData, int index)
 {
-    CCDecorativeDisplay *decoDisplay = NULL;
+    DecorativeDisplay *decoDisplay = NULL;
 
     if(index >= 0 && (unsigned int)index < m_pDecoDisplayList->count())
     {
-        decoDisplay = (CCDecorativeDisplay *)m_pDecoDisplayList->getObjectAtIndex(index);
+        decoDisplay = (DecorativeDisplay *)m_pDecoDisplayList->getObjectAtIndex(index);
     }
     else
     {
-        decoDisplay = CCDecorativeDisplay::create();
+        decoDisplay = DecorativeDisplay::create();
         m_pDecoDisplayList->addObject(decoDisplay);
     }
 
-    CCDisplayFactory::addDisplay(m_pBone, decoDisplay, displayData);
+    DisplayFactory::addDisplay(m_pBone, decoDisplay, displayData);
 
     //! if changed display index is current display index, then change current display to the new display
     if(index == m_iDisplayIndex)
@@ -110,50 +110,50 @@ void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
     }
 }
 
-void CCDisplayManager::addDisplay(Node *display, int index)
+void DisplayManager::addDisplay(Node *display, int index)
 {
-    CCDecorativeDisplay *decoDisplay = NULL;
+    DecorativeDisplay *decoDisplay = NULL;
 
     if(index >= 0 && (unsigned int)index < m_pDecoDisplayList->count())
     {
-        decoDisplay = (CCDecorativeDisplay *)m_pDecoDisplayList->getObjectAtIndex(index);
+        decoDisplay = (DecorativeDisplay *)m_pDecoDisplayList->getObjectAtIndex(index);
     }
     else
     {
-        decoDisplay = CCDecorativeDisplay::create();
+        decoDisplay = DecorativeDisplay::create();
         m_pDecoDisplayList->addObject(decoDisplay);
     }
 
-    CCDisplayData *displayData = NULL;
-    if (CCSkin *skin = dynamic_cast<CCSkin *>(display))
+    DisplayData *displayData = NULL;
+    if (Skin *skin = dynamic_cast<Skin *>(display))
     {
         skin->setBone(m_pBone);
-        displayData = CCSpriteDisplayData::create();
+        displayData = SpriteDisplayData::create();
 
-        CCDisplayFactory::initSpriteDisplay(m_pBone, decoDisplay, skin->getDisplayName().c_str(), skin);
+        DisplayFactory::initSpriteDisplay(m_pBone, decoDisplay, skin->getDisplayName().c_str(), skin);
 
-        if (CCSpriteDisplayData *spriteDisplayData = (CCSpriteDisplayData *)decoDisplay->getDisplayData())
+        if (SpriteDisplayData *spriteDisplayData = (SpriteDisplayData *)decoDisplay->getDisplayData())
         {
             skin->setSkinData(spriteDisplayData->skinData);
         }
         else
         {
-            CCBaseData baseData;
+            BaseData baseData;
             skin->setSkinData(baseData);
         }
     }
     else if (dynamic_cast<ParticleSystemQuad *>(display))
     {
-        displayData = CCParticleDisplayData::create();
+        displayData = ParticleDisplayData::create();
     }
-    else if(CCArmature *armature = dynamic_cast<CCArmature *>(display))
+    else if(Armature *armature = dynamic_cast<Armature *>(display))
     {
-        displayData = CCArmatureDisplayData::create();
+        displayData = ArmatureDisplayData::create();
         armature->setParentBone(m_pBone);
     }
     else
     {
-        displayData = CCDisplayData::create();
+        displayData = DisplayData::create();
     }
 
     decoDisplay->setDisplay(display);
@@ -167,7 +167,7 @@ void CCDisplayManager::addDisplay(Node *display, int index)
     }
 }
 
-void CCDisplayManager::removeDisplay(int index)
+void DisplayManager::removeDisplay(int index)
 {
     m_pDecoDisplayList->removeObjectAtIndex(index);
 
@@ -177,12 +177,12 @@ void CCDisplayManager::removeDisplay(int index)
     }
 }
 
-Array *CCDisplayManager::getDecorativeDisplayList()
+Array *DisplayManager::getDecorativeDisplayList()
 {
     return m_pDecoDisplayList;
 }
 
-void CCDisplayManager::changeDisplayByIndex(int index, bool force)
+void DisplayManager::changeDisplayByIndex(int index, bool force)
 {
     CCAssert( (m_pDecoDisplayList ? index < (int)m_pDecoDisplayList->count() : true), "the _index value is out of range");
 
@@ -207,12 +207,12 @@ void CCDisplayManager::changeDisplayByIndex(int index, bool force)
     }
 
 
-    CCDecorativeDisplay *decoDisplay = (CCDecorativeDisplay *)m_pDecoDisplayList->getObjectAtIndex(m_iDisplayIndex);
+    DecorativeDisplay *decoDisplay = (DecorativeDisplay *)m_pDecoDisplayList->getObjectAtIndex(m_iDisplayIndex);
 
     setCurrentDecorativeDisplay(decoDisplay);
 }
 
-void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay)
+void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 {
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (m_pCurrentDecoDisplay && m_pCurrentDecoDisplay->getColliderDetector())
@@ -233,7 +233,7 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
     Node *displayRenderNode = m_pCurrentDecoDisplay == NULL ? NULL : m_pCurrentDecoDisplay->getDisplay();
     if (m_pDisplayRenderNode)
     {
-        if (dynamic_cast<CCArmature *>(m_pDisplayRenderNode) != NULL)
+        if (dynamic_cast<Armature *>(m_pDisplayRenderNode) != NULL)
         {
             m_pBone->setChildArmature(NULL);
         }
@@ -245,7 +245,7 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
     if(m_pDisplayRenderNode)
     {
-        if (CCArmature *armature = dynamic_cast<CCArmature *>(m_pDisplayRenderNode))
+        if (Armature *armature = dynamic_cast<Armature *>(m_pDisplayRenderNode))
         {
             m_pBone->setChildArmature(armature);
         }
@@ -265,27 +265,27 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
     }
 }
 
-Node *CCDisplayManager::getDisplayRenderNode()
+Node *DisplayManager::getDisplayRenderNode()
 {
     return m_pDisplayRenderNode;
 }
 
-int CCDisplayManager::getCurrentDisplayIndex()
+int DisplayManager::getCurrentDisplayIndex()
 {
     return m_iDisplayIndex;
 }
 
-CCDecorativeDisplay *CCDisplayManager::getCurrentDecorativeDisplay()
+DecorativeDisplay *DisplayManager::getCurrentDecorativeDisplay()
 {
     return m_pCurrentDecoDisplay;
 }
 
-CCDecorativeDisplay *CCDisplayManager::getDecorativeDisplayByIndex( int index)
+DecorativeDisplay *DisplayManager::getDecorativeDisplayByIndex( int index)
 {
-    return (CCDecorativeDisplay *)m_pDecoDisplayList->getObjectAtIndex(index);
+    return (DecorativeDisplay *)m_pDecoDisplayList->getObjectAtIndex(index);
 }
 
-void CCDisplayManager::initDisplayList(CCBoneData *boneData)
+void DisplayManager::initDisplayList(BoneData *boneData)
 {
     CC_SAFE_DELETE(m_pDecoDisplayList);
     m_pDecoDisplayList = Array::create();
@@ -297,19 +297,19 @@ void CCDisplayManager::initDisplayList(CCBoneData *boneData)
     Array *displayDataList = &boneData->displayDataList;
     CCARRAY_FOREACH(displayDataList, object)
     {
-        CCDisplayData *displayData = (CCDisplayData *)object;
+        DisplayData *displayData = (DisplayData *)object;
 
-        CCDecorativeDisplay *decoDisplay = CCDecorativeDisplay::create();
+        DecorativeDisplay *decoDisplay = DecorativeDisplay::create();
         decoDisplay->setDisplayData(displayData);
 
-        CCDisplayFactory::createDisplay(m_pBone, decoDisplay);
+        DisplayFactory::createDisplay(m_pBone, decoDisplay);
 
         m_pDecoDisplayList->addObject(decoDisplay);
     }
 }
 
 
-bool CCDisplayManager::containPoint(Point &point)
+bool DisplayManager::containPoint(Point &point)
 {
     if(!m_bVisible || m_iDisplayIndex < 0)
     {
@@ -344,14 +344,14 @@ bool CCDisplayManager::containPoint(Point &point)
     return ret;
 }
 
-bool CCDisplayManager::containPoint(float x, float y)
+bool DisplayManager::containPoint(float x, float y)
 {
     Point p = Point(x, y);
     return containPoint(p);
 }
 
 
-void CCDisplayManager::setVisible(bool visible)
+void DisplayManager::setVisible(bool visible)
 {
     if(!m_pDisplayRenderNode)
         return;
@@ -360,32 +360,32 @@ void CCDisplayManager::setVisible(bool visible)
     m_pDisplayRenderNode->setVisible(visible);
 }
 
-bool CCDisplayManager::isVisible()
+bool DisplayManager::isVisible()
 {
     return m_bVisible;
 }
 
 
-Size CCDisplayManager::getContentSize()
+Size DisplayManager::getContentSize()
 {
     CS_RETURN_IF(!m_pDisplayRenderNode) Size(0, 0);
     return m_pDisplayRenderNode->getContentSize();
 }
 
-Rect CCDisplayManager::getBoundingBox()
+Rect DisplayManager::getBoundingBox()
 {
     CS_RETURN_IF(!m_pDisplayRenderNode) Rect(0, 0, 0, 0);
     return m_pDisplayRenderNode->getBoundingBox();
 }
 
 
-Point CCDisplayManager::getAnchorPoint()
+Point DisplayManager::getAnchorPoint()
 {
     CS_RETURN_IF(!m_pDisplayRenderNode) Point(0, 0);
     return m_pDisplayRenderNode->getAnchorPoint();
 }
 
-Point CCDisplayManager::getAnchorPointInPoints()
+Point DisplayManager::getAnchorPointInPoints()
 {
     CS_RETURN_IF(!m_pDisplayRenderNode) Point(0, 0);
     return m_pDisplayRenderNode->getAnchorPointInPoints();

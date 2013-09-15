@@ -662,9 +662,6 @@
     <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDefine.h">
       <Filter>CocoStudio\Armature\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Armature\utils\CCConstValue.h">
-      <Filter>CocoStudio\Armature\utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.h">
       <Filter>CocoStudio\Armature\utils</Filter>
     </ClInclude>
