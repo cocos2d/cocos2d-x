@@ -9,7 +9,7 @@ INCLUDES =  -I../ -I../Classes -I$(COCOS_ROOT)/CocosDenshion/include \
 SOURCES = main.cpp ../Classes/AppDelegate.cpp
 
 SHAREDLIBS += -lcocos2d -lcocosdenshion -llua
-COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so $(LIB_DIR)/liblua.so
+COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so $(LIB_DIR)/liblua.so $(LIB_DIR)/libbox2d.so
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
