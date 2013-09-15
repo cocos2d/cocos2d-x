@@ -249,11 +249,14 @@ void TouchesPerformTest3::onEnter()
     
     auto dispatcher = EventDispatcher::getInstance();
     
-    CC_PROFILER_START(TOUCH_PROFILER_NAME);
-    
-    dispatcher->dispatchEvent(&event);
-    
-    CC_PROFILER_STOP(TOUCH_PROFILER_NAME);
+    for (int i = 0; i < 100; ++i)
+    {
+        CC_PROFILER_START(TOUCH_PROFILER_NAME);
+        
+        dispatcher->dispatchEvent(&event, true);
+        
+        CC_PROFILER_STOP(TOUCH_PROFILER_NAME);
+    }
     
     CC_PROFILER_DISPLAY_TIMERS();
     
