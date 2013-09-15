@@ -50,9 +50,9 @@ private:
     SpriteFrameCacheHelper();
     ~SpriteFrameCacheHelper();
 
-    Dictionary *m_pTextureAtlasDic;
+    Dictionary *_textureAtlasDic;
 
-    static SpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
+    static SpriteFrameCacheHelper *_spriteFrameCacheHelper;
 };
 
 NS_CC_EXT_ARMATURE_END

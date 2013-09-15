@@ -55,10 +55,10 @@ void ArmatureDataManager::purge()
 
 ArmatureDataManager::ArmatureDataManager(void)
 {
-    m_pArmarureDatas = NULL;
-    m_pAnimationDatas = NULL;
-    m_pTextureDatas = NULL;
-    m_bAutoLoadSpriteFile = false;
+    _armarureDatas = NULL;
+    _animationDatas = NULL;
+    _textureDatas = NULL;
+    _autoLoadSpriteFile = false;
 }
 
 
@@ -66,9 +66,9 @@ ArmatureDataManager::~ArmatureDataManager(void)
 {
     removeAll();
 
-    CC_SAFE_DELETE(m_pAnimationDatas);
-    CC_SAFE_DELETE(m_pArmarureDatas);
-    CC_SAFE_DELETE(m_pTextureDatas);
+    CC_SAFE_DELETE(_animationDatas);
+    CC_SAFE_DELETE(_armarureDatas);
+    CC_SAFE_DELETE(_textureDatas);
 }
 
 
@@ -77,17 +77,17 @@ bool ArmatureDataManager::init()
     bool bRet = false;
     do
     {
-        m_pArmarureDatas = Dictionary::create();
-        CCAssert(m_pArmarureDatas, "create ArmatureDataManager::m_pArmarureDatas fail!");
-        m_pArmarureDatas->retain();
+        _armarureDatas = Dictionary::create();
+        CCAssert(_armarureDatas, "create ArmatureDataManager::_armarureDatas fail!");
+        _armarureDatas->retain();
 
-        m_pAnimationDatas = Dictionary::create();
-        CCAssert(m_pAnimationDatas, "create ArmatureDataManager::m_pAnimationDatas fail!");
-        m_pAnimationDatas->retain();
+        _animationDatas = Dictionary::create();
+        CCAssert(_animationDatas, "create ArmatureDataManager::_animationDatas fail!");
+        _animationDatas->retain();
 
-        m_pTextureDatas = Dictionary::create();
-        CCAssert(m_pTextureDatas, "create ArmatureDataManager::m_pTextureDatas fail!");
-        m_pTextureDatas->retain();
+        _textureDatas = Dictionary::create();
+        CCAssert(_textureDatas, "create ArmatureDataManager::_textureDatas fail!");
+        _textureDatas->retain();
 
         bRet = true;
     }
@@ -98,61 +98,61 @@ bool ArmatureDataManager::init()
 
 void ArmatureDataManager::addArmatureData(const char *id, ArmatureData *armatureData)
 {
-    if(m_pArmarureDatas)
+    if(_armarureDatas)
     {
-        m_pArmarureDatas->setObject(armatureData, id);
+        _armarureDatas->setObject(armatureData, id);
     }
 }
 
 ArmatureData *ArmatureDataManager::getArmatureData(const char *id)
 {
     ArmatureData *armatureData = NULL;
-    if (m_pArmarureDatas)
+    if (_armarureDatas)
     {
-        armatureData = (ArmatureData *)m_pArmarureDatas->objectForKey(id);
+        armatureData = (ArmatureData *)_armarureDatas->objectForKey(id);
     }
     return armatureData;
 }
 
 void ArmatureDataManager::removeArmatureData(const char *id)
 {
-    if (m_pArmarureDatas)
+    if (_armarureDatas)
     {
-        m_pArmarureDatas->removeObjectForKey(id);
+        _armarureDatas->removeObjectForKey(id);
     }
 }
 
 void ArmatureDataManager::addAnimationData(const char *id, AnimationData *animationData)
 {
-    if(m_pAnimationDatas)
+    if(_animationDatas)
     {
-        m_pAnimationDatas->setObject(animationData, id);
+        _animationDatas->setObject(animationData, id);
     }
 }
 
 AnimationData *ArmatureDataManager::getAnimationData(const char *id)
 {
     AnimationData *animationData = NULL;
-    if (m_pAnimationDatas)
+    if (_animationDatas)
     {
-        animationData = (AnimationData *)m_pAnimationDatas->objectForKey(id);
+        animationData = (AnimationData *)_animationDatas->objectForKey(id);
     }
     return animationData;
 }
 
 void ArmatureDataManager::removeAnimationData(const char *id)
 {
-    if (m_pAnimationDatas)
+    if (_animationDatas)
     {
-        m_pAnimationDatas->removeObjectForKey(id);
+        _animationDatas->removeObjectForKey(id);
     }
 }
 
 void ArmatureDataManager::addTextureData(const char *id, TextureData *textureData)
 {
-    if(m_pTextureDatas)
+    if(_textureDatas)
     {
-        m_pTextureDatas->setObject(textureData, id);
+        _textureDatas->setObject(textureData, id);
     }
 }
 
@@ -160,9 +160,9 @@ void ArmatureDataManager::addTextureData(const char *id, TextureData *textureDat
 TextureData *ArmatureDataManager::getTextureData(const char *id)
 {
     TextureData *textureData = NULL;
-    if (m_pTextureDatas)
+    if (_textureDatas)
     {
-        textureData = (TextureData *)m_pTextureDatas->objectForKey(id);
+        textureData = (TextureData *)_textureDatas->objectForKey(id);
     }
     return textureData;
 }
@@ -170,34 +170,34 @@ TextureData *ArmatureDataManager::getTextureData(const char *id)
 
 void ArmatureDataManager::removeTextureData(const char *id)
 {
-    if(m_pTextureDatas)
+    if(_textureDatas)
     {
-        m_pTextureDatas->removeObjectForKey(id);
+        _textureDatas->removeObjectForKey(id);
     }
 }
 
 void ArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 {
-    m_bAutoLoadSpriteFile = true;
+    _autoLoadSpriteFile = true;
     DataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
 }
 
 void ArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, Object *target, SEL_SCHEDULE selector)
 {
-    m_bAutoLoadSpriteFile = true;
+    _autoLoadSpriteFile = true;
     DataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
 }
 
 void ArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
-    m_bAutoLoadSpriteFile = false;
+    _autoLoadSpriteFile = false;
     DataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
 
 void ArmatureDataManager::addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, Object *target, SEL_SCHEDULE selector)
 {
-    m_bAutoLoadSpriteFile = false;
+    _autoLoadSpriteFile = false;
     DataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
@@ -210,18 +210,18 @@ void ArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const ch
 
 void ArmatureDataManager::removeAll()
 {
-    if( m_pAnimationDatas )
+    if( _animationDatas )
     {
-        m_pAnimationDatas->removeAllObjects();
+        _animationDatas->removeAllObjects();
     }
-    if( m_pArmarureDatas )
+    if( _armarureDatas )
     {
-        m_pArmarureDatas->removeAllObjects();
+        _armarureDatas->removeAllObjects();
     }
 
-    if( m_pTextureDatas )
+    if( _textureDatas )
     {
-        m_pTextureDatas->removeAllObjects();
+        _textureDatas->removeAllObjects();
     }
 
     DataReaderHelper::clear();
@@ -229,20 +229,20 @@ void ArmatureDataManager::removeAll()
 
 bool ArmatureDataManager::isAutoLoadSpriteFile()
 {
-    return m_bAutoLoadSpriteFile;
+    return _autoLoadSpriteFile;
 }
 
 Dictionary *ArmatureDataManager::getArmatureDatas() const
 {
-    return m_pArmarureDatas;
+    return _armarureDatas;
 }
 Dictionary *ArmatureDataManager::getAnimationDatas() const
 {
-    return m_pAnimationDatas;
+    return _animationDatas;
 }
 Dictionary *ArmatureDataManager::getTextureDatas() const
 {
-    return m_pTextureDatas;
+    return _textureDatas;
 }
 
 NS_CC_EXT_ARMATURE_END

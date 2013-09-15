@@ -119,47 +119,47 @@ protected:
 
 protected:
     //! Scale the process speed
-    CC_SYNTHESIZE(float, m_fProcessScale, ProcessScale);
+    CC_SYNTHESIZE(float, _processScale, ProcessScale);
 
     //! Set and get whether the aniamtion is pause
-    CC_SYNTHESIZE(bool, m_bIsPause, IsPause);
+    CC_SYNTHESIZE(bool, _isPause, IsPause);
 
     //! Set and get whether the aniamtion is complete
-    CC_SYNTHESIZE(bool, m_bIsComplete, IsComplete);
+    CC_SYNTHESIZE(bool, _isComplete, IsComplete);
 
     //! Set and get whether the aniamtion is playing
-    CC_SYNTHESIZE(bool, m_bIsPlaying, IsPlaying);
+    CC_SYNTHESIZE(bool, _isPlaying, IsPlaying);
 
     //! Current percent this process arrived
-    CC_SYNTHESIZE(float, m_fCurrentPercent, CurrentPercent);
+    CC_SYNTHESIZE(float, _currentPercent, CurrentPercent);
 
     //! The raw duration
-    CC_SYNTHESIZE(int, m_iRawDuration, RawDuration);
+    CC_SYNTHESIZE(int, _rawDuration, RawDuration);
 
     //! The animation whether or not loop
-    CC_SYNTHESIZE(AnimationType, m_eLoopType, LoopType);
+    CC_SYNTHESIZE(AnimationType, _loopType, LoopType);
 
     //! The tween easing effect
-    CC_SYNTHESIZE(CCTweenType, m_eTweenEasing, TweenEasing);
+    CC_SYNTHESIZE(CCTweenType, _tweenEasing, TweenEasing);
 
     //! The animation update speed
-    CC_SYNTHESIZE(float, m_fAnimationInternal, AnimationInternal);
+    CC_SYNTHESIZE(float, _animationInternal, AnimationInternal);
 
 
 protected:
     //! The durantion frame count will run
-    int m_iDurationTween;
+    int _durationTween;
 
     //! Current frame this process arrived, this frame is tween frame
-    float m_fCurrentFrame;
+    float _currentFrame;
     //! Frame index it the time line
-    int m_iCurFrameIndex;
+    int _curFrameIndex;
 
     //! Next frame this process need run to
     int m_iNextFrameIndex;
 
 
-    bool m_bIsLoopBack;
+    bool _isLoopBack;
 };
 
 NS_CC_EXT_ARMATURE_END

@@ -78,11 +78,11 @@ public:
 
     inline void setAnimation(ArmatureAnimation *animation)
     {
-        m_pAnimation = animation;
+        _animation = animation;
     }
     inline ArmatureAnimation *getAnimation() const
     {
-        return m_pAnimation;
+        return _animation;
     }
 protected:
 
@@ -117,26 +117,26 @@ protected:
     virtual void arriveKeyFrame(FrameData *keyFrameData);
 protected:
     //! A weak reference to the current MovementBoneData. The data is in the data pool
-    CC_SYNTHESIZE(MovementBoneData *, m_pMovementBoneData, MovementBoneData)
+    CC_SYNTHESIZE(MovementBoneData *, _movementBoneData, MovementBoneData)
 
-    FrameData *m_pTweenData;		//! The computational tween frame data, //! A weak reference to the Bone's tweenData
-    FrameData *m_pFrom;				//! From frame data, used for calculate between value
-    FrameData *m_pTo;				//! To frame data, used for calculate between value
-    FrameData *m_pBetween;			//! Between frame data, used for calculate current FrameData(m_pNode) value
-
-
-    Bone *m_pBone;					//! A weak reference to the Bone
-
-    CCTweenType m_eFrameTweenEasing;	//! Dedermine which tween effect current frame use
-
-    int m_iBetweenDuration;			//! Current key frame will last m_iBetweenDuration frames
-    int m_iTotalDuration;
+    FrameData *_tweenData;		//! The computational tween frame data, //! A weak reference to the Bone's tweenData
+    FrameData *_from;				//! From frame data, used for calculate between value
+    FrameData *_to;				//! To frame data, used for calculate between value
+    FrameData *_between;			//! Between frame data, used for calculate current FrameData(m_pNode) value
 
 
-    int m_iFromIndex;				//! The current frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
-    int m_iToIndex;					//! The next frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
+    Bone *_bone;					//! A weak reference to the Bone
 
-    ArmatureAnimation *m_pAnimation;
+    CCTweenType _frameTweenEasing;	//! Dedermine which tween effect current frame use
+
+    int _betweenDuration;			//! Current key frame will last _betweenDuration frames
+    int _totalDuration;
+
+
+    int _fromIndex;				//! The current frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
+    int _toIndex;					//! The next frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
+
+    ArmatureAnimation *_animation;
 
 };
 

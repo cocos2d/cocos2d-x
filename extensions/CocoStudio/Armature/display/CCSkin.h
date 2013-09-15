@@ -48,12 +48,12 @@ public:
     AffineTransform getNodeToWorldTransform() const;
     AffineTransform getNodeToWorldTransformAR() const;
 
-    CC_PROPERTY_PASS_BY_REF(BaseData, m_sSkinData, SkinData);
-    CC_SYNTHESIZE(Bone *, m_pBone, Bone);
+    CC_PROPERTY_PASS_BY_REF(BaseData, _skinData, SkinData);
+    CC_SYNTHESIZE(Bone *, _bone, Bone);
 
 protected:
-    AffineTransform m_tSkinTransform;
-    CC_SYNTHESIZE_READONLY(std::string, m_strDisplayName, DisplayName)
+    AffineTransform _skinTransform;
+    CC_SYNTHESIZE_READONLY(std::string, _displayName, DisplayName)
 };
 
 NS_CC_EXT_ARMATURE_END

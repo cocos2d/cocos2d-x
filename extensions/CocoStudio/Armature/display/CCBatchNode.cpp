@@ -41,7 +41,7 @@ BatchNode *BatchNode::create()
 }
 
 BatchNode::BatchNode()
-    : m_pAtlas(NULL)
+    : _atlas(NULL)
 {
 }
 
@@ -101,7 +101,7 @@ void BatchNode::draw()
         if (armature)
         {
             armature->visit();
-            m_pAtlas = armature->getTextureAtlas();
+            _atlas = armature->getTextureAtlas();
         }
         else
         {
@@ -109,10 +109,10 @@ void BatchNode::draw()
         }
     }
 
-    if (m_pAtlas)
+    if (_atlas)
     {
-        m_pAtlas->drawQuads();
-        m_pAtlas->removeAllQuads();
+        _atlas->drawQuads();
+        _atlas->removeAllQuads();
     }
 }
 

@@ -48,11 +48,11 @@ public:
 
 protected:
 
-    CC_SYNTHESIZE_RETAIN(Node *, m_pDisplay, Display);
-    CC_SYNTHESIZE_RETAIN(DisplayData *, m_pDisplayData, DisplayData);
+    CC_SYNTHESIZE_RETAIN(Node *, _display, Display);
+    CC_SYNTHESIZE_RETAIN(DisplayData *, _displayData, DisplayData);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_SYNTHESIZE_RETAIN(ColliderDetector *, m_pColliderDetector, ColliderDetector);
+    CC_SYNTHESIZE_RETAIN(ColliderDetector *, _colliderDetector, ColliderDetector);
 #endif
 };
 

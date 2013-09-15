@@ -72,10 +72,10 @@ Skin *Skin::create(const char *pszFileName)
 }
 
 Skin::Skin()
-    : m_pBone(NULL)
-    , m_strDisplayName("")
+    : _bone(NULL)
+    , _displayName("")
 {
-    m_tSkinTransform = AffineTransformIdentity;
+    _skinTransform = AffineTransformIdentity;
 }
 
 bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
@@ -87,7 +87,7 @@ bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 		TextureAtlas *atlas = SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
 		setTextureAtlas(atlas);
 
-		m_strDisplayName = pszSpriteFrameName;
+		_displayName = pszSpriteFrameName;
     }
 
     return ret;
@@ -102,7 +102,7 @@ bool Skin::initWithFile(const char *pszFilename)
 		TextureAtlas *atlas = SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
 		setTextureAtlas(atlas);
 
-		m_strDisplayName = pszFilename;
+		_displayName = pszFilename;
     }
 
     return ret;
@@ -110,24 +110,24 @@ bool Skin::initWithFile(const char *pszFilename)
 
 void Skin::setSkinData(const BaseData &var)
 {
-    m_sSkinData = var;
+    _skinData = var;
 
-    setScaleX(m_sSkinData.scaleX);
-    setScaleY(m_sSkinData.scaleY);
-    setRotation(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
-    setPosition(Point(m_sSkinData.x, m_sSkinData.y));
+    setScaleX(_skinData.scaleX);
+    setScaleY(_skinData.scaleY);
+    setRotation(CC_RADIANS_TO_DEGREES(_skinData.skewX));
+    setPosition(Point(_skinData.x, _skinData.y));
 
-    m_tSkinTransform = getNodeToParentTransform();
+    _skinTransform = getNodeToParentTransform();
 }
 
 const BaseData &Skin::getSkinData() const
 {
-    return m_sSkinData;
+    return _skinData;
 }
 
 void Skin::updateArmatureTransform()
 {
-    _transform = AffineTransformConcat(m_tSkinTransform, m_pBone->getNodeToArmatureTransform());
+    _transform = AffineTransformConcat(_skinTransform, _bone->getNodeToArmatureTransform());
 }
 
 void Skin::updateTransform()
@@ -185,7 +185,7 @@ void Skin::updateTransform()
 
 AffineTransform Skin::getNodeToWorldTransform() const
 {
-    return AffineTransformConcat(_transform, m_pBone->getArmature()->getNodeToWorldTransform());
+    return AffineTransformConcat(_transform, _bone->getArmature()->getNodeToWorldTransform());
 }
 
 AffineTransform Skin::getNodeToWorldTransformAR() const
@@ -198,7 +198,7 @@ AffineTransform Skin::getNodeToWorldTransformAR() const
     displayTransform.tx = anchorPoint.x;
     displayTransform.ty = anchorPoint.y;
 
-    return AffineTransformConcat(displayTransform, m_pBone->getArmature()->getNodeToWorldTransform());
+    return AffineTransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
 }
 
 NS_CC_EXT_ARMATURE_END

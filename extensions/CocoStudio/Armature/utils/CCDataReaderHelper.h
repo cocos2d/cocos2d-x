@@ -156,29 +156,28 @@ protected:
 
 
 
-	std::condition_variable		s_SleepCondition;
+	std::condition_variable		_sleepCondition;
 
-	std::thread     *s_LoadingThread;
+	std::thread     *_loadingThread;
 
-	std::mutex      s_SleepMutex;
+	std::mutex      _sleepMutex;
 
-	std::mutex      s_AsyncStructQueueMutex;
-	std::mutex      s_DataInfoMutex;
+	std::mutex      _asyncStructQueueMutex;
+	std::mutex      _dataInfoMutex;
 
-	std::mutex      s_AddDataMutex;
-	std::mutex      s_ReadFileMutex;
+	std::mutex      _addDataMutex;
 
-
-	unsigned long s_nAsyncRefCount;
-	unsigned long s_nAsyncRefTotalCount;
+	  
+	unsigned long _asyncRefCount;
+	unsigned long _asyncRefTotalCount;
 
 	bool need_quit;
 
-	std::queue<AsyncStruct *> *s_pAsyncStructQueue;
-	std::queue<DataInfo *>   *s_pDataQueue;
+	std::queue<AsyncStruct *> *_asyncStructQueue;
+	std::queue<DataInfo *>   *_dataQueue;
 
 
-    static DataReaderHelper *s_DataReaderHelper;
+    static DataReaderHelper *_dataReaderHelper;
 };
 
 NS_CC_EXT_ARMATURE_END

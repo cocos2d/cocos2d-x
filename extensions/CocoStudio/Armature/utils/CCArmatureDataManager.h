@@ -79,7 +79,7 @@ public:
     void addAnimationData(const char *id, AnimationData *animationData);
 
     /**
-     *	@brief	get animation data from m_pAnimationDatas(Dictionary)
+     *	@brief	get animation data from _animationDatas(Dictionary)
      *	@param 	id the id of the animation data you want to get
      *  @return AnimationData *
      */
@@ -140,7 +140,7 @@ public:
 
 
     /**
-     *	@brief	Clear the data in the m_pArmarureDatas and m_pAnimationDatas, and set m_pArmarureDatas and m_pAnimationDatas to NULL
+     *	@brief	Clear the data in the _armarureDatas and _animationDatas, and set _armarureDatas and _animationDatas to NULL
      */
     void removeAll();
 
@@ -159,23 +159,23 @@ private:
      *  @key	std::string
      *  @value	ArmatureData *
      */
-    Dictionary *m_pArmarureDatas;
+    Dictionary *_armarureDatas;
 
     /**
      *	@brief	save animation datas
      *  @key	std::string
      *  @value	AnimationData *
      */
-    Dictionary *m_pAnimationDatas;
+    Dictionary *_animationDatas;
 
     /**
      *	@brief	save texture datas
      *  @key	std::string
      *  @value	TextureData *
      */
-    Dictionary *m_pTextureDatas;
+    Dictionary *_textureDatas;
 
-    bool m_bAutoLoadSpriteFile;
+    bool _autoLoadSpriteFile;
 };
 
 

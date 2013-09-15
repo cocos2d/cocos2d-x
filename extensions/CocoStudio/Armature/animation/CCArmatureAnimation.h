@@ -179,20 +179,20 @@ protected:
     friend class Tween;
 protected:
     //! AnimationData save all MovementDatas this animation used.
-    CC_SYNTHESIZE_RETAIN(AnimationData *, m_pAnimationData, AnimationData);
+    CC_SYNTHESIZE_RETAIN(AnimationData *, _animationData, AnimationData);
 
     //! Scale the animation speed
-    float m_fSpeedScale;
+    float _speedScale;
 
-    MovementData *m_pMovementData;				//! MovementData save all MovementFrameDatas this animation used.
+    MovementData *_movementData;				//! MovementData save all MovementFrameDatas this animation used.
 
-    Armature *m_pArmature;						//! A weak reference of armature
+    Armature *_armature;						//! A weak reference of armature
 
-    std::string m_strMovementID;				//! Current movment's name
+    std::string _movementID;				//! Current movment's name
 
-    int m_iToIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+    int _toIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
-    Array *m_pTweenList;
+    Array *_tweenList;
 
 protected:
     /**
@@ -201,7 +201,7 @@ protected:
      * @param MovementEventType, Event Type, like START, COMPLETE.
      * @param const char*, Movement ID, also called Movement Name
      */
-    SEL_MovementEventCallFunc m_sMovementEventCallFunc;
+    SEL_MovementEventCallFunc _movementEventCallFunc;
 
     /**
      * FrameEvent CallFunc.
@@ -210,11 +210,11 @@ protected:
      * @param int, origin frame index
      * @param int, current frame index, animation may be delayed
      */
-    SEL_FrameEventCallFunc m_sFrameEventCallFunc;
+    SEL_FrameEventCallFunc _frameEventCallFunc;
 
 
-    Object *m_sMovementEventTarget;
-    Object *m_sFrameEventTarget;
+    Object *_movementEventTarget;
+    Object *_frameEventTarget;
 };
 
 NS_CC_EXT_ARMATURE_END

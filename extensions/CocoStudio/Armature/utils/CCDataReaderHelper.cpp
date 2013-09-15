@@ -142,7 +142,7 @@ static float s_CocoStudioVersion = VERSION_COMBINED;
 
 static std::string s_BasefilePath = "";
 
-DataReaderHelper *DataReaderHelper::s_DataReaderHelper = NULL;
+DataReaderHelper *DataReaderHelper::_dataReaderHelper = NULL;
 
 
 
@@ -157,19 +157,19 @@ void DataReaderHelper::loadData()
         Thread thread;
         thread.createAutoreleasePool();
 
-        std::queue<AsyncStruct *> *pQueue = s_pAsyncStructQueue;
-        s_AsyncStructQueueMutex.lock(); // get async struct from queue
+        std::queue<AsyncStruct *> *pQueue = _asyncStructQueue;
+        _asyncStructQueueMutex.lock(); // get async struct from queue
         if (pQueue->empty())
         {
-            s_AsyncStructQueueMutex.unlock();
+            _asyncStructQueueMutex.unlock();
             if (need_quit)
             {
                 break;
             }
             else
             {
-				std::unique_lock<std::mutex> lk(s_SleepMutex);
-				s_SleepCondition.wait(lk);
+				std::unique_lock<std::mutex> lk(_sleepMutex);
+				_sleepCondition.wait(lk);
                 continue;
             }
         }
@@ -177,7 +177,7 @@ void DataReaderHelper::loadData()
         {
             pAsyncStruct = pQueue->front();
             pQueue->pop();
-            s_AsyncStructQueueMutex.unlock();
+            _asyncStructQueueMutex.unlock();
         }
 
         // generate image info
@@ -194,29 +194,29 @@ void DataReaderHelper::loadData()
         }
 
         // put the image info into the queue
-        s_DataInfoMutex.lock();
-        s_pDataQueue->push(pDataInfo);
-        s_DataInfoMutex.unlock();
+        _dataInfoMutex.lock();
+        _dataQueue->push(pDataInfo);
+        _dataInfoMutex.unlock();
     }
 
-    if( s_pAsyncStructQueue != NULL )
+    if( _asyncStructQueue != NULL )
     {
-        delete s_pAsyncStructQueue;
-        s_pAsyncStructQueue = NULL;
-        delete s_pDataQueue;
-        s_pDataQueue = NULL;
+        delete _asyncStructQueue;
+        _asyncStructQueue = NULL;
+        delete _dataQueue;
+        _dataQueue = NULL;
     }
 }
 
 
 DataReaderHelper *DataReaderHelper::sharedDataReaderHelper()
 {
-    if(!s_DataReaderHelper)
+    if(!_dataReaderHelper)
     {
-        s_DataReaderHelper = new DataReaderHelper();
+        _dataReaderHelper = new DataReaderHelper();
     }
 
-    return s_DataReaderHelper;
+    return _dataReaderHelper;
 }
 
 void DataReaderHelper::setPositionReadScale(float scale)
@@ -233,7 +233,7 @@ float DataReaderHelper::getPositionReadScale()
 void DataReaderHelper::purge()
 {
     DataReaderHelper::clear();
-    CC_SAFE_RELEASE_NULL(s_DataReaderHelper);
+    CC_SAFE_RELEASE_NULL(_dataReaderHelper);
 }
 
 void DataReaderHelper::clear()
@@ -242,12 +242,12 @@ void DataReaderHelper::clear()
 }
 
 DataReaderHelper::DataReaderHelper()
-	: s_LoadingThread(nullptr)
-	, s_pAsyncStructQueue(nullptr)
-	, s_pDataQueue(nullptr)
+	: _loadingThread(nullptr)
+	, _asyncStructQueue(nullptr)
+	, _dataQueue(nullptr)
 	, need_quit(false)
-	, s_nAsyncRefCount(0)
-	, s_nAsyncRefTotalCount(0)
+	, _asyncRefCount(0)
+	, _asyncRefTotalCount(0)
 {
 
 }
@@ -256,11 +256,11 @@ DataReaderHelper::~DataReaderHelper()
 {
     need_quit = true;
 
-	s_SleepCondition.notify_one();
-	if (s_LoadingThread) s_LoadingThread->join();
+	_sleepCondition.notify_one();
+	if (_loadingThread) _loadingThread->join();
 
-	CC_SAFE_DELETE(s_LoadingThread);
-	s_DataReaderHelper = NULL;
+	CC_SAFE_DELETE(_loadingThread);
+	_dataReaderHelper = NULL;
 }
 
 void DataReaderHelper::addDataFromFile(const char *filePath)
@@ -320,13 +320,13 @@ void DataReaderHelper::addDataFromFileAsync(const char *filePath, Object *target
         {
             if (target && selector)
             {
-                if (s_nAsyncRefTotalCount == 0 && s_nAsyncRefCount == 0)
+                if (_asyncRefTotalCount == 0 && _asyncRefCount == 0)
                 {
                     (target->*selector)(1);
                 }
                 else
                 {
-                    (target->*selector)((s_nAsyncRefTotalCount - s_nAsyncRefCount) / (float)s_nAsyncRefTotalCount);
+                    (target->*selector)((_asyncRefTotalCount - _asyncRefCount) / (float)_asyncRefTotalCount);
                 }
             }
             return;
@@ -348,24 +348,24 @@ void DataReaderHelper::addDataFromFileAsync(const char *filePath, Object *target
 
 
     // lazy init
-    if (s_pAsyncStructQueue == NULL)
+    if (_asyncStructQueue == NULL)
     {
-        s_pAsyncStructQueue = new std::queue<AsyncStruct *>();
-        s_pDataQueue = new std::queue<DataInfo *>();
+        _asyncStructQueue = new std::queue<AsyncStruct *>();
+        _dataQueue = new std::queue<DataInfo *>();
 
 		// create a new thread to load images
-		s_LoadingThread = new std::thread(&DataReaderHelper::loadData, this);
+		_loadingThread = new std::thread(&DataReaderHelper::loadData, this);
 
         need_quit = false;
     }
 
-    if (0 == s_nAsyncRefCount)
+    if (0 == _asyncRefCount)
     {
 		Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this, 0, false);
     }
 
-    ++s_nAsyncRefCount;
-    ++s_nAsyncRefTotalCount;
+    ++_asyncRefCount;
+    ++_asyncRefTotalCount;
 
     if (target)
     {
@@ -400,28 +400,28 @@ void DataReaderHelper::addDataFromFileAsync(const char *filePath, Object *target
 
 
     // add async struct into queue
-    s_AsyncStructQueueMutex.lock();
-    s_pAsyncStructQueue->push(data);
-    s_AsyncStructQueueMutex.unlock();
+    _asyncStructQueueMutex.lock();
+    _asyncStructQueue->push(data);
+    _asyncStructQueueMutex.unlock();
 
-    s_SleepCondition.notify_one();
+    _sleepCondition.notify_one();
 }
 
 void DataReaderHelper::addDataAsyncCallBack(float dt)
 {
     // the data is generated in loading thread
-    std::queue<DataInfo *> *dataQueue = s_pDataQueue;
+    std::queue<DataInfo *> *dataQueue = _dataQueue;
 
-    s_DataInfoMutex.lock();
+    _dataInfoMutex.lock();
     if (dataQueue->empty())
     {
-        s_DataInfoMutex.unlock();
+        _dataInfoMutex.unlock();
     }
     else
     {
         DataInfo *pDataInfo = dataQueue->front();
         dataQueue->pop();
-        s_DataInfoMutex.unlock();
+        _dataInfoMutex.unlock();
 
         AsyncStruct *pAsyncStruct = pDataInfo->asyncStruct;
 
@@ -436,11 +436,11 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         Object *target = pAsyncStruct->target;
         SEL_SCHEDULE selector = pAsyncStruct->selector;
 
-        --s_nAsyncRefCount;
+        --_asyncRefCount;
 
         if (target && selector)
         {
-            (target->*selector)((s_nAsyncRefTotalCount - s_nAsyncRefCount) / (float)s_nAsyncRefTotalCount);
+            (target->*selector)((_asyncRefTotalCount - _asyncRefCount) / (float)_asyncRefTotalCount);
             target->release();
         }
 
@@ -448,9 +448,9 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         delete pAsyncStruct;
         delete pDataInfo;
 
-        if (0 == s_nAsyncRefCount)
+        if (0 == _asyncRefCount)
         {
-            s_nAsyncRefTotalCount = 0;
+            _asyncRefTotalCount = 0;
             CCDirector::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this);
         }
     }
@@ -483,13 +483,13 @@ void DataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *data
 
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.lock();
+            _dataReaderHelper->_addDataMutex.lock();
         }
         ArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData);
         armatureData->release();
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.unlock();
+            _dataReaderHelper->_addDataMutex.unlock();
         }
 
         armatureXML = armatureXML->NextSiblingElement(ARMATURE);
@@ -506,13 +506,13 @@ void DataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *data
         AnimationData *animationData = DataReaderHelper::decodeAnimation(animationXML);
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.lock();
+            _dataReaderHelper->_addDataMutex.lock();
         }
         ArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData);
         animationData->release();
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.unlock();
+            _dataReaderHelper->_addDataMutex.unlock();
         }
         animationXML = animationXML->NextSiblingElement(ANIMATION);
     }
@@ -529,13 +529,13 @@ void DataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *data
 
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.lock();
+            _dataReaderHelper->_addDataMutex.lock();
         }
         ArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData);
         textureData->release();
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.unlock();
+            _dataReaderHelper->_addDataMutex.unlock();
         }
         textureXML = textureXML->NextSiblingElement(SUB_TEXTURE);
     }
@@ -1107,13 +1107,13 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
 
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.lock();
+            _dataReaderHelper->_addDataMutex.lock();
         }
         ArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData);
         armatureData->release();
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.unlock();
+            _dataReaderHelper->_addDataMutex.unlock();
         }
         delete armatureDic;
     }
@@ -1127,13 +1127,13 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
 
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.lock();
+            _dataReaderHelper->_addDataMutex.lock();
         }
         ArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData);
         animationData->release();
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.unlock();
+            _dataReaderHelper->_addDataMutex.unlock();
         }
         delete animationDic;
     }
@@ -1147,13 +1147,13 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
 
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.lock();
+            _dataReaderHelper->_addDataMutex.lock();
         }
         ArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData);
         textureData->release();
         if (dataInfo)
         {
-            s_DataReaderHelper->s_AddDataMutex.unlock();
+            _dataReaderHelper->_addDataMutex.unlock();
         }
         delete textureDic;
     }

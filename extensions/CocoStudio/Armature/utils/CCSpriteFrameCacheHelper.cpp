@@ -27,22 +27,22 @@ THE SOFTWARE.
 
 NS_CC_EXT_ARMATURE_BEGIN
 
-SpriteFrameCacheHelper *SpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
+SpriteFrameCacheHelper *SpriteFrameCacheHelper::_spriteFrameCacheHelper = NULL;
 
 SpriteFrameCacheHelper *SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
 {
-    if(!s_SpriteFrameCacheHelper)
+    if(!_spriteFrameCacheHelper)
     {
-        s_SpriteFrameCacheHelper = new SpriteFrameCacheHelper();
+        _spriteFrameCacheHelper = new SpriteFrameCacheHelper();
     }
 
-    return s_SpriteFrameCacheHelper;
+    return _spriteFrameCacheHelper;
 }
 
 void SpriteFrameCacheHelper::purge()
 {
-    delete s_SpriteFrameCacheHelper;
-    s_SpriteFrameCacheHelper = NULL;
+    delete _spriteFrameCacheHelper;
+    _spriteFrameCacheHelper = NULL;
 }
 
 void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
@@ -53,23 +53,23 @@ void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const
 TextureAtlas *SpriteFrameCacheHelper::getTexureAtlasWithTexture(Texture2D *texture)
 {
     int key = texture->getName();
-    TextureAtlas *atlas = (TextureAtlas *)m_pTextureAtlasDic->objectForKey(key);
+    TextureAtlas *atlas = (TextureAtlas *)_textureAtlasDic->objectForKey(key);
     if (atlas == NULL)
     {
         atlas = TextureAtlas::createWithTexture(texture, 4);
-        m_pTextureAtlasDic->setObject(atlas, key);
+        _textureAtlasDic->setObject(atlas, key);
     }
     return atlas;
 }
 
 SpriteFrameCacheHelper::SpriteFrameCacheHelper()
 {
-    m_pTextureAtlasDic = new Dictionary();
+    _textureAtlasDic = new Dictionary();
 }
 
 SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
 {
-    CC_SAFE_RELEASE_NULL(m_pTextureAtlasDic);
+    CC_SAFE_RELEASE_NULL(_textureAtlasDic);
 }
 
 NS_CC_EXT_ARMATURE_END

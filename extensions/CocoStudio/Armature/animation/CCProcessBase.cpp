@@ -28,24 +28,24 @@ THE SOFTWARE.
 NS_CC_EXT_ARMATURE_BEGIN
 
 ProcessBase::ProcessBase(void)
-    : m_fProcessScale(1)
-    , m_bIsPause(true)
-    , m_bIsComplete(true)
-    , m_bIsPlaying(false)
-    , m_fCurrentPercent(0.0f)
-    , m_iRawDuration(0)
-    , m_eLoopType(ANIMATION_LOOP_BACK)
-    , m_eTweenEasing(Linear)
-    , m_iDurationTween(0)
-    , m_fCurrentFrame(0)
-    , m_iCurFrameIndex(0)
-    , m_bIsLoopBack(false)
+    : _processScale(1)
+    , _isPause(true)
+    , _isComplete(true)
+    , _isPlaying(false)
+    , _currentPercent(0.0f)
+    , _rawDuration(0)
+    , _loopType(ANIMATION_LOOP_BACK)
+    , _tweenEasing(Linear)
+    , _durationTween(0)
+    , _currentFrame(0)
+    , _curFrameIndex(0)
+    , _isLoopBack(false)
 {
     /*
-     *  set m_fAnimationInternal defualt value to CCDirector::sharedDirector()
+     *  set _animationInternal defualt value to CCDirector::sharedDirector()
      *  ->getAnimationInterval(), in line with game update speed
      */
-    m_fAnimationInternal = CCDirector::getInstance()->getAnimationInterval();
+    _animationInternal = CCDirector::getInstance()->getAnimationInterval();
 }
 
 
@@ -56,45 +56,45 @@ ProcessBase::~ProcessBase(void)
 
 void ProcessBase::pause()
 {
-    m_bIsPause = true;
-    m_bIsPlaying = false;
+    _isPause = true;
+    _isPlaying = false;
 }
 
 
 void ProcessBase::resume()
 {
-    m_bIsPause = false;
-    m_bIsPlaying = true;
+    _isPause = false;
+    _isPlaying = true;
 }
 
 void ProcessBase::stop()
 {
-    m_bIsComplete = true;
-    m_bIsPlaying = false;
-    m_fCurrentFrame = 0;
-    m_fCurrentPercent = 0;
+    _isComplete = true;
+    _isPlaying = false;
+    _currentFrame = 0;
+    _currentPercent = 0;
 }
 
 void ProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    m_bIsComplete = false;
-    m_bIsPause = false;
-    m_bIsPlaying = true;
-    m_fCurrentFrame = 0;
+    _isComplete = false;
+    _isPause = false;
+    _isPlaying = true;
+    _currentFrame = 0;
 
     /*
      *  Set m_iTotalFrames to durationTo, it is used for change tween between two animation.
      *  When changing end, m_iTotalFrames will be setted to _durationTween
      */
     m_iNextFrameIndex = durationTo;
-    m_eTweenEasing = (CCTweenType)tweenEasing;
+    _tweenEasing = (CCTweenType)tweenEasing;
 
 }
 
 void ProcessBase::update(float dt)
 {
 
-    if (m_bIsComplete || m_bIsPause)
+    if (_isComplete || _isPause)
     {
         return;
     }
@@ -103,33 +103,33 @@ void ProcessBase::update(float dt)
      *  Fileter the m_iDuration <=0 and dt >1
      *  If dt>1, generally speaking  the reason is the device is stuck.
      */
-    if(m_iRawDuration <= 0 || dt > 1)
+    if(_rawDuration <= 0 || dt > 1)
     {
         return;
     }
 
     if (m_iNextFrameIndex <= 0)
     {
-        m_fCurrentPercent = 1;
-        m_fCurrentFrame = 0;
+        _currentPercent = 1;
+        _currentFrame = 0;
     }
     else
     {
         /*
-        *  update m_fCurrentFrame, every update add the frame passed.
-        *  dt/m_fAnimationInternal determine it is not a frame animation. If frame speed changed, it will not make our
+        *  update _currentFrame, every update add the frame passed.
+        *  dt/_animationInternal determine it is not a frame animation. If frame speed changed, it will not make our
         *  animation speed slower or quicker.
         */
-        m_fCurrentFrame += m_fProcessScale * (dt / m_fAnimationInternal);
+        _currentFrame += _processScale * (dt / _animationInternal);
 
 
-        m_fCurrentPercent = m_fCurrentFrame / m_iNextFrameIndex;
+        _currentPercent = _currentFrame / m_iNextFrameIndex;
 
         /*
-        *	if m_fCurrentFrame is bigger or equal than m_iTotalFrames, then reduce it util m_fCurrentFrame is
+        *	if _currentFrame is bigger or equal than m_iTotalFrames, then reduce it util _currentFrame is
         *  smaller than m_iTotalFrames
         */
-        m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
+        _currentFrame = fmodf(_currentFrame, m_iNextFrameIndex);
     }
 
     updateHandler();
@@ -139,14 +139,14 @@ void ProcessBase::update(float dt)
 
 void ProcessBase::gotoFrame(int frameIndex)
 {
-    m_iCurFrameIndex = frameIndex;
+    _curFrameIndex = frameIndex;
     pause();
 }
 
 int ProcessBase::getCurrentFrameIndex()
 {
-    m_iCurFrameIndex = m_iRawDuration * m_fCurrentPercent;
-    return m_iCurFrameIndex;
+    _curFrameIndex = _rawDuration * _currentPercent;
+    return _curFrameIndex;
 }
 
 NS_CC_EXT_ARMATURE_END
