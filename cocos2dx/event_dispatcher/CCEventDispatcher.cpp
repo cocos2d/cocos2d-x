@@ -73,7 +73,7 @@ EventDispatcher* EventDispatcher::getInstance()
     return &_instance;
 }
 
-void EventDispatcher::registerEventListenerWithItem(EventListenerItem* item)
+void EventDispatcher::addEventListenerWithItem(EventListenerItem* item)
 {
     if (!_listeners)
     {
@@ -106,7 +106,7 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     item->listener->retain();
     item->listener->_isRegistered = true;
 
-    registerEventListenerWithItem(item);
+    addEventListenerWithItem(item);
 
     _eventNodes.push_back(node);
     node->associateEventListener(listener);
@@ -126,7 +126,7 @@ void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener,
     item->listener->retain();
     item->listener->_isRegistered = true;
 
-    registerEventListenerWithItem(item);
+    addEventListenerWithItem(item);
 }
 
 void EventDispatcher::removeEventListener(EventListener* listener)
@@ -220,7 +220,7 @@ void EventDispatcher::dispatchEvent(Event* event)
     if (_listeners == nullptr || !_isEnabled)
         return;
 
-    sortAllEventListenerItems();
+    sortAllEventListenerItemsForType(event->_type);
 
     DispatchGuard guard(_inDispatch);
 
@@ -253,7 +253,7 @@ void EventDispatcher::dispatchEvent(Event* event)
 
 void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
 {
-    auto touchListeners = getListeners(TouchEvent::EVENT_TYPE);
+    auto touchListeners = getListenerItemsForType(TouchEvent::EVENT_TYPE);
     if (touchListeners == nullptr)
         return;
     
@@ -446,7 +446,7 @@ void EventDispatcher::removeUnregisteredListeners()
         return;
     
     auto listenerItemIter = _listeners->begin();
-    while ( listenerItemIter != _listeners->end())
+    while (listenerItemIter != _listeners->end())
     {
         auto removeIterBegin = std::remove_if(listenerItemIter->second->begin(), listenerItemIter->second->end(), [](const EventListenerItem* item){
             return item->listener == nullptr;
@@ -477,43 +477,42 @@ void EventDispatcher::removeUnregisteredListeners()
     }
 }
 
-void EventDispatcher::sortAllEventListenerItems()
+void EventDispatcher::sortAllEventListenerItemsForType(const std::string &eventType)
 {
     if (_listeners == nullptr)
         return;
     
-    for (auto listenerItemIter = _listeners->begin(); listenerItemIter != _listeners->end(); ++listenerItemIter)
-    {
-        // After sort: priority < 0, = 0, scene graph, > 0
-        listenerItemIter->second->sort([](const EventListenerItem* item1, const EventListenerItem* item2) {
-            // item1 and item2 are both using fixed priority.
-            if (nullptr == item1->node && nullptr == item2->node)
-            {
-                return item1->fixedPriority > item2->fixedPriority;
-            }
-            // item1 and item2 are both using scene graph based priority.
-            else if (nullptr != item1->node && nullptr != item2->node)
-            {
-                return item1->node->getEventPriority() > item2->node->getEventPriority();
-            }
-            else if (nullptr != item1->node && nullptr == item2->node)
-            {
-                return 0 < item2->fixedPriority;
-            }
-            else if (nullptr == item1->node && nullptr != item2->node)
-            {
-                return item1->fixedPriority < 0;
-            }
-            else
-            {
-                CCASSERT(false, "sort event node error...");
-                return false;
-            }
-        });
-    }
+    auto listenerList = getListenerItemsForType(eventType);
+
+    // After sort: priority < 0, = 0, scene graph, > 0
+    listenerList->sort([](const EventListenerItem* item1, const EventListenerItem* item2) {
+        // item1 and item2 are both using fixed priority.
+        if (nullptr == item1->node && nullptr == item2->node)
+        {
+            return item1->fixedPriority > item2->fixedPriority;
+        }
+        // item1 and item2 are both using scene graph based priority.
+        else if (nullptr != item1->node && nullptr != item2->node)
+        {
+            return item1->node->getEventPriority() > item2->node->getEventPriority();
+        }
+        else if (nullptr != item1->node && nullptr == item2->node)
+        {
+            return 0 < item2->fixedPriority;
+        }
+        else if (nullptr == item1->node && nullptr != item2->node)
+        {
+            return item1->fixedPriority < 0;
+        }
+        else
+        {
+            CCASSERT(false, "sort event node error...");
+            return false;
+        }
+    });
 }
 
-std::list<EventDispatcher::EventListenerItem*>* EventDispatcher::getListeners(const std::string& eventType)
+std::list<EventDispatcher::EventListenerItem*>* EventDispatcher::getListenerItemsForType(const std::string &eventType)
 {
     if (_listeners != nullptr)
     {

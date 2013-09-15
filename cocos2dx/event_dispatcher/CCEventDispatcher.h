@@ -54,18 +54,22 @@ public:
     /** Gets the singleton of EventDispatcher */
     static EventDispatcher* getInstance();
 
-    /** Registers a callback function for an specified event with the priority of scene graph.
+    /** Adds a event listener for a specified event with the priority of scene graph.
+     *  @param listener The listener of a specified event.
+     *  @param node The priority of the listener is based on the draw order of this node.
      */
     void addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node);
 
-    /** Registers a callback function for an specified event with the fixed priority.
+    /** Adds a event listener for a specified event with the fixed priority.
+     *  @param listener The listener of a specified event.
+     *  @param fixedPriority The fixed priority of the listener.
      */
     void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
-    /** Unregisters a callback function by the unique ID. */
+    /** Remove a listener */
     void removeEventListener(EventListener* listener);
 
-    /** Removes listeners by event type */
+    /** Removes all listeners with the same event type */
     void removeListenersForEventType(const std::string& eventType);
     
     /** Removes all listeners */
@@ -104,18 +108,19 @@ private:
     /** Constructor of EventDispatcher */
     EventDispatcher();
     
-    void registerEventListenerWithItem(EventListenerItem* item);
+    /** Adds event listener with item */
+    void addEventListenerWithItem(EventListenerItem* item);
     
     /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
     void dispatchTouchEvent(TouchEvent* event);
     
-    /** Gets event listener list by event type. */
-    std::list<EventListenerItem*>* getListeners(const std::string& eventType);
+    /** Gets event the listener list for the event type. */
+    std::list<EventListenerItem*>* getListenerItemsForType(const std::string& eventType);
     
-    /** Sorts all listeners by priority */
-    void sortAllEventListenerItems();
+    /** Sorts the listeners of specified type by priority */
+    void sortAllEventListenerItemsForType(const std::string& eventType);
     
-    /** Remove listeners that have been unregistered. */
+    /** Removes all listeners that have been unregistered. */
     void removeUnregisteredListeners();
 
 private:
