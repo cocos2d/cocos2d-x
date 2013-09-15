@@ -1306,6 +1306,11 @@ void Node::associateEventListener(EventListener* listener)
     _eventlisteners.insert(listener);
 }
 
+void Node::dissociateEventListener(EventListener* listener)
+{
+    _eventlisteners.erase(listener);
+}
+
 // NodeRGBA
 NodeRGBA::NodeRGBA()
 : _displayedOpacity(255)

@@ -1375,6 +1375,7 @@ private:
     friend class EventDispatcher;
     
     void associateEventListener(EventListener* listener);
+    void dissociateEventListener(EventListener* listener);
     
     static void resetEventPriorityIndex();
     std::set<EventListener*> _eventlisteners;
