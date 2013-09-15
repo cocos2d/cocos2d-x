@@ -29,12 +29,12 @@ THE SOFTWARE.
 
 #include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
-#include "event_dispatcher/CCKeyboardEvent.h"
-#include "event_dispatcher/CCTouchEvent.h"
 #include "cocoa/CCArray.h"
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
+
+#include "event_dispatcher/CCKeyboardEvent.h"
 
 NS_CC_BEGIN
 
@@ -45,6 +45,9 @@ NS_CC_BEGIN
 
 class TouchScriptHandlerEntry;
 
+class TouchEventListener;
+class KeyboardEventListener;
+class AccelerationEventListener;
 
 //
 // Layer
@@ -180,9 +183,9 @@ protected:
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
-    EventListener* _touchListener;
-    EventListener* _keyboardListener;
-    EventListener* _accelerationListener;
+    TouchEventListener* _touchListener;
+    KeyboardEventListener* _keyboardListener;
+    AccelerationEventListener* _accelerationListener;
 private:
     Touch::DispatchMode _touchMode;
     bool _swallowsTouches;
