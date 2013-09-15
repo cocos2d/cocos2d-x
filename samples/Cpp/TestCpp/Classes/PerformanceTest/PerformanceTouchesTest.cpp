@@ -213,7 +213,7 @@ public:
 void TouchesPerformTest3::onEnter()
 {
     PerformBasicLayer::onEnter();
-    CC_PROFILER_PURGE_ALL();
+    
     
     auto s = Director::getInstance()->getWinSize();
     
@@ -225,6 +225,8 @@ void TouchesPerformTest3::onEnter()
 #define TOUCH_PROFILER_NAME  "TouchProfileName"
 #define TOUCHABLE_NODE_NUM 1000
     
+    srand(time(nullptr));
+    
     for (int i = 0; i < TOUCHABLE_NODE_NUM; ++i)
     {
         int zorder = rand() % TOUCHABLE_NODE_NUM;
@@ -235,35 +237,45 @@ void TouchesPerformTest3::onEnter()
         layer->release();
     }
     
-    std::vector<Touch*> touches;
-    for (int i = 0; i < TouchEvent::MAX_TOUCHES; ++i)
-    {
-        Touch* touch = new Touch();
-        touch->setTouchInfo(i, (i+1) * 10, (i+1) * 20);
-        touches.push_back(touch);
-    }
-
-    TouchEvent event;
-    event.setEventCode(TouchEvent::EventCode::BEGAN);
-    event.setTouches(touches);
-    
-    auto dispatcher = EventDispatcher::getInstance();
-    
-    for (int i = 0; i < 100; ++i)
-    {
-        CC_PROFILER_START(TOUCH_PROFILER_NAME);
+    auto emitEventlabel = LabelTTF::create("Emit Touch Event", "", 24);
+    auto menuItem = MenuItemLabel::create(emitEventlabel, [](Object* sender){
         
-        dispatcher->dispatchEvent(&event, true);
+        CC_PROFILER_PURGE_ALL();
         
-        CC_PROFILER_STOP(TOUCH_PROFILER_NAME);
-    }
+        std::vector<Touch*> touches;
+        for (int i = 0; i < TouchEvent::MAX_TOUCHES; ++i)
+        {
+            Touch* touch = new Touch();
+            touch->setTouchInfo(i, 10, (i+1) * 10);
+            touches.push_back(touch);
+        }
+        
+        TouchEvent event;
+        event.setEventCode(TouchEvent::EventCode::BEGAN);
+        event.setTouches(touches);
+        
+        auto dispatcher = EventDispatcher::getInstance();
+        
+        for (int i = 0; i < 100; ++i)
+        {
+            CC_PROFILER_START(TOUCH_PROFILER_NAME);
+            
+            dispatcher->dispatchEvent(&event, true);
+            
+            CC_PROFILER_STOP(TOUCH_PROFILER_NAME);
+        }
+        
+        CC_PROFILER_DISPLAY_TIMERS();
+        
+        for (auto& touch : touches)
+        {
+            touch->release();
+        }
+    });
     
-    CC_PROFILER_DISPLAY_TIMERS();
-    
-    for (auto& touch : touches)
-    {
-        touch->release();
-    }
+    menuItem->setPosition(Point(0, -20));
+    auto menu = Menu::create(menuItem, NULL);
+    addChild(menu);
 }
 
 std::string TouchesPerformTest3::title()
