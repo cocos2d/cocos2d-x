@@ -11,10 +11,10 @@ public:
     {
     }
 
-    virtual void showCurrentTest();
-    virtual void onEnter();
+    virtual void showCurrentTest() override;
+    virtual void onEnter() override;
     virtual std::string title();
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
 protected:
     LabelBMFont * _plabel;
@@ -33,14 +33,13 @@ public:
     {
     }
 
-    virtual void onEnter();
-    virtual std::string title();
-//    virtual void registerWithTouchDispatcher();
+    virtual void onEnter() override;
+    virtual std::string title() override;
 
-    virtual bool onTouchBegan(Touch* touch, Event* event);
-    virtual void onTouchMoved(Touch* touch, Event* event);
-    virtual void onTouchEnded(Touch* touch, Event* event);
-    virtual void onTouchCancelled(Touch* touch, Event* event);
+    virtual bool onTouchBegan(Touch* touch, Event* event) override;
+    virtual void onTouchMoved(Touch* touch, Event* event) override;
+    virtual void onTouchEnded(Touch* touch, Event* event) override;
+    virtual void onTouchCancelled(Touch* touch, Event* event) override;
 };
 
 class TouchesPerformTest2 : public TouchesMainScene
@@ -51,14 +50,26 @@ public:
     {
     }
 
-    virtual void onEnter();
-    virtual std::string title();
-//    virtual void registerWithTouchDispatcher();
+    virtual void onEnter() override;
+    virtual std::string title() override;
 
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
-    void onTouchesCancelled(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesCancelled(const std::vector<Touch*>& touches, Event* event) override;
+};
+
+class TouchesPerformTest3 : public PerformBasicLayer
+{
+public:
+    TouchesPerformTest3(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
+    : PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
+    {
+    }
+    
+    virtual void onEnter() override;
+    virtual std::string title();
+    virtual void showCurrentTest() override;
 };
 
 void runTouchesTest();
