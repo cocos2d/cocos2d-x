@@ -185,7 +185,6 @@ void EventDispatcher::setPriorityWithSceneGraph(EventListener* listener, Node* n
             auto item = *itemIter;
             if (item->listener == listener)
             {
-                // FIXME: fixed priority --> scene graph's priority.
                 item->fixedPriority = 0;
                 item->node = node;
                 return;
@@ -206,9 +205,12 @@ void EventDispatcher::setPriorityWithFixedValue(EventListener* listener, int fix
             auto item = *itemIter;
             if (item->listener == listener)
             {
-                // FIXME: scene graph's priority --> fixed priority.
                 item->fixedPriority = fixedPriority;
-                item->node = nullptr;
+                if (item->node != nullptr)
+                {
+                    item->node->dissociateEventListener(listener);
+                    item->node = nullptr;
+                }
                 return;
             }
         }
