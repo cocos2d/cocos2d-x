@@ -81,6 +81,7 @@ void  CCComponent::setName(const char *pName)
 {
 	m_strName.assign(pName);
 }
+
 CCNode* CCComponent::getOwner() const
 {
     return m_pOwner;
