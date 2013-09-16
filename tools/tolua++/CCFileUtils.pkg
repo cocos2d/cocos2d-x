@@ -10,6 +10,7 @@ class CCFileUtils
     void loadFilenameLookupDictionaryFromFile(const char* filename);
     const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
     void addSearchResolutionsOrder(const char* order);
+    void purgeSearchPaths();
     void addSearchPath(const char* path);
 
     std::string getWritablePath();

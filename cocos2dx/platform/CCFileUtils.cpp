@@ -717,6 +717,13 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     }
 }
 
+void FileUtils::purgeSearchPaths()
+{
+    _fullPathCache.clear();
+    _searchPathArray.clear();
+    _searchPathArray.push_back(_defaultResRootPath);
+}
+
 void FileUtils::addSearchPath(const std::string &searchpath)
 {
     std::string strPrefix;
