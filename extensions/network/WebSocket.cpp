@@ -42,7 +42,7 @@ NS_CC_EXT_BEGIN
 class WsMessage
 {
 public:
-    WsMessage() : what(0), obj(NULL){}
+    WsMessage() : what(0), obj(nullptr){}
     unsigned int what; // message type
     void* obj;
 };
@@ -85,6 +85,7 @@ private:
     std::thread* _subThreadInstance;
     WebSocket* _ws;
     bool _needQuit;
+    bool _isQuited;
     friend class WebSocket;
 };
 
@@ -110,8 +111,9 @@ public:
 // Implementation of WsThreadHelper
 WsThreadHelper::WsThreadHelper()
 : _subThreadInstance(nullptr)
-, _ws(NULL)
+, _ws(nullptr)
 , _needQuit(false)
+, _isQuited(false)
 {
     _UIWsMessageQueue = new std::list<WsMessage*>();
     _subThreadWsMessageQueue = new std::list<WsMessage*>();
@@ -155,6 +157,7 @@ void WsThreadHelper::wsThreadEntryFunc()
     }
     
     _ws->onSubThreadEnded();
+    _isQuited = true;
 }
 
 void WsThreadHelper::sendMessageToUIThread(WsMessage *msg)
@@ -179,7 +182,7 @@ void WsThreadHelper::joinSubThread()
 
 void WsThreadHelper::update(float dt)
 {
-    WsMessage *msg = NULL;
+    WsMessage *msg = nullptr;
 
     // Returns quickly if no message
     std::lock_guard<std::mutex> lk(_UIWsMessageQueueMutex);
@@ -236,7 +239,7 @@ WebSocket::~WebSocket()
 
 bool WebSocket::init(const Delegate& delegate,
                      const std::string& url,
-                     const std::vector<std::string>* protocols/* = NULL*/)
+                     const std::vector<std::string>* protocols/* = nullptr*/)
 {
     bool ret = false;
     bool useSSL = false;
@@ -433,6 +436,12 @@ void WebSocket::onSubThreadStarted()
         _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
                                              _path.c_str(), _host.c_str(), _host.c_str(),
                                              name.c_str(), -1);
+        if (nullptr == _wsInstance) {
+            WsMessage *msg = new WsMessage();
+            msg->what = WS_MSG_TO_UITHREAD_ERROR;
+            _readyState = State::CLOSING;
+            _wsHelper->sendMessageToUIThread(msg);
+        }
 	}
 }
 
@@ -578,7 +587,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                     WsMessage* msg = new WsMessage();
                     msg->what = WS_MSG_TO_UITHREAD_MESSAGE;
                     
-                    char* bytes = NULL;
+                    char* bytes = nullptr;
                     Data* data = new Data();
                     
                     if (lws_frame_is_binary(wsi))
@@ -630,6 +639,10 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
             break;
         case WS_MSG_TO_UITHREAD_CLOSE:
             {
+                // Waiting for the subThread safety exit.
+                while (!_wsHelper->_isQuited) {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                }
                 _delegate->onClose(this);
             }
             break;
