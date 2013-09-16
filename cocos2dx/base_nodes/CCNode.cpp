@@ -85,7 +85,7 @@ bool nodeComparisonLess(Object* p1, Object* p2)
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
-static int _globalEventPriorityIndex = 0;
+int Node::_globalEventPriorityIndex = 0;
 
 Node::Node(void)
 : _rotationX(0.0f)
@@ -826,7 +826,7 @@ void Node::visit()
         }
         // self draw
         this->draw();
-        this->updateEventPriorityIndex();
+        _eventPriority = ++_globalEventPriorityIndex;
 
         for( ; i < _children->count(); i++ )
         {
@@ -838,7 +838,7 @@ void Node::visit()
     else
     {
         this->draw();
-        this->updateEventPriorityIndex();
+        _eventPriority = ++_globalEventPriorityIndex;
     }
 
     // reset for next frame
@@ -1294,11 +1294,6 @@ void Node::removeAllComponents()
 void Node::resetEventPriorityIndex()
 {
     _globalEventPriorityIndex = 0;
-}
-
-void Node::updateEventPriorityIndex()
-{
-    _eventPriority = ++_globalEventPriorityIndex;
 }
 
 void Node::associateEventListener(EventListener* listener)

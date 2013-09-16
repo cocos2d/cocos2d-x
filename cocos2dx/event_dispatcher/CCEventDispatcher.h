@@ -58,16 +58,21 @@ public:
     /** Adds a event listener for a specified event with the priority of scene graph.
      *  @param listener The listener of a specified event.
      *  @param node The priority of the listener is based on the draw order of this node.
+     *  @note  The priority of scene graph will be fixed value 0. So the order of listener item
+     *          in the vector will be ' <0, =0, scene graph, >0'.
      */
     void addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node);
 
     /** Adds a event listener for a specified event with the fixed priority.
      *  @param listener The listener of a specified event.
      *  @param fixedPriority The fixed priority of the listener.
+     *  @note A lower priority will be called before the ones that have a higher value.
      */
     void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
-    /** Remove a listener */
+    /** Remove a listener 
+     *  @param listener The specified event listener which needs to be removed.
+     */
     void removeEventListener(EventListener* listener);
 
     /** Removes all listeners with the same event type */

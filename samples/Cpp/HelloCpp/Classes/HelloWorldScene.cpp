@@ -45,26 +45,11 @@ bool HelloWorld::init()
                                         CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
     
     closeItem->setPosition(origin + Point(visibleSize) - Point(closeItem->getContentSize() / 2));
-//    closeItem->setRotation(30);
+
     // create menu, it's an autorelease object
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Point::ZERO);
     this->addChild(menu, 1);
-//    closeItem->setVisible(false);
-
-    auto closeItem2 = MenuItemImage::create(
-                                      "CloseNormal.png",
-                                      "CloseSelected.png",
-                                      CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
-    
-    closeItem2->setPosition(origin + Point(visibleSize) - Point(closeItem->getContentSize() / 2) - Point(0, 20));
-//    closeItem2->setRotation(30);
-    menu->addChild(closeItem2, 100);
-    // create menu, it's an autorelease object
-    
-
-    
-//    closeItem->unregisterEventCallback(touchEventId);
     
     /////////////////////////////
     // 3. add your codes below...
@@ -89,90 +74,6 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(sprite);
-    
-    auto dispatcher = EventDispatcher::getInstance();
-    
-    auto layerTouchListener = TouchEventListener::create(Touch::DispatchMode::ALL_AT_ONCE);
-    layerTouchListener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event){
-        CCLOG("layer touches began... count = %d", (int)touches.size());
-       // dispatcher->removeAllListeners();
-    };
-    
-    auto layerTouchListener2 = layerTouchListener->clone();
-    dispatcher->addEventListenerWithSceneGraphPriority(layerTouchListener, this);
-    dispatcher->addEventListenerWithSceneGraphPriority(layerTouchListener2, this);
-    
-    auto spriteTouchListener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
-    spriteTouchListener->setSwallowTouches(true);
-    
-    spriteTouchListener->onTouchBegan = [=](Touch* touch, Event* evt){
-        CCLOG("Touch sprite.... began... %d， drawOrder = %d", sprite->getZOrder(), sprite->getEventPriority());
-        dispatcher->removeEventListener(layerTouchListener);
-        dispatcher->removeEventListener(layerTouchListener2);
-        return false;
-    };
-    
-    dispatcher->addEventListenerWithSceneGraphPriority(spriteTouchListener, sprite);
-    
-    
-    for (int i = 0; i < 10; ++i) {
-        int zorder = rand() % 50;
-        auto sprite1 = Sprite::create("CloseNormal.png");
-        
-        // position the sprite on the center of the screen
-        sprite1->setPosition(Point(30*(i+1), visibleSize.height/2) + origin);
-        
-
-        if (zorder % 2 == 0)
-        {
-            // add the sprite as a child to this layer
-            this->addChild(sprite1, zorder);
-        }
-        else
-        {
-            sprite->addChild(sprite1, zorder);
-        }
-    
-        char buf[100] = {0};
-        sprintf(buf, "%d", zorder);
-        auto label = LabelTTF::create(buf, "", 16);
-        sprite1->addChild(label);
-
-        auto spriteItemTouchListener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
-        spriteItemTouchListener->onTouchBegan = [=](Touch* touch, Event* event){
-            Rect hitRect;
-            hitRect.size = sprite1->getContentSize();
-            
-            Point localPoint = sprite1->convertToNodeSpace(touch->getLocation());
-            // HitTest
-            if (!hitRect.containsPoint(localPoint))
-                return false;
-            
-            CCLOG("Touch sprite222.... began..zorder: %d. drawOrder: %d", sprite1->getZOrder(), sprite1->getEventPriority());
-            sprite1->setColor(Color3B::BLACK);
-            event->stopPropagation();
-            return true;
-        };
-        
-        spriteItemTouchListener->onTouchEnded = [=](Touch* touch, Event* event) {
-            sprite1->setColor(Color3B::WHITE);
-        };
-        
-        spriteItemTouchListener->setSwallowTouches(true);
-        
-        dispatcher->addEventListenerWithSceneGraphPriority(spriteItemTouchListener, sprite1);
-
-        
-//        EventDispatcher::getInstance()->registerEventListener(TouchEvent::EVENT_TYPE, [=](Event* evt){
-//            TouchEvent* touchEvent = static_cast<TouchEvent*>(evt);
-//            if (touchEvent->getEventCode() == TouchEvent::EventCode::BEGAN)
-//            {
-//                CCLOG("Touch sprite333.... began..zorder: %d. drawOrder: %d", sprite1->getZOrder(), sprite1->getEventPriority());
-//            }
-//        }, zorder);
-        
-        CCLOG("set zorder : %d", zorder);
-    }
     
     return true;
 }

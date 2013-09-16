@@ -30,6 +30,9 @@
 
 #include <algorithm>
 
+
+#define DUMP_LISTENER_ITEM_PRIORITY_INFO 0
+
 namespace
 {
 
@@ -54,7 +57,6 @@ private:
 }
 
 NS_CC_BEGIN
-
 
 EventDispatcher::EventDispatcher()
 : _inDispatch(0)
@@ -104,7 +106,7 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     if (!listener->checkAvaiable())
         return;
     
-    EventListenerItem* item = new EventListenerItem();
+    auto item = new EventListenerItem();
     item->node          = node;
     item->fixedPriority = 0;
     item->listener      = listener;
@@ -124,7 +126,7 @@ void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener,
     if (!listener->checkAvaiable())
         return;
     
-    EventListenerItem* item = new EventListenerItem();
+    auto item = new EventListenerItem();
     item->node          = nullptr;
     item->fixedPriority = fixedPriority;
     item->listener      = listener;
@@ -244,11 +246,12 @@ void EventDispatcher::dispatchEvent(Event* event, bool toSortListeners)
         if (iter != _listeners->end())
         {
             auto listenerList = iter->second;
-            for (auto listenerIter = listenerList->begin(); listenerIter != listenerList->end(); ++listenerIter)
+            for (auto& item : *listenerList)
             {
-                CCASSERT(*listenerIter, "listener is invalid.");
+                CCASSERT(item, "listener item is invalid.");
 
-                (*listenerIter)->listener->onEvent(event);
+                event->setCurrentTarget(item->node);
+                item->listener->onEvent(event);
 
                 if (event->isStopped())
                     break;
@@ -494,12 +497,16 @@ void EventDispatcher::sortAllEventListenerItemsForType(const std::string &eventT
     
     auto listenerList = getListenerItemsForType(eventType);
 
+    if (listenerList == nullptr)
+        return;
+    
     // After sort: priority < 0, = 0, scene graph, > 0
     std::sort(listenerList->begin(), listenerList->end(), [](const EventListenerItem* item1, const EventListenerItem* item2) {
+        
         // item1 and item2 are both using fixed priority.
         if (nullptr == item1->node && nullptr == item2->node)
         {
-            return item1->fixedPriority > item2->fixedPriority;
+            return item1->fixedPriority < item2->fixedPriority;
         }
         // item1 and item2 are both using scene graph based priority.
         else if (nullptr != item1->node && nullptr != item2->node)
@@ -512,7 +519,7 @@ void EventDispatcher::sortAllEventListenerItemsForType(const std::string &eventT
         }
         else if (nullptr == item1->node && nullptr != item2->node)
         {
-            return item1->fixedPriority < 0;
+            return item1->fixedPriority <= 0;
         }
         else
         {
@@ -520,6 +527,15 @@ void EventDispatcher::sortAllEventListenerItemsForType(const std::string &eventT
             return false;
         }
     });
+    
+#if DUMP_LISTENER_ITEM_PRIORITY_INFO
+    log("-----------------------------------");
+    for (auto& item : *listenerList)
+    {
+        log("listener item priority: node (%p), fixed (%d)", item->node, item->fixedPriority);
+    }    
+#endif
+    
 }
 
 std::vector<EventDispatcher::EventListenerItem*>* EventDispatcher::getListenerItemsForType(const std::string &eventType)
