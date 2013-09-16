@@ -222,6 +222,7 @@ bool Image::initWithString(
 		CC_SAFE_DELETE_ARRAY(_data);
 	}
     _data = info.data;
+    _dataLen = _width * _height * 4;
 
     return true;
 }
