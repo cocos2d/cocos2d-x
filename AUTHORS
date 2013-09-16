@@ -5,7 +5,7 @@ cocos2d-x authors & contributors
 Core Developers:
     Ricardo Quesada
     XiaoMing Zhang (Minggo)
-    JianHua Chen (Dumganhar)
+    JianHua Chen (James)
     Zhe Wang (Walzer)
     Qingkui Hu (samuele3hu)
     Huabing Xu (dabingnn)
@@ -80,6 +80,7 @@ Developers:
     savdalion 
         Added example for russian language in TestCpp
         Added const modifier for classes CCArray, CCObject
+        Deprecated method fixes
 
     rodrigogolive
         Fix broke linux build
