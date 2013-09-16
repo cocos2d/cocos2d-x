@@ -43,7 +43,14 @@ public:
      */
     static Tween *create(Bone *bone);
 public:
+	/**
+     * @js ctor
+     */
     Tween(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Tween(void);
 
     /**

@@ -54,6 +54,10 @@ public:
 
 public:
     Bone();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Bone(void);
 
     /**
@@ -141,7 +145,7 @@ public:
     virtual bool isTransformDirty();
 
     virtual AffineTransform getNodeToArmatureTransform() const;
-    virtual AffineTransform getNodeToWorldTransform() const;
+    virtual AffineTransform getNodeToWorldTransform() const override;
 
     Node *getDisplayRenderNode();
 

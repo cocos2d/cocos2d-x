@@ -63,7 +63,6 @@
 #include "CocoStudio/Armature/utils/CCDataReaderHelper.h"
 #include "CocoStudio/Armature/utils/CCTweenFunction.h"
 #include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
-#include "CocoStudio/Armature/external_tool/sigslot.h"
 
 #include "CocoStudio/Components/CCComAttribute.h"
 #include "CocoStudio/Components/CCComAudio.h"

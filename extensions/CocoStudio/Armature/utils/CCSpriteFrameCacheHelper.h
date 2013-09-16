@@ -47,7 +47,14 @@ public:
     TextureAtlas *getTexureAtlasWithTexture(Texture2D *texture);
 
 private:
+	/**
+     * @js ctor
+     */
     SpriteFrameCacheHelper();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~SpriteFrameCacheHelper();
 
     Dictionary *_textureAtlasDic;

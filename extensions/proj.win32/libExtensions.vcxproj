@@ -234,7 +234,6 @@
     <ClInclude Include="..\CocoStudio\Armature\display\CCDisplayFactory.h" />
     <ClInclude Include="..\CocoStudio\Armature\display\CCDisplayManager.h" />
     <ClInclude Include="..\CocoStudio\Armature\display\CCSkin.h" />
-    <ClInclude Include="..\CocoStudio\Armature\external_tool\sigslot.h" />
     <ClInclude Include="..\CocoStudio\Armature\physics\CCColliderDetector.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDefine.h" />

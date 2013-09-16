@@ -50,7 +50,14 @@ enum AnimationType
 class  ProcessBase : public Object
 {
 public:
+	/**
+     * @js ctor
+     */
     ProcessBase(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ProcessBase(void);
 
     /**
@@ -156,7 +163,7 @@ protected:
     int _curFrameIndex;
 
     //! Next frame this process need run to
-    int m_iNextFrameIndex;
+    int _nextFrameIndex;
 
 
     bool _isLoopBack;

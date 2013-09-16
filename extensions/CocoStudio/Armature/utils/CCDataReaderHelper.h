@@ -85,7 +85,14 @@ public:
     static void purge();
     static void clear();
 public:
+	/**
+     * @js ctor
+     */
 	DataReaderHelper();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~DataReaderHelper();
 
     void addDataFromFile(const char *filePath);

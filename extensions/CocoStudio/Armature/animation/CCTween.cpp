@@ -190,7 +190,7 @@ void Tween::updateHandler()
             }
             else
             {
-                _currentPercent = (_currentPercent - 1) * m_iNextFrameIndex / _durationTween;
+                _currentPercent = (_currentPercent - 1) * _nextFrameIndex / _durationTween;
             }
 
             if (_currentPercent >= 1)
@@ -202,8 +202,8 @@ void Tween::updateHandler()
             }
             else
             {
-                m_iNextFrameIndex = _durationTween;
-                _currentFrame = _currentPercent * m_iNextFrameIndex;
+                _nextFrameIndex = _durationTween;
+                _currentFrame = _currentPercent * _nextFrameIndex;
                 _totalDuration = 0;
                 _betweenDuration = 0;
                 _fromIndex = _toIndex = 0;
@@ -215,13 +215,13 @@ void Tween::updateHandler()
         {
             _loopType = ANIMATION_LOOP_BACK;
 
-            m_iNextFrameIndex = _durationTween > 0 ? _durationTween : 1;
+            _nextFrameIndex = _durationTween > 0 ? _durationTween : 1;
 
             if (_movementBoneData->delay != 0)
             {
                 //
-                _currentFrame = (1 - _movementBoneData->delay) * (float)m_iNextFrameIndex;
-                _currentPercent = _currentFrame / m_iNextFrameIndex;
+                _currentFrame = (1 - _movementBoneData->delay) * (float)_nextFrameIndex;
+                _currentPercent = _currentFrame / _nextFrameIndex;
             }
             else
             {
@@ -243,7 +243,7 @@ void Tween::updateHandler()
         break;
         default:
         {
-            _currentFrame = fmodf(_currentFrame, m_iNextFrameIndex);
+            _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
 
             _totalDuration = 0;
             _betweenDuration = 0;

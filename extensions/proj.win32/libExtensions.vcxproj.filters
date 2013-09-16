@@ -55,9 +55,6 @@
     <Filter Include="CocoStudio\Armature\utils">
       <UniqueIdentifier>{5e5b3d7d-62a7-493e-a130-ed72ee7c65f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CocoStudio\Armature\external_tool">
-      <UniqueIdentifier>{bd365bbb-6972-4073-b268-8360df428166}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CocoStudio\Json">
       <UniqueIdentifier>{d797adcd-2e59-4486-944e-b3e7f3a954b8}</UniqueIdentifier>
     </Filter>
@@ -649,9 +646,6 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\display\CCSkin.h">
       <Filter>CocoStudio\Armature\display</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Armature\external_tool\sigslot.h">
-      <Filter>CocoStudio\Armature\external_tool</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\physics\CCColliderDetector.h">
       <Filter>CocoStudio\Armature\physics</Filter>

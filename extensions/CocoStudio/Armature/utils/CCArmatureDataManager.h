@@ -41,7 +41,14 @@ public:
 
     static void purge();
 private:
+	/**
+     * @js ctor
+     */
     ArmatureDataManager(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ArmatureDataManager(void);
 
 public:

@@ -41,7 +41,14 @@ class  DecorativeDisplay: public Object
 public:
     static DecorativeDisplay *create();
 public:
+	/**
+     * @js ctor
+     */
     DecorativeDisplay(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~DecorativeDisplay(void);
 
     virtual bool init();

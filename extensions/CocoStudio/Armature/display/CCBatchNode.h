@@ -34,6 +34,9 @@ class BatchNode : public Node
 public:
     static BatchNode *create();
 public:
+	/**
+     * @js ctor
+     */
     BatchNode();
 
     virtual bool init();
