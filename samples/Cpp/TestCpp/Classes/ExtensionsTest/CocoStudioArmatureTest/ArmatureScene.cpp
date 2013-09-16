@@ -518,17 +518,11 @@ std::string TestParticleDisplay::subtitle()
 {
     return "Touch to change animation";
 }
-bool TestParticleDisplay::ccTouchBegan(Touch *pTouch, Event *pEvent)
+void TestParticleDisplay::ccTouchesEnded(Set* touches, Event* event)
 {
     ++animationID;
     animationID = animationID % armature->getAnimation()->getMovementCount();
     armature->getAnimation()->playByIndex(animationID);
-    return false;
-}
-
-void TestParticleDisplay::registerWithTouchDispatcher()
-{
-    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN + 1, true);
 }
 
 
@@ -579,17 +573,13 @@ std::string TestUseMutiplePicture::subtitle()
 {
     return "weapon and armature are in different picture";
 }
-bool TestUseMutiplePicture::ccTouchBegan(Touch *pTouch, Event *pEvent)
+void TestUseMutiplePicture::ccTouchesEnded(Set* touches, Event* event)
 {
     ++displayIndex;
     displayIndex = (displayIndex) % 8;
     armature->getBone("weapon")->changeDisplayByIndex(displayIndex, true);
-    return false;
 }
-void TestUseMutiplePicture::registerWithTouchDispatcher()
-{
-    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN + 1, true);
-}
+
 
 
 
@@ -963,7 +953,7 @@ std::string TestArmatureNesting::title()
 {
     return "Test Armature Nesting";
 }
-bool TestArmatureNesting::ccTouchBegan(Touch *pTouch, Event *pEvent)
+void TestArmatureNesting::ccTouchesEnded(Set* touches, Event* event)
 {
     ++weaponIndex;
     weaponIndex = weaponIndex % 4;
@@ -973,10 +963,4 @@ bool TestArmatureNesting::ccTouchBegan(Touch *pTouch, Event *pEvent)
         armature->getBone("armInside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
         armature->getBone("armOutside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
     }
-
-    return false;
-}
-void TestArmatureNesting::registerWithTouchDispatcher()
-{
-    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN + 1, true);
 }

@@ -177,7 +177,7 @@ public:
 
     CC_SYNTHESIZE(BlendType, _blendType, BlendType)
 protected:
-    Tween *m_pTween;				//! Calculate tween effect
+    Tween *_tween;				//! Calculate tween effect
 
     //! Used for making tween effect in every frame
     CC_SYNTHESIZE_READONLY(FrameData *, _tweenData, TweenData);
