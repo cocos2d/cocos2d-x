@@ -438,12 +438,6 @@ float CCTween::updateFrameData(float currentPercent)
 
         m_eFrameTweenEasing = from->tweenEasing;
 
-        if (m_pBone->getName() == "bady-a20")
-        {
-            int a = 0;
-        }
-
-
         setBetween(from, to, false);
 
     }
