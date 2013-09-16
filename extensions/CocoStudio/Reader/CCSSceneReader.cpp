@@ -49,7 +49,7 @@ NS_CC_EXT_BEGIN
 		cocos2d::Node *pNode = NULL;
         do {
 			  CC_BREAK_IF(pszFileName == NULL);
-              pData = (char*)(cocos2d::CCFileUtils::getInstance()->getFileData(pszFileName, "r", &size));
+              pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pszFileName, "r", &size));
               CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
               cs::JsonDictionary *jsonDict = new cs::JsonDictionary();
               jsonDict->initWithDescription(pData);
@@ -101,12 +101,12 @@ NS_CC_EXT_BEGIN
 					const char *plistFile = fileData->getItemStringValue("plistFile");
 					if (file != NULL)
 					{
-						pPath.append(cocos2d::CCFileUtils::getInstance()->fullPathForFilename(file));
+						pPath.append(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
 					}
 
 					if (plistFile != NULL)
 					{
-						pPlistFile.append(cocos2d::CCFileUtils::getInstance()->fullPathForFilename(plistFile));
+						pPlistFile.append(cocos2d::FileUtils::getInstance()->fullPathForFilename(plistFile));
 					}
 					CC_SAFE_DELETE(fileData);
                 }
