@@ -497,6 +497,9 @@ void EventDispatcher::sortAllEventListenerItemsForType(const std::string &eventT
     
     auto listenerList = getListenerItemsForType(eventType);
 
+    if (listenerList == nullptr)
+        return;
+    
     // After sort: priority < 0, = 0, scene graph, > 0
     std::sort(listenerList->begin(), listenerList->end(), [](const EventListenerItem* item1, const EventListenerItem* item2) {
         
