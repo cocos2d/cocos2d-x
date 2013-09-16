@@ -28,33 +28,28 @@
 NS_CC_EXT_BEGIN
 
 UILayer::UILayer():
-m_pRootWidget(NULL),
-m_pInputManager(NULL),
-m_updateEnableWidget(NULL)
+_rootWidget(NULL),
+_inputManager(NULL)
 {
     
 }
 
 UILayer::~UILayer()
 {
-    m_pRootWidget->release();
-    CC_SAFE_DELETE(m_pInputManager);
-    m_updateEnableWidget->removeAllObjects();
-    CC_SAFE_RELEASE_NULL(m_updateEnableWidget);
+    _rootWidget->release();
+    CC_SAFE_DELETE(_inputManager);
 }
 
 bool UILayer::init()
 {
     if (CCLayer::init())
     {
-        m_pRootWidget = UIRootWidget::create();
-        m_pRootWidget->retain();
-        m_pRootWidget->onEnter();
-        addChild(m_pRootWidget->getRenderer());
-        m_pInputManager = new UIInputManager();
-        m_pInputManager->setRootWidget(m_pRootWidget);
-        m_updateEnableWidget = CCArray::create();
-        m_updateEnableWidget->retain();
+        _rootWidget = UIRootWidget::create();
+        _rootWidget->retain();
+        _rootWidget->onEnter();
+        addChild(_rootWidget->getRenderer());
+        _inputManager = new UIInputManager();
+        _inputManager->setRootWidget(_rootWidget);
         return true;
     }
     return false;
@@ -96,96 +91,56 @@ void UILayer::onEnterTransitionDidFinish()
 
 void UILayer::addWidget(UIWidget* widget)
 {
-    m_pRootWidget->addChild(widget);
+    _rootWidget->addChild(widget);
 }
 
 void UILayer::removeWidget(UIWidget* widget)
 {
-    m_pRootWidget->removeChild(widget);
+    _rootWidget->removeChild(widget);
 }
 
 void UILayer::setVisible(bool visible)
 {
     CCLayer::setVisible(visible);
-    m_pRootWidget->setVisible(visible);
-}
-
-void UILayer::update(float dt)
-{
-    if (!m_updateEnableWidget)
-    {
-        return;
-    }
-    ccArray* arrayWidget = m_updateEnableWidget->data;
-    int length = arrayWidget->num;
-    for (int i=0; i<length; i++)
-    {
-        dynamic_cast<UIWidget*>(arrayWidget->arr[i])->update(dt);
-    }
-}
-
-void UILayer::addUpdateEnableWidget(UIWidget* widget)
-{
-    if (!widget || !m_updateEnableWidget)
-    {
-        return;
-    }
-    if (m_updateEnableWidget->containsObject(widget))
-    {
-        return;
-    }
-    m_updateEnableWidget->addObject(widget);
-}
-
-void UILayer::removeUpdateEnableWidget(UIWidget* widget)
-{
-    if (!widget || !m_updateEnableWidget)
-    {
-        return;
-    }
-    if (!m_updateEnableWidget->containsObject(widget))
-    {
-        return;
-    }
-    m_updateEnableWidget->removeObject(widget);
+    _rootWidget->setVisible(visible);
 }
 
 UIWidget* UILayer::getWidgetByTag(int tag)
 {
-    if (!m_pRootWidget)
+    if (!_rootWidget)
     {
         return NULL;
     }
-    return CCUIHELPER->seekWidgetByTag(m_pRootWidget, tag);
+    return CCUIHELPER->seekWidgetByTag(_rootWidget, tag);
 }
 
 UIWidget* UILayer::getWidgetByName(const char* name)
 {
-    if (!m_pRootWidget)
+    if (!_rootWidget)
     {
         return NULL;
     }
-    return CCUIHELPER->seekWidgetByName(m_pRootWidget, name);
+    return CCUIHELPER->seekWidgetByName(_rootWidget, name);
 }
 
 UIRootWidget* UILayer::getRootWidget()
 {
-    return m_pRootWidget;
+    return _rootWidget;
 }
 
 UIInputManager* UILayer::getInputManager()
 {
-    return m_pInputManager;
+    return _inputManager;
 }
 
 void UILayer::clear()
 {
-    m_pRootWidget->removeAllChildren();
+    _rootWidget->removeAllChildren();
 }
 
 bool UILayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
-    if (m_pInputManager && m_pInputManager->onTouchBegan(pTouch))
+    if (_inputManager && _inputManager->onTouchBegan(pTouch))
     {
         return true;
     }
@@ -194,17 +149,17 @@ bool UILayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 
 void UILayer::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
-    m_pInputManager->onTouchMoved(pTouch);
+    _inputManager->onTouchMoved(pTouch);
 }
 
 void UILayer::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
-    m_pInputManager->onTouchEnd(pTouch);
+    _inputManager->onTouchEnd(pTouch);
 }
 
 void UILayer::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
-    m_pInputManager->onTouchCancelled(pTouch);
+    _inputManager->onTouchCancelled(pTouch);
 }
 
 NS_CC_EXT_END

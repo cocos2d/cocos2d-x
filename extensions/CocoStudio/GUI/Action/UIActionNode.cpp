@@ -36,7 +36,7 @@ UIActionNode::UIActionNode()
 
 	m_action = NULL;
 
-	m_ActionFrameList = CCArray::create();
+	m_ActionFrameList = Array::create();
 	m_ActionFrameList->retain();
 }
 
@@ -119,7 +119,7 @@ void UIActionNode::UpdateToFrameByIndex(int index)
 	UIActionFrame* frame = NULL;
 	for (int i = 0; i < frameNum; i++)
 	{
-		frame = (UIActionFrame*)m_ActionFrameList->objectAtIndex(index);
+		frame = (UIActionFrame*)m_ActionFrameList->getObjectAtIndex(index);
 		if (frame->getFrameId() == index)
 		{
 			bFindFrame = true;
@@ -159,13 +159,13 @@ void UIActionNode::RunAction(float fUnitTime, bool bloop)
 		return;
 	}	
 
-	CCArray* actionFrame = CCArray::create();
+	Array* actionFrame = Array::create();
 
 	for ( int i = 0; i < frameNum; i++ )
 	{
 		float duration;
 
-		UIActionFrame* frame = (UIActionFrame*)m_ActionFrameList->objectAtIndex(i);
+		UIActionFrame* frame = (UIActionFrame*)m_ActionFrameList->getObjectAtIndex(i);
 
 		if ( i == 0 )
 		{
@@ -174,23 +174,23 @@ void UIActionNode::RunAction(float fUnitTime, bool bloop)
 		}
 		else
 		{
-			UIActionFrame* frame_pre = (UIActionFrame*)m_ActionFrameList->objectAtIndex(i-1);
+			UIActionFrame* frame_pre = (UIActionFrame*)m_ActionFrameList->getObjectAtIndex(i-1);
 			duration = (frame->getFrameId() - frame_pre->getFrameId()) * fUnitTime;
 		}
 
-		CCMoveTo* action_1 = CCMoveTo::create(duration,frame->getPosition());
-		CCRotateTo* action_2 = CCRotateTo::create(duration,frame->getRotation());
-		CCScaleTo* action_3 = CCScaleTo::create(duration,frame->getScaleX(),frame->getScaleY());
-		CCFadeTo* action_4 = CCFadeTo::create(duration,frame->getOpacity());
-		CCTintTo* action_5 = CCTintTo::create(duration,frame->getColor().r,frame->getColor().g,frame->getColor().b);
+		MoveTo* action_1 = MoveTo::create(duration,frame->getPosition());
+		RotateTo* action_2 = RotateTo::create(duration,frame->getRotation());
+		ScaleTo* action_3 = ScaleTo::create(duration,frame->getScaleX(),frame->getScaleY());
+		FadeTo* action_4 = FadeTo::create(duration,frame->getOpacity());
+		TintTo* action_5 = TintTo::create(duration,frame->getColor().r,frame->getColor().g,frame->getColor().b);
 
-		CCSpawn * actionSpawn = CCSpawn::create(action_1,action_2,action_3,action_4,action_5, NULL);
+		Spawn * actionSpawn = Spawn::create(action_1,action_2,action_3,action_4,action_5, NULL);
 		actionFrame->addObject( actionSpawn );
 	}
 
 	if (bloop)
 	{
-        CCActionInterval* actionInterval = dynamic_cast<CCActionInterval*>(CCSequence::create(actionFrame));
+        ActionInterval* actionInterval = dynamic_cast<ActionInterval*>(Sequence::create(actionFrame));
         if (actionInterval)
         {
             if (m_actionNode) {
@@ -198,7 +198,7 @@ void UIActionNode::RunAction(float fUnitTime, bool bloop)
 				{
 					m_action->release();
 				}
-				m_action = CCRepeatForever::create(actionInterval);
+				m_action = RepeatForever::create(actionInterval);
 				m_action->retain();
                 m_actionNode->runAction(m_action);
             }
@@ -211,7 +211,7 @@ void UIActionNode::RunAction(float fUnitTime, bool bloop)
 			{
 				m_action->release();
 			}
-			m_action = CCSequence::create(actionFrame);
+			m_action = Sequence::create(actionFrame);
 			m_action->retain();
             m_actionNode->runAction(m_action);
         }
@@ -224,32 +224,5 @@ void UIActionNode::StopAction()
         m_actionNode->stopAction(m_action);
     }
 }
-
-//void UIActionNode::RunToFrameByIndex(int index)
-//{
-//	int frameNum = m_ActionFrameList->size();
-//
-//	if ( index < 0 || index >= frameNum )
-//	{
-//		if (m_actionNode != NULL)
-//		{
-//			m_actionNode->setVisible(false);
-//		}
-//
-//		return;
-//	}
-//
-//	CocoGUIActionFrame* frame = (CocoGUIActionFrame*)m_ActionFrameList->at(index);
-//
-//	RunToFrame(frame);
-//}
-//
-//void UIActionNode::RunToFrame(CocoGUIActionFrame* frame)
-//{
-//	if ( m_actionNode == NULL || frame == NULL )
-//	{
-//		return;
-//	}
-//}
 
 NS_CC_EXT_END

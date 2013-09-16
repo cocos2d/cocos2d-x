@@ -188,52 +188,52 @@ protected:
     
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
-    ListViewDirection m_eDirection;
-    ListViewMoveDirection m_eMoveDirection;
+    ListViewDirection _direction;
+    ListViewMoveDirection _moveDirection;
     
-    float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
-    float m_fTouchMoveStartLocation;
-    float m_fTopBoundary;//test
-    float m_fBottomBoundary;//test
-    float m_fLeftBoundary;
-    float m_fRightBoundary;                
+    float _touchStartLocation;
+    float _touchEndLocation;
+    float _touchMoveStartLocation;
+    float _topBoundary;//test
+    float _bottomBoundary;//test
+    float _leftBoundary;
+    float _rightBoundary;
     
-    bool m_bAutoScroll;
+    bool _autoScroll;
     
-    float m_fAutoScrollOriginalSpeed;
-    float m_fAutoScrollAcceleration;
+    float _autoScrollOriginalSpeed;
+    float _autoScrollAcceleration;
     
-    bool m_bBePressed;
-    float m_fSlidTime;
-    Point moveChildPoint;
-    float m_fChildFocusCancelOffset;    
+    bool _bePressed;
+    float _slidTime;
+    Point _moveChildPoint;
+    float _childFocusCancelOffset;
     
-    cocos2d::Object* m_pInitChildListener;
-    SEL_ListViewInitChildEvent m_pfnInitChildSelector;
-    cocos2d::Object* m_pUpdateChildListener;
-    SEL_ListViewUpdateChildEvent m_pfnUpdateChildSelector;
+    cocos2d::Object* _initChildListener;
+    SEL_ListViewInitChildEvent _initChildSelector;
+    cocos2d::Object* _updateChildListener;
+    SEL_ListViewUpdateChildEvent _updateChildSelector;
     
-    Array* m_pChildPool;
-    Array* m_pUpdatePool;
+    Array* _childPool;
+    Array* _updatePool;
     
-    int m_nDataLength;
-    int m_nBegin;
-    int m_nEnd;
-    UIWidget* m_pUpdateChild;
-    int m_nUpdateDataIndex;
-    bool m_bUpdateSuccess;
+    int _dataLength;
+    int _begin;
+    int _end;
+    UIWidget* _updateChild;
+    int _updateDataIndex;
+    bool _updateSuccess;
     
-    Array* m_overTopArray;
-    Array* m_overBottomArray;
-    Array* m_overLeftArray;
-    Array* m_overRightArray;
+    Array* _overTopArray;
+    Array* _overBottomArray;
+    Array* _overLeftArray;
+    Array* _overRightArray;
     
-    float m_fDisBoundaryToChild_0;
-    float m_fDisBetweenChild;
+    float _disBoundaryToChild_0;
+    float _disBetweenChild;
     
     /* gui mark */
-    float m_fScrollDegreeRange;
+    float _scrollDegreeRange;
     /**/
 };
 

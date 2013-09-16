@@ -60,6 +60,7 @@ Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
 Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \

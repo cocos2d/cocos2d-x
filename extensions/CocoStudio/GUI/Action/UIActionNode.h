@@ -33,14 +33,14 @@
 
 NS_CC_EXT_BEGIN
 
-class UIActionNode:public CCObject
+class UIActionNode:public Object
 {
 protected:
 	int currentIndex;
-	CCAction* m_action;
+	Action* m_action;
 	UIWidget* m_actionNode;
     //data
-	CCArray* m_ActionFrameList;/*action frame*/
+	Array* m_ActionFrameList;/*action frame*/
     CC_SYNTHESIZE(int, m_nActionTag, ActionTag);
 public:
     UIActionNode();
