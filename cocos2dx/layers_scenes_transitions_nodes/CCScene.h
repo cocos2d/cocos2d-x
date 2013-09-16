@@ -60,22 +60,30 @@ public:
     virtual ~Scene();
     
     bool init();
+    
 #ifdef CC_USE_PHYSICS
+public:
     bool initWithPhysics();
-#endif
     
     virtual void addChild(Node* child) override;
     virtual void addChild(Node* child, int zOrder) override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-#ifdef CC_USE_PHYSICS
+    /*
+     * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
+     */
+    virtual void update(float delta) override;
+    
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
-#endif
     
 protected:
-#ifdef CC_USE_PHYSICS
+    virtual void addChildToPhysicsWorld(Node* child);
+    
+protected:
     PhysicsWorld* _physicsWorld;
-#endif
+#endif // CC_USE_PHYSICS
+    
+    friend class Layer;
 };
 
 // end of scene group

@@ -22,42 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS
+#include "CCPhysicsContactInfo.h"
 
-#ifndef __CCPHYSICS_FIXTURE_H__
-#define __CCPHYSICS_FIXTURE_H__
-
-#include "cocoa/CCObject.h"
-#include "cocoa/CCGeometry.h"
-
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 NS_CC_BEGIN
 
-class PhysicsFixture : public Object
+PhysicsContactInfo::PhysicsContactInfo()
 {
-public:
-    static PhysicsFixture* createCircle(Point centre, float radius);
-    static PhysicsFixture* createRectangle(Rect rect);
-    static PhysicsFixture* createPolygon(Array* points);
-    
-    static PhysicsFixture* createEdgeSegment(Point x, Point y);
-    static PhysicsFixture* createEdgeCircle(Point centre, float radius);
-    static PhysicsFixture* createEdgeRectangle(Rect rect);
-    static PhysicsFixture* createEdgePolygon(Array* points);
-    
-protected:
-    bool init();
-    
-protected:
-    PhysicsFixture();
-    virtual ~PhysicsFixture();
-    
-protected:
-    float  _density;
-    float  _friction;
-};
+}
+
+PhysicsContactInfo::~PhysicsContactInfo()
+{
+}
 
 NS_CC_END
-#endif // __CCPHYSICS_FIXTURE_H__
-
-#endif // CC_USE_PHYSICS
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

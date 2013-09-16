@@ -22,31 +22,31 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_SETTING_H__
-#define __CCPHYSICS_SETTING_H__
+#include "../CCPhysicsSetting.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
-#define CC_PHYSICS_UNKNOWN  0
-#define CC_PHYSICS_BOX2D    1
-#define CC_PHYSICS_CHIPMUNK 2
+#ifndef __CCPHYSICS_BODY_INFO_H__
+#define __CCPHYSICS_BODY_INFO_H__
+#include "platform/CCPlatformMacros.h"
+#include "cocoa/CCObject.h"
 
-#define CC_USE_CHIPMUNK
+NS_CC_BEGIN
 
-#ifdef CC_USE_BOX2D
-#define CC_PHYSICS_ENGINE CC_PHYSICS_BOX2D
-#elif defined(CC_USE_CHIPMUNK)
-#define CC_PHYSICS_ENGINE CC_PHYSICS_CHIPMUNK
-#else
-#define CC_PHYSICS_ENGINE CC_PHYSICS_UNKNOWN
-#endif
+class PhysicsBodyInfo : public Clonable
+{
+public:
+    cpBody* body;
+    
+private:
+    PhysicsBodyInfo();
+    ~PhysicsBodyInfo();
+    
+    Clonable* clone() const override;
+    
+    friend class PhysicsBody;
+};
 
-#if (CC_PHYSICS_ENGINE != CC_PHYSICS_UNKNOWN)
-#define CC_USE_PHYSICS
-#endif
+NS_CC_END
+#endif // __CCPHYSICS_BODY_INFO_H__
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-#include "Box2D.h"
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#include "chipmunk.h"
-#endif
-
-#endif // __CCPHYSICS_SETTING_H__
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK

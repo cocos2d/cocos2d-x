@@ -454,6 +454,8 @@ public:
      *   get the PhysicsBody the sprite have
      */
     PhysicsBody* getPhysicsBody() const;
+    
+    virtual void visit() override;
 #endif
     
     /// @} End of Sprite properties getter/setters

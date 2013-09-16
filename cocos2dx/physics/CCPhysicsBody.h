@@ -36,33 +36,48 @@ NS_CC_BEGIN
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
-class PhysicsFixture;
+class PhysicsShape;
+class PhysicsShapeCircle;
+class PhysicsShapeBox;
+class PhysicsShapePolygon;
+class PhysicsShapeEdgeSegment;
+class PhysicsShapeEdgeBox;
+class PhysicsShapeEdgePolygon;
+class PhysicsShapeEdgeChain;
+
 class PhysicsBodyInfo;
 
-class PhysicsBody : public Object, public Clonable
+class PhysicsBody : public Object//, public Clonable
 {
 public:
-    static PhysicsBody* createCircle(Point centre, float radius);
-    static PhysicsBody* createRectangle(Rect rect);
-    static PhysicsBody* createPolygon(Array* points);
+    static PhysicsBody* createCircle(float radius);
+    static PhysicsBody* createBox(Size size);
+    static PhysicsBody* createPolygon(Point* points, int count);
     
-    static PhysicsBody* createEdgeSegment(Point x, Point y);
-    static PhysicsBody* createEdgeCircle(Point centre, float radius);
-    static PhysicsBody* createEdgeRectangle(Rect rect);
-    static PhysicsBody* createEdgePolygon(Array* points);
-    static PhysicsBody* createEdgeChain(Array* points);
+    static PhysicsBody* createEdgeSegment(Point a, Point b, float border = 1);
+    static PhysicsBody* createEdgeBox(Size size, float border = 1);
+    static PhysicsBody* createEdgePolygon(Point* points, int count, float border = 1);
+    static PhysicsBody* createEdgeChain(Point* points, int count, float border = 1);
+    
+    virtual PhysicsShapeCircle* addCircle(float radius, Point offset = Point(0, 0));
+    virtual PhysicsShapeBox* addBox(Size size, Point offset = Point(0, 0));
+    virtual PhysicsShapePolygon* addPolygon(Point* points, int count, Point offset = Point(0, 0));
+    
+    virtual PhysicsShapeEdgeSegment* addEdgeSegment(Point a, Point b, float border = 1);
+    virtual PhysicsShapeEdgeBox* addEdgeBox(Size size, float border = 1, Point offset = Point(0, 0));
+    virtual PhysicsShapeEdgePolygon* addEdgePolygon(Point* points, int count, float border = 1);
+    virtual PhysicsShapeEdgeChain* addEdgeChain(Point* points, int count, float border = 1);
     
     virtual void applyForce(Point force);
-    virtual void applyForce(Point force, Point point);
+    virtual void applyForce(Point force, Point offset);
     virtual void applyImpulse(Point impulse);
-    virtual void applyImpulse(Point impulse, Point point);
+    virtual void applyImpulse(Point impulse, Point offset);
     virtual void applyTorque(float torque);
-    virtual void applyAngularImpulse(float impulse);
     
-    void addFixture(PhysicsFixture* fixture);
-    inline Array* getFixtures() const { return _fixtures; }
-    void removeFixture(PhysicsFixture* fixture);
-    void removeAllFixtures();
+    inline std::vector<PhysicsShape*>& getShapes() { return _shapes; }
+    inline PhysicsShape* getShape() { return _shapes.size() >= 1 ? _shapes.front() : nullptr; }
+    void removeShape(PhysicsShape* shape);
+    void removeAllShapes();
     
     inline PhysicsWorld* getWorld() const { return _world; }
     inline const std::vector<PhysicsJoint*>* getJoints() const { return &_joints; }
@@ -76,34 +91,55 @@ public:
     void setCollisionBitmask(int bitmask);
     inline int getCollisionBitmask() const { return _collisionBitmask; }
     
-    virtual Clonable* clone() const override;
+    Point getPosition() const;
+    float getRotation() const;
+    
+    inline bool isDynamic() { return _dynamic; }
+    void setDynamic(bool dynamic);
+    
+    void setMass(float mass);
+    inline float getMass() { return _mass; }
+    
+    void setAngularDamping(float angularDamping);
+    inline float getAngularDamping() { return _angularDamping; }
+    
+    //virtual Clonable* clone() const override;
     
 protected:
-    static PhysicsBody* create();
+    
     bool init();
+    bool initStatic();
+    
+    virtual void setPosition(Point position);
+    virtual void setRotation(float rotation);
+    virtual void addShape(PhysicsShape* shape);
     
 protected:
     PhysicsBody();
     virtual ~PhysicsBody();
     
 protected:
-    float  _mass;
-    float  _density;
-    float  _area;
-    float  _friction;
     Sprite*  _owner;
-    Point  _velocity;
-    float  _angularVelocity;
-    bool   _resting;
+    std::vector<PhysicsJoint*>  _joints;
+    std::vector<PhysicsShape*>  _shapes;
+    PhysicsWorld*               _world;
+    PhysicsBodyInfo*            _info;
+    bool                        _dynamic;
+    bool                        _massDefault;
+    bool                        _angularDampingDefault;
+    float                       _mass;
+    float                       _area;
+    float                       _density;
+    float                       _angularDamping;
     
     int    _categoryBitmask;
     int    _contactTestBitmask;
     int    _collisionBitmask;
     
-    std::vector<PhysicsJoint*> _joints;
-    Array* _fixtures;
-    PhysicsWorld* _world;
-    PhysicsBodyInfo* _info;
+    friend class PhysicsWorld;
+    friend class PhysicsShape;
+    friend class PhysicsJoint;
+    friend class Sprite;
 };
 
 NS_CC_END

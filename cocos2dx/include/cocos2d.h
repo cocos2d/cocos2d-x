@@ -126,8 +126,8 @@ THE SOFTWARE.
 
 // physics
 #include "physics/CCPhysicsBody.h"
-#include "physics/CCPhysicsContactDelegate.h"
-#include "physics/CCPhysicsFixture.h"
+#include "physics/CCPhysicsContact.h"
+#include "physics/CCPhysicsShape.h"
 #include "physics/CCPhysicsJoint.h"
 #include "physics/CCPhysicsWorld.h"
 
