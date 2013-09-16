@@ -932,6 +932,9 @@
     <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h">
       <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocoStudio\Armature\external_tool\GLES-Render.h">
+      <Filter>CocoStudio\Armature\external_tool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\CocoStudio\Json\lib_json\json_internalarray.inl">
