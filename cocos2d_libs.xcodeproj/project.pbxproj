@@ -372,6 +372,120 @@
 		466BE8EE1793DBE400424245 /* CCDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 466BE8EC1793DBE400424245 /* CCDeprecated.h */; };
 		46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9C9611786763E00F808DD /* ccTypes.cpp */; };
 		46B9C9641786763E00F808DD /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9C9611786763E00F808DD /* ccTypes.cpp */; };
+		5032F07417E3403E00C9D250 /* CCSGUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07217E3403E00C9D250 /* CCSGUIReader.cpp */; };
+		5032F07517E3403E00C9D250 /* CCSGUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07217E3403E00C9D250 /* CCSGUIReader.cpp */; };
+		5032F07617E3403E00C9D250 /* CCSGUIReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07317E3403E00C9D250 /* CCSGUIReader.h */; };
+		5032F07717E3403E00C9D250 /* CCSGUIReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07317E3403E00C9D250 /* CCSGUIReader.h */; };
+		5032F0BB17E3405400C9D250 /* UIAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07B17E3405400C9D250 /* UIAction.cpp */; };
+		5032F0BC17E3405400C9D250 /* UIAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07B17E3405400C9D250 /* UIAction.cpp */; };
+		5032F0BD17E3405400C9D250 /* UIAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07C17E3405400C9D250 /* UIAction.h */; };
+		5032F0BE17E3405400C9D250 /* UIAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07C17E3405400C9D250 /* UIAction.h */; };
+		5032F0BF17E3405400C9D250 /* UIActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07D17E3405400C9D250 /* UIActionFrame.cpp */; };
+		5032F0C017E3405400C9D250 /* UIActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07D17E3405400C9D250 /* UIActionFrame.cpp */; };
+		5032F0C117E3405400C9D250 /* UIActionFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07E17E3405400C9D250 /* UIActionFrame.h */; };
+		5032F0C217E3405400C9D250 /* UIActionFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07E17E3405400C9D250 /* UIActionFrame.h */; };
+		5032F0C317E3405400C9D250 /* UIActionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07F17E3405400C9D250 /* UIActionManager.cpp */; };
+		5032F0C417E3405400C9D250 /* UIActionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07F17E3405400C9D250 /* UIActionManager.cpp */; };
+		5032F0C517E3405400C9D250 /* UIActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08017E3405400C9D250 /* UIActionManager.h */; };
+		5032F0C617E3405400C9D250 /* UIActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08017E3405400C9D250 /* UIActionManager.h */; };
+		5032F0C717E3405400C9D250 /* UIActionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08117E3405400C9D250 /* UIActionNode.cpp */; };
+		5032F0C817E3405400C9D250 /* UIActionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08117E3405400C9D250 /* UIActionNode.cpp */; };
+		5032F0C917E3405400C9D250 /* UIActionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08217E3405400C9D250 /* UIActionNode.h */; };
+		5032F0CA17E3405400C9D250 /* UIActionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08217E3405400C9D250 /* UIActionNode.h */; };
+		5032F0CB17E3405400C9D250 /* UIRootWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08417E3405400C9D250 /* UIRootWidget.cpp */; };
+		5032F0CC17E3405400C9D250 /* UIRootWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08417E3405400C9D250 /* UIRootWidget.cpp */; };
+		5032F0CD17E3405400C9D250 /* UIRootWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08517E3405400C9D250 /* UIRootWidget.h */; };
+		5032F0CE17E3405400C9D250 /* UIRootWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08517E3405400C9D250 /* UIRootWidget.h */; };
+		5032F0CF17E3405400C9D250 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08617E3405400C9D250 /* UIWidget.cpp */; };
+		5032F0D017E3405400C9D250 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08617E3405400C9D250 /* UIWidget.cpp */; };
+		5032F0D117E3405400C9D250 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08717E3405400C9D250 /* UIWidget.h */; };
+		5032F0D217E3405400C9D250 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08717E3405400C9D250 /* UIWidget.h */; };
+		5032F0D317E3405400C9D250 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08917E3405400C9D250 /* Layout.cpp */; };
+		5032F0D417E3405400C9D250 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08917E3405400C9D250 /* Layout.cpp */; };
+		5032F0D517E3405400C9D250 /* Layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08A17E3405400C9D250 /* Layout.h */; };
+		5032F0D617E3405400C9D250 /* Layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08A17E3405400C9D250 /* Layout.h */; };
+		5032F0D717E3405400C9D250 /* LayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08B17E3405400C9D250 /* LayoutExecutant.cpp */; };
+		5032F0D817E3405400C9D250 /* LayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08B17E3405400C9D250 /* LayoutExecutant.cpp */; };
+		5032F0D917E3405400C9D250 /* LayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08C17E3405400C9D250 /* LayoutExecutant.h */; };
+		5032F0DA17E3405400C9D250 /* LayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08C17E3405400C9D250 /* LayoutExecutant.h */; };
+		5032F0DB17E3405400C9D250 /* LayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08D17E3405400C9D250 /* LayoutParameter.cpp */; };
+		5032F0DC17E3405400C9D250 /* LayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08D17E3405400C9D250 /* LayoutParameter.cpp */; };
+		5032F0DD17E3405400C9D250 /* LayoutParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08E17E3405400C9D250 /* LayoutParameter.h */; };
+		5032F0DE17E3405400C9D250 /* LayoutParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08E17E3405400C9D250 /* LayoutParameter.h */; };
+		5032F0DF17E3405400C9D250 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08F17E3405400C9D250 /* UILayoutDefine.cpp */; };
+		5032F0E017E3405400C9D250 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08F17E3405400C9D250 /* UILayoutDefine.cpp */; };
+		5032F0E117E3405400C9D250 /* UILayoutDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09017E3405400C9D250 /* UILayoutDefine.h */; };
+		5032F0E217E3405400C9D250 /* UILayoutDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09017E3405400C9D250 /* UILayoutDefine.h */; };
+		5032F0E317E3405400C9D250 /* CocosGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09217E3405400C9D250 /* CocosGUI.cpp */; };
+		5032F0E417E3405400C9D250 /* CocosGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09217E3405400C9D250 /* CocosGUI.cpp */; };
+		5032F0E517E3405400C9D250 /* CocosGUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09317E3405400C9D250 /* CocosGUI.h */; };
+		5032F0E617E3405400C9D250 /* CocosGUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09317E3405400C9D250 /* CocosGUI.h */; };
+		5032F0E717E3405400C9D250 /* UIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09417E3405400C9D250 /* UIHelper.cpp */; };
+		5032F0E817E3405400C9D250 /* UIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09417E3405400C9D250 /* UIHelper.cpp */; };
+		5032F0E917E3405400C9D250 /* UIHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09517E3405400C9D250 /* UIHelper.h */; };
+		5032F0EA17E3405400C9D250 /* UIHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09517E3405400C9D250 /* UIHelper.h */; };
+		5032F0EB17E3405400C9D250 /* UIInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09617E3405400C9D250 /* UIInputManager.cpp */; };
+		5032F0EC17E3405400C9D250 /* UIInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09617E3405400C9D250 /* UIInputManager.cpp */; };
+		5032F0ED17E3405400C9D250 /* UIInputManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09717E3405400C9D250 /* UIInputManager.h */; };
+		5032F0EE17E3405400C9D250 /* UIInputManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09717E3405400C9D250 /* UIInputManager.h */; };
+		5032F0EF17E3405400C9D250 /* UILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09817E3405400C9D250 /* UILayer.cpp */; };
+		5032F0F017E3405400C9D250 /* UILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09817E3405400C9D250 /* UILayer.cpp */; };
+		5032F0F117E3405400C9D250 /* UILayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09917E3405400C9D250 /* UILayer.h */; };
+		5032F0F217E3405400C9D250 /* UILayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09917E3405400C9D250 /* UILayer.h */; };
+		5032F0F517E3405400C9D250 /* UIDragPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09E17E3405400C9D250 /* UIDragPanel.cpp */; };
+		5032F0F617E3405400C9D250 /* UIDragPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F09E17E3405400C9D250 /* UIDragPanel.cpp */; };
+		5032F0F717E3405400C9D250 /* UIDragPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09F17E3405400C9D250 /* UIDragPanel.h */; };
+		5032F0F817E3405400C9D250 /* UIDragPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F09F17E3405400C9D250 /* UIDragPanel.h */; };
+		5032F0F917E3405400C9D250 /* UIListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A017E3405400C9D250 /* UIListView.cpp */; };
+		5032F0FA17E3405400C9D250 /* UIListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A017E3405400C9D250 /* UIListView.cpp */; };
+		5032F0FB17E3405400C9D250 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A117E3405400C9D250 /* UIListView.h */; };
+		5032F0FC17E3405400C9D250 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A117E3405400C9D250 /* UIListView.h */; };
+		5032F0FD17E3405400C9D250 /* UIPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A217E3405400C9D250 /* UIPageView.cpp */; };
+		5032F0FE17E3405400C9D250 /* UIPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A217E3405400C9D250 /* UIPageView.cpp */; };
+		5032F0FF17E3405400C9D250 /* UIPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A317E3405400C9D250 /* UIPageView.h */; };
+		5032F10017E3405400C9D250 /* UIPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A317E3405400C9D250 /* UIPageView.h */; };
+		5032F10117E3405400C9D250 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A417E3405400C9D250 /* UIScrollInterface.h */; };
+		5032F10217E3405400C9D250 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A417E3405400C9D250 /* UIScrollInterface.h */; };
+		5032F10317E3405400C9D250 /* UIScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A517E3405400C9D250 /* UIScrollView.cpp */; };
+		5032F10417E3405400C9D250 /* UIScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A517E3405400C9D250 /* UIScrollView.cpp */; };
+		5032F10517E3405400C9D250 /* UIScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A617E3405400C9D250 /* UIScrollView.h */; };
+		5032F10617E3405400C9D250 /* UIScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A617E3405400C9D250 /* UIScrollView.h */; };
+		5032F10717E3405400C9D250 /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A717E3405400C9D250 /* UIButton.cpp */; };
+		5032F10817E3405400C9D250 /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A717E3405400C9D250 /* UIButton.cpp */; };
+		5032F10917E3405400C9D250 /* UIButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A817E3405400C9D250 /* UIButton.h */; };
+		5032F10A17E3405400C9D250 /* UIButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0A817E3405400C9D250 /* UIButton.h */; };
+		5032F10B17E3405400C9D250 /* UICheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A917E3405400C9D250 /* UICheckBox.cpp */; };
+		5032F10C17E3405400C9D250 /* UICheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0A917E3405400C9D250 /* UICheckBox.cpp */; };
+		5032F10D17E3405400C9D250 /* UICheckBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0AA17E3405400C9D250 /* UICheckBox.h */; };
+		5032F10E17E3405400C9D250 /* UICheckBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0AA17E3405400C9D250 /* UICheckBox.h */; };
+		5032F10F17E3405400C9D250 /* UIImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0AB17E3405400C9D250 /* UIImageView.cpp */; };
+		5032F11017E3405400C9D250 /* UIImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0AB17E3405400C9D250 /* UIImageView.cpp */; };
+		5032F11117E3405400C9D250 /* UIImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0AC17E3405400C9D250 /* UIImageView.h */; };
+		5032F11217E3405400C9D250 /* UIImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0AC17E3405400C9D250 /* UIImageView.h */; };
+		5032F11317E3405400C9D250 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0AD17E3405400C9D250 /* UILabel.cpp */; };
+		5032F11417E3405400C9D250 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0AD17E3405400C9D250 /* UILabel.cpp */; };
+		5032F11517E3405400C9D250 /* UILabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0AE17E3405400C9D250 /* UILabel.h */; };
+		5032F11617E3405400C9D250 /* UILabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0AE17E3405400C9D250 /* UILabel.h */; };
+		5032F11717E3405400C9D250 /* UILabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0AF17E3405400C9D250 /* UILabelAtlas.cpp */; };
+		5032F11817E3405400C9D250 /* UILabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0AF17E3405400C9D250 /* UILabelAtlas.cpp */; };
+		5032F11917E3405400C9D250 /* UILabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0B017E3405400C9D250 /* UILabelAtlas.h */; };
+		5032F11A17E3405400C9D250 /* UILabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0B017E3405400C9D250 /* UILabelAtlas.h */; };
+		5032F11B17E3405400C9D250 /* UILabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0B117E3405400C9D250 /* UILabelBMFont.cpp */; };
+		5032F11C17E3405400C9D250 /* UILabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0B117E3405400C9D250 /* UILabelBMFont.cpp */; };
+		5032F11D17E3405400C9D250 /* UILabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0B217E3405400C9D250 /* UILabelBMFont.h */; };
+		5032F11E17E3405400C9D250 /* UILabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0B217E3405400C9D250 /* UILabelBMFont.h */; };
+		5032F11F17E3405400C9D250 /* UILoadingBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0B317E3405400C9D250 /* UILoadingBar.cpp */; };
+		5032F12017E3405400C9D250 /* UILoadingBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0B317E3405400C9D250 /* UILoadingBar.cpp */; };
+		5032F12117E3405400C9D250 /* UILoadingBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0B417E3405400C9D250 /* UILoadingBar.h */; };
+		5032F12217E3405400C9D250 /* UILoadingBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0B417E3405400C9D250 /* UILoadingBar.h */; };
+		5032F12317E3405400C9D250 /* UISlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0B517E3405400C9D250 /* UISlider.cpp */; };
+		5032F12417E3405400C9D250 /* UISlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0B517E3405400C9D250 /* UISlider.cpp */; };
+		5032F12517E3405400C9D250 /* UISlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0B617E3405400C9D250 /* UISlider.h */; };
+		5032F12617E3405400C9D250 /* UISlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0B617E3405400C9D250 /* UISlider.h */; };
+		5032F12B17E3405400C9D250 /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0B917E3405400C9D250 /* UITextField.cpp */; };
+		5032F12C17E3405400C9D250 /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0B917E3405400C9D250 /* UITextField.cpp */; };
+		5032F12D17E3405400C9D250 /* UITextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0BA17E3405400C9D250 /* UITextField.h */; };
+		5032F12E17E3405400C9D250 /* UITextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0BA17E3405400C9D250 /* UITextField.h */; };
 		A035A5431782286100987F6C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A5421782286100987F6C /* libwebsockets.a */; };
 		A03F25661780BAE8006731B9 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1DDC1780BAE4006731B9 /* CCAction.cpp */; };
 		A03F25671780BAE8006731B9 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1DDD1780BAE4006731B9 /* CCAction.h */; };
@@ -2317,6 +2431,63 @@
 		466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDeprecated-ext.cpp"; sourceTree = "<group>"; };
 		466BE8EC1793DBE400424245 /* CCDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeprecated.h; sourceTree = "<group>"; };
 		46B9C9611786763E00F808DD /* ccTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccTypes.cpp; sourceTree = "<group>"; };
+		5032F07217E3403E00C9D250 /* CCSGUIReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSGUIReader.cpp; sourceTree = "<group>"; };
+		5032F07317E3403E00C9D250 /* CCSGUIReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSGUIReader.h; sourceTree = "<group>"; };
+		5032F07B17E3405400C9D250 /* UIAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIAction.cpp; sourceTree = "<group>"; };
+		5032F07C17E3405400C9D250 /* UIAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAction.h; sourceTree = "<group>"; };
+		5032F07D17E3405400C9D250 /* UIActionFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIActionFrame.cpp; sourceTree = "<group>"; };
+		5032F07E17E3405400C9D250 /* UIActionFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionFrame.h; sourceTree = "<group>"; };
+		5032F07F17E3405400C9D250 /* UIActionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIActionManager.cpp; sourceTree = "<group>"; };
+		5032F08017E3405400C9D250 /* UIActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionManager.h; sourceTree = "<group>"; };
+		5032F08117E3405400C9D250 /* UIActionNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIActionNode.cpp; sourceTree = "<group>"; };
+		5032F08217E3405400C9D250 /* UIActionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionNode.h; sourceTree = "<group>"; };
+		5032F08417E3405400C9D250 /* UIRootWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRootWidget.cpp; sourceTree = "<group>"; };
+		5032F08517E3405400C9D250 /* UIRootWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRootWidget.h; sourceTree = "<group>"; };
+		5032F08617E3405400C9D250 /* UIWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidget.cpp; sourceTree = "<group>"; };
+		5032F08717E3405400C9D250 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
+		5032F08917E3405400C9D250 /* Layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Layout.cpp; sourceTree = "<group>"; };
+		5032F08A17E3405400C9D250 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
+		5032F08B17E3405400C9D250 /* LayoutExecutant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutExecutant.cpp; sourceTree = "<group>"; };
+		5032F08C17E3405400C9D250 /* LayoutExecutant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutExecutant.h; sourceTree = "<group>"; };
+		5032F08D17E3405400C9D250 /* LayoutParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutParameter.cpp; sourceTree = "<group>"; };
+		5032F08E17E3405400C9D250 /* LayoutParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutParameter.h; sourceTree = "<group>"; };
+		5032F08F17E3405400C9D250 /* UILayoutDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutDefine.cpp; sourceTree = "<group>"; };
+		5032F09017E3405400C9D250 /* UILayoutDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutDefine.h; sourceTree = "<group>"; };
+		5032F09217E3405400C9D250 /* CocosGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUI.cpp; sourceTree = "<group>"; };
+		5032F09317E3405400C9D250 /* CocosGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUI.h; sourceTree = "<group>"; };
+		5032F09417E3405400C9D250 /* UIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHelper.cpp; sourceTree = "<group>"; };
+		5032F09517E3405400C9D250 /* UIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelper.h; sourceTree = "<group>"; };
+		5032F09617E3405400C9D250 /* UIInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIInputManager.cpp; sourceTree = "<group>"; };
+		5032F09717E3405400C9D250 /* UIInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIInputManager.h; sourceTree = "<group>"; };
+		5032F09817E3405400C9D250 /* UILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayer.cpp; sourceTree = "<group>"; };
+		5032F09917E3405400C9D250 /* UILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayer.h; sourceTree = "<group>"; };
+		5032F09E17E3405400C9D250 /* UIDragPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIDragPanel.cpp; sourceTree = "<group>"; };
+		5032F09F17E3405400C9D250 /* UIDragPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDragPanel.h; sourceTree = "<group>"; };
+		5032F0A017E3405400C9D250 /* UIListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListView.cpp; sourceTree = "<group>"; };
+		5032F0A117E3405400C9D250 /* UIListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListView.h; sourceTree = "<group>"; };
+		5032F0A217E3405400C9D250 /* UIPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIPageView.cpp; sourceTree = "<group>"; };
+		5032F0A317E3405400C9D250 /* UIPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPageView.h; sourceTree = "<group>"; };
+		5032F0A417E3405400C9D250 /* UIScrollInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollInterface.h; sourceTree = "<group>"; };
+		5032F0A517E3405400C9D250 /* UIScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollView.cpp; sourceTree = "<group>"; };
+		5032F0A617E3405400C9D250 /* UIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollView.h; sourceTree = "<group>"; };
+		5032F0A717E3405400C9D250 /* UIButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButton.cpp; sourceTree = "<group>"; };
+		5032F0A817E3405400C9D250 /* UIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButton.h; sourceTree = "<group>"; };
+		5032F0A917E3405400C9D250 /* UICheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UICheckBox.cpp; sourceTree = "<group>"; };
+		5032F0AA17E3405400C9D250 /* UICheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckBox.h; sourceTree = "<group>"; };
+		5032F0AB17E3405400C9D250 /* UIImageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImageView.cpp; sourceTree = "<group>"; };
+		5032F0AC17E3405400C9D250 /* UIImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageView.h; sourceTree = "<group>"; };
+		5032F0AD17E3405400C9D250 /* UILabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabel.cpp; sourceTree = "<group>"; };
+		5032F0AE17E3405400C9D250 /* UILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabel.h; sourceTree = "<group>"; };
+		5032F0AF17E3405400C9D250 /* UILabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelAtlas.cpp; sourceTree = "<group>"; };
+		5032F0B017E3405400C9D250 /* UILabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelAtlas.h; sourceTree = "<group>"; };
+		5032F0B117E3405400C9D250 /* UILabelBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelBMFont.cpp; sourceTree = "<group>"; };
+		5032F0B217E3405400C9D250 /* UILabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelBMFont.h; sourceTree = "<group>"; };
+		5032F0B317E3405400C9D250 /* UILoadingBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILoadingBar.cpp; sourceTree = "<group>"; };
+		5032F0B417E3405400C9D250 /* UILoadingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoadingBar.h; sourceTree = "<group>"; };
+		5032F0B517E3405400C9D250 /* UISlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISlider.cpp; sourceTree = "<group>"; };
+		5032F0B617E3405400C9D250 /* UISlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISlider.h; sourceTree = "<group>"; };
+		5032F0B917E3405400C9D250 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
+		5032F0BA17E3405400C9D250 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
 		A035A5421782286100987F6C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = external/libwebsockets/mac/lib/libwebsockets.a; sourceTree = "<group>"; };
 		A03F1DDC1780BAE4006731B9 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCAction.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		A03F1DDD1780BAE4006731B9 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCAction.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -3774,6 +3945,7 @@
 		37B6EEE817DEB40C001BE102 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				5032F07917E3405400C9D250 /* GUI */,
 				37B6EEE917DEB40C001BE102 /* Armature */,
 				37B6EF1F17DEB40C001BE102 /* Components */,
 				37B6EF2A17DEB40C001BE102 /* Json */,
@@ -3940,10 +4112,122 @@
 		37B6EF4117DEB40C001BE102 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
+				5032F07217E3403E00C9D250 /* CCSGUIReader.cpp */,
+				5032F07317E3403E00C9D250 /* CCSGUIReader.h */,
 				37B6EF4217DEB40C001BE102 /* CCSSceneReader.cpp */,
 				37B6EF4317DEB40C001BE102 /* CCSSceneReader.h */,
 			);
 			path = Reader;
+			sourceTree = "<group>";
+		};
+		5032F07917E3405400C9D250 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				5032F07A17E3405400C9D250 /* Action */,
+				5032F08317E3405400C9D250 /* BaseClasses */,
+				5032F08817E3405400C9D250 /* Layouts */,
+				5032F09117E3405400C9D250 /* System */,
+				5032F09A17E3405400C9D250 /* UIWidgets */,
+			);
+			path = GUI;
+			sourceTree = "<group>";
+		};
+		5032F07A17E3405400C9D250 /* Action */ = {
+			isa = PBXGroup;
+			children = (
+				5032F07B17E3405400C9D250 /* UIAction.cpp */,
+				5032F07C17E3405400C9D250 /* UIAction.h */,
+				5032F07D17E3405400C9D250 /* UIActionFrame.cpp */,
+				5032F07E17E3405400C9D250 /* UIActionFrame.h */,
+				5032F07F17E3405400C9D250 /* UIActionManager.cpp */,
+				5032F08017E3405400C9D250 /* UIActionManager.h */,
+				5032F08117E3405400C9D250 /* UIActionNode.cpp */,
+				5032F08217E3405400C9D250 /* UIActionNode.h */,
+			);
+			path = Action;
+			sourceTree = "<group>";
+		};
+		5032F08317E3405400C9D250 /* BaseClasses */ = {
+			isa = PBXGroup;
+			children = (
+				5032F08417E3405400C9D250 /* UIRootWidget.cpp */,
+				5032F08517E3405400C9D250 /* UIRootWidget.h */,
+				5032F08617E3405400C9D250 /* UIWidget.cpp */,
+				5032F08717E3405400C9D250 /* UIWidget.h */,
+			);
+			path = BaseClasses;
+			sourceTree = "<group>";
+		};
+		5032F08817E3405400C9D250 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				5032F08917E3405400C9D250 /* Layout.cpp */,
+				5032F08A17E3405400C9D250 /* Layout.h */,
+				5032F08B17E3405400C9D250 /* LayoutExecutant.cpp */,
+				5032F08C17E3405400C9D250 /* LayoutExecutant.h */,
+				5032F08D17E3405400C9D250 /* LayoutParameter.cpp */,
+				5032F08E17E3405400C9D250 /* LayoutParameter.h */,
+				5032F08F17E3405400C9D250 /* UILayoutDefine.cpp */,
+				5032F09017E3405400C9D250 /* UILayoutDefine.h */,
+			);
+			path = Layouts;
+			sourceTree = "<group>";
+		};
+		5032F09117E3405400C9D250 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				5032F09217E3405400C9D250 /* CocosGUI.cpp */,
+				5032F09317E3405400C9D250 /* CocosGUI.h */,
+				5032F09417E3405400C9D250 /* UIHelper.cpp */,
+				5032F09517E3405400C9D250 /* UIHelper.h */,
+				5032F09617E3405400C9D250 /* UIInputManager.cpp */,
+				5032F09717E3405400C9D250 /* UIInputManager.h */,
+				5032F09817E3405400C9D250 /* UILayer.cpp */,
+				5032F09917E3405400C9D250 /* UILayer.h */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		5032F09A17E3405400C9D250 /* UIWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				5032F09D17E3405400C9D250 /* ScrollWidget */,
+				5032F0A717E3405400C9D250 /* UIButton.cpp */,
+				5032F0A817E3405400C9D250 /* UIButton.h */,
+				5032F0A917E3405400C9D250 /* UICheckBox.cpp */,
+				5032F0AA17E3405400C9D250 /* UICheckBox.h */,
+				5032F0AB17E3405400C9D250 /* UIImageView.cpp */,
+				5032F0AC17E3405400C9D250 /* UIImageView.h */,
+				5032F0AD17E3405400C9D250 /* UILabel.cpp */,
+				5032F0AE17E3405400C9D250 /* UILabel.h */,
+				5032F0AF17E3405400C9D250 /* UILabelAtlas.cpp */,
+				5032F0B017E3405400C9D250 /* UILabelAtlas.h */,
+				5032F0B117E3405400C9D250 /* UILabelBMFont.cpp */,
+				5032F0B217E3405400C9D250 /* UILabelBMFont.h */,
+				5032F0B317E3405400C9D250 /* UILoadingBar.cpp */,
+				5032F0B417E3405400C9D250 /* UILoadingBar.h */,
+				5032F0B517E3405400C9D250 /* UISlider.cpp */,
+				5032F0B617E3405400C9D250 /* UISlider.h */,
+				5032F0B917E3405400C9D250 /* UITextField.cpp */,
+				5032F0BA17E3405400C9D250 /* UITextField.h */,
+			);
+			path = UIWidgets;
+			sourceTree = "<group>";
+		};
+		5032F09D17E3405400C9D250 /* ScrollWidget */ = {
+			isa = PBXGroup;
+			children = (
+				5032F09E17E3405400C9D250 /* UIDragPanel.cpp */,
+				5032F09F17E3405400C9D250 /* UIDragPanel.h */,
+				5032F0A017E3405400C9D250 /* UIListView.cpp */,
+				5032F0A117E3405400C9D250 /* UIListView.h */,
+				5032F0A217E3405400C9D250 /* UIPageView.cpp */,
+				5032F0A317E3405400C9D250 /* UIPageView.h */,
+				5032F0A417E3405400C9D250 /* UIScrollInterface.h */,
+				5032F0A517E3405400C9D250 /* UIScrollView.cpp */,
+				5032F0A617E3405400C9D250 /* UIScrollView.h */,
+			);
+			path = ScrollWidget;
 			sourceTree = "<group>";
 		};
 		A03F1DDA1780BAE4006731B9 /* cocos2dx */ = {
@@ -6392,6 +6676,35 @@
 				37B6F02E17DEBCBF001BE102 /* reader.h in Headers */,
 				37B6F03017DEBCC4001BE102 /* value.h in Headers */,
 				37B6F03217DEBCC9001BE102 /* writer.h in Headers */,
+				5032F07617E3403E00C9D250 /* CCSGUIReader.h in Headers */,
+				5032F0BD17E3405400C9D250 /* UIAction.h in Headers */,
+				5032F0C117E3405400C9D250 /* UIActionFrame.h in Headers */,
+				5032F0C517E3405400C9D250 /* UIActionManager.h in Headers */,
+				5032F0C917E3405400C9D250 /* UIActionNode.h in Headers */,
+				5032F0CD17E3405400C9D250 /* UIRootWidget.h in Headers */,
+				5032F0D117E3405400C9D250 /* UIWidget.h in Headers */,
+				5032F0D517E3405400C9D250 /* Layout.h in Headers */,
+				5032F0D917E3405400C9D250 /* LayoutExecutant.h in Headers */,
+				5032F0DD17E3405400C9D250 /* LayoutParameter.h in Headers */,
+				5032F0E117E3405400C9D250 /* UILayoutDefine.h in Headers */,
+				5032F0E517E3405400C9D250 /* CocosGUI.h in Headers */,
+				5032F0E917E3405400C9D250 /* UIHelper.h in Headers */,
+				5032F0ED17E3405400C9D250 /* UIInputManager.h in Headers */,
+				5032F0F117E3405400C9D250 /* UILayer.h in Headers */,
+				5032F0F717E3405400C9D250 /* UIDragPanel.h in Headers */,
+				5032F0FB17E3405400C9D250 /* UIListView.h in Headers */,
+				5032F0FF17E3405400C9D250 /* UIPageView.h in Headers */,
+				5032F10117E3405400C9D250 /* UIScrollInterface.h in Headers */,
+				5032F10517E3405400C9D250 /* UIScrollView.h in Headers */,
+				5032F10917E3405400C9D250 /* UIButton.h in Headers */,
+				5032F10D17E3405400C9D250 /* UICheckBox.h in Headers */,
+				5032F11117E3405400C9D250 /* UIImageView.h in Headers */,
+				5032F11517E3405400C9D250 /* UILabel.h in Headers */,
+				5032F11917E3405400C9D250 /* UILabelAtlas.h in Headers */,
+				5032F11D17E3405400C9D250 /* UILabelBMFont.h in Headers */,
+				5032F12117E3405400C9D250 /* UILoadingBar.h in Headers */,
+				5032F12517E3405400C9D250 /* UISlider.h in Headers */,
+				5032F12D17E3405400C9D250 /* UITextField.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6920,6 +7233,35 @@
 				37B6F02F17DEBCC0001BE102 /* reader.h in Headers */,
 				37B6F03117DEBCC5001BE102 /* value.h in Headers */,
 				37B6F03317DEBCCA001BE102 /* writer.h in Headers */,
+				5032F07717E3403E00C9D250 /* CCSGUIReader.h in Headers */,
+				5032F0BE17E3405400C9D250 /* UIAction.h in Headers */,
+				5032F0C217E3405400C9D250 /* UIActionFrame.h in Headers */,
+				5032F0C617E3405400C9D250 /* UIActionManager.h in Headers */,
+				5032F0CA17E3405400C9D250 /* UIActionNode.h in Headers */,
+				5032F0CE17E3405400C9D250 /* UIRootWidget.h in Headers */,
+				5032F0D217E3405400C9D250 /* UIWidget.h in Headers */,
+				5032F0D617E3405400C9D250 /* Layout.h in Headers */,
+				5032F0DA17E3405400C9D250 /* LayoutExecutant.h in Headers */,
+				5032F0DE17E3405400C9D250 /* LayoutParameter.h in Headers */,
+				5032F0E217E3405400C9D250 /* UILayoutDefine.h in Headers */,
+				5032F0E617E3405400C9D250 /* CocosGUI.h in Headers */,
+				5032F0EA17E3405400C9D250 /* UIHelper.h in Headers */,
+				5032F0EE17E3405400C9D250 /* UIInputManager.h in Headers */,
+				5032F0F217E3405400C9D250 /* UILayer.h in Headers */,
+				5032F0F817E3405400C9D250 /* UIDragPanel.h in Headers */,
+				5032F0FC17E3405400C9D250 /* UIListView.h in Headers */,
+				5032F10017E3405400C9D250 /* UIPageView.h in Headers */,
+				5032F10217E3405400C9D250 /* UIScrollInterface.h in Headers */,
+				5032F10617E3405400C9D250 /* UIScrollView.h in Headers */,
+				5032F10A17E3405400C9D250 /* UIButton.h in Headers */,
+				5032F10E17E3405400C9D250 /* UICheckBox.h in Headers */,
+				5032F11217E3405400C9D250 /* UIImageView.h in Headers */,
+				5032F11617E3405400C9D250 /* UILabel.h in Headers */,
+				5032F11A17E3405400C9D250 /* UILabelAtlas.h in Headers */,
+				5032F11E17E3405400C9D250 /* UILabelBMFont.h in Headers */,
+				5032F12217E3405400C9D250 /* UILoadingBar.h in Headers */,
+				5032F12617E3405400C9D250 /* UISlider.h in Headers */,
+				5032F12E17E3405400C9D250 /* UITextField.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7836,6 +8178,34 @@
 				37B6F02617DEBCAC001BE102 /* json_reader.cpp in Sources */,
 				37B6F02A17DEBCB5001BE102 /* json_value.cpp in Sources */,
 				37B6F02C17DEBCBA001BE102 /* json_writer.cpp in Sources */,
+				5032F07417E3403E00C9D250 /* CCSGUIReader.cpp in Sources */,
+				5032F0BB17E3405400C9D250 /* UIAction.cpp in Sources */,
+				5032F0BF17E3405400C9D250 /* UIActionFrame.cpp in Sources */,
+				5032F0C317E3405400C9D250 /* UIActionManager.cpp in Sources */,
+				5032F0C717E3405400C9D250 /* UIActionNode.cpp in Sources */,
+				5032F0CB17E3405400C9D250 /* UIRootWidget.cpp in Sources */,
+				5032F0CF17E3405400C9D250 /* UIWidget.cpp in Sources */,
+				5032F0D317E3405400C9D250 /* Layout.cpp in Sources */,
+				5032F0D717E3405400C9D250 /* LayoutExecutant.cpp in Sources */,
+				5032F0DB17E3405400C9D250 /* LayoutParameter.cpp in Sources */,
+				5032F0DF17E3405400C9D250 /* UILayoutDefine.cpp in Sources */,
+				5032F0E317E3405400C9D250 /* CocosGUI.cpp in Sources */,
+				5032F0E717E3405400C9D250 /* UIHelper.cpp in Sources */,
+				5032F0EB17E3405400C9D250 /* UIInputManager.cpp in Sources */,
+				5032F0EF17E3405400C9D250 /* UILayer.cpp in Sources */,
+				5032F0F517E3405400C9D250 /* UIDragPanel.cpp in Sources */,
+				5032F0F917E3405400C9D250 /* UIListView.cpp in Sources */,
+				5032F0FD17E3405400C9D250 /* UIPageView.cpp in Sources */,
+				5032F10317E3405400C9D250 /* UIScrollView.cpp in Sources */,
+				5032F10717E3405400C9D250 /* UIButton.cpp in Sources */,
+				5032F10B17E3405400C9D250 /* UICheckBox.cpp in Sources */,
+				5032F10F17E3405400C9D250 /* UIImageView.cpp in Sources */,
+				5032F11317E3405400C9D250 /* UILabel.cpp in Sources */,
+				5032F11717E3405400C9D250 /* UILabelAtlas.cpp in Sources */,
+				5032F11B17E3405400C9D250 /* UILabelBMFont.cpp in Sources */,
+				5032F11F17E3405400C9D250 /* UILoadingBar.cpp in Sources */,
+				5032F12317E3405400C9D250 /* UISlider.cpp in Sources */,
+				5032F12B17E3405400C9D250 /* UITextField.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8137,6 +8507,34 @@
 				37B6F02717DEBCAD001BE102 /* json_reader.cpp in Sources */,
 				37B6F02B17DEBCB7001BE102 /* json_value.cpp in Sources */,
 				37B6F02D17DEBCBC001BE102 /* json_writer.cpp in Sources */,
+				5032F07517E3403E00C9D250 /* CCSGUIReader.cpp in Sources */,
+				5032F0BC17E3405400C9D250 /* UIAction.cpp in Sources */,
+				5032F0C017E3405400C9D250 /* UIActionFrame.cpp in Sources */,
+				5032F0C417E3405400C9D250 /* UIActionManager.cpp in Sources */,
+				5032F0C817E3405400C9D250 /* UIActionNode.cpp in Sources */,
+				5032F0CC17E3405400C9D250 /* UIRootWidget.cpp in Sources */,
+				5032F0D017E3405400C9D250 /* UIWidget.cpp in Sources */,
+				5032F0D417E3405400C9D250 /* Layout.cpp in Sources */,
+				5032F0D817E3405400C9D250 /* LayoutExecutant.cpp in Sources */,
+				5032F0DC17E3405400C9D250 /* LayoutParameter.cpp in Sources */,
+				5032F0E017E3405400C9D250 /* UILayoutDefine.cpp in Sources */,
+				5032F0E417E3405400C9D250 /* CocosGUI.cpp in Sources */,
+				5032F0E817E3405400C9D250 /* UIHelper.cpp in Sources */,
+				5032F0EC17E3405400C9D250 /* UIInputManager.cpp in Sources */,
+				5032F0F017E3405400C9D250 /* UILayer.cpp in Sources */,
+				5032F0F617E3405400C9D250 /* UIDragPanel.cpp in Sources */,
+				5032F0FA17E3405400C9D250 /* UIListView.cpp in Sources */,
+				5032F0FE17E3405400C9D250 /* UIPageView.cpp in Sources */,
+				5032F10417E3405400C9D250 /* UIScrollView.cpp in Sources */,
+				5032F10817E3405400C9D250 /* UIButton.cpp in Sources */,
+				5032F10C17E3405400C9D250 /* UICheckBox.cpp in Sources */,
+				5032F11017E3405400C9D250 /* UIImageView.cpp in Sources */,
+				5032F11417E3405400C9D250 /* UILabel.cpp in Sources */,
+				5032F11817E3405400C9D250 /* UILabelAtlas.cpp in Sources */,
+				5032F11C17E3405400C9D250 /* UILabelBMFont.cpp in Sources */,
+				5032F12017E3405400C9D250 /* UILoadingBar.cpp in Sources */,
+				5032F12417E3405400C9D250 /* UISlider.cpp in Sources */,
+				5032F12C17E3405400C9D250 /* UITextField.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
