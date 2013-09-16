@@ -30,7 +30,7 @@
 
 NS_CC_EXT_BEGIN
 
-class UICCTextField: public TextFieldTTF, public TextFieldDelegate, public TouchDelegate
+class UICCTextField: public TextFieldTTF, public TextFieldDelegate
 {
 public:
     UICCTextField();

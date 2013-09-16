@@ -183,7 +183,7 @@ void UILayer::clear()
     m_pRootWidget->removeAllChildren();
 }
 
-bool UILayer::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool UILayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (m_pInputManager && m_pInputManager->onTouchBegan(pTouch))
     {
@@ -192,17 +192,17 @@ bool UILayer::ccTouchBegan(Touch *pTouch, Event *pEvent)
     return false;
 }
 
-void UILayer::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void UILayer::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     m_pInputManager->onTouchMoved(pTouch);
 }
 
-void UILayer::ccTouchEnded(Touch *pTouch, Event *pEvent)
+void UILayer::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     m_pInputManager->onTouchEnd(pTouch);
 }
 
-void UILayer::ccTouchCancelled(Touch *pTouch, Event *pEvent)
+void UILayer::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     m_pInputManager->onTouchCancelled(pTouch);
 }
