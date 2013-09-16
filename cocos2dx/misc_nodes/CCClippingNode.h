@@ -114,7 +114,7 @@ private:
     */
     void drawFullScreenQuadClearStencil();
 
-private:
+protected:
     ClippingNode();
 
 protected:
