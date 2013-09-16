@@ -29,43 +29,43 @@ THE SOFTWARE.
 #include "../utils/CCTweenFunction.h"
 
 
-#define CS_CREATE_NO_PARAM_NO_INIT(varType)\
+#define CC_CREATE_NO_PARAM_NO_INIT(varType)\
 public: \
-    static inline varType *create(void){ \
-    varType *var = new varType();\
-    if (var)\
+	static inline varType *create(void){ \
+	varType *var = new varType();\
+	if (var)\
 {\
-    var->autorelease();\
-    return var;\
+	var->autorelease();\
+	return var;\
 }\
-    CC_SAFE_DELETE(var);\
-    return NULL;\
+	CC_SAFE_DELETE(var);\
+	return NULL;\
 }
 
-#define CS_CREATE_NO_PARAM(varType)\
+#define CC_CREATE_NO_PARAM(varType)\
 public: \
-    static inline varType *create(void){ \
-    varType *var = new varType();\
-    if (var && var->init())\
+	static inline varType *create(void){ \
+	varType *var = new varType();\
+	if (var && var->init())\
 {\
-    var->autorelease();\
-    return var;\
+	var->autorelease();\
+	return var;\
 }\
-    CC_SAFE_DELETE(var);\
-    return NULL;\
+	CC_SAFE_DELETE(var);\
+	return NULL;\
 }
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 /**
-* the base node include a lot of attribute.
+* The base node include a lot of attributes.
 */
 class  BaseData : public Object
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(BaseData)
+    CC_CREATE_NO_PARAM_NO_INIT(BaseData)
 public:
-    /**
+	/**
      * @js ctor
      */
     BaseData();
@@ -76,8 +76,8 @@ public:
     ~BaseData(void);
 
     /*
-    * Copy datas from node
-    * @param  node A BaseData to copy datas
+    * Copy data from node
+    * @param  node A BaseData to copy data
     */
     virtual void copy(const BaseData *node);
 
@@ -88,10 +88,13 @@ public:
     * @param  to     to BaseData
     */
     virtual void subtract(BaseData *from, BaseData *to);
+
+    virtual void setColor(const Color4B &color);
+    virtual Color4B getColor();
 public:
-    float x;                    //! position x attribute
-    float y;                    //! position y attribute
-    int zOrder;                 //! zorder attribute, used to order the Bone's depth order
+    float x;					//! position x attribute
+    float y;					//! position y attribute
+    int zOrder;			//! zorder attribute, used to order the Bone's depth order
 
     /**
     * x y skewX skewY scaleX scaleY used to calculate transform matrix
@@ -103,23 +106,22 @@ public:
     float scaleX;
     float scaleY;
 
-    float tweenRotate;          //! SkewX, SkewY, and TweenRotate effect the rotation
+    float tweenRotate;       //! SkewX, SkewY, and TweenRotate effect the rotation
 
-    bool isUseColorInfo;        //! Whether or not this frame have the color changed Info
+    bool isUseColorInfo;    //! Whether or not this frame have the color changed Info
     int a, r, g, b;
 
 };
 
 
 /**
-* DisplayType distinguish which type you display is.
+* DisplayType distinguish which type your display is.
 */
 enum DisplayType
 {
-    CS_DISPLAY_SPRITE,          //! display is a single Sprite
-    CS_DISPLAY_ARMATURE,        //! display is a Armature
-    CS_DISPLAY_PARTICLE,        //! display is a Particle.
-    CS_DISPLAY_SHADER,          //! display is a shader
+    CS_DISPLAY_SPRITE,                //! display is a single Sprite
+    CS_DISPLAY_ARMATURE,         //! display is a Armature
+    CS_DISPLAY_PARTICLE,            //! display is a CCParticle.
 
     CS_DISPLAY_MAX
 };
@@ -127,11 +129,11 @@ enum DisplayType
 class  DisplayData : public Object
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(DisplayData)
+    CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
 
-    static const char *changeDisplayToTexture(const char *);
+    static const char *changeDisplayToTexture(const char *displayName);
 public:
-    /**
+	/**
      * @js ctor
      */
     DisplayData();
@@ -149,9 +151,9 @@ public:
 class  SpriteDisplayData : public DisplayData
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(SpriteDisplayData)
+    CC_CREATE_NO_PARAM_NO_INIT(SpriteDisplayData)
 public:
-    /**
+	/**
      * @js ctor
      */
     SpriteDisplayData();
@@ -168,23 +170,24 @@ public:
     void copy(SpriteDisplayData *displayData);
 public:
     /**
-    * If DisplayType is CS_DISPLAY_SPRITE, then Bone will use this image name to create a Sprite from SpriteFrameCache.
-    * It should note that when use this name to create Sprite from SpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
+    * If DisplayType is CS_DISPLAY_SPRITE, then Bone will use this image name to create a Sprite from CCSpriteFrameCache.
+    * It should note that when use this name to create Sprite from CCSpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
     *
     * If DisplayType is CS_DISPLAY_ARMATURE, the name is the Armature's name. When Bone init display and type is CS_DISPLAY_ARMATURE,
     * then Bone will create a Armature.
     */
     std::string displayName;
 
+    BaseData skinData;
 };
 
 
 class  ArmatureDisplayData  : public DisplayData
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(ArmatureDisplayData)
+    CC_CREATE_NO_PARAM_NO_INIT(ArmatureDisplayData)
 public:
-    /**
+	/**
      * @js ctor
      */
     ArmatureDisplayData();
@@ -201,8 +204,8 @@ public:
     void copy(ArmatureDisplayData *displayData);
 public:
     /**
-    * If DisplayType is CS_DISPLAY_SPRITE, then Bone will use this image name to create a Sprite from SpriteFrameCache.
-    * It should note that when use this name to create Sprite from SpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
+    * If DisplayType is CS_DISPLAY_SPRITE, then Bone will use this image name to create a Sprite from CCSpriteFrameCache.
+    * It should note that when use this name to create Sprite from CCSpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
     *
     * If DisplayType is CS_DISPLAY_ARMATURE, the name is the Armature's name. When Bone init display and type is CS_DISPLAY_ARMATURE,
     * then Bone will create a Armature.
@@ -215,9 +218,9 @@ public:
 class  ParticleDisplayData : public DisplayData
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(ParticleDisplayData)
+    CC_CREATE_NO_PARAM_NO_INIT(ParticleDisplayData)
 public:
-    /**
+	/**
      * @js ctor
      */
     ParticleDisplayData();
@@ -238,33 +241,6 @@ public:
 };
 
 
-class  ShaderDisplayData : public DisplayData
-{
-public:
-    CS_CREATE_NO_PARAM_NO_INIT(ShaderDisplayData)
-public:
-    /**
-     * @js ctor
-     */
-    ShaderDisplayData();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ShaderDisplayData() {};
-
-    inline void setParam(const char *vert, const char *frag)
-    {
-        this->vert = vert;
-        this->frag = frag;
-    }
-
-    void copy(ShaderDisplayData *displayData);
-public:
-    std::string vert;
-    std::string frag;
-};
-
 
 /**
 * BoneData used to init a Bone.
@@ -274,9 +250,9 @@ public:
 class  BoneData : public BaseData
 {
 public:
-    CS_CREATE_NO_PARAM(BoneData)
+    CC_CREATE_NO_PARAM(BoneData)
 public:
-    /**
+	/**
      * @js ctor
      */
     BoneData(void);
@@ -291,23 +267,24 @@ public:
     void addDisplayData(DisplayData *displayData);
     DisplayData *getDisplayData(int index);
 public:
-    std::string name;       //! the bone's name
-    std::string parentName; //! the bone parent's name
-    Array *displayDataList;  //! save DisplayData informations for the Bone
+    std::string name;                //! the bone's name
+    std::string parentName;     //! the bone parent's name
+    Array displayDataList;    //! save DisplayData informations for the Bone
+    AffineTransform boneDataTransform;
 };
 
 
 /**
-* ArmatureData saved the Armature name and Bonedatas needed for the Bones in this Armature
+* ArmatureData saved the Armature name and Bonedata needed for the CCBones in this Armature
 * When we create a Armature, we need to get each Bone's BoneData as it's init information.
 * So we can get a BoneData from the Dictionary saved in the ArmatureData.
 */
 class  ArmatureData : public Object
 {
 public:
-    CS_CREATE_NO_PARAM(ArmatureData)
+    CC_CREATE_NO_PARAM(ArmatureData)
 public:
-    /**
+	/**
      * @js ctor
      */
     ArmatureData();
@@ -322,17 +299,35 @@ public:
     BoneData *getBoneData(const char *boneName);
 public:
     std::string name;
-    Dictionary *boneDataDic;
-    Array *boneList;
+    Dictionary boneDataDic;
+    float dataVersion;
+};
+
+enum BlendType
+{
+    BLEND_NORMAL,
+    BLEND_LAYER,
+    BLEND_DARKEN,
+    BLEND_MULTIPLY,
+    BLEND_LIGHTEN,
+    BLEND_SCREEN,
+    BLEND_OVERLAY,
+    BLEND_HARD_LIGHT,
+    BLEND_ADD,
+    BLEND_SUBSTRACT,
+    BLEND_DIFFERENCE,
+    BLEND_INVERT,
+    BLEND_ALPHA,
+    BLEND_ERASE
 };
 
 
 class  FrameData : public BaseData
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(FrameData)
+    CC_CREATE_NO_PARAM_NO_INIT(FrameData)
 public:
-    /**
+	/**
      * @js ctor
      */
     FrameData();
@@ -342,33 +337,36 @@ public:
      */
     ~FrameData();
 
-    virtual void copy(FrameData *frameData);
+    virtual void copy(const BaseData *baseData);
 public:
-    int duration;                //! The frame will last _duration frames
-    TweenType tweenEasing;     //! Every frame's tween easing effect
+    int frameID;
+    int duration;                //! The frame will last duration frames
+    CCTweenType tweenEasing;     //! Every frame's tween easing effect
 
     /**
     * The current display index when change to this frame.
-    * If value is -1, then display will not show.
+    * If value is -1, then display will not be shown.
     */
     int displayIndex;
 
+    BlendType blendType;
+
+    std::string strEvent;
     /**
-    * _movement, _event, _sound, _soundEffect do not support yet
+    * strMovement, strEvent, strSound, strSoundEffect do not support yet
     */
-    std::string _movement;
-    std::string _event;
-    std::string _sound;
-    std::string _soundEffect;
+    std::string strMovement;
+    std::string strSound;
+    std::string strSoundEffect;
 };
 
 
 class  MovementBoneData : public Object
 {
 public:
-    CS_CREATE_NO_PARAM(MovementBoneData)
+    CC_CREATE_NO_PARAM(MovementBoneData)
 public:
-    /**
+	/**
      * @js ctor
      */
     MovementBoneData();
@@ -383,21 +381,21 @@ public:
     void addFrameData(FrameData *frameData);
     FrameData *getFrameData(int index);
 public:
-    float delay;        //! movement delay percent, this value can produce a delay effect
-    float scale;        //! scale this movement
-    float duration;     //! this Bone in this movement will last _duration frames
-    std::string name;   //! bone name
+    float delay;             //! movement delay percent, this value can produce a delay effect
+    float scale;             //! scale this movement
+    float duration;        //! this Bone in this movement will last m_iDuration frames
+    std::string name;    //! bone name
 
-    Array *frameList;
+    Array frameList;
 };
 
 
 class  MovementData : public Object
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(MovementData)
+    CC_CREATE_NO_PARAM_NO_INIT(MovementData)
 public:
-    /**
+	/**
      * @js ctor
      */
     MovementData(void);
@@ -412,35 +410,38 @@ public:
 public:
     std::string name;
     int duration;        //! the frames this movement will last
+    float scale;		  //! scale this movement
 
     /**
-    * Change to this movement will last _durationTo frames. Use this effect can avoid too suddenly changing.
+    * Change to this movement will last durationTo frames. Use this effect can avoid too suddenly changing.
     *
-    * Example : current movement is "stand", we want to change to "run", then we fill _durationTo frames before
+    * Example : current movement is "stand", we want to change to "run", then we fill durationTo frames before
     * change to "run" instead of changing to "run" directly.
     */
     int durationTo;
 
     /*
-    * This is different from _duration, _durationTween contain tween effect.
-    *
-    * Example : If we edit 10 frames in the flash, then _duration is 10. When we set _durationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
+    * This is different from duration, durationTween contain tween effect.
+    * duration is the raw time that the animation will last, it's the same with the time you edit in the Action Editor.
+    * durationTween is the actual time you want this animation last.
+    * Example : If we edit 10 frames in the flash, then duration is 10. When we set durationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
     */
     int durationTween;
 
-    bool loop;           //! whether the movement is looped
+    bool loop;           //! whether the movement was looped
 
     /**
     * Which tween easing effect the movement use
     * TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
     */
-    TweenType tweenEasing;
+    CCTweenType tweenEasing;
 
     /**
-     * Dictionary to save movment bone data.
-     * Key type is std::string, value type is MovementBoneData *.
-     */
-    Dictionary *movBoneDataDic;
+    * @brief	save movment bone data
+    * @key	const char *
+    * @value	MovementBoneData *
+    */
+    Dictionary movBoneDataDic;
 };
 
 
@@ -452,9 +453,9 @@ public:
 class  AnimationData : public Object
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(AnimationData)
+    CC_CREATE_NO_PARAM_NO_INIT(AnimationData)
 public:
-    /**
+	/**
      * @js ctor
      */
     AnimationData(void);
@@ -464,22 +465,19 @@ public:
      */
     ~AnimationData(void);
 
-    void release();
-    void retain();
-
     void addMovement(MovementData *movData);
     MovementData *getMovement(const char *movementName);
     int getMovementCount();
 public:
     std::string name;
-    Dictionary *movementDataDic;
+    Dictionary movementDataDic;
     std::vector<std::string> movementNames;
 };
 
 
-struct ContourVertex2F : public Object
+struct ContourVertex2 : public Object
 {
-    ContourVertex2F(float x, float y)
+    ContourVertex2(float x, float y)
     {
         this->x = x;
         this->y = y;
@@ -495,9 +493,9 @@ struct ContourVertex2F : public Object
 class  ContourData : public Object
 {
 public:
-    CS_CREATE_NO_PARAM(ContourData)
+    CC_CREATE_NO_PARAM(ContourData)
 public:
-    /**
+	/**
      * @js ctor
      */
     ContourData();
@@ -508,8 +506,9 @@ public:
     ~ContourData(void);
 
     virtual bool init();
+    virtual void addVertex(Point *vertex);
 public:
-    Array *vertexList;	//! Save contour vertex info, vertex saved in a Point
+    Array vertexList;	//! Save contour vertex info, vertex saved in a Point
 };
 
 
@@ -521,9 +520,9 @@ public:
 class  TextureData : public Object
 {
 public:
-    CS_CREATE_NO_PARAM(TextureData)
+    CC_CREATE_NO_PARAM(TextureData)
 public:
-    /**
+	/**
      * @js ctor
      */
     TextureData();
@@ -539,18 +538,18 @@ public:
     ContourData *getContourData(int index);
 public:
 
-    float height;       //! The texture's width, height
+    float height;		//! The texture's width, height
     float width;
 
-    float pivotX;       //! The texture's anchor point
+    float pivotX;		//! The texture's anchor point
     float pivotY;
 
-    std::string name;   //! The texture's name
+    std::string name;	//! The texture's name
 
-    Array *contourDataList;
+    Array contourDataList;
 };
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCARMATURE_DATAS_H__*/

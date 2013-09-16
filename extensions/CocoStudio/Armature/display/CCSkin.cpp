@@ -24,8 +24,10 @@ THE SOFTWARE.
 
 #include "CCSkin.h"
 #include "../utils/CCTransformHelp.h"
+#include "../utils/CCSpriteFrameCacheHelper.h"
+#include "../CCArmature.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 #if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -57,9 +59,53 @@ Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
     return NULL;
 }
 
+Skin *Skin::create(const char *pszFileName)
+{
+    Skin *skin = new Skin();
+    if(skin && skin->initWithFile(pszFileName))
+    {
+        skin->autorelease();
+        return skin;
+    }
+    CC_SAFE_DELETE(skin);
+    return NULL;
+}
+
 Skin::Skin()
     : _bone(NULL)
+    , _displayName("")
 {
+    _skinTransform = AffineTransformIdentity;
+}
+
+bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
+{
+    bool ret = Sprite::initWithSpriteFrameName(pszSpriteFrameName);
+
+    if (ret)
+    {
+		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
+		setTextureAtlas(atlas);
+
+		_displayName = pszSpriteFrameName;
+    }
+
+    return ret;
+}
+
+bool Skin::initWithFile(const char *pszFilename)
+{
+    bool ret = Sprite::initWithFile(pszFilename);
+
+    if (ret)
+    {
+		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
+		setTextureAtlas(atlas);
+
+		_displayName = pszFilename;
+    }
+
+    return ret;
 }
 
 void Skin::setSkinData(const BaseData &var)
@@ -79,12 +125,12 @@ const BaseData &Skin::getSkinData() const
     return _skinData;
 }
 
-void Skin::updateTransform()
+void Skin::updateArmatureTransform()
 {
-    _transform = AffineTransformConcat(_skinTransform, _bone->nodeToArmatureTransform());
+    _transform = AffineTransformConcat(_skinTransform, _bone->getNodeToArmatureTransform());
 }
 
-void Skin::draw()
+void Skin::updateTransform()
 {
     // If it is not visible, or one of its ancestors is not visible, then do nothing:
     if( !_visible)
@@ -97,7 +143,7 @@ void Skin::draw()
         // calculate the Quad based on the Affine Matrix
         //
 
-        Size size = _rect.size;
+        Size &size = _rect.size;
 
         float x1 = _offsetPosition.x;
         float y1 = _offsetPosition.y;
@@ -137,4 +183,22 @@ void Skin::draw()
     }
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+AffineTransform Skin::getNodeToWorldTransform() const
+{
+    return AffineTransformConcat(_transform, _bone->getArmature()->getNodeToWorldTransform());
+}
+
+AffineTransform Skin::getNodeToWorldTransformAR() const
+{
+    AffineTransform displayTransform = _transform;
+    Point anchorPoint =  _anchorPointInPoints;
+
+    anchorPoint = PointApplyAffineTransform(anchorPoint, displayTransform);
+
+    displayTransform.tx = anchorPoint.x;
+    displayTransform.ty = anchorPoint.y;
+
+    return AffineTransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
+}
+
+NS_CC_EXT_ARMATURE_END
