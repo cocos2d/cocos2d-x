@@ -29,11 +29,42 @@ THE SOFTWARE.
 #include "CCBone.h"
 #include "display/CCBatchNode.h"
 #include "animation/CCArmatureAnimation.h"
+#include "utils/CCSpriteFrameCacheHelper.h"
+#include "utils/CCArmatureDataManager.h"
 
 class b2Body;
 struct cpBody;
 
 NS_CC_EXT_ARMATURE_BEGIN
+
+CC_DEPRECATED_ATTRIBUTE typedef ProcessBase CCProcessBase;
+CC_DEPRECATED_ATTRIBUTE typedef BaseData CCBaseData;
+CC_DEPRECATED_ATTRIBUTE typedef DisplayData CCDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef SpriteDisplayData CCSpriteDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef ArmatureDisplayData CCArmatureDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef ParticleDisplayData CCParticleDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef BoneData CCBoneData;
+CC_DEPRECATED_ATTRIBUTE typedef FrameData CCFrameData;
+CC_DEPRECATED_ATTRIBUTE typedef MovementBoneData CCMovementBoneData;
+CC_DEPRECATED_ATTRIBUTE typedef MovementData CCMovementData;
+CC_DEPRECATED_ATTRIBUTE typedef AnimationData CCAnimationData;
+CC_DEPRECATED_ATTRIBUTE typedef ContourData CCContourData;
+CC_DEPRECATED_ATTRIBUTE typedef TextureData CCTextureData;
+CC_DEPRECATED_ATTRIBUTE typedef DecorativeDisplay CCDecorativeDisplay;
+CC_DEPRECATED_ATTRIBUTE typedef DisplayData CCDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef DisplayFactory CCDisplayFactory;
+CC_DEPRECATED_ATTRIBUTE typedef BatchNode CCBatchNode;
+CC_DEPRECATED_ATTRIBUTE typedef DecorativeDisplay CCDecorativeDisplay;
+CC_DEPRECATED_ATTRIBUTE typedef DisplayManager CCDisplayManager;
+CC_DEPRECATED_ATTRIBUTE typedef ColliderBody CCColliderBody;
+CC_DEPRECATED_ATTRIBUTE typedef ColliderDetector CCColliderDetector;
+CC_DEPRECATED_ATTRIBUTE typedef SpriteFrameCacheHelper CCSpriteFrameCacheHelper;
+CC_DEPRECATED_ATTRIBUTE typedef TweenFunction CCTweenFunction;
+CC_DEPRECATED_ATTRIBUTE typedef ArmatureData CCArmatureData;
+CC_DEPRECATED_ATTRIBUTE typedef Bone CCBone;
+CC_DEPRECATED_ATTRIBUTE typedef ArmatureAnimation CCArmatureAnimation;
+CC_DEPRECATED_ATTRIBUTE typedef Armature CCArmature;
+CC_DEPRECATED_ATTRIBUTE typedef ArmatureDataManager CCArmatureDataManager;
 
 class  Armature : public NodeRGBA, public BlendProtocol
 {
@@ -58,6 +89,10 @@ public:
 
 public:
     Armature();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Armature(void);
 
     /**
@@ -113,25 +148,25 @@ public:
 
     Bone *getBoneAtPoint(float x, float y);
 
-    virtual void visit();
-    virtual void update(float dt);
-    virtual void draw();
+    // overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void visit() override;
+    virtual void update(float dt) override;
+    virtual void draw() override;
 
-    virtual const AffineTransform& getNodeToParentTransform() const;
+    virtual const AffineTransform& getNodeToParentTransform() const override;
+
+    inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
+    inline const BlendFunc &getBlendFunc(void) const override{ return _blendFunc; }
+	
 
     /**
      * Set contentsize and Calculate anchor point.
      */
     virtual void updateOffsetPoint();
-
-    inline void setBlendFunc(const BlendFunc &blendFunc)
-    {
-        _blendFunc = blendFunc;
-    }
-    inline const BlendFunc &getBlendFunc(void) const
-    {
-        return _blendFunc;
-    }
 
     virtual void setAnimation(ArmatureAnimation *animation);
     virtual ArmatureAnimation *getAnimation();

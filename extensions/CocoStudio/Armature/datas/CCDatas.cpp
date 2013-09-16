@@ -229,7 +229,7 @@ void BoneData::addDisplayData(DisplayData *displayData)
 
 DisplayData *BoneData::getDisplayData(int index)
 {
-    return (DisplayData *)displayDataList.getObjectAtIndex(index);
+    return static_cast<DisplayData *>(displayDataList.getObjectAtIndex(index));
 }
 
 
@@ -254,7 +254,7 @@ void ArmatureData::addBoneData(BoneData *boneData)
 
 BoneData *ArmatureData::getBoneData(const char *boneName)
 {
-    return (BoneData *)boneDataDic.objectForKey(boneName);
+    return static_cast<BoneData*>(boneDataDic.objectForKey(boneName));
 }
 
 FrameData::FrameData(void)
@@ -312,7 +312,7 @@ void MovementBoneData::addFrameData(FrameData *frameData)
 
 FrameData *MovementBoneData::getFrameData(int index)
 {
-    return (FrameData *)frameList.getObjectAtIndex(index);
+    return static_cast<FrameData*>(frameList.getObjectAtIndex(index));
 }
 
 
@@ -339,7 +339,7 @@ void MovementData::addMovementBoneData(MovementBoneData *movBoneData)
 
 MovementBoneData *MovementData::getMovementBoneData(const char *boneName)
 {
-    return (MovementBoneData *)movBoneDataDic.objectForKey(boneName);
+    return static_cast<MovementBoneData *>(movBoneDataDic.objectForKey(boneName));
 }
 
 
@@ -360,7 +360,7 @@ void AnimationData::addMovement(MovementData *movData)
 
 MovementData *AnimationData::getMovement(const char *movementName)
 {
-    return (MovementData *)movementDataDic.objectForKey(movementName);
+    return static_cast<MovementData *>(movementDataDic.objectForKey(movementName));
 }
 
 int AnimationData::getMovementCount()
@@ -416,7 +416,7 @@ void TextureData::addContourData(ContourData *contourData)
 
 ContourData *TextureData::getContourData(int index)
 {
-    return (ContourData *)contourDataList.getObjectAtIndex(index);
+    return static_cast<ContourData *>(contourDataList.getObjectAtIndex(index));
 }
 
 

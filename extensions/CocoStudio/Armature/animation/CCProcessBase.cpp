@@ -42,7 +42,7 @@ ProcessBase::ProcessBase(void)
     , _isLoopBack(false)
 {
     /*
-     *  set _animationInternal defualt value to CCDirector::sharedDirector()
+     *  set _animationInternal defualt value to Director::getInstance()
      *  ->getAnimationInterval(), in line with game update speed
      */
     _animationInternal = CCDirector::getInstance()->getAnimationInterval();
@@ -86,7 +86,7 @@ void ProcessBase::play(void *animation, int durationTo, int durationTween,  int 
      *  Set m_iTotalFrames to durationTo, it is used for change tween between two animation.
      *  When changing end, m_iTotalFrames will be setted to _durationTween
      */
-    m_iNextFrameIndex = durationTo;
+    _nextFrameIndex = durationTo;
     _tweenEasing = (CCTweenType)tweenEasing;
 
 }
@@ -108,7 +108,7 @@ void ProcessBase::update(float dt)
         return;
     }
 
-    if (m_iNextFrameIndex <= 0)
+    if (_nextFrameIndex <= 0)
     {
         _currentPercent = 1;
         _currentFrame = 0;
@@ -123,13 +123,13 @@ void ProcessBase::update(float dt)
         _currentFrame += _processScale * (dt / _animationInternal);
 
 
-        _currentPercent = _currentFrame / m_iNextFrameIndex;
+        _currentPercent = _currentFrame / _nextFrameIndex;
 
         /*
         *	if _currentFrame is bigger or equal than m_iTotalFrames, then reduce it util _currentFrame is
         *  smaller than m_iTotalFrames
         */
-        _currentFrame = fmodf(_currentFrame, m_iNextFrameIndex);
+        _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
     }
 
     updateHandler();

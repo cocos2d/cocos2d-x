@@ -76,7 +76,14 @@ public:
     static ColliderDetector *create();
     static ColliderDetector *create(Bone *bone);
 public:
+	/**
+     * @js ctor
+     */
     ColliderDetector();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ColliderDetector(void);
 
     virtual bool init();

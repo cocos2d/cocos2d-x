@@ -80,11 +80,8 @@ void DisplayFactory::updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, f
         {
             do
             {
-#if ENABLE_PHYSICS_BOX2D_DETECT
                 CC_BREAK_IF(!detector->getBody());
-#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-                CC_BREAK_IF(!detector->getBody());
-#endif
+
                 Node *node = decoDisplay->getDisplay();
                 AffineTransform displayTransform = node->getNodeToParentTransform();
                 Point anchorPoint =  node->getAnchorPointInPoints();

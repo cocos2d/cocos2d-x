@@ -93,7 +93,7 @@ void ArmatureAnimation:: pause()
     Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((Tween *)object)->pause();
+		static_cast<Tween*>(object)->pause();
     }
     ProcessBase::pause();
 }
@@ -103,7 +103,7 @@ void ArmatureAnimation::resume()
     Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((Tween *)object)->resume();
+        static_cast<Tween*>(object)->resume();
     }
     ProcessBase::resume();
 }
@@ -113,7 +113,7 @@ void ArmatureAnimation::stop()
     Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((Tween *)object)->stop();
+        static_cast<Tween*>(object)->stop();
     }
     _tweenList->removeAllObjects();
     ProcessBase::stop();
@@ -145,7 +145,7 @@ void ArmatureAnimation::setSpeedScale(float speedScale)
     Dictionary *dict = _armature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
-        Bone *bone = (Bone *)element->getObject();
+        Bone *bone = static_cast<Bone*>(element->getObject());
 
         bone->getTween()->setProcessScale(_processScale);
         if (bone->getChildArmature())
@@ -173,7 +173,7 @@ void ArmatureAnimation::setAnimationInternal(float animationInternal)
     Dictionary *dict = _armature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
-        Bone *bone = (Bone *)element->getObject();
+        Bone *bone = static_cast<Bone*>(element->getObject());
         bone->getTween()->setAnimationInternal(_animationInternal);
         if (bone->getChildArmature())
         {
@@ -236,8 +236,8 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
 
     CCDICT_FOREACH(dict, element)
     {
-        Bone *bone = (Bone *)element->getObject();
-        movementBoneData = (MovementBoneData *)_movementData->movBoneDataDic.objectForKey(bone->getName());
+        Bone *bone = static_cast<Bone*>(element->getObject());
+        movementBoneData = static_cast<MovementBoneData *>(_movementData->movBoneDataDic.objectForKey(bone->getName()));
 
         Tween *tween = bone->getTween();
         if(movementBoneData && movementBoneData->frameList.count() > 0)
@@ -291,7 +291,7 @@ void ArmatureAnimation::update(float dt)
     Object *object = NULL;
     CCARRAY_FOREACH(_tweenList, object)
     {
-        ((Tween *)object)->update(dt);
+		static_cast<Tween *>(object)->update(dt);
     }
 }
 
@@ -304,7 +304,7 @@ void ArmatureAnimation::updateHandler()
         case ANIMATION_NO_LOOP:
         {
             _loopType = ANIMATION_MAX;
-            _currentFrame = (_currentPercent - 1) * m_iNextFrameIndex;
+            _currentFrame = (_currentPercent - 1) * _nextFrameIndex;
             _currentPercent = _currentFrame / _durationTween;
 
             if (_currentPercent >= 1.0f)
@@ -312,7 +312,7 @@ void ArmatureAnimation::updateHandler()
             }
             else
             {
-                m_iNextFrameIndex = _durationTween;
+                _nextFrameIndex = _durationTween;
 
                 if (_movementEventTarget && _movementEventCallFunc)
                 {
@@ -340,8 +340,8 @@ void ArmatureAnimation::updateHandler()
         {
             _loopType = ANIMATION_LOOP_FRONT;
             _currentPercent = fmodf(_currentPercent, 1);
-            _currentFrame = m_iNextFrameIndex == 0 ? 0 : fmodf(_currentFrame, m_iNextFrameIndex);
-            m_iNextFrameIndex = _durationTween > 0 ? _durationTween : 1;
+            _currentFrame = _nextFrameIndex == 0 ? 0 : fmodf(_currentFrame, _nextFrameIndex);
+            _nextFrameIndex = _durationTween > 0 ? _durationTween : 1;
 
             if (_movementEventTarget && _movementEventCallFunc)
             {
@@ -352,7 +352,7 @@ void ArmatureAnimation::updateHandler()
         default:
         {
             //_currentPercent = fmodf(_currentPercent, 1);
-            _currentFrame = fmodf(_currentFrame, m_iNextFrameIndex);
+            _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
             _toIndex = 0;
 
             if (_movementEventTarget && _movementEventCallFunc)

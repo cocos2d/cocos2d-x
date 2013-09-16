@@ -40,7 +40,14 @@ public:
     static DisplayManager *create(Bone *bone);
 
 public:
+	/**
+     * @js ctor
+     */
     DisplayManager();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~DisplayManager();
 
     bool init(Bone *bone);
