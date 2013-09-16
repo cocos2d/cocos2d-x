@@ -80,14 +80,19 @@ void EventDispatcher::addEventListenerWithItem(EventListenerItem* item)
         _listeners = new std::map<std::string, std::vector<EventListenerItem*>*>();
     }
 
+    std::vector<EventListenerItem*>* listenerList = nullptr;
+    
     auto itr = _listeners->find(item->listener->type);
     if (itr == _listeners->end())
     {
-        _listeners->insert(std::make_pair(item->listener->type, new std::vector<EventListenerItem*>()));
-        itr = _listeners->find(item->listener->type);
+        listenerList = new std::vector<EventListenerItem*>();
+        listenerList->reserve(100);
+        _listeners->insert(std::make_pair(item->listener->type, listenerList));
     }
-
-    auto listenerList = itr->second;
+    else
+    {
+        listenerList = itr->second;
+    }
 
     listenerList->insert(listenerList->begin(), item);
 }
@@ -266,23 +271,25 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
     std::vector<EventDispatcher::EventListenerItem*> allInOnelisteners;
     allInOnelisteners.reserve(touchListeners->size());
     
-    for (auto iter = touchListeners->begin(); iter != touchListeners->end(); ++iter)
-    {
-        auto touchEventListener = static_cast<TouchEventListener*>((*iter)->listener);
+    TouchEventListener* touchEventListener = nullptr;
+    
+    std::for_each(touchListeners->begin(), touchListeners->end(), [&](EventListenerItem*& item){
+
+        touchEventListener = static_cast<TouchEventListener*>(item->listener);
         
         if (touchEventListener->_dispatchMode == Touch::DispatchMode::ONE_BY_ONE)
         {
-            oneByOnelisteners.push_back(*iter);
+            oneByOnelisteners.push_back(item);
         }
         else if (touchEventListener->_dispatchMode == Touch::DispatchMode::ALL_AT_ONCE)
         {
-            allInOnelisteners.push_back(*iter);
+            allInOnelisteners.push_back(item);
         }
         else
         {
             CCASSERT(false, "Not supported touch listener type.");
         }
-    }
+    });
     
     bool isNeedsMutableSet = (oneByOnelisteners.size() > 0 && allInOnelisteners.size() > 0);
     
@@ -301,19 +308,19 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
         for (; touchesIter != orignalTouches.end(); ++touchesIter)
         {
             bool isSwallowed = false;
-            auto oneByOneIter = oneByOnelisteners.begin();
-            for (; oneByOneIter != oneByOnelisteners.end(); ++oneByOneIter)
+
+            for (auto& item : oneByOnelisteners)
             {
                 // Skip if the listener was removed.
-                if ((*oneByOneIter)->listener == nullptr)
+                if (item->listener == nullptr)
                     continue;
              
-                event->setCurrentTarget((*oneByOneIter)->node);
+                event->setCurrentTarget(item->node);
                 
                 bool isClaimed = false;
                 std::vector<Touch*>::iterator removedIter;
                 
-                auto touchEventListener = static_cast<TouchEventListener*>((*oneByOneIter)->listener);
+                auto touchEventListener = static_cast<TouchEventListener*>(item->listener);
                 TouchEvent::EventCode eventCode = event->getEventCode();
                 
                 if (eventCode == TouchEvent::EventCode::BEGAN)
@@ -390,15 +397,15 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
     //
     if (allInOnelisteners.size() > 0 && mutableTouches.size() > 0)
     {
-        for (auto allInOneIter = allInOnelisteners.begin(); allInOneIter != allInOnelisteners.end(); ++allInOneIter)
+        for (auto& item : allInOnelisteners)
         {
             // Skip if the listener was removed.
-            if ((*allInOneIter)->listener == nullptr)
+            if (item->listener == nullptr)
                 continue;
             
-            event->setCurrentTarget((*allInOneIter)->node);
+            event->setCurrentTarget(item->node);
             
-            auto touchEventListener = static_cast<TouchEventListener*>((*allInOneIter)->listener);
+            auto touchEventListener = static_cast<TouchEventListener*>(item->listener);
             
             switch (event->getEventCode())
             {
