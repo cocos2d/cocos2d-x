@@ -185,10 +185,10 @@ void ArmatureAnimation::setAnimationInternal(float animationInternal)
 
 void ArmatureAnimation::play(const char *animationName, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    CCAssert(_animationData, "_animationData can not be null");
+    CCASSERT(_animationData, "_animationData can not be null");
 
     _movementData = _animationData->getMovement(animationName);
-    CCAssert(_movementData, "_movementData can not be null");
+    CCASSERT(_movementData, "_movementData can not be null");
 
     //! Get key frame count
     _rawDuration = _movementData->duration;

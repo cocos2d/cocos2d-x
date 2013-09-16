@@ -129,7 +129,7 @@ bool Bone::init(const char *name)
 
 void Bone::setBoneData(BoneData *boneData)
 {
-    CCAssert(NULL != boneData, "_boneData must not be NULL");
+    CCASSERT(NULL != boneData, "_boneData must not be NULL");
 
     m_pBoneData = boneData;
     m_pBoneData->retain();
@@ -237,8 +237,8 @@ void Bone::updateZOrder()
 
 void Bone::addChildBone(Bone *child)
 {
-    CCAssert( NULL != child, "Argument must be non-nil");
-    CCAssert( NULL == child->_parentBone, "child already added. It can't be added again");
+    CCASSERT( NULL != child, "Argument must be non-nil");
+    CCASSERT( NULL == child->_parentBone, "child already added. It can't be added again");
 
     if(!_children)
     {

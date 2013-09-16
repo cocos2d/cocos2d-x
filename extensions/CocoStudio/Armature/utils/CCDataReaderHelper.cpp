@@ -467,7 +467,7 @@ void DataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *data
     document.Parse(pFileContent);
 
     tinyxml2::XMLElement *root = document.RootElement();
-    CCAssert(root, "XML error  or  XML is empty.");
+    CCASSERT(root, "XML error  or  XML is empty.");
 
     root->QueryFloatAttribute(VERSION, &s_FlashToolVersion);
 

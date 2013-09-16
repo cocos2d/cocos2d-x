@@ -48,7 +48,7 @@ BatchNode::BatchNode()
 bool BatchNode::init()
 {
     bool ret = Node::init();
-    setShaderProgram(CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return ret;
 }
 
