@@ -45,6 +45,7 @@ Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 Classes/EffectsTest/EffectsTest.cpp \
 Classes/ExtensionsTest/ExtensionsTest.cpp \
+Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
@@ -98,6 +99,7 @@ Classes/PerformanceTest/PerformanceSpriteTest.cpp \
 Classes/PerformanceTest/PerformanceTest.cpp \
 Classes/PerformanceTest/PerformanceTextureTest.cpp \
 Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+Classes/PhysicsTest/PhysicsTest.cpp \
 Classes/RenderTextureTest/RenderTextureTest.cpp \
 Classes/RotateWorldTest/RotateWorldTest.cpp \
 Classes/SceneTest/SceneTest.cpp \
