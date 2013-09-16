@@ -65,8 +65,8 @@ Bone::Bone()
     _armature = NULL;
     _childArmature = NULL;
     _boneData = NULL;
-    m_pTween = NULL;
-    m_pTween = NULL;
+    _tween = NULL;
+    _tween = NULL;
     _children = NULL;
     _displayManager = NULL;
     _ignoreMovementBoneData = false;
@@ -80,7 +80,7 @@ Bone::~Bone(void)
 {
     CC_SAFE_DELETE(_tweenData);
     CC_SAFE_DELETE(_children);
-    CC_SAFE_DELETE(m_pTween);
+    CC_SAFE_DELETE(_tween);
     CC_SAFE_DELETE(_displayManager);
 
     if(_boneData)
@@ -111,9 +111,9 @@ bool Bone::init(const char *name)
         CC_SAFE_DELETE(_tweenData);
         _tweenData = new FrameData();
 
-        CC_SAFE_DELETE(m_pTween);
-        m_pTween = new Tween();
-        m_pTween->init(this);
+        CC_SAFE_DELETE(_tween);
+        _tween = new Tween();
+        _tween->init(this);
 
         CC_SAFE_DELETE(_displayManager);
         _displayManager = new DisplayManager();
@@ -150,7 +150,7 @@ void Bone::setArmature(Armature *armature)
     _armature = armature;
     if (_armature)
     {
-        m_pTween->setAnimation(_armature->getAnimation());
+        _tween->setAnimation(_armature->getAnimation());
     }
 }
 
@@ -311,7 +311,7 @@ Armature *Bone::getChildArmature()
 
 Tween *Bone::getTween()
 {
-    return m_pTween;
+    return _tween;
 }
 
 void Bone::setZOrder(int zOrder)

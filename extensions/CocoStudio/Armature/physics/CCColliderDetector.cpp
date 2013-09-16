@@ -93,11 +93,7 @@ ColliderDetector::ColliderDetector()
     : _colliderBodyList(NULL)
     , _active(false)
 {
-#if ENABLE_PHYSICS_BOX2D_DETECT
     _body = NULL;
-#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-    _body = NULL;
-#endif
 }
 
 ColliderDetector::~ColliderDetector()
