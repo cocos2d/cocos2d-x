@@ -986,11 +986,28 @@ if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTar
 end
 --functions of WebSocket will be deprecated end
 
---enums of CCRenderTexture will be deprecated begin
+--functions of CCRenderTexture will be deprecated begin
 local CCRenderTextureDeprecated = { }
 function CCRenderTextureDeprecated.newCCImage(self)
     deprecatedTip("CCRenderTexture:newCCImage","CCRenderTexture:newImage")
     return self:newImage()
 end
 rawset(CCRenderTexture, "newCCImage", CCRenderTextureDeprecated.newCCImage)
---enums of CCRenderTexture will be deprecated end
+--functions of CCRenderTexture will be deprecated end
+
+--functions of Sprite will be deprecated begin
+local CCSpriteDeprecated = { }
+function CCSpriteDeprecated.setFlipX(self,flag)
+    deprecatedTip("CCSpriteDeprecated:setFlipX","CCSpriteDeprecated:setFlippedX")
+    return self:setFlippedX(flag)
+end
+rawset(cc.Sprite, "setFlipX", CCSpriteDeprecated.setFlipX)
+
+function CCSpriteDeprecated.setFlipY(self,flag)
+    deprecatedTip("CCSpriteDeprecated:setFlipY","CCSpriteDeprecated:setFlippedY")
+    return self:setFlippedY(flag)
+end
+rawset(cc.Sprite, "setFlipY", CCSpriteDeprecated.setFlipY)
+--functions of Sprite will be deprecated end
+
+
