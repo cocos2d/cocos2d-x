@@ -137,7 +137,7 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void onExit();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void ccTouchesEnded(Set* touches, Event* event);
+	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 
 	int displayIndex;
 	cocos2d::extension::armature::Armature *armature;
@@ -149,7 +149,7 @@ class TestParticleDisplay : public ArmatureTestLayer
 	virtual void onExit();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void ccTouchesEnded(Set* touches, Event* event);
+	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	int animationID;
 	cocos2d::extension::armature::Armature *armature;
@@ -250,7 +250,7 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
 	virtual std::string title();
-	virtual void ccTouchesEnded(Set* touches, Event* event);
+	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	cocos2d::extension::armature::Armature *armature;
 	int weaponIndex;

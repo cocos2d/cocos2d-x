@@ -505,28 +505,28 @@ void TestParticleDisplay::onEnter()
     bone->setScale(1.2f);
     armature->addBone(bone, "bady-a30");
 }
+
 void TestParticleDisplay::onExit()
 {
-    Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
     ArmatureTestLayer::onExit();
 }
+
 std::string TestParticleDisplay::title()
 {
     return "Test Particle Display";
 }
+
 std::string TestParticleDisplay::subtitle()
 {
     return "Touch to change animation";
 }
-void TestParticleDisplay::ccTouchesEnded(Set* touches, Event* event)
+
+void TestParticleDisplay::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     ++animationID;
     animationID = animationID % armature->getAnimation()->getMovementCount();
     armature->getAnimation()->playByIndex(animationID);
 }
-
-
-
 
 void TestUseMutiplePicture::onEnter()
 {
@@ -560,30 +560,28 @@ void TestUseMutiplePicture::onEnter()
     l->setAnchorPoint(Point(0.2f, 0.5f));
     armature->getBone("weapon")->addDisplay(l, 7);
 }
+
 void TestUseMutiplePicture::onExit()
 {
-    Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
     ArmatureTestLayer::onExit();
 }
+
 std::string TestUseMutiplePicture::title()
 {
     return "Test One Armature Use Different Picture";
 }
+
 std::string TestUseMutiplePicture::subtitle()
 {
     return "weapon and armature are in different picture";
 }
-void TestUseMutiplePicture::ccTouchesEnded(Set* touches, Event* event)
+
+void TestUseMutiplePicture::onTouchesEnded(const std::vector<Touch*>&  touches, Event* event)
 {
     ++displayIndex;
     displayIndex = (displayIndex) % 8;
     armature->getBone("weapon")->changeDisplayByIndex(displayIndex, true);
 }
-
-
-
-
-
 
 TestColliderDetector::~TestColliderDetector()
 {
@@ -929,7 +927,6 @@ std::string TestAnchorPoint::title()
     return "Test Set AnchorPoint";
 }
 
-
 void TestArmatureNesting::onEnter()
 {
     ArmatureTestLayer::onEnter();
@@ -944,16 +941,18 @@ void TestArmatureNesting::onEnter()
 
     weaponIndex = 0;
 }
+
 void TestArmatureNesting::onExit()
 {
-    Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
     ArmatureTestLayer::onExit();
 }
+
 std::string TestArmatureNesting::title()
 {
     return "Test Armature Nesting";
 }
-void TestArmatureNesting::ccTouchesEnded(Set* touches, Event* event)
+
+void TestArmatureNesting::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     ++weaponIndex;
     weaponIndex = weaponIndex % 4;
