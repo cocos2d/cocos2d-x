@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../CCArmature.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 BatchNode *BatchNode::create()
 {
@@ -48,7 +48,7 @@ BatchNode::BatchNode()
 bool BatchNode::init()
 {
     bool ret = Node::init();
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return ret;
 }
 
@@ -106,7 +106,7 @@ void BatchNode::draw()
         }
         else
         {
-            static_cast<Node*>(object)->visit();
+            ((Node *)object)->visit();
         }
     }
 
@@ -117,4 +117,4 @@ void BatchNode::draw()
     }
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END

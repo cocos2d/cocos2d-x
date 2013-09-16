@@ -25,22 +25,22 @@ THE SOFTWARE.
 #include "CCUtilMath.h"
 
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
-bool isSpriteContainPoint(Sprite *_sprite, Point _point, Point &_outPoint)
+bool isSpriteContainPoint(Sprite *sprite, Point point, Point &outPoint)
 {
-    _outPoint = _sprite->convertToNodeSpace(_point);
+    outPoint = sprite->convertToNodeSpace(point);
 
-    Size _s  = _sprite->getContentSize();
-    Rect _r(0, 0, _s.width, _s.height);
+    Size s  = sprite->getContentSize();
+    Rect r(0, 0, s.width, s.height);
 
-    return _r.containsPoint(_outPoint);
+    return r.containsPoint(outPoint);
 }
 
-bool isSpriteContainPoint(Sprite *_sprite, Point _point)
+bool isSpriteContainPoint(Sprite *sprite, Point point)
 {
-    Point _p = Point(0, 0);
-    return isSpriteContainPoint(_sprite, _point, _p);
+    Point p = Point(0, 0);
+    return isSpriteContainPoint(sprite, point, p);
 }
 
 
@@ -75,4 +75,4 @@ Point circleTo(float t, Point &center, float radius, float fromRadian, float rad
     return p;
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END

@@ -285,8 +285,6 @@ void EGLViewEventHandler::OnGLFWError(int errorID, const char* errorDesc)
 
 void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
 {
-	static int countxxx = 0;
-	CCLOG("OnGLFWMouseCallBack = %d", ++countxxx);
     EGLView* eglView = EGLView::getInstance();
     if(nullptr == eglView) return;
     if(GLFW_MOUSE_BUTTON_LEFT == button)
@@ -314,8 +312,6 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
 
 void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
 {
-	static int countxxx = 0;
-	CCLOG("OnGLFWMouseMoveCallBack = %d, %lf, %lf", ++countxxx, x, y);
     s_mouseX = (float)x;
     s_mouseY = (float)y;
     EGLView* eglView = EGLView::getInstance();
