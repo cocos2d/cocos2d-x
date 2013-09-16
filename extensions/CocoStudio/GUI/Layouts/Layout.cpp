@@ -28,7 +28,7 @@
 
 NS_CC_EXT_BEGIN
 
-#define DYNAMIC_CAST_CLIPPINGLAYER dynamic_cast<RectClippingNode*>(m_pRenderer)
+#define DYNAMIC_CAST_CLIPPINGLAYER dynamic_cast<RectClippingNode*>(_renderer)
 
 Layout::Layout():
 m_bClippingEnabled(false),
@@ -48,7 +48,7 @@ m_AlongVector(Point(0.0f, -1.0f)),
 m_nCOpacity(255),
 m_backGroundImageTextureSize(Size::ZERO)
 {
-    m_WidgetType = WidgetTypeContainer;
+    _widgetType = WidgetTypeContainer;
 }
 
 Layout::~Layout()
@@ -70,12 +70,12 @@ Layout* Layout::create()
 
 bool Layout::init()
 {
-    m_children = CCArray::create();
-    m_children->retain();
+    _children = CCArray::create();
+    _children->retain();
     initRenderer();
-    m_pRenderer->retain();
-    m_pRenderer->setZOrder(m_nWidgetZOrder);
-    RGBAProtocol* renderRGBA = dynamic_cast<RGBAProtocol*>(m_pRenderer);
+    _renderer->retain();
+    _renderer->setZOrder(_widgetZOrder);
+    RGBAProtocol* renderRGBA = dynamic_cast<RGBAProtocol*>(_renderer);
     if (renderRGBA)
     {
         renderRGBA->setCascadeColorEnabled(false);
@@ -85,8 +85,8 @@ bool Layout::init()
     setSize(Size::ZERO);
     setBright(true);
     setAnchorPoint(Point(0, 0));
-    m_pScheduler = Director::getInstance()->getScheduler();
-    CC_SAFE_RETAIN(m_pScheduler);
+    _scheduler = Director::getInstance()->getScheduler();
+    CC_SAFE_RETAIN(_scheduler);
     return true;
 }
 
@@ -108,7 +108,7 @@ LayoutExecutant* Layout::getLayoutExecutant() const
 
 void Layout::initRenderer()
 {
-    m_pRenderer = RectClippingNode::create();
+    _renderer = RectClippingNode::create();
 }
 
 bool Layout::isClippingEnabled()
@@ -118,8 +118,8 @@ bool Layout::isClippingEnabled()
 
 bool Layout::hitTest(const Point &pt)
 {
-    Point nsp = m_pRenderer->convertToNodeSpace(pt);
-    Rect bb = Rect(0.0f, 0.0f, m_size.width, m_size.height);
+    Point nsp = _renderer->convertToNodeSpace(pt);
+    Rect bb = Rect(0.0f, 0.0f, _size.width, _size.height);
     if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
     {
         return true;
@@ -135,26 +135,26 @@ void Layout::setClippingEnabled(bool able)
 
 void Layout::onSizeChanged()
 {
-    DYNAMIC_CAST_CLIPPINGLAYER->setClippingSize(m_size);
+    DYNAMIC_CAST_CLIPPINGLAYER->setClippingSize(_size);
     if (m_pLayoutExecutant)
     {
         m_pLayoutExecutant->doLayout();
     }
     if (m_pBackGroundImage)
     {
-        m_pBackGroundImage->setPosition(Point(m_size.width/2.0f, m_size.height/2.0f));
+        m_pBackGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
         if (m_bBackGroundScale9Enable)
         {
-            dynamic_cast<Scale9Sprite*>(m_pBackGroundImage)->setPreferredSize(m_size);
+            dynamic_cast<Scale9Sprite*>(m_pBackGroundImage)->setPreferredSize(_size);
         }
     }
     if (m_pColorRender)
     {
-        m_pColorRender->setContentSize(m_size);
+        m_pColorRender->setContentSize(_size);
     }
     if (m_pGradientRender)
     {
-        m_pGradientRender->setContentSize(m_size);
+        m_pGradientRender->setContentSize(_size);
     }
 }
 
@@ -164,18 +164,18 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     {
         return;
     }
-    m_pRenderer->removeChild(m_pBackGroundImage, true);
+    _renderer->removeChild(m_pBackGroundImage, true);
     m_pBackGroundImage = NULL;
     m_bBackGroundScale9Enable = able;
     if (m_bBackGroundScale9Enable)
     {
         m_pBackGroundImage = Scale9Sprite::create();
-        m_pRenderer->addChild(m_pBackGroundImage);
+        _renderer->addChild(m_pBackGroundImage);
     }
     else
     {
         m_pBackGroundImage = CCSprite::create();
-        m_pRenderer->addChild(m_pBackGroundImage);
+        _renderer->addChild(m_pBackGroundImage);
     }
     m_pBackGroundImage->setZOrder(-1);
     setBackGroundImage(m_strBackGroundImageFileName.c_str(),m_eBGImageTexType);    
@@ -207,7 +207,7 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
             default:
                 break;
         }
-        dynamic_cast<Scale9Sprite*>(m_pBackGroundImage)->setPreferredSize(m_size);
+        dynamic_cast<Scale9Sprite*>(m_pBackGroundImage)->setPreferredSize(_size);
     }
     else
     {
@@ -234,7 +234,7 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
         dynamic_cast<Sprite*>(m_pBackGroundImage)->setOpacity(getOpacity());
     }
     m_backGroundImageTextureSize = m_pBackGroundImage->getContentSize();
-    m_pBackGroundImage->setPosition(Point(m_size.width/2.0f, m_size.height/2.0f));
+    m_pBackGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
 }
 
 void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
@@ -252,16 +252,16 @@ void Layout::addBackGroundImage()
     {
         m_pBackGroundImage = Scale9Sprite::create();
         m_pBackGroundImage->setZOrder(-1);
-        m_pRenderer->addChild(m_pBackGroundImage);
-        dynamic_cast<Scale9Sprite*>(m_pBackGroundImage)->setPreferredSize(m_size);
+        _renderer->addChild(m_pBackGroundImage);
+        dynamic_cast<Scale9Sprite*>(m_pBackGroundImage)->setPreferredSize(_size);
     }
     else
     {
         m_pBackGroundImage = CCSprite::create();
         m_pBackGroundImage->setZOrder(-1);
-        m_pRenderer->addChild(m_pBackGroundImage);
+        _renderer->addChild(m_pBackGroundImage);
     }
-    m_pBackGroundImage->setPosition(Point(m_size.width/2.0f, m_size.height/2.0f));
+    m_pBackGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
 }
 
 void Layout::removeBackGroundImage()
@@ -270,7 +270,7 @@ void Layout::removeBackGroundImage()
     {
         return;
     }
-    m_pRenderer->removeChild(m_pBackGroundImage,  true);
+    _renderer->removeChild(m_pBackGroundImage,  true);
     m_pBackGroundImage = NULL;
     m_strBackGroundImageFileName = "";
     m_backGroundImageTextureSize = Size::ZERO;
@@ -287,26 +287,26 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
         case LAYOUT_COLOR_NONE:
             if (m_pColorRender)
             {
-                m_pRenderer->removeChild(m_pColorRender, true);
+                _renderer->removeChild(m_pColorRender, true);
                 m_pColorRender = NULL;
             }
             if (m_pGradientRender)
             {
-                m_pRenderer->removeChild(m_pGradientRender, true);
+                _renderer->removeChild(m_pGradientRender, true);
                 m_pGradientRender = NULL;
             }
             break;
         case LAYOUT_COLOR_SOLID:
             if (m_pColorRender)
             {
-                m_pRenderer->removeChild(m_pColorRender, true);
+                _renderer->removeChild(m_pColorRender, true);
                 m_pColorRender = NULL;
             }
             break;
         case LAYOUT_COLOR_GRADIENT:
             if (m_pGradientRender)
             {
-                m_pRenderer->removeChild(m_pGradientRender, true);
+                _renderer->removeChild(m_pGradientRender, true);
                 m_pGradientRender = NULL;
             }
             break;
@@ -320,19 +320,19 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             break;
         case LAYOUT_COLOR_SOLID:
             m_pColorRender = CCLayerColor::create();
-            m_pColorRender->setContentSize(m_size);
+            m_pColorRender->setContentSize(_size);
             m_pColorRender->setOpacity(m_nCOpacity);
             m_pColorRender->setColor(m_cColor);
-            m_pRenderer->addChild(m_pColorRender,-2);
+            _renderer->addChild(m_pColorRender,-2);
             break;
         case LAYOUT_COLOR_GRADIENT:
             m_pGradientRender = CCLayerGradient::create();
-            m_pGradientRender->setContentSize(m_size);
+            m_pGradientRender->setContentSize(_size);
             m_pGradientRender->setOpacity(m_nCOpacity);
             m_pGradientRender->setStartColor(m_gStartColor);
             m_pGradientRender->setEndColor(m_gEndColor);
             m_pGradientRender->setVector(m_AlongVector);
-            m_pRenderer->addChild(m_pGradientRender,-2);
+            _renderer->addChild(m_pGradientRender,-2);
             break;
         default:
             break;
@@ -422,7 +422,7 @@ const Size& Layout::getBackGroundImageTextureSize() const
 
 const Size& Layout::getContentSize() const
 {
-    return m_pRenderer->getContentSize();
+    return _renderer->getContentSize();
 }
 
 RectClippingNode::RectClippingNode():

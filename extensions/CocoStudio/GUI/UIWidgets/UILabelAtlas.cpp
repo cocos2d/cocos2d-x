@@ -103,7 +103,7 @@ void UILabelAtlas::initRenderer()
 {
     UIWidget::initRenderer();
     m_pLaberAtlasRenderer = UICCLabelAtlas::create();
-    m_pRenderer->addChild(m_pLaberAtlasRenderer);
+    _renderer->addChild(m_pLaberAtlasRenderer);
 }
 
 void UILabelAtlas::setProperty(const char *stringValue, const char *charMapFile, int itemWidth, int itemHeight, const char *startCharMap,bool useSpriteFrame)
@@ -147,10 +147,10 @@ Node* UILabelAtlas::getVirtualRenderer()
 
 void UILabelAtlas::labelAtlasScaleChangedWithSize()
 {
-    if (m_bIgnoreSize)
+    if (_ignoreSize)
     {
         m_pLaberAtlasRenderer->setScale(1.0f);
-        m_size = m_pLaberAtlasRenderer->getContentSize();
+        _size = m_pLaberAtlasRenderer->getContentSize();
     }
     else
     {
@@ -160,8 +160,8 @@ void UILabelAtlas::labelAtlasScaleChangedWithSize()
             m_pLaberAtlasRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = m_size.width / textureSize.width;
-        float scaleY = m_size.height / textureSize.height;
+        float scaleX = _size.width / textureSize.width;
+        float scaleY = _size.height / textureSize.height;
         m_pLaberAtlasRenderer->setScaleX(scaleX);
         m_pLaberAtlasRenderer->setScaleY(scaleY);
     }

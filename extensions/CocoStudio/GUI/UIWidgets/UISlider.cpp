@@ -81,8 +81,8 @@ void UISlider::initRenderer()
     m_pBarRenderer = CCSprite::create();
     m_pProgressBarRenderer = CCSprite::create();
     m_pProgressBarRenderer->setAnchorPoint(Point(0.0f, 0.5f));
-    m_pRenderer->addChild(m_pBarRenderer, -1);
-    m_pRenderer->addChild(m_pProgressBarRenderer, -1);
+    _renderer->addChild(m_pBarRenderer, -1);
+    _renderer->addChild(m_pProgressBarRenderer, -1);
     m_pSlidBallNormalRenderer = CCSprite::create();
     m_pSlidBallPressedRenderer = CCSprite::create();
     m_pSlidBallPressedRenderer->setVisible(false);
@@ -92,7 +92,7 @@ void UISlider::initRenderer()
     m_pSlidBallRenderer->addChild(m_pSlidBallNormalRenderer);
     m_pSlidBallRenderer->addChild(m_pSlidBallPressedRenderer);
     m_pSlidBallRenderer->addChild(m_pSlidBallDisabledRenderer);
-    m_pRenderer->addChild(m_pSlidBallRenderer);
+    _renderer->addChild(m_pSlidBallRenderer);
 }
 
 void UISlider::loadBarTexture(const char* fileName, TextureResType texType)
@@ -197,8 +197,8 @@ void UISlider::setScale9Enabled(bool able)
     }
     
     m_bScale9Enabled = able;
-    m_pRenderer->removeChild(m_pBarRenderer, true);
-    m_pRenderer->removeChild(m_pProgressBarRenderer, true);
+    _renderer->removeChild(m_pBarRenderer, true);
+    _renderer->removeChild(m_pProgressBarRenderer, true);
     m_pBarRenderer = NULL;
     m_pProgressBarRenderer = NULL;
     if (m_bScale9Enabled)
@@ -213,11 +213,11 @@ void UISlider::setScale9Enabled(bool able)
     }
     loadBarTexture(m_strTextureFile.c_str(), m_eBarTexType);
     loadProgressBarTexture(m_strProgressBarTextureFile.c_str(), m_eProgressBarTexType);
-    m_pRenderer->addChild(m_pBarRenderer, -1);
-    m_pRenderer->addChild(m_pProgressBarRenderer, -1);
+    _renderer->addChild(m_pBarRenderer, -1);
+    _renderer->addChild(m_pProgressBarRenderer, -1);
     if (m_bScale9Enabled)
     {
-        bool ignoreBefore = m_bIgnoreSize;
+        bool ignoreBefore = _ignoreSize;
         ignoreContentAdaptWithSize(false);
         m_bPrevIgnoreSize = ignoreBefore;
     }
@@ -383,7 +383,7 @@ void UISlider::setPercent(int percent)
 bool UISlider::onTouchBegan(const Point &touchPoint)
 {
     bool pass = UIWidget::onTouchBegan(touchPoint);
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     setPercent(getPercentWithBallPos(nsp.x));
     percentChangedEvent();
     return pass;
@@ -391,7 +391,7 @@ bool UISlider::onTouchBegan(const Point &touchPoint)
 
 void UISlider::onTouchMoved(const Point &touchPoint)
 {
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     m_pSlidBallRenderer->setPosition(Point(nsp.x,0));
     setPercent(getPercentWithBallPos(nsp.x));
     percentChangedEvent();
@@ -449,19 +449,19 @@ Node* UISlider::getVirtualRenderer()
 
 void UISlider::barRendererScaleChangedWithSize()
 {
-    if (m_bIgnoreSize)
+    if (_ignoreSize)
     {
         
         m_pBarRenderer->setScale(1.0f);
-        m_size = m_pBarRenderer->getContentSize();
-        m_fBarLength = m_size.width;
+        _size = m_pBarRenderer->getContentSize();
+        m_fBarLength = _size.width;
     }
     else
     {
-        m_fBarLength = m_size.width;
+        m_fBarLength = _size.width;
         if (m_bScale9Enabled)
         {
-            dynamic_cast<Scale9Sprite*>(m_pBarRenderer)->setPreferredSize(m_size);
+            dynamic_cast<Scale9Sprite*>(m_pBarRenderer)->setPreferredSize(_size);
         }
         else
         {
@@ -471,8 +471,8 @@ void UISlider::barRendererScaleChangedWithSize()
                 m_pBarRenderer->setScale(1.0f);
                 return;
             }
-            float bscaleX = m_size.width / btextureSize.width;
-            float bscaleY = m_size.height / btextureSize.height;
+            float bscaleX = _size.width / btextureSize.width;
+            float bscaleY = _size.height / btextureSize.height;
             m_pBarRenderer->setScaleX(bscaleX);
             m_pBarRenderer->setScaleY(bscaleY);
         }
@@ -482,13 +482,13 @@ void UISlider::barRendererScaleChangedWithSize()
 
 void UISlider::progressBarRendererScaleChangedWithSize()
 {
-    if (m_bIgnoreSize)
+    if (_ignoreSize)
     {
         if (!m_bScale9Enabled)
         {
             Size ptextureSize = m_ProgressBarTextureSize;
-            float pscaleX = m_size.width / ptextureSize.width;
-            float pscaleY = m_size.height / ptextureSize.height;
+            float pscaleX = _size.width / ptextureSize.width;
+            float pscaleY = _size.height / ptextureSize.height;
             m_pProgressBarRenderer->setScaleX(pscaleX);
             m_pProgressBarRenderer->setScaleY(pscaleY);
         }
@@ -497,7 +497,7 @@ void UISlider::progressBarRendererScaleChangedWithSize()
     {
         if (m_bScale9Enabled)
         {
-            dynamic_cast<Scale9Sprite*>(m_pProgressBarRenderer)->setPreferredSize(m_size);
+            dynamic_cast<Scale9Sprite*>(m_pProgressBarRenderer)->setPreferredSize(_size);
         }
         else
         {
@@ -507,8 +507,8 @@ void UISlider::progressBarRendererScaleChangedWithSize()
                 m_pProgressBarRenderer->setScale(1.0f);
                 return;
             }
-            float pscaleX = m_size.width / ptextureSize.width;
-            float pscaleY = m_size.height / ptextureSize.height;
+            float pscaleX = _size.width / ptextureSize.width;
+            float pscaleY = _size.height / ptextureSize.height;
             m_pProgressBarRenderer->setScaleX(pscaleX);
             m_pProgressBarRenderer->setScaleY(pscaleY);
         }

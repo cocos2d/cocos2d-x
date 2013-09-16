@@ -43,7 +43,7 @@ m_capInsets(Rect::ZERO),
 m_pImageRenderer(NULL),
 m_strTextureFile(""),
 m_eImageTexType(UI_TEX_TYPE_LOCAL),
-m_imageTextureSize(m_size)
+m_imageTextureSize(_size)
 {
 
 }
@@ -69,7 +69,7 @@ void UIImageView::initRenderer()
 {
     UIWidget::initRenderer();
     m_pImageRenderer = CCSprite::create();
-    m_pRenderer->addChild(m_pImageRenderer);
+    _renderer->addChild(m_pImageRenderer);
 }
 
 void UIImageView::loadTexture(const char *fileName, TextureResType texType)
@@ -132,9 +132,9 @@ void UIImageView::setTextureRect(const Rect &rect)
 bool UIImageView::onTouchBegan(const Point &touchPoint)
 {
     setFocused(true);
-    m_touchStartPos.x = touchPoint.x;
-    m_touchStartPos.y = touchPoint.y;
-    m_pWidgetParent->checkChildInfo(0,this,touchPoint);
+    _touchStartPos.x = touchPoint.x;
+    _touchStartPos.y = touchPoint.y;
+    _widgetParent->checkChildInfo(0,this,touchPoint);
     pushDownEvent();
     
     if (m_bDoubleClickEnabled)
@@ -144,7 +144,7 @@ bool UIImageView::onTouchBegan(const Point &touchPoint)
         m_nClickCount++;
         m_touchRelease = false;
     }
-    return m_bTouchPassedEnabled;
+    return _touchPassedEnabled;
 }
 
 void UIImageView::onTouchEnded(const Point &touchPoint)
@@ -272,7 +272,7 @@ void UIImageView::setScale9Enabled(bool able)
     
     
     m_bScale9Enabled = able;
-    m_pRenderer->removeChild(m_pImageRenderer, true);
+    _renderer->removeChild(m_pImageRenderer, true);
     m_pImageRenderer = NULL;
     if (m_bScale9Enabled)
     {
@@ -283,10 +283,10 @@ void UIImageView::setScale9Enabled(bool able)
         m_pImageRenderer = CCSprite::create();
     }
     loadTexture(m_strTextureFile.c_str(),m_eImageTexType);
-    m_pRenderer->addChild(m_pImageRenderer);
+    _renderer->addChild(m_pImageRenderer);
     if (m_bScale9Enabled)
     {
-        bool ignoreBefore = m_bIgnoreSize;
+        bool ignoreBefore = _ignoreSize;
         ignoreContentAdaptWithSize(false);
         m_bPrevIgnoreSize = ignoreBefore;
     }
@@ -339,19 +339,19 @@ Node* UIImageView::getVirtualRenderer()
 
 void UIImageView::imageTextureScaleChangedWithSize()
 {
-    if (m_bIgnoreSize)
+    if (_ignoreSize)
     {
         if (!m_bScale9Enabled)
         {
             m_pImageRenderer->setScale(1.0f);
-            m_size = m_imageTextureSize;
+            _size = m_imageTextureSize;
         }
     }
     else
     {
         if (m_bScale9Enabled)
         {
-            dynamic_cast<Scale9Sprite*>(m_pImageRenderer)->setPreferredSize(m_size);
+            dynamic_cast<Scale9Sprite*>(m_pImageRenderer)->setPreferredSize(_size);
         }
         else
         {
@@ -361,8 +361,8 @@ void UIImageView::imageTextureScaleChangedWithSize()
                 m_pImageRenderer->setScale(1.0f);
                 return;
             }
-            float scaleX = m_size.width / textureSize.width;
-            float scaleY = m_size.height / textureSize.height;
+            float scaleX = _size.width / textureSize.width;
+            float scaleY = _size.height / textureSize.height;
             m_pImageRenderer->setScaleX(scaleX);
             m_pImageRenderer->setScaleY(scaleY);
         }

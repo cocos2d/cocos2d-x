@@ -66,13 +66,13 @@ void UICCTextField::onEnter()
 }
 
 
-bool UICCTextField::onTextFieldAttachWithIME(CCTextFieldTTF *pSender)
+bool UICCTextField::onTextFieldAttachWithIME(TextFieldTTF *pSender)
 {
     setAttachWithIME(true);
     return false;
 }
 
-bool UICCTextField::onTextFieldInsertText(CCTextFieldTTF *pSender, const char *text, int nLen)
+bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *text, int nLen)
 {
     if (nLen == 1 && strcmp(text, "\n") == 0)
     {
@@ -90,13 +90,13 @@ bool UICCTextField::onTextFieldInsertText(CCTextFieldTTF *pSender, const char *t
     return false;
 }
 
-bool UICCTextField::onTextFieldDeleteBackward(CCTextFieldTTF *pSender, const char *delText, int nLen)
+bool UICCTextField::onTextFieldDeleteBackward(TextFieldTTF *pSender, const char *delText, int nLen)
 {
     setDeleteBackward(true);
     return false;
 }
 
-bool UICCTextField::onTextFieldDetachWithIME(CCTextFieldTTF *pSender)
+bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
 {
     setDetachWithIME(true);
     return false;
@@ -316,10 +316,10 @@ void UITextField::initRenderer()
 {
     UIWidget::initRenderer();
     m_pTextFieldRenderer = UICCTextField::create("input words here", "Thonburi", 20);
-    m_pRenderer->addChild(m_pTextFieldRenderer);
+    _renderer->addChild(m_pTextFieldRenderer);
 }
 
-void UITextField::setTouchSize(const CCSize &size)
+void UITextField::setTouchSize(const Size &size)
 {
     m_bUseTouchArea = true;
     m_fTouchWidth = size.width;
@@ -365,7 +365,7 @@ const char* UITextField::getStringValue()
     return m_pTextFieldRenderer->getString();
 }
 
-bool UITextField::onTouchBegan(const CCPoint &touchPoint)
+bool UITextField::onTouchBegan(const Point &touchPoint)
 {
     bool pass = UIWidget::onTouchBegan(touchPoint);
     m_pTextFieldRenderer->attachWithIME();
@@ -505,37 +505,37 @@ void UITextField::deleteBackwardEvent()
     }
 }
 
-void UITextField::addAttachWithIMEEvent(CCObject *target, SEL_TextFieldAttachWithIMEEvent selecor)
+void UITextField::addAttachWithIMEEvent(Object *target, SEL_TextFieldAttachWithIMEEvent selecor)
 {
     m_pAttachWithIMEListener = target;
     m_pfnAttachWithIMESelector = selecor;
 }
 
-void UITextField::addDetachWithIMEEvent(CCObject *target, SEL_TextFieldDetachWithIMEEvent selecor)
+void UITextField::addDetachWithIMEEvent(Object *target, SEL_TextFieldDetachWithIMEEvent selecor)
 {
     m_pDetachWithIMEListener = target;
     m_pfnDetachWithIMESelector = selecor;
 }
 
-void UITextField::addInsertTextEvent(CCObject *target, SEL_TextFieldInsertTextEvent selecor)
+void UITextField::addInsertTextEvent(Object *target, SEL_TextFieldInsertTextEvent selecor)
 {
     m_pInsertTextListener = target;
     m_pfnInsertTextSelector = selecor;
 }
 
-void UITextField::addDeleteBackwardEvent(CCObject *target, SEL_TextFieldDeleteBackwardEvent selecor)
+void UITextField::addDeleteBackwardEvent(Object *target, SEL_TextFieldDeleteBackwardEvent selecor)
 {
     m_pDeleteBackwardListener = target;
     m_pfnDeleteBackwardSelector = selecor;
 }
 
-void UITextField::setAnchorPoint(const CCPoint &pt)
+void UITextField::setAnchorPoint(const Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
     m_pTextFieldRenderer->setAnchorPoint(pt);
 }
 
-void UITextField::setColor(const ccColor3B &color)
+void UITextField::setColor(const Color3B &color)
 {
     UIWidget::setColor(color);
     m_pTextFieldRenderer->setColor(color);
@@ -554,32 +554,32 @@ void UITextField::onSizeChanged()
 
 void UITextField::textfieldRendererScaleChangedWithSize()
 {
-    if (m_bIgnoreSize)
+    if (_ignoreSize)
     {
         m_pTextFieldRenderer->setScale(1.0f);
-        m_size = getContentSize();
+        _size = getContentSize();
     }
     else
     {
-        CCSize textureSize = getContentSize();
+        Size textureSize = getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             m_pTextFieldRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = m_size.width / textureSize.width;
-        float scaleY = m_size.height / textureSize.height;
+        float scaleX = _size.width / textureSize.width;
+        float scaleY = _size.height / textureSize.height;
         m_pTextFieldRenderer->setScaleX(scaleX);
         m_pTextFieldRenderer->setScaleY(scaleY);
     }
 }
 
-const CCSize& UITextField::getContentSize() const
+const Size& UITextField::getContentSize() const
 {
     return m_pTextFieldRenderer->getContentSize();
 }
 
-CCNode* UITextField::getVirtualRenderer()
+Node* UITextField::getVirtualRenderer()
 {
     return m_pTextFieldRenderer;
 }
