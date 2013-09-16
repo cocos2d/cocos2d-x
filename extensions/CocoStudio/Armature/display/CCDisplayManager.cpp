@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "../utils/CCUtilMath.h"
 #include "../display/CCSkin.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 DisplayManager *DisplayManager::create(Bone *bone)
 {
@@ -44,12 +44,12 @@ DisplayManager *DisplayManager::create(Bone *bone)
 
 
 DisplayManager::DisplayManager()
-	: _decoDisplayList(NULL)
-	, _displayRenderNode(NULL)
+    : _decoDisplayList(NULL)
+    , _displayRenderNode(NULL)
     , _currentDecoDisplay(NULL)
     , _displayIndex(-1)
-	, _forceChangeDisplay(false)
-	, _visible(true)
+    , _forceChangeDisplay(false)
+    , _visible(true)
     , _bone(NULL)
 {
 }
@@ -110,6 +110,63 @@ void DisplayManager::addDisplay(DisplayData *displayData, int index)
     }
 }
 
+void DisplayManager::addDisplay(Node *display, int index)
+{
+    DecorativeDisplay *decoDisplay = NULL;
+
+    if(index >= 0 && (unsigned int)index < _decoDisplayList->count())
+    {
+        decoDisplay = (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
+    }
+    else
+    {
+        decoDisplay = DecorativeDisplay::create();
+        _decoDisplayList->addObject(decoDisplay);
+    }
+
+    DisplayData *displayData = NULL;
+    if (Skin *skin = dynamic_cast<Skin *>(display))
+    {
+        skin->setBone(_bone);
+        displayData = SpriteDisplayData::create();
+
+        DisplayFactory::initSpriteDisplay(_bone, decoDisplay, skin->getDisplayName().c_str(), skin);
+
+        if (SpriteDisplayData *spriteDisplayData = (SpriteDisplayData *)decoDisplay->getDisplayData())
+        {
+            skin->setSkinData(spriteDisplayData->skinData);
+        }
+        else
+        {
+            BaseData baseData;
+            skin->setSkinData(baseData);
+        }
+    }
+    else if (dynamic_cast<ParticleSystemQuad *>(display))
+    {
+        displayData = ParticleDisplayData::create();
+    }
+    else if(Armature *armature = dynamic_cast<Armature *>(display))
+    {
+        displayData = ArmatureDisplayData::create();
+        armature->setParentBone(_bone);
+    }
+    else
+    {
+        displayData = DisplayData::create();
+    }
+
+    decoDisplay->setDisplay(display);
+    decoDisplay->setDisplayData(displayData);
+
+    //! if changed display index is current display index, then change current display to the new display
+    if(index == _displayIndex)
+    {
+        _displayIndex = -1;
+        changeDisplayByIndex(index, false);
+    }
+}
+
 void DisplayManager::removeDisplay(int index)
 {
     _decoDisplayList->removeObjectAtIndex(index);
@@ -118,6 +175,11 @@ void DisplayManager::removeDisplay(int index)
     {
         setCurrentDecorativeDisplay(NULL);
     }
+}
+
+Array *DisplayManager::getDecorativeDisplayList()
+{
+    return _decoDisplayList;
 }
 
 void DisplayManager::changeDisplayByIndex(int index, bool force)
@@ -152,7 +214,7 @@ void DisplayManager::changeDisplayByIndex(int index, bool force)
 
 void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 {
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (_currentDecoDisplay && _currentDecoDisplay->getColliderDetector())
     {
         _currentDecoDisplay->getColliderDetector()->setActive(false);
@@ -161,7 +223,7 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 
     _currentDecoDisplay = decoDisplay;
 
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (_currentDecoDisplay && _currentDecoDisplay->getColliderDetector())
     {
         _currentDecoDisplay->getColliderDetector()->setActive(true);
@@ -175,7 +237,6 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
         {
             _bone->setChildArmature(NULL);
         }
-
         _displayRenderNode->removeFromParentAndCleanup(true);
         _displayRenderNode->release();
     }
@@ -184,12 +245,23 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 
     if(_displayRenderNode)
     {
-        if (dynamic_cast<Armature *>(_displayRenderNode) != NULL)
+        if (Armature *armature = dynamic_cast<Armature *>(_displayRenderNode))
         {
-            _bone->setChildArmature((Armature *)_displayRenderNode);
+            _bone->setChildArmature(armature);
         }
+        else if (ParticleSystemQuad *particle = dynamic_cast<ParticleSystemQuad *>(_displayRenderNode))
+        {
+            particle->resetSystem();
+        }
+
+        if (RGBAProtocol *rgbaProtocaol = dynamic_cast<RGBAProtocol *>(_displayRenderNode))
+        {
+			rgbaProtocaol->setColor(_bone->getDisplayedColor());
+			rgbaProtocaol->setOpacity(_bone->getDisplayedOpacity());
+        }
+
         _displayRenderNode->retain();
-		_displayRenderNode->setVisible(_visible);
+        _displayRenderNode->setVisible(_visible);
     }
 }
 
@@ -210,7 +282,7 @@ DecorativeDisplay *DisplayManager::getCurrentDecorativeDisplay()
 
 DecorativeDisplay *DisplayManager::getDecorativeDisplayByIndex( int index)
 {
-    return static_cast<DecorativeDisplay *>( _decoDisplayList->getObjectAtIndex(index) );
+    return (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
 }
 
 void DisplayManager::initDisplayList(BoneData *boneData)
@@ -222,10 +294,10 @@ void DisplayManager::initDisplayList(BoneData *boneData)
     CS_RETURN_IF(!boneData);
 
     Object *object = NULL;
-    Array *displayDataList = boneData->displayDataList;
+    Array *displayDataList = &boneData->displayDataList;
     CCARRAY_FOREACH(displayDataList, object)
     {
-        DisplayData *displayData = static_cast<DisplayData *>(object);
+        DisplayData *displayData = (DisplayData *)object;
 
         DecorativeDisplay *decoDisplay = DecorativeDisplay::create();
         decoDisplay->setDisplayData(displayData);
@@ -320,4 +392,4 @@ Point DisplayManager::getAnchorPointInPoints()
 }
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
