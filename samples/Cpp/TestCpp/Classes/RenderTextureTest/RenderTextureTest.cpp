@@ -176,9 +176,9 @@ RenderTextureSave::~RenderTextureSave()
     TextureCache::getInstance()->removeUnusedTextures();
 }
 
-void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
+void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    auto touch = static_cast<Touch*>( touches->anyObject() );
+    auto touch = touches[0];
     auto start = touch->getLocation();
     auto end = touch->getPreviousLocation();
 
@@ -361,10 +361,10 @@ string RenderTextureZbuffer::subtitle()
     return "Touch screen. It should be green";
 }
 
-void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event *event)
+void RenderTextureZbuffer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
 
-    for (auto &item: *touches)
+    for (auto &item: touches)
     {
         auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
@@ -381,9 +381,9 @@ void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event 
     }
 }
 
-void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
+void RenderTextureZbuffer::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto &item: *touches)
+    for (auto &item: touches)
     {
         auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
@@ -400,7 +400,7 @@ void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
     }
 }
 
-void RenderTextureZbuffer::ccTouchesEnded(Set* touches, Event* event)
+void RenderTextureZbuffer::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     this->renderScreenShot();
 }
@@ -668,11 +668,10 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
     return NULL;
 }
 
-void SpriteRenderTextureBug::ccTouchesEnded(Set* touches, Event* event)
+void SpriteRenderTextureBug::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto &item: *touches)
+    for (auto &touch: touches)
     {
-        auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
         addNewSpriteWithCoords(location);
     }

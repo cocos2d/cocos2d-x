@@ -758,11 +758,10 @@ ConvertToNode::ConvertToNode()
     }
 }
 
-void ConvertToNode::ccTouchesEnded(Set* touches, Event *event)
+void ConvertToNode::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
-    for( SetIterator it = touches->begin(); it != touches->end(); ++it)
+    for( auto& touch : touches)
     {
-        auto touch = static_cast<Touch*>(*it);
         auto location = touch->getLocation();
 
         for( int i = 0; i < 3; i++)

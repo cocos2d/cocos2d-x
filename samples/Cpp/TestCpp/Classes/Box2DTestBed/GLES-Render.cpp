@@ -91,7 +91,8 @@ void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int vertexCount
 
     CC_INCREMENT_GL_DRAWS(2);
 
-    CHECK_GL_ERROR_DEBUG();
+    glGetError();
+//    CHECK_GL_ERROR_DEBUG();
 
     delete[] vertices;
 }
@@ -159,7 +160,8 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 
     CC_INCREMENT_GL_DRAWS(2);
 
-    CHECK_GL_ERROR_DEBUG();
+    glGetError();
+//    CHECK_GL_ERROR_DEBUG();
 
     delete[] glVertices;
 }
@@ -182,7 +184,8 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
 
     CC_INCREMENT_GL_DRAWS(1);
 
-    CHECK_GL_ERROR_DEBUG();
+    glGetError();
+//    CHECK_GL_ERROR_DEBUG();
 }
 
 void GLESDebugDraw::DrawTransform(const b2Transform& xf)
@@ -216,7 +219,8 @@ void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
 
     CC_INCREMENT_GL_DRAWS(1);
 
-    CHECK_GL_ERROR_DEBUG();
+    glGetError();
+//    CHECK_GL_ERROR_DEBUG();
 }
 
 void GLESDebugDraw::DrawString(int x, int y, const char *string, ...)
@@ -245,6 +249,7 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
 
     CC_INCREMENT_GL_DRAWS(1);
 
-    CHECK_GL_ERROR_DEBUG();
+    glGetError();
+//    CHECK_GL_ERROR_DEBUG();
     
 }

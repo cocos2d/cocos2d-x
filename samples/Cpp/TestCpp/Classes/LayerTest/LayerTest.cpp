@@ -470,22 +470,21 @@ void LayerTest1::updateSize(Point &touchLocation)
     l->setContentSize( newSize );
 }
 
-void LayerTest1::ccTouchesBegan(Set  *touches, Event  *event)
+void LayerTest1::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-    ccTouchesMoved(touches, event);
+    onTouchesMoved(touches, event);
 }
 
-void LayerTest1::ccTouchesMoved(Set  *touches, Event  *event)
+void LayerTest1::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
-    auto touchLocation = touch->getLocation();
+    auto touchLocation = touches[0]->getLocation();
 
     updateSize(touchLocation);
 }
 
-void LayerTest1::ccTouchesEnded(Set  *touches, Event  *event)
+void LayerTest1::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
-    ccTouchesMoved(touches, event);
+    onTouchesMoved(touches, event);
 }
 
 std::string LayerTest1::title()
@@ -611,11 +610,11 @@ void LayerGradientTest::toggleItem(Object *sender)
     gradient->setCompressedInterpolation(! gradient->isCompressedInterpolation());
 }
 
-void LayerGradientTest::ccTouchesMoved(Set * touches, Event *event)
+void LayerGradientTest::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto touch = static_cast<Touch*>( touches->anyObject() );
+    auto touch = touches[0];
     auto start = touch->getLocation();    
 
     auto diff =  Point(s.width/2,s.height/2) - start;

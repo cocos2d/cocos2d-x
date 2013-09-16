@@ -122,8 +122,8 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual bool ccTouchBegan(Touch  *touch, Event  *event);
-	virtual void registerWithTouchDispatcher();
+	virtual bool onTouchBegan(Touch  *touch, Event  *event);
+//	virtual void registerWithTouchDispatcher();
 
 	int displayIndex;
 	cocos2d::extension::armature::Armature *armature;
@@ -134,8 +134,8 @@ class TestParticleDisplay : public ArmatureTestLayer
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual bool ccTouchBegan(Touch  *touch, Event  *event);
-	virtual void registerWithTouchDispatcher();
+	virtual bool onTouchBegan(Touch  *touch, Event  *event);
+//	virtual void registerWithTouchDispatcher();
 
 	int animationID;
 	cocos2d::extension::armature::Armature *armature;
@@ -178,8 +178,8 @@ class TestArmatureNesting : public ArmatureTestLayer
 public:
 	virtual void onEnter();
 	virtual std::string title();
-	virtual bool ccTouchBegan(Touch  *touch, Event  *event);
-	virtual void registerWithTouchDispatcher();
+	virtual bool onTouchBegan(Touch  *touch, Event  *event);
+//	virtual void registerWithTouchDispatcher();
 
 	cocos2d::extension::armature::Armature *armature;
 	int weaponIndex;

@@ -36,15 +36,20 @@ THE SOFTWARE.
 #include "effects/CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "actions/CCActionManager.h"
 #include "script_support/CCScriptSupport.h"
 #include "shaders/CCGLProgram.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCEvent.h"
+#include "event_dispatcher/CCTouchEvent.h"
 
 // externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
 #include "support/component/CCComponentContainer.h"
+
+
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -80,6 +85,7 @@ bool nodeComparisonLess(Object* p1, Object* p2)
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
+static int _globalEventPriorityIndex = 0;
 
 Node::Node(void)
 : _rotationX(0.0f)
@@ -166,7 +172,14 @@ Node::~Node()
     // children
     CC_SAFE_RELEASE(_children);
     
+    removeAllComponents();
+    
     CC_SAFE_DELETE(_componentContainer);
+    
+    for (auto iter = _eventlisteners.begin(); iter != _eventlisteners.end(); ++iter)
+    {
+        EventDispatcher::getInstance()->removeEventListener(*iter);
+    }
 }
 
 bool Node::init()
@@ -813,6 +826,7 @@ void Node::visit()
         }
         // self draw
         this->draw();
+        this->updateEventPriorityIndex();
 
         for( ; i < _children->count(); i++ )
         {
@@ -824,6 +838,7 @@ void Node::visit()
     else
     {
         this->draw();
+        this->updateEventPriorityIndex();
     }
 
     // reset for next frame
@@ -1274,6 +1289,26 @@ void Node::removeAllComponents()
 {
     if( _componentContainer )
         _componentContainer->removeAll();
+}
+
+void Node::resetEventPriorityIndex()
+{
+    _globalEventPriorityIndex = 0;
+}
+
+void Node::updateEventPriorityIndex()
+{
+    _eventPriority = ++_globalEventPriorityIndex;
+}
+
+void Node::associateEventListener(EventListener* listener)
+{
+    _eventlisteners.insert(listener);
+}
+
+void Node::dissociateEventListener(EventListener* listener)
+{
+    _eventlisteners.erase(listener);
 }
 
 // NodeRGBA
