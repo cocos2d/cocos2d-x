@@ -121,6 +121,7 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
 void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority)
 {
     CCASSERT(!listener->_isRegistered, "The listener has been registered.");
+    CCASSERT(fixedPriority != 0, "0 priority is forbidden for fixed priority since it's used for scene graph based priority.");
     
     if (!listener->checkAvaiable())
         return;
