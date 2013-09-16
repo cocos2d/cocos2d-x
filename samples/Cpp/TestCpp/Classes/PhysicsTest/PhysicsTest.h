@@ -11,10 +11,10 @@ class PhysicsTestLayer : public Layer
 public:
     PhysicsTestLayer();
     ~PhysicsTestLayer();
-    
-    void initPhysics();
+
     void createResetButton();
     
+    void toggleDebugCallback(Object* sender);
     void addNewSpriteAtPosition(Point p);
     virtual void ccTouchesEnded(Set* touches, Event* event);
 } ;

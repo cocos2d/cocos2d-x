@@ -22,31 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_SETTING_H__
-#define __CCPHYSICS_SETTING_H__
-
-#define CC_PHYSICS_UNKNOWN  0
-#define CC_PHYSICS_BOX2D    1
-#define CC_PHYSICS_CHIPMUNK 2
-
-#define CC_USE_CHIPMUNK
-
-#ifdef CC_USE_BOX2D
-#define CC_PHYSICS_ENGINE CC_PHYSICS_BOX2D
-#elif defined(CC_USE_CHIPMUNK)
-#define CC_PHYSICS_ENGINE CC_PHYSICS_CHIPMUNK
-#else
-#define CC_PHYSICS_ENGINE CC_PHYSICS_UNKNOWN
-#endif
-
-#if (CC_PHYSICS_ENGINE != CC_PHYSICS_UNKNOWN)
-#define CC_USE_PHYSICS
-#endif
+#include "CCPhysicsJointInfo.h"
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-#include "Box2D.h"
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#include "chipmunk.h"
-#endif
+NS_CC_BEGIN
 
-#endif // __CCPHYSICS_SETTING_H__
+PhysicsJointInfo::PhysicsJointInfo()
+{
+}
+
+PhysicsJointInfo::~PhysicsJointInfo()
+{
+}
+
+NS_CC_END
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

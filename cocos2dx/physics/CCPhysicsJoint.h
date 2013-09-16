@@ -34,42 +34,59 @@
 NS_CC_BEGIN
 
 class PhysicsBody;
+class PhysicsJointInfo;
+class PhysicsBodyInfo;
 
-class PhysicsJoint
+class PhysicsJoint : public Object
 {
 protected:
     PhysicsJoint();
-    virtual ~PhysicsJoint();
+    virtual ~PhysicsJoint() = 0;
+
+public:
+    PhysicsBody* getBodyA() { return _bodyA; }
+    PhysicsBody* getBodyB() { return _bodyB; }
     
-private:
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b);
+    
+    /**
+     * PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
+     */
+    PhysicsBodyInfo* bodyInfo(PhysicsBody* body) const;
+    
+protected:
     PhysicsBody* _bodyA;
     PhysicsBody* _bodyB;
+    PhysicsJointInfo* _info;
+    
+    friend class PhysicsBody;
 };
 
 class PhysicsJointFixed : public PhysicsJoint
 {
 public:
-    PhysicsJointFixed* create();
+    PhysicsJointFixed* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
-    bool init();
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
     PhysicsJointFixed();
-    ~PhysicsJointFixed();
+    virtual ~PhysicsJointFixed();
 };
 
 class PhysicsJointSliding : public PhysicsJoint
 {
 public:
-    PhysicsJointSliding* create();
+    PhysicsJointSliding* create(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
     
 protected:
-    bool init();
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
     
 protected:
     PhysicsJointSliding();
-    ~PhysicsJointSliding();
+    virtual ~PhysicsJointSliding();
 };
 
 class PhysicsJointSpring : public PhysicsJoint
@@ -82,33 +99,33 @@ protected:
     
 protected:
     PhysicsJointSpring();
-    ~PhysicsJointSpring();
+    virtual ~PhysicsJointSpring();
 };
 
 class PhysicsJointLimit : public PhysicsJoint
 {
 public:
-    PhysicsJointLimit* create();
+    PhysicsJointLimit* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
     
 protected:
-    bool init();
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
     
 protected:
     PhysicsJointLimit();
-    ~PhysicsJointLimit();
+    virtual ~PhysicsJointLimit();
 };
 
 class PhysicsJointPin : public PhysicsJoint
 {
 public:
-    PhysicsJointPin* create();
+    static PhysicsJointPin* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
 protected:
-    bool init();
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
 protected:
     PhysicsJointPin();
-    ~PhysicsJointPin();
+    virtual ~PhysicsJointPin();
 };
 
 NS_CC_END

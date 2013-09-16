@@ -22,31 +22,27 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_SETTING_H__
-#define __CCPHYSICS_SETTING_H__
+#include "../CCPhysicsSetting.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
-#define CC_PHYSICS_UNKNOWN  0
-#define CC_PHYSICS_BOX2D    1
-#define CC_PHYSICS_CHIPMUNK 2
+#ifndef __CCPHYSICS_WORLD_INFO_H__
+#define __CCPHYSICS_WORLD_INFO_H__
+#include "platform/CCPlatformMacros.h"
+NS_CC_BEGIN
 
-#define CC_USE_CHIPMUNK
+class PhysicsWorldInfo
+{
+public:
+    cpSpace* space;
+    
+private:
+    PhysicsWorldInfo();
+    ~PhysicsWorldInfo();
+    
+    friend class PhysicsWorld;
+};
 
-#ifdef CC_USE_BOX2D
-#define CC_PHYSICS_ENGINE CC_PHYSICS_BOX2D
-#elif defined(CC_USE_CHIPMUNK)
-#define CC_PHYSICS_ENGINE CC_PHYSICS_CHIPMUNK
-#else
-#define CC_PHYSICS_ENGINE CC_PHYSICS_UNKNOWN
-#endif
+NS_CC_END
+#endif // __CCPHYSICS_WORLD_INFO_H__
 
-#if (CC_PHYSICS_ENGINE != CC_PHYSICS_UNKNOWN)
-#define CC_USE_PHYSICS
-#endif
-
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-#include "Box2D.h"
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#include "chipmunk.h"
-#endif
-
-#endif // __CCPHYSICS_SETTING_H__
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK

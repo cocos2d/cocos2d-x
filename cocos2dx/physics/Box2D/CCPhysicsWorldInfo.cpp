@@ -21,3 +21,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#include "CCPhysicsWorldInfo.h"
+
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+NS_CC_BEGIN
+
+PhysicsWorldInfo::PhysicsWorldInfo()
+{
+}
+
+PhysicsWorldInfo::~PhysicsWorldInfo()
+{
+}
+
+NS_CC_END
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

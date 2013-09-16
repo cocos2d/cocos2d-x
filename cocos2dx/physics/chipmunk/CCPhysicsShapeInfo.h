@@ -22,31 +22,40 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_SETTING_H__
-#define __CCPHYSICS_SETTING_H__
+#include "../CCPhysicsSetting.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
-#define CC_PHYSICS_UNKNOWN  0
-#define CC_PHYSICS_BOX2D    1
-#define CC_PHYSICS_CHIPMUNK 2
+#ifndef __CCPHYSICS_SHAPE_INFO_H__
+#define __CCPHYSICS_SHAPE_INFO_H__
+#include <vector>
 
-#define CC_USE_CHIPMUNK
+#include "platform/CCPlatformMacros.h"
+#include <map>
 
-#ifdef CC_USE_BOX2D
-#define CC_PHYSICS_ENGINE CC_PHYSICS_BOX2D
-#elif defined(CC_USE_CHIPMUNK)
-#define CC_PHYSICS_ENGINE CC_PHYSICS_CHIPMUNK
-#else
-#define CC_PHYSICS_ENGINE CC_PHYSICS_UNKNOWN
-#endif
+NS_CC_BEGIN
 
-#if (CC_PHYSICS_ENGINE != CC_PHYSICS_UNKNOWN)
-#define CC_USE_PHYSICS
-#endif
+class PhysicsShape;
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-#include "Box2D.h"
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#include "chipmunk.h"
-#endif
+class PhysicsShapeInfo
+{
+public:
+    void add(cpShape* shape);
+    void remove(cpShape* shape);
+    void removeall();
+    
+public:
+    std::vector<cpShape*> shapes;
+    static std::map<cpShape*, PhysicsShapeInfo*> map;
+    PhysicsShape* shape;
+    
+private:
+    PhysicsShapeInfo(PhysicsShape* shape);
+    ~PhysicsShapeInfo();
+    
+    friend class PhysicsShape;
+};
 
-#endif // __CCPHYSICS_SETTING_H__
+NS_CC_END
+#endif // __CCPHYSICS_SHAPE_INFO_H__
+
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK

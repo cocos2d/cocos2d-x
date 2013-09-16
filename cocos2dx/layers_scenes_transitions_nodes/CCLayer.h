@@ -36,6 +36,7 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
+#include "physics/CCPhysicsSetting.h"
 
 NS_CC_BEGIN
 
@@ -138,6 +139,12 @@ public:
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual void onEnterTransitionDidFinish() override;
+    
+#ifdef CC_USE_PHYSICS
+    virtual void addChild(Node* child) override;
+    virtual void addChild(Node* child, int zOrder) override;
+    virtual void addChild(Node* child, int zOrder, int tag) override;
+#endif // CC_USE_PHYSICS
 
 protected:
     bool _touchEnabled;

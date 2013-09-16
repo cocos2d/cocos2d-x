@@ -99,12 +99,14 @@ bool Scene::initWithPhysics()
         CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
         this->setContentSize(pDirector->getWinSize());
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::create()));
+        _physicsWorld->setScene(this);
+        
+        this->scheduleUpdate();
         // success
         bRet = true;
     } while (0);
     return bRet;
 }
-#endif
 
 void Scene::addChild(Node* child)
 {
@@ -120,23 +122,27 @@ void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
     
-#ifdef CC_USE_PHYSICS
+    addChildToPhysicsWorld(child);
+}
+
+void Scene::addChildToPhysicsWorld(Node* child)
+{
     if (_physicsWorld)
     {
         auto addToPhysicsWorldFunc = [this](Object* node) -> void
         {
-            if (typeid(Sprite).hash_code() == typeid(node).hash_code())
+            if (dynamic_cast<Sprite*>(node) != nullptr)
             {
                 Sprite* sp = dynamic_cast<Sprite*>(node);
                 
-                if (sp && sp->getPhysicsBody())
+                if (sp->getPhysicsBody())
                 {
                     _physicsWorld->addChild(sp->getPhysicsBody());
                 }
             }
         };
         
-        if(typeid(Layer).hash_code() == typeid(child).hash_code())
+        if(dynamic_cast<Layer*>(child) != nullptr)
         {
             Object* subChild = nullptr;
             CCARRAY_FOREACH(child->getChildren(), subChild)
@@ -148,8 +154,15 @@ void Scene::addChild(Node* child, int zOrder, int tag)
             addToPhysicsWorldFunc(child);
         }
     }
-#endif
 }
+
+void Scene::update(float delta)
+{
+    Node::update(delta);
+    
+    _physicsWorld->update(delta);
+}
+#endif
 
 
 NS_CC_END

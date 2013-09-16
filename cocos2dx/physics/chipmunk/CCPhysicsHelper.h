@@ -21,3 +21,48 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#include "../CCPhysicsSetting.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+
+#ifndef __CCPHYSICS_HELPER_H__
+#define __CCPHYSICS_HELPER_H__
+
+#include "platform/CCPlatformMacros.h"
+#include "cocoa/CCGeometry.h"
+
+NS_CC_BEGIN
+
+class PhysicsHelper
+{
+public:
+    static Point cpv2point(const cpVect& vec) { return Point(vec.x, vec.y); }
+    static cpVect point2cpv(const Point& point) { return cpv(point.x, point.y); }
+    static Size cpv2size(const cpVect& vec) { return Size(vec.x, vec.y); }
+    static cpVect size2cpv(const Size& size) { return cpv(size.width, size.height); }
+    static float cpfloat2float(cpFloat f) { return f; }
+    static cpFloat float2cpfloat(float f) { return f; }
+    
+    static void cpvs2points(const cpVect* cpvs, Point* points, int count)
+    {
+        for (int i = 0; i < count; ++i)
+        {
+            points[i] = cpv2point(cpvs[i]);
+        }
+    }
+    
+    static cpVect* points2cpvs(const Point* points, cpVect* cpvs, int count)
+    {
+        for (int i = 0; i < count; ++i)
+        {
+            cpvs[i] = point2cpv(points[i]);
+        }
+        
+        return cpvs;
+    }
+};
+
+NS_CC_END
+#endif // __CCPHYSICS_HELPER_H__
+
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK

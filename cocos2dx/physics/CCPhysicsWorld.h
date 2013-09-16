@@ -36,10 +36,26 @@ NS_CC_BEGIN
 class PhysicsBody;
 class PhysicsJoint;
 class PhysicsWorldInfo;
+class PhysicsShape;
+class PhysicsContact;
+class PhysicsContactPreSolve;
+class PhysicsContactPostSolve;
 class PhysicsContactDelegate;
+class Array;
 
 class Sprite;
 class Scene;
+class DrawNode;
+
+namespace PhysicsInnerCallbackFunctions
+{
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+    int collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data);
+    int collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
+    void collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
+    void collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
+#endif
+}
 
 class PhysicsWorld
 {
@@ -53,21 +69,46 @@ public:
     Array* getBodysInRect(Rect rect) const;
     Array* getAllBody() const;
     
-    void registerContactDelegate(PhysicsContactDelegate* delegate);
+    inline void registerContactDelegate(PhysicsContactDelegate* delegate) { _delegate = delegate; }
+    inline void unregisterContactDelegate() { _delegate = nullptr; }
     
     inline Point getGravity() { return _gravity; }
     inline void setGravity(Point gravity) { _gravity = gravity; }
     
+    inline bool getDebugDraw() { return _debugDraw; }
+    inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
+    
 protected:
     static PhysicsWorld* create();
     bool init();
+    
+    void setScene(Scene* scene);
+    
     virtual void addChild(PhysicsBody* body);
+    virtual void addShape(PhysicsShape* shape);
+    virtual void update(float delta);
+    
+    virtual void debugDraw();
+    virtual void drawWithShape(DrawNode* node, PhysicsShape* shape);
+    
+    
+    virtual int collisionBeginCallback(const PhysicsContact& contact);
+    virtual int collisionPreSolveCallback(const PhysicsContact& contact, const PhysicsContactPreSolve& solve);
+    virtual void collisionPostSolveCallback(const PhysicsContact& contact, const PhysicsContactPostSolve& solve);
+    virtual void collisionSeparateCallback(const PhysicsContact& contact);
     
 protected:
     Point _gravity;
     float _speed;
+    PhysicsWorldInfo* _info;
+    PhysicsContactDelegate* _delegate;
     
-    PhysicsWorldInfo* _worldInfo;
+    
+    Array* _bodys;
+    Scene* _scene;
+    
+    bool _debugDraw;
+    DrawNode* _drawNode;
     
 protected:
     PhysicsWorld();
@@ -75,6 +116,14 @@ protected:
     
     friend class Sprite;
     friend class Scene;
+    friend class PhysicsBody;
+    
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+    friend int PhysicsInnerCallbackFunctions::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data);
+    friend int PhysicsInnerCallbackFunctions::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
+    friend void PhysicsInnerCallbackFunctions::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
+    friend void PhysicsInnerCallbackFunctions::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
+#endif
 };
 
 NS_CC_END

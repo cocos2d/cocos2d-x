@@ -22,31 +22,29 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS
+#include "../CCPhysicsSetting.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
-#ifndef __CCPHYSICS_CONTACTDELEGATE_H__
-#define __CCPHYSICS_CONTACTDELEGATE_H__
+#ifndef __CCPHYSICS_JOINT_INFO_H__
+#define __CCPHYSICS_JOINT_INFO_H__
 
-#include "cocoa/CCObject.h"
-#include "cocoa/CCGeometry.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
-class PhysicsBody;
-
-class PhysicsContactDelegate
+class PhysicsJointInfo
 {
 public:
-    PhysicsContactDelegate();
-    virtual ~PhysicsContactDelegate();
+    cpConstraint* joint;
     
-public:
-    virtual void onContactBegin(PhysicsBody* bodyA, PhysicsBody* bodyB, float collisionImpulse, Point contactPoint) = 0;
-    virtual void onContactEnd(PhysicsBody* bodyA, PhysicsBody* bodyB, float collisionImpulse, Point contactPoint) = 0;
+private:
+    PhysicsJointInfo();
+    ~PhysicsJointInfo();
+    
+    friend class PhysicsJoint;
 };
 
 NS_CC_END
-#endif //__CCPHYSICS_CONTACTDELEGATE_H__
+#endif // __CCPHYSICS_SHAPE_INFO_H__
 
-#endif // CC_USE_PHYSICS
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK

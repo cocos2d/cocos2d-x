@@ -22,31 +22,49 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_SETTING_H__
-#define __CCPHYSICS_SETTING_H__
+#include "CCPhysicsShapeInfo.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+NS_CC_BEGIN
 
-#define CC_PHYSICS_UNKNOWN  0
-#define CC_PHYSICS_BOX2D    1
-#define CC_PHYSICS_CHIPMUNK 2
+std::map<cpShape*, PhysicsShapeInfo*> PhysicsShapeInfo::map;
 
-#define CC_USE_CHIPMUNK
+PhysicsShapeInfo::PhysicsShapeInfo(PhysicsShape* shape)
+: shape(shape)
+{
+}
 
-#ifdef CC_USE_BOX2D
-#define CC_PHYSICS_ENGINE CC_PHYSICS_BOX2D
-#elif defined(CC_USE_CHIPMUNK)
-#define CC_PHYSICS_ENGINE CC_PHYSICS_CHIPMUNK
-#else
-#define CC_PHYSICS_ENGINE CC_PHYSICS_UNKNOWN
-#endif
+PhysicsShapeInfo::~PhysicsShapeInfo()
+{
+    for (auto it = shapes.begin(); it != shapes.end(); it++)
+    {
+        cpShapeFree(*it);
+        
+        auto mit = map.find(*it);
+        if (mit != map.end()) map.erase(*it);
+    }
+}
 
-#if (CC_PHYSICS_ENGINE != CC_PHYSICS_UNKNOWN)
-#define CC_USE_PHYSICS
-#endif
+void PhysicsShapeInfo::add(cpShape* shape)
+{
+    if (shape == nullptr) return;
+    
+    shapes.push_back(shape);
+    map.insert(std::pair<cpShape*, PhysicsShapeInfo*>(shape, this));
+}
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-#include "Box2D.h"
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#include "chipmunk.h"
-#endif
+void PhysicsShapeInfo::remove(cpShape* shape)
+{
+    if (shape == nullptr) return;
+    
+    auto it = find(shapes.begin(), shapes.end(), shape);
+    if (it != shapes.end())
+    {
+        shapes.erase(it);
+        
+        auto mit = map.find(shape);
+        if (mit != map.end()) map.erase(mit);
+    }
+}
 
-#endif // __CCPHYSICS_SETTING_H__
+NS_CC_END
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
