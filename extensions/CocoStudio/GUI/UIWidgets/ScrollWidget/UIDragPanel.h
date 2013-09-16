@@ -194,8 +194,8 @@ public:
     /**
      *  get and set bounce enable
      */
-    bool isBounceEnable();
-    void setBounceEnable(bool bounce);
+    bool isBounceEnabled();
+    void setBounceEnabled(bool bounce);
     /**
      *  set bounce duration
      */

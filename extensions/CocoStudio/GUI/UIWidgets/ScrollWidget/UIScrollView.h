@@ -229,9 +229,6 @@ protected:
     float m_fLeftBoundary;
     float m_fRightBoundary;
     
-    
-    int m_nMoveDirection;//0 pull down, 1 push up
-    
     bool m_bTopEnd;
     bool m_bBottomEnd;
     bool m_bLeftEnd;
@@ -257,7 +254,6 @@ protected:
     SEL_ScrollToRightEvent m_pfnScrollToRightSelector;
     
     Layout* m_pInnerContainer;
-    float m_fScrollDegreeRange;
 };
 
 NS_CC_EXT_END
