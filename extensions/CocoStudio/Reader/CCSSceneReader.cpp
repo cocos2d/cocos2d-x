@@ -49,12 +49,6 @@ NS_CC_EXT_BEGIN
 		cocos2d::Node *pNode = NULL;
         do {
 			  CC_BREAK_IF(pszFileName == NULL);
-			  std::string strFileName(pszFileName);
-			  if (std::string::npos != strFileName.find_last_of('/'))
-			  {
-				  strFileName = strFileName.substr(0, strFileName.find_last_of('/') + 1);
-				  cocos2d::CCFileUtils::getInstance()->addSearchPath(strFileName.c_str());
-			  }
               pData = (char*)(cocos2d::CCFileUtils::getInstance()->getFileData(pszFileName, "r", &size));
               CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
               cs::JsonDictionary *jsonDict = new cs::JsonDictionary();
