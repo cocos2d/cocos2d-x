@@ -202,10 +202,10 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     const char *des = NULL;
     std::string jsonpath;
     cs::JsonDictionary *jsonDict = NULL;
-    jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    jsonpath = FileUtils::getInstance()->fullPathForFilename(fileName);
     
     unsigned long size = 0;
-    des = (char*)(CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(),"r" , &size));
+    des = (char*)(FileUtils::getInstance()->getFileData(jsonpath.c_str(),"r" , &size));
 	if(NULL == des || strcmp(des, "") == 0)
 	{
 		printf("read json file[%s] error!\n", fileName);
@@ -235,7 +235,7 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     float fileDesignHeight = DICTOOL->getFloatValue_json(jsonDict, "designHeight");
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
         printf("Read design size error!\n");
-        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+        Size winSize = Director::getInstance()->getWinSize();
         CCUIHELPER->setFileDesignWidth(winSize.width);
         CCUIHELPER->setFileDesignHeight(winSize.height);
     }
@@ -248,10 +248,10 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     UIWidget* widget = widgetFromJsonDictionary(widgetTree);
     
     /* *********temp********* */
-    if (widget->getContentSize().equals(CCSizeZero))
+    if (widget->getContentSize().equals(Size::ZERO))
     {
         Layout* rootWidget = dynamic_cast<Layout*>(widget);
-        rootWidget->setSize(CCSizeMake(fileDesignWidth, fileDesignHeight));
+        rootWidget->setSize(Size(fileDesignWidth, fileDesignHeight));
     }
     /* ********************** */
     
@@ -280,7 +280,7 @@ void CCSGUIReader::setPropsForWidgetFromJsonDictionary(UIWidget*widget,cs::JsonD
     
     float w = DICTOOL->getFloatValue_json(options, "width");
     float h = DICTOOL->getFloatValue_json(options, "height");
-    widget->setSize(CCSizeMake(w, h));
+    widget->setSize(Size(w, h));
     
     widget->setTag(DICTOOL->getIntValue_json(options, "tag"));
 	widget->setActionTag(DICTOOL->getIntValue_json(options, "actiontag"));
@@ -290,7 +290,7 @@ void CCSGUIReader::setPropsForWidgetFromJsonDictionary(UIWidget*widget,cs::JsonD
     widget->setName(widgetName);
     float x = DICTOOL->getFloatValue_json(options, "x");
     float y = DICTOOL->getFloatValue_json(options, "y");
-    widget->setPosition(ccp(x,y));
+    widget->setPosition(Point(x,y));
     bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
     if (sx)
     {
@@ -329,12 +329,12 @@ void CCSGUIReader::setColorPropsForWidgetFromJsonDictionary(UIWidget *widget, cs
     int colorR = cr ? DICTOOL->getIntValue_json(options, "colorR") : 255;
     int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
     int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
-    widget->setColor(ccc3(colorR, colorG, colorB));
+    widget->setColor(Color3B(colorR, colorG, colorB));
     bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
     float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : 0.5f;
     bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
     float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : 0.5f;
-    widget->setAnchorPoint(ccp(apxf, apyf));
+    widget->setAnchorPoint(Point(apxf, apyf));
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
     widget->setFlipX(flipX);
@@ -377,14 +377,14 @@ void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::JsonD
             {
                 button->loadTextures(normalFileName_tp, pressedFileName_tp, disabledFileName_tp);
             }
-            button->setCapInsets(CCRectMake(cx, cy, cw, ch));
+            button->setCapInsets(Rect(cx, cy, cw, ch));
             bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
             bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
             if (sw && sh)
             {
                 float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
                 float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-                button->setSize(CCSizeMake(swf, shf));
+                button->setSize(Size(swf, shf));
             }
         }
         else
@@ -480,14 +480,14 @@ void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::JsonD
             float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
             float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
             
-            button->setCapInsets(CCRectMake(cx, cy, cw, ch));
+            button->setCapInsets(Rect(cx, cy, cw, ch));
             bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
             bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
             if (sw && sh)
             {
                 float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
                 float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-                button->setSize(CCSizeMake(swf, shf));
+                button->setSize(Size(swf, shf));
             }
         }
         setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -696,14 +696,14 @@ void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::Js
             {
                 float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
                 float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-                imageView->setSize(CCSizeMake(swf, shf));
+                imageView->setSize(Size(swf, shf));
             }
             
             float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
             float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
             float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
             float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
-            imageView->setCapInsets(CCRectMake(cx, cy, cw, ch));
+            imageView->setCapInsets(Rect(cx, cy, cw, ch));
             
         }
         else
@@ -769,7 +769,7 @@ void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::Js
             {
                 float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
                 float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-                imageView->setSize(CCSizeMake(swf, shf));
+                imageView->setSize(Size(swf, shf));
             }
             
             float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
@@ -777,7 +777,7 @@ void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::Js
             float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
             float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
             
-            imageView->setCapInsets(CCRectMake(cx, cy, cw, ch));
+            imageView->setCapInsets(Rect(cx, cy, cw, ch));
             
         }
         setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -808,7 +808,7 @@ void CCSGUIReader::setPropsForLabelFromJsonDictionary(UIWidget*widget,cs::JsonDi
     int cr = cro?DICTOOL->getIntValue_json(options, "colorR"):255;
     int cg = cgo?DICTOOL->getIntValue_json(options, "colorG"):255;
     int cb = cbo?DICTOOL->getIntValue_json(options, "colorB"):255;
-    ccColor3B tc = ccc3(cr, cg, cb);
+    Color3B tc = Color3B(cr, cg, cb);
     label->setColor(tc);
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -906,7 +906,7 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::JsonDi
         
         float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
         float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
-        panel->setBackGroundColorVector(ccp(bgcv1, bgcv2));
+        panel->setBackGroundColorVector(Point(bgcv1, bgcv2));
         
         int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
         
@@ -914,8 +914,8 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::JsonDi
         panel->setBackGroundColorType(LayoutBackGroundColorType(colorType));
 //        float w = DICTOOL->getFloatValue_json(options, "width");
 //        float h = DICTOOL->getFloatValue_json(options, "height");
-        panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
-        panel->setBackGroundColor(ccc3(cr, cg, cb));
+        panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
+        panel->setBackGroundColor(Color3B(cr, cg, cb));
         panel->setBackGroundColorOpacity(co);
 //        panel->setSize(CCSizeMake(w, h));
         
@@ -937,7 +937,7 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::JsonDi
             {
                 panel->setBackGroundImage(imageFileName_tp);
             }
-            panel->setBackGroundImageCapInsets(CCRectMake(cx, cy, cw, ch));
+            panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
         else
         {
@@ -973,7 +973,7 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::JsonDi
         
         float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
         float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
-        panel->setBackGroundColorVector(ccp(bgcv1, bgcv2));
+        panel->setBackGroundColorVector(Point(bgcv1, bgcv2));
         
         int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
         
@@ -981,8 +981,8 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::JsonDi
         panel->setBackGroundColorType(LayoutBackGroundColorType(colorType));
 //        float w = DICTOOL->getFloatValue_json(options, "width");
 //        float h = DICTOOL->getFloatValue_json(options, "height");
-        panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
-        panel->setBackGroundColor(ccc3(cr, cg, cb));
+        panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
+        panel->setBackGroundColor(Color3B(cr, cg, cb));
         panel->setBackGroundColorOpacity(co);
 //        panel->setSize(CCSizeMake(w, h));
         
@@ -1016,7 +1016,7 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::JsonDi
             float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
             float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
             float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
-            panel->setBackGroundImageCapInsets(CCRectMake(cx, cy, cw, ch));
+            panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
         setColorPropsForWidgetFromJsonDictionary(widget,options);
     }
@@ -1028,7 +1028,7 @@ void CCSGUIReader::setPropsForScrollViewFromJsonDictionary(UIWidget*widget,cs::J
     UIScrollView* scrollView = (UIScrollView*)widget;
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
-    scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+    scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
     /* gui mark */
 	int direction = DICTOOL->getFloatValue_json(options, "direction");
 	scrollView->setDirection((SCROLLVIEW_DIR)direction);
@@ -1063,7 +1063,7 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::JsonD
                 {
                     slider->loadBarTexture(imageFileName_tp);
                 }
-                slider->setSize(CCSizeMake(barLength, slider->getContentSize().height));
+                slider->setSize(Size(barLength, slider->getContentSize().height));
             }
             else
             {
@@ -1150,7 +1150,7 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::JsonD
                         break;
                 }
                 
-                slider->setSize(CCSizeMake(barLength, slider->getContentSize().height));
+                slider->setSize(Size(barLength, slider->getContentSize().height));
 				CC_SAFE_DELETE(imageFileNameDic);
             }
             else
@@ -1308,24 +1308,24 @@ void CCSGUIReader::setPropsForTextAreaFromJsonDictionary(UIWidget*widget,cs::Jso
     int cr = DICTOOL->getIntValue_json(options, "colorR");
     int cg = DICTOOL->getIntValue_json(options, "colorG");
     int cb = DICTOOL->getIntValue_json(options, "colorB");
-    textArea->setColor(ccc3(cr, cg, cb));
+    textArea->setColor(Color3B(cr, cg, cb));
     textArea->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
     bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
     bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
     if (aw && ah)
     {
-        CCSize size = CCSize(DICTOOL->getFloatValue_json(options, "areaWidth"),DICTOOL->getFloatValue_json(options,"areaHeight"));
+        Size size = Size(DICTOOL->getFloatValue_json(options, "areaWidth"),DICTOOL->getFloatValue_json(options,"areaHeight"));
         textArea->setTextAreaSize(size);
     }
     bool ha = DICTOOL->checkObjectExist_json(options, "hAlignment");
     if (ha)
     {
-        textArea->setTextHorizontalAlignment((CCTextAlignment)DICTOOL->getIntValue_json(options, "hAlignment"));
+        textArea->setTextHorizontalAlignment((TextHAlignment)DICTOOL->getIntValue_json(options, "hAlignment"));
     }
     bool va = DICTOOL->checkObjectExist_json(options, "vAlignment");
     if (va)
     {
-        textArea->setTextVerticalAlignment((CCVerticalTextAlignment)DICTOOL->getIntValue_json(options, "vAlignment"));
+        textArea->setTextVerticalAlignment((TextVAlignment)DICTOOL->getIntValue_json(options, "vAlignment"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -1343,7 +1343,7 @@ void CCSGUIReader::setPropsForTextButtonFromJsonDictionary(UIWidget*widget,cs::J
     int cri = cr?DICTOOL->getIntValue_json(options, "textColorR"):255;
     int cgi = cg?DICTOOL->getIntValue_json(options, "textColorG"):255;
     int cbi = cb?DICTOOL->getIntValue_json(options, "textColorB"):255;
-    textButton->setTitleColor(ccc3(cri,cgi,cbi));
+    textButton->setTitleColor(Color3B(cri,cgi,cbi));
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
@@ -1381,7 +1381,7 @@ void CCSGUIReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::Js
     bool tsh = DICTOOL->checkObjectExist_json(options, "touchSizeHeight");
     if (tsw && tsh)
     {
-        textField->setTouchSize(CCSizeMake(DICTOOL->getFloatValue_json(options, "touchSizeWidth"), DICTOOL->getFloatValue_json(options,"touchSizeHeight")));
+        textField->setTouchSize(Size(DICTOOL->getFloatValue_json(options, "touchSizeWidth"), DICTOOL->getFloatValue_json(options,"touchSizeHeight")));
     }
     
     float dw = DICTOOL->getFloatValue_json(options, "width");
@@ -1472,11 +1472,11 @@ void CCSGUIReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs:
             float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
             float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
             
-            loadingBar->setCapInsets(CCRectMake(cx, cy, cw, ch));
+            loadingBar->setCapInsets(Rect(cx, cy, cw, ch));
             
             float width = DICTOOL->getFloatValue_json(options, "width");
             float height = DICTOOL->getFloatValue_json(options, "height");
-            loadingBar->setSize(CCSizeMake(width, height));
+            loadingBar->setSize(Size(width, height));
         }
         /**/
 
@@ -1561,7 +1561,7 @@ void CCSGUIReader::setPropsForDragPanelFromJsonDictionary(UIWidget *widget, cs::
     
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
-    dragPanel->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+    dragPanel->setInnerContainerSize(Size(innerWidth, innerHeight));
     
     setColorPropsForWidgetFromJsonDictionary(widget, options);
 }

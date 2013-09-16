@@ -66,7 +66,7 @@ void UILabel::initRenderer()
 {
     UIWidget::initRenderer();
     m_pLabelRenderer = CCLabelTTF::create();
-    m_pRenderer->addChild(m_pLabelRenderer);
+    _renderer->addChild(m_pLabelRenderer);
 }
 
 void UILabel::setText(const char* text)
@@ -157,7 +157,7 @@ void UILabel::onPressStateChangedToDisabled()
 
 void UILabel::clickScale(float scale)
 {
-    m_pRenderer->setScale(scale);
+    _renderer->setScale(scale);
 }
 
 void UILabel::setFlipX(bool flipX)
@@ -203,10 +203,10 @@ Node* UILabel::getVirtualRenderer()
 
 void UILabel::labelScaleChangedWithSize()
 {
-    if (m_bIgnoreSize)
+    if (_ignoreSize)
     {
         m_pLabelRenderer->setScale(1.0f);
-        m_size = m_pLabelRenderer->getContentSize();
+        _size = m_pLabelRenderer->getContentSize();
     }
     else
     {
@@ -216,8 +216,8 @@ void UILabel::labelScaleChangedWithSize()
             m_pLabelRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = m_size.width / textureSize.width;
-        float scaleY = m_size.height / textureSize.height;
+        float scaleX = _size.width / textureSize.width;
+        float scaleY = _size.height / textureSize.height;
         m_pLabelRenderer->setScaleX(scaleX);
         m_pLabelRenderer->setScaleY(scaleY);
     }

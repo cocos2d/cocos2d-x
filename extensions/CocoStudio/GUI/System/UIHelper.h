@@ -116,7 +116,7 @@ protected:
     float m_fFileDesignWidth;
     float m_fFileDesignHeight;
     //texture
-    CCArray* m_textureFiles;
+    Array* m_textureFiles;
 };
 
 NS_CC_EXT_END

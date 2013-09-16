@@ -135,13 +135,13 @@ void UIDragPanel::releaseResoures()
 {
     setUpdateEnabled(false);
     removeAllChildren();
-    m_pRenderer->removeAllChildrenWithCleanup(true);
-    m_pRenderer->removeFromParentAndCleanup(true);
-    m_pRenderer->release();
+    _renderer->removeAllChildrenWithCleanup(true);
+    _renderer->removeFromParentAndCleanup(true);
+    _renderer->release();
     
     Layout::removeChild(m_pInnerContainer);
     
-    m_children->release();
+    _children->release();
 }
 
 bool UIDragPanel::onTouchBegan(const Point &touchPoint)
@@ -225,8 +225,8 @@ void UIDragPanel::onSizeChanged()
     Size innerSize = m_pInnerContainer->getSize();
     float orginInnerSizeWidth = innerSize.width;
     float orginInnerSizeHeight = innerSize.height;
-    float innerSizeWidth = MAX(orginInnerSizeWidth, m_size.width);
-    float innerSizeHeight = MAX(orginInnerSizeHeight, m_size.height);
+    float innerSizeWidth = MAX(orginInnerSizeWidth, _size.width);
+    float innerSizeHeight = MAX(orginInnerSizeHeight, _size.height);
     m_pInnerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
 }
 
@@ -237,9 +237,9 @@ const Size& UIDragPanel::getInnerContainerSize() const
 
 void UIDragPanel::setInnerContainerSize(const cocos2d::Size &size)
 {
-    float innerSizeWidth = m_size.width;
-    float innerSizeHeight = m_size.height;
-    if (size.width < m_size.width)
+    float innerSizeWidth = _size.width;
+    float innerSizeHeight = _size.height;
+    if (size.width < _size.width)
     {
         CCLOG("Inner width <= scrollview width, it will be force sized!");
     }
@@ -247,7 +247,7 @@ void UIDragPanel::setInnerContainerSize(const cocos2d::Size &size)
     {
         innerSizeWidth = size.width;
     }
-    if (size.height < m_size.height)
+    if (size.height < _size.height)
     {
         CCLOG("Inner height <= scrollview height, it will be force sized!");
     }
@@ -256,7 +256,7 @@ void UIDragPanel::setInnerContainerSize(const cocos2d::Size &size)
         innerSizeHeight = size.height;
     }
     m_pInnerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(Point(0, m_size.height - m_pInnerContainer->getSize().height));
+    m_pInnerContainer->setPosition(Point(0, _size.height - m_pInnerContainer->getSize().height));
 }
 
 const Point& UIDragPanel::getInnerContainerPosition() const
@@ -337,7 +337,7 @@ void UIDragPanel::handlePressLogic(const Point &touchPoint)
         }
     }
     
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     m_touchStartNodeSpace = nsp;
     
     m_touchStartWorldSpace = touchPoint;    
@@ -358,7 +358,7 @@ void UIDragPanel::handleMoveLogic(const Point &touchPoint)
         
     m_bTouchMoved = true;
     
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     Point delta = nsp - m_touchStartNodeSpace;
     m_touchStartNodeSpace = nsp;
     
@@ -472,8 +472,8 @@ void UIDragPanel::recordSlidTime(float dt)
 // check if dragpanel rect contain inner rect
 bool UIDragPanel::checkContainInnerRect()
 {
-    float width = m_size.width;
-    float height = m_size.height;
+    float width = _size.width;
+    float height = _size.height;
     float innerWidth = m_pInnerContainer->getSize().width;
     float innerHeight = m_pInnerContainer->getSize().height;
     
@@ -566,8 +566,8 @@ bool UIDragPanel::checkToBoundaryWithDeltaPosition(const Point&  delta)
     float innerBottom = m_pInnerContainer->getBottomInParent();
     
     float left = 0;
-    float top = m_size.height;
-    float right = m_size.width;
+    float top = _size.height;
+    float right = _size.width;
     float bottom = 0;
     
     bool toLeftBottom = false;
@@ -629,8 +629,8 @@ Point UIDragPanel::calculateToBoundaryDeltaPosition(const Point& paramDelta)
     float innerBottom = m_pInnerContainer->getBottomInParent();
     
     float left = 0;
-    float top = m_size.height;
-    float right = m_size.width;
+    float top = _size.height;
+    float right = _size.width;
     float bottom = 0;
     
     Point delta = paramDelta;
@@ -689,8 +689,8 @@ bool UIDragPanel::checkBerth()
     float innerBottom = m_pInnerContainer->getBottomInParent();
     
     float left = 0;
-    float top = m_size.height;
-    float right = m_size.width;
+    float top = _size.height;
+    float right = _size.width;
     float bottom = 0;
     
     if (innerLeft == left && innerBottom == bottom) // left bottom
@@ -907,8 +907,8 @@ bool UIDragPanel::checkNeedBounce()
     float innerBottom = m_pInnerContainer->getBottomInParent();
     
     float left = 0;
-    float top = m_size.height;
-    float right = m_size.width;
+    float top = _size.height;
+    float right = _size.width;
     float bottom = 0;        
     
     bool need = ((innerLeft > left && innerBottom > bottom)
@@ -946,8 +946,8 @@ void UIDragPanel::bounceToCorner()
     float innerRight = m_pInnerContainer->getRightInParent();
     float innerBottom = m_pInnerContainer->getBottomInParent();
     
-    float width = m_size.width;
-    float height = m_size.height;
+    float width = _size.width;
+    float height = _size.height;
     float left = 0;
     float top = height;
     float right = width;
