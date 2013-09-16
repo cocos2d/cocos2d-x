@@ -462,7 +462,7 @@ bool RectClippingNode::init()
     rect[2] = Point(m_clippingSize.width, m_clippingSize.height);
     rect[3] = Point(0, m_clippingSize.height);
     
-    Color4F green = {0, 1, 0, 1};
+    Color4F green = Color4F(0, 1, 0, 1);
     m_pInnerStencil->drawPolygon(rect, 4, green, 0, green);
     if (CCClippingNode::init(m_pInnerStencil))
     {
@@ -480,7 +480,7 @@ void RectClippingNode::setClippingSize(const Size &size)
     rect[1] = Point(m_clippingSize.width, 0);
     rect[2] = Point(m_clippingSize.width, m_clippingSize.height);
     rect[3] = Point(0, m_clippingSize.height);
-    Color4F green = {0, 1, 0, 1};
+    Color4F green = Color4F(0, 1, 0, 1);
     m_pInnerStencil->clear();
     m_pInnerStencil->drawPolygon(rect, 4, green, 0, green);
 }
