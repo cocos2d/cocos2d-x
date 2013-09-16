@@ -142,13 +142,13 @@ bool Armature::init(const char *name)
             _name = name;
 
             AnimationData *animationData = armatureDataManager->getAnimationData(name);
-            CCAssert(animationData, "AnimationData not exist! ");
+            CCASSERT(animationData, "AnimationData not exist! ");
 
             _animation->setAnimationData(animationData);
 
 
             ArmatureData *armatureData = armatureDataManager->getArmatureData(name);
-            CCAssert(armatureData, "");
+            CCASSERT(armatureData, "");
 
             _armatureData = armatureData;
 
@@ -197,7 +197,7 @@ bool Armature::init(const char *name)
 
         }
 
-        setShaderProgram(CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         unscheduleUpdate();
         scheduleUpdate();
@@ -251,8 +251,8 @@ Bone *Armature::createBone(const char *boneName)
 
 void Armature::addBone(Bone *bone, const char *parentName)
 {
-    CCAssert( bone != NULL, "Argument must be non-nil");
-    CCAssert(_boneDic->objectForKey(bone->getName()) == NULL, "bone already added. It can't be added again");
+    CCASSERT( bone != NULL, "Argument must be non-nil");
+    CCASSERT(_boneDic->objectForKey(bone->getName()) == NULL, "bone already added. It can't be added again");
 
     if (NULL != parentName)
     {
@@ -286,7 +286,7 @@ void Armature::addBone(Bone *bone, const char *parentName)
 
 void Armature::removeBone(Bone *bone, bool recursion)
 {
-    CCAssert(bone != NULL, "bone must be added to the bone dictionary!");
+    CCASSERT(bone != NULL, "bone must be added to the bone dictionary!");
 
     bone->setArmature(NULL);
     bone->removeFromParent(recursion);
@@ -308,7 +308,7 @@ Bone *Armature::getBone(const char *name) const
 
 void Armature::changeBoneParent(Bone *bone, const char *parentName)
 {
-    CCAssert(bone != NULL, "bone must be added to the bone dictionary!");
+    CCASSERT(bone != NULL, "bone must be added to the bone dictionary!");
 
     if(bone->getParentBone())
     {
@@ -423,7 +423,7 @@ const AffineTransform& Armature::getNodeToParentTransform() const
 void Armature::updateOffsetPoint()
 {
     // Set contentsize and Calculate anchor point.
-    Rect rect = boundingBox();
+    Rect rect = getBoundingBox();
     setContentSize(rect.size);
     _offsetPoint = Point(-rect.origin.x,  -rect.origin.y);
     if (rect.size.width != 0 && rect.size.height != 0)
