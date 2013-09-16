@@ -128,10 +128,19 @@ bool PhysicsContactPostSolve::init()
     return true;
 }
 
+PhysicsContactListener::PhysicsContactListener()
+: onContactBegin(nullptr)
+, onContactPreSolve(nullptr)
+, onContactPostSolve(nullptr)
+, onContactEnd(nullptr)
+{
+    
+}
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-#endif
+PhysicsContactListener::~PhysicsContactListener()
+{
+    
+}
 
 NS_CC_END
 #endif // CC_USE_PHYSICS
