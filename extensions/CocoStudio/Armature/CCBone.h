@@ -152,26 +152,26 @@ public:
 
 public:
     /*
-     *  The origin state of the Bone. Display's state is effected by m_pBoneData, m_pNode, _tweenData
+     *  The origin state of the Bone. Display's state is effected by _boneData, m_pNode, _tweenData
      *  when call setData function, it will copy from the BoneData.
      */
-    CC_PROPERTY(BoneData *, m_pBoneData, BoneData);
+    CC_PROPERTY(BoneData *, _boneData, BoneData);
 
     //! A weak reference to the Armature
     CC_PROPERTY(Armature *, _armature, Armature);
 
     //! A weak reference to the child Armature
-    CC_PROPERTY(Armature *, m_pChildArmature, ChildArmature);
+    CC_PROPERTY(Armature *, _childArmature, ChildArmature);
 
-    CC_SYNTHESIZE(DisplayManager *, m_pDisplayManager, DisplayManager)
+    CC_SYNTHESIZE(DisplayManager *, _displayManager, DisplayManager)
 
     /*
      *	When Armature play an animation, if there is not a MovementBoneData of this bone in this MovementData, this bone will be hidden.
      *	Set IgnoreMovementBoneData to true, then this bone will also be shown.
      */
-    CC_SYNTHESIZE(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
+    CC_SYNTHESIZE(bool, _ignoreMovementBoneData, IgnoreMovementBoneData)
 
-    CC_SYNTHESIZE(BlendType, m_eBlendType, BlendType)
+    CC_SYNTHESIZE(BlendType, _blendType, BlendType)
 protected:
     Tween *m_pTween;				//! Calculate tween effect
 
@@ -181,10 +181,10 @@ protected:
     CC_SYNTHESIZE(std::string, _name, Name);
 
     Bone *_parentBone;	             //! A weak reference to its parent
-    bool m_bBoneTransformDirty;          //! Whether or not transform dirty
+    bool _boneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
-    AffineTransform m_tWorldTransform;
+    AffineTransform _worldTransform;
 };
 
 NS_CC_EXT_ARMATURE_END

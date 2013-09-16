@@ -63,16 +63,16 @@ Bone::Bone()
     _tweenData = NULL;
     _parentBone = NULL;
     _armature = NULL;
-    m_pChildArmature = NULL;
-    m_pBoneData = NULL;
+    _childArmature = NULL;
+    _boneData = NULL;
     m_pTween = NULL;
     m_pTween = NULL;
     _children = NULL;
-    m_pDisplayManager = NULL;
-    m_bIgnoreMovementBoneData = false;
-    m_tWorldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
-    m_bBoneTransformDirty = true;
-    m_eBlendType = BLEND_NORMAL;
+    _displayManager = NULL;
+    _ignoreMovementBoneData = false;
+    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
+    _boneTransformDirty = true;
+    _blendType = BLEND_NORMAL;
 }
 
 
@@ -81,14 +81,14 @@ Bone::~Bone(void)
     CC_SAFE_DELETE(_tweenData);
     CC_SAFE_DELETE(_children);
     CC_SAFE_DELETE(m_pTween);
-    CC_SAFE_DELETE(m_pDisplayManager);
+    CC_SAFE_DELETE(_displayManager);
 
-    if(m_pBoneData)
+    if(_boneData)
     {
-        m_pBoneData->release();
+        _boneData->release();
     }
 
-    CC_SAFE_RELEASE(m_pChildArmature);
+    CC_SAFE_RELEASE(_childArmature);
 }
 
 bool Bone::init()
@@ -115,9 +115,9 @@ bool Bone::init(const char *name)
         m_pTween = new Tween();
         m_pTween->init(this);
 
-        CC_SAFE_DELETE(m_pDisplayManager);
-        m_pDisplayManager = new DisplayManager();
-        m_pDisplayManager->init(this);
+        CC_SAFE_DELETE(_displayManager);
+        _displayManager = new DisplayManager();
+        _displayManager->init(this);
 
 
         bRet = true;
@@ -131,18 +131,18 @@ void Bone::setBoneData(BoneData *boneData)
 {
     CCASSERT(NULL != boneData, "_boneData must not be NULL");
 
-    m_pBoneData = boneData;
-    m_pBoneData->retain();
+    _boneData = boneData;
+    _boneData->retain();
 
-    _name = m_pBoneData->name;
-    _ZOrder = m_pBoneData->zOrder;
+    _name = _boneData->name;
+    _ZOrder = _boneData->zOrder;
 
-    m_pDisplayManager->initDisplayList(boneData);
+    _displayManager->initDisplayList(boneData);
 }
 
 BoneData *Bone::getBoneData()
 {
-    return m_pBoneData;
+    return _boneData;
 }
 
 void Bone::setArmature(Armature *armature)
@@ -163,28 +163,28 @@ Armature *Bone::getArmature()
 void Bone::update(float delta)
 {
     if (_parentBone)
-        m_bBoneTransformDirty = m_bBoneTransformDirty || _parentBone->isTransformDirty();
+        _boneTransformDirty = _boneTransformDirty || _parentBone->isTransformDirty();
 
-    if (m_bBoneTransformDirty)
+    if (_boneTransformDirty)
     {
         if (_armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
         {
-            TransformHelp::nodeConcat(*_tweenData, *m_pBoneData);
+            TransformHelp::nodeConcat(*_tweenData, *_boneData);
             _tweenData->scaleX -= 1;
             _tweenData->scaleY -= 1;
         }
 
-        TransformHelp::nodeToMatrix(*_tweenData, m_tWorldTransform);
+        TransformHelp::nodeToMatrix(*_tweenData, _worldTransform);
 
-        m_tWorldTransform = AffineTransformConcat(getNodeToParentTransform(), m_tWorldTransform);
+        _worldTransform = AffineTransformConcat(getNodeToParentTransform(), _worldTransform);
 
         if(_parentBone)
         {
-            m_tWorldTransform = AffineTransformConcat(m_tWorldTransform, _parentBone->m_tWorldTransform);
+            _worldTransform = AffineTransformConcat(_worldTransform, _parentBone->_worldTransform);
         }
     }
 
-    DisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty || _armature->getArmatureTransformDirty());
+    DisplayFactory::updateDisplay(this, _displayManager->getCurrentDecorativeDisplay(), delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
@@ -193,7 +193,7 @@ void Bone::update(float delta)
         childBone->update(delta);
     }
 
-    m_bBoneTransformDirty = false;
+    _boneTransformDirty = false;
 }
 
 
@@ -213,7 +213,7 @@ void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
 
 void Bone::updateColor()
 {
-    Node *display = m_pDisplayManager->getDisplayRenderNode();
+    Node *display = _displayManager->getDisplayRenderNode();
     RGBAProtocol *protocol = dynamic_cast<RGBAProtocol *>(display);
     if(protocol != NULL)
     {
@@ -226,7 +226,7 @@ void Bone::updateZOrder()
 {
     if (_armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
     {
-        int zorder = _tweenData->zOrder + m_pBoneData->zOrder;
+        int zorder = _tweenData->zOrder + _boneData->zOrder;
         setZOrder(zorder);
     }
     else
@@ -296,17 +296,17 @@ Bone *Bone::getParentBone()
 
 void Bone::setChildArmature(Armature *armature)
 {
-    if (m_pChildArmature != armature)
+    if (_childArmature != armature)
     {
         CC_SAFE_RETAIN(armature);
-        CC_SAFE_RELEASE(m_pChildArmature);
-        m_pChildArmature = armature;
+        CC_SAFE_RELEASE(_childArmature);
+        _childArmature = armature;
     }
 }
 
 Armature *Bone::getChildArmature()
 {
-    return m_pChildArmature;
+    return _childArmature;
 }
 
 Tween *Bone::getTween()
@@ -322,47 +322,47 @@ void Bone::setZOrder(int zOrder)
 
 void Bone::setTransformDirty(bool dirty)
 {
-    m_bBoneTransformDirty = dirty;
+    _boneTransformDirty = dirty;
 }
 
 bool Bone::isTransformDirty()
 {
-    return m_bBoneTransformDirty;
+    return _boneTransformDirty;
 }
 
 AffineTransform Bone::getNodeToArmatureTransform() const
 {
-    return m_tWorldTransform;
+    return _worldTransform;
 }
 
 AffineTransform Bone::getNodeToWorldTransform() const
 {
-    return AffineTransformConcat(m_tWorldTransform, _armature->getNodeToWorldTransform());
+    return AffineTransformConcat(_worldTransform, _armature->getNodeToWorldTransform());
 }
 
 Node *Bone::getDisplayRenderNode()
 {
-    return m_pDisplayManager->getDisplayRenderNode();
+    return _displayManager->getDisplayRenderNode();
 }
 
 void Bone::addDisplay(DisplayData *displayData, int index)
 {
-    m_pDisplayManager->addDisplay(displayData, index);
+    _displayManager->addDisplay(displayData, index);
 }
 
 void Bone::addDisplay(Node *display, int index)
 {
-    m_pDisplayManager->addDisplay(display, index);
+    _displayManager->addDisplay(display, index);
 }
 
 void Bone::changeDisplayByIndex(int index, bool force)
 {
-    m_pDisplayManager->changeDisplayByIndex(index, force);
+    _displayManager->changeDisplayByIndex(index, force);
 }
 
 Array *Bone::getColliderBodyList()
 {
-    if (DecorativeDisplay *decoDisplay = m_pDisplayManager->getCurrentDecorativeDisplay())
+    if (DecorativeDisplay *decoDisplay = _displayManager->getCurrentDecorativeDisplay())
     {
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
         {
