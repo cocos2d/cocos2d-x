@@ -60,10 +60,10 @@ public:
     virtual void onExit();
     virtual void onEnterTransitionDidFinish();
     
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
+    virtual bool onTouchBegan(Touch *pTouch, Event *pEvent) override;
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
+    virtual void onTouchCancelled(Touch *pTouch, Event *pEvent) override;
     
     /**
      * Add a widget to UILayer, for drawing.
