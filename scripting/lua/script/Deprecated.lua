@@ -1009,5 +1009,3 @@ function CCSpriteDeprecated.setFlipY(self,flag)
 end
 rawset(cc.Sprite, "setFlipY", CCSpriteDeprecated.setFlipY)
 --functions of Sprite will be deprecated end
-
-
