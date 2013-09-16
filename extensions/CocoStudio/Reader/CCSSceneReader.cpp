@@ -245,7 +245,7 @@ NS_CC_EXT_BEGIN
 						textupath += file_path;
 						textupath.append(textureFileName);
 
-						cocos2d::extension::armature::ArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
+						cocos2d::extension::armature::ArmatureDataManager::getInstance()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
 
 					}
 

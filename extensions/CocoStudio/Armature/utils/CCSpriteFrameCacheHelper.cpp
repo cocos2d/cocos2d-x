@@ -29,7 +29,7 @@ NS_CC_EXT_ARMATURE_BEGIN
 
 SpriteFrameCacheHelper *SpriteFrameCacheHelper::_spriteFrameCacheHelper = NULL;
 
-SpriteFrameCacheHelper *SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
+SpriteFrameCacheHelper *SpriteFrameCacheHelper::getInstance()
 {
     if(!_spriteFrameCacheHelper)
     {

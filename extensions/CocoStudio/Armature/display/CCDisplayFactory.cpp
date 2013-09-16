@@ -183,7 +183,7 @@ void DisplayFactory::initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDispla
         textureName = textureName.erase(startPos);
     }
 
-    TextureData *textureData = ArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
+    TextureData *textureData = ArmatureDataManager::getInstance()->getTextureData(textureName.c_str());
     if(textureData)
     {
         //! Init display anchorPoint, every Texture have a anchor point

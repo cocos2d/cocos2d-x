@@ -73,7 +73,10 @@ protected:
 
 public:
 
-	static DataReaderHelper *sharedDataReaderHelper();
+	/** @deprecated Use getInstance() instead */
+	CC_DEPRECATED_ATTRIBUTE static DataReaderHelper *sharedDataReaderHelper() { return DataReaderHelper::getInstance(); }
+
+	static DataReaderHelper *getInstance();
 
     /**
      * Scale the position data, used for multiresolution adapter
