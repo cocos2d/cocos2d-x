@@ -89,7 +89,14 @@ This information is obtained from the TMX file.
 class CC_DLL TMXLayerInfo : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     TMXLayerInfo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXLayerInfo();
 
     void setProperties(Dictionary *properties);
@@ -130,7 +137,14 @@ public:
     //! size in pixels of the image
     Size          _imageSize;
 public:
+    /**
+     * @js ctor
+     */
     TMXTilesetInfo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXTilesetInfo();
     Rect rectForGID(unsigned int gid);
 };
@@ -160,8 +174,14 @@ public:
     CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithTMXFile(const char *tmxFile) { return TMXMapInfo::create(tmxFile); };
     /** creates a TMX Format with an XML string and a TMX resource path */
     CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath) { return TMXMapInfo::createWithXML(tmxString, resourcePath); };
-    
+    /**
+     * @js ctor
+     */
     TMXMapInfo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXMapInfo();
     
     /** initializes a TMX format with a  tmx file */
@@ -242,8 +262,20 @@ public:
     };
     
     // implement pure virtual methods of SAXDelegator
+    /**
+     * @js NA
+     * @lua NA
+     */
     void startElement(void *ctx, const char *name, const char **atts);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void endElement(void *ctx, const char *name);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void textHandler(void *ctx, const char *ch, int len);
     
     inline const char* getCurrentString(){ return _currentString.c_str(); }

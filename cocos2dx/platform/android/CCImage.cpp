@@ -170,6 +170,7 @@ bool Image::initWithString(
         _height   = (short)dc._height;
         _preMulti = true;
         _renderFormat = Texture2D::PixelFormat::RGBA8888;
+        _dataLen = _width * _height * 4;
 
         bRet = true;
     } while (0);
@@ -221,6 +222,7 @@ bool Image::initWithStringShadowStroke(
 	        _height   = (short)dc._height;
 	        _preMulti = true;
 		    _renderFormat = Texture2D::PixelFormat::RGBA8888;
+            _dataLen = _width * _height * 4;
 
 	        // swap the alpha channel (ARGB to RGBA)
 	        swapAlphaChannel((unsigned int *)_data, (_width * _height) );

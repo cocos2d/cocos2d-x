@@ -7,6 +7,7 @@
 class PhysicsTestLayer : public Layer
 {
     Texture2D* _spriteTexture;    // weak ref
+    Scene* _scene;
     
 public:
     PhysicsTestLayer();
@@ -14,9 +15,11 @@ public:
 
     void createResetButton();
     
+    inline void setScene(Scene* scene) { _scene = scene; }
     void toggleDebugCallback(Object* sender);
     void addNewSpriteAtPosition(Point p);
-    virtual void ccTouchesEnded(Set* touches, Event* event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    virtual void onAcceleration(Acceleration* acc, Event* event) override;
 } ;
 
 class PhysicsTestScene : public TestScene

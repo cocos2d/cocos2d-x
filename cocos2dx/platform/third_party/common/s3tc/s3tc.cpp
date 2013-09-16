@@ -140,8 +140,8 @@ static void s3tc_decode_block(uint8_t **blockData,
 //Decode S3TC encode data to RGB32
 void s3tc_decode(uint8_t *encodeData,             //in_data
                  uint8_t *decodeData,             //out_data
-                 const unsigned int pixelsWidth,
-                 const unsigned int pixelsHeight,
+                 const int pixelsWidth,
+                 const int pixelsHeight,
                  S3TCDecodeFlag decodeFlag)
 {
     uint32_t *decodeBlockData = (uint32_t *)decodeData;

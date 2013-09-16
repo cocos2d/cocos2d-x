@@ -24,7 +24,7 @@ using namespace cocos2d::extension;
     
 void GLNode::draw()
 {
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::kGLNodeDrawHandler);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::GL_NODE_DRAW);
     if (0 != handler)
     {
             CommonScriptData data(handler,"");
@@ -5322,7 +5322,7 @@ static int tolua_Cocos2d_CCGLProgram_vertexShaderLog00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'vertexShaderLog'", NULL);
 #endif
         {
-            const char* tolua_ret = (const char*)  self->vertexShaderLog();
+            const char* tolua_ret = (const char*)  self->getVertexShaderLog();
             tolua_pushstring(tolua_S,(const char*)tolua_ret);
         }
     }
@@ -5354,7 +5354,7 @@ static int tolua_Cocos2d_CCGLProgram_fragmentShaderLog00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fragmentShaderLog'", NULL);
 #endif
         {
-            const char* tolua_ret = (const char*)  self->fragmentShaderLog();
+            const char* tolua_ret = (const char*)  self->getFragmentShaderLog();
             tolua_pushstring(tolua_S,(const char*)tolua_ret);
         }
     }
@@ -5386,7 +5386,7 @@ static int tolua_Cocos2d_CCGLProgram_programLog00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'programLog'", NULL);
 #endif
         {
-            const char* tolua_ret = (const char*)  self->programLog();
+            const char* tolua_ret = (const char*)  self->getProgramLog();
             tolua_pushstring(tolua_S,(const char*)tolua_ret);
         }
     }
@@ -5727,7 +5727,7 @@ static int tolua_Cocos2d_CCShaderCache_programForKey00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'programForKey'", NULL);
 #endif
   {
-   GLProgram* tolua_ret = (GLProgram*)  self->programForKey(key);
+   GLProgram* tolua_ret = (GLProgram*)  self->getProgram(key);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCGLProgram");
   }
  }

@@ -652,7 +652,7 @@ void ActionAnimate::onEnter()
     {
         char szName[100] = {0};
         sprintf(szName, "Images/grossini_dance_%02d.png", i);
-        animation->addSpriteFrameWithFileName(szName);
+        animation->addSpriteFrameWithFile(szName);
     }
     // should last 2.8 seconds. And there are 14 frames.
     animation->setDelayPerUnit(2.8f / 14.0f);
@@ -667,7 +667,7 @@ void ActionAnimate::onEnter()
     // With 2 loops and reverse
     auto cache = AnimationCache::getInstance();
     cache->addAnimationsWithFile("animations/animations-2.plist");
-    auto animation2 = cache->animationByName("dance_1");
+    auto animation2 = cache->getAnimation("dance_1");
 
     auto action2 = Animate::create(animation2);
     _tamara->runAction(Sequence::create(action2, action2->reverse(), NULL));
@@ -1401,12 +1401,9 @@ void ActionStacked::runActionsInSprite(Sprite *sprite)
     // override me
 }
 
-void ActionStacked::ccTouchesEnded(Set* touches, Event* event)
+void ActionStacked::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for ( auto &item: *touches ) {
-
-        const Touch *touch = static_cast<Touch*>(item);
-
+    for ( auto &touch: touches ) {
         auto location = touch->getLocation();
         addNewSpriteWithCoords( location );
     }

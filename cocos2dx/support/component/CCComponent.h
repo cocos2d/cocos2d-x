@@ -33,11 +33,26 @@ NS_CC_BEGIN
 class CC_DLL Component : public Object
 {
 protected:
+    /**
+     * @js ctor
+     */
     Component(void);
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Component(void);
     virtual bool init();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit();
     virtual void update(float delta);
     virtual void serialize(void* r);
@@ -46,6 +61,7 @@ public:
     static Component* create(void);
     
     const char* getName() const;
+    void setName(const char *pName);
     
     void setOwner(Node *pOwner);
     Node* getOwner() const;

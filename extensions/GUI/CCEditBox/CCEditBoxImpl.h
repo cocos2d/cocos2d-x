@@ -36,7 +36,14 @@ NS_CC_EXT_BEGIN
 class EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImpl(EditBox* pEditBox) : _delegate(NULL),_editBox(pEditBox) {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EditBoxImpl() {}
     
     virtual bool initWithSize(const Size& size) = 0;
@@ -63,7 +70,15 @@ public:
     virtual void setVisible(bool visible) = 0;
     virtual void setContentSize(const Size& size) = 0;
 	virtual void setAnchorPoint(const Point& anchorPoint) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit(void) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter(void) = 0;
     
     

@@ -62,8 +62,14 @@ public:
     
     /** Creates a progress timer with the sprite as the shape the timer goes through */
     static ProgressTimer* create(Sprite* sp);
-
+    /**
+     * @js ctor
+     */
     ProgressTimer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ProgressTimer();
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
@@ -81,6 +87,10 @@ public:
     void setPercentage(float fPercentage);
     void setSprite(Sprite *pSprite);
     void setType(Type type);
+    /**
+     * @js setReverseDirection
+     * @lua setReverseDirection
+     */
     void setReverseProgress(bool reverse);
 
     inline bool isReverseDirection() { return _reverseDirection; };

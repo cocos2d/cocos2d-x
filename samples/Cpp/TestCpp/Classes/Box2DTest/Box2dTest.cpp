@@ -205,16 +205,12 @@ void Box2DTestLayer::update(float dt)
     world->Step(dt, velocityIterations, positionIterations);
 }
 
-void Box2DTestLayer::ccTouchesEnded(Set* touches, Event* event)
+void Box2DTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
-    SetIterator it;
-    Touch* touch;
 
-    for( it = touches->begin(); it != touches->end(); it++) 
+    for (auto& touch : touches)
     {
-        touch = static_cast<Touch*>(*it);
-
         if(!touch)
             break;
 

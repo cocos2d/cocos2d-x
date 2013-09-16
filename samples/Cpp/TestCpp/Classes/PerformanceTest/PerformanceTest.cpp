@@ -5,6 +5,7 @@
 #include "PerformanceSpriteTest.h"
 #include "PerformanceTextureTest.h"
 #include "PerformanceTouchesTest.h"
+#include "PerformanceAllocTest.h"
 
 enum
 {
@@ -17,11 +18,12 @@ struct {
 	std::function<void(Object*)> callback;
 } g_testsName[] =
 {
-    { "PerformanceNodeChildrenTest", [](Object*sender){runNodeChildrenTest();} },
-	{ "PerformanceParticleTest",[](Object*sender){runParticleTest();} },
-	{ "PerformanceSpriteTest",[](Object*sender){runSpriteTest();} },
-	{ "PerformanceTextureTest",[](Object*sender){runTextureTest();} },
-	{ "PerformanceTouchesTest",[](Object*sender){runTouchesTest();} },
+    { "Alloc Test", [](Object*sender){runAllocPerformanceTest(); } },
+    { "NodeChildren Test", [](Object*sender){runNodeChildrenTest();} },
+	{ "Particle Test",[](Object*sender){runParticleTest();} },
+	{ "Sprite Perf Test",[](Object*sender){runSpriteTest();} },
+	{ "Texture Perf Test",[](Object*sender){runTextureTest();} },
+	{ "Touches Perf Test",[](Object*sender){runTouchesTest();} },
 };
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);

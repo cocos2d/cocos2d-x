@@ -669,9 +669,55 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polyline")
     {
         // find parent object's dict and add polyline-points to it
-        // TMXObjectGroup* objectGroup = (TMXObjectGroup*)_objectGroups->lastObject();
-        // Dictionary* dict = (Dictionary*)objectGroup->getObjects()->lastObject();
-        // TODO: dict->setObject:[attributeDict objectForKey:@"points"] forKey:@"polylinePoints"];
+        TMXObjectGroup* objectGroup = (TMXObjectGroup*)_objectGroups->getLastObject();
+        Dictionary* dict = (Dictionary*)objectGroup->getObjects()->getLastObject();
+        
+        // get points value string
+        const char* value = valueForKey("points", attributeDict);
+        if(value)
+        {
+            Array* pointsArray = Array::createWithCapacity(10);
+            
+            // parse points string into a space-separated set of points
+            stringstream pointsStream(value);
+            string pointPair;
+            while(std::getline(pointsStream, pointPair, ' '))
+            {
+                // parse each point combo into a comma-separated x,y point
+                stringstream pointStream(pointPair);
+                string xStr,yStr;
+                char buffer[32] = {0};
+                
+                Dictionary* pointDict = new Dictionary;
+                pointDict->init();
+                
+                // set x
+                if(std::getline(pointStream, xStr, ','))
+                {
+                    int x = atoi(xStr.c_str()) + (int)objectGroup->getPositionOffset().x;
+                    sprintf(buffer, "%d", x);
+                    String* pStr = new String(buffer);
+                    pStr->autorelease();
+                    pointDict->setObject(pStr, "x");
+                }
+                
+                // set y
+                if(std::getline(pointStream, yStr, ','))
+                {
+                    int y = atoi(yStr.c_str()) + (int)objectGroup->getPositionOffset().y;
+                    sprintf(buffer, "%d", y);
+                    String* pStr = new String(buffer);
+                    pStr->autorelease();
+                    pointDict->setObject(pStr, "y");
+                }
+                
+                // add to points array
+                pointsArray->addObject(pointDict);
+                pointDict->release();
+            }
+            
+            dict->setObject(pointsArray, "polylinePoints");
+        }
     }
 
     if (attributeDict)

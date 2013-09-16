@@ -66,7 +66,7 @@ void LuaWebSocket::onOpen(WebSocket* ws)
 {
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
-        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerOpen);
+        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_OPEN);
         if (0 != nHandler) {
             CommonScriptData data(nHandler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
@@ -80,14 +80,14 @@ void LuaWebSocket::onMessage(WebSocket* ws, const WebSocket::Data& data)
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
         if (data.isBinary) {
-            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerMessage);
+            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
             if (0 != nHandler) {
                 SendBinaryMessageToLua(nHandler, (const unsigned char*)data.bytes, data.len);
             }
         }
         else{
                 
-            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerMessage);
+            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
             if (0 != nHandler) {
                     CommonScriptData commonData(nHandler,data.bytes);
                     ScriptEvent event(kCommonEvent,(void*)&commonData);
@@ -101,7 +101,7 @@ void LuaWebSocket::onClose(WebSocket* ws)
 {
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
-        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerClose);
+        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_CLOSE);
         if (0 != nHandler)
         {
             CommonScriptData data(nHandler,"");

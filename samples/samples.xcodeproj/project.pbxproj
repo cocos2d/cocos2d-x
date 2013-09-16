@@ -154,6 +154,8 @@
 		1A2E824C17952ECE0058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A2E824D17952ED70058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A2E824E17952EDF0058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A33319A17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */; };
+		1A33319B17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */; };
 		1A6FB4DE17854A6A00CDF010 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C417854A6A00CDF010 /* animations */; };
 		1A6FB4DF17854A6A00CDF010 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C517854A6A00CDF010 /* armature */; };
 		1A6FB4E017854A6A00CDF010 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C617854A6A00CDF010 /* background-music-aac.wav */; };
@@ -280,6 +282,24 @@
 		1AA62D3B17A15EB00006E64F /* sd in Resources */ = {isa = PBXBuildFile; fileRef = A0BD5A1D178F5F6C008915C5 /* sd */; };
 		1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
 		1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
+		37B6EF8A17DEB8FB001BE102 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8817DEB741001BE102 /* SceneEditorTest.cpp */; };
+		37B6EF8B17DEB8FD001BE102 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8817DEB741001BE102 /* SceneEditorTest.cpp */; };
+		37B6EF8C17DEB922001BE102 /* ComponentsTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7B17DEB741001BE102 /* ComponentsTestScene.cpp */; };
+		37B6EF8D17DEB925001BE102 /* ComponentsTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7B17DEB741001BE102 /* ComponentsTestScene.cpp */; };
+		37B6EF8E17DEB929001BE102 /* EnemyController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7D17DEB741001BE102 /* EnemyController.cpp */; };
+		37B6EF8F17DEB92B001BE102 /* EnemyController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7D17DEB741001BE102 /* EnemyController.cpp */; };
+		37B6EF9017DEB932001BE102 /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7F17DEB741001BE102 /* GameOverScene.cpp */; };
+		37B6EF9117DEB933001BE102 /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7F17DEB741001BE102 /* GameOverScene.cpp */; };
+		37B6EF9217DEB937001BE102 /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8117DEB741001BE102 /* PlayerController.cpp */; };
+		37B6EF9417DEB93D001BE102 /* ProjectileController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8317DEB741001BE102 /* ProjectileController.cpp */; };
+		37B6EF9517DEB93F001BE102 /* ProjectileController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8317DEB741001BE102 /* ProjectileController.cpp */; };
+		37B6EF9617DEB942001BE102 /* SceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8517DEB741001BE102 /* SceneController.cpp */; };
+		37B6EF9717DEB944001BE102 /* SceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8517DEB741001BE102 /* SceneController.cpp */; };
+		37B6EF9817DEB94E001BE102 /* ArmatureScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7817DEB741001BE102 /* ArmatureScene.cpp */; };
+		37B6EF9917DEB950001BE102 /* ArmatureScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7817DEB741001BE102 /* ArmatureScene.cpp */; };
+		37B6F03417DEBD17001BE102 /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8117DEB741001BE102 /* PlayerController.cpp */; };
+		37B6F06F17DEBDF3001BE102 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37B6F06E17DEBDF3001BE102 /* scenetest */; };
+		37B6F07017DEBDF3001BE102 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37B6F06E17DEBDF3001BE102 /* scenetest */; };
 		A01E166C1784BDA100B0CA4A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEA178254FF00987F6C /* .gitignore */; };
 		A01E166D1784BDA100B0CA4A /* app.config.txt in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEB178254FF00987F6C /* app.config.txt */; };
 		A01E166E1784BDA100B0CA4A /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEC178254FF00987F6C /* app.icf */; };
@@ -702,7 +722,6 @@
 		A0359AC417821D9C00987F6C /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599CD17821D9B00987F6C /* DrawPrimitivesTest.cpp */; };
 		A0359AC517821D9C00987F6C /* EffectsAdvancedTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599D017821D9B00987F6C /* EffectsAdvancedTest.cpp */; };
 		A0359AC617821D9C00987F6C /* EffectsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599D317821D9B00987F6C /* EffectsTest.cpp */; };
-		A0359AC717821D9C00987F6C /* ArmatureScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599D717821D9B00987F6C /* ArmatureScene.cpp */; };
 		A0359AC817821D9C00987F6C /* AnimationsTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599DC17821D9B00987F6C /* AnimationsTestLayer.cpp */; };
 		A0359AC917821D9C00987F6C /* ButtonTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599DF17821D9B00987F6C /* ButtonTestLayer.cpp */; };
 		A0359ACA17821D9C00987F6C /* CocosBuilderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599E217821D9B00987F6C /* CocosBuilderTest.cpp */; };
@@ -710,12 +729,6 @@
 		A0359ACC17821D9C00987F6C /* MenuTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599EC17821D9B00987F6C /* MenuTestLayer.cpp */; };
 		A0359ACD17821D9C00987F6C /* TestHeaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599F917821D9B00987F6C /* TestHeaderLayer.cpp */; };
 		A0359ACE17821D9C00987F6C /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599FE17821D9B00987F6C /* TimelineCallbackTestLayer.cpp */; };
-		A0359ACF17821D9C00987F6C /* ComponentsTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0117821D9B00987F6C /* ComponentsTestScene.cpp */; };
-		A0359AD017821D9C00987F6C /* EnemyController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0317821D9B00987F6C /* EnemyController.cpp */; };
-		A0359AD117821D9C00987F6C /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0517821D9B00987F6C /* GameOverScene.cpp */; };
-		A0359AD217821D9C00987F6C /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0717821D9B00987F6C /* PlayerController.cpp */; };
-		A0359AD317821D9C00987F6C /* ProjectileController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0917821D9B00987F6C /* ProjectileController.cpp */; };
-		A0359AD417821D9C00987F6C /* SceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0B17821D9B00987F6C /* SceneController.cpp */; };
 		A0359AD517821D9C00987F6C /* CCControlButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0F17821D9B00987F6C /* CCControlButtonTest.cpp */; };
 		A0359AD617821D9C00987F6C /* CCControlColourPickerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1217821D9B00987F6C /* CCControlColourPickerTest.cpp */; };
 		A0359AD717821D9C00987F6C /* CCControlPotentiometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1517821D9B00987F6C /* CCControlPotentiometerTest.cpp */; };
@@ -1052,6 +1065,8 @@
 		A035AF6F1782567A00987F6C /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6C1782567A00987F6C /* ipad */; };
 		A035AF701782567A00987F6C /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6D1782567A00987F6C /* ipadhd */; };
 		A035AF711782567A00987F6C /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6E1782567A00987F6C /* iphone */; };
+		A03A915017D95C5400FEABDE /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03A914E17D95C5400FEABDE /* PerformanceAllocTest.cpp */; };
+		A03A915117D95C5400FEABDE /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03A914E17D95C5400FEABDE /* PerformanceAllocTest.cpp */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A510B17839F040073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
 		A07A511017839FC80073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
@@ -1160,7 +1175,6 @@
 		A07A51CE1783A1D20073F6A7 /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599CD17821D9B00987F6C /* DrawPrimitivesTest.cpp */; };
 		A07A51CF1783A1D20073F6A7 /* EffectsAdvancedTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599D017821D9B00987F6C /* EffectsAdvancedTest.cpp */; };
 		A07A51D01783A1D20073F6A7 /* EffectsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599D317821D9B00987F6C /* EffectsTest.cpp */; };
-		A07A51D11783A1D20073F6A7 /* ArmatureScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599D717821D9B00987F6C /* ArmatureScene.cpp */; };
 		A07A51D21783A1D20073F6A7 /* AnimationsTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599DC17821D9B00987F6C /* AnimationsTestLayer.cpp */; };
 		A07A51D31783A1D20073F6A7 /* ButtonTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599DF17821D9B00987F6C /* ButtonTestLayer.cpp */; };
 		A07A51D41783A1D20073F6A7 /* CocosBuilderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599E217821D9B00987F6C /* CocosBuilderTest.cpp */; };
@@ -1168,12 +1182,6 @@
 		A07A51D61783A1D20073F6A7 /* MenuTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599EC17821D9B00987F6C /* MenuTestLayer.cpp */; };
 		A07A51D71783A1D20073F6A7 /* TestHeaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599F917821D9B00987F6C /* TestHeaderLayer.cpp */; };
 		A07A51D81783A1D20073F6A7 /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03599FE17821D9B00987F6C /* TimelineCallbackTestLayer.cpp */; };
-		A07A51D91783A1D20073F6A7 /* ComponentsTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0117821D9B00987F6C /* ComponentsTestScene.cpp */; };
-		A07A51DA1783A1D20073F6A7 /* EnemyController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0317821D9B00987F6C /* EnemyController.cpp */; };
-		A07A51DB1783A1D20073F6A7 /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0517821D9B00987F6C /* GameOverScene.cpp */; };
-		A07A51DC1783A1D20073F6A7 /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0717821D9B00987F6C /* PlayerController.cpp */; };
-		A07A51DD1783A1D20073F6A7 /* ProjectileController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0917821D9B00987F6C /* ProjectileController.cpp */; };
-		A07A51DE1783A1D20073F6A7 /* SceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0B17821D9B00987F6C /* SceneController.cpp */; };
 		A07A51DF1783A1D20073F6A7 /* CCControlButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A0F17821D9B00987F6C /* CCControlButtonTest.cpp */; };
 		A07A51E01783A1D20073F6A7 /* CCControlColourPickerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1217821D9B00987F6C /* CCControlColourPickerTest.cpp */; };
 		A07A51E11783A1D20073F6A7 /* CCControlPotentiometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A1517821D9B00987F6C /* CCControlPotentiometerTest.cpp */; };
@@ -1287,6 +1295,7 @@
 		B36FB10917990F13005F39FB /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
 		B3F4402117DF06F0003B4F84 /* PhysicsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */; };
 		B3F4402217DF06F0003B4F84 /* PhysicsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */; };
+		ED32BBA817DDDA4E004E0169 /* ShaderTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */; };
 		ED743D1517D098AF0004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1617D098B60004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1717D099F10004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
@@ -1298,6 +1307,7 @@
 		ED743D1D17D09CD40004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1E17D09D070004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
+		EDF3D9C317D9B6B000D4C480 /* ShaderTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2349,6 +2359,8 @@
 		1A119C9117853D8D00D62A44 /* Opengl.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Opengl.lua; path = ../scripting/lua/script/Opengl.lua; sourceTree = "<group>"; };
 		1A119C9217853D8D00D62A44 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenglConstants.lua; path = ../scripting/lua/script/OpenglConstants.lua; sourceTree = "<group>"; };
 		1A2E823A1793EED50058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewEventDispatcherTest.cpp; sourceTree = "<group>"; };
+		1A33319917E2DFEA00ED3802 /* NewEventDispatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEventDispatcherTest.h; sourceTree = "<group>"; };
 		1A6FB4C417854A6A00CDF010 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = Cpp/TestCpp/Resources/animations; sourceTree = SOURCE_ROOT; };
 		1A6FB4C517854A6A00CDF010 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; name = armature; path = Cpp/TestCpp/Resources/armature; sourceTree = SOURCE_ROOT; };
 		1A6FB4C617854A6A00CDF010 /* background-music-aac.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "background-music-aac.wav"; path = "Cpp/TestCpp/Resources/background-music-aac.wav"; sourceTree = SOURCE_ROOT; };
@@ -2393,6 +2405,23 @@
 		1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scale9SpriteTest.cpp; sourceTree = "<group>"; };
 		1ACD13F2178E487D00682DBD /* Scale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scale9SpriteTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		37B6EF7817DEB741001BE102 /* ArmatureScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArmatureScene.cpp; sourceTree = "<group>"; };
+		37B6EF7917DEB741001BE102 /* ArmatureScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureScene.h; sourceTree = "<group>"; };
+		37B6EF7B17DEB741001BE102 /* ComponentsTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComponentsTestScene.cpp; sourceTree = "<group>"; };
+		37B6EF7C17DEB741001BE102 /* ComponentsTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentsTestScene.h; sourceTree = "<group>"; };
+		37B6EF7D17DEB741001BE102 /* EnemyController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnemyController.cpp; sourceTree = "<group>"; };
+		37B6EF7E17DEB741001BE102 /* EnemyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnemyController.h; sourceTree = "<group>"; };
+		37B6EF7F17DEB741001BE102 /* GameOverScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverScene.cpp; sourceTree = "<group>"; };
+		37B6EF8017DEB741001BE102 /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScene.h; sourceTree = "<group>"; };
+		37B6EF8117DEB741001BE102 /* PlayerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerController.cpp; sourceTree = "<group>"; };
+		37B6EF8217DEB741001BE102 /* PlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
+		37B6EF8317DEB741001BE102 /* ProjectileController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProjectileController.cpp; sourceTree = "<group>"; };
+		37B6EF8417DEB741001BE102 /* ProjectileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectileController.h; sourceTree = "<group>"; };
+		37B6EF8517DEB741001BE102 /* SceneController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneController.cpp; sourceTree = "<group>"; };
+		37B6EF8617DEB741001BE102 /* SceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneController.h; sourceTree = "<group>"; };
+		37B6EF8817DEB741001BE102 /* SceneEditorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorTest.cpp; sourceTree = "<group>"; };
+		37B6EF8917DEB741001BE102 /* SceneEditorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneEditorTest.h; sourceTree = "<group>"; };
+		37B6F06E17DEBDF3001BE102 /* scenetest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scenetest; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E16A11784BF3000B0CA4A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		A01E16A21784BF3000B0CA4A /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -2603,8 +2632,6 @@
 		A03599D117821D9B00987F6C /* EffectsAdvancedTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectsAdvancedTest.h; sourceTree = "<group>"; };
 		A03599D317821D9B00987F6C /* EffectsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectsTest.cpp; sourceTree = "<group>"; };
 		A03599D417821D9B00987F6C /* EffectsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectsTest.h; sourceTree = "<group>"; };
-		A03599D717821D9B00987F6C /* ArmatureScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArmatureScene.cpp; sourceTree = "<group>"; };
-		A03599D817821D9B00987F6C /* ArmatureScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureScene.h; sourceTree = "<group>"; };
 		A03599DB17821D9B00987F6C /* AnimationsLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsLayerLoader.h; sourceTree = "<group>"; };
 		A03599DC17821D9B00987F6C /* AnimationsTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationsTestLayer.cpp; sourceTree = "<group>"; };
 		A03599DD17821D9B00987F6C /* AnimationsTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsTestLayer.h; sourceTree = "<group>"; };
@@ -2633,18 +2660,6 @@
 		A03599FD17821D9B00987F6C /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
 		A03599FE17821D9B00987F6C /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
 		A03599FF17821D9B00987F6C /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
-		A0359A0117821D9B00987F6C /* ComponentsTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComponentsTestScene.cpp; sourceTree = "<group>"; };
-		A0359A0217821D9B00987F6C /* ComponentsTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentsTestScene.h; sourceTree = "<group>"; };
-		A0359A0317821D9B00987F6C /* EnemyController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnemyController.cpp; sourceTree = "<group>"; };
-		A0359A0417821D9B00987F6C /* EnemyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnemyController.h; sourceTree = "<group>"; };
-		A0359A0517821D9B00987F6C /* GameOverScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverScene.cpp; sourceTree = "<group>"; };
-		A0359A0617821D9B00987F6C /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScene.h; sourceTree = "<group>"; };
-		A0359A0717821D9B00987F6C /* PlayerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerController.cpp; sourceTree = "<group>"; };
-		A0359A0817821D9B00987F6C /* PlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
-		A0359A0917821D9B00987F6C /* ProjectileController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProjectileController.cpp; sourceTree = "<group>"; };
-		A0359A0A17821D9B00987F6C /* ProjectileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectileController.h; sourceTree = "<group>"; };
-		A0359A0B17821D9B00987F6C /* SceneController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneController.cpp; sourceTree = "<group>"; };
-		A0359A0C17821D9B00987F6C /* SceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneController.h; sourceTree = "<group>"; };
 		A0359A0F17821D9B00987F6C /* CCControlButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButtonTest.cpp; sourceTree = "<group>"; };
 		A0359A1017821D9B00987F6C /* CCControlButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonTest.h; sourceTree = "<group>"; };
 		A0359A1217821D9B00987F6C /* CCControlColourPickerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlColourPickerTest.cpp; sourceTree = "<group>"; };
@@ -2951,6 +2966,8 @@
 		A035AF6C1782567A00987F6C /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		A035AF6D1782567A00987F6C /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		A035AF6E1782567A00987F6C /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
+		A03A914E17D95C5400FEABDE /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceAllocTest.cpp; sourceTree = "<group>"; };
+		A03A914F17D95C5400FEABDE /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceAllocTest.h; sourceTree = "<group>"; };
 		A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		A07A52291783A1D20073F6A7 /* Test cpp iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52321783A3A80073F6A7 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -2997,6 +3014,8 @@
 		B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsTest.cpp; path = PhysicsTest/PhysicsTest.cpp; sourceTree = "<group>"; };
 		B3F4402017DF06F0003B4F84 /* PhysicsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsTest.h; path = PhysicsTest/PhysicsTest.h; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderTest2.cpp; sourceTree = "<group>"; };
+		EDF3D9C217D9B67C00D4C480 /* ShaderTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTest2.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3666,6 +3685,15 @@
 			name = "Lua Common";
 			sourceTree = "<group>";
 		};
+		1A33319117E2DF4E00ED3802 /* NewEventDispatcherTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */,
+				1A33319917E2DFEA00ED3802 /* NewEventDispatcherTest.h */,
+			);
+			path = NewEventDispatcherTest;
+			sourceTree = "<group>";
+		};
 		1A6FB57C1785513C00CDF010 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
@@ -3756,6 +3784,43 @@
 				15C64832165F3AFD007D4F18 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		37B6EF7717DEB741001BE102 /* CocoStudioArmatureTest */ = {
+			isa = PBXGroup;
+			children = (
+				37B6EF7817DEB741001BE102 /* ArmatureScene.cpp */,
+				37B6EF7917DEB741001BE102 /* ArmatureScene.h */,
+			);
+			path = CocoStudioArmatureTest;
+			sourceTree = "<group>";
+		};
+		37B6EF7A17DEB741001BE102 /* CocoStudioComponentsTest */ = {
+			isa = PBXGroup;
+			children = (
+				37B6EF7B17DEB741001BE102 /* ComponentsTestScene.cpp */,
+				37B6EF7C17DEB741001BE102 /* ComponentsTestScene.h */,
+				37B6EF7D17DEB741001BE102 /* EnemyController.cpp */,
+				37B6EF7E17DEB741001BE102 /* EnemyController.h */,
+				37B6EF7F17DEB741001BE102 /* GameOverScene.cpp */,
+				37B6EF8017DEB741001BE102 /* GameOverScene.h */,
+				37B6EF8117DEB741001BE102 /* PlayerController.cpp */,
+				37B6EF8217DEB741001BE102 /* PlayerController.h */,
+				37B6EF8317DEB741001BE102 /* ProjectileController.cpp */,
+				37B6EF8417DEB741001BE102 /* ProjectileController.h */,
+				37B6EF8517DEB741001BE102 /* SceneController.cpp */,
+				37B6EF8617DEB741001BE102 /* SceneController.h */,
+			);
+			path = CocoStudioComponentsTest;
+			sourceTree = "<group>";
+		};
+		37B6EF8717DEB741001BE102 /* CocoStudioSceneTest */ = {
+			isa = PBXGroup;
+			children = (
+				37B6EF8817DEB741001BE102 /* SceneEditorTest.cpp */,
+				37B6EF8917DEB741001BE102 /* SceneEditorTest.h */,
+			);
+			path = CocoStudioSceneTest;
 			sourceTree = "<group>";
 		};
 		A01E16A01784BF3000B0CA4A /* proj.ios */ = {
@@ -3892,6 +3957,7 @@
 			isa = PBXGroup;
 			children = (
 				B3F4401C17DF0590003B4F84 /* PhysicsTest */,
+				1A33319117E2DF4E00ED3802 /* NewEventDispatcherTest */,
 				A035994E17821D9B00987F6C /* AccelerometerTest */,
 				A035995117821D9B00987F6C /* ActionManagerTest */,
 				A035995417821D9B00987F6C /* ActionsEaseTest */,
@@ -4219,9 +4285,10 @@
 		A03599D517821D9B00987F6C /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
-				A03599D617821D9B00987F6C /* ArmatureTest */,
+				37B6EF7717DEB741001BE102 /* CocoStudioArmatureTest */,
+				37B6EF7A17DEB741001BE102 /* CocoStudioComponentsTest */,
+				37B6EF8717DEB741001BE102 /* CocoStudioSceneTest */,
 				A03599D917821D9B00987F6C /* CocosBuilderTest */,
-				A0359A0017821D9B00987F6C /* ComponentsTest */,
 				A0359A0D17821D9B00987F6C /* ControlExtensionTest */,
 				A0359A2417821D9B00987F6C /* EditBoxTest */,
 				A0359A2717821D9B00987F6C /* ExtensionsTest.cpp */,
@@ -4232,15 +4299,6 @@
 				A0359A3117821D9B00987F6C /* TableViewTest */,
 			);
 			path = ExtensionsTest;
-			sourceTree = "<group>";
-		};
-		A03599D617821D9B00987F6C /* ArmatureTest */ = {
-			isa = PBXGroup;
-			children = (
-				A03599D717821D9B00987F6C /* ArmatureScene.cpp */,
-				A03599D817821D9B00987F6C /* ArmatureScene.h */,
-			);
-			path = ArmatureTest;
 			sourceTree = "<group>";
 		};
 		A03599D917821D9B00987F6C /* CocosBuilderTest */ = {
@@ -4356,25 +4414,6 @@
 				A03599FF17821D9B00987F6C /* TimelineCallbackTestLayer.h */,
 			);
 			path = TimelineCallbackTest;
-			sourceTree = "<group>";
-		};
-		A0359A0017821D9B00987F6C /* ComponentsTest */ = {
-			isa = PBXGroup;
-			children = (
-				A0359A0117821D9B00987F6C /* ComponentsTestScene.cpp */,
-				A0359A0217821D9B00987F6C /* ComponentsTestScene.h */,
-				A0359A0317821D9B00987F6C /* EnemyController.cpp */,
-				A0359A0417821D9B00987F6C /* EnemyController.h */,
-				A0359A0517821D9B00987F6C /* GameOverScene.cpp */,
-				A0359A0617821D9B00987F6C /* GameOverScene.h */,
-				A0359A0717821D9B00987F6C /* PlayerController.cpp */,
-				A0359A0817821D9B00987F6C /* PlayerController.h */,
-				A0359A0917821D9B00987F6C /* ProjectileController.cpp */,
-				A0359A0A17821D9B00987F6C /* ProjectileController.h */,
-				A0359A0B17821D9B00987F6C /* SceneController.cpp */,
-				A0359A0C17821D9B00987F6C /* SceneController.h */,
-			);
-			path = ComponentsTest;
 			sourceTree = "<group>";
 		};
 		A0359A0D17821D9B00987F6C /* ControlExtensionTest */ = {
@@ -4612,6 +4651,8 @@
 		A0359A5D17821D9C00987F6C /* PerformanceTest */ = {
 			isa = PBXGroup;
 			children = (
+				A03A914E17D95C5400FEABDE /* PerformanceAllocTest.cpp */,
+				A03A914F17D95C5400FEABDE /* PerformanceAllocTest.h */,
 				A0359A5E17821D9C00987F6C /* PerformanceNodeChildrenTest.cpp */,
 				A0359A5F17821D9C00987F6C /* PerformanceNodeChildrenTest.h */,
 				A0359A6017821D9C00987F6C /* PerformanceParticleTest.cpp */,
@@ -4667,6 +4708,8 @@
 		A0359A7617821D9C00987F6C /* ShaderTest */ = {
 			isa = PBXGroup;
 			children = (
+				EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */,
+				EDF3D9C217D9B67C00D4C480 /* ShaderTest2.h */,
 				A0359A7717821D9C00987F6C /* ShaderTest.cpp */,
 				A0359A7817821D9C00987F6C /* ShaderTest.h */,
 			);
@@ -4790,6 +4833,7 @@
 		A035A0201782270800987F6C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				37B6F06E17DEBDF3001BE102 /* scenetest */,
 				A035A4FF1782275800987F6C /* animations */,
 				A035A5001782275800987F6C /* app.icf */,
 				A035A5011782275800987F6C /* armature */,
@@ -6181,6 +6225,7 @@
 				A07A525D1783A3D90073F6A7 /* InfoPlist.strings in Resources */,
 				A07A525E1783A3D90073F6A7 /* MainMenu.xib in Resources */,
 				A07A525F1783A3D90073F6A7 /* Icon.icns in Resources */,
+				37B6F06F17DEBDF3001BE102 /* scenetest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6745,6 +6790,7 @@
 				A07A52491783A3A90073F6A7 /* Icon-144.png in Resources */,
 				A07A524A1783A3A90073F6A7 /* Icon-57.png in Resources */,
 				A07A524B1783A3A90073F6A7 /* Icon-72.png in Resources */,
+				37B6F07017DEBDF3001BE102 /* scenetest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6814,6 +6860,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED32BBA817DDDA4E004E0169 /* ShaderTest2.cpp in Sources */,
 				A0359AA417821D9C00987F6C /* AccelerometerTest.cpp in Sources */,
 				A0359AA517821D9C00987F6C /* ActionManagerTest.cpp in Sources */,
 				A0359AA617821D9C00987F6C /* ActionsEaseTest.cpp in Sources */,
@@ -6850,7 +6897,6 @@
 				A0359AC417821D9C00987F6C /* DrawPrimitivesTest.cpp in Sources */,
 				A0359AC517821D9C00987F6C /* EffectsAdvancedTest.cpp in Sources */,
 				A0359AC617821D9C00987F6C /* EffectsTest.cpp in Sources */,
-				A0359AC717821D9C00987F6C /* ArmatureScene.cpp in Sources */,
 				A0359AC817821D9C00987F6C /* AnimationsTestLayer.cpp in Sources */,
 				A0359AC917821D9C00987F6C /* ButtonTestLayer.cpp in Sources */,
 				A0359ACA17821D9C00987F6C /* CocosBuilderTest.cpp in Sources */,
@@ -6858,12 +6904,6 @@
 				A0359ACC17821D9C00987F6C /* MenuTestLayer.cpp in Sources */,
 				A0359ACD17821D9C00987F6C /* TestHeaderLayer.cpp in Sources */,
 				A0359ACE17821D9C00987F6C /* TimelineCallbackTestLayer.cpp in Sources */,
-				A0359ACF17821D9C00987F6C /* ComponentsTestScene.cpp in Sources */,
-				A0359AD017821D9C00987F6C /* EnemyController.cpp in Sources */,
-				A0359AD117821D9C00987F6C /* GameOverScene.cpp in Sources */,
-				A0359AD217821D9C00987F6C /* PlayerController.cpp in Sources */,
-				A0359AD317821D9C00987F6C /* ProjectileController.cpp in Sources */,
-				A0359AD417821D9C00987F6C /* SceneController.cpp in Sources */,
 				A0359AD517821D9C00987F6C /* CCControlButtonTest.cpp in Sources */,
 				A0359AD617821D9C00987F6C /* CCControlColourPickerTest.cpp in Sources */,
 				A0359AD717821D9C00987F6C /* CCControlPotentiometerTest.cpp in Sources */,
@@ -6922,6 +6962,16 @@
 				1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 				1A96FFCD1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
 				018DB85117B41BDB006EC77B /* LabelTestNew.cpp in Sources */,
+				A03A915017D95C5400FEABDE /* PerformanceAllocTest.cpp in Sources */,
+				37B6EF8B17DEB8FD001BE102 /* SceneEditorTest.cpp in Sources */,
+				37B6EF8C17DEB922001BE102 /* ComponentsTestScene.cpp in Sources */,
+				37B6EF8E17DEB929001BE102 /* EnemyController.cpp in Sources */,
+				37B6EF9017DEB932001BE102 /* GameOverScene.cpp in Sources */,
+				37B6EF9217DEB937001BE102 /* PlayerController.cpp in Sources */,
+				37B6EF9417DEB93D001BE102 /* ProjectileController.cpp in Sources */,
+				37B6EF9617DEB942001BE102 /* SceneController.cpp in Sources */,
+				37B6EF9817DEB94E001BE102 /* ArmatureScene.cpp in Sources */,
+				1A33319A17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7085,6 +7135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDF3D9C317D9B6B000D4C480 /* ShaderTest2.cpp in Sources */,
 				A07A51AE1783A1D20073F6A7 /* AccelerometerTest.cpp in Sources */,
 				A07A51AF1783A1D20073F6A7 /* ActionManagerTest.cpp in Sources */,
 				A07A51B01783A1D20073F6A7 /* ActionsEaseTest.cpp in Sources */,
@@ -7120,7 +7171,6 @@
 				A07A51CE1783A1D20073F6A7 /* DrawPrimitivesTest.cpp in Sources */,
 				A07A51CF1783A1D20073F6A7 /* EffectsAdvancedTest.cpp in Sources */,
 				A07A51D01783A1D20073F6A7 /* EffectsTest.cpp in Sources */,
-				A07A51D11783A1D20073F6A7 /* ArmatureScene.cpp in Sources */,
 				A07A51D21783A1D20073F6A7 /* AnimationsTestLayer.cpp in Sources */,
 				A07A51D31783A1D20073F6A7 /* ButtonTestLayer.cpp in Sources */,
 				A07A51D41783A1D20073F6A7 /* CocosBuilderTest.cpp in Sources */,
@@ -7128,12 +7178,6 @@
 				A07A51D61783A1D20073F6A7 /* MenuTestLayer.cpp in Sources */,
 				A07A51D71783A1D20073F6A7 /* TestHeaderLayer.cpp in Sources */,
 				A07A51D81783A1D20073F6A7 /* TimelineCallbackTestLayer.cpp in Sources */,
-				A07A51D91783A1D20073F6A7 /* ComponentsTestScene.cpp in Sources */,
-				A07A51DA1783A1D20073F6A7 /* EnemyController.cpp in Sources */,
-				A07A51DB1783A1D20073F6A7 /* GameOverScene.cpp in Sources */,
-				A07A51DC1783A1D20073F6A7 /* PlayerController.cpp in Sources */,
-				A07A51DD1783A1D20073F6A7 /* ProjectileController.cpp in Sources */,
-				A07A51DE1783A1D20073F6A7 /* SceneController.cpp in Sources */,
 				A07A51DF1783A1D20073F6A7 /* CCControlButtonTest.cpp in Sources */,
 				A07A51E01783A1D20073F6A7 /* CCControlColourPickerTest.cpp in Sources */,
 				A07A51E11783A1D20073F6A7 /* CCControlPotentiometerTest.cpp in Sources */,
@@ -7195,6 +7239,16 @@
 				1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 				1A96FFCE1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
 				018DB85017B41BD9006EC77B /* LabelTestNew.cpp in Sources */,
+				A03A915117D95C5400FEABDE /* PerformanceAllocTest.cpp in Sources */,
+				37B6EF8A17DEB8FB001BE102 /* SceneEditorTest.cpp in Sources */,
+				37B6EF8D17DEB925001BE102 /* ComponentsTestScene.cpp in Sources */,
+				37B6EF8F17DEB92B001BE102 /* EnemyController.cpp in Sources */,
+				37B6EF9117DEB933001BE102 /* GameOverScene.cpp in Sources */,
+				37B6EF9517DEB93F001BE102 /* ProjectileController.cpp in Sources */,
+				37B6EF9717DEB944001BE102 /* SceneController.cpp in Sources */,
+				37B6EF9917DEB950001BE102 /* ArmatureScene.cpp in Sources */,
+				37B6F03417DEBD17001BE102 /* PlayerController.cpp in Sources */,
+				1A33319B17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

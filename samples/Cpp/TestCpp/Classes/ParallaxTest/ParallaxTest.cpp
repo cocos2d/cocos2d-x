@@ -132,10 +132,9 @@ Parallax2::Parallax2()
     addChild(voidNode, 0, kTagNode);
 }
 
-void Parallax2::ccTouchesMoved(Set  *touches, Event  *event)
+void Parallax2::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
-    auto diff = touch->getDelta();
+    auto diff = touches[0]->getDelta();
     
     auto node = getChildByTag(kTagNode);
     auto currentPos = node->getPosition();

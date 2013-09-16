@@ -57,6 +57,10 @@ public:
 #endif
 
     Scene();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Scene();
     
     bool init();

@@ -45,9 +45,9 @@ class CC_DLL FileUtilsWin32 : public FileUtils
 public:
     /* override funtions */
     bool init();
-    virtual std::string getWritablePath();
-    virtual bool isFileExist(const std::string& strFilePath);
-    virtual bool isAbsolutePath(const std::string& strPath);
+    virtual std::string getWritablePath() const;
+    virtual bool isFileExist(const std::string& strFilePath) const;
+    virtual bool isAbsolutePath(const std::string& strPath) const;
 protected:
     /**
      *  Gets resource file data
