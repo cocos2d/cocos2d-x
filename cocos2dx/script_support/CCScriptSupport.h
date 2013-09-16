@@ -26,10 +26,9 @@
 #define __SCRIPT_SUPPORT_H__
 
 #include "platform/CCCommon.h"
-#include "CCAccelerometer.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouchEvent.h"
 #include "cocoa/CCSet.h"
-#include "CCAccelerometer.h"
 #include <map>
 #include <string>
 #include <list>
@@ -254,16 +253,16 @@ struct SchedulerScriptData
 
 struct TouchesScriptData
 {
-    int actionType;
+    TouchEvent::EventCode actionType;
     void* nativeObject;
-    Set* touches;
+    const std::vector<Touch*>& touches;
     
     // Constructor
     /**
      * @js NA
      * @lua NA
      */
-    TouchesScriptData(int inActionType, void* inNativeObject, Set* inTouches)
+    TouchesScriptData(TouchEvent::EventCode inActionType, void* inNativeObject, const std::vector<Touch*>& inTouches)
     : actionType(inActionType),
       nativeObject(inNativeObject),
       touches(inTouches)
@@ -273,7 +272,7 @@ struct TouchesScriptData
 
 struct TouchScriptData
 {
-    int actionType;
+    TouchEvent::EventCode actionType;
     void* nativeObject;
     Touch* touch;
     
@@ -282,7 +281,7 @@ struct TouchScriptData
      * @js NA
      * @lua NA
      */
-    TouchScriptData(int inActionType, void* inNativeObject, Touch* inTouch)
+    TouchScriptData(TouchEvent::EventCode inActionType, void* inNativeObject, Touch* inTouch)
     : actionType(inActionType),
       nativeObject(inNativeObject),
       touch(inTouch)

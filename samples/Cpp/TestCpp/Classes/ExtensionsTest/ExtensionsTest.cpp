@@ -115,16 +115,16 @@ void ExtensionsMainLayer::onEnter()
     addChild(_itemMenu);
 }
 
-void ExtensionsMainLayer::ccTouchesBegan(Set  *touches, Event  *event)
+void ExtensionsMainLayer::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = static_cast<Touch*>(touches[0]);
 
     _beginPos = touch->getLocation();    
 }
 
-void ExtensionsMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
+void ExtensionsMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = static_cast<Touch*>(touches[0]);
 
     auto touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;

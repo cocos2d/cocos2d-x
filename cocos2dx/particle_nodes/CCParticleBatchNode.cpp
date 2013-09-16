@@ -144,7 +144,8 @@ void ParticleBatchNode::visit()
     transform();
 
     draw();
-
+    updateEventPriorityIndex();
+    
     if ( _grid && _grid->isActive())
     {
         _grid->afterDraw(this);

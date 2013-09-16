@@ -37,12 +37,12 @@ public:
     virtual std::string subtitle() = 0;
     virtual void onClickTrackNode(bool bClicked) = 0;
 
-    virtual void registerWithTouchDispatcher();
+//    virtual void registerWithTouchDispatcher();
     virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
 
     // Layer
-    virtual bool ccTouchBegan(Touch  *touch, Event  *event);
-    virtual void ccTouchEnded(Touch  *touch, Event  *event);
+    bool onTouchBegan(Touch  *touch, Event  *event);
+    void onTouchEnded(Touch  *touch, Event  *event);
 
 protected:
     Node * _trackNode;
