@@ -472,6 +472,90 @@
     <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
       <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIImageView.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabel.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabelAtlas.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabelBMFont.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIButton.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UICheckBox.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Action\UIAction.cpp">
+      <Filter>CocoStudio\GUI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Action\UIActionFrame.cpp">
+      <Filter>CocoStudio\GUI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Action\UIActionManager.cpp">
+      <Filter>CocoStudio\GUI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Action\UIActionNode.cpp">
+      <Filter>CocoStudio\GUI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp">
+      <Filter>CocoStudio\GUI\BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp">
+      <Filter>CocoStudio\GUI\BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutExecutant.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\System\UIHelper.cpp">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\System\UIInputManager.cpp">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -781,6 +865,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\CCBone.h">
       <Filter>CocoStudio\Armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Armature\external_tool\GLES-Render.h">
+      <Filter>CocoStudio\Armature\external_tool</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\CSContentJsonDictionary.h">
       <Filter>CocoStudio\Json</Filter>
