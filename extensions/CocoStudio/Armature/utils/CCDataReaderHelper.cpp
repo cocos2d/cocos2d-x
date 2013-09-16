@@ -909,8 +909,6 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 
 
     //! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-    bool needCalcX = false;
-    bool needCalcY = false;
 
     CCFrameData **frames = (CCFrameData **)movBoneData->frameList.data->arr;
     for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
@@ -922,36 +920,12 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 
             if (difSkewX < -M_PI || difSkewX > M_PI)
             {
-                if (needCalcX)
-                {
-                    frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
-                }
-                else
-                {
-                    frames[i]->skewX = difSkewX < 0 ? frames[i]->skewX + 2 * M_PI : frames[i]->skewX - 2 * M_PI;
-                    needCalcX = true;
-                }
-            }
-            else
-            {
-                needCalcX = false;
+                frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
             }
 
             if (difSkewY < -M_PI || difSkewY > M_PI)
             {
-                if (needCalcY)
-                {
-                    frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
-                }
-                else
-                {
-                    frames[i]->skewY = difSkewY < 0 ? frames[i]->skewY + 2 * M_PI : frames[i]->skewY - 2 * M_PI;
-                    needCalcY = true;
-                }
-            }
-            else
-            {
-                needCalcY = false;
+                frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
             }
         }
     }
@@ -1511,9 +1485,6 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
     if (s_CocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
     {
         //! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-        bool needCalcX = false;
-        bool needCalcY = false;
-
         CCFrameData **frames = (CCFrameData **)movementBoneData->frameList.data->arr;
         for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
         {
@@ -1524,36 +1495,12 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
 
                 if (difSkewX < -M_PI || difSkewX > M_PI)
                 {
-                    if (needCalcX)
-                    {
-                        frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
-                    }
-                    else
-                    {
-                        frames[i]->skewX = difSkewX < 0 ? frames[i]->skewX + 2 * M_PI : frames[i]->skewX - 2 * M_PI;
-                        needCalcX = true;
-                    }
-                }
-                else
-                {
-                    needCalcX = false;
+                    frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
                 }
 
                 if (difSkewY < -M_PI || difSkewY > M_PI)
                 {
-                    if (needCalcY)
-                    {
-                        frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
-                    }
-                    else
-                    {
-                        frames[i]->skewY = difSkewY < 0 ? frames[i]->skewY + 2 * M_PI : frames[i]->skewY - 2 * M_PI;
-                        needCalcY = true;
-                    }
-                }
-                else
-                {
-                    needCalcY = false;
+                    frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
                 }
             }
         }
