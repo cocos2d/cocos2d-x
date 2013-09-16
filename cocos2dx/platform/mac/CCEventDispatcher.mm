@@ -32,7 +32,7 @@
 #include "support/data_support/utlist.h"
 
 #include "CCDirector.h"
-#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
+#include "platform/mac/CCEventDispatcher.h"
 
 //NS_CC_BEGIN;
 static CCEventDispatcher *sharedDispatcher = nil;
@@ -505,7 +505,7 @@ static int		eventQueueCount;
 {
 	if( dispatchEvents_ ) {
 		tListEntry *entry, *tmp;
-		cocos2d::Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, true);
+//		cocos2d::Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, true);
 
 		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
 			if ( entry->flags & kImplementsKeyDown ) {
@@ -521,7 +521,7 @@ static int		eventQueueCount;
 {
 	if( dispatchEvents_ ) {
 		tListEntry *entry, *tmp;
-		cocos2d::Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, false);
+//		cocos2d::Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, false);
 
 		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
 			if ( entry->flags & kImplementsKeyUp ) {

@@ -18,6 +18,7 @@ void ClickAndMoveTestScene::runThisTest()
 MainLayer::MainLayer()
 {
     setTouchEnabled(true);
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
     auto sprite = Sprite::create(s_pathGrossini);
     
@@ -37,10 +38,13 @@ MainLayer::MainLayer()
                       )); 
 }
 
-void MainLayer::ccTouchesEnded(Set  *touches, Event  *event)
+bool MainLayer::onTouchBegan(Touch* touch, Event  *event)
 {
-    auto touch = static_cast<Touch*>( touches->anyObject() );
-    
+    return true;
+}
+
+void MainLayer::onTouchEnded(Touch* touch, Event  *event)
+{
     auto location = touch->getLocation();
 
     auto s = getChildByTag(kTagSprite);

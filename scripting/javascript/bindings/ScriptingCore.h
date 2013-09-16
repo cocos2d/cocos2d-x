@@ -140,12 +140,12 @@ public:
     static void removeAllRoots(JSContext *cx);
 
 
-    int executeCustomTouchEvent(int eventType,
+    int executeCustomTouchEvent(TouchEvent::EventCode eventType,
                                 Touch *pTouch, JSObject *obj, jsval &retval);
-    int executeCustomTouchEvent(int eventType,
+    int executeCustomTouchEvent(TouchEvent::EventCode eventType,
                                 Touch *pTouch, JSObject *obj);
-    int executeCustomTouchesEvent(int eventType,
-                                  Set *pTouches, JSObject *obj);
+    int executeCustomTouchesEvent(TouchEvent::EventCode eventType,
+                                  const std::vector<Touch*>& touches, JSObject *obj);
 	/**
 	 * @return the global context
 	 */

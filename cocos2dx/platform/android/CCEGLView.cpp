@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "cocoa/CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
 #include "jni/IMEJni.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "CCGL.h"
