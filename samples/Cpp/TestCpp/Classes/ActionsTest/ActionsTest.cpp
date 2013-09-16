@@ -1401,12 +1401,9 @@ void ActionStacked::runActionsInSprite(Sprite *sprite)
     // override me
 }
 
-void ActionStacked::ccTouchesEnded(Set* touches, Event* event)
+void ActionStacked::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for ( auto &item: *touches ) {
-
-        const Touch *touch = static_cast<Touch*>(item);
-
+    for ( auto &touch: touches ) {
         auto location = touch->getLocation();
         addNewSpriteWithCoords( location );
     }

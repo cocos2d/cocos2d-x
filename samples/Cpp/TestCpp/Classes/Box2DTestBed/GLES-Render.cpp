@@ -246,5 +246,4 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
     CC_INCREMENT_GL_DRAWS(1);
 
     CHECK_GL_ERROR_DEBUG();
-    
 }

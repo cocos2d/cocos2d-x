@@ -15,6 +15,7 @@ cd $(dirname ${BASH_SOURCE[0]})
 
 if $COCOS2DX_USEAPT; then
     ./install-deps-linux.sh
+    tools/travis-scripts/install_glfw.sh
 fi
 
 export MAKEFLAGS=-j10

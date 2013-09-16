@@ -37,6 +37,9 @@
 #include "kazmath/kazmath.h"
 #include "script_support/CCScriptSupport.h"
 #include "CCProtocols.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -52,6 +55,7 @@ class ActionManager;
 class Component;
 class Dictionary;
 class ComponentContainer;
+class EventDispatcher;
 
 /**
  * @addtogroup base_nodes
@@ -71,6 +75,8 @@ bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2);
 #else
 bool nodeComparisonLess(Object* p1, Object* p2);
 #endif
+
+class EventListener;
 
 /** @brief Node is the main element. Anything that gets drawn or contains things that get drawn is a Node.
  The most popular Nodes are: Scene, Layer, Sprite, Menu.
@@ -134,7 +140,7 @@ public:
     static const int INVALID_TAG = -1;
 
     /// @{
-    /// @name Constructor, Distructor and Initializers
+    /// @name Constructor, Destructor and Initializers
 
     /**
      * Allocates and initializes a node.
@@ -204,8 +210,7 @@ public:
      * @return The Z order.
      */
     virtual int getZOrder() const;
-
-
+    
     /**
      * Sets the real OpenGL Z vertex.
      *
@@ -1361,7 +1366,23 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
+
+private:
+    friend class Director;
+    friend class EventDispatcher;
+    
+    int getEventPriority() const { return _eventPriority; };
+    
+    void associateEventListener(EventListener* listener);
+    void dissociateEventListener(EventListener* listener);
+    
+    static void resetEventPriorityIndex();
+    std::set<EventListener*> _eventlisteners;
+    
 protected:
+    
+    inline void updateEventPriorityIndex() { _eventPriority = ++_globalEventPriorityIndex; };
+    
     /// lazy allocs
     void childrenAlloc(void);
     
@@ -1439,6 +1460,8 @@ protected:
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
+    int _eventPriority;
+    static int _globalEventPriorityIndex;
 };
 
 //#pragma mark - NodeRGBA
