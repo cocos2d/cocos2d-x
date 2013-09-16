@@ -163,7 +163,7 @@ void ArmatureTestLayer::onEnter()
 
     addChild(menu, 100);
 
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+	setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
 }
 void ArmatureTestLayer::onExit()
