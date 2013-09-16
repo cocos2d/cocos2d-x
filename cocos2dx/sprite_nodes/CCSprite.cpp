@@ -182,7 +182,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tr.colors = Color4B::WHITE;
         
         // shader program
-        setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
         
         // update texture (calls updateBlendFunc)
         setTexture(texture);
@@ -990,7 +990,7 @@ void Sprite::setDisplayFrameWithAnimationName(const char *animationName, int fra
 {
     CCASSERT(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
 
-    Animation *a = AnimationCache::getInstance()->animationByName(animationName);
+    Animation *a = AnimationCache::getInstance()->getAnimation(animationName);
 
     CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
@@ -1101,7 +1101,7 @@ void Sprite::setTexture(Texture2D *texture)
     if (NULL == texture)
     {
         // Gets the texture by key firstly.
-        texture = TextureCache::getInstance()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
+        texture = TextureCache::getInstance()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
         
         // If texture wasn't in cache, create it from RAW data.
         if (NULL == texture)
