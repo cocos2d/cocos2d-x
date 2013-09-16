@@ -61,7 +61,7 @@ enum
 
 Menu::~Menu()
 {
-    CCLOG("In the destructor of Menu. %p", this);
+    CCLOGINFO("In the destructor of Menu. %p", this);
 }
 
 Menu* Menu::create()
