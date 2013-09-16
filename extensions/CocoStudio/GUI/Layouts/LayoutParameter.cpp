@@ -41,7 +41,7 @@ LayoutParameter* LayoutParameter::create()
 
 void LayoutParameter::setMargin(const UIMargin &margin)
 {
-    m_margin = margin;
+    _margin = margin;
     UIWidget* subClass = dynamic_cast<UIWidget*>(this);
     if (subClass)
     {
@@ -63,12 +63,12 @@ void LayoutParameter::setMargin(const UIMargin &margin)
 
 const UIMargin& LayoutParameter::getMargin() const
 {
-    return m_margin;
+    return _margin;
 }
 
 LayoutParameterType LayoutParameter::getLayoutType() const
 {
-    return m_eLayoutParameterType;
+    return _layoutParameterType;
 }
 
 LinearLayoutParameter* LinearLayoutParameter::create()

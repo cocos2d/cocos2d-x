@@ -28,37 +28,35 @@
 NS_CC_EXT_BEGIN
 
 UIScrollView::UIScrollView():
-m_eDirection(SCROLLVIEW_DIR_VERTICAL),
-m_eMoveDirection(SCROLLVIEW_MOVE_DIR_NONE),
-m_fTouchStartLocation(0.0f),
-m_fTouchEndLocation(0.0f),
-m_fTouchMoveStartLocation(0.0f),
-m_fTopBoundary(0.0f),
-m_fBottomBoundary(0.0f),
-m_fLeftBoundary(0.0f),
-m_fRightBoundary(0.0f),
-m_nMoveDirection(0),
-m_bTopEnd(false),
-m_bBottomEnd(false),
-m_bLeftEnd(false),
-m_bRightEnd(false),
-m_bAutoScroll(false),
-m_fAutoScrollOriginalSpeed(0.0f),
-m_fAutoScrollAcceleration(600.0f),
-m_bBePressed(false),
-m_fSlidTime(0.0f),
-moveChildPoint(Point::ZERO),
-m_fChildFocusCancelOffset(5.0f),
-m_pScrollToTopListener(NULL),
-m_pfnScrollToTopSelector(NULL),
-m_pScrollToBottomListener(NULL),
-m_pfnScrollToBottomSelector(NULL),
-m_pScrollToLeftListener(NULL),
-m_pfnScrollToLeftSelector(NULL),
-m_pScrollToRightListener(NULL),
-m_pfnScrollToRightSelector(NULL),
-m_pInnerContainer(NULL),
-m_fScrollDegreeRange(45.0f)
+_direction(SCROLLVIEW_DIR_VERTICAL),
+_moveDirection(SCROLLVIEW_MOVE_DIR_NONE),
+_touchStartLocation(0.0f),
+_touchEndLocation(0.0f),
+_touchMoveStartLocation(0.0f),
+_topBoundary(0.0f),
+_bottomBoundary(0.0f),
+_leftBoundary(0.0f),
+_rightBoundary(0.0f),
+_topEnd(false),
+_bottomEnd(false),
+_leftEnd(false),
+_rightEnd(false),
+_autoScroll(false),
+_autoScrollOriginalSpeed(0.0f),
+_autoScrollAcceleration(600.0f),
+_bePressed(false),
+_slidTime(0.0f),
+_moveChildPoint(Point::ZERO),
+_childFocusCancelOffset(5.0f),
+_scrollToTopListener(NULL),
+_scrollToTopSelector(NULL),
+_scrollToBottomListener(NULL),
+_scrollToBottomSelector(NULL),
+_scrollToLeftListener(NULL),
+_scrollToLeftSelector(NULL),
+_scrollToRightListener(NULL),
+_scrollToRightSelector(NULL),
+_innerContainer(NULL)
 {
 }
 
@@ -87,7 +85,7 @@ void UIScrollView::releaseResoures()
     _renderer->removeFromParentAndCleanup(true);
     _renderer->release();
     
-    Layout::removeChild(m_pInnerContainer);
+    Layout::removeChild(_innerContainer);
 
     _children->release();
 }
@@ -99,7 +97,7 @@ bool UIScrollView::init()
         setUpdateEnabled(true);
         setTouchEnabled(true);
         setClippingEnabled(true);
-        m_pInnerContainer->setTouchEnabled(false);
+        _innerContainer->setTouchEnabled(false);
         return true;
     }
     return false;
@@ -108,22 +106,22 @@ bool UIScrollView::init()
 void UIScrollView::initRenderer()
 {
     Layout::initRenderer();
-    m_pInnerContainer = Layout::create();
-    Layout::addChild(m_pInnerContainer);
+    _innerContainer = Layout::create();
+    Layout::addChild(_innerContainer);
 }
 
 void UIScrollView::onSizeChanged()
 {
     Layout::onSizeChanged();
-    m_fTopBoundary = _size.height;
-    m_fRightBoundary = _size.width;
-    Size innerSize = m_pInnerContainer->getSize();
+    _topBoundary = _size.height;
+    _rightBoundary = _size.width;
+    Size innerSize = _innerContainer->getSize();
     float orginInnerSizeWidth = innerSize.width;
     float orginInnerSizeHeight = innerSize.height;
     float innerSizeWidth = MAX(orginInnerSizeWidth, _size.width);
     float innerSizeHeight = MAX(orginInnerSizeHeight, _size.height);
-    m_pInnerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(Point(0, _size.height - m_pInnerContainer->getSize().height));
+    _innerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
+    _innerContainer->setPosition(Point(0, _size.height - _innerContainer->getSize().height));
 }
 
 void UIScrollView::setInnerContainerSize(const Size &size)
@@ -146,51 +144,51 @@ void UIScrollView::setInnerContainerSize(const Size &size)
     {
         innerSizeHeight = size.height;
     }
-    m_pInnerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(Point(0, _size.height - m_pInnerContainer->getSize().height));
+    _innerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
+    _innerContainer->setPosition(Point(0, _size.height - _innerContainer->getSize().height));
 }
 
 const Size& UIScrollView::getInnerContainerSize() const
 {
-	return m_pInnerContainer->getSize();
+	return _innerContainer->getSize();
 }
 
 bool UIScrollView::addChild(UIWidget* widget)
 {
-    return m_pInnerContainer->addChild(widget);
+    return _innerContainer->addChild(widget);
 }
 
 void UIScrollView::removeAllChildren()
 {
-    m_pInnerContainer->removeAllChildren();
+    _innerContainer->removeAllChildren();
 }
 
 bool UIScrollView::removeChild(UIWidget* child)
 {
-	return m_pInnerContainer->removeChild(child);
+	return _innerContainer->removeChild(child);
 }
 
 Array* UIScrollView::getChildren()
 {
-    return m_pInnerContainer->getChildren();
+    return _innerContainer->getChildren();
 }
 
 void UIScrollView::moveChildren(float offset)
 {
-    switch (m_eDirection)
+    switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
         {
-            moveChildPoint.x = m_pInnerContainer->getPosition().x;
-            moveChildPoint.y = m_pInnerContainer->getPosition().y + offset;
-            m_pInnerContainer->setPosition(moveChildPoint);
+            _moveChildPoint.x = _innerContainer->getPosition().x;
+            _moveChildPoint.y = _innerContainer->getPosition().y + offset;
+            _innerContainer->setPosition(_moveChildPoint);
             break;
         }
         case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
         {
-            moveChildPoint.x = m_pInnerContainer->getPosition().x + offset;
-            moveChildPoint.y = m_pInnerContainer->getPosition().y;
-            m_pInnerContainer->setPosition(moveChildPoint);
+            _moveChildPoint.x = _innerContainer->getPosition().x + offset;
+            _moveChildPoint.y = _innerContainer->getPosition().y;
+            _innerContainer->setPosition(_moveChildPoint);
             break;
         }
         default:
@@ -200,10 +198,10 @@ void UIScrollView::moveChildren(float offset)
 
 void UIScrollView::autoScrollChildren(float dt)
 {
-    switch (m_eDirection)
+    switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
-            switch (m_eMoveDirection)
+            switch (_moveDirection)
             {                        
                 case SCROLLVIEW_MOVE_DIR_UP: // up
                     {
@@ -239,7 +237,7 @@ void UIScrollView::autoScrollChildren(float dt)
             break;
             
         case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-            switch (m_eMoveDirection)
+            switch (_moveDirection)
             {
                 case SCROLLVIEW_MOVE_DIR_LEFT: // left
                     {
@@ -283,40 +281,40 @@ void UIScrollView::autoScrollChildren(float dt)
 
 void UIScrollView::startAutoScrollChildren(float v)
 {
-    m_fAutoScrollOriginalSpeed = v;
-    m_bAutoScroll = true;
+    _autoScrollOriginalSpeed = v;
+    _autoScroll = true;
 }
 
 void UIScrollView::stopAutoScrollChildren()
 {
-    m_bAutoScroll = false;
-    m_fAutoScrollOriginalSpeed = 0.0f;
+    _autoScroll = false;
+    _autoScrollOriginalSpeed = 0.0f;
 }
 
 float UIScrollView::getCurAutoScrollDistance(float time)
 {
     float dt = time;
-    m_fAutoScrollOriginalSpeed -= m_fAutoScrollAcceleration*dt;
-    return m_fAutoScrollOriginalSpeed*dt;
+    _autoScrollOriginalSpeed -= _autoScrollAcceleration*dt;
+    return _autoScrollOriginalSpeed*dt;
 }
 
 bool UIScrollView::scrollChildren(float touchOffset)
 {    
     float realOffset = touchOffset;
     
-    switch (m_eDirection)
+    switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
-            switch (m_eMoveDirection)
+            switch (_moveDirection)
             {                        
                 case SCROLLVIEW_MOVE_DIR_UP: // up
                 {
-                    float icBottomPos = m_pInnerContainer->getBottomInParent();
-                    if (icBottomPos + touchOffset >= m_fBottomBoundary)
+                    float icBottomPos = _innerContainer->getBottomInParent();
+                    if (icBottomPos + touchOffset >= _bottomBoundary)
                     {
-                        realOffset = m_fBottomBoundary - icBottomPos;
+                        realOffset = _bottomBoundary - icBottomPos;
                         moveChildren(realOffset);
-                        m_bBottomEnd = true;
+                        _bottomEnd = true;
                         scrollToBottomEvent();
                         return false;
                     }
@@ -324,12 +322,12 @@ bool UIScrollView::scrollChildren(float touchOffset)
                 }
                 case SCROLLVIEW_MOVE_DIR_DOWN: // down
                 {
-                    float icTopPos = m_pInnerContainer->getTopInParent();
-                    if (icTopPos + touchOffset <= m_fTopBoundary)
+                    float icTopPos = _innerContainer->getTopInParent();
+                    if (icTopPos + touchOffset <= _topBoundary)
                     {
-                        realOffset = m_fTopBoundary - icTopPos;
+                        realOffset = _topBoundary - icTopPos;
                         moveChildren(realOffset);
-                        m_bTopEnd = true;
+                        _topEnd = true;
                         scrollToTopEvent();
                         return false;
                     }
@@ -339,21 +337,21 @@ bool UIScrollView::scrollChildren(float touchOffset)
                     break;
             }
             moveChildren(realOffset);
-            m_bTopEnd = false;
-            m_bBottomEnd = false;
+            _topEnd = false;
+            _bottomEnd = false;
             return true;
             break;
         case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-            switch (m_eMoveDirection)
+            switch (_moveDirection)
             {
                 case SCROLLVIEW_MOVE_DIR_LEFT: // left
                 {
-                    float icRightPos = m_pInnerContainer->getRightInParent();
-                    if (icRightPos + touchOffset <= m_fRightBoundary)
+                    float icRightPos = _innerContainer->getRightInParent();
+                    if (icRightPos + touchOffset <= _rightBoundary)
                     {
-                        realOffset = m_fRightBoundary - icRightPos;
+                        realOffset = _rightBoundary - icRightPos;
                         moveChildren(realOffset);
-                        m_bRightEnd = true;
+                        _rightEnd = true;
                         scrollToRightEvent();
                         return false;
                     }
@@ -361,12 +359,12 @@ bool UIScrollView::scrollChildren(float touchOffset)
                 }
                 case SCROLLVIEW_MOVE_DIR_RIGHT: // right
                 {
-                    float icLeftPos = m_pInnerContainer->getLeftInParent();
-                    if (icLeftPos + touchOffset >= m_fLeftBoundary)
+                    float icLeftPos = _innerContainer->getLeftInParent();
+                    if (icLeftPos + touchOffset >= _leftBoundary)
                     {
-                        realOffset = m_fLeftBoundary - icLeftPos;
+                        realOffset = _leftBoundary - icLeftPos;
                         moveChildren(realOffset);
-                        m_bLeftEnd = true;
+                        _leftEnd = true;
                         scrollToLeftEvent();
                         return false;
                     }
@@ -376,8 +374,8 @@ bool UIScrollView::scrollChildren(float touchOffset)
                     break;
             }
             moveChildren(realOffset);
-            m_bLeftEnd = false;
-            m_bRightEnd = false;
+            _leftEnd = false;
+            _rightEnd = false;
             return true;
             break;
             
@@ -390,14 +388,14 @@ bool UIScrollView::scrollChildren(float touchOffset)
 
 void UIScrollView::scrollToBottom()
 {
-    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_UP; // up
-    scrollChildren(m_pInnerContainer->getSize().height);
+    _moveDirection = SCROLLVIEW_MOVE_DIR_UP; // up
+    scrollChildren(_innerContainer->getSize().height);
 }
 
 void UIScrollView::scrollToTop()
 {
-    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_DOWN; // down
-    scrollChildren(-m_pInnerContainer->getSize().height);
+    _moveDirection = SCROLLVIEW_MOVE_DIR_DOWN; // down
+    scrollChildren(-_innerContainer->getSize().height);
 }
 
 void UIScrollView::startRecordSlidAction()
@@ -406,11 +404,11 @@ void UIScrollView::startRecordSlidAction()
     {
         return;
     }
-    if (m_bAutoScroll){
+    if (_autoScroll){
         stopAutoScrollChildren();
     }
-    m_bBePressed = true;
-    m_fSlidTime = 0.0;
+    _bePressed = true;
+    _slidTime = 0.0;
 }
 
 void UIScrollView::endRecordSlidAction()
@@ -419,31 +417,31 @@ void UIScrollView::endRecordSlidAction()
     {
         return;
     }
-    if (m_fSlidTime <= 0.016f)
+    if (_slidTime <= 0.016f)
     {
         return;
     }
     float totalDis = 0;
-    totalDis = m_fTouchEndLocation-m_fTouchStartLocation;
-    float orSpeed = fabs(totalDis)/(m_fSlidTime);
+    totalDis = _touchEndLocation-_touchStartLocation;
+    float orSpeed = fabs(totalDis)/(_slidTime);
     startAutoScrollChildren(orSpeed);
     
-    m_bBePressed = false;
-    m_fSlidTime = 0.0;
+    _bePressed = false;
+    _slidTime = 0.0;
 }
 
 void UIScrollView::handlePressLogic(const Point &touchPoint)
 {        
     Point nsp = _renderer->convertToNodeSpace(touchPoint);
-    switch (m_eDirection)
+    switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
-            m_fTouchMoveStartLocation = nsp.y;
-            m_fTouchStartLocation = nsp.y;
+            _touchMoveStartLocation = nsp.y;
+            _touchStartLocation = nsp.y;
             break;
         case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-            m_fTouchMoveStartLocation = nsp.x;
-            m_fTouchStartLocation = nsp.x;
+            _touchMoveStartLocation = nsp.x;
+            _touchStartLocation = nsp.x;
             break;
         default:
             break;
@@ -456,21 +454,21 @@ void UIScrollView::handleMoveLogic(const Point &touchPoint)
     Point nsp = _renderer->convertToNodeSpace(touchPoint);
     float offset = 0.0f;
     
-    switch (m_eDirection)
+    switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
             {
                 float moveY = nsp.y;
-                offset = moveY - m_fTouchMoveStartLocation;
-                m_fTouchMoveStartLocation = moveY;
+                offset = moveY - _touchMoveStartLocation;
+                _touchMoveStartLocation = moveY;
                 
                 if (offset < 0.0f)
                 {
-                    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_DOWN; // down
+                    _moveDirection = SCROLLVIEW_MOVE_DIR_DOWN; // down
                 }
                 else if (offset > 0.0f)
                 {
-                    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_UP; // up
+                    _moveDirection = SCROLLVIEW_MOVE_DIR_UP; // up
                 }
             }
             break;
@@ -478,16 +476,16 @@ void UIScrollView::handleMoveLogic(const Point &touchPoint)
         case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
             {
                 float moveX = nsp.x;
-                offset = moveX - m_fTouchMoveStartLocation;
-                m_fTouchMoveStartLocation = moveX;
+                offset = moveX - _touchMoveStartLocation;
+                _touchMoveStartLocation = moveX;
                 
                 if (offset < 0)
                 {
-                    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_LEFT; // left
+                    _moveDirection = SCROLLVIEW_MOVE_DIR_LEFT; // left
                 }
                 else if (offset > 0)
                 {
-                    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_RIGHT; // right
+                    _moveDirection = SCROLLVIEW_MOVE_DIR_RIGHT; // right
                 }
             }
             break;
@@ -501,14 +499,14 @@ void UIScrollView::handleMoveLogic(const Point &touchPoint)
 void UIScrollView::handleReleaseLogic(const Point &touchPoint)
 {
     Point nsp = _renderer->convertToNodeSpace(touchPoint);
-    switch (m_eDirection)
+    switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
-            m_fTouchEndLocation = nsp.y;
+            _touchEndLocation = nsp.y;
             break;
             
         case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-            m_fTouchEndLocation = nsp.x;
+            _touchEndLocation = nsp.x;
             break;
             
         default:
@@ -548,7 +546,7 @@ void UIScrollView::onTouchLongClicked(const Point &touchPoint)
 
 void UIScrollView::update(float dt)
 {
-    if (m_bAutoScroll)
+    if (_autoScroll)
     {
         autoScrollChildren(dt);
     }
@@ -557,9 +555,9 @@ void UIScrollView::update(float dt)
 
 void UIScrollView::recordSlidTime(float dt)
 {
-    if (m_bBePressed)
+    if (_bePressed)
     {
-        m_fSlidTime += dt;
+        _slidTime += dt;
     }
 }
 
@@ -574,7 +572,7 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
         case 1:
         {
             float offset = 0;
-            switch (m_eDirection)
+            switch (_direction)
             {
                 case SCROLLVIEW_DIR_VERTICAL: // vertical
                     offset = fabs(sender->getTouchStartPos().y - touchPoint.y);
@@ -587,7 +585,7 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
                 default:
                     break;
             }
-            if (offset > m_fChildFocusCancelOffset)
+            if (offset > _childFocusCancelOffset)
             {
                 sender->setFocused(false);
                 handleMoveLogic(touchPoint);
@@ -611,93 +609,93 @@ void UIScrollView::checkChildInfo(int handleState,UIWidget* sender,const Point &
 
 void UIScrollView::scrollToTopEvent()
 {
-    if (m_pScrollToTopListener && m_pfnScrollToTopSelector)
+    if (_scrollToTopListener && _scrollToTopSelector)
     {
-        (m_pScrollToTopListener->*m_pfnScrollToTopSelector)(this);
+        (_scrollToTopListener->*_scrollToTopSelector)(this);
     }
 }
 
 void UIScrollView::scrollToBottomEvent()
 {
-    if (m_pScrollToBottomListener && m_pfnScrollToBottomSelector)
+    if (_scrollToBottomListener && _scrollToBottomSelector)
     {
-        (m_pScrollToBottomListener->*m_pfnScrollToBottomSelector)(this);
+        (_scrollToBottomListener->*_scrollToBottomSelector)(this);
     }
 }
 
 void UIScrollView::scrollToLeftEvent()
 {
-    if (m_pScrollToLeftListener && m_pfnScrollToLeftSelector)
+    if (_scrollToLeftListener && _scrollToLeftSelector)
     {
-        (m_pScrollToLeftListener->*m_pfnScrollToLeftSelector)(this);
+        (_scrollToLeftListener->*_scrollToLeftSelector)(this);
     }
 }
 
 void UIScrollView::scrollToRightEvent()
 {
-    if (m_pScrollToRightListener && m_pfnScrollToRightSelector)
+    if (_scrollToRightListener && _scrollToRightSelector)
     {
-        (m_pScrollToRightListener->*m_pfnScrollToRightSelector)(this);
+        (_scrollToRightListener->*_scrollToRightSelector)(this);
     }
 }
 
 void UIScrollView::addScrollToTopEvent(Object *target, SEL_ScrollToTopEvent selector)
 {
-    m_pScrollToTopListener = target;
-    m_pfnScrollToTopSelector = selector;
+    _scrollToTopListener = target;
+    _scrollToTopSelector = selector;
 }
 
 void UIScrollView::addScrollToBottomEvent(Object *target, SEL_ScrollToBottomEvent selector)
 {
-    m_pScrollToBottomListener = target;
-    m_pfnScrollToBottomSelector = selector;
+    _scrollToBottomListener = target;
+    _scrollToBottomSelector = selector;
 }
 
 void UIScrollView::addScrollToLeftEvent(Object *target, SEL_ScrollToLeftEvent selector)
 {
-    m_pScrollToLeftListener = target;
-    m_pfnScrollToLeftSelector = selector;
+    _scrollToLeftListener = target;
+    _scrollToLeftSelector = selector;
 }
 
 void UIScrollView::addScrollToRightEvent(Object *target, SEL_ScrollToRightEvent selector)
 {
-    m_pScrollToRightListener = target;
-    m_pfnScrollToRightSelector = selector;
+    _scrollToRightListener = target;
+    _scrollToRightSelector = selector;
 }
 
 void UIScrollView::setDirection(SCROLLVIEW_DIR dir)
 {
-    m_eDirection = dir;
+    _direction = dir;
 }
 
 SCROLLVIEW_DIR UIScrollView::getDirection()
 {
-    return m_eDirection;
+    return _direction;
 }
 
 void UIScrollView::setMoveDirection(SCROLLVIEW_MOVE_DIR dir)
 {
-    m_eMoveDirection = dir;
+    _moveDirection = dir;
 }
 
 SCROLLVIEW_MOVE_DIR UIScrollView::getMoveDirection()
 {
-    return m_eMoveDirection;
+    return _moveDirection;
 }
 
 Layout* UIScrollView::getInnerContainer()
 {
-    return m_pInnerContainer;
+    return _innerContainer;
 }
 
 void UIScrollView::setLayoutExecutant(LayoutExecutant *exe)
 {
-    m_pInnerContainer->setLayoutExecutant(exe);
+    _innerContainer->setLayoutExecutant(exe);
 }
 
 LayoutExecutant* UIScrollView::getLayoutExecutant() const
 {
-    return m_pInnerContainer->getLayoutExecutant();
+    return _innerContainer->getLayoutExecutant();
 }
 
 NS_CC_EXT_END
