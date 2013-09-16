@@ -22,8 +22,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCCONSTVALUE_H__
-#define __CCCONSTVALUE_H__
+#ifndef __CCARMATUREDEFINE_H__
+#define __CCARMATUREDEFINE_H__
 
+//#define _USRDLL 1
 
-#endif /*__CCCONSTVALUE_H__*/
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
+
+#define VERSION_COMBINED 0.25f
+
+#ifndef ENABLE_PHYSICS_BOX2D_DETECT
+#define ENABLE_PHYSICS_BOX2D_DETECT 0
+#endif
+
+#ifndef ENABLE_PHYSICS_CHIPMUNK_DETECT
+#define ENABLE_PHYSICS_CHIPMUNK_DETECT 1
+#endif
+
+#define MAX_VERTEXZ_VALUE 5000000.0f
+#define ARMATURE_MAX_CHILD 50.0f
+#define ARMATURE_MAX_ZORDER 100
+#define ARMATURE_MAX_COUNT ((MAX_VERTEXZ_VALUE) / (ARMATURE_MAX_CHILD) / ARMATURE_MAX_ZORDER)
+
+#define CS_RETURN_IF(cond) if (cond) return
+#define CS_RETURN_NULL_IF(cond) if (cond) return NULL;
+
+#endif /*__CCARMATUREDEFINE_H__*/

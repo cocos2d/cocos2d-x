@@ -21,37 +21,50 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __CCSPRITEFRAMECACHEHELPER_H__
+#define __CCSPRITEFRAMECACHEHELPER_H__
 
-#ifndef __CCSHADERNODE_H__
-#define __CCSHADERNODE_H__
+#include "CCArmatureDefine.h"
+#include <stack>
 
-#include "../utils/CCArmatureDefine.h"
+using namespace std;
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_BEGIN
 
-class ShaderNode : public Node
+class  CCSpriteFrameCacheHelper
 {
 public:
-    ShaderNode();
+    static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
 
-    bool initWithVertex(const char *vert, const char *frag);
-    void loadShaderVertex(const char *vert, const char *frag);
+    static void purgeSpriteFrameCacheHelper();
+public:
 
-    virtual void update(float dt);
-    virtual void setPosition(const Point &newPosition);
-    virtual void translateFormOtherNode(AffineTransform &transform);
-    virtual void draw();
+    /**
+     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     *
+     */
+    void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
-    static ShaderNode *shaderNodeWithVertex(const char *vert, const char *frag);
+    void addSpriteFrameFromDict(CCDictionary *dictionary, CCTexture2D *pobTexture, const char *imagePath);
+
+    /**
+     * Get this display in which image
+     */
+    const char *getDisplayImagePath(const char *displayName);
+
+	cocos2d::CCTextureAtlas *getTextureAtlasWithImageName(const char *imageName);
+	cocos2d::CCTextureAtlas *getTextureAtlasWithDisplayName(const char *displayName);
 
 private:
+    CCSpriteFrameCacheHelper();
+    ~CCSpriteFrameCacheHelper();
 
-    Vertex2F _center;
-    Vertex2F _resolution;
-    float      _time;
-    GLuint     _uniformCenter, _uniformResolution, _uniformTime;
+    std::map<std::string, std::string> m_Display2ImageMap;
+    CCDictionary *m_pDisplay2TextureAtlas;
+
+    static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_END
 
-#endif /*__CCSHADERNODE_H__*/
+#endif /*__CCSPRITEFRAMECACHEHELPER_H__*/

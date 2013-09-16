@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{40,46}</string>
             </dict>
-            <key>testAnimationResource\1.png</key>
+            <key>testAnimationResource/1.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1404,2},{402,640}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{402,640}</string>
             </dict>
-            <key>testAnimationResource\2.png</key>
+            <key>testAnimationResource/2.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1404,406},{372,504}}</string>
@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{372,504}</string>
             </dict>
-            <key>testAnimationResource\3.png</key>
+            <key>testAnimationResource/3.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{494,958}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{494,958}</string>
             </dict>
-            <key>testAnimationResource\4.png</key>
+            <key>testAnimationResource/4.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{808,1192},{282,220}}</string>
@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{282,220}</string>
             </dict>
-            <key>testAnimationResource\5.png</key>
+            <key>testAnimationResource/5.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1404,780},{380,472}}</string>
@@ -82,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{380,472}</string>
             </dict>
-            <key>testAnimationResource\6.png</key>
+            <key>testAnimationResource/6.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,962},{948,804}}</string>
@@ -95,7 +95,7 @@
                 <key>sourceSize</key>
                 <string>{948,804}</string>
             </dict>
-            <key>testAnimationResource\7.png</key>
+            <key>testAnimationResource/7.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1170,920},{292,224}}</string>
@@ -108,7 +108,7 @@
                 <key>sourceSize</key>
                 <string>{292,224}</string>
             </dict>
-            <key>testAnimationResource\8.png</key>
+            <key>testAnimationResource/8.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{808,920},{270,360}}</string>
@@ -121,7 +121,7 @@
                 <key>sourceSize</key>
                 <string>{270,360}</string>
             </dict>
-            <key>testAnimationResource\hat.png</key>
+            <key>testAnimationResource/hat.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{498,2},{904,916}}</string>

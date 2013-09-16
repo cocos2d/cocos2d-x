@@ -27,10 +27,9 @@ THE SOFTWARE.
 #include "CCTransformHelp.h"
 #include "CCDataReaderHelper.h"
 #include "CCSpriteFrameCacheHelper.h"
-#include "../physics/CCPhysicsWorld.h"
 
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 static ArmatureDataManager *s_sharedArmatureDataManager = NULL;
 
@@ -47,49 +46,48 @@ ArmatureDataManager *ArmatureDataManager::sharedArmatureDataManager()
     return s_sharedArmatureDataManager;
 }
 
+void ArmatureDataManager::purge()
+{
+    SpriteFrameCacheHelper::purge();
+    DataReaderHelper::purge();
+    CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
+}
+
 ArmatureDataManager::ArmatureDataManager(void)
 {
-	_armarureDatas = NULL;
+    _armarureDatas = NULL;
     _animationDatas = NULL;
     _textureDatas = NULL;
+    _autoLoadSpriteFile = false;
 }
 
 
 ArmatureDataManager::~ArmatureDataManager(void)
 {
-    CCLOGINFO("deallocing ArmatureDataManager: %p", this);
-
     removeAll();
 
-    CC_SAFE_RELEASE(_animationDatas);
-    CC_SAFE_RELEASE(_armarureDatas);
-    CC_SAFE_RELEASE(_textureDatas);
+    CC_SAFE_DELETE(_animationDatas);
+    CC_SAFE_DELETE(_armarureDatas);
+    CC_SAFE_DELETE(_textureDatas);
 }
 
-void ArmatureDataManager::purgeArmatureSystem()
-{
-    SpriteFrameCacheHelper::purgeSpriteFrameCacheHelper();
-    PhysicsWorld::purgePhysicsWorld();
-
-    CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
-}
 
 bool ArmatureDataManager::init()
 {
     bool bRet = false;
     do
     {
-        _armarureDatas = new Dictionary;
-        CCASSERT(_armarureDatas, "create ArmatureDataManager::_armarureDatas fail!");
-        _armarureDatas->init();
+        _armarureDatas = Dictionary::create();
+        CCAssert(_armarureDatas, "create ArmatureDataManager::_armarureDatas fail!");
+        _armarureDatas->retain();
 
-        _animationDatas = new Dictionary;
-        CCASSERT(_animationDatas, "create ArmatureDataManager::_animationDatas fail!");
-        _animationDatas->init();
+        _animationDatas = Dictionary::create();
+        CCAssert(_animationDatas, "create ArmatureDataManager::_animationDatas fail!");
+        _animationDatas->retain();
 
-        _textureDatas = new Dictionary;
-        CCASSERT(_textureDatas, "create ArmatureDataManager::_textureDatas fail!");
-        _textureDatas->init();
+        _textureDatas = Dictionary::create();
+        CCAssert(_textureDatas, "create ArmatureDataManager::_textureDatas fail!");
+        _textureDatas->retain();
 
         bRet = true;
     }
@@ -116,19 +114,19 @@ ArmatureData *ArmatureDataManager::getArmatureData(const char *id)
     return armatureData;
 }
 
+void ArmatureDataManager::removeArmatureData(const char *id)
+{
+    if (_armarureDatas)
+    {
+        _armarureDatas->removeObjectForKey(id);
+    }
+}
+
 void ArmatureDataManager::addAnimationData(const char *id, AnimationData *animationData)
 {
     if(_animationDatas)
     {
         _animationDatas->setObject(animationData, id);
-    }
-}
-
-void ArmatureDataManager::addTextureData(const char *id, TextureData *textureData)
-{
-    if(_textureDatas)
-    {
-        _textureDatas->setObject(textureData, id);
     }
 }
 
@@ -142,6 +140,23 @@ AnimationData *ArmatureDataManager::getAnimationData(const char *id)
     return animationData;
 }
 
+void ArmatureDataManager::removeAnimationData(const char *id)
+{
+    if (_animationDatas)
+    {
+        _animationDatas->removeObjectForKey(id);
+    }
+}
+
+void ArmatureDataManager::addTextureData(const char *id, TextureData *textureData)
+{
+    if(_textureDatas)
+    {
+        _textureDatas->setObject(textureData, id);
+    }
+}
+
+
 TextureData *ArmatureDataManager::getTextureData(const char *id)
 {
     TextureData *textureData = NULL;
@@ -153,29 +168,42 @@ TextureData *ArmatureDataManager::getTextureData(const char *id)
 }
 
 
-
-void ArmatureDataManager::addArmatureFileInfo(const char *armatureName, const char *useExistFileInfo, const char *imagePath, const char *plistPath, const char *configFilePath)
+void ArmatureDataManager::removeTextureData(const char *id)
 {
-    addArmatureFileInfo(imagePath, plistPath, configFilePath);
+    if(_textureDatas)
+    {
+        _textureDatas->removeObjectForKey(id);
+    }
+}
+
+void ArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
+{
+    _autoLoadSpriteFile = true;
+    DataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+}
+
+void ArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, Object *target, SEL_SCHEDULE selector)
+{
+    _autoLoadSpriteFile = true;
+    DataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
 }
 
 void ArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
+    _autoLoadSpriteFile = false;
+    DataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+    addSpriteFrameFromFile(plistPath, imagePath);
+}
 
-    DataReaderHelper::addDataFromFile(configFilePath);
+void ArmatureDataManager::addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, Object *target, SEL_SCHEDULE selector)
+{
+    _autoLoadSpriteFile = false;
+    DataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
 
 void ArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
-    //	if(Game::sharedGame()->isUsePackage())
-    //	{
-    //		SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromPak(plistPath, imagePath);
-    //	}
-    //    else
-    //	{
-    //		SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromFile(plistPath, imagePath);
-    //	}
     SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromFile(plistPath, imagePath);
 }
 
@@ -199,4 +227,22 @@ void ArmatureDataManager::removeAll()
     DataReaderHelper::clear();
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+bool ArmatureDataManager::isAutoLoadSpriteFile()
+{
+    return _autoLoadSpriteFile;
+}
+
+Dictionary *ArmatureDataManager::getArmatureDatas() const
+{
+    return _armarureDatas;
+}
+Dictionary *ArmatureDataManager::getAnimationDatas() const
+{
+    return _animationDatas;
+}
+Dictionary *ArmatureDataManager::getTextureDatas() const
+{
+    return _textureDatas;
+}
+
+NS_CC_EXT_ARMATURE_END

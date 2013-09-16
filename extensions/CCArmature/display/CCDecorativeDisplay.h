@@ -22,66 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCPHYSICSWORLD_H__
-#define __CCPHYSICSWORLD_H__
+#ifndef __CCDECORATIVEDISPLAY_H__
+#define __CCDECORATIVEDISPLAY_H__
 
 #include "../utils/CCArmatureDefine.h"
-#include "../CCBone.h"
-#include "../external_tool/sigslot.h"
+#include "CCDisplayFactory.h"
+#include "../datas/CCDatas.h"
 
-#include <list>
-using std::list;
 
-#ifndef PT_RATIO
-#define PT_RATIO 32
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#include "../physics/CCColliderDetector.h"
 #endif
 
-struct b2Manifold;
-struct b2ContactImpulse;
-class b2Fixture;
-class b2Contact;
-class b2World;
+NS_CC_EXT_BEGIN
 
-namespace cocos2d { namespace extension { namespace armature {
-
-class ContactListener;
-class GLESDebugDraw;
-
-class PhysicsWorld
+class  CCDecorativeDisplay: public CCObject
 {
 public:
-    static PhysicsWorld *sharedPhysicsWorld();
-    static void purgePhysicsWorld();
-
-    void initNoGravityWorld();
-private:
-    /**
-     * @js ctor
-     */
-    PhysicsWorld();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    ~PhysicsWorld();
-
-private:
-    static PhysicsWorld *s_PhysicsWorld;
-
-    b2World *_noGravityWorld;
-
-    ContactListener *_contactListener;
-
-    GLESDebugDraw *_debugDraw;
+    static CCDecorativeDisplay *create();
 public:
-    void update(float dt);
-    void drawDebug();
+    CCDecorativeDisplay(void);
+    ~CCDecorativeDisplay(void);
 
-    b2World *getNoGravityWorld();
+    virtual bool init();
 
-    sigslot::signal2<Bone *, Bone *> BoneColliderSignal;
+protected:
+
+    CC_SYNTHESIZE_RETAIN(CCNode *, m_pDisplay, Display);
+    CC_SYNTHESIZE_RETAIN(CCDisplayData *, m_pDisplayData, DisplayData);
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    CC_SYNTHESIZE_RETAIN(CCColliderDetector *, m_pColliderDetector, ColliderDetector);
+#endif
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_END
 
-#endif/*__CCPHYSICSWORLD_H__*/
+#endif /*__CCDECORATIVEDISPLAY_H__*/
