@@ -84,7 +84,7 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
     setBarChangeRate(Point(1,1));
     setSprite(sp);
     // shader program
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
