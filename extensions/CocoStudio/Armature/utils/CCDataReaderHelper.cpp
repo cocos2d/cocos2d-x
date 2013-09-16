@@ -879,6 +879,7 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 
     tinyxml2::XMLElement *frameXML = movBoneXml->FirstChildElement(FRAME);
 
+
     while( frameXML )
     {
         if(parentXml)
@@ -892,7 +893,6 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
                 parentTotalDuration += currentDuration;
                 parentFrameXML->QueryIntAttribute(A_DURATION, &currentDuration);
                 i++;
-
             }
         }
 
@@ -907,6 +907,54 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
         frameXML = frameXML->NextSiblingElement(FRAME);
     }
 
+
+    //! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
+    bool needCalcX = false;
+    bool needCalcY = false;
+
+    CCFrameData **frames = (CCFrameData **)movBoneData->frameList.data->arr;
+    for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
+    {
+        if (i > 0)
+        {
+            float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
+            float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+
+            if (difSkewX < -M_PI || difSkewX > M_PI)
+            {
+                if (needCalcX)
+                {
+                    frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+                }
+                else
+                {
+                    frames[i]->skewX = difSkewX < 0 ? frames[i]->skewX + 2 * M_PI : frames[i]->skewX - 2 * M_PI;
+                    needCalcX = true;
+                }
+            }
+            else
+            {
+                needCalcX = false;
+            }
+
+            if (difSkewY < -M_PI || difSkewY > M_PI)
+            {
+                if (needCalcY)
+                {
+                    frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+                }
+                else
+                {
+                    frames[i]->skewY = difSkewY < 0 ? frames[i]->skewY + 2 * M_PI : frames[i]->skewY - 2 * M_PI;
+                    needCalcY = true;
+                }
+            }
+            else
+            {
+                needCalcY = false;
+            }
+        }
+    }
 
     //
     CCFrameData *frameData = new CCFrameData();
@@ -1460,6 +1508,58 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
         delete dic;
     }
 
+    if (s_CocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
+    {
+        //! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
+        bool needCalcX = false;
+        bool needCalcY = false;
+
+        CCFrameData **frames = (CCFrameData **)movementBoneData->frameList.data->arr;
+        for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
+        {
+            if (i > 0)
+            {
+                float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
+                float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+
+                if (difSkewX < -M_PI || difSkewX > M_PI)
+                {
+                    if (needCalcX)
+                    {
+                        frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+                    }
+                    else
+                    {
+                        frames[i]->skewX = difSkewX < 0 ? frames[i]->skewX + 2 * M_PI : frames[i]->skewX - 2 * M_PI;
+                        needCalcX = true;
+                    }
+                }
+                else
+                {
+                    needCalcX = false;
+                }
+
+                if (difSkewY < -M_PI || difSkewY > M_PI)
+                {
+                    if (needCalcY)
+                    {
+                        frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+                    }
+                    else
+                    {
+                        frames[i]->skewY = difSkewY < 0 ? frames[i]->skewY + 2 * M_PI : frames[i]->skewY - 2 * M_PI;
+                        needCalcY = true;
+                    }
+                }
+                else
+                {
+                    needCalcY = false;
+                }
+            }
+        }
+    }
+
+
     if (s_CocoStudioVersion < VERSION_COMBINED)
     {
         if (movementBoneData->frameList.count() > 0)
@@ -1537,6 +1637,7 @@ CCTextureData *CCDataReaderHelper::decodeTexture(cs::CSJsonDictionary &json)
 CCContourData *CCDataReaderHelper::decodeContour(cs::CSJsonDictionary &json)
 {
     CCContourData *contourData = new CCContourData();
+	contourData->init();
 
     int length = json.getArrayItemCount(VERTEX_POINT);
     for (int i = length - 1; i >= 0; i--)

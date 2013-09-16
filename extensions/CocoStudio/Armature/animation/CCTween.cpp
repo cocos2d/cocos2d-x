@@ -271,27 +271,33 @@ void CCTween::updateHandler()
     }
 }
 
-void CCTween::setBetween(CCFrameData *from, CCFrameData *to)
+void CCTween::setBetween(CCFrameData *from, CCFrameData *to, bool limit)
 {
     do
     {
         if(from->displayIndex < 0 && to->displayIndex >= 0)
         {
             m_pFrom->copy(to);
-            m_pBetween->subtract(to, to);
+            m_pBetween->subtract(to, to, limit);
             break;
         }
         else if(to->displayIndex < 0 && from->displayIndex >= 0)
         {
             m_pFrom->copy(from);
-            m_pBetween->subtract(to, to);
+            m_pBetween->subtract(to, to, limit);
             break;
         }
 
         m_pFrom->copy(from);
-        m_pBetween->subtract(from, to);
+        m_pBetween->subtract(from, to, limit);
     }
     while (0);
+
+    if (!from->isTween)
+    {
+        m_pTweenData->copy(from);
+        m_pTweenData->isTween = true;
+    }
 
     arriveKeyFrame(from);
 }
@@ -333,6 +339,11 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
 {
     node = node == NULL ? m_pTweenData : node;
+    if (!m_pFrom->isTween)
+    {
+        return m_pFrom;
+    }
+
 
     node->x = m_pFrom->x + percent * m_pBetween->x;
     node->y = m_pFrom->y + percent * m_pBetween->y;
@@ -427,7 +438,7 @@ float CCTween::updateFrameData(float currentPercent)
 
         m_eFrameTweenEasing = from->tweenEasing;
 
-        setBetween(from, to);
+        setBetween(from, to, false);
 
     }
     currentPercent = m_iBetweenDuration == 0 ? 0 : (playedTime - m_iTotalDuration) / (float)m_iBetweenDuration;
