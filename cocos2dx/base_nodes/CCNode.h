@@ -210,9 +210,6 @@ public:
      * @return The Z order.
      */
     virtual int getZOrder() const;
-
-
-    int getEventPriority() const { return _eventPriority; };
     
     /**
      * Sets the real OpenGL Z vertex.
@@ -1373,6 +1370,8 @@ public:
 private:
     friend class Director;
     friend class EventDispatcher;
+    
+    int getEventPriority() const { return _eventPriority; };
     
     void associateEventListener(EventListener* listener);
     void dissociateEventListener(EventListener* listener);
