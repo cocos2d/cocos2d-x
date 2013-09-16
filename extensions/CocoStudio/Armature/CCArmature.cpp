@@ -454,7 +454,7 @@ void Armature::update(float dt)
     Object *object = NULL;
     CCARRAY_FOREACH(_topBoneList, object)
     {
-        ((Bone *)object)->update(dt);
+        static_cast<Bone*>(object)->update(dt);
     }
 
     _armatureTransformDirty = false;
@@ -483,7 +483,7 @@ void Armature::draw()
             {
             case CS_DISPLAY_SPRITE:
             {
-                Skin *skin = (Skin *)node;
+                Skin *skin = static_cast<Skin *>(node);
 
                 TextureAtlas *textureAtlas = skin->getTextureAtlas();
                 BlendType blendType = bone->getBlendType();
@@ -513,7 +513,7 @@ void Armature::draw()
             break;
             case CS_DISPLAY_ARMATURE:
             {
-                Armature *armature = (Armature *)(node);
+                Armature *armature = static_cast<Armature *>(node);
 
                 TextureAtlas *textureAtlas = armature->getTextureAtlas();
                 if(_atlas != textureAtlas)
@@ -675,14 +675,15 @@ Rect Armature::getBoundingBox() const
 
 Bone *Armature::getBoneAtPoint(float x, float y)
 {
-    int length = _children->data->num;
-    Bone **bs = (Bone **)_children->data->arr;
+    int length = _children->count();
+    Bone *bs;
 
     for(int i = length - 1; i >= 0; i--)
     {
-        if(bs[i]->getDisplayManager()->containPoint(x, y))
+        bs = static_cast<Bone*>( _children->getObjectAtIndex(i) );
+        if(bs->getDisplayManager()->containPoint(x, y))
         {
-            return bs[i];
+            return bs;
         }
     }
     return NULL;
