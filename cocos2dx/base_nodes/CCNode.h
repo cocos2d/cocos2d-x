@@ -1381,7 +1381,7 @@ private:
     
 protected:
     
-    void updateEventPriorityIndex();
+    inline void updateEventPriorityIndex() { _eventPriority = ++_globalEventPriorityIndex; };
     
     /// lazy allocs
     void childrenAlloc(void);
@@ -1461,6 +1461,7 @@ protected:
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
     int _eventPriority;
+    static int _globalEventPriorityIndex;
 };
 
 //#pragma mark - NodeRGBA
