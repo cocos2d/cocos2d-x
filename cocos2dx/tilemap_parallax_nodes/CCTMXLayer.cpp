@@ -215,7 +215,7 @@ void TMXLayer::parseInternalProperties()
             {
                 alphaFuncValue = alphaFuncVal->floatValue();
             }
-            setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
+            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
 
             GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 
@@ -241,8 +241,8 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Point pos, unsigned int gid)
     sprite->setOpacity(_opacity);
 
     //issue 1264, flip can be undone as well
-    sprite->setFlipX(false);
-    sprite->setFlipY(false);
+    sprite->setFlippedX(false);
+    sprite->setFlippedY(false);
     sprite->setRotation(0.0f);
     sprite->setAnchorPoint(Point(0,0));
 
@@ -268,24 +268,24 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Point pos, unsigned int gid)
         else if (flag == (kTMXTileVerticalFlag | kTMXTileHorizontalFlag) )
         {
             sprite->setRotation(90.0f);
-            sprite->setFlipX(true);
+            sprite->setFlippedX(true);
         }
         else
         {
             sprite->setRotation(270.0f);
-            sprite->setFlipX(true);
+            sprite->setFlippedX(true);
         }
     }
     else
     {
         if (gid & kTMXTileHorizontalFlag)
         {
-            sprite->setFlipX(true);
+            sprite->setFlippedX(true);
         }
 
         if (gid & kTMXTileVerticalFlag)
         {
-            sprite->setFlipY(true);
+            sprite->setFlippedY(true);
         }
     }
 }
