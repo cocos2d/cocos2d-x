@@ -72,10 +72,13 @@
 #include "CocoStudio/Components/CCComController.h"
 #include "CocoStudio/Components/CCComRender.h"
 
+#include "CocoStudio/GUI/System/CocosGUI.h"
+
 #include "CocoStudio/Json/CSContentJsonDictionary.h"
 #include "CocoStudio/Json/DictionaryHelper.h"
 
 #include "CocoStudio/Reader/CCSSceneReader.h"
+#include "CocoStudio/Reader/CCSGUIReader.h"
 
 
 
