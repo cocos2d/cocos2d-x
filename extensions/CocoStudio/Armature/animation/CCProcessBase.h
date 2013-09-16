@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 enum AnimationType
 {
@@ -50,7 +50,7 @@ enum AnimationType
 class  ProcessBase : public Object
 {
 public:
-    /**
+	/**
      * @js ctor
      */
     ProcessBase(void);
@@ -110,7 +110,7 @@ public:
      * You should never call this function, unless you know what you do
      * Update the Process, include current process, current frame and son on
      *
-     * @param dt    The duration since last update
+     * @param The duration since last update
      */
     virtual void update(float dt);
 
@@ -125,32 +125,32 @@ protected:
     virtual void updateHandler() {};
 
 protected:
-	//! Scale the animation speed
-	CC_SYNTHESIZE_PASS_BY_REF(float, _animationScale, AnimationScale);
+    //! Scale the process speed
+    CC_SYNTHESIZE(float, _processScale, ProcessScale);
 
     //! Set and get whether the aniamtion is pause
-    CC_SYNTHESIZE_PASS_BY_REF(bool, _isPause, IsPause);
+    CC_SYNTHESIZE(bool, _isPause, IsPause);
 
     //! Set and get whether the aniamtion is complete
-    CC_SYNTHESIZE_PASS_BY_REF(bool, _isComplete, IsComplete);
+    CC_SYNTHESIZE(bool, _isComplete, IsComplete);
 
     //! Set and get whether the aniamtion is playing
-    CC_SYNTHESIZE_PASS_BY_REF(bool, _isPlaying, IsPlaying);
+    CC_SYNTHESIZE(bool, _isPlaying, IsPlaying);
 
     //! Current percent this process arrived
-    CC_SYNTHESIZE_PASS_BY_REF(float, _currentPercent, CurrentPercent);
+    CC_SYNTHESIZE(float, _currentPercent, CurrentPercent);
 
     //! The raw duration
-    CC_SYNTHESIZE_PASS_BY_REF(int, _rawDuration, RawDuration);
+    CC_SYNTHESIZE(int, _rawDuration, RawDuration);
 
     //! The animation whether or not loop
-    CC_SYNTHESIZE_PASS_BY_REF(AnimationType, _loopType, LoopType);
+    CC_SYNTHESIZE(AnimationType, _loopType, LoopType);
 
     //! The tween easing effect
-    CC_SYNTHESIZE_PASS_BY_REF(TweenType, _tweenEasing, TweenEasing);
+    CC_SYNTHESIZE(CCTweenType, _tweenEasing, TweenEasing);
 
     //! The animation update speed
-    CC_SYNTHESIZE_PASS_BY_REF(float, _animationInternal, AnimationInternal);
+    CC_SYNTHESIZE(float, _animationInternal, AnimationInternal);
 
 
 protected:
@@ -169,6 +169,6 @@ protected:
     bool _isLoopBack;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCPROCESSBASE_H__*/

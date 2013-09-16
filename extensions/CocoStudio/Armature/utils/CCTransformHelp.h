@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 /*
  * use to calculate the matrix of node from parent node
@@ -48,6 +48,7 @@ public:
     static void matrixToNode(const AffineTransform &_matrix, BaseData &_node);
 
     static void nodeConcat(BaseData &target, BaseData &source);
+    static void nodeSub(BaseData &target, BaseData &source);
 public:
     static AffineTransform helpMatrix1;
     static AffineTransform helpMatrix2;
@@ -56,6 +57,6 @@ public:
     static Point helpPoint2;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCTRANSFORMHELP_H__*/

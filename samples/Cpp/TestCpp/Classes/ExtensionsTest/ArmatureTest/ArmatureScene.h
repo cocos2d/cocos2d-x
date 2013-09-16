@@ -21,12 +21,12 @@ public:
 	virtual void runThisTest();
 
 	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(Object* pSender);
+	virtual void MainMenuCallback(CCObject* pSender);
 };
 
 enum {
-	TEST_ASYNCHRONOUS_LOADING = 0,
-	TEST_COCOSTUDIO_WITH_SKELETON,
+	TEST_COCOSTUDIO_WITH_SKELETON = 0,
+	TEST_COCOSTUDIO_WITHOUT_SKELETON,
 	TEST_DRAGON_BONES_2_0,
 	TEST_PERFORMANCE,
 	TEST_CHANGE_ZORDER,
@@ -41,7 +41,7 @@ enum {
 	TEST_LAYER_COUNT
 };
 
-class ArmatureTestLayer : public Layer
+class ArmatureTestLayer : public CCLayer
 {
 public:
 	virtual void onEnter();
@@ -50,28 +50,23 @@ public:
 	virtual std::string title();
 	virtual std::string subtitle();
 
-	virtual void restartCallback(Object* pSender);
-	virtual void nextCallback(Object* pSender);
-	virtual void backCallback(Object* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 
 	virtual void draw();
-
-protected:
-	MenuItemImage *restartItem;
-	MenuItemImage *nextItem;
-	MenuItemImage *backItem;
 };
 
 
-class TestAsynchronousLoading : public ArmatureTestLayer
+
+class TestDragonBones20 : public ArmatureTestLayer
 {
 public:
 	virtual void onEnter();
 	virtual std::string title();
-	virtual std::string subtitle();
-
-	void dataLoaded(float percent);
 };
+
+
 
 class TestCSWithSkeleton : public ArmatureTestLayer
 {
@@ -79,10 +74,8 @@ class TestCSWithSkeleton : public ArmatureTestLayer
 	virtual std::string title();
 };
 
-
-class TestDragonBones20 : public ArmatureTestLayer
+class TestCSWithoutSkeleton : public ArmatureTestLayer
 {
-public:
 	virtual void onEnter();
 	virtual std::string title();
 };
@@ -96,7 +89,7 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void addArmature(cocos2d::extension::armature::Armature *armature);
+	virtual void addArmature(cocos2d::extension::CCArmature *armature);
 	void update(float delta);
 
 	int armatureCount;
@@ -118,111 +111,77 @@ class TestChangeZorder : public ArmatureTestLayer
 };
 
 
-class TestAnimationEvent : public ArmatureTestLayer
+class TestAnimationEvent : public ArmatureTestLayer, public sigslot::has_slots<>
 {
 public:
 
 	virtual void onEnter();
 	virtual std::string title();
-	void animationEvent(cocos2d::extension::armature::Armature *armature, cocos2d::extension::armature::MovementEventType movementType, const char *movementID);
+	void animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID);
 	void callback1();
 	void callback2();
 
-	cocos2d::extension::armature::Armature *armature;
+	cocos2d::extension::CCArmature *armature;
 };
 
 class TestUseMutiplePicture : public ArmatureTestLayer
 {
 	virtual void onEnter();
-	virtual void onExit();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+	virtual void registerWithTouchDispatcher();
 
 	int displayIndex;
-	cocos2d::extension::armature::Armature *armature;
+	cocos2d::extension::CCArmature *armature;
 };
 
 class TestParticleDisplay : public ArmatureTestLayer
 {
 	virtual void onEnter();
-	virtual void onExit();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+	virtual void registerWithTouchDispatcher();
 
 	int animationID;
-	cocos2d::extension::armature::Armature *armature;
+	cocos2d::extension::CCArmature *armature;
 };
 
-
-
-
 #if ENABLE_PHYSICS_BOX2D_DETECT
-
 class ContactListener;
+#endif
 
-class TestColliderDetector : public ArmatureTestLayer
+class TestColliderDetector : public ArmatureTestLayer, public sigslot::has_slots<>
 {
 public:
 	~TestColliderDetector();
 
 	virtual void onEnter();
-	virtual void onExit();
 	virtual std::string title();
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocos2d::extension::armature::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
-
 	void initWorld();
 
+	cocos2d::extension::CCArmature *armature;
+	cocos2d::extension::CCArmature *armature2;
 
-	cocos2d::extension::armature::Armature *armature;
-	cocos2d::extension::armature::Armature *armature2;
+	cocos2d::extension::CCPhysicsSprite *bullet;
 
-	cocos2d::extension::PhysicsSprite *bullet;
-
+#if ENABLE_PHYSICS_BOX2D_DETECT
 	b2World *world;
 	ContactListener *listener;
 	GLESDebugDraw *debugDraw;
-};
-
-
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-
-
-class TestColliderDetector : public ArmatureTestLayer
-{
-public:
-	~TestColliderDetector();
-
-	virtual void onEnter();
-	virtual void onExit();
-	virtual std::string title();
-	virtual void update(float delta);
-
-	void onFrameEvent(cocos2d::extension::armature::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
-
-	void initWorld();
-
-
-	cocos2d::extension::armature::Armature *armature;
-	cocos2d::extension::armature::Armature *armature2;
-
-	cocos2d::extension::PhysicsSprite *bullet;
-
-
 	cpSpace *space;
 
 	static int beginHit(cpArbiter *arb, cpSpace *space, void *unused);
 	static void endHit(cpArbiter *arb, cpSpace *space, void *unused);
 
 	void destroyCPBody(cpBody *body);
-};
 #endif
-
-
+};
 
 
 
@@ -233,8 +192,8 @@ public:
 	virtual std::string title();
 	virtual void draw();
 
-	cocos2d::extension::armature::Armature *armature;
-	Rect rect;
+	cocos2d::extension::CCArmature *armature;
+	CCRect rect;
 };
 
 class TestAnchorPoint : public ArmatureTestLayer
@@ -248,11 +207,11 @@ class TestArmatureNesting : public ArmatureTestLayer
 {
 public:
 	virtual void onEnter();
-	virtual void onExit();
 	virtual std::string title();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+	virtual void registerWithTouchDispatcher();
 
-	cocos2d::extension::armature::Armature *armature;
+	cocos2d::extension::CCArmature *armature;
 	int weaponIndex;
 };
 #endif  // __HELLOWORLD_SCENE_H__

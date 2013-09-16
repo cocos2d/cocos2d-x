@@ -22,36 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCSHADERNODE_H__
-#define __CCSHADERNODE_H__
+#include "CCArmatureDefine.h"
 
-#include "../utils/CCArmatureDefine.h"
+NS_CC_EXT_ARMATURE_BEGIN
 
-namespace cocos2d { namespace extension { namespace armature {
-
-class ShaderNode : public Node
+const char *armatureVersion()
 {
-public:
-    ShaderNode();
+    return "0.4.0.0";
+}
 
-    bool initWithVertex(const char *vert, const char *frag);
-    void loadShaderVertex(const char *vert, const char *frag);
-
-    virtual void update(float dt);
-    virtual void setPosition(const Point &newPosition);
-    virtual void translateFormOtherNode(AffineTransform &transform);
-    virtual void draw();
-
-    static ShaderNode *shaderNodeWithVertex(const char *vert, const char *frag);
-
-private:
-
-    Vertex2F _center;
-    Vertex2F _resolution;
-    float      _time;
-    GLuint     _uniformCenter, _uniformResolution, _uniformTime;
-};
-
-}}} // namespace cocos2d { namespace extension { namespace armature {
-
-#endif /*__CCSHADERNODE_H__*/
+NS_CC_EXT_ARMATURE_END
