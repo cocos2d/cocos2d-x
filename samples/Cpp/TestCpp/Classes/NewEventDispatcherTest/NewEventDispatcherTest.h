@@ -39,7 +39,7 @@ public:
     virtual std::string subtitle();
 };
 
-class FixedPriorityChangedTest : public EventDispatcherTestDemo
+class FixedPriorityTest : public EventDispatcherTestDemo
 {
 public:
     virtual void onEnter();

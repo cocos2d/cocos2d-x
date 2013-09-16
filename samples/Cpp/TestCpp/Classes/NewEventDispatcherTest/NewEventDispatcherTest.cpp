@@ -260,7 +260,7 @@ private:
     bool _useNodePriority;
 };
 
-void FixedPriorityChangedTest::onEnter()
+void FixedPriorityTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
     
@@ -290,12 +290,12 @@ void FixedPriorityChangedTest::onEnter()
 
 }
 
-std::string FixedPriorityChangedTest::title()
+std::string FixedPriorityTest::title()
 {
-    return "Fixed priority changed test";
+    return "Fixed priority test";
 }
 
-std::string FixedPriorityChangedTest::subtitle()
+std::string FixedPriorityTest::subtitle()
 {
     return "Fixed Priority, Blue: 30, Red: 20, Yellow: 10\n The lower value the higher priority will be.";
 }
