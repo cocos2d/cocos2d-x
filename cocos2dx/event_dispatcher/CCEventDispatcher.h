@@ -136,7 +136,6 @@ private:
     std::map<std::string, std::vector<EventListenerItem*>*>* _listeners;
 
     int               _inDispatch;
-    std::list<Node*>  _eventNodes;
     bool              _isEnabled;
 };
 
