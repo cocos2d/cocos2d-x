@@ -48,47 +48,44 @@ NS_CC_BEGIN
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
-namespace PhysicsInnerCallbackFunctions
+int PhysicsWorld::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data)
 {
-    int collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data)
-    {
-        PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
-        
-        CP_ARBITER_GET_SHAPES(arb, a, b);
-        
-        auto ita = PhysicsShapeInfo::map.find(a);
-        auto itb = PhysicsShapeInfo::map.find(b);
-        CC_ASSERT(ita != PhysicsShapeInfo::map.end() && itb != PhysicsShapeInfo::map.end());
-        
-        PhysicsContact* contact = PhysicsContact::create(ita->second->shape, itb->second->shape);
-        arb->data = contact;
-        
-        return world->collisionBeginCallback(*static_cast<PhysicsContact*>(arb->data));
-    }
+    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
     
-    int collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
-    {
-        PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
-        return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(arb->data),
-                                                PhysicsContactPreSolve());
-    }
+    CP_ARBITER_GET_SHAPES(arb, a, b);
     
-    void collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
-    {
-        PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
-        world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(arb->data),
-                                                 PhysicsContactPostSolve());
-    }
+    auto ita = PhysicsShapeInfo::map.find(a);
+    auto itb = PhysicsShapeInfo::map.find(b);
+    CC_ASSERT(ita != PhysicsShapeInfo::map.end() && itb != PhysicsShapeInfo::map.end());
     
-    void collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
-    {
-        PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
-        PhysicsContact* contact = static_cast<PhysicsContact*>(arb->data);
-        
-        world->collisionSeparateCallback(*contact);
-        
-        delete contact;
-    }
+    PhysicsContact* contact = PhysicsContact::create(ita->second->shape, itb->second->shape);
+    arb->data = contact;
+    
+    return world->collisionBeginCallback(*static_cast<PhysicsContact*>(arb->data));
+}
+
+int PhysicsWorld::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
+{
+    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
+    return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(arb->data),
+                                            PhysicsContactPreSolve());
+}
+
+void PhysicsWorld::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
+{
+    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
+    world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(arb->data),
+                                      PhysicsContactPostSolve());
+}
+
+void PhysicsWorld::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
+{
+    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
+    PhysicsContact* contact = static_cast<PhysicsContact*>(arb->data);
+    
+    world->collisionSeparateCallback(*contact);
+    
+    delete contact;
 }
 
 bool PhysicsWorld::init()
@@ -98,10 +95,10 @@ bool PhysicsWorld::init()
     cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(_gravity));
     
     cpSpaceSetDefaultCollisionHandler(_info->space,
-                                      PhysicsInnerCallbackFunctions::collisionBeginCallbackFunc,
-                                      PhysicsInnerCallbackFunctions::collisionPreSolveCallbackFunc,
-                                      PhysicsInnerCallbackFunctions::collisionPostSolveCallbackFunc,
-                                      PhysicsInnerCallbackFunctions::collisionSeparateCallbackFunc,
+                                      PhysicsWorld::collisionBeginCallbackFunc,
+                                      PhysicsWorld::collisionPreSolveCallbackFunc,
+                                      PhysicsWorld::collisionPostSolveCallbackFunc,
+                                      PhysicsWorld::collisionSeparateCallbackFunc,
                                       this);
     
     return true;
@@ -246,9 +243,9 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
 
 int PhysicsWorld::collisionBeginCallback(const PhysicsContact& contact)
 {
-    if (_delegate)
+    if (_listener && _listener->onContactBegin)
     {
-        return _delegate->onContactBegin(contact);
+        return _listener->onContactBegin(contact);
     }
     
     return true;
@@ -256,9 +253,9 @@ int PhysicsWorld::collisionBeginCallback(const PhysicsContact& contact)
 
 int PhysicsWorld::collisionPreSolveCallback(const PhysicsContact& contact, const PhysicsContactPreSolve& solve)
 {
-    if (_delegate)
+    if (_listener && _listener->onContactPreSolve)
     {
-        return _delegate->onContactPreSolve(contact, solve);
+        return _listener->onContactPreSolve(contact, solve);
     }
     
     return true;
@@ -266,17 +263,17 @@ int PhysicsWorld::collisionPreSolveCallback(const PhysicsContact& contact, const
 
 void PhysicsWorld::collisionPostSolveCallback(const PhysicsContact& contact, const PhysicsContactPostSolve& solve)
 {
-    if (_delegate)
+    if (_listener && _listener->onContactPreSolve)
     {
-        _delegate->onContactPostSove(contact, solve);
+        _listener->onContactPostSolve(contact, solve);
     }
 }
 
 void PhysicsWorld::collisionSeparateCallback(const PhysicsContact& contact)
 {
-    if (_delegate)
+    if (_listener && _listener->onContactEnd)
     {
-        _delegate->onContactEnd(contact);
+        _listener->onContactEnd(contact);
     }
 }
 
@@ -300,7 +297,7 @@ PhysicsWorld::PhysicsWorld()
 : _gravity(Point(0.0f, -98.0f))
 , _speed(1.0f)
 , _info(nullptr)
-, _delegate(nullptr)
+, _listener(nullptr)
 , _bodys(nullptr)
 , _scene(nullptr)
 , _debugDraw(false)

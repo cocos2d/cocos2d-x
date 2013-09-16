@@ -36,16 +36,6 @@ NS_CC_BEGIN
 class PhysicsShape;
 class PhysicsWorld;
 
-namespace PhysicsInnerCallbackFunctions
-{
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-    int collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data);
-    int collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    void collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    void collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-#endif
-}
-
 class PhysicsContactInfo;
 
 class PhysicsContact
@@ -70,13 +60,6 @@ private:
     void* _data;
     
     friend class PhysicsWorld;
-    
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-    friend int PhysicsInnerCallbackFunctions::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data);
-    friend int PhysicsInnerCallbackFunctions::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    friend void PhysicsInnerCallbackFunctions::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    friend void PhysicsInnerCallbackFunctions::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-#endif
 };
 
 class PhysicsContactPreSolve
@@ -89,13 +72,6 @@ private:
     bool init();
     
     friend class PhysicsWorld;
-    
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-    friend int PhysicsInnerCallbackFunctions::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data);
-    friend int PhysicsInnerCallbackFunctions::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    friend void PhysicsInnerCallbackFunctions::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    friend void PhysicsInnerCallbackFunctions::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-#endif
 };
 
 class PhysicsContactPostSolve
@@ -108,26 +84,20 @@ private:
     bool init();
     
     friend class PhysicsWorld;
-    
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-    friend int PhysicsInnerCallbackFunctions::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data);
-    friend int PhysicsInnerCallbackFunctions::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    friend void PhysicsInnerCallbackFunctions::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    friend void PhysicsInnerCallbackFunctions::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-#endif
 };
 
-class PhysicsContactDelegate
+class PhysicsContactListener
 {
 public:
-    PhysicsContactDelegate();
-    virtual ~PhysicsContactDelegate();
+    PhysicsContactListener();
+    virtual ~PhysicsContactListener();
     
 public:
-    virtual bool onContactBegin(const PhysicsContact& contact) = 0;
-    virtual bool onContactPreSolve(const PhysicsContact& contact, const PhysicsContactPreSolve& solve) = 0;
-    virtual void onContactPostSove(const PhysicsContact& contact, const PhysicsContactPostSolve& solve)= 0;
-    virtual void onContactEnd(const PhysicsContact& contact) = 0;
+    std::function<bool(const PhysicsContact& contact)> onContactBegin;
+    std::function<bool(const PhysicsContact& contact, const PhysicsContactPreSolve& solve)> onContactPreSolve;
+    
+    std::function<void(const PhysicsContact& contact, const PhysicsContactPostSolve& solve)> onContactPostSolve;
+    std::function<void(const PhysicsContact& contact)> onContactEnd;
 };
 
 NS_CC_END
