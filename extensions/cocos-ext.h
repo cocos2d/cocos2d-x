@@ -59,13 +59,10 @@
 #include "CocoStudio/Armature/display/CCDisplayManager.h"
 #include "CocoStudio/Armature/display/CCSkin.h"
 #include "CocoStudio/Armature/physics/CCColliderDetector.h"
-#include "CocoStudio/Armature/physics/CCPhysicsWorld.h"
 #include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
-#include "CocoStudio/Armature/utils/CCConstValue.h"
 #include "CocoStudio/Armature/utils/CCDataReaderHelper.h"
 #include "CocoStudio/Armature/utils/CCTweenFunction.h"
 #include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
-#include "CocoStudio/Armature/external_tool/sigslot.h"
 
 #include "CocoStudio/Components/CCComAttribute.h"
 #include "CocoStudio/Components/CCComAudio.h"

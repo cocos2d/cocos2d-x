@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCTransformHelp.h"
 #include "CCUtilMath.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 AffineTransform TransformHelp::helpMatrix1;
 AffineTransform TransformHelp::helpMatrix2;
@@ -139,4 +139,14 @@ void TransformHelp::nodeConcat(BaseData &target, BaseData &source)
     target.scaleY += source.scaleY;
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+void TransformHelp::nodeSub(BaseData &target, BaseData &source)
+{
+    target.x -= source.x;
+    target.y -= source.y;
+    target.skewX -= source.skewX;
+    target.skewY -= source.skewY;
+    target.scaleX -= source.scaleX;
+    target.scaleY -= source.scaleY;
+}
+
+NS_CC_EXT_ARMATURE_END

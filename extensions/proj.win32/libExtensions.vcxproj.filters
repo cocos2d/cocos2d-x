@@ -55,9 +55,6 @@
     <Filter Include="CocoStudio\Armature\utils">
       <UniqueIdentifier>{5e5b3d7d-62a7-493e-a130-ed72ee7c65f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CocoStudio\Armature\external_tool">
-      <UniqueIdentifier>{bd365bbb-6972-4073-b268-8360df428166}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CocoStudio\Json">
       <UniqueIdentifier>{d797adcd-2e59-4486-944e-b3e7f3a954b8}</UniqueIdentifier>
     </Filter>
@@ -316,16 +313,10 @@
     <ClCompile Include="..\CocoStudio\Armature\display\CCDisplayManager.cpp">
       <Filter>CocoStudio\Armature\display</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\display\CCShaderNode.cpp">
-      <Filter>CocoStudio\Armature\display</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\display\CCSkin.cpp">
       <Filter>CocoStudio\Armature\display</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\physics\CCColliderDetector.cpp">
-      <Filter>CocoStudio\Armature\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\physics\CCPhysicsWorld.cpp">
       <Filter>CocoStudio\Armature\physics</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.cpp">
@@ -373,8 +364,8 @@
     <ClCompile Include="..\CocoStudio\Components\CCComRender.cpp">
       <Filter>CocoStudio\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\external_tool\GLES-Render.cpp">
-      <Filter>CocoStudio\Armature\external_tool</Filter>
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDefine.cpp">
+      <Filter>CocoStudio\Armature\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -653,28 +644,16 @@
     <ClInclude Include="..\CocoStudio\Armature\display\CCDisplayManager.h">
       <Filter>CocoStudio\Armature\display</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Armature\display\CCShaderNode.h">
-      <Filter>CocoStudio\Armature\display</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\display\CCSkin.h">
       <Filter>CocoStudio\Armature\display</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Armature\external_tool\sigslot.h">
-      <Filter>CocoStudio\Armature\external_tool</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\physics\CCColliderDetector.h">
-      <Filter>CocoStudio\Armature\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Armature\physics\CCPhysicsWorld.h">
       <Filter>CocoStudio\Armature\physics</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.h">
       <Filter>CocoStudio\Armature\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDefine.h">
-      <Filter>CocoStudio\Armature\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Armature\utils\CCConstValue.h">
       <Filter>CocoStudio\Armature\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.h">
@@ -739,9 +718,6 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Components\CCComRender.h">
       <Filter>CocoStudio\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Armature\external_tool\GLES-Render.h">
-      <Filter>CocoStudio\Armature\external_tool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
