@@ -8,11 +8,11 @@ class MutiTouchTestLayer : public Layer
 public:
     bool init();
 
-    virtual void registerWithTouchDispatcher(void);
-    virtual void ccTouchesBegan(cocos2d::Set  *touches, cocos2d::Event  *event);
-    virtual void ccTouchesMoved(cocos2d::Set  *touches, cocos2d::Event  *event);
-    virtual void ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event);
-    virtual void ccTouchesCancelled(cocos2d::Set  *touches, cocos2d::Event  *event);
+//    virtual void registerWithTouchDispatcher(void);
+    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesCancelled(const std::vector<Touch*>& touches, cocos2d::Event  *event);
 
     CREATE_FUNC(MutiTouchTestLayer)
 };

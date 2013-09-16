@@ -15,6 +15,7 @@ struct {
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
 
+    { "NewEventDispatcherTest", []() { return new EventDispatcherTestScene(); } },
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
@@ -125,6 +126,14 @@ TestController::TestController()
 
     addChild(menu, 1);
 
+    // Register Touch Event
+    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(TestController::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(TestController::onTouchMoved, this);
+    
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 TestController::~TestController()
@@ -158,17 +167,14 @@ void TestController::closeCallback(Object * sender)
 #endif
 }
 
-void TestController::ccTouchesBegan(Set  *touches, Event  *event)
+bool TestController::onTouchBegan(Touch* touch, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
-
-    _beginPos = touch->getLocation();    
+    _beginPos = touch->getLocation();
+    return true;
 }
 
-void TestController::ccTouchesMoved(Set  *touches, Event  *event)
+void TestController::onTouchMoved(Touch* touch, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
-
     auto touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;
 

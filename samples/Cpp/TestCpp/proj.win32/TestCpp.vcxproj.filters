@@ -238,6 +238,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest">
       <UniqueIdentifier>{70cc5629-4a9a-494d-b126-6043d311031a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\NewEventDispatcherTest">
+      <UniqueIdentifier>{0b414789-7971-4a4c-86e3-40cc00936684}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -563,6 +566,10 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
+    <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp">
+      <Filter>Classes\NewEventDispatcherTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1066,6 +1073,10 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />
+    <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h">
+      <Filter>Classes\NewEventDispatcherTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

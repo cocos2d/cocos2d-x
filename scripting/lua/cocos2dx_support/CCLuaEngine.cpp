@@ -401,20 +401,21 @@ int LuaEngine::handleKeypadEvent(void* data)
         return 0;
     
     int action = keypadScriptData->actionType;
-    
-    switch (action)
-    {
-        case kTypeBackClicked:
-            _stack->pushString("backClicked");
-            break;
-            
-        case kTypeMenuClicked:
-            _stack->pushString("menuClicked");
-            break;
-            
-        default:
-            return 0;
-    }
+
+    //FIXME:
+//    switch (action)
+//    {
+//        case kTypeBackClicked:
+//            _stack->pushString("backClicked");
+//            break;
+//            
+//        case kTypeMenuClicked:
+//            _stack->pushString("menuClicked");
+//            break;
+//            
+//        default:
+//            return 0;
+//    }
     int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     return ret;
@@ -485,19 +486,19 @@ int LuaEngine::handleTouchEvent(void* data)
     
     switch (touchScriptData->actionType)
     {
-        case CCTOUCHBEGAN:
+        case TouchEvent::EventCode::BEGAN:
             _stack->pushString("began");
             break;
             
-        case CCTOUCHMOVED:
+        case TouchEvent::EventCode::MOVED:
             _stack->pushString("moved");
             break;
             
-        case CCTOUCHENDED:
+        case TouchEvent::EventCode::ENDED:
             _stack->pushString("ended");
             break;
             
-        case CCTOUCHCANCELLED:
+        case TouchEvent::EventCode::CANCELLED:
             _stack->pushString("cancelled");
             break;
             
@@ -524,7 +525,7 @@ int LuaEngine::handleTouchesEvent(void* data)
         return 0;
     
     TouchesScriptData* touchesScriptData = static_cast<TouchesScriptData*>(data);
-    if (NULL == touchesScriptData->nativeObject || NULL == touchesScriptData->touches)
+    if (NULL == touchesScriptData->nativeObject || touchesScriptData->touches.size() == 0)
         return 0;
     
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)touchesScriptData->nativeObject, ScriptHandlerMgr::HandlerType::TOUCHES);
@@ -534,19 +535,19 @@ int LuaEngine::handleTouchesEvent(void* data)
     
     switch (touchesScriptData->actionType)
     {
-        case CCTOUCHBEGAN:
+        case TouchEvent::EventCode::BEGAN:
             _stack->pushString("began");
             break;
             
-        case CCTOUCHMOVED:
+        case TouchEvent::EventCode::MOVED:
             _stack->pushString("moved");
             break;
             
-        case CCTOUCHENDED:
+        case TouchEvent::EventCode::ENDED:
             _stack->pushString("ended");
             break;
             
-        case CCTOUCHCANCELLED:
+        case TouchEvent::EventCode::CANCELLED:
             _stack->pushString("cancelled");
             break;
             
@@ -560,15 +561,14 @@ int LuaEngine::handleTouchesEvent(void* data)
 
     lua_newtable(L);
     int i = 1;
-    for (SetIterator it = touchesScriptData->touches->begin(); it != touchesScriptData->touches->end(); ++it)
+    for (auto& touch : touchesScriptData->touches)
     {
-        Touch* pTouch = static_cast<Touch*>(*it);
-        Point pt = pDirector->convertToGL(pTouch->getLocationInView());
+        Point pt = pDirector->convertToGL(touch->getLocationInView());
         lua_pushnumber(L, pt.x);
         lua_rawseti(L, -2, i++);
         lua_pushnumber(L, pt.y);
         lua_rawseti(L, -2, i++);
-        lua_pushinteger(L, pTouch->getID());
+        lua_pushinteger(L, touch->getID());
         lua_rawseti(L, -2, i++);
     }
     ret = _stack->executeFunctionByHandler(handler, 2);

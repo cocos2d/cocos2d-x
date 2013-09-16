@@ -562,7 +562,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     }
 }
 
-void TableView::ccTouchEnded(Touch *pTouch, Event *pEvent)
+void TableView::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     if (!this->isVisible()) {
         return;
@@ -581,18 +581,18 @@ void TableView::ccTouchEnded(Touch *pTouch, Event *pEvent)
         _touchedCell = NULL;
     }
 
-    ScrollView::ccTouchEnded(pTouch, pEvent);
+    ScrollView::onTouchEnded(pTouch, pEvent);
 }
 
-bool TableView::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool TableView::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (!this->isVisible()) {
         return false;
     }
 
-    bool touchResult = ScrollView::ccTouchBegan(pTouch, pEvent);
+    bool touchResult = ScrollView::onTouchBegan(pTouch, pEvent);
 
-    if(_touches->count() == 1) {
+    if(_touches.size() == 1) {
         unsigned int        index;
         Point           point;
 
@@ -623,9 +623,9 @@ bool TableView::ccTouchBegan(Touch *pTouch, Event *pEvent)
     return touchResult;
 }
 
-void TableView::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void TableView::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
-    ScrollView::ccTouchMoved(pTouch, pEvent);
+    ScrollView::onTouchMoved(pTouch, pEvent);
 
     if (_touchedCell && isTouchMoved()) {
         if(_tableViewDelegate != NULL) {
@@ -636,9 +636,9 @@ void TableView::ccTouchMoved(Touch *pTouch, Event *pEvent)
     }
 }
 
-void TableView::ccTouchCancelled(Touch *pTouch, Event *pEvent)
+void TableView::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
-    ScrollView::ccTouchCancelled(pTouch, pEvent);
+    ScrollView::onTouchCancelled(pTouch, pEvent);
 
     if (_touchedCell) {
         if(_tableViewDelegate != NULL) {

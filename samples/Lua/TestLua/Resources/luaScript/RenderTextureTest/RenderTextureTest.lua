@@ -299,7 +299,7 @@ end
 -- end
 -- end
 
--- local function ccTouchesMoved(cc.Set* touches, cc.Event* event)
+-- local function ccTouchesMoved(cc.const std::vector<Touch*>& touches, cc.Event* event)
 
 --     cc.SetIterator iter
 --     cc.Touch *touch
@@ -320,7 +320,7 @@ end
 -- end
 -- end
 
--- local function ccTouchesEnded(cc.Set* touches, cc.Event* event)
+-- local function ccTouchesEnded(cc.const std::vector<Touch*>& touches, cc.Event* event)
 
 --     this:renderScreenShot()
 -- end
@@ -590,7 +590,7 @@ end
 --                     return NULL
 --                     end
 
--- local function ccTouchesEnded(cc.Set* touches, cc.Event* event)
+-- local function ccTouchesEnded(cc.const std::vector<Touch*>& touches, cc.Event* event)
 
 --     cc.SetIterator iter = touches:begin()
 --     for( iter != touches:end() ++iter)

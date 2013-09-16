@@ -24,12 +24,12 @@ KeyboardTest::~KeyboardTest()
     _label->release();
 }
 
-void KeyboardTest::keyPressed(int keyCode)
+void KeyboardTest::onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event)
 {
     log("Key with keycode %d pressed", keyCode);
 }
 
-void KeyboardTest::keyReleased(int keyCode)
+void KeyboardTest::onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event)
 {
     log("Key with keycode %d released", keyCode);
 }
