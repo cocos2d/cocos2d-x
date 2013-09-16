@@ -228,8 +228,6 @@ protected:
     float m_fBarLength;
     int m_nPercent;
     
-    float m_fBarNodeScaleValue;
-    float m_fTouchMoveStartLocation;
     bool m_bScale9Enabled;
     bool m_bPrevIgnoreSize;
     std::string m_strTextureFile;

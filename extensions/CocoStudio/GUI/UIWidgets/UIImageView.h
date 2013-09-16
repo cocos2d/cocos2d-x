@@ -120,7 +120,6 @@ protected:
     virtual void onSizeChanged();
     void imageTextureScaleChangedWithSize();
 protected:
-    int m_nViewType;
     int m_nClickCount;
     float m_fClickTimeInterval;
     bool m_bStartCheckDoubleClick;

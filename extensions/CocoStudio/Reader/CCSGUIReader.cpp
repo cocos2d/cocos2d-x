@@ -1557,7 +1557,7 @@ void CCSGUIReader::setPropsForDragPanelFromJsonDictionary(UIWidget *widget, cs::
     UIDragPanel* dragPanel = (UIDragPanel*)widget;
     
     bool bounceEnable = DICTOOL->getBooleanValue_json(options, "bounceEnable");
-    dragPanel->setBounceEnable(bounceEnable);
+    dragPanel->setBounceEnabled(bounceEnable);
     
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");

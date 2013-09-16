@@ -189,7 +189,6 @@ protected:
     float m_fChildFocusCancelOffset;
     CCObject* m_pPageTurningListener;
     SEL_PageViewPageTurningEvent m_pfnPageTurningSelector;
-    float m_fScrollDegreeRange;
 };
 
 NS_CC_EXT_END
