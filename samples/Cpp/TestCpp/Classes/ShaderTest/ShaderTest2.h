@@ -24,8 +24,6 @@ public:
     virtual void runThisTest();
 };
 
-
-
 class NormalSpriteTest : public ShaderTestDemo2
 {
 public:
@@ -69,6 +67,13 @@ class BloomSpriteTest : public ShaderTestDemo2
 public:
     BloomSpriteTest();
     virtual std::string subtitle() {return "BloomSpriteTest";}
+};
+
+class LensFlareSpriteTest : public ShaderTestDemo2
+{
+public:
+    LensFlareSpriteTest();
+    virtual std::string subtitle() {return "LensFlareSpriteTest";}
 };
 
 class CelShadingSpriteTest : public ShaderTestDemo2
