@@ -38,9 +38,9 @@ void ActionCamera::startWithTarget(Node *target)
     ActionInterval::startWithTarget(target);
     
     Camera *camera = target->getCamera();
-    camera->getCenterXYZ(&_centerXOrig, &_centerYOrig, &_centerZOrig);
-    camera->getEyeXYZ(&_eyeXOrig, &_eyeYOrig, &_eyeZOrig);
-    camera->getUpXYZ(&_upXOrig, &_upYOrig, &_upZOrig);
+    camera->getCenter(&_centerXOrig, &_centerYOrig, &_centerZOrig);
+    camera->getEye(&_eyeXOrig, &_eyeYOrig, &_eyeZOrig);
+    camera->getUp(&_upXOrig, &_upYOrig, &_upZOrig);
 }
 
 ActionCamera* ActionCamera::clone() const
@@ -125,7 +125,7 @@ void OrbitCamera::update(float dt)
     float j = sinf(za) * sinf(xa) * r + _centerYOrig;
     float k = cosf(za) * r + _centerZOrig;
 
-    _target->getCamera()->setEyeXYZ(i,j,k);
+    _target->getCamera()->setEye(i,j,k);
 }
 
 void OrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimuth)
@@ -135,8 +135,8 @@ void OrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimut
     float s;
 
     Camera* pCamera = _target->getCamera();
-    pCamera->getEyeXYZ(&ex, &ey, &ez);
-    pCamera->getCenterXYZ(&cx, &cy, &cz);
+    pCamera->getEye(&ex, &ey, &ez);
+    pCamera->getCenter(&cx, &cy, &cz);
 
     x = ex-cx;
     y = ey-cy;
