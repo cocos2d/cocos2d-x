@@ -35,22 +35,41 @@ NS_CC_BEGIN
 
 class Node;
 
+/**
+ *   Base class of all kinds of events.
+ */
 class Event
 {
 public:
+    /** Constructor */
     Event(const std::string& type);
+    
+    /** Destructor */
     virtual ~Event();
 
+    /** Gets the event type */
 	const std::string& getType() const { return _type; };
+    
+    /** Stops propagation for current event */
     void stopPropagation() { _isStopped = true; };
+    
+    /** Checks whether the event has been stopped */
     bool isStopped() const { return _isStopped; };
+    
+    /** @brief Gets current target of the event
+     *  @return The target with which the event associates.
+     *  @note It onlys be available when the event listener is associated with node. 
+     *        It returns 0 when the listener is associated with fixed priority.
+     */
     Node* getCurrentTarget();
     
 protected:
+    /** Sets current target */
     void setCurrentTarget(Node* target);
-	std::string _type;
-    bool _isStopped;
-    Node* _currentTarget;
+    
+	std::string _type; /// Event type
+    bool _isStopped;   /// whether the event has been stopped.
+    Node* _currentTarget;  /// Current target
     
     friend class EventDispatcher;
 };

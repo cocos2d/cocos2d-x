@@ -104,7 +104,7 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     if (!listener->checkAvaiable())
         return;
     
-    EventListenerItem* item = new EventListenerItem();
+    auto item = new EventListenerItem();
     item->node          = node;
     item->fixedPriority = 0;
     item->listener      = listener;
@@ -124,7 +124,7 @@ void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener,
     if (!listener->checkAvaiable())
         return;
     
-    EventListenerItem* item = new EventListenerItem();
+    auto item = new EventListenerItem();
     item->node          = nullptr;
     item->fixedPriority = fixedPriority;
     item->listener      = listener;
@@ -244,11 +244,12 @@ void EventDispatcher::dispatchEvent(Event* event, bool toSortListeners)
         if (iter != _listeners->end())
         {
             auto listenerList = iter->second;
-            for (auto listenerIter = listenerList->begin(); listenerIter != listenerList->end(); ++listenerIter)
+            for (auto& item : *listenerList)
             {
-                CCASSERT(*listenerIter, "listener is invalid.");
+                CCASSERT(item, "listener item is invalid.");
 
-                (*listenerIter)->listener->onEvent(event);
+                event->setCurrentTarget(item->node);
+                item->listener->onEvent(event);
 
                 if (event->isStopped())
                     break;
