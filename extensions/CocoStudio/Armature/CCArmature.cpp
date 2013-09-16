@@ -135,7 +135,7 @@ bool Armature::init(const char *name)
 
         _name = name == NULL ? "" : name;
 
-        ArmatureDataManager *armatureDataManager = ArmatureDataManager::sharedArmatureDataManager();
+        ArmatureDataManager *armatureDataManager = ArmatureDataManager::getInstance();
 
         if(_name.length() != 0)
         {

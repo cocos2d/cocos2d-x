@@ -37,7 +37,10 @@ NS_CC_EXT_ARMATURE_BEGIN
 class  ArmatureDataManager : public Object
 {
 public:
-    static ArmatureDataManager *sharedArmatureDataManager();
+	/** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static ArmatureDataManager *sharedArmatureDataManager() { return ArmatureDataManager::getInstance(); }
+
+    static ArmatureDataManager *getInstance();
 
     static void purge();
 private:

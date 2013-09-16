@@ -33,7 +33,7 @@ NS_CC_EXT_ARMATURE_BEGIN
 
 static ArmatureDataManager *s_sharedArmatureDataManager = NULL;
 
-ArmatureDataManager *ArmatureDataManager::sharedArmatureDataManager()
+ArmatureDataManager *ArmatureDataManager::getInstance()
 {
     if (s_sharedArmatureDataManager == NULL)
     {
@@ -179,32 +179,32 @@ void ArmatureDataManager::removeTextureData(const char *id)
 void ArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 {
     _autoLoadSpriteFile = true;
-    DataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+    DataReaderHelper::getInstance()->addDataFromFile(configFilePath);
 }
 
 void ArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, Object *target, SEL_SCHEDULE selector)
 {
     _autoLoadSpriteFile = true;
-    DataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
+    DataReaderHelper::getInstance()->addDataFromFileAsync(configFilePath, target, selector);
 }
 
 void ArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
     _autoLoadSpriteFile = false;
-    DataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+    DataReaderHelper::getInstance()->addDataFromFile(configFilePath);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
 
 void ArmatureDataManager::addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, Object *target, SEL_SCHEDULE selector)
 {
     _autoLoadSpriteFile = false;
-    DataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
+    DataReaderHelper::getInstance()->addDataFromFileAsync(configFilePath, target, selector);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
 
 void ArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
-    SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromFile(plistPath, imagePath);
+    SpriteFrameCacheHelper::getInstance()->addSpriteFrameFromFile(plistPath, imagePath);
 }
 
 

@@ -84,7 +84,7 @@ bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 
     if (ret)
     {
-		TextureAtlas *atlas = SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
+		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
 		setTextureAtlas(atlas);
 
 		_displayName = pszSpriteFrameName;
@@ -99,7 +99,7 @@ bool Skin::initWithFile(const char *pszFilename)
 
     if (ret)
     {
-		TextureAtlas *atlas = SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
+		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
 		setTextureAtlas(atlas);
 
 		_displayName = pszFilename;

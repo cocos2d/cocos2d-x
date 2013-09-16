@@ -34,7 +34,10 @@ NS_CC_EXT_ARMATURE_BEGIN
 class  SpriteFrameCacheHelper
 {
 public:
-    static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
+	/** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper(){ return SpriteFrameCacheHelper::getInstance(); }
+
+    static SpriteFrameCacheHelper *getInstance();
 
     static void purge();
 public:
