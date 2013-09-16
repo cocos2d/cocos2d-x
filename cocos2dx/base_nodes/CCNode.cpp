@@ -176,10 +176,7 @@ Node::~Node()
     
     CC_SAFE_DELETE(_componentContainer);
     
-    for (auto iter = _eventlisteners.begin(); iter != _eventlisteners.end(); ++iter)
-    {
-        EventDispatcher::getInstance()->removeEventListener(*iter);
-    }
+    removeAllEventListeners();
 }
 
 bool Node::init()
@@ -950,7 +947,9 @@ void Node::onExit()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
-    arrayMakeObjectsPerformSelector(_children, onExit, Node*);    
+    arrayMakeObjectsPerformSelector(_children, onExit, Node*);
+    
+    removeAllEventListeners();
 }
 
 void Node::setActionManager(ActionManager* actionManager)
@@ -1304,6 +1303,14 @@ void Node::associateEventListener(EventListener* listener)
 void Node::dissociateEventListener(EventListener* listener)
 {
     _eventlisteners.erase(listener);
+}
+
+void Node::removeAllEventListeners()
+{
+    for (auto& listener : _eventlisteners)
+    {
+        EventDispatcher::getInstance()->removeEventListener(listener);
+    }
 }
 
 // NodeRGBA

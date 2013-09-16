@@ -100,7 +100,8 @@ Layer *Layer::create()
 
 void Layer::onRegisterTouchListener()
 {    
-    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
+    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE )
+    {
         // Register Touch Event
         auto listener = TouchEventListener::create(Touch::DispatchMode::ALL_AT_ONCE);
         
@@ -111,7 +112,9 @@ void Layer::onRegisterTouchListener()
         
         EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
         _touchListener = listener;
-    } else {
+    }
+    else
+    {
         // Register Touch Event
         auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
         listener->setSwallowTouches(_swallowsTouches);
