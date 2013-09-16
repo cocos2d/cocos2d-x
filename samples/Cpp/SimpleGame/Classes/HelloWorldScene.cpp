@@ -103,7 +103,16 @@ bool HelloWorld::init()
 		this->setTouchEnabled(true);
 
 		_targets = new Array;
+        if (nullptr != _targets)
+        {
+            _targets->initWithCapacity(7);
+        }
 		_projectiles = new Array;
+        if (nullptr != _projectiles)
+        {
+            _projectiles->initWithCapacity(7);
+        }
+        
 
 		// use updateGame instead of update, otherwise it will conflit with SelectorProtocol::update
 		// see http://www.cocos2d-x.org/boards/6/topics/1478
@@ -240,6 +249,11 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 void HelloWorld::updateGame(float dt)
 {
 	Array *projectilesToDelete = new Array;
+    if (nullptr != projectilesToDelete)
+    {
+        projectilesToDelete->initWithCapacity(7);
+    }
+
     Object* it = NULL;
     Object* jt = NULL;
 
@@ -254,6 +268,10 @@ void HelloWorld::updateGame(float dt)
 			projectile->getContentSize().height);
 
 		auto targetsToDelete =new Array;
+        if (nullptr != targetsToDelete)
+        {
+            targetsToDelete->initWithCapacity(7);
+        }
 
 		// for (jt = _targets->begin(); jt != _targets->end(); jt++)
         CCARRAY_FOREACH(_targets, jt)
