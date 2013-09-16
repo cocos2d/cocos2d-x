@@ -13,7 +13,7 @@ namespace {
 std::function<Layer*()> createFunctions[] =
 {
     CL(TouchableSpriteTest),
-    CL(FixedPriorityChangedTest)
+    CL(FixedPriorityTest)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
