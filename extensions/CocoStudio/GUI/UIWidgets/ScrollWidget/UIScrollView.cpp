@@ -83,13 +83,13 @@ void UIScrollView::releaseResoures()
 {
     setUpdateEnabled(false);
     removeAllChildren();
-    m_pRenderer->removeAllChildrenWithCleanup(true);
-    m_pRenderer->removeFromParentAndCleanup(true);
-    m_pRenderer->release();
+    _renderer->removeAllChildrenWithCleanup(true);
+    _renderer->removeFromParentAndCleanup(true);
+    _renderer->release();
     
     Layout::removeChild(m_pInnerContainer);
 
-    m_children->release();
+    _children->release();
 }
 
 bool UIScrollView::init()
@@ -115,22 +115,22 @@ void UIScrollView::initRenderer()
 void UIScrollView::onSizeChanged()
 {
     Layout::onSizeChanged();
-    m_fTopBoundary = m_size.height;
-    m_fRightBoundary = m_size.width;
+    m_fTopBoundary = _size.height;
+    m_fRightBoundary = _size.width;
     Size innerSize = m_pInnerContainer->getSize();
     float orginInnerSizeWidth = innerSize.width;
     float orginInnerSizeHeight = innerSize.height;
-    float innerSizeWidth = MAX(orginInnerSizeWidth, m_size.width);
-    float innerSizeHeight = MAX(orginInnerSizeHeight, m_size.height);
+    float innerSizeWidth = MAX(orginInnerSizeWidth, _size.width);
+    float innerSizeHeight = MAX(orginInnerSizeHeight, _size.height);
     m_pInnerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(Point(0, m_size.height - m_pInnerContainer->getSize().height));
+    m_pInnerContainer->setPosition(Point(0, _size.height - m_pInnerContainer->getSize().height));
 }
 
 void UIScrollView::setInnerContainerSize(const Size &size)
 {
-    float innerSizeWidth = m_size.width;
-    float innerSizeHeight = m_size.height;
-    if (size.width < m_size.width)
+    float innerSizeWidth = _size.width;
+    float innerSizeHeight = _size.height;
+    if (size.width < _size.width)
     {
         CCLOG("Inner width <= scrollview width, it will be force sized!");
     }
@@ -138,7 +138,7 @@ void UIScrollView::setInnerContainerSize(const Size &size)
     {
         innerSizeWidth = size.width;
     }
-    if (size.height < m_size.height)
+    if (size.height < _size.height)
     {
         CCLOG("Inner height <= scrollview height, it will be force sized!");
     }
@@ -147,7 +147,7 @@ void UIScrollView::setInnerContainerSize(const Size &size)
         innerSizeHeight = size.height;
     }
     m_pInnerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(Point(0, m_size.height - m_pInnerContainer->getSize().height));
+    m_pInnerContainer->setPosition(Point(0, _size.height - m_pInnerContainer->getSize().height));
 }
 
 const Size& UIScrollView::getInnerContainerSize() const
@@ -402,7 +402,7 @@ void UIScrollView::scrollToTop()
 
 void UIScrollView::startRecordSlidAction()
 {
-    if (m_children->count() <= 0)
+    if (_children->count() <= 0)
     {
         return;
     }
@@ -415,7 +415,7 @@ void UIScrollView::startRecordSlidAction()
 
 void UIScrollView::endRecordSlidAction()
 {
-    if (m_children->count() <= 0)
+    if (_children->count() <= 0)
     {
         return;
     }
@@ -434,7 +434,7 @@ void UIScrollView::endRecordSlidAction()
 
 void UIScrollView::handlePressLogic(const Point &touchPoint)
 {        
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     switch (m_eDirection)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
@@ -451,9 +451,9 @@ void UIScrollView::handlePressLogic(const Point &touchPoint)
     startRecordSlidAction();
 }
 
-void UIScrollView::handleMoveLogic(const CCPoint &touchPoint)
+void UIScrollView::handleMoveLogic(const Point &touchPoint)
 {
-    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     float offset = 0.0f;
     
     switch (m_eDirection)
@@ -500,7 +500,7 @@ void UIScrollView::handleMoveLogic(const CCPoint &touchPoint)
 
 void UIScrollView::handleReleaseLogic(const Point &touchPoint)
 {
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     switch (m_eDirection)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical

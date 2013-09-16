@@ -115,8 +115,8 @@ bool UIListView::init()
 void UIListView::onSizeChanged()
 {
     Layout::onSizeChanged();
-    m_fTopBoundary = m_size.height;
-    m_fRightBoundary = m_size.width;
+    m_fTopBoundary = _size.height;
+    m_fRightBoundary = _size.width;
 }
 
 bool UIListView::addChild(UIWidget* widget)
@@ -196,7 +196,7 @@ ListViewDirection UIListView::getDirection()
 
 void UIListView::resetProperty()
 {
-    ccArray* arrayChildren = m_children->data;
+    ccArray* arrayChildren = _children->data;
     
     if (arrayChildren->num <= 0)
     {
@@ -226,7 +226,7 @@ void UIListView::resetProperty()
     float scroll_top = m_fTopBoundary;
     float scroll_left = m_fLeftBoundary;
     
-    switch (m_children->count())
+    switch (_children->count())
     {
         case 1:
         {
@@ -287,7 +287,7 @@ void UIListView::resetProperty()
 
 void UIListView::handlePressLogic(const Point &touchPoint)
 {
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     
     switch (m_eDirection)
     {
@@ -310,7 +310,7 @@ void UIListView::handlePressLogic(const Point &touchPoint)
 
 void UIListView::handleMoveLogic(const Point &touchPoint)
 {
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     float offset = 0.0f;
     
     switch (m_eDirection)
@@ -357,7 +357,7 @@ void UIListView::handleMoveLogic(const Point &touchPoint)
 
 void UIListView::handleReleaseLogic(const Point &touchPoint)
 {
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     
     switch (m_eDirection)
     {
@@ -427,7 +427,7 @@ void UIListView::moveChildren(float offset)
     {
         case LISTVIEW_DIR_VERTICAL: // vertical
         {
-            ccArray* arrayChildren = m_children->data;
+            ccArray* arrayChildren = _children->data;
             int childrenCount = arrayChildren->num;
             for (int i = 0; i < childrenCount; i++)
             {
@@ -441,7 +441,7 @@ void UIListView::moveChildren(float offset)
             
         case LISTVIEW_DIR_HORIZONTAL: // horizontal
         {
-            ccArray* arrayChildren = m_children->data;
+            ccArray* arrayChildren = _children->data;
             int childrenCount = arrayChildren->num;
             for (int i=0;i<childrenCount;i++)
             {
@@ -732,7 +732,7 @@ void UIListView::recordSlidTime(float dt)
 
 void UIListView::startRecordSlidAction()
 {
-    if (m_children->count() <= 0)
+    if (_children->count() <= 0)
     {
         return;
     }
@@ -746,7 +746,7 @@ void UIListView::startRecordSlidAction()
 
 void UIListView::endRecordSlidAction()
 {
-    if (m_children->count() <= 0)
+    if (_children->count() <= 0)
     {
         return;
     }
@@ -815,7 +815,7 @@ void UIListView::initChildWithDataLength(int length)
     m_nEnd = 0;        
     
     // init child pool
-    ccArray* arrayChildren = m_children->data;
+    ccArray* arrayChildren = _children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
     {
@@ -1080,7 +1080,7 @@ void UIListView::collectOverTopChild()
 {
     float scroll_top = m_fTopBoundary;
     
-    ccArray* arrayChildren = m_children->data;
+    ccArray* arrayChildren = _children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
     {
@@ -1098,7 +1098,7 @@ void UIListView::collectOverBottomChild()
 {
     float scroll_bottom = m_fBottomBoundary;        
     
-    ccArray* arrayChildren = m_children->data;
+    ccArray* arrayChildren = _children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
     {
@@ -1116,7 +1116,7 @@ void UIListView::collectOverLeftChild()
 {
     float scroll_left = m_fLeftBoundary;        
     
-    ccArray* arrayChildren = m_children->data;
+    ccArray* arrayChildren = _children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
     {
@@ -1134,7 +1134,7 @@ void UIListView::collectOverRightChild()
 {
     float scroll_right = m_fRightBoundary;
     
-    ccArray* arrayChildren = m_children->data;
+    ccArray* arrayChildren = _children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
     {
@@ -1156,7 +1156,7 @@ void UIListView::setLoopPosition()
             {
                 case LISTVIEW_MOVE_DIR_UP: // up
                 {
-                    ccArray* arrayChildren = m_children->data;
+                    ccArray* arrayChildren = _children->data;
                     unsigned int childrenCount = arrayChildren->num;
                     
                     if (m_overTopArray->count() == childrenCount)
@@ -1184,7 +1184,7 @@ void UIListView::setLoopPosition()
                     {
                         float scroll_top = m_fTopBoundary;
                         
-                        ccArray* arrayChildren = m_children->data;
+                        ccArray* arrayChildren = _children->data;
                         int count = arrayChildren->num;
                         for (int i = 0; i < count; ++i)
                         {
@@ -1204,7 +1204,7 @@ void UIListView::setLoopPosition()
                     
                 case LISTVIEW_MOVE_DIR_DOWN: // down
                 {
-                    ccArray* arrayChildren = m_children->data;
+                    ccArray* arrayChildren = _children->data;
                     unsigned int childrenCount = arrayChildren->num;
                     
                     if (m_overBottomArray->count() == childrenCount)
@@ -1230,7 +1230,7 @@ void UIListView::setLoopPosition()
                     {
                         float scroll_bottom = m_fBottomBoundary;
                         
-                        ccArray* arrayChildren = m_children->data;
+                        ccArray* arrayChildren = _children->data;
                         int count = arrayChildren->num;
                         for (int i = count - 1; i >= 0; --i)
                         {
@@ -1258,7 +1258,7 @@ void UIListView::setLoopPosition()
             {
                 case LISTVIEW_MOVE_DIR_LEFT: // left
                 {
-                    ccArray* arrayChildren = m_children->data;
+                    ccArray* arrayChildren = _children->data;
                     unsigned int childrenCount = arrayChildren->num;
                     
                     if (m_overLeftArray->count() == childrenCount)
@@ -1286,7 +1286,7 @@ void UIListView::setLoopPosition()
                     {
                         float scroll_left = m_fLeftBoundary;
                         
-                        ccArray* arrayChildren = m_children->data;
+                        ccArray* arrayChildren = _children->data;
                         int count = arrayChildren->num;
                         for (int i = 0; i < count; ++i)
                         {
@@ -1306,7 +1306,7 @@ void UIListView::setLoopPosition()
                     
                 case LISTVIEW_MOVE_DIR_RIGHT: // right
                 {
-                    ccArray* arrayChildren = m_children->data;
+                    ccArray* arrayChildren = _children->data;
                     unsigned int childrenCount = arrayChildren->num;
                     
                     if (m_overRightArray->count() == childrenCount)
@@ -1332,7 +1332,7 @@ void UIListView::setLoopPosition()
                     {
                         float scroll_right = m_fRightBoundary;
                         
-                        ccArray* arrayChildren = m_children->data;
+                        ccArray* arrayChildren = _children->data;
                         int count = arrayChildren->num;
                         for (int i = count - 1; i >= 0; --i)
                         {

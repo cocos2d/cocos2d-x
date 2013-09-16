@@ -53,7 +53,7 @@ void UILabelBMFont::initRenderer()
 {
     UIWidget::initRenderer();
     m_pLabelBMFontRenderer = CCLabelBMFont::create();
-    m_pRenderer->addChild(m_pLabelBMFontRenderer);
+    _renderer->addChild(m_pLabelBMFontRenderer);
 }
 
 void UILabelBMFont::setFntFile(const char *fileName)
@@ -106,10 +106,10 @@ Node* UILabelBMFont::getVirtualRenderer()
 
 void UILabelBMFont::labelBMFontScaleChangedWithSize()
 {
-    if (m_bIgnoreSize)
+    if (_ignoreSize)
     {
         m_pLabelBMFontRenderer->setScale(1.0f);
-        m_size = m_pLabelBMFontRenderer->getContentSize();
+        _size = m_pLabelBMFontRenderer->getContentSize();
     }
     else
     {
@@ -119,8 +119,8 @@ void UILabelBMFont::labelBMFontScaleChangedWithSize()
             m_pLabelBMFontRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = m_size.width / textureSize.width;
-        float scaleY = m_size.height / textureSize.height;
+        float scaleX = _size.width / textureSize.width;
+        float scaleY = _size.height / textureSize.height;
         m_pLabelBMFontRenderer->setScaleX(scaleX);
         m_pLabelBMFontRenderer->setScaleY(scaleY);
     }

@@ -371,12 +371,12 @@ bool UIPageView::onTouchBegan(const Point &touchPoint)
 
 void UIPageView::onTouchMoved(const Point &touchPoint)
 {
-    m_touchMovePos.x = touchPoint.x;
-    m_touchMovePos.y = touchPoint.y;
+    _touchMovePos.x = touchPoint.x;
+    _touchMovePos.y = touchPoint.y;
     handleMoveLogic(touchPoint);
-    if (m_pWidgetParent)
+    if (_widgetParent)
     {
-        m_pWidgetParent->checkChildInfo(1,this,touchPoint);
+        _widgetParent->checkChildInfo(1,this,touchPoint);
     }
     moveEvent();
     if (!hitTest(touchPoint))
@@ -453,14 +453,14 @@ void UIPageView::onTouchCancelled(const Point &touchPoint)
 
 void UIPageView::handlePressLogic(const Point &touchPoint)
 {
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     m_fTouchMoveStartLocation = nsp.x;
     m_fTouchStartLocation = nsp.x;
 }
 
 void UIPageView::handleMoveLogic(const Point &touchPoint)
 {
-    Point nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    Point nsp = _renderer->convertToNodeSpace(touchPoint);
     float offset = 0.0;
     float moveX = nsp.x;
     offset = moveX - m_fTouchMoveStartLocation;

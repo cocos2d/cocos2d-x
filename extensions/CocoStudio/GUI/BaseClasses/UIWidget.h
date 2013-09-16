@@ -911,48 +911,48 @@ protected:
     virtual void releaseResoures();
     void updateSizeAndPosition();
 protected:
-    bool m_bEnabled;            ///< Highest control of widget
-    bool m_bVisible;            ///< is this widget visible
-    bool m_bBright;             ///< is this widget bright
-    bool m_bTouchEnabled;       ///< is this widget touch endabled
-    bool m_bTouchPassedEnabled; ///< is the touch event should be passed
-    bool m_bFocus;              ///< is the widget on focus
-    int m_nWidgetZOrder;        ///< z-order value that affects the draw order and touch order
-    Point m_anchorPoint;      ///< anchor point normalized
-    UIWidget* m_pWidgetParent;  ///< parent of widget
-    BrightStyle m_eBrightStyle; ///< bright style
-    bool m_bUpdateEnabled;      ///< is "update" method scheduled
-    Node* m_pRenderer;        ///< base renderer
-    Point m_touchStartPos;    ///< touch began point
-    Point m_touchMovePos;     ///< touch moved point
-    Point m_touchEndPos;      ///< touch ended point
+    bool _enabled;            ///< Highest control of widget
+    bool _visible;            ///< is this widget visible
+    bool _bright;             ///< is this widget bright
+    bool _touchEnabled;       ///< is this widget touch endabled
+    bool _touchPassedEnabled; ///< is the touch event should be passed
+    bool _focus;              ///< is the widget on focus
+    int _widgetZOrder;        ///< z-order value that affects the draw order and touch order
+    Point _anchorPoint;      ///< anchor point normalized
+    UIWidget* _widgetParent;  ///< parent of widget
+    BrightStyle _brightStyle; ///< bright style
+    bool _updateEnabled;      ///< is "update" method scheduled
+    Node* _renderer;        ///< base renderer
+    Point _touchStartPos;    ///< touch began point
+    Point _touchMovePos;     ///< touch moved point
+    Point _touchEndPos;      ///< touch ended point
     
-    Object*       m_pTouchEventListener;
-    SEL_TouchEvent    m_pfnTouchEventSelector;
+    Object*       _touchEventListener;
+    SEL_TouchEvent    _touchEventSelector;
     
 
     
-    int m_nWidgetTag;
-    std::string m_strName;
-    WidgetType m_WidgetType;
-	int m_nActionTag;
-    Size m_size;
-    Size m_customSize;
-    LayoutParameter* m_pLayoutParameter;
-    bool m_bIgnoreSize;
-    Array* m_children;
-    bool m_bAffectByClipping;
+    int _widgetTag;
+    std::string _name;
+    WidgetType _widgetType;
+	int _actionTag;
+    Size _size;
+    Size _customSize;
+    LayoutParameter* _layoutParameter;
+    bool _ignoreSize;
+    Array* _children;
+    bool _affectByClipping;
     
-    Scheduler* m_pScheduler;
+    Scheduler* _scheduler;
     
-    SizeType m_eSizeType;
-    Point m_sizePercent;
-    PositionType m_ePositionType;
-    Point m_positionPercent;
-    bool m_bIsRunning;
+    SizeType _sizeType;
+    Point _sizePercent;
+    PositionType _positionType;
+    Point _positionPercent;
+    bool _isRunning;
     
     /*temp action*/
-    UIActionNode* m_pBindingAction;
+    UIActionNode* _bindingAction;
 };
 
 class GUIRenderer : public NodeRGBA
@@ -965,7 +965,7 @@ public:
     void setEnabled(bool enabled);
     bool isEnabled() const;
 protected:
-    bool m_bEnabled;
+    bool _enabled;
 };
 
 NS_CC_EXT_END

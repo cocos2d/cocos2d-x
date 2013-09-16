@@ -64,7 +64,7 @@ void UILoadingBar::initRenderer()
 {
     UIWidget::initRenderer();
     m_pBarRenderer = CCSprite::create();
-    m_pRenderer->addChild(m_pBarRenderer);
+    _renderer->addChild(m_pBarRenderer);
     m_pBarRenderer->setAnchorPoint(Point(0.0f,0.5f));
 }
 
@@ -175,7 +175,7 @@ void UILoadingBar::setScale9Enabled(bool enabled)
         return;
     }
     m_bScale9Enabled = enabled;
-    m_pRenderer->removeChild(m_pBarRenderer, true);
+    _renderer->removeChild(m_pBarRenderer, true);
     m_pBarRenderer = NULL;
     if (m_bScale9Enabled)
     {
@@ -186,10 +186,10 @@ void UILoadingBar::setScale9Enabled(bool enabled)
         m_pBarRenderer = CCSprite::create();
     }
     loadTexture(m_strTextureFile.c_str(),m_eRenderBarTexType);
-    m_pRenderer->addChild(m_pBarRenderer);
+    _renderer->addChild(m_pBarRenderer);
     if (m_bScale9Enabled)
     {
-        bool ignoreBefore = m_bIgnoreSize;
+        bool ignoreBefore = _ignoreSize;
         ignoreContentAdaptWithSize(false);
         m_bPrevIgnoreSize = ignoreBefore;
     }
@@ -281,18 +281,18 @@ Node* UILoadingBar::getVirtualRenderer()
 
 void UILoadingBar::barRendererScaleChangedWithSize()
 {
-    if (m_bIgnoreSize)
+    if (_ignoreSize)
     {
         if (!m_bScale9Enabled)
         {
             m_fTotalLength = m_barRendererTextureSize.width;
             m_pBarRenderer->setScale(1.0f);
-            m_size = m_barRendererTextureSize;
+            _size = m_barRendererTextureSize;
         }
     }
     else
     {
-        m_fTotalLength = m_size.width;
+        m_fTotalLength = _size.width;
         if (m_bScale9Enabled)
         {
             setScale9Scale();
@@ -306,8 +306,8 @@ void UILoadingBar::barRendererScaleChangedWithSize()
                 m_pBarRenderer->setScale(1.0f);
                 return;
             }
-            float scaleX = m_size.width / textureSize.width;
-            float scaleY = m_size.height / textureSize.height;
+            float scaleX = _size.width / textureSize.width;
+            float scaleY = _size.height / textureSize.height;
             m_pBarRenderer->setScaleX(scaleX);
             m_pBarRenderer->setScaleY(scaleY);
         }
