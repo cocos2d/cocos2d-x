@@ -192,24 +192,24 @@ protected:
     //init background image renderer.
     void addBackGroundImage();
 protected:
-    bool m_bClippingEnabled;
-    LayoutExecutant* m_pLayoutExecutant;
+    bool _clippingEnabled;
+    LayoutExecutant* _layoutExecutant;
     
     //background
-    bool m_bBackGroundScale9Enable;
-    Node* m_pBackGroundImage;
-    std::string m_strBackGroundImageFileName;
-    Rect m_backGroundImageCapInsets;
-    LayoutBackGroundColorType m_colorType;
-    TextureResType m_eBGImageTexType;
-    LayerColor* m_pColorRender;
-    LayerGradient* m_pGradientRender;
-    Color3B m_cColor;
-    Color3B m_gStartColor;
-    Color3B m_gEndColor;
-    Point m_AlongVector;
-    int m_nCOpacity;
-    Size m_backGroundImageTextureSize;
+    bool _backGroundScale9Enabled;
+    Node* _backGroundImage;
+    std::string _backGroundImageFileName;
+    Rect _backGroundImageCapInsets;
+    LayoutBackGroundColorType _colorType;
+    TextureResType _bgImageTexType;
+    LayerColor* _colorRender;
+    LayerGradient* _gradientRender;
+    Color3B _cColor;
+    Color3B _gStartColor;
+    Color3B _gEndColor;
+    Point _alongVector;
+    int _cOpacity;
+    Size _backGroundImageTextureSize;
 };
 
 class RectClippingNode : public ClippingNode
@@ -225,12 +225,12 @@ public:
     bool isEnabled() const;
 protected:
     DrawNode* m_pInnerStencil;
-    bool m_bEnabled;
+    bool _enabled;
 private:
     RectClippingNode();
     Point rect[4];
-    Size m_clippingSize;
-    bool m_bClippingEnabled;
+    Size _clippingSize;
+    bool _clippingEnabled;
 };
 
 NS_CC_EXT_END
