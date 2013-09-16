@@ -267,6 +267,8 @@ const Point& UIDragPanel::getInnerContainerPosition() const
 void UIDragPanel::setInnerContainerPosition(const Point &point, bool animated)
 {
     Point delta = point - m_pInnerContainer->getPosition();
+
+//    Point delta = ccpSub(point, m_pInnerContainer->getPosition());
     setInnerContainerOffset(delta, animated);
 }
 
@@ -360,6 +362,7 @@ void UIDragPanel::handleMoveLogic(const Point &touchPoint)
     
     Point nsp = _renderer->convertToNodeSpace(touchPoint);
     Point delta = nsp - m_touchStartNodeSpace;
+//    Point delta = ccpSub(nsp, m_touchStartNodeSpace);
     m_touchStartNodeSpace = nsp;
     
     // reset berth dir to none
@@ -443,6 +446,7 @@ void UIDragPanel::interceptTouchEvent(int handleState, UIWidget *sender, const P
             
         case 1:
         {
+//            float offset = ccpDistance(sender->getTouchStartPos(), touchPoint);
             float offset = sender->getTouchStartPos().getDistance(touchPoint);
             if (offset > 5.0)
             {
@@ -487,8 +491,9 @@ bool UIDragPanel::checkContainInnerRect()
 
 // move
 void UIDragPanel::moveWithDelta(const Point &delta)
-{    
+{
     Point newPos = m_pInnerContainer->getPosition() + delta;
+//    Point newPos = ccpAdd(m_pInnerContainer->getPosition(), delta);
     m_pInnerContainer->setPosition(newPos);
 }
 
@@ -521,8 +526,9 @@ void UIDragPanel::startAutoMove()
     m_eMoveType = DRAGPANEL_MOVE_TYPE_AUTOMOVE;
     
     actionStop();
-    
+
     Point delta = m_touchEndWorldSpace - m_touchStartWorldSpace;
+//    Point delta = ccpSub(m_touchEndWorldSpace, m_touchStartWorldSpace);
     delta.x /= m_fSlidTime * 60;
     delta.y /= m_fSlidTime * 60;
     m_fSlidTime = 0.0;
@@ -1031,7 +1037,8 @@ void UIDragPanel::bounceToCorner()
         
         m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_BOTTOM;
     }
-    delta = Point(to_x, to_y) + Point(from_x, from_y);
+    delta = Point(to_x, to_y) - Point(from_x, from_y);
+//    delta = ccpSub(ccp(to_x, to_y), ccp(from_x, from_y));
     
     actionStartWithWidget(m_pInnerContainer);
     moveByWithDuration(m_fBounceDuration, delta);
@@ -1330,8 +1337,12 @@ void UIDragPanel::moveByUpdate(float t)
     Point currentPos = m_pActionWidget->getPosition();
     Point diff = currentPos - m_previousPosition;
     m_startPosition = m_startPosition + diff;
+//    Point diff = ccpSub(currentPos, m_previousPosition);
+//    m_startPosition = ccpAdd( m_startPosition, diff);
     
+//    Point newPos = ccpAdd( m_startPosition, ccpMult(m_positionDelta, t) );
     Point newPos = m_startPosition + (m_positionDelta * t);
+    
     m_pActionWidget->setPosition(newPos);
     m_previousPosition = newPos;
     
@@ -1358,7 +1369,8 @@ void UIDragPanel::moveToWithDuration(float duration, const Point& position)
 void UIDragPanel::moveToInit()
 {
     moveByInit();
-    m_positionDelta =  m_endPosition - m_pActionWidget->getPosition();
+    m_positionDelta = m_endPosition - m_pActionWidget->getPosition();
+//    m_positionDelta = ccpSub( m_endPosition, m_pActionWidget->getPosition() );
 }
 
 void UIDragPanel::moveToUpdate(float t)

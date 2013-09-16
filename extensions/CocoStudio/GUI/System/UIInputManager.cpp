@@ -28,30 +28,30 @@
 NS_CC_EXT_BEGIN
 
 UIInputManager::UIInputManager():
-m_manageredWidget(NULL),
-m_bWidgetBeSorted(false),
-m_bTouchDown(false),
-m_fLongClickTime(0.0),
-m_fLongClickRecordTime(0.0),
-checkedDoubleClickWidget(NULL),
-m_pRootWidget(NULL)
+_manageredWidget(NULL),
+_touchDown(false),
+_longClickTime(0.0),
+_longClickRecordTime(0.0),
+_checkedDoubleClickWidget(NULL),
+_rootWidget(NULL)
 {
-    m_manageredWidget = CCArray::create();
-    m_manageredWidget->retain();
-    checkedDoubleClickWidget = CCArray::create();
-    checkedDoubleClickWidget->retain();
-    m_pSelectedWidgets = CCArray::create();
-    m_pSelectedWidgets->retain();
+    _manageredWidget = CCArray::create();
+    _manageredWidget->retain();
+    _checkedDoubleClickWidget = CCArray::create();
+    _checkedDoubleClickWidget->retain();
+    _selectedWidgets = CCArray::create();
+    _selectedWidgets->retain();
 }
 
 UIInputManager::~UIInputManager()
 {
-    m_manageredWidget->removeAllObjects();
-    CC_SAFE_RELEASE_NULL(m_manageredWidget);
-    checkedDoubleClickWidget->removeAllObjects();
-    CC_SAFE_RELEASE_NULL(checkedDoubleClickWidget);
-    m_pSelectedWidgets->removeAllObjects();
-    CC_SAFE_RELEASE_NULL(m_pSelectedWidgets);
+    CCLOG("~UIInputManager");
+    _manageredWidget->removeAllObjects();
+    CC_SAFE_RELEASE_NULL(_manageredWidget);
+    _checkedDoubleClickWidget->removeAllObjects();
+    CC_SAFE_RELEASE_NULL(_checkedDoubleClickWidget);
+    _selectedWidgets->removeAllObjects();
+    CC_SAFE_RELEASE_NULL(_selectedWidgets);
 }
 
 void UIInputManager::registWidget(UIWidget* widget)
@@ -60,16 +60,11 @@ void UIInputManager::registWidget(UIWidget* widget)
     {
         return;
     }
-    if (m_manageredWidget->containsObject(widget))
+    if (_manageredWidget->containsObject(widget))
     {
         return;
     }
-    m_manageredWidget->addObject(widget);
-}
-
-void UIInputManager::uiSceneHasChanged()
-{
-    m_bWidgetBeSorted = false;
+    _manageredWidget->addObject(widget);
 }
 
 bool UIInputManager::checkTouchEvent(UIWidget *root, const Point &touchPoint)
@@ -86,7 +81,7 @@ bool UIInputManager::checkTouchEvent(UIWidget *root, const Point &touchPoint)
     }
     if (root->isEnabled() && root->isTouchEnabled() && root->hitTest(touchPoint) && root->clippingParentAreaContainPoint(touchPoint))
     {
-        m_pSelectedWidgets->addObject(root);
+        _selectedWidgets->addObject(root);
         root->onTouchBegan(touchPoint);
         return true;
     }
@@ -99,41 +94,41 @@ void UIInputManager::removeManageredWidget(UIWidget* widget)
     {
         return;
     }
-    if (!m_manageredWidget->containsObject(widget))
+    if (!_manageredWidget->containsObject(widget))
     {
         return;
     }
-    m_manageredWidget->removeObject(widget);
+    _manageredWidget->removeObject(widget);
 }
 
 bool UIInputManager::checkEventWidget(const Point &touchPoint)
 {
-    checkTouchEvent(m_pRootWidget,touchPoint);
-    return (m_pSelectedWidgets->count() > 0);
+    checkTouchEvent(_rootWidget,touchPoint);
+    return (_selectedWidgets->count() > 0);
 }
 
 void UIInputManager::addCheckedDoubleClickWidget(UIWidget* widget)
 {
-    if (checkedDoubleClickWidget->containsObject(widget))
+    if (_checkedDoubleClickWidget->containsObject(widget))
     {
         return;
     }
-    checkedDoubleClickWidget->addObject(widget);
+    _checkedDoubleClickWidget->addObject(widget);
 }
 
 void UIInputManager::update(float dt)
 {
-    if (m_bTouchDown)
+    if (_touchDown)
     {
-        m_fLongClickRecordTime += dt;
-        if (m_fLongClickRecordTime >= m_fLongClickTime)
+        _longClickRecordTime += dt;
+        if (_longClickRecordTime >= _longClickTime)
         {
-            m_fLongClickRecordTime = 0;
-            m_bTouchDown = false;
+            _longClickRecordTime = 0;
+            _touchDown = false;
 //            m_pCurSelectedWidget->onTouchLongClicked(touchBeganedPoint);
         }
     }
-    ccArray* arrayWidget = checkedDoubleClickWidget->data;
+    ccArray* arrayWidget = _checkedDoubleClickWidget->data;
     int widgetCount = arrayWidget->num;
     for (int i=0;i<widgetCount;i++)
     {
@@ -147,68 +142,70 @@ void UIInputManager::update(float dt)
 
 bool UIInputManager::onTouchBegan(Touch* touch)
 {
-    touchBeganedPoint.x = touch->getLocation().x;
-    touchBeganedPoint.y = touch->getLocation().y;
-    m_bTouchDown = true;
-    return checkEventWidget(touchBeganedPoint);
+    _touchBeganedPoint.x = touch->getLocation().x;
+    _touchBeganedPoint.y = touch->getLocation().y;
+    _touchDown = true;
+    return checkEventWidget(_touchBeganedPoint);
 }
 
 void UIInputManager::onTouchMoved(Touch* touch)
 {
-    touchMovedPoint.x = touch->getLocation().x;
-    touchMovedPoint.y = touch->getLocation().y;
-    ccArray* selectedWidgetArray = m_pSelectedWidgets->data;
+    _touchMovedPoint.x = touch->getLocation().x;
+    _touchMovedPoint.y = touch->getLocation().y;
+    ccArray* selectedWidgetArray = _selectedWidgets->data;
     int length = selectedWidgetArray->num;
     for (int i=0; i<length; ++i)
     {
         UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[i]);
-        hitWidget->onTouchMoved(touchMovedPoint);
+        hitWidget->onTouchMoved(_touchMovedPoint);
     }
-    if (m_bTouchDown)
+    if (_touchDown)
     {
-        m_fLongClickRecordTime = 0;
-        m_bTouchDown = false;
+        _longClickRecordTime = 0;
+        _touchDown = false;
     }
 }
 
 void UIInputManager::onTouchEnd(Touch* touch)
 {
-    m_bTouchDown = false;
-    touchEndedPoint.x = touch->getLocation().x;
-    touchEndedPoint.y = touch->getLocation().y;
-    ccArray* selectedWidgetArray = m_pSelectedWidgets->data;
+    _touchDown = false;
+    _touchEndedPoint.x = touch->getLocation().x;
+    _touchEndedPoint.y = touch->getLocation().y;
+    ccArray* selectedWidgetArray = _selectedWidgets->data;
     int length = selectedWidgetArray->num;
     for (int i=0; i<length; ++i)
     {
         UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[i]);
-        hitWidget->onTouchEnded(touchEndedPoint);
+        hitWidget->onTouchEnded(_touchEndedPoint);
+        CCLOG("widget touch end");
     }
-    m_pSelectedWidgets->removeAllObjects();
+    CCLOG("_selectedWidgets remove widgets");
+    _selectedWidgets->removeAllObjects();
 }
 
 void UIInputManager::onTouchCancelled(Touch* touch)
 {
-    m_bTouchDown = false;
-    touchEndedPoint.x = touch->getLocation().x;
-    touchEndedPoint.y = touch->getLocation().y;
-    ccArray* selectedWidgetArray = m_pSelectedWidgets->data;
+    _touchDown = false;
+    _touchEndedPoint.x = touch->getLocation().x;
+    _touchEndedPoint.y = touch->getLocation().y;
+    ccArray* selectedWidgetArray = _selectedWidgets->data;
     int length = selectedWidgetArray->num;
     for (int i=0; i<length; ++i)
     {
         UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[i]);
-        hitWidget->onTouchCancelled(touchEndedPoint);
+        hitWidget->onTouchCancelled(_touchEndedPoint);
     }
-    m_pSelectedWidgets->removeAllObjects();
+    _selectedWidgets->removeAllObjects();
 }
 
 void UIInputManager::setRootWidget(UIWidget *root)
 {
-    m_pRootWidget = root;
+    _rootWidget = root;
 }
 
 UIWidget* UIInputManager::getRootWidget()
 {
-    return m_pRootWidget;
+    return _rootWidget;
 }
 
 NS_CC_EXT_END
