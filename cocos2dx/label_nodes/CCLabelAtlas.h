@@ -51,9 +51,16 @@ A more flexible class is LabelBMFont. It supports variable width characters and 
 class CC_DLL LabelAtlas : public AtlasNode, public LabelProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     LabelAtlas()
         :_string("")
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LabelAtlas()
     { 
         _string.clear(); 

@@ -45,10 +45,21 @@ NS_CC_BEGIN
 class CC_DLL  TouchHandler : public Object
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TouchHandler(void);
 
-    /** delegate */
+    /** delegate 
+     * @js NA
+     * @lua NA
+     */
     TouchDelegate* getDelegate();
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setDelegate(TouchDelegate *pDelegate);
 
     /** priority */
@@ -94,6 +105,10 @@ public:
 class CC_DLL  TargetedTouchHandler : public TouchHandler
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~TargetedTouchHandler(void);
 
     /** whether or not the touches are swallowed */

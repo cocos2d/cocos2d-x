@@ -11,7 +11,15 @@ class CCBReader;
 
 class ControlButtonLoader : public ControlLoader {
     public:
+        /**
+         * @js NA
+         * @lua NA
+         */
         virtual ~ControlButtonLoader() {};
+        /**
+         * @js NA
+         * @lua NA
+         */
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(ControlButtonLoader, loader);
 
     protected:

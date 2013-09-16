@@ -49,7 +49,10 @@ public:
      The stencil node will be retained.
      */
     static ClippingNode* create(Node *pStencil);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ClippingNode();
     
     /** Initializes a clipping node without a stencil.
@@ -84,9 +87,25 @@ public:
     void setInverted(bool bInverted);
 
     // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnterTransitionDidFinish() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExitTransitionDidStart() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit() override;
     virtual void visit() override;
 
@@ -95,7 +114,7 @@ private:
     */
     void drawFullScreenQuadClearStencil();
 
-private:
+protected:
     ClippingNode();
 
 protected:

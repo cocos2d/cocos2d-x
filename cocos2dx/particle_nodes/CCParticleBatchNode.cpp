@@ -101,7 +101,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
 
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     
     return true;
 }
@@ -144,7 +144,8 @@ void ParticleBatchNode::visit()
     transform();
 
     draw();
-
+    updateEventPriorityIndex();
+    
     if ( _grid && _grid->isActive())
     {
         _grid->afterDraw(this);
@@ -272,7 +273,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // Find new AtlasIndex
             int newAtlasIndex = 0;
-            for( unsigned int i=0;i < _children->count();i++)
+            for( int i=0;i < _children->count();i++)
             {
                 ParticleSystem* pNode = (ParticleSystem*)_children->getObjectAtIndex(i);
                 if( pNode == child ) 

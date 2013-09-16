@@ -34,7 +34,14 @@ class Rect;
 class Application : public ApplicationProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     Application();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Application();
 
     /**

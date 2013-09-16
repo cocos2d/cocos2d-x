@@ -28,4 +28,14 @@ int Device::getDPI()
 	return dpi;
 }
 
+void Device::setAccelerometerEnabled(bool isEnabled)
+{
+
+}
+
+void Device::setAccelerometerInterval(float interval)
+{
+
+}
+
 NS_CC_END

@@ -1,5 +1,8 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
+
+#include "event_dispatcher/CCTouchEventListener.h"
+
 USING_NS_CC;
 
 
@@ -47,7 +50,7 @@ bool HelloWorld::init()
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Point::ZERO);
     this->addChild(menu, 1);
-
+    
     /////////////////////////////
     // 3. add your codes below...
 
@@ -70,11 +73,10 @@ bool HelloWorld::init()
     sprite->setPosition(Point(visibleSize / 2) + origin);
 
     // add the sprite as a child to this layer
-    this->addChild(sprite, 0);
+    this->addChild(sprite);
     
     return true;
 }
-
 
 void HelloWorld::menuCloseCallback(Object* sender)
 {

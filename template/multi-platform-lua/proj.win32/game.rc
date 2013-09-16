@@ -42,7 +42,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\game.ico"
+GLFW_ICON           ICON                    "res\\game.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

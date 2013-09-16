@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "CCMenuItem.h"
 #include "layers_scenes_transitions_nodes/CCLayer.h"
 
+#include "event_dispatcher/CCTouchEvent.h"
+
 NS_CC_BEGIN
 
 /**
@@ -76,9 +78,11 @@ public:
     
     /** creates a Menu with MenuItem objects */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
-
+    /**
+     * @js ctor
+     */
     Menu() : _selectedItem(NULL) {}
-    virtual ~Menu(){}
+    virtual ~Menu();
 
     /** initializes an empty Menu */
     bool init();
@@ -113,20 +117,29 @@ public:
     /** set event handler priority. By default it is: kMenuTouchPriority */
     void setHandlerPriority(int newPriority);
 
-    virtual void registerWithTouchDispatcher();
+//    virtual void registerWithTouchDispatcher();
     virtual void removeChild(Node* child, bool cleanup);
 
     virtual bool isEnabled() const { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };
 
     // overrides
+    
+   
     virtual void addChild(Node * child) override;
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node * child, int zOrder, int tag) override;
-    virtual bool ccTouchBegan(Touch* touch, Event* event) override;
-    virtual void ccTouchEnded(Touch* touch, Event* event) override;
-    virtual void ccTouchCancelled(Touch *touch, Event* event) override;
-    virtual void ccTouchMoved(Touch* touch, Event* event) override;
+//    virtual bool ccTouchBegan(Touch* touch, Event* event) override;
+//    virtual void ccTouchEnded(Touch* touch, Event* event) override;
+//    virtual void ccTouchCancelled(Touch *touch, Event* event) override;
+//    virtual void ccTouchMoved(Touch* touch, Event* event) override;
+    
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
+    void onTouchCancelled(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    
+    virtual void onEnter() override;
     virtual void onExit() override;
     virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) const override { return false;}

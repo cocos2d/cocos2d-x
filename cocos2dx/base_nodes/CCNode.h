@@ -37,6 +37,9 @@
 #include "kazmath/kazmath.h"
 #include "script_support/CCScriptSupport.h"
 #include "CCProtocols.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -52,6 +55,7 @@ class ActionManager;
 class Component;
 class Dictionary;
 class ComponentContainer;
+class EventDispatcher;
 
 /**
  * @addtogroup base_nodes
@@ -71,6 +75,8 @@ bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2);
 #else
 bool nodeComparisonLess(Object* p1, Object* p2);
 #endif
+
+class EventListener;
 
 /** @brief Node is the main element. Anything that gets drawn or contains things that get drawn is a Node.
  The most popular Nodes are: Scene, Layer, Sprite, Menu.
@@ -134,7 +140,7 @@ public:
     static const int INVALID_TAG = -1;
 
     /// @{
-    /// @name Constructor, Distructor and Initializers
+    /// @name Constructor, Destructor and Initializers
 
     /**
      * Allocates and initializes a node.
@@ -144,11 +150,14 @@ public:
 
     /**
      * Default constructor
+     * @js ctor
      */
     Node(void);
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~Node(void);
     
@@ -161,6 +170,8 @@ public:
     /**
      * Gets the description string. It makes debugging easier.
      * @return A string terminated with '\0'
+     * @js NA
+     * @lua NA
      */
     const char* description(void) const;
     
@@ -199,8 +210,7 @@ public:
      * @return The Z order.
      */
     virtual int getZOrder() const;
-
-
+    
     /**
      * Sets the real OpenGL Z vertex.
      *
@@ -299,6 +309,9 @@ public:
      * @see setPosition(const Point&)
      *
      * @return The position (x,y) of the node in OpenGL coordinates
+     * @code
+     * In js and lua return value is table which contains x,y
+     * @endcode
      */
     virtual const Point& getPosition() const;
     /**
@@ -322,6 +335,9 @@ public:
      * Gets position in a more efficient way, returns two number instead of a Point object
      *
      * @see setPosition(float, float)
+     * @code
+     * In js,out value not return
+     * @endcode
      */
     virtual void getPosition(float* x, float* y) const;
     /**
@@ -520,9 +536,15 @@ public:
     virtual int getOrderOfArrival() const;
     
     
-    /** @deprecated No longer needed */
+    /** @deprecated No longer needed 
+    * @js NA
+    * @lua NA
+    */
     CC_DEPRECATED_ATTRIBUTE void setGLServerState(int serverState) { /* ignore */ };
-    /** @deprecated No longer needed */
+    /** @deprecated No longer needed
+    * @js NA
+    * @lua NA
+    */
     CC_DEPRECATED_ATTRIBUTE int getGLServerState() const { return 0; }
     
     /**
@@ -640,6 +662,8 @@ public:
      * Removes this node itself from its parent node. 
      * If the node orphan, then nothing happens.
      * @param cleanup   true if all actions and callbacks on this node should be removed, false otherwise.
+     * @js removeFromParent
+     * @lua removeFromParent
      */
     virtual void removeFromParentAndCleanup(bool cleanup);
 
@@ -668,6 +692,8 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
      * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @js removeAllChildren
+     * @lua removeAllChildren
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup);
     
@@ -697,8 +723,12 @@ public:
      * Returns a grid object that is used when applying effects
      * 
      * @return A Grid object that is used when applying effects
+     * @js NA
      */
     virtual GridBase* getGrid() { return _grid; }
+    /**
+    * @js NA
+    */
     virtual const GridBase* getGrid() const { return _grid; }
 
     /**
@@ -763,8 +793,14 @@ public:
      * You can set everything in UserData pointer, a data block, a structure or an object.
      * 
      * @return A custom user data pointer
+     * @js NA
+     * @lua NA
      */
     virtual void* getUserData() { return _userData; }
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const void* getUserData() const { return _userData; }
 
     /**
@@ -775,6 +811,8 @@ public:
      *          especially before you change this data pointer, and before this node is autoreleased.
      *
      * @param userData  A custom user data pointer
+     * @js NA
+     * @lua NA
      */
     virtual void setUserData(void *userData);
     
@@ -784,8 +822,14 @@ public:
      * Similar to userData, but instead of holding a void* it holds an object
      *
      * @return A user assigned Object
+     * @js NA
+     * @lua NA
      */
     virtual Object* getUserObject() { return _userObject; }
+    /** 
+    * @js NA
+    * @lua NA
+    */
     virtual const Object* getUserObject() const { return _userObject; }
 
     /**
@@ -819,7 +863,7 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      * @code
-     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+     * node->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      * @endcode
      * 
      * @param shaderProgram The shader program which fetchs from ShaderCache.
@@ -833,8 +877,8 @@ public:
      *
      * @code
      * Camera* camera = node->getCamera();
-     * camera->setEyeXYZ(0, 0, 415/2);
-     * camera->setCenterXYZ(0, 0, 0);
+     * camera->setEye(0, 0, 415/2);
+     * camera->setCenter(0, 0, 0);
      * @endcode
      *
      * @return A Camera object that lets you move the node using a gluLookAt
@@ -852,6 +896,7 @@ public:
     
     /** 
      * Schedules for lua script. 
+     * @js NA
      */
     void scheduleUpdateWithPriorityLua(int handler, int priority);
     
@@ -866,12 +911,16 @@ public:
      * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
      * During onEnter you can't access a "sister/brother" node.
      * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
+     * @js NA
+     * @lua NA
      */
     virtual void onEnter();
 
     /** Event callback that is invoked when the Node enters in the 'stage'.
      * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
      * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. Node::onEnterTransitionDidFinish()
+     * @js NA
+     * @lua NA
      */
     virtual void onEnterTransitionDidFinish();
 
@@ -880,12 +929,16 @@ public:
      * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
      * During onExit you can't access a sibling node.
      * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
+     * @js NA
+     * @lua NA
      */
     virtual void onExit();
 
     /** 
      * Event callback that is called every time the Node leaves the 'stage'.
      * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts.
+     * @js NA
+     * @lua NA
      */
     virtual void onExitTransitionDidStart();
 
@@ -1029,6 +1082,8 @@ public:
      *
      * @param selector      A function selector
      * @return Whether the funcion selector is scheduled.
+     * @js NA
+     * @lua NA
      */
     bool isScheduled(SEL_SCHEDULE selector);
 
@@ -1038,6 +1093,8 @@ public:
      * It will use the order number 0. This method will be called every frame.
      * Scheduled methods with a lower order value will be called before the ones that have a higher order value.
      * Only one "update" method could be scheduled per node.
+     * @js NA
+     * @lua NA
      */
     void scheduleUpdate(void);
 
@@ -1047,6 +1104,8 @@ public:
      * This selector will be called every frame.
      * Scheduled methods with a lower priority will be called before the ones that have a higher value.
      * Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
+     * @js NA
+     * @lua NA
      */
     void scheduleUpdateWithPriority(int priority);
 
@@ -1071,6 +1130,7 @@ public:
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
      * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
+     * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
     
@@ -1080,6 +1140,7 @@ public:
      *
      * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param interval      Callback interval time in seconds. 0 means tick every frame,
+     * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval);
     
@@ -1089,6 +1150,7 @@ public:
      *
      * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param delay         The amount of time that the first tick will wait before execution.
+     * @lua NA
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
     
@@ -1097,6 +1159,7 @@ public:
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
      * @param selector      A function wrapped as a selector
+     * @lua NA
      */
     void schedule(SEL_SCHEDULE selector);
     
@@ -1105,12 +1168,14 @@ public:
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
      * @param selector      A function wrapped as a selector
+     * @lua NA
      */
     void unschedule(SEL_SCHEDULE selector);
 
     /** 
      * Unschedule all scheduled selectors: custom selectors, and the 'update' selector.
      * Actions are not affected by this method.
+     * @lua NA
      */
     void unscheduleAllSelectors(void);
 
@@ -1301,7 +1366,23 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
+
+private:
+    friend class Director;
+    friend class EventDispatcher;
+    
+    int getEventPriority() const { return _eventPriority; };
+    
+    void associateEventListener(EventListener* listener);
+    void dissociateEventListener(EventListener* listener);
+    
+    static void resetEventPriorityIndex();
+    std::set<EventListener*> _eventlisteners;
+    
 protected:
+    
+    inline void updateEventPriorityIndex() { _eventPriority = ++_globalEventPriorityIndex; };
+    
     /// lazy allocs
     void childrenAlloc(void);
     
@@ -1378,6 +1459,9 @@ protected:
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
+
+    int _eventPriority;
+    static int _globalEventPriorityIndex;
 };
 
 //#pragma mark - NodeRGBA
@@ -1394,7 +1478,14 @@ protected:
 class CC_DLL NodeRGBA : public Node, public RGBAProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     NodeRGBA();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~NodeRGBA();
     
     virtual bool init();
@@ -1424,7 +1515,6 @@ protected:
     Color3B     _realColor;
 	bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
-    
 };
 
 // end of base_node group

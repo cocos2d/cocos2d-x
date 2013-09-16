@@ -54,15 +54,17 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 	../Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 	../Classes/ExtensionsTest/ExtensionsTest.cpp \
-	../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
-	../Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
+    ../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
+    ../Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
+	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
 	../Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
+	../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 	../Classes/FileUtilsTest/FileUtilsTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \

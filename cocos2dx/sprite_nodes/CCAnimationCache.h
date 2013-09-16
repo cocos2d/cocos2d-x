@@ -50,7 +50,14 @@ Before v0.99.5, the recommend way was to save them on the Sprite. Since v0.99.5,
 class CC_DLL AnimationCache : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     AnimationCache();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~AnimationCache();
     /** Returns the shared instance of the Animation cache */
     static AnimationCache* getInstance();
@@ -72,14 +79,26 @@ public:
     void addAnimation(Animation *animation, const char * name);
 
     /** Deletes a Animation from the cache.
-    */
-    void removeAnimationByName(const char* name);
+     
+     */
+    void removeAnimation(const char* name);
+    /** @deprecated. Use removeAnimation() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void removeAnimationByName(const char* name){ removeAnimation(name);}
 
     /** Returns a Animation that was previously added.
     If the name is not found it will return nil.
     You should retain the returned copy if you are going to use it.
     */
-    Animation* animationByName(const char* name);
+    Animation* getAnimation(const char* name);
+    /**
+     @deprecated. Use getAnimation() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE Animation* animationByName(const char* name){ return getAnimation(name); }
 
     /** Adds an animation from an NSDictionary
      Make sure that the frames were previously loaded in the SpriteFrameCache.
@@ -90,6 +109,8 @@ public:
     /** Adds an animation from a plist file.
      Make sure that the frames were previously loaded in the SpriteFrameCache.
      @since v1.1
+     * @js addAnimations
+     * @lua addAnimations
      */
     void addAnimationsWithFile(const char* plist);
 

@@ -96,7 +96,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
 
     _descendants.reserve(capacity);
 
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
@@ -156,7 +156,8 @@ void SpriteBatchNode::visit(void)
     transform();
 
     draw();
-
+    updateEventPriorityIndex();
+    
     if (_grid && _grid->isActive())
     {
         _grid->afterDraw(this);
@@ -363,7 +364,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 
 void SpriteBatchNode::swap(int oldIndex, int newIndex)
 {
-    CCASSERT(oldIndex>=0 && oldIndex < _descendants.size() && newIndex >=0 && newIndex < _descendants.size(), "Invalid index");
+    CCASSERT(oldIndex>=0 && oldIndex < (int)_descendants.size() && newIndex >=0 && newIndex < (int)_descendants.size(), "Invalid index");
 
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
     std::swap( quads[oldIndex], quads[newIndex] );

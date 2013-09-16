@@ -102,7 +102,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool bFlip
         bRet = false;
     }
     
-    _shaderProgram = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE);
+    _shaderProgram = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
     calculateVertexPoints();
 
     return bRet;

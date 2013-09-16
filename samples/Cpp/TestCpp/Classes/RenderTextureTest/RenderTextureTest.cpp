@@ -133,12 +133,12 @@ string RenderTextureSave::subtitle()
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
 
-void RenderTextureSave::clearImage(cocos2d::Object *pSender)
+void RenderTextureSave::clearImage(cocos2d::Object *sender)
 {
     _target->clear(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
 
-void RenderTextureSave::saveImage(cocos2d::Object *pSender)
+void RenderTextureSave::saveImage(cocos2d::Object *sender)
 {
     static int counter = 0;
 
@@ -151,11 +151,11 @@ void RenderTextureSave::saveImage(cocos2d::Object *pSender)
     _target->saveToFile(jpg, Image::Format::JPG);
     
 
-    auto pImage = _target->newImage();
+    auto image = _target->newImage();
 
-    auto tex = TextureCache::getInstance()->addUIImage(pImage, png);
+    auto tex = TextureCache::getInstance()->addImage(image, png);
 
-    CC_SAFE_DELETE(pImage);
+    CC_SAFE_DELETE(image);
 
     auto sprite = Sprite::createWithTexture(tex);
 
@@ -176,9 +176,9 @@ RenderTextureSave::~RenderTextureSave()
     TextureCache::getInstance()->removeUnusedTextures();
 }
 
-void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
+void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    auto touch = static_cast<Touch*>( touches->anyObject() );
+    auto touch = touches[0];
     auto start = touch->getLocation();
     auto end = touch->getPreviousLocation();
 
@@ -361,10 +361,10 @@ string RenderTextureZbuffer::subtitle()
     return "Touch screen. It should be green";
 }
 
-void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event *event)
+void RenderTextureZbuffer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
 
-    for (auto &item: *touches)
+    for (auto &item: touches)
     {
         auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
@@ -381,9 +381,9 @@ void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event 
     }
 }
 
-void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
+void RenderTextureZbuffer::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto &item: *touches)
+    for (auto &item: touches)
     {
         auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
@@ -400,7 +400,7 @@ void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
     }
 }
 
-void RenderTextureZbuffer::ccTouchesEnded(Set* touches, Event* event)
+void RenderTextureZbuffer::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     this->renderScreenShot();
 }
@@ -423,7 +423,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
     sprite->setPosition(Point(256, 256));
     sprite->setOpacity(182);
-    sprite->setFlipY(1);
+    sprite->setFlippedY(1);
     this->addChild(sprite, 999999);
     sprite->setColor(Color3B::GREEN);
 
@@ -668,11 +668,10 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
     return NULL;
 }
 
-void SpriteRenderTextureBug::ccTouchesEnded(Set* touches, Event* event)
+void SpriteRenderTextureBug::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto &item: *touches)
+    for (auto &touch: touches)
     {
-        auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
         addNewSpriteWithCoords(location);
     }

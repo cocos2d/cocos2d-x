@@ -19,7 +19,7 @@ FontFNT * FontFNT::create(const char* fntFilePath)
     
     // add the texture
     Texture2D *tempTexture = TextureCache::getInstance()->addImage(newConf->getAtlasName());
-    if ( !tempTexture )
+    if (!tempTexture)
     {
         delete newConf;
         return nullptr;
@@ -42,39 +42,39 @@ FontFNT::~FontFNT()
         _configuration->release();
 }
 
-Size * FontFNT::getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters)
+Size * FontFNT::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const
 {
-    if (!pText)
+    if (!text)
         return 0;
     
-    outNumLetters = cc_wcslen(pText);
+    outNumLetters = cc_wcslen(text);
     
     if (!outNumLetters)
         return 0;
     
-    Size *pSizes = new Size[outNumLetters];
-    if (!pSizes)
+    Size *sizes = new Size[outNumLetters];
+    if (!sizes)
         return 0;
     
-    for (int c = 0; c<outNumLetters; ++c)
+    for (int c = 0; c < outNumLetters; ++c)
     {
         int advance = 0;
         int kerning = 0;
         
-        advance = getAdvanceForChar(pText[c]);
+        advance = getAdvanceForChar(text[c]);
         
-        if ( c < (outNumLetters-1) )
-            kerning = getHorizontalKerningForChars(pText[c], pText[c+1]);
+        if (c < (outNumLetters-1))
+            kerning = getHorizontalKerningForChars(text[c], text[c+1]);
         
-        pSizes[c].width = (advance + kerning);
+        sizes[c].width = (advance + kerning);
     }
     
-    return pSizes;
+    return sizes;
 }
 
-int  FontFNT::getAdvanceForChar(unsigned short theChar)
+int  FontFNT::getAdvanceForChar(unsigned short theChar) const
 {
-    tFontDefHashElement *element = NULL;
+    tFontDefHashElement *element = nullptr;
     
     // unichar is a short, and an int is needed on HASH_FIND_INT
     unsigned int key = theChar;
@@ -85,28 +85,28 @@ int  FontFNT::getAdvanceForChar(unsigned short theChar)
     return element->fontDef.xAdvance;
 }
 
-int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar)
+int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
 {
     int ret = 0;
-    unsigned int key = (firstChar<<16) | (secondChar & 0xffff);
+    unsigned int key = (firstChar << 16) | (secondChar & 0xffff);
     
-    if( _configuration->_kerningDictionary )
+    if (_configuration->_kerningDictionary)
     {
-        tKerningHashElement *element = NULL;
+        tKerningHashElement *element = nullptr;
         HASH_FIND_INT(_configuration->_kerningDictionary, &key, element);
         
-        if(element)
+        if (element)
             ret = element->amount;
     }
     
     return ret;
 }
 
-Rect FontFNT::getRectForCharInternal(unsigned short theChar)
+Rect FontFNT::getRectForCharInternal(unsigned short theChar) const
 {
     Rect retRect;
     ccBMFontDef fontDef;
-    tFontDefHashElement *element = NULL;
+    tFontDefHashElement *element = nullptr;
     unsigned int key = theChar;
     
     HASH_FIND_INT(_configuration->_fontDefDictionary, &key, element);
@@ -119,7 +119,7 @@ Rect FontFNT::getRectForCharInternal(unsigned short theChar)
     return retRect;
 }
 
-Rect FontFNT::getRectForChar(unsigned short theChar)
+Rect FontFNT::getRectForChar(unsigned short theChar) const
 {
     return getRectForCharInternal(theChar);
 }
@@ -146,15 +146,15 @@ FontAtlas * FontFNT::createFontAtlas()
     
     
     ccBMFontDef fontDef;
-    tFontDefHashElement *current_element, *tmp;
+    tFontDefHashElement *currentElement, *tmp;
     
     // Purge uniform hash
-    HASH_ITER(hh, _configuration->_fontDefDictionary, current_element, tmp)
+    HASH_ITER(hh, _configuration->_fontDefDictionary, currentElement, tmp)
     {
         
         FontLetterDefinition tempDefinition;
         
-        fontDef = current_element->fontDef;
+        fontDef = currentElement->fontDef;
         Rect tempRect;
         
         tempRect = fontDef.rect;

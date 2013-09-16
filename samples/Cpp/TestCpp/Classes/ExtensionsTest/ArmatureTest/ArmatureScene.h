@@ -6,22 +6,12 @@
 #include "../../VisibleRect.h"
 #include "../../testBasic.h"
 
-#include "CCArmature/CCArmature.h"
-#include "CCArmature/CCBone.h"
-#include "CCArmature/animation/CCArmatureAnimation.h"
-#include "CCArmature/datas/CCDatas.h"
-#include "CCArmature/display/CCBatchNode.h"
-#include "CCArmature/display/CCDecorativeDisplay.h"
-#include "CCArmature/display/CCDisplayManager.h"
-#include "CCArmature/display/CCSkin.h"
-#include "CCArmature/physics/CCColliderDetector.h"
-#include "CCArmature/physics/CCPhysicsWorld.h"
-#include "CCArmature/utils/CCArmatureDataManager.h"
-#include "CCArmature/utils/CCConstValue.h"
-#include "CCArmature/utils/CCDataReaderHelper.h"
-#include "CCArmature/utils/CCTweenFunction.h"
-#include "CCArmature/external_tool/sigslot.h"
-
+#if ENABLE_PHYSICS_BOX2D_DETECT
+#include "../../Box2DTestBed/GLES-Render.h"
+#include "Box2D/Box2D.h"
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+#include "chipmunk.h"
+#endif
 
 class ArmatureTestScene : public TestScene
 {
@@ -31,7 +21,7 @@ public:
 	virtual void runThisTest();
 
 	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(Object* sender);
+	virtual void MainMenuCallback(CCObject* pSender);
 };
 
 enum {
@@ -43,7 +33,7 @@ enum {
 	TEST_ANIMATION_EVENT,
 	TEST_PARTICLE_DISPLAY,
 	TEST_USE_DIFFERENT_PICTURE,
-	TEST_BOX2D_DETECTOR,
+	TEST_BCOLLIDER_DETECTOR,
 	TEST_BOUDINGBOX,
 	TEST_ANCHORPOINT,
 	TEST_ARMATURE_NESTING,
@@ -51,7 +41,7 @@ enum {
 	TEST_LAYER_COUNT
 };
 
-class ArmatureTestLayer : public Layer
+class ArmatureTestLayer : public CCLayer
 {
 public:
 	virtual void onEnter();
@@ -60,9 +50,9 @@ public:
 	virtual std::string title();
 	virtual std::string subtitle();
 
-	void restartCallback(Object* sender);
-	void nextCallback(Object* sender);
-	void backCallback(Object* sender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 
 	virtual void draw();
 };
@@ -99,7 +89,7 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void addArmature(cocos2d::extension::armature::Armature *armature);
+	virtual void addArmature(cocos2d::extension::CCArmature *armature);
 	void update(float delta);
 
 	int armatureCount;
@@ -127,11 +117,11 @@ public:
 
 	virtual void onEnter();
 	virtual std::string title();
-	void animationEvent(cocos2d::extension::armature::Armature *armature, cocos2d::extension::armature::MovementEventType movementType, const char *movementID);
+	void animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID);
 	void callback1();
 	void callback2();
 
-	cocos2d::extension::armature::Armature *armature;
+	cocos2d::extension::CCArmature *armature;
 };
 
 class TestUseMutiplePicture : public ArmatureTestLayer
@@ -139,11 +129,11 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual bool ccTouchBegan(Touch  *touch, Event  *event);
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void registerWithTouchDispatcher();
 
 	int displayIndex;
-	cocos2d::extension::armature::Armature *armature;
+	cocos2d::extension::CCArmature *armature;
 };
 
 class TestParticleDisplay : public ArmatureTestLayer
@@ -151,26 +141,49 @@ class TestParticleDisplay : public ArmatureTestLayer
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual bool ccTouchBegan(Touch  *touch, Event  *event);
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void registerWithTouchDispatcher();
 
 	int animationID;
-	cocos2d::extension::armature::Armature *armature;
+	cocos2d::extension::CCArmature *armature;
 };
 
-class TestBox2DDetector : public ArmatureTestLayer, public sigslot::has_slots<>
+#if ENABLE_PHYSICS_BOX2D_DETECT
+class ContactListener;
+#endif
+
+class TestColliderDetector : public ArmatureTestLayer, public sigslot::has_slots<>
 {
 public:
+	~TestColliderDetector();
+
 	virtual void onEnter();
 	virtual std::string title();
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onHit(cocos2d::extension::armature::Bone *bone, cocos2d::extension::armature::Bone *bone2);
+	void initWorld();
 
-	cocos2d::extension::armature::Armature *armature;
-	cocos2d::extension::armature::Armature *armature2;
+	cocos2d::extension::CCArmature *armature;
+	cocos2d::extension::CCArmature *armature2;
+
+	cocos2d::extension::CCPhysicsSprite *bullet;
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	b2World *world;
+	ContactListener *listener;
+	GLESDebugDraw *debugDraw;
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	cpSpace *space;
+
+	static int beginHit(cpArbiter *arb, cpSpace *space, void *unused);
+	static void endHit(cpArbiter *arb, cpSpace *space, void *unused);
+
+	void destroyCPBody(cpBody *body);
+#endif
 };
+
+
 
 class TestBoundingBox : public ArmatureTestLayer
 {
@@ -179,8 +192,8 @@ public:
 	virtual std::string title();
 	virtual void draw();
 
-	cocos2d::extension::armature::Armature *armature;
-	Rect rect;
+	cocos2d::extension::CCArmature *armature;
+	CCRect rect;
 };
 
 class TestAnchorPoint : public ArmatureTestLayer
@@ -195,10 +208,10 @@ class TestArmatureNesting : public ArmatureTestLayer
 public:
 	virtual void onEnter();
 	virtual std::string title();
-	virtual bool ccTouchBegan(Touch  *touch, Event  *event);
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void registerWithTouchDispatcher();
 
-	cocos2d::extension::armature::Armature *armature;
+	cocos2d::extension::CCArmature *armature;
 	int weaponIndex;
 };
 #endif  // __HELLOWORLD_SCENE_H__

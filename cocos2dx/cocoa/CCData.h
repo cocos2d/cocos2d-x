@@ -33,10 +33,25 @@ NS_CC_BEGIN
 class CC_DLL Data : public Object
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     Data(unsigned char *pBytes, const unsigned long nSize);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Data(Data *pData);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Data();
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     static Data* create(unsigned char *pBytes, const unsigned long nSize)
     {
         Data* pRet = new Data(pBytes, nSize);
@@ -46,11 +61,21 @@ public:
         }
         return pRet;
     }    
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     unsigned char* getBytes() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     unsigned long getSize() const;
     
-    /* override functions */
+    /** override functions
+     * @js NA
+     * @lua NA
+     */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
 private:

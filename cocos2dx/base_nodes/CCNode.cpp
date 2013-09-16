@@ -36,15 +36,20 @@ THE SOFTWARE.
 #include "effects/CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "actions/CCActionManager.h"
 #include "script_support/CCScriptSupport.h"
 #include "shaders/CCGLProgram.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCEvent.h"
+#include "event_dispatcher/CCTouchEvent.h"
 
 // externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
 #include "support/component/CCComponentContainer.h"
+
+
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -80,6 +85,7 @@ bool nodeComparisonLess(Object* p1, Object* p2)
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
+int Node::_globalEventPriorityIndex = 0;
 
 Node::Node(void)
 : _rotationX(0.0f)
@@ -130,7 +136,6 @@ Node::Node(void)
 
     ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
-    _componentContainer = new ComponentContainer(this);
 }
 
 Node::~Node()
@@ -167,9 +172,14 @@ Node::~Node()
     // children
     CC_SAFE_RELEASE(_children);
     
-          // _comsContainer
-    _componentContainer->removeAll();
+    removeAllComponents();
+    
     CC_SAFE_DELETE(_componentContainer);
+    
+    for (auto iter = _eventlisteners.begin(); iter != _eventlisteners.end(); ++iter)
+    {
+        EventDispatcher::getInstance()->removeEventListener(*iter);
+    }
 }
 
 bool Node::init()
@@ -799,7 +809,7 @@ void Node::visit()
      }
 
     this->transform();
-    unsigned int i = 0;
+    int i = 0;
 
     if(_children && _children->count() > 0)
     {
@@ -816,6 +826,7 @@ void Node::visit()
         }
         // self draw
         this->draw();
+        _eventPriority = ++_globalEventPriorityIndex;
 
         for( ; i < _children->count(); i++ )
         {
@@ -827,6 +838,7 @@ void Node::visit()
     else
     {
         this->draw();
+        _eventPriority = ++_globalEventPriorityIndex;
     }
 
     // reset for next frame
@@ -1253,22 +1265,45 @@ void Node::updateTransform()
 
 Component* Node::getComponent(const char *pName)
 {
-    return _componentContainer->get(pName);
+    if( _componentContainer )
+        return _componentContainer->get(pName);
+    return nullptr;
 }
 
 bool Node::addComponent(Component *pComponent)
 {
+    // lazy alloc
+    if( !_componentContainer )
+        _componentContainer = new ComponentContainer(this);
     return _componentContainer->add(pComponent);
 }
 
 bool Node::removeComponent(const char *pName)
 {
-    return _componentContainer->remove(pName);
+    if( _componentContainer )
+        return _componentContainer->remove(pName);
+    return false;
 }
 
 void Node::removeAllComponents()
 {
-    _componentContainer->removeAll();
+    if( _componentContainer )
+        _componentContainer->removeAll();
+}
+
+void Node::resetEventPriorityIndex()
+{
+    _globalEventPriorityIndex = 0;
+}
+
+void Node::associateEventListener(EventListener* listener)
+{
+    _eventlisteners.insert(listener);
+}
+
+void Node::dissociateEventListener(EventListener* listener)
+{
+    _eventlisteners.erase(listener);
 }
 
 // NodeRGBA

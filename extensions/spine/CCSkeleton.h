@@ -39,11 +39,22 @@ public:
 	static CCSkeleton* createWithData (SkeletonData* skeletonData, bool ownsSkeletonData = false);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
-
+    /**
+     * @js NA
+     */
 	CCSkeleton (SkeletonData* skeletonData, bool ownsSkeletonData = false);
+    /**
+     * @js NA
+     */
 	CCSkeleton (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
+    /**
+     * @js NA
+     */
 	CCSkeleton (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual ~CCSkeleton ();
 
 	// --- Convenience methods for common Skeleton_* functions.

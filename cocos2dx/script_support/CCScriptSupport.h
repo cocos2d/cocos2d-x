@@ -26,10 +26,9 @@
 #define __SCRIPT_SUPPORT_H__
 
 #include "platform/CCCommon.h"
-#include "CCAccelerometer.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouchEvent.h"
 #include "cocoa/CCSet.h"
-#include "CCAccelerometer.h"
 #include <map>
 #include <string>
 #include <list>
@@ -55,6 +54,10 @@ class ScriptHandlerEntry : public Object
 {
 public:
     static ScriptHandlerEntry* create(int nHandler);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ScriptHandlerEntry(void);
     
     int getHandler(void) {
@@ -87,21 +90,41 @@ class SchedulerScriptHandlerEntry : public ScriptHandlerEntry
 {
 public:
     // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
+    /**
+     * @js NA
+     * @lua NA
+     */
     static SchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~SchedulerScriptHandlerEntry(void);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     cocos2d::Timer* getTimer(void) {
         return _timer;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool isPaused(void) {
         return _paused;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     void markedForDeletion(void) {
         _markedForDeletion = true;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool isMarkedForDeletion(void) {
         return _markedForDeletion;
     }
@@ -126,17 +149,34 @@ private:
 class TouchScriptHandlerEntry : public ScriptHandlerEntry
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     static TouchScriptHandlerEntry* create(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~TouchScriptHandlerEntry(void);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool isMultiTouches(void) {
         return _isMultiTouches;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     int getPriority(void) {
         return _priority;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool getSwallowsTouches(void) {
         return _swallowsTouches;
     }
@@ -180,6 +220,10 @@ struct BasicScriptData
     void* value;
     
     // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
     BasicScriptData(void* inObject,void* inValue = NULL)
     : nativeObject(inObject),value(inValue)
     {
@@ -195,6 +239,10 @@ struct SchedulerScriptData
     void* node;
     
     // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
     SchedulerScriptData(int inHandler,float inElapse,void* inNode = NULL)
     : handler(inHandler),
       elapse(inElapse),
@@ -205,12 +253,16 @@ struct SchedulerScriptData
 
 struct TouchesScriptData
 {
-    int actionType;
+    TouchEvent::EventCode actionType;
     void* nativeObject;
-    Set* touches;
+    const std::vector<Touch*>& touches;
     
     // Constructor
-    TouchesScriptData(int inActionType, void* inNativeObject, Set* inTouches)
+    /**
+     * @js NA
+     * @lua NA
+     */
+    TouchesScriptData(TouchEvent::EventCode inActionType, void* inNativeObject, const std::vector<Touch*>& inTouches)
     : actionType(inActionType),
       nativeObject(inNativeObject),
       touches(inTouches)
@@ -220,12 +272,16 @@ struct TouchesScriptData
 
 struct TouchScriptData
 {
-    int actionType;
+    TouchEvent::EventCode actionType;
     void* nativeObject;
     Touch* touch;
     
     // Constructor
-    TouchScriptData(int inActionType, void* inNativeObject, Touch* inTouch)
+    /**
+     * @js NA
+     * @lua NA
+     */
+    TouchScriptData(TouchEvent::EventCode inActionType, void* inNativeObject, Touch* inTouch)
     : actionType(inActionType),
       nativeObject(inNativeObject),
       touch(inTouch)
@@ -239,6 +295,10 @@ struct KeypadScriptData
     void* nativeObject;
     
     // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
     KeypadScriptData(int inActionType,void* inNativeObject)
     : actionType(inActionType),nativeObject(inNativeObject)
     {
@@ -254,6 +314,10 @@ struct CommonScriptData
     char eventSourceClassName[64];
     
     // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
     CommonScriptData(int inHandler,const char* inName,Object* inSource = NULL,const char* inClassName = NULL)
     : handler(inHandler),
       eventSource(inSource)
@@ -277,6 +341,10 @@ struct ScriptEvent
     void* data;
     
     // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
     ScriptEvent(ScriptEventType inType,void* inData)
     : type(inType),
       data(inData)
@@ -290,18 +358,34 @@ struct ScriptEvent
 class CC_DLL ScriptEngineProtocol
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ScriptEngineProtocol() {};
     
-    /** Get script type */
+    /** Get script type 
+     * @js NA
+     * @lua NA
+     */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
 
-    /** Remove script object. */
+    /** Remove script object. 
+     * @js NA
+     * @lua NA
+     */
     virtual void removeScriptObjectByObject(Object* pObj) = 0;
     
-    /** Remove script function handler, only LuaEngine class need to implement this function. */
+    /** Remove script function handler, only LuaEngine class need to implement this function. 
+     * @js NA
+     * @lua NA
+     */
     virtual void removeScriptHandler(int nHandler) {};
     
-    /** Reallocate script function handler, only LuaEngine class need to implement this function. */
+    /** Reallocate script function handler, only LuaEngine class need to implement this function. 
+     * @js NA
+     * @lua NA
+     */
     virtual int reallocateScriptHandler(int nHandler) { return 0;}
     
     /**
@@ -309,12 +393,16 @@ public:
      @param codes holding the valid script code that should be executed.
      @return 0 if the string is executed correctly.
      @return other if the string is executed wrongly.
+     * @js NA
+     * @lua NA
      */
     virtual int executeString(const char* codes) = 0;
     
     /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
+     * @js NA
+     * @lua NA
      */
     virtual int executeScriptFile(const char* filename) = 0;
     
@@ -323,14 +411,21 @@ public:
      @brief The function should not take any parameters and should return an integer.
      @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      @return The integer value returned from the script function.
+     * @js NA
+     * @lua NA
      */
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
-    //when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be NULL in lua
+    /**when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be NULL in lua
+     * @js NA
+     * @lua NA
+     */
     virtual int sendEvent(ScriptEvent* evt) = 0;
     
     /** called by CCAssert to allow scripting engine to handle failed assertions
      * @return true if the assert was handled by the script engine, false otherwise.
+     * @js NA
+     * @lua NA
      */
     virtual bool handleAssert(const char *msg) = 0;
 };
@@ -343,18 +438,47 @@ public:
 class CC_DLL ScriptEngineManager
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ScriptEngineManager(void);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     ScriptEngineProtocol* getScriptEngine(void) {
         return _scriptEngine;
     }
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setScriptEngine(ScriptEngineProtocol *pScriptEngine);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void removeScriptEngine(void);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     static ScriptEngineManager* getInstance();
+    /**
+     * @js NA
+     * @lua NA
+     */
     static void destroyInstance();
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE static ScriptEngineManager* sharedManager() { return ScriptEngineManager::getInstance(); };
+    /**
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
     
 private:

@@ -33,7 +33,7 @@ bool FileUtilsEmscripten::init()
     return FileUtils::init();
 }
 
-string FileUtilsEmscripten::getWritablePath()
+string FileUtilsEmscripten::getWritablePath() const
 {
     // Let's write it in the current working directory's data folder
     char cwd[FILENAME_MAX] = {0};
@@ -47,7 +47,7 @@ string FileUtilsEmscripten::getWritablePath()
     return path;
 }
 
-bool FileUtilsEmscripten::isAbsolutePath(const std::string& strPath)
+bool FileUtilsEmscripten::isAbsolutePath(const std::string& strPath) const
 {
     if (strPath[0] == '/' || strPath.find(_defaultResRootPath) == 0)
     {
@@ -56,7 +56,7 @@ bool FileUtilsEmscripten::isAbsolutePath(const std::string& strPath)
     return false;
 }
 
-bool FileUtilsEmscripten::isFileExist(const std::string& strFilePath)
+bool FileUtilsEmscripten::isFileExist(const std::string& strFilePath) const
 {
     std::string strPath = strFilePath;
     if (strPath[0] != '/')

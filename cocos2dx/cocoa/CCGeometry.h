@@ -60,28 +60,81 @@ public:
     float y;
 
 public:
+    /**
+     * @js NA
+     */
     Point();
+    /**
+     * @js NA
+     */
     Point(float x, float y);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point(const Point& other);
+    /**
+     * @js NA
+     * @lua NA
+     */
     explicit Point(const Size& size);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point& operator= (const Point& other);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point& operator= (const Size& size);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point operator+(const Point& right) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point operator-(const Point& right) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point operator-() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point operator*(float a) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point operator/(float a) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setPoint(float x, float y);
+    /**
+     * @js NA
+     */
     bool equals(const Point& target) const;
     
     /** @returns if points have fuzzy equality which means equal with some degree of variance.
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     bool fuzzyEquals(const Point& target, float variance) const;
 
     /** Calculates distance between point an origin
      @return float
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline float getLength() const {
         return sqrtf(x*x + y*y);
@@ -90,6 +143,8 @@ public:
     /** Calculates the square length of a Point (not calling sqrt() )
      @return float
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline float getLengthSq() const {
         return dot(*this); //x*x + y*y;
@@ -98,7 +153,9 @@ public:
     /** Calculates the square distance between two points (not calling sqrt() )
      @return float
      @since v2.1.4
-    */
+     * @js NA
+     * @lua NA
+     */
     inline float getDistanceSq(const Point& other) const {
         return (*this - other).getLengthSq();
     };
@@ -106,6 +163,8 @@ public:
     /** Calculates the distance between two points
      @return float
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline float getDistance(const Point& other) const {
         return (*this - other).getLength();
@@ -113,19 +172,25 @@ public:
 
     /** @returns the angle in radians between this vector and the x axis
      @since v2.1.4
-    */
+     * @js NA
+     * @lua NA
+     */
     inline float getAngle() const {
         return atan2f(y, x);
     };
 
     /** @returns the angle in radians between two vector directions
      @since v2.1.4
-    */
+     * @js NA
+     * @lua NA
+     */
     float getAngle(const Point& other) const;
 
     /** Calculates dot product of two points.
      @return float
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline float dot(const Point& other) const {
         return x*other.x + y*other.y;
@@ -134,6 +199,8 @@ public:
     /** Calculates cross product of two points.
      @return float
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline float cross(const Point& other) const {
         return x*other.y - y*other.x;
@@ -142,6 +209,8 @@ public:
     /** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
      @return Point
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline Point getPerp() const {
         return Point(-y, x);
@@ -150,6 +219,8 @@ public:
     /** Calculates midpoint between two points.
      @return Point
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     inline Point getMidpoint(const Point& other) const
     {
@@ -158,6 +229,8 @@ public:
     
     /** Clamp a point between from and to.
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     inline Point getClampPoint(const Point& min_inclusive, const Point& max_inclusive) const
     {
@@ -170,6 +243,8 @@ public:
      * For example: let's try to take the floor of x,y
      * p.compOp(floorf);
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     inline Point compOp(std::function<float(float)> function) const
     {
@@ -179,6 +254,8 @@ public:
     /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
      @return Point
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline Point getRPerp() const {
         return Point(y, -x);
@@ -187,6 +264,8 @@ public:
     /** Calculates the projection of this over other.
      @return Point
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline Point project(const Point& other) const {
         return other * (dot(other)/other.dot(other));
@@ -196,6 +275,8 @@ public:
      @return Point vector with an angle of this.getAngle() + other.getAngle(),
      and a length of this.getLength() * other.getLength().
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline Point rotate(const Point& other) const {
         return Point(x*other.x - y*other.y, x*other.y + y*other.x);
@@ -205,6 +286,8 @@ public:
      @return Point vector with an angle of this.getAngle() - other.getAngle(),
      and a length of this.getLength() * other.getLength().
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline Point unrotate(const Point& other) const {
         return Point(x*other.x + y*other.y, y*other.x - x*other.y);
@@ -214,6 +297,8 @@ public:
      * If the point is 0, it returns (1, 0)
      @return Point
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline Point normalize() const {
         float length = getLength();
@@ -227,6 +312,8 @@ public:
         alpha == 1 ? b
         otherwise a value between a..b
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     inline Point lerp(const Point& other, float alpha) const {
         return *this * (1.f - alpha) + other * alpha;
@@ -237,9 +324,15 @@ public:
      @param angle is the angle of rotation ccw in radians
      @returns the rotated point
      @since v2.1.4
+     * @js NA
+     * @lua NA
      */
     Point rotateByAngle(const Point& pivot, float angle) const;
 
+    /**
+     * @js NA
+     * @lua NA
+     */
     static inline Point forAngle(const float a)
     {
     	return Point(cosf(a), sinf(a));
@@ -259,42 +352,54 @@ public:
      the hit point is        C + T * (D - C);
      the hit point also is   A + S * (B - A);
      @since 3.0
+     * @js NA
+     * @lua NA
      */
     static bool isLineIntersect(const Point& A, const Point& B,
                                  const Point& C, const Point& D,
                                  float *S = nullptr, float *T = nullptr);
     
-    /*
+    /**
      returns true if Line A-B overlap with segment C-D
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     static bool isLineOverlap(const Point& A, const Point& B,
                                 const Point& C, const Point& D);
     
-    /*
+    /**
      returns true if Line A-B parallel with segment C-D
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     static bool isLineParallel(const Point& A, const Point& B,
                    const Point& C, const Point& D);
     
-    /*
+    /**
      returns true if Segment A-B overlap with segment C-D
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     static bool isSegmentOverlap(const Point& A, const Point& B,
                                  const Point& C, const Point& D,
                                  Point* S = nullptr, Point* E = nullptr);
     
-    /*
+    /**
      returns true if Segment A-B intersects with segment C-D
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     static bool isSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D);
     
-    /*
+    /**
      returns the intersection point of line A-B, C-D
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     static Point getIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D);
     
@@ -315,17 +420,62 @@ public:
     float height;
 
 public:
+    /**
+     * @js NA
+     */
     Size();
+    /**
+     * @js NA
+     */
     Size(float width, float height);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Size(const Size& other);
+    /**
+     * @js NA
+     * @lua NA
+     */
     explicit Size(const Point& point);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Size& operator= (const Size& other);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Size& operator= (const Point& point);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Size operator+(const Size& right) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Size operator-(const Size& right) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Size operator*(float a) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Size operator/(float a) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setSize(float width, float height);
+    /**
+     * @js NA
+     */
     bool equals(const Size& target) const;
     
     static const Size ZERO;
@@ -338,20 +488,69 @@ public:
     Size  size;
 
 public:
+    /**
+     * @js NA
+     */
     Rect();
+    /**
+     * @js NA
+     */
     Rect(float x, float y, float width, float height);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Rect(const Rect& other);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Rect& operator= (const Rect& other);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setRect(float x, float y, float width, float height);
+    /**
+     * @js NA
+     */
     float getMinX() const; /// return the leftmost x-value of current rect
+    /**
+     * @js NA
+     */
     float getMidX() const; /// return the midpoint x-value of current rect
+    /**
+     * @js NA
+     */
     float getMaxX() const; /// return the rightmost x-value of current rect
+    /**
+     * @js NA
+     */
     float getMinY() const; /// return the bottommost y-value of current rect
+    /**
+     * @js NA
+     */
     float getMidY() const; /// return the midpoint y-value of current rect
+    /**
+     * @js NA
+     */
     float getMaxY() const; /// return the topmost y-value of current rect
-    bool equals(const Rect& rect) const;   
+    /**
+     * @js NA
+     */
+    bool equals(const Rect& rect) const;
+    /**
+     * @js NA
+     */
     bool containsPoint(const Point& point) const;
+    /**
+     * @js NA
+     */
     bool intersectsRect(const Rect& rect) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Rect unionWithRect(const Rect & rect) const;
     
     static const Rect ZERO;

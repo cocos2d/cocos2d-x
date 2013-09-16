@@ -20,6 +20,8 @@ LOCAL_SRC_FILES := ../cocos2dx_support/CCLuaBridge.cpp \
           ../cocos2dx_support/lua_cocos2dx_manual.cpp \
           ../cocos2dx_support/lua_cocos2dx_extension_manual.cpp \
           ../cocos2dx_support/lua_cocos2dx_deprecated.cpp \
+          ../cocos2dx_support/platform/android/CCLuaJavaBridge.cpp \
+          ../cocos2dx_support/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp \
           ../tolua/tolua_event.c \
           ../tolua/tolua_is.c \
           ../tolua/tolua_map.c \
@@ -30,7 +32,9 @@ LOCAL_SRC_FILES := ../cocos2dx_support/CCLuaBridge.cpp \
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../luajit/include \
                            $(LOCAL_PATH)/../tolua \
                            $(LOCAL_PATH)/../cocos2dx_support \
-                           $(LOCAL_PATH)/../../auto-generated/lua-bindings
+                           $(LOCAL_PATH)/../../auto-generated/lua-bindings \
+                           $(LOCAL_PATH)/../cocos2dx_support/platform/android \
+                           $(LOCAL_PATH)/../cocos2dx_support/platform/android/jni
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
@@ -44,7 +48,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/../../../CocosDenshion/include \
                     $(LOCAL_PATH)/../../../extensions \
                     $(LOCAL_PATH)/../cocos2dx_support \
-                    $(LOCAL_PATH)/../../auto-generated/lua-bindings
+                    $(LOCAL_PATH)/../../auto-generated/lua-bindings \
+                    $(LOCAL_PATH)/../cocos2dx_support/platform/android \
+                    $(LOCAL_PATH)/../cocos2dx_support/platform/android/jni
 
 
 LOCAL_WHOLE_STATIC_LIBRARIES := luajit_static

@@ -31,7 +31,7 @@ extern "C" {
 
 #include "ccTypes.h"
 #include "cocoa/CCObject.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "cocoa/CCSet.h"
 #include "base_nodes/CCNode.h"
 #include "script_support/CCScriptSupport.h"

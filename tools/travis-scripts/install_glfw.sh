@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-GLFW_VERSION="3.0.1"
+GLFW_VERSION="3.0.2"
 GLFW_SOURCE="https://codeload.github.com/glfw/glfw/tar.gz/${GLFW_VERSION}"
 GLFW_ZIP="glfw${GLFW_VERSION}.tar.gz"
 GLFW_INSTALL="glfw_install"
@@ -12,6 +12,7 @@ install_glfw_dep()
   sudo apt-get install xorg-dev
   sudo apt-get install libglu1-mesa-dev
   sudo apt-get install cmake
+  sudo apt-get install curl
 }
 
 clean_tmp_file()
@@ -26,6 +27,7 @@ make_and_install()
   cmake "../${GLFW_SRCDIR}" -G "Unix Makefiles" -DBUILD_SHARED_LIBS=ON
   make
   sudo make install
+  sudo ldconfig
   cd ..
 }
 

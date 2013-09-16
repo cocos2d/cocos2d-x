@@ -35,7 +35,6 @@ int Application::run()
     PVRFrameEnableControlWindow(false);
 
     // Main message loop:
-    MSG msg;
     LARGE_INTEGER nFreq;
     LARGE_INTEGER nLast;
     LARGE_INTEGER nNow;

@@ -18,10 +18,9 @@ public:
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
 
-    virtual void registerWithTouchDispatcher();
 
-    virtual bool ccTouchBegan(Touch* touch, Event* event);
-    virtual void ccTouchMoved(Touch* touch, Event* event);
+    virtual bool onTouchBegan(Touch* touch, Event* event);
+    virtual void onTouchMoved(Touch* touch, Event* event);
 
 public:
     static MenuLayer* menuWithEntryID(int entryId);
@@ -43,10 +42,10 @@ public:
     void tick(float dt);
     void draw();
 
-    virtual void registerWithTouchDispatcher();
-    virtual bool ccTouchBegan(Touch* touch, Event* event);
-    virtual void ccTouchMoved(Touch* touch, Event* event);
-    virtual void ccTouchEnded(Touch* touch, Event* event);
+//    virtual void registerWithTouchDispatcher();
+    virtual bool onTouchBegan(Touch* touch, Event* event);
+    virtual void onTouchMoved(Touch* touch, Event* event);
+    virtual void onTouchEnded(Touch* touch, Event* event);
     //virtual void accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration);
 
     static Box2DView* viewWithEntryID(int entryId);

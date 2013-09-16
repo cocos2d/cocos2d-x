@@ -9,14 +9,29 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class MenuItemLoader : public NodeLoader {
-    public:
-        virtual ~MenuItemLoader() {};
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~MenuItemLoader() {};
 
-    protected:
-        CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(MenuItem);
-
-        virtual void onHandlePropTypeBlock(Node * pNode, Node * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * ccbReader);
-        virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
+protected:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(MenuItem);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeBlock(Node * pNode, Node * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * ccbReader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
 };
 
 NS_CC_EXT_END

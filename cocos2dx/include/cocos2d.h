@@ -91,10 +91,6 @@ THE SOFTWARE.
 #include "kazmath/include/kazmath/kazmath.h"
 #include "kazmath/include/kazmath/GL/matrix.h"
 
-// keypad_dispatcher
-#include "keypad_dispatcher/CCKeypadDelegate.h"
-#include "keypad_dispatcher/CCKeypadDispatcher.h"
-
 // label_nodes
 #include "label_nodes/CCLabelAtlas.h"
 #include "label_nodes/CCLabelTTF.h"
@@ -142,7 +138,6 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "platform/ios/CCAccelerometer.h"
     #include "platform/ios/CCApplication.h"
     #include "platform/ios/CCEGLView.h"
     #include "platform/ios/CCGL.h"
@@ -150,7 +145,6 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "platform/android/CCAccelerometer.h"
     #include "platform/android/CCApplication.h"
     #include "platform/android/CCEGLView.h"
     #include "platform/android/CCGL.h"
@@ -158,7 +152,6 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    #include "platform/blackberry/CCAccelerometer.h"
     #include "platform/blackberry/CCApplication.h"
     #include "platform/blackberry/CCEGLView.h"
     #include "platform/blackberry/CCGL.h"
@@ -166,7 +159,6 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	#include "platform/win32/CCAccelerometer.h"
 	#include "platform/win32/CCApplication.h"
 	#include "platform/win32/CCEGLView.h"
 	#include "platform/win32/CCGL.h"
@@ -174,7 +166,6 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-	#include "platform/mac/CCAccelerometer.h"
 	#include "platform/mac/CCApplication.h"
 	#include "platform/mac/CCEGLView.h"
 	#include "platform/mac/CCGL.h"
@@ -182,7 +173,6 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "platform/linux/CCAccelerometer.h"
 	#include "platform/linux/CCApplication.h"
 	#include "platform/linux/CCEGLView.h"
 	#include "platform/linux/CCGL.h"
@@ -192,7 +182,6 @@ THE SOFTWARE.
 // MARMALADE CHANGE
 // Added for Marmalade support
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-	#include "platform/Marmalade/CCAccelerometer.h"
 	#include "platform/Marmalade/CCApplication.h"
 	#include "platform/Marmalade/CCEGLView.h"
 	#include "platform/Marmalade/CCGL.h"
@@ -200,7 +189,6 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
-    #include "platform/nacl/CCAccelerometer.h"
     #include "platform/nacl/CCApplication.h"
     #include "platform/nacl/CCEGLView.h"
     #include "platform/nacl/CCGL.h"
@@ -216,7 +204,6 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
-    #include "platform/tizen/CCAccelerometer.h"
     #include "platform/tizen/CCApplication.h"
     #include "platform/tizen/CCEGLView.h"
     #include "platform/tizen/CCGL.h"
@@ -224,7 +211,6 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_QT5)
-    #include "platform/qt5/CCAccelerometer.h"
     #include "platform/qt5/CCApplication.h"
     #include "platform/qt5/CCEGLView.h"
     #include "platform/qt5/CCGL.h"
@@ -274,11 +260,14 @@ THE SOFTWARE.
 #include "tilemap_parallax_nodes/CCTMXXMLParser.h"
 #include "tilemap_parallax_nodes/CCTileMapAtlas.h"
 
-// touch_dispatcher
-#include "touch_dispatcher/CCTouch.h"
-#include "touch_dispatcher/CCTouchDelegateProtocol.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
-#include "touch_dispatcher/CCTouchHandler.h"
+// EventDispatcher
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCTouchEventListener.h"
+#include "event_dispatcher/CCTouchEvent.h"
+#include "event_dispatcher/CCKeyboardEventListener.h"
+#include "event_dispatcher/CCKeyboardEvent.h"
+#include "event_dispatcher/CCAccelerationEvent.h"
+#include "event_dispatcher/CCAccelerationEventListener.h"
 
 // root
 #include "CCCamera.h"

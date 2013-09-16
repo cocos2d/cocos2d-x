@@ -46,7 +46,7 @@ static void atitc_decode_block(uint8_t **blockData,
     (*blockData) += 2;
     
     //extract the msb flag
-    msb = (colorValue0 & 0x8000);
+    msb = (colorValue0 & 0x8000) != 0;
     
     /* the channel is r5g6b5 , 16 bits */
     rb0  = (colorValue0 << 3 | colorValue0 << 9) & 0xf800f8;
@@ -152,8 +152,8 @@ static void atitc_decode_block(uint8_t **blockData,
 //Decode ATITC encode data to RGB32
 void atitc_decode(uint8_t *encodeData,             //in_data
                  uint8_t *decodeData,              //out_data
-                 const unsigned int pixelsWidth,
-                 const unsigned int pixelsHeight,
+                 const int pixelsWidth,
+                 const int pixelsHeight,
                  ATITCDecodeFlag decodeFlag)
 {
     uint32_t *decodeBlockData = (uint32_t *)decodeData;

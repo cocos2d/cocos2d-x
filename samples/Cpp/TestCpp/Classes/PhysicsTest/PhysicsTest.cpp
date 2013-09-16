@@ -3,7 +3,8 @@
 USING_NS_CC;
 
 PhysicsTestLayer::PhysicsTestLayer()
-: _spriteTexture(NULL)
+: _spriteTexture(nullptr)
+, _scene(nullptr)
 {
 #ifdef CC_USE_PHYSICS
     setTouchEnabled(true);
@@ -49,10 +50,9 @@ PhysicsTestLayer::PhysicsTestLayer()
 void PhysicsTestLayer::toggleDebugCallback(Object* sender)
 {
 #ifdef CC_USE_PHYSICS
-    if (dynamic_cast<Scene*>(this->getParent()) != nullptr)
+    if (_scene != nullptr)
     {
-        PhysicsWorld* world = dynamic_cast<Scene*>(this->getParent())->getPhysicsWorld();
-        world->setDebugDraw(!world->getDebugDraw());
+        _scene->getPhysicsWorld()->setDebugDraw(!_scene->getPhysicsWorld()->getDebugDraw());
     }
 #endif
 }
@@ -67,6 +67,7 @@ void PhysicsTestLayer::createResetButton()
 		auto s = new PhysicsTestScene();
         s->initTest();
 		auto child = new PhysicsTestLayer();
+        child->setScene(s);
 		s->addChild(child);
 		child->release();
 		Director::getInstance()->replaceScene(s);
@@ -80,18 +81,40 @@ void PhysicsTestLayer::createResetButton()
     
 }
 
-void PhysicsTestLayer::ccTouchesEnded(Set* touches, Event* event)
+void PhysicsTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
     
-    for( auto &item: *touches)
+    for( auto &touch: touches)
     {
-        auto touch = static_cast<Touch*>(item);
-        
         auto location = touch->getLocation();
         
         addNewSpriteAtPosition( location );
     }
+}
+
+
+void PhysicsTestLayer::onAcceleration(Acceleration* acc, Event* event)
+{
+#ifdef CC_USE_PHYSICS
+    static float prevX=0, prevY=0;
+    
+#define kFilterFactor 0.05f
+    
+    float accelX = (float) acc->x * kFilterFactor + (1- kFilterFactor)*prevX;
+    float accelY = (float) acc->y * kFilterFactor + (1- kFilterFactor)*prevY;
+    
+    prevX = accelX;
+    prevY = accelY;
+    
+    auto v = Point( accelX, accelY);
+    v = v * 200;
+    
+    if(_scene != nullptr)
+    {
+        _scene->getPhysicsWorld()->setGravity(v);
+    }
+#endif
 }
 
 void PhysicsTestLayer::addNewSpriteAtPosition(Point p)
@@ -133,6 +156,7 @@ bool PhysicsTestScene::initTest()
 void PhysicsTestScene::runThisTest()
 {
     auto layer = new PhysicsTestLayer();
+    layer->setScene(this);
     addChild(layer);
     layer->release();
     

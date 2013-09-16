@@ -41,7 +41,7 @@ typedef struct _hashElement
 {
     struct _ccArray             *actions;
     Object                    *target;
-    unsigned int                actionIndex;
+    int                actionIndex;
     Action                    *currentAction;
     bool                        currentActionSalvaged;
     bool                        paused;
@@ -87,9 +87,9 @@ void ActionManager::actionAllocWithHashElement(tHashElement *pElement)
 
 }
 
-void ActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pElement)
+void ActionManager::removeActionAtIndex(int index, tHashElement *pElement)
 {
-    Action *pAction = (Action*)pElement->actions->arr[uIndex];
+    Action *pAction = (Action*)pElement->actions->arr[index];
 
     if (pAction == pElement->currentAction && (! pElement->currentActionSalvaged))
     {
@@ -97,10 +97,10 @@ void ActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pElem
         pElement->currentActionSalvaged = true;
     }
 
-    ccArrayRemoveObjectAtIndex(pElement->actions, uIndex, true);
+    ccArrayRemoveObjectAtIndex(pElement->actions, index, true);
 
     // update actionIndex in case we are in tick. looping over the actions
-    if (pElement->actionIndex >= uIndex)
+    if (pElement->actionIndex >= index)
     {
         pElement->actionIndex--;
     }
