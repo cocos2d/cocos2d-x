@@ -223,19 +223,6 @@ void Menu::removeChild(Node* child, bool cleanup)
 
 //Menu - Events
 
-void Menu::setHandlerPriority(int newPriority)
-{
-    CCASSERT(false, "Not needed since we're using new ");
-//    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
-//    pDispatcher->setPriority(newPriority, this);
-}
-
-//void Menu::registerWithTouchDispatcher()
-//{
-//    Director* pDirector = Director::getInstance();
-//    pDirector->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), true);
-//}
-
 bool Menu::onTouchBegan(Touch* touch, Event* event)
 {
     if (_state != Menu::State::WAITING || ! _visible || !_enabled)

@@ -115,7 +115,6 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
 
     addEventListenerWithItem(item);
 
-    _eventNodes.push_back(node);
     node->associateEventListener(listener);
 }
 
