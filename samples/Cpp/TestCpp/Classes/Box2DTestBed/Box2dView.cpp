@@ -52,8 +52,7 @@ bool MenuLayer::initWithEntryID(int entryId)
 
     m_entryID = entryId;
     
-//    setTouchEnabled( true );
-//    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    setTouchEnabled( true );
     
     Box2DView* view = Box2DView::viewWithEntryID( entryId );
     addChild(view, 0, kTagBox2DNode);
@@ -81,6 +80,10 @@ bool MenuLayer::initWithEntryID(int entryId)
     
     addChild(menu, 1);
     
+    // Removes touch event listener
+    EventDispatcher::getInstance()->removeEventListener(_touchListener);
+    
+    // Adds touch event listener
     auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(true);
 
@@ -176,15 +179,17 @@ Box2DView* Box2DView::viewWithEntryID(int entryId)
 bool Box2DView::initWithEntryID(int entryId)
 {    
 //    setIsAccelerometerEnabled( true );
-//    setTouchEnabled( true );
-//setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    setTouchEnabled( true );
+    
     schedule( schedule_selector(Box2DView::tick) );
 
     m_entry = g_testEntries + entryId;
     m_test = m_entry->createFcn();
     
-    // Register Touch Event
+    // Removes Touch Event Listener
+    EventDispatcher::getInstance()->removeEventListener(_touchListener);
     
+    // Adds Touch Event Listener
     auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(true);
     

@@ -39,4 +39,13 @@ public:
     virtual std::string subtitle();
 };
 
+class FixedPriorityTest : public EventDispatcherTestDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+
 #endif /* defined(__samples__NewEventDispatcherTest__) */
