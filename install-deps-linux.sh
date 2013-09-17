@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Change directory to the location of this script
+cd $(dirname ${BASH_SOURCE[0]})
+
 DEPENDS='libx11-dev'
 DEPENDS+=' libxmu-dev'
 DEPENDS+=' libglu1-mesa-dev'
