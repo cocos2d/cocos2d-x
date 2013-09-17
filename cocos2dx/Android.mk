@@ -111,7 +111,6 @@ physics/chipmunk/CCPhysicsContactInfo.cpp \
 physics/chipmunk/CCPhysicsJointInfo.cpp \
 physics/chipmunk/CCPhysicsShapeInfo.cpp \
 physics/chipmunk/CCPhysicsWorldInfo.cpp \
-physics/chipmunk/ChipmunkDebugDraw.c \
 platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
@@ -165,7 +164,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/platform/third_party/common/etc \
                     $(LOCAL_PATH)/platform/third_party/common/s3tc \
-                    $(LOCAL_PATH)/platform/third_party/common/atitc
+                    $(LOCAL_PATH)/platform/third_party/common/atitc \
+                    $(LOCAL_PATH)/../external/chipmunk/include/chipmunk
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
@@ -173,7 +173,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/platform/third_party/common/etc \
                     $(LOCAL_PATH)/platform/third_party/common/s3tc \
-                    $(LOCAL_PATH)/platform/third_party/common/atitc
+                    $(LOCAL_PATH)/platform/third_party/common/atitc \
+                    $(LOCAL_PATH)/../external/chipmunk/include/chipmunk
 
 
 LOCAL_LDLIBS := -lGLESv2 \

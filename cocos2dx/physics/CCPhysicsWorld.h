@@ -63,7 +63,7 @@ public:
     inline void unregisterContactListener() { _listener = nullptr; }
     
     inline Point getGravity() { return _gravity; }
-    inline void setGravity(Point gravity) { _gravity = gravity; }
+    void setGravity(Point gravity);
     
     inline bool getDebugDraw() { return _debugDraw; }
     inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
