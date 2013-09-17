@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ActionNode.h"
-#include "ActionFrameEasing.h"
+#include "CCActionNode.h"
+#include "CCActionFrameEasing.h"
 #include "../GUI/BaseClasses/UIWidget.h"
 #include "../GUI/System/UIHelper.h"
 #include "../Json/DictionaryHelper.h"
@@ -35,6 +35,7 @@ ActionNode::ActionNode()
 , destFrameIndex(0)
 , m_fUnitTime(0.1f)
 , m_ActionTag(0)
+, m_actionSpawn(NULL)
 , m_action(NULL)
 , m_Object(NULL)
 , m_FrameArray(NULL)
@@ -53,10 +54,15 @@ ActionNode::ActionNode()
 
 ActionNode::~ActionNode()
 {
-	if (m_action != NULL)
+	if (m_action == NULL)
+	{
+		CC_SAFE_RELEASE(m_actionSpawn);
+	}
+	else
 	{
 		CC_SAFE_RELEASE(m_action);
 	}
+
 	if (m_FrameArray != NULL)
 	{
 		m_FrameArray->removeAllObjects();
@@ -160,6 +166,17 @@ void ActionNode::initActionNodeFromRoot(CCObject* root)
 	}
 }
 
+void ActionNode::setUnitTime(float fTime)
+{
+	m_fUnitTime = fTime;
+	this->refreshActionProperty();
+}
+
+float ActionNode::getUnitTime()
+{
+	return m_fUnitTime;
+}
+
 void ActionNode::setActionTag(int tag)
 {
 	m_ActionTag = tag;
@@ -251,13 +268,12 @@ void ActionNode::clearAllFrame()
 	}
 }
 
-void ActionNode::playAction(bool bloop,float fUnitTime)
+CCSpawn * ActionNode::refreshActionProperty()
 {
 	if ( m_Object == NULL )
 	{
-		return;
+		return NULL;
 	}
-
 	CCArray* cSpawnArray = CCArray::create();
 	for (int n = 0; n < frameArrayNum; n++)
 	{
@@ -278,7 +294,7 @@ void ActionNode::playAction(bool bloop,float fUnitTime)
 			else
 			{
 				ActionFrame* srcFrame = (ActionFrame*)(cArray->objectAtIndex(i-1));
-				float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex())*fUnitTime;
+				float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
 				CCAction* cAction = frame->getAction(duration);
 				cSequenceArray->addObject(cAction);
 			}
@@ -286,26 +302,43 @@ void ActionNode::playAction(bool bloop,float fUnitTime)
 		CCSequence* cSequence = CCSequence::create(cSequenceArray);
 		cSpawnArray->addObject(cSequence);
 	}
-	CCSpawn * actionSpawn = CCSpawn::create(cSpawnArray);
 
-	if (m_Object)
+	if (m_action == NULL)
 	{
-		if (m_action!=NULL)
-		{
-			m_action->release();
-		}
-		if (bloop)
-		{
-			m_action = CCRepeatForever::create(actionSpawn);
-		}
-		else
-		{
-			m_action = CCSequence::create(actionSpawn);
-		}
-		m_action->retain();
-
-		this->runAction();
+		CC_SAFE_RELEASE(m_actionSpawn);
 	}
+	else
+	{
+		CC_SAFE_RELEASE(m_action);
+	}
+
+	m_actionSpawn = CCSpawn::create(cSpawnArray);
+	return m_actionSpawn;
+}
+
+void ActionNode::playAction(bool bloop)
+{
+	if ( m_Object == NULL || m_actionSpawn == NULL)
+	{
+		return;
+	}
+
+	if (m_action!=NULL)
+	{
+		m_action->release();
+	}
+	if (bloop)
+	{
+		m_action = CCRepeatForever::create(m_actionSpawn);
+	}
+	else
+	{
+		m_action = CCSequence::create(m_actionSpawn);
+	}
+	m_action->retain();
+
+	this->runAction();
+
 }
 
 void ActionNode::runAction()
@@ -371,7 +404,7 @@ int ActionNode::getLastFrameIndex()
 
 	return frameindex;
 }
-bool ActionNode::updateActionToTimeLine(float fTime,float fUnitTime)
+bool ActionNode::updateActionToTimeLine(float fTime)
 {
 	bool bFindFrame = false;
 
@@ -390,13 +423,13 @@ bool ActionNode::updateActionToTimeLine(float fTime,float fUnitTime)
 		{
 			ActionFrame* frame = (ActionFrame*)(cArray->objectAtIndex(i));
 
-			if (frame->getFrameIndex()*fUnitTime == fTime)
+			if (frame->getFrameIndex()*getUnitTime() == fTime)
 			{
 				this->easingToFrame(1.0f,1.0f,frame);
 				bFindFrame = true;
 				break;
 			}
-			else if (frame->getFrameIndex()*fUnitTime > fTime)
+			else if (frame->getFrameIndex()*getUnitTime() > fTime)
 			{
 				if (i == 0)
 				{
@@ -406,8 +439,8 @@ bool ActionNode::updateActionToTimeLine(float fTime,float fUnitTime)
 				else
 				{
 					srcFrame = (ActionFrame*)(cArray->objectAtIndex(i-1));
-					float duration = frame->getFrameIndex()*fUnitTime - srcFrame->getFrameIndex()*fUnitTime;
-					float delaytime = fTime - srcFrame->getFrameIndex()*fUnitTime;
+					float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex())*getUnitTime();
+					float delaytime = fTime - srcFrame->getFrameIndex()*getUnitTime();
 					this->easingToFrame(duration,1.0f,srcFrame);
 					//float easingTime = ActionFrameEasing::bounceTime(delaytime);
 					this->easingToFrame(duration,delaytime/duration,frame);

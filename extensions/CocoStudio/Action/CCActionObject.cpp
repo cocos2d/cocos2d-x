@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ActionObject.h"
+#include "CCActionObject.h"
 #include "../Json//DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
@@ -99,6 +99,7 @@ void ActionObject::initWithDictionary(cs::CSJsonDictionary *dic,CCObject* root)
 		actionNode->autorelease();
         cs::CSJsonDictionary* actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
         actionNode->initWithDictionary(actionNodeDic,root);
+		actionNode->setUnitTime(getUnitTime());
         m_ActionNodeList->addObject(actionNode);
 		CC_SAFE_DELETE(actionNodeDic);
     }
@@ -128,7 +129,7 @@ void ActionObject::play()
 	for ( int i = 0; i < frameNum; i++ )
 	{
 		ActionNode* actionNode = (ActionNode*)m_ActionNodeList->objectAtIndex(i);
-		actionNode->playAction( getLoop(),getUnitTime() );
+		actionNode->playAction( getLoop());
 	}
 }
 
@@ -160,7 +161,7 @@ void ActionObject::updateToFrameByTime(float fTime)
 	{
 		ActionNode* actionNode = (ActionNode*)m_ActionNodeList->objectAtIndex(i);
 
-		actionNode->updateActionToTimeLine(fTime,m_fUnitTime);
+		actionNode->updateActionToTimeLine(fTime);
 	}
 }
 

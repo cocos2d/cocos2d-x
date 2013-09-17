@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ActionManager.h"
+#include "CCActionManager.h"
 #include "../Json/DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
