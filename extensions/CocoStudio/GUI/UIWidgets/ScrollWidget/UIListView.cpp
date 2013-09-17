@@ -42,10 +42,8 @@ UIListView::UIListView()
 , _bePressed(false)
 , _slidTime(0.0f)
 , _childFocusCancelOffset(5.0f)
-, _initChildListener(NULL)
-, _initChildSelector(NULL)
-, _updateChildListener(NULL)
-, _updateChildSelector(NULL)
+, _eventListener(NULL)
+, _eventSelector(NULL)
 , _childPool(NULL)
 , _updatePool(NULL)
 , _dataLength(0)
@@ -1431,30 +1429,30 @@ void UIListView::updateChild()
 
 void UIListView::initChildEvent()
 {
-    if (_initChildListener && _initChildSelector)
+    if (_eventListener && _eventSelector)
     {
-        (_initChildListener->*_initChildSelector)(this);
+        (_eventListener->*_eventSelector)(this, LISTVIEW_EVENT_INIT_CHILD);
     }
 }
 
 void UIListView::updateChildEvent()
 {
-    if (_updateChildListener && _updateChildSelector)
+    if (_eventListener && _eventSelector)
     {
-        (_updateChildListener->*_updateChildSelector)(this);
+        (_eventListener->*_eventSelector)(this, LISTVIEW_EVENT_UPDATE_CHILD);
     }
 }
 
-void UIListView::addInitChildEvent(Object *target, SEL_ListViewInitChildEvent seletor)
+void UIListView::addEventListenter(Object *target, SEL_ListViewEvent selector)
 {
-    _initChildListener = target;
-    _initChildSelector = seletor;
+    _eventListener = target;
+    _eventSelector = selector;
 }
 
-void UIListView::addUpdateChildEvent(Object *target, SEL_ListViewUpdateChildEvent selector)
+const char* UIListView::getDescription() const
 {
-    _updateChildListener = target;
-    _updateChildSelector = selector;
+    return "ListView";
 }
+
 
 NS_CC_EXT_END

@@ -2,6 +2,7 @@
 #include "cocos-ext.h"
 #include "UIScene.h"
 #include "UISceneManager.h"
+#include "../ExtensionsTest.h"
 
 UIScene::UIScene()
 : m_pSceneTitle(NULL)
@@ -40,13 +41,16 @@ bool UIScene::init()
         UIButton *right_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("right_Button"));
         right_button->addTouchEventListener(this, toucheventselector(UIScene::nextCallback));
         
-        // exit button
-        UIButton* exit_button = UIButton::create();
-        exit_button->setTouchEnabled(true);
-        exit_button->loadTextures("CloseNormal.png", "CloseSelected.png", "");
-        exit_button->setPosition(Point(m_pUiLayer->getContentSize().width - exit_button->getContentSize().width, exit_button->getContentSize().height));
-        exit_button->addTouchEventListener(this, toucheventselector(UIScene::menuCloseCallback));
-        m_pUiLayer->addWidget(exit_button);
+        
+        UILabel* mainMenuLabel = UILabel::create();
+        mainMenuLabel->setText("MainMenu");
+        mainMenuLabel->setFontSize(20);
+        mainMenuLabel->setTouchScaleChangeEnabled(true);
+        mainMenuLabel->setPosition(Point(430,30));
+        mainMenuLabel->setTouchEnabled(true);
+        mainMenuLabel->addTouchEventListener(this, toucheventselector(UIScene::menuCloseCallback));
+        m_pUiLayer->addWidget(mainMenuLabel);
+    
         
         return true;
     }
@@ -57,12 +61,10 @@ void UIScene::menuCloseCallback(Object* pSender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
-        CCDirector::getInstance()->end();
+        auto scene = new ExtensionsTestScene();
+        scene->runThisTest();
+        scene->release();
     }
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
 }
 
 void UIScene::previousCallback(Object* sender, TouchEventType type)

@@ -87,6 +87,11 @@ public:
     
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer();
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();

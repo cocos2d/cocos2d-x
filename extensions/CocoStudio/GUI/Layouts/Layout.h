@@ -179,6 +179,10 @@ public:
      */
     virtual const Size& getContentSize() const;
 
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     //override "init" method of widget.
     virtual bool init();

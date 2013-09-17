@@ -46,6 +46,11 @@ public:
      * Allocates and initializes a widget.
      */
     static UIRootWidget* create();
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     //initializes state of widget.
     virtual bool init();
