@@ -75,11 +75,11 @@ public:
     /**
      *  remove all widget children override
      */
-    virtual void removeAllChildrenAndCleanUp(bool cleanup);
+    virtual void removeAllChildren();
     /**
      *  remove widget child override
      */
-    virtual bool removeChild(UIWidget* child, bool cleanup);
+    virtual bool removeChild(UIWidget* child);
     
     virtual bool onTouchBegan(const CCPoint &touchPoint);
     virtual void onTouchMoved(const CCPoint &touchPoint);
@@ -132,17 +132,19 @@ public:
      */
     void addUpdateChildEvent(cocos2d::CCObject* target, SEL_ListViewUpdateChildEvent selector);
     
-    /* gui mark */
     /**
      *  get and set degree range for checking move or not with scrolling
      */
-//    float getScrollDegreeRange() const;
-//    void setScrollDegreeRange(float range);
     /**/
+    virtual void update(float dt);
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool init();
-    virtual void update(float dt);
+    
     virtual void onSizeChanged();
     
     void setMoveDirection(ListViewMoveDirection dir);
@@ -187,8 +189,13 @@ protected:
     void initChildEvent();
     void updateChildEvent();        
     
+    /*compatible*/
+    /**
+     * These methods will be removed
+     */
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
-
 protected:
     ListViewDirection m_eDirection;
     ListViewMoveDirection m_eMoveDirection;

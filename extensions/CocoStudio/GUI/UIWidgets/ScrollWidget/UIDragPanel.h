@@ -137,11 +137,11 @@ public:
     /**
      *  remove widget child override
      */
-    virtual bool removeChild(UIWidget* child,bool cleanup);
+    virtual bool removeChild(UIWidget* child);
     /**
      *  remove all widget children override
      */
-    virtual void removeAllChildrenAndCleanUp(bool cleanup);
+    virtual void removeAllChildren();
     /**
      *  get widget children of inner container
      */
@@ -162,12 +162,6 @@ public:
      */
     void setInnerContainerOffset(const CCPoint& offset, bool animated);
     /**/
-
-	/**
-     *  get inner container render
-     */
-	Layout* getInnerContainer();
-	/**/
     
     // auto move
     /**
@@ -200,8 +194,8 @@ public:
     /**
      *  get and set bounce enable
      */
-    bool isBounceEnable();
-    void setBounceEnable(bool bounce);
+    bool isBounceEnabled();
+    void setBounceEnabled(bool bounce);
     /**
      *  set bounce duration
      */
@@ -221,7 +215,21 @@ public:
     void addBounceToLeftEvent(CCObject* target, SEL_DragPanelBounceToLeftEvent selector);
     void addBounceToTopEvent(CCObject* target, SEL_DragPanelBounceToTopEvent selector);
     void addBounceToRightEvent(CCObject* target, SEL_DragPanelBounceToRightEvent selector);
-    void addBounceToBottomEvent(CCObject* target, SEL_DragPanelBounceToBottomEvent selector);    
+    void addBounceToBottomEvent(CCObject* target, SEL_DragPanelBounceToBottomEvent selector);
+    
+    /**
+     * Gets inner container of dragpanel.
+     *
+     * Inner container is the container of dragpanel's children.
+     *
+     * @return inner container.
+     */
+    Layout* getInnerContainer();
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
 protected:
     virtual bool init();
@@ -307,9 +315,20 @@ protected:
     void moveToInit();
     void moveToUpdate(float t);
     virtual void onSizeChanged();
+    /*compatible*/
+    /**
+     * These methods will be removed
+     */
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
     Layout* m_pInnerContainer;
+    
+    /*
+    DRAGPANEL_DIR m_eDirection;
+    DRAGPANEL_MOVE_DIR m_eMoveDirection;
+     */
     
     bool m_bTouchPressed;
     bool m_bTouchMoved;
@@ -375,6 +394,8 @@ protected:
     SEL_DragPanelBounceToRightEvent m_pfnBounceToRightSelector;
     CCObject* m_pBounceToBottomListener;
     SEL_DragPanelBounceToBottomEvent m_pfnBounceToBottomSelector;        
+    
+    
     
     float m_bRunningAction;
     int m_nActionType;

@@ -198,4 +198,4 @@ protected:
 
 NS_CC_EXT_END
 
-#endif /* defined(__TestCpp__LayoutParameter__) */
+#endif /* defined(__LayoutParameter__) */

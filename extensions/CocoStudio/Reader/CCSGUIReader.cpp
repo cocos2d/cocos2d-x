@@ -22,43 +22,44 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CocosGUI.h"
-#include "../../Json/DictionaryHelper.h"
+#include "../GUI/System/CocosGUI.h"
+#include "../Json/DictionaryHelper.h"
+//#include "../Action/UIActionManager.h"
 #include <fstream>
 #include <iostream>
 
 
 NS_CC_EXT_BEGIN
     
-static CCSReader* sharedReader = NULL;
+static CCSGUIReader* sharedReader = NULL;
 
-CCSReader::CCSReader():
+CCSGUIReader::CCSGUIReader():
 m_strFilePath(""),
 m_bOlderVersion(false)
 {
     
 }
 
-CCSReader::~CCSReader()
+CCSGUIReader::~CCSGUIReader()
 {
     
 }
 
-CCSReader* CCSReader::shareReader()
+CCSGUIReader* CCSGUIReader::shareReader()
 {
     if (!sharedReader)
     {
-        sharedReader = new CCSReader();
+        sharedReader = new CCSGUIReader();
     }
     return sharedReader;
 }
 
-void CCSReader::purgeCCSReader()
+void CCSGUIReader::purgeCCSGUIReader()
 {
 	CC_SAFE_DELETE(sharedReader);
 }
 
-int CCSReader::getVersionInteger(const char *str)
+int CCSGUIReader::getVersionInteger(const char *str)
 {
     /*********temp***********/
     std::string strVersion = str;
@@ -93,7 +94,7 @@ int CCSReader::getVersionInteger(const char *str)
     /************************/
 }
 
-UIWidget* CCSReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
+UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
 {
     UIWidget* widget = NULL;
     const char* classname = DICTOOL->getStringValue_json(data, "classname");
@@ -195,7 +196,7 @@ UIWidget* CCSReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
 
 
 
-UIWidget* CCSReader::widgetFromJsonFile(const char *fileName)
+UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
 {
     m_bOlderVersion = false;
     const char *des = NULL;
@@ -269,7 +270,7 @@ UIWidget* CCSReader::widgetFromJsonFile(const char *fileName)
     return widget;
 }
 
-void CCSReader::setPropsForWidgetFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary *options)
+void CCSGUIReader::setPropsForWidgetFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary *options)
 {
     bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, "ignoreSize");
     if (ignoreSizeExsit)
@@ -315,7 +316,7 @@ void CCSReader::setPropsForWidgetFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
     widget->setZOrder(z);
 }
 
-void CCSReader::setColorPropsForWidgetFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
+void CCSGUIReader::setColorPropsForWidgetFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
     bool op = DICTOOL->checkObjectExist_json(options, "opacity");
     if (op)
@@ -340,7 +341,7 @@ void CCSReader::setColorPropsForWidgetFromJsonDictionary(UIWidget *widget, cs::C
     widget->setFlipY(flipY);
 }
 
-void CCSReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     if (m_bOlderVersion)
     {
@@ -493,7 +494,7 @@ void CCSReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
     }
 }
 
-void CCSReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     if (m_bOlderVersion)
     {
@@ -654,7 +655,7 @@ void CCSReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJson
     }
 }
 
-void CCSReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     if (m_bOlderVersion)
     {
@@ -783,7 +784,7 @@ void CCSReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CSJso
     }
 }
 
-void CCSReader::setPropsForLabelFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForLabelFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     UILabel* label = (UILabel*)widget;
@@ -812,7 +813,7 @@ void CCSReader::setPropsForLabelFromJsonDictionary(UIWidget*widget,cs::CSJsonDic
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void CCSReader::setPropsForLabelAtlasFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForLabelAtlasFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     if (m_bOlderVersion)
     {
@@ -870,7 +871,7 @@ void CCSReader::setPropsForLabelAtlasFromJsonDictionary(UIWidget*widget,cs::CSJs
     }
 }
 
-void CCSReader::setPropsForContainerWidgetFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
+void CCSGUIReader::setPropsForContainerWidgetFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     UIContainerWidget* containerWidget = (UIContainerWidget*)widget;
@@ -878,12 +879,12 @@ void CCSReader::setPropsForContainerWidgetFromJsonDictionary(UIWidget *widget, c
         && !dynamic_cast<UIListView*>(containerWidget)
         && !dynamic_cast<UIDragPanel*>(containerWidget))
     {
-        containerWidget->setClippingEnabled(DICTOOL->getBooleanValue_json(options, "clipAble"));
+        containerWidget->setClippingEnable(DICTOOL->getBooleanValue_json(options, "clipAble"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void CCSReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     if (m_bOlderVersion)
     {
@@ -1021,25 +1022,21 @@ void CCSReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::CSJsonDic
     }
 }
 
-void CCSReader::setPropsForScrollViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForScrollViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     setPropsForPanelFromJsonDictionary(widget, options);
-
     UIScrollView* scrollView = (UIScrollView*)widget;
-
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
     scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
-    
     /* gui mark */
 	int direction = DICTOOL->getFloatValue_json(options, "direction");
 	scrollView->setDirection((SCROLLVIEW_DIR)direction);
     /**/
-
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     if (m_bOlderVersion)
     {
@@ -1298,7 +1295,7 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
     }
 }
 
-void CCSReader::setPropsForTextAreaFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForTextAreaFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     UITextArea* textArea = (UITextArea*)widget;
@@ -1333,39 +1330,34 @@ void CCSReader::setPropsForTextAreaFromJsonDictionary(UIWidget*widget,cs::CSJson
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void CCSReader::setPropsForTextButtonFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForTextButtonFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     setPropsForButtonFromJsonDictionary(widget, options);
-    /* gui mark modify text button text color parse */
-    setColorPropsForWidgetFromJsonDictionary(widget,options);
-    /**/
+    
     
     UITextButton* textButton = (UITextButton*)widget;
-    textButton->setText(DICTOOL->getStringValue_json(options, "text"));
+    textButton->setTitleText(DICTOOL->getStringValue_json(options, "text"));
     bool cr = DICTOOL->checkObjectExist_json(options, "textColorR");
     bool cg = DICTOOL->checkObjectExist_json(options, "textColorG");
     bool cb = DICTOOL->checkObjectExist_json(options, "textColorB");
     int cri = cr?DICTOOL->getIntValue_json(options, "textColorR"):255;
     int cgi = cg?DICTOOL->getIntValue_json(options, "textColorG"):255;
     int cbi = cb?DICTOOL->getIntValue_json(options, "textColorB"):255;
-    textButton->setTextColor(cri,cgi,cbi);
+    textButton->setTitleColor(ccc3(cri,cgi,cbi));
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
-        textButton->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+        textButton->setTitleFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
     }
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        textButton->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        textButton->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName"));
     }
-    /* gui mark modify text button text color parse */
-    // before
-//    setColorPropsForWidgetFromJsonDictionary(widget,options);
-    /**/
+    setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void CCSReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     UITextField* textField = (UITextField*)widget;
@@ -1398,7 +1390,6 @@ void CCSReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJso
     {
         //textField->setSize(CCSizeMake(dw, dh));
     }
-
 	bool maxLengthEnable = DICTOOL->getBooleanValue_json(options, "maxLengthEnable");
 	textField->setMaxLengthEnable(maxLengthEnable);
 
@@ -1407,7 +1398,6 @@ void CCSReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJso
 		int maxLength = DICTOOL->getIntValue_json(options, "maxLength");
 		textField->setMaxLength(maxLength);
 	}
-
     bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
     textField->setPasswordEnable(passwordEnable);
     if (passwordEnable)
@@ -1417,7 +1407,7 @@ void CCSReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJso
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void CCSReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
+void CCSGUIReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
     if (m_bOlderVersion)
     {
@@ -1470,8 +1460,9 @@ void CCSReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs::CS
                 break;
         }
 		CC_SAFE_DELETE(imageFileNameDic);
+        
         /* gui mark add load bar scale9 parse */
-        bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");        
+        bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
         loadingBar->setScale9Enabled(scale9Enable);
         
         if (scale9Enable)
@@ -1495,18 +1486,18 @@ void CCSReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs::CS
     }
 }
 
-void CCSReader::setPropsForListViewFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
+void CCSGUIReader::setPropsForListViewFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
     setPropsForScrollViewFromJsonDictionary(widget, options);
 }
 
-void CCSReader::setPropsForPageViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
+void CCSGUIReader::setPropsForPageViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     setPropsForPanelFromJsonDictionary(widget, options);
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void CCSReader::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
+void CCSGUIReader::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
     if (m_bOlderVersion)
     {
@@ -1559,14 +1550,14 @@ void CCSReader::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, cs::C
     }
 }
 
-void CCSReader::setPropsForDragPanelFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
+void CCSGUIReader::setPropsForDragPanelFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
     setPropsForPanelFromJsonDictionary(widget, options);
     
     UIDragPanel* dragPanel = (UIDragPanel*)widget;
     
     bool bounceEnable = DICTOOL->getBooleanValue_json(options, "bounceEnable");
-    dragPanel->setBounceEnable(bounceEnable);
+    dragPanel->setBounceEnabled(bounceEnable);
     
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
