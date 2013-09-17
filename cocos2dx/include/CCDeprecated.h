@@ -909,7 +909,6 @@ CC_DEPRECATED_ATTRIBUTE typedef ParticleSystem::PositionType tPositionType;
 #define kCCLabelAutomaticWidth  kLabelAutomaticWidth
 
 
-CC_DEPRECATED_ATTRIBUTE const int kCCMenuHandlerPriority = Menu::HANDLER_PRIORITY;
 CC_DEPRECATED_ATTRIBUTE const Menu::State kCCMenuStateWaiting = Menu::State::WAITING;
 CC_DEPRECATED_ATTRIBUTE const Menu::State kCCMenuStateTrackingTouch = Menu::State::TRACKING_TOUCH;
 

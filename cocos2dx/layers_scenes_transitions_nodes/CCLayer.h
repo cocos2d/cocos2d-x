@@ -113,7 +113,6 @@ public:
     @since v0.8.0
     */
     CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
-    virtual void onRegisterTouchListener();
 
     /** whether or not it will receive Touch events.
     You can enable / disable touch events with this property.
@@ -180,6 +179,8 @@ public:
     virtual void onEnterTransitionDidFinish() override;
 
 protected:
+    void addTouchListener();
+    
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
