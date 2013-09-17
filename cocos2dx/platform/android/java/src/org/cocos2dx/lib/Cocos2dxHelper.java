@@ -57,7 +57,7 @@ public class Cocos2dxHelper {
 	private static String sFileDirectory;
 	private static Activity sActivity = null;
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
-
+	
     /**
      * Optional meta-that can be in the manifest for this component, specifying
      * the name of the native shared library to load.  If not specified,
@@ -101,6 +101,7 @@ public class Cocos2dxHelper {
 
 		//Cocos2dxHelper.nativeSetAssetManager(sAssetManager);
         Cocos2dxBitmap.setContext(activity);
+        sActivity = activity;                   
 	}
 	
 	public static void initListener() {
@@ -108,8 +109,7 @@ public class Cocos2dxHelper {
             
             @Override
             public void showEditTextDialog(final String title, final String message,
-                    final int inputMode, final int inputFlag, final int returnType, final int maxLength) {
-            	
+                    final int inputMode, final int inputFlag, final int returnType, final int maxLength) {           	
             	sActivity.runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -286,8 +286,7 @@ public class Cocos2dxHelper {
 	public static void setEditTextDialogResult(final String pResult) {
 		try {
 			final byte[] bytesUTF8 = pResult.getBytes("UTF8");
-
-			Cocos2dxHelper.nativeSetEditTextDialogResult(bytesUTF8);
+			Cocos2dxHelper.nativeSetEditTextDialogResult(bytesUTF8);			
 		} catch (UnsupportedEncodingException pUnsupportedEncodingException) {
 			/* Nothing. */
 		}

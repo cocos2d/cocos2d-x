@@ -27,6 +27,8 @@
 #include "event_dispatcher/CCEventDispatcher.h"
 #include "event_dispatcher/CCAccelerationEvent.h"
 
+#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 
@@ -67,6 +69,36 @@ struct engine {
 };
 
 static struct engine engine;
+
+static char* editboxText = NULL;
+extern EditTextCallback s_pfEditTextCallback;
+extern void* s_ctx;
+
+extern "C" {
+	JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {	
+		jsize  size = env->GetArrayLength(text);
+		pthread_mutex_lock(&(engine.app->mutex));
+		if (size > 0) {
+			
+
+			jbyte * data = (jbyte*)env->GetByteArrayElements(text, 0);
+			char* pBuf = (char*)malloc(size+1);
+			if (pBuf != NULL) {
+				memcpy(pBuf, data, size);
+				pBuf[size] = '\0';
+				editboxText = pBuf;				
+			}
+			env->ReleaseByteArrayElements(text, data, 0);
+			
+		} else {
+			char* pBuf = (char*)malloc(1);
+			pBuf[0] = '\0';
+			editboxText = pBuf;			
+		}
+		pthread_cond_broadcast(&engine.app->cond);
+		pthread_mutex_unlock(&(engine.app->mutex));
+	}
+}
 
 typedef struct cocos_dimensions {
     int w;
@@ -181,6 +213,8 @@ static cocos_dimensions engine_init_display(struct engine* engine) {
 /**
  * Just the current frame in the display.
  */
+int tmpCount = 0;
+
 static void engine_draw_frame(struct engine* engine) {
     LOG_RENDER_DEBUG("engine_draw_frame(...)");
     pthread_t thisthread = pthread_self();
@@ -198,7 +232,14 @@ static void engine_draw_frame(struct engine* engine) {
     /* // Just fill the screen with a color. */
     /* glClearColor(((float)engine->state.x)/engine->width, engine->state.angle, */
     /*         ((float)engine->state.y)/engine->height, 1); */
-    /* glClear(GL_COLOR_BUFFER_BIT); */
+    /* glClear(GL_COLOR_BUFFER_BIT); */	
+	
+	if (s_pfEditTextCallback && editboxText)
+	{
+		s_pfEditTextCallback(editboxText, s_ctx);
+		free(editboxText);
+		editboxText = NULL;
+	}	
 
     eglSwapBuffers(engine->display, engine->surface);
 }
@@ -445,6 +486,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
         case APP_CMD_GAINED_FOCUS:
             if (cocos2d::Director::getInstance()->getOpenGLView()) {
                 cocos2d::Application::getInstance()->applicationWillEnterForeground();
+				engine->animating = 1;
             }
 
             break;
