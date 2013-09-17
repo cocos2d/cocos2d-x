@@ -33,6 +33,7 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
+#include "physics/CCPhysicsSetting.h"
 
 #include "event_dispatcher/CCKeyboardEvent.h"
 
@@ -177,6 +178,12 @@ public:
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish() override;
+    
+#ifdef CC_USE_PHYSICS
+    virtual void addChild(Node* child) override;
+    virtual void addChild(Node* child, int zOrder) override;
+    virtual void addChild(Node* child, int zOrder, int tag) override;
+#endif // CC_USE_PHYSICS
 
 protected:
     void addTouchListener();
