@@ -18,7 +18,7 @@ CocosGUITestScene::CocosGUITestScene(bool bPortrait)
 CocosGUITestScene::~CocosGUITestScene()
 {
 	cocos2d::extension::SceneReader::getInstance()->purgeSceneReader();
-	cocos2d::extension::UIActionManager::purgeUIActionManager();
+	cocos2d::extension::ActionManagerEx::purgeActionManager();
 	cocos2d::extension::UIHelper::purgeUIHelper();
 }
 

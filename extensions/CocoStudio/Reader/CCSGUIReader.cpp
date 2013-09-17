@@ -24,7 +24,7 @@
 
 #include "../GUI/System/CocosGUI.h"
 #include "../Json/DictionaryHelper.h"
-//#include "../Action/UIActionManager.h"
+#include "../Action/ActionManagerEx.h"
 #include <fstream>
 #include <iostream>
 
@@ -258,10 +258,10 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
 //    widget->setFileDesignSize(CCSizeMake(fileDesignWidth, fileDesignHeight));
     cs::JsonDictionary* actions = DICTOOL->getSubDictionary_json(jsonDict, "animation");
     /* *********temp********* */
-//    UIActionManager::shareManager()->releaseActions();
+//    ActionManager::shareManager()->releaseActions();
     /* ********************** */
     CCLOG("file name == [%s]",fileName);
-    UIActionManager::shareManager()->initWithDictionary(fileName,actions,widget);
+    ActionManagerEx::shareManager()->initWithDictionary(fileName,actions,widget);
 
 	CC_SAFE_DELETE(widgetTree);
 	CC_SAFE_DELETE(actions);

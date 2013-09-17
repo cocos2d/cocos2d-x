@@ -74,6 +74,11 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Json/lib_json/json_reader.cpp \
 ../CocoStudio/Json/lib_json/json_writer.cpp \
 ../CocoStudio/Reader/CCSSceneReader.cpp \
+../CocoStudio/Action/ActionFrame.cpp \
+../CocoStudio/Action/ActionFrameEasing.cpp \
+../CocoStudio/Action/ActionManagerEx.cpp \
+../CocoStudio/Action/ActionNode.cpp \
+../CocoStudio/Action/ActionObject.cpp \
 ../spine/Animation.cpp \
 ../spine/AnimationState.cpp \
 ../spine/AnimationStateData.cpp \
