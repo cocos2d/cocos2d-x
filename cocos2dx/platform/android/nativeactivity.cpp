@@ -213,8 +213,6 @@ static cocos_dimensions engine_init_display(struct engine* engine) {
 /**
  * Just the current frame in the display.
  */
-int tmpCount = 0;
-
 static void engine_draw_frame(struct engine* engine) {
     LOG_RENDER_DEBUG("engine_draw_frame(...)");
     pthread_t thisthread = pthread_self();
