@@ -1,7 +1,7 @@
 #include "CocosGUIScene.h"
 #include "UISceneManager.h"
 //#include "CocosGUIExamplesRegisterScene.h"
-#include "ExtensionsTest.h"
+#include "../ExtensionsTest.h"
 
 const char* gui_scene_names[2] =
 {
