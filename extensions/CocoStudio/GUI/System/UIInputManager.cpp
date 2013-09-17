@@ -45,7 +45,6 @@ _rootWidget(NULL)
 
 UIInputManager::~UIInputManager()
 {
-    CCLOG("~UIInputManager");
     _manageredWidget->removeAllObjects();
     CC_SAFE_RELEASE_NULL(_manageredWidget);
     _checkedDoubleClickWidget->removeAllObjects();
@@ -177,9 +176,7 @@ void UIInputManager::onTouchEnd(Touch* touch)
     {
         UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[i]);
         hitWidget->onTouchEnded(_touchEndedPoint);
-        CCLOG("widget touch end");
     }
-    CCLOG("_selectedWidgets remove widgets");
     _selectedWidgets->removeAllObjects();
 }
 

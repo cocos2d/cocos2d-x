@@ -12,6 +12,7 @@ class TestScene : public Scene
 {
 public: 
     TestScene(bool bPortrait = false);
+    virtual bool initTest();
     virtual void onEnter();
 
     virtual void runThisTest() = 0;
