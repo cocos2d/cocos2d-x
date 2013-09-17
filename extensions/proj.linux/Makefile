@@ -81,10 +81,6 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Components/CCComController.cpp \
 ../CocoStudio/Components/CCComRender.cpp \
 ../CocoStudio/Components/CCInputDelegate.cpp \
-../CocoStudio/GUI/Action/UIAction.cpp \
-../CocoStudio/GUI/Action/UIActionFrame.cpp \
-../CocoStudio/GUI/Action/UIActionManager.cpp \
-../CocoStudio/GUI/Action/UIActionNode.cpp \
 ../CocoStudio/GUI/BaseClasses/UIRootWidget.cpp \
 ../CocoStudio/GUI/BaseClasses/UIWidget.cpp \
 ../CocoStudio/GUI/Layouts/Layout.cpp \
