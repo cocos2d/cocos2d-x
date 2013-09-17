@@ -194,8 +194,8 @@ public:
     /**
      *  get and set bounce enable
      */
-    bool isBounceEnable();
-    void setBounceEnable(bool bounce);
+    bool isBounceEnabled();
+    void setBounceEnabled(bool bounce);
     /**
      *  set bounce duration
      */
@@ -225,6 +225,11 @@ public:
      * @return inner container.
      */
     Layout* getInnerContainer();
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
 protected:
     virtual bool init();

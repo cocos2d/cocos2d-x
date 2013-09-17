@@ -879,6 +879,11 @@ public:
      */
     virtual const CCSize& getContentSize() const;
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     virtual void onEnter();
     virtual void onExit();
     

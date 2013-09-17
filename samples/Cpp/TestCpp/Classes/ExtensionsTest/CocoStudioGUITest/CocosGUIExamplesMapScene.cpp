@@ -67,7 +67,7 @@ void CocosGUIExamplesMapScene::onExit()
     
     CCSSceneReader::sharedSceneReader()->purgeSceneReader();
     UIHelper::purgeUIHelper();
-    UIActionManager::purgeUIActionManager();
+    ActionManager::purgeActionManager();
     
     CCScene::onExit();
 }

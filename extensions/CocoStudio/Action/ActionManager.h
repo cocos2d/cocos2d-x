@@ -22,55 +22,73 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UILABELBMFONT_H__
-#define __UILABELBMFONT_H__
+#ifndef __ActionMANAGER_H__
+#define __ActionMANAGER_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
+#include "ActionObject.h"
+#include "../Json/CSContentJsonDictionary.h"
 
 NS_CC_EXT_BEGIN
-    
-class UILabelBMFont : public UIWidget
+
+class ActionManager:public CCObject
 {
 public:
+    
     /**
      * Default constructor
      */
-    UILabelBMFont();
+    ActionManager();
     
     /**
      * Default destructor
      */
-    virtual ~UILabelBMFont();
+    virtual ~ActionManager();
     
     /**
-     * Allocates and initializes.
+     * Gets the static instance of ActionManager.
      */
-    static UILabelBMFont* create();
-    
-    /** init a bitmap font atlas with an initial string and the FNT file */
-    void setFntFile(const char* fileName);
-    
-    /** set string value for labelbmfont*/
-    void setText(const char* value);
-    
-    /** get string value for labelbmfont*/
-    const char* getStringValue();
-    virtual void setAnchorPoint(const CCPoint &pt);
-    virtual const CCSize& getContentSize() const;
-    virtual CCNode* getVirtualRenderer();
-    /**
-     * Returns the "class name" of widget.
+    static ActionManager* shareManager();
+
+	 /**
+     * Purges ActionManager point.
      */
-    virtual const char* getDescription() const;
+	static void purgeActionManager();
+
+	 /**
+     * Gets an ActionObject with a name.
+	 *
+	 * @param jsonName  UI file name
+     *
+     * @param actionName  action name in the UI file.
+     *
+     * @return  ActionObject which named as the param name
+     */
+	ActionObject* getActionByName(const char* jsonName,const char* actionName);
+
+	/**
+     * Play an Action with a name.
+	 *
+	 * @param jsonName  UI file name
+     *
+     * @param actionName  action name in teh UIfile.
+     */
+	void playActionByName(const char* jsonName,const char* actionName);
+    
+    /*init properties with json dictionay*/
+    void initWithDictionary(const char* jsonName,cs::CSJsonDictionary* dic,CCObject* root);
+
+	/**
+     * Release all actions.
+     *
+     */
+	void releaseActions();
+
 protected:
-    virtual void initRenderer();
-    virtual void onSizeChanged();
-    void labelBMFontScaleChangedWithSize();
-protected:
-    CCLabelBMFont* m_pLabelBMFontRenderer;
-    bool m_bFntFileHasInit;
+	CCDictionary* m_pActionDic;
 };
-    
+
 NS_CC_EXT_END
 
-#endif /* defined(__UILabelBMFont__) */
+#endif
