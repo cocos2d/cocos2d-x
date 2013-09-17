@@ -37,6 +37,9 @@ class PhysicsShapeInfo;
 class PhysicsBody;
 class PhysicsBodyInfo;
 
+/** 
+ * @brief A shape for body. You do not create PhysicsWorld objects directly, instead, you can view PhysicsBody to see how to create it.
+ */
 class PhysicsShape : public Object
 {
 public:
@@ -60,7 +63,7 @@ protected:
     bool init(PhysicsBody* body, Type type);
     
     /**
-     * PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
+     * @brief PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
      */
     PhysicsBodyInfo* bodyInfo() const;
     
@@ -68,7 +71,7 @@ protected:
     
 protected:
     PhysicsShape();
-    virtual ~PhysicsShape();
+    virtual ~PhysicsShape() = 0;
     
 protected:
     PhysicsBody* _body;
@@ -79,6 +82,7 @@ protected:
     friend class PhysicsBody;
 };
 
+/** A circle shape */
 class PhysicsShapeCircle : public PhysicsShape
 {
 protected:
@@ -92,6 +96,7 @@ protected:
     friend class PhysicsBody;
 };
 
+/** A box shape */
 class PhysicsShapeBox : public PhysicsShape
 {
 protected:
@@ -105,6 +110,7 @@ protected:
     friend class PhysicsBody;
 };
 
+/** A polygon shape */
 class PhysicsShapePolygon : public PhysicsShape
 {
 protected:
@@ -118,6 +124,7 @@ protected:
     friend class PhysicsBody;
 };
 
+/** A segment shape */
 class PhysicsShapeEdgeSegment : public PhysicsShape
 {
 protected:
@@ -131,6 +138,7 @@ protected:
     friend class PhysicsBody;
 };
 
+/** An edge box shape */
 class PhysicsShapeEdgeBox : public PhysicsShape
 {
 public:
@@ -146,6 +154,7 @@ protected:
     friend class PhysicsBody;
 };
 
+/** An edge polygon shape */
 class PhysicsShapeEdgePolygon : public PhysicsShape
 {
 public:
@@ -161,6 +170,7 @@ protected:
     friend class PhysicsBody;
 };
 
+/** a chain shape */
 class PhysicsShapeEdgeChain : public PhysicsShape
 {
 public:

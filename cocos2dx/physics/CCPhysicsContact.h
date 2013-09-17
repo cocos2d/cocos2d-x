@@ -38,12 +38,28 @@ class PhysicsWorld;
 
 class PhysicsContactInfo;
 
+/**
+ * @brief Contact infomation. it will created automatically when two shape contact with each other. and it will destoried automatically when two shape separated.
+ */
 class PhysicsContact
 {
 public:
+    /*
+     * @brief get contact shape A.
+     */
     inline PhysicsShape* getShapeA() { return _shapeA; }
+    /*
+     * @brief get contact shape B.
+     */
     inline PhysicsShape* getShapeB() { return _shapeB; }
+    /*
+     * @brief get data.
+     */
     inline void* getData() { return _data; }
+    /*
+     * @brief set data to contact. you must manage the memory yourself, Generally you can set data at contact begin, and distory it at contact end.
+     */
+    inline void setData(void* data) { _data = data; }
     
 private:
     static PhysicsContact* create(PhysicsShape* a, PhysicsShape* b);
@@ -62,6 +78,9 @@ private:
     friend class PhysicsWorld;
 };
 
+/*
+ * @brief presolve value generated when onContactPreSolve called.
+ */
 class PhysicsContactPreSolve
 {
 private:
@@ -74,6 +93,9 @@ private:
     friend class PhysicsWorld;
 };
 
+/*
+ * @brief postsolve value generated when onContactPostSolve called.
+ */
 class PhysicsContactPostSolve
 {
 private:
@@ -86,6 +108,9 @@ private:
     friend class PhysicsWorld;
 };
 
+/*
+ * @brief contact listener.
+ */
 class PhysicsContactListener
 {
 public:
@@ -93,10 +118,22 @@ public:
     virtual ~PhysicsContactListener();
     
 public:
+    /*
+     * @brief it will called at two shapes start to contact, and only call it once.
+     */
     std::function<bool(const PhysicsContact& contact)> onContactBegin;
+    /*
+     * @brief Two shapes are touching during this step. Return false from the callback to make world ignore the collision this step or true to process it normally. Additionally, you may override collision values, elasticity, or surface velocity values.
+     */
     std::function<bool(const PhysicsContact& contact, const PhysicsContactPreSolve& solve)> onContactPreSolve;
-    
+    /*
+     * @brief Two shapes are touching and their collision response has been processed. You can retrieve the collision impulse or kinetic energy at this time if you want to use it to calculate sound volumes or damage amounts. See cpArbiter for more info
+     */
     std::function<void(const PhysicsContact& contact, const PhysicsContactPostSolve& solve)> onContactPostSolve;
+    /*
+     * @brief it will called at two shapes separated, and only call it once.
+     * onContactBegin and onContactEnd will called in pairs.
+     */
     std::function<void(const PhysicsContact& contact)> onContactEnd;
 };
 

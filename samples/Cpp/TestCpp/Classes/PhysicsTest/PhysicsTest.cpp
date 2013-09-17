@@ -52,7 +52,7 @@ void PhysicsTestLayer::toggleDebugCallback(Object* sender)
 #ifdef CC_USE_PHYSICS
     if (_scene != nullptr)
     {
-        _scene->getPhysicsWorld()->setDebugDraw(!_scene->getPhysicsWorld()->getDebugDraw());
+        _scene->getPhysicsWorld()->setDebugDraw(!_scene->getPhysicsWorld()->isDebugDraw());
     }
 #endif
 }

@@ -37,6 +37,9 @@ class PhysicsBody;
 class PhysicsJointInfo;
 class PhysicsBodyInfo;
 
+/*
+ * @brief An PhysicsJoint object connects two physics bodies together.
+ */
 class PhysicsJoint : public Object
 {
 protected:
@@ -63,6 +66,9 @@ protected:
     friend class PhysicsBody;
 };
 
+/*
+ * @brief A fixed joint fuses the two bodies together at a reference point. Fixed joints are useful for creating complex shapes that can be broken apart later.
+ */
 class PhysicsJointFixed : public PhysicsJoint
 {
 public:
@@ -76,6 +82,9 @@ protected:
     virtual ~PhysicsJointFixed();
 };
 
+/*
+ * @brief A sliding joint allows the two bodies to slide along a chosen axis.
+ */
 class PhysicsJointSliding : public PhysicsJoint
 {
 public:
@@ -89,6 +98,9 @@ protected:
     virtual ~PhysicsJointSliding();
 };
 
+/*
+ * @brief A spring joint connects the two bodies with a spring whose length is the initial distance between the two bodies.
+ */
 class PhysicsJointSpring : public PhysicsJoint
 {
 public:
@@ -102,6 +114,9 @@ protected:
     virtual ~PhysicsJointSpring();
 };
 
+/*
+ * @brief A limit joint imposes a maximum distance between the two bodies, as if they were connected by a rope.
+ */
 class PhysicsJointLimit : public PhysicsJoint
 {
 public:
@@ -115,6 +130,9 @@ protected:
     virtual ~PhysicsJointLimit();
 };
 
+/*
+ * @brief A pin joint allows the two bodies to independently rotate around the anchor point as if pinned together.
+ */
 class PhysicsJointPin : public PhysicsJoint
 {
 public:

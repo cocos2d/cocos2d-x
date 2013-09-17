@@ -47,11 +47,17 @@ class Sprite;
 class Scene;
 class DrawNode;
 
+/**
+ * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
+ */
 class PhysicsWorld
 {
 public:
+    /** Adds a joint to the physics world.*/
     void addJoint(PhysicsJoint* joint);
+    /** Removes a joint from the physics world.*/
     void removeJoint(PhysicsJoint* joint);
+    /** Remove all joints from the physics world.*/
     void removeAllJoints();
     
     Array* getBodysAlongRay(Point start, Point end) const;
@@ -59,13 +65,19 @@ public:
     Array* getBodysInRect(Rect rect) const;
     Array* getAllBody() const;
     
+    /** Register a listener to receive contact callbacks*/
     inline void registerContactListener(PhysicsContactListener* delegate) { _listener = delegate; }
+    /** Unregister a listener. */
     inline void unregisterContactListener() { _listener = nullptr; }
     
+    /** get the gravity value */
     inline Point getGravity() { return _gravity; }
+    /** set the gravity value */
     void setGravity(Point gravity);
     
-    inline bool getDebugDraw() { return _debugDraw; }
+    /** test the debug draw is enabled */
+    inline bool isDebugDraw() { return _debugDraw; }
+    /** set the debug draw */
     inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
     
 protected:
