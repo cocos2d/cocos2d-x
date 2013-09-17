@@ -59,7 +59,8 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/platform/linux \
     -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
     -I$(COCOS_SRC)/platform/third_party/linux/libtiff \
-    -I$(COCOS_SRC)/platform/third_party/linux/libwebp
+    -I$(COCOS_SRC)/platform/third_party/linux/libwebp \
+    -I$(COCOS_ROOT/external/chipmunk/include/chipmunk
 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
