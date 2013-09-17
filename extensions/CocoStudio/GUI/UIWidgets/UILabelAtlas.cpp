@@ -167,4 +167,9 @@ void UILabelAtlas::labelAtlasScaleChangedWithSize()
     }
 }
 
+const char* UILabelAtlas::getDescription() const
+{
+    return "LabelAtlase";
+}
+
 NS_CC_EXT_END

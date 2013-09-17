@@ -44,8 +44,7 @@ m_fAutoScrollSpeed(0.0f),
 m_nAutoScrollDir(0),
 m_fChildFocusCancelOffset(5.0f),
 m_pPageTurningListener(NULL),
-m_pfnPageTurningSelector(NULL),
-m_fScrollDegreeRange(45.0f)
+m_pfnPageTurningSelector(NULL)
 {
 }
 
@@ -564,6 +563,11 @@ void UIPageView::addPageTurningEvent(CCObject *target, SEL_PageViewPageTurningEv
 int UIPageView::getCurPageIndex() const
 {
     return m_nCurPageIdx;
+}
+
+const char* UIPageView::getDescription() const
+{
+    return "PageView";
 }
 
 NS_CC_EXT_END

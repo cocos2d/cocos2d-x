@@ -132,13 +132,16 @@ public:
      */
     void addUpdateChildEvent(cocos2d::CCObject* target, SEL_ListViewUpdateChildEvent selector);
     
-    /* gui mark */
     /**
      *  get and set degree range for checking move or not with scrolling
      */
     /**/
     virtual void update(float dt);
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool init();
     

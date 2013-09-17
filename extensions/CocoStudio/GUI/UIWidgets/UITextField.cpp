@@ -584,4 +584,9 @@ CCNode* UITextField::getVirtualRenderer()
     return m_pTextFieldRenderer;
 }
 
+const char* UITextField::getDescription() const
+{
+    return "TextField";
+}
+
 NS_CC_EXT_END

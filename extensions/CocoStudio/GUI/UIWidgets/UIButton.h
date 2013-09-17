@@ -162,6 +162,11 @@ public:
      */
     virtual void setColor(const ccColor3B &color);
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     void setTitleText(const char* text);
     const char* getTitleText() const;
     void setTitleColor(const ccColor3B& color);
