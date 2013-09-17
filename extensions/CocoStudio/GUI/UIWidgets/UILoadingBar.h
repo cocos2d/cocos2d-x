@@ -116,8 +116,16 @@ public:
     
     //override "getVirtualRenderer" method of widget.
     virtual CCNode* getVirtualRenderer();
-
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     /*Compatible*/
+    /**
+     * These methods will be removed
+     */
     void setTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexture(texture,texType);};
     void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
     void setScale9Enable(bool is){setScale9Enabled(is);};

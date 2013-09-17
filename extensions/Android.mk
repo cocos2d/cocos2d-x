@@ -82,7 +82,6 @@ CocoStudio/GUI/Layouts/Layout.cpp \
 CocoStudio/GUI/Layouts/LayoutExecutant.cpp \
 CocoStudio/GUI/Layouts/LayoutParameter.cpp \
 CocoStudio/GUI/Layouts/UILayoutDefine.cpp \
-CocoStudio/GUI/System/CCSReader.cpp \
 CocoStudio/GUI/System/CocosGUI.cpp \
 CocoStudio/GUI/System/UIHelper.cpp \
 CocoStudio/GUI/System/UIInputManager.cpp \
@@ -98,10 +97,8 @@ CocoStudio/GUI/UIWidgets/UILabel.cpp \
 CocoStudio/GUI/UIWidgets/UILabelAtlas.cpp \
 CocoStudio/GUI/UIWidgets/UILabelBMFont.cpp \
 CocoStudio/GUI/UIWidgets/UILoadingBar.cpp \
-CocoStudio/GUI/UIWidgets/UINodeContainer.cpp \
 CocoStudio/GUI/UIWidgets/UISlider.cpp \
 CocoStudio/GUI/UIWidgets/UISwitch.cpp \
-CocoStudio/GUI/UIWidgets/UITextButton.cpp \
 CocoStudio/GUI/UIWidgets/UITextField.cpp \
 CocoStudio/Components/CCComAttribute.cpp \
 CocoStudio/Components/CCComAudio.cpp \
@@ -114,6 +111,7 @@ CocoStudio/Json/lib_json/json_value.cpp \
 CocoStudio/Json/lib_json/json_reader.cpp \
 CocoStudio/Json/lib_json/json_writer.cpp \
 CocoStudio/Reader/CCSSceneReader.cpp \
+CocoStudio/Reader/CCSGUIReader.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
 spine/AnimationStateData.cpp \

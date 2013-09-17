@@ -161,8 +161,8 @@ bool UIDragPanelTest_Bounce::init()
         
         // Create the dragpanel
         UIDragPanel* dragPanel = UIDragPanel::create();
-        dragPanel->setTouchEnable(true);
-        dragPanel->setBounceEnable(true);
+        dragPanel->setTouchEnabled(true);
+        dragPanel->setBounceEnabled(true);
         dragPanel->setBackGroundImageScale9Enabled(true);
         dragPanel->setBackGroundImage("cocosgui/green_edit.png");
         dragPanel->setSize(CCSizeMake(210, 122.5));
