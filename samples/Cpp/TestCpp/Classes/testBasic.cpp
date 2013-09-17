@@ -4,8 +4,11 @@
 
 TestScene::TestScene(bool bPortrait)
 {
-    
-    Scene::init();
+}
+
+bool TestScene::initTest()
+{
+    return Scene::init();
 }
 
 void TestScene::onEnter()

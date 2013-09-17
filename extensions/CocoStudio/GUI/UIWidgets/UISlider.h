@@ -158,7 +158,7 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addPercentEvent(Object* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListener(Object* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const Point &touchPoint);
@@ -180,6 +180,11 @@ public:
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual void initRenderer();
     float getPercentWithBallPos(float location);
