@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ActionNode.h"
-#include "ActionFrameEasing.h"
+#include "CCActionNode.h"
+#include "CCActionFrameEasing.h"
 #include "../GUI/BaseClasses/UIWidget.h"
 #include "../GUI/System/UIHelper.h"
 #include "../Json/DictionaryHelper.h"
@@ -318,7 +318,7 @@ Spawn * ActionNode::refreshActionProperty()
 
 void ActionNode::playAction(bool bloop)
 {
-	if ( _object == NULL )
+	if ( _object == NULL || _actionSpawn == NULL)
 	{
 		return;
 	}

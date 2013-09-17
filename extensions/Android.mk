@@ -89,11 +89,11 @@ CocoStudio/Json/lib_json/json_value.cpp \
 CocoStudio/Json/lib_json/json_writer.cpp \
 CocoStudio/Reader/CCSGUIReader.cpp \
 CocoStudio/Reader/CCSSceneReader.cpp \
-CocoStudio/Action/ActionFrame.cpp \
-CocoStudio/Action/ActionFrameEasing.cpp \
-CocoStudio/Action/ActionManagerEx.cpp \
-CocoStudio/Action/ActionNode.cpp \
-CocoStudio/Action/ActionObject.cpp \
+CocoStudio/Action/CCActionFrame.cpp \
+CocoStudio/Action/CCActionFrameEasing.cpp \
+CocoStudio/Action/CCActionManagerEx.cpp \
+CocoStudio/Action/CCActionNode.cpp \
+CocoStudio/Action/CCActionObject.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
 GUI/CCControlExtension/CCControlColourPicker.cpp \

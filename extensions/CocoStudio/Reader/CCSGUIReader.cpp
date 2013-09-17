@@ -24,7 +24,7 @@
 
 #include "../GUI/System/CocosGUI.h"
 #include "../Json/DictionaryHelper.h"
-#include "../Action/ActionManagerEx.h"
+#include "../Action/CCActionManagerEx.h"
 #include <fstream>
 #include <iostream>
 

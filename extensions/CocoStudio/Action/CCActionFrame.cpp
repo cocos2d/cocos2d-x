@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ActionFrame.h"
+#include "CCActionFrame.h"
 
 NS_CC_EXT_BEGIN
 
