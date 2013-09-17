@@ -87,7 +87,7 @@ public:
     * @param  from   from BaseData
     * @param  to     to BaseData
     */
-    virtual void subtract(BaseData *from, BaseData *to);
+    virtual void subtract(BaseData *from, BaseData *to, bool limit);
 
     virtual void setColor(const Color4B &color);
     virtual Color4B getColor();
@@ -342,6 +342,7 @@ public:
     int frameID;
     int duration;                //! The frame will last duration frames
     CCTweenType tweenEasing;     //! Every frame's tween easing effect
+    bool isTween;                //! Whether it's a tween key frame
 
     /**
     * The current display index when change to this frame.
