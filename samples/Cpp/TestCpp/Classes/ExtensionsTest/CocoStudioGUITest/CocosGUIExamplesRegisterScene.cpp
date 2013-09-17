@@ -80,7 +80,7 @@ void CocosGUIExamplesRegisterScene::onExit()
     
     CCSSceneReader::sharedSceneReader()->purgeSceneReader();
     UIHelper::purgeUIHelper();
-	UIActionManager::shareManager()->purgeUIActionManager();
+	ActionManager::shareManager()->purgeActionManager();
     
     CCScene::onExit();
 }
