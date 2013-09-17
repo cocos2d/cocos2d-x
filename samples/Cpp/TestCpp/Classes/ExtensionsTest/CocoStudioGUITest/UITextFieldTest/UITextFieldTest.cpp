@@ -51,10 +51,7 @@ bool UITextFieldTest::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        textField->addAttachWithIMEEvent(this, coco_TextField_AttachWithIME_selector(UITextFieldTest::attachWithIMEEvent));
-        textField->addDetachWithIMEEvent(this, coco_TextField_DetachWithIME_selector(UITextFieldTest::detachWithIMEEvent));
-        textField->addInsertTextEvent(this, coco_TextField_InsertText_selector(UITextFieldTest::insertTextEvent));
-        textField->addDeleteBackwardEvent(this, coco_TextField_DeleteBackward_selector(UITextFieldTest::deleteBackwardEvent));
+        textField->addEventListener(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -62,31 +59,40 @@ bool UITextFieldTest::init()
     return false;
 }
 
-void UITextFieldTest::attachWithIMEEvent(CCObject *pSender)
+void UITextFieldTest::textFieldEvent(CCObject *pSender, TextFiledEventType type)
 {
-    UITextField* textField = dynamic_cast<UITextField*>(pSender);
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    textField->runAction(CCMoveTo::create(0.225,
-                                          ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME")->getCString());
-}
-
-void UITextFieldTest::detachWithIMEEvent(CCObject* pSender)
-{
-    UITextField* textField = dynamic_cast<UITextField*>(pSender);
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    textField->runAction(CCMoveTo::create(0.175, ccp(screenSize.width / 2.0f, screenSize.height / 2.0f)));
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME")->getCString());    
-}
-
-void UITextFieldTest::insertTextEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words")->getCString());
-}
-
-void UITextFieldTest::deleteBackwardEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("delete word")->getCString());
+    switch (type)
+    {
+        case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+        {
+            UITextField* textField = dynamic_cast<UITextField*>(pSender);
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            textField->runAction(CCMoveTo::create(0.225,
+                                                  ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME")->getCString());
+        }
+            break;
+            
+        case TEXTFIELD_EVENT_DETACH_WITH_IME:
+        {
+            UITextField* textField = dynamic_cast<UITextField*>(pSender);
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            textField->runAction(CCMoveTo::create(0.175, ccp(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME")->getCString());
+        }
+            break;
+            
+        case TEXTFIELD_EVENT_INDERT_TEXT:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words")->getCString());
+            break;
+            
+        case TEXTFIELD_EVENT_DELETE_BACKWARD:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("delete word")->getCString());
+            break;
+            
+        default:
+            break;
+    }
 }
 
 // UITextFieldTest_MaxLength
@@ -133,10 +139,7 @@ bool UITextFieldTest_MaxLength::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addAttachWithIMEEvent(this, coco_TextField_AttachWithIME_selector(UITextFieldTest_MaxLength::attachWithIMEEvent));
-        textField->addDetachWithIMEEvent(this, coco_TextField_DetachWithIME_selector(UITextFieldTest_MaxLength::detachWithIMEEvent));
-        textField->addInsertTextEvent(this, coco_TextField_InsertText_selector(UITextFieldTest_MaxLength::insertTextEvent));
-        textField->addDeleteBackwardEvent(this, coco_TextField_DeleteBackward_selector(UITextFieldTest_MaxLength::deleteBackwardEvent));
+        textField->addEventListener(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -144,33 +147,46 @@ bool UITextFieldTest_MaxLength::init()
     return false;
 }
 
-void UITextFieldTest_MaxLength::attachWithIMEEvent(CCObject *pSender)
+void UITextFieldTest_MaxLength::textFieldEvent(CCObject *pSender, TextFiledEventType type)
 {
-    UITextField* textField = dynamic_cast<UITextField*>(pSender);
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    textField->runAction(CCMoveTo::create(0.225,
-                                          ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME max length %d", textField->getMaxLength())->getCString());
-}
-
-void UITextFieldTest_MaxLength::detachWithIMEEvent(CCObject* pSender)
-{
-    UITextField* textField = dynamic_cast<UITextField*>(pSender);
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    textField->runAction(CCMoveTo::create(0.175, ccp(screenSize.width / 2.0f, screenSize.height / 2.0f)));
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME max length %d", textField->getMaxLength())->getCString());
-}
-
-void UITextFieldTest_MaxLength::insertTextEvent(CCObject *pSender)
-{
-    UITextField* textField = dynamic_cast<UITextField*>(pSender);
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words max length %d", textField->getMaxLength())->getCString());
-}
-
-void UITextFieldTest_MaxLength::deleteBackwardEvent(CCObject *pSender)
-{
-    UITextField* textField = dynamic_cast<UITextField*>(pSender);
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("delete word max length %d", textField->getMaxLength())->getCString());
+    switch (type)
+    {
+        case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+        {
+            UITextField* textField = dynamic_cast<UITextField*>(pSender);
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            textField->runAction(CCMoveTo::create(0.225,
+                                                  ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME max length %d", textField->getMaxLength())->getCString());
+        }
+            break;
+            
+        case TEXTFIELD_EVENT_DETACH_WITH_IME:
+        {
+            UITextField* textField = dynamic_cast<UITextField*>(pSender);
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            textField->runAction(CCMoveTo::create(0.175, ccp(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME max length %d", textField->getMaxLength())->getCString());
+        }
+            break;
+            
+        case TEXTFIELD_EVENT_INDERT_TEXT:
+        {
+            UITextField* textField = dynamic_cast<UITextField*>(pSender);
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words max length %d", textField->getMaxLength())->getCString());
+        }
+            break;
+            
+        case TEXTFIELD_EVENT_DELETE_BACKWARD:
+        {
+            UITextField* textField = dynamic_cast<UITextField*>(pSender);
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("delete word max length %d", textField->getMaxLength())->getCString());
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 // UITextFieldTest_Password
@@ -217,10 +233,7 @@ bool UITextFieldTest_Password::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input password here");
         textField->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addAttachWithIMEEvent(this, coco_TextField_AttachWithIME_selector(UITextFieldTest_Password::attachWithIMEEvent));
-        textField->addDetachWithIMEEvent(this, coco_TextField_DetachWithIME_selector(UITextFieldTest_Password::detachWithIMEEvent));
-        textField->addInsertTextEvent(this, coco_TextField_InsertText_selector(UITextFieldTest_Password::insertTextEvent));
-        textField->addDeleteBackwardEvent(this, coco_TextField_DeleteBackward_selector(UITextFieldTest_Password::deleteBackwardEvent));
+        textField->addEventListener(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -228,29 +241,38 @@ bool UITextFieldTest_Password::init()
     return false;
 }
 
-void UITextFieldTest_Password::attachWithIMEEvent(CCObject *pSender)
+void UITextFieldTest_Password::textFieldEvent(CCObject *pSender, TextFiledEventType type)
 {
-    UITextField* textField = dynamic_cast<UITextField*>(pSender);
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    textField->runAction(CCMoveTo::create(0.225,
-                                          ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME password")->getCString());
-}
-
-void UITextFieldTest_Password::detachWithIMEEvent(CCObject* pSender)
-{
-    UITextField* textField = dynamic_cast<UITextField*>(pSender);
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    textField->runAction(CCMoveTo::create(0.175, ccp(screenSize.width / 2.0f, screenSize.height / 2.0f)));
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME password")->getCString());
-}
-
-void UITextFieldTest_Password::insertTextEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words password")->getCString());
-}
-
-void UITextFieldTest_Password::deleteBackwardEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("delete word password")->getCString());
+    switch (type)
+    {
+        case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+        {
+            UITextField* textField = dynamic_cast<UITextField*>(pSender);
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            textField->runAction(CCMoveTo::create(0.225,
+                                                  ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME password")->getCString());
+        }
+            break;
+            
+        case TEXTFIELD_EVENT_DETACH_WITH_IME:
+        {
+            UITextField* textField = dynamic_cast<UITextField*>(pSender);
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            textField->runAction(CCMoveTo::create(0.175, ccp(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME password")->getCString());
+        }
+            break;
+            
+        case TEXTFIELD_EVENT_INDERT_TEXT:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words password")->getCString());
+            break;
+            
+        case TEXTFIELD_EVENT_DELETE_BACKWARD:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("delete word password")->getCString());
+            break;
+            
+        default:
+            break;
+    }
 }
