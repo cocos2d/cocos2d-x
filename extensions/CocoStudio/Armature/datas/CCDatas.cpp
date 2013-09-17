@@ -265,6 +265,7 @@ FrameData::FrameData(void)
     : frameID(0)
     , duration(1)
     , tweenEasing(Linear)
+    , isTween(true)
     , displayIndex(0)
     , blendType(BLEND_NORMAL)
 

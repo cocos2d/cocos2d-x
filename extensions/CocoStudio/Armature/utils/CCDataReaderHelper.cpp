@@ -101,6 +101,7 @@ static const char *A_RED_OFFSET = "rM";
 static const char *A_GREEN_OFFSET = "gM";
 static const char *A_BLUE_OFFSET = "bM";
 static const char *A_COLOR_TRANSFORM = "colorTransform";
+static const char *A_TWEEN_FRAME = "tweenFrame";
 //static const char *A_ROTATION = "rotation";
 //static const char *A_USE_COLOR_INFO = "uci";
 
@@ -1477,6 +1478,7 @@ FrameData *DataReaderHelper::decodeFrame(cs::JsonDictionary &json)
     frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
     frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
     frameData->blendType = (BlendType)json.getItemIntValue(A_BLEND_TYPE, 0);
+	frameData->isTween = (bool)json.getItemBoolvalue(A_TWEEN_FRAME, true);
 
     const char *event = json.getItemStringValue(A_EVENT);
     if (event != NULL)

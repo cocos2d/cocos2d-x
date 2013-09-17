@@ -293,6 +293,12 @@ void Tween::setBetween(FrameData *from, FrameData *to, bool limit)
     }
     while (0);
 
+    if (!from->isTween)
+    {
+        _tweenData->copy(from);
+        _tweenData->isTween = true;
+    }
+
     arriveKeyFrame(from);
 }
 
@@ -333,6 +339,11 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
 FrameData *Tween::tweenNodeTo(float percent, FrameData *node)
 {
     node = node == NULL ? _tweenData : node;
+
+    if (!_from->isTween)
+    {
+        return _from;
+    }
 
     node->x = _from->x + percent * _between->x;
     node->y = _from->y + percent * _between->y;
