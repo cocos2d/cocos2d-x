@@ -547,4 +547,10 @@ void UISlider::onPressStateChangedToDisabled()
     m_pSlidBallPressedRenderer->setVisible(false);
     m_pSlidBallDisabledRenderer->setVisible(true);
 }
+
+const char* UISlider::getDescription() const
+{
+    return "Slider";
+}
+
 NS_CC_EXT_END

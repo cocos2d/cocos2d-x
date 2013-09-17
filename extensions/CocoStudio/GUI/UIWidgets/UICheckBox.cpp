@@ -474,4 +474,9 @@ void UICheckBox::frontCrossDisabledTextureScaleChangedWithSize()
     }
 }
 
+const char* UICheckBox::getDescription() const
+{
+    return "CheckBox";
+}
+
 NS_CC_EXT_END

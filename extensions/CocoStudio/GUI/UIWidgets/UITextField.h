@@ -132,6 +132,11 @@ public:
     virtual void setColor(const ccColor3B &color);
     virtual void setOpacity(int opacity);
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     /*compatibel*/
     /**
      * These methods will be removed

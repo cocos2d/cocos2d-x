@@ -304,7 +304,6 @@
 		37CA1C4B17D87A3300A649D0 /* UILabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1BF417D87A3300A649D0 /* UILabelBMFont.cpp */; };
 		37CA1C4C17D87A3300A649D0 /* UILoadingBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1BF617D87A3300A649D0 /* UILoadingBar.cpp */; };
 		37CA1C4E17D87A3300A649D0 /* UISlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1BFA17D87A3300A649D0 /* UISlider.cpp */; };
-		37CA1C4F17D87A3300A649D0 /* UISwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1BFC17D87A3300A649D0 /* UISwitch.cpp */; };
 		37CA1C5117D87A3300A649D0 /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1C0017D87A3300A649D0 /* UITextField.cpp */; };
 		37CA1C5217D87A3300A649D0 /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1C0317D87A3300A649D0 /* CSContentJsonDictionary.cpp */; };
 		37CA1C5317D87A3300A649D0 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1C0517D87A3300A649D0 /* DictionaryHelper.cpp */; };
@@ -1080,8 +1079,6 @@
 		37CA1BF717D87A3300A649D0 /* UILoadingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoadingBar.h; sourceTree = "<group>"; };
 		37CA1BFA17D87A3300A649D0 /* UISlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISlider.cpp; sourceTree = "<group>"; };
 		37CA1BFB17D87A3300A649D0 /* UISlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISlider.h; sourceTree = "<group>"; };
-		37CA1BFC17D87A3300A649D0 /* UISwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISwitch.cpp; sourceTree = "<group>"; };
-		37CA1BFD17D87A3300A649D0 /* UISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISwitch.h; sourceTree = "<group>"; };
 		37CA1C0017D87A3300A649D0 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
 		37CA1C0117D87A3300A649D0 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
 		37CA1C0317D87A3300A649D0 /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
@@ -2911,8 +2908,6 @@
 				37CA1BF717D87A3300A649D0 /* UILoadingBar.h */,
 				37CA1BFA17D87A3300A649D0 /* UISlider.cpp */,
 				37CA1BFB17D87A3300A649D0 /* UISlider.h */,
-				37CA1BFC17D87A3300A649D0 /* UISwitch.cpp */,
-				37CA1BFD17D87A3300A649D0 /* UISwitch.h */,
 				37CA1C0017D87A3300A649D0 /* UITextField.cpp */,
 				37CA1C0117D87A3300A649D0 /* UITextField.h */,
 			);
@@ -3711,7 +3706,6 @@
 				37CA1C4B17D87A3300A649D0 /* UILabelBMFont.cpp in Sources */,
 				37CA1C4C17D87A3300A649D0 /* UILoadingBar.cpp in Sources */,
 				37CA1C4E17D87A3300A649D0 /* UISlider.cpp in Sources */,
-				37CA1C4F17D87A3300A649D0 /* UISwitch.cpp in Sources */,
 				37CA1C5117D87A3300A649D0 /* UITextField.cpp in Sources */,
 				37CA1C5217D87A3300A649D0 /* CSContentJsonDictionary.cpp in Sources */,
 				37CA1C5317D87A3300A649D0 /* DictionaryHelper.cpp in Sources */,
