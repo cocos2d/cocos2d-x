@@ -376,6 +376,7 @@ EGLView::EGLView()
 {
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
     s_pEglView = this;
+    g_keyCodeMap.clear();
     for (auto& item : g_keyCodeStructArray)
     {
         g_keyCodeMap.insert(std::make_pair(item.glfwKeyCode, item.keyCode));
