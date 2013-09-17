@@ -287,7 +287,7 @@ void UICheckBox::unSelectedEvent()
     }
 }
 
-void UICheckBox::addSelectedStateEvent(Object *target, SEL_SelectedStateEvent selector)
+void UICheckBox::addEventListener(Object *target, SEL_SelectedStateEvent selector)
 {
     _selectedStateEventListener = target;
     _selectedStateEventSelector = selector;
@@ -454,6 +454,11 @@ void UICheckBox::frontCrossDisabledTextureScaleChangedWithSize()
         _frontCrossDisabledRenderer->setScaleX(scaleX);
         _frontCrossDisabledRenderer->setScaleY(scaleY);
     }
+}
+
+const char* UICheckBox::getDescription() const
+{
+    return "CheckBox";
 }
 
 NS_CC_EXT_END

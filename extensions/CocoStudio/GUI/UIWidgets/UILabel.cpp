@@ -221,7 +221,11 @@ void UILabel::labelScaleChangedWithSize()
         _labelRenderer->setScaleX(scaleX);
         _labelRenderer->setScaleY(scaleY);
     }
-    
+}
+
+const char* UILabel::getDescription() const
+{
+    return "Label";
 }
 
 NS_CC_EXT_END
