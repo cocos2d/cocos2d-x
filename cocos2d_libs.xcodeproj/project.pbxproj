@@ -346,6 +346,26 @@
 		37B6F03117DEBCC5001BE102 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF3F17DEB40C001BE102 /* value.h */; };
 		37B6F03217DEBCC9001BE102 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF4017DEB40C001BE102 /* writer.h */; };
 		37B6F03317DEBCCA001BE102 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF4017DEB40C001BE102 /* writer.h */; };
+		37BB5B6817E88E97002746B4 /* ActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B5E17E88E96002746B4 /* ActionFrame.cpp */; };
+		37BB5B6917E88E97002746B4 /* ActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B5E17E88E96002746B4 /* ActionFrame.cpp */; };
+		37BB5B6A17E88E97002746B4 /* ActionFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B5F17E88E96002746B4 /* ActionFrame.h */; };
+		37BB5B6B17E88E97002746B4 /* ActionFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B5F17E88E96002746B4 /* ActionFrame.h */; };
+		37BB5B6C17E88E97002746B4 /* ActionFrameEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B6017E88E96002746B4 /* ActionFrameEasing.cpp */; };
+		37BB5B6D17E88E97002746B4 /* ActionFrameEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B6017E88E96002746B4 /* ActionFrameEasing.cpp */; };
+		37BB5B6E17E88E97002746B4 /* ActionFrameEasing.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B6117E88E96002746B4 /* ActionFrameEasing.h */; };
+		37BB5B6F17E88E97002746B4 /* ActionFrameEasing.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B6117E88E96002746B4 /* ActionFrameEasing.h */; };
+		37BB5B7017E88E97002746B4 /* ActionManagerEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B6217E88E96002746B4 /* ActionManagerEx.cpp */; };
+		37BB5B7117E88E97002746B4 /* ActionManagerEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B6217E88E96002746B4 /* ActionManagerEx.cpp */; };
+		37BB5B7217E88E97002746B4 /* ActionManagerEx.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B6317E88E96002746B4 /* ActionManagerEx.h */; };
+		37BB5B7317E88E97002746B4 /* ActionManagerEx.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B6317E88E96002746B4 /* ActionManagerEx.h */; };
+		37BB5B7417E88E97002746B4 /* ActionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B6417E88E96002746B4 /* ActionNode.cpp */; };
+		37BB5B7517E88E97002746B4 /* ActionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B6417E88E96002746B4 /* ActionNode.cpp */; };
+		37BB5B7617E88E97002746B4 /* ActionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B6517E88E96002746B4 /* ActionNode.h */; };
+		37BB5B7717E88E97002746B4 /* ActionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B6517E88E96002746B4 /* ActionNode.h */; };
+		37BB5B7817E88E97002746B4 /* ActionObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B6617E88E96002746B4 /* ActionObject.cpp */; };
+		37BB5B7917E88E97002746B4 /* ActionObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B6617E88E96002746B4 /* ActionObject.cpp */; };
+		37BB5B7A17E88E97002746B4 /* ActionObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B6717E88E96002746B4 /* ActionObject.h */; };
+		37BB5B7B17E88E97002746B4 /* ActionObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5B6717E88E96002746B4 /* ActionObject.h */; };
 		466AF6A017A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
 		466AF6A117A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
 		466AF6A717A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */; };
@@ -358,22 +378,6 @@
 		5032F07517E3403E00C9D250 /* CCSGUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07217E3403E00C9D250 /* CCSGUIReader.cpp */; };
 		5032F07617E3403E00C9D250 /* CCSGUIReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07317E3403E00C9D250 /* CCSGUIReader.h */; };
 		5032F07717E3403E00C9D250 /* CCSGUIReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07317E3403E00C9D250 /* CCSGUIReader.h */; };
-		5032F0BB17E3405400C9D250 /* UIAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07B17E3405400C9D250 /* UIAction.cpp */; };
-		5032F0BC17E3405400C9D250 /* UIAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07B17E3405400C9D250 /* UIAction.cpp */; };
-		5032F0BD17E3405400C9D250 /* UIAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07C17E3405400C9D250 /* UIAction.h */; };
-		5032F0BE17E3405400C9D250 /* UIAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07C17E3405400C9D250 /* UIAction.h */; };
-		5032F0BF17E3405400C9D250 /* UIActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07D17E3405400C9D250 /* UIActionFrame.cpp */; };
-		5032F0C017E3405400C9D250 /* UIActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07D17E3405400C9D250 /* UIActionFrame.cpp */; };
-		5032F0C117E3405400C9D250 /* UIActionFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07E17E3405400C9D250 /* UIActionFrame.h */; };
-		5032F0C217E3405400C9D250 /* UIActionFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F07E17E3405400C9D250 /* UIActionFrame.h */; };
-		5032F0C317E3405400C9D250 /* UIActionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07F17E3405400C9D250 /* UIActionManager.cpp */; };
-		5032F0C417E3405400C9D250 /* UIActionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F07F17E3405400C9D250 /* UIActionManager.cpp */; };
-		5032F0C517E3405400C9D250 /* UIActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08017E3405400C9D250 /* UIActionManager.h */; };
-		5032F0C617E3405400C9D250 /* UIActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08017E3405400C9D250 /* UIActionManager.h */; };
-		5032F0C717E3405400C9D250 /* UIActionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08117E3405400C9D250 /* UIActionNode.cpp */; };
-		5032F0C817E3405400C9D250 /* UIActionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08117E3405400C9D250 /* UIActionNode.cpp */; };
-		5032F0C917E3405400C9D250 /* UIActionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08217E3405400C9D250 /* UIActionNode.h */; };
-		5032F0CA17E3405400C9D250 /* UIActionNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08217E3405400C9D250 /* UIActionNode.h */; };
 		5032F0CB17E3405400C9D250 /* UIRootWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08417E3405400C9D250 /* UIRootWidget.cpp */; };
 		5032F0CC17E3405400C9D250 /* UIRootWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08417E3405400C9D250 /* UIRootWidget.cpp */; };
 		5032F0CD17E3405400C9D250 /* UIRootWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08517E3405400C9D250 /* UIRootWidget.h */; };
@@ -2399,6 +2403,16 @@
 		37B6EF4017DEB40C001BE102 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		37B6EF4217DEB40C001BE102 /* CCSSceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSSceneReader.cpp; sourceTree = "<group>"; };
 		37B6EF4317DEB40C001BE102 /* CCSSceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSSceneReader.h; sourceTree = "<group>"; };
+		37BB5B5E17E88E96002746B4 /* ActionFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionFrame.cpp; sourceTree = "<group>"; };
+		37BB5B5F17E88E96002746B4 /* ActionFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionFrame.h; sourceTree = "<group>"; };
+		37BB5B6017E88E96002746B4 /* ActionFrameEasing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionFrameEasing.cpp; sourceTree = "<group>"; };
+		37BB5B6117E88E96002746B4 /* ActionFrameEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionFrameEasing.h; sourceTree = "<group>"; };
+		37BB5B6217E88E96002746B4 /* ActionManagerEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionManagerEx.cpp; sourceTree = "<group>"; };
+		37BB5B6317E88E96002746B4 /* ActionManagerEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionManagerEx.h; sourceTree = "<group>"; };
+		37BB5B6417E88E96002746B4 /* ActionNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionNode.cpp; sourceTree = "<group>"; };
+		37BB5B6517E88E96002746B4 /* ActionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionNode.h; sourceTree = "<group>"; };
+		37BB5B6617E88E96002746B4 /* ActionObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionObject.cpp; sourceTree = "<group>"; };
+		37BB5B6717E88E96002746B4 /* ActionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionObject.h; sourceTree = "<group>"; };
 		466AF689179FCBBB002EE9BB /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DrawPrimitives.lua; sourceTree = "<group>"; };
 		466AF69E17A12297002EE9BB /* CCDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDeprecated.cpp; sourceTree = "<group>"; };
 		466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDeprecated-ext.cpp"; sourceTree = "<group>"; };
@@ -2406,14 +2420,6 @@
 		46B9C9611786763E00F808DD /* ccTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccTypes.cpp; sourceTree = "<group>"; };
 		5032F07217E3403E00C9D250 /* CCSGUIReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSGUIReader.cpp; sourceTree = "<group>"; };
 		5032F07317E3403E00C9D250 /* CCSGUIReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSGUIReader.h; sourceTree = "<group>"; };
-		5032F07B17E3405400C9D250 /* UIAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIAction.cpp; sourceTree = "<group>"; };
-		5032F07C17E3405400C9D250 /* UIAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAction.h; sourceTree = "<group>"; };
-		5032F07D17E3405400C9D250 /* UIActionFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIActionFrame.cpp; sourceTree = "<group>"; };
-		5032F07E17E3405400C9D250 /* UIActionFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionFrame.h; sourceTree = "<group>"; };
-		5032F07F17E3405400C9D250 /* UIActionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIActionManager.cpp; sourceTree = "<group>"; };
-		5032F08017E3405400C9D250 /* UIActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionManager.h; sourceTree = "<group>"; };
-		5032F08117E3405400C9D250 /* UIActionNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIActionNode.cpp; sourceTree = "<group>"; };
-		5032F08217E3405400C9D250 /* UIActionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionNode.h; sourceTree = "<group>"; };
 		5032F08417E3405400C9D250 /* UIRootWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRootWidget.cpp; sourceTree = "<group>"; };
 		5032F08517E3405400C9D250 /* UIRootWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRootWidget.h; sourceTree = "<group>"; };
 		5032F08617E3405400C9D250 /* UIWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidget.cpp; sourceTree = "<group>"; };
@@ -4003,6 +4009,7 @@
 		37B6EEE817DEB40C001BE102 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				37BB5B5D17E88E96002746B4 /* Action */,
 				1ABCA26117E712CF009F65D2 /* Armature */,
 				5032F07917E3405400C9D250 /* GUI */,
 				37B6EF1F17DEB40C001BE102 /* Components */,
@@ -4076,31 +4083,32 @@
 			path = Reader;
 			sourceTree = "<group>";
 		};
+		37BB5B5D17E88E96002746B4 /* Action */ = {
+			isa = PBXGroup;
+			children = (
+				37BB5B5E17E88E96002746B4 /* ActionFrame.cpp */,
+				37BB5B5F17E88E96002746B4 /* ActionFrame.h */,
+				37BB5B6017E88E96002746B4 /* ActionFrameEasing.cpp */,
+				37BB5B6117E88E96002746B4 /* ActionFrameEasing.h */,
+				37BB5B6217E88E96002746B4 /* ActionManagerEx.cpp */,
+				37BB5B6317E88E96002746B4 /* ActionManagerEx.h */,
+				37BB5B6417E88E96002746B4 /* ActionNode.cpp */,
+				37BB5B6517E88E96002746B4 /* ActionNode.h */,
+				37BB5B6617E88E96002746B4 /* ActionObject.cpp */,
+				37BB5B6717E88E96002746B4 /* ActionObject.h */,
+			);
+			path = Action;
+			sourceTree = "<group>";
+		};
 		5032F07917E3405400C9D250 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				5032F07A17E3405400C9D250 /* Action */,
 				5032F08317E3405400C9D250 /* BaseClasses */,
 				5032F08817E3405400C9D250 /* Layouts */,
 				5032F09117E3405400C9D250 /* System */,
 				5032F09A17E3405400C9D250 /* UIWidgets */,
 			);
 			path = GUI;
-			sourceTree = "<group>";
-		};
-		5032F07A17E3405400C9D250 /* Action */ = {
-			isa = PBXGroup;
-			children = (
-				5032F07B17E3405400C9D250 /* UIAction.cpp */,
-				5032F07C17E3405400C9D250 /* UIAction.h */,
-				5032F07D17E3405400C9D250 /* UIActionFrame.cpp */,
-				5032F07E17E3405400C9D250 /* UIActionFrame.h */,
-				5032F07F17E3405400C9D250 /* UIActionManager.cpp */,
-				5032F08017E3405400C9D250 /* UIActionManager.h */,
-				5032F08117E3405400C9D250 /* UIActionNode.cpp */,
-				5032F08217E3405400C9D250 /* UIActionNode.h */,
-			);
-			path = Action;
 			sourceTree = "<group>";
 		};
 		5032F08317E3405400C9D250 /* BaseClasses */ = {
@@ -6624,10 +6632,6 @@
 				1ABCA2BF17E712CF009F65D2 /* CCArmatureDataManager.h in Headers */,
 				37B6F03217DEBCC9001BE102 /* writer.h in Headers */,
 				5032F07617E3403E00C9D250 /* CCSGUIReader.h in Headers */,
-				5032F0BD17E3405400C9D250 /* UIAction.h in Headers */,
-				5032F0C117E3405400C9D250 /* UIActionFrame.h in Headers */,
-				5032F0C517E3405400C9D250 /* UIActionManager.h in Headers */,
-				5032F0C917E3405400C9D250 /* UIActionNode.h in Headers */,
 				1ABCA29F17E712CF009F65D2 /* CCBone.h in Headers */,
 				5032F0CD17E3405400C9D250 /* UIRootWidget.h in Headers */,
 				5032F0D117E3405400C9D250 /* UIWidget.h in Headers */,
@@ -6655,6 +6659,11 @@
 				5032F12117E3405400C9D250 /* UILoadingBar.h in Headers */,
 				5032F12517E3405400C9D250 /* UISlider.h in Headers */,
 				5032F12D17E3405400C9D250 /* UITextField.h in Headers */,
+				37BB5B6A17E88E97002746B4 /* ActionFrame.h in Headers */,
+				37BB5B6E17E88E97002746B4 /* ActionFrameEasing.h in Headers */,
+				37BB5B7217E88E97002746B4 /* ActionManagerEx.h in Headers */,
+				37BB5B7617E88E97002746B4 /* ActionNode.h in Headers */,
+				37BB5B7A17E88E97002746B4 /* ActionObject.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7175,10 +7184,6 @@
 				1ABCA2C017E712CF009F65D2 /* CCArmatureDataManager.h in Headers */,
 				37B6F03317DEBCCA001BE102 /* writer.h in Headers */,
 				5032F07717E3403E00C9D250 /* CCSGUIReader.h in Headers */,
-				5032F0BE17E3405400C9D250 /* UIAction.h in Headers */,
-				5032F0C217E3405400C9D250 /* UIActionFrame.h in Headers */,
-				5032F0C617E3405400C9D250 /* UIActionManager.h in Headers */,
-				5032F0CA17E3405400C9D250 /* UIActionNode.h in Headers */,
 				1ABCA2A017E712CF009F65D2 /* CCBone.h in Headers */,
 				5032F0CE17E3405400C9D250 /* UIRootWidget.h in Headers */,
 				5032F0D217E3405400C9D250 /* UIWidget.h in Headers */,
@@ -7206,6 +7211,11 @@
 				5032F12217E3405400C9D250 /* UILoadingBar.h in Headers */,
 				5032F12617E3405400C9D250 /* UISlider.h in Headers */,
 				5032F12E17E3405400C9D250 /* UITextField.h in Headers */,
+				37BB5B6B17E88E97002746B4 /* ActionFrame.h in Headers */,
+				37BB5B6F17E88E97002746B4 /* ActionFrameEasing.h in Headers */,
+				37BB5B7317E88E97002746B4 /* ActionManagerEx.h in Headers */,
+				37BB5B7717E88E97002746B4 /* ActionNode.h in Headers */,
+				37BB5B7B17E88E97002746B4 /* ActionObject.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8117,11 +8127,7 @@
 				37B6F02A17DEBCB5001BE102 /* json_value.cpp in Sources */,
 				37B6F02C17DEBCBA001BE102 /* json_writer.cpp in Sources */,
 				5032F07417E3403E00C9D250 /* CCSGUIReader.cpp in Sources */,
-				5032F0BB17E3405400C9D250 /* UIAction.cpp in Sources */,
-				5032F0BF17E3405400C9D250 /* UIActionFrame.cpp in Sources */,
 				1ABCA2B517E712CF009F65D2 /* CCSkin.cpp in Sources */,
-				5032F0C317E3405400C9D250 /* UIActionManager.cpp in Sources */,
-				5032F0C717E3405400C9D250 /* UIActionNode.cpp in Sources */,
 				5032F0CB17E3405400C9D250 /* UIRootWidget.cpp in Sources */,
 				5032F0CF17E3405400C9D250 /* UIWidget.cpp in Sources */,
 				5032F0D317E3405400C9D250 /* Layout.cpp in Sources */,
@@ -8147,6 +8153,11 @@
 				5032F12317E3405400C9D250 /* UISlider.cpp in Sources */,
 				1ABCA2C517E712CF009F65D2 /* CCDataReaderHelper.cpp in Sources */,
 				5032F12B17E3405400C9D250 /* UITextField.cpp in Sources */,
+				37BB5B6817E88E97002746B4 /* ActionFrame.cpp in Sources */,
+				37BB5B6C17E88E97002746B4 /* ActionFrameEasing.cpp in Sources */,
+				37BB5B7017E88E97002746B4 /* ActionManagerEx.cpp in Sources */,
+				37BB5B7417E88E97002746B4 /* ActionNode.cpp in Sources */,
+				37BB5B7817E88E97002746B4 /* ActionObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8443,11 +8454,7 @@
 				37B6F02B17DEBCB7001BE102 /* json_value.cpp in Sources */,
 				37B6F02D17DEBCBC001BE102 /* json_writer.cpp in Sources */,
 				5032F07517E3403E00C9D250 /* CCSGUIReader.cpp in Sources */,
-				5032F0BC17E3405400C9D250 /* UIAction.cpp in Sources */,
-				5032F0C017E3405400C9D250 /* UIActionFrame.cpp in Sources */,
 				1ABCA2B617E712CF009F65D2 /* CCSkin.cpp in Sources */,
-				5032F0C417E3405400C9D250 /* UIActionManager.cpp in Sources */,
-				5032F0C817E3405400C9D250 /* UIActionNode.cpp in Sources */,
 				5032F0CC17E3405400C9D250 /* UIRootWidget.cpp in Sources */,
 				5032F0D017E3405400C9D250 /* UIWidget.cpp in Sources */,
 				5032F0D417E3405400C9D250 /* Layout.cpp in Sources */,
@@ -8473,6 +8480,11 @@
 				5032F12417E3405400C9D250 /* UISlider.cpp in Sources */,
 				1ABCA2C617E712CF009F65D2 /* CCDataReaderHelper.cpp in Sources */,
 				5032F12C17E3405400C9D250 /* UITextField.cpp in Sources */,
+				37BB5B6917E88E97002746B4 /* ActionFrame.cpp in Sources */,
+				37BB5B6D17E88E97002746B4 /* ActionFrameEasing.cpp in Sources */,
+				37BB5B7117E88E97002746B4 /* ActionManagerEx.cpp in Sources */,
+				37BB5B7517E88E97002746B4 /* ActionNode.cpp in Sources */,
+				37BB5B7917E88E97002746B4 /* ActionObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
