@@ -59,9 +59,9 @@ function ClickAndMoveTest()
     layer = cc.Layer:create()
 
     initWithLayer()
-
-    scene:addChild(CreateBackMenuItem())
     scene:addChild(layer)
+    scene:addChild(CreateBackMenuItem())
+    
 
     return scene
 end
