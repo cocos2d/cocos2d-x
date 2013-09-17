@@ -657,4 +657,9 @@ void UIButton::setColor(const ccColor3B &color)
     setTitleColor(m_titleColor);
 }
 
+const char* UIButton::getDescription() const
+{
+    return "Button";
+}
+
 NS_CC_EXT_END

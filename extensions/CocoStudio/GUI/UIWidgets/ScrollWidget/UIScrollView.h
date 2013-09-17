@@ -183,6 +183,11 @@ public:
     virtual void onTouchLongClicked(const CCPoint &touchPoint);
     
     virtual void update(float dt);
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -229,9 +234,6 @@ protected:
     float m_fLeftBoundary;
     float m_fRightBoundary;
     
-    
-    int m_nMoveDirection;//0 pull down, 1 push up
-    
     bool m_bTopEnd;
     bool m_bBottomEnd;
     bool m_bLeftEnd;
@@ -257,7 +259,6 @@ protected:
     SEL_ScrollToRightEvent m_pfnScrollToRightSelector;
     
     Layout* m_pInnerContainer;
-    float m_fScrollDegreeRange;
 };
 
 NS_CC_EXT_END

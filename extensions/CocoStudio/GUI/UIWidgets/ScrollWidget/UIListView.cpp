@@ -1457,4 +1457,9 @@ void UIListView::addUpdateChildEvent(cocos2d::CCObject *target, SEL_ListViewUpda
     m_pfnUpdateChildSelector = selector;
 }
 
+const char* UIListView::getDescription() const
+{
+    return "ListView";
+}
+
 NS_CC_EXT_END

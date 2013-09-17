@@ -897,12 +897,12 @@ void UIDragPanel::addBerthToBottomEvent(CCObject *target, SEL_DragPanelBerthToBo
 
 
 // bounce
-bool UIDragPanel::isBounceEnable()
+bool UIDragPanel::isBounceEnabled()
 {
     return m_bBounceEnable;
 }
 
-void UIDragPanel::setBounceEnable(bool bounce)
+void UIDragPanel::setBounceEnabled(bool bounce)
 {
     m_bBounceEnable = bounce;
 }
@@ -1377,6 +1377,11 @@ void UIDragPanel::moveToUpdate(float t)
 Layout* UIDragPanel::getInnerContainer()
 {
     return m_pInnerContainer;
+}
+
+const char* UIDragPanel::getDescription() const
+{
+    return "DragPanel";
 }
 
 NS_CC_EXT_END

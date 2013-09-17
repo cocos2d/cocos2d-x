@@ -37,7 +37,6 @@ m_fTopBoundary(0.0f),
 m_fBottomBoundary(0.0f),
 m_fLeftBoundary(0.0f),
 m_fRightBoundary(0.0f),
-m_nMoveDirection(0),
 m_bTopEnd(false),
 m_bBottomEnd(false),
 m_bLeftEnd(false),
@@ -57,8 +56,7 @@ m_pScrollToLeftListener(NULL),
 m_pfnScrollToLeftSelector(NULL),
 m_pScrollToRightListener(NULL),
 m_pfnScrollToRightSelector(NULL),
-m_pInnerContainer(NULL),
-m_fScrollDegreeRange(45.0f)
+m_pInnerContainer(NULL)
 {
 }
 
@@ -706,6 +704,11 @@ void UIScrollView::setLayoutExecutant(LayoutExecutant *exe)
 LayoutExecutant* UIScrollView::getLayoutExecutant() const
 {
     return m_pInnerContainer->getLayoutExecutant();
+}
+
+const char* UIScrollView::getDescription() const
+{
+    return "ScrollView";
 }
 
 NS_CC_EXT_END
