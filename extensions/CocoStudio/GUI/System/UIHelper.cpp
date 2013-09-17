@@ -47,11 +47,13 @@ void UIHelper::purgeUIHelper()
 }
 
 UIHelper::UIHelper():
-m_textureFiles(NULL)
+_textureFiles(NULL),
+_fileDesignHeight(0.0f),
+_fileDesignWidth(0.0f)
 {
     Size winSize = Director::getInstance()->getWinSize();
-    m_fFileDesignWidth = winSize.width;
-    m_fFileDesignHeight = winSize.height;
+    _fileDesignWidth = winSize.width;
+    _fileDesignHeight = winSize.height;
     init();
 }
 
@@ -62,8 +64,8 @@ UIHelper::~UIHelper()
 
 void UIHelper::init()
 {
-    m_textureFiles = CCArray::create();
-    m_textureFiles->retain();
+    _textureFiles = CCArray::create();
+    _textureFiles->retain();
 }
 
 UIWidget* UIHelper::createWidgetFromJsonFile(const char *fileName)
@@ -77,7 +79,7 @@ void UIHelper::addSpriteFrame(const char *fileName)
     {
         return;
     }
-    ccArray* arrayTextures = m_textureFiles->data;
+    ccArray* arrayTextures = _textureFiles->data;
     int length = arrayTextures->num;
     for (int i=0;i<length;i++)
     {
@@ -87,7 +89,7 @@ void UIHelper::addSpriteFrame(const char *fileName)
             return;
         }
     }
-    m_textureFiles->addObject(CCString::create(fileName));
+    _textureFiles->addObject(CCString::create(fileName));
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile(fileName);
 }
 
@@ -97,7 +99,7 @@ void UIHelper::removeSpriteFrame(const char *fileName)
     {
         return;
     }
-    ccArray* arrayTextures = m_textureFiles->data;
+    ccArray* arrayTextures = _textureFiles->data;
     int length = arrayTextures->num;
     for (int i=0;i<length;i++)
     {
@@ -105,7 +107,7 @@ void UIHelper::removeSpriteFrame(const char *fileName)
         if (strcmp(file->_string.c_str(), fileName) == 0)
         {
             SpriteFrameCache::getInstance()->removeSpriteFrameByName(fileName);
-            m_textureFiles->removeObject(file);
+            _textureFiles->removeObject(file);
             return;
         }
     }
@@ -113,14 +115,14 @@ void UIHelper::removeSpriteFrame(const char *fileName)
 
 void UIHelper::removeAllSpriteFrame()
 {
-    ccArray* arrayTextures = m_textureFiles->data;
+    ccArray* arrayTextures = _textureFiles->data;
     int length = arrayTextures->num;
     for (int i=0;i<length;i++)
     {
         String* file = (String*)(arrayTextures->arr[i]);
         SpriteFrameCache::getInstance()->removeSpriteFrameByName(file->_string.c_str());
     }
-    m_textureFiles->removeAllObjects();
+    _textureFiles->removeAllObjects();
 }
 
 UIWidget* UIHelper::seekWidgetByTag(UIWidget* root, int tag)
@@ -193,22 +195,22 @@ UIWidget* UIHelper::seekWidgetByRelativeName(UIWidget *root, const char *name)
 
 void UIHelper::setFileDesignWidth(float width)
 {
-    m_fFileDesignWidth = width;
+    _fileDesignWidth = width;
 }
 
 float UIHelper::getFileDesignWidth()
 {
-    return m_fFileDesignWidth;
+    return _fileDesignWidth;
 }
 
 void UIHelper::setFileDesignHeight(float height)
 {
-    m_fFileDesignHeight = height;
+    _fileDesignHeight = height;
 }
 
 float UIHelper::getFileDesignHeight()
 {
-    return m_fFileDesignHeight;
+    return _fileDesignHeight;
 }
 
 /*temp action*/

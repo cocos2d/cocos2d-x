@@ -60,6 +60,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
 	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp \
 	../Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 	../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 	../Classes/FontTest/FontTest.cpp \

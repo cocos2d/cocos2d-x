@@ -45,12 +45,12 @@ public:
     /**
      * Default constructor
      */
-    LayoutExecutant() : m_pLayout(NULL){m_eLayoutType = LAYOUT_DEFAULT;};
+    LayoutExecutant() : _layout(NULL){_layoutType = LAYOUT_DEFAULT;};
     
     /**
      * Default destructor
      */
-    virtual ~LayoutExecutant(){m_pLayout = NULL;};
+    virtual ~LayoutExecutant(){_layout = NULL;};
     
     /**
      * To do layout. Need to be overrided.
@@ -64,7 +64,7 @@ public:
      *
      * @return LayoutType
      */
-    LayoutType getLayoutType(){return m_eLayoutType;};
+    LayoutType getLayoutType(){return _layoutType;};
     
     /**
      * Binding a Layout to LayoutExecutant.
@@ -80,8 +80,8 @@ public:
      */
     Layout* getLayout() const;
 protected:
-    LayoutType m_eLayoutType;
-    Layout* m_pLayout;
+    LayoutType _layoutType;
+    Layout* _layout;
 };
 
 class LinearVerticalLayoutExecutant : public LayoutExecutant
@@ -90,7 +90,7 @@ public:
     /**
      * Default constructor
      */
-    LinearVerticalLayoutExecutant(){m_eLayoutType = LAYOUT_LINEAR_VERTICAL;};
+    LinearVerticalLayoutExecutant(){_layoutType = LAYOUT_LINEAR_VERTICAL;};
     
     /**
      * Default destructor
@@ -113,7 +113,7 @@ public:
     /**
      * Default constructor
      */
-    LinearHorizontalLayoutExecutant(){m_eLayoutType = LAYOUT_LINEAR_HORIZONTAL;};
+    LinearHorizontalLayoutExecutant(){_layoutType = LAYOUT_LINEAR_HORIZONTAL;};
     
     /**
      * Default destructor
@@ -136,7 +136,7 @@ public:
     /**
      * Default constructor
      */
-    RelativeLayoutExecutant(){m_eLayoutType = LAYOUT_RELATIVE;};
+    RelativeLayoutExecutant(){_layoutType = LAYOUT_RELATIVE;};
     
     /**
      * Default destructor

@@ -8,7 +8,10 @@ using namespace cocos2d::extension;
 
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
-	
+    armature::ArmatureDataManager::purge();
+	SceneReader::getInstance()->purgeSceneReader();
+	cocos2d::extension::UIActionManager::shareManager()->purgeUIActionManager();
+	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
 }
 
 SceneEditorTestLayer::SceneEditorTestLayer()
@@ -73,6 +76,8 @@ cocos2d::Node* SceneEditorTestLayer::createGameScene()
 
     pNode->addChild(menuBack);
     
+    //ui action
+	cocos2d::extension::UIActionManager::shareManager()->PlayActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 
@@ -85,16 +90,6 @@ void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 	pScene->release();
 }  
 
-
-cocos2d::extension::armature::Armature* SceneEditorTestLayer::getFish(int nTag, const char *pszName)
-{
-	if (_curNode == NULL)
-	{
-		return NULL;
-	}
-	ComRender *pFishRender = (ComRender*)(_curNode->getChildByTag(nTag)->getComponent(pszName));
-	return (cocos2d::extension::armature::Armature *)(pFishRender->getNode());
-}
 
 void runSceneEditorTestLayer()
 {
