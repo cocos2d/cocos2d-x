@@ -30,7 +30,7 @@
 
 NS_CC_EXT_BEGIN
 
-class UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate, public CCTouchDelegate
+class UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate
 {
 public:
     UICCTextField();
@@ -131,6 +131,11 @@ public:
     virtual void setAnchorPoint(const CCPoint &pt);
     virtual void setColor(const ccColor3B &color);
     virtual void setOpacity(int opacity);
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
     /*compatibel*/
     /**

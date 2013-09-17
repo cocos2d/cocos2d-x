@@ -56,4 +56,9 @@ bool UIRootWidget::init()
     return false;
 }
 
+const char* UIRootWidget::getDescription() const
+{
+    return "RootWidget";
+}
+
 NS_CC_EXT_END

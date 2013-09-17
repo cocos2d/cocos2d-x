@@ -100,7 +100,10 @@ public:
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
-    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
     void setDoubleClickEnabled(bool able);
     void doubleClickEvent();
@@ -120,7 +123,6 @@ protected:
     virtual void onSizeChanged();
     void imageTextureScaleChangedWithSize();
 protected:
-    int m_nViewType;
     int m_nClickCount;
     float m_fClickTimeInterval;
     bool m_bStartCheckDoubleClick;
