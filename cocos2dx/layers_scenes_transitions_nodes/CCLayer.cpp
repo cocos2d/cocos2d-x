@@ -280,6 +280,23 @@ void Layer::onAcceleration(Acceleration* pAccelerationValue, Event* event)
     }
 }
 
+void Layer::onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(keyCode);
+    CC_UNUSED_PARAM(event);
+}
+
+void Layer::onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(event);
+    if(kScriptTypeNone != _scriptType)
+    {
+        KeypadScriptData data(keyCode, this);
+        ScriptEvent event(kKeypadEvent,&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+}
+
 /// isKeyboardEnabled getter
 bool Layer::isKeyboardEnabled() const
 {
