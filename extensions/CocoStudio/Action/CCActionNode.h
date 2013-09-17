@@ -27,7 +27,7 @@
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "ActionFrame.h"
+#include "CCActionFrame.h"
 #include "../Json/CSContentJsonDictionary.h"
 
 NS_CC_EXT_BEGIN
@@ -45,7 +45,19 @@ public:
      * Default destructor
      */
     virtual ~ActionNode();
-
+    /**
+     * Sets the time interval of frame.
+     *
+	 * @param fTime   the time interval of frame
+     */
+	void setUnitTime(float fTime);
+    
+    /**
+     * Gets the time interval of frame.
+     *
+	 * @return fTime   the time interval of frame
+     */
+	float getUnitTime();
     /**
      * Sets tag for ActionNode
      *
@@ -120,19 +132,15 @@ public:
      * Updates action states to some time.
      *
      * @param fTime   the time when need to update
-     *
-     * @param fUnitTime    the time interval of frame
      */
-	virtual bool updateActionToTimeLine(float fTime,float fUnitTime);
+	virtual bool updateActionToTimeLine(float fTime);
 
     /**
      * Play the action.
      *
      * @param bloop   true the
-     *
-     * @param fUnitTime    the time interval of frame
      */
-	virtual void playAction(bool bloop,float fUnitTime);
+	virtual void playAction(bool bloop);
     
     /**
      * Stop the action.
@@ -150,12 +158,13 @@ protected:
 	int m_ActionTag;
 	CCAction* m_action;
 	CCObject* m_Object;
-    
+    CCSpawn * m_actionSpawn;
 	CCArray* m_FrameArray;
 	int frameArrayNum;
     
 protected:
 	virtual CCNode* getActionNode();
+	virtual CCSpawn * refreshActionProperty();
 	virtual void runAction();
 	virtual void initActionNodeFromRoot(CCObject* root);
 	virtual void easingToFrame(float duration,float delayTime,ActionFrame* destFrame);
