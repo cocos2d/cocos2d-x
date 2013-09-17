@@ -30,8 +30,13 @@
 
 NS_CC_EXT_BEGIN
 
-typedef void (Object::*SEL_PageViewPageTurningEvent)(Object*);
-#define coco_PageView_PageTurning_selector(_SELECTOR) (SEL_PageViewPageTurningEvent)(&_SELECTOR)
+typedef enum
+{
+    PAGEVIEW_EVENT_TURNING,
+}PageViewEventType;
+
+typedef void (Object::*SEL_PageViewEvent)(Object*, PageViewEventType);
+#define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
 typedef enum {
     PAGEVIEW_TOUCHLEFT,
@@ -110,8 +115,8 @@ public:
      */
     int getCurPageIndex() const;
     
-    //Add call back function called when page turning.
-    void addPageTurningEvent(Object *target, SEL_PageViewPageTurningEvent selector);
+    // event
+    void addEventListener(Object *target, SEL_PageViewEvent selector);
     
     //override "removeChild" method of widget.
     virtual bool removeChild(UIWidget* widget);
@@ -134,6 +139,10 @@ public:
     //override "update" method of widget.
     virtual void update(float dt);
 
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool addChild(UIWidget* widget);
     virtual bool init();
@@ -170,8 +179,8 @@ protected:
     float _autoScrollSpeed;
     int _autoScrollDir;
     float _childFocusCancelOffset;
-    Object* _pageTurningListener;
-    SEL_PageViewPageTurningEvent _pageTurningSelector;
+    Object* _eventListener;
+    SEL_PageViewEvent _eventSelector;
 };
 
 NS_CC_EXT_END

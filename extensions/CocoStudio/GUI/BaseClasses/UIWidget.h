@@ -875,6 +875,11 @@ public:
     virtual void onEnter();
     virtual void onExit();
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();

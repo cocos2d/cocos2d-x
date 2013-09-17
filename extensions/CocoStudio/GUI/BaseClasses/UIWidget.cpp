@@ -1155,6 +1155,11 @@ LayoutParameter* UIWidget::getLayoutParameter()
     return _layoutParameter;
 }
 
+const char* UIWidget::getDescription() const
+{
+    return "Widget";
+}
+
 /*temp action*/
 void UIWidget::setActionTag(int tag)
 {
