@@ -143,4 +143,9 @@ files
     ("../CocoStudio/Reader")
     "*.h"
     "*.cpp"
+	
+	["CocoStudio/Action"]
+    ("../CocoStudio/Action")
+    "*.h"
+    "*.cpp"
 }

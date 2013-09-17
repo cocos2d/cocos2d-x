@@ -22,44 +22,50 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UIACTIONNODE_H__
-#define __UIACTIONNODE_H__
+#ifndef __ActionFrameEasing_H__
+#define __ActionFrameEasing_H__
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "../BaseClasses/UIWidget.h"
-#include "UIActionFrame.h"
-#include "../../Json/CSContentJsonDictionary.h"
+#include "../Json/CSContentJsonDictionary.h"
 
 NS_CC_EXT_BEGIN
 
-class UIActionNode:public CCObject
+enum FrameEasingType
+{
+	kCCBKeyframeEasingInstant,
+
+	kCCBKeyframeEasingLinear,
+
+	kCCBKeyframeEasingCubicIn,
+	kCCBKeyframeEasingCubicOut,
+	kCCBKeyframeEasingCubicInOut,
+
+	kCCBKeyframeEasingElasticIn,
+	kCCBKeyframeEasingElasticOut,
+	kCCBKeyframeEasingElasticInOut,
+
+	kCCBKeyframeEasingBounceIn,
+	kCCBKeyframeEasingBounceOut,
+	kCCBKeyframeEasingBounceInOut,
+
+	kCCBKeyframeEasingBackIn,
+	kCCBKeyframeEasingBackOut,
+	kCCBKeyframeEasingBackInOut,
+};
+
+class ActionFrameEasing:public cocos2d::CCObject
 {
 protected:
-	int currentIndex;
-	CCAction* m_action;
-	UIWidget* m_actionNode;
-    //data
-	CCArray* m_ActionFrameList;/*action frame*/
-    CC_SYNTHESIZE(int, m_nActionTag, ActionTag);
+	FrameEasingType m_type;
+	float m_fValue;
 public:
-    UIActionNode();
-    virtual ~UIActionNode();
+    ActionFrameEasing();
+    virtual ~ActionFrameEasing();
 
-	void SetActionNode(UIWidget* widget);
+	float bounceTime(float t);
 
-	void InsertFrame(int index, UIActionFrame* frame);
-	void AddFrame(UIActionFrame* frame);
-	void DeleteFrame(UIActionFrame* frame);
-	void ClearAllFrame();
-
-	void UpdateToFrameByIndex(int index);
-	void UpdateToFrame(UIActionFrame* frame);
-
-	void RunAction(float fUnitTime, bool bloop);
-	void StopAction();
-    void initWithDictionary(cs::CSJsonDictionary* dic,UIWidget* root);
-    void releaseBindingWidget();
+	float easeValue(float t);
 };
 
 NS_CC_EXT_END
