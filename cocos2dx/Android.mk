@@ -96,6 +96,21 @@ particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
+physics/CCPhysicsBody.cpp \
+physics/CCPhysicsContact.cpp \
+physics/CCPhysicsJoint.cpp \
+physics/CCPhysicsShape.cpp \
+physics/CCPhysicsWorld.cpp \
+physics/Box2D/CCPhysicsBodyInfo.cpp \
+physics/Box2D/CCPhysicsContactInfo.cpp \
+physics/Box2D/CCPhysicsJointInfo.cpp \
+physics/Box2D/CCPhysicsShapeInfo.cpp \
+physics/Box2D/CCPhysicsWorldInfo.cpp \
+physics/chipmunk/CCPhysicsBodyInfo.cpp \
+physics/chipmunk/CCPhysicsContactInfo.cpp \
+physics/chipmunk/CCPhysicsJointInfo.cpp \
+physics/chipmunk/CCPhysicsShapeInfo.cpp \
+physics/chipmunk/CCPhysicsWorldInfo.cpp \
 platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
@@ -149,7 +164,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/platform/third_party/common/etc \
                     $(LOCAL_PATH)/platform/third_party/common/s3tc \
-                    $(LOCAL_PATH)/platform/third_party/common/atitc
+                    $(LOCAL_PATH)/platform/third_party/common/atitc \
+                    $(LOCAL_PATH)/../external/chipmunk/include/chipmunk
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
@@ -157,7 +173,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/platform/third_party/common/etc \
                     $(LOCAL_PATH)/platform/third_party/common/s3tc \
-                    $(LOCAL_PATH)/platform/third_party/common/atitc
+                    $(LOCAL_PATH)/platform/third_party/common/atitc \
+                    $(LOCAL_PATH)/../external/chipmunk/include/chipmunk
 
 
 LOCAL_LDLIBS := -lGLESv2 \
@@ -176,6 +193,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
+LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi -DUSE_FILE32API
@@ -188,3 +206,4 @@ $(call import-module,libpng)
 $(call import-module,libtiff)
 $(call import-module,libwebp)
 $(call import-module,libfreetype2)
+$(call import-module,external/chipmunk)
