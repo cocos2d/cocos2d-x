@@ -295,6 +295,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest">
       <UniqueIdentifier>{24f044ee-09a6-406b-98d7-8d5d759e5bb1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\KeyboardTest">
+      <UniqueIdentifier>{8d7d37cd-5cc2-4a7d-9bd2-7b5c928adbb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -684,6 +687,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\KeyboardTest\KeyboardTest.cpp">
+      <Filter>Classes\KeyboardTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1251,6 +1257,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\KeyboardTest\KeyboardTest.h">
+      <Filter>Classes\KeyboardTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

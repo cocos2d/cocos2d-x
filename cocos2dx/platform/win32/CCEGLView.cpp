@@ -35,12 +35,20 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-static std::map<int, KeyboardEvent::KeyCode> g_keyCodeMap;// = {
+struct keyCodeItem
+{
+    int glfwKeyCode;
+    KeyboardEvent::KeyCode keyCode;
+};
+
+static std::map<int, KeyboardEvent::KeyCode> g_keyCodeMap;
+
+static keyCodeItem g_keyCodeStructArray[] = {
     /* The unknown key */
-   // make_pair( GLFW_KEY_UNKNOWN         , KeyboardEvent::KeyCode::KEY_NONE          ),
+    { GLFW_KEY_UNKNOWN         , KeyboardEvent::KeyCode::KEY_NONE          },
     
     /* Printable keys */
-	/*
+
     { GLFW_KEY_SPACE           , KeyboardEvent::KeyCode::KEY_SPACE         },
     { GLFW_KEY_APOSTROPHE      , KeyboardEvent::KeyCode::KEY_APOSTROPHE    },
     { GLFW_KEY_COMMA           , KeyboardEvent::KeyCode::KEY_COMMA         },
@@ -92,7 +100,7 @@ static std::map<int, KeyboardEvent::KeyCode> g_keyCodeMap;// = {
     { GLFW_KEY_WORLD_1         , KeyboardEvent::KeyCode::KEY_GRAVE         },
     { GLFW_KEY_WORLD_2         , KeyboardEvent::KeyCode::KEY_NONE          },
     
-    /* Function keys *//*
+    /* Function keys */
     { GLFW_KEY_ESCAPE          , KeyboardEvent::KeyCode::KEY_ESCAPE        },
     { GLFW_KEY_ENTER           , KeyboardEvent::KeyCode::KEY_KP_ENTER      },
     { GLFW_KEY_TAB             , KeyboardEvent::KeyCode::KEY_TAB           },
@@ -163,8 +171,8 @@ static std::map<int, KeyboardEvent::KeyCode> g_keyCodeMap;// = {
     { GLFW_KEY_RIGHT_ALT       , KeyboardEvent::KeyCode::KEY_ALT           },
     { GLFW_KEY_RIGHT_SUPER     , KeyboardEvent::KeyCode::KEY_HYPER         },
     { GLFW_KEY_MENU            , KeyboardEvent::KeyCode::KEY_MENU          },
-    { GLFW_KEY_LAST            , KeyboardEvent::KeyCode::KEY_NONE          }*/
-//};
+    { GLFW_KEY_LAST            , KeyboardEvent::KeyCode::KEY_NONE          }
+};
 
 #if(_MSC_VER >= 1600) // Visual Studio 2010 or higher version.
 // Windows Touch define
@@ -368,6 +376,10 @@ EGLView::EGLView()
 {
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
     s_pEglView = this;
+    for (auto& item : g_keyCodeStructArray)
+    {
+        g_keyCodeMap.insert(std::make_pair(item.glfwKeyCode, item.keyCode));
+    }
     strcpy(_viewName, "Cocos2dxWin32");
     glfwSetErrorCallback(EGLViewEventHandler::OnGLFWError);
     glfwInit();
