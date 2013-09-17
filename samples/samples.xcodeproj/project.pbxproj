@@ -282,6 +282,8 @@
 		1AA62D3B17A15EB00006E64F /* sd in Resources */ = {isa = PBXBuildFile; fileRef = A0BD5A1D178F5F6C008915C5 /* sd */; };
 		1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
 		1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
+		1AEBD90717E85B0D0015C2ED /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AEBD90617E85B0D0015C2ED /* cocosgui */; };
+		1AEBD90817E85B0D0015C2ED /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AEBD90617E85B0D0015C2ED /* cocosgui */; };
 		37B6EF8A17DEB8FB001BE102 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8817DEB741001BE102 /* SceneEditorTest.cpp */; };
 		37B6EF8B17DEB8FD001BE102 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8817DEB741001BE102 /* SceneEditorTest.cpp */; };
 		37B6EF8C17DEB922001BE102 /* ComponentsTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7B17DEB741001BE102 /* ComponentsTestScene.cpp */; };
@@ -2442,6 +2444,7 @@
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scale9SpriteTest.cpp; sourceTree = "<group>"; };
 		1ACD13F2178E487D00682DBD /* Scale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scale9SpriteTest.h; sourceTree = "<group>"; };
+		1AEBD90617E85B0D0015C2ED /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosgui; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B6EF7817DEB741001BE102 /* ArmatureScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArmatureScene.cpp; sourceTree = "<group>"; };
 		37B6EF7917DEB741001BE102 /* ArmatureScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureScene.h; sourceTree = "<group>"; };
@@ -5092,6 +5095,7 @@
 		A035A0201782270800987F6C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1AEBD90617E85B0D0015C2ED /* cocosgui */,
 				37B6F06E17DEBDF3001BE102 /* scenetest */,
 				A035A4FF1782275800987F6C /* animations */,
 				A035A5001782275800987F6C /* app.icf */,
@@ -6476,6 +6480,7 @@
 				A07A525E1783A3D90073F6A7 /* MainMenu.xib in Resources */,
 				A07A525F1783A3D90073F6A7 /* Icon.icns in Resources */,
 				37B6F06F17DEBDF3001BE102 /* scenetest in Resources */,
+				1AEBD90717E85B0D0015C2ED /* cocosgui in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7041,6 +7046,7 @@
 				A07A524A1783A3A90073F6A7 /* Icon-57.png in Resources */,
 				A07A524B1783A3A90073F6A7 /* Icon-72.png in Resources */,
 				37B6F07017DEBDF3001BE102 /* scenetest in Resources */,
+				1AEBD90817E85B0D0015C2ED /* cocosgui in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
