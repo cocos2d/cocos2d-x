@@ -281,7 +281,7 @@ public:
     CCFrameData();
     ~CCFrameData();
 
-    virtual void copy(CCFrameData *frameData);
+    virtual void copy(const CCBaseData *node);
 public:
     int frameID;
     int duration;                //! The frame will last duration frames
