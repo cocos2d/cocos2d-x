@@ -878,7 +878,6 @@ public:
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
-    void setBindingAction(UIActionNode* actionNode);
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
@@ -950,9 +949,6 @@ protected:
     PositionType _positionType;
     Point _positionPercent;
     bool _isRunning;
-    
-    /*temp action*/
-    UIActionNode* _bindingAction;
 };
 
 class GUIRenderer : public NodeRGBA

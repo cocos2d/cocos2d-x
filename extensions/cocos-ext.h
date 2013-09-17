@@ -77,7 +77,7 @@
 #include "CocoStudio/Reader/CCSSceneReader.h"
 #include "CocoStudio/Reader/CCSGUIReader.h"
 
-
+#include "CocoStudio/Action/ActionManagerEx.h"
 
 #include "CCDeprecated-ext.h"
 
