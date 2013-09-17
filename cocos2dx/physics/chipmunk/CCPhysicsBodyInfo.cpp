@@ -38,7 +38,7 @@ PhysicsBodyInfo::~PhysicsBodyInfo()
 
 Clonable* PhysicsBodyInfo::clone() const
 {
-    
+    return nullptr;
 }
 
 NS_CC_END

@@ -2134,6 +2134,8 @@
 		B36B5E8417E5CAE600C943F6 /* CCPhysicsContactInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B36B5E8117E5CAE600C943F6 /* CCPhysicsContactInfo.cpp */; };
 		B36B5E8517E5CAE600C943F6 /* CCPhysicsContactInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = B36B5E8217E5CAE600C943F6 /* CCPhysicsContactInfo.h */; };
 		B36B5E8617E5CAE600C943F6 /* CCPhysicsContactInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = B36B5E8217E5CAE600C943F6 /* CCPhysicsContactInfo.h */; };
+		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
+		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
 		B3BDDFF717D9703C001ADE9E /* CCPhysicsBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFED17D9703C001ADE9E /* CCPhysicsBody.cpp */; };
 		B3BDDFF817D9703C001ADE9E /* CCPhysicsBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFED17D9703C001ADE9E /* CCPhysicsBody.cpp */; };
 		B3BDDFF917D9703C001ADE9E /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFEE17D9703C001ADE9E /* CCPhysicsBody.h */; };
@@ -3629,6 +3631,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */,
 				B3D8DD63179922F30039C204 /* libtiff.a in Frameworks */,
 				B3D8DD64179922F30039C204 /* libwebp.a in Frameworks */,
 				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
@@ -3696,6 +3699,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */,
 				A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */,
 				A0C80A7D1799DF4C002532D9 /* libfreetype.a in Frameworks */,
 				B3D8DD58179922A10039C204 /* libcurl.a in Frameworks */,
@@ -7021,7 +7025,6 @@
 				A07A4D041783777C0073F6A7 /* CCParticleSystemQuad.h in Headers */,
 				A07A4D051783777C0073F6A7 /* firePngData.h in Headers */,
 				B36B5E8617E5CAE600C943F6 /* CCPhysicsContactInfo.h in Headers */,
-				A07A4D061783777C0073F6A7 /* CCAccelerometerDelegate.h in Headers */,
 				A07A4D071783777C0073F6A7 /* CCApplicationProtocol.h in Headers */,
 				A07A4D081783777C0073F6A7 /* CCCommon.h in Headers */,
 				A07A4D091783777C0073F6A7 /* CCDevice.h in Headers */,
@@ -8018,10 +8021,7 @@
 				A03F2B651780BAE9006731B9 /* CCTMXObjectGroup.cpp in Sources */,
 				A03F2B671780BAE9006731B9 /* CCTMXTiledMap.cpp in Sources */,
 				A03F2B691780BAE9006731B9 /* CCTMXXMLParser.cpp in Sources */,
-				A03F2B6B1780BAE9006731B9 /* CCTouch.cpp in Sources */,
-				A03F2B6E1780BAE9006731B9 /* CCTouchDispatcher.cpp in Sources */,
 				B3C1A83A17E0504000402152 /* CCPhysicsShapeInfo.cpp in Sources */,
-				A03F2B701780BAE9006731B9 /* CCTouchHandler.cpp in Sources */,
 				A07A4DF71783815B0073F6A7 /* CCApplication.mm in Sources */,
 				A07A4DF81783815B0073F6A7 /* CCCommon.mm in Sources */,
 				A07A4DF91783815B0073F6A7 /* CCDevice.mm in Sources */,
@@ -8448,9 +8448,6 @@
 				A07A4C571783777C0073F6A7 /* vec3.c in Sources */,
 				A07A4C581783777C0073F6A7 /* vec4.c in Sources */,
 				B3C1A82D17E0175300402152 /* CCPhysicsWorldInfo.cpp in Sources */,
-				A07A4C591783777C0073F6A7 /* CCKeyboardDispatcher.cpp in Sources */,
-				A07A4C5A1783777C0073F6A7 /* CCKeypadDelegate.cpp in Sources */,
-				A07A4C5B1783777C0073F6A7 /* CCKeypadDispatcher.cpp in Sources */,
 				A07A4C5C1783777C0073F6A7 /* CCLabelAtlas.cpp in Sources */,
 				A07A4C5D1783777C0073F6A7 /* CCLabelBMFont.cpp in Sources */,
 				A07A4C5E1783777C0073F6A7 /* CCLabelTTF.cpp in Sources */,

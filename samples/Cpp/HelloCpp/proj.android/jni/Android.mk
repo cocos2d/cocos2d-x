@@ -12,10 +12,11 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static cocos2dxandroid_static cocosdenshion_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static cocos2dxandroid_static cocosdenshion_static chipmunk_static
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,cocos2dx)
 $(call import-module,CocosDenshion/android)
 $(call import-module,cocos2dx/platform/android)
+$(call import-module,external/chipmunk)
