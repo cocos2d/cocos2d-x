@@ -1457,4 +1457,10 @@ void UIListView::addUpdateChildEvent(Object *target, SEL_ListViewUpdateChildEven
     _updateChildSelector = selector;
 }
 
+const char* UIListView::getDescription() const
+{
+    return "ListView";
+}
+
+
 NS_CC_EXT_END

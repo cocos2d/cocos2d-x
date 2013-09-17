@@ -698,4 +698,9 @@ LayoutExecutant* UIScrollView::getLayoutExecutant() const
     return _innerContainer->getLayoutExecutant();
 }
 
+const char* UIScrollView::getDescription() const
+{
+    return "ScrollView";
+}
+
 NS_CC_EXT_END

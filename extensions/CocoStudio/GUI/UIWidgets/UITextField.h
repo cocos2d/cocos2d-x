@@ -70,6 +70,8 @@ public:
     bool getInsertText();
     void setDeleteBackward(bool deleteBackward);
     bool getDeleteBackward();
+    
+
 protected:
     bool m_bMaxLengthEnabled;
     int m_nMaxLength;
@@ -131,7 +133,10 @@ public:
     virtual void setAnchorPoint(const Point &pt);
     virtual void setColor(const Color3B &color);
     virtual void setOpacity(int opacity);
-    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     /*compatibel*/
     /**
      * These methods will be removed

@@ -226,6 +226,11 @@ public:
      */
     Layout* getInnerContainer();
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
 protected:
     virtual bool init();
     virtual void initRenderer();
