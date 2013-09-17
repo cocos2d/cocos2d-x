@@ -565,4 +565,9 @@ int UIPageView::getCurPageIndex() const
     return _curPageIdx;
 }
 
+const char* UIPageView::getDescription() const
+{
+    return "PageView";
+}
+
 NS_CC_EXT_END

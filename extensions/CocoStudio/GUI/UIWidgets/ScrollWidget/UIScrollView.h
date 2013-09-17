@@ -183,6 +183,11 @@ public:
     virtual void onTouchLongClicked(const Point &touchPoint);
     
     virtual void update(float dt);
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool init();
     virtual void initRenderer();

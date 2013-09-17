@@ -117,6 +117,11 @@ public:
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer();
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     void setTextAreaSize(const Size &size);
     void setTextHorizontalAlignment(TextHAlignment alignment);
     void setTextVerticalAlignment(TextVAlignment alignment);

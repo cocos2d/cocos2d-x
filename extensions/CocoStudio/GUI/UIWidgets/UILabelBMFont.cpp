@@ -126,4 +126,10 @@ void UILabelBMFont::labelBMFontScaleChangedWithSize()
     }
 }
 
+const char* UILabelBMFont::getDescription() const
+{
+    return "LabelBMFont";
+}
+
+
 NS_CC_EXT_END

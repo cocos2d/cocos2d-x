@@ -171,9 +171,10 @@ public:
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
     
-    virtual void setNormalSpriteFrame(SpriteFrame* frame);
-    virtual void setPressedSpriteFrame(SpriteFrame* frame);
-    virtual void setDisabledSpriteFrame(SpriteFrame* frame);
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool init();
     virtual void initRenderer();

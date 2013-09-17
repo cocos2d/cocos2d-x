@@ -134,6 +134,10 @@ public:
     //override "update" method of widget.
     virtual void update(float dt);
 
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool addChild(UIWidget* widget);
     virtual bool init();
