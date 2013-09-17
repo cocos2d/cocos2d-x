@@ -556,9 +556,9 @@ CC_DEPRECATED_ATTRIBUTE typedef IMEKeyboardNotificationInfo CCIMEKeyboardNotific
 CC_DEPRECATED_ATTRIBUTE typedef TextFieldDelegate CCTextFieldDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef TextFieldTTF CCTextFieldTTF;
 CC_DEPRECATED_ATTRIBUTE typedef NotificationCenter CCNotificationCenter;
-CC_DEPRECATED_ATTRIBUTE typedef TargetedTouchDelegate CCTargetedTouchDelegate;
-CC_DEPRECATED_ATTRIBUTE typedef StandardTouchDelegate CCStandardTouchDelegate;
-CC_DEPRECATED_ATTRIBUTE typedef TouchDelegate CCTouchDelegate;
+//CC_DEPRECATED_ATTRIBUTE typedef TargetedTouchDelegate CCTargetedTouchDelegate;
+//CC_DEPRECATED_ATTRIBUTE typedef StandardTouchDelegate CCStandardTouchDelegate;
+//CC_DEPRECATED_ATTRIBUTE typedef TouchDelegate CCTouchDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef Image CCImage;
 CC_DEPRECATED_ATTRIBUTE typedef UserDefault CCUserDefault;
 
@@ -688,8 +688,7 @@ CC_DEPRECATED_ATTRIBUTE typedef LabelTTF CCLabelTTF;
 CC_DEPRECATED_ATTRIBUTE typedef SpriteBatchNode CCSpriteBatchNode;
 CC_DEPRECATED_ATTRIBUTE typedef LabelBMFont CCLabelBMFont;
 CC_DEPRECATED_ATTRIBUTE typedef Layer CCLayer;
-CC_DEPRECATED_ATTRIBUTE typedef TouchDelegate CCTouchDelegate;
-CC_DEPRECATED_ATTRIBUTE typedef KeypadDelegate CCKeypadDelegate;
+//CC_DEPRECATED_ATTRIBUTE typedef KeypadDelegate CCKeypadDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef LayerRGBA CCLayerRGBA;
 CC_DEPRECATED_ATTRIBUTE typedef LayerColor CCLayerColor;
 CC_DEPRECATED_ATTRIBUTE typedef LayerGradient CCLayerGradient;
@@ -936,8 +935,8 @@ CC_DEPRECATED_ATTRIBUTE typedef TransitionScene::Orientation tOrientation;
 CC_DEPRECATED_ATTRIBUTE const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
 CC_DEPRECATED_ATTRIBUTE const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
 
-CC_DEPRECATED_ATTRIBUTE const int kCCActionTagInvalid = kActionTagInvalid;
-CC_DEPRECATED_ATTRIBUTE const int kCCNodeTagInvalid = kNodeTagInvalid;
+CC_DEPRECATED_ATTRIBUTE const int kCCActionTagInvalid = Action::INVALID_TAG;
+CC_DEPRECATED_ATTRIBUTE const int kCCNodeTagInvalid = Node::INVALID_TAG;
 
 CC_DEPRECATED_ATTRIBUTE const int kCCNodeOnEnter = kNodeOnEnter;
 CC_DEPRECATED_ATTRIBUTE const int kCCNodeOnExit = kNodeOnExit;

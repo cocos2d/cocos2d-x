@@ -55,7 +55,8 @@ void AnimationCache::destroyInstance()
 
 bool AnimationCache::init()
 {
-    _animations = new Dictionary();
+    _animations = new Dictionary;
+    _animations->init();
     return true;
 }
 
@@ -66,7 +67,7 @@ AnimationCache::AnimationCache()
 
 AnimationCache::~AnimationCache()
 {
-    CCLOGINFO("cocos2d: deallocing %p", this);
+    CCLOGINFO("deallocing AnimationCache: %p", this);
     CC_SAFE_RELEASE(_animations);
 }
 
@@ -75,7 +76,7 @@ void AnimationCache::addAnimation(Animation *animation, const char * name)
     _animations->setObject(animation, name);
 }
 
-void AnimationCache::removeAnimationByName(const char* name)
+void AnimationCache::removeAnimation(const char* name)
 {
     if (! name)
     {
@@ -85,7 +86,7 @@ void AnimationCache::removeAnimationByName(const char* name)
     _animations->removeObjectForKey(name);
 }
 
-Animation* AnimationCache::animationByName(const char* name)
+Animation* AnimationCache::getAnimation(const char* name)
 {
     return (Animation*)_animations->objectForKey(name);
 }

@@ -31,8 +31,14 @@ public:
         BACK_OUT,
         BACK_INOUT,
     };
-    
+    /**
+     * @js ctor
+     */
     CCBKeyframe();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCBKeyframe();
     
     Object* getValue();

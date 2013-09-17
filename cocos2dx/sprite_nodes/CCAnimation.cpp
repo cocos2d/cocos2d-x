@@ -50,7 +50,7 @@ bool AnimationFrame::initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUn
 
 AnimationFrame::~AnimationFrame()
 {    
-    CCLOGINFO( "cocos2d: deallocing %p", this);
+    CCLOGINFO( "deallocing AnimationFrame: %p", this);
 
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_userInfo);
@@ -159,7 +159,7 @@ Animation::Animation()
 
 Animation::~Animation(void)
 {
-    CCLOGINFO("cocos2d, deallocing %p", this);
+    CCLOGINFO("deallocing Animation: %p", this);
     CC_SAFE_RELEASE(_frames);
 }
 
@@ -174,7 +174,7 @@ void Animation::addSpriteFrame(SpriteFrame *pFrame)
     _totalDelayUnits++;
 }
 
-void Animation::addSpriteFrameWithFileName(const char *filename)
+void Animation::addSpriteFrameWithFile(const char *filename)
 {
     Texture2D *texture = TextureCache::getInstance()->addImage(filename);
     Rect rect = Rect::ZERO;

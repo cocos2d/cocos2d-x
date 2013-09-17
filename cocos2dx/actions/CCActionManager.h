@@ -57,7 +57,14 @@ struct _hashElement;
 class CC_DLL ActionManager : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     ActionManager(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ActionManager(void);
 
     // actions
@@ -83,12 +90,12 @@ public:
     void removeAction(Action *pAction);
 
     /** Removes an action given its tag and the target */
-    void removeActionByTag(unsigned int tag, Object *target);
+    void removeActionByTag(int tag, Object *target);
 
     /** Gets an action given its tag an a target
      @return the Action the with the given tag
      */
-    Action* getActionByTag(unsigned int tag, const Object *target) const;
+    Action* getActionByTag(int tag, const Object *target) const;
 
     /** Returns the numbers of actions that are running in a certain target. 
      * Composable actions are counted as 1 action. Example:
@@ -119,7 +126,7 @@ public:
 protected:
     // declared in ActionManager.m
 
-    void removeActionAtIndex(unsigned int uIndex, struct _hashElement *pElement);
+    void removeActionAtIndex(int index, struct _hashElement *pElement);
     void deleteHashElement(struct _hashElement *pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
     void update(float dt);

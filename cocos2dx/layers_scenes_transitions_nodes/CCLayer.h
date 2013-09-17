@@ -29,13 +29,12 @@ THE SOFTWARE.
 
 #include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
-#include "touch_dispatcher/CCTouchDelegateProtocol.h"
-#include "platform/CCAccelerometerDelegate.h"
-#include "keypad_dispatcher/CCKeypadDelegate.h"
 #include "cocoa/CCArray.h"
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
+
+#include "event_dispatcher/CCKeyboardEvent.h"
 
 NS_CC_BEGIN
 
@@ -46,6 +45,10 @@ NS_CC_BEGIN
 
 class TouchScriptHandlerEntry;
 
+class TouchEventListener;
+class KeyboardEventListener;
+class AccelerationEventListener;
+
 //
 // Layer
 //
@@ -55,28 +58,49 @@ All features from Node are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
+class CC_DLL Layer : public Node
 {
 public:    
     /** creates a fullscreen black layer */
     static Layer *create(void);
+    /**
+     * @js ctor
+     */
     Layer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Layer();
     virtual bool init();
     
-    // default implements are used to call script callback if exist
-    virtual bool ccTouchBegan(Touch *touch, Event *event);
-    virtual void ccTouchMoved(Touch *touch, Event *event);
-    virtual void ccTouchEnded(Touch *touch, Event *event);
-    virtual void ccTouchCancelled(Touch *touch, Event *event);
-
-    // default implements are used to call script callback if exist
-    virtual void ccTouchesBegan(Set *touches, Event *event);
-    virtual void ccTouchesMoved(Set *touches, Event *event);
-    virtual void ccTouchesEnded(Set *touches, Event *event);
-    virtual void ccTouchesCancelled(Set *touches, Event *event);
+    // Deprecated touch callbacks.
+    CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
     
-    virtual void didAccelerate(Acceleration* accelerationValue);
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    
+    // default implements are used to call script callback if exist
+    virtual bool onTouchBegan(Touch *touch, Event *event);
+    virtual void onTouchMoved(Touch *touch, Event *event);
+    virtual void onTouchEnded(Touch *touch, Event *event);
+    virtual void onTouchCancelled(Touch *touch, Event *event);
+
+//    // default implements are used to call script callback if exist
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
+    virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *event);
+    
+    /** @deprecated Please override onAcceleration */
+    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
+    
+    virtual void onAcceleration(Acceleration* acc, Event* event);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
@@ -88,7 +112,8 @@ public:
     }
     @since v0.8.0
     */
-    virtual void registerWithTouchDispatcher(void);
+    CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
+    virtual void onRegisterTouchListener();
 
     /** whether or not it will receive Touch events.
     You can enable / disable touch events with this property.
@@ -100,10 +125,6 @@ public:
     
     virtual void setTouchMode(Touch::DispatchMode mode);
     virtual Touch::DispatchMode getTouchMode() const;
-    
-    /** priority of the touch events. Default is 0 */
-    virtual void setTouchPriority(int priority);
-    virtual int getTouchPriority() const;
 
     /** swallowsTouches of the touch events. Default is true */
     virtual void setSwallowsTouches(bool swallowsTouches);
@@ -124,34 +145,53 @@ public:
 
     virtual bool isKeyboardEnabled() const;
     virtual void setKeyboardEnabled(bool value);
-    virtual void keyPressed(int keyCode) {};
-    virtual void keyReleased(int keyCode) {};
+ /** Please use onKeyPressed instead. */
+    virtual void keyPressed(int keyCode) final {};
+    
+    /** Please use onKeyRelease instead. */
+    virtual void keyReleased(int keyCode) final {};
+    
+    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event) {};
+    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event) {};
 
-    virtual bool isKeypadEnabled() const;
-    virtual void setKeypadEnabled(bool value);
+    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return false; };
+    CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value) final {};
 
-    virtual void keyBackClicked(void);
-    virtual void keyMenuClicked(void);
+    /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
+    CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
+    CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnterTransitionDidFinish() override;
 
 protected:
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
-    bool _keypadEnabled;
-    
+    TouchEventListener* _touchListener;
+    KeyboardEventListener* _keyboardListener;
+    AccelerationEventListener* _accelerationListener;
 private:
-    int _touchPriority;
     Touch::DispatchMode _touchMode;
     bool _swallowsTouches;
     
-    int executeScriptTouchHandler(int eventType, Touch* touch);
-    int executeScriptTouchesHandler(int eventType, Set* touches);
+    int executeScriptTouchHandler(TouchEvent::EventCode eventType, Touch* touch);
+    int executeScriptTouchesHandler(TouchEvent::EventCode eventType, const std::vector<Touch*>& touches);
 };
 
 #ifdef __apple__
@@ -170,8 +210,14 @@ class CC_DLL LayerRGBA : public Layer, public RGBAProtocol
 {
 public:
     CREATE_FUNC(LayerRGBA);
-    
+    /**
+     * @js ctor
+     */
     LayerRGBA();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LayerRGBA();
     
     virtual bool init();
@@ -222,14 +268,26 @@ public:
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
     static LayerColor * create(const Color4B& color);
-
+    /**
+     * @js ctor
+     */
     LayerColor();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LayerColor();
 
     virtual bool init();
-    /** initializes a Layer with color, width and height in Points */
+    /** initializes a Layer with color, width and height in Points 
+     * @js init
+     * @lua init
+     */
     bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
-    /** initializes a Layer with color. Width and height are the window size. */
+    /** initializes a Layer with color. Width and height are the window size. 
+     * @js init
+     * @lua init
+     */
     bool initWithColor(const Color4B& color);
 
     /** change width in Points*/
@@ -249,7 +307,18 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc& getBlendFunc() const override;
+    /**
+    *@code
+    *When this function bound into js or lua,the parameter will be changed
+    *In js: var setBlendFunc(var src, var dst)
+    *In lua: local setBlendFunc(local src, local dst)
+    *@endcode
+    */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
 protected:
@@ -295,10 +364,16 @@ public:
     static LayerGradient* create(const Color4B& start, const Color4B& end, const Point& v);
 
     virtual bool init();
-    /** Initializes the Layer with a gradient between start and end. */
+    /** Initializes the Layer with a gradient between start and end. 
+     * @js init
+     * @lua init
+     */
     bool initWithColor(const Color4B& start, const Color4B& end);
 
-    /** Initializes the Layer with a gradient between start and end in the direction of v. */
+    /** Initializes the Layer with a gradient between start and end in the direction of v. 
+     * @js init
+     * @lua init
+     */
     bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
@@ -354,27 +429,49 @@ Features:
 class CC_DLL LayerMultiplex : public Layer
 {
 public:
-    /** creates and initializes a LayerMultiplex object */
+    /** creates and initializes a LayerMultiplex object 
+     * @js NA
+     * @lua NA
+     */
     static LayerMultiplex* create();
 
     /** creates a LayerMultiplex with an array of layers.
      @since v2.1
+     * @js NA
      */
     static LayerMultiplex* createWithArray(Array* arrayOfLayers);
 
-    /** creates a LayerMultiplex with one or more layers using a variable argument list. */
+    /** creates a LayerMultiplex with one or more layers using a variable argument list. 
+     * @code
+     * When this function bound to lua or js,the input params are changed.
+     * In js:var create(...)
+     * In lua:local create(...)
+     * @endcode
+     */
     static LayerMultiplex * create(Layer* layer, ... );
 
     /**
      * lua script can not init with undetermined number of variables
      * so add these functions to be used with lua.
+     * @js NA
+     * @lua NA
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
-
+    /**
+     * @js ctor
+     */
     LayerMultiplex();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LayerMultiplex();
 
-    /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
+    virtual bool init();
+    /** initializes a MultiplexLayer with one or more layers using a variable argument list. 
+     * @js NA
+     * @lua NA
+     */
     bool initWithLayers(Layer* layer, va_list params);
 
     /** initializes a MultiplexLayer with an array of layers
@@ -387,11 +484,11 @@ public:
     /** switches to a certain layer indexed by n.
      The current (old) layer will be removed from it's parent with 'cleanup=true'.
      */
-    void switchTo(unsigned int n);
+    void switchTo(int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup=true'.
     */
-    void switchToAndReleaseMe(unsigned int n);
+    void switchToAndReleaseMe(int n);
 
 protected:
     unsigned int _enabledLayer;

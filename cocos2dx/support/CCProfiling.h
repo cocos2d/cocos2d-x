@@ -25,10 +25,11 @@ THE SOFTWARE.
 #ifndef __SUPPORT_CCPROFILING_H__
 #define __SUPPORT_CCPROFILING_H__
 
+#include <string>
+#include <chrono>
 #include "ccConfig.h"
 #include "cocoa/CCObject.h"
 #include "cocoa/CCDictionary.h"
-#include <string>
 
 NS_CC_BEGIN
 
@@ -48,22 +49,49 @@ class ProfilingTimer;
 class CC_DLL Profiler : public Object
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Profiler(void);
-    /** display the timers */
+    /** display the timers
+     * @js NA
+     * @lua NA
+     */
     void displayTimers(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool init(void);
 
 public:
-    /** returns the singleton */
+    /** returns the singleton 
+     * @js NA
+     * @lua NA
+     */
     static Profiler* getInstance(void);
 
+    /**
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE static Profiler* sharedProfiler(void);
 
-    /** Creates and adds a new timer */
+    /** Creates and adds a new timer 
+     * @js NA
+     * @lua NA
+     */
     ProfilingTimer* createAndAddTimerWithName(const char* timerName);
-    /** releases a timer */
+    /** releases a timer 
+     * @js NA
+     * @lua NA
+     */
     void releaseTimer(const char* timerName);
-    /** releases all timers */
+    /** releases all timers 
+     * @js NA
+     * @lua NA
+     */
     void releaseAllTimers();
 
     Dictionary* _activeTimers;
@@ -72,22 +100,46 @@ public:
 class ProfilingTimer : public Object
 {
 public:
-    bool initWithName(const char* timerName);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ProfilingTimer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ProfilingTimer(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    bool initWithName(const char* timerName);
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description(void) const;
-    inline struct timeval * getStartTime(void) { return &_startTime; };
-    inline void setAverageTime(double value) { _averageTime = value; }
-    inline double getAverageTime(void) { return _averageTime; }
-    /** resets the timer properties */
+    /**
+     * @js NA
+     * @lua NA
+     */
+    inline const std::chrono::high_resolution_clock::time_point& getStartTime(void) { return _startTime; };
+
+    /** resets the timer properties
+     * @js NA
+     * @lua NA
+     */
     void reset();
 
     std::string _nameStr;
-    struct timeval _startTime;
-    double _averageTime;
-    double            minTime;
-    double            maxTime;
-    double            totalTime;
-    unsigned int    numberOfCalls;
+    std::chrono::high_resolution_clock::time_point _startTime;
+    int _averageTime1;
+    int _averageTime2;
+    int minTime;
+    int maxTime;
+    long long totalTime;
+    int numberOfCalls;
 };
 
 extern void ProfilingBeginTimingBlock(const char *timerName);

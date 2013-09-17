@@ -28,11 +28,12 @@ THE SOFTWARE.
 #ifndef __CC_SPRITE_BATCH_NODE_H__
 #define __CC_SPRITE_BATCH_NODE_H__
 
+#include <vector>
+
 #include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
 #include "textures/CCTextureAtlas.h"
 #include "ccMacros.h"
-#include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
 
@@ -61,21 +62,27 @@ class Sprite;
 */
 class CC_DLL SpriteBatchNode : public Node, public TextureProtocol
 {
-    static const int kDefaultSpriteBatchCapacity = 29;
+    static const int DEFAULT_CAPACITY = 29;
 
 public:
     /** creates a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      */
-    static SpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = kDefaultSpriteBatchCapacity);
+    static SpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
 
     /** creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    static SpriteBatchNode* create(const char* fileImage, int capacity = kDefaultSpriteBatchCapacity);
-
+    static SpriteBatchNode* create(const char* fileImage, int capacity = DEFAULT_CAPACITY);
+    /**
+     * @js ctor
+     */
     SpriteBatchNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~SpriteBatchNode();
 
     /** initializes a SpriteBatchNode with a texture2d and capacity of children.
@@ -85,15 +92,17 @@ public:
     /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
+     * @js init
+     * @lua init
      */
     bool initWithFile(const char* fileImage, int capacity);
     bool init();
 
-    // property
-    
-    // retain
+    /** returns the TextureAtlas object */
     inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
-    inline void setTextureAtlas(TextureAtlas* textureAtlas) 
+
+    /** sets the TextureAtlas object */
+    inline void setTextureAtlas(TextureAtlas* textureAtlas)
     { 
         if (textureAtlas != _textureAtlas)
         {
@@ -103,23 +112,24 @@ public:
         }
     }
 
-    inline Array* getDescendants(void) { return _descendants; }
+    /** returns an array with the descendants (children, gran children, etc.). 
+     This is specific to BatchNode. In order to use the children, use getChildren() instead */
+    inline const std::vector<Sprite*>& getDescendants() const { return _descendants; }
 
     void increaseAtlasCapacity();
 
     /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
     @warning Removing a child from a SpriteBatchNode is very slow
     */
-    void removeChildAtIndex(unsigned int index, bool doCleanup);
+    void removeChildAtIndex(int index, bool doCleanup);
 
-    void insertChild(Sprite *child, unsigned int index);
     void appendChild(Sprite* sprite);
     void removeSpriteFromAtlas(Sprite *sprite);
 
-    unsigned int rebuildIndexInOrder(Sprite *parent, unsigned int index);
-    unsigned int highestAtlasIndexInChild(Sprite *sprite);
-    unsigned int lowestAtlasIndexInChild(Sprite *sprite);
-    unsigned int atlasIndexForChild(Sprite *sprite, int z);
+    int rebuildIndexInOrder(Sprite *parent, int index);
+    int highestAtlasIndexInChild(Sprite *sprite);
+    int lowestAtlasIndexInChild(Sprite *sprite);
+    int atlasIndexForChild(Sprite *sprite, int z);
     /* Sprites use this to start sortChildren, don't call this manually */
     void reorderBatch(bool reorder);
 
@@ -129,16 +139,27 @@ public:
     // TextureProtocol
     virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
+    /**
+    *@code
+    *When this function bound into js or lua,the parameter will be changed
+    *In js: var setBlendFunc(var src, var dst)
+    *@endcode
+    * @lua NA 
+    */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc& getBlendFunc(void) const override;
 
     virtual void visit(void) override;
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
+    virtual void addChild(Node* child) override{ Node::addChild(child);}
+    virtual void addChild(Node * child, int zOrder) override { Node::addChild(child, zOrder);}
     virtual void addChild(Node * child, int zOrder, int tag) override;
-    virtual void reorderChild(Node * child, int zOrder) override;
+    virtual void reorderChild(Node *child, int zOrder) override;
         
-    virtual void removeChild(Node* child, bool cleanup) override;
+    virtual void removeChild(Node *child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void sortAllChildren() override;
     virtual void draw(void) override;
@@ -157,19 +178,19 @@ protected:
     /* This is the opposite of "addQuadFromSprite.
     It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
     */
-    SpriteBatchNode * addSpriteWithoutQuad(Sprite*child, int z, int aTag);
+    SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
 
-private:
     void updateAtlasIndex(Sprite* sprite, int* curIndex);
     void swap(int oldIndex, int newIndex);
     void updateBlendFunc();
 
-protected:
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;
 
     // all descendants: children, grand children, etc...
-    Array* _descendants;
+    // There is not need to retain/release these objects, since they are already retained by _children
+    // So, using std::vector<Sprite*> is slightly faster than using cocos2d::Array for this particular case
+    std::vector<Sprite*> _descendants;
 };
 
 // end of sprite_nodes group

@@ -201,7 +201,7 @@ static CCEAGLView *view;
 
 - (void) dealloc
 {
-	CCLOGINFO(@"cocos2d: deallocing CCEAGLView %@", self);
+	CCLOGINFO("deallocing CCEAGLView: %p", self);
 	[super dealloc];
 }
 	

@@ -71,6 +71,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(TTFFontShadowAndStroke),
     // should be moved to another test
     CL(Atlas1),
+    CL(LabelBMFontCrashTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1265,9 +1266,9 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set  *touches, cocos2d::Event  *event)
+void BitmapFontMultiLineAlignment::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    auto touch = (Touch *)touches->anyObject();
+    auto touch = touches[0];
     auto location = touch->getLocationInView();
 
     if (this->_arrowsShouldRetain->getBoundingBox().containsPoint(location))
@@ -1277,7 +1278,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set  *touches, cocos2
     }
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event)
+void BitmapFontMultiLineAlignment::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
     _drag = false;
     this->snapArrowsToEdge();
@@ -1285,14 +1286,14 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set  *touches, cocos2
     this->_arrowsBarShouldRetain->setVisible(false);
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::Set  *touches, cocos2d::Event  *event)
+void BitmapFontMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
     if (! _drag)
     {
         return;
     }
 
-    auto touch = (Touch *)touches->anyObject();
+    auto touch = touches[0];
     auto location = touch->getLocationInView();
 
     auto winSize = Director::getInstance()->getWinSize();
@@ -1610,4 +1611,37 @@ void LabelBMFontBounds::draw()
         Point(origin.width, labelSize.height + origin.height)
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
+}
+
+// LabelBMFontCrashTest
+void LabelBMFontCrashTest::onEnter()
+{
+    AtlasDemo::onEnter();
+    
+    auto winSize = Director::getInstance()->getWinSize();
+    //Create a label and add it
+    auto label1 = new LabelBMFont();
+    label1->initWithString("test", "fonts/bitmapFontTest2.fnt");
+    this->addChild(label1);
+    // Visit will call draw where the function "ccGLBindVAO(m_uVAOname);" will be invoked.
+    label1->visit();
+    
+    // Remove this label
+    label1->removeFromParentAndCleanup(true);
+    label1->release();
+    
+    // Create a new label and add it (then crashes)
+    auto label2 = LabelBMFont::create("test 2", "fonts/bitmapFontTest.fnt");
+    label2->setPosition(Point(winSize.width/2, winSize.height/2));
+    this->addChild(label2);
+}
+
+std::string LabelBMFontCrashTest::title()
+{
+    return "LabelBMFont Crash Test";
+}
+
+std::string LabelBMFontCrashTest::subtitle()
+{
+    return "Should not crash.";
 }

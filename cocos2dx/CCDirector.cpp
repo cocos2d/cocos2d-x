@@ -32,13 +32,11 @@ THE SOFTWARE.
 
 #include "ccFPSImages.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
-#include "CCConfiguration.h"
 #include "cocoa/CCNS.h"
 #include "layers_scenes_transitions_nodes/CCScene.h"
 #include "cocoa/CCArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
 #include "support/CCNotificationCenter.h"
 #include "layers_scenes_transitions_nodes/CCTransition.h"
 #include "textures/CCTextureCache.h"
@@ -49,11 +47,8 @@ THE SOFTWARE.
 #include "label_nodes/CCLabelBMFont.h"
 #include "label_nodes/CCLabelAtlas.h"
 #include "actions/CCActionManager.h"
-#include "CCConfiguration.h"
-#include "keypad_dispatcher/CCKeypadDispatcher.h"
-#include "CCAccelerometer.h"
 #include "sprite_nodes/CCAnimationCache.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "support/user_default/CCUserDefault.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
@@ -63,7 +58,6 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
-#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "platform/ios/CCEGLView.h"
@@ -161,7 +155,7 @@ bool Director::init(void)
     _notificationNode = nullptr;
 
     _scenesStack = new Array();
-    _scenesStack->init();
+    _scenesStack->initWithCapacity(15);
 
     // projection delegate if "Custom" projection is used
     _projectionDelegate = nullptr;
@@ -193,18 +187,6 @@ bool Director::init(void)
     // action manager
     _actionManager = new ActionManager();
     _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
-    // touchDispatcher
-    _touchDispatcher = new TouchDispatcher();
-    _touchDispatcher->init();
-
-    // KeyboardDispatcher
-    _keyboardDispatcher = new KeyboardDispatcher();
-
-    // KeypadDispatcher
-    _keypadDispatcher = new KeypadDispatcher();
-
-    // Accelerometer
-    _accelerometer = new Accelerometer();
 
     // create autorelease pool
     PoolManager::sharedPoolManager()->push();
@@ -214,7 +196,7 @@ bool Director::init(void)
     
 Director::~Director(void)
 {
-    CCLOG("cocos2d: deallocing Director %p", this);
+    CCLOGINFO("deallocing Director: %p", this);
 
     CC_SAFE_RELEASE(_FPSLabel);
     CC_SAFE_RELEASE(_SPFLabel);
@@ -225,10 +207,6 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_scenesStack);
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
-    CC_SAFE_RELEASE(_touchDispatcher);
-    CC_SAFE_RELEASE(_keyboardDispatcher);
-    CC_SAFE_RELEASE(_keypadDispatcher);
-    CC_SAFE_DELETE(_accelerometer);
 
     // pop the autorelease pool
     PoolManager::sharedPoolManager()->pop();
@@ -254,7 +232,7 @@ void Director::setDefaultValues(void)
 	_displayStats = conf->getBool("cocos2d.x.display_fps", false);
 
 	// GL projection
-	const char *projection = conf->getCString("cocos2d.x.gl.projection", "2d");
+	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
 	if (strcmp(projection, "3d") == 0)
 		_projection = Projection::_3D;
 	else if (strcmp(projection, "2d") == 0)
@@ -296,6 +274,8 @@ void Director::setGLDefaultValues()
 // Draw the Scene
 void Director::drawScene()
 {
+    Node::resetEventPriorityIndex();
+    
     // calculate "global" dt
     calculateDeltaTime();
 
@@ -418,8 +398,7 @@ void Director::setOpenGLView(EGLView *pobOpenGLView)
         
         CHECK_GL_ERROR_DEBUG();
 
-        _openGLView->setTouchDelegate(_touchDispatcher);
-        _touchDispatcher->setDispatchEvents(true);
+//        _touchDispatcher->setDispatchEvents(true);
     }
 }
 
@@ -668,7 +647,7 @@ void Director::popScene(void)
     else
     {
         _sendCleanupToScene = true;
-        _nextScene = (Scene*)_scenesStack->objectAtIndex(c - 1);
+        _nextScene = (Scene*)_scenesStack->getObjectAtIndex(c - 1);
     }
 }
 
@@ -696,7 +675,7 @@ void Director::popToSceneStackLevel(int level)
 	// pop stack until reaching desired level
 	while (c > level)
     {
-        Scene *current = (Scene*)_scenesStack->lastObject();
+        Scene *current = (Scene*)_scenesStack->getLastObject();
 
 		if (current->isRunning())
         {
@@ -709,7 +688,7 @@ void Director::popToSceneStackLevel(int level)
 		--c;
 	}
 
-    _nextScene = (Scene*)_scenesStack->lastObject();
+    _nextScene = (Scene*)_scenesStack->getLastObject();
 	_sendCleanupToScene = false;
 }
 
@@ -725,7 +704,7 @@ void Director::purgeDirector()
     
     // don't release the event handlers
     // They are needed in case the director is run again
-    _touchDispatcher->removeAllDelegates();
+//    _touchDispatcher->removeAllDelegates();
 
     if (_runningScene)
     {
@@ -907,7 +886,7 @@ void Director::createStatsLabel()
         CC_SAFE_RELEASE_NULL(_FPSLabel);
         CC_SAFE_RELEASE_NULL(_SPFLabel);
         CC_SAFE_RELEASE_NULL(_drawsLabel);
-        textureCache->removeTextureForKey("cc_fps_images");
+        textureCache->removeTextureForKey("/cc_fps_images");
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
@@ -924,7 +903,7 @@ void Director::createStatsLabel()
         return;
     }
 
-    texture = textureCache->addUIImage(image, "cc_fps_images");
+    texture = textureCache->addImage(image, "/cc_fps_images");
     CC_SAFE_RELEASE(image);
 
     /*
@@ -1035,59 +1014,6 @@ void Director::setActionManager(ActionManager* actionManager)
 ActionManager* Director::getActionManager() const
 {
     return _actionManager;
-}
-
-void Director::setTouchDispatcher(TouchDispatcher* touchDispatcher)
-{
-    if (_touchDispatcher != touchDispatcher)
-    {
-        CC_SAFE_RETAIN(touchDispatcher);
-        CC_SAFE_RELEASE(_touchDispatcher);
-        _touchDispatcher = touchDispatcher;
-    }    
-}
-
-TouchDispatcher* Director::getTouchDispatcher() const
-{
-    return _touchDispatcher;
-}
-
-void Director::setKeyboardDispatcher(KeyboardDispatcher* keyboardDispatcher)
-{
-    CC_SAFE_RETAIN(keyboardDispatcher);
-    CC_SAFE_RELEASE(_keyboardDispatcher);
-    _keyboardDispatcher = keyboardDispatcher;
-}
-
-KeyboardDispatcher* Director::getKeyboardDispatcher() const
-{
-    return _keyboardDispatcher;
-}
-
-void Director::setKeypadDispatcher(KeypadDispatcher* keyboardDispatcher)
-{
-    CC_SAFE_RETAIN(keyboardDispatcher);
-    CC_SAFE_RELEASE(_keypadDispatcher);
-    _keypadDispatcher = keyboardDispatcher;
-}
-
-KeypadDispatcher* Director::getKeypadDispatcher() const
-{
-    return _keypadDispatcher;
-}
-
-void Director::setAccelerometer(Accelerometer* accelerometer)
-{
-    if (_accelerometer != accelerometer)
-    {
-        CC_SAFE_DELETE(_accelerometer);
-        _accelerometer = accelerometer;
-    }
-}
-
-Accelerometer* Director::getAccelerometer() const
-{
-    return _accelerometer;
 }
 
 /***************************************************

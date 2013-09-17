@@ -171,8 +171,14 @@ public:
 
     //! create a system with a fixed number of particles
     static ParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
-
+    /**
+     * @js ctor
+     */
     ParticleSystem();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleSystem();
 
     /** initializes a ParticleSystem*/
@@ -356,8 +362,8 @@ public:
     inline void setEmissionRate(float rate) { _emissionRate = rate; };
 
     /** maximum particles of the system */
-    virtual unsigned int getTotalParticles() const;
-    virtual void setTotalParticles(unsigned int totalParticles);
+    virtual int getTotalParticles() const;
+    virtual void setTotalParticles(int totalParticles);
 
     /** does the alpha value modify color */
     inline void setOpacityModifyRGB(bool opacityModifyRGB) { _opacityModifyRGB = opacityModifyRGB; };
@@ -374,7 +380,18 @@ public:
     virtual void update(float dt) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
+    /**
+    *@code
+    *When this function bound into js or lua,the parameter will be changed
+    *In js: var setBlendFunc(var src, var dst)
+    *In lua: local setBlendFunc(local src, local dst)
+    *@endcode
+    */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc &getBlendFunc() const override;
 protected:
     virtual void updateBlendFunc();
@@ -446,7 +463,7 @@ protected:
     float _emitCounter;
 
     //!  particle idx
-    unsigned int _particleIdx;
+    int _particleIdx;
 
     // Optimization
     //CC_UPDATE_PARTICLE_IMP    updateParticleImp;
@@ -461,13 +478,13 @@ protected:
     //true if scaled or rotated
     bool _transformSystemDirty;
     // Number of allocated particles
-    unsigned int _allocatedParticles;
+    int _allocatedParticles;
 
     /** Is the emitter active */
     bool _isActive;
     
     /** Quantity of particles that are being simulated at the moment */
-    unsigned int _particleCount;
+    int _particleCount;
     /** How many seconds the emitter will run. -1 means 'forever' */
     float _duration;
     /** sourcePosition of the emitter */
@@ -516,7 +533,7 @@ protected:
     /** emission rate of the particles */
     float _emissionRate;
     /** maximum particles of the system */
-    unsigned int _totalParticles;
+    int _totalParticles;
     /** conforms to CocosNodeTexture protocol */
     Texture2D* _texture;
     /** conforms to CocosNodeTexture protocol */

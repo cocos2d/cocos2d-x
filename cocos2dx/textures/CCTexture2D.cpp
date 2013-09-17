@@ -437,7 +437,7 @@ Texture2D::~Texture2D()
     VolatileTexture::removeTexture(this);
 #endif
 
-    CCLOGINFO("cocos2d: deallocing Texture2D %u.", _name);
+    CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
     CC_SAFE_RELEASE(_shaderProgram);
 
     if(_name)
@@ -662,7 +662,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1;
 
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
 
     return true;
 }

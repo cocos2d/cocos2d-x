@@ -50,10 +50,10 @@ class RCPtr
 public:
 	//Construct using a C pointer
 	//e.g. RCPtr< T > x = new T();
-	RCPtr(T* ptr = NULL)
+	RCPtr(T* ptr = nullptr)
     : _ptr(ptr)
 	{
-        if(ptr != NULL) {ptr->retain();}
+        if(ptr != nullptr) {ptr->retain();}
 	}
 
 	//Copy constructor
@@ -69,13 +69,13 @@ public:
     : _ptr(ptr._ptr)
 	{
 //        printf("Array: Move Constructor: %p\n", this);
-        ptr._ptr = NULL;
+        ptr._ptr = nullptr;
 	}
 
 	~RCPtr()
 	{
 //        printf("Array: Destructor: %p\n", this);
-        if(_ptr != NULL) {_ptr->release();}
+        if(_ptr != nullptr) {_ptr->release();}
 	}
 
 	//Assign a pointer
@@ -87,8 +87,8 @@ public:
         //The following grab and release operations have to be performed
         //in that order to handle the case where ptr == _ptr
         //(See comment below by David Garlisch)
-        if(ptr != NULL) {ptr->retain();}
-        if(_ptr != NULL) {_ptr->release();}
+        if(ptr != nullptr) {ptr->retain();}
+        if(_ptr != nullptr) {_ptr->release();}
         _ptr = ptr;
         return (*this);
 	}
@@ -113,7 +113,7 @@ public:
     T* operator->() const {return _ptr;}		//x->member
     T &operator*() const {return *_ptr;}		//*x, (*x).member
     explicit operator T*() const {return _ptr;}		//T* y = x;
-    explicit operator bool() const {return _ptr != NULL;}	//if(x) {/*x is not NULL*/}
+    explicit operator bool() const {return _ptr != nullptr;}	//if(x) {/*x is not NULL*/}
     bool operator==(const RCPtr &ptr) {return _ptr == ptr._ptr;}
     bool operator==(const T *ptr) {return _ptr == ptr;}
 
@@ -210,7 +210,7 @@ do {                                                                  \
 }                                                                     \
 while(false)
 
-#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
+#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, object, elementType)   \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
@@ -220,7 +220,7 @@ do {                                                                  \
             elementType pNode = static_cast<elementType>(child);      \
             if(pNode)                                                 \
             {                                                         \
-                pNode->func(pObject);                                 \
+                pNode->func(object);                                 \
             }                                                         \
         }                                                             \
     }                                                                 \
@@ -234,67 +234,115 @@ class CC_DLL Array : public Object, public Clonable
 {
 public:
 
-    /** Create an array */
+    /** Creates an empty array. Default capacity is 10 
+     * @js NA
+     * @lua NA
+     */
     static Array* create();
-    /** Create an array with some objects */
-    static Array* create(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
-    /** Create an array with one object */
-    static Array* createWithObject(Object* pObject);
-    /** Create an array with capacity */
-    static Array* createWithCapacity(unsigned int capacity);
-    /** Create an array with an existing array */
+    /** Create an array with objects 
+     * @js NA
+     */
+    static Array* create(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
+    /** Create an array with one object 
+     * @js NA
+     */
+    static Array* createWithObject(Object* object);
+    /** Create an array with a default capacity 
+     * @js NA
+     */
+    static Array* createWithCapacity(int capacity);
+    /** Create an array with from an existing array 
+     * @js NA
+     */
     static Array* createWithArray(Array* otherArray);
     /**
      @brief   Generate a Array pointer by file
      @param   pFileName  The file name of *.plist file
      @return  The Array pointer generated from the file
+     * @js NA
      */
     static Array* createWithContentsOfFile(const char* pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
      invoker should call release().
+     * @js NA
+     * @lua NA
      */
     static Array* createWithContentsOfFileThreadSafe(const char* pFileName);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Array();
 
-    /** Initializes an array */
+    /** Initializes an array 
+     * @js NA
+     * @lua NA
+     */
     bool init();
-    /** Initializes an array with one object */
-    bool initWithObject(Object* pObject);
-    /** Initializes an array with some objects */
-    bool initWithObjects(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
-    /** Initializes an array with capacity */
-    bool initWithCapacity(unsigned int capacity);
-    /** Initializes an array with an existing array */
+    /** Initializes an array with one object 
+     * @js NA
+     * @lua NA
+     */
+    bool initWithObject(Object* object);
+    /** Initializes an array with some objects 
+     * @js NA
+     * @lua NA
+     */
+    bool initWithObjects(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
+    /** Initializes an array with capacity 
+     * @js NA
+     * @lua NA
+     */
+    bool initWithCapacity(int capacity);
+    /** Initializes an array with an existing array 
+     * @js NA
+     * @lua NA
+     */
     bool initWithArray(Array* otherArray);
 
     // Querying an Array
 
-    /** Returns element count of the array */
-    unsigned int count() const {
+    /** Returns element count of the array 
+     * @js NA
+     */
+    int count() const
+    {
 #if CC_USE_ARRAY_VECTOR
         return data.size();
 #else
         return data->num;
 #endif
     }
-    /** Returns capacity of the array */
-    unsigned int capacity() const {
+    /** Returns capacity of the array 
+     * @js NA
+     */
+    int capacity() const
+    {
 #if CC_USE_ARRAY_VECTOR
         return data.capacity();
 #else
         return data->max;
 #endif
     }
-    /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
+    /** Returns index of a certain object, return UINT_MAX if doesn't contain the object 
+     * @js NA
+     * @lua NA
+     */
     int getIndexOfObject(Object* object) const;
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE int indexOfObject(Object* object) const { return getIndexOfObject(object); }
 
-    /** Returns an element with a certain index */
-    Object* getObjectAtIndex(int index) {
-        CCASSERT(index>=0 && index < count(), "index out of range in objectAtIndex()");
+    /** Returns an element with a certain index 
+     * @js NA
+     * @lua NA
+     */
+    Object* getObjectAtIndex(int index)
+    {
+        CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
 #if CC_USE_ARRAY_VECTOR
         return data[index].get();
 #else
@@ -302,36 +350,69 @@ public:
 #endif
     }
     CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(int index) { return getObjectAtIndex(index); }
-    /** Returns the last element of the array */
-    Object* getLastObject() {
+    /** Returns the last element of the array 
+     * @js NA
+     */
+    Object* getLastObject()
+    {
 #if CC_USE_ARRAY_VECTOR
         return data.back().get();
 #else
-        if( data->num > 0 )
+        if(data->num > 0)
             return data->arr[data->num-1];
+        
         return nullptr;
 #endif
     }
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE Object* lastObject() { return getLastObject(); }
-    /** Returns a random element */
+    /** Returns a random element 
+     * @js NA
+     * @lua NA
+     */
     Object* getRandomObject();
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE Object* randomObject() { return getRandomObject(); }
-    /** Returns a Boolean value that indicates whether object is present in array. */
+    /** Returns a Boolean value that indicates whether object is present in array. 
+     * @js NA
+     */
     bool containsObject(Object* object) const;
-    /** @since 1.1 */
-    bool isEqualToArray(Array* pOtherArray);
+    /** @since 1.1 
+     * @js NA
+     */
+    bool isEqualToArray(Array* otherArray);
     // Adding Objects
 
-    /** Add a certain object */
+    /** Add a certain object 
+     * @js NA
+     */
     void addObject(Object* object);
-    /** Add all elements of an existing array */
+    /**
+     * @js NA
+     */
+    /** Add all elements of an existing array 
+     * @js NA
+     */
     void addObjectsFromArray(Array* otherArray);
-    /** Insert a certain object at a certain index */
+    /** Insert a certain object at a certain index 
+     * @js NA
+     */
     void insertObject(Object* object, int index);
-    /** sets a certain object at a certain index */
+    /** sets a certain object at a certain index 
+     * @js NA
+     * @lua NA
+     */
     void setObject(Object* object, int index);
-    /** sets a certain object at a certain index without retaining. Use it with caution */
-    void fastSetObject(Object* object, int index) {
+    /** sets a certain object at a certain index without retaining. Use it with caution 
+     * @js NA
+     * @lua NA
+     */
+    void fastSetObject(Object* object, int index)
+    {
 #if CC_USE_ARRAY_VECTOR
         setObject(object, index);
 #else
@@ -339,50 +420,84 @@ public:
         data->arr[index] = object;
 #endif
     }
-
-    void swap( int indexOne, int indexTwo ) {
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void swap( int indexOne, int indexTwo )
+    {
         CCASSERT(indexOne >=0 && indexOne < count() && indexTwo >= 0 && indexTwo < count(), "Invalid indices");
 #if CC_USE_ARRAY_VECTOR
-        std::swap( data[indexOne], data[indexTwo] );
+        std::swap(data[indexOne], data[indexTwo]);
 #else
-        std::swap( data->arr[indexOne], data->arr[indexTwo] );
+        std::swap(data->arr[indexOne], data->arr[indexTwo]);
 #endif
     }
 
     // Removing Objects
 
-    /** Remove last object */
-    void removeLastObject(bool bReleaseObj = true);
-    /** Remove a certain object */
-    void removeObject(Object* object, bool bReleaseObj = true);
-    /** Remove an element with a certain index */
-    void removeObjectAtIndex(unsigned int index, bool bReleaseObj = true);
-    /** Remove all elements */
+    /** Remove last object 
+     * @js NA
+     */
+    void removeLastObject(bool releaseObj = true);
+    /** Remove a certain object 
+     * @js NA
+     */
+    void removeObject(Object* object, bool releaseObj = true);
+    /** Remove an element with a certain index 
+     * @js NA
+     */
+    void removeObjectAtIndex(int index, bool releaseObj = true);
+    /** Remove all elements 
+     * @js NA
+     */
     void removeObjectsInArray(Array* otherArray);
-    /** Remove all objects */
+    /** Remove all objects 
+     * @js NA
+     */
     void removeAllObjects();
-    /** Fast way to remove a certain object */
+    /** Fast way to remove a certain object 
+     * @js NA
+     */
     void fastRemoveObject(Object* object);
-    /** Fast way to remove an element with a certain index */
-    void fastRemoveObjectAtIndex(unsigned int index);
+    /** Fast way to remove an element with a certain index 
+     * @js NA
+     */
+    void fastRemoveObjectAtIndex(int index);
 
     // Rearranging Content
 
-    /** Swap two elements */
+    /** Swap two elements 
+     * @js NA
+     */
     void exchangeObject(Object* object1, Object* object2);
-    /** Swap two elements with certain indexes */
-    void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
+    /** Swap two elements with certain indexes 
+     * @js NA
+     */
+    void exchangeObjectAtIndex(int index1, int index2);
 
-    /** Replace object at index with another object. */
-    void replaceObjectAtIndex(unsigned int uIndex, Object* pObject, bool bReleaseObject = true);
+    /** Replace object at index with another object. 
+     * @js NA
+     */
+    void replaceObjectAtIndex(int index, Object* object, bool releaseObject = true);
 
-    /** Revers the array */
+    /** Revers the array 
+     * @js NA
+     */
     void reverseObjects();
-    /* Shrinks the array so the memory footprint corresponds with the number of items */
+    /* Shrinks the array so the memory footprint corresponds with the number of items 
+     * @js NA
+     */
     void reduceMemoryFootprint();
   
-    /* override functions */
+    /* override functions 
+     * @js NA
+     */
     virtual void acceptVisitor(DataVisitor &visitor);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual Array* clone() const;
 
     // ------------------------------------------
@@ -391,60 +506,47 @@ public:
 #if CC_USE_ARRAY_VECTOR
     typedef std::vector<RCPtr<Object>>::iterator iterator;
     typedef std::vector<RCPtr<Object>>::const_iterator const_iterator;
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     iterator begin() { return data.begin(); }
+    /**
+     * @js NA
+     * @lua NA
+     */
     iterator end() { return data.end(); }
     const_iterator cbegin() { return data.cbegin(); }
+    /**
+     * @js NA
+     * @lua NA
+     */
     const_iterator cend() { return data.cend(); }
 
-#else
-    class ArrayIterator : public std::iterator<std::input_iterator_tag, Object>
-    {
-    public:
-        ArrayIterator(Object *object, Array *array) : _ptr(object), _parent(array) {}
-        ArrayIterator(const ArrayIterator& arrayIterator) : _ptr(arrayIterator._ptr), _parent(arrayIterator._parent) {}
-
-        ArrayIterator& operator++()
-        {
-            int index = _parent->getIndexOfObject(_ptr);
-            _ptr = _parent->getObjectAtIndex(index+1);
-            return *this;
-        }
-        ArrayIterator operator++(int)
-        {
-            ArrayIterator tmp(*this);
-            (*this)++;
-            return tmp;
-        }
-        bool operator==(const ArrayIterator& rhs) { return _ptr == rhs._ptr; }
-        bool operator!=(const ArrayIterator& rhs) { return _ptr != rhs._ptr; }
-        Object* operator*() { return _ptr; }
-        Object* operator->() { return _ptr; }
-
-    private:
-        Object *_ptr;
-        Array *_parent;
-    };
-
-    // functions for range-based loop
-    typedef ArrayIterator iterator;
-    typedef ArrayIterator const_iterator;
-    iterator begin();
-    iterator end();
-
-#endif
-    
-
-
-public:
-#if CC_USE_ARRAY_VECTOR
     std::vector<RCPtr<Object>> data;
+
 #else
+    /**
+     * @js NA
+     * @lua NA
+     */
+    Object** begin() { return &data->arr[0]; }
+    /**
+     * @js NA
+     * @lua NA
+     */
+    Object** end() { return &data->arr[data->num]; }
+
     ccArray* data;
+
 #endif
 
+//protected:
+    /**
+     * @js NA
+     * @lua NA
+     */
     Array();
-    Array(unsigned int capacity);
 };
 
 // end of data_structure group

@@ -47,9 +47,20 @@ typedef struct
 class CC_DLL IMEDelegate
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~IMEDelegate();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool attachWithIME();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool detachWithIME();
 
 protected:
@@ -59,47 +70,81 @@ protected:
     @brief    Decide if the delegate instance is ready to receive an IME message.
 
     Called by IMEDispatcher.
+    * @js NA
+    * @lua NA
     */
     virtual bool canAttachWithIME() { return false; }
     /**
     @brief    When the delegate detaches from the IME, this method is called by IMEDispatcher.
+    * @js NA
+    * @lua NA
     */
     virtual void didAttachWithIME() {}
 
     /**
     @brief    Decide if the delegate instance can stop receiving IME messages.
+    * @js NA
+    * @lua NA
     */
     virtual bool canDetachWithIME() { return false; }
 
     /**
     @brief    When the delegate detaches from the IME, this method is called by IMEDispatcher.
+    * @js NA
+    * @lua NA
     */
     virtual void didDetachWithIME() {}
 
     /**
     @brief    Called by IMEDispatcher when text input received from the IME.
+    * @js NA
+    * @lua NA
     */
     virtual void insertText(const char * text, int len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
 
     /**
     @brief    Called by IMEDispatcher after the user clicks the backward key.
+    * @js NA
+    * @lua NA
     */
     virtual void deleteBackward() {}
 
     /**
     @brief    Called by IMEDispatcher for text stored in delegate.
+    * @js NA
+    * @lua NA
     */
     virtual const char * getContentText() { return 0; }
 
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info)   {CC_UNUSED_PARAM(info);}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void keyboardDidShow(IMEKeyboardNotificationInfo& info)    {CC_UNUSED_PARAM(info);}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void keyboardWillHide(IMEKeyboardNotificationInfo& info)   {CC_UNUSED_PARAM(info);}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info)    {CC_UNUSED_PARAM(info);}
 
 protected:
+    /**
+     * @js NA
+     * @lua NA
+     */
     IMEDelegate();
 };
 

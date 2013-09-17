@@ -69,6 +69,7 @@ CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
     if( s_pConfigurations == NULL )
     {
         s_pConfigurations = new Dictionary();
+        s_pConfigurations->init();
     }
 
     pRet = static_cast<CCBMFontConfiguration*>( s_pConfigurations->objectForKey(fntFile) );
@@ -140,7 +141,7 @@ CCBMFontConfiguration::CCBMFontConfiguration()
 
 CCBMFontConfiguration::~CCBMFontConfiguration()
 {
-    CCLOGINFO( "cocos2d: deallocing CCBMFontConfiguration %p", this );
+    CCLOGINFO( "deallocing CCBMFontConfiguration: %p", this );
     this->purgeFontDefDictionary();
     this->purgeKerningDictionary();
     _atlasName.clear();
@@ -939,7 +940,7 @@ void LabelBMFont::updateLabel()
         int skip = 0;
 
         Array* children = getChildren();
-        for (unsigned int j = 0; j < children->count(); j++)
+        for (int j = 0; j < children->count(); j++)
         {
             Sprite* characterSprite;
             unsigned int justSkipped = 0;

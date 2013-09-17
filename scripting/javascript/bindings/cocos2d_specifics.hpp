@@ -40,15 +40,10 @@ extern callfuncTarget_proxy_t *_callfuncTarget_native_ht;
 template <class T>
 inline js_type_class_t *js_get_type_from_native(T* native_obj) {
     js_type_class_t *typeProxy;
-    long typeId = cocos2d::getHashCodeByString(typeid(*native_obj).name());
+    long typeId = typeid(*native_obj).hash_code();
     HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     if (!typeProxy) {
-        cocos2d::TypeInfo *typeInfo = dynamic_cast<cocos2d::TypeInfo *>(native_obj);
-        if (typeInfo) {
-            typeId = typeInfo->getClassTypeInfo();
-        } else {
-            typeId = cocos2d::getHashCodeByString(typeid(T).name());
-        }
+        typeId = typeid(T).hash_code();
         HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     }
     return typeProxy;
@@ -185,9 +180,12 @@ protected:
 };
 
 
-class JSTouchDelegate: public Object, public TouchDelegate
+class JSTouchDelegate: public Object
 {
 public:
+    JSTouchDelegate();
+    ~JSTouchDelegate();
+    
 	// Set the touch delegate to map by using the key (pJSObj).
     static void setDelegateForJSObject(JSObject* pJSObj, JSTouchDelegate* pDelegate);
     // Get the touch delegate by the key (pJSObj).
@@ -196,29 +194,31 @@ public:
     static void removeDelegateForJSObject(JSObject* pJSObj);
 
     void setJSObject(JSObject *obj);
-    void registerStandardDelegate();
+    void registerStandardDelegate(int priority);
     void registerTargettedDelegate(int priority, bool swallowsTouches);
 	// unregister touch delegate.
 	// Normally, developer should invoke cc.unregisterTouchDelegate() in when the scene exits.
 	// So this function need to be binded.
     void unregisterTouchDelegate();
 
-    bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    void ccTouchEnded(Touch *pTouch, Event *pEvent);
-    void ccTouchCancelled(Touch *pTouch, Event *pEvent);
+    bool onTouchBegan(Touch *touch, Event *event);
+    void onTouchMoved(Touch *touch, Event *event);
+    void onTouchEnded(Touch *touch, Event *event);
+    void onTouchCancelled(Touch *touch, Event *event);
     
     // optional
-    void ccTouchesBegan(Set *pTouches, Event *pEvent);
-    void ccTouchesMoved(Set *pTouches, Event *pEvent);
-    void ccTouchesEnded(Set *pTouches, Event *pEvent);
-    void ccTouchesCancelled(Set *pTouches, Event *pEvent);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
+    void onTouchesCancelled(const std::vector<Touch*>& touches, Event *event);
 
 private:
-    JSObject *_mObj;
+    JSObject* _obj;
     typedef std::map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
+    bool _needUnroot;
+    TouchEventListener* _touchListener;
 };
 
 

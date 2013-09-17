@@ -4,7 +4,6 @@
 #include "controller.h"
 #include "SimpleAudioEngine.h"
 #include "cocos-ext.h"
-#include "CCArmature/utils/CCArmatureDataManager.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -16,7 +15,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
-	cocos2d::extension::armature::ArmatureDataManager::purgeArmatureSystem();
+	cocos2d::extension::armature::ArmatureDataManager::purge();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -38,15 +37,20 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto designSize = Size(480, 320);
 
     auto pFileUtils = FileUtils::getInstance();
+	std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
     {
         auto resourceSize = Size(960, 640);
-        std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
-        pFileUtils->setSearchPaths(searchPaths);
+		searchPaths.push_back("hd/scenetest");
         director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
+	else
+	{
+		searchPaths.push_back("scenetest");
+	}
+	pFileUtils->setSearchPaths(searchPaths);
 
     EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 

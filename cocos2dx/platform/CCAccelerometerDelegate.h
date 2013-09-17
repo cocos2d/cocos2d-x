@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCACCELEROMETER_DELEGATE_H__
 #define __CCACCELEROMETER_DELEGATE_H__
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 
 NS_CC_BEGIN
 /**
@@ -39,7 +39,10 @@ public:
     double z;
 
     double timestamp;
-    
+    /**
+    * @js NA
+    * @lua NA
+    */
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 

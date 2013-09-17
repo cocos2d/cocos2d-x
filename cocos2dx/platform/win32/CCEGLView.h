@@ -30,16 +30,23 @@ THE SOFTWARE.
 #include "cocoa/CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
 
-NS_CC_BEGIN
+#include "platform/third_party/win32/GLFW/glfw3.h"
 
-typedef LRESULT (*CUSTOM_WND_PROC)(UINT message, WPARAM wParam, LPARAM lParam, BOOL* pProcessed);
+NS_CC_BEGIN
 
 class EGL;
 
 class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     EGLView();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EGLView();
 
     /* override functions */
@@ -48,26 +55,15 @@ public:
     virtual void swapBuffers();
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
-
-    void setMenuResource(LPCWSTR menu);
-    void setWndProc(CUSTOM_WND_PROC proc);
-
-private:
-    virtual bool Create();
-    bool initGL();
-    void destroyGL();
-public:
-    virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
-
-    // win32 platform function
-    HWND getHWnd();
-    void resize(int width, int height);
-    /* 
-     * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
+    /*
+     *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
-    void setFrameZoomFactor(float fZoomFactor);
+    bool init(const char* viewName, float width, float height, float frameZoomFactor = 1.0f);
+public:
+
+    //void resize(int width, int height);
 	float getFrameZoomFactor();
-    void centerWindow();
+    //void centerWindow();
 
     typedef void (*LPFN_ACCELEROMETER_KEYHOOK)( UINT message,WPARAM wParam, LPARAM lParam );
     void setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook );
@@ -84,19 +80,25 @@ public:
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
 protected:
-
+    /* 
+     * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
+     */
+    void setFrameZoomFactor(float fZoomFactor);
 private:
     bool _captured;
-    HWND _wnd;
-    HDC  _DC;
-    HGLRC _RC;
     LPFN_ACCELEROMETER_KEYHOOK _lpfnAccelerometerKeyHook;
     bool _supportTouch;
 
-    LPCWSTR _menu;
-    CUSTOM_WND_PROC _wndproc;
-
+    int _frameBufferSize[2];
     float _frameZoomFactor;
+    static EGLView* s_pEglView;
+public:
+    bool windowShouldClose();
+
+    void pollEvents();
+    GLFWwindow* getWindow() const { return _mainWindow; }
+private:
+    GLFWwindow* _mainWindow;
 };
 
 NS_CC_END

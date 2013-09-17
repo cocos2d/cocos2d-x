@@ -1114,19 +1114,19 @@ std::string ParticleDemo::subtitle()
     return "No titile";
 }
 
-void ParticleDemo::ccTouchesBegan(Set  *touches, Event  *event)
+void ParticleDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-    ccTouchesEnded(touches, event);
+    onTouchesEnded(touches, event);
 }
 
-void ParticleDemo::ccTouchesMoved(Set  *touches, Event  *event)
+void ParticleDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    return ccTouchesEnded(touches, event);
+    return onTouchesEnded(touches, event);
 }
 
-void ParticleDemo::ccTouchesEnded(Set  *touches, Event  *event)
+void ParticleDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = touches[0];
     
     auto location = touch->getLocation();
 
@@ -1649,7 +1649,7 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
     {
         CCLOG("remove random system");
         unsigned int uRand = rand() % (nChildrenCount - 1);
-        _batchNode->removeChild((Node*)_batchNode->getChildren()->objectAtIndex(uRand), true);
+        _batchNode->removeChild((Node*)_batchNode->getChildren()->getObjectAtIndex(uRand), true);
 
         auto particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
         //add new
@@ -1796,7 +1796,7 @@ void ReorderParticleSystems::onEnter()
 
 void ReorderParticleSystems::reorderSystem(float time)
 {
-    auto system = (ParticleSystem*)_batchNode->getChildren()->objectAtIndex(1);
+    auto system = (ParticleSystem*)_batchNode->getChildren()->getObjectAtIndex(1);
     _batchNode->reorderChild(system, system->getZOrder() - 1);     
 }
 

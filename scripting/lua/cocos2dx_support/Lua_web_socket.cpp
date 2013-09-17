@@ -66,7 +66,7 @@ void LuaWebSocket::onOpen(WebSocket* ws)
 {
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
-        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerOpen);
+        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_OPEN);
         if (0 != nHandler) {
             CommonScriptData data(nHandler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
@@ -80,14 +80,14 @@ void LuaWebSocket::onMessage(WebSocket* ws, const WebSocket::Data& data)
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
         if (data.isBinary) {
-            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerMessage);
+            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
             if (0 != nHandler) {
                 SendBinaryMessageToLua(nHandler, (const unsigned char*)data.bytes, data.len);
             }
         }
         else{
                 
-            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerMessage);
+            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
             if (0 != nHandler) {
                     CommonScriptData commonData(nHandler,data.bytes);
                     ScriptEvent event(kCommonEvent,(void*)&commonData);
@@ -101,7 +101,7 @@ void LuaWebSocket::onClose(WebSocket* ws)
 {
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
-        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::kWebSocketScriptHandlerClose);
+        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_CLOSE);
         if (0 != nHandler)
         {
             CommonScriptData data(nHandler,"");
@@ -352,15 +352,6 @@ TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
     tolua_reg_Web_Socket_type(tolua_S);
     tolua_module(tolua_S,NULL,0);
     tolua_beginmodule(tolua_S,NULL);
-    tolua_constant(tolua_S,"kStateConnecting",(int)WebSocket::State::CONNECTING);
-    tolua_constant(tolua_S,"kStateOpen",(int)WebSocket::State::OPEN);
-    tolua_constant(tolua_S,"kStateClosing",(int)WebSocket::State::CLOSING);
-    tolua_constant(tolua_S,"kStateClosed",(int)WebSocket::State::CLOSED);
-      tolua_constant(tolua_S,"kWebSocketScriptHandlerOpen",LuaWebSocket::kWebSocketScriptHandlerOpen);
-      tolua_constant(tolua_S,"kWebSocketScriptHandlerMessage",LuaWebSocket::kWebSocketScriptHandlerMessage);
-      tolua_constant(tolua_S,"kWebSocketScriptHandlerClose",LuaWebSocket::kWebSocketScriptHandlerClose);
-      tolua_constant(tolua_S,"kWebSocketScriptHandlerError",LuaWebSocket::kWebSocketScriptHandlerError);
-
       #ifdef __cplusplus
       tolua_cclass(tolua_S,"WebSocket","WebSocket","",tolua_collect_WebSocket);
       #else

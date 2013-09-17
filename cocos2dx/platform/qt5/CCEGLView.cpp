@@ -32,8 +32,9 @@
 #include "ccMacros.h"
 #include "CCDirector.h"
 
-#include "touch_dispatcher/CCTouch.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "event_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCKeyboardEvent.h"
 #include "text_input_node/CCIMEDispatcher.h"
 
 #include <QGuiApplication>

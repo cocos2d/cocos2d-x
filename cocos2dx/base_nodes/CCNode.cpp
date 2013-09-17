@@ -24,21 +24,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "cocoa/CCString.h"
+
 #include "CCNode.h"
+
+#include <algorithm>
+
+#include "cocoa/CCString.h"
+#include "support/data_support/ccCArray.h"
 #include "support/TransformUtils.h"
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "actions/CCActionManager.h"
 #include "script_support/CCScriptSupport.h"
 #include "shaders/CCGLProgram.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCEvent.h"
+#include "event_dispatcher/CCTouchEvent.h"
+
 // externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
 #include "support/component/CCComponentContainer.h"
+
+
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -48,8 +59,33 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+#if CC_USE_ARRAY_VECTOR
+bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
+{
+    Object *p1 = static_cast<Object*>(pp1);
+    Object *p2 = static_cast<Object*>(pp2);
+    Node *n1 = static_cast<Node*>(p1);
+    Node *n2 = static_cast<Node*>(p2);
+
+    return( n1->getZOrder() < n2->getZOrder() ||
+           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+           );
+}
+#else
+bool nodeComparisonLess(Object* p1, Object* p2)
+{
+    Node *n1 = static_cast<Node*>(p1);
+    Node *n2 = static_cast<Node*>(p2);
+
+    return( n1->getZOrder() < n2->getZOrder() ||
+           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+           );
+}
+#endif
+
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
+int Node::_globalEventPriorityIndex = 0;
 
 Node::Node(void)
 : _rotationX(0.0f)
@@ -63,9 +99,9 @@ Node::Node(void)
 , _anchorPointInPoints(Point::ZERO)
 , _anchorPoint(Point::ZERO)
 , _contentSize(Size::ZERO)
-, _additionalTransform(AffineTransformMakeIdentity())
-, _transform(AffineTransformMakeIdentity())
-, _inverse(AffineTransformMakeIdentity())
+, _additionalTransform(AffineTransform::IDENTITY)
+, _transform(AffineTransform::IDENTITY)
+, _inverse(AffineTransform::IDENTITY)
 , _additionalTransformDirty(false)
 , _transformDirty(true)
 , _inverseDirty(true)
@@ -77,7 +113,7 @@ Node::Node(void)
 , _children(NULL)
 , _parent(NULL)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
-, _tag(kNodeTagInvalid)
+, _tag(Node::INVALID_TAG)
 // userData is always inited as nil
 , _userData(NULL)
 , _userObject(NULL)
@@ -100,12 +136,11 @@ Node::Node(void)
 
     ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
-    _componentContainer = new ComponentContainer(this);
 }
 
 Node::~Node()
 {
-    CCLOGINFO( "cocos2d: deallocing: %p", this );
+    CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
     if (_updateScriptHandler)
     {
@@ -137,9 +172,11 @@ Node::~Node()
     // children
     CC_SAFE_RELEASE(_children);
     
-          // _comsContainer
-    _componentContainer->removeAll();
+    removeAllComponents();
+    
     CC_SAFE_DELETE(_componentContainer);
+    
+    removeAllEventListeners();
 }
 
 bool Node::init()
@@ -524,7 +561,7 @@ void Node::childrenAlloc(void)
 
 Node* Node::getChildByTag(int aTag)
 {
-    CCASSERT( aTag != kNodeTagInvalid, "Invalid tag");
+    CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
 
     if(_children && _children->count() > 0)
     {
@@ -607,15 +644,14 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-    if ( _children->containsObject(child) )
-    {
-        this->detachChild(child,cleanup);
-    }
+    int index = _children->getIndexOfObject(child);
+    if( index != CC_INVALID_INDEX )
+        this->detachChild( child, index, cleanup );
 }
 
 void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 {
-    CCASSERT( tag != kNodeTagInvalid, "Invalid tag");
+    CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
 
     Node *child = this->getChildByTag(tag);
 
@@ -668,7 +704,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
     
 }
 
-void Node::detachChild(Node *child, bool doCleanup)
+void Node::detachChild(Node *child, int childIndex, bool doCleanup)
 {
     // IMPORTANT:
     //  -1st do onExit
@@ -689,7 +725,7 @@ void Node::detachChild(Node *child, bool doCleanup)
     // set parent nil at the end
     child->setParent(NULL);
 
-    _children->removeObject(child);
+    _children->removeObjectAtIndex(childIndex);
 }
 
 
@@ -711,6 +747,7 @@ void Node::reorderChild(Node *child, int zOrder)
 
 void Node::sortAllChildren()
 {
+#if 0
     if (_reorderChildDirty)
     {
         int i,j,length = _children->count();
@@ -737,6 +774,12 @@ void Node::sortAllChildren()
 
         _reorderChildDirty = false;
     }
+#else
+    if( _reorderChildDirty ) {
+        std::sort( std::begin(*_children), std::end(*_children), nodeComparisonLess );
+        _reorderChildDirty = false;
+    }
+#endif
 }
 
 
@@ -763,7 +806,7 @@ void Node::visit()
      }
 
     this->transform();
-    unsigned int i = 0;
+    int i = 0;
 
     if(_children && _children->count() > 0)
     {
@@ -780,6 +823,7 @@ void Node::visit()
         }
         // self draw
         this->draw();
+        _eventPriority = ++_globalEventPriorityIndex;
 
         for( ; i < _children->count(); i++ )
         {
@@ -791,6 +835,7 @@ void Node::visit()
     else
     {
         this->draw();
+        _eventPriority = ++_globalEventPriorityIndex;
     }
 
     // reset for next frame
@@ -818,8 +863,7 @@ void Node::transform()
     kmMat4 transfrom4x4;
 
     // Convert 3x3 into 4x4 matrix
-    AffineTransform tmpAffine = this->getNodeToParentTransform();
-    CGAffineToGL(&tmpAffine, transfrom4x4.mat);
+    CGAffineToGL(this->getNodeToParentTransform(), transfrom4x4.mat);
 
     // Update Z vertex manually
     transfrom4x4.mat[14] = _vertexZ;
@@ -903,7 +947,9 @@ void Node::onExit()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
-    arrayMakeObjectsPerformSelector(_children, onExit, Node*);    
+    arrayMakeObjectsPerformSelector(_children, onExit, Node*);
+    
+    removeAllEventListeners();
 }
 
 void Node::setActionManager(ActionManager* actionManager)
@@ -935,13 +981,13 @@ void Node::stopAction(Action* action)
 
 void Node::stopActionByTag(int tag)
 {
-    CCASSERT( tag != kActionTagInvalid, "Invalid tag");
+    CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
     _actionManager->removeActionByTag(tag, this);
 }
 
 Action * Node::getActionByTag(int tag)
 {
-    CCASSERT( tag != kActionTagInvalid, "Invalid tag");
+    CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
     return _actionManager->getActionByTag(tag, this);
 }
 
@@ -1060,7 +1106,7 @@ void Node::update(float fDelta)
     }
 }
 
-AffineTransform Node::getNodeToParentTransform() const
+const AffineTransform& Node::getNodeToParentTransform() const
 {
     if (_transformDirty) 
     {
@@ -1143,7 +1189,7 @@ void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
     _additionalTransformDirty = true;
 }
 
-AffineTransform Node::getParentToNodeTransform() const
+const AffineTransform& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
         _inverse = AffineTransformInvert(this->getNodeToParentTransform());
@@ -1218,22 +1264,53 @@ void Node::updateTransform()
 
 Component* Node::getComponent(const char *pName)
 {
-    return _componentContainer->get(pName);
+    if( _componentContainer )
+        return _componentContainer->get(pName);
+    return nullptr;
 }
 
 bool Node::addComponent(Component *pComponent)
 {
+    // lazy alloc
+    if( !_componentContainer )
+        _componentContainer = new ComponentContainer(this);
     return _componentContainer->add(pComponent);
 }
 
 bool Node::removeComponent(const char *pName)
 {
-    return _componentContainer->remove(pName);
+    if( _componentContainer )
+        return _componentContainer->remove(pName);
+    return false;
 }
 
 void Node::removeAllComponents()
 {
-    _componentContainer->removeAll();
+    if( _componentContainer )
+        _componentContainer->removeAll();
+}
+
+void Node::resetEventPriorityIndex()
+{
+    _globalEventPriorityIndex = 0;
+}
+
+void Node::associateEventListener(EventListener* listener)
+{
+    _eventlisteners.insert(listener);
+}
+
+void Node::dissociateEventListener(EventListener* listener)
+{
+    _eventlisteners.erase(listener);
+}
+
+void Node::removeAllEventListeners()
+{
+    for (auto& listener : _eventlisteners)
+    {
+        EventDispatcher::getInstance()->removeEventListener(listener);
+    }
 }
 
 // NodeRGBA

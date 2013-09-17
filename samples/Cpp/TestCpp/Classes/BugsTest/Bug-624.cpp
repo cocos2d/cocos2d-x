@@ -37,7 +37,7 @@ void Bug624Layer::switchLayer(float dt)
     Director::getInstance()->replaceScene(TransitionFade::create(2.0f, scene, Color3B::WHITE));
 }
 
-void Bug624Layer::didAccelerate(Acceleration* acceleration)
+void Bug624Layer::onAcceleration(Acceleration* acc, Event* event)
 {    
     log("Layer1 accel");
 }
@@ -74,7 +74,7 @@ void Bug624Layer2::switchLayer(float dt)
     Director::getInstance()->replaceScene(TransitionFade::create(2.0f, scene, Color3B::RED));
 }
 
-void Bug624Layer2::didAccelerate(Acceleration* acceleration)
+void Bug624Layer2::onAcceleration(Acceleration* acc, Event* event)
 {    
     log("Layer2 accel");
 }

@@ -806,9 +806,9 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandle
     pRet->_subItems = Array::create();
     pRet->_subItems->retain();
     
-    for (unsigned int z=0; z < menuItems->count(); z++)
+    for (int z=0; z < menuItems->count(); z++)
     {
-        MenuItem* menuItem = (MenuItem*)menuItems->objectAtIndex(z);
+        MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
         pRet->_subItems->addObject(menuItem);
     }
     
@@ -824,9 +824,9 @@ MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callba
     pRet->_subItems = Array::create();
     pRet->_subItems->retain();
 
-    for (unsigned int z=0; z < menuItems->count(); z++)
+    for (int z=0; z < menuItems->count(); z++)
     {
-        MenuItem* menuItem = (MenuItem*)menuItems->objectAtIndex(z);
+        MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
         pRet->_subItems->addObject(menuItem);
     }
 
@@ -939,7 +939,7 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
             currentItem->removeFromParentAndCleanup(false);
         }
 
-        MenuItem* item = (MenuItem*)_subItems->objectAtIndex(_selectedIndex);
+        MenuItem* item = (MenuItem*)_subItems->getObjectAtIndex(_selectedIndex);
         this->addChild(item, 0, kCurrentItem);
         Size s = item->getContentSize();
         this->setContentSize(s);
@@ -950,13 +950,13 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
 void MenuItemToggle::selected()
 {
     MenuItem::selected();
-    static_cast<MenuItem*>(_subItems->objectAtIndex(_selectedIndex))->selected();
+    static_cast<MenuItem*>(_subItems->getObjectAtIndex(_selectedIndex))->selected();
 }
 
 void MenuItemToggle::unselected()
 {
     MenuItem::unselected();
-    static_cast<MenuItem*>(_subItems->objectAtIndex(_selectedIndex))->unselected();
+    static_cast<MenuItem*>(_subItems->getObjectAtIndex(_selectedIndex))->unselected();
 }
 
 void MenuItemToggle::activate()
@@ -989,7 +989,7 @@ void MenuItemToggle::setEnabled(bool enabled)
 
 MenuItem* MenuItemToggle::getSelectedItem()
 {
-    return static_cast<MenuItem*>(_subItems->objectAtIndex(_selectedIndex));
+    return static_cast<MenuItem*>(_subItems->getObjectAtIndex(_selectedIndex));
 }
 
 NS_CC_END

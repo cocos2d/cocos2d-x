@@ -37,13 +37,13 @@ NS_CC_BEGIN
 Action::Action()
 :_originalTarget(NULL)
 ,_target(NULL)
-,_tag(kActionTagInvalid)
+,_tag(Action::INVALID_TAG)
 {
 }
 
 Action::~Action()
 {
-    CCLOGINFO("cocos2d: deallocing");
+    CCLOGINFO("deallocing Action: %p - tag: %i", this, _tag);
 }
 
 const char* Action::description() const

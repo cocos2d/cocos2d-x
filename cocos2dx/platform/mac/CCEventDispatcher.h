@@ -26,8 +26,8 @@
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
 #import <Availability.h>
-#ifndef __CC_EVENT_DISPATCHER_H__
-#define __CC_EVENT_DISPATCHER_H__
+#ifndef __CC_EVENT_DISPATCHER_MAC_H__
+#define __CC_EVENT_DISPATCHER_MAC_H__
 
 #import <Cocoa/Cocoa.h>
 
@@ -275,4 +275,4 @@ struct _listEntry;
 @end
 
 //NS_CC_END;
-#endif // __CC_EVENT_DISPATCHER_H__
+#endif // __CC_EVENT_DISPATCHER_MAC_H__

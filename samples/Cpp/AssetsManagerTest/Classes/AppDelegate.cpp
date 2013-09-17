@@ -8,7 +8,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
 #include "cocos2d_specifics.hpp"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
@@ -85,8 +85,6 @@ UpdateLayer::UpdateLayer()
 
 UpdateLayer::~UpdateLayer()
 {
-    AssetsManager *pAssetsManager = getAssetsManager();
-    CC_SAFE_DELETE(pAssetsManager);
 }
 
 void UpdateLayer::update(cocos2d::Object *pSender)
@@ -94,7 +92,7 @@ void UpdateLayer::update(cocos2d::Object *pSender)
     pProgressLabel->setString("");
     
     // update resources
-    getAssetsManager()->update();
+    pAssetsManager->update();
     
     isUpdateItemClicked = true;
 }
@@ -116,7 +114,7 @@ void UpdateLayer::reset(cocos2d::Object *pSender)
     system(command.c_str());
 #endif
     // Delete recorded version codes.
-    getAssetsManager()->deleteVersion();
+    pAssetsManager->deleteVersion();
     
     createDownloadedDir();
 }
@@ -141,6 +139,15 @@ bool UpdateLayer::init()
 {
     Layer::init();
     
+    /** Creates assets manager */
+    pAssetsManager = new AssetsManager("https://raw.github.com/minggo/AssetsManagerTest/master/package.zip",
+                                       "https://raw.github.com/minggo/AssetsManagerTest/master/version",
+                                       pathToSave.c_str());
+    pAssetsManager->setDelegate(this);
+    pAssetsManager->setConnectionTimeout(3);
+    addChild(pAssetsManager);
+    pAssetsManager->release();
+    
     createDownloadedDir();
     
     auto size = Director::getInstance()->getWinSize();
@@ -162,22 +169,6 @@ bool UpdateLayer::init()
     addChild(pProgressLabel);
     
     return true;
-}
-
-AssetsManager* UpdateLayer::getAssetsManager()
-{
-    static AssetsManager *pAssetsManager = NULL;
-    
-    if (! pAssetsManager)
-    {
-        pAssetsManager = new AssetsManager("https://raw.github.com/minggo/AssetsManagerTest/master/package.zip",
-                                           "https://raw.github.com/minggo/AssetsManagerTest/master/version",
-                                           pathToSave.c_str());
-        pAssetsManager->setDelegate(this);
-        pAssetsManager->setConnectionTimeout(3);
-    }
-    
-    return pAssetsManager;
 }
 
 void UpdateLayer::createDownloadedDir()

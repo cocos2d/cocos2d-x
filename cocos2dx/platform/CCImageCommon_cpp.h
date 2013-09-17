@@ -51,7 +51,7 @@ extern "C"
 #endif
 
 #include "ccMacros.h"
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "CCConfiguration.h"
@@ -1504,7 +1504,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     }
     else                                               //decompressed data length
     {
-        for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)
+        for (int i = 0; i < _numberOfMipmaps && (width || height); ++i)
         {
             if (width == 0) width = 1;
             if (height == 0) height = 1;
@@ -1523,7 +1523,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     int decodeOffset = 0;
     width = _width;  height = _height;
     
-    for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)  
+    for (int i = 0; i < _numberOfMipmaps && (width || height); ++i)  
     {
         if (width == 0) width = 1;
         if (height == 0) height = 1;
@@ -1629,7 +1629,7 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
     }
     else                                               //decompressed data length
     {
-        for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)
+        for (int i = 0; i < _numberOfMipmaps && (width || height); ++i)
         {
             if (width == 0) width = 1;
             if (height == 0) height = 1;
@@ -1647,7 +1647,7 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
     int decodeOffset = 0;
     width = _width;  height = _height;
     
-    for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)
+    for (int i = 0; i < _numberOfMipmaps && (width || height); ++i)
     {
         if (width == 0) width = 1;
         if (height == 0) height = 1;

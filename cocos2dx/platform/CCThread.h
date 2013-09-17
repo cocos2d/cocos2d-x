@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_PLATFORM_THREAD_H__
 #define __CC_PLATFORM_THREAD_H__
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
@@ -42,9 +42,20 @@ NS_CC_BEGIN
 class CC_DLL Thread
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     Thread() : _autoReleasePool(nullptr) {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Thread();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     void createAutoreleasePool();
 
 private:

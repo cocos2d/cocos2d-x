@@ -1,4 +1,6 @@
 #include "SpriteTest.h"
+
+#include <algorithm>
 #include "../testResource.h"
 
 
@@ -203,11 +205,9 @@ void SpriteTestDemo::backCallback(Object* sender)
 Sprite1::Sprite1()
 {
     setTouchEnabled( true );
-    
-    
+
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Point(s.width/2, s.height/2) );
-    
 }
 
 void Sprite1::addNewSpriteWithCoords(Point p)
@@ -241,11 +241,10 @@ void Sprite1::addNewSpriteWithCoords(Point p)
     sprite->runAction( RepeatForever::create(seq) );
 }
 
-void Sprite1::ccTouchesEnded(Set* touches, Event* event)
+void Sprite1::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto item: *touches)
+    for (auto touch: touches)
     {
-        auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
     
         addNewSpriteWithCoords( location );
@@ -308,11 +307,10 @@ void SpriteBatchNode1::addNewSpriteWithCoords(Point p)
     sprite->runAction( RepeatForever::create(seq));
 }
 
-void SpriteBatchNode1::ccTouchesEnded(Set* touches, Event* event)
+void SpriteBatchNode1::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto &item: *touches)
+    for (auto &touch: touches)
     {
-        auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
             
         addNewSpriteWithCoords( location );
@@ -639,7 +637,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     {
         if(i!=5)
         {
-            asmtest->reorderChild( static_cast<Node*>(a->objectAtIndex(i)), 9 );
+            asmtest->reorderChild( static_cast<Node*>(a->getObjectAtIndex(i)), 9 );
         }
     }
     
@@ -660,18 +658,13 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     }
     
     prev = -1;
-    auto sChildren = asmtest->getDescendants();
-    CCARRAY_FOREACH(sChildren, pObject)
-    {
-        child = static_cast<Sprite*>(pObject);
-        if(! child )
-            break;
-
-        int currentIndex = child->getAtlasIndex();
+    auto descendants = asmtest->getDescendants();
+    std::for_each(descendants.begin(), descendants.end(), [&](Sprite* sprite) {
+        int currentIndex = sprite->getAtlasIndex();
         CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("descendant %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
-    }
+    });
 }
 
 std::string SpriteBatchNodeReorder::title()
@@ -898,7 +891,7 @@ SpriteZVertex::SpriteZVertex()
     //
     // Configure shader to mimic glAlphaTest
     //
-    auto alphaTestShader = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto alphaTestShader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 
     // set alpha test value
@@ -983,7 +976,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     //
     // Configure shader to mimic glAlphaTest
     //
-    auto alphaTestShader = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto alphaTestShader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 
     // set alpha test value
@@ -1212,12 +1205,12 @@ void SpriteFlip::flipSprites(float dt)
     auto sprite1 = static_cast<Sprite*>(getChildByTag(kTagSprite1));
     auto sprite2 = static_cast<Sprite*>(getChildByTag(kTagSprite2));
     
-    bool x = sprite1->isFlipX();
-    bool y = sprite2->isFlipY();
+    bool x = sprite1->isFlippedX();
+    bool y = sprite2->isFlippedY();
     
     CCLOG("Pre: %f", sprite1->getContentSize().height);
-    sprite1->setFlipX(!x);
-    sprite2->setFlipY(!y);
+    sprite1->setFlippedX(!x);
+    sprite2->setFlippedY(!y);
     CCLOG("Post: %f", sprite1->getContentSize().height);
 }
 
@@ -1255,12 +1248,12 @@ void SpriteBatchNodeFlip::flipSprites(float dt)
     auto sprite1 = static_cast<Sprite*>(batch->getChildByTag(kTagSprite1));
     auto sprite2 = static_cast<Sprite*>(batch->getChildByTag(kTagSprite2));
     
-    bool x = sprite1->isFlipX();
-    bool y = sprite2->isFlipY();
+    bool x = sprite1->isFlippedX();
+    bool y = sprite2->isFlippedY();
     
     CCLOG("Pre: %f", sprite1->getContentSize().height);
-    sprite1->setFlipX(!x);
-    sprite2->setFlipY(!y);
+    sprite1->setFlippedX(!x);
+    sprite2->setFlippedY(!y);
     CCLOG("Post: %f", sprite1->getContentSize().height);
 }
 
@@ -1444,7 +1437,7 @@ void SpriteNewTexture::addNewSprite()
     sprite->runAction( RepeatForever::create(seq) );
 }
 
-void SpriteNewTexture::ccTouchesEnded(Set* touches, Event* event)
+void SpriteNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
 
     auto node = getChildByTag( kTagSpriteBatchNode );
@@ -1550,7 +1543,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     sprite->runAction( RepeatForever::create(seq) );
 }
 
-void SpriteBatchNodeNewTexture::ccTouchesEnded(Set* touches, Event* event)
+void SpriteBatchNodeNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     auto batch = static_cast<SpriteBatchNode*>( getChildByTag( kTagSpriteBatchNode) );
     
@@ -1609,8 +1602,8 @@ void SpriteFrameTest::onEnter()
     _sprite1->runAction( RepeatForever::create( Animate::create(animation) ) );
 
     // to test issue #732, uncomment the following line
-    _sprite1->setFlipX(false);
-    _sprite1->setFlipY(false);
+    _sprite1->setFlippedX(false);
+    _sprite1->setFlippedY(false);
 
     //
     // Animation using standard Sprite
@@ -1644,8 +1637,8 @@ void SpriteFrameTest::onEnter()
 
 
     // to test issue #732, uncomment the following line
-    _sprite2->setFlipX(false);
-    _sprite2->setFlipY(false);
+    _sprite2->setFlippedX(false);
+    _sprite2->setFlippedY(false);
 
     schedule(schedule_selector(SpriteFrameTest::startIn05Secs), 0.5f);
     _counter = 0;
@@ -1703,10 +1696,10 @@ void SpriteFrameTest::flipSprites(float dt)
             break;
     }
 
-    _sprite1->setFlipX(fx);
-    _sprite1->setFlipY(fy);
-    _sprite2->setFlipX(fx);
-    _sprite2->setFlipY(fy);
+    _sprite1->setFlippedX(fx);
+    _sprite1->setFlippedY(fy);
+    _sprite2->setFlippedX(fx);
+    _sprite2->setFlippedY(fy);
     //NSLog(@"flipX:%d, flipY:%d", fx, fy);
 }
 
@@ -2949,14 +2942,14 @@ SpriteChildrenChildren::SpriteChildrenChildren()
     // child right bottom
     l3b1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b1->setScale( 0.45f);
-    l3b1->setFlipY( true );
+    l3b1->setFlippedY( true );
     l3b1->setPosition( Point(0+l2bSize.width/2,-100+l2bSize.height/2) );
     l2b->addChild(l3b1);
     
     // child right top
     l3b2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b2->setScale( 0.45f );
-    l3b2->setFlipY( true );
+    l3b2->setFlippedY( true );
     l3b1->setPosition( Point(0+l2bSize.width/2,+100+l2bSize.height/2) );
     l2b->addChild(l3b2);
 }
@@ -3033,14 +3026,14 @@ SpriteBatchNodeChildrenChildren::SpriteBatchNodeChildrenChildren()
     // child right bottom
     l3b1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b1->setScale( 0.45f );
-    l3b1->setFlipY( true );
+    l3b1->setFlippedY( true );
     l3b1->setPosition( Point(0+l2bSize.width/2,-100+l2bSize.height/2) );
     l2b->addChild(l3b1);
 
     // child right top
     l3b2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b2->setScale( 0.45f );
-    l3b2->setFlipY( true );
+    l3b2->setFlippedY( true );
     l3b1->setPosition( Point(0+l2bSize.width/2,+100+l2bSize.height/2) );
     l2b->addChild(l3b2);
     
@@ -3475,11 +3468,11 @@ AnimationCacheTest::AnimationCacheTest()
 
     auto animCache = AnimationCache::getInstance();
 
-    auto normal = animCache->animationByName("dance");
+    auto normal = animCache->getAnimation("dance");
     normal->setRestoreOriginalFrame(true);
-    auto dance_grey = animCache->animationByName("dance_gray");
+    auto dance_grey = animCache->getAnimation("dance_gray");
     dance_grey->setRestoreOriginalFrame(true);
-    auto dance_blue = animCache->animationByName("dance_blue");
+    auto dance_blue = animCache->getAnimation("dance_blue");
     dance_blue->setRestoreOriginalFrame(true);
 
     auto animN = Animate::create(normal);
@@ -3531,11 +3524,11 @@ AnimationCacheFile::AnimationCacheFile()
     animCache->addAnimationsWithFile("animations/animations.plist");
 
 
-    auto normal = animCache->animationByName("dance_1");
+    auto normal = animCache->getAnimation("dance_1");
     normal->setRestoreOriginalFrame(true);
-    auto dance_grey = animCache->animationByName("dance_2");
+    auto dance_grey = animCache->getAnimation("dance_2");
     dance_grey->setRestoreOriginalFrame(true);
-    auto dance_blue = animCache->animationByName("dance_3");
+    auto dance_blue = animCache->getAnimation("dance_3");
     dance_blue->setRestoreOriginalFrame(true);
 
     auto animN = Animate::create(normal);
@@ -4149,7 +4142,7 @@ void NodeSort::reorderSprite(float dt)
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     }
     //z-4
-    _node->reorderChild( static_cast<Node*>( _node->getChildren()->objectAtIndex(0) ), -6);
+    _node->reorderChild( static_cast<Node*>( _node->getChildren()->getObjectAtIndex(0) ), -6);
 
     _node->sortAllChildren();
     log("After reorder--");
@@ -4207,11 +4200,10 @@ void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
     _batchNode->reorderChild(_sprite1, 4);
 
     _batchNode->sortAllChildren();
-    Object *child;
-    CCARRAY_FOREACH(_batchNode->getDescendants(), child)
-    {
-        log("tag %i", (int)( static_cast<Node*>(child)->getTag()) );
-    }    
+
+    std::for_each(_batchNode->getDescendants().begin(), _batchNode->getDescendants().end(), [&](Sprite* sprite) {
+        log("tag %i", sprite->getTag() );
+    });
 }
 
 /// SpriteBatchNodeReorderOneChild
@@ -4274,14 +4266,14 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
     // child right bottom
     l3b1 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b1->setScale(0.45f);
-    l3b1->setFlipY(true);
+    l3b1->setFlippedY(true);
     l3b1->setPosition(Point(0+l2bSize.width/2,-50+l2bSize.height/2));
     l2b->addChild(l3b1);
 
     // child right top
     l3b2 = Sprite::createWithSpriteFrameName("child1.gif");
     l3b2->setScale(0.45f);
-    l3b2->setFlipY(true);
+    l3b2->setFlippedY(true);
     l3b2->setPosition(Point(0+l2bSize.width/2,+50+l2bSize.height/2));
     l2b->addChild(l3b2);
 

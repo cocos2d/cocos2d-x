@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCGeometry.h"
 #include "ccMacros.h"
+#include <algorithm>
 
 // implementation of Point
 NS_CC_BEGIN
@@ -116,6 +117,42 @@ Point Point::rotateByAngle(const Point& pivot, float angle) const
     return pivot + (*this - pivot).rotate(Point::forAngle(angle));
 }
 
+bool Point::isOneDemensionSegmentOverlap(float A, float B, float C, float D, float *S, float *E)
+{
+    float ABmin = MIN(A, B);
+    float ABmax = MAX(A, B);
+    float CDmin = MIN(C, D);
+    float CDmax = MAX(C, D);
+    
+    if (ABmax < CDmin || CDmax < ABmin)
+    {
+        // ABmin->ABmax->CDmin->CDmax or CDmin->CDmax->ABmin->ABmax
+        return false;
+    }
+    else
+    {
+        if (ABmin >= CDmin && ABmin <= CDmax)
+        {
+            // CDmin->ABmin->CDmax->ABmax or CDmin->ABmin->ABmax->CDmax
+            if (S != nullptr) *S = ABmin;
+            if (E != nullptr) *E = CDmax < ABmax ? CDmax : ABmax;
+        }
+        else if (ABmax >= CDmin && ABmax <= CDmax)
+        {
+            // ABmin->CDmin->ABmax->CDmax
+            if (S != nullptr) *S = CDmin;
+            if (E != nullptr) *E = ABmax;
+        }
+        else
+        {
+            // ABmin->CDmin->CDmax->ABmax
+            if (S != nullptr) *S = CDmin;
+            if (E != nullptr) *E = CDmax;
+        }
+        return true;
+    }
+}
+
 bool Point::isLineIntersect(const Point& A, const Point& B,
                             const Point& C, const Point& D,
                             float *S, float *T)
@@ -125,38 +162,72 @@ bool Point::isLineIntersect(const Point& A, const Point& B,
     {
         return false;
     }
-    const float BAx = B.x - A.x;
-    const float BAy = B.y - A.y;
-    const float DCx = D.x - C.x;
-    const float DCy = D.y - C.y;
-    const float ACx = A.x - C.x;
-    const float ACy = A.y - C.y;
     
-    const float denom = DCy*BAx - DCx*BAy;
-    
-    *S = DCx*ACy - DCy*ACx;
-    *T = BAx*ACy - BAy*ACx;
+    const float denom = crossProduct2Vector(A, B, C, D);
     
     if (denom == 0)
     {
-        if (*S == 0 || *T == 0)
-        {
-            // Lines incident
-            return true;
-        }
-        // Lines parallel and not incident
+        // Lines parallel or overlap
         return false;
     }
     
-    *S = *S / denom;
-    *T = *T / denom;
-    
-    // Point of intersection
-    // CGPoint P;
-    // P.x = A.x + *S * (B.x - A.x);
-    // P.y = A.y + *S * (B.y - A.y);
+    if (S != nullptr) *S = crossProduct2Vector(C, D, C, A) / denom;
+    if (T != nullptr) *T = crossProduct2Vector(A, B, C, A) / denom;
     
     return true;
+}
+
+bool Point::isLineParallel(const Point& A, const Point& B,
+                           const Point& C, const Point& D)
+{
+    // FAIL: Line undefined
+    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
+    {
+        return false;
+    }
+    
+    if (crossProduct2Vector(A, B, C, D) == 0)
+    {
+        // line overlap
+        if (crossProduct2Vector(C, D, C, A) == 0 || crossProduct2Vector(A, B, C, A) == 0)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool Point::isLineOverlap(const Point& A, const Point& B,
+                            const Point& C, const Point& D)
+{
+    // FAIL: Line undefined
+    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
+    {
+        return false;
+    }
+    
+    if (crossProduct2Vector(A, B, C, D) == 0 &&
+        (crossProduct2Vector(C, D, C, A) == 0 || crossProduct2Vector(A, B, C, A) == 0))
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+bool Point::isSegmentOverlap(const Point& A, const Point& B, const Point& C, const Point& D, Point* S, Point* E)
+{
+    
+    if (isLineOverlap(A, B, C, D))
+    {
+        return isOneDemensionSegmentOverlap(A.x, B.x, C.x, D.x, &S->x, &E->x) &&
+        isOneDemensionSegmentOverlap(A.y, B.y, C.y, D.y, &S->y, &E->y);
+    }  
+    
+    return false;
 }
 
 bool Point::isSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D)
@@ -164,10 +235,10 @@ bool Point::isSegmentIntersect(const Point& A, const Point& B, const Point& C, c
     float S, T;
     
     if (isLineIntersect(A, B, C, D, &S, &T )&&
-       (S >= 0.0f && S <= 1.0f && T >= 0.0f && T <= 1.0f))
+        (S >= 0.0f && S <= 1.0f && T >= 0.0f && T <= 1.0f))
     {
         return true;
-    }  
+    }
     
     return false;
 }
@@ -298,12 +369,12 @@ bool Rect::equals(const Rect& rect) const
 
 float Rect::getMaxX() const
 {
-    return (float)(origin.x + size.width);
+    return origin.x + size.width;
 }
 
 float Rect::getMidX() const
 {
-    return (float)(origin.x + size.width / 2.0);
+    return origin.x + size.width / 2.0f;
 }
 
 float Rect::getMinX() const
@@ -318,7 +389,7 @@ float Rect::getMaxY() const
 
 float Rect::getMidY() const
 {
-    return (float)(origin.y + size.height / 2.0);
+    return origin.y + size.height / 2.0f;
 }
 
 float Rect::getMinY() const

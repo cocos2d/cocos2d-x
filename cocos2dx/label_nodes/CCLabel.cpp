@@ -31,13 +31,13 @@ NS_CC_BEGIN
 
 Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fontSize, int lineSize, TextHAlignment alignment, GlyphCollection glyphs, const char *customGlyphs )
 {
-    FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath, fontSize, glyphs, customGlyphs);
+    FontAtlas *tmpAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath, fontSize, glyphs, customGlyphs);
 
-    if (!tempAtlas)
+    if (!tmpAtlas)
         return nullptr;
     
     // create the actual label
-    Label* templabel = Label::createWithAtlas(tempAtlas, alignment, lineSize);
+    Label* templabel = Label::createWithAtlas(tmpAtlas, alignment, lineSize);
     
     if (templabel)
     {
@@ -53,12 +53,12 @@ Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fo
 Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, TextHAlignment alignment, int lineSize)
 {
     
-    FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath);
+    FontAtlas *tmpAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath);
     
-    if (!tempAtlas)
+    if (!tmpAtlas)
         return 0;
     
-    Label* templabel = Label::createWithAtlas(tempAtlas, alignment, lineSize);
+    Label* templabel = Label::createWithAtlas(tmpAtlas, alignment, lineSize);
     
     if (templabel)
     {
@@ -73,9 +73,9 @@ Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, T
     return 0;
 }
 
-Label* Label::createWithAtlas(FontAtlas *pAtlas, TextHAlignment alignment, int lineSize)
+Label* Label::createWithAtlas(FontAtlas *atlas, TextHAlignment alignment, int lineSize)
 {
-    Label *ret = new Label(pAtlas, alignment);
+    Label *ret = new Label(atlas, alignment);
     
     if (!ret)
         return 0;
@@ -94,24 +94,28 @@ Label* Label::createWithAtlas(FontAtlas *pAtlas, TextHAlignment alignment, int l
     return ret;
 }
 
-Label::Label(FontAtlas *pAtlas, TextHAlignment alignment):      _currentUTF8String(0),
-_originalUTF8String(0),
-_fontAtlas(pAtlas),
-_alignment(alignment),
-_lineBreakWithoutSpaces(false),
-_advances(0),
-_displayedColor(Color3B::WHITE),
-_realColor(Color3B::WHITE),
-_cascadeColorEnabled(true),
-_cascadeOpacityEnabled(true),
-_displayedOpacity(255),
-_realOpacity(255),
-_isOpacityModifyRGB(false)
+Label::Label(FontAtlas *atlas, TextHAlignment alignment)
+: _currentUTF8String(0)
+, _originalUTF8String(0)
+, _fontAtlas(atlas)
+, _alignment(alignment)
+, _lineBreakWithoutSpaces(false)
+, _advances(0)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
+, _cascadeColorEnabled(true)
+, _cascadeOpacityEnabled(true)
+, _displayedOpacity(255)
+, _realOpacity(255)
+, _isOpacityModifyRGB(false)
 {
 }
 
 Label::~Label()
 {
+    CC_SAFE_RELEASE(_spriteArray);
+    CC_SAFE_RELEASE(_spriteArrayCache);
+
     if (_currentUTF8String)
         delete [] _currentUTF8String;
     
@@ -124,6 +128,12 @@ Label::~Label()
 
 bool Label::init()
 {
+    _spriteArray = Array::createWithCapacity(30);
+    _spriteArrayCache = Array::createWithCapacity(30);
+
+    _spriteArray->retain();
+    _spriteArrayCache->retain();
+
     return true;
 }
 
@@ -253,12 +263,12 @@ void Label::alignText()
 void Label::hideAllLetters()
 {
     Object* Obj = NULL;
-    CCARRAY_FOREACH(&_spriteArray, Obj)
+    CCARRAY_FOREACH(_spriteArray, Obj)
     {
         ((Sprite *)Obj)->setVisible(false);
     }
     
-    CCARRAY_FOREACH(&_spriteArrayCache, Obj)
+    CCARRAY_FOREACH(_spriteArrayCache, Obj)
     {
         ((Sprite *)Obj)->setVisible(false);
     }
@@ -333,7 +343,7 @@ void Label::resetCurrentString()
     
 }
 
-Sprite * Label::createNewSpriteFromLetterDefinition(FontLetterDefinition &theDefinition, Texture2D *theTexture)
+Sprite * Label::createNewSpriteFromLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture)
 {
     Rect uvRect;
     uvRect.size.height = theDefinition.height;
@@ -362,7 +372,7 @@ Sprite * Label::createNewSpriteFromLetterDefinition(FontLetterDefinition &theDef
     return tempSprite;
 }
 
-Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, FontLetterDefinition &theDefinition, Texture2D *theTexture)
+Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture)
 {
     if (!spriteToUpdate)
     {
@@ -431,21 +441,21 @@ Sprite * Label::updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short int
 void Label::moveAllSpritesToCache()
 {
     Object* pObj = NULL;
-    CCARRAY_FOREACH(&_spriteArray, pObj)
+    CCARRAY_FOREACH(_spriteArray, pObj)
     {
         ((Sprite *)pObj)->removeFromParent();
-        _spriteArrayCache.addObject(pObj);
+        _spriteArrayCache->addObject(pObj);
     }
     
-    _spriteArray.removeAllObjects();
+    _spriteArray->removeAllObjects();
 }
 
 Sprite * Label::getSprite()
 {
-    if (_spriteArrayCache.count())
+    if (_spriteArrayCache->count())
     {
-        Sprite *retSprite = (Sprite *) _spriteArrayCache.lastObject();
-        _spriteArrayCache.removeLastObject();
+        Sprite *retSprite = static_cast<Sprite *>(_spriteArrayCache->getLastObject());
+        _spriteArrayCache->removeLastObject();
         return retSprite;
     }
     else
@@ -457,10 +467,10 @@ Sprite * Label::getSprite()
 
 ///// PROTOCOL STUFF
 
-Sprite * Label::getSpriteChild(int ID)
+Sprite * Label::getSpriteChild(int ID) const
 {
     Object* pObj = NULL;
-    CCARRAY_FOREACH(&_spriteArray, pObj)
+    CCARRAY_FOREACH(_spriteArray, pObj)
     {
         Sprite *pSprite = (Sprite *)pObj;
         if ( pSprite->getTag() == ID)
@@ -471,9 +481,9 @@ Sprite * Label::getSpriteChild(int ID)
     return 0;
 }
 
-Array  * Label::getChildrenLetters()
+Array* Label::getChildrenLetters() const
 {
-    return &_spriteArray;
+    return _spriteArray;
 }
 
 Sprite * Label::getSpriteForChar(unsigned short int theChar, int spriteIndexHint)
@@ -493,7 +503,7 @@ Sprite * Label::getSpriteForChar(unsigned short int theChar, int spriteIndexHint
         if (retSprite)
             retSprite->setTag(spriteIndexHint);
         
-        _spriteArray.addObject(retSprite);
+        _spriteArray->addObject(retSprite);
     }
     
     // the sprite is now visible
@@ -506,29 +516,29 @@ Sprite * Label::getSpriteForChar(unsigned short int theChar, int spriteIndexHint
     return retSprite;
 }
 
-float Label::getLetterPosXLeft( Sprite* sp )
+float Label::getLetterPosXLeft( Sprite* sp ) const
 {
     float scaleX = _scaleX;
     return sp->getPosition().x * scaleX - (sp->getContentSize().width * scaleX * sp->getAnchorPoint().x);
 }
 
-float Label::getLetterPosXRight( Sprite* sp )
+float Label::getLetterPosXRight( Sprite* sp ) const
 {
     float scaleX = _scaleX;
     return sp->getPosition().x * scaleX + (sp->getContentSize().width * scaleX * sp->getAnchorPoint().x);
 }
 
-int Label::getCommonLineHeight()
+int Label::getCommonLineHeight() const
 {
     return _commonLineHeight;
 }
 
-int Label::getKerningForCharsPair(unsigned short first, unsigned short second)
+int Label::getKerningForCharsPair(unsigned short first, unsigned short second) const
 {
     return 0;
 }
 
-int Label::getXOffsetForChar(unsigned short c)
+int Label::getXOffsetForChar(unsigned short c) const
 {
     FontLetterDefinition tempDefinition;
     bool validDefinition = _fontAtlas->getLetterDefinitionForChar(c, tempDefinition);
@@ -538,7 +548,7 @@ int Label::getXOffsetForChar(unsigned short c)
     return (tempDefinition.offsetX);
 }
 
-int Label::getYOffsetForChar(unsigned short c)
+int Label::getYOffsetForChar(unsigned short c) const
 {
     FontLetterDefinition tempDefinition;
     bool validDefinition = _fontAtlas->getLetterDefinitionForChar(c, tempDefinition);
@@ -548,7 +558,7 @@ int Label::getYOffsetForChar(unsigned short c)
     return (tempDefinition.offsetY);
 }
 
-int Label::getAdvanceForChar(unsigned short c, int hintPositionInString)
+int Label::getAdvanceForChar(unsigned short c, int hintPositionInString) const
 {
     if (_advances)
     {
@@ -566,13 +576,13 @@ int Label::getAdvanceForChar(unsigned short c, int hintPositionInString)
     }
 }
 
-Rect Label::getRectForChar(unsigned short c)
+Rect Label::getRectForChar(unsigned short c) const
 {
     return _fontAtlas->getFont().getRectForChar(c);
 }
 
 // string related stuff
-int Label::getStringNumLines()
+int Label::getStringNumLines() const
 {
     int quantityOfLines = 1;
     
@@ -593,17 +603,17 @@ int Label::getStringNumLines()
     return quantityOfLines;
 }
 
-int Label::getStringLenght()
+int Label::getStringLenght() const
 {
     return _currentUTF8String ? cc_wcslen(_currentUTF8String) : 0;
 }
 
-unsigned short Label::getCharAtStringPosition(int position)
+unsigned short Label::getCharAtStringPosition(int position) const
 {
     return _currentUTF8String[position];
 }
 
-unsigned short * Label::getUTF8String()
+unsigned short * Label::getUTF8String() const
 {
     return _currentUTF8String;
 }
@@ -613,23 +623,23 @@ void Label::assignNewUTF8String(unsigned short *newString)
     setCurrentString(newString);
 }
 
-TextHAlignment Label::getTextAlignment()
+TextHAlignment Label::getTextAlignment() const
 {
     return _alignment;
 }
 
 // label related stuff
-float Label::getMaxLineWidth()
+float Label::getMaxLineWidth() const
 {
     return _width;
 }
 
-bool Label::breakLineWithoutSpace()
+bool Label::breakLineWithoutSpace() const
 {
     return _lineBreakWithoutSpaces;
 }
 
-Size Label::getLabelContentSize()
+Size Label::getLabelContentSize() const
 {
     return getContentSize();
 }

@@ -12,8 +12,8 @@ public:
     KeyboardTest();
     ~KeyboardTest();
 
-    virtual void keyPressed(int keyCode);
-    virtual void keyReleased(int keyCode);
+    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event);
 
 private:
     LabelTTF*            _label;

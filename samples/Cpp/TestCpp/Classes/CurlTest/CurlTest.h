@@ -10,7 +10,7 @@ public:
     CurlTest();
     ~CurlTest();
 
-    virtual void ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
 
 private:
     cocos2d::LabelTTF*         _label;

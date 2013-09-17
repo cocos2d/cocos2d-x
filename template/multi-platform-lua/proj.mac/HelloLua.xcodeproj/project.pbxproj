@@ -28,6 +28,9 @@
 		1501825E17A74F8000E674E5 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1501825717A74F8000E674E5 /* Opengl.lua */; };
 		1501825F17A74F8000E674E5 /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1501825817A74F8000E674E5 /* OpenglConstants.lua */; };
 		1501826E17A7513400E674E5 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A02F0B17A64D060035E92B /* libchipmunk Mac.a */; };
+		1525770C17CEFB6300BE417B /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1525770917CEFB6200BE417B /* DeprecatedClass.lua */; };
+		1525770D17CEFB6300BE417B /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1525770A17CEFB6300BE417B /* DeprecatedEnum.lua */; };
+		1525770E17CEFB6300BE417B /* DeprecatedOpenglEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1525770B17CEFB6300BE417B /* DeprecatedOpenglEnum.lua */; };
 		15A02F3817A64D1E0035E92B /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F2417A64D1E0035E92B /* background.mp3 */; };
 		15A02F3917A64D1E0035E92B /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F2517A64D1E0035E92B /* background.ogg */; };
 		15A02F3C17A64D1E0035E92B /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F2817A64D1E0035E92B /* crop.png */; };
@@ -40,12 +43,13 @@
 		15A02F4617A64D1E0035E92B /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F3317A64D1E0035E92B /* menu1.png */; };
 		15A02F4717A64D1E0035E92B /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F3417A64D1E0035E92B /* menu2.png */; };
 		15A02F4D17A64D390035E92B /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A02F4B17A64D390035E92B /* AppDelegate.cpp */; };
-		15A02F7017A64DFB0035E92B /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A02F6417A64DFB0035E92B /* AppController.mm */; };
 		15A02F7317A64DFB0035E92B /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F6D17A64DFB0035E92B /* Icon.icns */; };
 		15A02F7417A64DFB0035E92B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F6E17A64DFB0035E92B /* Info.plist */; };
-		15A02F7517A64DFB0035E92B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A02F6F17A64DFB0035E92B /* main.m */; };
+		15A02F7517A64DFB0035E92B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A02F6F17A64DFB0035E92B /* main.cpp */; };
 		15A02F7B17A64E2A0035E92B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F7717A64E2A0035E92B /* InfoPlist.strings */; };
 		15A02F7C17A64E2A0035E92B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F7917A64E2A0035E92B /* MainMenu.xib */; };
+		1ADB273B17CCA0F500634B5E /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ADB273A17CCA0F500634B5E /* Cocos2d.lua */; };
+		ED4D1B4B17D4460E0058FC68 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4D1B4A17D4460E0058FC68 /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +203,9 @@
 		1501825617A74F8000E674E5 /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DrawPrimitives.lua; sourceTree = "<group>"; };
 		1501825717A74F8000E674E5 /* Opengl.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Opengl.lua; sourceTree = "<group>"; };
 		1501825817A74F8000E674E5 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenglConstants.lua; sourceTree = "<group>"; };
+		1525770917CEFB6200BE417B /* DeprecatedClass.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeprecatedClass.lua; sourceTree = "<group>"; };
+		1525770A17CEFB6300BE417B /* DeprecatedEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeprecatedEnum.lua; sourceTree = "<group>"; };
+		1525770B17CEFB6300BE417B /* DeprecatedOpenglEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeprecatedOpenglEnum.lua; sourceTree = "<group>"; };
 		15A02E6017A647C90035E92B /* HelloLua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloLua.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15A02E6817A647C90035E92B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15A02EF317A64D050035E92B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
@@ -215,15 +222,14 @@
 		15A02F3417A64D1E0035E92B /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
 		15A02F4B17A64D390035E92B /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		15A02F4C17A64D390035E92B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		15A02F6317A64DFB0035E92B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		15A02F6417A64DFB0035E92B /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		15A02F6D17A64DFB0035E92B /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		15A02F6E17A64DFB0035E92B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		15A02F6F17A64DFB0035E92B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		15A02F6F17A64DFB0035E92B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		15A02F7817A64E2A0035E92B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		15A02F7A17A64E2A0035E92B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
-		15A02F7D17A64EF30035E92B /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		15A02FAA17A65D810035E92B /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		1ADB273A17CCA0F500634B5E /* Cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cocos2d.lua; sourceTree = "<group>"; };
+		ED4D1B4A17D4460E0058FC68 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +237,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED4D1B4B17D4460E0058FC68 /* IOKit.framework in Frameworks */,
 				1501826E17A7513400E674E5 /* libchipmunk Mac.a in Frameworks */,
 				1501821D17A6706400E674E5 /* libcocos2dx Mac.a in Frameworks */,
 				1501821E17A6706400E674E5 /* libcocos2dx-extensions Mac.a in Frameworks */,
@@ -254,8 +261,12 @@
 		1501825117A74F8000E674E5 /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				1525770917CEFB6200BE417B /* DeprecatedClass.lua */,
+				1525770A17CEFB6300BE417B /* DeprecatedEnum.lua */,
+				1525770B17CEFB6300BE417B /* DeprecatedOpenglEnum.lua */,
 				1501825217A74F8000E674E5 /* AudioEngine.lua */,
 				1501825317A74F8000E674E5 /* CCBReaderLoad.lua */,
+				1ADB273A17CCA0F500634B5E /* Cocos2d.lua */,
 				1501825417A74F8000E674E5 /* Cocos2dConstants.lua */,
 				1501825517A74F8000E674E5 /* Deprecated.lua */,
 				1501825617A74F8000E674E5 /* DrawPrimitives.lua */,
@@ -290,6 +301,7 @@
 		15A02E6217A647C90035E92B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ED4D1B4A17D4460E0058FC68 /* IOKit.framework */,
 				150181F517A6696400E674E5 /* libcurl.dylib */,
 				150181F317A6695400E674E5 /* libz.dylib */,
 				150181EC17A6679B00E674E5 /* ApplicationServices.framework */,
@@ -356,13 +368,10 @@
 		15A02F6217A64DFB0035E92B /* Mac */ = {
 			isa = PBXGroup;
 			children = (
-				15A02F7D17A64EF30035E92B /* Prefix.pch */,
-				15A02F6317A64DFB0035E92B /* AppController.h */,
-				15A02F6417A64DFB0035E92B /* AppController.mm */,
 				15A02F7617A64E2A0035E92B /* en.lproj */,
 				15A02F6D17A64DFB0035E92B /* Icon.icns */,
 				15A02F6E17A64DFB0035E92B /* Info.plist */,
-				15A02F6F17A64DFB0035E92B /* main.m */,
+				15A02F6F17A64DFB0035E92B /* main.cpp */,
 			);
 			name = Mac;
 			sourceTree = "<group>";
@@ -561,6 +570,10 @@
 				1501825D17A74F8000E674E5 /* DrawPrimitives.lua in Resources */,
 				1501825E17A74F8000E674E5 /* Opengl.lua in Resources */,
 				1501825F17A74F8000E674E5 /* OpenglConstants.lua in Resources */,
+				1ADB273B17CCA0F500634B5E /* Cocos2d.lua in Resources */,
+				1525770C17CEFB6300BE417B /* DeprecatedClass.lua in Resources */,
+				1525770D17CEFB6300BE417B /* DeprecatedEnum.lua in Resources */,
+				1525770E17CEFB6300BE417B /* DeprecatedOpenglEnum.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,8 +585,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A02F4D17A64D390035E92B /* AppDelegate.cpp in Sources */,
-				15A02F7017A64DFB0035E92B /* AppController.mm in Sources */,
-				15A02F7517A64DFB0035E92B /* main.m in Sources */,
+				15A02F7517A64DFB0035E92B /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

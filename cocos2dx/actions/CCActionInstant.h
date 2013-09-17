@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include <functional>
 
 #include "CCStdC.h"
-#include "ccTypeInfo.h"
 #include "CCAction.h"
 
 NS_CC_BEGIN
@@ -226,6 +225,9 @@ class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 public:
 	/** creates the action with the callback of type std::function<void()>.
 	 This is the preferred way to create the callback.
+     * When this funtion bound in js or lua ,the input param will be changed
+     * In js: var create(var func, var this, var [data]) or var create(var func)
+     * In lua:local create(local funcID)
 	 */
     static CallFunc * create(const std::function<void()>& func);
 
@@ -233,16 +235,25 @@ public:
 
      typedef void (Object::*SEL_CallFunc)();
 	 @deprecated Use the std::function API instead.
+     * @js NA
+     * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Object* pSelectorTarget, SEL_CallFunc selector);
 
 public:
+    /**
+     * @js ctor
+     */
     CallFunc()
         : _selectorTarget(NULL)
         , _callFunc(NULL)
 		, _function(nullptr)
     {
     }
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CallFunc();
 
 	/** initializes the action with the callback 
@@ -252,6 +263,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget);
 
 	/** initializes the action with the std::function<void()>
+     * @js NK
+     * @lua NK
 	 */
     bool initWithFunction(const std::function<void()>& func);
 
@@ -297,7 +310,7 @@ protected:
 @brief Calls a 'callback' with the node as the first argument
 N means Node
 */
-class CC_DLL CallFuncN : public CallFunc, public TypeInfo
+class CC_DLL CallFuncN : public CallFunc
 {
 public:
     /** creates the action with the callback of type std::function<void()>.
@@ -325,11 +338,6 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
 
-    virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
-		return id;
-    }
-
     //
     // Overrides
     //
@@ -352,11 +360,6 @@ class CC_DLL  __CCCallFuncND : public CallFunc
 public:
     /** creates the action with the callback and the data to pass as an argument */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
-    
-    virtual long getClassTypeInfo() {
-        static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
-		return id;
-    }
     
 protected:
     /** initializes the action with the callback and the data to pass as an argument */
@@ -382,7 +385,7 @@ protected:
  @since v0.99.5
  */
 
-class CC_DLL __CCCallFuncO : public CallFunc, public TypeInfo
+class CC_DLL __CCCallFuncO : public CallFunc
 {
 public:
     /** creates the action with the callback
@@ -390,14 +393,15 @@ public:
      typedef void (Object::*SEL_CallFuncO)(Object*);
      */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
-    
+    /**
+     * @js ctor
+     */
     __CCCallFuncO();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~__CCCallFuncO();
-    
-    virtual long getClassTypeInfo() {
-	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
-		return id;
-    }
     
 protected:
     /** initializes the action with the callback

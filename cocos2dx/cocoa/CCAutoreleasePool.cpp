@@ -31,11 +31,12 @@ static PoolManager* s_pPoolManager = NULL;
 AutoreleasePool::AutoreleasePool()
 {
     _managedObjectArray = new Array();
-    _managedObjectArray->init();
+    _managedObjectArray->initWithCapacity(150);
 }
 
 AutoreleasePool::~AutoreleasePool()
 {
+    CCLOGINFO("deallocing AutoreleasePool: %p", this);
     CC_SAFE_DELETE(_managedObjectArray);
 }
 
@@ -107,12 +108,13 @@ void PoolManager::purgePoolManager()
 PoolManager::PoolManager()
 {
     _releasePoolStack = new Array();    
-    _releasePoolStack->init();
+    _releasePoolStack->initWithCapacity(150);
     _curReleasePool = 0;
 }
 
 PoolManager::~PoolManager()
 {
+    CCLOGINFO("deallocing PoolManager: %p", this);
     finalize();
  
      // we only release the last autorelease pool here 
@@ -165,10 +167,10 @@ void PoolManager::pop()
 
 //         if(nCount > 1)
 //         {
-//             _curReleasePool = _releasePoolStack->objectAtIndex(nCount - 2);
+//             _curReleasePool = _releasePoolStack->getObjectAtIndex(nCount - 2);
 //             return;
 //         }
-        _curReleasePool = (AutoreleasePool*)_releasePoolStack->objectAtIndex(nCount - 2);
+        _curReleasePool = (AutoreleasePool*)_releasePoolStack->getObjectAtIndex(nCount - 2);
     }
 
     /*_curReleasePool = NULL;*/

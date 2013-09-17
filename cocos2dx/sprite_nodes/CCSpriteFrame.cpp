@@ -116,7 +116,7 @@ bool SpriteFrame::initWithTextureFilename(const char* filename, const Rect& rect
 
 SpriteFrame::~SpriteFrame(void)
 {
-    CCLOGINFO("cocos2d: deallocing %p", this);
+    CCLOGINFO("deallocing SpriteFrame: %p", this);
     CC_SAFE_RELEASE(_texture);
 }
 
@@ -126,6 +126,7 @@ SpriteFrame* SpriteFrame::clone() const
     SpriteFrame *copy = new SpriteFrame();
     copy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
     copy->setTexture(_texture);
+    copy->autorelease();
     return copy;
 }
 

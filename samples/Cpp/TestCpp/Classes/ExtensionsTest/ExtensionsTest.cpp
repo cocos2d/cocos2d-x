@@ -7,10 +7,13 @@
 #include "NetworkTest/HttpClientTest.h"
 #endif
 #include "TableViewTest/TableViewTestScene.h"
-#include "ComponentsTest/ComponentsTestScene.h"
-#include "ArmatureTest/ArmatureScene.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "CocoStudioArmatureTest/ArmatureScene.h"
+#include "CocoStudioComponentsTest/ComponentsTestScene.h"
+#include "CocoStudioSceneTest/SceneEditorTest.h"
+#include "CocoStudioGUITest/CocosGUIScene.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NetworkTest/WebSocketTest.h"
 #include "NetworkTest/SocketIOTest.h"
 #endif
@@ -59,7 +62,7 @@ static struct {
 	{ "HttpClientTest", [](Object *sender){ runHttpClientTest();}
 	},
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	{ "WebSocketTest", [](Object *sender){ runWebSocketTest();}
 	},
 	{ "SocketIOTest", [](Object *sender){ runSocketIOTest();}
@@ -71,13 +74,22 @@ static struct {
 #endif
 	{ "TableViewTest", [](Object *sender){ runTableViewTest();}
 	},
-    { "CommponentTest", [](Object *sender) { runComponentsTestLayerTest(); }
+	{ "CocoStudioArmatureTest", [](Object *sender) { ArmatureTestScene *scene = new ArmatureTestScene();
+	                                       scene->runThisTest();
+	                                       scene->release();
+	}
+	},
+    { "CocoStudioComponentsTest", [](Object *sender) { runComponentsTestLayerTest(); }
     },
-    { "ArmatureTest", [](Object *sender) { ArmatureTestScene *scene = new ArmatureTestScene();
-                                             scene->runThisTest();
-                                             scene->release();
-                                        }
-    },
+	{ "CocoStudioSceneTest", [](Object *sender) { runSceneEditorTestLayer(); }
+	},
+    { "CocoStudioGUITest", [](Object *sender)
+        {
+            CocosGUITestScene* pScene = new CocosGUITestScene();
+            pScene->runThisTest();
+            pScene->release();
+        }
+	},
 };
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);
@@ -111,16 +123,16 @@ void ExtensionsMainLayer::onEnter()
     addChild(_itemMenu);
 }
 
-void ExtensionsMainLayer::ccTouchesBegan(Set  *touches, Event  *event)
+void ExtensionsMainLayer::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = static_cast<Touch*>(touches[0]);
 
     _beginPos = touch->getLocation();    
 }
 
-void ExtensionsMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
+void ExtensionsMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = static_cast<Touch*>(touches[0]);
 
     auto touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;

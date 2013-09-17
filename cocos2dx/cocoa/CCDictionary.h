@@ -81,6 +81,8 @@ private:
 public:
     /**
      *  The destructor of DictElement.
+     * @js NA
+     * @lua NA
      */
     ~DictElement();
 
@@ -172,20 +174,30 @@ public:
 class CC_DLL Dictionary : public Object, public Clonable
 {
 public:
-    /** 
+    /**
      * The constructor of Dictionary.
+     * @js NA
+     * @lua NA
      */
     Dictionary();
 
     /**
      * The destructor of Dictionary
+     * @js NA
+     * @lua NA
      */
     ~Dictionary();
 
+    /** Initializes the dictionary. It returns true if the initializations was successful. 
+     * @js NA
+     * @lua NA
+     */
+    bool init();
     /**
      *  Get the count of elements in Dictionary.
      *
      *  @return  The count of elements.
+     * @js NA
      */
     unsigned int count();
 
@@ -193,6 +205,7 @@ public:
      *  Return all keys of elements.
      *
      *  @return  The array contains all keys of elements. It's an autorelease object yet.
+     * @js NA
      */
     Array* allKeys();
 
@@ -200,6 +213,7 @@ public:
      *  Get all keys according to the specified object.
      *  @warning  We use '==' to compare two objects
      *  @return   The array contains all keys for the specified object. It's an autorelease object yet.
+     * @js NA
      */
     Array* allKeysForObject(Object* object);
 
@@ -220,6 +234,7 @@ public:
      *     }
      *  @endcode
      *  @see objectForKey(intptr_t)
+     * @js NA
      */
     Object* objectForKey(const std::string& key);
     
@@ -230,6 +245,7 @@ public:
      *  @param key  The integer key for searching.
      *  @return The object matches the key.
      *  @see objectForKey(const std::string&)
+     * @js NA
      */
     Object* objectForKey(intptr_t key);
     
@@ -240,6 +256,7 @@ public:
      *  @return An instance of String.
      *          It will return an empty string if the objects aren't String pointer or the key wasn't found.
      *  @see valueForKey(intptr_t)
+     *  @js NA
      */
     const String* valueForKey(const std::string& key);
     
@@ -250,6 +267,7 @@ public:
      *  @return An instance of String.
      *          It will return an empty string if the objects aren't String pointer or the key wasn't found.
      *  @see valueForKey(intptr_t)
+     *  @js NA
      */
     const String* valueForKey(intptr_t key);
 
@@ -263,6 +281,7 @@ public:
      *  @param pObject  The Object to be inserted.
      *  @param key      The string key for searching.
      *  @see setObject(Object*, intptr_t)
+     * @js NA
      */
     void setObject(Object* pObject, const std::string& key);
     
@@ -275,6 +294,7 @@ public:
      *  @param pObject  The Object to be inserted.
      *  @param key      The string key for searching.
      *  @see setObject(Object*, const std::string&)
+     *  @js NA
      */
     void setObject(Object* pObject, intptr_t key);
 
@@ -284,6 +304,7 @@ public:
      *  @param key  The string key for searching.
      *  @see removeObjectForKey(intptr_t), removeObjectsForKeys(Array*),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
+     *  @js NA
      */
     void removeObjectForKey(const std::string& key);
     
@@ -293,6 +314,7 @@ public:
      *  @param key  The integer key for searching.
      *  @see removeObjectForKey(const std::string&), removeObjectsForKeys(Array*),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
+     *  @js NA
      */
     void removeObjectForKey(intptr_t key);
     
@@ -302,6 +324,7 @@ public:
      *  @param pKeyArray  The array contains keys to be removed.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
+     *  @js NA
      */
     void removeObjectsForKeys(Array* pKeyArray);
     
@@ -311,6 +334,8 @@ public:
      *  @param pElement  The element need to be removed.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectsForKeys(Array*), removeAllObjects().
+     * @js NA
+     * @lua NA
      */
     void removeObjectForElememt(DictElement* pElement);
     
@@ -319,6 +344,7 @@ public:
      *
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectsForKeys(Array*), removeObjectForElememt(DictElement*).
+     * @js NA
      */
     void removeAllObjects();
     
@@ -327,6 +353,8 @@ public:
      *
      *  @return The random object. 
      *  @see objectForKey(intptr_t), objectForKey(const std::string&)
+     *  @js NA
+     *  @lua NA
      */
     Object* randomObject();
     
@@ -334,6 +362,7 @@ public:
      *  Create a dictionary.
      *  @return A dictionary which is an autorelease object.
      *  @see createWithDictionary(Dictionary*), createWithContentsOfFile(const char*), createWithContentsOfFileThreadSafe(const char*).
+     *  @js NA
      */
     static Dictionary* create();
 
@@ -343,6 +372,7 @@ public:
      *  @param srcDict The exist dictionary.
      *  @return A dictionary which is an autorelease object.
      *  @see create(), createWithContentsOfFile(const char*), createWithContentsOfFileThreadSafe(const char*).
+     *  @js NA
      */
     static Dictionary* createWithDictionary(Dictionary* srcDict);
     
@@ -351,6 +381,7 @@ public:
      *  @param  pFileName  The name of the plist file.
      *  @return A dictionary which is an autorelease object.
      *  @see create(), createWithDictionary(Dictionary*), createWithContentsOfFileThreadSafe(const char*).
+     *  @js NA
      */
     static Dictionary* createWithContentsOfFile(const char *pFileName);
     
@@ -358,6 +389,8 @@ public:
      *  Write a dictionary to a plist file.
      *  @param fullPath The full path of the plist file. You can get writeable path by getWritablePath()
      *  @return true if successed, false if failed
+     *  @js NA
+     *  @lua NA
      */
     bool writeToFile(const char *fullPath);
      
@@ -371,11 +404,20 @@ public:
      *
      *  @param  pFileName  The name of the plist file.
      *  @return A dictionary which isn't an autorelease object.
+     *  @js NA
+     *  @lua NA
      */
     static Dictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
 
-    /* override functions */
+    /* override functions 
+     *  @js NA
+     *  @lua NA
+     */
     virtual void acceptVisitor(DataVisitor &visitor);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual Dictionary* clone() const;
     
 private:

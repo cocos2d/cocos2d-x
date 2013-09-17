@@ -82,7 +82,7 @@ GLProgram::GLProgram()
 
 GLProgram::~GLProgram()
 {
-    CCLOGINFO("cocos2d: %s %d deallocing %p", __FUNCTION__, __LINE__, this);
+    CCLOGINFO("%s %d deallocing GLProgram: %p", __FUNCTION__, __LINE__, this);
 
     // there is no need to delete the shaders. They should have been already deleted.
     CCASSERT(_vertShader == 0, "Vertex Shaders should have been already deleted");
@@ -202,11 +202,11 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         
         if (type == GL_VERTEX_SHADER)
         {
-            CCLOG("cocos2d: %s", vertexShaderLog());
+            CCLOG("cocos2d: %s", getVertexShaderLog());
         }
         else
         {
-            CCLOG("cocos2d: %s", fragmentShaderLog());
+            CCLOG("cocos2d: %s", getFragmentShaderLog());
         }
         free(src);
 
@@ -302,17 +302,17 @@ const char* GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc
     return log->getCString();
 }
 
-const char* GLProgram::vertexShaderLog() const
+const char* GLProgram::getVertexShaderLog() const
 {
     return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
-const char* GLProgram::fragmentShaderLog() const
+const char* GLProgram::getFragmentShaderLog() const
 {
     return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
-const char* GLProgram::programLog() const
+const char* GLProgram::getProgramLog() const
 {
     return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }
