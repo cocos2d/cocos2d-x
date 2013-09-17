@@ -154,18 +154,15 @@ public:
     
     //override "getLayoutExecutant" method of widget.
     virtual LayoutExecutant* getLayoutExecutant() const;
-
-    //override "releaseResoures" method of widget.
-    virtual void releaseResoures();
     
     //override "addChild" method of widget.
     virtual bool addChild(UIWidget* widget);
     
     //override "removeAllChildrenAndCleanUp" method of widget.
-    virtual void removeAllChildrenAndCleanUp(bool cleanup);
+    virtual void removeAllChildren();
     
     //override "removeChild" method of widget.
-	virtual bool removeChild(UIWidget* child,bool cleanup);
+	virtual bool removeChild(UIWidget* child);
     
     //override "getChildren" method of widget.
     virtual CCArray* getChildren();
@@ -184,8 +181,13 @@ public:
     
     //override "onTouchLongClicked" method of widget.
     virtual void onTouchLongClicked(const CCPoint &touchPoint);
-//    float getScrollDegreeRange() const;
-//    void setScrollDegreeRange(float range);
+    
+    virtual void update(float dt);
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -202,8 +204,9 @@ protected:
     virtual void handleReleaseLogic(const CCPoint &touchPoint);
     virtual void interceptTouchEvent(int handleState,UIWidget* sender,const CCPoint &touchPoint);
     virtual void checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint);
-    virtual void update(float dt);
     void recordSlidTime(float dt);
+    //override "releaseResoures" method of widget.
+    virtual void releaseResoures();
     
     void scrollToTopEvent();
     void scrollToBottomEvent();
@@ -212,11 +215,14 @@ protected:
     void setMoveDirection(SCROLLVIEW_MOVE_DIR dir);
     SCROLLVIEW_MOVE_DIR getMoveDirection();
     virtual void onSizeChanged();
+//    virtual bool isInScrollDegreeRange(UIWidget* widget);
     /*compatible*/
+    /**
+     * These methods will be removed
+     */
     virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
-
 protected:
     SCROLLVIEW_DIR m_eDirection;
     SCROLLVIEW_MOVE_DIR m_eMoveDirection;
@@ -227,9 +233,6 @@ protected:
     float m_fBottomBoundary;//test
     float m_fLeftBoundary;
     float m_fRightBoundary;
-    
-    
-    int m_nMoveDirection;//0 pull down, 1 push up
     
     bool m_bTopEnd;
     bool m_bBottomEnd;
@@ -256,7 +259,6 @@ protected:
     SEL_ScrollToRightEvent m_pfnScrollToRightSelector;
     
     Layout* m_pInnerContainer;
-    float m_fScrollDegreeRange;
 };
 
 NS_CC_EXT_END
