@@ -4219,7 +4219,6 @@
 		A035994D17821D9B00987F6C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B3F4401C17DF0590003B4F84 /* PhysicsTest */,
 				1A33319117E2DF4E00ED3802 /* NewEventDispatcherTest */,
 				A035994E17821D9B00987F6C /* AccelerometerTest */,
 				A035995117821D9B00987F6C /* ActionManagerTest */,
@@ -4261,6 +4260,7 @@
 				A0359A5717821D9B00987F6C /* ParallaxTest */,
 				A0359A5A17821D9B00987F6C /* ParticleTest */,
 				A0359A5D17821D9C00987F6C /* PerformanceTest */,
+				B3F4401C17DF0590003B4F84 /* PhysicsTest */,
 				A0359A6A17821D9C00987F6C /* RenderTextureTest */,
 				A0359A6D17821D9C00987F6C /* RotateWorldTest */,
 				A0359A7017821D9C00987F6C /* SceneTest */,
