@@ -46,14 +46,16 @@ enum SCROLLVIEW_MOVE_DIR
     SCROLLVIEW_MOVE_DIR_RIGHT,
 };
 
-typedef void (Object::*SEL_ScrollToTopEvent)(Object*);
-typedef void (Object::*SEL_ScrollToBottomEvent)(Object*);
-typedef void (Object::*SEL_ScrollToLeftEvent)(Object*);
-typedef void (Object::*SEL_ScrollToRightEvent)(Object*);
-#define coco_ScrollToTopSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToTopEvent)(&_SELECTOR)
-#define coco_ScrollToBottomSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToBottomEvent)(&_SELECTOR)
-#define coco_ScrollToLeftSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToLeftEvent)(&_SELECTOR)
-#define coco_ScrollToRightSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToRightEvent)(&_SELECTOR)
+typedef enum
+{
+    SCROLLVIEW_EVENT_SCROLL_TO_TOP,
+    SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
+    SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
+    SCROLLVIEW_EVENT_SCROLL_TO_RIGHT,
+}ScrollviewEventType;
+
+typedef void (Object::*SEL_ScrollViewEvent)(Object*, ScrollviewEventType);
+#define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
 class UIScrollView : public Layout , public UIScrollInterface
@@ -130,24 +132,9 @@ public:
 	const Size& getInnerContainerSize() const;
     
     /**
-     * Add call back function called when scrollview scrolled to top.
+     * Add call back function called scrollview event triggered
      */
-    void addScrollToTopEvent(Object* target, SEL_ScrollToTopEvent selector);
-    
-    /**
-     * Add call back function called when scrollview scrolled to bottom.
-     */
-    void addScrollToBottomEvent(Object* target, SEL_ScrollToBottomEvent selector);
-    
-    /**
-     * Add call back function called when scrollview scrolled to left.
-     */
-    void addScrollToLeftEvent(Object* target, SEL_ScrollToLeftEvent selector);
-    
-    /**
-     * Add call back function called when scrollview scrolled to right.
-     */
-    void addScrollToRightEvent(Object* target, SEL_ScrollToRightEvent selector);
+    void addEventListener(Object* target, SEL_ScrollViewEvent selector);    
     
     //override "setLayoutExecutant" method of widget.
     virtual void setLayoutExecutant(LayoutExecutant* exe);
@@ -217,6 +204,8 @@ protected:
     virtual void onSizeChanged();
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
+    Layout* _innerContainer;
+    
     SCROLLVIEW_DIR _direction;
     SCROLLVIEW_MOVE_DIR _moveDirection;
     float _touchStartLocation;
@@ -242,16 +231,9 @@ protected:
     Point _moveChildPoint;
     float _childFocusCancelOffset;
     
-    Object* _scrollToTopListener;
-    SEL_ScrollToTopEvent _scrollToTopSelector;
-    Object* _scrollToBottomListener;
-    SEL_ScrollToBottomEvent _scrollToBottomSelector;
-    Object* _scrollToLeftListener;
-    SEL_ScrollToLeftEvent _scrollToLeftSelector;
-    Object* _scrollToRightListener;
-    SEL_ScrollToRightEvent _scrollToRightSelector;
+    Object* _eventListener;
+    SEL_ScrollViewEvent _eventSelector;
     
-    Layout* _innerContainer;
 };
 
 NS_CC_EXT_END
