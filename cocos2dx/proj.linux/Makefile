@@ -1,17 +1,17 @@
 TARGET = libcocos2d.so
 
 INCLUDES += \
-			-I../platform/third_party/linux/libfreetype2 \
-			-I../platform/third_party/common/etc \
-		       -I../platform/third_party/common/s3tc \
-		      -I../platform/third_party/common/atitc \
-			-I../../extensions \
-			-I../../extensions/CCBReader \
-			-I../../extensions/GUI/CCControlExtension \
-			-I../../extensions/GUI/CCControlExtension \
-			-I../../external/chipmunk/include/chipmunk \
-			-I../../extensions/network \
-            -I../../extensions/Components \
+	-I../platform/third_party/linux/libfreetype2 \
+	-I../platform/third_party/common/etc \
+	-I../platform/third_party/common/s3tc \
+        -I../platform/third_party/common/atitc \
+	-I../../extensions \
+	-I../../extensions/CCBReader \
+	-I../../extensions/GUI/CCControlExtension \
+	-I../../extensions/GUI/CCControlExtension \
+	-I../../external/chipmunk/include/chipmunk \
+	-I../../extensions/network \
+        -I../../extensions/Components
 
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \
@@ -81,9 +81,19 @@ SOURCES = ../actions/CCAction.cpp \
 ../particle_nodes/CCParticleSystem.cpp \
 ../particle_nodes/CCParticleSystemQuad.cpp \
 ../particle_nodes/CCParticleBatchNode.cpp \
+../physics/Box2D/CCPhysicsContactInfo.cpp \
+../physics/Box2D/CCPhysicsJointInfo.cpp \
+../physics/Box2D/CCPhysicsShapeInfo.cpp \
+../physics/Box2D/CCPhysicsBodyInfo.cpp \
+../physics/Box2D/CCPhysicsWorldInfo.cpp \
+../physics/chipmunk/CCPhysicsContactInfo.cpp \
+../physics/chipmunk/CCPhysicsJointInfo.cpp \
+../physics/chipmunk/CCPhysicsShapeInfo.cpp \
+../physics/chipmunk/CCPhysicsBodyInfo.cpp \
+../physics/chipmunk/CCPhysicsWorldInfo.cpp \
 ../physics/CCPhysicsBody.cpp \
-../physics/CCPhysicsContactDelegate.cpp \
-../physics/CCPhysicsFixture.cpp \
+../physics/CCPhysicsContact.cpp \
+../physics/CCPhysicsShape.cpp \
 ../physics/CCPhysicsJoint.cpp \
 ../physics/CCPhysicsWorld.cpp \
 ../platform/CCSAXParser.cpp \
@@ -166,6 +176,8 @@ include cocos2dx.mk
 
 CXXFLAGS += -Wno-sequence-point
 CCFLAGS += -Wno-sequence-point
+
+STATICLIBS += $(LIB_DIR)/libchipmunk.a
 
 TARGET := $(LIB_DIR)/$(TARGET)
 
