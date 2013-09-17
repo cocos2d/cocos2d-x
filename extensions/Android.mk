@@ -55,10 +55,6 @@ CocoStudio/Components/CCComAudio.cpp \
 CocoStudio/Components/CCComController.cpp \
 CocoStudio/Components/CCComRender.cpp \
 CocoStudio/Components/CCInputDelegate.cpp \
-CocoStudio/GUI/Action/UIAction.cpp \
-CocoStudio/GUI/Action/UIActionFrame.cpp \
-CocoStudio/GUI/Action/UIActionManager.cpp \
-CocoStudio/GUI/Action/UIActionNode.cpp \
 CocoStudio/GUI/BaseClasses/UIRootWidget.cpp \
 CocoStudio/GUI/BaseClasses/UIWidget.cpp \
 CocoStudio/GUI/Layouts/Layout.cpp \
@@ -89,6 +85,11 @@ CocoStudio/Json/lib_json/json_value.cpp \
 CocoStudio/Json/lib_json/json_writer.cpp \
 CocoStudio/Reader/CCSGUIReader.cpp \
 CocoStudio/Reader/CCSSceneReader.cpp \
+CocoStudio/Action/CCActionFrame.cpp \
+CocoStudio/Action/CCActionFrameEasing.cpp \
+CocoStudio/Action/CCActionManagerEx.cpp \
+CocoStudio/Action/CCActionNode.cpp \
+CocoStudio/Action/CCActionObject.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
 GUI/CCControlExtension/CCControlColourPicker.cpp \
