@@ -101,6 +101,7 @@ static const char *A_RED_OFFSET = "rM";
 static const char *A_GREEN_OFFSET = "gM";
 static const char *A_BLUE_OFFSET = "bM";
 static const char *A_COLOR_TRANSFORM = "colorTransform";
+static const char *A_TWEEN_FRAME = "tweenFrame";
 //static const char *A_ROTATION = "rotation";
 //static const char *A_USE_COLOR_INFO = "uci";
 
@@ -853,6 +854,28 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
     }
 
 
+	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
+	CCFrameData **frames = (CCFrameData **)movBoneData->frameList.data->arr;
+	for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
+	{
+		if (i > 0)
+		{
+			float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
+			float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+
+			if (difSkewX < -M_PI || difSkewX > M_PI)
+			{
+				frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+			}
+
+			if (difSkewY < -M_PI || difSkewY > M_PI)
+			{
+				frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+			}
+		}
+	}
+
+
     //
     FrameData *frameData = new FrameData();
     frameData->copy((FrameData *)movBoneData->frameList.getLastObject());
@@ -1405,6 +1428,31 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(cs::JsonDictionary &json)
         delete dic;
     }
 
+
+	if (s_CocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
+	{
+		//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
+		CCFrameData **frames = (CCFrameData **)movementBoneData->frameList.data->arr;
+		for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
+		{
+			if (i > 0)
+			{
+				float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
+				float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+
+				if (difSkewX < -M_PI || difSkewX > M_PI)
+				{
+					frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+				}
+
+				if (difSkewY < -M_PI || difSkewY > M_PI)
+				{
+					frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+				}
+			}
+		}
+	}
+
     if (s_CocoStudioVersion < VERSION_COMBINED)
     {
         if (movementBoneData->frameList.count() > 0)
@@ -1430,6 +1478,7 @@ FrameData *DataReaderHelper::decodeFrame(cs::JsonDictionary &json)
     frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
     frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
     frameData->blendType = (BlendType)json.getItemIntValue(A_BLEND_TYPE, 0);
+	frameData->isTween = (bool)json.getItemBoolvalue(A_TWEEN_FRAME, true);
 
     const char *event = json.getItemStringValue(A_EVENT);
     if (event != NULL)
