@@ -28,6 +28,7 @@
 NS_CC_EXT_BEGIN
 
 UIScrollView::UIScrollView():
+_innerContainer(NULL),
 _direction(SCROLLVIEW_DIR_VERTICAL),
 _moveDirection(SCROLLVIEW_MOVE_DIR_NONE),
 _touchStartLocation(0.0f),
@@ -48,15 +49,8 @@ _bePressed(false),
 _slidTime(0.0f),
 _moveChildPoint(Point::ZERO),
 _childFocusCancelOffset(5.0f),
-_scrollToTopListener(NULL),
-_scrollToTopSelector(NULL),
-_scrollToBottomListener(NULL),
-_scrollToBottomSelector(NULL),
-_scrollToLeftListener(NULL),
-_scrollToLeftSelector(NULL),
-_scrollToRightListener(NULL),
-_scrollToRightSelector(NULL),
-_innerContainer(NULL)
+_eventListener(NULL),
+_eventSelector(NULL)
 {
 }
 
@@ -609,58 +603,40 @@ void UIScrollView::checkChildInfo(int handleState,UIWidget* sender,const Point &
 
 void UIScrollView::scrollToTopEvent()
 {
-    if (_scrollToTopListener && _scrollToTopSelector)
+    if (_eventListener && _eventSelector)
     {
-        (_scrollToTopListener->*_scrollToTopSelector)(this);
+        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
     }
 }
 
 void UIScrollView::scrollToBottomEvent()
 {
-    if (_scrollToBottomListener && _scrollToBottomSelector)
+    if (_eventListener && _eventSelector)
     {
-        (_scrollToBottomListener->*_scrollToBottomSelector)(this);
+        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
     }
 }
 
 void UIScrollView::scrollToLeftEvent()
 {
-    if (_scrollToLeftListener && _scrollToLeftSelector)
+    if (_eventListener && _eventSelector)
     {
-        (_scrollToLeftListener->*_scrollToLeftSelector)(this);
+        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
     }
 }
 
 void UIScrollView::scrollToRightEvent()
 {
-    if (_scrollToRightListener && _scrollToRightSelector)
+    if (_eventListener && _eventSelector)
     {
-        (_scrollToRightListener->*_scrollToRightSelector)(this);
+        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
     }
 }
 
-void UIScrollView::addScrollToTopEvent(Object *target, SEL_ScrollToTopEvent selector)
+void UIScrollView::addEventListener(Object *target, SEL_ScrollViewEvent selector)
 {
-    _scrollToTopListener = target;
-    _scrollToTopSelector = selector;
-}
-
-void UIScrollView::addScrollToBottomEvent(Object *target, SEL_ScrollToBottomEvent selector)
-{
-    _scrollToBottomListener = target;
-    _scrollToBottomSelector = selector;
-}
-
-void UIScrollView::addScrollToLeftEvent(Object *target, SEL_ScrollToLeftEvent selector)
-{
-    _scrollToLeftListener = target;
-    _scrollToLeftSelector = selector;
-}
-
-void UIScrollView::addScrollToRightEvent(Object *target, SEL_ScrollToRightEvent selector)
-{
-    _scrollToRightListener = target;
-    _scrollToRightSelector = selector;
+    _eventListener = target;
+    _eventSelector = selector;
 }
 
 void UIScrollView::setDirection(SCROLLVIEW_DIR dir)
@@ -696,6 +672,11 @@ void UIScrollView::setLayoutExecutant(LayoutExecutant *exe)
 LayoutExecutant* UIScrollView::getLayoutExecutant() const
 {
     return _innerContainer->getLayoutExecutant();
+}
+
+const char* UIScrollView::getDescription() const
+{
+    return "ScrollView";
 }
 
 NS_CC_EXT_END

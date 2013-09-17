@@ -431,54 +431,6 @@ void UIButton::setAnchorPoint(const Point &pt)
     _titleRenderer->setPosition(Point(_size.width*(0.5f-_anchorPoint.x), _size.height*(0.5f-_anchorPoint.y)));
 }
 
-void UIButton::setNormalSpriteFrame(SpriteFrame *frame)
-{
-    if (!frame)
-    {
-        return;
-    }
-    if (_scale9Enabled)
-    {
-        dynamic_cast<Scale9Sprite*>(_buttonNormalRenderer)->setSpriteFrame(frame);
-    }
-    else
-    {
-        dynamic_cast<Sprite*>(_buttonNormalRenderer)->setDisplayFrame(frame);
-    }
-}
-
-void UIButton::setPressedSpriteFrame(SpriteFrame *frame)
-{
-    if (!frame)
-    {
-        return;
-    }
-    if (_scale9Enabled)
-    {
-        dynamic_cast<Scale9Sprite*>(_buttonClickedRenderer)->setSpriteFrame(frame);
-    }
-    else
-    {
-        dynamic_cast<Sprite*>(_buttonClickedRenderer)->setDisplayFrame(frame);
-    }
-}
-
-void UIButton::setDisabledSpriteFrame(SpriteFrame *frame)
-{
-    if (!frame)
-    {
-        return;
-    }
-    if (_scale9Enabled)
-    {
-        dynamic_cast<Scale9Sprite*>(_buttonDisableRenderer)->setSpriteFrame(frame);
-    }
-    else
-    {
-        dynamic_cast<Sprite*>(_buttonDisableRenderer)->setDisplayFrame(frame);
-    }
-}
-
 void UIButton::onSizeChanged()
 {
     normalTextureScaleChangedWithSize();
@@ -655,6 +607,11 @@ void UIButton::setColor(const Color3B &color)
 {
     UIWidget::setColor(color);
     setTitleColor(_titleColor);
+}
+
+const char* UIButton::getDescription() const
+{
+    return "Button";
 }
 
 NS_CC_EXT_END
