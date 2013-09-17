@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Change directory to the location of this script
+cd $(dirname ${BASH_SOURCE[0]})
+
 DEPENDS='libx11-dev'
 DEPENDS+=' libxmu-dev'
 DEPENDS+=' libglu1-mesa-dev'
@@ -27,4 +30,7 @@ if [ -n "$MISSING" ]; then
     echo -e $TXTCOLOR_GREEN"Missing packages: $MISSING.\nYou may be asked for your password for package installation."$TXTCOLOR_DEFAULT
     sudo apt-get --force-yes --yes install $MISSING
 fi
+
+# install glfw
+tools/travis-scripts/install_glfw.sh
 
