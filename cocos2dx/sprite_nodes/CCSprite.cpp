@@ -295,13 +295,19 @@ Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 
 Sprite::Sprite(void)
 : _shouldBeHidden(false)
-, _texture(NULL)
+, _texture(nullptr)
+#ifdef CC_USE_PHYSICS
+, _physicsBody(nullptr)
+#endif
 {
 }
 
 Sprite::~Sprite(void)
 {
     CC_SAFE_RELEASE(_texture);
+#ifdef CC_USE_PHYSICS
+    CC_SAFE_RELEASE(_physicsBody);
+#endif
 }
 
 void Sprite::setTextureRect(const Rect& rect)
@@ -784,12 +790,27 @@ void Sprite::setPosition(const Point& pos)
 {
     Node::setPosition(pos);
     SET_DIRTY_RECURSIVELY();
+    
+#ifdef CC_USE_PHYSICS
+    if (_physicsBody)
+    {
+        _physicsBody->setPosition(pos);
+    }
+#endif
 }
 
-void Sprite::setRotation(float fRotation)
+void Sprite::setRotation(float rotation)
 {
-    Node::setRotation(fRotation);
+    Node::setRotation(rotation);
+    
     SET_DIRTY_RECURSIVELY();
+    
+#ifdef CC_USE_PHYSICS
+    if (_physicsBody)
+    {
+        _physicsBody->setRotation(rotation);
+    }
+#endif
 }
 
 void Sprite::setRotationX(float fRotationX)
@@ -885,6 +906,33 @@ bool Sprite::isFlippedY(void) const
 {
     return _flippedY;
 }
+
+#ifdef CC_USE_PHYSICS
+void Sprite::setPhysicsBody(PhysicsBody* body)
+{
+    _physicsBody = body;
+    _physicsBody->retain();
+    _physicsBody->setPosition(getPosition());
+    _physicsBody->setRotation(getRotation());
+}
+
+PhysicsBody* Sprite::getPhysicsBody() const
+{
+    return _physicsBody;
+}
+
+void Sprite::visit()
+{
+    if (_physicsBody)
+    {
+        Node::setPosition(_physicsBody->getPosition());
+        Node::setRotation(_physicsBody->getRotation());
+        SET_DIRTY_RECURSIVELY();
+    }
+    
+    Node::visit();
+}
+#endif //CC_USE_PHYSICS
 
 //
 // RGBA protocol
