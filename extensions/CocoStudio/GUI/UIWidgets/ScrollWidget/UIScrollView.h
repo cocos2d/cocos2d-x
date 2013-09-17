@@ -46,6 +46,18 @@ enum SCROLLVIEW_MOVE_DIR
     SCROLLVIEW_MOVE_DIR_RIGHT,
 };
 
+typedef enum
+{
+    SCROLLVIEW_EVENT_SCROLL_TO_TOP,
+    SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
+    SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
+    SCROLLVIEW_EVENT_SCROLL_TO_RIGHT,
+}ScrollviewEventType;
+
+typedef void (CCObject::*SEL_ScrollViewEvent)(CCObject*, ScrollviewEventType);
+#define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
+
+/*******Compatible*******/
 typedef void (CCObject::*SEL_ScrollToTopEvent)(CCObject*);
 typedef void (CCObject::*SEL_ScrollToBottomEvent)(CCObject*);
 typedef void (CCObject::*SEL_ScrollToLeftEvent)(CCObject*);
@@ -54,6 +66,7 @@ typedef void (CCObject::*SEL_ScrollToRightEvent)(CCObject*);
 #define coco_ScrollToBottomSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToBottomEvent)(&_SELECTOR)
 #define coco_ScrollToLeftSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToLeftEvent)(&_SELECTOR)
 #define coco_ScrollToRightSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToRightEvent)(&_SELECTOR)
+/************************/
 
 
 class UIScrollView : public Layout , public UIScrollInterface
@@ -130,6 +143,12 @@ public:
 	const CCSize& getInnerContainerSize() const;
     
     /**
+     * Add call back function called scrollview event triggered
+     */
+    void addEventListener(CCObject* target, SEL_ScrollViewEvent selector);
+    
+    /*******Compatible*******/
+    /**
      * Add call back function called when scrollview scrolled to top.
      */
     void addScrollToTopEvent(CCObject* target, SEL_ScrollToTopEvent selector);
@@ -148,6 +167,7 @@ public:
      * Add call back function called when scrollview scrolled to right.
      */
     void addScrollToRightEvent(CCObject* target, SEL_ScrollToRightEvent selector);
+    /**************/
     
     //override "setLayoutExecutant" method of widget.
     virtual void setLayoutExecutant(LayoutExecutant* exe);
@@ -224,6 +244,8 @@ protected:
     /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
+    Layout* m_pInnerContainer;
+    
     SCROLLVIEW_DIR m_eDirection;
     SCROLLVIEW_MOVE_DIR m_eMoveDirection;
     float m_fTouchStartLocation;
@@ -249,6 +271,9 @@ protected:
     CCPoint moveChildPoint;
     float m_fChildFocusCancelOffset;
     
+    CCObject* m_pEventListener;
+    SEL_ScrollViewEvent m_pfnEventSelector;
+    /*compatible*/
     CCObject* m_pScrollToTopListener;
     SEL_ScrollToTopEvent m_pfnScrollToTopSelector;
     CCObject* m_pScrollToBottomListener;
@@ -257,8 +282,9 @@ protected:
     SEL_ScrollToLeftEvent m_pfnScrollToLeftSelector;
     CCObject* m_pScrollToRightListener;
     SEL_ScrollToRightEvent m_pfnScrollToRightSelector;
+    /************/
     
-    Layout* m_pInnerContainer;
+    
 };
 
 NS_CC_EXT_END
