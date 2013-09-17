@@ -27,10 +27,11 @@
 
 #ifndef __CCPHYSICS_SHAPE_INFO_H__
 #define __CCPHYSICS_SHAPE_INFO_H__
-#include <vector>
 
-#include "platform/CCPlatformMacros.h"
+#include <vector>
 #include <map>
+#include "chipmunk.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

@@ -31,6 +31,12 @@
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
 
+
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+typedef struct cpArbiter cpArbiter;
+typedef struct cpSpace cpSpace;
+#endif
+
 NS_CC_BEGIN
 
 class PhysicsBody;

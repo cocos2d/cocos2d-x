@@ -43,10 +43,4 @@
 #define CC_USE_PHYSICS
 #endif
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-#include "Box2D.h"
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#include "chipmunk.h"
-#endif
-
 #endif // __CCPHYSICS_SETTING_H__

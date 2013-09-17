@@ -27,9 +27,8 @@
 
 #ifndef __CCPHYSICS_JOINT_INFO_H__
 #define __CCPHYSICS_JOINT_INFO_H__
-
+#include "chipmunk.h"
 #include "platform/CCPlatformMacros.h"
-
 NS_CC_BEGIN
 
 class PhysicsJointInfo

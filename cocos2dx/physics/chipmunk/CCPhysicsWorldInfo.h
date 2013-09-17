@@ -27,6 +27,7 @@
 
 #ifndef __CCPHYSICS_WORLD_INFO_H__
 #define __CCPHYSICS_WORLD_INFO_H__
+#include "chipmunk.h"
 #include "platform/CCPlatformMacros.h"
 NS_CC_BEGIN
 
