@@ -72,10 +72,6 @@ CocoStudio/Armature/utils/CCSpriteFrameCacheHelper.cpp \
 CocoStudio/Armature/utils/CCTransformHelp.cpp \
 CocoStudio/Armature/utils/CCTweenFunction.cpp \
 CocoStudio/Armature/utils/CCUtilMath.cpp \
-CocoStudio/GUI/Action/UIAction.cpp \
-CocoStudio/GUI/Action/UIActionFrame.cpp \
-CocoStudio/GUI/Action/UIActionManager.cpp \
-CocoStudio/GUI/Action/UIActionNode.cpp \
 CocoStudio/GUI/BaseClasses/UIRootWidget.cpp \
 CocoStudio/GUI/BaseClasses/UIWidget.cpp \
 CocoStudio/GUI/Layouts/Layout.cpp \
