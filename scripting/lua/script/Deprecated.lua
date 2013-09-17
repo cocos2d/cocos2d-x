@@ -28,6 +28,12 @@ function CCTextureCacheDeprecated.purgeSharedTextureCache()
     return cc.TextureCache:destroyInstance()
 end
 rawset(CCTextureCache,"purgeSharedTextureCache",CCTextureCacheDeprecated.purgeSharedTextureCache)
+
+function CCTextureCacheDeprecated.addUIImage(self, image, key)
+    deprecatedTip("CCTextureCache:addUIImage","CCTextureCache:addImage")
+    return self:addImage(image,key)
+end
+rawset(CCTextureCache,"addUIImage",CCTextureCacheDeprecated.addUIImage)
 --functions of CCTextureCache will be deprecated end
 
 --functions of CCAnimation will be deprecated begin
