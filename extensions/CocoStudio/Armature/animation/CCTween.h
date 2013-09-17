@@ -106,7 +106,7 @@ protected:
     /**
      * Calculate the between value of _from and _to, and give it to between frame data
      */
-    virtual void setBetween(FrameData *from, FrameData *to);
+    virtual void setBetween(FrameData *from, FrameData *to, bool limit = true);
 
     /**
      * According to the percent to calculate current FrameData with tween effect
