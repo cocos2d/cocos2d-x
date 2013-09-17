@@ -87,7 +87,7 @@ public:
     * @param  from   from BaseData
     * @param  to     to BaseData
     */
-    virtual void subtract(BaseData *from, BaseData *to);
+    virtual void subtract(BaseData *from, BaseData *to, bool limit);
 
     virtual void setColor(const Color4B &color);
     virtual Color4B getColor();
