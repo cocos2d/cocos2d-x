@@ -70,10 +70,6 @@ m_ePositionType(POSITION_ABSOLUTE),
 m_positionPercent(CCPointZero),
 m_bIsRunning(false),
 
-/*temp action*/
-m_pBindingAction(NULL),
-
-
 /*Compatible*/
 m_pPushListener(NULL),
 m_pfnPushSelector(NULL),
@@ -1215,11 +1211,6 @@ void UIWidget::setActionTag(int tag)
 int UIWidget::getActionTag()
 {
 	return m_nActionTag;
-}
-
-void UIWidget::setBindingAction(UIActionNode *actionNode)
-{
-    m_pBindingAction = actionNode;
 }
 
 GUIRenderer::GUIRenderer():

@@ -67,6 +67,8 @@
 
 #include "CocoStudio/Reader/CCSSceneReader.h"
 
+#include "CocoStudio/Action/ActionManager.h"
+
 // Physics integration
 #if CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
 #include "physics_nodes/CCPhysicsDebugNode.h"

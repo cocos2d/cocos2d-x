@@ -47,8 +47,7 @@
 #include "UILayer.h"
 #include "../Layouts/LayoutExecutant.h"
 #include "../UIWidgets/Compatible/CompatibleClasses.h"
-/*temp action*/
-#include "../Action/UIActionManager.h"
+
 NS_CC_EXT_BEGIN
 
 const char* CocosGUIVersion();

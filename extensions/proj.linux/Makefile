@@ -141,6 +141,11 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Json/lib_json/json_writer.cpp \
 ../CocoStudio/Reader/CCSSceneReader.cpp \
 ../CocoStudio/Reader/CCSGUIReader.cpp \
+../CocoStudio/Action/ActionManager.cpp \
+../CocoStudio/Action/ActionObject.cpp \
+../CocoStudio/Action/ActionNode.cpp \
+../CocoStudio/Action/ActionFrame.cpp \
+../CocoStudio/Action/ActionFrameEasing.cpp \
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
