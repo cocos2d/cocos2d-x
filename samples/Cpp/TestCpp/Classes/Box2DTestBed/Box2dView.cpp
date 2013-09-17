@@ -53,6 +53,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     m_entryID = entryId;
     
     setTouchEnabled( true );
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
     Box2DView* view = Box2DView::viewWithEntryID( entryId );
     addChild(view, 0, kTagBox2DNode);
@@ -90,7 +91,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     listener->onTouchBegan = CC_CALLBACK_2(MenuLayer::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(MenuLayer::onTouchMoved, this);
 
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 0);
+    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 1);
     _touchListener = listener;
     return true;
 }
@@ -185,6 +186,7 @@ bool Box2DView::initWithEntryID(int entryId)
 
     m_entry = g_testEntries + entryId;
     m_test = m_entry->createFcn();
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
     // Removes Touch Event Listener
     EventDispatcher::getInstance()->removeEventListener(_touchListener);
@@ -197,7 +199,7 @@ bool Box2DView::initWithEntryID(int entryId)
     listener->onTouchMoved = CC_CALLBACK_2(Box2DView::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(Box2DView::onTouchEnded, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 10);
+    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, -10);
     _touchListener = listener;
     
     return true;
@@ -268,8 +270,6 @@ void Box2DView::onTouchEnded(Touch* touch, Event* event)
     log("Box2DView::onTouchEnded, pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
     
     m_test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
-    
-//    EventDispatcher::getInstance()->setPriorityWithFixedValue(_touchEventId, -1);
 }
 
 // void Box2DView::accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration)

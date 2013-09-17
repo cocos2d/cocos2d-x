@@ -98,8 +98,13 @@ Layer *Layer::create()
 
 /// Touch and Accelerometer related
 
-void Layer::onRegisterTouchListener()
-{    
+void Layer::addTouchListener()
+{
+    if (_touchListener != nullptr)
+        return;
+    
+    auto dispatcher = EventDispatcher::getInstance();    
+    
     if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE )
     {
         // Register Touch Event
@@ -110,7 +115,7 @@ void Layer::onRegisterTouchListener()
         listener->onTouchesEnded = CC_CALLBACK_2(Layer::onTouchesEnded, this);
         listener->onTouchesCancelled = CC_CALLBACK_2(Layer::onTouchesCancelled, this);
         
-        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         _touchListener = listener;
     }
     else
@@ -124,7 +129,7 @@ void Layer::onRegisterTouchListener()
         listener->onTouchEnded = CC_CALLBACK_2(Layer::onTouchEnded, this);
         listener->onTouchCancelled = CC_CALLBACK_2(Layer::onTouchCancelled, this);
         
-        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         _touchListener = listener;
     }
 }
@@ -170,7 +175,7 @@ void Layer::setTouchEnabled(bool enabled)
         {
             if (enabled)
             {
-                this->onRegisterTouchListener();
+                this->addTouchListener();
             }
             else
             {
@@ -309,7 +314,7 @@ void Layer::onEnter()
     // since events are propagated in reverse order
     if (_touchEnabled)
     {
-        this->onRegisterTouchListener();
+        this->addTouchListener();
     }
 
     // then iterate over all the children
@@ -348,6 +353,7 @@ void Layer::onEnterTransitionDidFinish()
     if (_accelerometerEnabled)
     {
         auto dispatcher = EventDispatcher::getInstance();
+        dispatcher->removeEventListener(_accelerationListener);
         _accelerationListener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
         dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
     }
