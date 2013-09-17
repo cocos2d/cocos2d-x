@@ -78,7 +78,7 @@ void UICCLabelAtlas::updateDisplayedOpacity(GLubyte opacity)
 
 
 UILabelAtlas::UILabelAtlas():
-m_pLaberAtlasRenderer(NULL)
+_laberAtlasRenderer(NULL)
 {
 }
 
@@ -102,32 +102,32 @@ UILabelAtlas* UILabelAtlas::create()
 void UILabelAtlas::initRenderer()
 {
     UIWidget::initRenderer();
-    m_pLaberAtlasRenderer = UICCLabelAtlas::create();
-    _renderer->addChild(m_pLaberAtlasRenderer);
+    _laberAtlasRenderer = UICCLabelAtlas::create();
+    _renderer->addChild(_laberAtlasRenderer);
 }
 
 void UILabelAtlas::setProperty(const char *stringValue, const char *charMapFile, int itemWidth, int itemHeight, const char *startCharMap,bool useSpriteFrame)
 {
-    m_pLaberAtlasRenderer->setProperty(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
+    _laberAtlasRenderer->setProperty(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
     updateAnchorPoint();
     labelAtlasScaleChangedWithSize();
 }
 
 void UILabelAtlas::setStringValue(const char *value)
 {
-    m_pLaberAtlasRenderer->setString(value);
+    _laberAtlasRenderer->setString(value);
     labelAtlasScaleChangedWithSize();
 }
 
 const char* UILabelAtlas::getStringValue()
 {
-    return m_pLaberAtlasRenderer->getString();
+    return _laberAtlasRenderer->getString();
 }
 
 void UILabelAtlas::setAnchorPoint(const Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
-    m_pLaberAtlasRenderer->setAnchorPoint(Point(pt.x, pt.y));
+    _laberAtlasRenderer->setAnchorPoint(Point(pt.x, pt.y));
 }
 
 void UILabelAtlas::onSizeChanged()
@@ -137,33 +137,33 @@ void UILabelAtlas::onSizeChanged()
 
 const Size& UILabelAtlas::getContentSize() const
 {
-    return m_pLaberAtlasRenderer->getContentSize();
+    return _laberAtlasRenderer->getContentSize();
 }
 
 Node* UILabelAtlas::getVirtualRenderer()
 {
-    return m_pLaberAtlasRenderer;
+    return _laberAtlasRenderer;
 }
 
 void UILabelAtlas::labelAtlasScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        m_pLaberAtlasRenderer->setScale(1.0f);
-        _size = m_pLaberAtlasRenderer->getContentSize();
+        _laberAtlasRenderer->setScale(1.0f);
+        _size = _laberAtlasRenderer->getContentSize();
     }
     else
     {
-        Size textureSize = m_pLaberAtlasRenderer->getContentSize();
+        Size textureSize = _laberAtlasRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
-            m_pLaberAtlasRenderer->setScale(1.0f);
+            _laberAtlasRenderer->setScale(1.0f);
             return;
         }
         float scaleX = _size.width / textureSize.width;
         float scaleY = _size.height / textureSize.height;
-        m_pLaberAtlasRenderer->setScaleX(scaleX);
-        m_pLaberAtlasRenderer->setScaleY(scaleY);
+        _laberAtlasRenderer->setScaleX(scaleX);
+        _laberAtlasRenderer->setScaleY(scaleY);
     }
 }
 

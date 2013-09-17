@@ -63,8 +63,8 @@ protected:
     virtual void onSizeChanged();
     void labelBMFontScaleChangedWithSize();
 protected:
-    LabelBMFont* m_pLabelBMFontRenderer;
-    bool m_bFntFileHasInit;
+    LabelBMFont* _labelBMFontRenderer;
+    bool _fntFileHasInit;
 };
     
 NS_CC_EXT_END

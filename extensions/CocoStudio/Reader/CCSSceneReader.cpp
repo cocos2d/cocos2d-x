@@ -199,7 +199,6 @@ NS_CC_EXT_BEGIN
                 }
                 else if(comName != NULL && strcmp(comName, "CCArmature") == 0)
                 {
-					continue;
 					if (nResType != 0)
 					{
 						continue;

@@ -49,14 +49,7 @@ public:
      * @param widget    registed widget can be touched.
      */
     void registWidget(UIWidget* widget);
-    
-    /**
-     * A call back function called when widget tree struct has changed.
-     *
-     * If widget tree struct has changed, uiinputmanager will resort registed widgets.
-     */
-    void uiSceneHasChanged();
-    
+        
     /**
      * Remove a registed widget from input manager.
      *
@@ -86,18 +79,17 @@ public:
 protected:
     bool checkTouchEvent(UIWidget* root, const Point& touchPoint);
 protected:
-    Array* m_manageredWidget;
-    Array* m_pSelectedWidgets;
-    Point touchBeganedPoint;
-    Point touchMovedPoint;
-    Point touchEndedPoint;
-    Point touchCanceledPoint;
-    bool m_bWidgetBeSorted;
-    bool m_bTouchDown;
-    float m_fLongClickTime;
-    float m_fLongClickRecordTime;
-    Array* checkedDoubleClickWidget;
-    UIWidget* m_pRootWidget;
+    Array* _manageredWidget;
+    Array* _selectedWidgets;
+    Point _touchBeganedPoint;
+    Point _touchMovedPoint;
+    Point _touchEndedPoint;
+    Point _touchCanceledPoint;
+    bool _touchDown;
+    float _longClickTime;
+    float _longClickRecordTime;
+    Array* _checkedDoubleClickWidget;
+    UIWidget* _rootWidget;
 };
 
 NS_CC_EXT_END

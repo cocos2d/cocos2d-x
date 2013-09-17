@@ -30,12 +30,12 @@ NS_CC_EXT_BEGIN
 
 void LayoutExecutant::setLayout(Layout *layout)
 {
-    m_pLayout = layout;
+    _layout = layout;
 }
 
 Layout* LayoutExecutant::getLayout() const
 {
-    return m_pLayout;
+    return _layout;
 }
 
 LinearVerticalLayoutExecutant* LinearVerticalLayoutExecutant::create()
@@ -76,11 +76,11 @@ RelativeLayoutExecutant* RelativeLayoutExecutant::create()
 
 void LinearVerticalLayoutExecutant::doLayout()
 {
-    if (m_pLayout)
+    if (_layout)
     {
-        ccArray* layoutChildrenArray = m_pLayout->getChildren()->data;
+        ccArray* layoutChildrenArray = _layout->getChildren()->data;
         int length = layoutChildrenArray->num;
-        Size layoutSize = m_pLayout->getSize();
+        Size layoutSize = _layout->getSize();
         float topBoundary = layoutSize.height;
         for (int i=0; i<length; ++i)
         {
@@ -121,11 +121,11 @@ void LinearVerticalLayoutExecutant::doLayout()
 
 void LinearHorizontalLayoutExecutant::doLayout()
 {
-    if (m_pLayout)
+    if (_layout)
     {
-        ccArray* layoutChildrenArray = m_pLayout->getChildren()->data;
+        ccArray* layoutChildrenArray = _layout->getChildren()->data;
         int length = layoutChildrenArray->num;
-        Size layoutSize = m_pLayout->getSize();
+        Size layoutSize = _layout->getSize();
         float leftBoundary = 0.0f;
         for (int i=0; i<length; ++i)
         {
@@ -166,11 +166,11 @@ void LinearHorizontalLayoutExecutant::doLayout()
 
 void RelativeLayoutExecutant::doLayout()
 {
-    if (m_pLayout)
+    if (_layout)
     {
-        ccArray* layoutChildrenArray = m_pLayout->getChildren()->data;
+        ccArray* layoutChildrenArray = _layout->getChildren()->data;
         int length = layoutChildrenArray->num;
-        Size layoutSize = m_pLayout->getSize();
+        Size layoutSize = _layout->getSize();
         for (int i=0; i<length; i++)
         {
             UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
@@ -187,7 +187,7 @@ void RelativeLayoutExecutant::doLayout()
                 UIWidget* relativeWidget = NULL;
                 if (relativeName && strcmp(relativeName, ""))
                 {
-                    relativeWidget = CCUIHELPER->seekWidgetByRelativeName(m_pLayout, relativeName);
+                    relativeWidget = CCUIHELPER->seekWidgetByRelativeName(_layout, relativeName);
                 }
                 switch (align)
                 {

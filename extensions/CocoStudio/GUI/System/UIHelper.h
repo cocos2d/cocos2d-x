@@ -113,10 +113,10 @@ public:
     UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
 protected:
     
-    float m_fFileDesignWidth;
-    float m_fFileDesignHeight;
+    float _fileDesignWidth;
+    float _fileDesignHeight;
     //texture
-    Array* m_textureFiles;
+    Array* _textureFiles;
 };
 
 NS_CC_EXT_END
