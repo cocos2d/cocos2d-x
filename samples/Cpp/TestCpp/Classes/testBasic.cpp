@@ -1,5 +1,6 @@
 #include "testBasic.h"
 #include "controller.h"
+#include "cocos-ext.h"
 
 TestScene::TestScene(bool bPortrait)
 {
@@ -48,6 +49,8 @@ void TestScene::onEnter()
             Director::getInstance()->replaceScene(scene);
             scene->release();
         }
+        
+        cocos2d::extension::armature::ArmatureDataManager::destoryInstance();
 	});
 
     auto menu =Menu::create(menuItem, NULL);

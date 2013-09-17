@@ -1,8 +1,6 @@
 #ifndef _KEYBOARD_TEST_H_
 #define _KEYBOARD_TEST_H_
 
-#ifdef CC_KEYBOARD_SUPPORT
-
 #include "cocos2d.h"
 #include "../testBasic.h"
 
@@ -25,6 +23,5 @@ public:
     virtual void runThisTest();
 };
 
-#endif
 
 #endif
