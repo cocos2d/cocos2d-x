@@ -112,19 +112,18 @@ protected:
     virtual void onSizeChanged();
     void imageTextureScaleChangedWithSize();
 protected:
-    int m_nViewType;
-    int m_nClickCount;
-    float m_fClickTimeInterval;
-    bool m_bStartCheckDoubleClick;
-    bool m_touchRelease;
-    bool m_bDoubleClickEnabled;
-    bool m_bScale9Enabled;
-    bool m_bPrevIgnoreSize;
-    Rect m_capInsets;
-    Node* m_pImageRenderer;
-    std::string m_strTextureFile;
-    TextureResType m_eImageTexType;
-    Size m_imageTextureSize;
+    int _clickCount;
+    float _clickTimeInterval;
+    bool _startCheckDoubleClick;
+    bool _touchRelease;
+    bool _doubleClickEnabled;
+    bool _scale9Enabled;
+    bool _prevIgnoreSize;
+    Rect _capInsets;
+    Node* _imageRenderer;
+    std::string _textureFile;
+    TextureResType _imageTexType;
+    Size _imageTextureSize;
 };
 
 NS_CC_EXT_END

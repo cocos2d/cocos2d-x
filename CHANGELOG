@@ -1,3 +1,42 @@
+cocos2d-x-3.0alpha0 @Sep.17 2013
+[all platforms]
+     [FIX]          TargetAction::reverse() doesn't work as expected
+     [FIX]          OpenGLTest crash
+     [FIX]          Wrong logic when passing an empty std::vector to WebSocket::init()
+     [FIX]          Crash in ParticleSystemQuad because of improper deletion of VBO and VAO
+     [FIX]          Point::isSegmentIntersect() return wrong value when two have the same y value and parallel to the x-axis
+     [FIX]          The utf8 response in XmlHttpRequest are mess codes
+     [FIX]          Observers with the same target and name but different sender are the same observer in NotificationCenter
+     [NEW]          Add ATITC format support
+     [NEW]          Better integration of physics engine
+     [NEW]          New event dispatcher
+     [NEW]          New Label
+     [NEW]          S3TC support
+     [NEW]          Adding a method to get duration of timeline for CCBAnimationManager class
+     [NEW]          Array is compatible with stl container
+     [3RD]          Upgrading SpiderMonekey to Firefox v23
+[Android]
+     [FIX]          When lock screen or entering background and resume the application textures from pvr.ccz file become black
+     [FIX]          Stroke font color with channel color values other than 255 doesn't take effect
+     [NEW]          Use native activity
+[iOS]
+     [FIX]          Can not hide status bar on iOS 7
+     [FIX]          Missing icons for iOS 7
+[Mac OS X]
+     [NEW]          lua template
+[javascript binding]
+     [FIX]          CCBReader can't set properties to owner if 'owner var' is setted
+     [FIX]          Crash appears when extending cc.ScrollView in JS
+     [FIX]          cc.registerTargettedDelegate doesn't support pure js object as its target
+     [FIX]          Memory leak in the binding glue code of cc.FileUtils.getStringFromFile(getByteArrayFromFile)
+     [NEW]          Bind Sprite::getDisplayFrame()
+     [NEW]          Bind callback of ControlButton
+     [NEW]          Bind RemoveSelf
+[lua binding]
+     [NEW]          Bind Sprite::getDisplayFrame()
+     [NEW]          
+
+
 cocos2d-x-3.0alpha0-pre @Jul.30 2013
 [all platforms]
      [FIX]      #2124: Image::initWithImageFileThreadSafe is not thread safe

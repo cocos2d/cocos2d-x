@@ -154,25 +154,24 @@ protected:
 
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
-    int m_nCurPageIdx;
-    Array* m_pages;
-    PVTouchDir m_touchMoveDir;
-    float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
-    float m_fTouchMoveStartLocation;
-    Point movePagePoint;
-    UIWidget* m_pLeftChild;
-    UIWidget* m_pRightChild;
-    float m_fLeftBoundary;
-    float m_fRightBoundary;
-    bool m_bIsAutoScrolling;
-    float m_fAutoScrollDistance;
-    float m_fAutoScrollSpeed;
-    int m_nAutoScrollDir;
-    float m_fChildFocusCancelOffset;
-    Object* m_pPageTurningListener;
-    SEL_PageViewPageTurningEvent m_pfnPageTurningSelector;
-    float m_fScrollDegreeRange;
+    int _curPageIdx;
+    Array* _pages;
+    PVTouchDir _touchMoveDir;
+    float _touchStartLocation;
+    float _touchEndLocation;
+    float _touchMoveStartLocation;
+    Point _movePagePoint;
+    UIWidget* _leftChild;
+    UIWidget* _rightChild;
+    float _leftBoundary;
+    float _rightBoundary;
+    bool _isAutoScrolling;
+    float _autoScrollDistance;
+    float _autoScrollSpeed;
+    int _autoScrollDir;
+    float _childFocusCancelOffset;
+    Object* _pageTurningListener;
+    SEL_PageViewPageTurningEvent _pageTurningSelector;
 };
 
 NS_CC_EXT_END
