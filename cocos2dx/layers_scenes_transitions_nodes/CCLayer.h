@@ -144,14 +144,15 @@ public:
 
     virtual bool isKeyboardEnabled() const;
     virtual void setKeyboardEnabled(bool value);
- /** Please use onKeyPressed instead. */
+    
+    /** Please use onKeyPressed instead. */
     virtual void keyPressed(int keyCode) final {};
     
-    /** Please use onKeyRelease instead. */
+    /** Please use onKeyReleased instead. */
     virtual void keyReleased(int keyCode) final {};
     
-    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event) {};
-    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event) {};
+    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event);
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return false; };
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value) final {};

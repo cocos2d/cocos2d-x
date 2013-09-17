@@ -142,6 +142,7 @@
 		1A119CB31785480400D62A44 /* Cocos2dConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A119C9017853D8D00D62A44 /* Cocos2dConstants.lua */; };
 		1A119CB41785480400D62A44 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A119C9117853D8D00D62A44 /* Opengl.lua */; };
 		1A119CB51785480400D62A44 /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A119C9217853D8D00D62A44 /* OpenglConstants.lua */; };
+		1A219E2617E8A2CD00EE4980 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4017821D9B00987F6C /* KeyboardTest.cpp */; };
 		1A2E823B1793EED50058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A2E823C1793EED50058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A2E823F1793EEF50058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
@@ -1242,7 +1243,6 @@
 		A07A51EE1783A1D20073F6A7 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A3717821D9B00987F6C /* FileUtilsTest.cpp */; };
 		A07A51EF1783A1D20073F6A7 /* FontTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A3A17821D9B00987F6C /* FontTest.cpp */; };
 		A07A51F01783A1D20073F6A7 /* IntervalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A3D17821D9B00987F6C /* IntervalTest.cpp */; };
-		A07A51F11783A1D20073F6A7 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4017821D9B00987F6C /* KeyboardTest.cpp */; };
 		A07A51F21783A1D20073F6A7 /* KeypadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4317821D9B00987F6C /* KeypadTest.cpp */; };
 		A07A51F31783A1D20073F6A7 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4617821D9B00987F6C /* LabelTest.cpp */; };
 		A07A51F41783A1D20073F6A7 /* LayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4917821D9B00987F6C /* LayerTest.cpp */; };
@@ -7471,7 +7471,6 @@
 				A07A51EE1783A1D20073F6A7 /* FileUtilsTest.cpp in Sources */,
 				A07A51EF1783A1D20073F6A7 /* FontTest.cpp in Sources */,
 				A07A51F01783A1D20073F6A7 /* IntervalTest.cpp in Sources */,
-				A07A51F11783A1D20073F6A7 /* KeyboardTest.cpp in Sources */,
 				A07A51F21783A1D20073F6A7 /* KeypadTest.cpp in Sources */,
 				A07A51F31783A1D20073F6A7 /* LabelTest.cpp in Sources */,
 				A07A51F41783A1D20073F6A7 /* LayerTest.cpp in Sources */,
@@ -7543,6 +7542,7 @@
 				50891D6817E72F7D005AE68C /* UITextAreaTest.cpp in Sources */,
 				50891D6A17E72F7D005AE68C /* UITextButtonTest.cpp in Sources */,
 				50891D6C17E72F7D005AE68C /* UITextFieldTest.cpp in Sources */,
+				1A219E2617E8A2CD00EE4980 /* KeyboardTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
