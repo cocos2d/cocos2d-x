@@ -30,7 +30,7 @@
 
 NS_CC_EXT_BEGIN
 
-class UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate, public CCTouchDelegate
+class UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate
 {
 public:
     UICCTextField();
@@ -115,7 +115,7 @@ public:
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled();
     void setPasswordStyleText(const char* styleText);
-    void update(float dt);
+    virtual void update(float dt);
     bool getAttachWithIME();
     void setAttachWithIME(bool attach);
     bool getDetachWithIME();
@@ -132,9 +132,18 @@ public:
     virtual void setColor(const ccColor3B &color);
     virtual void setOpacity(int opacity);
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     /*compatibel*/
+    /**
+     * These methods will be removed
+     */
     void setMaxLengthEnable(bool is){setMaxLengthEnabled(is);};
     void setPasswordEnable(bool is){setPasswordEnabled(is);};
+    /************/
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
 protected:

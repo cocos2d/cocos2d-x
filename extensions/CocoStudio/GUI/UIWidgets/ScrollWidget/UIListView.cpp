@@ -60,18 +60,14 @@ UIListView::UIListView()
 , m_overRightArray(NULL)
 , m_fDisBoundaryToChild_0(0.0f)
 , m_fDisBetweenChild(0.0f)
-/* gui mark */
 , m_fScrollDegreeRange(45.0f)
-/**/
 {
 }
 
 UIListView::~UIListView()
 {
-    /* gui mark */
     CC_SAFE_RELEASE_NULL(m_pChildPool);
     CC_SAFE_RELEASE_NULL(m_pUpdatePool);
-    /**/
     CC_SAFE_RELEASE_NULL(m_overTopArray);
     CC_SAFE_RELEASE_NULL(m_overBottomArray);
     CC_SAFE_RELEASE_NULL(m_overLeftArray);
@@ -83,6 +79,7 @@ UIListView* UIListView::create()
     UIListView* widget = new UIListView();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -129,23 +126,18 @@ bool UIListView::addChild(UIWidget* widget)
     return true;
 }
 
-void UIListView::removeAllChildrenAndCleanUp(bool cleanup)
+void UIListView::removeAllChildren()
 {
     m_pUpdatePool->removeAllObjects();
     m_pChildPool->removeAllObjects();
-    Layout::removeAllChildrenAndCleanUp(cleanup);
-    
-    /*
-    m_pUpdatePool->clear();
-    m_pChildPool->clear();
-     */
+    Layout::removeAllChildren();
 }
 
-bool UIListView::removeChild(UIWidget* child,bool cleanup)
+bool UIListView::removeChild(UIWidget* child)
 {
     bool value = false;
     
-    if (Layout::removeChild(child, cleanup))
+    if (Layout::removeChild(child))
     {
         value = true;
         resetProperty();
@@ -164,14 +156,7 @@ bool UIListView::onTouchBegan(const CCPoint &touchPoint)
 void UIListView::onTouchMoved(const CCPoint &touchPoint)
 {
     Layout::onTouchMoved(touchPoint);
-    /* gui mark */
-//    if (isInScrollDegreeRange(this))
-    {
-        handleMoveLogic(touchPoint);
-    }    
-    // before
-//    handleMoveLogic(touchPoint);
-    /**/
+    handleMoveLogic(touchPoint);
 }
 
 void UIListView::onTouchEnded(const CCPoint &touchPoint)
@@ -416,10 +401,8 @@ void UIListView::interceptTouchEvent(int handleState, UIWidget *sender, const CC
             }
             if (offset > m_fChildFocusCancelOffset)
             {
-                {
-                    sender->setFocused(false);
-                    handleMoveLogic(touchPoint);
-                }
+                sender->setFocused(false);
+                handleMoveLogic(touchPoint);
             }
         }
             break;
@@ -435,9 +418,6 @@ void UIListView::interceptTouchEvent(int handleState, UIWidget *sender, const CC
 
 void UIListView::checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint)
 {
-    /* gui mark */
-//    Layout::checkChildInfo(handleState, sender, touchPoint);
-    /**/
     interceptTouchEvent(handleState, sender, touchPoint);
 }
 
@@ -794,12 +774,10 @@ UIWidget* UIListView::getCheckPositionChild()
             {
                 case LISTVIEW_MOVE_DIR_UP: // up
                     child = dynamic_cast<UIWidget*>(m_pChildPool->lastObject());
-//                    child = m_pChildPool->rbegin();
                     break;
                     
                 case LISTVIEW_MOVE_DIR_DOWN: // down
                     child = dynamic_cast<UIWidget*>(m_pChildPool->objectAtIndex(0));
-//                    child = m_pChildPool->begin();
                     break;
                     
                 default:
@@ -812,12 +790,10 @@ UIWidget* UIListView::getCheckPositionChild()
             {
                 case LISTVIEW_MOVE_DIR_LEFT: // left
                     child = dynamic_cast<UIWidget*>(m_pChildPool->lastObject());
-//                    child = m_pChildPool->rbegin();
                     break;
                     
                 case LISTVIEW_MOVE_DIR_RIGHT: // right
                     child = dynamic_cast<UIWidget*>(m_pChildPool->objectAtIndex(0));
-//                    child = m_pChildPool->begin();
                     break;
                     
                 default:
@@ -848,7 +824,6 @@ void UIListView::initChildWithDataLength(int length)
         setUpdateDataIndex(i);
         initChildEvent();
         m_pChildPool->addObject(child);
-//        m_pChildPool->push_back(child);
         m_nEnd = i;
     }
 }
@@ -857,10 +832,6 @@ UIWidget* UIListView::getChildFromUpdatePool()
 {
     UIWidget* child = dynamic_cast<UIWidget*>(m_pUpdatePool->lastObject());
     m_pUpdatePool->removeLastObject();
-    /*
-    UIWidget* child = m_pUpdatePool->rbegin();
-    m_pUpdatePool->pop_back();
-     */
     return child;
 }
 
@@ -876,11 +847,6 @@ void UIListView::pushChildToPool()
                         UIWidget* child = dynamic_cast<UIWidget*>(m_pChildPool->objectAtIndex(0));
                         m_pUpdatePool->insertObject(child, 0);
                         m_pChildPool->removeObjectAtIndex(0);
-                        /*
-                        UIWidget* child = m_pChildPool->begin();
-                        m_pUpdatePool->push_front(child);
-                        m_pChildPool->pop_front();
-                         */
                     }
                     break;
                     
@@ -889,11 +855,7 @@ void UIListView::pushChildToPool()
                         UIWidget* child = dynamic_cast<UIWidget*>(m_pChildPool->lastObject());
                         m_pUpdatePool->insertObject(child, 0);
                         m_pChildPool->removeLastObject();
-                        /*
-                        UIWidget* child = m_pChildPool->rbegin();
-                        m_pUpdatePool->push_front(child);
-                        m_pChildPool->pop_back();
-                         */
+
                     }
                     break;
                     
@@ -910,11 +872,6 @@ void UIListView::pushChildToPool()
                         UIWidget* child = dynamic_cast<UIWidget*>(m_pChildPool->objectAtIndex(0));
                         m_pUpdatePool->insertObject(child, 0);
                         m_pChildPool->removeObjectAtIndex(0);
-                        /*
-                        UIWidget* child = m_pChildPool->begin();
-                        m_pUpdatePool->push_front(child);
-                        m_pChildPool->pop_front();
-                         */
                     }
                     break;
                     
@@ -923,11 +880,6 @@ void UIListView::pushChildToPool()
                         UIWidget* child = dynamic_cast<UIWidget*>(m_pChildPool->lastObject());
                         m_pUpdatePool->insertObject(child, 0);
                         m_pChildPool->removeLastObject();
-                        /*
-                        UIWidget* child = m_pChildPool->rbegin();
-                        m_pUpdatePool->push_front(child);
-                        m_pChildPool->pop_back();
-                         */
                     }
                     break;
                 
@@ -965,7 +917,6 @@ void UIListView::getAndCallback()
                     {
                         --m_nEnd;
                         m_pChildPool->insertObject(child, 0);
-//                        m_pChildPool->push_front(child);
                         return;
                     }
                     ++m_nBegin;
@@ -981,7 +932,6 @@ void UIListView::getAndCallback()
                     {
                         ++m_nBegin;
                         m_pChildPool->addObject(child);
-//                        m_pChildPool->push_back(child);
                         return;
                     }
                     --m_nEnd;
@@ -1005,7 +955,6 @@ void UIListView::getAndCallback()
                     {
                         --m_nEnd;
                         m_pChildPool->insertObject(child, 0);
-//                        m_pChildPool->push_front(child);
                         return;
                     }
                     ++m_nBegin;
@@ -1021,7 +970,6 @@ void UIListView::getAndCallback()
                     {
                         ++m_nBegin;
                         m_pChildPool->addObject(child);
-//                        m_pChildPool->push_back(child);
                         return;
                     }
                     --m_nEnd;
@@ -1043,12 +991,10 @@ void UIListView::getAndCallback()
             {
                 case LISTVIEW_MOVE_DIR_UP: // up
                     m_pChildPool->addObject(child);
-//                    m_pChildPool->push_back(child);
                     break;
                     
                 case LISTVIEW_MOVE_DIR_DOWN: // down
                     m_pChildPool->insertObject(child, 0);
-//                    m_pChildPool->push_front(child);
                     break;
                     
                 default:
@@ -1061,12 +1007,9 @@ void UIListView::getAndCallback()
             {
                 case LISTVIEW_MOVE_DIR_LEFT: // left
                     m_pChildPool->addObject(child);
-//                    m_pChildPool->push_back(child);
                     break;
-                    
                 case LISTVIEW_MOVE_DIR_RIGHT: // right
                     m_pChildPool->insertObject(child, 0);
-//                    m_pChildPool->push_front(child);
                     break;
                     
                 default:
@@ -1266,8 +1209,8 @@ void UIListView::setLoopPosition()
                     
                     if (m_overBottomArray->count() == childrenCount)
                     {
-                        int count = childrenCount;
-                        for (int i = 0; i < count; ++i)
+                        unsigned int count = childrenCount;
+                        for (unsigned int i = 0; i < count; ++i)
                         {
                             UIWidget* child = dynamic_cast<UIWidget*>(m_overBottomArray->objectAtIndex(i));
                             
@@ -1514,50 +1457,9 @@ void UIListView::addUpdateChildEvent(cocos2d::CCObject *target, SEL_ListViewUpda
     m_pfnUpdateChildSelector = selector;
 }
 
-/* gui mark */
-//float UIListView::getScrollDegreeRange() const
-//{
-//    return m_fScrollDegreeRange;
-//}
-//
-//void UIListView::setScrollDegreeRange(float range)
-//{
-//    m_fScrollDegreeRange = range;
-//}
-//
-//bool UIListView::isInScrollDegreeRange(UIWidget* widget)
-//{
-//    CCPoint vector = ccpSub(widget->getTouchMovePos(), widget->getTouchStartPos());
-//    float radians = ccpToAngle(vector);
-//    float degrees = CC_RADIANS_TO_DEGREES(radians);
-//    
-//    float compare = m_fScrollDegreeRange / 2;
-//    
-//    switch (m_eDirection)
-//    {
-//        case LISTVIEW_DIR_VERTICAL:
-//            if ((degrees >= 90 - compare && degrees <= 90 + compare)
-//                || (degrees >= -90 - compare && degrees <= -90 + compare))
-//            {
-//                return true;
-//            }
-//            break;
-//            
-//        case LISTVIEW_DIR_HORIZONTAL:
-//            if ((degrees >= -compare && degrees <= compare)
-//                || (degrees >= -179.99 && degrees <= -179.99 + compare)
-//                || (degrees >= 180 - compare && degrees <= 180))
-//            {
-//                return true;
-//            }
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
-//    return false;
-//}
-/**/
+const char* UIListView::getDescription() const
+{
+    return "ListView";
+}
 
 NS_CC_EXT_END

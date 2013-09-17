@@ -84,18 +84,10 @@ public:
     UIWidget* getRootWidget();
     void addCheckedDoubleClickWidget(UIWidget* widget);
 protected:
-    /**
-     * Sort a widget tree by z order.
-     *
-     * @param widget    widget tree which will be sorted.
-     */
-    void sortWidgets(UIWidget* widget);
-    void sortRootWidgets(UIWidget* root);
-    
+    bool checkTouchEvent(UIWidget* root, const CCPoint& touchPoint);
 protected:
     CCArray* m_manageredWidget;
     CCArray* m_pSelectedWidgets;
-//    UIWidget* m_pCurSelectedWidget;
     CCPoint touchBeganedPoint;
     CCPoint touchMovedPoint;
     CCPoint touchEndedPoint;

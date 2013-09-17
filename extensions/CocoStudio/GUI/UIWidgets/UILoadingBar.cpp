@@ -35,7 +35,7 @@ m_nPercent(100),
 m_fTotalLength(0),
 m_pBarRenderer(NULL),
 m_eRenderBarTexType(UI_TEX_TYPE_LOCAL),
-m_barRendererTextureSize(ccp(0.0f, 0.0f)),
+m_barRendererTextureSize(CCSizeZero),
 m_bScale9Enabled(false),
 m_bPrevIgnoreSize(true),
 m_capInsets(CCRectZero),
@@ -53,6 +53,7 @@ UILoadingBar* UILoadingBar::create()
     UILoadingBar* widget = new UILoadingBar();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -201,12 +202,11 @@ void UILoadingBar::setScale9Enabled(bool enabled)
 
 void UILoadingBar::setCapInsets(const CCRect &capInsets)
 {
+    m_capInsets = capInsets;
     if (!m_bScale9Enabled)
     {
         return;
     }
-    m_capInsets = capInsets;
-    
     dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setCapInsets(capInsets);
 }
 
@@ -312,26 +312,28 @@ void UILoadingBar::barRendererScaleChangedWithSize()
             m_pBarRenderer->setScaleY(scaleY);
         }
     }
-    m_pBarRenderer->setPosition(ccp(-m_fTotalLength * 0.5f, 0.0f));
-}
-
-void UILoadingBar::setScale9Scale()
-{
     switch (m_nBarType)
     {
         case LoadingBarTypeLeft:
             m_pBarRenderer->setPosition(ccp(-m_fTotalLength * 0.5f, 0.0f));
             break;
-            
         case LoadingBarTypeRight:
             m_pBarRenderer->setPosition(ccp(m_fTotalLength * 0.5f, 0.0f));
             break;
-            
         default:
             break;
     }
+}
+
+void UILoadingBar::setScale9Scale()
+{
     float width = (float)(m_nPercent) / 100 * m_fTotalLength;
     dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setPreferredSize(CCSizeMake(width, m_barRendererTextureSize.height));
+}
+
+const char* UILoadingBar::getDescription() const
+{
+    return "LoadingBar";
 }
 
 NS_CC_EXT_END

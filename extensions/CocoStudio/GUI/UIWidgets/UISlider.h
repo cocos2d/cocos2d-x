@@ -29,8 +29,19 @@
 
 NS_CC_EXT_BEGIN
 
+typedef enum
+{
+    SLIDER_PERCENTCHANGED
+}SliderEventType;
+
+typedef void (CCObject::*SEL_SlidPercentChangedEvent)(CCObject*,SliderEventType);
+#define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
+
+
+/*compatible*/
 typedef void (CCObject::*SEL_PercentChangedEvent)(CCObject*);
 #define coco_percentchangedselector(_SELECTOR) (SEL_PercentChangedEvent)(&_SELECTOR)
+/************/
 class UISlider : public UIWidget
 {
 public:
@@ -71,6 +82,20 @@ public:
      * @param capInsets    capinsets for slider
      */
     void setCapInsets(const CCRect &capInsets);
+    
+    /**
+     * Sets capinsets for slider, if slider is using scale9 renderer.
+     *
+     * @param capInsets    capinsets for slider
+     */
+    void setCapInsetsBarRenderer(const CCRect &capInsets);
+    
+    /**
+     * Sets capinsets for slider, if slider is using scale9 renderer.
+     *
+     * @param capInsets    capinsets for slider
+     */
+    void setCapInsetProgressBarRebderer(const CCRect &capInsets);
     
     /**
      * Load textures for slider ball.
@@ -138,7 +163,7 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    virtual void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector);
+    void addPercentEvent(CCObject* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const CCPoint &touchPoint);
@@ -161,7 +186,15 @@ public:
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     /*Compatible*/
+    /**
+     * These methods will be removed
+     */
     void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
     void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
     void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureNormal(normal,texType);};
@@ -171,6 +204,11 @@ public:
     void setSlidBallPercent(int percent){setPercent(percent);};
     void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
     void setScale9Enable(bool is){setScale9Enabled(is);};
+    void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector)
+    {
+        m_pPercentListener = target;
+        m_pfnPercentSelector = selector;
+    };
     /************/
 protected:
     virtual void initRenderer();
@@ -195,8 +233,6 @@ protected:
     float m_fBarLength;
     int m_nPercent;
     
-    float m_fBarNodeScaleValue;
-    float m_fTouchMoveStartLocation;
     bool m_bScale9Enabled;
     bool m_bPrevIgnoreSize;
     std::string m_strTextureFile;
@@ -204,14 +240,22 @@ protected:
     std::string m_strSlidBallNormalTextureFile;
     std::string m_strSlidBallPressedTextureFile;
     std::string m_strSlidBallDisabledTextureFile;
-    CCRect m_capInsets;
-    CCObject*       m_pPercentListener;
-    SEL_PushEvent    m_pfnPercentSelector;
+
+    CCRect m_capInsetsBarRenderer;
+    CCRect m_capInsetsProgressBarRenderer;
+
+    CCObject*       m_pSlidPercentListener;
+    SEL_SlidPercentChangedEvent    m_pfnSlidPercentSelector;
     TextureResType m_eBarTexType;
     TextureResType m_eProgressBarTexType;
     TextureResType m_eBallNTexType;
     TextureResType m_eBallPTexType;
     TextureResType m_eBallDTexType;
+    
+    /*Compatible*/
+    CCObject*       m_pPercentListener;
+    SEL_PushEvent    m_pfnPercentSelector;
+    /************/
 };
 
 NS_CC_EXT_END
