@@ -271,25 +271,25 @@ void Tween::updateHandler()
     }
 }
 
-void Tween::setBetween(FrameData *from, FrameData *to)
+void Tween::setBetween(FrameData *from, FrameData *to, bool limit)
 {
     do
     {
         if(from->displayIndex < 0 && to->displayIndex >= 0)
         {
             _from->copy(to);
-            _between->subtract(to, to);
+            _between->subtract(to, to, limit);
             break;
         }
         else if(to->displayIndex < 0 && from->displayIndex >= 0)
         {
             _from->copy(from);
-            _between->subtract(to, to);
+            _between->subtract(to, to, limit);
             break;
         }
 
         _from->copy(from);
-        _between->subtract(from, to);
+        _between->subtract(from, to, limit);
     }
     while (0);
 
@@ -427,7 +427,7 @@ float Tween::updateFrameData(float currentPercent)
 
         _frameTweenEasing = from->tweenEasing;
 
-        setBetween(from, to);
+        setBetween(from, to, false);
 
     }
     currentPercent = _betweenDuration == 0 ? 0 : (playedTime - _totalDuration) / (float)_betweenDuration;

@@ -853,6 +853,28 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
     }
 
 
+	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
+	CCFrameData **frames = (CCFrameData **)movBoneData->frameList.data->arr;
+	for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
+	{
+		if (i > 0)
+		{
+			float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
+			float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+
+			if (difSkewX < -M_PI || difSkewX > M_PI)
+			{
+				frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+			}
+
+			if (difSkewY < -M_PI || difSkewY > M_PI)
+			{
+				frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+			}
+		}
+	}
+
+
     //
     FrameData *frameData = new FrameData();
     frameData->copy((FrameData *)movBoneData->frameList.getLastObject());
@@ -1404,6 +1426,31 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(cs::JsonDictionary &json)
 
         delete dic;
     }
+
+
+	if (s_CocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
+	{
+		//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
+		CCFrameData **frames = (CCFrameData **)movementBoneData->frameList.data->arr;
+		for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
+		{
+			if (i > 0)
+			{
+				float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
+				float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+
+				if (difSkewX < -M_PI || difSkewX > M_PI)
+				{
+					frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+				}
+
+				if (difSkewY < -M_PI || difSkewY > M_PI)
+				{
+					frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+				}
+			}
+		}
+	}
 
     if (s_CocoStudioVersion < VERSION_COMBINED)
     {
