@@ -27,23 +27,22 @@
 
 NS_CC_EXT_BEGIN
 
-#define DYNAMIC_CAST_CCSPRITE dynamic_cast<cocos2d::Sprite*>(m_pImageRenderer)
-#define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<cocos2d::extension::Scale9Sprite*>(m_pImageRenderer)
+#define DYNAMIC_CAST_CCSPRITE dynamic_cast<cocos2d::Sprite*>(_imageRenderer)
+#define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<cocos2d::extension::Scale9Sprite*>(_imageRenderer)
 
 UIImageView::UIImageView():
-m_nViewType(1),
-m_nClickCount(0),
-m_fClickTimeInterval(0.0),
-m_bStartCheckDoubleClick(false),
-m_touchRelease(false),
-m_bDoubleClickEnabled(false),
-m_bScale9Enabled(false),
-m_bPrevIgnoreSize(true),
-m_capInsets(Rect::ZERO),
-m_pImageRenderer(NULL),
-m_strTextureFile(""),
-m_eImageTexType(UI_TEX_TYPE_LOCAL),
-m_imageTextureSize(_size)
+_clickCount(0),
+_clickTimeInterval(0.0),
+_startCheckDoubleClick(false),
+_touchRelease(false),
+_doubleClickEnabled(false),
+_scale9Enabled(false),
+_prevIgnoreSize(true),
+_capInsets(Rect::ZERO),
+_imageRenderer(NULL),
+_textureFile(""),
+_imageTexType(UI_TEX_TYPE_LOCAL),
+_imageTextureSize(_size)
 {
 
 }
@@ -68,8 +67,8 @@ UIImageView* UIImageView::create()
 void UIImageView::initRenderer()
 {
     UIWidget::initRenderer();
-    m_pImageRenderer = CCSprite::create();
-    _renderer->addChild(m_pImageRenderer);
+    _imageRenderer = Sprite::create();
+    _renderer->addChild(_imageRenderer);
 }
 
 void UIImageView::loadTexture(const char *fileName, TextureResType texType)
@@ -78,12 +77,12 @@ void UIImageView::loadTexture(const char *fileName, TextureResType texType)
     {
         return;
     }
-    m_strTextureFile = fileName;
-    m_eImageTexType = texType;
-    switch (m_eImageTexType)
+    _textureFile = fileName;
+    _imageTexType = texType;
+    switch (_imageTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            if (m_bScale9Enabled)
+            if (_scale9Enabled)
             {
                 DYNAMIC_CAST_SCALE9SPRITE->initWithFile(fileName);
                 DYNAMIC_CAST_SCALE9SPRITE->setColor(getColor());
@@ -97,7 +96,7 @@ void UIImageView::loadTexture(const char *fileName, TextureResType texType)
             }
             break;
         case UI_TEX_TYPE_PLIST:
-            if (m_bScale9Enabled)
+            if (_scale9Enabled)
             {
                 DYNAMIC_CAST_SCALE9SPRITE->initWithSpriteFrameName(fileName);
                 DYNAMIC_CAST_SCALE9SPRITE->setColor(getColor());
@@ -113,14 +112,14 @@ void UIImageView::loadTexture(const char *fileName, TextureResType texType)
         default:
             break;
     }
-    m_imageTextureSize = m_pImageRenderer->getContentSize();
+    _imageTextureSize = _imageRenderer->getContentSize();
     updateAnchorPoint();
     imageTextureScaleChangedWithSize();
 }
 
 void UIImageView::setTextureRect(const Rect &rect)
 {
-    if (m_bScale9Enabled)
+    if (_scale9Enabled)
     {
     }
     else
@@ -137,29 +136,29 @@ bool UIImageView::onTouchBegan(const Point &touchPoint)
     _widgetParent->checkChildInfo(0,this,touchPoint);
     pushDownEvent();
     
-    if (m_bDoubleClickEnabled)
+    if (_doubleClickEnabled)
     {
-        m_fClickTimeInterval = 0;
-        m_bStartCheckDoubleClick = true;
-        m_nClickCount++;
-        m_touchRelease = false;
+        _clickTimeInterval = 0;
+        _startCheckDoubleClick = true;
+        _clickCount++;
+        _touchRelease = false;
     }
     return _touchPassedEnabled;
 }
 
 void UIImageView::onTouchEnded(const Point &touchPoint)
 {
-    if (m_bDoubleClickEnabled)
+    if (_doubleClickEnabled)
     {
-        if (m_nClickCount >= 2)
+        if (_clickCount >= 2)
         {
             doubleClickEvent();
-            m_nClickCount = 0;
-            m_bStartCheckDoubleClick = false;
+            _clickCount = 0;
+            _startCheckDoubleClick = false;
         }
         else
         {
-            m_touchRelease = true;
+            _touchRelease = true;
         }
     }
     else
@@ -175,26 +174,26 @@ void UIImageView::doubleClickEvent()
 
 void UIImageView::checkDoubleClick(float dt)
 {
-    if (m_bStartCheckDoubleClick)
+    if (_startCheckDoubleClick)
     {
-        m_fClickTimeInterval += dt;
-        if (m_fClickTimeInterval >= 200 && m_nClickCount > 0)
+        _clickTimeInterval += dt;
+        if (_clickTimeInterval >= 200 && _clickCount > 0)
         {
-            m_fClickTimeInterval = 0;
-            m_nClickCount--;
-            m_bStartCheckDoubleClick = false;
+            _clickTimeInterval = 0;
+            _clickCount--;
+            _startCheckDoubleClick = false;
         }
     }
     else
     {
-        if (m_nClickCount <= 1)
+        if (_clickCount <= 1)
         {
-            if (m_touchRelease)
+            if (_touchRelease)
             {
                 releaseUpEvent();
-                m_fClickTimeInterval = 0;
-                m_nClickCount = 0;
-                m_touchRelease = false;
+                _clickTimeInterval = 0;
+                _clickCount = 0;
+                _touchRelease = false;
             }
         }
     }
@@ -202,11 +201,11 @@ void UIImageView::checkDoubleClick(float dt)
 
 void UIImageView::setDoubleClickEnabled(bool able)
 {
-    if (able == m_bDoubleClickEnabled)
+    if (able == _doubleClickEnabled)
     {
         return;
     }
-    m_bDoubleClickEnabled = able;
+    _doubleClickEnabled = able;
     if (able)
     {
 //        COCOUISYSTEM->getUIInputManager()->addCheckedDoubleClickWidget(this);
@@ -219,7 +218,7 @@ void UIImageView::setDoubleClickEnabled(bool able)
 
 void UIImageView::setFlipX(bool flipX)
 {
-    if (m_bScale9Enabled)
+    if (_scale9Enabled)
     {
     }
     else
@@ -230,7 +229,7 @@ void UIImageView::setFlipX(bool flipX)
 
 void UIImageView::setFlipY(bool flipY)
 {
-    if (m_bScale9Enabled)
+    if (_scale9Enabled)
     {
     }
     else
@@ -241,7 +240,7 @@ void UIImageView::setFlipY(bool flipY)
 
 bool UIImageView::isFlipX()
 {
-    if (m_bScale9Enabled)
+    if (_scale9Enabled)
     {
         return false;
     }
@@ -253,7 +252,7 @@ bool UIImageView::isFlipX()
 
 bool UIImageView::isFlipY()
 {
-    if (m_bScale9Enabled)
+    if (_scale9Enabled)
     {
         return false;
     }
@@ -265,51 +264,51 @@ bool UIImageView::isFlipY()
 
 void UIImageView::setScale9Enabled(bool able)
 {
-    if (m_bScale9Enabled == able)
+    if (_scale9Enabled == able)
     {
         return;
     }
     
     
-    m_bScale9Enabled = able;
-    _renderer->removeChild(m_pImageRenderer, true);
-    m_pImageRenderer = NULL;
-    if (m_bScale9Enabled)
+    _scale9Enabled = able;
+    _renderer->removeChild(_imageRenderer, true);
+    _imageRenderer = NULL;
+    if (_scale9Enabled)
     {
-        m_pImageRenderer = extension::Scale9Sprite::create();
+        _imageRenderer = extension::Scale9Sprite::create();
     }
     else
     {
-        m_pImageRenderer = CCSprite::create();
+        _imageRenderer = CCSprite::create();
     }
-    loadTexture(m_strTextureFile.c_str(),m_eImageTexType);
-    _renderer->addChild(m_pImageRenderer);
-    if (m_bScale9Enabled)
+    loadTexture(_textureFile.c_str(),_imageTexType);
+    _renderer->addChild(_imageRenderer);
+    if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
         ignoreContentAdaptWithSize(false);
-        m_bPrevIgnoreSize = ignoreBefore;
+        _prevIgnoreSize = ignoreBefore;
     }
     else
     {
-        ignoreContentAdaptWithSize(m_bPrevIgnoreSize);
+        ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
-    setCapInsets(m_capInsets);
+    setCapInsets(_capInsets);
 }
 
 void UIImageView::ignoreContentAdaptWithSize(bool ignore)
 {
-    if (!m_bScale9Enabled || (m_bScale9Enabled && !ignore))
+    if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
         UIWidget::ignoreContentAdaptWithSize(ignore);
-        m_bPrevIgnoreSize = ignore;
+        _prevIgnoreSize = ignore;
     }
 }
 
 void UIImageView::setCapInsets(const Rect &capInsets)
 {
-    m_capInsets = capInsets;
-    if (!m_bScale9Enabled)
+    _capInsets = capInsets;
+    if (!_scale9Enabled)
     {
         return;
     }
@@ -319,7 +318,7 @@ void UIImageView::setCapInsets(const Rect &capInsets)
 void UIImageView::setAnchorPoint(const Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
-    m_pImageRenderer->setAnchorPoint(pt);
+    _imageRenderer->setAnchorPoint(pt);
 }
 
 void UIImageView::onSizeChanged()
@@ -329,42 +328,42 @@ void UIImageView::onSizeChanged()
 
 const Size& UIImageView::getContentSize() const
 {
-    return m_imageTextureSize;
+    return _imageTextureSize;
 }
 
 Node* UIImageView::getVirtualRenderer()
 {
-    return m_pImageRenderer;
+    return _imageRenderer;
 }
 
 void UIImageView::imageTextureScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        if (!m_bScale9Enabled)
+        if (!_scale9Enabled)
         {
-            m_pImageRenderer->setScale(1.0f);
-            _size = m_imageTextureSize;
+            _imageRenderer->setScale(1.0f);
+            _size = _imageTextureSize;
         }
     }
     else
     {
-        if (m_bScale9Enabled)
+        if (_scale9Enabled)
         {
-            dynamic_cast<Scale9Sprite*>(m_pImageRenderer)->setPreferredSize(_size);
+            dynamic_cast<Scale9Sprite*>(_imageRenderer)->setPreferredSize(_size);
         }
         else
         {
-            Size textureSize = m_pImageRenderer->getContentSize();
+            Size textureSize = _imageRenderer->getContentSize();
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
-                m_pImageRenderer->setScale(1.0f);
+                _imageRenderer->setScale(1.0f);
                 return;
             }
             float scaleX = _size.width / textureSize.width;
             float scaleY = _size.height / textureSize.height;
-            m_pImageRenderer->setScaleX(scaleX);
-            m_pImageRenderer->setScaleY(scaleY);
+            _imageRenderer->setScaleX(scaleX);
+            _imageRenderer->setScaleY(scaleY);
         }
     }
 }

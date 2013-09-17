@@ -150,21 +150,21 @@ protected:
     virtual void onSizeChanged();
     void textfieldRendererScaleChangedWithSize();
 protected:
-    float m_fTouchWidth;
-    float m_fTouchHeight;
-    bool m_bUseTouchArea;
+    float _touchWidth;
+    float _touchHeight;
+    bool _useTouchArea;
     
-    Object* m_pAttachWithIMEListener;
-    Object* m_pDetachWithIMEListener;
-    Object* m_pInsertTextListener;
-    Object* m_pDeleteBackwardListener;
+    Object* _attachWithIMEListener;
+    Object* _detachWithIMEListener;
+    Object* _insertTextListener;
+    Object* _deleteBackwardListener;
     
-    SEL_TextFieldAttachWithIMEEvent m_pfnAttachWithIMESelector;
-    SEL_TextFieldDetachWithIMEEvent m_pfnDetachWithIMESelector;
-    SEL_TextFieldInsertTextEvent m_pfnInsertTextSelector;
-    SEL_TextFieldDeleteBackwardEvent m_pfnDeleteBackwardSelector;
+    SEL_TextFieldAttachWithIMEEvent _attachWithIMESelector;
+    SEL_TextFieldDetachWithIMEEvent _detachWithIMESelector;
+    SEL_TextFieldInsertTextEvent _insertTextSelector;
+    SEL_TextFieldDeleteBackwardEvent _deleteBackwardSelector;
     
-    UICCTextField* m_pTextFieldRenderer;
+    UICCTextField* _textFieldRenderer;
 };
 
 NS_CC_EXT_END

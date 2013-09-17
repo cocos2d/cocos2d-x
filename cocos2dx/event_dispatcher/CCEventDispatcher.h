@@ -110,6 +110,7 @@ private:
         int            fixedPriority;   // The higher the number, the higher the priority
         Node*          node;            // Weak reference.
         EventListener* listener;
+        ~EventListenerItem();
     };
     
     /** Constructor of EventDispatcher */
@@ -127,15 +128,19 @@ private:
     /** Sorts the listeners of specified type by priority */
     void sortAllEventListenerItemsForType(const std::string& eventType);
     
-    /** Removes all listeners that have been unregistered. */
-    void removeUnregisteredListeners();
+    /** Updates all listener items
+     *  1) Removes all listener items that have been marked as 'removed' when dispatching event.
+     *  2) Adds all listener items that have been marked as 'added' when dispatching event.
+     */
+    void updateListenerItems();
 
 private:
     /**
      * Listeners map.
      */
     std::map<std::string, std::vector<EventListenerItem*>*>* _listeners;
-
+    std::vector<EventListenerItem*> _toAddedListeners;
+    
     int               _inDispatch;
     bool              _isEnabled;
 };

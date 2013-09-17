@@ -64,7 +64,7 @@ void UIAction::Play()
 	int frameNum = m_ActionNodeList->count();
 	for ( int i = 0; i < frameNum; i++ )
 	{
-		UIActionNode* actionNode = (UIActionNode*)m_ActionNodeList->objectAtIndex(i);
+		UIActionNode* actionNode = (UIActionNode*)m_ActionNodeList->getObjectAtIndex(i);
 		actionNode->RunAction( getUnitTime(),getLoop() );
 	}
 }
@@ -80,7 +80,7 @@ void UIAction::Stop()
 
 	for ( int i = 0; i < frameNum; i++ )
 	{
-		UIActionNode* actionNode = (UIActionNode*)m_ActionNodeList->objectAtIndex(i);
+		UIActionNode* actionNode = (UIActionNode*)m_ActionNodeList->getObjectAtIndex(i);
 		actionNode->StopAction();
 	}
 }
@@ -91,7 +91,7 @@ void UIAction::UpdateToFrameByIndex(int index)
 
 	for ( int i = 0; i < frameNum; i++ )
 	{
-		UIActionNode* actionNode = (UIActionNode*)m_ActionNodeList->objectAtIndex(i);
+		UIActionNode* actionNode = (UIActionNode*)m_ActionNodeList->getObjectAtIndex(i);
 
 		actionNode->UpdateToFrameByIndex(index);
 	}
