@@ -33,6 +33,7 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
+#include "physics/CCPhysicsSetting.h"
 
 #include "event_dispatcher/CCKeyboardEvent.h"
 
@@ -113,7 +114,6 @@ public:
     @since v0.8.0
     */
     CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
-    virtual void onRegisterTouchListener();
 
     /** whether or not it will receive Touch events.
     You can enable / disable touch events with this property.
@@ -178,8 +178,16 @@ public:
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish() override;
+    
+#ifdef CC_USE_PHYSICS
+    virtual void addChild(Node* child) override;
+    virtual void addChild(Node* child, int zOrder) override;
+    virtual void addChild(Node* child, int zOrder, int tag) override;
+#endif // CC_USE_PHYSICS
 
 protected:
+    void addTouchListener();
+    
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;

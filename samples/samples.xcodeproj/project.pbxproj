@@ -282,6 +282,8 @@
 		1AA62D3B17A15EB00006E64F /* sd in Resources */ = {isa = PBXBuildFile; fileRef = A0BD5A1D178F5F6C008915C5 /* sd */; };
 		1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
 		1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
+		1AEBD90717E85B0D0015C2ED /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AEBD90617E85B0D0015C2ED /* cocosgui */; };
+		1AEBD90817E85B0D0015C2ED /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AEBD90617E85B0D0015C2ED /* cocosgui */; };
 		37B6EF8A17DEB8FB001BE102 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8817DEB741001BE102 /* SceneEditorTest.cpp */; };
 		37B6EF8B17DEB8FD001BE102 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF8817DEB741001BE102 /* SceneEditorTest.cpp */; };
 		37B6EF8C17DEB922001BE102 /* ComponentsTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF7B17DEB741001BE102 /* ComponentsTestScene.cpp */; };
@@ -1333,6 +1335,8 @@
 		A0BD5A1F178F5F6C008915C5 /* sd in Resources */ = {isa = PBXBuildFile; fileRef = A0BD5A1D178F5F6C008915C5 /* sd */; };
 		B36FB10617990E14005F39FB /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
 		B36FB10917990F13005F39FB /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
+		B3F4402117DF06F0003B4F84 /* PhysicsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */; };
+		B3F4402217DF06F0003B4F84 /* PhysicsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */; };
 		ED32BBA817DDDA4E004E0169 /* ShaderTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */; };
 		ED743D1517D098AF0004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1617D098B60004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
@@ -2442,6 +2446,7 @@
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scale9SpriteTest.cpp; sourceTree = "<group>"; };
 		1ACD13F2178E487D00682DBD /* Scale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scale9SpriteTest.h; sourceTree = "<group>"; };
+		1AEBD90617E85B0D0015C2ED /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosgui; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B6EF7817DEB741001BE102 /* ArmatureScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArmatureScene.cpp; sourceTree = "<group>"; };
 		37B6EF7917DEB741001BE102 /* ArmatureScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureScene.h; sourceTree = "<group>"; };
@@ -3089,6 +3094,8 @@
 		A07A53811784AC9B0073F6A7 /* Hello cpp iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello cpp iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0BD5A1C178F5F6C008915C5 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		A0BD5A1D178F5F6C008915C5 /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
+		B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsTest.cpp; path = PhysicsTest/PhysicsTest.cpp; sourceTree = "<group>"; };
+		B3F4402017DF06F0003B4F84 /* PhysicsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsTest.h; path = PhysicsTest/PhysicsTest.h; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderTest2.cpp; sourceTree = "<group>"; };
 		EDF3D9C217D9B67C00D4C480 /* ShaderTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTest2.h; sourceTree = "<group>"; };
@@ -4256,6 +4263,7 @@
 				A0359A5717821D9B00987F6C /* ParallaxTest */,
 				A0359A5A17821D9B00987F6C /* ParticleTest */,
 				A0359A5D17821D9C00987F6C /* PerformanceTest */,
+				B3F4401C17DF0590003B4F84 /* PhysicsTest */,
 				A0359A6A17821D9C00987F6C /* RenderTextureTest */,
 				A0359A6D17821D9C00987F6C /* RotateWorldTest */,
 				A0359A7017821D9C00987F6C /* SceneTest */,
@@ -5092,6 +5100,7 @@
 		A035A0201782270800987F6C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1AEBD90617E85B0D0015C2ED /* cocosgui */,
 				37B6F06E17DEBDF3001BE102 /* scenetest */,
 				A035A4FF1782275800987F6C /* animations */,
 				A035A5001782275800987F6C /* app.icf */,
@@ -5630,6 +5639,15 @@
 				A07A52A61783AD8B0073F6A7 /* RootViewController.mm */,
 			);
 			path = proj.ios;
+			sourceTree = "<group>";
+		};
+		B3F4401C17DF0590003B4F84 /* PhysicsTest */ = {
+			isa = PBXGroup;
+			children = (
+				B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */,
+				B3F4402017DF06F0003B4F84 /* PhysicsTest.h */,
+			);
+			name = PhysicsTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -6476,6 +6494,7 @@
 				A07A525E1783A3D90073F6A7 /* MainMenu.xib in Resources */,
 				A07A525F1783A3D90073F6A7 /* Icon.icns in Resources */,
 				37B6F06F17DEBDF3001BE102 /* scenetest in Resources */,
+				1AEBD90717E85B0D0015C2ED /* cocosgui in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7041,6 +7060,7 @@
 				A07A524A1783A3A90073F6A7 /* Icon-57.png in Resources */,
 				A07A524B1783A3A90073F6A7 /* Icon-72.png in Resources */,
 				37B6F07017DEBDF3001BE102 /* scenetest in Resources */,
+				1AEBD90817E85B0D0015C2ED /* cocosgui in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7118,6 +7138,7 @@
 				A0359AA817821D9C00987F6C /* ActionsTest.cpp in Sources */,
 				A0359AA917821D9C00987F6C /* AppDelegate.cpp in Sources */,
 				A0359AAA17821D9C00987F6C /* BaseTest.cpp in Sources */,
+				B3F4402117DF06F0003B4F84 /* PhysicsTest.cpp in Sources */,
 				A0359AAB17821D9C00987F6C /* Box2dTest.cpp in Sources */,
 				A0359AAC17821D9C00987F6C /* Box2dView.cpp in Sources */,
 				A0359AAD17821D9C00987F6C /* GLES-Render.cpp in Sources */,
@@ -7465,6 +7486,7 @@
 				A07A51EE1783A1D20073F6A7 /* FileUtilsTest.cpp in Sources */,
 				A07A51EF1783A1D20073F6A7 /* FontTest.cpp in Sources */,
 				A07A51F01783A1D20073F6A7 /* IntervalTest.cpp in Sources */,
+				B3F4402217DF06F0003B4F84 /* PhysicsTest.cpp in Sources */,
 				A07A51F11783A1D20073F6A7 /* KeyboardTest.cpp in Sources */,
 				A07A51F21783A1D20073F6A7 /* KeypadTest.cpp in Sources */,
 				A07A51F31783A1D20073F6A7 /* LabelTest.cpp in Sources */,

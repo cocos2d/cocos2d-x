@@ -573,19 +573,16 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     
     setTouchEnabled(true);
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-}
-
-void RemoveMenuItemWhenMove::onRegisterTouchListener()
-{
+    
     // Register Touch Event
-    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
-    listener->setSwallowTouches(false);
+    _touchListener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    _touchListener->setSwallowTouches(false);
     
-    listener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);
-    listener->onTouchMoved = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchMoved, this);
+    _touchListener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);
+    _touchListener->onTouchMoved = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchMoved, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, -100);
-    _touchListener = listener;
+    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(_touchListener, -100);
+    
 }
 
 void RemoveMenuItemWhenMove::goBack(Object *pSender)

@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "event_dispatcher/CCAccelerationEvent.h"
 #include "event_dispatcher/CCAccelerationEventListener.h"
 #include "platform/CCDevice.h"
+#include "CCScene.h"
 
 NS_CC_BEGIN
 
@@ -98,8 +99,13 @@ Layer *Layer::create()
 
 /// Touch and Accelerometer related
 
-void Layer::onRegisterTouchListener()
-{    
+void Layer::addTouchListener()
+{
+    if (_touchListener != nullptr)
+        return;
+    
+    auto dispatcher = EventDispatcher::getInstance();    
+    
     if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE )
     {
         // Register Touch Event
@@ -110,7 +116,7 @@ void Layer::onRegisterTouchListener()
         listener->onTouchesEnded = CC_CALLBACK_2(Layer::onTouchesEnded, this);
         listener->onTouchesCancelled = CC_CALLBACK_2(Layer::onTouchesCancelled, this);
         
-        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         _touchListener = listener;
     }
     else
@@ -124,7 +130,7 @@ void Layer::onRegisterTouchListener()
         listener->onTouchEnded = CC_CALLBACK_2(Layer::onTouchEnded, this);
         listener->onTouchCancelled = CC_CALLBACK_2(Layer::onTouchCancelled, this);
         
-        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         _touchListener = listener;
     }
 }
@@ -170,7 +176,7 @@ void Layer::setTouchEnabled(bool enabled)
         {
             if (enabled)
             {
-                this->onRegisterTouchListener();
+                this->addTouchListener();
             }
             else
             {
@@ -309,7 +315,7 @@ void Layer::onEnter()
     // since events are propagated in reverse order
     if (_touchEnabled)
     {
-        this->onRegisterTouchListener();
+        this->addTouchListener();
     }
 
     // then iterate over all the children
@@ -348,6 +354,7 @@ void Layer::onEnterTransitionDidFinish()
     if (_accelerometerEnabled)
     {
         auto dispatcher = EventDispatcher::getInstance();
+        dispatcher->removeEventListener(_accelerationListener);
         _accelerationListener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
         dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
     }
@@ -451,6 +458,30 @@ void Layer::onTouchesCancelled(const std::vector<Touch*>& pTouches, Event *pEven
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
+
+
+#ifdef CC_USE_PHYSICS
+void Layer::addChild(Node* child)
+{
+    Node::addChild(child);
+}
+
+void Layer::addChild(Node* child, int zOrder)
+{
+    Node::addChild(child, zOrder);
+}
+
+void Layer::addChild(Node* child, int zOrder, int tag)
+{
+    Node::addChild(child, zOrder, tag);
+    
+    if (this->getParent() &&
+        dynamic_cast<Scene*>(this->getParent()) != nullptr)
+    {
+        dynamic_cast<Scene*>(this->getParent())->addChildToPhysicsWorld(child);
+    }
+}
+#endif
 
 // LayerRGBA
 LayerRGBA::LayerRGBA()
