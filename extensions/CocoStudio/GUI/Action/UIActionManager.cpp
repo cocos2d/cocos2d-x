@@ -32,7 +32,8 @@ static UIActionManager* sharedActionManager = NULL;
 
 UIActionManager* UIActionManager::shareManager()
 {
-    if (!sharedActionManager) {
+    if (!sharedActionManager)
+    {
         sharedActionManager = new UIActionManager();
     }
     return sharedActionManager;
@@ -45,16 +46,12 @@ void UIActionManager::purgeUIActionManager()
 
 UIActionManager::UIActionManager()
 {
-//	m_ActionList = cocos2d::CCArray::create();
-//	m_ActionList->retain();
     m_pActionDic = CCDictionary::create();
     m_pActionDic->retain();
 }
 
 UIActionManager::~UIActionManager()
 {
-//	m_ActionList->removeAllObjects();
-//	m_ActionList->release();
     m_pActionDic->removeAllObjects();
     m_pActionDic->release();
 }
@@ -110,14 +107,6 @@ void UIActionManager::PlayActionByName(const char* jsonName,const char* actionNa
 void UIActionManager::releaseActions()
 {
     m_pActionDic->removeAllObjects();
-//    int times = m_ActionList->data->num;
-//    for (int i=0; i<times; i++)
-//    {
-//        UIAction* action = dynamic_cast<UIAction*>(m_ActionList->lastObject());
-//        m_ActionList->removeObject(action);
-//        delete action;
-//        action = NULL;
-//    }
 }
 
 NS_CC_EXT_END

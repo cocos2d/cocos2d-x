@@ -60,10 +60,10 @@ public:
     virtual void onExit();
     virtual void onEnterTransitionDidFinish();
     
-    virtual bool onTouchBegan(Touch *pTouch, Event *pEvent) override;
-    virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
-    virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
-    virtual void onTouchCancelled(Touch *pTouch, Event *pEvent) override;
+    virtual bool onTouchBegan(Touch *pTouch, Event *pEvent);
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent);
+    virtual void onTouchEnded(Touch *pTouch, Event *pEvent);
+    virtual void onTouchCancelled(Touch *pTouch, Event *pEvent);
     
     /**
      * Add a widget to UILayer, for drawing.
@@ -124,16 +124,10 @@ public:
      * @return UIRootWidget, "UIRootWidget" is the root widget of UILayer.
      */
     UIRootWidget* getRootWidget();
-    
-    //update method
-    void update(float dt);
-    void addUpdateEnableWidget(UIWidget* widget);
-    void removeUpdateEnableWidget(UIWidget* widget);
 
 protected:
-    UIRootWidget* m_pRootWidget;
-    UIInputManager* m_pInputManager;
-    Array* m_updateEnableWidget;
+    UIRootWidget* _rootWidget;
+    UIInputManager* _inputManager;
 };
 
 NS_CC_EXT_END

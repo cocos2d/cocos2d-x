@@ -123,16 +123,16 @@ protected:
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
 protected:
-    LoadingBarType m_nBarType;
-    int m_nPercent;
-    float m_fTotalLength;
-    Node* m_pBarRenderer;
-    TextureResType m_eRenderBarTexType;
-    Size m_barRendererTextureSize;
-    bool m_bScale9Enabled;
-    bool m_bPrevIgnoreSize;
-    Rect m_capInsets;
-    std::string m_strTextureFile;
+    LoadingBarType _barType;
+    int _percent;
+    float _totalLength;
+    Node* _barRenderer;
+    TextureResType _renderBarTexType;
+    Size _barRendererTextureSize;
+    bool _scale9Enabled;
+    bool _prevIgnoreSize;
+    Rect _capInsets;
+    std::string _textureFile;
 };
 
 NS_CC_EXT_END
