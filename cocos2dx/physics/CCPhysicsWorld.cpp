@@ -25,6 +25,12 @@
 #include "CCPhysicsWorld.h"
 #ifdef CC_USE_PHYSICS
 
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#include "chipmunk.h"
+#elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
+#include "Box2D.h"
+#endif
+
 #include "CCPhysicsBody.h"
 #include "CCPhysicsShape.h"
 #include "CCPhysicsContact.h"

@@ -28,6 +28,7 @@
 #ifndef __CCPHYSICS_HELPER_H__
 #define __CCPHYSICS_HELPER_H__
 
+#include "chipmunk.h"
 #include "platform/CCPlatformMacros.h"
 #include "cocoa/CCGeometry.h"
 
