@@ -28,3 +28,6 @@ if [ -n "$MISSING" ]; then
     sudo apt-get --force-yes --yes install $MISSING
 fi
 
+# install glfw
+tools/travis-scripts/install_glfw.sh
+
