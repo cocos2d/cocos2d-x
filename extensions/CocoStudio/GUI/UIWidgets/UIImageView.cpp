@@ -368,4 +368,9 @@ void UIImageView::imageTextureScaleChangedWithSize()
     }
 }
 
+const char* UIImageView::getDescription() const
+{
+    return "ImageView";
+}
+
 NS_CC_EXT_END
