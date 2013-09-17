@@ -2286,6 +2286,70 @@ tolua_lerror:
 #endif
 }
 
+static int tolua_cocos2dx_SpriteBatchNode_getDescendants(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'tolua_cocos2dx_SpriteBatchNode_getDescendants'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        std::vector<Sprite*> ret = cobj->getDescendants();
+
+        lua_newtable(tolua_S);
+        
+        if (ret.empty())
+            return 1;
+        
+        auto iter = ret.begin();
+        int  indexTable = 1;
+        for (; iter != ret.end(); ++iter)
+        {
+            if (nullptr == *iter)
+                continue;
+            
+            lua_pushnumber(tolua_S, (lua_Number)indexTable);
+            toluafix_pushusertype_ccobject(tolua_S, (*iter)->_ID, &((*iter)->_luaID), (void*)(*iter),"Sprite");
+            lua_rawset(tolua_S, -3);
+            (*iter)->retain();
+            ++indexTable;
+        }
+        
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDescendants",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_getDescendants'.",&tolua_err);
+#endif
+    return 0;
+}
+
 static void extendTexture2D(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "Texture2D");
@@ -2657,6 +2721,18 @@ static void extendUserDefault(lua_State* tolua_S)
     }
 }
 
+static void extendSpriteBatchNode(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "SpriteBatchNode");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"getDescendants");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_getDescendants );
+        lua_rawset(tolua_S,-3);
+    }
+}
+
 
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
@@ -2691,6 +2767,6 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendUserDefault(tolua_S);
     extendGLProgram(tolua_S);
     extendTexture2D(tolua_S);
-    
+    extendSpriteBatchNode(tolua_S);
     return 0;
 }
