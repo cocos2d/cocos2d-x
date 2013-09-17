@@ -532,19 +532,19 @@
     <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
       <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\ActionFrame.cpp">
+    <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\ActionFrameEasing.cpp">
+    <ClCompile Include="..\CocoStudio\Action\CCCActionFrameEasing.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\ActionNode.cpp">
+    <ClCompile Include="..\CocoStudio\Action\CCActionManagerEx.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\ActionObject.cpp">
+    <ClCompile Include="..\CocoStudio\Action\CCActionNode.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\ActionManagerEx.cpp">
+    <ClCompile Include="..\CocoStudio\Action\CCActionObject.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
   </ItemGroup>
@@ -974,19 +974,19 @@
     <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h">
       <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\ActionFrame.h">
+    <ClInclude Include="..\CocoStudio\Action\CCActionFrame.h">
       <Filter>CocoStudio\Action</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\ActionFrameEasing.h">
+    <ClInclude Include="..\CocoStudio\Action\CCActionFrameEasing.h">
       <Filter>CocoStudio\Action</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\ActionNode.h">
+    <ClInclude Include="..\CocoStudio\Action\CCActionManagerEx.h">
       <Filter>CocoStudio\Action</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\ActionObject.h">
+    <ClInclude Include="..\CocoStudio\Action\CCActionNode.h">
       <Filter>CocoStudio\Action</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\ActionManagerEx.h">
+    <ClInclude Include="..\CocoStudio\Action\CCActionObject.h">
       <Filter>CocoStudio\Action</Filter>
     </ClInclude>
   </ItemGroup>

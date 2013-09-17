@@ -59,7 +59,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCEditBox/CCEditBoxImplNone.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
 ../physics_nodes/CCPhysicsSprite.cpp \
-./CocoStudio/Armature/CCArmature.cpp \
+../CocoStudio/Armature/CCArmature.cpp \
 ../CocoStudio/Armature/CCBone.cpp \
 ../CocoStudio/Armature/animation/CCArmatureAnimation.cpp \
 ../CocoStudio/Armature/animation/CCProcessBase.cpp \
@@ -117,11 +117,11 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Json/lib_json/json_writer.cpp \
 ../CocoStudio/Reader/CCSGUIReader.cpp \
 ../CocoStudio/Reader/CCSSceneReader.cpp \
-../CocoStudio/Action/ActionFrame.cpp \
-../CocoStudio/Action/ActionFrameEasing.cpp \
-../CocoStudio/Action/ActionManagerEx.cpp \
-../CocoStudio/Action/ActionNode.cpp \
-../CocoStudio/Action/ActionObject.cpp \
+../CocoStudio/Action/CCActionFrame.cpp \
+../CocoStudio/Action/CCActionFrameEasing.cpp \
+../CocoStudio/Action/CCActionManagerEx.cpp \
+../CocoStudio/Action/CCActionNode.cpp \
+../CocoStudio/Action/CCActionObject.cpp \
 ../CCDeprecated-ext.cpp
 
 include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk

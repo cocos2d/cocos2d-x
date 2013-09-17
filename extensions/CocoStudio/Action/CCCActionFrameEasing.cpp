@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include <math.h>
-#include "ActionFrameEasing.h"
+#include "CCActionFrameEasing.h"
 #include "../Json/DictionaryHelper.h"
 NS_CC_EXT_BEGIN
 
