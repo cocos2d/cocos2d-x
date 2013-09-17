@@ -83,6 +83,36 @@ PhysicsJointPin::~PhysicsJointPin()
     
 }
 
+PhysicsJointFixed::PhysicsJointFixed()
+{
+    
+}
+
+PhysicsJointFixed::~PhysicsJointFixed()
+{
+    
+}
+
+PhysicsJointSliding::PhysicsJointSliding()
+{
+    
+}
+
+PhysicsJointSliding::~PhysicsJointSliding()
+{
+    
+}
+
+PhysicsJointLimit::PhysicsJointLimit()
+{
+    
+}
+
+PhysicsJointLimit::~PhysicsJointLimit()
+{
+    
+}
+
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 PhysicsBodyInfo* PhysicsJoint::bodyInfo(PhysicsBody* body) const
 {

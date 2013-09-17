@@ -24,6 +24,7 @@
 
 #include "CCPhysicsShapeInfo.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#include <algorithm>
 NS_CC_BEGIN
 
 std::map<cpShape*, PhysicsShapeInfo*> PhysicsShapeInfo::map;
@@ -56,7 +57,7 @@ void PhysicsShapeInfo::remove(cpShape* shape)
 {
     if (shape == nullptr) return;
     
-    auto it = find(shapes.begin(), shapes.end(), shape);
+    auto it = std::find(shapes.begin(), shapes.end(), shape);
     if (it != shapes.end())
     {
         shapes.erase(it);

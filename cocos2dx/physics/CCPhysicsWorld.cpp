@@ -277,6 +277,12 @@ void PhysicsWorld::collisionSeparateCallback(const PhysicsContact& contact)
     }
 }
 
+void PhysicsWorld::setGravity(Point gravity)
+{
+    _gravity = gravity;
+    cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(_gravity));
+}
+
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 
 #endif
