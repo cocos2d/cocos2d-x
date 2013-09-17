@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.nd.commplatform.widget.NdMessageRecordListItem
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content">
+  <TextView
+  android:id="@+id/nd3_messagetiem_txt"
+  android:layout_height="wrap_content"
+  android:layout_width="wrap_content" 
+  android:textColor="@color/nd3_black"
+  android:layout_centerHorizontal="true" 
+  android:layout_alignParentTop="true"/>
+  
+  <RelativeLayout
+  android:id="@+id/nd3_message_item_layout"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:layout_below="@id/nd3_messagetiem_txt"
+  android:layout_marginLeft="@dimen/nd3_item_divider"
+  android:layout_marginRight="@dimen/nd3_item_divider">
+	  
+	  <TextView
+	  android:id="@+id/nd3_message_send_txt"
+	  android:layout_alignParentTop="true"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_alignParentLeft="true"
+	  android:background="@drawable/nd3_msge_owen" 
+	  android:textColor="@color/nd3_black"/>
+	  
+	   <TextView
+	  android:id="@+id/nd3_message_rcv_txt"
+	  android:layout_alignParentTop="true"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_alignParentRight="true"
+	  android:background="@drawable/nd3_msge_friend" 
+	  android:textColor="@color/nd3_black"/>
+     
+ </RelativeLayout>
+</com.nd.commplatform.widget.NdMessageRecordListItem>

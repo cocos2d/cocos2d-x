@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 靓点推荐——专题类型 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <LinearLayout 
+        android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:padding="8dip"
+	    android:orientation="vertical"
+        >
+        <!-- 主标题 -->
+	    <TextView 
+	        android:id="@+id/txt_main_title"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:paddingRight="20dip"
+	        android:maxLines="2"
+	        style="@style/nd_gcsdk_project_main_title"
+	        />
+	    <!-- 副标题 -->
+	    <TextView 
+	        android:id="@+id/txt_sub_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:singleLine="true"
+	        android:maxLength="8"
+	        style="@style/nd_gcsdk_project_sub_title"
+	        />
+    </LinearLayout>
+    <!-- 标签 -->
+    <TextView
+        android:id="@+id/txt_label" 
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dip"
+        style="@style/nd_gcsdk_project_label"
+        />
+</RelativeLayout>

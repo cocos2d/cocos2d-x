@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 个人设置面板 -->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" 
+  android:orientation="vertical"> 
+  
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="@dimen/nd3_margin_size"
+	android:background="@drawable/nd3_white_bg" 
+	android:orientation="vertical"
+	android:gravity="center_horizontal">
+	
+			<TextView 
+			android:id="@+id/nd3_appname_txt"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textColor="@color/nd3_black"  
+			android:singleLine="true" 
+			android:textSize="@dimen/nd3_btn_text_size"
+			android:layout_marginTop="5dp"/>
+			
+			<ImageView  
+		     android:src="@drawable/nd3_horizontal_line"
+		     android:layout_width="fill_parent"
+		     android:layout_height="wrap_content"
+		     android:scaleType="fitXY"/>
+		    
+		    <LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"> 
+				<TextView  
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_app_feedback_service_phone"
+				android:textSize="@dimen/nd3_btn_text_size"
+				android:textColor="@color/nd3_black"
+				android:layout_marginTop="5dp" 	 />
+				<TextView 
+				android:id="@+id/nd3_servicephone_txt"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/nd3_blue"
+				android:singleLine="true" 
+				android:textSize="@dimen/nd3_btn_text_size"
+				android:layout_alignLeft="@id/nd3_appname_txt"
+				android:layout_below="@id/nd3_appname_txt"
+				android:layout_marginTop="5dp"  
+				/>
+			</LinearLayout>
+			
+			<ImageView  
+		     android:src="@drawable/nd3_horizontal_line"
+		     android:layout_width="fill_parent"
+		     android:layout_height="wrap_content"
+		     android:scaleType="fitXY"
+		     android:layout_marginBottom="5dp"/>
+		     
+			 <RadioGroup
+			    		android:visibility="gone"
+					    android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:orientation="horizontal"
+		                android:id="@+id/nd3_feedback_type_group"  
+		                android:gravity="center_horizontal"
+		                >
+		                	<RadioButton  
+						    android:id="@+id/nd3_enhance_advice_btn" 
+						    android:text="@string/nd3_app_feedback_sub_type_1"
+						    android:button="@drawable/nd3_regist_checked" 
+						    android:textColor="@color/nd3_black"
+						    android:layout_width="wrap_content" 
+						    android:paddingRight="15dip"
+						    android:layout_height="wrap_content"
+						    android:checked="true" />
+						   <RadioButton  
+						 	android:id="@+id/nd3_problem_feedback_btn" 
+						 	android:text="@string/nd3_app_feedback_sub_type_2"
+						 	android:textColor="@color/nd3_black"
+						 	android:button="@drawable/nd3_regist_checked" 
+						 	android:layout_width="wrap_content" 
+						 	android:layout_marginRight="7dip"
+						 	android:layout_height="wrap_content" />
+		      </RadioGroup>
+		     
+     </LinearLayout><!--
+     
+    
+    <ScrollView
+   		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1" 
+		android:layout_margin="7dp"
+    	>
+    	 
+		--><EditText
+			android:id="@+id/nd3_feedback_edit"
+			android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_white_bg" 
+			android:hint="@string/nd3_app_feedback_input_hide"
+			android:gravity="left|top"
+			android:minLines="7"
+			android:maxLength="500"
+			android:scrollbars="vertical"
+			android:layout_margin="7dp"
+			/>
+			
+		<EditText
+			android:id="@+id/nd3_tel_number_edit"
+			android:inputType="phone"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_white_bg" 
+			android:hint="@string/nd3_feedback_tel_tip"
+			android:gravity="left|top" 
+			android:scrollbars="vertical"
+			android:layout_margin="7dp"
+			android:visibility="gone"
+			/>	
+			
+	<!--</ScrollView>
+	     
+
+   
+	
+--></LinearLayout>

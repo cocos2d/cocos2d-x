@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "plugins">
+      <FileRef
+         location = "group:protocols/proj.ios/PluginProtocol.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:plugins/admob/proj.ios/PluginAdmob.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:plugins/flurry/proj.ios/PluginFlurry.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:plugins/twitter/proj.ios/PluginTwitter.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:plugins/umeng/proj.ios/PluginUmeng.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:plugins/weibo/proj.ios/PluginWeibo.xcodeproj">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:samples/HelloPlugins/proj.ios/HelloPlugins.xcodeproj">
+   </FileRef>
+</Workspace>

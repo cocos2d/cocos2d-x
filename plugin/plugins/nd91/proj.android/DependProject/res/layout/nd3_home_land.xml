@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/nd3_platform_padding_size"
+    android:paddingBottom="@dimen/nd3_platform_padding_size"
+    android:paddingLeft="@dimen/nd3_option_item_marginLeft" 
+    android:paddingRight="@dimen/nd3_option_item_marginLeft" >
+
+    <!-- 头像和心情 -->
+
+    <RelativeLayout
+        android:id="@+id/nd3_person_layout_land"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/nd3_option_item_marginLeft"
+        android:paddingRight="@dimen/nd3_option_item_marginLeft"
+        android:layout_margin="@dimen/nd3_margin_size" >
+
+        <ImageView
+            android:id="@+id/nd3_head_image_land"
+            android:layout_width="57dip"
+            android:layout_height="57dip"
+            android:layout_centerVertical="true"
+            android:src="@drawable/nd3_head_bg" />
+
+        <RelativeLayout
+            android:id="@+id/nd3_person_info_layout_land"
+            android:layout_width="fill_parent"
+            android:layout_height="57dip"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/nd3_margin_size"
+            android:layout_toRightOf="@+id/nd3_head_image_land"
+            android:background="@drawable/nd3_mood_bg" >
+
+            <TextView
+                android:id="@+id/nd3_mood_land"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/nd3_switch_image"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:textColor="@color/nd3_black"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/nd3_switch_image_land"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/nd3_switch_image" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!-- 各个入口 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nd3_bk1"
+        android:orientation="vertical" >
+
+        <!-- 第一行 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <!-- 成就榜 -->
+            <Button
+                android:id="@+id/nd3_achieve_layout_land"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0"
+                android:paddingTop="@dimen/nd3_option_item_marginLeft"
+                android:paddingBottom="@dimen/nd3_option_item_marginLeft"
+                android:drawablePadding="@dimen/nd3_item_divider"
+                android:background="@null"
+                android:drawableTop="@drawable/nd3_achieve"
+                android:textColor="@color/nd3_black"
+                android:text="@string/nd3_achieve_rank"/>
+
+        	<ImageView
+	            android:layout_width="1.0dip"
+	            android:layout_height="fill_parent"
+	            android:background="@android:color/black" />
+                    
+        	<!-- 排行榜 -->
+            <Button
+                android:id="@+id/nd3_rank_layout_land"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0"
+                android:paddingTop="@dimen/nd3_option_item_marginLeft"
+                android:paddingBottom="@dimen/nd3_option_item_marginLeft"
+                android:drawablePadding="@dimen/nd3_item_divider"
+                android:background="@null"
+                android:drawableTop="@drawable/nd3_rank_image"
+                android:textColor="@color/nd3_black"
+                android:text="@string/nd3_ranking"/>
+
+        	<ImageView
+	            android:layout_width="1.0dip"
+	            android:layout_height="fill_parent"
+	            android:background="@android:color/black" />
+        	            
+        	<!-- 论坛 -->
+            <Button
+                android:id="@+id/nd3_bbs_detail_layout_land"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0"
+                android:paddingTop="@dimen/nd3_option_item_marginLeft"
+                android:paddingBottom="@dimen/nd3_option_item_marginLeft"
+                android:drawablePadding="@dimen/nd3_item_divider"
+                android:background="@null"
+                android:drawableTop="@drawable/nd3_bbs_icon"
+                android:textColor="@color/nd3_black"
+                android:text="@string/nd3_show_bbs_detail"/>                 
+        </LinearLayout>
+
+        <!-- 分割线 -->
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1.0dip"
+            android:background="@android:color/black" />
+
+        <!-- 第二行 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <!-- 新鲜事 -->
+            <Button
+                android:id="@+id/nd3_bizarre_layout_land"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0"
+                android:paddingTop="@dimen/nd3_option_item_marginLeft"
+                android:paddingBottom="@dimen/nd3_option_item_marginLeft"
+                android:drawablePadding="@dimen/nd3_item_divider"
+                android:background="@null"
+                android:drawableTop="@drawable/nd3_bizarre_image"
+                android:textColor="@color/nd3_black"
+                android:text="@string/nd3_bizarre_friend"/>                 
+
+        	<ImageView
+	            android:layout_width="1.0dip"
+	            android:layout_height="fill_parent"
+	            android:background="@android:color/black" />
+        	             
+        	<!-- 看看谁在玩 -->
+            <Button
+                android:id="@+id/nd3_show_player_layout_land"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0"
+                android:paddingTop="@dimen/nd3_option_item_marginLeft"
+                android:paddingBottom="@dimen/nd3_option_item_marginLeft"
+                android:drawablePadding="@dimen/nd3_item_divider"
+                android:background="@null"
+                android:drawableTop="@drawable/nd3_showplayer"
+                android:textColor="@color/nd3_black"
+                android:text="@string/nd3_show_player"/>                 
+
+        	<ImageView
+	            android:layout_width="1.0dip"
+	            android:layout_height="fill_parent"
+	            android:background="@android:color/black" />
+
+        	<!-- 邀请好友 -->	            
+            <Button
+                android:id="@+id/nd3_invite_layout_land"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0"
+                android:paddingTop="@dimen/nd3_option_item_marginLeft"
+                android:paddingBottom="@dimen/nd3_option_item_marginLeft"
+                android:drawablePadding="@dimen/nd3_item_divider"
+                android:background="@null"
+                android:drawableTop="@drawable/nd3_invite_image"
+                android:textColor="@color/nd3_black"
+                android:text="@string/nd3_invite_friend"/>                                    
+                            
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
