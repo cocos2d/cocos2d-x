@@ -34,7 +34,7 @@ public:
     ~UIPageViewTest();
     bool init();
     
-    void pageTurningEvent(Object* pSender);
+    void pageViewEvent(Object* pSender, PageViewEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UIPageViewTest)

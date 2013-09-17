@@ -43,8 +43,8 @@ _autoScrollDistance(0.0f),
 _autoScrollSpeed(0.0f),
 _autoScrollDir(0),
 _childFocusCancelOffset(5.0f),
-_pageTurningListener(NULL),
-_pageTurningSelector(NULL)
+_eventListener(NULL),
+_eventSelector(NULL)
 {
 }
 
@@ -548,16 +548,16 @@ void UIPageView::interceptTouchEvent(int handleState, UIWidget *sender, const Po
 
 void UIPageView::pageTurningEvent()
 {
-    if (_pageTurningListener && _pageTurningSelector)
+    if (_eventListener && _eventSelector)
     {
-        (_pageTurningListener->*_pageTurningSelector)(this);
+        (_eventListener->*_eventSelector)(this, PAGEVIEW_EVENT_TURNING);
     }
 }
 
-void UIPageView::addPageTurningEvent(Object *target, SEL_PageViewPageTurningEvent selector)
+void UIPageView::addEventListener(Object *target, SEL_PageViewEvent selector)
 {
-    _pageTurningListener = target;
-    _pageTurningSelector = selector;
+    _eventListener = target;
+    _eventSelector = selector;
 }
 
 int UIPageView::getCurPageIndex() const

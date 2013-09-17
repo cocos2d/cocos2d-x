@@ -134,7 +134,7 @@ public:
     virtual void setAnchorPoint(const Point &pt);
     
     //add a call back function would called when checkbox is selected or unselected.
-    void addSelectedStateEvent(Object* target,SEL_SelectedStateEvent selector);
+    void addEventListener(Object* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);

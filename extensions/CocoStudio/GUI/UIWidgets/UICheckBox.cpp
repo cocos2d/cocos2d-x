@@ -287,7 +287,7 @@ void UICheckBox::unSelectedEvent()
     }
 }
 
-void UICheckBox::addSelectedStateEvent(Object *target, SEL_SelectedStateEvent selector)
+void UICheckBox::addEventListener(Object *target, SEL_SelectedStateEvent selector)
 {
     _selectedStateEventListener = target;
     _selectedStateEventSelector = selector;
