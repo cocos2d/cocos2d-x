@@ -60,4 +60,8 @@ var cc = cc || {};
         return cc.TMXTiledMap.prototype.getPropertiesForGID.apply(this, arguments);
     };
 
+    cc.Menu.prototype.setHandlerPriority = function() {
+        cc.log("cc.Menu.setHandlerPriority was deprecated, 3.0 uses new event dispatcher to dispatch touch event based on draw order, so setHandlerPriority is not needed now.");
+    };
+
 })();
