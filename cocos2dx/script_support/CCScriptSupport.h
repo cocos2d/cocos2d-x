@@ -28,6 +28,7 @@
 #include "platform/CCCommon.h"
 #include "event_dispatcher/CCTouch.h"
 #include "event_dispatcher/CCTouchEvent.h"
+#include "event_dispatcher/CCKeyboardEvent.h"
 #include "cocoa/CCSet.h"
 #include <map>
 #include <string>
@@ -291,7 +292,7 @@ struct TouchScriptData
 
 struct KeypadScriptData
 {
-    int actionType;
+    KeyboardEvent::KeyCode actionType;
     void* nativeObject;
     
     // Constructor
@@ -299,7 +300,7 @@ struct KeypadScriptData
      * @js NA
      * @lua NA
      */
-    KeypadScriptData(int inActionType,void* inNativeObject)
+    KeypadScriptData(KeyboardEvent::KeyCode inActionType,void* inNativeObject)
     : actionType(inActionType),nativeObject(inNativeObject)
     {
     }
