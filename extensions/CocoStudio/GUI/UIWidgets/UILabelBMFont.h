@@ -58,6 +58,10 @@ public:
     virtual void setAnchorPoint(const CCPoint &pt);
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();

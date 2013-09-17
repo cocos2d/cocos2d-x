@@ -134,8 +134,10 @@ public:
     //override "update" method of widget.
     virtual void update(float dt);
     
-//    float getScrollDegreeRange() const;
-//    void setScrollDegreeRange(float range);
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
     /*compatible*/
     /**

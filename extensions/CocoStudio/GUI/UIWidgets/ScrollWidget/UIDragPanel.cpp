@@ -1379,4 +1379,9 @@ Layout* UIDragPanel::getInnerContainer()
     return m_pInnerContainer;
 }
 
+const char* UIDragPanel::getDescription() const
+{
+    return "DragPanel";
+}
+
 NS_CC_EXT_END
