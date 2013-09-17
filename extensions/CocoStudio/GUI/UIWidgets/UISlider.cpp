@@ -410,7 +410,7 @@ float UISlider::getPercentWithBallPos(float px)
     return (((px-(-_barLength/2.0f))/_barLength)*100.0f);
 }
 
-void UISlider::addPercentEvent(Object *target, SEL_SlidPercentChangedEvent selector)
+void UISlider::addEventListener(Object *target, SEL_SlidPercentChangedEvent selector)
 {
     _slidPercentListener = target;
     _slidPercentSelector = selector;

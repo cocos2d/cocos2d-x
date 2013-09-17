@@ -90,8 +90,7 @@ bool UIListViewTest_Vertical::init()
             
             listView->addChild(layout);
         }
-        listView->addInitChildEvent(this, coco_ListView_InitChild_selector(UIListViewTest_Vertical::initChildEvent));
-        listView->addUpdateChildEvent(this, coco_ListView_UpdateChild_selector(UIListViewTest_Vertical::updateChildEvent));
+        listView->addEventListenter(this, listvieweventselector(UIListViewTest_Vertical::listViewEvent));
         listView->initChildWithDataLength(m_array->count());
         m_pUiLayer->addWidget(listView);
         
@@ -101,33 +100,44 @@ bool UIListViewTest_Vertical::init()
     return false;
 }
 
-void UIListViewTest_Vertical::initChildEvent(Object *pSender)
+void UIListViewTest_Vertical::listViewEvent(Object *pSender, ListViewEventType type)
 {
-    String* ccstr = static_cast<String*>(m_array->getObjectAtIndex(m_nCount));
-    UIListView* list = dynamic_cast<UIListView*>(pSender);
-    
-    Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
-    UIButton* textButton = dynamic_cast<UIButton*>(layout->getChildByName("TextButton"));
-    textButton->setTitleText(ccstr->getCString());
-    
-    m_nCount++;
-}
-
-void UIListViewTest_Vertical::updateChildEvent(Object *pSender)
-{
-    UIListView* list = dynamic_cast<UIListView*>(pSender);
-    int index = list->getUpdateDataIndex();
-    
-    if (index < 0 || index >= list->getDataLength())
+    switch (type)
     {
-        list->setUpdateSuccess(false);
+        case LISTVIEW_EVENT_INIT_CHILD:
+        {
+            String* ccstr = static_cast<String*>(m_array->getObjectAtIndex(m_nCount));
+            UIListView* list = dynamic_cast<UIListView*>(pSender);
+            
+            Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
+            UIButton* textButton = dynamic_cast<UIButton*>(layout->getChildByName("TextButton"));
+            textButton->setTitleText(ccstr->getCString());
+            
+            m_nCount++;
+        }
+            break;
+            
+        case LISTVIEW_EVENT_UPDATE_CHILD:
+        {
+            UIListView* list = dynamic_cast<UIListView*>(pSender);
+            int index = list->getUpdateDataIndex();
+            
+            if (index < 0 || index >= list->getDataLength())
+            {
+                list->setUpdateSuccess(false);
+            }
+            
+            String* ccstr = static_cast<String*>(m_array->getObjectAtIndex(index));
+            Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
+            UIButton* textButton = dynamic_cast<UIButton*>(layout->getChildByName("TextButton"));
+            textButton->setTitleText(ccstr->getCString());
+            list->setUpdateSuccess(true);
+        }
+            break;
+            
+        default:
+            break;
     }
-    
-    String* ccstr = static_cast<String*>(m_array->getObjectAtIndex(index));
-    Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
-    UIButton* textButton = dynamic_cast<UIButton*>(layout->getChildByName("TextButton"));
-    textButton->setTitleText(ccstr->getCString());
-    list->setUpdateSuccess(true);    
 }
 
 // UIListViewTest_Horizontal
@@ -211,8 +221,7 @@ bool UIListViewTest_Horizontal::init()
             
             listView->addChild(layout);
         }
-        listView->addInitChildEvent(this, coco_ListView_InitChild_selector(UIListViewTest_Horizontal::initChildEvent));
-        listView->addUpdateChildEvent(this, coco_ListView_UpdateChild_selector(UIListViewTest_Horizontal::updateChildEvent));
+        listView->addEventListenter(this, listvieweventselector(UIListViewTest_Horizontal::listViewEvent));
         listView->initChildWithDataLength(m_array->count());
         m_pUiLayer->addWidget(listView);
         
@@ -222,31 +231,42 @@ bool UIListViewTest_Horizontal::init()
     return false;
 }
 
-void UIListViewTest_Horizontal::initChildEvent(Object *pSender)
+void UIListViewTest_Horizontal::listViewEvent(Object *pSender, ListViewEventType type)
 {
-    String* ccstr = static_cast<String*>(m_array->getObjectAtIndex(m_nCount));
-    UIListView* list = dynamic_cast<UIListView*>(pSender);
-    
-    Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
-    UIButton* textButton = dynamic_cast<UIButton*>(layout->getChildByName("TextButton"));
-    textButton->setTitleText(ccstr->getCString());
-    
-    m_nCount++;
-}
-
-void UIListViewTest_Horizontal::updateChildEvent(Object *pSender)
-{
-    UIListView* list = dynamic_cast<UIListView*>(pSender);
-    int index = list->getUpdateDataIndex();
-    
-    if (index < 0 || index >= list->getDataLength())
+    switch (type)
     {
-        list->setUpdateSuccess(false);
+        case LISTVIEW_EVENT_INIT_CHILD:
+        {
+            String* ccstr = static_cast<String*>(m_array->getObjectAtIndex(m_nCount));
+            UIListView* list = dynamic_cast<UIListView*>(pSender);
+            
+            Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
+            UIButton* textButton = dynamic_cast<UIButton*>(layout->getChildByName("TextButton"));
+            textButton->setTitleText(ccstr->getCString());
+            
+            m_nCount++;
+        }
+            break;
+            
+        case LISTVIEW_EVENT_UPDATE_CHILD:
+        {
+            UIListView* list = dynamic_cast<UIListView*>(pSender);
+            int index = list->getUpdateDataIndex();
+            
+            if (index < 0 || index >= list->getDataLength())
+            {
+                list->setUpdateSuccess(false);
+            }
+            
+            String* ccstr = static_cast<String*>(m_array->getObjectAtIndex(index));
+            Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
+            UIButton* textButton = dynamic_cast<UIButton*>(layout->getChildByName("TextButton"));
+            textButton->setTitleText(ccstr->getCString());
+            list->setUpdateSuccess(true);
+        }
+            break;
+            
+        default:
+            break;
     }
-    
-    String* ccstr = static_cast<String*>(m_array->getObjectAtIndex(index));
-    Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
-    UIButton* textButton = dynamic_cast<UIButton*>(layout->getChildByName("TextButton"));
-    textButton->setTitleText(ccstr->getCString());
-    list->setUpdateSuccess(true);
 }

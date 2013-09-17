@@ -72,47 +72,31 @@ enum DRAGPANEL_BOUNCE_DIR
     DRAGPANEL_BOUNCE_DIR_BOTTOM,
 };
 
-/**
- *  dragpanel berth event
- */
-typedef void (Object::*SEL_DragPanelBerthToLeftBottomEvent)(Object*);
-#define coco_DragPane_BerthToLeftBottom_selector(_SELECTOR) (SEL_DragPanelBerthToLeftBottomEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBerthToLeftTopEvent)(Object*);
-#define coco_DragPanel_BerthToLeftTop_selector(_SELECTOR) (SEL_DragPanelBerthToLeftTopEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBerthToRightBottomEvent)(Object*);
-#define coco_DragPanel_BerthToRightBottom_selector(_SELECTOR) (SEL_DragPanelBerthToRightBottomEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBerthToRightTopEvent)(Object*);
-#define coco_DragPanel_BerthToRightTop_selector(_SELECTOR) (SEL_DragPanelBerthToRightTopEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBerthToLeftEvent)(Object*);
-#define coco_DragPanel_BerthToLeft_selector(_SELECTOR) (SEL_DragPanelBerthToLeftEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBerthToRightEvent)(Object*);
-#define coco_DragPanel_BerthToRight_selector(_SELECTOR) (SEL_DragPanelBerthToRightEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBerthToTopEvent)(Object*);
-#define coco_DragPanel_BerthToTop_selector(_SELECTOR) (SEL_DragPanelBerthToTopEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBerthToBottomEvent)(Object*);
-#define coco_DragPanel_BerthToBottom_selector(_SELECTOR) (SEL_DragPanelBerthToBottomEvent)(&_SELECTOR)
+typedef enum
+{
+    DRAGPANEL_EVENT_BERTH_LEFTBOTTOM,
+    DRAGPANEL_EVENT_BERTH_LFETTOP,
+    DRAGPANEL_EVENT_BERTH_RIGHTBOTTOM,
+    DRAGPANEL_EVENT_BERTH_RIGHTTOP,
+    DRAGPANEL_EVENT_BERTH_LEFT,
+    DRAGPANEL_EVENT_BERTH_TOP,
+    DRAGPANEL_EVENT_BERTH_RIGHT,
+    DRAGPANEL_EVENT_BERTH_BOTTOM,
+    DRAGPANEL_EVENT_BOUNCE_LEFTBOTTOM,
+    DRAGPANEL_EVENT_BOUNCE_LEFTTOP,
+    DRAGPANEL_EVENT_BOUNCE_RIGHTBOTTOM,
+    DRAGPANEL_EVENT_BOUNCE_RIGHTTOP,
+    DRAGPANEL_EVENT_BOUNCE_LEFT,
+    DRAGPANEL_EVENT_BOUNCE_TOP,
+    DRAGPANEL_EVENT_BOUNCE_RIGHT,
+    DRAGPANEL_EVENT_BOUNCE_BOTTOM,
+}DragPanelEventType;
 
 /**
- *  dragpanel bounce event
+ *  dragpanel event
  */
-typedef void (Object::*SEL_DragPanelBounceOverEvent)(Object*);
-#define coco_DragPanel_BounceOver_selector(_SELECTOR) (SEL_DragPanelBounceOverEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBounceToLeftBottomEvent)(Object*);
-#define coco_DragPanel_BounceToLeftBottom_selector(_SELECTOR) (SEL_DragPanelBounceToLeftBottomEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBounceToLeftTopEvent)(Object*);
-#define coco_DragPanel_BounceToLeftTop_selector(_SELECTOR) (SEL_DragPanelBounceToLeftTopEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBounceToRightBottomEvent)(Object*);
-#define coco_DragPanel_BounceToRightBottom_selector(_SELECTOR) (SEL_DragPanelBounceToRightBottomEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBounceToRightTopEvent)(Object*);
-#define coco_DragPanel_BounceToRightTop_selector(_SELECTOR) (SEL_DragPanelBounceToRightTopEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBounceToLeftEvent)(Object*);
-#define coco_DragPanel_BounceToLeft_selector(_SELECTOR) (SEL_DragPanelBounceToLeftEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBounceToTopEvent)(Object*);
-#define coco_DragPanel_BounceToTop_selector(_SELECTOR) (SEL_DragPanelBounceToTopEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBounceToRightEvent)(Object*);
-#define coco_DragPanel_BounceToRight_selector(_SELECTOR) (SEL_DragPanelBounceToRightEvent)(&_SELECTOR)
-typedef void (Object::*SEL_DragPanelBounceToBottomEvent)(Object*);
-#define coco_DragPanel_BounceToBottom_selector(_SELECTOR) (SEL_DragPanelBounceToBottomEvent)(&_SELECTOR)
+typedef void (Object::*SEL_DragPanelEvent)(Object*, DragPanelEventType);
+#define dragpaneleventselector(_SELECTOR)(SEL_DragPanelEvent)(&_SELECTOR)
 
 class UIDragPanel : public Layout, public UIScrollInterface
 {
@@ -180,17 +164,10 @@ public:
     bool isBerth();
     
     /**
-     *  berth event by direction
+     *  event
      */
-    void addBerthToLeftBottomEvent(Object* target, SEL_DragPanelBerthToLeftBottomEvent selector);
-    void addBerthToLeftTopEvent(Object* target, SEL_DragPanelBerthToLeftTopEvent selector);
-    void addBerthToRightBottomEvent(Object* target, SEL_DragPanelBerthToRightBottomEvent selector);
-    void addBerthToRightTopEvent(Object* target, SEL_DragPanelBerthToRightTopEvent selector);
-    void addBerthToLeftEvent(Object* target, SEL_DragPanelBerthToLeftEvent selector);
-    void addBerthToTopEvent(Object* target, SEL_DragPanelBerthToTopEvent selector);
-    void addBerthToRightEvent(Object* target, SEL_DragPanelBerthToRightEvent selector);
-    void addBerthToBottomEvent(Object* target, SEL_DragPanelBerthToBottomEvent selector);
-    
+    void addEventListener(Object* target, SEL_DragPanelEvent selector);
+        
     /**
      *  get and set bounce enable
      */
@@ -204,18 +181,6 @@ public:
      *  set bounce ease rate
      */
     void setBounceEaseRate(float rate);
-    /**
-     *  bounce event by dircetion
-     */
-    void addBounceOverEvent(Object* target, SEL_DragPanelBounceOverEvent selector);
-    void addBounceToLeftBottomEvent(Object* target, SEL_DragPanelBounceToLeftBottomEvent selector);
-    void addBounceToLeftTopEvent(Object* target, SEL_DragPanelBounceToLeftTopEvent selector);
-    void addBounceToRightBottomEvent(Object* target, SEL_DragPanelBounceToRightBottomEvent selector);
-    void addBounceToRightTopEvent(Object* target, SEL_DragPanelBounceToRightTopEvent selector);
-    void addBounceToLeftEvent(Object* target, SEL_DragPanelBounceToLeftEvent selector);
-    void addBounceToTopEvent(Object* target, SEL_DragPanelBounceToTopEvent selector);
-    void addBounceToRightEvent(Object* target, SEL_DragPanelBounceToRightEvent selector);
-    void addBounceToBottomEvent(Object* target, SEL_DragPanelBounceToBottomEvent selector);
     
     /**
      * Gets inner container of dragpanel.
@@ -291,7 +256,6 @@ protected:
     void bounceToCorner();
     void bounceOver();
     // bounce event
-    void bounceOverEvent();
     void bounceToLeftBottomEvent();
     void bounceToRightBottomEvent();
     void bounceToLeftTopEvent();
@@ -323,94 +287,59 @@ protected:
     /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
-    Layout* m_pInnerContainer;
+    Layout* _innerContainer;
     
     /*
     DRAGPANEL_DIR m_eDirection;
     DRAGPANEL_MOVE_DIR m_eMoveDirection;
      */
     
-    bool m_bTouchPressed;
-    bool m_bTouchMoved;
-    bool m_bTouchReleased;
-    bool m_bTouchCanceld; // check touch out of drag panel boundary
+    bool _touchPressed;
+    bool _touchMoved;
+    bool _touchReleased;
+    bool _touchCanceld; // check touch out of drag panel boundary
     
-    Point m_touchStartNodeSpace;
-    Point m_touchStartWorldSpace;
-    Point m_touchEndWorldSpace;
+    Point _touchStartNodeSpace;
+    Point _touchStartWorldSpace;
+    Point _touchEndWorldSpace;
     
-    float m_fSlidTime;
+    float _slidTime;
     
     // move type
-    DRAGPANEL_MOVE_TYPE m_eMoveType;
+    DRAGPANEL_MOVE_TYPE _moveType;
     
     // auto move
-    float m_fAutoMoveDuration;
-    float m_fAutoMoveEaseRate;
+    float _autoMoveDuration;
+    float _autoMoveEaseRate;
+    
+    // event
+    Object* _eventLister;
+    SEL_DragPanelEvent _eventSelector;
     
     // berth
-    DRAGPANEL_BERTH_DIR m_eBerthDirection;
-    
-    // berth event
-    Object* m_pBerthToLeftListener;
-    SEL_DragPanelBerthToLeftEvent m_pfnBerthToLeftSelector;
-    Object* m_pBerthToRightListener;
-    SEL_DragPanelBerthToRightEvent m_pfnBerthToRightSelector;
-    Object* m_pBerthToTopListener;
-    SEL_DragPanelBerthToTopEvent m_pfnBerthToTopSelector;
-    Object* m_pBerthToBottomListener;
-    SEL_DragPanelBerthToBottomEvent m_pfnBerthToBottomSelector;
-    Object* m_pBerthToLeftBottomListener;
-    SEL_DragPanelBerthToLeftBottomEvent m_pfnBerthToLeftBottomSelector;
-    Object* m_pBerthToLeftTopListener;
-    SEL_DragPanelBerthToLeftTopEvent m_pfnBerthToLeftTopSelector;
-    Object* m_pBerthToRightBottomListener;
-    SEL_DragPanelBerthToRightBottomEvent m_pfnBerthToRightBottomSelector;
-    Object* m_pBerthToRightTopListener;
-    SEL_DragPanelBerthToRightTopEvent m_pfnBerthToRightTopSelector;
-    
+    DRAGPANEL_BERTH_DIR _berthDirection;
+        
     // bounce
-    bool m_bBounceEnable;
-    DRAGPANEL_BOUNCE_DIR m_eBounceDirection;
-    float m_fBounceDuration;
-    float m_fBounceEaseRate;
-    
-    // bounce event
-    Object* m_pBounceOverListener;
-    SEL_DragPanelBounceOverEvent m_pfnBounceOverSelector;
-    Object* m_pBounceToLeftBottomListener;
-    SEL_DragPanelBounceToLeftBottomEvent m_pfnBounceToLeftBottomSelector;
-    Object* m_pBounceToLeftTopListener;
-    SEL_DragPanelBounceToLeftTopEvent m_pfnBounceToLeftTopSelector;
-    Object* m_pBounceToRightBottomListener;
-    SEL_DragPanelBounceToRightBottomEvent m_pfnBounceToRightBottomSelector;
-    Object* m_pBounceToRightTopListener;
-    SEL_DragPanelBounceToRightTopEvent m_pfnBounceToRightTopSelector;
-    Object* m_pBounceToLeftListener;
-    SEL_DragPanelBounceToLeftEvent m_pfnBounceToLeftSelector;
-    Object* m_pBounceToTopListener;
-    SEL_DragPanelBounceToTopEvent m_pfnBounceToTopSelector;
-    Object* m_pBounceToRightListener;
-    SEL_DragPanelBounceToRightEvent m_pfnBounceToRightSelector;
-    Object* m_pBounceToBottomListener;
-    SEL_DragPanelBounceToBottomEvent m_pfnBounceToBottomSelector;        
+    bool _bounceEnable;
+    DRAGPANEL_BOUNCE_DIR _bounceDirection;
+    float _bounceDuration;
+    float _bounceEaseRate;
     
     
+    float _runningAction;
+    int _actionType;
     
-    float m_bRunningAction;
-    int m_nActionType;
+    UIWidget* _actionWidget;
     
-    UIWidget* m_pActionWidget;
+    float _duration;
+    float _elapsed;
+    bool _firstTick;
     
-    float m_fDuration;
-    float m_elapsed;
-    bool m_bFirstTick;
+    Point _positionDelta;
+    Point _startPosition;
+    Point _previousPosition;
     
-    Point m_positionDelta;
-    Point m_startPosition;
-    Point m_previousPosition;
-    
-    Point m_endPosition;
+    Point _endPosition;
 };
 
 NS_CC_EXT_END

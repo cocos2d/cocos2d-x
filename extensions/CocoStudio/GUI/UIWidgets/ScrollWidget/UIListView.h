@@ -53,13 +53,17 @@ typedef enum LISTVIEW_MOVE_DIR
     LISTVIEW_MOVE_DIR_RIGHT,
 }ListViewMoveDirection;
 
+typedef enum
+{
+    LISTVIEW_EVENT_INIT_CHILD,
+    LISTVIEW_EVENT_UPDATE_CHILD,
+}ListViewEventType;
+
 /**
  *  list view event
  */
-typedef void (cocos2d::Object::*SEL_ListViewInitChildEvent)(cocos2d::Object*);
-typedef void (cocos2d::Object::*SEL_ListViewUpdateChildEvent)(cocos2d::Object*);
-#define coco_ListView_InitChild_selector(_SELECTOR) (SEL_ListViewInitChildEvent)(&_SELECTOR)
-#define coco_ListView_UpdateChild_selector(_SELECTOR) (SEL_ListViewUpdateChildEvent)(&_SELECTOR)
+typedef void (Object::*SEL_ListViewEvent)(Object*, ListViewEventType);
+#define listvieweventselector(_SELECTOR)(SEL_ListViewEvent)(&_SELECTOR)
 
 class UIListView : public Layout
 {
@@ -124,13 +128,9 @@ public:
      *  add event call-back function
      */
     /**
-     *  add init child event
+     *  add event
      */
-    void addInitChildEvent(cocos2d::Object* target, SEL_ListViewInitChildEvent seletor);
-    /**
-     *  add udpate child event
-     */
-    void addUpdateChildEvent(cocos2d::Object* target, SEL_ListViewUpdateChildEvent selector);
+    void addEventListenter(cocos2d::Object* target, SEL_ListViewEvent selector);
     
     /* gui mark */
     /**
@@ -213,10 +213,8 @@ protected:
     Point _moveChildPoint;
     float _childFocusCancelOffset;
     
-    cocos2d::Object* _initChildListener;
-    SEL_ListViewInitChildEvent _initChildSelector;
-    cocos2d::Object* _updateChildListener;
-    SEL_ListViewUpdateChildEvent _updateChildSelector;
+    Object* _eventListener;
+    SEL_ListViewEvent _eventSelector;
     
     Array* _childPool;
     Array* _updatePool;

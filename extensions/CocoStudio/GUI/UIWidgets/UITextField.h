@@ -84,14 +84,16 @@ protected:
 };
 
 
-typedef void (Object::*SEL_TextFieldAttachWithIMEEvent)(Object*);
-#define coco_TextField_AttachWithIME_selector(_SELECTOR) (SEL_TextFieldAttachWithIMEEvent)(&_SELECTOR)
-typedef void (Object::*SEL_TextFieldDetachWithIMEEvent)(Object*);
-#define coco_TextField_DetachWithIME_selector(_SELECTOR) (SEL_TextFieldDetachWithIMEEvent)(&_SELECTOR)
-typedef void (Object::*SEL_TextFieldInsertTextEvent)(Object*);
-#define coco_TextField_InsertText_selector(_SELECTOR) (SEL_TextFieldInsertTextEvent)(&_SELECTOR)
-typedef void (Object::*SEL_TextFieldDeleteBackwardEvent)(Object*);
-#define coco_TextField_DeleteBackward_selector(_SELECTOR) (SEL_TextFieldDeleteBackwardEvent)(&_SELECTOR)
+typedef enum
+{
+    TEXTFIELD_EVENT_ATTACH_WITH_IME,
+    TEXTFIELD_EVENT_DETACH_WITH_IME,
+    TEXTFIELD_EVENT_INDERT_TEXT,
+    TEXTFIELD_EVENT_DELETE_BACKWARD,
+}TextFiledEventType;
+
+typedef void (Object::*SEL_TextFieldEvent)(Object*, TextFiledEventType);
+#define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
 //class UITextField : public UIWidget
 class UITextField : public UIWidget
@@ -126,10 +128,7 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addAttachWithIMEEvent(Object* target, SEL_TextFieldAttachWithIMEEvent selecor);
-    void addDetachWithIMEEvent(Object* target, SEL_TextFieldDetachWithIMEEvent selecor);
-    void addInsertTextEvent(Object* target, SEL_TextFieldInsertTextEvent selecor);
-    void addDeleteBackwardEvent(Object* target, SEL_TextFieldDeleteBackwardEvent selecor);
+    void addEventListener(Object* target, SEL_TextFieldEvent selecor);
     virtual void setAnchorPoint(const Point &pt);
     virtual void setColor(const Color3B &color);
     virtual void setOpacity(int opacity);
@@ -155,21 +154,15 @@ protected:
     virtual void onSizeChanged();
     void textfieldRendererScaleChangedWithSize();
 protected:
+    UICCTextField* _textFieldRenderer;
+    
     float _touchWidth;
     float _touchHeight;
     bool _useTouchArea;
     
-    Object* _attachWithIMEListener;
-    Object* _detachWithIMEListener;
-    Object* _insertTextListener;
-    Object* _deleteBackwardListener;
+    Object* _eventListener;
+    SEL_TextFieldEvent _eventSelector;
     
-    SEL_TextFieldAttachWithIMEEvent _attachWithIMESelector;
-    SEL_TextFieldDetachWithIMEEvent _detachWithIMESelector;
-    SEL_TextFieldInsertTextEvent _insertTextSelector;
-    SEL_TextFieldDeleteBackwardEvent _deleteBackwardSelector;
-    
-    UICCTextField* _textFieldRenderer;
 };
 
 NS_CC_EXT_END

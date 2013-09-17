@@ -271,18 +271,12 @@ bool UICCTextField::getDeleteBackward()
 
     
 UITextField::UITextField():
+_textFieldRenderer(NULL),
 _touchWidth(0.0f),
 _touchHeight(0.0f),
 _useTouchArea(false),
-_attachWithIMEListener(NULL),
-_detachWithIMEListener(NULL),
-_insertTextListener(NULL),
-_deleteBackwardListener(NULL),
-_attachWithIMESelector(NULL),
-_detachWithIMESelector(NULL),
-_insertTextSelector(NULL),
-_deleteBackwardSelector(NULL),
-_textFieldRenderer(NULL)
+_eventListener(NULL),
+_eventSelector(NULL)
 {
 }
 
@@ -475,58 +469,40 @@ void UITextField::setDeleteBackward(bool deleteBackward)
 
 void UITextField::attachWithIMEEvent()
 {
-    if (_attachWithIMEListener && _attachWithIMESelector)
+    if (_eventListener && _eventSelector)
     {
-        (_attachWithIMEListener->*_attachWithIMESelector)(this);
+        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
     }
 }
 
 void UITextField::detachWithIMEEvent()
 {
-    if (_detachWithIMEListener && _detachWithIMESelector)
+    if (_eventListener && _eventSelector)
     {
-        (_detachWithIMEListener->*_detachWithIMESelector)(this);
+        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
     }
 }
 
 void UITextField::insertTextEvent()
 {
-    if (_insertTextListener && _insertTextSelector)
+    if (_eventListener && _eventSelector)
     {
-        (_insertTextListener->*_insertTextSelector)(this);
+        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_INDERT_TEXT);
     }
 }
 
 void UITextField::deleteBackwardEvent()
 {
-    if (_deleteBackwardListener && _deleteBackwardSelector)
+    if (_eventListener && _eventSelector)
     {
-        (_deleteBackwardListener->*_deleteBackwardSelector)(this);
+        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
     }
 }
 
-void UITextField::addAttachWithIMEEvent(Object *target, SEL_TextFieldAttachWithIMEEvent selecor)
+void UITextField::addEventListener(Object *target, SEL_TextFieldEvent selecor)
 {
-    _attachWithIMEListener = target;
-    _attachWithIMESelector = selecor;
-}
-
-void UITextField::addDetachWithIMEEvent(Object *target, SEL_TextFieldDetachWithIMEEvent selecor)
-{
-    _detachWithIMEListener = target;
-    _detachWithIMESelector = selecor;
-}
-
-void UITextField::addInsertTextEvent(Object *target, SEL_TextFieldInsertTextEvent selecor)
-{
-    _insertTextListener = target;
-    _insertTextSelector = selecor;
-}
-
-void UITextField::addDeleteBackwardEvent(Object *target, SEL_TextFieldDeleteBackwardEvent selecor)
-{
-    _deleteBackwardListener = target;
-    _deleteBackwardSelector = selecor;
+    _eventListener = target;
+    _eventSelector = selecor;
 }
 
 void UITextField::setAnchorPoint(const Point &pt)
