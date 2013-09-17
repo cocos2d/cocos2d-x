@@ -425,6 +425,11 @@ const CCSize& Layout::getContentSize() const
     return m_pRenderer->getContentSize();
 }
 
+const char* Layout::getDescription() const
+{
+    return "Layout";
+}
+
 RectClippingNode::RectClippingNode():
 m_pInnerStencil(NULL),
 m_bEnabled(true),

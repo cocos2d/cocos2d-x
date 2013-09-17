@@ -37,8 +37,6 @@ m_pSlidBallDisabledRenderer(NULL),
 m_pSlidBallRenderer(NULL),
 m_fBarLength(0.0),
 m_nPercent(0),
-m_fBarNodeScaleValue(1.0),
-m_fTouchMoveStartLocation(0.0),
 m_bScale9Enabled(false),
 m_bPrevIgnoreSize(true),
 m_strTextureFile(""),
@@ -549,4 +547,10 @@ void UISlider::onPressStateChangedToDisabled()
     m_pSlidBallPressedRenderer->setVisible(false);
     m_pSlidBallDisabledRenderer->setVisible(true);
 }
+
+const char* UISlider::getDescription() const
+{
+    return "Slider";
+}
+
 NS_CC_EXT_END

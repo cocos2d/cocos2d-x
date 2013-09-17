@@ -117,6 +117,11 @@ public:
     //override "getVirtualRenderer" method of widget.
     virtual CCNode* getVirtualRenderer();
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     void setTextAreaSize(const CCSize &size);
     void setTextHorizontalAlignment(CCTextAlignment alignment);
     void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
