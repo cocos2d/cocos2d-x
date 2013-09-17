@@ -84,7 +84,7 @@ void JSTouchDelegate::registerTargettedDelegate(int priority, bool swallowsTouch
     auto dispatcher = EventDispatcher::getInstance();
     dispatcher->removeEventListener(_touchListener);
     
-    auto listener = TouchEventListener::create(Touch::DispatchMode::ALL_AT_ONCE);
+    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(swallowsTouches);
     
     listener->onTouchBegan = CC_CALLBACK_2(JSTouchDelegate::onTouchBegan, this);
