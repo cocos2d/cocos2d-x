@@ -65,5 +65,6 @@
 #include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
 #include "DataVisitorTest/DataVisitorTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
+#include "PhysicsTest/PhysicsTest.h"
 
 #endif
