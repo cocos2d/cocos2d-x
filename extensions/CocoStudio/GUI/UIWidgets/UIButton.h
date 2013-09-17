@@ -186,26 +186,26 @@ protected:
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
 protected:
-    Node* m_pButtonNormalRenderer;
-    Node* m_pButtonClickedRenderer;
-    Node* m_pButtonDisableRenderer;
-    LabelTTF* m_pTitleRenderer;
-    std::string m_strNormalFileName;
-    std::string m_strClickedFileName;
-    std::string m_strDisabledFileName;
-    bool m_bPrevIgnoreSize;
-    bool m_bScale9Enabled;
-    Rect m_capInsetsNormal;
-    Rect m_capInsetsPressed;
-    Rect m_capInsetsDisabled;
-    TextureResType m_eNormalTexType;
-    TextureResType m_ePressedTexType;
-    TextureResType m_eDisabledTexType;
-    Size m_normalTextureSize;
-    Size m_pressedTextureSize;
-    Size m_disabledTextureSize;
-    bool m_bPressedActionEnabled;
-    Color3B m_titleColor;
+    Node* _buttonNormalRenderer;
+    Node* _buttonClickedRenderer;
+    Node* _buttonDisableRenderer;
+    LabelTTF* _titleRenderer;
+    std::string _normalFileName;
+    std::string _clickedFileName;
+    std::string _disabledFileName;
+    bool _prevIgnoreSize;
+    bool _scale9Enabled;
+    Rect _capInsetsNormal;
+    Rect _capInsetsPressed;
+    Rect _capInsetsDisabled;
+    TextureResType _normalTexType;
+    TextureResType _pressedTexType;
+    TextureResType _disabledTexType;
+    Size _normalTextureSize;
+    Size _pressedTextureSize;
+    Size _disabledTextureSize;
+    bool _pressedActionEnabled;
+    Color3B _titleColor;
 };
 
 NS_CC_EXT_END

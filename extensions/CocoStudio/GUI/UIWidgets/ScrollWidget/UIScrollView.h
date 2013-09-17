@@ -212,45 +212,41 @@ protected:
     virtual void onSizeChanged();
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
-    SCROLLVIEW_DIR m_eDirection;
-    SCROLLVIEW_MOVE_DIR m_eMoveDirection;
-    float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
-    float m_fTouchMoveStartLocation;
-    float m_fTopBoundary;//test
-    float m_fBottomBoundary;//test
-    float m_fLeftBoundary;
-    float m_fRightBoundary;
+    SCROLLVIEW_DIR _direction;
+    SCROLLVIEW_MOVE_DIR _moveDirection;
+    float _touchStartLocation;
+    float _touchEndLocation;
+    float _touchMoveStartLocation;
+    float _topBoundary;//test
+    float _bottomBoundary;//test
+    float _leftBoundary;
+    float _rightBoundary;
     
+    bool _topEnd;
+    bool _bottomEnd;
+    bool _leftEnd;
+    bool _rightEnd;
     
-    int m_nMoveDirection;//0 pull down, 1 push up
+    bool _autoScroll;
     
-    bool m_bTopEnd;
-    bool m_bBottomEnd;
-    bool m_bLeftEnd;
-    bool m_bRightEnd;
+    float _autoScrollOriginalSpeed;
+    float _autoScrollAcceleration;
     
-    bool m_bAutoScroll;
+    bool _bePressed;
+    float _slidTime;
+    Point _moveChildPoint;
+    float _childFocusCancelOffset;
     
-    float m_fAutoScrollOriginalSpeed;
-    float m_fAutoScrollAcceleration;
+    Object* _scrollToTopListener;
+    SEL_ScrollToTopEvent _scrollToTopSelector;
+    Object* _scrollToBottomListener;
+    SEL_ScrollToBottomEvent _scrollToBottomSelector;
+    Object* _scrollToLeftListener;
+    SEL_ScrollToLeftEvent _scrollToLeftSelector;
+    Object* _scrollToRightListener;
+    SEL_ScrollToRightEvent _scrollToRightSelector;
     
-    bool m_bBePressed;
-    float m_fSlidTime;
-    Point moveChildPoint;
-    float m_fChildFocusCancelOffset;
-    
-    Object* m_pScrollToTopListener;
-    SEL_ScrollToTopEvent m_pfnScrollToTopSelector;
-    Object* m_pScrollToBottomListener;
-    SEL_ScrollToBottomEvent m_pfnScrollToBottomSelector;
-    Object* m_pScrollToLeftListener;
-    SEL_ScrollToLeftEvent m_pfnScrollToLeftSelector;
-    Object* m_pScrollToRightListener;
-    SEL_ScrollToRightEvent m_pfnScrollToRightSelector;
-    
-    Layout* m_pInnerContainer;
-    float m_fScrollDegreeRange;
+    Layout* _innerContainer;
 };
 
 NS_CC_EXT_END

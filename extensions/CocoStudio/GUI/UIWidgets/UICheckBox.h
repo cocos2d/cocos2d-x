@@ -172,21 +172,21 @@ protected:
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
 protected:
-    Sprite* m_pBackGroundBoxRenderer;
-    Sprite* m_pBackGroundSelectedBoxRenderer;
-    Sprite* m_pFrontCrossRenderer;
-    Sprite* m_pBackGroundBoxDisabledRenderer;
-    Sprite* m_pFrontCrossDisabledRenderer;
-    bool m_bIsSelected;
+    Sprite* _backGroundBoxRenderer;
+    Sprite* _backGroundSelectedBoxRenderer;
+    Sprite* _frontCrossRenderer;
+    Sprite* _backGroundBoxDisabledRenderer;
+    Sprite* _frontCrossDisabledRenderer;
+    bool _isSelected;
 
-    Object*       m_pSelectedStateEventListener;
-    SEL_SelectedStateEvent    m_pfnSelectedStateEventSelector;
+    Object*       _selectedStateEventListener;
+    SEL_SelectedStateEvent    _selectedStateEventSelector;
     
-    TextureResType m_eBackGroundTexType;
-    TextureResType m_eBackGroundSelectedTexType;
-    TextureResType m_eFrontCrossTexType;
-    TextureResType m_eBackGroundDisabledTexType;
-    TextureResType m_eFrontCrossDisabledTexType;
+    TextureResType _backGroundTexType;
+    TextureResType _backGroundSelectedTexType;
+    TextureResType _frontCrossTexType;
+    TextureResType _backGroundDisabledTexType;
+    TextureResType _frontCrossDisabledTexType;
 };
 
 NS_CC_EXT_END

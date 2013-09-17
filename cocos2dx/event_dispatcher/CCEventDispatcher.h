@@ -59,7 +59,7 @@ public:
      *  @param listener The listener of a specified event.
      *  @param node The priority of the listener is based on the draw order of this node.
      *  @note  The priority of scene graph will be fixed value 0. So the order of listener item
-     *          in the vector will be ' <0, =0, scene graph, >0'.
+     *          in the vector will be ' <0, scene graph (0 priority), >0'.
      */
     void addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node);
 
@@ -67,6 +67,7 @@ public:
      *  @param listener The listener of a specified event.
      *  @param fixedPriority The fixed priority of the listener.
      *  @note A lower priority will be called before the ones that have a higher value.
+     *        0 priority is forbidden for fixed priority since it's used for scene graph based priority.
      */
     void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
@@ -136,7 +137,6 @@ private:
     std::map<std::string, std::vector<EventListenerItem*>*>* _listeners;
 
     int               _inDispatch;
-    std::list<Node*>  _eventNodes;
     bool              _isEnabled;
 };
 
