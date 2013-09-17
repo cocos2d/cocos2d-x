@@ -74,7 +74,7 @@ void BaseData::copy(const BaseData *node )
 }
 
 
-void BaseData::subtract(BaseData *from, BaseData *to)
+void BaseData::subtract(BaseData *from, BaseData *to, bool limit)
 {
     x = to->x - from->x;
     y = to->y - from->y;
@@ -98,22 +98,25 @@ void BaseData::subtract(BaseData *from, BaseData *to)
         isUseColorInfo = false;
     }
 
-    if (skewX > M_PI)
-    {
-        skewX -= (float)CC_DOUBLE_PI;
-    }
-    if (skewX < -M_PI)
-    {
-        skewX += (float)CC_DOUBLE_PI;
-    }
+	if (limit)
+	{
+        if (skewX > M_PI)
+        {
+            skewX -= (float)CC_DOUBLE_PI;
+        }
+        if (skewX < -M_PI)
+        {
+            skewX += (float)CC_DOUBLE_PI;
+        }
 
-    if (skewY > M_PI)
-    {
-        skewY -= (float)CC_DOUBLE_PI;
-    }
-    if (skewY < -M_PI)
-    {
-        skewY += (float)CC_DOUBLE_PI;
+        if (skewY > M_PI)
+        {
+            skewY -= (float)CC_DOUBLE_PI;
+        }
+        if (skewY < -M_PI)
+        {
+            skewY += (float)CC_DOUBLE_PI;
+        }
     }
 
     if (to->tweenRotate)
@@ -121,6 +124,7 @@ void BaseData::subtract(BaseData *from, BaseData *to)
         skewX += to->tweenRotate;
         skewY -= to->tweenRotate;
     }
+	
 }
 
 void BaseData::setColor(const Color4B &color)
@@ -261,6 +265,7 @@ FrameData::FrameData(void)
     : frameID(0)
     , duration(1)
     , tweenEasing(Linear)
+    , isTween(true)
     , displayIndex(0)
     , blendType(BLEND_NORMAL)
 
