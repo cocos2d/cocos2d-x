@@ -39,6 +39,7 @@ public:
     
 private:
     Acceleration _acc;
+    friend class AccelerationEventListener;
 };
 
 NS_CC_END
