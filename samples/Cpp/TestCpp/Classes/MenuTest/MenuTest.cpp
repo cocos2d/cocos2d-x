@@ -581,7 +581,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     _touchListener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);
     _touchListener->onTouchMoved = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchMoved, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(_touchListener, -100);
+    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(_touchListener, -129);
     
 }
 
@@ -592,13 +592,9 @@ void RemoveMenuItemWhenMove::goBack(Object *pSender)
 
 RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()
 {
+    EventDispatcher::getInstance()->removeEventListener(_touchListener);
     CC_SAFE_RELEASE(item);
 }
-
-//void RemoveMenuItemWhenMove::registerWithTouchDispatcher(void)
-//{
-//    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, -129, false);
-//}
 
 bool RemoveMenuItemWhenMove::onTouchBegan(Touch  *touch, Event  *event)
 {
@@ -617,6 +613,8 @@ void RemoveMenuItemWhenMove::onTouchMoved(Touch  *touch, Event  *event)
 
 void MenuTestScene::runThisTest()
 {
+    MenuItemFont::setFontSize(20);
+    
     auto layer1 = new MenuLayerMainMenu();
     auto layer2 = new MenuLayer2();
     auto layer3 = new MenuLayer3();
