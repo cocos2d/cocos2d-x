@@ -48,28 +48,35 @@ public:
     virtual ~Event();
 
     /** Gets the event type */
-	const std::string& getType() const { return _type; };
+	inline const std::string& getType() const { return _type; };
     
     /** Stops propagation for current event */
-    void stopPropagation() { _isStopped = true; };
+    inline void stopPropagation() { _isStopped = true; };
     
     /** Checks whether the event has been stopped */
-    bool isStopped() const { return _isStopped; };
+    inline bool isStopped() const { return _isStopped; };
     
     /** @brief Gets current target of the event
      *  @return The target with which the event associates.
      *  @note It onlys be available when the event listener is associated with node. 
      *        It returns 0 when the listener is associated with fixed priority.
      */
-    Node* getCurrentTarget();
+    inline Node* getCurrentTarget() { return _currentTarget; };
+    
+    /** Set user data */
+    inline void setUserData(void* data) { _userData = data; };
+    
+    /** Get user data */
+    inline void* getUserData() const { return _userData; };
     
 protected:
     /** Sets current target */
-    void setCurrentTarget(Node* target);
+    inline void setCurrentTarget(Node* target) { _currentTarget = target; };
     
-	std::string _type; /// Event type
-    bool _isStopped;   /// whether the event has been stopped.
-    Node* _currentTarget;  /// Current target
+	std::string _type;     ///< Event type
+    bool _isStopped;       ///< whether the event has been stopped.
+    Node* _currentTarget;  ///< Current target
+    void* _userData;       ///< User data
     
     friend class EventDispatcher;
 };
