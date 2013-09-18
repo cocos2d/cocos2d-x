@@ -31,6 +31,6 @@ int main(int argc, char *argv[])
 {
     AppDelegate app;
     EGLView eglView;
-    eglView.init("TestCPP",900,640);
+    eglView.init("CrystalCraze",900,640);
     return Application::getInstance()->run();
 }
