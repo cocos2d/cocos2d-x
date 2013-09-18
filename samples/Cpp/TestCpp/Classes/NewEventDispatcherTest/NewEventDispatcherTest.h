@@ -78,6 +78,7 @@ class SpriteAccelerationEventTest : public EventDispatcherTestDemo
 {
 public:
     virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() override;
     virtual std::string subtitle() override;
 };

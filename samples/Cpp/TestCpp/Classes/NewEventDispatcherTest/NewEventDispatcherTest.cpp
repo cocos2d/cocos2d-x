@@ -499,6 +499,8 @@ _pos = _max;        \
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
+    Device::setAccelerometerEnabled(true);
+    
     auto sprite = Sprite::create(s_Ball);
     sprite->setPosition(origin + Point(size.width/2, size.height/2));
     addChild(sprite);
@@ -508,8 +510,10 @@ _pos = _max;        \
         
         auto ptNow  = sprite->getPosition();
         
-        ptNow.x -= acc->x ;
-        ptNow.y -= acc->y ;
+        log("acc: x = %lf, y = %lf", acc->x, acc->y);
+        
+        ptNow.x += acc->x * 9.81f;
+        ptNow.y += acc->y * 9.81f;
         
         FIX_POS(ptNow.x, (VisibleRect::left().x+ballSize.width / 2.0), (VisibleRect::right().x - ballSize.width / 2.0));
         FIX_POS(ptNow.y, (VisibleRect::bottom().y+ballSize.height / 2.0), (VisibleRect::top().y - ballSize.height / 2.0));
@@ -517,6 +521,11 @@ _pos = _max;        \
     });
     
     dispatcher->addEventListenerWithSceneGraphPriority(listener, sprite);
+}
+
+void SpriteAccelerationEventTest::onExit()
+{
+    Device::setAccelerometerEnabled(false);
 }
 
 std::string SpriteAccelerationEventTest::title()
