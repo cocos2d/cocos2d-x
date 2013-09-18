@@ -42,7 +42,7 @@ struct {
 #endif
 	{ "CurrentLanguageTest", []() { return new CurrentLanguageTestScene(); } },
 	{ "DrawPrimitivesTest", [](){return new DrawPrimitivesTestScene();} },
-    { "EventDispatcherTest", []() { return new EventDispatcherTestScene(); } },
+    { "EventDispatcherTest(NEW)", []() { return new EventDispatcherTestScene(); } },
 	{ "EffectAdvancedTest", []() { return new EffectAdvanceScene(); } },
 	{ "EffectsTest", [](){return new EffectTestScene();} },
 	{ "ExtensionsTest", []() { return new ExtensionsTestScene(); } },
