@@ -126,6 +126,8 @@ Node::Node(void)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
+, _eventPriority(0)
+, _oldEventPriority(0)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -1307,9 +1309,11 @@ void Node::dissociateEventListener(EventListener* listener)
 
 void Node::removeAllEventListeners()
 {
+    auto dispatcher = EventDispatcher::getInstance();
+    
     for (auto& listener : _eventlisteners)
     {
-        EventDispatcher::getInstance()->removeEventListener(listener);
+        dispatcher->removeEventListener(listener);
     }
 }
 
