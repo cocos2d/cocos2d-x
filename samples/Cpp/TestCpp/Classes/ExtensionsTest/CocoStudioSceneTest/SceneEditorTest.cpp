@@ -10,7 +10,7 @@ SceneEditorTestLayer::~SceneEditorTestLayer()
 {
 	CCArmatureDataManager::purge();
 	CCSSceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::UIActionManager::shareManager()->purgeUIActionManager();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
 	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
 }
 
@@ -67,12 +67,6 @@ cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
 	}
 	m_pCurNode = pNode;
 
-	//fishes
-	CCArmature *pBlowFish = getFish(10008, "blowFish");
-	CCArmature *pButterFlyFish = getFish(10009, "butterFlyFish");
-	pBlowFish->getAnimation()->playByIndex(0);
-	pButterFlyFish->getAnimation()->playByIndex(0);
-
     CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(SceneEditorTestLayer::toExtensionsMainLayer));
         itemBack->setColor(ccc3(255, 255, 255));
         itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
@@ -83,7 +77,7 @@ cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
     pNode->addChild(menuBack);
     
 	//ui action
-	cocos2d::extension::UIActionManager::shareManager()->PlayActionByName("startMenu_1.json","Animation1");
+	cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
 
     return pNode;
 }

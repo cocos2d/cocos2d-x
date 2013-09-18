@@ -22,43 +22,71 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UIACTION_H__
-#define __UIACTION_H__
+#ifndef __ActionMANAGER_H__
+#define __ActionMANAGER_H__
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "UIActionNode.h"
-#include "../../Json/CSContentJsonDictionary.h"
+#include "CCActionObject.h"
+#include "../Json/CSContentJsonDictionary.h"
 
 NS_CC_EXT_BEGIN
 
-class UIAction : public CCObject
+class ActionManager:public CCObject
 {
-protected:
-	cocos2d::CCArray* m_ActionNodeList;/*actionnode*/
-    std::string m_name;
 public:
-    UIAction();
-    virtual ~UIAction();
-
-	void Play();
-	void Pause();
-	void Stop();
-
-	void UpdateToFrameByIndex(int index);
-
     
-	//
-//	CC_SYNTHESIZE(std::string, m_name, Name);
-	//
-	CC_SYNTHESIZE(bool, m_loop, Loop);
-	//
-	CC_SYNTHESIZE(float, m_fUnitTime, UnitTime);
+    /**
+     * Default constructor
+     */
+    ActionManager();
     
-    void initWithDictionary(cs::CSJsonDictionary* dic,UIWidget* root);
+    /**
+     * Default destructor
+     */
+    virtual ~ActionManager();
     
-    void setName(const char* name);
-    const char* getName() const;
+    /**
+     * Gets the static instance of ActionManager.
+     */
+    static ActionManager* shareManager();
+
+	 /**
+     * Purges ActionManager point.
+     */
+	static void purgeActionManager();
+
+	 /**
+     * Gets an ActionObject with a name.
+	 *
+	 * @param jsonName  UI file name
+     *
+     * @param actionName  action name in the UI file.
+     *
+     * @return  ActionObject which named as the param name
+     */
+	ActionObject* getActionByName(const char* jsonName,const char* actionName);
+
+	/**
+     * Play an Action with a name.
+	 *
+	 * @param jsonName  UI file name
+     *
+     * @param actionName  action name in teh UIfile.
+     */
+	void playActionByName(const char* jsonName,const char* actionName);
+    
+    /*init properties with json dictionay*/
+    void initWithDictionary(const char* jsonName,cs::CSJsonDictionary* dic,CCObject* root);
+
+	/**
+     * Release all actions.
+     *
+     */
+	void releaseActions();
+
+protected:
+	CCDictionary* m_pActionDic;
 };
 
 NS_CC_EXT_END
