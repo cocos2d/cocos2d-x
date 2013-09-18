@@ -260,7 +260,7 @@ void TouchesPerformTest3::onEnter()
         {
             CC_PROFILER_START(TOUCH_PROFILER_NAME);
             
-            dispatcher->dispatchEvent(&event, true);
+            dispatcher->dispatchEvent(&event, false);
             
             CC_PROFILER_STOP(TOUCH_PROFILER_NAME);
         }
