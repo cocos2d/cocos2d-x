@@ -155,8 +155,8 @@ public:
     virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event);
     virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event);
 
-    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return false; };
-    CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return isKeyboardEnabled(); };
+    CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value) { setKeyboardEnabled(value); };
 
     /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
