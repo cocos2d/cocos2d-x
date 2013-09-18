@@ -37,7 +37,7 @@ void CocosGUITestScene::runThisTest()
     m_pItemMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 1; ++i)
     {
         CCMenuItemFont* pItem = CCMenuItemFont::create(gui_scene_names[i], this,
                                                        menu_selector(CocosGUITestScene::menuCallback));

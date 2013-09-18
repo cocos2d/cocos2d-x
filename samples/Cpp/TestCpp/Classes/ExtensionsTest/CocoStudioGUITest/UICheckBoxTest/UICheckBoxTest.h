@@ -33,8 +33,7 @@ public:
     UICheckBoxTest();
     ~UICheckBoxTest();
     bool init();
-    void selectedEvent(CCObject* pSender);
-    void unSelectedEvent(CCObject* pSender);
+    void selectedStateEvent(CCObject* pSender, CheckBoxEventType type);    
     
 protected:
     UI_SCENE_CREATE_FUNC(UICheckBoxTest)
