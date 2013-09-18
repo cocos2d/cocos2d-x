@@ -243,6 +243,7 @@
     </Filter>
     <Filter Include="Classes\PhysicsTest">
       <UniqueIdentifier>{a83cb042-e3d6-4d3b-a4f6-30a4b3fcb3e9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest">
       <UniqueIdentifier>{9daecd38-37c6-4216-a999-86077af83beb}</UniqueIdentifier>
     </Filter>
@@ -632,6 +633,7 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp">
       <Filter>Classes\PhysicsTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest</Filter>
     </ClCompile>
@@ -1204,6 +1206,7 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h">
       <Filter>Classes\PhysicsTest</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest</Filter>
     </ClInclude>
