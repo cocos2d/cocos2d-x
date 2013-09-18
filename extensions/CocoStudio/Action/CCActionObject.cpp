@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCActionObject.h"
-#include "../Json//DictionaryHelper.h"
+#include "../Json/DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
 
@@ -70,7 +70,7 @@ void ActionObject::setUnitTime(float fTime)
 	int nodeNum = _actionNodeList->count();
 	for ( int i = 0; i < nodeNum; i++ )
 	{
-		ActionNode* actionNode = (ActionNode*)_actionNodeList->objectAtIndex(i);
+		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 		actionNode->setUnitTime(_fUnitTime);
 	}
 }
@@ -134,7 +134,7 @@ void ActionObject::play()
 	int frameNum = _actionNodeList->count();
 	for ( int i = 0; i < frameNum; i++ )
 	{
-		ActionNode* actionNode = (ActionNode*)_actionNodeList->objectAtIndex(i);
+		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 		actionNode->playAction( getLoop());
 	}
 }
@@ -150,7 +150,7 @@ void ActionObject::stop()
 
 	for ( int i = 0; i < frameNum; i++ )
 	{
-		ActionNode* actionNode = (ActionNode*)_actionNodeList->objectAtIndex(i);
+		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 		actionNode->stopAction();
 	}
 
@@ -165,7 +165,7 @@ void ActionObject::updateToFrameByTime(float fTime)
 
 	for ( int i = 0; i < nodeNum; i++ )
 	{
-		ActionNode* actionNode = (ActionNode*)_actionNodeList->objectAtIndex(i);
+		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 
 		actionNode->updateActionToTimeLine(fTime);
 	}
