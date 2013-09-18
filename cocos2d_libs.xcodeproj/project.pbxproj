@@ -288,8 +288,6 @@
 		37BB5C4B17E8A26A002746B4 /* CCActionObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5C3917E8A26A002746B4 /* CCActionObject.cpp */; };
 		37BB5C4C17E8A26A002746B4 /* CCActionObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5C3A17E8A26A002746B4 /* CCActionObject.h */; };
 		37BB5C4D17E8A26A002746B4 /* CCActionObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5C3A17E8A26A002746B4 /* CCActionObject.h */; };
-		37BB5C4E17E8A26A002746B4 /* CCCActionFrameEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5C3B17E8A26A002746B4 /* CCCActionFrameEasing.cpp */; };
-		37BB5C4F17E8A26A002746B4 /* CCCActionFrameEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5C3B17E8A26A002746B4 /* CCCActionFrameEasing.cpp */; };
 		37BB5C7C17E8A360002746B4 /* CCArmatureAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5C5217E8A360002746B4 /* CCArmatureAnimation.cpp */; };
 		37BB5C7D17E8A360002746B4 /* CCArmatureAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5C5217E8A360002746B4 /* CCArmatureAnimation.cpp */; };
 		37BB5C7E17E8A360002746B4 /* CCArmatureAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5C5317E8A360002746B4 /* CCArmatureAnimation.h */; };
@@ -2332,6 +2330,7 @@
 		1ADB26EA17CC92D200634B5E /* lua_cocos2dx_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_extension_auto.hpp; sourceTree = "<group>"; };
 		1AE019821790023400D574A8 /* SocketIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SocketIO.cpp; sourceTree = "<group>"; };
 		1AE019831790023400D574A8 /* SocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIO.h; sourceTree = "<group>"; };
+		37AF1A2F17E9555F00B55096 /* CCActionFrameEasing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionFrameEasing.cpp; sourceTree = "<group>"; };
 		37B6EF2017DEB40C001BE102 /* CCComAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComAttribute.cpp; sourceTree = "<group>"; };
 		37B6EF2117DEB40C001BE102 /* CCComAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComAttribute.h; sourceTree = "<group>"; };
 		37B6EF2217DEB40C001BE102 /* CCComAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComAudio.cpp; sourceTree = "<group>"; };
@@ -2374,7 +2373,6 @@
 		37BB5C3817E8A26A002746B4 /* CCActionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionNode.h; sourceTree = "<group>"; };
 		37BB5C3917E8A26A002746B4 /* CCActionObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionObject.cpp; sourceTree = "<group>"; };
 		37BB5C3A17E8A26A002746B4 /* CCActionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionObject.h; sourceTree = "<group>"; };
-		37BB5C3B17E8A26A002746B4 /* CCCActionFrameEasing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCActionFrameEasing.cpp; sourceTree = "<group>"; };
 		37BB5C5217E8A360002746B4 /* CCArmatureAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArmatureAnimation.cpp; sourceTree = "<group>"; };
 		37BB5C5317E8A360002746B4 /* CCArmatureAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArmatureAnimation.h; sourceTree = "<group>"; };
 		37BB5C5417E8A360002746B4 /* CCProcessBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProcessBase.cpp; sourceTree = "<group>"; };
@@ -4001,6 +3999,7 @@
 		37BB5B5D17E88E96002746B4 /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				37AF1A2F17E9555F00B55096 /* CCActionFrameEasing.cpp */,
 				37BB5C3217E8A26A002746B4 /* CCActionFrame.cpp */,
 				37BB5C3317E8A26A002746B4 /* CCActionFrame.h */,
 				37BB5C3417E8A26A002746B4 /* CCActionFrameEasing.h */,
@@ -4010,7 +4009,6 @@
 				37BB5C3817E8A26A002746B4 /* CCActionNode.h */,
 				37BB5C3917E8A26A002746B4 /* CCActionObject.cpp */,
 				37BB5C3A17E8A26A002746B4 /* CCActionObject.h */,
-				37BB5C3B17E8A26A002746B4 /* CCCActionFrameEasing.cpp */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -8138,7 +8136,6 @@
 				37BB5C4217E8A26A002746B4 /* CCActionManagerEx.cpp in Sources */,
 				37BB5C4617E8A26A002746B4 /* CCActionNode.cpp in Sources */,
 				37BB5C4A17E8A26A002746B4 /* CCActionObject.cpp in Sources */,
-				37BB5C4E17E8A26A002746B4 /* CCCActionFrameEasing.cpp in Sources */,
 				37BB5C7C17E8A360002746B4 /* CCArmatureAnimation.cpp in Sources */,
 				37BB5C8017E8A360002746B4 /* CCProcessBase.cpp in Sources */,
 				37BB5C8417E8A360002746B4 /* CCTween.cpp in Sources */,
@@ -8465,7 +8462,6 @@
 				37BB5C4317E8A26A002746B4 /* CCActionManagerEx.cpp in Sources */,
 				37BB5C4717E8A26A002746B4 /* CCActionNode.cpp in Sources */,
 				37BB5C4B17E8A26A002746B4 /* CCActionObject.cpp in Sources */,
-				37BB5C4F17E8A26A002746B4 /* CCCActionFrameEasing.cpp in Sources */,
 				37BB5C7D17E8A360002746B4 /* CCArmatureAnimation.cpp in Sources */,
 				37BB5C8117E8A360002746B4 /* CCProcessBase.cpp in Sources */,
 				37BB5C8517E8A360002746B4 /* CCTween.cpp in Sources */,
