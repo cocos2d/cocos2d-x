@@ -37,14 +37,5 @@ Event::~Event()
 {
 }
 
-Node* Event::getCurrentTarget()
-{
-    return _currentTarget;
-}
-
-void Event::setCurrentTarget(Node* target)
-{
-    _currentTarget = target;
-}
 
 NS_CC_END
