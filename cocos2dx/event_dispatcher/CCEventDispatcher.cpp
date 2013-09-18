@@ -67,7 +67,6 @@ EventDispatcher::EventListenerItem::~EventListenerItem()
 
 EventDispatcher::EventDispatcher()
 : _inDispatch(0)
-, _listeners(nullptr)
 , _isEnabled(true)
 {
     _toAddedListeners.reserve(50);
@@ -95,28 +94,25 @@ void EventDispatcher::destroyInstance()
 
 void EventDispatcher::addEventListenerWithItem(EventListenerItem* item)
 {
-    if (!_listeners)
-    {
-        _listeners = new std::map<std::string, std::vector<EventListenerItem*>*>();
-    }
-
     if (_inDispatch == 0)
     {
         std::vector<EventListenerItem*>* listenerList = nullptr;
         
-        auto itr = _listeners->find(item->listener->type);
-        if (itr == _listeners->end())
+        auto iter = _listeners.find(item->listener->type);
+        if (iter == _listeners.end())
         {
             listenerList = new std::vector<EventListenerItem*>();
             listenerList->reserve(100);
-            _listeners->insert(std::make_pair(item->listener->type, listenerList));
+            _listeners.insert(std::make_pair(item->listener->type, listenerList));
         }
         else
         {
-            listenerList = itr->second;
+            listenerList = iter->second;
         }
 
         listenerList->insert(listenerList->begin(), item);
+
+        setDirtyForEventType(item->listener->type, true);
     }
     else
     {
@@ -166,17 +162,19 @@ void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener,
 
 void EventDispatcher::removeEventListener(EventListener* listener)
 {
-    if (_listeners == nullptr || listener == nullptr)
+    if (listener == nullptr)
         return;
 
     bool isFound = false;
     
-    for (auto iter = _listeners->begin(); iter != _listeners->end();)
+    for (auto iter = _listeners.begin(); iter != _listeners.end();)
     {
         for (auto itemIter = iter->second->begin(); itemIter != iter->second->end(); ++itemIter)
         {
             if ((*itemIter)->listener == listener)
             {
+                listener->retain();
+                
                 if (_inDispatch == 0)
                 {
                     (*itemIter)->listener->release();
@@ -196,8 +194,10 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         if (iter->second->empty())
         {
             auto list = iter->second;
-            iter = _listeners->erase(iter);
+            iter = _listeners.erase(iter);
             CC_SAFE_DELETE(list);
+            
+            _priorityDirtyFlagMap.erase(listener->type);
         }
         else
         {
@@ -208,52 +208,30 @@ void EventDispatcher::removeEventListener(EventListener* listener)
             break;
     }
 
-    if (_listeners->empty())
+    if (isFound)
     {
-        CC_SAFE_DELETE(_listeners);
+        listener->release();
     }
 }
 
-void EventDispatcher::setPriorityWithSceneGraph(EventListener* listener, Node* node)
+void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
 {
-    if (_listeners == nullptr || listener == nullptr || node == nullptr)
+    if (listener == nullptr)
         return;
-
-    for (auto iter = _listeners->begin(); iter != _listeners->end(); ++iter)
+    
+    for (auto iter = _listeners.begin(); iter != _listeners.end(); ++iter)
     {
         for (auto itemIter = iter->second->begin(); itemIter != iter->second->end(); ++itemIter)
         {
             auto item = *itemIter;
             if (item->listener == listener)
             {
-                item->fixedPriority = 0;
+                CCASSERT(item->node, "Can't set fixed priority with scene graph based listener.");
                 
-                CC_SAFE_RETAIN(node);
-                CC_SAFE_RELEASE(item->node);
-                item->node = node;
-                return;
-            }
-        }
-    }
-}
-
-void EventDispatcher::setPriorityWithFixedValue(EventListener* listener, int fixedPriority)
-{
-    if (_listeners == nullptr || listener == nullptr)
-        return;
-
-    for (auto iter = _listeners->begin(); iter != _listeners->end(); ++iter)
-    {
-        for (auto itemIter = iter->second->begin(); itemIter != iter->second->end(); ++itemIter)
-        {
-            auto item = *itemIter;
-            if (item->listener == listener)
-            {
-                item->fixedPriority = fixedPriority;
-                if (item->node != nullptr)
+                if (item->fixedPriority != fixedPriority)
                 {
-                    item->node->dissociateEventListener(listener);
-                    CC_SAFE_RELEASE_NULL(item->node);
+                    item->fixedPriority = fixedPriority;
+                    setDirtyForEventType(listener->type, true);
                 }
                 return;
             }
@@ -263,12 +241,24 @@ void EventDispatcher::setPriorityWithFixedValue(EventListener* listener, int fix
 
 void EventDispatcher::dispatchEvent(Event* event, bool forceSortListeners)
 {
-    if (_listeners == nullptr || !_isEnabled)
+    if (!_isEnabled)
         return;
-
-    if (forceSortListeners)
+    
+    bool isDirty = false;
+    auto dirtyIter = _priorityDirtyFlagMap.find(event->_type);
+    if (dirtyIter != _priorityDirtyFlagMap.end())
+    {
+        isDirty = dirtyIter->second;
+    }
+    
+    if (forceSortListeners || isDirty)
     {
         sortAllEventListenerItemsForType(event->_type);
+        // Sets the dirty flag to false
+        if (isDirty)
+        {
+            dirtyIter->second = false;
+        }
     }
 
     DispatchGuard guard(_inDispatch);
@@ -279,22 +269,19 @@ void EventDispatcher::dispatchEvent(Event* event, bool forceSortListeners)
         return;
     }
     
-    if (_listeners)
+    auto iter = _listeners.find(event->getType());
+    if (iter != _listeners.end())
     {
-        auto iter = _listeners->find(event->getType());
-        if (iter != _listeners->end())
+        auto listenerList = iter->second;
+        for (auto& item : *listenerList)
         {
-            auto listenerList = iter->second;
-            for (auto& item : *listenerList)
-            {
-                CCASSERT(item, "listener item is invalid.");
+            CCASSERT(item, "listener item is invalid.");
 
-                event->setCurrentTarget(item->node);
-                item->listener->onEvent(event);
+            event->setCurrentTarget(item->node);
+            item->listener->onEvent(event);
 
-                if (event->isStopped())
-                    break;
-            }
+            if (event->isStopped())
+                break;
         }
     }
     
@@ -500,11 +487,8 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
 
 void EventDispatcher::updateListenerItems()
 {
-    if (!_listeners)
-        return;
-    
-    auto listenerItemIter = _listeners->begin();
-    while (listenerItemIter != _listeners->end())
+    auto listenerItemIter = _listeners.begin();
+    while (listenerItemIter != _listeners.end())
     {
         for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end();)
         {
@@ -521,8 +505,9 @@ void EventDispatcher::updateListenerItems()
         
         if (listenerItemIter->second->empty())
         {
+            _priorityDirtyFlagMap.erase(listenerItemIter->first);
             delete listenerItemIter->second;
-            listenerItemIter =  _listeners->erase(listenerItemIter);
+            listenerItemIter =  _listeners.erase(listenerItemIter);
         }
         else
         {
@@ -536,12 +521,12 @@ void EventDispatcher::updateListenerItems()
         
         for (auto& item : _toAddedListeners)
         {
-            auto itr = _listeners->find(item->listener->type);
-            if (itr == _listeners->end())
+            auto itr = _listeners.find(item->listener->type);
+            if (itr == _listeners.end())
             {
                 listenerList = new std::vector<EventListenerItem*>();
                 listenerList->reserve(100);
-                _listeners->insert(std::make_pair(item->listener->type, listenerList));
+                _listeners.insert(std::make_pair(item->listener->type, listenerList));
             }
             else
             {
@@ -549,20 +534,16 @@ void EventDispatcher::updateListenerItems()
             }
             
             listenerList->push_back(item);
+            
+            setDirtyForEventType(item->listener->type, true);
         }
         _toAddedListeners.clear();
-    }
-    
-    if (_listeners->empty())
-    {
-        delete _listeners;
-        _listeners = nullptr;
     }
 }
 
 void EventDispatcher::sortAllEventListenerItemsForType(const std::string &eventType)
 {
-    if (_listeners == nullptr)
+    if (eventType.empty())
         return;
     
     auto listenerList = getListenerItemsForType(eventType);
@@ -610,13 +591,10 @@ void EventDispatcher::sortAllEventListenerItemsForType(const std::string &eventT
 
 std::vector<EventDispatcher::EventListenerItem*>* EventDispatcher::getListenerItemsForType(const std::string &eventType)
 {
-    if (_listeners != nullptr)
+    auto iter = _listeners.find(eventType);
+    if (iter != _listeners.end())
     {
-        auto iter = _listeners->find(eventType);
-        if (iter != _listeners->end())
-        {
-            return iter->second;
-        }
+        return iter->second;
     }
     
     return nullptr;
@@ -624,11 +602,11 @@ std::vector<EventDispatcher::EventListenerItem*>* EventDispatcher::getListenerIt
 
 void EventDispatcher::removeListenersForEventType(const std::string& eventType)
 {
-    if (_listeners == nullptr)
+    if (eventType.empty())
         return;
     
-    auto listenerItemIter = _listeners->find(eventType);
-    if (listenerItemIter != _listeners->end())
+    auto listenerItemIter = _listeners.find(eventType);
+    if (listenerItemIter != _listeners.end())
     {
         for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
         {
@@ -647,17 +625,15 @@ void EventDispatcher::removeListenersForEventType(const std::string& eventType)
         {
             listenerItemIter->second->clear();
             delete listenerItemIter->second;
-            _listeners->erase(listenerItemIter);
+            _listeners.erase(listenerItemIter);
+            _priorityDirtyFlagMap.erase(eventType);
         }
     }
 }
 
 void EventDispatcher::removeAllListeners()
 {
-    if (_listeners == nullptr)
-        return;
-    
-    for (auto listenerItemIter = _listeners->begin(); listenerItemIter != _listeners->end(); ++listenerItemIter)
+    for (auto listenerItemIter = _listeners.begin(); listenerItemIter != _listeners.end(); ++listenerItemIter)
     {
         for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
         {
@@ -676,13 +652,14 @@ void EventDispatcher::removeAllListeners()
         {
             listenerItemIter->second->clear();        
             delete listenerItemIter->second;
+            
+            _priorityDirtyFlagMap.clear();
         }
     }
 
     if (!_inDispatch)
     {
-        delete _listeners;
-        _listeners = nullptr;
+        _listeners.clear();
     }
 }
 
@@ -695,6 +672,31 @@ void EventDispatcher::setEnabled(bool isEnabled)
 bool EventDispatcher::isEnabled() const
 {
     return _isEnabled;
+}
+
+void EventDispatcher::setDirtyForEventType(const std::string& eventType, bool isDirty)
+{
+    auto iter = _priorityDirtyFlagMap.find(eventType);
+    if (iter == _priorityDirtyFlagMap.end())
+    {
+        _priorityDirtyFlagMap.insert(std::make_pair(eventType, isDirty));
+    }
+    else
+    {
+        iter->second = isDirty;
+    }
+}
+
+bool EventDispatcher::isDirtyForEventType(const std::string& eventType)
+{
+    bool isDirty = false;
+    auto iter = _priorityDirtyFlagMap.find(eventType);
+    if (iter != _priorityDirtyFlagMap.end())
+    {
+        isDirty = iter->second;
+    }
+
+    return isDirty;
 }
 
 NS_CC_END

@@ -213,7 +213,7 @@ public:
         auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
         listener->setSwallowTouches(true);
         
-        listener->onTouchBegan = [&](Touch* touch, Event* event){
+        listener->onTouchBegan = [=](Touch* touch, Event* event){
             
             Point locationInNode = this->convertToNodeSpace(touch->getLocation());
             Size s = this->getContentSize();
@@ -227,11 +227,11 @@ public:
             return false;
         };
         
-        listener->onTouchMoved = [&](Touch* touch, Event* event){
+        listener->onTouchMoved = [=](Touch* touch, Event* event){
             //this->setPosition(this->getPosition() + touch->getDelta());
         };
         
-        listener->onTouchEnded = [&](Touch* touch, Event* event){
+        listener->onTouchEnded = [=](Touch* touch, Event* event){
             this->setColor(Color3B::WHITE);
         };
         
