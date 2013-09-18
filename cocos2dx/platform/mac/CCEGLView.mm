@@ -238,9 +238,7 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    KeyboardEvent event;
-    event._keyCode = g_keyCodeMap[key];
-    event._isPressed = (GLFW_PRESS == action);
+    KeyboardEvent event(g_keyCodeMap[key], GLFW_PRESS == action);
     EventDispatcher::getInstance()->dispatchEvent(&event);
 }
 
