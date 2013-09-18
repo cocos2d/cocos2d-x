@@ -207,6 +207,8 @@ public:
 private:
     KeyCode _keyCode;
     bool _isPressed;
+    
+    friend class KeyboardEventListener;
 };
 
 NS_CC_END

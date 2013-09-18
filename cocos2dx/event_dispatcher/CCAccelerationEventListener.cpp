@@ -56,7 +56,7 @@ bool AccelerationEventListener::init(std::function<void(Acceleration*, Event* ev
 {
     auto listener = [this](Event* event){
         auto accEvent = static_cast<AccelerationEvent*>(event);
-        this->onAccelerationEvent(&accEvent->acc, event);
+        this->onAccelerationEvent(&accEvent->_acc, event);
     };
     
     if (EventListener::init(AccelerationEvent::EVENT_TYPE, listener))
