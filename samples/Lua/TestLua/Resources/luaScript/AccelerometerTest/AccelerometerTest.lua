@@ -27,29 +27,27 @@ local function AccelerometerMainLayer()
     	local szBall  = pBall:getContentSize()
     	local ptNowX,ptNowY = pBall:getPosition()
     	
-    	local ptTmp = pDir:convertToUI(cc.p(ptNowX,ptNowY))	
-    	ptTmp.x   = ptTmp.x + x * 9.81
-    	ptTmp.y   = ptTmp.y - y * 9.81
+    	ptNowX  = ptNowX - x 
+    	ptNowY  = ptNowY - y 
 
 
-    	local ptNext = pDir:convertToGL(cc.p(ptTmp.x,ptTmp.y))
-    	local nMinX  = math.floor(VisibleRect:left().x + szBall.width / 2.0)
-    	local nMaxX  = math.floor(VisibleRect:right().x - szBall.width / 2.0)
-   		if ptNext.x <   nMinX then
-   			ptNext.x = nMinX
-   		elseif ptNext.x > nMaxX then
-   			ptNext.x = nMaxX
+    	local minX  = math.floor(VisibleRect:left().x + szBall.width / 2.0)
+    	local maxX  = math.floor(VisibleRect:right().x - szBall.width / 2.0)
+   		if ptNowX <   minX then
+   			ptNowX = minX
+   		elseif ptNowX > maxX then
+   			ptNowX = maxX
    		end
    		
-   		local nMinY  = math.floor(VisibleRect:bottom().y + szBall.height / 2.0)
-    	local nMaxY  = math.floor(VisibleRect:top().y   - szBall.height / 2.0)
-   		if ptNext.y <   nMinY then
-   			ptNext.y = nMinY
-   		elseif ptNext.y > nMaxY then
-   			ptNext.y = nMaxY
+   		local minY  = math.floor(VisibleRect:bottom().y + szBall.height / 2.0)
+    	local maxY  = math.floor(VisibleRect:top().y   - szBall.height / 2.0)
+   		if ptNowY <   minY then
+   			ptNowY = minY
+   		elseif ptNowY > maxY then
+   			ptNowY = maxY
    		end
    		
-    	pBall:setPosition(cc.p(ptNext.x,ptNext.y))
+    	pBall:setPosition(cc.p(ptNowX, ptNowY ))
     	
     	
     end
