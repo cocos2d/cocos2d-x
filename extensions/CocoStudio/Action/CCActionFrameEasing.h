@@ -22,41 +22,50 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UIACTIONFRAME_H__
-#define __UIACTIONFRAME_H__
+#ifndef __ActionFrameEasing_H__
+#define __ActionFrameEasing_H__
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "../../Json/CSContentJsonDictionary.h"
+#include "../Json/CSContentJsonDictionary.h"
 
 NS_CC_EXT_BEGIN
 
-class UIActionFrame:public Object
+enum FrameEasingType
+{
+	kframeEasingInstant,
+
+	kframeEasingLinear,
+
+	kframeEasingCubicIn,
+	kframeEasingCubicOut,
+	kframeEasingCubicInOut,
+
+	kframeEasingElasticIn,
+	kframeEasingElasticOut,
+	kframeEasingElasticInOut,
+
+	kframeEasingBounceIn,
+	kframeEasingBounceOut,
+	kframeEasingBounceInOut,
+
+	kframeEasingBackIn,
+	kframeEasingBackOut,
+	kframeEasingBackInOut,
+};
+
+class ActionFrameEasing:public cocos2d::Object
 {
 protected:
-
+	FrameEasingType _type;
+	float _fValue;
 public:
-    UIActionFrame();
-    virtual ~UIActionFrame();
-	//
-	CC_SYNTHESIZE(int, m_frameId, FrameId);
-	//
-	CC_SYNTHESIZE(float, m_startTime, StartTime);
-	//
-	CC_SYNTHESIZE(Point, m_position, Position);
-	//
-	CC_SYNTHESIZE(float, m_scaleX, ScaleX);
-	//
-	CC_SYNTHESIZE(float, m_scaleY, ScaleY);
-	//
-	CC_SYNTHESIZE(float, m_rotation, Rotation);
-	//
-	CC_SYNTHESIZE(float, m_opacity, Opacity);
-	//
-	CC_SYNTHESIZE(Color3B, m_color, Color);
-    
-    void initWithDictionary(cs::JsonDictionary* dic);
+    ActionFrameEasing();
+    virtual ~ActionFrameEasing();
 
+	float bounceTime(float t);
+
+	float easeValue(float t);
 };
 
 NS_CC_EXT_END
