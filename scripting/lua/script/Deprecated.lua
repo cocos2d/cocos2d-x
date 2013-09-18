@@ -117,6 +117,11 @@ function CCMenuDeprecated.createWithItem(self,...)
     return self:create(...)
 end
 rawset(CCMenu,"createWithItem",CCMenuDeprecated.createWithItem)
+
+function CCMenuDeprecated.setHandlerPriority(self)
+    print("\n********** \n".."setHandlerPriority was deprecated in 3.0. \n**********")
+end
+rawset(CCMenu,"setHandlerPriority",CCMenuDeprecated.setHandlerPriority)
 --functions of CCMenu will be deprecated end
 
 --functions of CCNode will be deprecated begin
@@ -1015,3 +1020,17 @@ function CCSpriteDeprecated.setFlipY(self,flag)
 end
 rawset(cc.Sprite, "setFlipY", CCSpriteDeprecated.setFlipY)
 --functions of Sprite will be deprecated end
+
+
+--functions of Layer will be deprecated begin
+local CCLayerDeprecated = {}
+function CCLayerDeprecated.setKeypadEnabled( self, enabled)
+    return self:setKeyboardEnabled(enabled)
+end
+rawset(cc.Layer, "setKeypadEnabled", CCLayerDeprecated.setKeypadEnabled )
+
+function CCLayerDeprecated.isKeypadEnabled(self)
+    return self:isKeyboardEnabled()
+end
+rawset(cc.Layer, "isKeypadEnabled", CCLayerDeprecated.isKeypadEnabled )
+--functions of Layer will be deprecated end
