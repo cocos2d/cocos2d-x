@@ -55,6 +55,9 @@ public:
     /** Gets the singleton of EventDispatcher */
     static EventDispatcher* getInstance();
 
+    /** Destroys the singleton of EventDispatcher */
+    static void destroyInstance();
+    
     /** Adds a event listener for a specified event with the priority of scene graph.
      *  @param listener The listener of a specified event.
      *  @param node The priority of the listener is based on the draw order of this node.
@@ -98,7 +101,7 @@ public:
      *  Also removes all EventListeners marked for deletion from the
      *  event dispatcher list.
      */
-    void dispatchEvent(Event* event, bool toSortListeners = true);
+    void dispatchEvent(Event* event, bool forceSortListeners = true);
 
 public:
     /** Destructor of EventDispatcher */
@@ -141,8 +144,8 @@ private:
     std::map<std::string, std::vector<EventListenerItem*>*>* _listeners;
     std::vector<EventListenerItem*> _toAddedListeners;
     
-    int               _inDispatch;
-    bool              _isEnabled;
+    int   _inDispatch;        ///< Whether it's in dispatching event
+    bool  _isEnabled;         ///< Whether to enable dispatching event
 };
 
 
