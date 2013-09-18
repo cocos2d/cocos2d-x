@@ -87,8 +87,8 @@ void ActionNode::initWithDictionary(cs::JsonDictionary *dic,Object* root)
 			float positionY = DICTOOL->getFloatValue_json(actionFrameDic, "positiony");
 			ActionMoveFrame* actionFrame = new ActionMoveFrame();
 			actionFrame->setFrameIndex(frameInex);
-			actionFrame->setPosition(CCPointMake(positionX, positionY));
-			Array* cActionArray = (Array*)_frameArray->objectAtIndex((int)kKeyframeMove);
+			actionFrame->setPosition(Point(positionX, positionY));
+			Array* cActionArray = (Array*)_frameArray->getObjectAtIndex((int)kKeyframeMove);
 			cActionArray->addObject(actionFrame);
 		}
 
@@ -101,7 +101,7 @@ void ActionNode::initWithDictionary(cs::JsonDictionary *dic,Object* root)
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setScaleX(scaleX);
 			actionFrame->setScaleY(scaleY);
-			Array* cActionArray = (Array*)_frameArray->objectAtIndex((int)kKeyframeScale);
+			Array* cActionArray = (Array*)_frameArray->getObjectAtIndex((int)kKeyframeScale);
 			cActionArray->addObject(actionFrame);
 		}
 
@@ -112,7 +112,7 @@ void ActionNode::initWithDictionary(cs::JsonDictionary *dic,Object* root)
 			ActionRotationFrame* actionFrame = new ActionRotationFrame();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setRotation(rotation);
-			Array* cActionArray = (Array*)_frameArray->objectAtIndex((int)kKeyframeRotate);
+			Array* cActionArray = (Array*)_frameArray->getObjectAtIndex((int)kKeyframeRotate);
 			cActionArray->addObject(actionFrame);
 		}
 
@@ -123,7 +123,7 @@ void ActionNode::initWithDictionary(cs::JsonDictionary *dic,Object* root)
 			ActionFadeFrame* actionFrame = new ActionFadeFrame();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setOpacity(opacity);
-			Array* cActionArray = (Array*)_frameArray->objectAtIndex((int)kKeyframeFade);
+			Array* cActionArray = (Array*)_frameArray->getObjectAtIndex((int)kKeyframeFade);
 			cActionArray->addObject(actionFrame);
 		}
 
@@ -135,8 +135,8 @@ void ActionNode::initWithDictionary(cs::JsonDictionary *dic,Object* root)
 			int colorB = DICTOOL->getIntValue_json(actionFrameDic, "colorb");
 			ActionTintFrame* actionFrame = new ActionTintFrame();
 			actionFrame->setFrameIndex(frameInex);
-			actionFrame->setColor(ccc3(colorR,colorG,colorB));
-			Array* cActionArray = (Array*)_frameArray->objectAtIndex((int)kKeyframeTint);
+			actionFrame->setColor(Color3B(colorR,colorG,colorB));
+			Array* cActionArray = (Array*)_frameArray->getObjectAtIndex((int)kKeyframeTint);
 			cActionArray->addObject(actionFrame);
 		}
 
@@ -150,7 +150,7 @@ void ActionNode::initActionNodeFromRoot(Object* root)
 	Node* rootNode = dynamic_cast<Node*>(root);
 	if (rootNode != NULL)
 	{
-		CCLog("Need a definition of <initActionNodeFromRoot> for gameObject");
+		log("Need a definition of <initActionNodeFromRoot> for gameObject");
 	}
 	else
 	{
@@ -222,7 +222,7 @@ void ActionNode::insertFrame(int index, ActionFrame* frame)
 		return;
 	}
 	int frameType = frame->getFrameType();
-	Array* cArray = (Array*)_frameArray->objectAtIndex(frameType);
+	Array* cArray = (Array*)_frameArray->getObjectAtIndex(frameType);
 	if (cArray == NULL)
 	{
 		return;
@@ -237,7 +237,7 @@ void ActionNode::addFrame(ActionFrame* frame)
 		return;
 	}
 	int frameType = frame->getFrameType();
-	Array* cArray = (Array*)_frameArray->objectAtIndex(frameType);
+	Array* cArray = (Array*)_frameArray->getObjectAtIndex(frameType);
 	if (cArray == NULL)
 	{
 		return;
@@ -252,7 +252,7 @@ void ActionNode::deleteFrame(ActionFrame* frame)
 		return;
 	}
 	int frameType = frame->getFrameType();
-	Array* cArray = (Array*)_frameArray->objectAtIndex(frameType);
+	Array* cArray = (Array*)_frameArray->getObjectAtIndex(frameType);
 	if (cArray == NULL)
 	{ 
 		return;
@@ -277,7 +277,7 @@ Spawn * ActionNode::refreshActionProperty()
 	Array* cSpawnArray = Array::create();
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
-		Array* cArray = (Array*)(_frameArray->objectAtIndex(n));
+		Array* cArray = (Array*)(_frameArray->getObjectAtIndex(n));
 		if (cArray == NULL || cArray->count() <= 0)
 		{
 			continue;
@@ -287,13 +287,13 @@ Spawn * ActionNode::refreshActionProperty()
 		int frameCount = cArray->count();
 		for (int i = 0; i < frameCount; i++)
 		{
-			ActionFrame* frame = (ActionFrame*)(cArray->objectAtIndex(i));
+			ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(i));
 			if (i == 0)
 			{
 			}
 			else
 			{
-				ActionFrame* srcFrame = (ActionFrame*)(cArray->objectAtIndex(i-1));
+				ActionFrame* srcFrame = (ActionFrame*)(cArray->getObjectAtIndex(i-1));
 				float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
 				Action* cAction = frame->getAction(duration);
 				cSequenceArray->addObject(cAction);
@@ -333,7 +333,7 @@ void ActionNode::playAction(bool bloop)
 	}
 	else
 	{
-		_action = Sequence::create(_actionSpawn);
+		_action = Sequence::create(_actionSpawn, NULL);
 	}
 	_action->retain();
 
@@ -364,13 +364,13 @@ int ActionNode::getFirstFrameIndex()
 	int frameindex = 99999;
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
-		Array* cArray = (Array*)(_frameArray->objectAtIndex(n));
+		Array* cArray = (Array*)(_frameArray->getObjectAtIndex(n));
 		if (cArray == NULL || cArray->count() <= 0)
 		{
 			continue;
 		}
 
-		ActionFrame* frame = (ActionFrame*)(cArray->objectAtIndex(0));
+		ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(0));
 		int iFrameIndex = frame->getFrameIndex();
 
 		if (frameindex > iFrameIndex)
@@ -387,13 +387,13 @@ int ActionNode::getLastFrameIndex()
 	int frameindex = -1;
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
-		Array* cArray = (Array*)(_frameArray->objectAtIndex(n));
+		Array* cArray = (Array*)(_frameArray->getObjectAtIndex(n));
 		if (cArray == NULL || cArray->count() <= 0)
 		{
 			continue;
 		}
 		int lastInex = cArray->count() - 1;
-		ActionFrame* frame = (ActionFrame*)(cArray->objectAtIndex(lastInex));
+		ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(lastInex));
 		int iFrameIndex = frame->getFrameIndex();
 
 		if (frameindex < iFrameIndex)
@@ -413,7 +413,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
-		Array* cArray = (Array*)(_frameArray->objectAtIndex(n));
+		Array* cArray = (Array*)(_frameArray->getObjectAtIndex(n));
 		if (cArray == NULL)
 		{
 			continue;
@@ -421,7 +421,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 		int frameCount = cArray->count();
 		for (int i = 0; i < frameCount; i++)
 		{
-			ActionFrame* frame = (ActionFrame*)(cArray->objectAtIndex(i));
+			ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(i));
 
 			if (frame->getFrameIndex()*getUnitTime() == fTime)
 			{
@@ -438,7 +438,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 				}
 				else
 				{
-					srcFrame = (ActionFrame*)(cArray->objectAtIndex(i-1));
+					srcFrame = (ActionFrame*)(cArray->getObjectAtIndex(i-1));
 					float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex())*getUnitTime();
 					float delaytime = fTime - srcFrame->getFrameIndex()*getUnitTime();
 					this->easingToFrame(duration,1.0f,srcFrame);
