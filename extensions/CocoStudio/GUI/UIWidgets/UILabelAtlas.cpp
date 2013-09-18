@@ -92,6 +92,7 @@ UILabelAtlas* UILabelAtlas::create()
     UILabelAtlas* widget = new UILabelAtlas();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -164,6 +165,11 @@ void UILabelAtlas::labelAtlasScaleChangedWithSize()
         m_pLaberAtlasRenderer->setScaleX(scaleX);
         m_pLaberAtlasRenderer->setScaleY(scaleY);
     }
+}
+
+const char* UILabelAtlas::getDescription() const
+{
+    return "LabelAtlase";
 }
 
 NS_CC_EXT_END

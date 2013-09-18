@@ -64,9 +64,6 @@
     <Filter Include="CocoStudio\Armature\utils">
       <UniqueIdentifier>{7c14020f-5f6d-49fa-a925-35016f433865}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CocoStudio\GUI\Action">
-      <UniqueIdentifier>{e6dd08b1-b691-4b75-b7c1-d4ddcdd31393}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CocoStudio\GUI\BaseClasses">
       <UniqueIdentifier>{630839cb-5841-4b54-b024-a910ed9d9e79}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,9 @@
     </Filter>
     <Filter Include="CocoStudio\Json\lib_json">
       <UniqueIdentifier>{90422e8b-1eea-43b4-bd40-05ace0263acd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoStudio\Action">
+      <UniqueIdentifier>{fd28c5fb-3a7b-4d75-846d-adc986d38375}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -375,18 +375,6 @@
     <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp">
       <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Action\UIAction.cpp">
-      <Filter>CocoStudio\GUI\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Action\UIActionFrame.cpp">
-      <Filter>CocoStudio\GUI\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Action\UIActionManager.cpp">
-      <Filter>CocoStudio\GUI\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Action\UIActionNode.cpp">
-      <Filter>CocoStudio\GUI\Action</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClCompile>
@@ -404,9 +392,6 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\System\CCSReader.cpp">
-      <Filter>CocoStudio\GUI\System</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
@@ -453,16 +438,10 @@
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UINodeContainer.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISwitch.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextButton.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp">
@@ -485,6 +464,22 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDefine.cpp">
       <Filter>CocoStudio\Armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Action\CCActionFrameEasing.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Action\CCActionManager.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Action\CCActionNode.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Action\CCActionObject.cpp">
+      <Filter>CocoStudio\Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -736,18 +731,6 @@
     <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h">
       <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Action\UIAction.h">
-      <Filter>CocoStudio\GUI\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Action\UIActionFrame.h">
-      <Filter>CocoStudio\GUI\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Action\UIActionManager.h">
-      <Filter>CocoStudio\GUI\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Action\UIActionNode.h">
-      <Filter>CocoStudio\GUI\Action</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClInclude>
@@ -765,9 +748,6 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h">
       <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\System\CCSReader.h">
-      <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\System\CocosGUI.h">
       <Filter>CocoStudio\GUI\System</Filter>
@@ -820,16 +800,10 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UINodeContainer.h">
-      <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISwitch.h">
-      <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextButton.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h">
@@ -870,6 +844,22 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h">
       <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h" />
+    <ClInclude Include="..\CocoStudio\Action\CCActionFrame.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Action\CCActionFrameEasing.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Action\CCActionManager.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Action\CCActionNode.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Action\CCActionObject.h">
+      <Filter>CocoStudio\Action</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

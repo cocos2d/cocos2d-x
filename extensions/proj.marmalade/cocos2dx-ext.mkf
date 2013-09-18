@@ -98,12 +98,7 @@ files
     ("../CocoStudio/GUI")
     "*.h"
     "*.cpp"
-	
-	["CocoStudio/GUI/Action"]
-    ("../CocoStudio/GUI/Action")
-    "*.h"
-    "*.cpp"
-	
+		
 	["CocoStudio/GUI/BaseClasses"]
     ("../CocoStudio/GUI/BaseClasses")
     "*.h"
@@ -141,6 +136,11 @@ files
 
 	["CocoStudio/Reader"]
     ("../CocoStudio/Reader")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/Action"]
+    ("../CocoStudio/Action")
     "*.h"
     "*.cpp"
 }

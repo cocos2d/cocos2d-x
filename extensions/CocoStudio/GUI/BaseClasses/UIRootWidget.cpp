@@ -32,7 +32,6 @@ UIRootWidget::UIRootWidget()
 
 UIRootWidget::~UIRootWidget()
 {
-    
 }
 
 UIRootWidget* UIRootWidget::create()
@@ -40,6 +39,7 @@ UIRootWidget* UIRootWidget::create()
     UIRootWidget* widget = new UIRootWidget();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -54,6 +54,11 @@ bool UIRootWidget::init()
         return true;
     }
     return false;
+}
+
+const char* UIRootWidget::getDescription() const
+{
+    return "RootWidget";
 }
 
 NS_CC_EXT_END

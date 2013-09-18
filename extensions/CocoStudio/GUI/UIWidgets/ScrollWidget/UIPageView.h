@@ -30,8 +30,18 @@
 
 NS_CC_EXT_BEGIN
 
+typedef enum
+{
+    PAGEVIEW_EVENT_TURNING,
+}PageViewEventType;
+
+typedef void (CCObject::*SEL_PageViewEvent)(CCObject*, PageViewEventType);
+#define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
+
+/*******Compatible*******/
 typedef void (CCObject::*SEL_PageViewPageTurningEvent)(CCObject*);
 #define coco_PageView_PageTurning_selector(_SELECTOR) (SEL_PageViewPageTurningEvent)(&_SELECTOR)
+/************************/
 
 typedef enum {
     PAGEVIEW_TOUCHLEFT,
@@ -86,19 +96,15 @@ public:
      * Remove a page of pageview.
      *
      * @param page    page which will be removed.
-     *
-     * @param cleanup   true that page will be destroyed, false otherwise.
      */
-    void removePage(Layout* page, bool cleanup);
-    
+    void removePage(Layout* page);
+
     /**
      * Remove a page at index of pageview.
      *
      * @param index    index of page.
-     *
-     * @param cleanup   true that page will be destroyed, false otherwise.
      */
-    void removePageAtIndex(int index, bool cleanup);
+    void removePageAtIndex(int index);
     
     /**
      * scroll pageview to index.
@@ -114,14 +120,18 @@ public:
      */
     int getCurPageIndex() const;
     
+    // event
+    void addEventListener(CCObject *target, SEL_PageViewEvent selector);
+    /*******Compatible*******/
     //Add call back function called when page turning.
     void addPageTurningEvent(CCObject *target, SEL_PageViewPageTurningEvent selector);
+    /**************/
     
     //override "removeChild" method of widget.
-    virtual bool removeChild(UIWidget* widget, bool cleanup);
+    virtual bool removeChild(UIWidget* widget);
     
     //override "removeAllChildrenAndCleanUp" method of widget.
-    virtual void removeAllChildrenAndCleanUp(bool cleanup);
+    virtual void removeAllChildren();
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const CCPoint &touchPoint);
@@ -138,8 +148,18 @@ public:
     //override "update" method of widget.
     virtual void update(float dt);
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     /*compatible*/
+    /**
+     * These methods will be removed
+     */
     int getPage() const{return getCurPageIndex();};
+    void removePage(Layout* page, bool cleanup){removePage(page);};
+    void removePageAtIndex(int index, bool cleanup){removePageAtIndex(index);};
     /************/
 protected:
     virtual bool addChild(UIWidget* widget);
@@ -158,6 +178,13 @@ protected:
     void updateChildrenSize();
     void updateChildrenPosition();
     virtual void onSizeChanged();
+//    virtual bool isInScrollDegreeRange(UIWidget* widget);
+    /*compatible*/
+    /**
+     * These methods will be removed
+     */
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
     int m_nCurPageIdx;
@@ -176,9 +203,12 @@ protected:
     float m_fAutoScrollSpeed;
     int m_nAutoScrollDir;
     float m_fChildFocusCancelOffset;
+    CCObject* m_pEventListener;
+    SEL_PageViewEvent m_pfnEventSelector;
+    /*compatible*/
     CCObject* m_pPageTurningListener;
     SEL_PageViewPageTurningEvent m_pfnPageTurningSelector;
-    float m_fScrollDegreeRange;
+    /************/
 };
 
 NS_CC_EXT_END
