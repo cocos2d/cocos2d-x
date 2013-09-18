@@ -28,8 +28,10 @@ NS_CC_BEGIN
 
 const char* AccelerationEvent::EVENT_TYPE = "AccelerometerEvent";
 
-AccelerationEvent::AccelerationEvent()
+AccelerationEvent::AccelerationEvent(Acceleration acc)
 : Event(EVENT_TYPE)
-{}
+, _acc(acc)
+{
+}
 
 NS_CC_END
