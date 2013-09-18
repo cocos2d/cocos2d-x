@@ -222,6 +222,8 @@ protected:
     // color modulate
     //    BOOL colorModulate;
 
+    std::string m_configName;
+    
     //! How many particles can be emitted per second
     float m_fEmitCounter;
 
@@ -261,6 +263,9 @@ protected:
     CC_PROPERTY(float, m_fAngle, Angle)
     /** angle variance of each particle */
     CC_PROPERTY(float, m_fAngleVar, AngleVar)
+    
+    /** Flipping variance of each particle */
+    unsigned int m_yCoordFlipped;
 
 //////////////////////////////////////////////////////////////////////////
 public:

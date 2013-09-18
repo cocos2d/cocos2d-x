@@ -82,7 +82,8 @@ NS_CC_BEGIN
 //
 
 CCParticleSystem::CCParticleSystem()
-: m_sPlistFile("")
+: m_configName("")
+, m_sPlistFile("")
 , m_fElapsed(0)
 , m_pParticles(NULL)
 , m_fEmitCounter(0)
@@ -116,6 +117,7 @@ CCParticleSystem::CCParticleSystem()
 , m_ePositionType(kCCPositionTypeFree)
 , m_bIsAutoRemoveOnFinish(false)
 , m_nEmitterMode(kCCParticleModeGravity)
+, m_yCoordFlipped(0)
 {
     modeA.gravity = CCPointZero;
     modeA.speed = 0;
@@ -207,15 +209,23 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
         // self, not super
         if(this->initWithTotalParticles(maxParticles))
         {
+            // particle name in 2.0
+            m_configName = dictionary->valueForKey("configName")->m_sString;
             // angle
             m_fAngle = dictionary->valueForKey("angle")->floatValue();
             m_fAngleVar = dictionary->valueForKey("angleVariance")->floatValue();
-
             // duration
             m_fDuration = dictionary->valueForKey("duration")->floatValue();
 
-            // blend function 
-            m_tBlendFunc.src = dictionary->valueForKey("blendFuncSource")->intValue();
+            // blend function
+            if (m_configName.length()>0)
+            {
+                m_tBlendFunc.src = dictionary->valueForKey("blendFuncSource")->floatValue();
+            }
+            else
+            {
+                m_tBlendFunc.src = dictionary->valueForKey("blendFuncSource")->intValue();
+            }
             m_tBlendFunc.dst = dictionary->valueForKey("blendFuncDestination")->intValue();
 
             // color
@@ -286,11 +296,34 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
             // or Mode B: radius movement
             else if( m_nEmitterMode == kCCParticleModeRadius ) 
             {
-                modeB.startRadius = dictionary->valueForKey("maxRadius")->floatValue();
+                if (m_configName.length()>0)
+                {
+                    modeB.startRadius = dictionary->valueForKey("maxRadius")->intValue();
+                }
+                else
+                {
+                    modeB.startRadius = dictionary->valueForKey("maxRadius")->floatValue();
+                }
+                
                 modeB.startRadiusVar = dictionary->valueForKey("maxRadiusVariance")->floatValue();
-                modeB.endRadius = dictionary->valueForKey("minRadius")->floatValue();
+                if (m_configName.length()>0)
+                {
+                    modeB.endRadius = dictionary->valueForKey("minRadius")->intValue();
+                }
+                else
+                {
+                    modeB.endRadius = dictionary->valueForKey("minRadius")->floatValue();
+                }
+                //modeB.endRadiusVar = dictionary->valueForKey("minRadiusVariance")->floatValue();
                 modeB.endRadiusVar = 0.0f;
-                modeB.rotatePerSecond = dictionary->valueForKey("rotatePerSecond")->floatValue();
+                if (m_configName.length()>0)
+                {
+                    modeB.rotatePerSecond = dictionary->valueForKey("rotatePerSecond")->intValue();
+                }
+                else
+                {
+                    modeB.rotatePerSecond = dictionary->valueForKey("rotatePerSecond")->floatValue();
+                }
                 modeB.rotatePerSecondVar = dictionary->valueForKey("rotatePerSecondVariance")->floatValue();
 
             } else {
@@ -379,6 +412,12 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                         image->release();
                     }
                 }
+                
+                if (m_configName.length()>0)
+                {
+                    m_yCoordFlipped = dictionary->valueForKey("yCoordFlipped")->intValue();
+                }
+                
                 CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
             }
             bRet = true;
@@ -532,11 +571,12 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 
     // direction
     float a = CC_DEGREES_TO_RADIANS( m_fAngle + m_fAngleVar * CCRANDOM_MINUS1_1() );    
-
+    
     // Mode Gravity: A
     if (m_nEmitterMode == kCCParticleModeGravity) 
     {
         CCPoint v(cosf( a ), sinf( a ));
+     
         float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
 
         // direction
@@ -573,8 +613,10 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
         }
 
         particle->modeB.angle = a;
+        
         particle->modeB.degreesPerSecond = CC_DEGREES_TO_RADIANS(modeB.rotatePerSecond + modeB.rotatePerSecondVar * CCRANDOM_MINUS1_1());
-    }    
+    }
+    
 }
 
 void CCParticleSystem::stopSystem()
@@ -673,7 +715,14 @@ void CCParticleSystem::update(float dt)
                     tmp = ccpAdd( ccpAdd( radial, tangential), modeA.gravity);
                     tmp = ccpMult( tmp, dt);
                     p->modeA.dir = ccpAdd( p->modeA.dir, tmp);
-                    tmp = ccpMult(p->modeA.dir, dt);
+					if (m_yCoordFlipped == -1)
+					{
+						tmp = ccpMult(p->modeA.dir, dt);
+					}
+                    else
+					{
+						tmp = ccpMult(p->modeA.dir, -dt);
+					}
                     p->pos = ccpAdd( p->pos, tmp );
                 }
 
@@ -686,8 +735,13 @@ void CCParticleSystem::update(float dt)
 
                     p->pos.x = - cosf(p->modeB.angle) * p->modeB.radius;
                     p->pos.y = - sinf(p->modeB.angle) * p->modeB.radius;
+                    
+                    if (m_yCoordFlipped == -1)
+               		{
+                		p->pos.y = -p->pos.y;
+                	}
                 }
-
+				
                 // color
                 p->color.r += (p->deltaColor.r * dt);
                 p->color.g += (p->deltaColor.g * dt);
