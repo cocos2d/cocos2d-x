@@ -35,9 +35,9 @@ ActionNode::ActionNode()
 , destFrameIndex(0)
 , m_fUnitTime(0.1f)
 , m_ActionTag(0)
+, m_Object(NULL)
 , m_actionSpawn(NULL)
 , m_action(NULL)
-, m_Object(NULL)
 , m_FrameArray(NULL)
 , frameArrayNum(0)
 {
@@ -333,7 +333,7 @@ void ActionNode::playAction(bool bloop)
 	}
 	else
 	{
-		m_action = CCSequence::create(m_actionSpawn);
+		m_action = CCSequence::create(m_actionSpawn, NULL);
 	}
 	m_action->retain();
 
@@ -409,7 +409,6 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 	bool bFindFrame = false;
 
 	ActionFrame* srcFrame = NULL;
-	ActionFrame* destFrame = NULL;
 
 	for (int n = 0; n < frameArrayNum; n++)
 	{

@@ -156,9 +156,9 @@ protected:
 	float m_fUnitTime;
     
 	int m_ActionTag;
-	CCAction* m_action;
 	CCObject* m_Object;
     CCSpawn * m_actionSpawn;
+	CCAction* m_action;
 	CCArray* m_FrameArray;
 	int frameArrayNum;
     
