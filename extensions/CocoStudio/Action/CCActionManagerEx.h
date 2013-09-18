@@ -22,44 +22,71 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UIACTIONNODE_H__
-#define __UIACTIONNODE_H__
+#ifndef __ActionMANAGER_H__
+#define __ActionMANAGER_H__
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "../BaseClasses/UIWidget.h"
-#include "UIActionFrame.h"
-#include "../../Json/CSContentJsonDictionary.h"
+#include "CCActionObject.h"
+#include "../Json/CSContentJsonDictionary.h"
 
 NS_CC_EXT_BEGIN
 
-class UIActionNode:public Object
+class ActionManagerEx:public Object
 {
-protected:
-	int currentIndex;
-	Action* m_action;
-	UIWidget* m_actionNode;
-    //data
-	Array* m_ActionFrameList;/*action frame*/
-    CC_SYNTHESIZE(int, m_nActionTag, ActionTag);
 public:
-    UIActionNode();
-    virtual ~UIActionNode();
+    
+    /**
+     * Default constructor
+     */
+    ActionManagerEx();
+    
+    /**
+     * Default destructor
+     */
+    virtual ~ActionManagerEx();
+    
+    /**
+     * Gets the static instance of ActionManager.
+     */
+    static ActionManagerEx* shareManager();
 
-	void SetActionNode(UIWidget* widget);
+	 /**
+     * Purges ActionManager point.
+     */
+	static void purgeActionManager();
 
-	void InsertFrame(int index, UIActionFrame* frame);
-	void AddFrame(UIActionFrame* frame);
-	void DeleteFrame(UIActionFrame* frame);
-	void ClearAllFrame();
+	 /**
+     * Gets an ActionObject with a name.
+	 *
+	 * @param jsonName  UI file name
+     *
+     * @param actionName  action name in the UI file.
+     *
+     * @return  ActionObject which named as the param name
+     */
+	ActionObject* getActionByName(const char* jsonName,const char* actionName);
 
-	void UpdateToFrameByIndex(int index);
-	void UpdateToFrame(UIActionFrame* frame);
+	/**
+     * Play an Action with a name.
+	 *
+	 * @param jsonName  UI file name
+     *
+     * @param actionName  action name in teh UIfile.
+     */
+	void playActionByName(const char* jsonName,const char* actionName);
+    
+    /*init properties with json dictionay*/
+    void initWithDictionary(const char* jsonName,cs::JsonDictionary* dic,Object* root);
 
-	void RunAction(float fUnitTime, bool bloop);
-	void StopAction();
-    void initWithDictionary(cs::JsonDictionary* dic,UIWidget* root);
-    void releaseBindingWidget();
+	/**
+     * Release all actions.
+     *
+     */
+	void releaseActions();
+
+protected:
+	Dictionary* _pActionDic;
 };
 
 NS_CC_EXT_END
