@@ -14,8 +14,6 @@ struct {
 	const char *test_name;
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
-
-    { "NewEventDispatcherTest", []() { return new EventDispatcherTestScene(); } },
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
@@ -44,6 +42,7 @@ struct {
 #endif
 	{ "CurrentLanguageTest", []() { return new CurrentLanguageTestScene(); } },
 	{ "DrawPrimitivesTest", [](){return new DrawPrimitivesTestScene();} },
+    { "EventDispatcherTest(NEW)", []() { return new EventDispatcherTestScene(); } },
 	{ "EffectAdvancedTest", []() { return new EffectAdvanceScene(); } },
 	{ "EffectsTest", [](){return new EffectTestScene();} },
 	{ "ExtensionsTest", []() { return new ExtensionsTestScene(); } },

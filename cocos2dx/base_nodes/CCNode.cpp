@@ -825,7 +825,7 @@ void Node::visit()
         }
         // self draw
         this->draw();
-        _eventPriority = ++_globalEventPriorityIndex;
+        updateEventPriorityIndex();
 
         for( ; i < _children->count(); i++ )
         {
@@ -837,7 +837,7 @@ void Node::visit()
     else
     {
         this->draw();
-        _eventPriority = ++_globalEventPriorityIndex;
+        updateEventPriorityIndex();
     }
 
     // reset for next frame
@@ -1314,6 +1314,16 @@ void Node::removeAllEventListeners()
     for (auto& listener : _eventlisteners)
     {
         dispatcher->removeEventListener(listener);
+    }
+}
+
+void Node::setDirtyForAllEventListeners()
+{
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    for (auto& listener : _eventlisteners)
+    {
+        dispatcher->setDirtyForEventType(listener->type, true);
     }
 }
 

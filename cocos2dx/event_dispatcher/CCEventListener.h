@@ -87,6 +87,7 @@ protected:
     bool _isRegistered;                    /// Whether the listener has been added to dispatcher.
     
     friend class EventDispatcher;
+    friend class Node;
 };
 
 NS_CC_END

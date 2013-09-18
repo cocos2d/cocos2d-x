@@ -30,7 +30,7 @@ USING_NS_CC;
 int main(int argc, char *argv[])
 {
     AppDelegate app;
-    EGLView* eglView = new EGLView();
-    eglView->init("TestCPP",900,640);
+    EGLView eglView;
+    eglView.init("CrystalCraze",900,640);
     return Application::getInstance()->run();
 }
