@@ -389,7 +389,12 @@ void Dictionary::acceptVisitor(DataVisitor &visitor)
 
 Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 {
-    return createWithContentsOfFileThreadSafe(pFileName);
+    auto ret = createWithContentsOfFileThreadSafe(pFileName);
+    if (ret != nullptr)
+    {
+        ret->autorelease();
+    }
+    return ret;
 }
 
 bool Dictionary::writeToFile(const char *fullPath)

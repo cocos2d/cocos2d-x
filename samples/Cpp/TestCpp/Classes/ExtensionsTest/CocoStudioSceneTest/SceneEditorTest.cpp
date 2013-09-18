@@ -8,9 +8,9 @@ using namespace cocos2d::extension;
 
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
-    armature::ArmatureDataManager::purge();
+    armature::ArmatureDataManager::getInstance()->purge();
 	SceneReader::getInstance()->purgeSceneReader();
-	cocos2d::extension::UIActionManager::shareManager()->purgeUIActionManager();
+	cocos2d::extension::ActionManagerEx::shareManager()->purgeActionManager();
 	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
 }
 
@@ -77,7 +77,7 @@ cocos2d::Node* SceneEditorTestLayer::createGameScene()
     pNode->addChild(menuBack);
     
     //ui action
-	cocos2d::extension::UIActionManager::shareManager()->PlayActionByName("startMenu_1.json","Animation1");
+	cocos2d::extension::ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 
