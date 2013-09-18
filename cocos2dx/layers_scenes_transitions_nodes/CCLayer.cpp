@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "event_dispatcher/CCAccelerationEvent.h"
 #include "event_dispatcher/CCAccelerationEventListener.h"
 #include "platform/CCDevice.h"
+#include "CCScene.h"
 
 NS_CC_BEGIN
 
@@ -279,6 +280,23 @@ void Layer::onAcceleration(Acceleration* pAccelerationValue, Event* event)
     }
 }
 
+void Layer::onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(keyCode);
+    CC_UNUSED_PARAM(event);
+}
+
+void Layer::onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(event);
+    if(kScriptTypeNone != _scriptType)
+    {
+        KeypadScriptData data(keyCode, this);
+        ScriptEvent event(kKeypadEvent,&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+}
+
 /// isKeyboardEnabled getter
 bool Layer::isKeyboardEnabled() const
 {
@@ -457,6 +475,30 @@ void Layer::onTouchesCancelled(const std::vector<Touch*>& pTouches, Event *pEven
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
+
+
+#ifdef CC_USE_PHYSICS
+void Layer::addChild(Node* child)
+{
+    Node::addChild(child);
+}
+
+void Layer::addChild(Node* child, int zOrder)
+{
+    Node::addChild(child, zOrder);
+}
+
+void Layer::addChild(Node* child, int zOrder, int tag)
+{
+    Node::addChild(child, zOrder, tag);
+    
+    if (this->getParent() &&
+        dynamic_cast<Scene*>(this->getParent()) != nullptr)
+    {
+        dynamic_cast<Scene*>(this->getParent())->addChildToPhysicsWorld(child);
+    }
+}
+#endif
 
 // LayerRGBA
 LayerRGBA::LayerRGBA()

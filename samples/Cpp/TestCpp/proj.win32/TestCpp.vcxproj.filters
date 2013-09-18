@@ -241,6 +241,8 @@
     <Filter Include="Classes\NewEventDispatcherTest">
       <UniqueIdentifier>{0b414789-7971-4a4c-86e3-40cc00936684}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\PhysicsTest">
+      <UniqueIdentifier>{a83cb042-e3d6-4d3b-a4f6-30a4b3fcb3e9}</UniqueIdentifier>
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest">
       <UniqueIdentifier>{9daecd38-37c6-4216-a999-86077af83beb}</UniqueIdentifier>
     </Filter>
@@ -294,6 +296,9 @@
     </Filter>
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest">
       <UniqueIdentifier>{24f044ee-09a6-406b-98d7-8d5d759e5bb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\KeyboardTest">
+      <UniqueIdentifier>{8d7d37cd-5cc2-4a7d-9bd2-7b5c928adbb5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -625,6 +630,8 @@
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp">
       <Filter>Classes\NewEventDispatcherTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp">
+      <Filter>Classes\PhysicsTest</Filter>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest</Filter>
     </ClCompile>
@@ -684,6 +691,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\KeyboardTest\KeyboardTest.cpp">
+      <Filter>Classes\KeyboardTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1192,6 +1202,8 @@
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h">
       <Filter>Classes\NewEventDispatcherTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h">
+      <Filter>Classes\PhysicsTest</Filter>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest</Filter>
     </ClInclude>
@@ -1251,6 +1263,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\KeyboardTest\KeyboardTest.h">
+      <Filter>Classes\KeyboardTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

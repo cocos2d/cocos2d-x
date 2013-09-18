@@ -400,22 +400,20 @@ int LuaEngine::handleKeypadEvent(void* data)
     if (0 == handler)
         return 0;
     
-    int action = keypadScriptData->actionType;
+    KeyboardEvent::KeyCode action = keypadScriptData->actionType;
 
-    //FIXME:
-//    switch (action)
-//    {
-//        case kTypeBackClicked:
-//            _stack->pushString("backClicked");
-//            break;
-//            
-//        case kTypeMenuClicked:
-//            _stack->pushString("menuClicked");
-//            break;
-//            
-//        default:
-//            return 0;
-//    }
+    switch(action)
+    {
+        case KeyboardEvent::KeyCode::KEY_BACKSPACE:
+			_stack->pushString("backClicked");
+			break;
+		case KeyboardEvent::KeyCode::KEY_MENU:
+            _stack->pushString("menuClicked");
+			break;
+		default:
+			break;
+    }
+
     int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     return ret;

@@ -33,6 +33,7 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
+#include "physics/CCPhysicsSetting.h"
 
 #include "event_dispatcher/CCKeyboardEvent.h"
 
@@ -144,14 +145,15 @@ public:
 
     virtual bool isKeyboardEnabled() const;
     virtual void setKeyboardEnabled(bool value);
- /** Please use onKeyPressed instead. */
+    
+    /** Please use onKeyPressed instead. */
     virtual void keyPressed(int keyCode) final {};
     
-    /** Please use onKeyRelease instead. */
+    /** Please use onKeyReleased instead. */
     virtual void keyReleased(int keyCode) final {};
     
-    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event) {};
-    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event) {};
+    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event);
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return isKeyboardEnabled(); };
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value) { setKeyboardEnabled(value); };
@@ -177,6 +179,12 @@ public:
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish() override;
+    
+#ifdef CC_USE_PHYSICS
+    virtual void addChild(Node* child) override;
+    virtual void addChild(Node* child, int zOrder) override;
+    virtual void addChild(Node* child, int zOrder, int tag) override;
+#endif // CC_USE_PHYSICS
 
 protected:
     void addTouchListener();
