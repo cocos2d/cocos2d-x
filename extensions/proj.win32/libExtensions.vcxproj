@@ -118,7 +118,7 @@
     <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
     <ClCompile Include="..\CCDeprecated-ext.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp" />
-    <ClCompile Include="..\CocoStudio\Action\CCCActionFrameEasing.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionManagerEx.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionNode.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionObject.cpp" />

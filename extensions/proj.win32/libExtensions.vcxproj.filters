@@ -535,9 +535,6 @@
     <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\CCCActionFrameEasing.cpp">
-      <Filter>CocoStudio\Action</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\Action\CCActionManagerEx.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
@@ -545,6 +542,9 @@
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Action\CCActionObject.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Action\CCActionFrameEasing.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
   </ItemGroup>
