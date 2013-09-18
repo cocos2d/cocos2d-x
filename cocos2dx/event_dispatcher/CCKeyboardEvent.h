@@ -198,7 +198,13 @@ public:
     
     static const char* EVENT_TYPE;
     
-    KeyboardEvent() : Event(EVENT_TYPE) {};
+    KeyboardEvent(KeyCode keyCode, bool isPressed)
+     : Event(EVENT_TYPE)
+     , _keyCode(keyCode)
+     , _isPressed(isPressed)
+    {};
+    
+private:
     KeyCode _keyCode;
     bool _isPressed;
 };
