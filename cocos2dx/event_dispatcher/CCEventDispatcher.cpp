@@ -58,6 +58,8 @@ private:
 
 NS_CC_BEGIN
 
+static EventDispatcher* g_instance = nullptr;
+
 EventDispatcher::EventListenerItem::~EventListenerItem()
 {
     CC_SAFE_RELEASE(this->node);
@@ -73,12 +75,22 @@ EventDispatcher::EventDispatcher()
 
 EventDispatcher::~EventDispatcher()
 {
+    removeAllListeners();
 }
 
 EventDispatcher* EventDispatcher::getInstance()
 {
-    static EventDispatcher _instance;
-    return &_instance;
+    if (g_instance == nullptr)
+    {
+        g_instance = new EventDispatcher();
+    }
+    
+    return g_instance;
+}
+
+void EventDispatcher::destroyInstance()
+{
+    CC_SAFE_DELETE(g_instance);
 }
 
 void EventDispatcher::addEventListenerWithItem(EventListenerItem* item)
@@ -249,13 +261,15 @@ void EventDispatcher::setPriorityWithFixedValue(EventListener* listener, int fix
     }
 }
 
-void EventDispatcher::dispatchEvent(Event* event, bool toSortListeners)
+void EventDispatcher::dispatchEvent(Event* event, bool forceSortListeners)
 {
     if (_listeners == nullptr || !_isEnabled)
         return;
 
-    if (toSortListeners)
+    if (forceSortListeners)
+    {
         sortAllEventListenerItemsForType(event->_type);
+    }
 
     DispatchGuard guard(_inDispatch);
 

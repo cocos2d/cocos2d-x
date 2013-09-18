@@ -1464,8 +1464,9 @@ protected:
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
-    int _eventPriority;
-    static int _globalEventPriorityIndex;
+    int _eventPriority;           ///< The scene graph based priority of event listener.
+    int _oldEventPriority;        ///< The old scene graph based priority of event listener.
+    static int _globalEventPriorityIndex;    ///< The index of global event priority.
 };
 
 //#pragma mark - NodeRGBA
