@@ -1,7 +1,5 @@
 #include "KeyboardTest.h"
 
-#ifdef CC_KEYBOARD_SUPPORT
-
 KeyboardTest::KeyboardTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -43,4 +41,3 @@ void KeyboardTestScene::runThisTest()
     layer->release();
 }
 
-#endif
