@@ -85,11 +85,6 @@ typedef void (CCObject::*SEL_CancelEvent)(CCObject*);
 #define coco_cancelselector(_SELECTOR) (cocos2d::extension::SEL_CancelEvent)(&_SELECTOR)
 /************************/
 
-
-//class UILayer;
-/*temp action*/
-class UIActionNode;
-
 class UIWidget : public CCObject
 {
 public:    
@@ -989,7 +984,6 @@ public:
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
-    void setBindingAction(UIActionNode* actionNode);
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
@@ -1062,8 +1056,6 @@ protected:
     CCPoint m_positionPercent;
     bool m_bIsRunning;
     
-    /*temp action*/
-    UIActionNode* m_pBindingAction;
     /*Compatible*/
     CCObject*       m_pPushListener;
     SEL_PushEvent    m_pfnPushSelector;
