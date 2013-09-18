@@ -46,8 +46,6 @@
 #include "../../Reader/CCSGUIReader.h"
 #include "UILayer.h"
 #include "../Layouts/LayoutExecutant.h"
-/*temp action*/
-#include "../Action/UIActionManager.h"
 NS_CC_EXT_BEGIN
 
 const char* CocosGUIVersion();
