@@ -324,7 +324,9 @@ public:
     {
         if (CURLE_OK != curl_easy_perform(_curl))
             return false;
-        CURLcode code = curl_easy_getinfo(_curl, CURLINFO_RESPONSE_CODE, responseCode);
+        long respCode;
+        CURLcode code = curl_easy_getinfo(_curl, CURLINFO_RESPONSE_CODE, &respCode);
+        *responseCode = respCode;
         if (code != CURLE_OK || *responseCode != 200) {
             CCLOGERROR("Curl curl_easy_getinfo failed: %s", curl_easy_strerror(code));
             return false;
