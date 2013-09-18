@@ -172,12 +172,11 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         for (auto itemIter = iter->second->begin(); itemIter != iter->second->end(); ++itemIter)
         {
             if ((*itemIter)->listener == listener)
-            {
-                listener->retain();
-                
+            {                
+                (*itemIter)->listener->_isRegistered = false;
+                (*itemIter)->listener->release();
                 if (_inDispatch == 0)
                 {
-                    (*itemIter)->listener->release();
                     delete (*itemIter);
                     iter->second->erase(itemIter);
                 }
@@ -206,11 +205,6 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         
         if (isFound)
             break;
-    }
-
-    if (isFound)
-    {
-        listener->release();
     }
 }
 
@@ -610,6 +604,7 @@ void EventDispatcher::removeListenersForEventType(const std::string& eventType)
     {
         for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
         {
+            (*iter)->listener->_isRegistered = false;
             (*iter)->listener->release();
             if (_inDispatch)
             {
@@ -637,6 +632,7 @@ void EventDispatcher::removeAllListeners()
     {
         for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
         {
+            (*iter)->listener->_isRegistered = false;
             (*iter)->listener->release();
             if (_inDispatch)
             {
