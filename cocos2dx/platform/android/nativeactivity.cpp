@@ -26,6 +26,7 @@
 #include "textures/CCTextureCache.h"
 #include "event_dispatcher/CCEventDispatcher.h"
 #include "event_dispatcher/CCAccelerationEvent.h"
+#include "event_dispatcher/CCKeyboardEvent.h"
 
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
@@ -388,6 +389,38 @@ static int32_t handle_touch_input(AInputEvent *event) {
     }
 }
 
+/*
+* Handle Key Inputs
+*/
+static int32_t handle_key_input(AInputEvent *event)
+{
+	if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
+	{
+		switch (AKeyEvent_getKeyCode(event))
+		{
+		case AKEYCODE_BACK:	
+			{
+				cocos2d::KeyboardEvent event;	
+				event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_BACKSPACE;
+				cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+				LOGI("AKEYCODE_BACK");
+			}			
+			return 1;			
+		case AKEYCODE_MENU:		
+			{
+				cocos2d::KeyboardEvent event;	
+				event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_MENU;
+				cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+				LOGI("AKEYCODE_MENU");
+			}			
+			return 1;			
+		default:
+			break;
+		}
+	}
+	return 0;
+}
+
 /**
  * Process the next input event.
  */
@@ -404,6 +437,8 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 
         return handle_touch_input(event);
     }
+	else
+		return handle_key_input(event);
 
     return 0;
 }
@@ -568,7 +603,7 @@ void android_main(struct android_app* state) {
                             // ACONFIGURATION_ORIENTATION_SQUARE
                             cocos2d::AccelerationEvent accEvent;
                             accEvent.acc.x = event.acceleration.x;
-                            accEvent.acc.y = -event.acceleration.y;
+                            accEvent.acc.y = event.acceleration.y;
                             accEvent.acc.z = event.acceleration.z;
                             accEvent.acc.timestamp = 0;
                             cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);

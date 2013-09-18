@@ -66,16 +66,14 @@ void AccelerometerTest::onAcceleration(Acceleration* acc, Event* event)
 
     auto ballSize  = _ball->getContentSize();
 
-    auto ptNow  = _ball->getPosition();
-    auto ptTemp = pDir->convertToUI(ptNow);
+    auto ptNow  = _ball->getPosition();  
 
-    ptTemp.x += acc->x * 9.81f;
-    ptTemp.y -= acc->y * 9.81f;
+    ptNow.x -= acc->x ;
+    ptNow.y -= acc->y ;
 
-    auto ptNext = pDir->convertToGL(ptTemp);
-    FIX_POS(ptNext.x, (VisibleRect::left().x+ballSize.width / 2.0), (VisibleRect::right().x - ballSize.width / 2.0));
-    FIX_POS(ptNext.y, (VisibleRect::bottom().y+ballSize.height / 2.0), (VisibleRect::top().y - ballSize.height / 2.0));
-    _ball->setPosition(ptNext);
+    FIX_POS(ptNow.x, (VisibleRect::left().x+ballSize.width / 2.0), (VisibleRect::right().x - ballSize.width / 2.0));
+    FIX_POS(ptNow.y, (VisibleRect::bottom().y+ballSize.height / 2.0), (VisibleRect::top().y - ballSize.height / 2.0));
+    _ball->setPosition(ptNow);
 }
 
 //------------------------------------------------------------------
