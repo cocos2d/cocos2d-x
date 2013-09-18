@@ -394,31 +394,31 @@ static int32_t handle_touch_input(AInputEvent *event) {
 */
 static int32_t handle_key_input(AInputEvent *event)
 {
-	if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
-	{
-		switch (AKeyEvent_getKeyCode(event))
-		{
-		case AKEYCODE_BACK:	
-			{
-				cocos2d::KeyboardEvent event;	
-				event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_BACKSPACE;
-				cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
-				LOGI("AKEYCODE_BACK");
-			}			
-			return 1;			
-		case AKEYCODE_MENU:		
-			{
-				cocos2d::KeyboardEvent event;	
-				event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_MENU;
-				cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
-				LOGI("AKEYCODE_MENU");
-			}			
-			return 1;			
-		default:
-			break;
-		}
-	}
-	return 0;
+    if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
+    {
+        switch (AKeyEvent_getKeyCode(event))
+        {
+        case AKEYCODE_BACK:	
+            {
+                cocos2d::KeyboardEvent event;
+                event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_BACKSPACE;
+                event._isPressed = false;
+                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+            }
+            return 1;
+        case AKEYCODE_MENU:
+            {
+                cocos2d::KeyboardEvent event;
+                event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_MENU;
+                event._isPressed = false;
+                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+            }
+            return 1;
+        default:
+            break;
+        }
+    }
+    return 0;
 }
 
 /**
