@@ -60,4 +60,18 @@ var cc = cc || {};
         return cc.TMXTiledMap.prototype.getPropertiesForGID.apply(this, arguments);
     };
 
+    cc.Menu.prototype.setHandlerPriority = function() {
+        cc.log("cc.Menu.setHandlerPriority was deprecated, 3.0 uses new event dispatcher to dispatch touch event based on draw order, so setHandlerPriority is not needed now.");
+    };
+
+    cc.Layer.prototype.setKeypadEnabled = function() {
+        logW("cc.Layer.setKeypadEnabled", "cc.Layer.setKeyboardEnabled");
+        return cc.Layer.prototype.setKeyboardEnabled.apply(this, arguments);
+    };
+
+    cc.Layer.prototype.isKeypadEnabled = function() {
+        logW("cc.Layer.isKeypadEnabled", "cc.Layer.isKeyboardEnabled");
+        return cc.Layer.prototype.isKeyboardEnabled.apply(this, arguments);
+    };
+
 })();

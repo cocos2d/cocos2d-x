@@ -980,23 +980,40 @@ int ScriptingCore::handleKeypadEvent(void* data)
     if (NULL == keypadScriptData->nativeObject)
         return 0;
     
-    int action = keypadScriptData->actionType;
+    KeyboardEvent::KeyCode action = keypadScriptData->actionType;
     
 	js_proxy_t * p = jsb_get_native_proxy(keypadScriptData->nativeObject);
 
 	if (p)
     {
-// FIXME:		switch(action)
-//        {
-//		case kTypeBackClicked:
-//			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "backClicked");
-//			break;
-//		case kTypeMenuClicked:
-//			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "menuClicked");
-//			break;
-//		default:
-//			break;
-//		}
+        JSBool ret = JS_FALSE;
+        switch(action)
+        {
+        case KeyboardEvent::KeyCode::KEY_BACKSPACE:
+			ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onBackClicked");
+            if (!ret)
+            {
+                ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "backClicked");
+                if (ret)
+                {
+                    CCLOG("backClicked will be deprecated, please use onBackClicked instead.");
+                }
+            }
+			break;
+		case KeyboardEvent::KeyCode::KEY_MENU:
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onMenuClicked");
+            if (!ret)
+            {
+                ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "menuClicked");
+                if (ret)
+                {
+                    CCLOG("menuClicked will be deprecated, please use onMenuClicked instead.");
+                }
+            }
+			break;
+		default:
+			break;
+		}
 		return 1;
 	}
 

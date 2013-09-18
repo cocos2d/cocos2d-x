@@ -50,11 +50,6 @@ NS_CC_BEGIN
 class CC_DLL Menu : public LayerRGBA
 {
 public:
-    enum
-    {
-        HANDLER_PRIORITY = -128,
-    };
-    
     enum class State
     {
         WAITING,
