@@ -704,8 +704,11 @@ void Director::purgeDirector()
     CHECK_GL_ERROR_DEBUG();
     
     // OpenGL view
-    _openGLView->end();
-    _openGLView = nullptr;
+    if (_openGLView)
+    {
+        _openGLView->end();
+        _openGLView = nullptr;
+    }
 
     // delete Director
     release();
