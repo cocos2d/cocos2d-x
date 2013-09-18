@@ -49,7 +49,11 @@ ScriptHandlerEntry* ScriptHandlerEntry::create(int nHandler)
 
 ScriptHandlerEntry::~ScriptHandlerEntry(void)
 {
-    ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
+    if (_handler != NULL )
+    {
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
+        _handler = NULL;
+    }
 }
 
 // #pragma mark -
@@ -97,8 +101,12 @@ TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int nHandler,
 
 TouchScriptHandlerEntry::~TouchScriptHandlerEntry(void)
 {
-    ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
-    LUALOG("[LUA] Remove touch event handler: %d", _handler);
+	if (_handler != NULL )
+	{
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
+        LUALOG("[LUA] Remove touch event handler: %d", _handler);
+        _handler = NULL;
+    }
 }
 
 bool TouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
