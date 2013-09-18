@@ -402,16 +402,16 @@ static int32_t handle_key_input(AInputEvent *event)
 			{
 				cocos2d::KeyboardEvent event;	
 				event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_BACKSPACE;
+                event._isPressed = false;
 				cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
-				LOGI("AKEYCODE_BACK");
 			}			
 			return 1;			
 		case AKEYCODE_MENU:		
 			{
 				cocos2d::KeyboardEvent event;	
 				event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_MENU;
+                event._isPressed = false;
 				cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
-				LOGI("AKEYCODE_MENU");
 			}			
 			return 1;			
 		default:
