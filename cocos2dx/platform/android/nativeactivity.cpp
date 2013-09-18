@@ -394,31 +394,27 @@ static int32_t handle_touch_input(AInputEvent *event) {
 */
 static int32_t handle_key_input(AInputEvent *event)
 {
-	if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
-	{
-		switch (AKeyEvent_getKeyCode(event))
-		{
-		case AKEYCODE_BACK:	
-			{
-				cocos2d::KeyboardEvent event;	
-				event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_BACKSPACE;
-				cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
-				LOGI("AKEYCODE_BACK");
-			}			
-			return 1;			
-		case AKEYCODE_MENU:		
-			{
-				cocos2d::KeyboardEvent event;	
-				event._keyCode = cocos2d::KeyboardEvent::KeyCode::KEY_MENU;
-				cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
-				LOGI("AKEYCODE_MENU");
-			}			
-			return 1;			
-		default:
-			break;
-		}
-	}
-	return 0;
+    if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
+    {
+        switch (AKeyEvent_getKeyCode(event))
+        {
+        case AKEYCODE_BACK:	
+            {
+                cocos2d::KeyboardEvent event(cocos2d::KeyboardEvent::KeyCode::KEY_BACKSPACE, false);
+                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+            }
+            return 1;
+        case AKEYCODE_MENU:
+            {
+                cocos2d::KeyboardEvent event(cocos2d::KeyboardEvent::KeyCode::KEY_MENU, false);
+                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+            }
+            return 1;
+        default:
+            break;
+        }
+    }
+    return 0;
 }
 
 /**
@@ -601,21 +597,24 @@ void android_main(struct android_app* state) {
                             // ACONFIGURATION_ORIENTATION_ANY
                             // ACONFIGURATION_ORIENTATION_PORT
                             // ACONFIGURATION_ORIENTATION_SQUARE
-                            cocos2d::AccelerationEvent accEvent;
-                            accEvent.acc.x = event.acceleration.x;
-                            accEvent.acc.y = event.acceleration.y;
-                            accEvent.acc.z = event.acceleration.z;
-                            accEvent.acc.timestamp = 0;
+                            cocos2d::Acceleration acc;
+                            acc.x = event.acceleration.x;
+                            acc.y = event.acceleration.y;
+                            acc.z = event.acceleration.z;
+                            acc.timestamp = 0;
+                            cocos2d::AccelerationEvent accEvent(acc);
+
                             cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
                         } else {
                             // ACONFIGURATION_ORIENTATION_LAND
                             // swap x and y parameters
+                            cocos2d::Acceleration acc;
+                            acc.x = -event.acceleration.y;
+                            acc.y = event.acceleration.x;
+                            acc.z = event.acceleration.z;
+                            acc.timestamp = 0;
+                            cocos2d::AccelerationEvent accEvent(acc);
 
-                            cocos2d::AccelerationEvent accEvent;
-                            accEvent.acc.x = -event.acceleration.y;
-                            accEvent.acc.y = event.acceleration.x;
-                            accEvent.acc.z = event.acceleration.z;
-                            accEvent.acc.timestamp = 0;
                             cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
                         }
                     }

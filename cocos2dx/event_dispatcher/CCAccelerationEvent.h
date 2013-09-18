@@ -35,8 +35,11 @@ class AccelerationEvent : public Event
 public:
     static const char* EVENT_TYPE;
     
-    AccelerationEvent();
-    Acceleration acc;
+    AccelerationEvent(Acceleration acc);
+    
+private:
+    Acceleration _acc;
+    friend class AccelerationEventListener;
 };
 
 NS_CC_END

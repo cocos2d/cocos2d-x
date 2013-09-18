@@ -7,13 +7,18 @@
 //
 
 #include "NewEventDispatcherTest.h"
+#include "testResource.h"
 
 namespace {
     
 std::function<Layer*()> createFunctions[] =
 {
     CL(TouchableSpriteTest),
-    CL(FixedPriorityTest)
+    CL(FixedPriorityTest),
+    CL(RemoveListenerWhenDispatching),
+    CL(CustomEventTest),
+    CL(LabelKeyboardEventTest),
+    CL(SpriteAccelerationEventTest)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -148,7 +153,7 @@ void TouchableSpriteTest::onEnter()
         
         if (rect.containsPoint(locationInNode))
         {
-            log("sprite tag %d, began... x = %f, y = %f", target->getTag(), locationInNode.x, locationInNode.y);
+            log("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setOpacity(180);
             return true;
         }
@@ -162,7 +167,7 @@ void TouchableSpriteTest::onEnter()
     
     listener1->onTouchEnded = [=](Touch* touch, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        log("sprite tag %d onTouchesEnded.. ", target->getTag());
+        log("sprite onTouchesEnded.. ");
         target->setOpacity(255);
         if (target == sprite2)
         {
@@ -186,7 +191,7 @@ std::string TouchableSpriteTest::title()
 
 std::string TouchableSpriteTest::subtitle()
 {
-    return "";
+    return "Please drag the blocks";
 }
 
 // FixedPriorityChangedTest
@@ -213,7 +218,7 @@ public:
         auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
         listener->setSwallowTouches(true);
         
-        listener->onTouchBegan = [&](Touch* touch, Event* event){
+        listener->onTouchBegan = [=](Touch* touch, Event* event){
             
             Point locationInNode = this->convertToNodeSpace(touch->getLocation());
             Size s = this->getContentSize();
@@ -227,11 +232,11 @@ public:
             return false;
         };
         
-        listener->onTouchMoved = [&](Touch* touch, Event* event){
+        listener->onTouchMoved = [=](Touch* touch, Event* event){
             //this->setPosition(this->getPosition() + touch->getDelta());
         };
         
-        listener->onTouchEnded = [&](Touch* touch, Event* event){
+        listener->onTouchEnded = [=](Touch* touch, Event* event){
             this->setColor(Color3B::WHITE);
         };
         
@@ -298,4 +303,237 @@ std::string FixedPriorityTest::title()
 std::string FixedPriorityTest::subtitle()
 {
     return "Fixed Priority, Blue: 30, Red: 20, Yellow: 10\n The lower value the higher priority will be.";
+}
+
+// RemoveListenerWhenDispatching
+void RemoveListenerWhenDispatching::onEnter()
+{
+    EventDispatcherTestDemo::onEnter();
+    
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto sprite1 = Sprite::create("Images/CyanSquare.png");
+    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(sprite1, 10);
+    
+    // Make sprite1 touchable
+    auto listener1 = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    listener1->setSwallowTouches(true);
+    setUserObject(listener1);
+    
+    std::shared_ptr<bool> firstClick(new bool(true));
+    
+    listener1->onTouchBegan = [=](Touch* touch, Event* event){
+        Point locationInNode = sprite1->convertToNodeSpace(touch->getLocation());
+        Size s = sprite1->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        
+        if (rect.containsPoint(locationInNode))
+        {
+            sprite1->setColor(Color3B::RED);
+            return true;
+        }
+        return false;
+    };
+    
+    listener1->onTouchEnded = [=](Touch* touch, Event* event){
+        sprite1->setColor(Color3B::WHITE);
+    };
+    
+    dispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
+    
+    auto statusLabel = LabelTTF::create("The sprite could be touched!", "", 20);
+    statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
+    addChild(statusLabel);
+    std::shared_ptr<bool> enable(new bool(true));
+    // Enable/Disable item
+    auto toggleItem = MenuItemToggle::createWithCallback([=](Object* sender){
+        if (*enable)
+        {
+            dispatcher->removeEventListener(listener1);
+            statusLabel->setString("The sprite could not be touched!");
+            
+            (*enable) = false;
+        }
+        else
+        {
+            dispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
+            statusLabel->setString("The sprite could be touched!");
+
+            (*enable) = true;
+        }
+    }, MenuItemFont::create("Enabled"), MenuItemFont::create("Disabled"), NULL);
+    
+    toggleItem->setPosition(origin + Point(size.width/2, 80));
+    auto menu = Menu::create(toggleItem, nullptr);
+    menu->setPosition(Point(0, 0));
+    menu->setAnchorPoint(Point(0, 0));
+    addChild(menu, -1);
+}
+
+std::string RemoveListenerWhenDispatching::title()
+{
+    return "Add and remove listener\n when dispatching event";
+}
+
+std::string RemoveListenerWhenDispatching::subtitle()
+{
+    return "";
+}
+
+// CustomEventTest
+void CustomEventTest::onEnter()
+{
+    EventDispatcherTestDemo::onEnter();
+    
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto statusLabel = LabelTTF::create("No custom event received!", "", 20);
+    statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
+    addChild(statusLabel);
+
+    _listener = EventListener::create("game_custom_event", [=](Event* event){
+        std::string str("Custom event received, ");
+        char* buf = static_cast<char*>(event->getUserData());
+        str += buf;
+        str += " times";
+        statusLabel->setString(str.c_str());
+        delete[] buf;
+    });
+    
+    dispatcher->addEventListenerWithFixedPriority(_listener, 1);
+    
+    auto sendItem = MenuItemFont::create("Send Custom Event", [=](Object* sender){
+        static int count = 0;
+        ++count;
+        char* buf = new char[10];
+        sprintf(buf, "%d", count);
+        Event event("game_custom_event");
+        event.setUserData(buf);
+        dispatcher->dispatchEvent(&event);
+    });
+    sendItem->setPosition(origin + Point(size.width/2, size.height/2));
+    auto menu = Menu::create(sendItem, nullptr);
+    menu->setPosition(Point(0, 0));
+    menu->setAnchorPoint(Point(0, 0));
+    addChild(menu, -1);
+}
+
+void CustomEventTest::onExit()
+{
+    EventDispatcher::getInstance()->removeEventListener(_listener);
+    EventDispatcherTestDemo::onExit();
+}
+
+std::string CustomEventTest::title()
+{
+    return "Send custom event";
+}
+
+std::string CustomEventTest::subtitle()
+{
+    return "";
+}
+
+// LabelKeyboardEventTest
+void LabelKeyboardEventTest::onEnter()
+{
+    EventDispatcherTestDemo::onEnter();
+    
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto statusLabel = LabelTTF::create("No keyboard event received!", "", 20);
+    statusLabel->setPosition(origin + Point(size.width/2, size.height/2));
+    addChild(statusLabel);
+        
+    auto listener = KeyboardEventListener::create();
+    listener->onKeyPressed = [](KeyboardEvent::KeyCode keyCode, Event* event){
+        char buf[100] = {0};
+        sprintf(buf, "Key %d was pressed!", (int)keyCode);
+        auto label = static_cast<LabelTTF*>(event->getCurrentTarget());
+        label->setString(buf);
+    };
+    
+    listener->onKeyReleased = [](KeyboardEvent::KeyCode keyCode, Event* event){
+        char buf[100] = {0};
+        sprintf(buf, "Key %d was released!", (int)keyCode);
+        auto label = static_cast<LabelTTF*>(event->getCurrentTarget());
+        label->setString(buf);
+    };
+    
+    dispatcher->addEventListenerWithSceneGraphPriority(listener, statusLabel);
+}
+
+std::string LabelKeyboardEventTest::title()
+{
+    return "Label Receives Keyboard Event";
+}
+
+std::string LabelKeyboardEventTest::subtitle()
+{
+    return "Please click keyboard\n(Only available on Desktop and Android)";
+}
+
+// SpriteAccelerationEventTest
+void SpriteAccelerationEventTest::onEnter()
+{
+#define FIX_POS(_pos, _min, _max) \
+if (_pos < _min)        \
+_pos = _min;        \
+else if (_pos > _max)   \
+_pos = _max;        \
+
+    EventDispatcherTestDemo::onEnter();
+    
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    Device::setAccelerometerEnabled(true);
+    
+    auto sprite = Sprite::create(s_Ball);
+    sprite->setPosition(origin + Point(size.width/2, size.height/2));
+    addChild(sprite);
+    
+    auto listener = AccelerationEventListener::create([=](Acceleration* acc, Event* event){
+        auto ballSize  = sprite->getContentSize();
+        
+        auto ptNow  = sprite->getPosition();
+        
+        log("acc: x = %lf, y = %lf", acc->x, acc->y);
+        
+        ptNow.x += acc->x * 9.81f;
+        ptNow.y += acc->y * 9.81f;
+        
+        FIX_POS(ptNow.x, (VisibleRect::left().x+ballSize.width / 2.0), (VisibleRect::right().x - ballSize.width / 2.0));
+        FIX_POS(ptNow.y, (VisibleRect::bottom().y+ballSize.height / 2.0), (VisibleRect::top().y - ballSize.height / 2.0));
+        sprite->setPosition(ptNow);
+    });
+    
+    dispatcher->addEventListenerWithSceneGraphPriority(listener, sprite);
+}
+
+void SpriteAccelerationEventTest::onExit()
+{
+    Device::setAccelerometerEnabled(false);
+}
+
+std::string SpriteAccelerationEventTest::title()
+{
+    return "Sprite Receives Acceleration Event";
+}
+
+std::string SpriteAccelerationEventTest::subtitle()
+{
+    return "Please move your device\n(Only available on mobile)";
 }

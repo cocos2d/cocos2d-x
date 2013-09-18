@@ -24,8 +24,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    EGLView* eglView = new EGLView();
-    eglView->init("TestCPP",900,640);
+    EGLView eglView;
+    eglView.init("CrystalCraze",900,640);
 
     int ret = Application::getInstance()->run();
 

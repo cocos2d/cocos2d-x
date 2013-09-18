@@ -47,5 +47,40 @@ public:
     virtual std::string subtitle();
 };
 
+class RemoveListenerWhenDispatching : public EventDispatcherTestDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class CustomEventTest : public EventDispatcherTestDemo
+{
+public:
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() override;
+    virtual std::string subtitle() override;
+private:
+    EventListener* _listener;
+};
+
+class LabelKeyboardEventTest : public EventDispatcherTestDemo
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() override;
+    virtual std::string subtitle() override;
+};
+
+class SpriteAccelerationEventTest : public EventDispatcherTestDemo
+{
+public:
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() override;
+    virtual std::string subtitle() override;
+};
 
 #endif /* defined(__samples__NewEventDispatcherTest__) */
