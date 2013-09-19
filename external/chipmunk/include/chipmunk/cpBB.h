@@ -91,6 +91,10 @@ static inline cpFloat cpBBMergedArea(cpBB a, cpBB b)
 	return (cpfmax(a.r, b.r) - cpfmin(a.l, b.l))*(cpfmax(a.t, b.t) - cpfmin(a.b, b.b));
 }
 
+#if defined(_WIN32)
+#pragma warning(disable:4056)
+#endif // #if defined(WIN32)
+
 /// Returns the fraction along the segment query the cpBB is hit. Returns INFINITY if it doesn't hit.
 static inline cpFloat cpBBSegmentQuery(cpBB bb, cpVect a, cpVect b)
 {
@@ -115,6 +119,10 @@ static inline cpFloat cpBBSegmentQuery(cpBB bb, cpVect a, cpVect b)
 	
 	return INFINITY;
 }
+
+#if defined(_WIN32)
+#pragma warning(default:4056)
+#endif // #if defined(WIN32)
 
 /// Return true if the bounding box intersects the line segment with ends @c a and @c b.
 static inline cpBool cpBBIntersectsSegment(cpBB bb, cpVect a, cpVect b)
