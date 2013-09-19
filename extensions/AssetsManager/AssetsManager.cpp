@@ -25,8 +25,10 @@
 #include "AssetsManager.h"
 #include "cocos2d.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <curl/curl.h>
 #include <curl/easy.h>
+
 #include <stdio.h>
 #include <vector>
 
@@ -607,3 +609,4 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
 }
 
 NS_CC_EXT_END;
+#endif // CC_PLATFORM_WINRT
