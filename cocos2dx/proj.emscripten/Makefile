@@ -55,6 +55,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../event_dispatcher/CCTouch.cpp \
 ../event_dispatcher/CCTouchEvent.cpp \
 ../event_dispatcher/CCTouchEventListener.cpp \
+../event_dispatcher/CCCustomEvent.cpp \
+../event_dispatcher/CCCustomEventListener.cpp \
 ../label_nodes/CCFont.cpp \
 ../label_nodes/CCFontAtlas.cpp \
 ../label_nodes/CCFontAtlasCache.cpp \

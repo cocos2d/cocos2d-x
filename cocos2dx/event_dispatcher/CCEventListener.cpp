@@ -27,20 +27,6 @@
 
 NS_CC_BEGIN
 
-EventListener* EventListener::create(const std::string& eventType, std::function<void(Event*)> callback)
-{
-    EventListener* ret = new EventListener();
-    if (ret && ret->init(eventType, callback))
-    {
-        ret->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-    return ret;
-}
-
 EventListener::EventListener()
 {}
     
@@ -49,10 +35,10 @@ EventListener::~EventListener()
 	CCLOGINFO("In the destructor of EventListener. %p", this);
 }
 
-bool EventListener::init(const std::string& t, std::function<void(Event*)>callback)
+bool EventListener::init(const std::string& t, std::function<void(Event*)> callback)
 {
-    onEvent = callback;
-    type = t;
+    _onEvent = callback;
+    _type = t;
     _isRegistered = false;
     
     return true;
@@ -60,21 +46,7 @@ bool EventListener::init(const std::string& t, std::function<void(Event*)>callba
 
 bool EventListener::checkAvaiable()
 { 
-	return (onEvent != nullptr);
-}
-
-EventListener* EventListener::clone()
-{
-    EventListener* ret = new EventListener();
-    if (ret && ret->init(type, onEvent))
-    {
-        ret->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-    return ret;
+	return (_onEvent != nullptr);
 }
 
 NS_CC_END

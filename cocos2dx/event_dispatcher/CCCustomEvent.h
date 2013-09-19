@@ -22,51 +22,29 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef cocos2d_libs_EventListener_h
-#define cocos2d_libs_EventListener_h
+#ifndef __cocos2d_libs__CCCustomEvent__
+#define __cocos2d_libs__CCCustomEvent__
 
-#include "platform/CCPlatformMacros.h"
-#include "cocoa/CCObject.h"
-
-#include <functional>
-#include <string>
-#include <memory>
+#include "CCEvent.h"
 
 NS_CC_BEGIN
 
-class Event;
-
-/**
- *  The base class of event listener.
- *  If you need custom listener which with different callback, you need to inherit this class.
- *  For instance, you could refer to AccelerationEventListener, KeyboardEventListener or TouchEventListener, CustomEventListener.
- */
-class EventListener : public Object
-{    
-protected:
-    /** Constructor */
-    EventListener();
-    
-    /** Initializes event with type and callback function */
-    bool init(const std::string& t, std::function<void(Event*)>callback);
+class CustomEvent : public Event
+{
 public:
-    /** Destructor */
-    virtual ~EventListener();
+    /** Constructor */
+    CustomEvent(const std::string& eventName);
     
-    /** Checks whether the listener is available. */
-    virtual bool checkAvaiable() = 0;
+    /** Set user data */
+    inline void setUserData(void* data) { _userData = data; };
     
-    /** Clones the listener, its subclasses have to override this method. */
-    virtual EventListener* clone() = 0;
+    /** Get user data */
+    inline void* getUserData() const { return _userData; };
+    
 protected:
-    std::function<void(Event*)> _onEvent;   /// Event callback function
-    std::string _type;                      /// Event type
-    bool _isRegistered;                    /// Whether the listener has been added to dispatcher.
-    
-    friend class EventDispatcher;
-    friend class Node;
+    void* _userData;       ///< User data
 };
 
 NS_CC_END
 
-#endif
+#endif /* defined(__cocos2d_libs__CCCustomEvent__) */
