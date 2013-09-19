@@ -343,8 +343,8 @@ void Layer::onEnter()
     {
         auto dispatcher = EventDispatcher::getInstance();
         dispatcher->removeEventListener(_accelerationListener);
-        auto listener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
-        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        _accelerationListener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
+        dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
     }
 }
 
