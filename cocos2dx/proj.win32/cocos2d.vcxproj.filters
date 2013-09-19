@@ -566,6 +566,12 @@
     <ClCompile Include="..\physics\Box2D\CCPhysicsWorldInfo.cpp">
       <Filter>physics\Box2D</Filter>
     </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCCustomEvent.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCCustomEventListener.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -1142,6 +1148,12 @@
     </ClInclude>
     <ClInclude Include="..\physics\Box2D\CCPhysicsWorldInfo.h">
       <Filter>physics\Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCCustomEvent.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCCustomEventListener.h">
+      <Filter>event_dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
