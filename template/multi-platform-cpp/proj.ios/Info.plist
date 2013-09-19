@@ -12,6 +12,19 @@
 	<string>Icon-57.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
+		<string>Icon-120</string>
+		<string>Icon.png</string>
+		<string>Icon@2x.png</string>
+		<string>Icon-57.png</string>
+		<string>Icon-114.png</string>
+		<string>Icon-72.png</string>
+		<string>Icon-144.png</string>
+	</array>
+	<key>CFBundleIconFiles~ipad</key>
+	<array>
+		<string>Icon-152</string>
+		<string>Icon-76</string>
+		<string>Icon-120</string>
 		<string>Icon.png</string>
 		<string>Icon@2x.png</string>
 		<string>Icon-57.png</string>
@@ -39,8 +52,8 @@
 	<array/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
 </dict>
 </plist>
