@@ -34,12 +34,13 @@ class AccelerationEventListener : public EventListener
 {
 public:
     static AccelerationEventListener* create(std::function<void(Acceleration*, Event* event)> callback);
-    virtual AccelerationEventListener* clone() override;
-    
     ~AccelerationEventListener();
+    
+    /// Overrides
+    virtual AccelerationEventListener* clone() override;
+    virtual bool checkAvaiable() override;
 private:
     AccelerationEventListener();
-    virtual bool checkAvaiable() override;
     
     bool init(std::function<void(Acceleration*, Event* event)> callback);
     std::function<void(Acceleration*, Event*)> onAccelerationEvent;

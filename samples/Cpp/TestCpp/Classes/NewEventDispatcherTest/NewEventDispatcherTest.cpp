@@ -398,7 +398,7 @@ void CustomEventTest::onEnter()
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
 
-    _listener = EventListener::create("game_custom_event", [=](Event* event){
+    _listener = CustomEventListener::create("game_custom_event", [=](CustomEvent* event){
         std::string str("Custom event received, ");
         char* buf = static_cast<char*>(event->getUserData());
         str += buf;
@@ -414,7 +414,7 @@ void CustomEventTest::onEnter()
         ++count;
         char* buf = new char[10];
         sprintf(buf, "%d", count);
-        Event event("game_custom_event");
+        CustomEvent event("game_custom_event");
         event.setUserData(buf);
         dispatcher->dispatchEvent(&event);
     });

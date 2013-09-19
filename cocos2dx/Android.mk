@@ -47,6 +47,8 @@ effects/CCGrabber.cpp \
 effects/CCGrid.cpp \
 event_dispatcher/CCAccelerationEvent.cpp \
 event_dispatcher/CCAccelerationEventListener.cpp \
+event_dispatcher/CCCustomEvent.cpp \
+event_dispatcher/CCCustomEventListener.cpp \
 event_dispatcher/CCEvent.cpp \
 event_dispatcher/CCEventDispatcher.cpp \
 event_dispatcher/CCEventListener.cpp \

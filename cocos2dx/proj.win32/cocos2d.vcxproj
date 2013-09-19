@@ -175,6 +175,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionTween.cpp" />
     <ClCompile Include="..\event_dispatcher\CCAccelerationEvent.cpp" />
     <ClCompile Include="..\event_dispatcher\CCAccelerationEventListener.cpp" />
+    <ClCompile Include="..\event_dispatcher\CCCustomEvent.cpp" />
+    <ClCompile Include="..\event_dispatcher\CCCustomEventListener.cpp" />
     <ClCompile Include="..\event_dispatcher\CCEvent.cpp" />
     <ClCompile Include="..\event_dispatcher\CCEventDispatcher.cpp" />
     <ClCompile Include="..\event_dispatcher\CCEventListener.cpp" />
@@ -335,6 +337,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\actions\CCActionTween.h" />
     <ClInclude Include="..\event_dispatcher\CCAccelerationEvent.h" />
     <ClInclude Include="..\event_dispatcher\CCAccelerationEventListener.h" />
+    <ClInclude Include="..\event_dispatcher\CCCustomEvent.h" />
+    <ClInclude Include="..\event_dispatcher\CCCustomEventListener.h" />
     <ClInclude Include="..\event_dispatcher\CCEvent.h" />
     <ClInclude Include="..\event_dispatcher\CCEventDispatcher.h" />
     <ClInclude Include="..\event_dispatcher\CCEventListener.h" />
