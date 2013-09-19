@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010 cocos2d-x.org
+Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
 
@@ -46,6 +47,8 @@ Config of cocos2d-x project, per target platform.
 #define CC_PLATFORM_NACL               9
 #define CC_PLATFORM_EMSCRIPTEN        10
 #define CC_PLATFORM_TIZEN             11
+#define CC_PLATFORM_WINRT             12
+#define CC_PLATFORM_WP8               13
 
 // Determine target platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -66,6 +69,18 @@ Config of cocos2d-x project, per target platform.
 #if defined(ANDROID)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_ANDROID
+#endif
+
+// WinRT (Windows Store App)
+#if defined(WINRT) && defined(_WINRT)
+    #undef  CC_TARGET_PLATFORM
+    #define CC_TARGET_PLATFORM			CC_PLATFORM_WINRT
+#endif
+
+// WP8 (Windows Phone 8 App)
+#if defined(WP8) && defined(_WP8)
+    #undef  CC_TARGET_PLATFORM
+    #define CC_TARGET_PLATFORM			CC_PLATFORM_WP8
 #endif
 
 // win32
