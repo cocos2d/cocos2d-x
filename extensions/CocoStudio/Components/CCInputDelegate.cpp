@@ -117,7 +117,7 @@ void InputDelegate::setTouchEnabled(bool enabled)
                 listener->onTouchesEnded = CC_CALLBACK_2(InputDelegate::onTouchesEnded, this);
                 listener->onTouchesCancelled = CC_CALLBACK_2(InputDelegate::onTouchesCancelled, this);
                 
-                EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 0);
+                EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, -1);
                 _touchListener = listener;
             } else {
                 // Register Touch Event
