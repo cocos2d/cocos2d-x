@@ -33,7 +33,7 @@ InputDelegate::InputDelegate(void)
 , _accelerometerListener(nullptr)
 , _keypadEnabled(false)
 , _keyboardListener(nullptr)
-, _touchPriority(0)
+, _touchPriority(-1)
 , _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
 {
 
