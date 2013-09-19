@@ -45,7 +45,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// Fields
 	// ===========================================================
 	
-	private Cocos2dxGLSurfaceView mGLSurfaceView;
+	protected Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
 	private static Context sContext = null;
 	
@@ -145,11 +145,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         if (isAndroidEmulator())
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
 
-        this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        this.mGLSurfaceView.setCocos2dxRenderer(this.onCreateRenderer());
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
         // Set framelayout as the content view
 		setContentView(mFrameLayout);
+	}
+	
+	public Cocos2dxRenderer onCreateRenderer() {
+		return new Cocos2dxRenderer();
 	}
 	
     public Cocos2dxGLSurfaceView onCreateView() {
