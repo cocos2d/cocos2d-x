@@ -50,6 +50,8 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array/>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeRight</string>
