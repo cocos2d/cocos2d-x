@@ -526,6 +526,7 @@ _pos = _max;        \
 void SpriteAccelerationEventTest::onExit()
 {
     Device::setAccelerometerEnabled(false);
+    EventDispatcherTestDemo::onExit();
 }
 
 std::string SpriteAccelerationEventTest::title()
