@@ -74,4 +74,9 @@ var cc = cc || {};
         return cc.Layer.prototype.isKeyboardEnabled.apply(this, arguments);
     };
 
+    cc.registerTargettedDelegate = function() {
+        logW("cc.registerTargettedDelegate", "cc.registerTargetedDelegate");
+        return cc.registerTargetedDelegate.apply(this, arguments);
+    };
+
 })();

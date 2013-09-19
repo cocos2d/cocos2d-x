@@ -79,7 +79,7 @@ void JSTouchDelegate::registerStandardDelegate(int priority)
     _touchListener = listener;
 }
 
-void JSTouchDelegate::registerTargettedDelegate(int priority, bool swallowsTouches)
+void JSTouchDelegate::registerTargetedDelegate(int priority, bool swallowsTouches)
 {
     auto dispatcher = EventDispatcher::getInstance();
     dispatcher->removeEventListener(_touchListener);
@@ -105,6 +105,8 @@ void JSTouchDelegate::unregisterTouchDelegate()
     }
     
     EventDispatcher::getInstance()->removeEventListener(_touchListener);
+    
+    this->release();
 }
 
 bool JSTouchDelegate::onTouchBegan(Touch *touch, Event *event)
@@ -671,26 +673,31 @@ JSBool js_cocos2dx_CCLayerMultiplex_create(JSContext *cx, uint32_t argc, jsval *
 
 JSBool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc == 2)
+	if (argc == 1 || argc == 2)
     {
 		jsval *argv = JS_ARGV(cx, vp);
         JSObject* jsobj = NULL;
 
         JSTouchDelegate *touch = new JSTouchDelegate();
-        touch->autorelease();
         
-        touch->registerStandardDelegate(JSVAL_TO_INT(argv[1]));
+        int priority = 1;
+        if (argc == 2)
+        {
+            priority = JSVAL_TO_INT(argv[1]);
+        }
         
-        jsobj = JSVAL_TO_OBJECT(argv[0]);
+        touch->registerStandardDelegate(priority);
+        
+        jsobj = JSVAL_TO_OBJECT(argv[0]); 
         touch->setJSObject(jsobj);
         JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
 		return JS_TRUE;
 	}
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting >= 1", argc);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
 
-JSBool js_cocos2dx_JSTouchDelegate_registerTargettedDelegate(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_cocos2dx_JSTouchDelegate_registerTargetedDelegate(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc == 3)
     {
@@ -698,16 +705,15 @@ JSBool js_cocos2dx_JSTouchDelegate_registerTargettedDelegate(JSContext *cx, uint
         JSObject* jsobj = NULL;
 
         JSTouchDelegate *touch = new JSTouchDelegate();
-        touch->autorelease();
-        touch->registerTargettedDelegate(JSVAL_TO_INT(argv[1]), JSVAL_TO_BOOLEAN(argv[2]));
+        touch->registerTargetedDelegate(JSVAL_TO_INT(argv[0]), JSVAL_TO_BOOLEAN(argv[1]));
         
-        jsobj = JSVAL_TO_OBJECT(argv[0]);
+        jsobj = JSVAL_TO_OBJECT(argv[2]);
         touch->setJSObject(jsobj);
         JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
 
 		return JS_TRUE;
 	}
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting >=1", argc);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
 	return JS_FALSE;
 }
 
@@ -3652,7 +3658,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.LayerMultiplex; })()"));
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCLayerMultiplex_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
-	JS_DefineFunction(cx, ns, "registerTargettedDelegate", js_cocos2dx_JSTouchDelegate_registerTargettedDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, ns, "registerTargetedDelegate", js_cocos2dx_JSTouchDelegate_registerTargetedDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, ns, "registerStandardDelegate", js_cocos2dx_JSTouchDelegate_registerStandardDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "unregisterTouchDelegate", js_cocos2dx_JSTouchDelegate_unregisterTouchDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
