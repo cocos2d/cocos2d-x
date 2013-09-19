@@ -35,7 +35,8 @@ void CocosGUIExamplesRegisterScene::onEnter()
     // ui node container add to e-mail layout
     UINodeContainer* nodeContainer = UINodeContainer::create();
     nodeContainer->setPosition(ccp(eMail_layout->getContentSize().width / 2, eMail_layout->getContentSize().height / 2));
-    
+ 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // CCEditBox add to ui node container
     CCSize editBoxSize = eMail_layout->getContentSize();
     CCEditBox* email_editBox = CCEditBox::create(editBoxSize, CCScale9Sprite::create("cocosgui/gui_examples/register_1/e-mail.png"));
@@ -48,7 +49,9 @@ void CocosGUIExamplesRegisterScene::onEnter()
     
     // add ui node container to layout
     eMail_layout->addChild(nodeContainer);
-    
+#else
+#pragma message ("Warning: CCEditBox not implmented for CC_PLATFORM_WINRT and CC_PLATFORM_WP8")
+#endif   
     // content panel
     Layout* content_panel = dynamic_cast<Layout*>(m_pLayout->getChildByName("content_Panel"));
     
