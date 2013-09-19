@@ -122,7 +122,7 @@ void ArmatureTestScene::MainMenuCallback(Object *pSender)
     //TestScene::MainMenuCallback(pSender);
 
     removeAllChildren();
-    ArmatureDataManager::purge();
+    ArmatureDataManager::destoryInstance();
 }
 
 

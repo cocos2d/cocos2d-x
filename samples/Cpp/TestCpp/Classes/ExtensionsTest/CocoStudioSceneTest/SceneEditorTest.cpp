@@ -8,7 +8,7 @@ using namespace cocos2d::extension;
 
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
-    armature::ArmatureDataManager::getInstance()->purge();
+    armature::ArmatureDataManager::getInstance()->destoryInstance();
 	SceneReader::getInstance()->purgeSceneReader();
 	cocos2d::extension::ActionManagerEx::shareManager()->purgeActionManager();
 	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
