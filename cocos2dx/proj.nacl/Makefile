@@ -44,6 +44,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../event_dispatcher/CCTouch.cpp \
 ../event_dispatcher/CCTouchEvent.cpp \
 ../event_dispatcher/CCTouchEventListener.cpp \
+../event_dispatcher/CCCustomEvent.cpp \
+../event_dispatcher/CCCustomEventListener.cpp \
 ../label_nodes/CCLabelAtlas.cpp \
 ../label_nodes/CCLabelBMFont.cpp \
 ../label_nodes/CCLabelTTF.cpp \

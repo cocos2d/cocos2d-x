@@ -37,14 +37,16 @@ class TouchEventListener : public EventListener
 {
 public:
     static TouchEventListener* create(Touch::DispatchMode mode);
+    
+    /// Overrides
     virtual TouchEventListener* clone() override;
+    virtual bool checkAvaiable() override;
+    
+    virtual ~TouchEventListener();
     
 private:
     TouchEventListener();
     bool init(Touch::DispatchMode mode);
-    
-    virtual ~TouchEventListener();
-    virtual bool checkAvaiable() override;
     
 public:
     std::function<bool(Touch*, Event*)> onTouchBegan;

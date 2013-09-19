@@ -268,6 +268,8 @@ THE SOFTWARE.
 #include "event_dispatcher/CCKeyboardEvent.h"
 #include "event_dispatcher/CCAccelerationEvent.h"
 #include "event_dispatcher/CCAccelerationEventListener.h"
+#include "event_dispatcher/CCCustomEvent.h"
+#include "event_dispatcher/CCCustomEventListener.h"
 
 // root
 #include "CCCamera.h"

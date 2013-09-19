@@ -1323,7 +1323,7 @@ void Node::setDirtyForAllEventListeners()
     
     for (auto& listener : _eventlisteners)
     {
-        dispatcher->setDirtyForEventType(listener->type, true);
+        dispatcher->setDirtyForEventType(listener->_type, true);
     }
 }
 
