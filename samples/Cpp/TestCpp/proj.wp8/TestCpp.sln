@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCpp", "TestCpp.vcxproj", "{E14D2E08-1474-48F5-8815-6F559B07D3C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|Win32 = Debug|Win32
+		Release|ARM = Release|ARM
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Debug|ARM.ActiveCfg = Debug|ARM
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Debug|ARM.Build.0 = Debug|ARM
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Debug|ARM.Deploy.0 = Debug|ARM
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Debug|Win32.Build.0 = Debug|Win32
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Debug|Win32.Deploy.0 = Debug|Win32
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Release|ARM.ActiveCfg = Release|ARM
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Release|ARM.Build.0 = Release|ARM
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Release|ARM.Deploy.0 = Release|ARM
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Release|Win32.ActiveCfg = Release|Win32
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Release|Win32.Build.0 = Release|Win32
+		{E14D2E08-1474-48F5-8815-6F559B07D3C4}.Release|Win32.Deploy.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
