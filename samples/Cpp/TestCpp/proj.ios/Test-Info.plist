@@ -44,6 +44,8 @@
 		<string>fonts/Schwarzwald Regular.ttf</string>
 		<string>fonts/Scissor Cuts.ttf</string>
 	</array>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
