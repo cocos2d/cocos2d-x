@@ -69,7 +69,7 @@ void AccelerometerTest::onAcceleration(Acceleration* acc, Event* event)
     auto ptNow  = _ball->getPosition();
     auto ptTemp = pDir->convertToUI(ptNow);
 
-    ptTemp.x -= acc->x * 9.81f;
+    ptTemp.x += acc->x * 9.81f;
     ptTemp.y -= acc->y * 9.81f;
 
     auto ptNext = pDir->convertToGL(ptTemp);
