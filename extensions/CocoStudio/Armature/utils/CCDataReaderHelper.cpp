@@ -35,7 +35,12 @@ THE SOFTWARE.
 #include <cctype>
 #include <queue>
 #include <list>
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <pthread.h>
+#else
+#include "CCWinRTUtils.h"
+using namespace concurrency;
+#endif
 
 static const char *VERSION = "version";
 static const float VERSION_2_0 = 2.0f;
@@ -176,6 +181,7 @@ typedef struct _DataInfo
     std::queue<std::string>      configFileQueue;
 } DataInfo;
 
+
 static pthread_t s_loadingThread;
 
 static pthread_mutex_t		s_SleepMutex;
@@ -200,10 +206,34 @@ static bool need_quit = false;
 static std::queue<AsyncStruct *> *s_pAsyncStructQueue = NULL;
 static std::queue<DataInfo *>   *s_pDataQueue = NULL;
 
+static void addData(AsyncStruct *pAsyncStruct)
+{
+
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAsyncStruct->filename.c_str());
+    unsigned long size;
+    pAsyncStruct->fileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+
+    // generate image info
+    DataInfo *pDataInfo = new DataInfo();
+    pDataInfo->asyncStruct = pAsyncStruct;
+
+    if (pAsyncStruct->configType == DragonBone_XML)
+    {
+        CCDataReaderHelper::addDataFromCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
+    }
+    else if(pAsyncStruct->configType == CocoStudio_JSON)
+    {
+        CCDataReaderHelper::addDataFromJsonCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
+    }
+
+    // put the image info into the queue
+    pthread_mutex_lock(&s_DataInfoMutex);
+    s_pDataQueue->push(pDataInfo);
+    pthread_mutex_unlock(&s_DataInfoMutex);
+}
+
 static void *loadData(void *)
 {
-    AsyncStruct *pAsyncStruct = NULL;
-
     while (true)
     {
         // create autorelease pool for iOS
@@ -227,28 +257,11 @@ static void *loadData(void *)
         }
         else
         {
-            pAsyncStruct = pQueue->front();
+            AsyncStruct *pAsyncStruct = pQueue->front();
             pQueue->pop();
             pthread_mutex_unlock(&s_asyncStructQueueMutex);
-        }
-
-        // generate image info
-        DataInfo *pDataInfo = new DataInfo();
-        pDataInfo->asyncStruct = pAsyncStruct;
-
-        if (pAsyncStruct->configType == DragonBone_XML)
-        {
-            CCDataReaderHelper::addDataFromCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
-        }
-        else if(pAsyncStruct->configType == CocoStudio_JSON)
-        {
-            CCDataReaderHelper::addDataFromJsonCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
-        }
-
-        // put the image info into the queue
-        pthread_mutex_lock(&s_DataInfoMutex);
-        s_pDataQueue->push(pDataInfo);
-        pthread_mutex_unlock(&s_DataInfoMutex);
+            addData(pAsyncStruct);
+       }
     }
 
     if( s_pAsyncStructQueue != NULL )
@@ -409,8 +422,9 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *filePath, CCObject *ta
         pthread_mutex_init(&s_addDataMutex, NULL);
         pthread_mutex_init(&s_ReadFileMutex, NULL);
         pthread_cond_init(&s_SleepCondition, NULL);
+ #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
         pthread_create(&s_loadingThread, NULL, loadData, NULL);
-
+#endif
         need_quit = false;
     }
 
@@ -440,10 +454,6 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *filePath, CCObject *ta
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
 
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
-    unsigned long size;
-    data->fileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
-
     if (str.compare(".xml") == 0)
     {
         data->configType = DragonBone_XML;
@@ -453,14 +463,22 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *filePath, CCObject *ta
         data->configType = CocoStudio_JSON;
     }
 
-
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // add async struct into queue
     pthread_mutex_lock(&s_asyncStructQueueMutex);
     s_pAsyncStructQueue->push(data);
     pthread_mutex_unlock(&s_asyncStructQueueMutex);
 
     pthread_cond_signal(&s_SleepCondition);
+#else
+    // WinRT uses an Async Task to load the image since the ThreadPool has a limited number of threads
+    create_task([this, data] {
+        addData(data);
+    });
+#endif
 }
+
+
 
 void CCDataReaderHelper::addDataAsyncCallBack(float dt)
 {
@@ -879,7 +897,6 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 
     tinyxml2::XMLElement *frameXML = movBoneXml->FirstChildElement(FRAME);
 
-
     while( frameXML )
     {
         if(parentXml)
@@ -893,6 +910,7 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
                 parentTotalDuration += currentDuration;
                 parentFrameXML->QueryIntAttribute(A_DURATION, &currentDuration);
                 i++;
+
             }
         }
 
