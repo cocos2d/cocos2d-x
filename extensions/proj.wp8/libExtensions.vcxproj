@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{a5ce59f9-2785-4e08-bd3c-0f370eeca439}</ProjectGuid>
+    <RootNamespace>libExtensions</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;../../../angle-pr/include;../../../angle-pr/samples/gles2_book/Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;../../../angle-pr/include;../../../angle-pr/samples/gles2_book/Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsWinRT>true</CompileAsWinRT>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;../../../angle-pr/include;../../../angle-pr/samples/gles2_book/Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;../../../angle-pr/include;../../../angle-pr/samples/gles2_book/Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsWinRT>true</CompileAsWinRT>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="Windows">
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+    <Reference Include="platform.winmd">
+      <IsWinMDFile>true</IsWinMDFile>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
+    <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
+    <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBKeyframe.cpp" />
+    <ClCompile Include="..\CCBReader\CCBReader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequence.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequenceProperty.cpp" />
+    <ClCompile Include="..\CCBReader\CCBValue.cpp" />
+    <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCControlLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCData.cpp" />
+    <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLayerGradientLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLayerLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCMenuItemImageLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCNode+CCBRelativePositioning.cpp" />
+    <ClCompile Include="..\CCBReader\CCNodeLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCNodeLoaderLibrary.cpp" />
+    <ClCompile Include="..\CCBReader\CCParticleSystemQuadLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlPotentiometer.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlStepper.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp" />
+    <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
+    <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
+    <ClCompile Include="..\spine\Animation.cpp" />
+    <ClCompile Include="..\spine\AnimationState.cpp" />
+    <ClCompile Include="..\spine\AnimationStateData.cpp" />
+    <ClCompile Include="..\spine\Atlas.cpp" />
+    <ClCompile Include="..\spine\AtlasAttachmentLoader.cpp" />
+    <ClCompile Include="..\spine\Attachment.cpp" />
+    <ClCompile Include="..\spine\AttachmentLoader.cpp" />
+    <ClCompile Include="..\spine\Bone.cpp" />
+    <ClCompile Include="..\spine\BoneData.cpp" />
+    <ClCompile Include="..\spine\extension.cpp" />
+    <ClCompile Include="..\spine\Json.cpp" />
+    <ClCompile Include="..\spine\RegionAttachment.cpp" />
+    <ClCompile Include="..\spine\Skeleton.cpp" />
+    <ClCompile Include="..\spine\SkeletonData.cpp" />
+    <ClCompile Include="..\spine\SkeletonJson.cpp" />
+    <ClCompile Include="..\spine\Skin.cpp" />
+    <ClCompile Include="..\spine\Slot.cpp" />
+    <ClCompile Include="..\spine\SlotData.cpp" />
+    <ClCompile Include="..\spine\spine-cocos2dx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\AssetsManager\AssetsManager.h" />
+    <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
+    <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
+    <ClInclude Include="..\CCBReader\CCBKeyframe.h" />
+    <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h" />
+    <ClInclude Include="..\CCBReader\CCBReader.h" />
+    <ClInclude Include="..\CCBReader\CCBSelectorResolver.h" />
+    <ClInclude Include="..\CCBReader\CCBSequence.h" />
+    <ClInclude Include="..\CCBReader\CCBSequenceProperty.h" />
+    <ClInclude Include="..\CCBReader\CCBValue.h" />
+    <ClInclude Include="..\CCBReader\CCControlButtonLoader.h" />
+    <ClInclude Include="..\CCBReader\CCControlLoader.h" />
+    <ClInclude Include="..\CCBReader\CCData.h" />
+    <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h" />
+    <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h" />
+    <ClInclude Include="..\CCBReader\CCLayerColorLoader.h" />
+    <ClInclude Include="..\CCBReader\CCLayerGradientLoader.h" />
+    <ClInclude Include="..\CCBReader\CCLayerLoader.h" />
+    <ClInclude Include="..\CCBReader\CCMenuItemImageLoader.h" />
+    <ClInclude Include="..\CCBReader\CCMenuItemLoader.h" />
+    <ClInclude Include="..\CCBReader\CCMenuLoader.h" />
+    <ClInclude Include="..\CCBReader\CCNode+CCBRelativePositioning.h" />
+    <ClInclude Include="..\CCBReader\CCNodeLoader.h" />
+    <ClInclude Include="..\CCBReader\CCNodeLoaderLibrary.h" />
+    <ClInclude Include="..\CCBReader\CCNodeLoaderListener.h" />
+    <ClInclude Include="..\CCBReader\CCParticleSystemQuadLoader.h" />
+    <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h" />
+    <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
+    <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
+    <ClInclude Include="..\cocos-ext.h" />
+    <ClInclude Include="..\ExtensionMacros.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlExtensions.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlHuePicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlPotentiometer.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSlider.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlStepper.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCSorting.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCTableView.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h" />
+    <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
+    <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />
+    <ClInclude Include="..\spine\Animation.h" />
+    <ClInclude Include="..\spine\AnimationState.h" />
+    <ClInclude Include="..\spine\AnimationStateData.h" />
+    <ClInclude Include="..\spine\Atlas.h" />
+    <ClInclude Include="..\spine\AtlasAttachmentLoader.h" />
+    <ClInclude Include="..\spine\Attachment.h" />
+    <ClInclude Include="..\spine\AttachmentLoader.h" />
+    <ClInclude Include="..\spine\Bone.h" />
+    <ClInclude Include="..\spine\BoneData.h" />
+    <ClInclude Include="..\spine\extension.h" />
+    <ClInclude Include="..\spine\Json.h" />
+    <ClInclude Include="..\spine\RegionAttachment.h" />
+    <ClInclude Include="..\spine\Skeleton.h" />
+    <ClInclude Include="..\spine\SkeletonData.h" />
+    <ClInclude Include="..\spine\SkeletonJson.h" />
+    <ClInclude Include="..\spine\Skin.h" />
+    <ClInclude Include="..\spine\Slot.h" />
+    <ClInclude Include="..\spine\SlotData.h" />
+    <ClInclude Include="..\spine\spine-cocos2dx.h" />
+    <ClInclude Include="..\spine\spine.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
