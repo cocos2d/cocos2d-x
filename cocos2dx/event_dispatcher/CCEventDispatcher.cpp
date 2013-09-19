@@ -166,13 +166,14 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         return;
 
     bool isFound = false;
-    
+
     for (auto iter = _listeners.begin(); iter != _listeners.end();)
     {
         for (auto itemIter = iter->second->begin(); itemIter != iter->second->end(); ++itemIter)
         {
             if ((*itemIter)->listener == listener)
-            {                
+            {
+                CC_SAFE_RETAIN(listener);
                 (*itemIter)->listener->_isRegistered = false;
                 (*itemIter)->listener->release();
                 if (_inDispatch == 0)
@@ -192,11 +193,10 @@ void EventDispatcher::removeEventListener(EventListener* listener)
 
         if (iter->second->empty())
         {
+            _priorityDirtyFlagMap.erase(listener->_type);
             auto list = iter->second;
             iter = _listeners.erase(iter);
             CC_SAFE_DELETE(list);
-            
-            _priorityDirtyFlagMap.erase(listener->_type);
         }
         else
         {
@@ -205,6 +205,11 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         
         if (isFound)
             break;
+    }
+
+    if (isFound)
+    {
+        CC_SAFE_RELEASE(listener);
     }
 }
 
