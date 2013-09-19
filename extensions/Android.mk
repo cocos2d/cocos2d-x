@@ -31,6 +31,11 @@ CCBReader/CCParticleSystemQuadLoader.cpp \
 CCBReader/CCScale9SpriteLoader.cpp \
 CCBReader/CCScrollViewLoader.cpp \
 CCBReader/CCSpriteLoader.cpp \
+CocoStudio/Action/CCActionFrame.cpp \
+CocoStudio/Action/CCActionFrameEasing.cpp \
+CocoStudio/Action/CCActionManagerEx.cpp \
+CocoStudio/Action/CCActionNode.cpp \
+CocoStudio/Action/CCActionObject.cpp \
 CocoStudio/Armature/CCArmature.cpp \
 CocoStudio/Armature/CCBone.cpp \
 CocoStudio/Armature/animation/CCArmatureAnimation.cpp \
@@ -85,11 +90,6 @@ CocoStudio/Json/lib_json/json_value.cpp \
 CocoStudio/Json/lib_json/json_writer.cpp \
 CocoStudio/Reader/CCSGUIReader.cpp \
 CocoStudio/Reader/CCSSceneReader.cpp \
-CocoStudio/Action/CCActionFrame.cpp \
-CocoStudio/Action/CCActionFrameEasing.cpp \
-CocoStudio/Action/CCActionManagerEx.cpp \
-CocoStudio/Action/CCActionNode.cpp \
-CocoStudio/Action/CCActionObject.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
 GUI/CCControlExtension/CCControlColourPicker.cpp \

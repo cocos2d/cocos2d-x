@@ -20,35 +20,16 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
- 
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__CCKeyboardEventListener__
-#define __cocos2d_libs__CCKeyboardEventListener__
-
-#include "CCEventListener.h"
-#include "CCKeyboardEvent.h"
+#include "CCCustomEvent.h"
 
 NS_CC_BEGIN
 
-class Event;
-
-class KeyboardEventListener : public EventListener
+CustomEvent::CustomEvent(const std::string& eventName)
+: Event(eventName)
+, _userData(nullptr)
 {
-public:
-    static KeyboardEventListener* create();
-    
-    /// Overrides
-    virtual KeyboardEventListener* clone() override;
-    virtual bool checkAvaiable() override;
-    
-    std::function<void(KeyboardEvent::KeyCode, Event* event)> onKeyPressed;
-    std::function<void(KeyboardEvent::KeyCode, Event* event)> onKeyReleased;
-private:
-    KeyboardEventListener();
-    bool init();
-};
+}
 
 NS_CC_END
-
-#endif /* defined(__cocos2d_libs__CCKeyboardEventListener__) */

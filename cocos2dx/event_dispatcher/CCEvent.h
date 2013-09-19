@@ -40,10 +40,10 @@ class Node;
  */
 class Event
 {
-public:
+protected:
     /** Constructor */
     Event(const std::string& type);
-    
+public:
     /** Destructor */
     virtual ~Event();
 
@@ -63,12 +63,6 @@ public:
      */
     inline Node* getCurrentTarget() { return _currentTarget; };
     
-    /** Set user data */
-    inline void setUserData(void* data) { _userData = data; };
-    
-    /** Get user data */
-    inline void* getUserData() const { return _userData; };
-    
 protected:
     /** Sets current target */
     inline void setCurrentTarget(Node* target) { _currentTarget = target; };
@@ -76,7 +70,6 @@ protected:
 	std::string _type;     ///< Event type
     bool _isStopped;       ///< whether the event has been stopped.
     Node* _currentTarget;  ///< Current target
-    void* _userData;       ///< User data
     
     friend class EventDispatcher;
 };

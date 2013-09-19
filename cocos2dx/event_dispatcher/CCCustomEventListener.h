@@ -20,35 +20,58 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
- 
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__CCKeyboardEventListener__
-#define __cocos2d_libs__CCKeyboardEventListener__
+#ifndef __cocos2d_libs__CCCustomEventListener__
+#define __cocos2d_libs__CCCustomEventListener__
 
 #include "CCEventListener.h"
-#include "CCKeyboardEvent.h"
 
 NS_CC_BEGIN
 
-class Event;
+class CustomEvent;
 
-class KeyboardEventListener : public EventListener
+/**
+ *  Usage:
+ *        auto dispatcher = EventDispatcher::getInstance();
+ *     Adds a listener:
+ *
+ *        auto callback = [](CustomEvent* event){ do_some_thing(); };
+ *        auto listener = CustomEventListener::create(callback);
+ *        dispatcher->addEventListenerWithSceneGraphPriority(listener, one_node);
+ *
+ *     Dispatchs a custom event:
+ *
+ *        Event event("your_event_type");
+ *        dispatcher->dispatchEvent(&event);
+ *
+ *     Removes a listener
+ *
+ *        dispatcher->removeListener(listener);
+ */
+class CustomEventListener : public EventListener
 {
 public:
-    static KeyboardEventListener* create();
+    /** Creates an event listener with type and callback.
+     *  @param eventType The type of the event.
+     *  @param callback The callback function when the specified event was emitted.
+     */
+    static CustomEventListener* create(const std::string& eventName, std::function<void(CustomEvent*)> callback);
     
     /// Overrides
-    virtual KeyboardEventListener* clone() override;
     virtual bool checkAvaiable() override;
+    virtual CustomEventListener* clone() override;
     
-    std::function<void(KeyboardEvent::KeyCode, Event* event)> onKeyPressed;
-    std::function<void(KeyboardEvent::KeyCode, Event* event)> onKeyReleased;
-private:
-    KeyboardEventListener();
-    bool init();
+protected:
+    /** Constructor */
+    CustomEventListener();
+    
+    /** Initializes event with type and callback function */
+    bool init(const std::string& eventName, std::function<void(CustomEvent*)> callback);
+    
+    std::function<void(CustomEvent*)> _onCustomEvent;
 };
 
 NS_CC_END
 
-#endif /* defined(__cocos2d_libs__CCKeyboardEventListener__) */
+#endif /* defined(__cocos2d_libs__CCCustomEventListener__) */
