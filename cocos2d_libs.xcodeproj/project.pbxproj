@@ -116,6 +116,14 @@
 		1A11982A1785388100D62A44 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196981785201F00D62A44 /* tolua_map.c */; };
 		1A11982B1785388100D62A44 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196991785201F00D62A44 /* tolua_push.c */; };
 		1A11982C1785388100D62A44 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A11969A1785201F00D62A44 /* tolua_to.c */; };
+		1A2B654417EA7CEE00B386CE /* CCCustomEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B654217EA7CEE00B386CE /* CCCustomEvent.cpp */; };
+		1A2B654517EA7CEE00B386CE /* CCCustomEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B654217EA7CEE00B386CE /* CCCustomEvent.cpp */; };
+		1A2B654617EA7CEE00B386CE /* CCCustomEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B654317EA7CEE00B386CE /* CCCustomEvent.h */; };
+		1A2B654717EA7CEE00B386CE /* CCCustomEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B654317EA7CEE00B386CE /* CCCustomEvent.h */; };
+		1A2B654A17EA7E3500B386CE /* CCCustomEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B654817EA7E3400B386CE /* CCCustomEventListener.cpp */; };
+		1A2B654B17EA7E3500B386CE /* CCCustomEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B654817EA7E3400B386CE /* CCCustomEventListener.cpp */; };
+		1A2B654C17EA7E3500B386CE /* CCCustomEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B654917EA7E3400B386CE /* CCCustomEventListener.h */; };
+		1A2B654D17EA7E3500B386CE /* CCCustomEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B654917EA7E3400B386CE /* CCCustomEventListener.h */; };
 		1A2E82381793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
 		1A2E82391793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
 		1A50FEA517A0C89300A422C8 /* CCDeprecated-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */; };
@@ -2362,6 +2370,10 @@
 		1A1196991785201F00D62A44 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		1A11969A1785201F00D62A44 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A2B654217EA7CEE00B386CE /* CCCustomEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCustomEvent.cpp; sourceTree = "<group>"; };
+		1A2B654317EA7CEE00B386CE /* CCCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomEvent.h; sourceTree = "<group>"; };
+		1A2B654817EA7E3400B386CE /* CCCustomEventListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCustomEventListener.cpp; sourceTree = "<group>"; };
+		1A2B654917EA7E3400B386CE /* CCCustomEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomEventListener.h; sourceTree = "<group>"; };
 		1A2E82371793EDB70058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
 		1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDeprecated-ext.h"; sourceTree = "<group>"; };
 		1A6CC65D17E07C89006DEE69 /* CCAccelerationEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAccelerationEvent.cpp; sourceTree = "<group>"; };
@@ -3950,6 +3962,10 @@
 				1A6CC65E17E07C89006DEE69 /* CCAccelerationEvent.h */,
 				1A6CC65F17E07C89006DEE69 /* CCAccelerationEventListener.cpp */,
 				1A6CC66017E07C89006DEE69 /* CCAccelerationEventListener.h */,
+				1A2B654217EA7CEE00B386CE /* CCCustomEvent.cpp */,
+				1A2B654317EA7CEE00B386CE /* CCCustomEvent.h */,
+				1A2B654817EA7E3400B386CE /* CCCustomEventListener.cpp */,
+				1A2B654917EA7E3400B386CE /* CCCustomEventListener.h */,
 				1A6CC66117E07C89006DEE69 /* CCEvent.cpp */,
 				1A6CC66217E07C89006DEE69 /* CCEvent.h */,
 				1A6CC66317E07C89006DEE69 /* CCEventDispatcher.cpp */,
@@ -6523,6 +6539,8 @@
 				1A6CC69517E07C89006DEE69 /* CCTouch.h in Headers */,
 				1A6CC69917E07C89006DEE69 /* CCTouchEvent.h in Headers */,
 				1A6CC69D17E07C89006DEE69 /* CCTouchEventListener.h in Headers */,
+				1A2B654617EA7CEE00B386CE /* CCCustomEvent.h in Headers */,
+				1A2B654C17EA7E3500B386CE /* CCCustomEventListener.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7249,6 +7267,8 @@
 				1A6CC69617E07C89006DEE69 /* CCTouch.h in Headers */,
 				1A6CC69A17E07C89006DEE69 /* CCTouchEvent.h in Headers */,
 				1A6CC69E17E07C89006DEE69 /* CCTouchEventListener.h in Headers */,
+				1A2B654717EA7CEE00B386CE /* CCCustomEvent.h in Headers */,
+				1A2B654D17EA7E3500B386CE /* CCCustomEventListener.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8063,6 +8083,8 @@
 				1A6CC69317E07C89006DEE69 /* CCTouch.cpp in Sources */,
 				1A6CC69717E07C89006DEE69 /* CCTouchEvent.cpp in Sources */,
 				1A6CC69B17E07C89006DEE69 /* CCTouchEventListener.cpp in Sources */,
+				1A2B654417EA7CEE00B386CE /* CCCustomEvent.cpp in Sources */,
+				1A2B654A17EA7E3500B386CE /* CCCustomEventListener.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8564,6 +8586,8 @@
 				1A6CC69417E07C89006DEE69 /* CCTouch.cpp in Sources */,
 				1A6CC69817E07C89006DEE69 /* CCTouchEvent.cpp in Sources */,
 				1A6CC69C17E07C89006DEE69 /* CCTouchEventListener.cpp in Sources */,
+				1A2B654517EA7CEE00B386CE /* CCCustomEvent.cpp in Sources */,
+				1A2B654B17EA7E3500B386CE /* CCCustomEventListener.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

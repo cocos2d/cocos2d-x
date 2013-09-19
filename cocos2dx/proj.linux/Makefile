@@ -49,6 +49,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../event_dispatcher/CCTouch.cpp \
 ../event_dispatcher/CCTouchEvent.cpp \
 ../event_dispatcher/CCTouchEventListener.cpp \
+../event_dispatcher/CCCustomEvent.cpp \
+../event_dispatcher/CCCustomEventListener.cpp \
 ../draw_nodes/CCDrawingPrimitives.cpp \
 ../draw_nodes/CCDrawNode.cpp \
 ../effects/CCGrabber.cpp \
