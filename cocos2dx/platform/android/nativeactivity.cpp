@@ -598,9 +598,9 @@ void android_main(struct android_app* state) {
                             // ACONFIGURATION_ORIENTATION_PORT
                             // ACONFIGURATION_ORIENTATION_SQUARE
                             cocos2d::Acceleration acc;
-                            acc.x = event.acceleration.x;
-                            acc.y = event.acceleration.y;
-                            acc.z = event.acceleration.z;
+                            acc.x = event.acceleration.x/10;
+                            acc.y = -event.acceleration.y/10;
+                            acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
                             cocos2d::AccelerationEvent accEvent(acc);
 
@@ -609,9 +609,9 @@ void android_main(struct android_app* state) {
                             // ACONFIGURATION_ORIENTATION_LAND
                             // swap x and y parameters
                             cocos2d::Acceleration acc;
-                            acc.x = -event.acceleration.y;
-                            acc.y = event.acceleration.x;
-                            acc.z = event.acceleration.z;
+                            acc.x = -event.acceleration.y/10;
+                            acc.y = -event.acceleration.x/10;
+                            acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
                             cocos2d::AccelerationEvent accEvent(acc);
 
