@@ -35,7 +35,7 @@ void TestCpp::Initialize(CoreApplicationView^ applicationView)
 
 void TestCpp::SetWindow(CoreWindow^ window)
 {
-	DisplayProperties::AutoRotationPreferences = Windows::Graphics::Display::DisplayOrientations::Portrait;
+	DisplayProperties::AutoRotationPreferences = Windows::Graphics::Display::DisplayOrientations::Landscape;
 
 	window->VisibilityChanged +=
 		ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &TestCpp::OnVisibilityChanged);
