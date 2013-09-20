@@ -39,9 +39,7 @@ THE SOFTWARE.
 #include <agile.h>
 #include <DirectXMath.h>
 
-#if defined(ANGLE_PLATFORM_WINRT)
 #include "esUtil.h"
-#endif
 
 NS_CC_BEGIN
 
@@ -120,9 +118,7 @@ private:
 	Windows::Foundation::Rect m_keyboardRect;
 	CCPoint GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
 
-#if defined(ANGLE_PLATFORM_WINRT)
 	ESContext m_esContext;
-#endif
 };
 
 NS_CC_END
