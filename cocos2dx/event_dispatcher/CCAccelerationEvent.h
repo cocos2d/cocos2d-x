@@ -30,16 +30,16 @@
 
 NS_CC_BEGIN
 
-class AccelerationEvent : public Event
+class EventAcceleration : public Event
 {
 public:
     static const char* EVENT_TYPE;
     
-    AccelerationEvent(Acceleration acc);
+    EventAcceleration(Acceleration acc);
     
 private:
     Acceleration _acc;
-    friend class AccelerationEventListener;
+    friend class EventListenerAcceleration;
 };
 
 NS_CC_END
