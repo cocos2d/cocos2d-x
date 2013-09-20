@@ -234,9 +234,8 @@ bool CCEGLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
 
 
  	esInitContext ( &m_esContext );
-    m_esContext.hWnd.window = window;
-	m_esContext.hWnd.panel = nullptr;
-    esCreateWindow ( &m_esContext, TEXT("Simple Instancing"), 320, 240, ES_WINDOW_RGB );
+	m_esContext.hWnd = WINRT_EGL_WINDOW(window);
+    esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
 
 	UpdateForWindowSizeChange();
 	m_initialized = true;
