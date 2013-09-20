@@ -692,6 +692,8 @@ bool EventDispatcher::isEnabled() const
 
 void EventDispatcher::setDirtyForEventType(const std::string& eventType, bool isDirty)
 {
+    CCASSERT(!eventType.empty(), "Invalid event type.");
+    
     auto iter = _priorityDirtyFlagMap.find(eventType);
     if (iter == _priorityDirtyFlagMap.end())
     {
