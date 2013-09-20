@@ -85,7 +85,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     EventDispatcher::getInstance()->removeEventListener(_touchListener);
     
     // Adds touch event listener
-    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(true);
 
     listener->onTouchBegan = CC_CALLBACK_2(MenuLayer::onTouchBegan, this);
@@ -192,7 +192,7 @@ bool Box2DView::initWithEntryID(int entryId)
     EventDispatcher::getInstance()->removeEventListener(_touchListener);
     
     // Adds Touch Event Listener
-    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(true);
     
     listener->onTouchBegan = CC_CALLBACK_2(Box2DView::onTouchBegan, this);

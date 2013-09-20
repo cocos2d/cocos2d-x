@@ -37,7 +37,7 @@
 NS_CC_BEGIN
 
 class Event;
-class TouchEvent;
+class EventTouch;
 class Node;
 
 /**
@@ -124,7 +124,7 @@ private:
     void addEventListenerWithItem(EventListenerItem* item);
     
     /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
-    void dispatchTouchEvent(TouchEvent* event);
+    void dispatchTouchEvent(EventTouch* event);
     
     /** Gets event the listener list for the event type. */
     std::vector<EventListenerItem*>* getListenerItemsForType(const std::string& eventType);

@@ -29,11 +29,11 @@
 
 NS_CC_BEGIN
 
-class CustomEvent : public Event
+class EventCustom : public Event
 {
 public:
     /** Constructor */
-    CustomEvent(const std::string& eventName);
+    EventCustom(const std::string& eventName);
     
     /** Set user data */
     inline void setUserData(void* data) { _userData = data; };

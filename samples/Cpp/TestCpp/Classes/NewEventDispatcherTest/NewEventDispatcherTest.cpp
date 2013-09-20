@@ -141,7 +141,7 @@ void TouchableSpriteTest::onEnter()
     sprite2->addChild(sprite3, 1);
     
     // Make sprite1 touchable
-    auto listener1 = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener1 = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
     listener1->setSwallowTouches(true);
     
     listener1->onTouchBegan = [](Touch* touch, Event* event){
@@ -188,7 +188,7 @@ void TouchableSpriteTest::onEnter()
         auto senderItem = static_cast<MenuItemFont*>(sender);
         senderItem->setString("Only Next item could be clicked");
         
-        EventDispatcher::getInstance()->removeListenersForEventType(TouchEvent::EVENT_TYPE);
+        EventDispatcher::getInstance()->removeListenersForEventType(EventTouch::EVENT_TYPE);
         
         auto nextItem = MenuItemFont::create("Next", [=](Object* sender){
             nextCallback(nullptr);
@@ -243,7 +243,7 @@ public:
         
         auto dispatcher = EventDispatcher::getInstance();
         
-        auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+        auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
         listener->setSwallowTouches(true);
         
         listener->onTouchBegan = [=](Touch* touch, Event* event){
@@ -348,7 +348,7 @@ void RemoveListenerWhenDispatching::onEnter()
     addChild(sprite1, 10);
     
     // Make sprite1 touchable
-    auto listener1 = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener1 = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
     listener1->setSwallowTouches(true);
     setUserObject(listener1);
     
@@ -426,7 +426,7 @@ void CustomEventTest::onEnter()
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
 
-    _listener = CustomEventListener::create("game_custom_event", [=](CustomEvent* event){
+    _listener = EventListenerCustom::create("game_custom_event", [=](EventCustom* event){
         std::string str("Custom event received, ");
         char* buf = static_cast<char*>(event->getUserData());
         str += buf;
@@ -442,7 +442,7 @@ void CustomEventTest::onEnter()
         ++count;
         char* buf = new char[10];
         sprintf(buf, "%d", count);
-        CustomEvent event("game_custom_event");
+        EventCustom event("game_custom_event");
         event.setUserData(buf);
         dispatcher->dispatchEvent(&event);
     });
@@ -483,15 +483,15 @@ void LabelKeyboardEventTest::onEnter()
     statusLabel->setPosition(origin + Point(size.width/2, size.height/2));
     addChild(statusLabel);
         
-    auto listener = KeyboardEventListener::create();
-    listener->onKeyPressed = [](KeyboardEvent::KeyCode keyCode, Event* event){
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event){
         char buf[100] = {0};
         sprintf(buf, "Key %d was pressed!", (int)keyCode);
         auto label = static_cast<LabelTTF*>(event->getCurrentTarget());
         label->setString(buf);
     };
     
-    listener->onKeyReleased = [](KeyboardEvent::KeyCode keyCode, Event* event){
+    listener->onKeyReleased = [](EventKeyboard::KeyCode keyCode, Event* event){
         char buf[100] = {0};
         sprintf(buf, "Key %d was released!", (int)keyCode);
         auto label = static_cast<LabelTTF*>(event->getCurrentTarget());
@@ -533,7 +533,7 @@ _pos = _max;        \
     sprite->setPosition(origin + Point(size.width/2, size.height/2));
     addChild(sprite);
     
-    auto listener = AccelerationEventListener::create([=](Acceleration* acc, Event* event){
+    auto listener = EventListenerAcceleration::create([=](Acceleration* acc, Event* event){
         auto ballSize  = sprite->getContentSize();
         
         auto ptNow  = sprite->getPosition();

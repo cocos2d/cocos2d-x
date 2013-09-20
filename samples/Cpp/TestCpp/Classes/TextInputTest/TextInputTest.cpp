@@ -129,7 +129,7 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
     setTouchEnabled(true);
     
     // Register Touch Event
-    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
     
     listener->onTouchBegan = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchBegan, this);
     listener->onTouchEnded = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchEnded, this);
