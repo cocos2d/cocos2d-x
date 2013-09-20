@@ -104,6 +104,11 @@ public:
     virtual ~CCGLProgram();
     /** Initializes the CCGLProgram with a vertex and fragment with bytes array */
     bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    /** Initializes the CCGLProgram with precompiled shader program */
+    bool initWithPrecompiledProgramByteArray(const GLchar* shaderByteArray, GLint length);
+#endif
     /** Initializes the CCGLProgram with a vertex and fragment with contents of filenames */
     bool initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename);
     /**  It will add a new attribute to the shader */
