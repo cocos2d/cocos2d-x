@@ -93,19 +93,14 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->stopAnimation();
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
-#endif
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->startAnimation();
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
-#endif
-
 }
