@@ -274,6 +274,24 @@
     <Image Include="Assets\Resources\hd\armature\TestBone0.png" />
     <Image Include="Assets\Resources\hd\armature\weapon.png" />
     <Image Include="Assets\Resources\hd\ccb\burst.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\animationbuttonnormal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\animationbuttonpressed.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\arrow.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\b11.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\backtotopnormal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\backtotoppressed.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\bitmapFontTest2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\button.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\buttonHighlighted.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\ccicon.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_active.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_active_disable.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_active_press.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_normal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_normal_disable.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_normal_press.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\CloseNormal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\CloseSelected.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\equip\111.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\equip\12.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\equip\13.png" />
@@ -312,6 +330,8 @@
     <Image Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item\1.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item\2.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item\7.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\green_edit.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\grossini-aliases.png" />
     <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\5.png" />
     <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\7.png" />
     <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\button.png" />
@@ -402,6 +422,19 @@
     <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item\1.png" />
     <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item\2.png" />
     <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item\7.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\Hello.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\labelatlas.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\loadingbar.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\scrollviewbg.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\slidbar.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderballnormal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderballpressed.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderProgress.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderProgress2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderThumb.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderTrack.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderTrack2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\slider_bar_active_9patch.png" />
     <Image Include="Assets\Resources\hd\cocosgui\UITest\b1.png" />
     <Image Include="Assets\Resources\hd\cocosgui\UITest\b2.png" />
     <Image Include="Assets\Resources\hd\cocosgui\UITest\background.png" />
@@ -1543,6 +1576,24 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
+    <None Include="Assets\Resources\hd\cocosgui\bitmapFontTest2.fnt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\CocoGUISample.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\CocoGUI_PageView_Sample.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Resources\hd\cocosgui\examples\examples.json">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
@@ -1747,6 +1798,30 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
+    <None Include="Assets\Resources\Images\encryptedAtlas.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\encryptedAtlas.pvr.ccz">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\encryptedAtlas.tps">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\ETC1.pkm">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Resources\Images\fire_rgba8888.pvr">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
@@ -1796,6 +1871,24 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
     <None Include="Assets\Resources\Images\logo-nomipmap.pvr">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\nonencryptedAtlas.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\nonencryptedAtlas.pvr.ccz">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\nonencryptedAtlas.tps">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -2429,6 +2522,7 @@
     <Font Include="Assets\Resources\fonts\tahoma.ttf" />
     <Font Include="Assets\Resources\fonts\Thonburi.ttf" />
     <Font Include="Assets\Resources\fonts\ThonburiBold.ttf" />
+    <Font Include="Assets\Resources\hd\cocosgui\Marker Felt.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\Resources\background-music-aac.wav" />
