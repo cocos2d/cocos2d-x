@@ -29,7 +29,7 @@ Supported Platforms
    * iOS:  stable, well tested on iOS 5.x ~ 6.x SDK.
    * Android: stable, well tested on 2.0~4.x, ndk r5 ~ r8. If you use gles20
      branch or cocos2d-x v2.0 above, only android 2.3 and higher are supported
-   * Windows Phone 8 and Win8 Metro: stable, it's in another repo
+   * Windows Phone 8 and Windows Store Apps (WinRT)
      http://github.com/cocos2d-x/cocos2dx-win8.
    * Bada: cocos2d-x v1.x supports Bada SDK 1.0 & 2.0. Bada support was
      deprecated since cocos2d-x v2.0.
