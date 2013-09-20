@@ -182,6 +182,34 @@ void TouchableSpriteTest::onEnter()
     dispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
     dispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite2);
     dispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite3);
+    
+
+    auto removeAllTouchItem = MenuItemFont::create("Remove All Touch Listeners", [this](Object* sender){
+        auto senderItem = static_cast<MenuItemFont*>(sender);
+        senderItem->setString("Only Next item could be clicked");
+        
+        EventDispatcher::getInstance()->removeListenersForEventType(TouchEvent::EVENT_TYPE);
+        
+        auto nextItem = MenuItemFont::create("Next", [=](Object* sender){
+            nextCallback(nullptr);
+        });
+        
+        nextItem->setFontSizeObj(16);
+        nextItem->setPosition(VisibleRect::right() + Point(-100, -30));
+        
+        auto menu2 = Menu::create(nextItem, NULL);
+        menu2->setPosition(Point(0, 0));
+        menu2->setAnchorPoint(Point(0, 0));
+        this->addChild(menu2);
+    });
+    
+    removeAllTouchItem->setFontSizeObj(16);
+    removeAllTouchItem->setPosition(VisibleRect::right() + Point(-100, 0));
+    
+    auto menu = Menu::create(removeAllTouchItem, nullptr);
+    menu->setPosition(Point(0, 0));
+    menu->setAnchorPoint(Point(0, 0));
+    addChild(menu);
 }
 
 std::string TouchableSpriteTest::title()
