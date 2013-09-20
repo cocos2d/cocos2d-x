@@ -175,6 +175,11 @@ void EventDispatcher::removeEventListener(EventListener* listener)
             {
                 CC_SAFE_RETAIN(listener);
                 (*itemIter)->listener->_isRegistered = false;
+                if ((*itemIter)->node != nullptr)
+                {
+                    (*itemIter)->node->dissociateEventListener(listener);
+                }
+                
                 (*itemIter)->listener->release();
                 if (_inDispatch == 0)
                 {
@@ -610,6 +615,11 @@ void EventDispatcher::removeListenersForEventType(const std::string& eventType)
         for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
         {
             (*iter)->listener->_isRegistered = false;
+            if ((*iter)->node != nullptr)
+            {
+                (*iter)->node->dissociateEventListener((*iter)->listener);
+            }
+            
             (*iter)->listener->release();
             if (_inDispatch)
             {
@@ -638,6 +648,11 @@ void EventDispatcher::removeAllListeners()
         for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
         {
             (*iter)->listener->_isRegistered = false;
+            if ((*iter)->node != nullptr)
+            {
+                (*iter)->node->dissociateEventListener((*iter)->listener);
+            }
+            
             (*iter)->listener->release();
             if (_inDispatch)
             {
