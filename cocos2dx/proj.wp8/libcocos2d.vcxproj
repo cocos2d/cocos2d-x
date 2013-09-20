@@ -538,12 +538,6 @@
     <ProjectReference Include="..\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj">
       <Project>{d2d857bf-346e-4014-b9cf-50d5e1f8a357}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\platform\third_party\winrt\angleproject\src\libEGL\libEGL_phone.vcxproj">
-      <Project>{ab42a170-e370-4707-8cc6-1c51349c146f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_phone.vcxproj">
-      <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
