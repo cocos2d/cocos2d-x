@@ -390,8 +390,6 @@ void CCEGLView::OnRendering()
 	if(m_running && m_initialized)
 	{
 		CCDirector::sharedDirector()->mainLoop();
-		swapBuffers();
-
 		// TODO: fix audio
 		// CocosDenshion::SimpleAudioEngine::sharedEngine()->render();
 	}
