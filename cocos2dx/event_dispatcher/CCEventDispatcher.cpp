@@ -353,7 +353,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 bool isClaimed = false;
                 std::vector<Touch*>::iterator removedIter;
                 
-                auto touchEventListenerTouch = static_cast<EventListener*>(item->listener);
+                auto touchEventListener = static_cast<EventListenerTouch*>(item->listener);
                 EventTouch::EventCode eventCode = event->getEventCode();
                 
                 if (eventCode == EventTouch::EventCode::BEGAN)
