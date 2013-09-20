@@ -139,7 +139,7 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
@@ -161,7 +161,7 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>
