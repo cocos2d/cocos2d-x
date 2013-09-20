@@ -27,6 +27,8 @@ THE SOFTWARE.
 #define __CCWINRT_UTILS_H__
 
 #include "platform/CCPlatformMacros.h"
+#include "cocoa/CCDictionary.h"
+
 #include <wrl/client.h>
 #include <ppl.h>
 #include <ppltasks.h>
@@ -74,6 +76,9 @@ float getScaledDPIValue(float v);
 
 Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path);
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+void savePrecompiledShaders(CCDictionary* programs);
+#endif
 
 NS_CC_END
 
