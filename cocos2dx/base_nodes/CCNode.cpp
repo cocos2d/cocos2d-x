@@ -1304,12 +1304,7 @@ void Node::associateEventListener(EventListener* listener)
 
 void Node::dissociateEventListener(EventListener* listener)
 {
-    auto foundIter = _eventlisteners.find(listener);
-    if (foundIter != _eventlisteners.end())
-    {
-        (*foundIter)->_type = "";
-        _eventlisteners.erase(listener);
-    }
+    _eventlisteners.erase(listener);
 }
 
 void Node::removeAllEventListeners()
