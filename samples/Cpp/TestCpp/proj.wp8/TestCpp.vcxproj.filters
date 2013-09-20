@@ -3226,6 +3226,9 @@
     <Media Include="Assets\Resources\ccb\gem-1.wav">
       <Filter>Assets\Resources\ccb</Filter>
     </Media>
+    <Media Include="Assets\Resources\background.wav">
+      <Filter>Assets\Resources</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Resources\Misc\resources-hd\test4.txt">

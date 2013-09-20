@@ -2179,6 +2179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\Resources\background.mp3" />
+    <Media Include="Assets\Resources\background.wav" />
     <Media Include="Assets\Resources\ccb\gem-0.wav" />
     <Media Include="Assets\Resources\ccb\gem-1.wav" />
     <Media Include="Assets\Resources\effect1.wav" />
