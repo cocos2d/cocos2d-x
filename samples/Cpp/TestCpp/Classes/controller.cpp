@@ -105,11 +105,7 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new KeypadTestScene(); break;
 #endif
     case TEST_COCOSDENSHION:
-	#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
         pScene = new CocosDenshionTestScene(); break;
-    #else
-	    CCMessageBox("TEST_COCOSDENSHION not yet implemented.","Alert"); break;
-    #endif
     case TEST_PERFORMANCE:
         pScene = new PerformanceTestScene(); break;
     case TEST_ZWOPTEX:
