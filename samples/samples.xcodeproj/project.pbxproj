@@ -304,6 +304,15 @@
 		37B6F06F17DEBDF3001BE102 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37B6F06E17DEBDF3001BE102 /* scenetest */; };
 		37B6F07017DEBDF3001BE102 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37B6F06E17DEBDF3001BE102 /* scenetest */; };
 		46E1949B17E9514B00357A8F /* PhysicsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */; };
+		5087E71917EB78DA00C73F5D /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087E71617EB78DA00C73F5D /* Icon-76.png */; };
+		5087E71A17EB78DA00C73F5D /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087E71717EB78DA00C73F5D /* Icon-120.png */; };
+		5087E71B17EB78DA00C73F5D /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087E71817EB78DA00C73F5D /* Icon-152.png */; };
+		5087E72117EB7C1300C73F5D /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087E71E17EB7C1300C73F5D /* Icon-76.png */; };
+		5087E72217EB7C1300C73F5D /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087E71F17EB7C1300C73F5D /* Icon-120.png */; };
+		5087E72317EB7C1300C73F5D /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087E72017EB7C1300C73F5D /* Icon-152.png */; };
+		5087E72717EB7D0F00C73F5D /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087E72417EB7D0F00C73F5D /* Icon-76.png */; };
+		5087E72817EB7D0F00C73F5D /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087E72517EB7D0F00C73F5D /* Icon-120.png */; };
+		5087E72917EB7D0F00C73F5D /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087E72617EB7D0F00C73F5D /* Icon-152.png */; };
 		50891D4517E72F7D005AE68C /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891D0C17E72F7D005AE68C /* CocosGUIScene.cpp */; };
 		50891D4617E72F7D005AE68C /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891D0C17E72F7D005AE68C /* CocosGUIScene.cpp */; };
 		50891D4717E72F7D005AE68C /* UIButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891D0F17E72F7D005AE68C /* UIButtonTest.cpp */; };
@@ -2465,6 +2474,15 @@
 		37B6EF8817DEB741001BE102 /* SceneEditorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorTest.cpp; sourceTree = "<group>"; };
 		37B6EF8917DEB741001BE102 /* SceneEditorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneEditorTest.h; sourceTree = "<group>"; };
 		37B6F06E17DEBDF3001BE102 /* scenetest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scenetest; sourceTree = "<group>"; };
+		5087E71617EB78DA00C73F5D /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
+		5087E71717EB78DA00C73F5D /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
+		5087E71817EB78DA00C73F5D /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
+		5087E71E17EB7C1300C73F5D /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
+		5087E71F17EB7C1300C73F5D /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
+		5087E72017EB7C1300C73F5D /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
+		5087E72417EB7D0F00C73F5D /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
+		5087E72517EB7D0F00C73F5D /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
+		5087E72617EB7D0F00C73F5D /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
 		50891D0C17E72F7D005AE68C /* CocosGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIScene.cpp; sourceTree = "<group>"; };
 		50891D0D17E72F7D005AE68C /* CocosGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUIScene.h; sourceTree = "<group>"; };
 		50891D0F17E72F7D005AE68C /* UIButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButtonTest.cpp; sourceTree = "<group>"; };
@@ -4101,6 +4119,9 @@
 				A01E16A71784BF3000B0CA4A /* Icon-144.png */,
 				A01E16A81784BF3000B0CA4A /* Icon-57.png */,
 				A01E16A91784BF3000B0CA4A /* Icon-72.png */,
+				5087E72417EB7D0F00C73F5D /* Icon-76.png */,
+				5087E72517EB7D0F00C73F5D /* Icon-120.png */,
+				5087E72617EB7D0F00C73F5D /* Icon-152.png */,
 				A01E16AA1784BF3000B0CA4A /* main.m */,
 				A01E16AB1784BF3000B0CA4A /* RootViewController.h */,
 				A01E16AC1784BF3000B0CA4A /* RootViewController.mm */,
@@ -5579,6 +5600,9 @@
 		A07A52301783A3A80073F6A7 /* proj.ios */ = {
 			isa = PBXGroup;
 			children = (
+				5087E71617EB78DA00C73F5D /* Icon-76.png */,
+				5087E71717EB78DA00C73F5D /* Icon-120.png */,
+				5087E71817EB78DA00C73F5D /* Icon-152.png */,
 				A07A52311783A3A80073F6A7 /* Classes */,
 				A07A52361783A3A80073F6A7 /* Default-568h@2x.png */,
 				A07A52371783A3A80073F6A7 /* Default.png */,
@@ -5634,6 +5658,9 @@
 				A07A52A11783AD8B0073F6A7 /* Icon-144.png */,
 				A07A52A21783AD8B0073F6A7 /* Icon-57.png */,
 				A07A52A31783AD8B0073F6A7 /* Icon-72.png */,
+				5087E71E17EB7C1300C73F5D /* Icon-76.png */,
+				5087E71F17EB7C1300C73F5D /* Icon-120.png */,
+				5087E72017EB7C1300C73F5D /* Icon-152.png */,
 				A07A52A41783AD8B0073F6A7 /* main.m */,
 				A07A52A51783AD8B0073F6A7 /* RootViewController.h */,
 				A07A52A61783AD8B0073F6A7 /* RootViewController.mm */,
@@ -6513,10 +6540,13 @@
 				A01E16B41784BF3000B0CA4A /* Default.png in Resources */,
 				A01E16B51784BF3000B0CA4A /* Default@2x.png in Resources */,
 				A01E16B61784BF3000B0CA4A /* Icon-114.png in Resources */,
+				5087E72917EB7D0F00C73F5D /* Icon-152.png in Resources */,
 				A01E16B71784BF3000B0CA4A /* Icon-144.png in Resources */,
+				5087E72717EB7D0F00C73F5D /* Icon-76.png in Resources */,
 				A01E16B81784BF3000B0CA4A /* Icon-57.png in Resources */,
 				A01E16B91784BF3000B0CA4A /* Icon-72.png in Resources */,
 				A0BD5A1E178F5F6C008915C5 /* hd in Resources */,
+				5087E72817EB7D0F00C73F5D /* Icon-120.png in Resources */,
 				A0BD5A1F178F5F6C008915C5 /* sd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7035,6 +7065,7 @@
 				A07A51991783A1D20073F6A7 /* effect1.raw in Resources */,
 				A07A519A1783A1D20073F6A7 /* effect1.wav in Resources */,
 				A07A519B1783A1D20073F6A7 /* effect2.ogg in Resources */,
+				5087E71917EB78DA00C73F5D /* Icon-76.png in Resources */,
 				A07A519C1783A1D20073F6A7 /* extensions in Resources */,
 				A07A519D1783A1D20073F6A7 /* fileLookup.plist in Resources */,
 				A07A519E1783A1D20073F6A7 /* fonts in Resources */,
@@ -7052,6 +7083,7 @@
 				A07A51AA1783A1D20073F6A7 /* spine in Resources */,
 				A07A51AB1783A1D20073F6A7 /* TileMaps in Resources */,
 				A07A51AC1783A1D20073F6A7 /* zwoptex in Resources */,
+				5087E71B17EB78DA00C73F5D /* Icon-152.png in Resources */,
 				A07A52451783A3A90073F6A7 /* Default-568h@2x.png in Resources */,
 				A07A52461783A3A90073F6A7 /* Default.png in Resources */,
 				A07A52471783A3A90073F6A7 /* Default@2x.png in Resources */,
@@ -7060,6 +7092,7 @@
 				A07A524A1783A3A90073F6A7 /* Icon-57.png in Resources */,
 				A07A524B1783A3A90073F6A7 /* Icon-72.png in Resources */,
 				37B6F07017DEBDF3001BE102 /* scenetest in Resources */,
+				5087E71A17EB78DA00C73F5D /* Icon-120.png in Resources */,
 				1AEBD90817E85B0D0015C2ED /* cocosgui in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7068,7 +7101,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5087E72217EB7C1300C73F5D /* Icon-120.png in Resources */,
 				A07A53841784AD4B0073F6A7 /* Default-568h@2x.png in Resources */,
+				5087E72117EB7C1300C73F5D /* Icon-76.png in Resources */,
 				A07A53851784AD510073F6A7 /* Default.png in Resources */,
 				A07A53861784AD510073F6A7 /* Default@2x.png in Resources */,
 				A07A53881784AD5A0073F6A7 /* Icon-114.png in Resources */,
@@ -7079,6 +7114,7 @@
 				A07A53911784AD790073F6A7 /* ipadhd in Resources */,
 				A07A53921784AD790073F6A7 /* iphone in Resources */,
 				A07A53931784AD820073F6A7 /* bang.png in Resources */,
+				5087E72317EB7C1300C73F5D /* Icon-152.png in Resources */,
 				A07A53941784AD880073F6A7 /* Marker Felt.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8390,7 +8426,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Lua/HelloLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8414,7 +8449,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Lua/HelloLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8440,7 +8474,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Lua/TestLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8464,7 +8497,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Lua/TestLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8499,7 +8531,6 @@
 					"-image_base",
 					100000000,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
@@ -8531,7 +8562,6 @@
 					"-image_base",
 					100000000,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
@@ -8565,7 +8595,6 @@
 					"-image_base",
 					100000000,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
@@ -8597,7 +8626,6 @@
 					"-image_base",
 					100000000,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
