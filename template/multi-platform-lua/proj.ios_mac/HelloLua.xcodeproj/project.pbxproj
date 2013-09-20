@@ -80,6 +80,12 @@
 		5023817817EBBE3400990C9B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5023817417EBBE3400990C9B /* main.cpp */; };
 		5023817A17EBBE8300990C9B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5023817917EBBE8300990C9B /* OpenGLES.framework */; };
 		50805AAF17EBBEAA004CFAD3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50805AAE17EBBEAA004CFAD3 /* UIKit.framework */; };
+		5091733617ECE17A00D62437 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 5091733017ECE17A00D62437 /* Icon-29.png */; };
+		5091733717ECE17A00D62437 /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 5091733117ECE17A00D62437 /* Icon-40.png */; };
+		5091733817ECE17A00D62437 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 5091733217ECE17A00D62437 /* Icon-50.png */; };
+		5091733917ECE17A00D62437 /* Icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 5091733317ECE17A00D62437 /* Icon-58.png */; };
+		5091733A17ECE17A00D62437 /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 5091733417ECE17A00D62437 /* Icon-80.png */; };
+		5091733B17ECE17A00D62437 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 5091733517ECE17A00D62437 /* Icon-100.png */; };
 		50D7C96517EBBECA005D0B91 /* libbox2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF4C3E11786631700122817 /* libbox2d iOS.a */; };
 		50D7C96617EBBECA005D0B91 /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF4C3DF1786631700122817 /* libchipmunk iOS.a */; };
 		50D7C96717EBBECA005D0B91 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF4C3DB1786631700122817 /* libcocos2dx iOS.a */; };
@@ -270,6 +276,12 @@
 		5023817517EBBE3400990C9B /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		5023817917EBBE8300990C9B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		50805AAE17EBBEAA004CFAD3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		5091733017ECE17A00D62437 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
+		5091733117ECE17A00D62437 /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
+		5091733217ECE17A00D62437 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
+		5091733317ECE17A00D62437 /* Icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-58.png"; sourceTree = "<group>"; };
+		5091733417ECE17A00D62437 /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80.png"; sourceTree = "<group>"; };
+		5091733517ECE17A00D62437 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		50D7C96D17EBBEE6005D0B91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -383,13 +395,7 @@
 				5023810917EBBCAC00990C9B /* Default-568h@2x.png */,
 				5023810A17EBBCAC00990C9B /* Default.png */,
 				5023810B17EBBCAC00990C9B /* Default@2x.png */,
-				5023810C17EBBCAC00990C9B /* Icon-114.png */,
-				5023810D17EBBCAC00990C9B /* Icon-120.png */,
-				5023810E17EBBCAC00990C9B /* Icon-144.png */,
-				5023810F17EBBCAC00990C9B /* Icon-152.png */,
-				5023811017EBBCAC00990C9B /* Icon-57.png */,
-				5023811117EBBCAC00990C9B /* Icon-72.png */,
-				5023811217EBBCAC00990C9B /* Icon-76.png */,
+				5091734A17ECE18300D62437 /* Icons */,
 				5023811317EBBCAC00990C9B /* Info.plist */,
 				5023811417EBBCAC00990C9B /* main.m */,
 				5023811517EBBCAC00990C9B /* Prefix.pch */,
@@ -408,6 +414,26 @@
 				5023817517EBBE3400990C9B /* Prefix.pch */,
 			);
 			path = mac;
+			sourceTree = "<group>";
+		};
+		5091734A17ECE18300D62437 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				5091733017ECE17A00D62437 /* Icon-29.png */,
+				5091733117ECE17A00D62437 /* Icon-40.png */,
+				5091733217ECE17A00D62437 /* Icon-50.png */,
+				5091733317ECE17A00D62437 /* Icon-58.png */,
+				5091733417ECE17A00D62437 /* Icon-80.png */,
+				5091733517ECE17A00D62437 /* Icon-100.png */,
+				5023810C17EBBCAC00990C9B /* Icon-114.png */,
+				5023810D17EBBCAC00990C9B /* Icon-120.png */,
+				5023810E17EBBCAC00990C9B /* Icon-144.png */,
+				5023810F17EBBCAC00990C9B /* Icon-152.png */,
+				5023811017EBBCAC00990C9B /* Icon-57.png */,
+				5023811117EBBCAC00990C9B /* Icon-72.png */,
+				5023811217EBBCAC00990C9B /* Icon-76.png */,
+			);
+			name = Icons;
 			sourceTree = "<group>";
 		};
 		F293B3BD15EB7BE500256477 = {
@@ -530,6 +556,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					F293B3C715EB7BE500256477 = {
+						DevelopmentTeam = MDDB52YB8L;
+					};
+				};
 			};
 			buildConfigurationList = F293B3C215EB7BE500256477 /* Build configuration list for PBXProject "HelloLua" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -693,16 +724,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				5023811D17EBBCAC00990C9B /* Icon-120.png in Resources */,
+				5091733B17ECE17A00D62437 /* Icon-100.png in Resources */,
 				1AC3622F16D47C5C000847F2 /* background.mp3 in Resources */,
 				1AC3623016D47C5C000847F2 /* background.ogg in Resources */,
 				1AC3623116D47C5C000847F2 /* crop.png in Resources */,
 				1AC3623216D47C5C000847F2 /* dog.png in Resources */,
 				5023811B17EBBCAC00990C9B /* Default@2x.png in Resources */,
 				1AC3623316D47C5C000847F2 /* effect1.wav in Resources */,
+				5091733617ECE17A00D62437 /* Icon-29.png in Resources */,
 				5023811917EBBCAC00990C9B /* Default-568h@2x.png in Resources */,
 				1AC3623416D47C5C000847F2 /* farm.jpg in Resources */,
 				1AC3623516D47C5C000847F2 /* fonts in Resources */,
 				1AC3623616D47C5C000847F2 /* hello.lua in Resources */,
+				5091733917ECE17A00D62437 /* Icon-58.png in Resources */,
 				1AC3623716D47C5C000847F2 /* hello2.lua in Resources */,
 				1AC3623816D47C5C000847F2 /* land.png in Resources */,
 				5023811F17EBBCAC00990C9B /* Icon-152.png in Resources */,
@@ -710,15 +744,18 @@
 				1AC3623916D47C5C000847F2 /* menu1.png in Resources */,
 				1AC3623A16D47C5C000847F2 /* menu2.png in Resources */,
 				5023812217EBBCAC00990C9B /* Icon-76.png in Resources */,
+				5091733A17ECE17A00D62437 /* Icon-80.png in Resources */,
 				1A0227AC17A3AA3500B867AD /* AudioEngine.lua in Resources */,
 				1A0227AD17A3AA3500B867AD /* CCBReaderLoad.lua in Resources */,
 				1A0227AE17A3AA3500B867AD /* Cocos2dConstants.lua in Resources */,
 				1A0227AF17A3AA3500B867AD /* Deprecated.lua in Resources */,
 				1A0227B017A3AA3500B867AD /* DrawPrimitives.lua in Resources */,
+				5091733717ECE17A00D62437 /* Icon-40.png in Resources */,
 				1A0227B117A3AA3500B867AD /* Opengl.lua in Resources */,
 				5023811E17EBBCAC00990C9B /* Icon-144.png in Resources */,
 				5023811A17EBBCAC00990C9B /* Default.png in Resources */,
 				1A0227B217A3AA3500B867AD /* OpenglConstants.lua in Resources */,
+				5091733817ECE17A00D62437 /* Icon-50.png in Resources */,
 				1ADB273817CCA0C200634B5E /* Cocos2d.lua in Resources */,
 				1525771E17CEFBD400BE417B /* DeprecatedClass.lua in Resources */,
 				1525771F17CEFBD400BE417B /* DeprecatedEnum.lua in Resources */,
@@ -933,6 +970,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -976,6 +1014,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
