@@ -33,19 +33,19 @@
 
 NS_CC_BEGIN
 
-class TouchEventListener : public EventListener
+class EventListenerTouch : public EventListener
 {
 public:
-    static TouchEventListener* create(Touch::DispatchMode mode);
+    static EventListenerTouch* create(Touch::DispatchMode mode);
     
     /// Overrides
-    virtual TouchEventListener* clone() override;
+    virtual EventListenerTouch* clone() override;
     virtual bool checkAvaiable() override;
     
-    virtual ~TouchEventListener();
+    virtual ~EventListenerTouch();
     
 private:
-    TouchEventListener();
+    EventListenerTouch();
     bool init(Touch::DispatchMode mode);
     
 public:

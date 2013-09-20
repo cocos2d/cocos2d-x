@@ -46,9 +46,9 @@ NS_CC_BEGIN
 
 class TouchScriptHandlerEntry;
 
-class TouchEventListener;
-class KeyboardEventListener;
-class AccelerationEventListener;
+class EventListenerTouch;
+class EventListenerKeyboard;
+class EventListenerAcceleration;
 
 //
 // Layer
@@ -152,8 +152,8 @@ public:
     /** Please use onKeyReleased instead. */
     virtual void keyReleased(int keyCode) final {};
     
-    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event);
-    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event);
+    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return isKeyboardEnabled(); };
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value) { setKeyboardEnabled(value); };
@@ -192,15 +192,15 @@ protected:
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
-    TouchEventListener* _touchListener;
-    KeyboardEventListener* _keyboardListener;
-    AccelerationEventListener* _accelerationListener;
+    EventListenerTouch* _touchListener;
+    EventListenerKeyboard* _keyboardListener;
+    EventListenerAcceleration* _accelerationListener;
 private:
     Touch::DispatchMode _touchMode;
     bool _swallowsTouches;
     
-    int executeScriptTouchHandler(TouchEvent::EventCode eventType, Touch* touch);
-    int executeScriptTouchesHandler(TouchEvent::EventCode eventType, const std::vector<Touch*>& touches);
+    int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
+    int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
 };
 
 #ifdef __apple__

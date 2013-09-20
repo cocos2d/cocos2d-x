@@ -110,8 +110,8 @@ public:
     
     virtual void onAcceleration(Acceleration* acc, Event* event) {};
 
-    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event) {};
-    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event) {};
+    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {};
+    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {};
     
     virtual bool onTouchBegan(Touch *touch, Event *event);
     virtual void onTouchMoved(Touch *touch, Event *event);

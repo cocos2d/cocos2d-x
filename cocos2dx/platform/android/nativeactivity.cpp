@@ -400,13 +400,13 @@ static int32_t handle_key_input(AInputEvent *event)
         {
         case AKEYCODE_BACK:	
             {
-                cocos2d::KeyboardEvent event(cocos2d::KeyboardEvent::KeyCode::KEY_BACKSPACE, false);
+                cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, false);
                 cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
             }
             return 1;
         case AKEYCODE_MENU:
             {
-                cocos2d::KeyboardEvent event(cocos2d::KeyboardEvent::KeyCode::KEY_MENU, false);
+                cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
                 cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
             }
             return 1;
@@ -602,7 +602,7 @@ void android_main(struct android_app* state) {
                             acc.y = -event.acceleration.y/10;
                             acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
-                            cocos2d::AccelerationEvent accEvent(acc);
+                            cocos2d::EventAcceleration accEvent(acc);
 
                             cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
                         } else {
@@ -613,7 +613,7 @@ void android_main(struct android_app* state) {
                             acc.y = -event.acceleration.x/10;
                             acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
-                            cocos2d::AccelerationEvent accEvent(acc);
+                            cocos2d::EventAcceleration accEvent(acc);
 
                             cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
                         }
