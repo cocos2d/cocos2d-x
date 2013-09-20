@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 #define TOUCH_PERF_DEBUG 1
 
-class TouchEvent : public Event
+class EventTouch : public Event
 {
 public:
     static const char* EVENT_TYPE;
@@ -47,7 +47,7 @@ public:
         CANCELLED
     };
 
-    TouchEvent()
+    EventTouch()
     : Event(EVENT_TYPE)
     {
         _touches.reserve(MAX_TOUCHES);
