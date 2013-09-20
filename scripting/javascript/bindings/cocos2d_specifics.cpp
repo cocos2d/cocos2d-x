@@ -67,7 +67,7 @@ void JSTouchDelegate::registerStandardDelegate(int priority)
     auto dispatcher = EventDispatcher::getInstance();
     dispatcher->removeEventListener(_touchListener);
     
-    auto listener = TouchEventListener::create(Touch::DispatchMode::ALL_AT_ONCE);
+    auto listener = EventListenerTouch::create(Touch::DispatchMode::ALL_AT_ONCE);
     
     listener->onTouchesBegan = CC_CALLBACK_2(JSTouchDelegate::onTouchesBegan, this);
     listener->onTouchesMoved = CC_CALLBACK_2(JSTouchDelegate::onTouchesMoved, this);
@@ -84,7 +84,7 @@ void JSTouchDelegate::registerTargetedDelegate(int priority, bool swallowsTouche
     auto dispatcher = EventDispatcher::getInstance();
     dispatcher->removeEventListener(_touchListener);
     
-    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(swallowsTouches);
     
     listener->onTouchBegan = CC_CALLBACK_2(JSTouchDelegate::onTouchBegan, this);
@@ -115,7 +115,7 @@ bool JSTouchDelegate::onTouchBegan(Touch *touch, Event *event)
     jsval retval;
     bool bRet = false;
     
-    ScriptingCore::getInstance()->executeCustomTouchEvent(TouchEvent::EventCode::BEGAN,
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::BEGAN,
         touch, _obj, retval);
     
     if(JSVAL_IS_BOOLEAN(retval))
@@ -131,7 +131,7 @@ void JSTouchDelegate::onTouchMoved(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
 
-    ScriptingCore::getInstance()->executeCustomTouchEvent(TouchEvent::EventCode::MOVED,
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::MOVED,
         touch, _obj);
 }
 
@@ -139,14 +139,14 @@ void JSTouchDelegate::onTouchEnded(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
 
-    ScriptingCore::getInstance()->executeCustomTouchEvent(TouchEvent::EventCode::ENDED,
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::ENDED,
         touch, _obj);
 }
 
 void JSTouchDelegate::onTouchCancelled(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchEvent(TouchEvent::EventCode::CANCELLED,
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::CANCELLED,
         touch, _obj);
 }
 
@@ -154,25 +154,25 @@ void JSTouchDelegate::onTouchCancelled(Touch *touch, Event *event)
 void JSTouchDelegate::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(TouchEvent::EventCode::BEGAN, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::BEGAN, touches, _obj);
 }
 
 void JSTouchDelegate::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(TouchEvent::EventCode::MOVED, touches, _obj);        
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::MOVED, touches, _obj);
 }
 
 void JSTouchDelegate::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(TouchEvent::EventCode::ENDED, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::ENDED, touches, _obj);
 }
 
 void JSTouchDelegate::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(TouchEvent::EventCode::CANCELLED, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::CANCELLED, touches, _obj);
 }
 
 static void addCallBackAndThis(JSObject *obj, jsval callback, jsval &thisObj)
