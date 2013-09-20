@@ -33,19 +33,19 @@ NS_CC_BEGIN
 
 class Event;
 
-class KeyboardEventListener : public EventListener
+class EventListenerKeyboard : public EventListener
 {
 public:
-    static KeyboardEventListener* create();
+    static EventListenerKeyboard* create();
     
     /// Overrides
-    virtual KeyboardEventListener* clone() override;
+    virtual EventListenerKeyboard* clone() override;
     virtual bool checkAvaiable() override;
     
-    std::function<void(KeyboardEvent::KeyCode, Event* event)> onKeyPressed;
-    std::function<void(KeyboardEvent::KeyCode, Event* event)> onKeyReleased;
+    std::function<void(EventKeyboard::KeyCode, Event* event)> onKeyPressed;
+    std::function<void(EventKeyboard::KeyCode, Event* event)> onKeyReleased;
 private:
-    KeyboardEventListener();
+    EventListenerKeyboard();
     bool init();
 };
 

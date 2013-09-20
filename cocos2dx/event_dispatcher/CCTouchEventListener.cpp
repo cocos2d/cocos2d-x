@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-TouchEventListener::TouchEventListener()
+EventListenerTouch::EventListenerTouch()
 : onTouchBegan(nullptr)
 , onTouchMoved(nullptr)
 , onTouchEnded(nullptr)
@@ -44,14 +44,14 @@ TouchEventListener::TouchEventListener()
 {
 }
 
-TouchEventListener::~TouchEventListener()
+EventListenerTouch::~EventListenerTouch()
 {
     CCLOGINFO("In the destructor of TouchEventListener, %p", this);
 }
 
-bool TouchEventListener::init(Touch::DispatchMode mode)
+bool EventListenerTouch::init(Touch::DispatchMode mode)
 {
-    if (EventListener::init(TouchEvent::EVENT_TYPE, nullptr))
+    if (EventListener::init(EventTouch::EVENT_TYPE, nullptr))
     {
         _dispatchMode = mode;
         return true;
@@ -60,15 +60,15 @@ bool TouchEventListener::init(Touch::DispatchMode mode)
     return false;
 }
 
-void TouchEventListener::setSwallowTouches(bool needSwallow)
+void EventListenerTouch::setSwallowTouches(bool needSwallow)
 {
     CCASSERT(_dispatchMode == Touch::DispatchMode::ONE_BY_ONE, "Swallow touches only available in OneByOne mode.");
     _needSwallow = needSwallow;
 }
 
-TouchEventListener* TouchEventListener::create(Touch::DispatchMode mode)
+EventListenerTouch* EventListenerTouch::create(Touch::DispatchMode mode)
 {
-    auto ret = new TouchEventListener();
+    auto ret = new EventListenerTouch();
     if (ret && ret->init(mode))
     {
         ret->autorelease();
@@ -80,7 +80,7 @@ TouchEventListener* TouchEventListener::create(Touch::DispatchMode mode)
     return ret;
 }
 
-bool TouchEventListener::checkAvaiable()
+bool EventListenerTouch::checkAvaiable()
 {
     if (_dispatchMode == Touch::DispatchMode::ALL_AT_ONCE)
     {
@@ -108,9 +108,9 @@ bool TouchEventListener::checkAvaiable()
     return true;
 }
 
-TouchEventListener* TouchEventListener::clone()
+EventListenerTouch* EventListenerTouch::clone()
 {
-    auto ret = new TouchEventListener();
+    auto ret = new EventListenerTouch();
     if (ret && ret->init(_dispatchMode))
     {
         ret->autorelease();
