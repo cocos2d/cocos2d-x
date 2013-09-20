@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-class CustomEvent;
+class EventCustom;
 
 /**
  *  Usage:
@@ -49,27 +49,27 @@ class CustomEvent;
  *
  *        dispatcher->removeListener(listener);
  */
-class CustomEventListener : public EventListener
+class EventListenerCustom : public EventListener
 {
 public:
     /** Creates an event listener with type and callback.
      *  @param eventType The type of the event.
      *  @param callback The callback function when the specified event was emitted.
      */
-    static CustomEventListener* create(const std::string& eventName, std::function<void(CustomEvent*)> callback);
+    static EventListenerCustom* create(const std::string& eventName, std::function<void(EventCustom*)> callback);
     
     /// Overrides
     virtual bool checkAvaiable() override;
-    virtual CustomEventListener* clone() override;
+    virtual EventListenerCustom* clone() override;
     
 protected:
     /** Constructor */
-    CustomEventListener();
+    EventListenerCustom();
     
     /** Initializes event with type and callback function */
-    bool init(const std::string& eventName, std::function<void(CustomEvent*)> callback);
+    bool init(const std::string& eventName, std::function<void(EventCustom*)> callback);
     
-    std::function<void(CustomEvent*)> _onCustomEvent;
+    std::function<void(EventCustom*)> _onCustomEvent;
 };
 
 NS_CC_END
