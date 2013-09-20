@@ -1304,14 +1304,21 @@ void Node::associateEventListener(EventListener* listener)
 
 void Node::dissociateEventListener(EventListener* listener)
 {
-    _eventlisteners.erase(listener);
+    auto foundIter = _eventlisteners.find(listener);
+    if (foundIter != _eventlisteners.end())
+    {
+        (*foundIter)->_type = "";
+        _eventlisteners.erase(listener);
+    }
 }
 
 void Node::removeAllEventListeners()
 {
     auto dispatcher = EventDispatcher::getInstance();
     
-    for (auto& listener : _eventlisteners)
+    auto eventListenersCopy = _eventlisteners;
+    
+    for (auto& listener : eventListenersCopy)
     {
         dispatcher->removeEventListener(listener);
     }
