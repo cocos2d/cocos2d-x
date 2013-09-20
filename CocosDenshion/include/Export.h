@@ -29,7 +29,7 @@ THE SOFTWARE.
 #if defined(SHP)
     #include <FBaseConfig.h>
     #define EXPORT_DLL  _EXPORT_
-#elif defined(_WIN32) || defined(_WINRT)
+#elif defined(_WIN32) || defined(_WINRT) || defined(_WP8)
     #if defined(_EXPORT_DLL_)
     #define EXPORT_DLL     __declspec(dllexport)
     #elif defined(IGNORE_EXPORT)
