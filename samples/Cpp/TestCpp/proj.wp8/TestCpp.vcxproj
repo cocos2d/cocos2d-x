@@ -57,25 +57,30 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\angle-pr\include;$(ProjectDir)..\..\..\..\..\angle-pr\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -84,16 +89,23 @@
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(ProjectDir)Assets\Resources" /s /y /i /q &amp; echo Copied Resource files to \Assets\Resources</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy Resources to Assets folder</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\angle-pr\include;$(ProjectDir)..\..\..\..\..\angle-pr\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -101,16 +113,23 @@
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(ProjectDir)Assets\Resources" /s /y /i /q &amp; echo Copied Resource files to \Assets\Resources</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy Resources to Assets folder</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\angle-pr\include;$(ProjectDir)..\..\..\..\..\angle-pr\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -119,16 +138,23 @@
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(ProjectDir)Assets\Resources" /s /y /i /q &amp; echo Copied Resource files to \Assets\Resources</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy Resources to Assets folder</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\angle-pr\include;$(ProjectDir)..\..\..\..\..\angle-pr\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -136,6 +162,12 @@
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(ProjectDir)Assets\Resources" /s /y /i /q &amp; echo Copied Resource files to \Assets\Resources</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy Resources to Assets folder</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Reference Include="platform.winmd">
@@ -153,6 +185,14 @@
     <Image Include="Assets\Resources\animations\grossini_blue.png" />
     <Image Include="Assets\Resources\animations\grossini_family.png" />
     <Image Include="Assets\Resources\animations\grossini_gray.png" />
+    <Image Include="Assets\Resources\armature\bg.jpg" />
+    <Image Include="Assets\Resources\armature\Cowboy0.png" />
+    <Image Include="Assets\Resources\armature\cyborg.png" />
+    <Image Include="Assets\Resources\armature\Dragon.png" />
+    <Image Include="Assets\Resources\armature\knight.png" />
+    <Image Include="Assets\Resources\armature\robot.png" />
+    <Image Include="Assets\Resources\armature\TestBone0.png" />
+    <Image Include="Assets\Resources\armature\weapon.png" />
     <Image Include="Assets\Resources\ccb\animated-grossini.png" />
     <Image Include="Assets\Resources\ccb\btn-a-0.png" />
     <Image Include="Assets\Resources\ccb\btn-a-1.png" />
@@ -203,6 +243,7 @@
     <Image Include="Assets\Resources\extensions\switch-on.png" />
     <Image Include="Assets\Resources\extensions\switch-thumb.png" />
     <Image Include="Assets\Resources\extensions\yellow_edit.png" />
+    <Image Include="Assets\Resources\fonts\arial-26-en-ru_0.png" />
     <Image Include="Assets\Resources\fonts\arial-unicode-26.png" />
     <Image Include="Assets\Resources\fonts\arial16.png" />
     <Image Include="Assets\Resources\fonts\bitmapFontChinese.png" />
@@ -225,7 +266,52 @@
     <Image Include="Assets\Resources\fonts\west_england-64.png" />
     <Image Include="Assets\Resources\fps_images.png" />
     <Image Include="Assets\Resources\hd\animations\dragon_animation.png" />
+    <Image Include="Assets\Resources\hd\armature\Cowboy0.png" />
+    <Image Include="Assets\Resources\hd\armature\cyborg.png" />
+    <Image Include="Assets\Resources\hd\armature\Dragon.png" />
+    <Image Include="Assets\Resources\hd\armature\knight.png" />
+    <Image Include="Assets\Resources\hd\armature\robot.png" />
+    <Image Include="Assets\Resources\hd\armature\TestBone0.png" />
+    <Image Include="Assets\Resources\hd\armature\weapon.png" />
     <Image Include="Assets\Resources\hd\ccb\burst.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\111.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\12.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\13.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\14.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\15.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\button_end_01.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\button_end_02.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\button_green_n2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\button_green_p2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\button_green_un2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\10.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\11.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\3.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\4.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\5.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\6.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\7.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\8.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\9.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\crab.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\research.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\sell.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\shop_shield_1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\shop_shield_2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\shop_shield_3.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\train.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\equip\eg\upgrade.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\Test\UIResForEditor\Button\button_country_n.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\Test\UIResForEditor\Button\button_country_p.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\Test\UIResForEditor\Button\button_country_un.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\Test\UIResForEditor\Button\symbol_1a.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\Test\UIResForEditor\Button\symbol_1B.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\Test\UIResForEditor\Button\symbol_1c.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item\1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item\2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item\7.png" />
     <Image Include="Assets\Resources\hd\extensions\background.png" />
     <Image Include="Assets\Resources\hd\extensions\button.png" />
     <Image Include="Assets\Resources\hd\extensions\buttonHighlighted.png" />
@@ -467,6 +553,11 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Assets\Resources\animations\grossini.plist.xml" />
+    <Xml Include="Assets\Resources\armature\cyborg.xml" />
+    <Xml Include="Assets\Resources\armature\Dragon.xml" />
+    <Xml Include="Assets\Resources\armature\knight.xml" />
+    <Xml Include="Assets\Resources\armature\robot.xml" />
+    <Xml Include="Assets\Resources\armature\weapon.xml" />
     <Xml Include="Assets\Resources\fonts\strings.xml" />
     <Xml Include="WMAppManifest.xml">
       <SubType>Designer</SubType>
@@ -542,8 +633,11 @@
     <ClInclude Include="..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\Classes\ClickAndMoveTest\ClickAndMoveTest.h" />
     <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
+    <ClInclude Include="..\Classes\CocosDenshionTest\CocosDenshionTest.h" />
+    <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />
     <ClInclude Include="..\Classes\controller.h" />
     <ClInclude Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.h" />
+    <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h" />
     <ClInclude Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.h" />
     <ClInclude Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h" />
     <ClInclude Include="..\Classes\EffectsTest\EffectsTest.h" />
@@ -568,6 +662,40 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\GameOverScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\PlayerController.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesEquipScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesMapScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesPageScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesRegisterScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesWeaponScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIDragPanelTest\UIDragPanelTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPanelTest\UIPanelTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextAreaTest\UITextAreaTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h" />
@@ -592,6 +720,7 @@
     <ClInclude Include="..\Classes\NodeTest\NodeTest.h" />
     <ClInclude Include="..\Classes\ParallaxTest\ParallaxTest.h" />
     <ClInclude Include="..\Classes\ParticleTest\ParticleTest.h" />
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticleTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceSpriteTest.h" />
@@ -611,6 +740,7 @@
     <ClInclude Include="..\Classes\TextInputTest\TextInputTest.h" />
     <ClInclude Include="..\Classes\Texture2dTest\Texture2dTest.h" />
     <ClInclude Include="..\Classes\TextureCacheTest\TextureCacheTest.h" />
+    <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
     <ClInclude Include="..\Classes\TileMapTest\TileMapTest.h" />
     <ClInclude Include="..\Classes\TouchesTest\Ball.h" />
     <ClInclude Include="..\Classes\TouchesTest\Paddle.h" />
@@ -647,8 +777,11 @@
     <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\Classes\ClickAndMoveTest\ClickAndMoveTest.cpp" />
     <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
+    <ClCompile Include="..\Classes\CocosDenshionTest\CocosDenshionTest.cpp" />
+    <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
     <ClCompile Include="..\Classes\controller.cpp" />
     <ClCompile Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp" />
+    <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.cpp" />
     <ClCompile Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
     <ClCompile Include="..\Classes\EffectsTest\EffectsTest.cpp" />
@@ -659,6 +792,40 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\GameOverScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\PlayerController.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesEquipScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesMapScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesPageScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesRegisterScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesWeaponScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIDragPanelTest\UIDragPanelTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPanelTest\UIPanelTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextAreaTest\UITextAreaTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp" />
@@ -683,6 +850,7 @@
     <ClCompile Include="..\Classes\NodeTest\NodeTest.cpp" />
     <ClCompile Include="..\Classes\ParallaxTest\ParallaxTest.cpp" />
     <ClCompile Include="..\Classes\ParticleTest\ParticleTest.cpp" />
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticleTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceSpriteTest.cpp" />
@@ -700,6 +868,7 @@
     <ClCompile Include="..\Classes\TextInputTest\TextInputTest.cpp" />
     <ClCompile Include="..\Classes\Texture2dTest\Texture2dTest.cpp" />
     <ClCompile Include="..\Classes\TextureCacheTest\TextureCacheTest.cpp" />
+    <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
     <ClCompile Include="..\Classes\TileMapTest\TileMapTest.cpp" />
     <ClCompile Include="..\Classes\TouchesTest\Ball.cpp" />
     <ClCompile Include="..\Classes\TouchesTest\Paddle.cpp" />
@@ -711,17 +880,20 @@
     <ClCompile Include="TestCpp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\angle-pr\samples\gles2_book\Common\esUtil_phone.vcxproj">
+    <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj">
       <Project>{d2d857bf-346e-4014-b9cf-50d5e1f8a357}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\angle-pr\src\libEGL\libEGL_phone.vcxproj">
-      <Project>{57eae839-8a09-4250-986a-3e21f98afbb0}</Project>
+    <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libEGL\libEGL_phone.vcxproj">
+      <Project>{ab42a170-e370-4707-8cc6-1c51349c146f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\angle-pr\src\libGLESv2\libGLESv2_phone.vcxproj">
+    <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_phone.vcxproj">
       <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos2dx\proj.wp8\libcocos2d.vcxproj">
-      <Project>{22d061b7-7d0e-4f80-93cf-50f57d5a42f6}</Project>
+      <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CocosDenshion\proj.wp8\CocosDenshion.vcxproj">
+      <Project>{72ddd46b-55b1-4531-9eea-72081acbcaa2}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\extensions\proj.wp8\libExtensions.vcxproj">
       <Project>{a5ce59f9-2785-4e08-bd3c-0f370eeca439}</Project>
@@ -801,6 +973,60 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
     <None Include="Assets\Resources\app.icf">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\armature\Cowboy.ExportJson">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\armature\Cowboy0.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\armature\cyborg.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\armature\Dragon.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\armature\knight.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\armature\robot.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\armature\TestBone.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\armature\TestBone0.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\armature\weapon.plist">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -986,6 +1212,24 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
+    <None Include="Assets\Resources\configs\config-example.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\configs\config-test-invalid.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\configs\config-test-ok.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Resources\development.icf">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
@@ -1011,6 +1255,12 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
     <None Include="Assets\Resources\fileLookup.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\fonts\arial-26-en-ru.fnt">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -1131,6 +1381,60 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
     <None Include="Assets\Resources\fonts\west_england-64.fnt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\armature\Cowboy0.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\armature\cyborg.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\armature\Dragon.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\armature\knight.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\armature\robot.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\armature\TestBone0.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\armature\weapon.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\examples\examples.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item_1.json">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -1870,7 +2174,6 @@
     <Font Include="Assets\Resources\fonts\Schwarzwald Regular.ttf" />
     <Font Include="Assets\Resources\fonts\Scissor Cuts.ttf" />
     <Font Include="Assets\Resources\fonts\tahoma.ttf" />
-    <Font Include="Assets\Resources\fonts\Test.ttf" />
     <Font Include="Assets\Resources\fonts\Thonburi.ttf" />
     <Font Include="Assets\Resources\fonts\ThonburiBold.ttf" />
   </ItemGroup>
