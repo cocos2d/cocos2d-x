@@ -106,38 +106,38 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
     }
 }
 
-static void getTouchesFuncName(TouchEvent::EventCode eventCode, std::string &funcName)
+static void getTouchesFuncName(EventTouch::EventCode eventCode, std::string &funcName)
 {
     switch(eventCode)
     {
-        case TouchEvent::EventCode::BEGAN:
+        case EventTouch::EventCode::BEGAN:
             funcName = "onTouchesBegan";
             break;
-        case TouchEvent::EventCode::ENDED:
+        case EventTouch::EventCode::ENDED:
             funcName = "onTouchesEnded";
             break;
-        case TouchEvent::EventCode::MOVED:
+        case EventTouch::EventCode::MOVED:
             funcName = "onTouchesMoved";
             break;
-        case TouchEvent::EventCode::CANCELLED:
+        case EventTouch::EventCode::CANCELLED:
             funcName = "onTouchesCancelled";
             break;
     }
 }
 
-static void getTouchFuncName(TouchEvent::EventCode eventCode, std::string &funcName)
+static void getTouchFuncName(EventTouch::EventCode eventCode, std::string &funcName)
 {
     switch(eventCode) {
-        case TouchEvent::EventCode::BEGAN:
+        case EventTouch::EventCode::BEGAN:
             funcName = "onTouchBegan";
             break;
-        case TouchEvent::EventCode::ENDED:
+        case EventTouch::EventCode::ENDED:
             funcName = "onTouchEnded";
             break;
-        case TouchEvent::EventCode::MOVED:
+        case EventTouch::EventCode::MOVED:
             funcName = "onTouchMoved";
             break;
-        case TouchEvent::EventCode::CANCELLED:
+        case EventTouch::EventCode::CANCELLED:
             funcName = "onTouchCancelled";
             break;
     }
@@ -839,7 +839,7 @@ int ScriptingCore::handleTouchesEvent(void* data)
         return 0;
     
     Layer* pLayer = static_cast<Layer*>(touchesScriptData->nativeObject);
-    TouchEvent::EventCode eventType = touchesScriptData->actionType;
+    EventTouch::EventCode eventType = touchesScriptData->actionType;
     const std::vector<Touch*>& touches = touchesScriptData->touches;
     
     std::string funcName = "";
@@ -884,7 +884,7 @@ int ScriptingCore::handleTouchEvent(void* data)
         return 0;
     
     Layer* pLayer = static_cast<Layer*>(touchScriptData->nativeObject);
-    TouchEvent::EventCode eventType = touchScriptData->actionType;
+    EventTouch::EventCode eventType = touchScriptData->actionType;
     Touch *pTouch = touchScriptData->touch;
 
     
@@ -980,7 +980,7 @@ int ScriptingCore::handleKeypadEvent(void* data)
     if (NULL == keypadScriptData->nativeObject)
         return 0;
     
-    KeyboardEvent::KeyCode action = keypadScriptData->actionType;
+    EventKeyboard::KeyCode action = keypadScriptData->actionType;
     
 	js_proxy_t * p = jsb_get_native_proxy(keypadScriptData->nativeObject);
 
@@ -989,7 +989,7 @@ int ScriptingCore::handleKeypadEvent(void* data)
         JSBool ret = JS_FALSE;
         switch(action)
         {
-        case KeyboardEvent::KeyCode::KEY_BACKSPACE:
+        case EventKeyboard::KeyCode::KEY_BACKSPACE:
 			ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onBackClicked");
             if (!ret)
             {
@@ -1000,7 +1000,7 @@ int ScriptingCore::handleKeypadEvent(void* data)
                 }
             }
 			break;
-		case KeyboardEvent::KeyCode::KEY_MENU:
+		case EventKeyboard::KeyCode::KEY_MENU:
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onMenuClicked");
             if (!ret)
             {
@@ -1021,7 +1021,7 @@ int ScriptingCore::handleKeypadEvent(void* data)
 }
 
 
-int ScriptingCore::executeCustomTouchesEvent(TouchEvent::EventCode eventType,
+int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
                                        const std::vector<Touch*>& touches, JSObject *obj)
 {
     jsval retval;
@@ -1055,7 +1055,7 @@ int ScriptingCore::executeCustomTouchesEvent(TouchEvent::EventCode eventType,
 }
 
 
-int ScriptingCore::executeCustomTouchEvent(TouchEvent::EventCode eventType,
+int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
                                            Touch *pTouch, JSObject *obj)
 {
     jsval retval;
@@ -1074,7 +1074,7 @@ int ScriptingCore::executeCustomTouchEvent(TouchEvent::EventCode eventType,
 }
 
 
-int ScriptingCore::executeCustomTouchEvent(TouchEvent::EventCode eventType,
+int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
                                            Touch *pTouch, JSObject *obj,
                                            jsval &retval)
 {
