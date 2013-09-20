@@ -2,106 +2,109 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="actions">
-      <UniqueIdentifier>{76bc35f3-a52d-452b-ac5b-19579f7458f0}</UniqueIdentifier>
+      <UniqueIdentifier>{6ad9f887-c7e3-45f5-b8a7-6ff50c6c5b6e}</UniqueIdentifier>
     </Filter>
     <Filter Include="base_nodes">
-      <UniqueIdentifier>{e3222d9f-8877-41fe-b7f8-134915da8ea0}</UniqueIdentifier>
+      <UniqueIdentifier>{42ae81f5-d6f9-40ea-93a5-502e39bd9282}</UniqueIdentifier>
     </Filter>
     <Filter Include="cocoa">
-      <UniqueIdentifier>{0e31fb85-df09-4a22-bf5b-537f116e4d9e}</UniqueIdentifier>
+      <UniqueIdentifier>{b3773906-669c-4141-9f0b-6ef00c76c81c}</UniqueIdentifier>
     </Filter>
     <Filter Include="draw_nodes">
-      <UniqueIdentifier>{8aca6ed2-c184-45e3-accc-fc1826c17283}</UniqueIdentifier>
+      <UniqueIdentifier>{355e338d-a53a-414f-ba9f-7d16b177ef80}</UniqueIdentifier>
     </Filter>
     <Filter Include="effects">
-      <UniqueIdentifier>{3c3ae5cd-98d2-419b-a347-79311e89f7e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath">
-      <UniqueIdentifier>{9e2f599e-775c-45e3-b04f-9fcd5f5307a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath\include">
-      <UniqueIdentifier>{1222aa8e-1b58-496b-8593-fbdf53a5a8de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath\src">
-      <UniqueIdentifier>{e9ce39eb-639d-4288-a232-e4de7f8edf45}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath\include\kazmath">
-      <UniqueIdentifier>{413a9804-3442-4430-961f-a7def9017b1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath\include\kazmath\GL">
-      <UniqueIdentifier>{62662523-c1fc-4ef7-9ddc-fd2895f5bd52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath\src\GL">
-      <UniqueIdentifier>{33023b72-caf9-4746-a802-a481b15d59ad}</UniqueIdentifier>
+      <UniqueIdentifier>{64e281b9-3fa8-42ca-9716-661cddeb6e30}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{3bdb49d0-1a3d-494f-b55c-b60cc45f56ff}</UniqueIdentifier>
+      <UniqueIdentifier>{abd23e05-14ff-4a45-98bb-ad59cc4f98ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath">
+      <UniqueIdentifier>{681ee614-628a-4017-8627-a76b18192946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\include">
+      <UniqueIdentifier>{eedb7e37-ca43-4035-bdce-f915390ed304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\src">
+      <UniqueIdentifier>{3b1785e8-4ee6-4db6-a61f-73866ec900c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\include\kazmath">
+      <UniqueIdentifier>{f0e50f30-a6bf-4381-9b7f-f4601e1451e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\include\kazmath\GL">
+      <UniqueIdentifier>{12ed0e65-c0c5-4765-9219-2e6bb5e547b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\src\GL">
+      <UniqueIdentifier>{a7c4aa0e-9bf9-4ce1-8b2d-a3274a0d3211}</UniqueIdentifier>
     </Filter>
     <Filter Include="keyboard_dispatcher">
-      <UniqueIdentifier>{b9fecd50-0f9b-4948-833c-c07803cc446c}</UniqueIdentifier>
+      <UniqueIdentifier>{b6e29596-eff3-4f2c-b821-ed57618b9a02}</UniqueIdentifier>
     </Filter>
     <Filter Include="label_nodes">
-      <UniqueIdentifier>{00b27eec-97ce-463d-b5ec-84477a908507}</UniqueIdentifier>
+      <UniqueIdentifier>{e32087b3-10c3-4111-b4a5-0009e43f18d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="layers_scenes_transtions_nodes">
-      <UniqueIdentifier>{b59cb94c-7053-4d42-925d-8ceaade83916}</UniqueIdentifier>
+    <Filter Include="layers_scenes_transitions_nodes">
+      <UniqueIdentifier>{abf2e324-3571-46b9-b8a0-c3d35ec39886}</UniqueIdentifier>
     </Filter>
     <Filter Include="menu_nodes">
-      <UniqueIdentifier>{231372ef-2d6f-4f90-8c29-1474ac4c7663}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="particle_nodes">
-      <UniqueIdentifier>{1eba985a-da06-4f6d-91b1-790bbaf57d6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="script_support">
-      <UniqueIdentifier>{0112bc9d-7ab2-4985-bdf1-70203805a76d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="shaders">
-      <UniqueIdentifier>{c96ac35f-9066-44c5-8303-a3cd75daeb66}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sprite_nodes">
-      <UniqueIdentifier>{e8420db5-199a-47fd-926d-6f85c6f7668e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="support">
-      <UniqueIdentifier>{3be77f40-e141-4684-9c3d-8ff32e7e94da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="support\data_support">
-      <UniqueIdentifier>{bf0f9713-f44b-4ec1-8dbe-7349212fda32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="support\image_support">
-      <UniqueIdentifier>{6862e381-7f44-48b6-905c-488edf8fa442}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="support\tinyxml2">
-      <UniqueIdentifier>{828c7f23-fbd4-4901-b433-4d2713a20ba3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="support\user_default">
-      <UniqueIdentifier>{d245b939-d749-4ed8-9475-f651697d4808}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="support\zip_support">
-      <UniqueIdentifier>{024f331b-56a5-4c79-bcc1-346e41502dd6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="text_input_node">
-      <UniqueIdentifier>{8a0fd47c-5dce-4096-ac49-092e2d3175e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="textures">
-      <UniqueIdentifier>{a5ad2de4-ed43-4c9b-9be0-cac02c1e7f63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="tilemap_parrallax_nodes">
-      <UniqueIdentifier>{42bd193d-91db-4255-93b7-94042418865b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="touch_dispatcher">
-      <UniqueIdentifier>{a88d39ec-bf4e-4e8a-a27e-8096f89618b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="platform">
-      <UniqueIdentifier>{f579105f-b098-4e33-8f01-3660f205b459}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="platform\winrt">
-      <UniqueIdentifier>{fcbd189c-1450-4a54-bdfd-50a52d1b2843}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="platform\wp8">
-      <UniqueIdentifier>{65562840-95d3-48e9-8749-0b1dacc4bd17}</UniqueIdentifier>
+      <UniqueIdentifier>{48fc34a8-1987-443f-873d-3967886d9fc9}</UniqueIdentifier>
     </Filter>
     <Filter Include="misc_nodes">
-      <UniqueIdentifier>{2f975700-52d9-43e5-8226-b719c5ff2eaf}</UniqueIdentifier>
+      <UniqueIdentifier>{23821b0c-f17d-46bb-90a8-efaf2fca8275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="particle_nodes">
+      <UniqueIdentifier>{02d66db8-1c75-470d-a4cf-aef16a125756}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{f56836ba-85c3-40d4-a29b-7ece1c460be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\winrt">
+      <UniqueIdentifier>{9ea3f905-e8f5-4861-a60b-beb7ca5374a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\wp8">
+      <UniqueIdentifier>{00b41d7b-b9d5-4e94-b98b-63df5b7d7641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script_suppport">
+      <UniqueIdentifier>{a7893f07-64fc-420e-96c4-13b3570906f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{4a6d14fa-1126-4055-aedf-e46a691a00bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sprite_nodes">
+      <UniqueIdentifier>{be2763e1-8c10-41c7-8724-d326f1fd01a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support">
+      <UniqueIdentifier>{42de21dd-9f2e-4e85-8971-d22a8b4ee803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\data_support">
+      <UniqueIdentifier>{8949bb0a-e137-404f-a2e4-4a9cd9076605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\image_support">
+      <UniqueIdentifier>{10a8f6ec-59f8-4193-b652-f7d90299998e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\tinyxml2">
+      <UniqueIdentifier>{f02caa8c-0b49-496f-9529-dad4e914f17d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\user_default">
+      <UniqueIdentifier>{5f8abb0c-8359-42ec-aaec-59bf53990109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\zip_support">
+      <UniqueIdentifier>{2d5652ae-62a8-455d-b442-b30ca3b9cbc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\component">
+      <UniqueIdentifier>{5ebfee81-ad85-491a-b570-7761f433035c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="text_input_node">
+      <UniqueIdentifier>{d4bbb376-726a-4193-bc10-ef716941d2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="textures">
+      <UniqueIdentifier>{e544dd06-56d9-418a-bffe-9c3e7c51bace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tilemap_parrallax_nodes">
+      <UniqueIdentifier>{c494bb86-0655-4d2e-b10b-b43b2ae9529a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="touch_dispatcher">
+      <UniqueIdentifier>{7b1b3b9d-7307-4a5c-8e6c-40e96804ed08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +150,9 @@
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
       <Filter>base_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\base_nodes\CCGLBufferedNode.cpp">
+      <Filter>base_nodes</Filter>
+    </ClCompile>
     <ClCompile Include="..\base_nodes\CCNode.cpp">
       <Filter>base_nodes</Filter>
     </ClCompile>
@@ -157,6 +163,9 @@
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocoa\CCDataVisitor.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\cocoa\CCDictionary.cpp">
@@ -192,12 +201,6 @@
     <ClCompile Include="..\effects\CCGrid.cpp">
       <Filter>effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\kazmath\src\GL\mat4stack.c">
-      <Filter>kazmath\src\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\kazmath\src\GL\matrix.c">
-      <Filter>kazmath\src\GL</Filter>
-    </ClCompile>
     <ClCompile Include="..\kazmath\src\aabb.c">
       <Filter>kazmath\src</Filter>
     </ClCompile>
@@ -231,6 +234,12 @@
     <ClCompile Include="..\kazmath\src\vec4.c">
       <Filter>kazmath\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\kazmath\src\GL\mat4stack.c">
+      <Filter>kazmath\src\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\GL\matrix.c">
+      <Filter>kazmath\src\GL</Filter>
+    </ClCompile>
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDelegate.cpp">
       <Filter>keyboard_dispatcher</Filter>
     </ClCompile>
@@ -247,25 +256,37 @@
       <Filter>label_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCScene.cpp">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\menu_nodes\CCMenu.cpp">
       <Filter>menu_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\menu_nodes\CCMenuItem.cpp">
       <Filter>menu_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\misc_nodes\CCClippingNode.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\misc_nodes\CCProgressTimer.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\misc_nodes\CCRenderTexture.cpp">
+      <Filter>misc_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\particle_nodes\CCParticleBatchNode.cpp">
       <Filter>particle_nodes</Filter>
@@ -279,8 +300,68 @@
     <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp">
       <Filter>particle_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\wp8\CCEGLView.cpp">
+      <Filter>platform\wp8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\wp8\Direct3DBase.cpp">
+      <Filter>platform\wp8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCAccelerometer.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCApplication.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCCommon.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCDevice.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCFileUtilsWinRT.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCImage.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCStdC.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCEGLViewProtocol.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCFileUtils.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCSAXParser.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCThread.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\platform.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
     <ClCompile Include="..\script_support\CCScriptSupport.cpp">
-      <Filter>script_support</Filter>
+      <Filter>script_suppport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shaders\CCGLProgram.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shaders\ccGLStateCache.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shaders\CCShaderCache.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shaders\ccShaders.cpp">
+      <Filter>shaders</Filter>
     </ClCompile>
     <ClCompile Include="..\sprite_nodes\CCAnimation.cpp">
       <Filter>sprite_nodes</Filter>
@@ -327,16 +408,16 @@
     <ClCompile Include="..\support\data_support\ccCArray.cpp">
       <Filter>support\data_support</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\component\CCComponent.cpp">
+      <Filter>support\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\component\CCComponentContainer.cpp">
+      <Filter>support\component</Filter>
+    </ClCompile>
     <ClCompile Include="..\support\image_support\TGAlib.cpp">
       <Filter>support\image_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp">
-      <Filter>support\zip_support</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\user_default\CCUserDefault.cpp">
-      <Filter>support\user_default</Filter>
-    </ClCompile>
-    <ClCompile Include="..\support\user_default\CCUserDefaultAndroid.cpp">
       <Filter>support\user_default</Filter>
     </ClCompile>
     <ClCompile Include="..\support\zip_support\ioapi.cpp">
@@ -347,6 +428,9 @@
     </ClCompile>
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp">
       <Filter>support\zip_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp">
+      <Filter>support\tinyxml2</Filter>
     </ClCompile>
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp">
       <Filter>text_input_node</Filter>
@@ -361,6 +445,9 @@
       <Filter>textures</Filter>
     </ClCompile>
     <ClCompile Include="..\textures\CCTextureCache.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\textures\CCTextureETC.cpp">
       <Filter>textures</Filter>
     </ClCompile>
     <ClCompile Include="..\textures\CCTexturePVR.cpp">
@@ -399,83 +486,8 @@
     <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
-    <ClCompile Include="..\platform\CCEGLViewProtocol.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCFileUtils.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCImageCommonWebp.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCSAXParser.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCThread.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\platform.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCAccelerometer.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCApplication.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCCommon.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCDevice.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCFileUtilsWinRT.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCImage.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCStdC.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\wp8\CCEGLView.cpp">
-      <Filter>platform\wp8</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\wp8\Direct3DBase.cpp">
-      <Filter>platform\wp8</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\wp8\ModalLayer.cpp">
       <Filter>platform\wp8</Filter>
-    </ClCompile>
-    <ClCompile Include="..\shaders\CCGLProgram.cpp">
-      <Filter>shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="..\shaders\ccGLStateCache.cpp">
-      <Filter>shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="..\shaders\CCShaderCache.cpp">
-      <Filter>shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="..\shaders\ccShaders.cpp">
-      <Filter>shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCClippingNode.cpp">
-      <Filter>misc_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCMotionStreak.cpp">
-      <Filter>misc_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCProgressTimer.cpp">
-      <Filter>misc_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCRenderTexture.cpp">
-      <Filter>misc_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp">
-      <Filter>platform\winrt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -521,6 +533,9 @@
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
       <Filter>base_nodes</Filter>
     </ClInclude>
+    <ClInclude Include="..\base_nodes\CCGLBufferedNode.h">
+      <Filter>base_nodes</Filter>
+    </ClInclude>
     <ClInclude Include="..\base_nodes\CCNode.h">
       <Filter>base_nodes</Filter>
     </ClInclude>
@@ -534,6 +549,9 @@
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCBool.h">
+      <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocoa\CCDataVisitor.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCDictionary.h">
@@ -578,6 +596,27 @@
     <ClInclude Include="..\effects\CCGrid.h">
       <Filter>effects</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\ccConfig.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCEventType.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ccMacros.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCProtocols.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ccTypeInfo.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ccTypes.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cocos2d.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\kazmath\include\kazmath\aabb.h">
       <Filter>kazmath\include\kazmath</Filter>
     </ClInclude>
@@ -620,27 +659,6 @@
     <ClInclude Include="..\kazmath\include\kazmath\GL\matrix.h">
       <Filter>kazmath\include\kazmath\GL</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ccConfig.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCEventType.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ccMacros.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCProtocols.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ccTypeInfo.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ccTypes.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\cocos2d.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\keypad_dispatcher\CCKeypadDelegate.h">
       <Filter>keyboard_dispatcher</Filter>
     </ClInclude>
@@ -657,25 +675,37 @@
       <Filter>label_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCLayer.h">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCScene.h">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h">
-      <Filter>layers_scenes_transtions_nodes</Filter>
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\menu_nodes\CCMenu.h">
       <Filter>menu_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\menu_nodes\CCMenuItem.h">
       <Filter>menu_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\misc_nodes\CCClippingNode.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\misc_nodes\CCMotionStreak.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\misc_nodes\CCProgressTimer.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\misc_nodes\CCRenderTexture.h">
+      <Filter>misc_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\particle_nodes\CCParticleBatchNode.h">
       <Filter>particle_nodes</Filter>
@@ -692,8 +722,89 @@
     <ClInclude Include="..\particle_nodes\firePngData.h">
       <Filter>particle_nodes</Filter>
     </ClInclude>
+    <ClInclude Include="..\platform\wp8\CCEGLView.h">
+      <Filter>platform\wp8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\wp8\Direct3DBase.h">
+      <Filter>platform\wp8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCAccelerometer.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCApplication.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCFileUtilsWinRT.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCFreeTypeFont.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCGL.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCPlatformDefine.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCStdC.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCWinRTUtils.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCAccelerometerDelegate.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCApplicationProtocol.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCCommon.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCDevice.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCEGLViewProtocol.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCFileUtils.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCImage.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCImageCommon_cpp.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformConfig.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformMacros.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCSAXParser.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCThread.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\platform.h">
+      <Filter>platform</Filter>
+    </ClInclude>
     <ClInclude Include="..\script_support\CCScriptSupport.h">
-      <Filter>script_support</Filter>
+      <Filter>script_suppport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\CCGLProgram.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccGLStateCache.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\CCShaderCache.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShaders.h">
+      <Filter>shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\sprite_nodes\CCAnimation.h">
       <Filter>sprite_nodes</Filter>
@@ -746,11 +857,14 @@
     <ClInclude Include="..\support\data_support\utlist.h">
       <Filter>support\data_support</Filter>
     </ClInclude>
+    <ClInclude Include="..\support\component\CCComponent.h">
+      <Filter>support\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\component\CCComponentContainer.h">
+      <Filter>support\component</Filter>
+    </ClInclude>
     <ClInclude Include="..\support\image_support\TGAlib.h">
       <Filter>support\image_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\tinyxml2\tinyxml2.h">
-      <Filter>support\zip_support</Filter>
     </ClInclude>
     <ClInclude Include="..\support\user_default\CCUserDefault.h">
       <Filter>support\user_default</Filter>
@@ -763,6 +877,9 @@
     </ClInclude>
     <ClInclude Include="..\support\zip_support\ZipUtils.h">
       <Filter>support\zip_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\tinyxml2\tinyxml2.h">
+      <Filter>support\tinyxml2</Filter>
     </ClInclude>
     <ClInclude Include="..\text_input_node\CCIMEDelegate.h">
       <Filter>text_input_node</Filter>
@@ -780,6 +897,9 @@
       <Filter>textures</Filter>
     </ClInclude>
     <ClInclude Include="..\textures\CCTextureCache.h">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\textures\CCTextureETC.h">
       <Filter>textures</Filter>
     </ClInclude>
     <ClInclude Include="..\textures\CCTexturePVR.h">
@@ -820,106 +940,8 @@
     <ClInclude Include="..\CCDirector.h" />
     <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\CCScheduler.h" />
-    <ClInclude Include="..\platform\CCAccelerometerDelegate.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCApplicationProtocol.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCCommon.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCDevice.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCEGLViewProtocol.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCFileUtils.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCImage.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCImageCommon_cpp.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCPlatformConfig.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCPlatformMacros.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCSAXParser.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCThread.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\platform.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCAccelerometer.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCApplication.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCFileUtilsWinRT.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCGL.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCPlatformDefine.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCStdC.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCWinRTUtils.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\wp8\CCEGLView.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\wp8\Direct3DBase.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\wp8\ModalLayer.h">
       <Filter>platform\wp8</Filter>
     </ClInclude>
-    <ClInclude Include="..\shaders\CCGLProgram.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\ccGLStateCache.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\CCShaderCache.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\ccShaders.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCClippingNode.h">
-      <Filter>misc_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCMotionStreak.h">
-      <Filter>misc_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCProgressTimer.h">
-      <Filter>misc_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCRenderTexture.h">
-      <Filter>misc_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCFreeTypeFont.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\support\user_default\CCUserDefault.mm">
-      <Filter>support\user_default</Filter>
-    </None>
   </ItemGroup>
 </Project>
