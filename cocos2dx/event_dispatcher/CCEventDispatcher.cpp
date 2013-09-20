@@ -267,9 +267,9 @@ void EventDispatcher::dispatchEvent(Event* event, bool forceSortListeners)
 
     DispatchGuard guard(_inDispatch);
 
-    if (event->_type == TouchEvent::EVENT_TYPE)
+    if (event->_type == EventTouch::EVENT_TYPE)
     {
-        dispatchTouchEvent(static_cast<TouchEvent*>(event));
+        dispatchTouchEvent(static_cast<EventTouch*>(event));
         return;
     }
     
@@ -292,9 +292,9 @@ void EventDispatcher::dispatchEvent(Event* event, bool forceSortListeners)
     updateListenerItems();
 }
 
-void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
+void EventDispatcher::dispatchTouchEvent(EventTouch* event)
 {
-    auto touchListeners = getListenerItemsForType(TouchEvent::EVENT_TYPE);
+    auto touchListeners = getListenerItemsForType(EventTouch::EVENT_TYPE);
     if (touchListeners == nullptr)
         return;
     
@@ -304,11 +304,11 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
     std::vector<EventDispatcher::EventListenerItem*> allInOnelisteners;
     allInOnelisteners.reserve(touchListeners->size());
     
-    TouchEventListener* touchEventListener = nullptr;
+    EventListenerTouch* touchEventListener = nullptr;
     
     std::for_each(touchListeners->begin(), touchListeners->end(), [&](EventListenerItem*& item){
 
-        touchEventListener = static_cast<TouchEventListener*>(item->listener);
+        touchEventListener = static_cast<EventListenerTouch*>(item->listener);
         
         if (touchEventListener->_dispatchMode == Touch::DispatchMode::ONE_BY_ONE)
         {
@@ -353,10 +353,10 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
                 bool isClaimed = false;
                 std::vector<Touch*>::iterator removedIter;
                 
-                auto touchEventListener = static_cast<TouchEventListener*>(item->listener);
-                TouchEvent::EventCode eventCode = event->getEventCode();
+                auto touchEventListenerTouch = static_cast<EventListener*>(item->listener);
+                EventTouch::EventCode eventCode = event->getEventCode();
                 
-                if (eventCode == TouchEvent::EventCode::BEGAN)
+                if (eventCode == EventTouch::EventCode::BEGAN)
                 {
                     if (touchEventListener->onTouchBegan)
                     {
@@ -374,13 +374,13 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
                     
                     switch (eventCode)
                     {
-                        case TouchEvent::EventCode::MOVED:
+                        case EventTouch::EventCode::MOVED:
                             if (touchEventListener->onTouchMoved)
                             {
                                 touchEventListener->onTouchMoved(*touchesIter, event);
                             }
                             break;
-                        case TouchEvent::EventCode::ENDED:
+                        case EventTouch::EventCode::ENDED:
                             if (touchEventListener->onTouchEnded)
                             {
                                 touchEventListener->onTouchEnded(*touchesIter, event);
@@ -390,7 +390,7 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
                                 touchEventListener->_claimedTouches.erase(removedIter);
                             }
                             break;
-                        case TouchEvent::EventCode::CANCELLED:
+                        case EventTouch::EventCode::CANCELLED:
                             if (touchEventListener->onTouchCancelled)
                             {
                                 touchEventListener->onTouchCancelled(*touchesIter, event);
@@ -444,29 +444,29 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
             
             event->setCurrentTarget(item->node);
             
-            auto touchEventListener = static_cast<TouchEventListener*>(item->listener);
+            auto touchEventListener = static_cast<EventListenerTouch*>(item->listener);
             
             switch (event->getEventCode())
             {
-                case TouchEvent::EventCode::BEGAN:
+                case EventTouch::EventCode::BEGAN:
                     if (touchEventListener->onTouchesBegan)
                     {
                         touchEventListener->onTouchesBegan(mutableTouches, event);
                     }
                     break;
-                case TouchEvent::EventCode::MOVED:
+                case EventTouch::EventCode::MOVED:
                     if (touchEventListener->onTouchesMoved)
                     {
                         touchEventListener->onTouchesMoved(mutableTouches, event);
                     }
                     break;
-                case TouchEvent::EventCode::ENDED:
+                case EventTouch::EventCode::ENDED:
                     if (touchEventListener->onTouchesEnded)
                     {
                         touchEventListener->onTouchesEnded(mutableTouches, event);
                     }
                     break;
-                case TouchEvent::EventCode::CANCELLED:
+                case EventTouch::EventCode::CANCELLED:
                     if (touchEventListener->onTouchesCancelled)
                     {
                         touchEventListener->onTouchesCancelled(mutableTouches, event);

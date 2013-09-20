@@ -27,14 +27,14 @@
 
 NS_CC_BEGIN
 
-CustomEventListener::CustomEventListener()
+EventListenerCustom::EventListenerCustom()
 : _onCustomEvent(nullptr)
 {
 }
 
-CustomEventListener* CustomEventListener::create(const std::string& eventName, std::function<void(CustomEvent*)> callback)
+EventListenerCustom* EventListenerCustom::create(const std::string& eventName, std::function<void(EventCustom*)> callback)
 {
-    CustomEventListener* ret = new CustomEventListener();
+    EventListenerCustom* ret = new EventListenerCustom();
     if (ret && ret->init(eventName, callback))
     {
         ret->autorelease();
@@ -46,7 +46,7 @@ CustomEventListener* CustomEventListener::create(const std::string& eventName, s
     return ret;
 }
 
-bool CustomEventListener::init(const std::string& eventName, std::function<void(CustomEvent*)>callback)
+bool EventListenerCustom::init(const std::string& eventName, std::function<void(EventCustom*)>callback)
 {
     bool ret = false;
     
@@ -55,7 +55,7 @@ bool CustomEventListener::init(const std::string& eventName, std::function<void(
     auto listener = [this](Event* event){
         if (_onCustomEvent != nullptr)
         {
-            _onCustomEvent(static_cast<CustomEvent*>(event));
+            _onCustomEvent(static_cast<EventCustom*>(event));
         }
     };
     
@@ -66,9 +66,9 @@ bool CustomEventListener::init(const std::string& eventName, std::function<void(
     return ret;
 }
 
-CustomEventListener* CustomEventListener::clone()
+EventListenerCustom* EventListenerCustom::clone()
 {
-    CustomEventListener* ret = new CustomEventListener();
+    EventListenerCustom* ret = new EventListenerCustom();
     if (ret && ret->init(_type, _onCustomEvent))
     {
         ret->autorelease();
@@ -80,7 +80,7 @@ CustomEventListener* CustomEventListener::clone()
     return ret;
 }
 
-bool CustomEventListener::checkAvaiable()
+bool EventListenerCustom::checkAvaiable()
 {
     bool ret = false;
     if (EventListener::checkAvaiable() && _onCustomEvent != nullptr)

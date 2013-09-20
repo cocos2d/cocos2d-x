@@ -575,7 +575,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
     // Register Touch Event
-    _touchListener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    _touchListener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
     _touchListener->setSwallowTouches(false);
     
     _touchListener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);

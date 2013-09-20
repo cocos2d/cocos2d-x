@@ -29,16 +29,16 @@
 
 NS_CC_BEGIN
 
-bool KeyboardEventListener::checkAvaiable()
+bool EventListenerKeyboard::checkAvaiable()
 {
     CCASSERT(onKeyPressed && onKeyReleased, "");
     
     return true;
 }
 
-KeyboardEventListener* KeyboardEventListener::create()
+EventListenerKeyboard* EventListenerKeyboard::create()
 {
-    auto ret = new KeyboardEventListener();
+    auto ret = new EventListenerKeyboard();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -50,9 +50,9 @@ KeyboardEventListener* KeyboardEventListener::create()
     return ret;
 }
 
-KeyboardEventListener* KeyboardEventListener::clone()
+EventListenerKeyboard* EventListenerKeyboard::clone()
 {
-    auto ret = new KeyboardEventListener();
+    auto ret = new EventListenerKeyboard();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -66,16 +66,16 @@ KeyboardEventListener* KeyboardEventListener::clone()
     return ret;
 }
 
-KeyboardEventListener::KeyboardEventListener()
+EventListenerKeyboard::EventListenerKeyboard()
 : onKeyPressed(nullptr)
 , onKeyReleased(nullptr)
 {
 }
 
-bool KeyboardEventListener::init()
+bool EventListenerKeyboard::init()
 {
     auto listener = [this](Event* event){
-        auto keyboardEvent = static_cast<KeyboardEvent*>(event);
+        auto keyboardEvent = static_cast<EventKeyboard*>(event);
         if (keyboardEvent->_isPressed)
         {
             if (onKeyPressed != nullptr)
@@ -88,7 +88,7 @@ bool KeyboardEventListener::init()
         }
     };
     
-    if (EventListener::init(KeyboardEvent::EVENT_TYPE, listener))
+    if (EventListener::init(EventKeyboard::EVENT_TYPE, listener))
     {
         return true;
     }
