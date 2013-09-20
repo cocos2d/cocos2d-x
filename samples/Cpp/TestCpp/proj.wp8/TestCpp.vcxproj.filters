@@ -446,14 +446,86 @@
     <Filter Include="Assets\Resources\hd\cocosgui\examples\Test\UIResForEditor\Button">
       <UniqueIdentifier>{58678108-de54-4742-8b8f-32ef15ba116c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Resources\configs">
+      <UniqueIdentifier>{240b7e5e-c190-43da-adb1-9cf831e4c520}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\components">
+      <UniqueIdentifier>{05d541a5-d02e-4b97-8d6e-a753024b2ef4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\fonts">
+      <UniqueIdentifier>{6984ddb4-463c-4bec-9cad-422aa182a88a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\scenetest">
+      <UniqueIdentifier>{0c710755-dc0b-47a5-a20c-eaf81a63980a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\scenetest\fishes">
+      <UniqueIdentifier>{47053cc3-84d0-4eb1-9312-f77ffbf3a27e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\scenetest\Images">
+      <UniqueIdentifier>{1bbf04fd-e234-44cc-9d29-a073cbc6ba94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\scenetest\Misc">
+      <UniqueIdentifier>{468fe317-0b92-4aeb-948f-a6c9ac21bdea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\scenetest\Particles">
+      <UniqueIdentifier>{9903d551-13f6-4ce1-ae73-58b61f2880dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\scenetest\startMenu">
+      <UniqueIdentifier>{81d96bd2-081f-45f7-9902-88244d1000ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\scenetest\fishes\blowFish">
+      <UniqueIdentifier>{2a100d28-5859-4604-bbf5-8d485ed1d347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\scenetest\fishes\Butterflyfish">
+      <UniqueIdentifier>{754dc441-74e8-4abf-ba93-db0403f2c8a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\scenetest\startMenu\Fish_UI">
+      <UniqueIdentifier>{83663873-ac55-42cf-9385-81e500663dac}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1">
       <UniqueIdentifier>{f76dc597-4f7c-441d-a0b4-1d42ab079f57}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1">
       <UniqueIdentifier>{fd70eb7a-12cd-468a-817a-c9ee2e78ade4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\Resources\configs">
-      <UniqueIdentifier>{240b7e5e-c190-43da-adb1-9cf831e4c520}</UniqueIdentifier>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\map_1">
+      <UniqueIdentifier>{bf8592f5-682d-439c-9ccb-8a16c20f936d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1">
+      <UniqueIdentifier>{42fdb763-a5c2-428e-896c-d53dc78eb038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\page_1">
+      <UniqueIdentifier>{5886d372-56e5-46bd-b673-78ace6cf8e35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\register_1">
+      <UniqueIdentifier>{6c60ba35-6c04-44ad-b5f3-6b2d92b0a85d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\UIAction_1">
+      <UniqueIdentifier>{42dea401-0f44-45bd-a1fc-9e16419d90c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1">
+      <UniqueIdentifier>{4a453dca-ce76-40e5-81cc-364a3eab7f0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip">
+      <UniqueIdentifier>{ddf6a2f3-0086-4aa9-b55a-a3e3cb8b52b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq">
+      <UniqueIdentifier>{90e95f14-05b3-4c85-a895-a61f740ce861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content">
+      <UniqueIdentifier>{a43ca6c8-f612-4677-95c7-b1bdaa1d42e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_introduce">
+      <UniqueIdentifier>{9930c016-0f35-4486-83a5-3dbe2dab409e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1">
+      <UniqueIdentifier>{c9d71b12-c2ad-4075-8987-03ff0cd63cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item">
+      <UniqueIdentifier>{ddd8ab66-8aca-4192-a341-4a27ce68318b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons">
+      <UniqueIdentifier>{ebe0e071-d3b0-44fd-b1d3-2913dafa4471}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1578,6 +1650,351 @@
     </Image>
     <Image Include="Assets\Resources\hd\cocosgui\examples\Test\UIResForEditor\Button\symbol_1c.png">
       <Filter>Assets\Resources\hd\cocosgui\examples\Test\UIResForEditor\Button</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\components\Player.png">
+      <Filter>Assets\Resources\hd\components</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\components\Projectile.png">
+      <Filter>Assets\Resources\hd\components</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\components\Target.png">
+      <Filter>Assets\Resources\hd\components</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\fonts\font-issue1343.png">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\fonts\konqa32.png">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\fonts\labelatlas.png">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\fonts\larabie-16.png">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\fonts\markerFelt.png">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\fonts\tuffy_bold_italic-charmap.png">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\scenetest\fishes\blowFish\Blowfish0.png">
+      <Filter>Assets\Resources\hd\scenetest\fishes\blowFish</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\scenetest\fishes\Butterflyfish\Butterflyfish0.png">
+      <Filter>Assets\Resources\hd\scenetest\fishes\Butterflyfish</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\scenetest\Images\startMenuBG.png">
+      <Filter>Assets\Resources\hd\scenetest\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\scenetest\Particles\qipao01.png">
+      <Filter>Assets\Resources\hd\scenetest\Particles</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\scenetest\startMenu\Fish_UI\starMenuButton01.png">
+      <Filter>Assets\Resources\hd\scenetest\startMenu\Fish_UI</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\scenetest\startMenu\Fish_UI\starMenuButton02.png">
+      <Filter>Assets\Resources\hd\scenetest\startMenu\Fish_UI</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\scenetest\startMenu\Fish_UI\ui_logo_001-hd.png">
+      <Filter>Assets\Resources\hd\scenetest\startMenu\Fish_UI</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\b1.png">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\b2.png">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\background.png">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\buttonBackground.png">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\f1.png">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\f2.png">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\r1.png">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\r2.png">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\ribbon.png">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\5.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\buy_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\7.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\buy_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\button.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\buy_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\buttonHighlighted.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\buy_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\2.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\12.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\13.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\14.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\15.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\111.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_end_01.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_end_02.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_green_n2.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_green_p2.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_green_un2.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\1.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\3.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\4.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\5.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\6.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\7.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\8.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\9.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\10.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\11.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\crab.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\research.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\sell.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\shop_shield_1.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\shop_shield_2.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\shop_shield_3.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\train.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\upgrade.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eq</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_1\image_castle.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\map_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_1\map_pve.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\map_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\5.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\map_alert_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\7.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\map_alert_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\close_02.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\map_alert_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\close_03.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\map_alert_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\close_04.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\map_alert_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\background.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\buttonBackground.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\ribbon.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\teehanlax - iOS 6 - iPhone_check.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\teehanlax - iOS 6 - iPhone_check01.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content\CocoStudio_AnimationEditor.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content\CocoStudio_DataEditor.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content\CocoStudio_SceneEditor.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content\CocoStudio_UIEditor.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\128_128.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\register_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\button_d.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\register_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\button_n.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\register_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\e-mail.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\register_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\Rosewood stdloadingH.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\register_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\ui_shop_005-hd.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\register_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\UIAction_1\CocoStudio_UIEditor.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\UIAction_1</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_1.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_2.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_3.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_4.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_5.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_6.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_7.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_8.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_9.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_10.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_11.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_12.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_13.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_14.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_15.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_16.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_17.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_18.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_19.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_20.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_21.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_22.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_23.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_24.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_25.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_26.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_27.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_28.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_29.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_30.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_31.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item\1.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item\2.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item\7.png">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -3168,6 +3585,75 @@
     <None Include="Assets\Resources\configs\config-test-ok.plist">
       <Filter>Assets\Resources\configs</Filter>
     </None>
+    <None Include="Assets\Resources\hd\fonts\font-issue1343.fnt">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\fonts\konqa32.fnt">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\fonts\larabie-16.plist">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\fonts\markerFelt.fnt">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\fonts\tuffy_bold_italic-charmap.plist">
+      <Filter>Assets\Resources\hd\fonts</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\fishes\blowFish\Blowfish.ExportJson">
+      <Filter>Assets\Resources\hd\scenetest\fishes\blowFish</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\fishes\blowFish\Blowfish0.plist">
+      <Filter>Assets\Resources\hd\scenetest\fishes\blowFish</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\fishes\Butterflyfish\Butterflyfish.ExportJson">
+      <Filter>Assets\Resources\hd\scenetest\fishes\Butterflyfish</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\fishes\Butterflyfish\Butterflyfish0.plist">
+      <Filter>Assets\Resources\hd\scenetest\fishes\Butterflyfish</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\Particles\qipao01.plist">
+      <Filter>Assets\Resources\hd\scenetest\Particles</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\startMenu\startMenu_1.json">
+      <Filter>Assets\Resources\hd\scenetest\startMenu</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\FishJoy2.json">
+      <Filter>Assets\Resources\hd\scenetest</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\UITest\UITest.json">
+      <Filter>Assets\Resources\hd\cocosgui\UITest</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\buy_1.json">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\buy_1</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip_1.json">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\equip_1</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\map_1\map_1.json">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\map_1</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\map_alert_1.json">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\map_alert_1</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_1.json">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\page_1</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\register_1.json">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\register_1</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\Rosewood stdloadingH.fnt">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\register_1</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\UIAction_1\UIAction_1.json">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\UIAction_1</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_introduce_1.json">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item_1.json">
+      <Filter>Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Resources\fonts\A Damn Mess.ttf">
@@ -3227,6 +3713,18 @@
       <Filter>Assets\Resources\ccb</Filter>
     </Media>
     <Media Include="Assets\Resources\background.wav">
+      <Filter>Assets\Resources</Filter>
+    </Media>
+    <Media Include="Assets\Resources\hd\scenetest\Misc\music_logo.mp3">
+      <Filter>Assets\Resources\hd\scenetest\Misc</Filter>
+    </Media>
+    <Media Include="Assets\Resources\hd\scenetest\Misc\music_logo.wav">
+      <Filter>Assets\Resources\hd\scenetest\Misc</Filter>
+    </Media>
+    <Media Include="Assets\Resources\background-music-aac.wav">
+      <Filter>Assets\Resources</Filter>
+    </Media>
+    <Media Include="Assets\Resources\pew-pew-lei.wav">
       <Filter>Assets\Resources</Filter>
     </Media>
   </ItemGroup>
