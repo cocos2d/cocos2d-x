@@ -768,7 +768,6 @@
 					"-lz",
 					"-ljs_static",
 				);
-				PRODUCT_NAME = "Hello JavaScript Mac";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -808,7 +807,6 @@
 					"-lz",
 					"-ljs_static",
 				);
-				PRODUCT_NAME = "Hello JavaScript Mac";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -839,6 +837,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -864,6 +863,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -906,7 +906,6 @@
 					"-lz",
 					"-ljs_static",
 				);
-				PRODUCT_NAME = "Hello JavaScript iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -949,7 +948,6 @@
 					"-lz",
 					"-ljs_static",
 				);
-				PRODUCT_NAME = "Hello JavaScript iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
