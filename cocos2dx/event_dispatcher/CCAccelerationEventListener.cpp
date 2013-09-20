@@ -27,19 +27,19 @@
 
 NS_CC_BEGIN
 
-AccelerationEventListener::AccelerationEventListener()
+EventListenerAcceleration::EventListenerAcceleration()
 {
 
 }
 
-AccelerationEventListener::~AccelerationEventListener()
+EventListenerAcceleration::~EventListenerAcceleration()
 {
     CCLOGINFO("In the destructor of AccelerationEventListener. %p", this);
 }
 
-AccelerationEventListener* AccelerationEventListener::create(std::function<void(Acceleration*, Event* event)> callback)
+EventListenerAcceleration* EventListenerAcceleration::create(std::function<void(Acceleration*, Event* event)> callback)
 {
-    AccelerationEventListener* ret = new AccelerationEventListener();
+    EventListenerAcceleration* ret = new EventListenerAcceleration();
     if (ret && ret->init(callback))
     {
         ret->autorelease();
@@ -52,14 +52,14 @@ AccelerationEventListener* AccelerationEventListener::create(std::function<void(
     return ret;
 }
 
-bool AccelerationEventListener::init(std::function<void(Acceleration*, Event* event)> callback)
+bool EventListenerAcceleration::init(std::function<void(Acceleration*, Event* event)> callback)
 {
     auto listener = [this](Event* event){
-        auto accEvent = static_cast<AccelerationEvent*>(event);
+        auto accEvent = static_cast<EventAcceleration*>(event);
         this->onAccelerationEvent(&accEvent->_acc, event);
     };
     
-    if (EventListener::init(AccelerationEvent::EVENT_TYPE, listener))
+    if (EventListener::init(EventAcceleration::EVENT_TYPE, listener))
     {
         onAccelerationEvent = callback;
         return true;
@@ -68,9 +68,9 @@ bool AccelerationEventListener::init(std::function<void(Acceleration*, Event* ev
     return false;
 }
 
-AccelerationEventListener* AccelerationEventListener::clone()
+EventListenerAcceleration* EventListenerAcceleration::clone()
 {
-    auto ret = new AccelerationEventListener();
+    auto ret = new EventListenerAcceleration();
     
     if (ret && ret->init(onAccelerationEvent))
     {
@@ -84,7 +84,7 @@ AccelerationEventListener* AccelerationEventListener::clone()
     return ret;
 }
 
-bool AccelerationEventListener::checkAvaiable()
+bool EventListenerAcceleration::checkAvaiable()
 {
     CCASSERT(onAccelerationEvent, "");
     
