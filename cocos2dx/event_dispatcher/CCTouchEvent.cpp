@@ -26,6 +26,6 @@
 
 NS_CC_BEGIN
 
-const char* TouchEvent::EVENT_TYPE = "TouchEvent";
+const char* EventTouch::EVENT_TYPE = "TouchEvent";
 
 NS_CC_END
