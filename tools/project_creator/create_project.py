@@ -23,7 +23,7 @@ def checkParams():
     
     # set the parser to parse input params
     # the correspond variable name of "-x, --xxx" is parser.xxx
-    parser = OptionParser(usage="\n %prog -p <PROJECT_NAME> -k <PACKAGE_NAME> -l <cpp|lua|javascript>\n\nSample:\n %prog -p MyGame -k com.MyCompany.AwesomeGame -l javascript")
+    parser = OptionParser(usage="Usage: %prog -p <PROJECT_NAME> -k <PACKAGE_NAME> -l <cpp|lua|javascript>\nSample: %prog -p MyGame -k com.MyCompany.AwesomeGame -l javascript")
     parser.add_option("-p", "--project", metavar="PROJECT_NAME", help="Set a project name")
     parser.add_option("-k", "--package", metavar="PACKAGE_NAME", help="Set a package name for project")
     parser.add_option("-l", "--language",
