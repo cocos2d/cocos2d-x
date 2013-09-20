@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CCGL_ANGLE_H__
 #define __CCGL_ANGLE_H__
 
-#include "../../angleproject/include/GLES2/gl2.h"
-#include "../../angleproject/include/GLES2/gl2ext.h"
+#include "../third_party/winrt/angleproject/include/GLES2/gl2.h"
+#include "../third_party/winrt/angleproject/include/GLES2/gl2ext.h"
 
 #define GL_BGRA						GL_BGRA_EXT
 
