@@ -19,34 +19,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{22d061b7-7d0e-4f80-93cf-50f57d5a42f6}</ProjectGuid>
-    <RootNamespace>cocos2d</RootNamespace>
+    <ProjectGuid>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</ProjectGuid>
+    <RootNamespace>libcocos2d</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
-    <ProjectName>libcocos2d</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110_wp80</PlatformToolset>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110_wp80</PlatformToolset>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v110_wp80</PlatformToolset>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v110_wp80</PlatformToolset>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="PropertySheets">
@@ -56,91 +59,112 @@
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USRDLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
-      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAsWinRT>true</CompileAsWinRT>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>false</MinimalRebuild>
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../../../angle-pr/include;../../../angle-pr/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-    </Link>
-    <Lib>
-      <AdditionalDependencies>d3d11.lib;zlib.lib;LibPNG.lib;libjpeg.lib;libtiff.lib;freetype.lib;WindowsPhoneCore.lib;RuntimeObject.lib;xaudio2.lib;PhoneAppModelHost.lib</AdditionalDependencies>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-    </Lib>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USRDLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
-      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../../../angle-pr/include;../../../angle-pr/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-    </Link>
-    <Lib>
-      <AdditionalDependencies>d3d11.lib;zlib.lib;LibPNG.lib;libjpeg.lib;libtiff.lib;freetype.lib;WindowsPhoneCore.lib;RuntimeObject.lib;xaudio2.lib;PhoneAppModelHost.lib</AdditionalDependencies>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-    </Lib>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USRDLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
-      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAsWinRT>true</CompileAsWinRT>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>false</MinimalRebuild>
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../../../angle-pr/include;../../../angle-pr/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-    </Link>
-    <Lib>
-      <AdditionalDependencies>d3d11.lib;zlib.lib;LibPNG.lib;libjpeg.lib;libtiff.lib;freetype.lib;WindowsPhoneCore.lib;RuntimeObject.lib;xaudio2.lib;PhoneAppModelHost.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\ARM</AdditionalLibraryDirectories>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-    </Lib>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;ANGLE_PLATFORM_WINRT;ANGLE_PLATFORM_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USRDLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
-      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../../../angle-pr/include;../../../angle-pr/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-    </Link>
-    <Lib>
-      <AdditionalDependencies>d3d11.lib;zlib.lib;LibPNG.lib;libjpeg.lib;libtiff.lib;freetype.lib;WindowsPhoneCore.lib;RuntimeObject.lib;xaudio2.lib;PhoneAppModelHost.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\ARM</AdditionalLibraryDirectories>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-    </Lib>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Reference Include="Windows">
@@ -152,21 +176,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\angle-pr\samples\gles2_book\Common\esUtil_phone.vcxproj">
-      <Project>{d2d857bf-346e-4014-b9cf-50d5e1f8a357}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\angle-pr\src\libEGL\libEGL_phone.vcxproj">
-      <Project>{57eae839-8a09-4250-986a-3e21f98afbb0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\angle-pr\src\libGLESv2\libGLESv2_phone.vcxproj">
-      <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCClippingNode.cpp" />
-    <ClCompile Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCMotionStreak.cpp" />
-    <ClCompile Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCProgressTimer.cpp" />
-    <ClCompile Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCRenderTexture.cpp" />
     <ClCompile Include="..\actions\CCAction.cpp" />
     <ClCompile Include="..\actions\CCActionCamera.cpp" />
     <ClCompile Include="..\actions\CCActionCatmullRom.cpp" />
@@ -181,6 +190,7 @@
     <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
     <ClCompile Include="..\actions\CCActionTween.cpp" />
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp" />
+    <ClCompile Include="..\base_nodes\CCGLBufferedNode.cpp" />
     <ClCompile Include="..\base_nodes\CCNode.cpp" />
     <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
@@ -195,6 +205,7 @@
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\cocoa\CCDataVisitor.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCGeometry.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
@@ -297,13 +308,16 @@
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp" />
     <ClCompile Include="..\menu_nodes\CCMenu.cpp" />
     <ClCompile Include="..\menu_nodes\CCMenuItem.cpp" />
+    <ClCompile Include="..\misc_nodes\CCClippingNode.cpp" />
+    <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp" />
+    <ClCompile Include="..\misc_nodes\CCProgressTimer.cpp" />
+    <ClCompile Include="..\misc_nodes\CCRenderTexture.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleBatchNode.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleExamples.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleSystem.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
-    <ClCompile Include="..\platform\CCImageCommonWebp.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
@@ -337,18 +351,20 @@
     <ClCompile Include="..\support\ccUTF8.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\CCVertex.cpp" />
+    <ClCompile Include="..\support\component\CCComponent.cpp" />
+    <ClCompile Include="..\support\component\CCComponentContainer.cpp" />
     <ClCompile Include="..\support\data_support\ccCArray.cpp" />
     <ClCompile Include="..\support\image_support\TGAlib.cpp" />
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\user_default\CCUserDefault.cpp" />
-    <ClCompile Include="..\support\user_default\CCUserDefaultAndroid.cpp" />
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
     <ClCompile Include="..\support\zip_support\unzip.cpp" />
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp" />
     <ClCompile Include="..\textures\CCTexture2D.cpp" />
     <ClCompile Include="..\textures\CCTextureAtlas.cpp" />
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
+    <ClCompile Include="..\textures\CCTextureETC.cpp" />
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp" />
     <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp" />
@@ -363,10 +379,6 @@
     <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCClippingNode.h" />
-    <ClInclude Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCMotionStreak.h" />
-    <ClInclude Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCProgressTimer.h" />
-    <ClInclude Include="..\..\..\cocos2d-x-pr\cocos2dx\misc_nodes\CCRenderTexture.h" />
     <ClInclude Include="..\actions\CCAction.h" />
     <ClInclude Include="..\actions\CCActionCamera.h" />
     <ClInclude Include="..\actions\CCActionCatmullRom.h" />
@@ -381,6 +393,7 @@
     <ClInclude Include="..\actions\CCActionTiledGrid.h" />
     <ClInclude Include="..\actions\CCActionTween.h" />
     <ClInclude Include="..\base_nodes\CCAtlasNode.h" />
+    <ClInclude Include="..\base_nodes\CCGLBufferedNode.h" />
     <ClInclude Include="..\base_nodes\CCNode.h" />
     <ClInclude Include="..\CCCamera.h" />
     <ClInclude Include="..\CCConfiguration.h" />
@@ -391,6 +404,7 @@
     <ClInclude Include="..\cocoa\CCArray.h" />
     <ClInclude Include="..\cocoa\CCAutoreleasePool.h" />
     <ClInclude Include="..\cocoa\CCBool.h" />
+    <ClInclude Include="..\cocoa\CCDataVisitor.h" />
     <ClInclude Include="..\cocoa\CCDictionary.h" />
     <ClInclude Include="..\cocoa\CCDouble.h" />
     <ClInclude Include="..\cocoa\CCFloat.h" />
@@ -438,6 +452,10 @@
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h" />
     <ClInclude Include="..\menu_nodes\CCMenu.h" />
     <ClInclude Include="..\menu_nodes\CCMenuItem.h" />
+    <ClInclude Include="..\misc_nodes\CCClippingNode.h" />
+    <ClInclude Include="..\misc_nodes\CCMotionStreak.h" />
+    <ClInclude Include="..\misc_nodes\CCProgressTimer.h" />
+    <ClInclude Include="..\misc_nodes\CCRenderTexture.h" />
     <ClInclude Include="..\particle_nodes\CCParticleBatchNode.h" />
     <ClInclude Include="..\particle_nodes\CCParticleExamples.h" />
     <ClInclude Include="..\particle_nodes\CCParticleSystem.h" />
@@ -485,6 +503,8 @@
     <ClInclude Include="..\support\ccUTF8.h" />
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
+    <ClInclude Include="..\support\component\CCComponent.h" />
+    <ClInclude Include="..\support\component\CCComponentContainer.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />
     <ClInclude Include="..\support\data_support\uthash.h" />
     <ClInclude Include="..\support\data_support\utlist.h" />
@@ -498,6 +518,7 @@
     <ClInclude Include="..\textures\CCTexture2D.h" />
     <ClInclude Include="..\textures\CCTextureAtlas.h" />
     <ClInclude Include="..\textures\CCTextureCache.h" />
+    <ClInclude Include="..\textures\CCTextureETC.h" />
     <ClInclude Include="..\textures\CCTexturePVR.h" />
     <ClInclude Include="..\text_input_node\CCIMEDelegate.h" />
     <ClInclude Include="..\text_input_node\CCIMEDispatcher.h" />
@@ -514,7 +535,15 @@
     <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\support\user_default\CCUserDefault.mm" />
+    <ProjectReference Include="..\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj">
+      <Project>{d2d857bf-346e-4014-b9cf-50d5e1f8a357}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\platform\third_party\winrt\angleproject\src\libEGL\libEGL_phone.vcxproj">
+      <Project>{ab42a170-e370-4707-8cc6-1c51349c146f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_phone.vcxproj">
+      <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
