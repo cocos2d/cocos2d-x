@@ -806,7 +806,6 @@
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 				);
 				OTHER_CFLAGS = "-O2";
-				PRODUCT_NAME = "HelloCpp iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -846,7 +845,6 @@
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 				);
-				PRODUCT_NAME = "HelloCpp iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -888,7 +886,6 @@
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/mac/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/mac/lib\"",
 				);
-				PRODUCT_NAME = "HelloCpp Mac";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -926,7 +923,6 @@
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/mac/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/mac/lib\"",
 				);
-				PRODUCT_NAME = "HelloCpp Mac";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
@@ -941,6 +937,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -953,6 +950,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;
 			};
