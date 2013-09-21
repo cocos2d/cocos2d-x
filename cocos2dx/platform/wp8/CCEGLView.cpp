@@ -238,6 +238,11 @@ bool CCEGLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
     esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
 
 	UpdateForWindowSizeChange();
+	DisplayProperties::AutoRotationPreferences = 
+		DisplayOrientations::Landscape | 
+		DisplayOrientations::LandscapeFlipped | 
+		DisplayOrientations::Portrait | 
+		DisplayOrientations::PortraitFlipped;
 	m_initialized = true;
     return bRet;
 }
