@@ -25,8 +25,8 @@
 #include "shaders/CCShaderCache.h"
 #include "textures/CCTextureCache.h"
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCAccelerationEvent.h"
-#include "event_dispatcher/CCKeyboardEvent.h"
+#include "event_dispatcher/CCEventAcceleration.h"
+#include "event_dispatcher/CCEventKeyboard.h"
 
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 

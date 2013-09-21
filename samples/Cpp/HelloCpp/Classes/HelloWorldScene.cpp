@@ -1,7 +1,7 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
-#include "event_dispatcher/CCTouchEventListener.h"
+#include "event_dispatcher/CCEventListenerTouch.h"
 
 USING_NS_CC;
 
