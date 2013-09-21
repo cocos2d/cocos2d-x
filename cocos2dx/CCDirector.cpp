@@ -267,6 +267,31 @@ void CCDirector::drawScene(void)
 
     kmGLPushMatrix();
 
+#if defined(CC_PLATFORM_WP8)
+    kmMat4 orientationCorrection;
+    switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
+	{
+		case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
+			kmMat4RotationZ(&orientationCorrection, M_PI);
+			break;
+
+		case Windows::Graphics::Display::DisplayOrientations::Landscape:
+            kmMat4RotationZ(&orientationCorrection, 3 * M_PI_2);
+			break;
+			
+		case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
+            kmMat4RotationZ(&orientationCorrection, M_PI_2);
+			break;
+
+        default:
+			kmMat4Identity(&orientationCorrection);
+	}
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPushMatrix();
+    kmGLMultMatrix(&orientationCorrection);
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+#endif
+
     // draw the scene
     if (m_pRunningScene)
     {
@@ -284,6 +309,11 @@ void CCDirector::drawScene(void)
         showStats();
     }
 
+#if defined(CC_PLATFORM_WP8)
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+#endif
     kmGLPopMatrix();
 
     m_uTotalFrames++;
