@@ -89,20 +89,20 @@ bool CCShaderCache::init()
     m_pPrograms = new CCDictionary();
     GLboolean hasCompiler;
     glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
+    hasCompiler = FALSE;
     if(hasCompiler)
     {
         loadDefaultShaders();
-
-//#define CC_PLATFORM_WINRT_SAVE_SHADERS
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) && defined(CC_PLATFORM_WINRT_SAVE_SHADERS)
-        savePrecompiledShaders(m_pPrograms);
-#endif
+     savePrecompiledShaders(m_pPrograms);
+#endif   
     }
     else
     {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         loadDefaultPrecompiledShaders();
+#endif
     }
-
     return true;
 }
 
@@ -177,6 +177,7 @@ void CCShaderCache::loadDefaultShaders()
     p->release();
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 void CCShaderCache::loadDefaultPrecompiledShaders()
 {
     // Position Texture Color shader
@@ -246,6 +247,7 @@ void CCShaderCache::loadDefaultPrecompiledShaders()
     m_pPrograms->setObject(p, kCCShader_PositionLengthTexureColor);
     p->release();
 }
+#endif
 
 void CCShaderCache::reloadDefaultShaders()
 {
@@ -304,6 +306,7 @@ void CCShaderCache::reloadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 void CCShaderCache::loadDefaultPrecompiledShader(CCGLProgram *p, int type)
 {
     switch (type) {
@@ -359,6 +362,64 @@ void CCShaderCache::loadDefaultPrecompiledShader(CCGLProgram *p, int type)
     
     CHECK_GL_ERROR_DEBUG();
 }
+
+void CCShaderCache::reloadDefaultPrecompiledShaders()
+{
+    // reset all programs and reload them
+    
+    // Position Texture Color shader
+    CCGLProgram *p = programForKey(kCCShader_PositionTextureColor);    
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTextureColor);
+
+    // Position Texture Color alpha test
+    p = programForKey(kCCShader_PositionTextureColorAlphaTest);
+    p->reset();    
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTextureColorAlphaTest);
+    
+    //
+    // Position, Color shader
+    //
+    p = programForKey(kCCShader_PositionColor);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionColor);
+    
+    //
+    // Position Texture shader
+    //
+    p = programForKey(kCCShader_PositionTexture);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTexture);
+    
+    //
+    // Position, Texture attribs, 1 Color as uniform shader
+    //
+    p = programForKey(kCCShader_PositionTexture_uColor);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTexture_uColor);
+    
+    //
+    // Position Texture A8 Color shader
+    //
+    p = programForKey(kCCShader_PositionTextureA8Color);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTextureA8Color);
+    
+    //
+    // Position and 1 color passed as a uniform (to simulate glColor4ub )
+    //
+    p = programForKey(kCCShader_Position_uColor);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_Position_uColor);
+    
+    //
+	// Position, Legth(TexCoords, Color (used by Draw Node basically )
+	//
+    p = programForKey(kCCShader_PositionLengthTexureColor);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionLengthTexureColor);
+}
+#endif
 
 void CCShaderCache::loadDefaultShader(CCGLProgram *p, int type)
 {
