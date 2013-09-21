@@ -23,6 +23,9 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>Icon-80</string>
+				<string>Icon-58</string>
+				<string>Icon-29</string>
 				<string>Icon-120</string>
 				<string>Icon-72.png</string>
 				<string>Icon.png</string>
@@ -41,6 +44,12 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>Icon-58</string>
+				<string>Icon-29</string>
+				<string>Icon-80</string>
+				<string>Icon-40</string>
+				<string>Icon-100</string>
+				<string>Icon-50</string>
 				<string>Icon-152</string>
 				<string>Icon-76</string>
 				<string>Icon-120</string>
