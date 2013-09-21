@@ -274,6 +274,24 @@
     <Image Include="Assets\Resources\hd\armature\TestBone0.png" />
     <Image Include="Assets\Resources\hd\armature\weapon.png" />
     <Image Include="Assets\Resources\hd\ccb\burst.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\animationbuttonnormal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\animationbuttonpressed.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\arrow.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\b11.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\backtotopnormal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\backtotoppressed.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\bitmapFontTest2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\button.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\buttonHighlighted.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\ccicon.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_active.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_active_disable.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_active_press.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_normal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_normal_disable.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\check_box_normal_press.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\CloseNormal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\CloseSelected.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\equip\111.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\equip\12.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\equip\13.png" />
@@ -312,6 +330,123 @@
     <Image Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item\1.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item\2.png" />
     <Image Include="Assets\Resources\hd\cocosgui\examples\weapon_introduce\weapon_item_1\weapon_item\7.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\green_edit.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\grossini-aliases.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\5.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\7.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\button.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\buttonHighlighted.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\111.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\12.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\13.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\14.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\15.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_end_01.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_end_02.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_green_n2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_green_p2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\button_green_un2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\10.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\11.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\3.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\4.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\5.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\6.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\7.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\8.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\9.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\crab.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\research.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\sell.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\shop_shield_1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\shop_shield_2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\shop_shield_3.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\train.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip\eg\upgrade.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_1\image_castle.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_1\map_pve.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\5.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\7.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\close_02.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\close_03.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\close_04.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\background.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\buttonBackground.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content\CocoStudio_AnimationEditor.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content\CocoStudio_DataEditor.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content\CocoStudio_SceneEditor.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_content\CocoStudio_UIEditor.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\ribbon.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\teehanlax - iOS 6 - iPhone_check.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\teehanlax - iOS 6 - iPhone_check01.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\128_128.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\button_d.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\button_n.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\e-mail.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\Rosewood stdloadingH.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\ui_shop_005-hd.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\UIAction_1\CocoStudio_UIEditor.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_10.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_11.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_12.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_13.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_14.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_15.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_16.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_17.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_18.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_19.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_20.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_21.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_22.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_23.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_24.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_25.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_26.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_27.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_28.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_29.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_3.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_30.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_31.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_4.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_5.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_6.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_7.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_8.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapons\weapons_9.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item\1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item\2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item\7.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\Hello.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\labelatlas.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\loadingbar.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\scrollviewbg.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\slidbar.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderballnormal.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderballpressed.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderProgress.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderProgress2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderThumb.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderTrack.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\sliderTrack2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\slider_bar_active_9patch.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\b1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\b2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\background.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\buttonBackground.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\f1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\f2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\r1.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\r2.png" />
+    <Image Include="Assets\Resources\hd\cocosgui\UITest\ribbon.png" />
+    <Image Include="Assets\Resources\hd\components\Player.png" />
+    <Image Include="Assets\Resources\hd\components\Projectile.png" />
+    <Image Include="Assets\Resources\hd\components\Target.png" />
     <Image Include="Assets\Resources\hd\extensions\background.png" />
     <Image Include="Assets\Resources\hd\extensions\button.png" />
     <Image Include="Assets\Resources\hd\extensions\buttonHighlighted.png" />
@@ -327,6 +462,12 @@
     <Image Include="Assets\Resources\hd\extensions\sliderTrack2.png" />
     <Image Include="Assets\Resources\hd\extensions\stepper-minus.png" />
     <Image Include="Assets\Resources\hd\extensions\stepper-plus.png" />
+    <Image Include="Assets\Resources\hd\fonts\font-issue1343.png" />
+    <Image Include="Assets\Resources\hd\fonts\konqa32.png" />
+    <Image Include="Assets\Resources\hd\fonts\labelatlas.png" />
+    <Image Include="Assets\Resources\hd\fonts\larabie-16.png" />
+    <Image Include="Assets\Resources\hd\fonts\markerFelt.png" />
+    <Image Include="Assets\Resources\hd\fonts\tuffy_bold_italic-charmap.png" />
     <Image Include="Assets\Resources\hd\fps_images.png" />
     <Image Include="Assets\Resources\hd\Images\arrows.png" />
     <Image Include="Assets\Resources\hd\Images\arrowsBar.png" />
@@ -356,6 +497,13 @@
     <Image Include="Assets\Resources\hd\Images\particles.png" />
     <Image Include="Assets\Resources\hd\Images\r1.png" />
     <Image Include="Assets\Resources\hd\Images\r2.png" />
+    <Image Include="Assets\Resources\hd\scenetest\fishes\blowFish\Blowfish0.png" />
+    <Image Include="Assets\Resources\hd\scenetest\fishes\Butterflyfish\Butterflyfish0.png" />
+    <Image Include="Assets\Resources\hd\scenetest\Images\startMenuBG.png" />
+    <Image Include="Assets\Resources\hd\scenetest\Particles\qipao01.png" />
+    <Image Include="Assets\Resources\hd\scenetest\startMenu\Fish_UI\starMenuButton01.png" />
+    <Image Include="Assets\Resources\hd\scenetest\startMenu\Fish_UI\starMenuButton02.png" />
+    <Image Include="Assets\Resources\hd\scenetest\startMenu\Fish_UI\ui_logo_001-hd.png" />
     <Image Include="Assets\Resources\hd\spine\spineboy.png" />
     <Image Include="Assets\Resources\hd\TileMaps\tiles.png" />
     <Image Include="Assets\Resources\hd\TileMaps\tmw_desert_spacing.png" />
@@ -1428,6 +1576,24 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
+    <None Include="Assets\Resources\hd\cocosgui\bitmapFontTest2.fnt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\CocoGUISample.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\CocoGUI_PageView_Sample.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Resources\hd\cocosgui\examples\examples.json">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
@@ -1440,7 +1606,103 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\buy_1\buy_1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\equip_1\equip_1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\map_1\map_1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\map_alert_1\map_alert_1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\page_1\page_1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\register_1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\register_1\Rosewood stdloadingH.fnt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\UIAction_1\UIAction_1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_introduce_1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\gui_examples\weapon_introduce_1\weapon_item_1\weapon_item_1.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\cocosgui\UITest\UITest.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Resources\hd\extensions\CCControlColourPickerSpriteSheet.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\fonts\font-issue1343.fnt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\fonts\konqa32.fnt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\fonts\larabie-16.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\fonts\markerFelt.fnt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\fonts\tuffy_bold_italic-charmap.plist">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -1453,6 +1715,48 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
     <None Include="Assets\Resources\hd\Images\only_in_hd.pvr.ccz">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\fishes\blowFish\Blowfish.ExportJson">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\fishes\blowFish\Blowfish0.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\fishes\Butterflyfish\Butterflyfish.ExportJson">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\fishes\Butterflyfish\Butterflyfish0.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\FishJoy2.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\Particles\qipao01.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\hd\scenetest\startMenu\startMenu_1.json">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -1489,6 +1793,30 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
     <None Include="Assets\Resources\Images\bugs\circle.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\encryptedAtlas.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\encryptedAtlas.pvr.ccz">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\encryptedAtlas.tps">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\ETC1.pkm">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -1543,6 +1871,24 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
     <None Include="Assets\Resources\Images\logo-nomipmap.pvr">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\nonencryptedAtlas.plist">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\nonencryptedAtlas.pvr.ccz">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\Resources\Images\nonencryptedAtlas.tps">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -2176,12 +2522,18 @@
     <Font Include="Assets\Resources\fonts\tahoma.ttf" />
     <Font Include="Assets\Resources\fonts\Thonburi.ttf" />
     <Font Include="Assets\Resources\fonts\ThonburiBold.ttf" />
+    <Font Include="Assets\Resources\hd\cocosgui\Marker Felt.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Assets\Resources\background-music-aac.wav" />
     <Media Include="Assets\Resources\background.mp3" />
+    <Media Include="Assets\Resources\background.wav" />
     <Media Include="Assets\Resources\ccb\gem-0.wav" />
     <Media Include="Assets\Resources\ccb\gem-1.wav" />
     <Media Include="Assets\Resources\effect1.wav" />
+    <Media Include="Assets\Resources\hd\scenetest\Misc\music_logo.mp3" />
+    <Media Include="Assets\Resources\hd\scenetest\Misc\music_logo.wav" />
+    <Media Include="Assets\Resources\pew-pew-lei.wav" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Resources\Misc\resources-hd\test4.txt" />
