@@ -35,7 +35,7 @@ THE SOFTWARE.
 #endif // EMSCRIPTEN
 #include "physics/CCPhysicsSetting.h"
 
-#include "event_dispatcher/CCKeyboardEvent.h"
+#include "event_dispatcher/CCEventKeyboard.h"
 
 NS_CC_BEGIN
 

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "event_dispatcher/CCTouch.h"
 #include "CCStdC.h"
 #include "cocoa/CCInteger.h"
-#include "event_dispatcher/CCTouchEventListener.h"
+#include "event_dispatcher/CCEventListenerTouch.h"
 
 
 #include <vector>

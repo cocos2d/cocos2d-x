@@ -262,14 +262,14 @@ THE SOFTWARE.
 
 // EventDispatcher
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCTouchEventListener.h"
-#include "event_dispatcher/CCTouchEvent.h"
-#include "event_dispatcher/CCKeyboardEventListener.h"
-#include "event_dispatcher/CCKeyboardEvent.h"
-#include "event_dispatcher/CCAccelerationEvent.h"
-#include "event_dispatcher/CCAccelerationEventListener.h"
-#include "event_dispatcher/CCCustomEvent.h"
-#include "event_dispatcher/CCCustomEventListener.h"
+#include "event_dispatcher/CCEventListenerTouch.h"
+#include "event_dispatcher/CCEventTouch.h"
+#include "event_dispatcher/CCEventListenerKeyboard.h"
+#include "event_dispatcher/CCEventKeyboard.h"
+#include "event_dispatcher/CCEventAcceleration.h"
+#include "event_dispatcher/CCEventListenerAcceleration.h"
+#include "event_dispatcher/CCEventCustom.h"
+#include "event_dispatcher/CCEventListenerCustom.h"
 
 // root
 #include "CCCamera.h"

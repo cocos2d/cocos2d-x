@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCMenuItem.h"
 #include "layers_scenes_transitions_nodes/CCLayer.h"
 
-#include "event_dispatcher/CCTouchEvent.h"
+#include "event_dispatcher/CCEventTouch.h"
 
 NS_CC_BEGIN
 

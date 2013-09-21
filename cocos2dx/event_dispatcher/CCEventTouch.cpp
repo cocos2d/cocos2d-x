@@ -22,16 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCAccelerationEvent.h"
+#include "CCEventTouch.h"
 
 NS_CC_BEGIN
 
-const char* EventAcceleration::EVENT_TYPE = "AccelerometerEvent";
-
-EventAcceleration::EventAcceleration(Acceleration acc)
-: Event(EVENT_TYPE)
-, _acc(acc)
-{
-}
+const char* EventTouch::EVENT_TYPE = "TouchEvent";
 
 NS_CC_END

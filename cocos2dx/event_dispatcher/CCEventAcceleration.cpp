@@ -20,13 +20,18 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
- 
  ****************************************************************************/
 
-#include "CCKeyboardEvent.h"
+#include "CCEventAcceleration.h"
 
 NS_CC_BEGIN
 
-const char* EventKeyboard::EVENT_TYPE = "KeyboardEvent";
+const char* EventAcceleration::EVENT_TYPE = "AccelerometerEvent";
+
+EventAcceleration::EventAcceleration(Acceleration acc)
+: Event(EVENT_TYPE)
+, _acc(acc)
+{
+}
 
 NS_CC_END
