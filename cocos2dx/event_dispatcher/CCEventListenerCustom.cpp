@@ -20,80 +20,74 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
- 
  ****************************************************************************/
 
-#include "CCKeyboardEventListener.h"
-#include "CCKeyboardEvent.h"
-#include "ccMacros.h"
+#include "CCEventListenerCustom.h"
+#include "CCEventCustom.h"
 
 NS_CC_BEGIN
 
-bool EventListenerKeyboard::checkAvaiable()
+EventListenerCustom::EventListenerCustom()
+: _onCustomEvent(nullptr)
 {
-    CCASSERT(onKeyPressed && onKeyReleased, "");
+}
+
+EventListenerCustom* EventListenerCustom::create(const std::string& eventName, std::function<void(EventCustom*)> callback)
+{
+    EventListenerCustom* ret = new EventListenerCustom();
+    if (ret && ret->init(eventName, callback))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+bool EventListenerCustom::init(const std::string& eventName, std::function<void(EventCustom*)>callback)
+{
+    bool ret = false;
     
-    return true;
-}
-
-EventListenerKeyboard* EventListenerKeyboard::create()
-{
-    auto ret = new EventListenerKeyboard();
-    if (ret && ret->init())
-    {
-        ret->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-    return ret;
-}
-
-EventListenerKeyboard* EventListenerKeyboard::clone()
-{
-    auto ret = new EventListenerKeyboard();
-    if (ret && ret->init())
-    {
-        ret->autorelease();
-        ret->onKeyPressed = onKeyPressed;
-        ret->onKeyReleased = onKeyReleased;
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-    return ret;
-}
-
-EventListenerKeyboard::EventListenerKeyboard()
-: onKeyPressed(nullptr)
-, onKeyReleased(nullptr)
-{
-}
-
-bool EventListenerKeyboard::init()
-{
+    _onCustomEvent = callback;
+    
     auto listener = [this](Event* event){
-        auto keyboardEvent = static_cast<EventKeyboard*>(event);
-        if (keyboardEvent->_isPressed)
+        if (_onCustomEvent != nullptr)
         {
-            if (onKeyPressed != nullptr)
-                onKeyPressed(keyboardEvent->_keyCode, event);
-        }
-        else
-        {
-            if (onKeyReleased != nullptr)
-                onKeyReleased(keyboardEvent->_keyCode, event);
+            _onCustomEvent(static_cast<EventCustom*>(event));
         }
     };
     
-    if (EventListener::init(EventKeyboard::EVENT_TYPE, listener))
+    if (EventListener::init(eventName, listener))
     {
-        return true;
+        ret = true;
     }
-    
-    return false;
+    return ret;
+}
+
+EventListenerCustom* EventListenerCustom::clone()
+{
+    EventListenerCustom* ret = new EventListenerCustom();
+    if (ret && ret->init(_type, _onCustomEvent))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+bool EventListenerCustom::checkAvaiable()
+{
+    bool ret = false;
+    if (EventListener::checkAvaiable() && _onCustomEvent != nullptr)
+    {
+        ret = true;
+    }
+    return ret;
 }
 
 NS_CC_END

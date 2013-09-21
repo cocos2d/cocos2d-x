@@ -12,7 +12,7 @@
 #include "event_dispatcher/CCTouch.h"
 #include "text_input_node/CCIMEDispatcher.h"
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCKeyboardEvent.h"
+#include "event_dispatcher/CCEventKeyboard.h"
 #include <unistd.h>
 
 NS_CC_BEGIN

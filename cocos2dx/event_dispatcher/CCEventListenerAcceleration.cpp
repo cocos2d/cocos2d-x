@@ -22,20 +22,25 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCCustomEventListener.h"
-#include "CCCustomEvent.h"
+#include "CCEventListenerAcceleration.h"
+#include "CCEventAcceleration.h"
 
 NS_CC_BEGIN
 
-EventListenerCustom::EventListenerCustom()
-: _onCustomEvent(nullptr)
+EventListenerAcceleration::EventListenerAcceleration()
 {
+
 }
 
-EventListenerCustom* EventListenerCustom::create(const std::string& eventName, std::function<void(EventCustom*)> callback)
+EventListenerAcceleration::~EventListenerAcceleration()
 {
-    EventListenerCustom* ret = new EventListenerCustom();
-    if (ret && ret->init(eventName, callback))
+    CCLOGINFO("In the destructor of AccelerationEventListener. %p", this);
+}
+
+EventListenerAcceleration* EventListenerAcceleration::create(std::function<void(Acceleration*, Event* event)> callback)
+{
+    EventListenerAcceleration* ret = new EventListenerAcceleration();
+    if (ret && ret->init(callback))
     {
         ret->autorelease();
     }
@@ -43,33 +48,31 @@ EventListenerCustom* EventListenerCustom::create(const std::string& eventName, s
     {
         CC_SAFE_DELETE(ret);
     }
+    
     return ret;
 }
 
-bool EventListenerCustom::init(const std::string& eventName, std::function<void(EventCustom*)>callback)
+bool EventListenerAcceleration::init(std::function<void(Acceleration*, Event* event)> callback)
 {
-    bool ret = false;
-    
-    _onCustomEvent = callback;
-    
     auto listener = [this](Event* event){
-        if (_onCustomEvent != nullptr)
-        {
-            _onCustomEvent(static_cast<EventCustom*>(event));
-        }
+        auto accEvent = static_cast<EventAcceleration*>(event);
+        this->onAccelerationEvent(&accEvent->_acc, event);
     };
     
-    if (EventListener::init(eventName, listener))
+    if (EventListener::init(EventAcceleration::EVENT_TYPE, listener))
     {
-        ret = true;
+        onAccelerationEvent = callback;
+        return true;
     }
-    return ret;
+    
+    return false;
 }
 
-EventListenerCustom* EventListenerCustom::clone()
+EventListenerAcceleration* EventListenerAcceleration::clone()
 {
-    EventListenerCustom* ret = new EventListenerCustom();
-    if (ret && ret->init(_type, _onCustomEvent))
+    auto ret = new EventListenerAcceleration();
+    
+    if (ret && ret->init(onAccelerationEvent))
     {
         ret->autorelease();
     }
@@ -77,17 +80,15 @@ EventListenerCustom* EventListenerCustom::clone()
     {
         CC_SAFE_DELETE(ret);
     }
+    
     return ret;
 }
 
-bool EventListenerCustom::checkAvaiable()
+bool EventListenerAcceleration::checkAvaiable()
 {
-    bool ret = false;
-    if (EventListener::checkAvaiable() && _onCustomEvent != nullptr)
-    {
-        ret = true;
-    }
-    return ret;
+    CCASSERT(onAccelerationEvent, "");
+    
+    return true;
 }
 
 NS_CC_END
