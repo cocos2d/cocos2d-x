@@ -267,7 +267,7 @@ void CCDirector::drawScene(void)
 
     kmGLPushMatrix();
 
-#if defined(CC_PLATFORM_WP8)
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     kmMat4 orientationCorrection;
     switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
 	{
@@ -308,8 +308,8 @@ void CCDirector::drawScene(void)
     {
         showStats();
     }
-
-#if defined(CC_PLATFORM_WP8)
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPopMatrix();
     kmGLMatrixMode(KM_GL_MODELVIEW);
