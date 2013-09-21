@@ -27,7 +27,7 @@
 #include "CCSet.h"
 #include "event_dispatcher/CCTouch.h"
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCKeyboardEvent.h"
+#include "event_dispatcher/CCEventKeyboard.h"
 #include "CCIMEDispatcher.h"
 
 NS_CC_BEGIN

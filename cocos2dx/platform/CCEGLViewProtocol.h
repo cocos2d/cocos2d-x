@@ -2,7 +2,7 @@
 #define __CCEGLVIEWPROTOCOL_H__
 
 #include "ccTypes.h"
-#include "event_dispatcher/CCTouchEvent.h"
+#include "event_dispatcher/CCEventTouch.h"
 
 #include <vector>
 

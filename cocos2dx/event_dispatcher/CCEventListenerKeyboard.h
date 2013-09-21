@@ -27,7 +27,7 @@
 #define __cocos2d_libs__CCKeyboardEventListener__
 
 #include "CCEventListener.h"
-#include "CCKeyboardEvent.h"
+#include "CCEventKeyboard.h"
 
 NS_CC_BEGIN
 
