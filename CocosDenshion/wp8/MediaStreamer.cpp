@@ -40,7 +40,7 @@ MediaStreamer::MediaStreamer() :
 {
     ZeroMemory(&m_waveFormat, sizeof(m_waveFormat));
     m_location = Package::Current->InstalledLocation;
-    m_locationPath = Platform::String::Concat(m_location->Path, "\\");
+    m_locationPath = Platform::String::Concat(m_location->Path, "\\Assets\\Resources\\");
 }
 
 MediaStreamer::~MediaStreamer()
@@ -106,7 +106,28 @@ Platform::Array<byte>^ MediaStreamer::ReadData(
 
 void MediaStreamer::Initialize(__in const WCHAR* url)
 {
-	Platform::Array<byte>^ data = ReadData(ref new Platform::String(url));
+
+    WCHAR filePath[MAX_PATH] = {0};
+	if ((wcslen(url) > 1 && url[1] == ':'))
+	{
+		// path start with "x:", is absolute path
+		wcscat_s(filePath, url);
+	}
+	else if (wcslen(url) > 0 
+		&& (L'/' == url[0] || L'\\' == url[0]))
+	{
+		// path start with '/' or '\', is absolute path without driver name
+		wcscat_s(filePath, m_locationPath->Data());
+		// remove '/' or '\\'
+		wcscat_s(filePath, (const WCHAR*)url[1]);
+	}else
+	{
+		wcscat_s(filePath, m_locationPath->Data());
+		wcscat_s(filePath, url);
+	}
+
+
+	Platform::Array<byte>^ data = ReadData(ref new Platform::String(filePath));
 	UINT32 length = data->Length;
 	const byte * dataPtr = data->Data;
 	UINT32 offset = 0;
