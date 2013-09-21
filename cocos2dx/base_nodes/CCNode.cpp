@@ -42,7 +42,7 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "event_dispatcher/CCEventDispatcher.h"
 #include "event_dispatcher/CCEvent.h"
-#include "event_dispatcher/CCTouchEvent.h"
+#include "event_dispatcher/CCEventTouch.h"
 
 // externals
 #include "kazmath/GL/matrix.h"

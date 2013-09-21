@@ -23,8 +23,8 @@
  ****************************************************************************/
 #include "CCEventDispatcher.h"
 #include "CCEvent.h"
-#include "CCTouchEvent.h"
-#include "CCTouchEventListener.h"
+#include "CCEventTouch.h"
+#include "CCEventListenerTouch.h"
 #include "base_nodes/CCNode.h"
 #include "CCDirector.h"
 

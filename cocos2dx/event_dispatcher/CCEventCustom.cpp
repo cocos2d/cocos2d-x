@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCCustomEvent.h"
+#include "CCEventCustom.h"
 
 NS_CC_BEGIN
 

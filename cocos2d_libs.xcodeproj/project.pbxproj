@@ -116,26 +116,10 @@
 		1A11982A1785388100D62A44 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196981785201F00D62A44 /* tolua_map.c */; };
 		1A11982B1785388100D62A44 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196991785201F00D62A44 /* tolua_push.c */; };
 		1A11982C1785388100D62A44 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A11969A1785201F00D62A44 /* tolua_to.c */; };
-		1A2B654417EA7CEE00B386CE /* CCCustomEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B654217EA7CEE00B386CE /* CCCustomEvent.cpp */; };
-		1A2B654517EA7CEE00B386CE /* CCCustomEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B654217EA7CEE00B386CE /* CCCustomEvent.cpp */; };
-		1A2B654617EA7CEE00B386CE /* CCCustomEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B654317EA7CEE00B386CE /* CCCustomEvent.h */; };
-		1A2B654717EA7CEE00B386CE /* CCCustomEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B654317EA7CEE00B386CE /* CCCustomEvent.h */; };
-		1A2B654A17EA7E3500B386CE /* CCCustomEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B654817EA7E3400B386CE /* CCCustomEventListener.cpp */; };
-		1A2B654B17EA7E3500B386CE /* CCCustomEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B654817EA7E3400B386CE /* CCCustomEventListener.cpp */; };
-		1A2B654C17EA7E3500B386CE /* CCCustomEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B654917EA7E3400B386CE /* CCCustomEventListener.h */; };
-		1A2B654D17EA7E3500B386CE /* CCCustomEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B654917EA7E3400B386CE /* CCCustomEventListener.h */; };
 		1A2E82381793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
 		1A2E82391793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
 		1A50FEA517A0C89300A422C8 /* CCDeprecated-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */; };
 		1A50FEA617A0C89300A422C8 /* CCDeprecated-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */; };
-		1A6CC67317E07C89006DEE69 /* CCAccelerationEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC65D17E07C89006DEE69 /* CCAccelerationEvent.cpp */; };
-		1A6CC67417E07C89006DEE69 /* CCAccelerationEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC65D17E07C89006DEE69 /* CCAccelerationEvent.cpp */; };
-		1A6CC67517E07C89006DEE69 /* CCAccelerationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC65E17E07C89006DEE69 /* CCAccelerationEvent.h */; };
-		1A6CC67617E07C89006DEE69 /* CCAccelerationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC65E17E07C89006DEE69 /* CCAccelerationEvent.h */; };
-		1A6CC67717E07C89006DEE69 /* CCAccelerationEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC65F17E07C89006DEE69 /* CCAccelerationEventListener.cpp */; };
-		1A6CC67817E07C89006DEE69 /* CCAccelerationEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC65F17E07C89006DEE69 /* CCAccelerationEventListener.cpp */; };
-		1A6CC67917E07C89006DEE69 /* CCAccelerationEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66017E07C89006DEE69 /* CCAccelerationEventListener.h */; };
-		1A6CC67A17E07C89006DEE69 /* CCAccelerationEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66017E07C89006DEE69 /* CCAccelerationEventListener.h */; };
 		1A6CC67B17E07C89006DEE69 /* CCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66117E07C89006DEE69 /* CCEvent.cpp */; };
 		1A6CC67C17E07C89006DEE69 /* CCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66117E07C89006DEE69 /* CCEvent.cpp */; };
 		1A6CC67D17E07C89006DEE69 /* CCEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66217E07C89006DEE69 /* CCEvent.h */; };
@@ -148,26 +132,10 @@
 		1A6CC68817E07C89006DEE69 /* CCEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66717E07C89006DEE69 /* CCEventListener.cpp */; };
 		1A6CC68917E07C89006DEE69 /* CCEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66817E07C89006DEE69 /* CCEventListener.h */; };
 		1A6CC68A17E07C89006DEE69 /* CCEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66817E07C89006DEE69 /* CCEventListener.h */; };
-		1A6CC68B17E07C89006DEE69 /* CCKeyboardEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66917E07C89006DEE69 /* CCKeyboardEvent.cpp */; };
-		1A6CC68C17E07C89006DEE69 /* CCKeyboardEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66917E07C89006DEE69 /* CCKeyboardEvent.cpp */; };
-		1A6CC68D17E07C89006DEE69 /* CCKeyboardEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66A17E07C89006DEE69 /* CCKeyboardEvent.h */; };
-		1A6CC68E17E07C89006DEE69 /* CCKeyboardEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66A17E07C89006DEE69 /* CCKeyboardEvent.h */; };
-		1A6CC68F17E07C89006DEE69 /* CCKeyboardEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66B17E07C89006DEE69 /* CCKeyboardEventListener.cpp */; };
-		1A6CC69017E07C89006DEE69 /* CCKeyboardEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66B17E07C89006DEE69 /* CCKeyboardEventListener.cpp */; };
-		1A6CC69117E07C89006DEE69 /* CCKeyboardEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66C17E07C89006DEE69 /* CCKeyboardEventListener.h */; };
-		1A6CC69217E07C89006DEE69 /* CCKeyboardEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66C17E07C89006DEE69 /* CCKeyboardEventListener.h */; };
 		1A6CC69317E07C89006DEE69 /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66D17E07C89006DEE69 /* CCTouch.cpp */; };
 		1A6CC69417E07C89006DEE69 /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66D17E07C89006DEE69 /* CCTouch.cpp */; };
 		1A6CC69517E07C89006DEE69 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66E17E07C89006DEE69 /* CCTouch.h */; };
 		1A6CC69617E07C89006DEE69 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC66E17E07C89006DEE69 /* CCTouch.h */; };
-		1A6CC69717E07C89006DEE69 /* CCTouchEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66F17E07C89006DEE69 /* CCTouchEvent.cpp */; };
-		1A6CC69817E07C89006DEE69 /* CCTouchEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC66F17E07C89006DEE69 /* CCTouchEvent.cpp */; };
-		1A6CC69917E07C89006DEE69 /* CCTouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC67017E07C89006DEE69 /* CCTouchEvent.h */; };
-		1A6CC69A17E07C89006DEE69 /* CCTouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC67017E07C89006DEE69 /* CCTouchEvent.h */; };
-		1A6CC69B17E07C89006DEE69 /* CCTouchEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC67117E07C89006DEE69 /* CCTouchEventListener.cpp */; };
-		1A6CC69C17E07C89006DEE69 /* CCTouchEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CC67117E07C89006DEE69 /* CCTouchEventListener.cpp */; };
-		1A6CC69D17E07C89006DEE69 /* CCTouchEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC67217E07C89006DEE69 /* CCTouchEventListener.h */; };
-		1A6CC69E17E07C89006DEE69 /* CCTouchEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A6CC67217E07C89006DEE69 /* CCTouchEventListener.h */; };
 		1A6FB50617854BC200CDF010 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196951785201F00D62A44 /* tolua_event.c */; };
 		1A6FB50717854BC200CDF010 /* tolua_is.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196971785201F00D62A44 /* tolua_is.c */; };
 		1A6FB50817854BC200CDF010 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196981785201F00D62A44 /* tolua_map.c */; };
@@ -372,6 +340,38 @@
 		37BB5CC517E8A360002746B4 /* CCUtilMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5C7A17E8A360002746B4 /* CCUtilMath.cpp */; };
 		37BB5CC617E8A360002746B4 /* CCUtilMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5C7B17E8A360002746B4 /* CCUtilMath.h */; };
 		37BB5CC717E8A360002746B4 /* CCUtilMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BB5C7B17E8A360002746B4 /* CCUtilMath.h */; };
+		4621FCB517ED716100CD3B52 /* CCEventAcceleration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCA517ED716100CD3B52 /* CCEventAcceleration.cpp */; };
+		4621FCB617ED716100CD3B52 /* CCEventAcceleration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCA517ED716100CD3B52 /* CCEventAcceleration.cpp */; };
+		4621FCB717ED716100CD3B52 /* CCEventAcceleration.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCA617ED716100CD3B52 /* CCEventAcceleration.h */; };
+		4621FCB817ED716100CD3B52 /* CCEventAcceleration.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCA617ED716100CD3B52 /* CCEventAcceleration.h */; };
+		4621FCB917ED716100CD3B52 /* CCEventCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCA717ED716100CD3B52 /* CCEventCustom.cpp */; };
+		4621FCBA17ED716100CD3B52 /* CCEventCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCA717ED716100CD3B52 /* CCEventCustom.cpp */; };
+		4621FCBB17ED716100CD3B52 /* CCEventCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCA817ED716100CD3B52 /* CCEventCustom.h */; };
+		4621FCBC17ED716100CD3B52 /* CCEventCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCA817ED716100CD3B52 /* CCEventCustom.h */; };
+		4621FCBD17ED716100CD3B52 /* CCEventKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCA917ED716100CD3B52 /* CCEventKeyboard.cpp */; };
+		4621FCBE17ED716100CD3B52 /* CCEventKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCA917ED716100CD3B52 /* CCEventKeyboard.cpp */; };
+		4621FCBF17ED716100CD3B52 /* CCEventKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCAA17ED716100CD3B52 /* CCEventKeyboard.h */; };
+		4621FCC017ED716100CD3B52 /* CCEventKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCAA17ED716100CD3B52 /* CCEventKeyboard.h */; };
+		4621FCC117ED716100CD3B52 /* CCEventListenerAcceleration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCAB17ED716100CD3B52 /* CCEventListenerAcceleration.cpp */; };
+		4621FCC217ED716100CD3B52 /* CCEventListenerAcceleration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCAB17ED716100CD3B52 /* CCEventListenerAcceleration.cpp */; };
+		4621FCC317ED716100CD3B52 /* CCEventListenerAcceleration.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCAC17ED716100CD3B52 /* CCEventListenerAcceleration.h */; };
+		4621FCC417ED716100CD3B52 /* CCEventListenerAcceleration.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCAC17ED716100CD3B52 /* CCEventListenerAcceleration.h */; };
+		4621FCC517ED716100CD3B52 /* CCEventListenerCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCAD17ED716100CD3B52 /* CCEventListenerCustom.cpp */; };
+		4621FCC617ED716100CD3B52 /* CCEventListenerCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCAD17ED716100CD3B52 /* CCEventListenerCustom.cpp */; };
+		4621FCC717ED716100CD3B52 /* CCEventListenerCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCAE17ED716100CD3B52 /* CCEventListenerCustom.h */; };
+		4621FCC817ED716100CD3B52 /* CCEventListenerCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCAE17ED716100CD3B52 /* CCEventListenerCustom.h */; };
+		4621FCC917ED716100CD3B52 /* CCEventListenerKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCAF17ED716100CD3B52 /* CCEventListenerKeyboard.cpp */; };
+		4621FCCA17ED716100CD3B52 /* CCEventListenerKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCAF17ED716100CD3B52 /* CCEventListenerKeyboard.cpp */; };
+		4621FCCB17ED716100CD3B52 /* CCEventListenerKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCB017ED716100CD3B52 /* CCEventListenerKeyboard.h */; };
+		4621FCCC17ED716100CD3B52 /* CCEventListenerKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCB017ED716100CD3B52 /* CCEventListenerKeyboard.h */; };
+		4621FCCD17ED716100CD3B52 /* CCEventListenerTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCB117ED716100CD3B52 /* CCEventListenerTouch.cpp */; };
+		4621FCCE17ED716100CD3B52 /* CCEventListenerTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCB117ED716100CD3B52 /* CCEventListenerTouch.cpp */; };
+		4621FCCF17ED716100CD3B52 /* CCEventListenerTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCB217ED716100CD3B52 /* CCEventListenerTouch.h */; };
+		4621FCD017ED716100CD3B52 /* CCEventListenerTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCB217ED716100CD3B52 /* CCEventListenerTouch.h */; };
+		4621FCD117ED716100CD3B52 /* CCEventTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCB317ED716100CD3B52 /* CCEventTouch.cpp */; };
+		4621FCD217ED716100CD3B52 /* CCEventTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621FCB317ED716100CD3B52 /* CCEventTouch.cpp */; };
+		4621FCD317ED716100CD3B52 /* CCEventTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCB417ED716100CD3B52 /* CCEventTouch.h */; };
+		4621FCD417ED716100CD3B52 /* CCEventTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621FCB417ED716100CD3B52 /* CCEventTouch.h */; };
 		466AF6A017A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
 		466AF6A117A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
 		466AF6A717A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */; };
@@ -2370,32 +2370,16 @@
 		1A1196991785201F00D62A44 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		1A11969A1785201F00D62A44 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A2B654217EA7CEE00B386CE /* CCCustomEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCustomEvent.cpp; sourceTree = "<group>"; };
-		1A2B654317EA7CEE00B386CE /* CCCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomEvent.h; sourceTree = "<group>"; };
-		1A2B654817EA7E3400B386CE /* CCCustomEventListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCustomEventListener.cpp; sourceTree = "<group>"; };
-		1A2B654917EA7E3400B386CE /* CCCustomEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomEventListener.h; sourceTree = "<group>"; };
 		1A2E82371793EDB70058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
 		1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDeprecated-ext.h"; sourceTree = "<group>"; };
-		1A6CC65D17E07C89006DEE69 /* CCAccelerationEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAccelerationEvent.cpp; sourceTree = "<group>"; };
-		1A6CC65E17E07C89006DEE69 /* CCAccelerationEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerationEvent.h; sourceTree = "<group>"; };
-		1A6CC65F17E07C89006DEE69 /* CCAccelerationEventListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAccelerationEventListener.cpp; sourceTree = "<group>"; };
-		1A6CC66017E07C89006DEE69 /* CCAccelerationEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerationEventListener.h; sourceTree = "<group>"; };
 		1A6CC66117E07C89006DEE69 /* CCEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEvent.cpp; sourceTree = "<group>"; };
 		1A6CC66217E07C89006DEE69 /* CCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEvent.h; sourceTree = "<group>"; };
 		1A6CC66317E07C89006DEE69 /* CCEventDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventDispatcher.cpp; sourceTree = "<group>"; };
 		1A6CC66417E07C89006DEE69 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
 		1A6CC66717E07C89006DEE69 /* CCEventListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventListener.cpp; sourceTree = "<group>"; };
 		1A6CC66817E07C89006DEE69 /* CCEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventListener.h; sourceTree = "<group>"; };
-		1A6CC66917E07C89006DEE69 /* CCKeyboardEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeyboardEvent.cpp; sourceTree = "<group>"; };
-		1A6CC66A17E07C89006DEE69 /* CCKeyboardEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardEvent.h; sourceTree = "<group>"; };
-		1A6CC66B17E07C89006DEE69 /* CCKeyboardEventListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeyboardEventListener.cpp; sourceTree = "<group>"; };
-		1A6CC66C17E07C89006DEE69 /* CCKeyboardEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardEventListener.h; sourceTree = "<group>"; };
 		1A6CC66D17E07C89006DEE69 /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 		1A6CC66E17E07C89006DEE69 /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
-		1A6CC66F17E07C89006DEE69 /* CCTouchEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchEvent.cpp; sourceTree = "<group>"; };
-		1A6CC67017E07C89006DEE69 /* CCTouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchEvent.h; sourceTree = "<group>"; };
-		1A6CC67117E07C89006DEE69 /* CCTouchEventListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchEventListener.cpp; sourceTree = "<group>"; };
-		1A6CC67217E07C89006DEE69 /* CCTouchEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchEventListener.h; sourceTree = "<group>"; };
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6FB53317854DD600CDF010 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit.a; sourceTree = "<group>"; };
 		1ADB26DF17CC92D200634B5E /* jsb_cocos2dx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_auto.cpp; sourceTree = "<group>"; };
@@ -2489,6 +2473,22 @@
 		37BB5C7917E8A360002746B4 /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		37BB5C7A17E8A360002746B4 /* CCUtilMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUtilMath.cpp; sourceTree = "<group>"; };
 		37BB5C7B17E8A360002746B4 /* CCUtilMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUtilMath.h; sourceTree = "<group>"; };
+		4621FCA517ED716100CD3B52 /* CCEventAcceleration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventAcceleration.cpp; sourceTree = "<group>"; };
+		4621FCA617ED716100CD3B52 /* CCEventAcceleration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventAcceleration.h; sourceTree = "<group>"; };
+		4621FCA717ED716100CD3B52 /* CCEventCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventCustom.cpp; sourceTree = "<group>"; };
+		4621FCA817ED716100CD3B52 /* CCEventCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventCustom.h; sourceTree = "<group>"; };
+		4621FCA917ED716100CD3B52 /* CCEventKeyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventKeyboard.cpp; sourceTree = "<group>"; };
+		4621FCAA17ED716100CD3B52 /* CCEventKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventKeyboard.h; sourceTree = "<group>"; };
+		4621FCAB17ED716100CD3B52 /* CCEventListenerAcceleration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventListenerAcceleration.cpp; sourceTree = "<group>"; };
+		4621FCAC17ED716100CD3B52 /* CCEventListenerAcceleration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventListenerAcceleration.h; sourceTree = "<group>"; };
+		4621FCAD17ED716100CD3B52 /* CCEventListenerCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventListenerCustom.cpp; sourceTree = "<group>"; };
+		4621FCAE17ED716100CD3B52 /* CCEventListenerCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventListenerCustom.h; sourceTree = "<group>"; };
+		4621FCAF17ED716100CD3B52 /* CCEventListenerKeyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventListenerKeyboard.cpp; sourceTree = "<group>"; };
+		4621FCB017ED716100CD3B52 /* CCEventListenerKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventListenerKeyboard.h; sourceTree = "<group>"; };
+		4621FCB117ED716100CD3B52 /* CCEventListenerTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventListenerTouch.cpp; sourceTree = "<group>"; };
+		4621FCB217ED716100CD3B52 /* CCEventListenerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventListenerTouch.h; sourceTree = "<group>"; };
+		4621FCB317ED716100CD3B52 /* CCEventTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventTouch.cpp; sourceTree = "<group>"; };
+		4621FCB417ED716100CD3B52 /* CCEventTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventTouch.h; sourceTree = "<group>"; };
 		466AF689179FCBBB002EE9BB /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DrawPrimitives.lua; sourceTree = "<group>"; };
 		466AF69E17A12297002EE9BB /* CCDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDeprecated.cpp; sourceTree = "<group>"; };
 		466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDeprecated-ext.cpp"; sourceTree = "<group>"; };
@@ -3958,30 +3958,30 @@
 		1A6CC65C17E07C89006DEE69 /* event_dispatcher */ = {
 			isa = PBXGroup;
 			children = (
-				1A6CC65D17E07C89006DEE69 /* CCAccelerationEvent.cpp */,
-				1A6CC65E17E07C89006DEE69 /* CCAccelerationEvent.h */,
-				1A6CC65F17E07C89006DEE69 /* CCAccelerationEventListener.cpp */,
-				1A6CC66017E07C89006DEE69 /* CCAccelerationEventListener.h */,
-				1A2B654217EA7CEE00B386CE /* CCCustomEvent.cpp */,
-				1A2B654317EA7CEE00B386CE /* CCCustomEvent.h */,
-				1A2B654817EA7E3400B386CE /* CCCustomEventListener.cpp */,
-				1A2B654917EA7E3400B386CE /* CCCustomEventListener.h */,
+				4621FCA517ED716100CD3B52 /* CCEventAcceleration.cpp */,
+				4621FCA617ED716100CD3B52 /* CCEventAcceleration.h */,
+				4621FCA717ED716100CD3B52 /* CCEventCustom.cpp */,
+				4621FCA817ED716100CD3B52 /* CCEventCustom.h */,
+				4621FCA917ED716100CD3B52 /* CCEventKeyboard.cpp */,
+				4621FCAA17ED716100CD3B52 /* CCEventKeyboard.h */,
+				4621FCAB17ED716100CD3B52 /* CCEventListenerAcceleration.cpp */,
+				4621FCAC17ED716100CD3B52 /* CCEventListenerAcceleration.h */,
+				4621FCAD17ED716100CD3B52 /* CCEventListenerCustom.cpp */,
+				4621FCAE17ED716100CD3B52 /* CCEventListenerCustom.h */,
+				4621FCAF17ED716100CD3B52 /* CCEventListenerKeyboard.cpp */,
+				4621FCB017ED716100CD3B52 /* CCEventListenerKeyboard.h */,
+				4621FCB117ED716100CD3B52 /* CCEventListenerTouch.cpp */,
+				4621FCB217ED716100CD3B52 /* CCEventListenerTouch.h */,
+				4621FCB317ED716100CD3B52 /* CCEventTouch.cpp */,
+				4621FCB417ED716100CD3B52 /* CCEventTouch.h */,
 				1A6CC66117E07C89006DEE69 /* CCEvent.cpp */,
 				1A6CC66217E07C89006DEE69 /* CCEvent.h */,
 				1A6CC66317E07C89006DEE69 /* CCEventDispatcher.cpp */,
 				1A6CC66417E07C89006DEE69 /* CCEventDispatcher.h */,
 				1A6CC66717E07C89006DEE69 /* CCEventListener.cpp */,
 				1A6CC66817E07C89006DEE69 /* CCEventListener.h */,
-				1A6CC66917E07C89006DEE69 /* CCKeyboardEvent.cpp */,
-				1A6CC66A17E07C89006DEE69 /* CCKeyboardEvent.h */,
-				1A6CC66B17E07C89006DEE69 /* CCKeyboardEventListener.cpp */,
-				1A6CC66C17E07C89006DEE69 /* CCKeyboardEventListener.h */,
 				1A6CC66D17E07C89006DEE69 /* CCTouch.cpp */,
 				1A6CC66E17E07C89006DEE69 /* CCTouch.h */,
-				1A6CC66F17E07C89006DEE69 /* CCTouchEvent.cpp */,
-				1A6CC67017E07C89006DEE69 /* CCTouchEvent.h */,
-				1A6CC67117E07C89006DEE69 /* CCTouchEventListener.cpp */,
-				1A6CC67217E07C89006DEE69 /* CCTouchEventListener.h */,
 			);
 			path = event_dispatcher;
 			sourceTree = "<group>";
@@ -6529,18 +6529,18 @@
 				0186A8FE17A0674300D88A79 /* CCFontFNT.h in Headers */,
 				01881BCD17B35D840019A3C3 /* s3tc.h in Headers */,
 				01C92EE317BB5DE800024119 /* atitc.h in Headers */,
-				1A6CC67517E07C89006DEE69 /* CCAccelerationEvent.h in Headers */,
-				1A6CC67917E07C89006DEE69 /* CCAccelerationEventListener.h in Headers */,
 				1A6CC67D17E07C89006DEE69 /* CCEvent.h in Headers */,
 				1A6CC68117E07C89006DEE69 /* CCEventDispatcher.h in Headers */,
 				1A6CC68917E07C89006DEE69 /* CCEventListener.h in Headers */,
-				1A6CC68D17E07C89006DEE69 /* CCKeyboardEvent.h in Headers */,
-				1A6CC69117E07C89006DEE69 /* CCKeyboardEventListener.h in Headers */,
 				1A6CC69517E07C89006DEE69 /* CCTouch.h in Headers */,
-				1A6CC69917E07C89006DEE69 /* CCTouchEvent.h in Headers */,
-				1A6CC69D17E07C89006DEE69 /* CCTouchEventListener.h in Headers */,
-				1A2B654617EA7CEE00B386CE /* CCCustomEvent.h in Headers */,
-				1A2B654C17EA7E3500B386CE /* CCCustomEventListener.h in Headers */,
+				4621FCB717ED716100CD3B52 /* CCEventAcceleration.h in Headers */,
+				4621FCBB17ED716100CD3B52 /* CCEventCustom.h in Headers */,
+				4621FCBF17ED716100CD3B52 /* CCEventKeyboard.h in Headers */,
+				4621FCC317ED716100CD3B52 /* CCEventListenerAcceleration.h in Headers */,
+				4621FCC717ED716100CD3B52 /* CCEventListenerCustom.h in Headers */,
+				4621FCCB17ED716100CD3B52 /* CCEventListenerKeyboard.h in Headers */,
+				4621FCCF17ED716100CD3B52 /* CCEventListenerTouch.h in Headers */,
+				4621FCD317ED716100CD3B52 /* CCEventTouch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7257,18 +7257,18 @@
 				0186A90017A0674500D88A79 /* CCFontFNT.h in Headers */,
 				01881BCC17B35D800019A3C3 /* s3tc.h in Headers */,
 				01C92EE417BB5DE800024119 /* atitc.h in Headers */,
-				1A6CC67617E07C89006DEE69 /* CCAccelerationEvent.h in Headers */,
-				1A6CC67A17E07C89006DEE69 /* CCAccelerationEventListener.h in Headers */,
 				1A6CC67E17E07C89006DEE69 /* CCEvent.h in Headers */,
 				1A6CC68217E07C89006DEE69 /* CCEventDispatcher.h in Headers */,
 				1A6CC68A17E07C89006DEE69 /* CCEventListener.h in Headers */,
-				1A6CC68E17E07C89006DEE69 /* CCKeyboardEvent.h in Headers */,
-				1A6CC69217E07C89006DEE69 /* CCKeyboardEventListener.h in Headers */,
 				1A6CC69617E07C89006DEE69 /* CCTouch.h in Headers */,
-				1A6CC69A17E07C89006DEE69 /* CCTouchEvent.h in Headers */,
-				1A6CC69E17E07C89006DEE69 /* CCTouchEventListener.h in Headers */,
-				1A2B654717EA7CEE00B386CE /* CCCustomEvent.h in Headers */,
-				1A2B654D17EA7E3500B386CE /* CCCustomEventListener.h in Headers */,
+				4621FCB817ED716100CD3B52 /* CCEventAcceleration.h in Headers */,
+				4621FCBC17ED716100CD3B52 /* CCEventCustom.h in Headers */,
+				4621FCC017ED716100CD3B52 /* CCEventKeyboard.h in Headers */,
+				4621FCC417ED716100CD3B52 /* CCEventListenerAcceleration.h in Headers */,
+				4621FCC817ED716100CD3B52 /* CCEventListenerCustom.h in Headers */,
+				4621FCCC17ED716100CD3B52 /* CCEventListenerKeyboard.h in Headers */,
+				4621FCD017ED716100CD3B52 /* CCEventListenerTouch.h in Headers */,
+				4621FCD417ED716100CD3B52 /* CCEventTouch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8073,18 +8073,18 @@
 				0186A90217A068E800D88A79 /* CCFont.cpp in Sources */,
 				01C92EE117BB5DE800024119 /* atitc.cpp in Sources */,
 				B3BDDFF717D9703C001ADE9E /* CCPhysicsBody.cpp in Sources */,
-				1A6CC67317E07C89006DEE69 /* CCAccelerationEvent.cpp in Sources */,
-				1A6CC67717E07C89006DEE69 /* CCAccelerationEventListener.cpp in Sources */,
 				1A6CC67B17E07C89006DEE69 /* CCEvent.cpp in Sources */,
 				1A6CC67F17E07C89006DEE69 /* CCEventDispatcher.cpp in Sources */,
 				1A6CC68717E07C89006DEE69 /* CCEventListener.cpp in Sources */,
-				1A6CC68B17E07C89006DEE69 /* CCKeyboardEvent.cpp in Sources */,
-				1A6CC68F17E07C89006DEE69 /* CCKeyboardEventListener.cpp in Sources */,
 				1A6CC69317E07C89006DEE69 /* CCTouch.cpp in Sources */,
-				1A6CC69717E07C89006DEE69 /* CCTouchEvent.cpp in Sources */,
-				1A6CC69B17E07C89006DEE69 /* CCTouchEventListener.cpp in Sources */,
-				1A2B654417EA7CEE00B386CE /* CCCustomEvent.cpp in Sources */,
-				1A2B654A17EA7E3500B386CE /* CCCustomEventListener.cpp in Sources */,
+				4621FCB517ED716100CD3B52 /* CCEventAcceleration.cpp in Sources */,
+				4621FCB917ED716100CD3B52 /* CCEventCustom.cpp in Sources */,
+				4621FCBD17ED716100CD3B52 /* CCEventKeyboard.cpp in Sources */,
+				4621FCC117ED716100CD3B52 /* CCEventListenerAcceleration.cpp in Sources */,
+				4621FCC517ED716100CD3B52 /* CCEventListenerCustom.cpp in Sources */,
+				4621FCC917ED716100CD3B52 /* CCEventListenerKeyboard.cpp in Sources */,
+				4621FCCD17ED716100CD3B52 /* CCEventListenerTouch.cpp in Sources */,
+				4621FCD117ED716100CD3B52 /* CCEventTouch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8576,18 +8576,18 @@
 				0186A90317A068E900D88A79 /* CCFont.cpp in Sources */,
 				B3C1A83517E0175300402152 /* CCPhysicsWorldInfo.cpp in Sources */,
 				01C92EE217BB5DE800024119 /* atitc.cpp in Sources */,
-				1A6CC67417E07C89006DEE69 /* CCAccelerationEvent.cpp in Sources */,
-				1A6CC67817E07C89006DEE69 /* CCAccelerationEventListener.cpp in Sources */,
 				1A6CC67C17E07C89006DEE69 /* CCEvent.cpp in Sources */,
 				1A6CC68017E07C89006DEE69 /* CCEventDispatcher.cpp in Sources */,
 				1A6CC68817E07C89006DEE69 /* CCEventListener.cpp in Sources */,
-				1A6CC68C17E07C89006DEE69 /* CCKeyboardEvent.cpp in Sources */,
-				1A6CC69017E07C89006DEE69 /* CCKeyboardEventListener.cpp in Sources */,
 				1A6CC69417E07C89006DEE69 /* CCTouch.cpp in Sources */,
-				1A6CC69817E07C89006DEE69 /* CCTouchEvent.cpp in Sources */,
-				1A6CC69C17E07C89006DEE69 /* CCTouchEventListener.cpp in Sources */,
-				1A2B654517EA7CEE00B386CE /* CCCustomEvent.cpp in Sources */,
-				1A2B654B17EA7E3500B386CE /* CCCustomEventListener.cpp in Sources */,
+				4621FCB617ED716100CD3B52 /* CCEventAcceleration.cpp in Sources */,
+				4621FCBA17ED716100CD3B52 /* CCEventCustom.cpp in Sources */,
+				4621FCBE17ED716100CD3B52 /* CCEventKeyboard.cpp in Sources */,
+				4621FCC217ED716100CD3B52 /* CCEventListenerAcceleration.cpp in Sources */,
+				4621FCC617ED716100CD3B52 /* CCEventListenerCustom.cpp in Sources */,
+				4621FCCA17ED716100CD3B52 /* CCEventListenerKeyboard.cpp in Sources */,
+				4621FCCE17ED716100CD3B52 /* CCEventListenerTouch.cpp in Sources */,
+				4621FCD217ED716100CD3B52 /* CCEventTouch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,8 +27,8 @@
 
 #include "platform/CCCommon.h"
 #include "event_dispatcher/CCTouch.h"
-#include "event_dispatcher/CCTouchEvent.h"
-#include "event_dispatcher/CCKeyboardEvent.h"
+#include "event_dispatcher/CCEventTouch.h"
+#include "event_dispatcher/CCEventKeyboard.h"
 #include "cocoa/CCSet.h"
 #include <map>
 #include <string>

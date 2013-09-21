@@ -20,27 +20,26 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+ 
  ****************************************************************************/
 
-#include "CCAccelerationEventListener.h"
-#include "CCAccelerationEvent.h"
+#include "CCEventListenerKeyboard.h"
+#include "CCEventKeyboard.h"
+#include "ccMacros.h"
 
 NS_CC_BEGIN
 
-EventListenerAcceleration::EventListenerAcceleration()
+bool EventListenerKeyboard::checkAvaiable()
 {
-
+    CCASSERT(onKeyPressed && onKeyReleased, "");
+    
+    return true;
 }
 
-EventListenerAcceleration::~EventListenerAcceleration()
+EventListenerKeyboard* EventListenerKeyboard::create()
 {
-    CCLOGINFO("In the destructor of AccelerationEventListener. %p", this);
-}
-
-EventListenerAcceleration* EventListenerAcceleration::create(std::function<void(Acceleration*, Event* event)> callback)
-{
-    EventListenerAcceleration* ret = new EventListenerAcceleration();
-    if (ret && ret->init(callback))
+    auto ret = new EventListenerKeyboard();
+    if (ret && ret->init())
     {
         ret->autorelease();
     }
@@ -48,47 +47,53 @@ EventListenerAcceleration* EventListenerAcceleration::create(std::function<void(
     {
         CC_SAFE_DELETE(ret);
     }
-    
     return ret;
 }
 
-bool EventListenerAcceleration::init(std::function<void(Acceleration*, Event* event)> callback)
+EventListenerKeyboard* EventListenerKeyboard::clone()
+{
+    auto ret = new EventListenerKeyboard();
+    if (ret && ret->init())
+    {
+        ret->autorelease();
+        ret->onKeyPressed = onKeyPressed;
+        ret->onKeyReleased = onKeyReleased;
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+EventListenerKeyboard::EventListenerKeyboard()
+: onKeyPressed(nullptr)
+, onKeyReleased(nullptr)
+{
+}
+
+bool EventListenerKeyboard::init()
 {
     auto listener = [this](Event* event){
-        auto accEvent = static_cast<EventAcceleration*>(event);
-        this->onAccelerationEvent(&accEvent->_acc, event);
+        auto keyboardEvent = static_cast<EventKeyboard*>(event);
+        if (keyboardEvent->_isPressed)
+        {
+            if (onKeyPressed != nullptr)
+                onKeyPressed(keyboardEvent->_keyCode, event);
+        }
+        else
+        {
+            if (onKeyReleased != nullptr)
+                onKeyReleased(keyboardEvent->_keyCode, event);
+        }
     };
     
-    if (EventListener::init(EventAcceleration::EVENT_TYPE, listener))
+    if (EventListener::init(EventKeyboard::EVENT_TYPE, listener))
     {
-        onAccelerationEvent = callback;
         return true;
     }
     
     return false;
-}
-
-EventListenerAcceleration* EventListenerAcceleration::clone()
-{
-    auto ret = new EventListenerAcceleration();
-    
-    if (ret && ret->init(onAccelerationEvent))
-    {
-        ret->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-    
-    return ret;
-}
-
-bool EventListenerAcceleration::checkAvaiable()
-{
-    CCASSERT(onAccelerationEvent, "");
-    
-    return true;
 }
 
 NS_CC_END
