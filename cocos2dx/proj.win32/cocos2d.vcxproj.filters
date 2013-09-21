@@ -491,12 +491,6 @@
     <ClCompile Include="..\platform\third_party\common\atitc\atitc.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCAccelerationEvent.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCAccelerationEventListener.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\event_dispatcher\CCEvent.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
@@ -506,19 +500,7 @@
     <ClCompile Include="..\event_dispatcher\CCEventListener.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCKeyboardEvent.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCKeyboardEventListener.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\event_dispatcher\CCTouch.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCTouchEvent.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCTouchEventListener.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -566,10 +548,28 @@
     <ClCompile Include="..\physics\Box2D\CCPhysicsWorldInfo.cpp">
       <Filter>physics\Box2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCCustomEvent.cpp">
+    <ClCompile Include="..\event_dispatcher\CCEventAcceleration.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCCustomEventListener.cpp">
+    <ClCompile Include="..\event_dispatcher\CCEventCustom.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventKeyboard.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventListenerAcceleration.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventListenerCustom.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventListenerKeyboard.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventListenerTouch.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventTouch.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1065,12 +1065,6 @@
     <ClInclude Include="..\platform\CCDevice.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\event_dispatcher\CCAccelerationEvent.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\event_dispatcher\CCAccelerationEventListener.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
     <ClInclude Include="..\event_dispatcher\CCEvent.h">
       <Filter>event_dispatcher</Filter>
     </ClInclude>
@@ -1080,19 +1074,7 @@
     <ClInclude Include="..\event_dispatcher\CCEventListener.h">
       <Filter>event_dispatcher</Filter>
     </ClInclude>
-    <ClInclude Include="..\event_dispatcher\CCKeyboardEvent.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\event_dispatcher\CCKeyboardEventListener.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
     <ClInclude Include="..\event_dispatcher\CCTouch.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\event_dispatcher\CCTouchEvent.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\event_dispatcher\CCTouchEventListener.h">
       <Filter>event_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1149,10 +1131,28 @@
     <ClInclude Include="..\physics\Box2D\CCPhysicsWorldInfo.h">
       <Filter>physics\Box2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\event_dispatcher\CCCustomEvent.h">
+    <ClInclude Include="..\event_dispatcher\CCEventAcceleration.h">
       <Filter>event_dispatcher</Filter>
     </ClInclude>
-    <ClInclude Include="..\event_dispatcher\CCCustomEventListener.h">
+    <ClInclude Include="..\event_dispatcher\CCEventCustom.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventKeyboard.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventListenerAcceleration.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventListenerCustom.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventListenerKeyboard.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventListenerTouch.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventTouch.h">
       <Filter>event_dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
