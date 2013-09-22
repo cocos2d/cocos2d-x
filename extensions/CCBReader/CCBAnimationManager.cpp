@@ -41,6 +41,7 @@ bool CCBAnimationManager::init()
     mDocumentOutletNodes = new CCArray();
     mDocumentCallbackNames = new CCArray();
     mDocumentCallbackNodes = new CCArray();
+    mDocumentCallbackControlEvents = new CCArray();
     mKeyframeCallbacks = new CCArray();
     mKeyframeCallFuncs = new CCDictionary();
 
@@ -75,6 +76,7 @@ CCBAnimationManager::~CCBAnimationManager()
     CC_SAFE_RELEASE(mDocumentOutletNodes);
     CC_SAFE_RELEASE(mDocumentCallbackNames);
     CC_SAFE_RELEASE(mDocumentCallbackNodes);
+    CC_SAFE_RELEASE(mDocumentCallbackControlEvents);
     
     CC_SAFE_RELEASE(mKeyframeCallFuncs);
     CC_SAFE_RELEASE(mKeyframeCallbacks);
@@ -127,6 +129,16 @@ void CCBAnimationManager::addDocumentCallbackNode(CCNode *node) {
 void CCBAnimationManager::addDocumentCallbackName(std::string name) {
     CCString *tmpName = CCString::create(name);
     mDocumentCallbackNames->addObject(tmpName);
+}
+
+void CCBAnimationManager::addDocumentCallbackControlEvents(CCControlEvent eventType)
+{
+    mDocumentCallbackControlEvents->addObject(CCInteger::create((int)eventType));
+}
+
+CCArray* CCBAnimationManager::getDocumentCallbackControlEvents()
+{
+    return mDocumentCallbackControlEvents;
 }
 
 CCArray* CCBAnimationManager::getDocumentCallbackNames() {

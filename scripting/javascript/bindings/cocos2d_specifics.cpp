@@ -41,9 +41,9 @@ void JSTouchDelegate::setJSObject(JSObject *obj) {
     _mObj = obj;
 }
 
-void JSTouchDelegate::registerStandardDelegate() {
+void JSTouchDelegate::registerStandardDelegate(int priority) {
     CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addStandardDelegate(this,0);
+    pDirector->getTouchDispatcher()->addStandardDelegate(this,priority);
 }
 
 void JSTouchDelegate::registerTargettedDelegate(int priority, bool swallowsTouches) {
@@ -627,7 +627,10 @@ JSBool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint3
 
         JSTouchDelegate *touch = new JSTouchDelegate();
         touch->autorelease();
-        touch->registerStandardDelegate();
+        if(argc > 1)
+        	touch->registerStandardDelegate(JSVAL_TO_INT(argv[1]));
+        else
+        	touch->registerStandardDelegate(0);
         jsobj = (argc == 1 ? JSVAL_TO_OBJECT(argv[0]) : JSVAL_TO_OBJECT(JSVAL_VOID));
         touch->setJSObject(jsobj);
         JSTouchDelegate::setDelegateForJSObject(jsobj, touch);

@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include "CCBSequence.h"
+#include "GUI/CCControlExtension/CCControl.h"
 
 
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
@@ -197,6 +198,7 @@ private:
     
     std::vector<std::string> mOwnerCallbackNames;
     CCArray* mOwnerCallbackNodes;
+    CCArray* mOwnerOwnerCallbackControlEvents;
     std::string mCCBRootPath;
     bool hasScriptingOwner;    
     bool init();
@@ -250,11 +252,11 @@ public:
     
     bool readCallbackKeyframesForSeq(CCBSequence* seq);
     bool readSoundKeyframesForSeq(CCBSequence* seq);
-
-
-    
+   
     CCArray* getOwnerCallbackNames();
     CCArray* getOwnerCallbackNodes();
+    CCArray* getOwnerCallbackControlEvents();
+
     CCArray* getOwnerOutletNames();
     CCArray* getOwnerOutletNodes();
     CCArray* getNodesWithAnimationManagers();
@@ -265,9 +267,11 @@ public:
     
     void addOwnerCallbackName(std::string name);
     void addOwnerCallbackNode(CCNode *node);
+    void addOwnerCallbackControlEvents(CCControlEvent type);
     
     void addDocumentCallbackName(std::string name);
     void addDocumentCallbackNode(CCNode *node);
+    void addDocumentCallbackControlEvents(CCControlEvent eventType);
     
     static float getResolutionScale();
     static void setResolutionScale(float scale);
