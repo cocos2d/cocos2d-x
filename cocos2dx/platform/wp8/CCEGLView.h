@@ -40,13 +40,12 @@ THE SOFTWARE.
 #include <DirectXMath.h>
 
 #include "esUtil.h"
+#include "WP8Keyboard.h"
 
 NS_CC_BEGIN
 
 class CCEGL;
 class CCEGLView;
-
-
 
 class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
@@ -111,6 +110,7 @@ protected:
 
 private:
     Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
+
 	bool m_running;
 	bool m_initialized;
     bool m_bSupportTouch;
@@ -119,6 +119,8 @@ private:
 	CCPoint GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
 
 	ESContext m_esContext;
+	bool m_textInputEnabled;
+    WP8Keyboard^ mKeyboard;
 };
 
 NS_CC_END

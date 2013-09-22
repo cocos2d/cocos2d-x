@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 cocos2d-x.org
 Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
@@ -48,6 +48,9 @@ using namespace Windows::UI::ViewManagement;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::ApplicationModel::Activation;
+using namespace Windows::Phone::UI::Core;
+using namespace Platform;
+
 
 NS_CC_BEGIN
 
@@ -55,7 +58,7 @@ static CCEGLView* s_pEglView = NULL;
 
 
 #if 0
-CCPoint DirectXView::GetCCPoint(PointerEventArgs^ args) {
+CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 
 	auto p = TransformToOrientation(args->CurrentPoint->Position);
 	float x = getScaledDPIValue(p.X);
@@ -70,40 +73,33 @@ CCPoint DirectXView::GetCCPoint(PointerEventArgs^ args) {
 	}
 	return pt;
 }
+#endif
 
-void DirectXView::ShowKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
+#if 0
+void CCEGLView::ShowKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
 {
     CCEGLView::sharedOpenGLView()->ShowKeyboard(args->OccludedRect);
 }
 
-void DirectXView::HideKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
+void CCEGLView::HideKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
 {
     CCEGLView::sharedOpenGLView()->HideKeyboard(args->OccludedRect);
 }
+#endif
 
-void DirectXView::setIMEKeyboardState(bool bOpen)
+void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
 	m_textInputEnabled = bOpen;
-	if(m_textInputEnabled)
-	{
-#if !defined(WINAPI_PARTITION_PHONE)
-		m_textBox->IsEnabled = true;
-		m_textBox->Focus(FocusState::Pointer);
-#endif	
-	}
-	else
-	{
-#if !defined(WINAPI_PARTITION_PHONE)
-		m_dummy->Focus(FocusState::Pointer);
-		m_textBox->IsEnabled = false;
-#endif	
-	}
+    if(!mKeyboard)
+        mKeyboard = ref new WP8Keyboard(m_window.Get());
+
+    mKeyboard->SetFocus(m_textInputEnabled);
 }
 
 
 #if !defined(WINAPI_PARTITION_PHONE)
 
-void DirectXView::OnTextKeyDown(Object^ sender, KeyRoutedEventArgs^ args)
+void CCEGLView::OnTextKeyDown(Object^ sender, KeyRoutedEventArgs^ args)
 {
 	if(!m_textInputEnabled)
 	{
@@ -119,7 +115,7 @@ void DirectXView::OnTextKeyDown(Object^ sender, KeyRoutedEventArgs^ args)
     }
 }
 
-void DirectXView::OnTextKeyUp(Object^ sender, KeyRoutedEventArgs^ args)
+void CCEGLView::OnTextKeyUp(Object^ sender, KeyRoutedEventArgs^ args)
 {
 	if(!m_textInputEnabled)
 	{
@@ -154,46 +150,6 @@ void DirectXView::OnTextKeyUp(Object^ sender, KeyRoutedEventArgs^ args)
 #endif
 
 
-void DirectXView::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
-{
-    // Phone applications operate in a memory-constrained environment, so when entering
-    // the background it is a good idea to free memory-intensive objects that will be
-    // easy to restore upon reactivation. The swapchain and backbuffer are good candidates
-    // here, as they consume a large amount of memory and can be reinitialized quickly.
-    m_swapChain = nullptr;
-    m_renderTargetView = nullptr;
-    m_depthStencilView = nullptr;
-}
-
-void DirectXView::OnWindowSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
-{
-	ResizeWindow();
-	CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
-}
-
-void DirectXView::OnLogicalDpiChanged(Object^ sender)
-{
-	//SetDpi(DisplayProperties::LogicalDpi);
-}
-
-void DirectXView::OnOrientationChanged(Object^ sender)
-{
-	ResizeWindow();
-	CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
-}
-
-void DirectXView::OnDisplayContentsInvalidated(Object^ sender)
-{
-	CCEGLView::sharedOpenGLView()->ValidateDevice();
-}
-
-void DirectXView::OnRendering(Object^ sender, Object^ args)
-{
-	CCEGLView::sharedOpenGLView()->OnRendering();
-}
-#endif
-
-
 CCEGLView::CCEGLView()
 	: m_window(nullptr)
 	, m_fFrameZoomFactor(1.0f)
@@ -201,11 +157,13 @@ CCEGLView::CCEGLView()
 	, m_lastPointValid(false)
 	, m_running(false)
 	, m_initialized(false)
+    , m_textInputEnabled(false)
 	, m_windowClosed(false)
 	, m_windowVisible(true)
+    , mKeyboard(nullptr)
 {
 	s_pEglView = this;
-    strcpy(m_szViewName, "Cocos2dxWP8");
+    strcpy_s(m_szViewName, "Cocos2dxWP8");
 }
 
 CCEGLView::~CCEGLView()
@@ -216,22 +174,11 @@ CCEGLView::~CCEGLView()
 	// TODO: cleanup 
 }
 
-#if defined(WINAPI_PARTITION_PHONE)
 bool CCEGLView::Create(CoreWindow^ window)
-#else
-bool CCEGLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
-#endif
 {
     bool bRet = false;
 	m_window = window;
-
 	m_bSupportTouch = true;
-
-#if 0
-	bool done = false;
-	while(!done) {};  
-#endif // 0
-
 
  	esInitContext ( &m_esContext );
 	m_esContext.hWnd = WINRT_EGL_WINDOW(window);
@@ -326,10 +273,7 @@ void CCEGLView::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 }
 
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
-{
 
-}
 
 void CCEGLView::resize(int width, int height)
 {
