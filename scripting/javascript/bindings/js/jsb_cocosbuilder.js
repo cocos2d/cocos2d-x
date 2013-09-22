@@ -40,7 +40,22 @@ cc.BuilderReader.load = function(file, owner, parentSize)
             var callbackName = ownerCallbackNames[i];
             var callbackNode = ownerCallbackNodes[i];
 
-            callbackNode.setCallback(owner[callbackName], owner);
+            if (owner[callbackName] === undefined)
+            {
+                cc.log("Warning: " + "owner." + callbackName + " is undefined.");
+            }
+            else
+            {
+                if(callbackNode instanceof cc.ControlButton)
+                {
+                    var ownerCallbackControlEvents = reader.getOwnerCallbackControlEvents();
+                    callbackNode.addTargetWithActionForControlEvents(owner, owner[callbackName], ownerCallbackControlEvents[i]);
+                }
+                else
+                {
+                    callbackNode.setCallback(owner[callbackName], owner);
+                }
+            }
         }
 
         // Variables
