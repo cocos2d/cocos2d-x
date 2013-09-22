@@ -31,6 +31,6 @@ int main(int argc, char *argv[])
 {
     AppDelegate app;
     EGLView eglView;
-    eglView.init("CocosDragonJS",900,640);
+    eglView.init("CocosDragonJS", 480, 720);
     return Application::getInstance()->run();
 }
