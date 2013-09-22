@@ -67,6 +67,12 @@ bool ActionObject::getLoop()
 void ActionObject::setUnitTime(float fTime)
 {
 	m_fUnitTime = fTime;
+	int frameNum = m_ActionNodeList->count();
+	for ( int i = 0; i < frameNum; i++ )
+	{
+		ActionNode* actionNode = (ActionNode*)m_ActionNodeList->objectAtIndex(i);
+		actionNode->setUnitTime(m_fUnitTime);
+	}
 }
 float ActionObject::getUnitTime()
 {
@@ -112,6 +118,7 @@ void ActionObject::addActionNode(ActionNode* node)
 		return;
 	}
 	m_ActionNodeList->addObject(node);
+	node->setUnitTime(m_fUnitTime);
 }
 void ActionObject::removeActionNode(ActionNode* node)
 {
