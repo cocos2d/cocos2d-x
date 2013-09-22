@@ -271,9 +271,13 @@ bool UICCTextField::getDeleteBackward()
 
     
 UITextField::UITextField():
-m_fTouchWidth(0.0),
-m_fTouchHeight(0.0),
+m_pTextFieldRenderer(NULL),
+m_fTouchWidth(0.0f),
+m_fTouchHeight(0.0f),
 m_bUseTouchArea(false),
+m_pEventListener(NULL),
+m_pfnEventSelector(NULL),
+/*******Compatible*******/
 m_pAttachWithIMEListener(NULL),
 m_pDetachWithIMEListener(NULL),
 m_pInsertTextListener(NULL),
@@ -281,14 +285,13 @@ m_pDeleteBackwardListener(NULL),
 m_pfnAttachWithIMESelector(NULL),
 m_pfnDetachWithIMESelector(NULL),
 m_pfnInsertTextSelector(NULL),
-m_pfnDeleteBackwardSelector(NULL),
-m_pTextFieldRenderer(NULL)
+m_pfnDeleteBackwardSelector(NULL)
+/**************/
 {
 }
 
 UITextField::~UITextField()
 {
-    
 }
 
 UITextField* UITextField::create()
@@ -296,6 +299,7 @@ UITextField* UITextField::create()
     UITextField* widget = new UITextField();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -334,30 +338,25 @@ void UITextField::setText(const char* text)
 	}
     std::string strText(text);
     m_pTextFieldRenderer->setString(strText.c_str());
-	textfieldRendererScaleChangedWithSize();
+    textfieldRendererScaleChangedWithSize();
 }
-
-//void UITextField::setSize(const CCSize &size)
-//{
-//    m_pRenderTextField->setDimensions(size);
-//}
 
 void UITextField::setPlaceHolder(const char *value)
 {
     m_pTextFieldRenderer->setPlaceHolder(value);
-	textfieldRendererScaleChangedWithSize();
+    textfieldRendererScaleChangedWithSize();
 }
 
 void UITextField::setFontSize(int size)
 {
     m_pTextFieldRenderer->setFontSize(size);
-	textfieldRendererScaleChangedWithSize();
+    textfieldRendererScaleChangedWithSize();
 }
 
 void UITextField::setFontName(const char *name)
 {
     m_pTextFieldRenderer->setFontName(name);
-	textfieldRendererScaleChangedWithSize();
+    textfieldRendererScaleChangedWithSize();
 }
 
 void UITextField::didNotSelectSelf()
@@ -480,36 +479,67 @@ void UITextField::setDeleteBackward(bool deleteBackward)
 
 void UITextField::attachWithIMEEvent()
 {
+    /*Compatible*/
     if (m_pAttachWithIMEListener && m_pfnAttachWithIMESelector)
     {
         (m_pAttachWithIMEListener->*m_pfnAttachWithIMESelector)(this);
+    }
+    /************/
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
     }
 }
 
 void UITextField::detachWithIMEEvent()
 {
+    /*Compatible*/
     if (m_pDetachWithIMEListener && m_pfnDetachWithIMESelector)
     {
         (m_pDetachWithIMEListener->*m_pfnDetachWithIMESelector)(this);
+    }
+    /************/
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
     }
 }
 
 void UITextField::insertTextEvent()
 {
+    /*Compatible*/
     if (m_pInsertTextListener && m_pfnInsertTextSelector)
     {
         (m_pInsertTextListener->*m_pfnInsertTextSelector)(this);
+    }
+    /************/
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, TEXTFIELD_EVENT_INDERT_TEXT);
     }
 }
 
 void UITextField::deleteBackwardEvent()
 {
+    /*Compatible*/
     if (m_pDeleteBackwardListener && m_pfnDeleteBackwardSelector)
     {
         (m_pDeleteBackwardListener->*m_pfnDeleteBackwardSelector)(this);
     }
+    /************/
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
+    }
 }
 
+void UITextField::addEventListener(CCObject *target, SEL_TextFieldEvent selecor)
+{
+    m_pEventListener = target;
+    m_pfnEventSelector = selecor;
+}
+
+/*******Compatible*******/
 void UITextField::addAttachWithIMEEvent(CCObject *target, SEL_TextFieldAttachWithIMEEvent selecor)
 {
     m_pAttachWithIMEListener = target;
@@ -533,6 +563,7 @@ void UITextField::addDeleteBackwardEvent(CCObject *target, SEL_TextFieldDeleteBa
     m_pDeleteBackwardListener = target;
     m_pfnDeleteBackwardSelector = selecor;
 }
+/**************/
 
 void UITextField::setAnchorPoint(const CCPoint &pt)
 {
@@ -587,6 +618,11 @@ const CCSize& UITextField::getContentSize() const
 CCNode* UITextField::getVirtualRenderer()
 {
     return m_pTextFieldRenderer;
+}
+
+const char* UITextField::getDescription() const
+{
+    return "TextField";
 }
 
 NS_CC_EXT_END

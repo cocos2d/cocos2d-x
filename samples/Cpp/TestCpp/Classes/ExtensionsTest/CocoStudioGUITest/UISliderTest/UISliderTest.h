@@ -33,7 +33,7 @@ public:
     UISliderTest();
     ~UISliderTest();
     bool init();
-    void percentChangedEvent(CCObject* pSender);
+    void sliderEvent(CCObject* pSender, SliderEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UISliderTest)
@@ -46,6 +46,7 @@ public:
     UISliderTest_Scale9();
     ~UISliderTest_Scale9();
     bool init();
+    void sliderEvent(CCObject* pSender, SliderEventType type);
     void percentChangedEvent(CCObject* pSender);
     
 protected:
