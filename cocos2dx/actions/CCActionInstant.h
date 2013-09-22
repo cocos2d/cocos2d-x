@@ -212,33 +212,52 @@ public:
         , m_pCallFunc(NULL)
     {
     }
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCCallFunc();
 
     /** creates the action with the callback 
 
-    typedef void (CCObject::*SEL_CallFunc)();
+    * typedef void (CCObject::*SEL_CallFunc)();
+    * @lua NA
     */
     static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
 
-	/** creates the action with the handler script function */
+	/** creates the action with the handler script function 
+     * @js NA
+     */
 	static CCCallFunc * create(int nHandler);
 
 	/** initializes the action with the callback 
     
-    typedef void (CCObject::*SEL_CallFunc)();
+    * typedef void (CCObject::*SEL_CallFunc)();
+    * @lua NA
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget);
-    /** executes the callback */
+    /** executes the callback 
+     * @lua NA
+     */
     virtual void execute();
-    //super methods
+    /** super methods
+     * @lua NA
+     */
     virtual void update(float time);
+    /**
+     * @lua NA
+     */
     CCObject * copyWithZone(CCZone *pZone);
-
+    /**
+     * @lua NA
+     */
     inline CCObject* getTargetCallback()
     {
         return m_pSelectorTarget;
     }
-
+    /**
+     * @lua NA
+     */
     inline void setTargetCallback(CCObject* pSel)
     {
         if (pSel != m_pSelectorTarget)
@@ -248,7 +267,9 @@ public:
             m_pSelectorTarget = pSel; 
         }
     }
-    
+    /**
+     * @lua NA
+     */
     inline int getScriptHandler() { return m_nScriptHandler; };
 protected:
     /** Target that will be called */
@@ -268,12 +289,22 @@ protected:
 /** 
 @brief Calls a 'callback' with the node as the first argument
 N means Node
+* @js NA
 */
 class CC_DLL CCCallFuncN : public CCCallFunc, public TypeInfo
 {
 public:
+    /**
+     * @lua NA
+     */
     CCCallFuncN(){}
+    /**
+     * @lua NA
+     */
     virtual ~CCCallFuncN(){}
+    /**
+     * @lua NA
+     */
     virtual long getClassTypeInfo() {
 		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCCallFunc).name());
 		return id;
@@ -281,27 +312,36 @@ public:
 
     /** creates the action with the callback 
 
-    typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
-    */
+     * typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
+     * @lua NA
+     */
     static CCCallFuncN * create(CCObject* pSelectorTarget, SEL_CallFuncN selector);
 
-	/** creates the action with the handler script function */
+	/** creates the action with the handler script function*/
 	static CCCallFuncN * create(int nHandler);
 
     /** initializes the action with the callback 
 
-    typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
-    */
+     * typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
+     * @lua NA
+     */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
-    // super methods
+    /** super methods
+     * @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
+    /**
+     * @lua NA
+     */
     virtual void execute();
 };
 
 
 /** 
-@brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
+* @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
 * ND means: Node and Data. Data is void *, so it could be anything.
+* @js NA
+* @lua NA
 */
 class CC_DLL CCCallFuncND : public CCCallFuncN
 {
@@ -329,6 +369,8 @@ protected:
 @brief Calls a 'callback' with an object as the first argument.
 O means Object.
 @since v0.99.5
+@js NA
+@lua NA
 */
 
 class CC_DLL CCCallFuncO : public CCCallFunc, public TypeInfo

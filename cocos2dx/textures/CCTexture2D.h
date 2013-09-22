@@ -113,15 +113,27 @@ class CC_DLL CCTexture2D : public CCObject
 {
 public:
     CCTexture2D();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCTexture2D();
 
     const char* description(void);
 
-    /** These functions are needed to create mutable textures */
+    /** These functions are needed to create mutable textures 
+     * @js NA
+     */
     void releaseData(void *data);
+    /**
+     * @js NA
+     */
     void* keepData(void *data, unsigned int length);
 
-    /** Initializes with a texture2d with data */
+    /** Initializes with a texture2d with data 
+     * @js NA
+     * @lua NA
+     */
     bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize);
 
     /**
@@ -160,6 +172,10 @@ public:
     @warning Calling this method could allocate additional texture memory.
 
     @since v0.8
+    @code
+    when this functon bound to js,the input param are changed
+    js: var setTexParameters(var minFilter, var magFilter, var wrapS, var wrapT)
+    @endcode
     */
     void setTexParameters(ccTexParams* texParams);
 

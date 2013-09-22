@@ -85,7 +85,10 @@ public:
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
     void registerScriptAccelerateHandler(int nHandler);
     void unregisterScriptAccelerateHandler(void);

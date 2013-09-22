@@ -47,6 +47,10 @@ public:
     void clear();
 };
 
+/**
+ * @js NA
+ * @lua NA
+ */
 class CC_DLL CCPoolManager
 {
     CCArray*    m_pReleasePoolStack;    

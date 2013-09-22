@@ -80,7 +80,10 @@ public:
     void setVertex(const CCPoint& position, const ccVertex3F& vertex);
 
 public:
-    /** creates the action with size and duration */
+    /** creates the action with size and duration 
+     *  @js NA
+     *  @lua NA
+     */
     static CCGrid3DAction* create(float duration, const CCSize& gridSize);
 };
 
@@ -99,7 +102,10 @@ public:
     virtual CCGridBase* getGrid(void);
 
 public:
-    /** creates the action with size and duration */
+    /** creates the action with size and duration 
+     *  @js NA
+     *  @lua NA
+     */
     static CCTiledGrid3DAction* create(float duration, const CCSize& gridSize);
 };
 

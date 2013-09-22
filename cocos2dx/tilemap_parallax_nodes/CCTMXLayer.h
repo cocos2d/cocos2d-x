@@ -86,13 +86,22 @@ class CC_DLL CCTMXLayer : public CCSpriteBatchNode
     /** properties from the layer. They can be added using Tiled */
     CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
 public:
+    /**
+     * @lua NA
+     */
     CCTMXLayer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCTMXLayer();
   
     /** creates a CCTMXLayer with an tileset info, a layer info and a map info */
     static CCTMXLayer * create(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
 
-    /** initializes a CCTMXLayer with a tileset info, a layer info and a map info */
+    /** initializes a CCTMXLayer with a tileset info, a layer info and a map info 
+     * @lua NA
+     */
     bool initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
 
     /** dealloc the map that contains the tile position from memory.
@@ -118,6 +127,7 @@ public:
 
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
+     @lua NA
      */
     unsigned int tileGIDAt(const CCPoint& tileCoordinate, ccTMXTileFlags* flags);
 
@@ -149,10 +159,13 @@ public:
     void setupTiles();
 
     /** CCTMXLayer doesn't support adding a CCSprite manually.
-    @warning addchild(z, tag); is not supported on CCTMXLayer. Instead of setTileGID.
-    */
+     *  @warning addchild(z, tag); is not supported on CCTMXLayer. Instead of setTileGID.
+     *  @lua NA
+     */
     virtual void addChild(CCNode * child, int zOrder, int tag);
-    // super method
+    /** super method
+     *  @lua NA
+     */
     void removeChild(CCNode* child, bool cleanup);
 
     inline const char* getLayerName(){ return m_sLayerName.c_str(); }

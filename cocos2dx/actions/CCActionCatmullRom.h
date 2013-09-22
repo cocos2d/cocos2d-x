@@ -51,17 +51,25 @@ NS_CC_BEGIN;
  */
 
 /** An Array that contain control points.
- Used by CCCardinalSplineTo and (By) and CCCatmullRomTo (and By) actions.
-@ingroup Actions
+ * Used by CCCardinalSplineTo and (By) and CCCatmullRomTo (and By) actions.
+ * @ingroup Actions
+ * @js NA
  */
 class CC_DLL CCPointArray : public CCObject
 {
 public:
     
-    /** creates and initializes a Points array with capacity */
+    /** creates and initializes a Points array with capacity 
+     * @lua NA
+     */
     static CCPointArray* create(unsigned int capacity);
-
+    /**
+     * @lua NA
+     */
     virtual ~CCPointArray();
+    /**
+     * @lua NA
+     */
     CCPointArray();
     
     /** initializes a Catmull Rom config with a capacity hint */
@@ -90,7 +98,9 @@ public:
     
     /** reverse the current control point array inline, without generating a new one */
     void reverseInline();
-    
+    /**
+     * @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *zone);
     
     const std::vector<CCPoint*>* getControlPoints();

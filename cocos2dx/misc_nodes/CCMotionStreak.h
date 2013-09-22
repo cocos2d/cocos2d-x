@@ -76,7 +76,13 @@ public:
     /* Implement interfaces */
     virtual CCTexture2D* getTexture(void);
     virtual void setTexture(CCTexture2D *texture);
+    /**
+     * @js NA
+     */
     virtual void setBlendFunc(ccBlendFunc blendFunc);
+    /**
+     * @js NA
+     */
     virtual ccBlendFunc getBlendFunc(void);
     virtual GLubyte getOpacity(void);
     virtual void setOpacity(GLubyte opacity);

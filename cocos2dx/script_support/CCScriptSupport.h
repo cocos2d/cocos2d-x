@@ -81,6 +81,8 @@ protected:
 /**
  * @addtogroup script_support
  * @{
+ * @js NA
+ * @lua NA
  */
 
 class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
@@ -239,6 +241,8 @@ public:
  CCScriptEngineManager is a singleton which holds an object instance of CCScriptEngineProtocl
  It helps cocos2d-x and the user code to find back LuaEngine object
  @since v0.99.5-x-0.8.5
+ @js NA
+ @lua NA
  */
 class CC_DLL CCScriptEngineManager
 {
