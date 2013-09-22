@@ -42,6 +42,7 @@ UILabelBMFont* UILabelBMFont::create()
     UILabelBMFont* widget = new UILabelBMFont();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -123,6 +124,11 @@ void UILabelBMFont::labelBMFontScaleChangedWithSize()
         m_pLabelBMFontRenderer->setScaleX(scaleX);
         m_pLabelBMFontRenderer->setScaleY(scaleY);
     }
+}
+
+const char* UILabelBMFont::getDescription() const
+{
+    return "LabelBMFont";
 }
 
 NS_CC_EXT_END

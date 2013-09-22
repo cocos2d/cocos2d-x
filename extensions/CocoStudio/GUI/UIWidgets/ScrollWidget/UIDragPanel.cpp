@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "UIDragPanel.h"
-
+#include "../../System/UILayer.h"
 
 NS_CC_EXT_BEGIN
 
@@ -41,6 +41,24 @@ UIDragPanel::UIDragPanel()
 , m_fAutoMoveDuration(0.5f)
 , m_fAutoMoveEaseRate(2.0f)
 , m_eBerthDirection(DRAGPANEL_BERTH_DIR_NONE)
+, m_bBounceEnable(false)
+, m_eBounceDirection(DRAGPANEL_BOUNCE_DIR_NONE)
+, m_fBounceDuration(0.5f)
+, m_fBounceEaseRate(2.0f)
+, m_pEventLister(NULL)
+, m_pfnEventSelector(NULL)
+, m_bRunningAction(false)
+, m_nActionType(0)
+, m_pActionWidget(NULL)
+, m_fDuration(0.0f)
+, m_elapsed(0.0f)
+, m_bFirstTick(false)
+, m_positionDelta(CCPointZero)
+, m_startPosition(CCPointZero)
+, m_previousPosition(CCPointZero)
+, m_endPosition(CCPointZero)
+
+/*compatible*/
 , m_pBerthToLeftListener(NULL)
 , m_pfnBerthToLeftSelector(NULL)
 , m_pBerthToRightListener(NULL)
@@ -57,10 +75,6 @@ UIDragPanel::UIDragPanel()
 , m_pfnBerthToRightBottomSelector(NULL)
 , m_pBerthToRightTopListener(NULL)
 , m_pfnBerthToRightTopSelector(NULL)
-, m_bBounceEnable(false)
-, m_eBounceDirection(DRAGPANEL_BOUNCE_DIR_NONE)
-, m_fBounceDuration(0.5f)
-, m_fBounceEaseRate(2.0f)
 , m_pBounceOverListener(NULL)
 , m_pfnBounceOverSelector(NULL)
 , m_pBounceToLeftBottomListener(NULL)
@@ -79,16 +93,7 @@ UIDragPanel::UIDragPanel()
 , m_pfnBounceToRightSelector(NULL)
 , m_pBounceToBottomListener(NULL)
 , m_pfnBounceToBottomSelector(NULL)
-, m_bRunningAction(false)
-, m_nActionType(0)
-, m_pActionWidget(NULL)
-, m_fDuration(0.0f)
-, m_elapsed(0.0f)
-, m_bFirstTick(false)
-, m_positionDelta(CCPointZero)
-, m_startPosition(CCPointZero)
-, m_previousPosition(CCPointZero)
-, m_endPosition(CCPointZero)
+/***********/
 {
     
 }
@@ -103,6 +108,7 @@ UIDragPanel* UIDragPanel::create()
     UIDragPanel* widget = new UIDragPanel();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -132,12 +138,23 @@ void UIDragPanel::initRenderer()
 
 void UIDragPanel::releaseResoures()
 {
-    Layout::releaseResoures();
-    m_pInnerContainer->structureChangedEvent();
-    m_pInnerContainer->releaseResoures();
-    m_pInnerContainer->setParent(NULL);
-    delete m_pInnerContainer;
-    m_pInnerContainer = NULL;
+    m_pPushListener = NULL;
+    m_pfnPushSelector = NULL;
+    m_pMoveListener = NULL;
+    m_pfnMoveSelector = NULL;
+    m_pReleaseListener = NULL;
+    m_pfnReleaseSelector = NULL;
+    m_pCancelListener = NULL;
+    m_pfnCancelSelector = NULL;
+    setUpdateEnabled(false);
+    removeAllChildren();
+    m_pRenderer->removeAllChildrenWithCleanup(true);
+    m_pRenderer->removeFromParentAndCleanup(true);
+    m_pRenderer->release();
+    
+    Layout::removeChild(m_pInnerContainer);
+    
+    m_children->release();
 }
 
 bool UIDragPanel::onTouchBegan(const CCPoint &touchPoint)
@@ -194,21 +211,20 @@ bool UIDragPanel::addChild(UIWidget *widget)
     return true;
 }
 
-bool UIDragPanel::removeChild(UIWidget *child, bool cleanup)
+bool UIDragPanel::removeChild(UIWidget *child)
 {
     bool value = false;
-    if (m_pInnerContainer->removeChild(child, cleanup))
+    if (m_pInnerContainer->removeChild(child))
     {
-//        updateWidthAndHeight();
         value = true;
     }
     
     return value;
 }
 
-void UIDragPanel::removeAllChildrenAndCleanUp(bool cleanup)
+void UIDragPanel::removeAllChildren()
 {
-    m_pInnerContainer->removeAllChildrenAndCleanUp(cleanup);
+    m_pInnerContainer->removeAllChildren();
 }
 
 CCArray* UIDragPanel::getChildren()
@@ -301,68 +317,6 @@ void UIDragPanel::setInnerContainerOffset(const CCPoint &offset)
     }
 }
 
-Layout* UIDragPanel::getInnerContainer()
-{
-	return m_pInnerContainer;
-}
-/**/
-
-/*
-void UIDragPanel::updateWidthAndHeight()
-{
-    CCArray* innerChildren = m_pInnerContainer->getChildren();
-    
-    if (innerChildren->count() <= 0)
-    {
-        return;
-    }    
-    
-    UIWidget* leftChild = dynamic_cast<UIWidget*>(innerChildren->objectAtIndex(0));
-    UIWidget* rightChild = dynamic_cast<UIWidget*>(innerChildren->objectAtIndex(0));
-    UIWidget* topChild = dynamic_cast<UIWidget*>(innerChildren->objectAtIndex(0));
-    UIWidget* bottomChild = dynamic_cast<UIWidget*>(innerChildren->objectAtIndex(0));
-        
-    ccArray* arrayChildren = innerChildren->data;
-    int childrenCount = arrayChildren->num;
-    for (int i = 0; i < childrenCount; i++)
-    {
-        UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
-        
-        if (leftChild->getRelativeLeftPos() > child->getRelativeLeftPos())
-        {
-            leftChild = child;
-        }
-        if (rightChild->getRelativeRightPos() < child->getRelativeRightPos())
-        {
-            rightChild = child;
-        }
-        if (topChild->getRelativeTopPos() < child->getRelativeTopPos())
-        {
-            topChild = child;
-        }
-        if (bottomChild->getRelativeBottomPos() > child->getRelativeBottomPos())
-        {            
-            bottomChild = child;
-        }
-    }
-    
-    float leftBoundary = leftChild->getRelativeLeftPos();
-    float rightBoundary = rightChild->getRelativeRightPos();
-    float topBoundary = topChild->getRelativeTopPos();
-    float bottomBoundary = bottomChild->getRelativeBottomPos();
-    
-    float resWidth = rightBoundary - leftBoundary;
-    float resHeight = topBoundary - bottomBoundary;
-    m_pInnerContainer->setSize(CCSizeMake(resWidth, resHeight));
-        
-    m_pInnerContainer->setPosition(ccp(m_pInnerContainer->getPosition().x + leftBoundary, m_pInnerContainer->getPosition().y + bottomBoundary));
-    for (int i = 0; i < childrenCount; i++)
-    {
-        UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
-        child->setPosition(ccp(child->getPosition().x - leftBoundary, child->getPosition().y - bottomBoundary));
-    }
-}
-*/
 
 void UIDragPanel::handlePressLogic(const CCPoint &touchPoint)
 {
@@ -459,45 +413,7 @@ void UIDragPanel::handleMoveLogic(const CCPoint &touchPoint)
         {
             berthEvent();
         }
-    }        
-    // before
-    /*
-    if (pointAtSelfBody(touchPoint))
-    {
-        CCPoint innernsp = m_pInnerContainer->getContainerNode()->convertToNodeSpace(touchPoint);
-        
-        CCPoint delta = ccpSub(innernsp, m_touchStartNodeSpace);        
-        moveWithDelta(delta);
-        // bounceEnable is disable
-        if (!m_bBounceEnable)
-        {
-            if (checkToBoundaryWithDeltaPosition(delta))
-            {
-                delta = calculateToBoundaryDeltaPosition(delta);
-                moveWithDelta(delta);
-                if (checkBerth())
-                {                    
-                    berthEvent();
-                }
-            }
-        }
     }
-    else
-    {
-        m_bTouchMoved = false;
-     
-        // bounce
-        if (m_bBounceEnable)
-        {
-            if (checkNeedBounce())
-            {
-                m_bTouchCanceld = true;
-                startBounce();
-            }
-        }
-    }
-     */
-    //
 }
 
 void UIDragPanel::handleReleaseLogic(const CCPoint &touchPoint)
@@ -557,43 +473,6 @@ void UIDragPanel::interceptTouchEvent(int handleState, UIWidget *sender, const C
             break;
     }
 }
-
-/* gui mark */
-//bool UIDragPanel::isInScrollDegreeRange(UIWidget *widget)
-//{
-//    return false;
-//}
-/**/
-
-/*
-void UIDragPanel::setDirection(DRAGPANEL_DIR dir)
-{
-    if (m_eDirection == dir)
-    {
-        return;
-    }
-    m_eDirection = dir;
-}
-
-DRAGPANEL_DIR UIDragPanel::getDirection()
-{
-    return m_eDirection;
-}
-
-void UIDragPanel::setMoveDirection(DRAGPANEL_MOVE_DIR moveDir)
-{
-    if (m_eMoveDirection == moveDir)
-    {
-        return;
-    }
-    m_eMoveDirection = moveDir;
-}
-
-DRAGPANEL_MOVE_DIR UIDragPanel::getMoveDirection()
-{
-    return m_eMoveDirection;
-}
- */
 
 void UIDragPanel::recordSlidTime(float dt)
 {
@@ -689,6 +568,7 @@ void UIDragPanel::setAutoMoveEaseRate(float rate)
 }
 
 // berth
+
 // check if move to boundary
 
 bool UIDragPanel::checkToBoundaryWithDeltaPosition(const CCPoint&  delta)
@@ -910,68 +790,123 @@ void UIDragPanel::berthEvent()
 
 void UIDragPanel::berthToLeftBottomEvent()
 {
+    /*Compatible*/
     if (m_pBerthToLeftBottomListener && m_pfnBerthToLeftBottomSelector)
     {
         (m_pBerthToLeftBottomListener->*m_pfnBerthToLeftBottomSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BERTH_LEFTBOTTOM);
     }
 }
 
 void UIDragPanel::berthToLeftTopEvent()
 {
+    /*Compatible*/
     if (m_pBerthToLeftTopListener && m_pfnBerthToLeftTopSelector)
     {
         (m_pBerthToLeftTopListener->*m_pfnBerthToLeftTopSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BERTH_LFETTOP);
     }
 }
 
 void UIDragPanel::berthToRightBottomEvent()
 {
+    /*Compatible*/
     if (m_pBerthToRightBottomListener && m_pfnBerthToRightBottomSelector)
     {
         (m_pBerthToRightBottomListener->*m_pfnBerthToRightBottomSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BERTH_RIGHTBOTTOM);
     }
 }
 
 void UIDragPanel::berthToRightTopEvent()
 {
+    /*Compatible*/
     if (m_pBerthToRightTopListener && m_pfnBerthToRightTopSelector)
     {
         (m_pBerthToRightTopListener->*m_pfnBerthToRightTopSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BERTH_RIGHTTOP);
     }
 }
 
 void UIDragPanel::berthToLeftEvent()
 {
+    /*Compatible*/
     if (m_pBerthToLeftListener && m_pfnBerthToLeftSelector)
     {
         (m_pBerthToLeftListener->*m_pfnBerthToLeftSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BERTH_LEFT);
     }
 }
 
 void UIDragPanel::berthToTopEvent()
 {
+    /*Compatible*/
     if (m_pBerthToTopListener && m_pfnBerthToTopSelector)
     {
         (m_pBerthToTopListener->*m_pfnBerthToTopSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BERTH_TOP);
     }
 }
 
 void UIDragPanel::berthToRightEvent()
 {
+    /*Compatible*/
     if (m_pBerthToRightListener && m_pfnBerthToRightSelector)
     {
         (m_pBerthToRightListener->*m_pfnBerthToRightSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BERTH_RIGHT);
     }
 }
 
 void UIDragPanel::berthToBottomEvent()
 {
+    /*Compatible*/
     if (m_pBerthToBottomListener && m_pfnBerthToBottomSelector)
     {
         (m_pBerthToBottomListener->*m_pfnBerthToBottomSelector)(this);
     }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BERTH_BOTTOM);
+    }
 }
 
+void UIDragPanel::addEventListener(CCObject *target, SEL_DragPanelEvent selector)
+{
+    m_pEventLister = target;
+    m_pfnEventSelector = selector;
+}
+
+/*******Compatible*******/
 void UIDragPanel::addBerthToLeftBottomEvent(CCObject *target, SEL_DragPanelBerthToLeftBottomEvent selector)
 {
     m_pBerthToLeftBottomListener = target;
@@ -1019,15 +954,15 @@ void UIDragPanel::addBerthToBottomEvent(CCObject *target, SEL_DragPanelBerthToBo
     m_pBerthToBottomListener = target;
     m_pfnBerthToBottomSelector = selector;
 }
-
+/**************/
 
 // bounce
-bool UIDragPanel::isBounceEnable()
+bool UIDragPanel::isBounceEnabled()
 {
     return m_bBounceEnable;
 }
 
-void UIDragPanel::setBounceEnable(bool bounce)
+void UIDragPanel::setBounceEnabled(bool bounce)
 {
     m_bBounceEnable = bounce;
 }
@@ -1174,8 +1109,6 @@ void UIDragPanel::bounceOver()
 {
     stopBounce();
     
-    bounceOverEvent();
-    
     switch (m_eBounceDirection)
     {
         case DRAGPANEL_BOUNCE_DIR_LEFTBOTTOM:
@@ -1217,84 +1150,121 @@ void UIDragPanel::bounceOver()
     m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_NONE;
 }
 
-void UIDragPanel::bounceOverEvent()
-{
-    if (m_pBounceOverListener && m_pfnBounceOverSelector)
-    {
-        (m_pBounceOverListener->*m_pfnBounceOverSelector)(this);
-    }
-}
-
 void UIDragPanel::bounceToLeftBottomEvent()
 {
+    /*Compatible*/
     if (m_pBounceToLeftBottomListener && m_pfnBounceToLeftBottomSelector)
     {
         (m_pBounceToLeftBottomListener->*m_pfnBounceToLeftBottomSelector)(this);
     }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BOUNCE_LEFTBOTTOM);
+    }
+    
 }
 
 void UIDragPanel::bounceToLeftTopEvent()
 {
+    /*Compatible*/
     if (m_pBounceToLeftTopListener && m_pfnBounceToLeftTopSelector)
     {
         (m_pBounceToLeftTopListener->*m_pfnBounceToLeftTopSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BOUNCE_LEFTTOP);
     }
 }
 
 void UIDragPanel::bounceToRightBottomEvent()
 {
+    /*Compatible*/
     if (m_pBounceToRightBottomListener && m_pfnBounceToRightBottomSelector)
     {
         (m_pBounceToRightBottomListener->*m_pfnBounceToRightBottomSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BOUNCE_RIGHTBOTTOM);
     }
 }
 
 void UIDragPanel::bounceToRightTopEvent()
 {
+    /*Compatible*/
     if (m_pBounceToRightTopListener && m_pfnBounceToRightTopSelector)
     {
         (m_pBounceToRightTopListener->*m_pfnBounceToRightTopSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BOUNCE_RIGHTTOP);
     }
 }
 
 void UIDragPanel::bounceToLeftEvent()
 {
+    /*Compatible*/
     if (m_pBounceToLeftListener && m_pfnBounceToLeftSelector)
     {
         (m_pBounceToLeftListener->*m_pfnBounceToLeftSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BOUNCE_LEFT);
     }
 }
 
 void UIDragPanel::bounceToTopEvent()
 {
+    /*Compatible*/
     if (m_pBounceToTopListener && m_pfnBounceToTopSelector)
     {
         (m_pBounceToTopListener->*m_pfnBounceToTopSelector)(this);
+    }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BOUNCE_TOP);
     }
 }
 
 void UIDragPanel::bounceToRightEvent()
 {
+    /*Compatible*/
     if (m_pBounceToRightListener && m_pfnBounceToRightSelector)
     {
         (m_pBounceToRightListener->*m_pfnBounceToRightSelector)(this);
     }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BOUNCE_RIGHT);
+    }
+    
 }
 
 void UIDragPanel::bounceToBottomEvent()
 {
+    /*Compatible*/
     if (m_pBounceToBottomListener && m_pfnBounceToBottomSelector)
     {
         (m_pBounceToBottomListener->*m_pfnBounceToBottomSelector)(this);
     }
+    /************/
+    if (m_pEventLister && m_pfnEventSelector)
+    {
+        (m_pEventLister->*m_pfnEventSelector)(this, DRAGPANEL_EVENT_BOUNCE_BOTTOM);
+    }
 }
 
-void UIDragPanel::addBounceOverEvent(CCObject *target, SEL_DragPanelBounceOverEvent selector)
-{
-    m_pBounceOverListener = target;
-    m_pfnBounceOverSelector = selector;
-}
-
+/*******Compatible*******/
 void UIDragPanel::addBounceToLeftBottomEvent(CCObject *target, SEL_DragPanelBounceToLeftBottomEvent selector)
 {
     m_pBounceToLeftBottomListener = target;
@@ -1342,6 +1312,7 @@ void UIDragPanel::addBounceToBottomEvent(CCObject *target, SEL_DragPanelBounceTo
     m_pBounceToBottomListener = target;
     m_pfnBounceToBottomSelector = selector;
 }
+/**************/
 
 // widget action
 void UIDragPanel::actionWithDuration(float duration)
@@ -1497,7 +1468,16 @@ void UIDragPanel::moveToInit()
 void UIDragPanel::moveToUpdate(float t)
 {
     moveByUpdate(t);
-//    setPosition(ccp(m_startPosition.x + m_deltaForMoveTo.x * t, m_startPosition.y + m_deltaForMoveTo.y * t));    
+}
+
+Layout* UIDragPanel::getInnerContainer()
+{
+    return m_pInnerContainer;
+}
+
+const char* UIDragPanel::getDescription() const
+{
+    return "DragPanel";
 }
 
 NS_CC_EXT_END
