@@ -211,6 +211,17 @@ void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
     updateColor();
 }
 
+void Bone::setColor(const Color3B& color)
+{
+    CCNodeRGBA::setColor(color);
+	updateColor();
+}
+void Bone::setOpacity(GLubyte opacity)
+{
+    CCNodeRGBA::setOpacity(opacity);
+	updateColor();
+}
+
 void Bone::updateColor()
 {
     Node *display = _displayManager->getDisplayRenderNode();

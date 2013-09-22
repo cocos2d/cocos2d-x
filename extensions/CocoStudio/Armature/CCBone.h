@@ -122,18 +122,21 @@ public:
      */
     void removeChildBone(Bone *bone, bool recursion);
 
-    void update(float delta);
+    void update(float delta) override;
 
-    void updateDisplayedColor(const Color3B &parentColor);
-    void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual void updateDisplayedColor(const Color3B &parentColor) override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+
+	virtual void setColor(const Color3B& color) override;
+	virtual void setOpacity(GLubyte opacity) override;
 
     //! Update color to render display
-    void updateColor();
+    virtual void updateColor();
 
     //! Update zorder
-    void updateZOrder();
+    virtual void updateZOrder();
 
-    virtual void setZOrder(int zOrder);
+    virtual void setZOrder(int zOrder) override;
 
     Tween *getTween();
 
