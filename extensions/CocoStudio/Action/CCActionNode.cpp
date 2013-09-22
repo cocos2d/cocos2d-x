@@ -313,6 +313,7 @@ CCSpawn * ActionNode::refreshActionProperty()
 	}
 
 	m_actionSpawn = CCSpawn::create(cSpawnArray);
+	m_actionSpawn->retain();
 	return m_actionSpawn;
 }
 
