@@ -136,9 +136,16 @@ protected:
 class CC_DLL CCFiniteTimeAction : public CCAction
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCFiniteTimeAction()
         : m_fDuration(0)
     {}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCFiniteTimeAction(){}
     //! get duration in seconds of the action
     inline float getDuration(void) { return m_fDuration; }
@@ -221,6 +228,9 @@ Instead of using CCCamera as a "follower", use this action instead.
 class CC_DLL CCFollow : public CCAction
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCFollow()
         : m_pobFollowedNode(NULL)
         , m_bBoundarySet(false)

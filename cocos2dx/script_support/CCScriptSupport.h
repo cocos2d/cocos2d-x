@@ -50,7 +50,10 @@ enum ccScriptType {
     kScriptTypeLua,
     kScriptTypeJavascript
 };
-
+/**
+ * @js NA
+ * @lua NA
+ */
 class CCScriptHandlerEntry : public CCObject
 {
 public:
@@ -124,7 +127,10 @@ private:
 };
 
 
-
+/**
+ * @js NA
+ * @lua NA
+ */
 class CCTouchScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
@@ -162,6 +168,10 @@ private:
 // Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
 // It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
 // So a crash will appear on Win32 if you click the close button.
+/**
+ * @js NA
+ * @lua NA
+ */
 class CC_DLL CCScriptEngineProtocol
 {
 public:

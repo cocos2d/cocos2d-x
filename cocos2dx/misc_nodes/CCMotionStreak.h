@@ -49,7 +49,14 @@ class CC_DLL CCMotionStreak : public CCNodeRGBA, public CCTextureProtocol
 #endif // EMSCRIPTEN
 {
 public:
+    /**
+     * @js ctor
+     */
     CCMotionStreak();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCMotionStreak();
 
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */

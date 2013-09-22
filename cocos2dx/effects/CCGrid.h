@@ -52,44 +52,98 @@ class CCGLProgram;
 class CC_DLL CCGridBase : public CCObject
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCGridBase(void);
 
-    /** whether or not the grid is active */
+    /** whether or not the grid is active 
+     *  @lua NA
+     */
     inline bool isActive(void) { return m_bActive; }
+    /**
+     *  @lua NA
+     */
     void setActive(bool bActive);
 
-    /** number of times that the grid will be reused */
+    /** number of times that the grid will be reused 
+     *  @lua NA
+     */
     inline int getReuseGrid(void) { return m_nReuseGrid; }
+    /**
+     *  @lua NA
+     */
     inline void setReuseGrid(int nReuseGrid) { m_nReuseGrid = nReuseGrid; }
 
-    /** size of the grid */
+    /** size of the grid 
+     *  @lua NA
+     */
     inline const CCSize& getGridSize(void) { return m_sGridSize; }
+    /**
+     *  @lua NA
+     */
     inline void setGridSize(const CCSize& gridSize) { m_sGridSize = gridSize; }
 
-    /** pixels between the grids */
+    /** pixels between the grids 
+     *  @lua NA
+     */
     inline const CCPoint& getStep(void) { return m_obStep; }
+    /**
+     *  @lua NA
+     */
     inline void setStep(const CCPoint& step) { m_obStep = step; }
 
-    /** is texture flipped */
+    /** is texture flipped 
+     * @lua NA
+     */
     inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
+    /**
+     *  @lua NA
+     */
     void setTextureFlipped(bool bFlipped);
-
+    /**
+     *  @lua NA
+     */
     bool initWithSize(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    /**
+     *  @lua NA
+     */
     bool initWithSize(const CCSize& gridSize);
-
+    /**
+     *  @lua NA
+     */
     void beforeDraw(void);
+    /**
+     *  @lua NA
+     */
     void afterDraw(CCNode *pTarget);
+    /**
+     *  @lua NA
+     */
     virtual void blit(void);
+    /**
+     *  @lua NA
+     */
     virtual void reuse(void);
+    /**
+     *  @lua NA
+     */
     virtual void calculateVertexPoints(void);
 
 public:
 
-    /** create one Grid */
+    /** create one Grid 
+     * @lua NA
+     */
     static CCGridBase* create(const CCSize& gridSize, CCTexture2D *texture, bool flipped);
-    /** create one Grid */
+    /** create one Grid 
+     * @lua NA
+     */
     static CCGridBase* create(const CCSize& gridSize);
-
+    /**
+     *  @lua NA
+     */
     void set2DProjection(void);
 
 protected:
@@ -106,6 +160,8 @@ protected:
 
 /**
  CCGrid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
+ @js NA
+ @lua NA
  */
 class CC_DLL CCGrid3D : public CCGridBase
 #ifdef EMSCRIPTEN
@@ -143,6 +199,8 @@ protected:
 /**
  CCTiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
  the tiles can be separated from the grid.
+ @js NA
+ @lua NA
 */
 class CC_DLL CCTiledGrid3D : public CCGridBase
 #ifdef EMSCRIPTEN

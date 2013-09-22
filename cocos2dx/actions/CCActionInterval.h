@@ -214,6 +214,9 @@ To repeat the an action for a limited number of times use the Repeat action.
 class CC_DLL CCRepeatForever : public CCActionInterval
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCRepeatForever()
         : m_pInnerAction(NULL)
     {}
@@ -441,6 +444,9 @@ protected:
 class CC_DLL CCSkewTo : public CCActionInterval
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCSkewTo();
     virtual bool initWithDuration(float t, float sx, float sy);
     /**
@@ -843,7 +849,14 @@ public:
 class CC_DLL CCReverseTime : public CCActionInterval
 {
 public:
+    /**
+     *  @js ctor
+     */
     ~CCReverseTime(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     CCReverseTime();
 
     /** initializes the action */
@@ -870,6 +883,9 @@ class CCTexture2D;
 class CC_DLL CCAnimate : public CCActionInterval
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCAnimate();
     /**
      *  @js NA
@@ -907,6 +923,9 @@ protected:
 class CC_DLL CCTargetedAction : public CCActionInterval
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTargetedAction();
     /**
      *  @js NA

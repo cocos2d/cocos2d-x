@@ -37,6 +37,9 @@ NS_CC_BEGIN
 class CC_DLL CCImage : public CCObject
 {
 public:
+    /**
+     @js ctor
+     */
     CCImage();
     /**
      * @js NA

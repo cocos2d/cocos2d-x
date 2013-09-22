@@ -53,6 +53,7 @@ class CC_DLL CCTimer : public CCObject
 {
 public:
     /**
+     *  @js  ctor
      *  @lua NA
      */
     CCTimer(void);

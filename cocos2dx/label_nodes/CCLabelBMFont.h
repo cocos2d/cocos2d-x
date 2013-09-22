@@ -104,6 +104,8 @@ typedef struct _KerningHashElement
 
 /** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
 @since v0.8
+@js NA
+@lua NA
 */
 class CC_DLL CCBMFontConfiguration : public CCObject
 {
@@ -190,8 +192,14 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCLabelBMFont();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLabelBMFont();
     /** Purges the cached data.
     Removes from memory the cached configurations and the atlas name dictionary.

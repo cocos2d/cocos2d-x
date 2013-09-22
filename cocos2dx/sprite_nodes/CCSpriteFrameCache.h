@@ -59,9 +59,16 @@ class CC_DLL CCSpriteFrameCache : public CCObject
 {
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
+    /**
+     * @js ctor
+     */
     CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
 public:
     bool init(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCSpriteFrameCache(void);
 
 private:

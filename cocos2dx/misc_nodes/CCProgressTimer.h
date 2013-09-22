@@ -59,7 +59,14 @@ class CC_DLL CCProgressTimer : public CCNodeRGBA
 #endif // EMSCRIPTEN
 {
 public:
+    /**
+     * @js ctor
+     */
     CCProgressTimer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCProgressTimer(void);
 
     /**    Change the percentage to change progress. */

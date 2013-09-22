@@ -32,6 +32,8 @@ NS_CC_BEGIN
 /**
  * @addtogroup base_nodes
  * @{
+ * @js NA
+ * @lua NA
  */
 
 class CC_DLL CCAutoreleasePool : public CCObject

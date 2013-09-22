@@ -88,7 +88,9 @@ protected:
     bool    m_bIsSendCleanupToScene;
 
 public:
-
+    /**
+     *  @js ctor
+     */
     CCTransitionScene();
     /**
      *  @js NA
@@ -136,7 +138,14 @@ protected:
     tOrientation m_eOrientation;
 
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionSceneOriented();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionSceneOriented();
 
     /** creates a base transition with duration and incoming scene */
@@ -152,6 +161,9 @@ Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming
 class CC_DLL CCTransitionRotoZoom : public CCTransitionScene
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionRotoZoom();
     /**
      *  @js NA
@@ -173,6 +185,9 @@ Zoom out and jump the outgoing scene, and then jump and zoom in the incoming
 class CC_DLL CCTransitionJumpZoom : public CCTransitionScene
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionJumpZoom();
     /**
      *  @js NA
@@ -194,6 +209,9 @@ Move in from to the left the incoming scene.
 class CC_DLL CCTransitionMoveInL : public CCTransitionScene, public CCTransitionEaseScene
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionMoveInL();
     /**
      *  @js NA
@@ -221,7 +239,14 @@ Move in from to the right the incoming scene.
 class CC_DLL CCTransitionMoveInR : public CCTransitionMoveInL
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionMoveInR();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionMoveInR();
     virtual void initScenes();
 
@@ -234,7 +259,14 @@ Move in from to the top the incoming scene.
 class CC_DLL CCTransitionMoveInT : public CCTransitionMoveInL 
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionMoveInT();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionMoveInT();
     virtual void initScenes();
 
@@ -247,7 +279,14 @@ Move in from to the bottom the incoming scene.
 class CC_DLL CCTransitionMoveInB : public CCTransitionMoveInL
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionMoveInB();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionMoveInB();
     virtual void initScenes();
 
@@ -260,6 +299,9 @@ Slide in the incoming scene from the left border.
 class CC_DLL CCTransitionSlideInL : public CCTransitionScene, public CCTransitionEaseScene
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionSlideInL();
     /**
      *  @js NA
@@ -290,7 +332,14 @@ Slide in the incoming scene from the right border.
 class CC_DLL CCTransitionSlideInR : public CCTransitionSlideInL 
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionSlideInR();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionSlideInR();
 
     /** initializes the scenes */
@@ -309,7 +358,14 @@ Slide in the incoming scene from the bottom border.
 class CC_DLL CCTransitionSlideInB : public CCTransitionSlideInL
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionSlideInB();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionSlideInB();
 
     /** initializes the scenes */
@@ -328,7 +384,14 @@ Slide in the incoming scene from the top border.
 class CC_DLL CCTransitionSlideInT : public CCTransitionSlideInL
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionSlideInT();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionSlideInT();
 
     /** initializes the scenes */
@@ -347,6 +410,9 @@ protected:
 class CC_DLL CCTransitionShrinkGrow : public CCTransitionScene , public CCTransitionEaseScene
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionShrinkGrow();
     /**
      *  @js NA
@@ -370,6 +436,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL CCTransitionFlipX : public CCTransitionSceneOriented
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionFlipX();
     /**
      *  @js NA
@@ -393,6 +462,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL CCTransitionFlipY : public CCTransitionSceneOriented
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionFlipY();
     /**
      *  @js NA
@@ -416,6 +488,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL CCTransitionFlipAngular : public CCTransitionSceneOriented
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionFlipAngular();
     /**
      *  @js NA
@@ -439,6 +514,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL CCTransitionZoomFlipX : public CCTransitionSceneOriented
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionZoomFlipX();
     /**
      *  @js NA
@@ -462,6 +540,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL CCTransitionZoomFlipY : public CCTransitionSceneOriented
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionZoomFlipY();
     /**
      *  @js NA
@@ -485,6 +566,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL CCTransitionZoomFlipAngular : public CCTransitionSceneOriented
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionZoomFlipAngular();
     /**
      *  @js NA
@@ -510,7 +594,9 @@ protected:
     ccColor4B    m_tColor;
 
 public:
-
+    /**
+     *  @js ctor
+     */
     CCTransitionFade();
     /**
      *  @js NA
@@ -548,6 +634,9 @@ Cross fades two scenes using the CCRenderTexture object.
 class CC_DLL CCTransitionCrossFade : public CCTransitionScene
 {
 public :
+    /**
+     *  @js ctor
+     */
     CCTransitionCrossFade();
     /**
      *  @js NA
@@ -577,6 +666,9 @@ Turn off the tiles of the outgoing scene in random order
 class CC_DLL CCTransitionTurnOffTiles : public CCTransitionScene ,public CCTransitionEaseScene
 {
 public :
+    /**
+     *  @js ctor
+     */
     CCTransitionTurnOffTiles();
     /**
      *  @js NA
@@ -602,6 +694,9 @@ The odd columns goes upwards while the even columns goes downwards.
 class CC_DLL CCTransitionSplitCols : public CCTransitionScene , public CCTransitionEaseScene
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionSplitCols();
     /**
      *  @js NA
@@ -628,7 +723,14 @@ The odd rows goes to the left while the even rows goes to the right.
 class CC_DLL CCTransitionSplitRows : public CCTransitionSplitCols
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionSplitRows();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionSplitRows();
 
     virtual CCActionInterval* action(void);
@@ -644,6 +746,9 @@ Fade the tiles of the outgoing scene from the left-bottom corner the to top-righ
 class CC_DLL CCTransitionFadeTR : public CCTransitionScene , public CCTransitionEaseScene
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionFadeTR();
     /**
      *  @js NA
@@ -671,7 +776,14 @@ Fade the tiles of the outgoing scene from the top-right corner to the bottom-lef
 class CC_DLL CCTransitionFadeBL : public CCTransitionFadeTR
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionFadeBL();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionFadeBL();
     virtual CCActionInterval* actionWithSize(const CCSize& size);
 
@@ -686,7 +798,14 @@ public:
 class CC_DLL CCTransitionFadeUp : public CCTransitionFadeTR
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionFadeUp();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionFadeUp();
     virtual CCActionInterval* actionWithSize(const CCSize& size);
 
@@ -701,7 +820,14 @@ public:
 class CC_DLL CCTransitionFadeDown : public CCTransitionFadeTR
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionFadeDown();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionFadeDown();
     virtual CCActionInterval* actionWithSize(const CCSize& size);
 

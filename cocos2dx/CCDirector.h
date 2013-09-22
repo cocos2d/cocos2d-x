@@ -97,7 +97,14 @@ and when to execute the Scenes.
 class CC_DLL CCDirector : public CCObject, public TypeInfo
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCDirector(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCDirector(void);
     virtual bool init(void);
     /**
@@ -444,6 +451,8 @@ protected:
   - Only supports animation intervals of 1/60 1/30 & 1/15
  
  @since v0.8.2
+ @js NA
+ @lua NA
  */
 class CCDisplayLinkDirector : public CCDirector
 {

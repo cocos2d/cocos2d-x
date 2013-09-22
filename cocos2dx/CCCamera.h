@@ -79,6 +79,9 @@ protected:
     bool m_bDirty;
     kmMat4    m_lookupMatrix;
 public:
+    /**
+     *  @js ctor
+     */
     CCCamera(void);
     /**
      *  @js NA

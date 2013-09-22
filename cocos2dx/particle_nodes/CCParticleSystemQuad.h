@@ -63,6 +63,9 @@ protected:
     GLuint                m_pBuffersVBO[2]; //0: vertex  1: indices
 
 public:
+    /**
+     * @js ctor
+     */
     CCParticleSystemQuad();
     /**
      * @js NA

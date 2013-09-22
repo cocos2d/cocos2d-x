@@ -59,7 +59,14 @@ class CC_DLL CCTileMapAtlas : public CCAtlasNode
     /** TileMap info */
     CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
 public:
+    /**
+     * @js ctor
+     */
     CCTileMapAtlas();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCTileMapAtlas();
     
     /** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.

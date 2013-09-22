@@ -59,7 +59,14 @@ class CC_DLL CCMenu : public CCLayerRGBA
     bool m_bEnabled;
     
 public:
+    /**
+     *  @js ctor
+     */
     CCMenu() : m_pSelectedItem(NULL) {}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCMenu(){}
 
     /** creates an empty CCMenu */

@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
-
+/**
+ * @js NA
+ */
 class CC_DLL CCNotificationCenter : public CCObject
 {
 public:

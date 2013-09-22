@@ -172,6 +172,7 @@ public:
     CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
 public:
     /**
+     * @js  ctor
      * @lua NA
      */
     CCTMXMapInfo();

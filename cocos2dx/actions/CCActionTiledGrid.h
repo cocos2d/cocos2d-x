@@ -87,6 +87,10 @@ struct Tile;
 class CC_DLL CCShuffleTiles : public CCTiledGrid3DAction
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCShuffleTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
     virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int seed);
@@ -179,6 +183,10 @@ public:
 class CC_DLL CCTurnOffTiles : public CCTiledGrid3DAction
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCTurnOffTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
     virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int seed);
