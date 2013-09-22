@@ -101,6 +101,7 @@ public:
 
     /* override functions 
      * @lua NA
+     * @js  NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual bool isEqual(const CCObject* pObject);

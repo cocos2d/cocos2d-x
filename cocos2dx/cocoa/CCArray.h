@@ -225,7 +225,10 @@ public:
     /* Shrinks the array so the memory footprint corresponds with the number of items */
     void reduceMemoryFootprint();
   
-    /* override functions */
+    /** override functions 
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
     /* override functions */

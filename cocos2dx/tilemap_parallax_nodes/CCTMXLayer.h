@@ -116,17 +116,20 @@ public:
     You can remove either by calling:
     - layer->removeChild(sprite, cleanup);
     - or layer->removeTileAt(ccp(x,y));
+    @js getTileGIDAt
     */
     CCSprite* tileAt(const CCPoint& tileCoordinate);
 
     /** returns the tile gid at a given tile coordinate.
     if it returns 0, it means that the tile is empty.
     This method requires the the tile map has not been previously released (eg. don't call layer->releaseMap())
+    @js tileGIDAt
     */
     unsigned int  tileGIDAt(const CCPoint& tileCoordinate);
 
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
+     @js tileGIDAt
      @lua NA
      */
     unsigned int tileGIDAt(const CCPoint& tileCoordinate, ccTMXTileFlags* flags);
@@ -149,10 +152,14 @@ public:
     /** removes a tile at given tile coordinate */
     void removeTileAt(const CCPoint& tileCoordinate);
 
-    /** returns the position in points of a given tile coordinate */
+    /** returns the position in points of a given tile coordinate 
+     * @js getPositionAt
+     */
     CCPoint positionAt(const CCPoint& tileCoordinate);
 
-    /** return the value for the specific property name */
+    /** return the value for the specific property name 
+     *  @js getProperty
+     */
     CCString *propertyNamed(const char *propertyName);
 
     /** Creates the tiles */

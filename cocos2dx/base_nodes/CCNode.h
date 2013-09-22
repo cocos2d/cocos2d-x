@@ -646,6 +646,7 @@ public:
      * Removes this node itself from its parent node. 
      * If the node orphan, then nothing happens.
      * @param cleanup   true if all actions and callbacks on this node should be removed, false otherwise.
+     * @js removeFromParent
      */
     virtual void removeFromParentAndCleanup(bool cleanup);
     /** 
@@ -688,6 +689,7 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
      * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @js removeAllChildren
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup);
     
@@ -924,12 +926,16 @@ public:
      * If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.
      * During onEnter you can't access a "sister/brother" node.
      * If you override onEnter, you shall call its parent's one, e.g., CCNode::onEnter().
+     * @js NA
+     * @lua NA
      */
     virtual void onEnter();
 
     /** Event callback that is invoked when the CCNode enters in the 'stage'.
      * If the CCNode enters the 'stage' with a transition, this event is called when the transition finishes.
      * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. CCNode::onEnterTransitionDidFinish()
+     * @js NA
+     * @lua NA
      */
     virtual void onEnterTransitionDidFinish();
 
@@ -938,12 +944,16 @@ public:
      * If the CCNode leaves the 'stage' with a transition, this event is called when the transition finishes.
      * During onExit you can't access a sibling node.
      * If you override onExit, you shall call its parent's one, e.g., CCNode::onExit().
+     * @js NA
+     * @lua NA
      */
     virtual void onExit();
 
     /** 
      * Event callback that is called every time the CCNode leaves the 'stage'.
      * If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
+     * @js NA
+     * @lua NA
      */
     virtual void onExitTransitionDidStart();
 
@@ -981,6 +991,7 @@ public:
      * @todo Rename to getBoundingBox() in the future versions.
      * 
      * @return A "local" axis aligned boudning box of the node.
+     * @js getBoundingBox
      */
     CCRect boundingBox(void);
 

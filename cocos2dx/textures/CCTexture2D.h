@@ -118,7 +118,10 @@ public:
      * @lua NA
      */
     virtual ~CCTexture2D();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     const char* description(void);
 
     /** These functions are needed to create mutable textures 
@@ -242,6 +245,7 @@ public:
 
     /** returns the alpha pixel format
     @since v0.8
+    @js getDefaultAlphaPixelFormat
     */
     static CCTexture2DPixelFormat defaultAlphaPixelFormat();
 

@@ -215,18 +215,24 @@ public:
     /** set font size
      * c++ can not overload static and non-static member functions with the same parameter types
      * so change the name to setFontSizeObj
+     * @js setFontSize
      */
     void setFontSizeObj(unsigned int s);
     
-    /** get font size */
+    /** get font size 
+     *  @js fontSize
+     */
     unsigned int fontSizeObj();
     
     /** set the font name 
      * c++ can not overload static and non-static member functions with the same parameter types
      * so change the name to setFontNameObj
+     * @js setFontName
      */
     void setFontNameObj(const char* name);
-    
+    /**
+     *  @js fontName
+     */
     const char* fontNameObj();
     
 protected:

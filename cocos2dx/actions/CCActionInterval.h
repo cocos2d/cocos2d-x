@@ -69,7 +69,10 @@ public:
 
     /** returns true if the action has finished */
     virtual bool isDone(void);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void step(float dt);
     virtual void startWithTarget(CCNode *pTarget);
@@ -107,7 +110,8 @@ public:
      */
     bool initWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
     /**
-     * @lua NA
+     *  @js NA
+     *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
     /**
@@ -156,11 +160,18 @@ protected:
 class CC_DLL CCRepeat : public CCActionInterval
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCRepeat(void);
 
     /** initializes a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
     bool initWithAction(CCFiniteTimeAction *pAction, unsigned int times);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
@@ -206,10 +217,18 @@ public:
     CCRepeatForever()
         : m_pInnerAction(NULL)
     {}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCRepeatForever();
 
     /** initializes the action */
     bool initWithAction(CCActionInterval *pAction);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode* pTarget);
     virtual void step(float dt);
@@ -256,7 +275,8 @@ public:
      */
     bool initWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
     /**
-     * @lua NA
+     *  @js NA
+     *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
     /**
@@ -316,7 +336,10 @@ public:
     /** creates the action with separate rotation angles */
     static CCRotateTo* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
     virtual bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -343,7 +366,10 @@ public:
     
     static CCRotateBy* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
     bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -367,7 +393,10 @@ class CC_DLL CCMoveBy : public CCActionInterval
 public:
     /** initializes the action */
     bool initWithDuration(float duration, const CCPoint& deltaPosition);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse(void);
@@ -392,7 +421,10 @@ class CC_DLL CCMoveTo : public CCMoveBy
 public:
     /** initializes the action */
     bool initWithDuration(float duration, const CCPoint& position);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
 
@@ -411,6 +443,10 @@ class CC_DLL CCSkewTo : public CCActionInterval
 public:
     CCSkewTo();
     virtual bool initWithDuration(float t, float sx, float sy);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -453,7 +489,10 @@ class CC_DLL CCJumpBy : public CCActionInterval
 public:
     /** initializes the action */
     bool initWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -476,6 +515,10 @@ class CC_DLL CCJumpTo : public CCJumpBy
 {
 public:
     virtual void startWithTarget(CCNode *pTarget);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -499,16 +542,32 @@ typedef struct _ccBezierConfig {
 class CC_DLL CCBezierBy : public CCActionInterval
 {
 public:
-    /** initializes the action with a duration and a bezier configuration */
+    /** initializes the action with a duration and a bezier configuration 
+     *  @lua NA
+     */
     bool initWithDuration(float t, const ccBezierConfig& c);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
+    /**
+     *  @lua NA
+     */
     virtual void startWithTarget(CCNode *pTarget);
+    /**
+     *  @lua NA
+     */
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** creates the action with a duration and a bezier configuration */
+    /** creates the action with a duration and a bezier configuration 
+     *  @code
+     *  when this function bound to js,the input params are changed
+     *  js: var create(var t, var pointTable)
+     *  @endcode
+     */
     static CCBezierBy* create(float t, const ccBezierConfig& c);
 protected:
     ccBezierConfig m_sConfig;
@@ -522,13 +581,28 @@ protected:
 class CC_DLL CCBezierTo : public CCBezierBy
 {
 public:
+    /**
+     *  @lua NA
+     */
     virtual void startWithTarget(CCNode *pTarget);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 
-    /** creates the action with a duration and a bezier configuration */
+    /** creates the action with a duration and a bezier configuration
+     *  @code
+     *  when this function bound to js,the input params are changed
+     *  js: var create(var t, var pointTable)
+     *  @endcode
+     */
     static CCBezierTo* create(float t, const ccBezierConfig& c);
+    /**
+     *  @lua NA
+     */
     bool initWithDuration(float t, const ccBezierConfig &c);
     
 protected:
@@ -546,7 +620,10 @@ public:
 
     /** initializes the action with and X factor and a Y factor */
     bool initWithDuration(float duration, float sx, float sy);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -576,6 +653,10 @@ class CC_DLL CCScaleBy : public CCScaleTo
 public:
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -594,7 +675,10 @@ class CC_DLL CCBlink : public CCActionInterval
 public:
     /** initializes the action */
     bool initWithDuration(float duration, unsigned int uBlinks);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
@@ -620,6 +704,10 @@ class CC_DLL CCFadeIn : public CCActionInterval
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -635,6 +723,10 @@ class CC_DLL CCFadeOut : public CCActionInterval
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -651,7 +743,10 @@ class CC_DLL CCFadeTo : public CCActionInterval
 public:
     /** initializes the action with duration and opacity */
     bool initWithDuration(float duration, GLubyte opacity);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -673,7 +768,10 @@ class CC_DLL CCTintTo : public CCActionInterval
 public:
     /** initializes the action with duration and color */
     bool initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -694,7 +792,10 @@ class CC_DLL CCTintBy : public CCActionInterval
 public:
     /** initializes the action with duration and color */
     bool initWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -720,6 +821,10 @@ class CC_DLL CCDelayTime : public CCActionInterval
 public:
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -743,7 +848,10 @@ public:
 
     /** initializes the action */
     bool initWithAction(CCFiniteTimeAction *pAction);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
@@ -763,12 +871,19 @@ class CC_DLL CCAnimate : public CCActionInterval
 {
 public:
     CCAnimate();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCAnimate();
 
     /** initializes the action with an Animation and will restore the original frame when the animation is over */
     bool initWithAnimation(CCAnimation *pAnimation);
 
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
@@ -793,6 +908,10 @@ class CC_DLL CCTargetedAction : public CCActionInterval
 {
 public:
     CCTargetedAction();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTargetedAction();
 
     /** Create an action with the specified action and forced target */
@@ -800,7 +919,10 @@ public:
 
     /** Init an action with the specified action and forced target */
     bool initWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);

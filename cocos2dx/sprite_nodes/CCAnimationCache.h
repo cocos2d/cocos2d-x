@@ -52,7 +52,9 @@ class CC_DLL CCAnimationCache : public CCObject
 public:
     CCAnimationCache();
     ~CCAnimationCache();
-    /** Returns the shared instance of the Animation cache */
+    /** Returns the shared instance of the Animation cache 
+     *  @js getInstance
+     */
     static CCAnimationCache* sharedAnimationCache(void);
 
     /** Purges the cache. It releases all the CCAnimation objects and the shared instance.
@@ -64,12 +66,14 @@ public:
     void addAnimation(CCAnimation *animation, const char * name);
 
     /** Deletes a CCAnimation from the cache.
-    */
+     *@js removeAnimation
+     */
     void removeAnimationByName(const char* name);
 
     /** Returns a CCAnimation that was previously added.
     If the name is not found it will return nil.
     You should retain the returned copy if you are going to use it.
+    @js getAnimation
     */
     CCAnimation* animationByName(const char* name);
 
@@ -82,6 +86,7 @@ public:
     /** Adds an animation from a plist file.
      Make sure that the frames were previously loaded in the CCSpriteFrameCache.
      @since v1.1
+     @js addAnimations
      */
     void addAnimationsWithFile(const char* plist);
 

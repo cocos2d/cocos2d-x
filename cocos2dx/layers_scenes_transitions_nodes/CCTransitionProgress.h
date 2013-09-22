@@ -45,7 +45,15 @@ public:
     static CCTransitionProgress* create(float t, CCScene* scene);
 
     CCTransitionProgress();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);

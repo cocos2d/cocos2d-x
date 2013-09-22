@@ -241,6 +241,7 @@ public:
      *
      * @param   pszFilename The path to an image file in local file system
      * @return  true if the sprite is initialized properly, false otherwise.
+     * @js init
      */
     virtual bool initWithFile(const char *pszFilename);
     
@@ -254,6 +255,7 @@ public:
      * @param   pszFilename The path to an image file in local file system.
      * @param   rect        The rectangle assigned the content area from texture.
      * @return  true if the sprite is initialized properly, false otherwise.
+     * @js init
      */
     virtual bool initWithFile(const char *pszFilename, const CCRect& rect);
     
@@ -466,6 +468,7 @@ public:
      * sprite->setScaleX(sprite->getScaleX() * -1);
      *
      * @return true if the sprite is flipped horizaontally, false otherwise.
+     * @js isFlippedX
      */
     bool isFlipX(void);
     /**
@@ -484,6 +487,7 @@ public:
      * sprite->setScaleY(sprite->getScaleY() * -1);
      * 
      * @return true if the sprite is flipped vertically, flase otherwise.
+     * @js isFlippedY
      */
     bool isFlipY(void);
     /**

@@ -72,8 +72,9 @@ public:
     */
     bool initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
     /** returns a tile from position x,y.
-    For the moment only channel R is used
-    */
+     For the moment only channel R is used
+     @js getTileAt
+     */
     ccColor3B tileAt(const CCPoint& position);
     /** sets a tile at position x,y.
     For the moment only channel R is used

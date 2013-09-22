@@ -110,10 +110,12 @@ public:
      */
     virtual ~CCGLProgram();
     /** Initializes the CCGLProgram with a vertex and fragment with bytes array 
+     * @js  initWithString
      * @lua NA
      */
     bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     /** Initializes the CCGLProgram with a vertex and fragment with contents of filenames 
+     * @js  init
      * @lua NA
      */
     bool initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename);
@@ -146,7 +148,8 @@ public:
     GLint getUniformLocationForName(const char* name);
     
     /** calls glUniform1i only if the values are different than the previous call for this same shader program. 
-     * @lua NA
+     *  @js  setUniformLocationI32
+     *  @lua NA
      */
     void setUniformLocationWith1i(GLint location, GLint i1);
     
@@ -235,14 +238,17 @@ public:
     void setUniformsForBuiltins();
 
     /** returns the vertexShader error log 
+     *  @js  getVertexShaderLog
      *  @lua NA
      */
     const char* vertexShaderLog();
     /** returns the fragmentShader error log 
+     *  @js  getFragmentShaderLog
      *  @lua NA
      */
     const char* fragmentShaderLog();
     /** returns the program error log 
+     *  @js  getProgramLog
      *  @lua NA
      */
     const char* programLog();

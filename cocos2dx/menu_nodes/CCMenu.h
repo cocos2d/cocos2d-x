@@ -167,6 +167,8 @@ public:
     /**
     @since v0.99.5
     override onExit
+    *  @js NA
+    *  @lua NA
     */
     virtual void onExit();
 

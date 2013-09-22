@@ -56,7 +56,15 @@ class CC_DLL CCAnimationFrame : public CCObject
 {
 public:
     CCAnimationFrame();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCAnimationFrame();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
     bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo);
@@ -120,6 +128,7 @@ public:
     /** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
      The frame will be added with one "delay unit".
      Added to facilitate the migration from v0.8 to v0.9.
+     * @js addSpriteFrameWithFile
      */  
     void addSpriteFrameWithFileName(const char *pszFileName);
 

@@ -49,11 +49,24 @@ enum {
 class CC_DLL CCAction : public CCObject 
 {
 public:
+    /**
+     * @js ctor
+     */
     CCAction(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCAction(void);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
 
     //! return true if the action has finished
@@ -151,10 +164,17 @@ class CCRepeatForever;
 class CC_DLL CCSpeed : public CCAction
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCSpeed()
         : m_fSpeed(0.0)
         , m_pInnerAction(NULL)
     {}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCSpeed(void);
 
     inline float getSpeed(void) { return m_fSpeed; }
@@ -163,7 +183,10 @@ public:
 
     /** initializes the action */
     bool initWithAction(CCActionInterval *pAction, float fSpeed);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode* pTarget);
     virtual void stop();
@@ -207,6 +230,10 @@ public:
         , m_fTopBoundary(0.0)
         , m_fBottomBoundary(0.0)
     {}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCFollow(void);
     
     inline bool isBoundarySet(void) { return m_bBoundarySet; }
@@ -215,7 +242,10 @@ public:
 
     /** initializes the action with a set boundary */
     bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void step(float dt);
     virtual bool isDone(void);
