@@ -39,7 +39,7 @@ NS_CC_BEGIN
 
 /** @brief Scene is a subclass of Node that is used only as an abstract concept.
 
-Scene and Node are almost identical with the difference that Scene has it's
+Scene and Node are almost identical with the difference that Scene has its
 anchor point (by default) at the center of the screen.
 
 For the moment Scene has no other logic than that, but in future releases it might have
