@@ -211,6 +211,18 @@ void CCBone::updateDisplayedOpacity(GLubyte parentOpacity)
     updateColor();
 }
 
+void CCBone::setColor(const ccColor3B& color)
+{
+	CCNodeRGBA::setColor(color);
+	updateColor();
+}
+
+void CCBone::setOpacity(GLubyte opacity)
+{
+	CCNodeRGBA::setOpacity(opacity);
+	updateColor();
+}
+
 void CCBone::updateColor()
 {
     CCNode *display = m_pDisplayManager->getDisplayRenderNode();
