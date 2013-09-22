@@ -41,6 +41,10 @@ class CCGridBase;
 class CC_DLL CCGridAction : public CCActionInterval
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse(void);

@@ -64,6 +64,7 @@ public:
     
     /** creates the CCLabelAtlas with a string and a configuration file
      @since v2.0
+     @js _create
      */
     static CCLabelAtlas* create(const char *string, const char *fntFile);
 

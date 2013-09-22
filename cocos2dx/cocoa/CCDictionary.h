@@ -332,6 +332,7 @@ public:
      *  This function is used for deepcopy elements from source dictionary to destination dictionary.
      *  You shouldn't invoke this function manually since it's called by CCObject::copy.
      *  @lua NA
+     *  @js  NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
     /// @}

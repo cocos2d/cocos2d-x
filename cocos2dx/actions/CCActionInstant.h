@@ -46,8 +46,16 @@ class CC_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
 {
 public:
     CCActionInstant();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCActionInstant(){}
     // CCAction methods
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual bool isDone(void);
     virtual void step(float dt);
@@ -62,10 +70,18 @@ class CC_DLL CCShow : public CCActionInstant
 {
 public:
     CCShow(){}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCShow(){}
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -82,10 +98,18 @@ class CC_DLL CCHide : public CCActionInstant
 {
 public:
     CCHide(){}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCHide(){}
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -99,9 +123,17 @@ class CC_DLL CCToggleVisibility : public CCActionInstant
 {
 public:
     CCToggleVisibility(){}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCToggleVisibility(){}
     //super method
     virtual void update(float time);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
 
@@ -110,8 +142,10 @@ public:
 };
 
 /** 
-@brief Remove the node
-*/
+ @brief Remove the node
+ @js NA
+ @lua NA
+ */
 class CC_DLL CCRemoveSelf : public CCActionInstant
 {
 public:
@@ -133,6 +167,7 @@ protected:
 /** 
 @brief Flips the sprite horizontally
 @since v0.99.0
+@js NA
 */
 class CC_DLL CCFlipX : public CCActionInstant
 {
@@ -140,6 +175,9 @@ public:
     CCFlipX()
         :m_bFlipX(false)
     {}
+    /**
+     *  @lua NA
+     */
     virtual ~CCFlipX(){}
 
     /** create the action */
@@ -150,6 +188,9 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+    /**
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
 
 protected:
@@ -159,6 +200,7 @@ protected:
 /** 
 @brief Flips the sprite vertically
 @since v0.99.0
+@js NA
 */
 class CC_DLL CCFlipY : public CCActionInstant
 {
@@ -166,6 +208,9 @@ public:
     CCFlipY()
         :m_bFlipY(false)
     {}
+    /**
+     *  @lua NA
+     */
     virtual ~CCFlipY(){}
 
     /** create the action */
@@ -176,6 +221,9 @@ public:
     //super methods
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
+    /**
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
 
 protected:
@@ -188,6 +236,10 @@ class CC_DLL CCPlace : public CCActionInstant //<NSCopying>
 {
 public:
     CCPlace(){}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCPlace(){}
 
     /** creates a Place action with a position */
@@ -196,6 +248,10 @@ public:
     bool initWithPosition(const CCPoint& pos);
     //super methods
     virtual void update(float time);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
 protected:
     CCPoint m_tPosition;
@@ -245,6 +301,7 @@ public:
      */
     virtual void update(float time);
     /**
+     * @js  NA
      * @lua NA
      */
     CCObject * copyWithZone(CCZone *pZone);
@@ -327,6 +384,7 @@ public:
      */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
     /** super methods
+     * @js  NA
      * @lua NA
      */
     virtual CCObject* copyWithZone(CCZone *pZone);
@@ -357,6 +415,10 @@ public:
     /** initializes the action with the callback and the data to pass as an argument */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
     // super methods
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void execute();
 
@@ -396,6 +458,10 @@ public:
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
     // super methods
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void execute();
 

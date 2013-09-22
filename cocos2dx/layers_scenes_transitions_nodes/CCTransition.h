@@ -90,9 +90,21 @@ protected:
 public:
 
     CCTransitionScene();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionScene();
     virtual void draw();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
     virtual void cleanup();
 
@@ -141,7 +153,15 @@ class CC_DLL CCTransitionRotoZoom : public CCTransitionScene
 {
 public:
     CCTransitionRotoZoom();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionRotoZoom();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
 
     static CCTransitionRotoZoom* create(float t, CCScene* scene);
@@ -154,7 +174,15 @@ class CC_DLL CCTransitionJumpZoom : public CCTransitionScene
 {
 public:
     CCTransitionJumpZoom();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionJumpZoom();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
 
     static CCTransitionJumpZoom* create(float t, CCScene* scene);
@@ -167,6 +195,10 @@ class CC_DLL CCTransitionMoveInL : public CCTransitionScene, public CCTransition
 {
 public:
     CCTransitionMoveInL();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionMoveInL();
     /** initializes the scenes */
     virtual void initScenes(void);
@@ -174,7 +206,10 @@ public:
     virtual CCActionInterval* action(void);
 
     virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
 
     static CCTransitionMoveInL* create(float t, CCScene* scene);
@@ -226,13 +261,20 @@ class CC_DLL CCTransitionSlideInL : public CCTransitionScene, public CCTransitio
 {
 public:
     CCTransitionSlideInL();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionSlideInL();
 
     /** initializes the scenes */
     virtual void initScenes(void);
     /** returns the action that will be performed by the incoming and outgoing scene */
     virtual CCActionInterval* action(void);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
     
     virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
@@ -306,8 +348,15 @@ class CC_DLL CCTransitionShrinkGrow : public CCTransitionScene , public CCTransi
 {
 public:
     CCTransitionShrinkGrow();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionShrinkGrow();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
     virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
@@ -322,8 +371,15 @@ class CC_DLL CCTransitionFlipX : public CCTransitionSceneOriented
 {
 public:
     CCTransitionFlipX();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionFlipX();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
 
     static CCTransitionFlipX* create(float t, CCScene* s, tOrientation o);
@@ -338,8 +394,15 @@ class CC_DLL CCTransitionFlipY : public CCTransitionSceneOriented
 {
 public:
     CCTransitionFlipY();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionFlipY();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
 
     static CCTransitionFlipY* create(float t, CCScene* s, tOrientation o);
@@ -354,8 +417,15 @@ class CC_DLL CCTransitionFlipAngular : public CCTransitionSceneOriented
 {
 public:
     CCTransitionFlipAngular();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionFlipAngular();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
     
     static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o);
@@ -370,8 +440,15 @@ class CC_DLL CCTransitionZoomFlipX : public CCTransitionSceneOriented
 {
 public:
     CCTransitionZoomFlipX();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionZoomFlipX();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
 
     static CCTransitionZoomFlipX* create(float t, CCScene* s, tOrientation o);
@@ -386,8 +463,15 @@ class CC_DLL CCTransitionZoomFlipY : public CCTransitionSceneOriented
 {
 public:
     CCTransitionZoomFlipY();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionZoomFlipY();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
 
     static CCTransitionZoomFlipY* create(float t, CCScene* s, tOrientation o);
@@ -402,8 +486,15 @@ class CC_DLL CCTransitionZoomFlipAngular : public CCTransitionSceneOriented
 {
 public:
     CCTransitionZoomFlipAngular();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionZoomFlipAngular();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
 
     static CCTransitionZoomFlipAngular* create(float t, CCScene* s, tOrientation o);
@@ -421,6 +512,10 @@ protected:
 public:
 
     CCTransitionFade();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionFade();
     
     /** creates the transition with a duration and with an RGB color
@@ -432,8 +527,16 @@ public:
     /** initializes the transition with a duration and with an RGB color */
     virtual bool initWithDuration(float t, CCScene*scene ,const ccColor3B& color);
 
-    virtual bool initWithDuration(float t,CCScene* scene); 
+    virtual bool initWithDuration(float t,CCScene* scene);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
 };
 
@@ -446,10 +549,22 @@ class CC_DLL CCTransitionCrossFade : public CCTransitionScene
 {
 public :
     CCTransitionCrossFade();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionCrossFade();
 
     virtual void draw();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
 
 public:
@@ -463,8 +578,15 @@ class CC_DLL CCTransitionTurnOffTiles : public CCTransitionScene ,public CCTrans
 {
 public :
     CCTransitionTurnOffTiles();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionTurnOffTiles();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
     virtual CCActionInterval * easeActionWithAction(CCActionInterval * action);
 
@@ -481,9 +603,17 @@ class CC_DLL CCTransitionSplitCols : public CCTransitionScene , public CCTransit
 {
 public:
     CCTransitionSplitCols();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionSplitCols();
 
     virtual CCActionInterval* action(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
     virtual CCActionInterval * easeActionWithAction(CCActionInterval * action);
 
@@ -515,8 +645,16 @@ class CC_DLL CCTransitionFadeTR : public CCTransitionScene , public CCTransition
 {
 public:
     CCTransitionFadeTR();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionFadeTR();
     virtual CCActionInterval* actionWithSize(const CCSize& size);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
     virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 

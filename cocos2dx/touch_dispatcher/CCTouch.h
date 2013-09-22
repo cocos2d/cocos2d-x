@@ -70,7 +70,9 @@ public:
             m_startPointCaptured = true;
         }
     }
-
+    /**
+     *  @js getId
+     */
     int getID() const
     {
         return m_nId;

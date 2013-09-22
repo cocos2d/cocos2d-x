@@ -77,6 +77,9 @@ public:
     void setPercentage(float fPercentage);
     void setSprite(CCSprite *pSprite);
     void setType(CCProgressTimerType type);
+    /**
+     *  @js setReverseDirection
+     */
     void setReverseProgress(bool reverse);
 
     virtual void draw(void);

@@ -40,7 +40,10 @@ class CC_DLL CCShakyTiles3D : public CCTiledGrid3DAction
 public:
     /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
     virtual bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShakeZ);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -60,7 +63,10 @@ class CC_DLL CCShatteredTiles3D : public CCTiledGrid3DAction
 public:
     /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
     virtual bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShatterZ);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -90,6 +96,10 @@ public:
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -175,7 +185,10 @@ public:
     void shuffle(unsigned int *pArray, unsigned int nLen);
     void turnOnTile(const CCPoint& pos);
     void turnOffTile(const CCPoint& pos);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -207,7 +220,10 @@ public:
 
     /** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
     virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -236,6 +252,10 @@ public:
 
     /** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int numberOfJumps, float amplitude);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -255,7 +275,10 @@ class CC_DLL CCSplitRows : public CCTiledGrid3DAction
 public :
     /** initializes the action with the number of rows to split and the duration */
     virtual bool initWithDuration(float duration, unsigned int nRows);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
     virtual void startWithTarget(CCNode *pTarget);
@@ -275,7 +298,10 @@ class CC_DLL CCSplitCols : public CCTiledGrid3DAction
 public:
     /** initializes the action with the number of columns to split and the duration */
     virtual bool initWithDuration(float duration, unsigned int nCols);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
     virtual void startWithTarget(CCNode *pTarget);

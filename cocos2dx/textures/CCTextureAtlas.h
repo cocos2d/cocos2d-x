@@ -76,8 +76,15 @@ protected:
 public:
 
     CCTextureAtlas();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTextureAtlas();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     const char* description();
 
     /** creates a TextureAtlas with an filename and with an initial capacity for Quads.

@@ -103,6 +103,10 @@ public:
     /** positions the camera according to spherical coordinates */
     void sphericalRadius(float *r, float *zenith, float *azimuth);
     // super methods
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);

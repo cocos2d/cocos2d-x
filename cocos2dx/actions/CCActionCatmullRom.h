@@ -99,7 +99,8 @@ public:
     /** reverse the current control point array inline, without generating a new one */
     void reverseInline();
     /**
-     * @lua NA
+     *  @js NA
+     *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone *zone);
     
@@ -119,25 +120,53 @@ class CC_DLL CCCardinalSplineTo : public CCActionInterval
 {
 public:
 
-    /** creates an action with a Cardinal Spline array of points and tension */
+    /** creates an action with a Cardinal Spline array of points and tension 
+     *  @code
+     *  when thie function bound to js,the input params are changed
+     *  js:var create(var duration,var pointTable,var tension)
+     *  @endcode
+     */
     static CCCardinalSplineTo* create(float duration, CCPointArray* points, float tension);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCCardinalSplineTo();
+    /**
+     *  @lua NA
+     */
     CCCardinalSplineTo();
     
-    /** initializes the action with a duration and an array of points */
+    /** initializes the action with a duration and an array of points 
+     *  @lua NA
+     */
     bool initWithDuration(float duration, CCPointArray* points, float tension);
     
     // super virtual functions
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCCardinalSplineTo* copyWithZone(CCZone* pZone);
+    /**
+     *  @lua NA
+     */
     virtual void startWithTarget(CCNode *pTarget);
+    /**
+     *  @lua NA
+     */
     virtual void update(float time);
     virtual CCActionInterval* reverse();
-    
+    /**
+     *  @lua NA
+     */
     virtual void updatePosition(CCPoint &newPos);
     
     inline CCPointArray* getPoints() { return m_pPoints; }
-    inline void  setPoints(CCPointArray* points) 
+    /**
+     *  @js NA
+     */
+    inline void  setPoints(CCPointArray* points)
     {
         CC_SAFE_RETAIN(points);
         CC_SAFE_RELEASE(m_pPoints);
@@ -161,13 +190,25 @@ class CC_DLL CCCardinalSplineBy : public CCCardinalSplineTo
 {
 public:
     
-    /** creates an action with a Cardinal Spline array of points and tension */
+    /** creates an action with a Cardinal Spline array of points and tension 
+     *  @code
+     *  when thie function bound to js,the input params are changed
+     *  js:var create(var duration,var pointTable,var tension)
+     *  @endcode
+     */
     static CCCardinalSplineBy* create(float duration, CCPointArray* points, float tension);
-
+    /**
+     *  @lua NA
+     */
     CCCardinalSplineBy();
-    
+    /**
+     *  @lua NA
+     */
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse();
+    /**
+     *  @lua NA
+     */
     virtual void updatePosition(CCPoint &newPos);
 protected:
     CCPoint m_startPosition;
@@ -182,10 +223,18 @@ class CC_DLL CCCatmullRomTo : public CCCardinalSplineTo
 {
 public:
     
-    /** creates an action with a Cardinal Spline array of points and tension */
+    /** creates an action with a Cardinal Spline array of points and tension 
+     *  @code
+     *  when this function bound to js,the input params are changed
+     *  js:var create(var dt,var pointTable)
+     *  @endcode
+     */
     static CCCatmullRomTo* create(float dt, CCPointArray* points);
 
-    /** initializes the action with a duration and an array of points */
+    /** initializes the action with a duration and an array of points 
+     *  @js NA
+     *  @lua NA
+     */
     bool initWithDuration(float dt, CCPointArray* points);
 };
 
@@ -198,10 +247,18 @@ class CC_DLL CCCatmullRomBy : public CCCardinalSplineBy
 {
 public:
     
-    /** creates an action with a Cardinal Spline array of points and tension */
+    /** creates an action with a Cardinal Spline array of points and tension 
+     *  @code
+     *  when this function bound to js,the input params are changed
+     *  js:var create(var dt,var pointTable)
+     *  @endcode
+     */
     static CCCatmullRomBy* create(float dt, CCPointArray* points);
 
-    /** initializes the action with a duration and an array of points */
+    /** initializes the action with a duration and an array of points 
+     *  @js NA
+     *  @lua NA
+     */
     bool initWithDuration(float dt, CCPointArray* points);
 };
 

@@ -350,7 +350,9 @@ public:
 	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
 	
 public:
-    /** returns a shared instance of the director */
+    /** returns a shared instance of the director 
+     *  @js getInstance
+     */
     static CCDirector* sharedDirector(void);
 
 protected:

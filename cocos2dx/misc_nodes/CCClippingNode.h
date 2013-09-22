@@ -65,10 +65,25 @@ public:
      The stencil node will be retained, and its parent will be set to this clipping node.
      */
     virtual bool init(CCNode *pStencil);
-    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnterTransitionDidFinish();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExitTransitionDidStart();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
     virtual void visit();
     
