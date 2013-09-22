@@ -628,7 +628,7 @@ JSBool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint3
         JSTouchDelegate *touch = new JSTouchDelegate();
         touch->autorelease();
         if(argc > 1)
-        	touch->registerStandardDelegate(JSVAL_TOINT(argv[1]));
+        	touch->registerStandardDelegate(JSVAL_TO_INT(argv[1]));
         else
         	touch->registerStandardDelegate(0);
         jsobj = (argc == 1 ? JSVAL_TO_OBJECT(argv[0]) : JSVAL_TO_OBJECT(JSVAL_VOID));
