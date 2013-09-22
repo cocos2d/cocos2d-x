@@ -14,7 +14,7 @@ cc.BuilderReader.setResourcePath = function (rootPath) {
 cc.BuilderReader.load = function(file, owner, parentSize)
 {
     // Load the node graph using the correct function
-    var reader = cc._Reader.create();
+    var reader = cc.BuilderReader.create();    
     reader.setCCBRootPath(cc.BuilderReader._resourcePath);
     
     var node;
@@ -86,7 +86,22 @@ cc.BuilderReader.load = function(file, owner, parentSize)
             var callbackName = documentCallbackNames[j];
             var callbackNode = documentCallbackNodes[j];
 
-            callbackNode.setCallback(controller[callbackName], controller);
+            if (controller[callbackName] === undefined)
+            {
+                cc.log("Warning: " + documentControllerName + "." + callbackName + " is undefined.");
+            }
+            else
+            {
+                if(callbackNode instanceof cc.ControlButton)
+                {
+                    var documentCallbackControlEvents = animationManager.getDocumentCallbackControlEvents();
+                    callbackNode.addTargetWithActionForControlEvents(controller, controller[callbackName], documentCallbackControlEvents[j]); 
+                }
+                else
+                {
+                    callbackNode.setCallback(controller[callbackName], controller);
+                }
+            }
         }
 
 
@@ -118,12 +133,12 @@ cc.BuilderReader.load = function(file, owner, parentSize)
             if (callbackType == 1) // Document callback
             {
                 var callfunc = cc.CallFunc.create(controller[callbackName], controller);
-                animationManager.setCallFuncForJSCallbackNamed(callfunc, keyframeCallbacks[j]);
+                animationManager.setCallFunc(callfunc, keyframeCallbacks[j]);
             }
             else if (callbackType == 2 && owner) // Owner callback
             {
                 var callfunc = cc.CallFunc.create(owner[callbackName], owner);
-                animationManager.setCallFuncForJSCallbackNamed(callfunc, keyframeCallbacks[j]);
+                animationManager.setCallFunc(callfunc, keyframeCallbacks[j]);
             }
         }
         
