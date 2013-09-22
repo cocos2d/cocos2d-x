@@ -42,10 +42,6 @@ UIListView::UIListView()
 , m_bBePressed(false)
 , m_fSlidTime(0.0f)
 , m_fChildFocusCancelOffset(5.0f)
-, m_pInitChildListener(NULL)
-, m_pfnInitChildSelector(NULL)
-, m_pUpdateChildListener(NULL)
-, m_pfnUpdateChildSelector(NULL)
 , m_pChildPool(NULL)
 , m_pUpdatePool(NULL)
 , m_nDataLength(0)
@@ -60,7 +56,15 @@ UIListView::UIListView()
 , m_overRightArray(NULL)
 , m_fDisBoundaryToChild_0(0.0f)
 , m_fDisBetweenChild(0.0f)
-, m_fScrollDegreeRange(45.0f)
+, m_pEventListener(NULL)
+, m_pfnEventSelector(NULL)
+
+/*compatible*/
+, m_pInitChildListener(NULL)
+, m_pfnInitChildSelector(NULL)
+, m_pUpdateChildListener(NULL)
+, m_pfnUpdateChildSelector(NULL)
+/*************/
 {
 }
 
@@ -1431,20 +1435,39 @@ void UIListView::updateChild()
 
 void UIListView::initChildEvent()
 {
+    /*Compatible*/
     if (m_pInitChildListener && m_pfnInitChildSelector)
     {
         (m_pInitChildListener->*m_pfnInitChildSelector)(this);
+    }
+    /************/
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, LISTVIEW_EVENT_INIT_CHILD);
     }
 }
 
 void UIListView::updateChildEvent()
 {
+    /*Compatible*/
     if (m_pUpdateChildListener && m_pfnUpdateChildSelector)
     {
         (m_pUpdateChildListener->*m_pfnUpdateChildSelector)(this);
     }
+    /************/
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, LISTVIEW_EVENT_UPDATE_CHILD);
+    }
 }
 
+void UIListView::addEventListenter(CCObject *target, SEL_ListViewEvent selector)
+{
+    m_pEventListener = target;
+    m_pfnEventSelector = selector;
+}
+
+/*Compatible*/
 void UIListView::addInitChildEvent(cocos2d::CCObject *target, SEL_ListViewInitChildEvent seletor)
 {
     m_pInitChildListener = target;
@@ -1456,6 +1479,7 @@ void UIListView::addUpdateChildEvent(cocos2d::CCObject *target, SEL_ListViewUpda
     m_pUpdateChildListener = target;
     m_pfnUpdateChildSelector = selector;
 }
+/************/
 
 const char* UIListView::getDescription() const
 {
