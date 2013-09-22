@@ -704,7 +704,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
     }
     if( movementXML->QueryIntAttribute(A_LOOP, &(loop)) == tinyxml2::XML_SUCCESS)
     {
-        movementData->loop = (bool)loop;
+        movementData->loop = (loop != 0);
     }
 
     const char *_easing = movementXML->Attribute(A_TWEEN_EASING);
@@ -855,7 +855,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
 
 	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-	CCFrameData **frames = (CCFrameData **)movBoneData->frameList.data->arr;
+	FrameData **frames = (FrameData **)movBoneData->frameList.data->arr;
 	for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
 	{
 		if (i > 0)
@@ -1432,7 +1432,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(cs::JsonDictionary &json)
 	if (s_CocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
 	{
 		//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-		CCFrameData **frames = (CCFrameData **)movementBoneData->frameList.data->arr;
+		FrameData **frames = (FrameData **)movementBoneData->frameList.data->arr;
 		for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
 		{
 			if (i > 0)

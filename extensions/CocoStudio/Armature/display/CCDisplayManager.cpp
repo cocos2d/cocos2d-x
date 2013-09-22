@@ -90,7 +90,7 @@ void DisplayManager::addDisplay(DisplayData *displayData, int index)
 {
     DecorativeDisplay *decoDisplay = NULL;
 
-    if(index >= 0 && (unsigned int)index < _decoDisplayList->count())
+    if( (index >= 0) && (index < _decoDisplayList->count()) )
     {
         decoDisplay = (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
     }
@@ -114,7 +114,7 @@ void DisplayManager::addDisplay(Node *display, int index)
 {
     DecorativeDisplay *decoDisplay = NULL;
 
-    if(index >= 0 && (unsigned int)index < _decoDisplayList->count())
+    if( (index >= 0) && (index < _decoDisplayList->count()) )
     {
         decoDisplay = (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
     }

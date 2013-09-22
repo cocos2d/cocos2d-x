@@ -236,7 +236,7 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
                 
                 PhysicsHelper::cpvs2points(poly->tVerts, seg, num);
                 
-                node->drawPolygon(seg, num, Color4F(1, 0, 0, 0.3), 1, Color4F(1, 0, 0, 1));
+                node->drawPolygon(seg, num, Color4F(1.0f, 0.0f, 0.0f, 0.3f), 1.0f, Color4F(1.0f, 0.0f, 0.0f, 1.0f));
                 
                 delete[] seg;
                 break;
