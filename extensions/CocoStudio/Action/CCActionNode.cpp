@@ -313,6 +313,7 @@ CCSpawn * ActionNode::refreshActionProperty()
 	}
 
 	m_actionSpawn = CCSpawn::create(cSpawnArray);
+	m_actionSpawn->retain();
 	return m_actionSpawn;
 }
 
@@ -362,6 +363,7 @@ void ActionNode::stopAction()
 int ActionNode::getFirstFrameIndex()
 {
 	int frameindex = 99999;
+	bool bFindFrame = false;
 	for (int n = 0; n < frameArrayNum; n++)
 	{
 		CCArray* cArray = (CCArray*)(m_FrameArray->objectAtIndex(n));
@@ -370,6 +372,7 @@ int ActionNode::getFirstFrameIndex()
 			continue;
 		}
 
+		bFindFrame = true;
 		ActionFrame* frame = (ActionFrame*)(cArray->objectAtIndex(0));
 		int iFrameIndex = frame->getFrameIndex();
 
@@ -378,13 +381,17 @@ int ActionNode::getFirstFrameIndex()
 			frameindex = iFrameIndex;
 		}
 	}
-
+	if (!bFindFrame)
+	{
+		frameindex = 0;
+	}
 	return frameindex;
 }
 
 int ActionNode::getLastFrameIndex()
 {
 	int frameindex = -1;
+	bool bFindFrame = false;
 	for (int n = 0; n < frameArrayNum; n++)
 	{
 		CCArray* cArray = (CCArray*)(m_FrameArray->objectAtIndex(n));
@@ -392,6 +399,8 @@ int ActionNode::getLastFrameIndex()
 		{
 			continue;
 		}
+
+		bFindFrame = true;
 		int lastInex = cArray->count() - 1;
 		ActionFrame* frame = (ActionFrame*)(cArray->objectAtIndex(lastInex));
 		int iFrameIndex = frame->getFrameIndex();
@@ -401,7 +410,10 @@ int ActionNode::getLastFrameIndex()
 			frameindex = iFrameIndex;
 		}
 	}
-
+	if (!bFindFrame)
+	{
+		frameindex = 0;
+	}
 	return frameindex;
 }
 bool ActionNode::updateActionToTimeLine(float fTime)
