@@ -33,9 +33,7 @@ public:
     UIButtonTest();
     ~UIButtonTest();
     bool init();
-    void touchBeganEvent(CCObject *pSender);
-    void touchMovedEvent(CCObject *pSender);
-    void touchEndedEvent(CCObject *pSender);
+    void touchEvent(CCObject *pSender, TouchEventType type);    
 
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest)
@@ -48,9 +46,7 @@ public:
     UIButtonTest_Scale9();
     ~UIButtonTest_Scale9();
     bool init();
-    void touchBeganEvent(CCObject *pSender);
-    void touchMovedEvent(CCObject *pSender);
-    void touchEndedEvent(CCObject *pSender);
+    void touchEvent(CCObject *pSender, TouchEventType type);        
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_Scale9)
@@ -63,9 +59,7 @@ public:
     UIButtonTest_PressedAction();
     ~UIButtonTest_PressedAction();
     bool init();
-    void touchBeganEvent(CCObject *pSender);
-    void touchMovedEvent(CCObject *pSender);
-    void touchEndedEvent(CCObject *pSender);
+    void touchEvent(CCObject *pSender, TouchEventType type);    
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_PressedAction)

@@ -31,7 +31,6 @@ NS_CC_EXT_BEGIN
 #define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<cocos2d::extension::CCScale9Sprite*>(m_pImageRenderer)
 
 UIImageView::UIImageView():
-m_nViewType(1),
 m_nClickCount(0),
 m_fClickTimeInterval(0.0),
 m_bStartCheckDoubleClick(false),
@@ -58,6 +57,7 @@ UIImageView* UIImageView::create()
     UIImageView* widget = new UIImageView();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -121,7 +121,6 @@ void UIImageView::setTextureRect(const CCRect &rect)
 {
     if (m_bScale9Enabled)
     {
-//        DYNAMIC_CAST_SCALE9SPRITE->setTextureRect(rect);
     }
     else
     {
@@ -221,7 +220,6 @@ void UIImageView::setFlipX(bool flipX)
 {
     if (m_bScale9Enabled)
     {
-//            dynamic_cast<GUIScale9Sprite*>(m_pImage)->setFlipX(flipX);
     }
     else
     {
@@ -233,7 +231,6 @@ void UIImageView::setFlipY(bool flipY)
 {
     if (m_bScale9Enabled)
     {
-//            dynamic_cast<GUIScale9Sprite*>(m_pImage)->setFlipX(flipX);
     }
     else
     {
@@ -308,38 +305,6 @@ void UIImageView::ignoreContentAdaptWithSize(bool ignore)
     }
 }
 
-void UIImageView::setDisplayFrame(CCSpriteFrame *pNewFrame)
-{
-    if (!pNewFrame)
-    {
-        return;
-    }
-    if (m_bScale9Enabled)
-    {
-//        DYNAMIC_CAST_SCALE9SPRITE->setDisplayFrame(pNewFrame);
-    }
-    else
-    {
-        DYNAMIC_CAST_CCSPRITE->setDisplayFrame(pNewFrame);
-    }
-}
-
-void UIImageView::setSpriteFrame(CCSpriteFrame *pNewFrame)
-{
-    if (!pNewFrame)
-    {
-        return;
-    }
-    if (m_bScale9Enabled)
-    {
-        DYNAMIC_CAST_SCALE9SPRITE->setSpriteFrame(pNewFrame);
-    }
-    else
-    {
-//        DYNAMIC_CAST_CCSPRITE->setSpriteFrame(pNewFrame);
-    }
-}
-
 void UIImageView::setCapInsets(const CCRect &capInsets)
 {
     m_capInsets = capInsets;
@@ -401,6 +366,11 @@ void UIImageView::imageTextureScaleChangedWithSize()
             m_pImageRenderer->setScaleY(scaleY);
         }
     }
+}
+
+const char* UIImageView::getDescription() const
+{
+    return "ImageView";
 }
 
 NS_CC_EXT_END

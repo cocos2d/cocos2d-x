@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "ExtensionMacros.h"
 
 #define VERSION_COMBINED 0.30f
-
+#define VERSION_CHANGE_ROTATION_RANGE 1.0f
 
 #ifndef AUTO_ADD_SPRITE_FRAME_NAME_PREFIX
 #define AUTO_ADD_SPRITE_FRAME_NAME_PREFIX 0
@@ -47,5 +47,11 @@ THE SOFTWARE.
 
 #define CS_RETURN_IF(cond) if (cond) return
 #define CS_RETURN_NULL_IF(cond) if (cond) return NULL;
+
+NS_CC_EXT_BEGIN
+
+const char *armatureVersion();
+
+NS_CC_EXT_END
 
 #endif /*__CCARMATUREDEFINE_H__*/

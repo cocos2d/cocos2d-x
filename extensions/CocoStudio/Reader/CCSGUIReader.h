@@ -22,22 +22,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCSREADER_H__
-#define __CCSREADER_H__
+#ifndef __CCSGUIREADER_H__
+#define __CCSGUIREADER_H__
 
-#include "../BaseClasses/UIWidget.h"
-#include "../../Json/CSContentJsonDictionary.h"
+#include "../GUI/BaseClasses/UIWidget.h"
+#include "../Json/CSContentJsonDictionary.h"
 
 NS_CC_EXT_BEGIN
 
 #define kCCSVersion 1.0
-class CCSReader : CCObject
+class CCSGUIReader : CCObject
 {
 public:
-    CCSReader();
-    ~CCSReader();
-    static CCSReader* shareReader();
-	static void purgeCCSReader();
+    CCSGUIReader();
+    ~CCSGUIReader();
+    static CCSGUIReader* shareReader();
+	static void purgeCCSGUIReader();
     
     UIWidget* widgetFromJsonFile(const char* fileName);
     UIWidget* widgetFromJsonDictionary(cs::CSJsonDictionary* data);
@@ -73,4 +73,4 @@ protected:
 NS_CC_EXT_END
 
 
-#endif /* defined(__CocosGUITest__CCSReader__) */
+#endif /* defined(__CCSGUIReader__) */

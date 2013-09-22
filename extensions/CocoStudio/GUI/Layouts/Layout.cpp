@@ -61,6 +61,7 @@ Layout* Layout::create()
     Layout* layout = new Layout();
     if (layout && layout->init())
     {
+        layout->autorelease();
         return layout;
     }
     CC_SAFE_DELETE(layout);
@@ -84,6 +85,8 @@ bool Layout::init()
     setSize(CCSizeZero);
     setBright(true);
     setAnchorPoint(ccp(0, 0));
+    m_pScheduler = CCDirector::sharedDirector()->getScheduler();
+    CC_SAFE_RETAIN(m_pScheduler);
     return true;
 }
 
@@ -417,8 +420,19 @@ const CCSize& Layout::getBackGroundImageTextureSize() const
     return m_backGroundImageTextureSize;
 }
 
+const CCSize& Layout::getContentSize() const
+{
+    return m_pRenderer->getContentSize();
+}
+
+const char* Layout::getDescription() const
+{
+    return "Layout";
+}
+
 RectClippingNode::RectClippingNode():
 m_pInnerStencil(NULL),
+m_bEnabled(true),
 m_clippingSize(CCSizeMake(50.0f, 50.0f)),
 m_bClippingEnabled(false)
 {
@@ -465,12 +479,14 @@ bool RectClippingNode::init()
 
 void RectClippingNode::setClippingSize(const cocos2d::CCSize &size)
 {
+    setContentSize(size);
     m_clippingSize = size;
     rect[0] = ccp(0, 0);
     rect[1] = ccp(m_clippingSize.width, 0);
     rect[2] = ccp(m_clippingSize.width, m_clippingSize.height);
     rect[3] = ccp(0, m_clippingSize.height);
     ccColor4F green = {0, 1, 0, 1};
+    m_pInnerStencil->clear();
     m_pInnerStencil->drawPolygon(rect, 4, green, 0, green);
 }
 
@@ -481,6 +497,10 @@ void RectClippingNode::setClippingEnabled(bool enabled)
 
 void RectClippingNode::visit()
 {
+    if (!m_bEnabled)
+    {
+        return;
+    }
     if (m_bClippingEnabled)
     {
         CCClippingNode::visit();
@@ -489,6 +509,16 @@ void RectClippingNode::visit()
     {
         CCNode::visit();
     }
+}
+
+void RectClippingNode::setEnabled(bool enabled)
+{
+    m_bEnabled = enabled;
+}
+
+bool RectClippingNode::isEnabled() const
+{
+    return m_bEnabled;
 }
 
 NS_CC_EXT_END

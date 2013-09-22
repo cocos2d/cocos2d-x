@@ -33,14 +33,7 @@ public:
     UIDragPanelTest();
     ~UIDragPanelTest();
     bool init();
-    void berthToLeftBottomEvent(CCObject* pSender);
-    void berthToLeftTopEvent(CCObject* pSender);
-    void berthToRightBottomEvent(CCObject* pSender);
-    void berthToRightTopEvent(CCObject* pSender);
-    void berthToLeftEvent(CCObject* pSender);
-    void berthToTopEvent(CCObject* pSender);
-    void berthToRightEvent(CCObject* pSender);
-    void berthToBottomEvent(CCObject* pSender);
+    void dragPanelEvent(CCObject* pSender, DragPanelEventType type);    
     
 protected:
     UI_SCENE_CREATE_FUNC(UIDragPanelTest)
@@ -53,14 +46,7 @@ public:
     UIDragPanelTest_Bounce();
     ~UIDragPanelTest_Bounce();
     bool init();
-    void bounceToLeftBottomEvent(CCObject* pSender);
-    void bounceToRightBottomEvent(CCObject* pSender);
-    void bounceToLeftTopEvent(CCObject* pSender);
-    void bounceToRightTopEvent(CCObject* pSender);
-    void bounceToLeftEvent(CCObject* pSender);
-    void bounceToTopEvent(CCObject* pSender);
-    void bounceToRightEvent(CCObject* pSender);
-    void bounceToBottomEvent(CCObject* pSender);
+    void dragPanelEvent(CCObject* pSender, DragPanelEventType type);    
     
 protected:
     UI_SCENE_CREATE_FUNC(UIDragPanelTest_Bounce)
