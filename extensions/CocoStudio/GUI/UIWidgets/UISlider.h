@@ -163,7 +163,7 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addPercentEvent(CCObject* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListener(CCObject* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const CCPoint &touchPoint);

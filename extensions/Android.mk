@@ -72,10 +72,6 @@ CocoStudio/Armature/utils/CCSpriteFrameCacheHelper.cpp \
 CocoStudio/Armature/utils/CCTransformHelp.cpp \
 CocoStudio/Armature/utils/CCTweenFunction.cpp \
 CocoStudio/Armature/utils/CCUtilMath.cpp \
-CocoStudio/GUI/Action/UIAction.cpp \
-CocoStudio/GUI/Action/UIActionFrame.cpp \
-CocoStudio/GUI/Action/UIActionManager.cpp \
-CocoStudio/GUI/Action/UIActionNode.cpp \
 CocoStudio/GUI/BaseClasses/UIRootWidget.cpp \
 CocoStudio/GUI/BaseClasses/UIWidget.cpp \
 CocoStudio/GUI/Layouts/Layout.cpp \
@@ -112,6 +108,11 @@ CocoStudio/Json/lib_json/json_reader.cpp \
 CocoStudio/Json/lib_json/json_writer.cpp \
 CocoStudio/Reader/CCSSceneReader.cpp \
 CocoStudio/Reader/CCSGUIReader.cpp \
+CocoStudio/Action/CCActionManager.cpp \
+CocoStudio/Action/CCActionObject.cpp \
+CocoStudio/Action/CCActionNode.cpp \
+CocoStudio/Action/CCActionFrame.cpp \
+CocoStudio/Action/CCActionFrameEasing.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
 spine/AnimationStateData.cpp \

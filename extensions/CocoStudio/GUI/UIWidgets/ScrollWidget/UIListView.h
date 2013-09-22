@@ -53,13 +53,24 @@ typedef enum LISTVIEW_MOVE_DIR
     LISTVIEW_MOVE_DIR_RIGHT,
 }ListViewMoveDirection;
 
+typedef enum
+{
+    LISTVIEW_EVENT_INIT_CHILD,
+    LISTVIEW_EVENT_UPDATE_CHILD,
+}ListViewEventType;
+
 /**
  *  list view event
  */
+typedef void (CCObject::*SEL_ListViewEvent)(CCObject*, ListViewEventType);
+#define listvieweventselector(_SELECTOR)(SEL_ListViewEvent)(&_SELECTOR)
+
+/*******Compatible*******/
 typedef void (cocos2d::CCObject::*SEL_ListViewInitChildEvent)(cocos2d::CCObject*);
 typedef void (cocos2d::CCObject::*SEL_ListViewUpdateChildEvent)(cocos2d::CCObject*);
 #define coco_ListView_InitChild_selector(_SELECTOR) (SEL_ListViewInitChildEvent)(&_SELECTOR)
 #define coco_ListView_UpdateChild_selector(_SELECTOR) (SEL_ListViewUpdateChildEvent)(&_SELECTOR)
+/************************/
 
 class UIListView : public Layout
 {
@@ -124,6 +135,11 @@ public:
      *  add event call-back function
      */
     /**
+     *  add event
+     */
+    void addEventListenter(cocos2d::CCObject* target, SEL_ListViewEvent selector);
+    /*******Compatible*******/
+    /**
      *  add init child event
      */
     void addInitChildEvent(cocos2d::CCObject* target, SEL_ListViewInitChildEvent seletor);
@@ -131,6 +147,7 @@ public:
      *  add udpate child event
      */
     void addUpdateChildEvent(cocos2d::CCObject* target, SEL_ListViewUpdateChildEvent selector);
+    /**************/
     
     /**
      *  get and set degree range for checking move or not with scrolling
@@ -218,10 +235,7 @@ protected:
     CCPoint moveChildPoint;
     float m_fChildFocusCancelOffset;    
     
-    cocos2d::CCObject* m_pInitChildListener;
-    SEL_ListViewInitChildEvent m_pfnInitChildSelector;
-    cocos2d::CCObject* m_pUpdateChildListener;
-    SEL_ListViewUpdateChildEvent m_pfnUpdateChildSelector;
+    
     
     CCArray* m_pChildPool;
     CCArray* m_pUpdatePool;
@@ -241,9 +255,15 @@ protected:
     float m_fDisBoundaryToChild_0;
     float m_fDisBetweenChild;
     
-    /* gui mark */
-    float m_fScrollDegreeRange;
-    /**/
+    CCObject* m_pEventListener;
+    SEL_ListViewEvent m_pfnEventSelector;
+    
+    /*compatible*/
+    cocos2d::CCObject* m_pInitChildListener;
+    SEL_ListViewInitChildEvent m_pfnInitChildSelector;
+    cocos2d::CCObject* m_pUpdateChildListener;
+    SEL_ListViewUpdateChildEvent m_pfnUpdateChildSelector;
+    /***********/
 };
 
 NS_CC_EXT_END
