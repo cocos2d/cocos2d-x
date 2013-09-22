@@ -313,7 +313,10 @@ Spawn * ActionNode::refreshActionProperty()
 	}
 
 	_actionSpawn = Spawn::create(cSpawnArray);
-	_actionSpawn->retain();
+	if (_actionSpawn != NULL)
+	{
+		_actionSpawn->retain();
+	}
 	return _actionSpawn;
 }
 
