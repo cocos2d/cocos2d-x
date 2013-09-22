@@ -87,6 +87,7 @@ class CC_DLL CCTMXLayer : public CCSpriteBatchNode
     CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
 public:
     /**
+     * @js ctor
      * @lua NA
      */
     CCTMXLayer();

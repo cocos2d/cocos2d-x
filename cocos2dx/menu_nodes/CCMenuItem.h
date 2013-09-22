@@ -60,6 +60,9 @@ protected:
     bool m_bEnabled;
 
 public:
+    /**
+     *  @js ctor
+     */
     CCMenuItem()
     : m_bSelected(false)
     , m_bEnabled(false)            
@@ -129,6 +132,9 @@ class CC_DLL CCMenuItemLabel : public CCMenuItem
     /** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
     CC_PROPERTY(CCNode*, m_pLabel, Label);
 public:
+    /**
+     *  @js ctor
+     */
     CCMenuItemLabel()
     : m_pLabel(NULL)
     , m_fOriginalScale(0.0)
@@ -171,7 +177,14 @@ protected:
 class CC_DLL CCMenuItemAtlasFont : public CCMenuItemLabel
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCMenuItemAtlasFont(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCMenuItemAtlasFont(){}
     
     /** creates a menu item from a string and atlas with a target/selector */
@@ -191,7 +204,14 @@ public:
 class CC_DLL CCMenuItemFont : public CCMenuItemLabel
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCMenuItemFont() : m_uFontSize(0), m_strFontName(""){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCMenuItemFont(){}
     /** set default font size */
     static void setFontSize(unsigned int s);
@@ -260,6 +280,9 @@ class CC_DLL CCMenuItemSprite : public CCMenuItem
     /** the image used when the item is disabled */
     CC_PROPERTY(CCNode*, m_pDisabledImage, DisabledImage);
 public:
+    /**
+     *  @js ctor
+     */
     CCMenuItemSprite()
     :m_pNormalImage(NULL)
     ,m_pSelectedImage(NULL)
@@ -305,7 +328,15 @@ protected:
 class CC_DLL CCMenuItemImage : public CCMenuItemSprite
 {
 public:
+    /**
+     * @js ctor
+     * @lua NA
+     */
     CCMenuItemImage(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCMenuItemImage(){}
     
     /** creates a menu item with a normal and selected image*/
@@ -351,10 +382,17 @@ class CC_DLL CCMenuItemToggle : public CCMenuItem
      */
     CC_PROPERTY(CCArray*, m_pSubItems, SubItems);
 public:
+    /**
+     * @js ctor
+     */
     CCMenuItemToggle()
     : m_uSelectedIndex(0)
     , m_pSubItems(NULL)            
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCMenuItemToggle();
     
     /** creates a menu item from a CCArray with a target selector */

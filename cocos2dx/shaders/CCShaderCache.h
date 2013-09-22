@@ -45,8 +45,14 @@ class CCGLProgram;
 class CC_DLL CCShaderCache : public CCObject 
 {
 public:
+    /**
+     * @js ctor
+     */
     CCShaderCache();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCShaderCache();
     /** returns the shared instance 
      *  @js getInstance

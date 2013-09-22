@@ -51,9 +51,17 @@ A more flexible class is CCLabelBMFont. It supports variable width characters an
 class CC_DLL CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol
 {
 public:
+    /**
+     *  @js ctor
+     *  @lua NA
+     */
     CCLabelAtlas()
         :m_sString("")
     {}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLabelAtlas()
     { 
         m_sString.clear(); 

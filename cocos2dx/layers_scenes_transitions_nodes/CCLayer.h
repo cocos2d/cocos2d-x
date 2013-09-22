@@ -63,7 +63,14 @@ All features from CCNode are valid, plus the following new features:
 class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCLayer();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLayer();
     virtual bool init();
     
@@ -196,8 +203,14 @@ class CC_DLL CCLayerRGBA : public CCLayer, public CCRGBAProtocol
 {
 public:
     CREATE_FUNC(CCLayerRGBA);
-    
+    /**
+     *  @js ctor
+     */
     CCLayerRGBA();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLayerRGBA();
     
     virtual bool init();
@@ -243,7 +256,14 @@ protected:
     ccColor4F  m_pSquareColors[4];
 
 public:
+    /**
+     *  @js ctor
+     */
     CCLayerColor();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLayerColor();
 
     virtual void draw();
@@ -360,6 +380,7 @@ protected:
     CCArray*     m_pLayers;
 public:
     /**
+     * @js ctor
      * @lua NA
      */
     CCLayerMultiplex();

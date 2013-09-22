@@ -43,7 +43,9 @@ class CC_DLL CCTransitionProgress : public CCTransitionScene
 {
 public:
     static CCTransitionProgress* create(float t, CCScene* scene);
-
+    /**
+     *  @js ctor
+     */
     CCTransitionProgress();
     /**
      *  @js NA

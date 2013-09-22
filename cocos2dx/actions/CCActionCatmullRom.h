@@ -133,6 +133,7 @@ public:
      */
     virtual ~CCCardinalSplineTo();
     /**
+     *  @js ctor
      *  @lua NA
      */
     CCCardinalSplineTo();
@@ -198,6 +199,7 @@ public:
      */
     static CCCardinalSplineBy* create(float duration, CCPointArray* points, float tension);
     /**
+     *  @js NA
      *  @lua NA
      */
     CCCardinalSplineBy();

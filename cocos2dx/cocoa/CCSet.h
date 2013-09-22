@@ -41,6 +41,7 @@ class CC_DLL CCSet : public CCObject
 {
 public:
     /**
+     * @js  ctor
      * @lua NA
      */
     CCSet(void);

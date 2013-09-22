@@ -38,7 +38,10 @@ class CCTexture2D;
  * @{
  */
 
-/** FBO class that grabs the the contents of the screen */
+/** FBO class that grabs the the contents of the screen 
+ * @js NA
+ * @lua NA
+ */
 class CCGrabber : public CCObject
 {
 public:

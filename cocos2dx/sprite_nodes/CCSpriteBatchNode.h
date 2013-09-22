@@ -63,7 +63,9 @@ class CCSprite;
 class CC_DLL CCSpriteBatchNode : public CCNode, public CCTextureProtocol
 {
 public:
-
+    /**
+     *  @js ctor
+     */
     CCSpriteBatchNode();
     /**
      * @js NA

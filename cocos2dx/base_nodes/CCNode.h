@@ -133,11 +133,14 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     CCNode(void);
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~CCNode(void);
     
@@ -1461,7 +1464,14 @@ protected:
 class CC_DLL CCNodeRGBA : public CCNode, public CCRGBAProtocol
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCNodeRGBA();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCNodeRGBA();
     
     virtual bool init();

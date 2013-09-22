@@ -112,6 +112,9 @@ class CC_DLL CCTexture2D : public CCObject
 #endif // EMSCRIPTEN
 {
 public:
+    /**
+     * @js ctor
+     */
     CCTexture2D();
     /**
      * @js NA

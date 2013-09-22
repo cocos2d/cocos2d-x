@@ -119,7 +119,14 @@ class CC_DLL CCTMXTiledMap : public CCNode
     /** properties */
     CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
 public:
+    /**
+     * @js ctor
+     */
     CCTMXTiledMap();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCTMXTiledMap();
 
     /** creates a TMX Tiled Map with a TMX file.*/

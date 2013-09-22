@@ -70,6 +70,9 @@ protected:
     unsigned int        m_uAutoReleaseCount;
 public:
     CCObject(void);
+    /**
+     *  @lua NA
+     */
     virtual ~CCObject(void);
     
     void release(void);

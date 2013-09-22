@@ -57,7 +57,8 @@ class CCDictionary;
  *      // ......
  *  }
  *  @endcode
- *
+ *  @js NA
+ *  @lua NA
  */
 class CC_DLL CCDictElement
 {

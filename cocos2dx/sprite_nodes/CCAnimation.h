@@ -55,6 +55,9 @@ class CCSpriteFrame;
 class CC_DLL CCAnimationFrame : public CCObject
 {
 public:
+    /**
+     * @js ctor
+     */
     CCAnimationFrame();
     /**
      *  @js NA
@@ -93,6 +96,9 @@ You can animate a CCAnimation object by using the CCAnimate action. Example:
 class CC_DLL CCAnimation : public CCObject
 {
 public:
+    /**
+     * @js ctor
+     */
     CCAnimation();
     /**
      * @js NA

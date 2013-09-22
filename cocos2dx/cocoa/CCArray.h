@@ -236,7 +236,13 @@ public:
 
 public:
     ccArray* data;
+    /**
+     *  @lua NA
+     */
     CCArray();
+    /**
+     *  @lua NA
+     */
     CCArray(unsigned int capacity);
 };
 

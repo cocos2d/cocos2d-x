@@ -117,6 +117,10 @@ public:
 class CC_DLL CCAccelDeccelAmplitude : public CCActionInterval
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCAccelDeccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);
@@ -143,6 +147,10 @@ protected:
 class CC_DLL CCAccelAmplitude : public CCActionInterval
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCAccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);
@@ -168,6 +176,10 @@ protected:
 class CC_DLL CCDeccelAmplitude : public CCActionInterval
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCDeccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);

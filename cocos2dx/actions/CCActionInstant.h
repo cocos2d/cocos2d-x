@@ -45,6 +45,9 @@ the CCIntervalAction actions.
 class CC_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCActionInstant();
     /**
      *  @js NA
@@ -69,6 +72,10 @@ public:
 class CC_DLL CCShow : public CCActionInstant
 {
 public:
+    /**
+     *  @js ctor
+     *  @lua NA
+     */
     CCShow(){}
     /**
      *  @js NA
@@ -97,6 +104,10 @@ public:
 class CC_DLL CCHide : public CCActionInstant
 {
 public:
+    /**
+     *  @js ctor
+     *  @lua NA
+     */
     CCHide(){}
     /**
      *  @js NA
@@ -104,6 +115,9 @@ public:
      */
     virtual ~CCHide(){}
     //super methods
+    /**
+     *  @lua NA
+     */
     virtual void update(float time);
     virtual CCFiniteTimeAction * reverse(void);
     /**
@@ -122,6 +136,9 @@ public:
 class CC_DLL CCToggleVisibility : public CCActionInstant
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCToggleVisibility(){}
     /**
      *  @js NA
@@ -172,10 +189,14 @@ protected:
 class CC_DLL CCFlipX : public CCActionInstant
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCFlipX()
         :m_bFlipX(false)
     {}
     /**
+     *  @js  NA
      *  @lua NA
      */
     virtual ~CCFlipX(){}
@@ -205,10 +226,14 @@ protected:
 class CC_DLL CCFlipY : public CCActionInstant
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCFlipY()
         :m_bFlipY(false)
     {}
     /**
+     *  @js  NA
      *  @lua NA
      */
     virtual ~CCFlipY(){}
@@ -235,6 +260,9 @@ protected:
 class CC_DLL CCPlace : public CCActionInstant //<NSCopying>
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCPlace(){}
     /**
      *  @js NA
@@ -262,6 +290,9 @@ protected:
 class CC_DLL CCCallFunc : public CCActionInstant //<NSCopying>
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCCallFunc()
         : m_pSelectorTarget(NULL)
 		, m_nScriptHandler(0)
@@ -352,10 +383,12 @@ class CC_DLL CCCallFuncN : public CCCallFunc, public TypeInfo
 {
 public:
     /**
+     * @js ctor
      * @lua NA
      */
     CCCallFuncN(){}
     /**
+     * @js  NA
      * @lua NA
      */
     virtual ~CCCallFuncN(){}

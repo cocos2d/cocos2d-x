@@ -54,7 +54,10 @@ public:
      The stencil node will be retained.
      */
     static CCClippingNode* create(CCNode *pStencil);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCClippingNode();
     
     /** Initializes a clipping node without a stencil.

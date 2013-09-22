@@ -101,6 +101,7 @@ class CC_DLL CCGLProgram : public CCObject
 {
 public:
     /**
+     * @js  ctor
      * @lua NA
      */
     CCGLProgram();

@@ -52,6 +52,9 @@ protected:
     bool    m_bBack;
     
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionPageTurn();
     /**
      *  @js NA

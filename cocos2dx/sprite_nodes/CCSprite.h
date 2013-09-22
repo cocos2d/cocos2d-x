@@ -164,11 +164,14 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     CCSprite(void);
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~CCSprite(void);
     
