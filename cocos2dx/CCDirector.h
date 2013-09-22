@@ -100,6 +100,10 @@ public:
     CCDirector(void);
     virtual ~CCDirector(void);
     virtual bool init(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual long getClassTypeInfo() {
 		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCDirector).name());
 		return id;
@@ -123,7 +127,9 @@ public:
     /** seconds per frame */
     inline float getSecondsPerFrame() { return m_fSecondsPerFrame; }
 
-    /** Get the CCEGLView, where everything is rendered */
+    /** Get the CCEGLView, where everything is rendered
+     * @js NA
+     */
     inline CCEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
     void setOpenGLView(CCEGLView *pobOpenGLView);
 
@@ -138,6 +144,7 @@ public:
     
     /** Sets an OpenGL projection
      @since v0.8.2
+     @js NA
      */
     inline ccDirectorProjection getProjection(void) { return m_eProjection; }
     void setProjection(ccDirectorProjection kProjection);
@@ -334,6 +341,8 @@ public:
 
     /** CCAccelerometer associated with this director
      @since v2.0
+     @js NA
+     @lua NA
      */
     CC_PROPERTY(CCAccelerometer*, m_pAccelerometer, Accelerometer);
 

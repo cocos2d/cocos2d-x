@@ -111,6 +111,10 @@ private:
     int     m_scriptHandler;
 };
 
+/**
+ * @js NA
+ * @lua NA
+ */
 class CC_DLL CCNotificationObserver : public CCObject
 {
 public:

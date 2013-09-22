@@ -155,6 +155,7 @@ public:
     /**
      * Gets the description string. It makes debugging easier.
      * @return A string terminated with '\0'
+     * @js NA
      */
     const char* description(void);
     
@@ -285,6 +286,7 @@ public:
      * @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
+     * @js NA
      */
     virtual void setPosition(const CCPoint &position);
     /**
@@ -310,6 +312,7 @@ public:
      *
      * @param x     X coordinate for position
      * @param y     Y coordinate for position
+     * @js NA
      */
     virtual void setPosition(float x, float y);
     /**
@@ -518,12 +521,14 @@ public:
      * Sets the state of OpenGL server side.
      *
      * @param glServerState     The state of OpenGL server side.
+     * @js NA
      */
     virtual void setGLServerState(ccGLServerState glServerState);
     /**
      * Returns the state of OpenGL server side.
      *
      * @return The state of OpenGL server side.
+     * @js NA
      */
     virtual ccGLServerState getGLServerState();
     
@@ -712,6 +717,7 @@ public:
      * Returns a grid object that is used when applying effects
      * 
      * @return A CCGrid object that is used when applying effects
+     * @js NA
      */
     virtual CCGridBase* getGrid();
     /**
@@ -776,6 +782,7 @@ public:
      * You can set everything in UserData pointer, a data block, a structure or an object.
      * 
      * @return A custom user data pointer
+     * @js NA
      */
     virtual void* getUserData();
     /**
@@ -786,6 +793,7 @@ public:
      *          especially before you change this data pointer, and before this node is autoreleased.
      *
      * @return A custom user data pointer
+     * @js NA
      */
     virtual void setUserData(void *pUserData);
     
@@ -795,6 +803,7 @@ public:
      * Similar to userData, but instead of holding a void* it holds an object
      *
      * @return A user assigned CCObject
+     * @js NA
      */
     virtual CCObject* getUserObject();
     /**
@@ -900,6 +909,7 @@ public:
     
     /** 
      * Schedules for lua script. 
+     * @js NA
      */
     void scheduleUpdateWithPriorityLua(int nHandler, int priority);
     
@@ -1053,6 +1063,7 @@ public:
      *
      * @warning If you set a new CCScheduler, then previously created timers/update are going to be removed.
      * @param scheduler     A CCShdeduler object that is used to schedule all "update" and timers.
+     * @js NA
      */
     virtual void setScheduler(CCScheduler* scheduler);
     /**
@@ -1060,6 +1071,7 @@ public:
      *
      * @see setScheduler(CCScheduler*)
      * @return A CCScheduler object.
+     * @js NA
      */
     virtual CCScheduler* getScheduler();
     
@@ -1068,6 +1080,8 @@ public:
      *
      * @param selector      A function selector
      * @return Whether the funcion selector is scheduled.
+     * @js NA
+     * @lua NA
      */
     bool isScheduled(SEL_SCHEDULE selector);
 
@@ -1077,6 +1091,7 @@ public:
      * It will use the order number 0. This method will be called every frame.
      * Scheduled methods with a lower order value will be called before the ones that have a higher order value.
      * Only one "update" method could be scheduled per node.
+     * @lua NA
      */
     void scheduleUpdate(void);
 
@@ -1086,6 +1101,7 @@ public:
      * This selector will be called every frame.
      * Scheduled methods with a lower priority will be called before the ones that have a higher value.
      * Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
+     * @lua NA
      */
     void scheduleUpdateWithPriority(int priority);
 
@@ -1109,6 +1125,7 @@ public:
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
      * @param repeat    The selector will be excuted (repeat + 1) times, you can use kCCRepeatForever for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
+     * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
     
@@ -1118,6 +1135,7 @@ public:
      *
      * @param selector      A function wrapped as a selector
      * @param interval      Callback interval time in seconds. 0 means tick every frame,
+     * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval);
     
@@ -1127,6 +1145,7 @@ public:
      *
      * @param selector      A function wrapped as a selector
      * @param delay         The amount of time that the first tick will wait before execution.
+     * @lua NA
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
     
@@ -1135,6 +1154,7 @@ public:
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
      * @param selector      A function wrapped as a selector
+     * @lua NA
      */
     void schedule(SEL_SCHEDULE selector);
     
@@ -1143,6 +1163,7 @@ public:
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
      * @param selector      A function wrapped as a selector
+     * @lua NA
      */
     void unschedule(SEL_SCHEDULE selector);
 
@@ -1155,11 +1176,15 @@ public:
     /** 
      * Resumes all scheduled selectors and actions.
      * This method is called internally by onEnter
+     * @js NA
+     * @lua NA
      */
     void resumeSchedulerAndActions(void);
     /** 
      * Pauses all scheduled selectors and actions.
      * This method is called internally by onExit
+     * @js NA
+     * @lua NA
      */
     void pauseSchedulerAndActions(void);
     
@@ -1337,7 +1362,10 @@ private:
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
     void detachChild(CCNode *child, bool doCleanup);
     
-    /// Convert cocos2d coordinates to UI windows coordinate.
+    /** Convert cocos2d coordinates to UI windows coordinate.
+     * @js NA
+     * @lua NA
+     */
     CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 
 protected:

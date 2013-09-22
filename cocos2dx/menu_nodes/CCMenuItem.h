@@ -67,13 +67,22 @@ public:
     , m_pfnSelector(NULL)
     , m_nScriptTapHandler(0)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCMenuItem();
 
-    /** Creates a CCMenuItem with no target/selector */
+    /** Creates a CCMenuItem with no target/selector 
+     * @js NA
+     * @lua NA
+     */
     static CCMenuItem* create();
     /** Creates a CCMenuItem with a target/selector */
     static CCMenuItem* create(CCObject *rec, SEL_MenuHandler selector);
-    /** Initializes a CCMenuItem with a target/selector */
+    /** Initializes a CCMenuItem with a target/selector 
+     * @lua NA
+     */
     bool initWithTarget(CCObject *rec, SEL_MenuHandler selector);
     /** Returns the outside box */
     CCRect rect();
@@ -124,9 +133,15 @@ public:
     : m_pLabel(NULL)
     , m_fOriginalScale(0.0)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCMenuItemLabel();
 
-    /** creates a CCMenuItemLabel with a Label, target and selector */
+    /** creates a CCMenuItemLabel with a Label, target and selector 
+     * @lua NA
+     */
     static CCMenuItemLabel * create(CCNode*label, CCObject* target, SEL_MenuHandler selector);
     /** creates a CCMenuItemLabel with a Label. Target and selector will be nil */
     static CCMenuItemLabel* create(CCNode *label);
@@ -161,7 +176,9 @@ public:
     
     /** creates a menu item from a string and atlas with a target/selector */
     static CCMenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
-    /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
+    /** creates a menu item from a string and atlas. Use it with MenuItemToggle 
+     * @lua NA
+     */
     static CCMenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string and atlas with a target/selector */
     bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
@@ -187,7 +204,9 @@ public:
 
     /** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
     static CCMenuItemFont * create(const char *value);
-    /** creates a menu item from a string with a target/selector */
+    /** creates a menu item from a string with a target/selector 
+     * @lua NA
+     */
     static CCMenuItemFont * create(const char *value, CCObject* target, SEL_MenuHandler selector);
 
     /** initializes a menu item from a string with a target/selector */
@@ -243,9 +262,13 @@ public:
 
     /** creates a menu item with a normal, selected and disabled image*/
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
-    /** creates a menu item with a normal and selected image with target/selector */
+    /** creates a menu item with a normal and selected image with target/selector 
+     * @lua NA
+     */
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
-    /** creates a menu item with a normal,selected  and disabled image with target/selector */
+    /** creates a menu item with a normal,selected  and disabled image with target/selector 
+     * @lua NA
+     */
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
@@ -283,9 +306,13 @@ public:
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage);
     /** creates a menu item with a normal,selected  and disabled image*/
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage);
-    /** creates a menu item with a normal and selected image with target/selector */
+    /** creates a menu item with a normal and selected image with target/selector 
+     * @lua NA
+     */
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
-    /** creates a menu item with a normal,selected  and disabled image with target/selector */
+    /** creates a menu item with a normal,selected  and disabled image with target/selector 
+     * @lua NA
+     */
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
     
     bool init();
@@ -299,6 +326,7 @@ public:
     void setDisabledSpriteFrame(CCSpriteFrame* frame);
 
     /** Creates an CCMenuItemImage.
+     * @js NA
      */
     static CCMenuItemImage* create();
 };
@@ -329,7 +357,10 @@ public:
     /** creates a menu item from a list of items with a target/selector */
     static CCMenuItemToggle* createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);  
 
-    /** creates a menu item with no target/selector and no items */
+    /** creates a menu item with no target/selector and no items 
+     * @js NA
+     * @lua NA
+     */
     static CCMenuItemToggle* create();
 
     /** initializes a menu item from a list of items with a target selector */

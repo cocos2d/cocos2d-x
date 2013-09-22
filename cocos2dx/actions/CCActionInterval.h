@@ -96,26 +96,52 @@ protected:
 class CC_DLL CCSequence : public CCActionInterval
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCSequence(void);
 
-    /** initializes the action */
+    /** initializes the action 
+     * @lua NA
+     */
     bool initWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
-
+    /**
+     * @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
+    /**
+     * @lua NA
+     */
     virtual void startWithTarget(CCNode *pTarget);
+    /**
+     * @lua NA
+     */
     virtual void stop(void);
+    /**
+     * @lua NA
+     */
     virtual void update(float t);
     virtual CCActionInterval* reverse(void);
 
 public:
 
-    /** helper constructor to create an array of sequenceable actions */
+    /** helper constructor to create an array of sequenceable actions 
+     * @lua NA
+     */
     static CCSequence* create(CCFiniteTimeAction *pAction1, ...);
-    /** helper constructor to create an array of sequenceable actions given an array */
+    /** helper constructor to create an array of sequenceable actions given an array 
+     * @js NA
+     */
     static CCSequence* create(CCArray *arrayOfActions);
-    /** helper constructor to create an array of sequence-able actions */
+    /** helper constructor to create an array of sequence-able actions 
+     * @js NA
+     * @lua NA
+     */
     static CCSequence* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
-    /** creates the action */
+    /** creates the action 
+     * @js NA
+     */
     static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
 protected:
@@ -219,29 +245,55 @@ protected:
 class CC_DLL CCSpawn : public CCActionInterval
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCSpawn(void);
 
-    /** initializes the Spawn action with the 2 actions to spawn */
+    /** initializes the Spawn action with the 2 actions to spawn 
+     * @lua NA
+     */
     bool initWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
-
+    /**
+     * @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
+    /**
+     * @lua NA
+     */
     virtual void startWithTarget(CCNode *pTarget);
+    /**
+     * @lua NA
+     */
     virtual void stop(void);
+    /**
+     * @lua NA
+     */
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
 
-    /** helper constructor to create an array of spawned actions */
+    /** helper constructor to create an array of spawned actions 
+     * @lua NA
+     */
     static CCSpawn* create(CCFiniteTimeAction *pAction1, ...);
     
-    /** helper constructor to create an array of spawned actions */
+    /** helper constructor to create an array of spawned actions 
+     * @js  NA
+     * @lua NA
+     */
     static CCSpawn* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
 
-    /** helper constructor to create an array of spawned actions given an array */
+    /** helper constructor to create an array of spawned actions given an array 
+     * @js NA
+     */
     static CCSpawn* create(CCArray *arrayOfActions);
 
-    /** creates the Spawn action */
+    /** creates the Spawn action 
+     * @js NA
+     */
     static CCSpawn* createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
 protected:

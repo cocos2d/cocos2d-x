@@ -103,7 +103,9 @@ public:
     // sets a new texture. it will be retained
     virtual void setTexture(CCTexture2D *texture);
     virtual void setBlendFunc(ccBlendFunc blendFunc);
-    // returns the blending function used for the texture
+    /** returns the blending function used for the texture
+     * @js NA
+     */
     virtual ccBlendFunc getBlendFunc(void);
 
     void visit();
