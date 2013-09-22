@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 {
     AppDelegate app;
     EGLView eglView;
-    eglView.init("MoonWarriors",900,640);
+    eglView.init("MoonWarriors", 480, 720);
     return Application::getInstance()->run();
 }
 
