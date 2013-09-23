@@ -362,6 +362,7 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         
         // Create the layout
         Layout* layout = Layout::create();
+        layout->setLayoutType(LAYOUT_LINEAR_VERTICAL);
         layout->setSize(CCSizeMake(280, 150));        
         CCSize backgroundSize = background->getRect().size;
         layout->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
@@ -407,9 +408,7 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         lp3->setMargin(UIMargin(0, 10, 0, 10));
         
         
-        LinearVerticalLayoutExecutant* exe = LinearVerticalLayoutExecutant::create();
-        layout->setLayoutExecutant(exe);
-        exe->doLayout();
+        layout->doLayout();
         
         return true;
     }
@@ -446,6 +445,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         
         // Create the layout
         Layout* layout = Layout::create();
+        layout->setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
         layout->setClippingEnabled(true);
         layout->setSize(CCSizeMake(280, 150));        
         CCSize backgroundSize = background->getRect().size;
@@ -491,9 +491,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         lp3->setMargin(UIMargin(0, 10, 0, 10));
         
         
-        LinearHorizontalLayoutExecutant* exe = LinearHorizontalLayoutExecutant::create();
-        layout->setLayoutExecutant(exe);
-        exe->doLayout();
+        layout->doLayout();
         
         return true;
     }
@@ -530,6 +528,7 @@ bool UIPanelTest_Layout_Relative::init()
         
         // Create the layout
         Layout* layout = Layout::create();
+        layout->setLayoutType(LAYOUT_RELATIVE);
         layout->setSize(CCSizeMake(280, 150));
         layout->setBackGroundColorType(LAYOUT_COLOR_SOLID);
         layout->setBackGroundColor(ccGREEN);
@@ -574,9 +573,7 @@ bool UIPanelTest_Layout_Relative::init()
         rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT);
         
         
-        RelativeLayoutExecutant* exe = RelativeLayoutExecutant::create();
-        layout->setLayoutExecutant(exe);        
-        exe->doLayout();
+        layout->doLayout();
         
         return true;
     }

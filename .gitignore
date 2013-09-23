@@ -67,6 +67,7 @@ build/
 ._.*
 xcuserdata/
 DerivedData/
+*.xccheckout
 
 # Ignore files built by bada
 .Simulator-Debug/
