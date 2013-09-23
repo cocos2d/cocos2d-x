@@ -60,6 +60,14 @@ int Application::run()
         Director::getInstance()->mainLoop();
         pMainWnd->pollEvents();
     }
+
+    /* Only work on Desktop
+    *  Director::mainLoop is really one frame logic
+    *  when we want to close the window, we should call Director::end();
+    *  then call Director::mainLoop to do release of internal resources
+    */
+    Director::getInstance()->end();
+    Director::getInstance()->mainLoop();
     return true;
 }
 

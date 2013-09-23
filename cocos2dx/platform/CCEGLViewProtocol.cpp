@@ -9,7 +9,7 @@ NS_CC_BEGIN
 
 namespace {
     
-    static Touch* g_touches[TouchEvent::MAX_TOUCHES] = { NULL };
+    static Touch* g_touches[EventTouch::MAX_TOUCHES] = { NULL };
     static unsigned int g_indexBitsUsed = 0;
     // System touch pointer ID (It may not be ascending order number) <-> Ascending order number from 0
     static std::map<int, int> g_touchIdReorderMap;
@@ -19,7 +19,7 @@ namespace {
         int i;
         int temp = g_indexBitsUsed;
         
-        for (i = 0; i < TouchEvent::MAX_TOUCHES; i++) {
+        for (i = 0; i < EventTouch::MAX_TOUCHES; i++) {
             if (! (temp & 0x00000001)) {
                 g_indexBitsUsed |= (1 <<  i);
                 return i;
@@ -34,7 +34,7 @@ namespace {
     
     static void removeUsedIndexBit(int index)
     {
-        if (index < 0 || index >= TouchEvent::MAX_TOUCHES)
+        if (index < 0 || index >= EventTouch::MAX_TOUCHES)
         {
             return;
         }
@@ -207,7 +207,7 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
     float x = 0.0f;
     float y = 0.0f;
     int nUnusedIndex = 0;
-    TouchEvent touchEvent;
+    EventTouch touchEvent;
     
     for (int i = 0; i < num; ++i)
     {
@@ -246,7 +246,7 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
         return;
     }
     
-    touchEvent._eventCode = TouchEvent::EventCode::BEGAN;
+    touchEvent._eventCode = EventTouch::EventCode::BEGAN;
     EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
@@ -255,7 +255,7 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
     int id = 0;
     float x = 0.0f;
     float y = 0.0f;
-    TouchEvent touchEvent;
+    EventTouch touchEvent;
     
     for (int i = 0; i < num; ++i)
     {
@@ -293,16 +293,16 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
         return;
     }
     
-    touchEvent._eventCode = TouchEvent::EventCode::MOVED;
+    touchEvent._eventCode = EventTouch::EventCode::MOVED;
     EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
-void EGLViewProtocol::handleTouchesOfEndOrCancel(TouchEvent::EventCode eventCode, int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[])
 {
     int id = 0;
     float x = 0.0f;
     float y = 0.0f;
-    TouchEvent touchEvent;
+    EventTouch touchEvent;
     
     for (int i = 0; i < num; ++i)
     {
@@ -358,12 +358,12 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(TouchEvent::EventCode eventCode
 
 void EGLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[])
 {
-    handleTouchesOfEndOrCancel(TouchEvent::EventCode::ENDED, num, ids, xs, ys);
+    handleTouchesOfEndOrCancel(EventTouch::EventCode::ENDED, num, ids, xs, ys);
 }
 
 void EGLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
 {
-    handleTouchesOfEndOrCancel(TouchEvent::EventCode::CANCELLED, num, ids, xs, ys);
+    handleTouchesOfEndOrCancel(EventTouch::EventCode::CANCELLED, num, ids, xs, ys);
 }
 
 const Rect& EGLViewProtocol::getViewPortRect() const

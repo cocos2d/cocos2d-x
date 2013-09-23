@@ -42,7 +42,7 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "event_dispatcher/CCEventDispatcher.h"
 #include "event_dispatcher/CCEvent.h"
-#include "event_dispatcher/CCTouchEvent.h"
+#include "event_dispatcher/CCEventTouch.h"
 
 // externals
 #include "kazmath/GL/matrix.h"
@@ -825,7 +825,7 @@ void Node::visit()
         }
         // self draw
         this->draw();
-        _eventPriority = ++_globalEventPriorityIndex;
+        updateEventPriorityIndex();
 
         for( ; i < _children->count(); i++ )
         {
@@ -837,7 +837,7 @@ void Node::visit()
     else
     {
         this->draw();
-        _eventPriority = ++_globalEventPriorityIndex;
+        updateEventPriorityIndex();
     }
 
     // reset for next frame
@@ -1311,9 +1311,21 @@ void Node::removeAllEventListeners()
 {
     auto dispatcher = EventDispatcher::getInstance();
     
-    for (auto& listener : _eventlisteners)
+    auto eventListenersCopy = _eventlisteners;
+    
+    for (auto& listener : eventListenersCopy)
     {
         dispatcher->removeEventListener(listener);
+    }
+}
+
+void Node::setDirtyForAllEventListeners()
+{
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    for (auto& listener : _eventlisteners)
+    {
+        dispatcher->setDirtyForEventType(listener->_type, true);
     }
 }
 

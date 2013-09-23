@@ -28,8 +28,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   02 01 00
-#define COCOS2D_VERSION 0x00020100
+// 00   03 00 00
+#define COCOS2D_VERSION 0x00030000
 
 //
 // all cocos2d include files
@@ -262,12 +262,14 @@ THE SOFTWARE.
 
 // EventDispatcher
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCTouchEventListener.h"
-#include "event_dispatcher/CCTouchEvent.h"
-#include "event_dispatcher/CCKeyboardEventListener.h"
-#include "event_dispatcher/CCKeyboardEvent.h"
-#include "event_dispatcher/CCAccelerationEvent.h"
-#include "event_dispatcher/CCAccelerationEventListener.h"
+#include "event_dispatcher/CCEventListenerTouch.h"
+#include "event_dispatcher/CCEventTouch.h"
+#include "event_dispatcher/CCEventListenerKeyboard.h"
+#include "event_dispatcher/CCEventKeyboard.h"
+#include "event_dispatcher/CCEventAcceleration.h"
+#include "event_dispatcher/CCEventListenerAcceleration.h"
+#include "event_dispatcher/CCEventCustom.h"
+#include "event_dispatcher/CCEventListenerCustom.h"
 
 // root
 #include "CCCamera.h"

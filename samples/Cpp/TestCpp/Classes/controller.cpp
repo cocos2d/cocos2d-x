@@ -14,8 +14,6 @@ struct {
 	const char *test_name;
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
-
-    { "NewEventDispatcherTest", []() { return new EventDispatcherTestScene(); } },
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
@@ -44,6 +42,7 @@ struct {
 #endif
 	{ "CurrentLanguageTest", []() { return new CurrentLanguageTestScene(); } },
 	{ "DrawPrimitivesTest", [](){return new DrawPrimitivesTestScene();} },
+    { "EventDispatcherTest(NEW)", []() { return new EventDispatcherTestScene(); } },
 	{ "EffectAdvancedTest", []() { return new EffectAdvanceScene(); } },
 	{ "EffectsTest", [](){return new EffectTestScene();} },
 	{ "ExtensionsTest", []() { return new ExtensionsTestScene(); } },
@@ -126,7 +125,7 @@ TestController::TestController()
     addChild(menu, 1);
 
     // Register Touch Event
-    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(true);
     
     listener->onTouchBegan = CC_CALLBACK_2(TestController::onTouchBegan, this);

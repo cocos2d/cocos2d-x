@@ -503,6 +503,7 @@ UserDefault* UserDefault::getInstance()
 
 void UserDefault::destroyInstance()
 {
+    delete _userDefault;
     _userDefault = NULL;
 }
 

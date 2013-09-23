@@ -39,33 +39,10 @@ class Event;
 /**
  *  The base class of event listener.
  *  If you need custom listener which with different callback, you need to inherit this class.
- *  For instance, you could refer to AccelerationEventListener, KeyboardEventListener or TouchEventListener.
- *  Usage:
- *        auto dispatcher = EventDispatcher::getInstance();
- *     Adds a listener:
- *
- *        auto callback = [](Event* event){ do_some_thing(); };
- *        auto listener = EventListener::create("your_event_type", callback);
- *        dispatcher->addEventListenerWithSceneGraphPriority(listener, one_node);
- *
- *     Dispatchs a custom event:
- *        
- *        Event event("your_event_type");
- *        dispatcher->dispatchEvent(&event);
- *
- *     Removes a listener
- *       
- *        dispatcher->removeListener(listener);
+ *  For instance, you could refer to AccelerationEventListener, KeyboardEventListener or TouchEventListener, CustomEventListener.
  */
 class EventListener : public Object
-{
-public:
-    /** Creates an event listener with type and callback.
-     *  @param eventType The type of the event.
-     *  @param callback The callback function when the specified event was emitted.
-     */
-    static EventListener* create(const std::string& eventType, std::function<void(Event*)> callback);
-    
+{    
 protected:
     /** Constructor */
     EventListener();
@@ -77,16 +54,17 @@ public:
     virtual ~EventListener();
     
     /** Checks whether the listener is available. */
-    virtual bool checkAvaiable();
+    virtual bool checkAvaiable() = 0;
     
     /** Clones the listener, its subclasses have to override this method. */
-    virtual EventListener* clone();
+    virtual EventListener* clone() = 0;
 protected:
-    std::function<void(Event*)> onEvent;   /// Event callback function
-    std::string type;                      /// Event type
+    std::function<void(Event*)> _onEvent;   /// Event callback function
+    std::string _type;                      /// Event type
     bool _isRegistered;                    /// Whether the listener has been added to dispatcher.
     
     friend class EventDispatcher;
+    friend class Node;
 };
 
 NS_CC_END
