@@ -58,6 +58,8 @@ class CCSet;
  *  2. overload visit() methods for object that you need to handle
  *  3. handle other objects in \a visitObject()
  *  4. pass your visitor to \a CCObject::acceptVisitor()
+ *  @js NA
+ *  @lua NA
  */
 class CC_DLL CCDataVisitor
 {
@@ -77,7 +79,10 @@ public:
     virtual void visit(const CCSet *p);
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CC_DLL CCPrettyPrinter : public CCDataVisitor
 {
 public:

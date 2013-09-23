@@ -36,7 +36,10 @@ typedef enum
     LAYOUT_COLOR_SOLID,
     LAYOUT_COLOR_GRADIENT
 }LayoutBackGroundColorType;
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class Layout : public UIWidget
 {
 public:
@@ -224,7 +227,10 @@ protected:
     int m_nCOpacity;
     CCSize m_backGroundImageTextureSize;
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class RectClippingNode : public CCClippingNode
 {
 public:

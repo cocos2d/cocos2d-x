@@ -79,7 +79,14 @@ protected:
     bool m_bIgnoreContentScaleFactor;
     
 public:
+    /**
+     *  @js ctor
+     */
     CCAtlasNode();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCAtlasNode();
 
 	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/

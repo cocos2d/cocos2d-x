@@ -84,7 +84,10 @@ typedef void (CCObject::*SEL_CancelEvent)(CCObject*);
 #define coco_releaseselector(_SELECTOR) (cocos2d::extension::SEL_ReleaseEvent)(&_SELECTOR)
 #define coco_cancelselector(_SELECTOR) (cocos2d::extension::SEL_CancelEvent)(&_SELECTOR)
 /************************/
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIWidget : public CCObject
 {
 public:    
@@ -1067,7 +1070,10 @@ protected:
     SEL_ReleaseEvent    m_pfnCancelSelector;
     /************/
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class GUIRenderer : public CCNodeRGBA
 {
 public:
