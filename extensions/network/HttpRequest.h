@@ -39,6 +39,8 @@ typedef void (CCObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse*
  @brief defines the object which users must packed for CCHttpClient::send(HttpRequest*) method.
  Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
+ @js NA
+ @lua NA
  */
 
 class CCHttpRequest : public CCObject
