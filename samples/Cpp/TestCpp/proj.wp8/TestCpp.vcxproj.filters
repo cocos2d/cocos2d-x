@@ -691,81 +691,6 @@
     <Image Include="Assets\Resources\hd\extensions\stepper-plus.png">
       <Filter>Assets\Resources\hd\extensions</Filter>
     </Image>
-    <Image Include="Assets\Resources\hd\Images\arrows.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\arrowsBar.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\b1.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\b2.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\background1.jpg">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\background1.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\background2.jpg">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\background2.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\background3.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\ball.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\blocks.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\close.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\f1.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\f2.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\grossini.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\grossini_dance_atlas.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\grossinis_sister1.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\grossinis_sister2.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\hole_effect.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\hole_stencil.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\Icon.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\paddle.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\particles.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\r1.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
-    <Image Include="Assets\Resources\hd\Images\r2.png">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </Image>
     <Image Include="Assets\Resources\hd\Images\bugs\circle.png">
       <Filter>Assets\Resources\hd\Images\bugs</Filter>
     </Image>
@@ -2095,6 +2020,81 @@
     <Image Include="Assets\Resources\hd\cocosgui\sliderTrack2.png">
       <Filter>Assets\Resources\hd\cocosgui</Filter>
     </Image>
+    <Image Include="Assets\Resources\hd\Images\arrows.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\arrowsBar.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\b1.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\b2.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\background1.jpg">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\background1.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\background2.jpg">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\background2.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\background3.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\ball.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\blocks.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\close.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\f1.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\f2.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\grossini.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\grossini_dance_atlas.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\grossinis_sister1.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\grossinis_sister2.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\hole_effect.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\hole_stencil.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\Icon.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\paddle.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\particles.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\r1.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
+    <Image Include="Assets\Resources\hd\Images\r2.png">
+      <Filter>Assets\Resources\hd\Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestCpp.cpp" />
@@ -3096,9 +3096,6 @@
     <None Include="Assets\Resources\hd\extensions\CCControlColourPickerSpriteSheet.plist">
       <Filter>Assets\Resources\hd\extensions</Filter>
     </None>
-    <None Include="Assets\Resources\hd\Images\only_in_hd.pvr.ccz">
-      <Filter>Assets\Resources\hd\Images</Filter>
-    </None>
     <None Include="Assets\Resources\hd\Images\bugs\circle.plist">
       <Filter>Assets\Resources\hd\Images\bugs</Filter>
     </None>
@@ -3782,6 +3779,9 @@
     </None>
     <None Include="Assets\Resources\hd\cocosgui\CocoGUISample.json">
       <Filter>Assets\Resources\hd\cocosgui</Filter>
+    </None>
+    <None Include="Assets\Resources\hd\Images\only_in_hd.pvr.ccz">
+      <Filter>Assets\Resources\hd\Images</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
