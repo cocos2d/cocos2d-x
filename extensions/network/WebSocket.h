@@ -43,7 +43,14 @@ class WsMessage;
 class WebSocket
 {
 public:
+    /**
+     * @js ctor
+     */
     WebSocket();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~WebSocket();
     
     /**
@@ -69,6 +76,8 @@ public:
 
     /**
      *  @brief The delegate class to process websocket events.
+     *  @js NA
+     *  @lua NA
      */
     class Delegate
     {
@@ -87,6 +96,7 @@ public:
      *  @param  delegate The delegate which want to receive event from websocket.
      *  @param  url      The URL of websocket server.
      *  @return true: Success, false: Failure
+     *  @js NA
      */
     bool init(const Delegate& delegate,
               const std::string& url,

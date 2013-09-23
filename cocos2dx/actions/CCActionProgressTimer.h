@@ -43,7 +43,10 @@ class CC_DLL CCProgressTo : public CCActionInterval
 public:
     /** Initializes with a duration and a percent */
     bool initWithDuration(float duration, float fPercent);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -65,7 +68,10 @@ class CC_DLL CCProgressFromTo : public CCActionInterval
 public:
     /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(float duration, float fFromPercentage, float fToPercentage);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual CCActionInterval* reverse(void);
     virtual void startWithTarget(CCNode *pTarget);
