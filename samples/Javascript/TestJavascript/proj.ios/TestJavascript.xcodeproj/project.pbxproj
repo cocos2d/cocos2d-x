@@ -175,8 +175,6 @@
 		1A36F50817EFE19B000D0275 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F47A17EFE19B000D0275 /* UIWidget.cpp */; };
 		1A36F50917EFE19B000D0275 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F47D17EFE19B000D0275 /* Layout.cpp */; };
 		1A36F50A17EFE19B000D0275 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F47D17EFE19B000D0275 /* Layout.cpp */; };
-		1A36F50B17EFE19B000D0275 /* LayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F47F17EFE19B000D0275 /* LayoutExecutant.cpp */; };
-		1A36F50C17EFE19B000D0275 /* LayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F47F17EFE19B000D0275 /* LayoutExecutant.cpp */; };
 		1A36F50D17EFE19B000D0275 /* LayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F48117EFE19B000D0275 /* LayoutParameter.cpp */; };
 		1A36F50E17EFE19B000D0275 /* LayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F48117EFE19B000D0275 /* LayoutParameter.cpp */; };
 		1A36F50F17EFE19B000D0275 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F48317EFE19B000D0275 /* UILayoutDefine.cpp */; };
@@ -763,8 +761,6 @@
 		1A36F47B17EFE19B000D0275 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
 		1A36F47D17EFE19B000D0275 /* Layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Layout.cpp; sourceTree = "<group>"; };
 		1A36F47E17EFE19B000D0275 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
-		1A36F47F17EFE19B000D0275 /* LayoutExecutant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutExecutant.cpp; sourceTree = "<group>"; };
-		1A36F48017EFE19B000D0275 /* LayoutExecutant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutExecutant.h; sourceTree = "<group>"; };
 		1A36F48117EFE19B000D0275 /* LayoutParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutParameter.cpp; sourceTree = "<group>"; };
 		1A36F48217EFE19B000D0275 /* LayoutParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutParameter.h; sourceTree = "<group>"; };
 		1A36F48317EFE19B000D0275 /* UILayoutDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutDefine.cpp; sourceTree = "<group>"; };
@@ -1571,8 +1567,6 @@
 			children = (
 				1A36F47D17EFE19B000D0275 /* Layout.cpp */,
 				1A36F47E17EFE19B000D0275 /* Layout.h */,
-				1A36F47F17EFE19B000D0275 /* LayoutExecutant.cpp */,
-				1A36F48017EFE19B000D0275 /* LayoutExecutant.h */,
 				1A36F48117EFE19B000D0275 /* LayoutParameter.cpp */,
 				1A36F48217EFE19B000D0275 /* LayoutParameter.h */,
 				1A36F48317EFE19B000D0275 /* UILayoutDefine.cpp */,
@@ -2235,7 +2229,6 @@
 				1A36F50717EFE19B000D0275 /* UIWidget.cpp in Sources */,
 				1A36F50917EFE19B000D0275 /* Layout.cpp in Sources */,
 				1AF2873C17F014C200642436 /* jsb_deprecated.js in Sources */,
-				1A36F50B17EFE19B000D0275 /* LayoutExecutant.cpp in Sources */,
 				1A36F50D17EFE19B000D0275 /* LayoutParameter.cpp in Sources */,
 				1A36F50F17EFE19B000D0275 /* UILayoutDefine.cpp in Sources */,
 				1A36F51117EFE19B000D0275 /* CocosGUI.cpp in Sources */,
@@ -2415,7 +2408,6 @@
 				1A36F50617EFE19B000D0275 /* UIRootWidget.cpp in Sources */,
 				1A36F50817EFE19B000D0275 /* UIWidget.cpp in Sources */,
 				1A36F50A17EFE19B000D0275 /* Layout.cpp in Sources */,
-				1A36F50C17EFE19B000D0275 /* LayoutExecutant.cpp in Sources */,
 				1A36F50E17EFE19B000D0275 /* LayoutParameter.cpp in Sources */,
 				1A36F51017EFE19B000D0275 /* UILayoutDefine.cpp in Sources */,
 				1A36F51217EFE19B000D0275 /* CocosGUI.cpp in Sources */,
