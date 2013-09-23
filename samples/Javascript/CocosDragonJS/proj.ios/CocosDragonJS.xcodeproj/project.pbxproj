@@ -207,6 +207,27 @@
 		1AAC794616EDC2D700B97F83 /* jsb_cocos2dx_extension_auto_api.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AAC794316EDC2D700B97F83 /* jsb_cocos2dx_extension_auto_api.js */; };
 		1AAC794716EDC2D700B97F83 /* jsb_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAC794416EDC2D700B97F83 /* jsb_cocos2dx_extension_auto.cpp */; };
 		1AD74D8316F80FE200F7F1B4 /* Published files iOS in Resources */ = {isa = PBXBuildFile; fileRef = 1AD74D8216F80FE200F7F1B4 /* Published files iOS */; };
+		1AF284A717F00BF400642436 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284A317F00BF400642436 /* jsb_chipmunk_constants.js */; };
+		1AF284A817F00BF400642436 /* jsb_cocos2d_extension.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284A417F00BF400642436 /* jsb_cocos2d_extension.js */; };
+		1AF284A917F00BF400642436 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284A517F00BF400642436 /* jsb_opengl_constants.js */; };
+		1AF284AA17F00BF400642436 /* main.debug.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284A617F00BF400642436 /* main.debug.js */; };
+		1AF284AB17F00C1500642436 /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF284A317F00BF400642436 /* jsb_chipmunk_constants.js */; };
+		1AF284AC17F00C1500642436 /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF284A417F00BF400642436 /* jsb_cocos2d_extension.js */; };
+		1AF284AD17F00C1500642436 /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF284A517F00BF400642436 /* jsb_opengl_constants.js */; };
+		1AF284AE17F00C1500642436 /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF284A617F00BF400642436 /* main.debug.js */; };
+		1AF284B917F00C5400642436 /* js_bindings_chipmunk_auto_classes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284B017F00C5400642436 /* js_bindings_chipmunk_auto_classes.cpp */; };
+		1AF284BA17F00C5400642436 /* js_bindings_chipmunk_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284B317F00C5400642436 /* js_bindings_chipmunk_functions.cpp */; };
+		1AF284BB17F00C5400642436 /* js_bindings_chipmunk_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284B517F00C5400642436 /* js_bindings_chipmunk_manual.cpp */; };
+		1AF284BC17F00C5400642436 /* js_bindings_chipmunk_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284B717F00C5400642436 /* js_bindings_chipmunk_registration.cpp */; };
+		1AF284C217F00C8200642436 /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284BE17F00C8200642436 /* CCPhysicsDebugNode.cpp */; };
+		1AF284C317F00C8200642436 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284C017F00C8200642436 /* CCPhysicsSprite.cpp */; };
+		1AF284C617F00C9900642436 /* cocosjs_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284C417F00C9900642436 /* cocosjs_manual_conversions.cpp */; };
+		1AF284CE17F00D0F00642436 /* jsb_opengl_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284C817F00D0F00642436 /* jsb_opengl_functions.cpp */; };
+		1AF284CF17F00D0F00642436 /* jsb_opengl_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284CA17F00D0F00642436 /* jsb_opengl_manual.cpp */; };
+		1AF284D017F00D0F00642436 /* jsb_opengl_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284CC17F00D0F00642436 /* jsb_opengl_registration.cpp */; };
+		1AF284D317F00D3300642436 /* js_bindings_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284D117F00D3300642436 /* js_bindings_opengl.cpp */; };
+		1AF2873017F013D800642436 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2872F17F013D800642436 /* jsb_deprecated.js */; };
+		1AF2873117F013E200642436 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2872F17F013D800642436 /* jsb_deprecated.js */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
 		A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275431517C094001B78AA /* OpenGLES.framework */; };
 		A92275461517C094001B78AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; };
@@ -606,6 +627,36 @@
 		1AAC794416EDC2D700B97F83 /* jsb_cocos2dx_extension_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_extension_auto.cpp; sourceTree = "<group>"; };
 		1AAC794516EDC2D700B97F83 /* jsb_cocos2dx_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_extension_auto.hpp; sourceTree = "<group>"; };
 		1AD74D8216F80FE200F7F1B4 /* Published files iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published files iOS"; path = "../../Shared/games/CocosDragonJS/Published files iOS"; sourceTree = "<group>"; };
+		1AF284A317F00BF400642436 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
+		1AF284A417F00BF400642436 /* jsb_cocos2d_extension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_extension.js; sourceTree = "<group>"; };
+		1AF284A517F00BF400642436 /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_constants.js; sourceTree = "<group>"; };
+		1AF284A617F00BF400642436 /* main.debug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.debug.js; sourceTree = "<group>"; };
+		1AF284AF17F00C5400642436 /* js_bindings_chipmunk_auto_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes_registration.h; sourceTree = "<group>"; };
+		1AF284B017F00C5400642436 /* js_bindings_chipmunk_auto_classes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_auto_classes.cpp; sourceTree = "<group>"; };
+		1AF284B117F00C5400642436 /* js_bindings_chipmunk_auto_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes.h; sourceTree = "<group>"; };
+		1AF284B217F00C5400642436 /* js_bindings_chipmunk_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_functions_registration.h; sourceTree = "<group>"; };
+		1AF284B317F00C5400642436 /* js_bindings_chipmunk_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_functions.cpp; sourceTree = "<group>"; };
+		1AF284B417F00C5400642436 /* js_bindings_chipmunk_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_functions.h; sourceTree = "<group>"; };
+		1AF284B517F00C5400642436 /* js_bindings_chipmunk_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_manual.cpp; sourceTree = "<group>"; };
+		1AF284B617F00C5400642436 /* js_bindings_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_manual.h; sourceTree = "<group>"; };
+		1AF284B717F00C5400642436 /* js_bindings_chipmunk_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_registration.cpp; sourceTree = "<group>"; };
+		1AF284B817F00C5400642436 /* js_bindings_chipmunk_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_registration.h; sourceTree = "<group>"; };
+		1AF284BE17F00C8200642436 /* CCPhysicsDebugNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsDebugNode.cpp; sourceTree = "<group>"; };
+		1AF284BF17F00C8200642436 /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
+		1AF284C017F00C8200642436 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
+		1AF284C117F00C8200642436 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
+		1AF284C417F00C9900642436 /* cocosjs_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocosjs_manual_conversions.cpp; sourceTree = "<group>"; };
+		1AF284C517F00C9900642436 /* cocosjs_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocosjs_manual_conversions.h; sourceTree = "<group>"; };
+		1AF284C717F00D0F00642436 /* jsb_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_helper.h; sourceTree = "<group>"; };
+		1AF284C817F00D0F00642436 /* jsb_opengl_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_opengl_functions.cpp; sourceTree = "<group>"; };
+		1AF284C917F00D0F00642436 /* jsb_opengl_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_functions.h; sourceTree = "<group>"; };
+		1AF284CA17F00D0F00642436 /* jsb_opengl_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_opengl_manual.cpp; sourceTree = "<group>"; };
+		1AF284CB17F00D0F00642436 /* jsb_opengl_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_manual.h; sourceTree = "<group>"; };
+		1AF284CC17F00D0F00642436 /* jsb_opengl_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_opengl_registration.cpp; sourceTree = "<group>"; };
+		1AF284CD17F00D0F00642436 /* jsb_opengl_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_registration.h; sourceTree = "<group>"; };
+		1AF284D117F00D3300642436 /* js_bindings_opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_opengl.cpp; sourceTree = "<group>"; };
+		1AF284D217F00D3300642436 /* js_bindings_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_opengl.h; sourceTree = "<group>"; };
+		1AF2872F17F013D800642436 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* CocosDragonJS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosDragonJS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -680,12 +731,13 @@
 		15A3CED91682C2B7002FB0C5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
-				1A36F54C17EFE682000D0275 /* CocoStudio */,
-				15A3CEDB1682C2B7002FB0C5 /* CCBReader */,
 				15A3CF101682C2B8002FB0C5 /* cocos-ext.h */,
 				15A3CF111682C2B8002FB0C5 /* ExtensionMacros.h */,
+				15A3CEDB1682C2B7002FB0C5 /* CCBReader */,
+				1A36F54C17EFE682000D0275 /* CocoStudio */,
 				1AAC78FB16EDC26E00B97F83 /* GUI */,
 				1A82F5D4169AC75500C4B13A /* LocalStorage */,
+				1AF284BD17F00C8200642436 /* physics_nodes */,
 			);
 			name = extensions;
 			path = ../../../../extensions;
@@ -791,13 +843,27 @@
 			children = (
 				15A3D07A1682E721002FB0C5 /* cocos2d_specifics.cpp */,
 				15A3D07B1682E721002FB0C5 /* cocos2d_specifics.hpp */,
+				1AF284C417F00C9900642436 /* cocosjs_manual_conversions.cpp */,
+				1AF284C517F00C9900642436 /* cocosjs_manual_conversions.h */,
 				15A3D07E1682E721002FB0C5 /* generated */,
 				15A3D0831682E721002FB0C5 /* js */,
 				15A3D0891682E721002FB0C5 /* js_bindings_ccbreader.cpp */,
 				15A3D08A1682E721002FB0C5 /* js_bindings_ccbreader.h */,
+				1AF284B017F00C5400642436 /* js_bindings_chipmunk_auto_classes.cpp */,
+				1AF284B117F00C5400642436 /* js_bindings_chipmunk_auto_classes.h */,
+				1AF284AF17F00C5400642436 /* js_bindings_chipmunk_auto_classes_registration.h */,
+				1AF284B317F00C5400642436 /* js_bindings_chipmunk_functions.cpp */,
+				1AF284B417F00C5400642436 /* js_bindings_chipmunk_functions.h */,
+				1AF284B217F00C5400642436 /* js_bindings_chipmunk_functions_registration.h */,
+				1AF284B517F00C5400642436 /* js_bindings_chipmunk_manual.cpp */,
+				1AF284B617F00C5400642436 /* js_bindings_chipmunk_manual.h */,
+				1AF284B717F00C5400642436 /* js_bindings_chipmunk_registration.cpp */,
+				1AF284B817F00C5400642436 /* js_bindings_chipmunk_registration.h */,
 				15A3D0951682E721002FB0C5 /* js_bindings_config.h */,
 				15A3D0961682E721002FB0C5 /* js_bindings_core.cpp */,
 				15A3D0971682E721002FB0C5 /* js_bindings_core.h */,
+				1AF284D117F00D3300642436 /* js_bindings_opengl.cpp */,
+				1AF284D217F00D3300642436 /* js_bindings_opengl.h */,
 				1A177F101698297600C9AC27 /* js_bindings_system_functions.cpp */,
 				1A177F111698297600C9AC27 /* js_bindings_system_functions.h */,
 				1A177F0F1698297600C9AC27 /* js_bindings_system_functions_registration.h */,
@@ -807,6 +873,13 @@
 				15A3D0991682E721002FB0C5 /* js_manual_conversions.h */,
 				1AAC794016EDC2C700B97F83 /* jsb_cocos2dx_extension_manual.cpp */,
 				1AAC794116EDC2C700B97F83 /* jsb_cocos2dx_extension_manual.h */,
+				1AF284C717F00D0F00642436 /* jsb_helper.h */,
+				1AF284C817F00D0F00642436 /* jsb_opengl_functions.cpp */,
+				1AF284C917F00D0F00642436 /* jsb_opengl_functions.h */,
+				1AF284CA17F00D0F00642436 /* jsb_opengl_manual.cpp */,
+				1AF284CB17F00D0F00642436 /* jsb_opengl_manual.h */,
+				1AF284CC17F00D0F00642436 /* jsb_opengl_registration.cpp */,
+				1AF284CD17F00D0F00642436 /* jsb_opengl_registration.h */,
 				15A3D09A1682E721002FB0C5 /* ScriptingCore.cpp */,
 				15A3D09B1682E721002FB0C5 /* ScriptingCore.h */,
 				15A3D09C1682E721002FB0C5 /* spidermonkey_specifics.h */,
@@ -832,14 +905,19 @@
 		15A3D0831682E721002FB0C5 /* js */ = {
 			isa = PBXGroup;
 			children = (
+				1AF2872F17F013D800642436 /* jsb_deprecated.js */,
 				1A27579F1697FA7200504026 /* jsb.js */,
 				1A2757991697FA7200504026 /* jsb_chipmunk.js */,
+				1AF284A317F00BF400642436 /* jsb_chipmunk_constants.js */,
 				1A27579A1697FA7200504026 /* jsb_cocos2d.js */,
 				1AA51AD016F71307000FDF05 /* jsb_cocos2d_constants.js */,
+				1AF284A417F00BF400642436 /* jsb_cocos2d_extension.js */,
 				1A27579B1697FA7200504026 /* jsb_cocosbuilder.js */,
 				1A27579C1697FA7200504026 /* jsb_debugger.js */,
 				1A27579D1697FA7200504026 /* jsb_opengl.js */,
+				1AF284A517F00BF400642436 /* jsb_opengl_constants.js */,
 				1A27579E1697FA7200504026 /* jsb_sys.js */,
+				1AF284A617F00BF400642436 /* main.debug.js */,
 			);
 			path = js;
 			sourceTree = "<group>";
@@ -1400,6 +1478,17 @@
 			path = CCScrollView;
 			sourceTree = "<group>";
 		};
+		1AF284BD17F00C8200642436 /* physics_nodes */ = {
+			isa = PBXGroup;
+			children = (
+				1AF284BE17F00C8200642436 /* CCPhysicsDebugNode.cpp */,
+				1AF284BF17F00C8200642436 /* CCPhysicsDebugNode.h */,
+				1AF284C017F00C8200642436 /* CCPhysicsSprite.cpp */,
+				1AF284C117F00C8200642436 /* CCPhysicsSprite.h */,
+			);
+			path = physics_nodes;
+			sourceTree = "<group>";
+		};
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
@@ -1533,6 +1622,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AF2873117F013E200642436 /* jsb_deprecated.js in Resources */,
+				1AF284AB17F00C1500642436 /* jsb_chipmunk_constants.js in Resources */,
+				1AF284AC17F00C1500642436 /* jsb_cocos2d_extension.js in Resources */,
+				1AF284AD17F00C1500642436 /* jsb_opengl_constants.js in Resources */,
+				1AF284AE17F00C1500642436 /* main.debug.js in Resources */,
 				1AA51AD216F7131E000FDF05 /* jsb_cocos2d_constants.js in Resources */,
 				1A2758101698218C00504026 /* jsb_chipmunk.js in Resources */,
 				1A2758111698218C00504026 /* jsb_cocos2d.js in Resources */,
@@ -1599,19 +1693,24 @@
 				15A3CF631682C2B8002FB0C5 /* CCLayerColorLoader.cpp in Sources */,
 				15A3CF641682C2B8002FB0C5 /* CCLayerGradientLoader.cpp in Sources */,
 				15A3CF651682C2B8002FB0C5 /* CCLayerLoader.cpp in Sources */,
+				1AF2873017F013D800642436 /* jsb_deprecated.js in Sources */,
 				15A3CF661682C2B8002FB0C5 /* CCMenuItemImageLoader.cpp in Sources */,
 				15A3CF671682C2B8002FB0C5 /* CCMenuItemLoader.cpp in Sources */,
+				1AF284A717F00BF400642436 /* jsb_chipmunk_constants.js in Sources */,
 				15A3CF681682C2B8002FB0C5 /* CCNode+CCBRelativePositioning.cpp in Sources */,
 				15A3CF691682C2B8002FB0C5 /* CCNodeLoader.cpp in Sources */,
 				15A3CF6A1682C2B8002FB0C5 /* CCNodeLoaderLibrary.cpp in Sources */,
+				1AF284BA17F00C5400642436 /* js_bindings_chipmunk_functions.cpp in Sources */,
 				15A3CF6B1682C2B8002FB0C5 /* CCParticleSystemQuadLoader.cpp in Sources */,
 				15A3CF6C1682C2B8002FB0C5 /* CCScale9SpriteLoader.cpp in Sources */,
 				15A3CF6D1682C2B8002FB0C5 /* CCScrollViewLoader.cpp in Sources */,
 				15A3CF6E1682C2B8002FB0C5 /* CCSpriteLoader.cpp in Sources */,
+				1AF284A917F00BF400642436 /* jsb_opengl_constants.js in Sources */,
 				15A3D00E1682C331002FB0C5 /* CDAudioManager.m in Sources */,
 				15A3D00F1682C331002FB0C5 /* CDOpenALSupport.m in Sources */,
 				15A3D0101682C331002FB0C5 /* CocosDenshion.m in Sources */,
 				15A3D0111682C331002FB0C5 /* SimpleAudioEngine.mm in Sources */,
+				1AF284AA17F00BF400642436 /* main.debug.js in Sources */,
 				15A3D0121682C331002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				15A3D09F1682E721002FB0C5 /* cocos2d_specifics.cpp in Sources */,
 				15A3D0A91682E721002FB0C5 /* js_bindings_ccbreader.cpp in Sources */,
@@ -1631,6 +1730,7 @@
 				1A82F5D9169AC75500C4B13A /* LocalStorageAndroid.cpp in Sources */,
 				1AAC78F916EDC13D00B97F83 /* jsb_cocos2dx_auto_api.js in Sources */,
 				1AAC78FA16EDC13D00B97F83 /* jsb_cocos2dx_auto.cpp in Sources */,
+				1AF284D317F00D3300642436 /* js_bindings_opengl.cpp in Sources */,
 				1AAC792B16EDC26E00B97F83 /* CCControl.cpp in Sources */,
 				1AAC792C16EDC26E00B97F83 /* CCControlButton.cpp in Sources */,
 				1AAC792D16EDC26E00B97F83 /* CCControlColourPicker.cpp in Sources */,
@@ -1650,8 +1750,10 @@
 				1AAC793B16EDC26E00B97F83 /* CCEditBoxImplWin.cpp in Sources */,
 				1AAC793C16EDC26E00B97F83 /* CCScrollView.cpp in Sources */,
 				1AAC793D16EDC26E00B97F83 /* CCSorting.cpp in Sources */,
+				1AF284B917F00C5400642436 /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
 				1AAC793E16EDC26E00B97F83 /* CCTableView.cpp in Sources */,
 				1AAC793F16EDC26E00B97F83 /* CCTableViewCell.cpp in Sources */,
+				1AF284CF17F00D0F00642436 /* jsb_opengl_manual.cpp in Sources */,
 				1AAC794216EDC2C700B97F83 /* jsb_cocos2dx_extension_manual.cpp in Sources */,
 				1AAC794616EDC2D700B97F83 /* jsb_cocos2dx_extension_auto_api.js in Sources */,
 				1AAC794716EDC2D700B97F83 /* jsb_cocos2dx_extension_auto.cpp in Sources */,
@@ -1664,8 +1766,10 @@
 				1A36F5EB17EFE683000D0275 /* CCArmatureAnimation.cpp in Sources */,
 				1A36F5EC17EFE683000D0275 /* CCProcessBase.cpp in Sources */,
 				1A36F5ED17EFE683000D0275 /* CCTween.cpp in Sources */,
+				1AF284C217F00C8200642436 /* CCPhysicsDebugNode.cpp in Sources */,
 				1A36F5EE17EFE683000D0275 /* CCArmature.cpp in Sources */,
 				1A36F5EF17EFE683000D0275 /* CCBone.cpp in Sources */,
+				1AF284C617F00C9900642436 /* cocosjs_manual_conversions.cpp in Sources */,
 				1A36F5F017EFE683000D0275 /* CCDatas.cpp in Sources */,
 				1A36F5F117EFE683000D0275 /* CCBatchNode.cpp in Sources */,
 				1A36F5F217EFE683000D0275 /* CCDecorativeDisplay.cpp in Sources */,
@@ -1689,6 +1793,7 @@
 				1A36F60417EFE683000D0275 /* UIWidget.cpp in Sources */,
 				1A36F60517EFE683000D0275 /* Layout.cpp in Sources */,
 				1A36F60617EFE683000D0275 /* LayoutExecutant.cpp in Sources */,
+				1AF284CE17F00D0F00642436 /* jsb_opengl_functions.cpp in Sources */,
 				1A36F60717EFE683000D0275 /* LayoutParameter.cpp in Sources */,
 				1A36F60817EFE683000D0275 /* UILayoutDefine.cpp in Sources */,
 				1A36F60917EFE683000D0275 /* CocosGUI.cpp in Sources */,
@@ -1723,9 +1828,12 @@
 				1A36F69117EFE6D2000D0275 /* cpConstraint.c in Sources */,
 				1A36F69217EFE6D2000D0275 /* cpDampedRotarySpring.c in Sources */,
 				1A36F69317EFE6D2000D0275 /* cpDampedSpring.c in Sources */,
+				1AF284A817F00BF400642436 /* jsb_cocos2d_extension.js in Sources */,
 				1A36F69417EFE6D2000D0275 /* cpGearJoint.c in Sources */,
 				1A36F69517EFE6D2000D0275 /* cpGrooveJoint.c in Sources */,
 				1A36F69617EFE6D2000D0275 /* cpPinJoint.c in Sources */,
+				1AF284BC17F00C5400642436 /* js_bindings_chipmunk_registration.cpp in Sources */,
+				1AF284C317F00C8200642436 /* CCPhysicsSprite.cpp in Sources */,
 				1A36F69717EFE6D2000D0275 /* cpPivotJoint.c in Sources */,
 				1A36F69817EFE6D2000D0275 /* cpRatchetJoint.c in Sources */,
 				1A36F69917EFE6D2000D0275 /* cpRotaryLimitJoint.c in Sources */,
@@ -1742,6 +1850,8 @@
 				1A36F6A417EFE6D2000D0275 /* cpShape.c in Sources */,
 				1A36F6A517EFE6D2000D0275 /* cpSpace.c in Sources */,
 				1A36F6A617EFE6D2000D0275 /* cpSpaceComponent.c in Sources */,
+				1AF284BB17F00C5400642436 /* js_bindings_chipmunk_manual.cpp in Sources */,
+				1AF284D017F00D0F00642436 /* jsb_opengl_registration.cpp in Sources */,
 				1A36F6A717EFE6D2000D0275 /* cpSpaceHash.c in Sources */,
 				1A36F6A817EFE6D2000D0275 /* cpSpaceQuery.c in Sources */,
 				1A36F6A917EFE6D2000D0275 /* cpSpaceStep.c in Sources */,
