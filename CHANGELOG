@@ -1,40 +1,38 @@
-cocos2d-x-3.0alpha0 @Sep.17 2013
+cocos2d-x-3.0alpha0 @Sep.19 2013
 [all platforms]
-     [FIX]          TargetAction::reverse() doesn't work as expected
-     [FIX]          OpenGLTest crash
-     [FIX]          Wrong logic when passing an empty std::vector to WebSocket::init()
-     [FIX]          Crash in ParticleSystemQuad because of improper deletion of VBO and VAO
-     [FIX]          Point::isSegmentIntersect() return wrong value when two have the same y value and parallel to the x-axis
-     [FIX]          The utf8 response in XmlHttpRequest are mess codes
+     [FIX]          TargetAction::reverse() works as expected
+     [FIX]          Fixed crash in OpenGLTest
+     [FIX]          Fixed logic when passing an empty std::vector to WebSocket::init()
+     [FIX]          Fixed crash in ParticleSystemQuad due to improper deletion of VBO and VAO
+     [FIX]          Point::isSegmentIntersect() returns correct value
+     [FIX]          Improved UTF8 response code in XmlHttpRequest
      [FIX]          Observers with the same target and name but different sender are the same observer in NotificationCenter
-     [NEW]          Add ATITC format support
-     [NEW]          Better integration of physics engine
-     [NEW]          New event dispatcher
-     [NEW]          New Label
-     [NEW]          S3TC support
-     [NEW]          Adding a method to get duration of timeline for CCBAnimationManager class
-     [NEW]          Array is compatible with stl container
-     [3RD]          Upgrading SpiderMonekey to Firefox v23
+     [NEW]          Added ATITC format support
+     [NEW]          Better integration with physics engine
+     [NEW]          New Event Dispatcher: supports Keybaord, Touches, Accelerometer, Custom events. Added Tests as well
+     [NEW]          New Label code: Faster and more efficient than previous code
+     [NEW]          Added S3TC support
+     [NEW]          Added a method to get duration of timeline for CCBAnimationManager class
+     [NEW]          Array is compatible with STL containers.
+     [3RD]          Upgraded SpiderMonkey to Firefox v23
 [Android]
-     [FIX]          When lock screen or entering background and resume the application textures from pvr.ccz file become black
-     [FIX]          Stroke font color with channel color values other than 255 doesn't take effect
-     [NEW]          Use native activity
+     [FIX]          Fixed When lock screen or entering background and resume the application textures from pvr.ccz file become black
+     [FIX]          Fixed Stroke font color
+     [NEW]          Uses Native Activity
 [iOS]
-     [FIX]          Can not hide status bar on iOS 7
-     [FIX]          Missing icons for iOS 7
+     [FIX]          Status bar can be hidden on iOS 7
+     [FIX]          Added iOS7 icons to templates and tests
 [Mac OS X]
-     [NEW]          lua template
-[javascript binding]
-     [FIX]          CCBReader can't set properties to owner if 'owner var' is setted
-     [FIX]          Crash appears when extending cc.ScrollView in JS
-     [FIX]          cc.registerTargettedDelegate doesn't support pure js object as its target
-     [FIX]          Memory leak in the binding glue code of cc.FileUtils.getStringFromFile(getByteArrayFromFile)
+     [NEW]          iOS and Mac tempaltes were merged into one single Xcode project file.
+     [NEW]          Added Lua template
+[JavaScript bindings]
+     [FIX]          CCBReader is able to set properties to owner if 'owner var' is setted
+     [FIX]          Fixed crash when extending cc.ScrollView in JS
+     [FIX]          cc.registerTargettedDelegate supports pure js object as its target
+     [FIX]          Fixed memory leak in the binding glue code of cc.FileUtils.getStringFromFile(getByteArrayFromFile)
+     [NEW]          Added bindigns for Sprite::getDisplayFrame(), ControlButton callback and RemoveSelf
+[Lua bindings]
      [NEW]          Bind Sprite::getDisplayFrame()
-     [NEW]          Bind callback of ControlButton
-     [NEW]          Bind RemoveSelf
-[lua binding]
-     [NEW]          Bind Sprite::getDisplayFrame()
-     [NEW]          
 
 
 cocos2d-x-3.0alpha0-pre @Jul.30 2013
@@ -106,18 +104,18 @@ cocos2d-x-3.0alpha0-pre @Jul.30 2013
      [FIX]      #2398: Add support for initializing Image with raw data
 [windows]
      [FIX]      #2322: link error becasue of using multiply inheritance
-[javascript binding]
+[JavaScript bindings]
      [FIX]      #2307: PhysicsSprite::getCPBody return wrong type
      [FIX]      #2313: bind cc.ClippingNode
      [FIX]      #2315: iterating through cc.Node children crash
      [Feature]  #2285: bind MontionStreak
      [Feature]  #2340: Updates SpiderMonekey to Firefox v22 (JS Bindings)
      [Feature]  #2427: bind FileUtils.getInstance().createDictionaryWithContentsOfFile
-[lua binding]
-     [Feature]  #2276: Add CCScrollView lua binding and corresponding test sample
-     [Feature]  #2277: Add OpenGL lua binding and corresponding test sample
-     [Feature]  #2324: Add OpenGL lua module
-     [Feature]  #2343: Redesign the mechanism of invoking lua func from c++
+[Lua bindings]
+     [Feature]  #2276: Add CCScrollView Lua binding and corresponding test sample
+     [Feature]  #2277: Add OpenGL Lua binding and corresponding test sample
+     [Feature]  #2324: Add OpenGL Lua module
+     [Feature]  #2343: Redesign the mechanism of invoking Lua func from c++
      [Feature]  #2344: make some execute functions into one function in ScriptEngineProtocol
      [Feature]  #2426: Add DrawPrimitives test sample
      [Feature]  #2429: LuaWebSocket supports sending binary string
@@ -191,21 +189,21 @@ cocos2d-x-3.0alpha0-pre @Jul.30 2013
      Document #2121: write a document to describe the usage of emscriptenate port
 [tizen]
      Feature  #2185: add support for Tizen
-[javascript binding]
+[JavaScript bindings]
      Bug      #2099: fix a bug in ScriptingCore::evalString() not setting the outval
      Bug      #2179: fix a bug that pointQueryFirst returns invalid Shape when a shape is not found
      Bug      #2186: fix a bug that new PivotJoint can't access 4 parameters like in html5 version
      Bug      #2187: JavaScript debugger improved and bug fixed
      Bug      #2243: fix a bug that XMLHttpRequest dones't support non-ascii characters
      Bug      #2244: fix a bug that cc.Camera.getEyeXYZ, cc.Camera.getCenterXYZ, cc.Camera.getUpXYZ return bad values
-     Feature  #1647: Bind websocket to javascript
+     Feature  #1647: Bind websocket to JavaScript
      Feature  #2092: add XMLHttpRequest and bind it to JSB
-     Feature  #2106: add support for javascript byte code
-     Feature  #2162: add command line tool for generating javascript bytecode
+     Feature  #2106: add support for JavaScript byte code
+     Feature  #2162: add command line tool for generating JavaScript bytecode
      Feature  #2214: upgrade Spidermonkey to Firefox v21
      Refactor #2152: log assert messages to the console and renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert
      Refactor #2247: use functions instead of macros to speeding up building for JSB project
-[lua binding]
+[Lua bindings]
      Feature  #2103: implement most test cases
 
 cocos2d-2.1rc0-x-2.1.3 @May.01 2013
@@ -266,18 +264,18 @@ cocos2d-2.1rc0-x-2.1.3 @May.01 2013
 [mac]
      Bug      #2051: fix a bug that TestCpp/ExtensionsTest/CocosbuilderTest crashes under x86_64 target
      Feature  #1856: adding 64bit target for Mac project
-[javascript binding]
+[JavaScript bindings]
      Bug      #1855: fix a bug that std_string_to_jsval generates messy js string when passed a non-ascii UTF8 std::string
      Bug      #2057: adding response for back and menu keypad event for Android
      Bug      #2059: fix a bug that cc.FileUtils.getInstance().getStringFromFile(filename) doesn't return a whole string
      Bug      #2071: fix a bug that cc.TMXLayer.getTiles() can't work
-     Feature  #1841: find a way to obfuscate javascript code on the top of JSB
+     Feature  #1841: find a way to obfuscate JavaScript code on the top of JSB
      Feature  #1936: adding OpenGL Bindings to Javascript
      Feature  #2043: upgrading SpiderMonkey to Firefox20.0
      Feature  #2060: support for cc.FileUtils.getInstance().getByteArrayFromFile(filename)
      Feature  #2064: exposing cc.Node.nodeTo***Transform to JS
      Refactor #1944: subclass of cc.Sprite,cc.Layer... doesn't need cc.associateWithNative anymore
-[lua binding]
+[Lua bindings]
      Feature  #1814: add menutest 
      Feature  #1941: add TileMapTest
      Feature  #1942: add LayerTest
@@ -290,7 +288,7 @@ cocos2d-2.1rc0-x-2.1.3 @May.01 2013
      Feature  #2004: add UserDefaultTest
      Feature  #2005: add CurrentLanguageTest
      Refactor #1847: use luajit
-     Refactor #2084: unify the method of loading lua files on all platforms
+     Refactor #2084: unify the method of loading Lua files on all platforms
 
 cocos2d-2.1rc0-x-2.1.2 @Mar.20 2013
 [all platforms]
@@ -333,7 +331,7 @@ cocos2d-2.1rc0-x-2.1.2 @Mar.20 2013
      Feature  #1842: support kEditBoxInputFlagSensitive setting for CCEditBox on iOS
      Refactor #1755: add CocosDenshion xcode project
      Refactor #1825: use CCLabelTTF to show text for CCEditBox
-[javascript binding]
+[JavaScript bindings]
      Bug      #1707: fix a crash caused by unaligned memory access in CCBReader::readFloat()
      Bug      #1726: fix crash of JSB application on android device with armv6 architecture
      Bug      #1729: fix compiling error of ScriptingCore.cpp with C++11 on iOS
@@ -351,11 +349,11 @@ cocos2d-2.1rc0-x-2.1.2 @Mar.20 2013
      Refactor #1830: use JS::CompileOptions::setUTF8(true) to compile script
      Refactor #1836: make js target of "cc.Scheduler().scheduleCallbackForTarget()" accept a object that not depend on CCNode or its subclass
      Refactor #1837: refactor schedule binding codes
-[lua binding]
+[Lua bindings]
      Bug      #1745: fix a bug that CCRepeat:create() receives error argument
-     Feature  #1425: fix errors in lua test cases and add more test cases
+     Feature  #1425: fix errors in Lua test cases and add more test cases
      Feature  #1698: add CCLuaObjcBridge
-     Feature  #1802: add TouchesTest for lua binding
+     Feature  #1802: add TouchesTest for Lua binding
      Refactor #1818: cleanup the tolua++ bindings build system
 [win32]
      Feature  #1634: CCEditBox support
@@ -424,10 +422,10 @@ cocos2d-2.1beta3-x-2.1.1 @Jan.29 2013
      Refactor #1630: add TestLua post-build script
      Refactor #1632: remove grskia dependency and add in freetype support to the builds.
 [linux]
-     Feature  #1611: add lua support
+     Feature  #1611: add Lua support
      Refactor #1621: add linux 64bit target for eclipse project
      Refactor #1676: refactor makefile and eclipse project configuration
-[javascript binding]
+[JavaScript bindings]
      Bug      #1550: fix some memory leaks in JSBinding
      Bug      #1614: fix a crash caused by DrawNodeTest
      Bug      #1622: fix a crash when cc.Node.getChildren is invoked if it has no children
@@ -442,7 +440,7 @@ cocos2d-2.1beta3-x-2.1.1 @Jan.29 2013
      Feature  #1661: add jsb sample game CrystalCraze
      Refactor #1530: do some improvements to JS Bindings
      Refactor #1633: implement sys.capabilities for JSB
-[lua binding]
+[Lua bindings]
      Refactor #1608: add CCNode::scheduleUpdateWithPriorityLua() for LuaBinding
      Refactor #1626: add CCDirector::setDisplayStats() for luabinding
 
@@ -471,13 +469,13 @@ cocos2d-2.1beta3-x-2.1.0 @Dec.5 2012
      Refactor #1575: update samples/TestCpp to compatible with marmalade
      Refactor #1578: create cocos2dx-ext marmalade project
      Refactor #1591: add TestLua marmalade project 
- [javascript binding]
+ [JavaScript bindings]
      Bug      #1577: fix a bug that touch events lost on Win32 when using JSBinding
      Bug      #1586: fix a crash in WatermelonWithMe
      Bug      #1588: rescheduleCallback support for JSBinding
      Refactor #1570: improve the debugger for JSBinding
- [lua binding]
-     Bug      #1587: remove lua script handler in CCCallFunc's destructor
+ [Lua bindings]
+     Bug      #1587: remove Lua script handler in CCCallFunc's destructor
 
 cocos2d-2.0-x-2.0.4 @Nov.2 2012
  [all platforms]
@@ -504,12 +502,12 @@ cocos2d-2.0-x-2.0.4 @Nov.2 2012
  [iOS]
     Bug       #1527: fix a bug that MoonWarriors can not run on iOS simulator sometimes
     Refactor  #1491: remove dependency of FontLabel lib
- [javascript binding]
-    Bug       #1526: fix a bug that javascript binding related samples will crash on iOS devices
+ [JavaScript bindings]
+    Bug       #1526: fix a bug that JavaScript binding related samples will crash on iOS devices
     Feature   #1469: add MoonWarriors as a sample game
-    Refactor  #1487: use shared javascript test cases with cocos2d-html5 and cocos2d-iphone
+    Refactor  #1487: use shared JavaScript test cases with cocos2d-html5 and cocos2d-iphone
     Refactor  #1517: upgrade SpiderMonkey to FF 17.0 beta3
- [lua binding]
+ [Lua bindings]
     Bug       #1506: fix a compilation error of TestLua if the path of cocos2d-x contains spaces  
  [win32]
     Bug       #1496: fix an error of comparing font's face name in CCImage of win32 port
@@ -521,7 +519,7 @@ cocos2d-2.0-x-2.0.4 @Nov.2 2012
 cocos2d-2.0-x-2.0.3 @Sep.26 2012
  [all platforms]
     Bug       #1452: change CCRGBAProtocol to public in order for actions like CCTintTo to have an affect on the CCScale9Sprite
-    Bug       #1454: make javascript binding work together with lua binding and c++ codes
+    Bug       #1454: make JavaScript binding work together with Lua binding and c++ codes
     Bug       #1464: fix a crash caused by CCLabelBMFont
     Bug       #1478: fix a bug that TMX parser causes tileset images not to be loaded
     Bug       #1479: fix a bug that CCNotificationCenter does not check whether the object is valid before post notification
@@ -544,7 +542,7 @@ cocos2d-2.0-x-2.0.3 @Sep.26 2012
  [win32]
     Feature   #1457: Add vs2012 sln
     Feature   #1474: popup a warning dialog instead of crash directly when OpenGL version is too old to run 2dx
- [js-binding]
+ [js-bindings]
     Feature   #1451: merge new js-binding codes
     Refactor  #1476: update location of spidermonkey-android makefile
  [lua]
@@ -615,7 +613,7 @@ cocos2d-2.0-rc2-x-2.0.1 @Jun.28 2012
     Bug       #1301: apply scissor with points in CCEGLView::sharedOpenGLView().setScissorInPoints()
     Bug       #1302: change the parameter type of CCMenu::setHandlerPriority to signed int
     Bug       #1308: fix a logical bug in CCTouchDispatcher
-    Bug       #1326: fix a bug that the compilation of Hellolua and testjs project was broken after synchronizing to rc2
+    Bug       #1326: fix a bug that the compilation of HelloLua and testjs project was broken after synchronizing to rc2
     Bug       #1330: fix bugs of CCBIReader
     Bug       #1335: fix memory leaks in cocos2dx and CCBReader
     Bug       #1368: implement a test case(Effect4) in EffectsAdvancedTest
@@ -655,7 +653,7 @@ cocos2d-2.0-rc2-x-2.0.1 @Jun.28 2012
     Bug       #1366: fix a crash of tests
  [lua]
     Bug       #1369: fix a crash when invoking CCLabelTTF:setPosition(x,y)
-    Feature   #1327: export 'create' method for lua bindings
+    Feature   #1327: export 'create' method for Lua bindings
 
 cocos2d-2.0-rc0a-x-2.0 @May.31 2012
  [all platforms]
@@ -727,7 +725,7 @@ cocos2d-2.0-rc0a-x-2.0 @May.31 2012
     Bug       #1237: fix a bug that line number message printed by CCAssert is wrong
     Bug       #1279: fix a bug that NodeNonOpaqueTest can't be shown correctly
     Feature   #1247: add profiler support for android
-    Feature   #1265: build dynamic library of spidermonkey for Android, and implement testjs for android
+    Feature   #1265: build dynamic library of SpiderMonkey for Android, and implement testjs for android
     Refactor  #1179: popup a message box when invoking CCAssert() on Android
     Refactor  #1201: simplify the usage of writing Android.mk
  [windows]
@@ -737,11 +735,11 @@ cocos2d-2.0-rc0a-x-2.0 @May.31 2012
     Bug       #1268: fix a bug that Testjs will crash after clicking the close button on win32
     Bug       #1270: fix some warning on win32
     Feature   #1186: add console window for Win32 application, all debug message output to this console window
-    Feature   #1263: build dynamic library of spidermonkey for win32, and add testjs project to solution
+    Feature   #1263: build dynamic library of SpiderMonkey for win32, and add testjs project to solution
     Refactor  #1170: remove win32 template of wophone
  [lua]
-    Refactor  #1190: update lua binding to 2.0
-    Refactor  #1220: using CCString::stringWithContentsOfFile to get string from lua script files
+    Refactor  #1190: update Lua binding to 2.0
+    Refactor  #1220: using CCString::stringWithContentsOfFile to get string from Lua script files
     
 
 cocos2d-1.0.1-x-0.12.0 @ Mar.5 2012
@@ -788,7 +786,7 @@ cocos2d-1.0.1-x-0.12.0 @ Mar.5 2012
  [lua]
      Bug      #942: fix a crash when invoking CCScheduler:sharedScheduler():scheduleScriptFunc in lua
      Bug      #953: add tolua++ for Mac
-     Refactor #973: refactor lua support
+     Refactor #973: refactor Lua support
 
 cocos2d-1.0.1-x-0.11.0 @ Jan.13 2012
  [blackberry] 
@@ -915,9 +913,9 @@ cocos2d-1.0.1-x-0.9.2 @ Oct.20,2011
     Bug     #702  tests crash at the start on wophone devices
  [lua]
     Feature #704  Print error descriptions ad pop error code in CCLuaScriptModule::executeString & CCLuaScriptModule::executeScriptFile
-    Feature #707  Support 'require' for lua on android
-    Feature #732  Add particle systems to lua bindings
-    Feature #733  Use ant to generate a lua project, refer to http://www.cocos2d-x.org/boards/11/topics/3957
+    Feature #707  Support 'require' for Lua on android
+    Feature #732  Add particle systems to Lua bindings
+    Feature #733  Use ant to generate a Lua project, refer to http://www.cocos2d-x.org/boards/11/topics/3957
     Feature #734  Use ant to generate LuaCocos2d.cpp
     
 
@@ -948,8 +946,8 @@ cocos2d-1.0.1-x-0.9.1 @ Aug.17,2011
     Document #622  comment CCUserDefault in doxygen format
     Document #651  add CCFileUtils to oxygen api document
  [lua]
-    Feature  #679  bind lua to CocosDenshion
-    Feature  #647  add a method to set search path of lua script
+    Feature  #679  bind Lua to CocosDenshion
+    Feature  #647  add a method to set search path of Lua script
     Feature  #611  Add some methods in CCMenuItemLabel & CCMenuItemToggle for lua
     Feature  #612  Export CCNode::getContentSizeInPixels & setContentSizeInPixels to lua
     Feature  #653  add CCScheduler::unscheduleScriptFunc
@@ -973,8 +971,8 @@ cocos2d-1.0.1-x-0.9.1 @ Aug.17,2011
     Bug      #667  AppDelegate::applicationDidEnterBackground isn't invoked on iOS
     Bug      #668  CCLabelBMFont display 4 characters in a square per character block in retina mode
  [win32]
-    Feature  #620  change lua library to static lib 
-    Feature  #632  Update visual studio template for lua support
+    Feature  #620  change Lua library to static lib 
+    Feature  #632  Update visual studio template for Lua support
 
    
 cocos2d-1.0.0-x-0.9.0 @ Jul.14,2011
@@ -1011,8 +1009,8 @@ cocos2d-1.0.0-x-0.9.0 @ Jul.14,2011
 cocos2d-0.99.5-x-0.8.5 @ Jun.28,2011
  [all platforms]
     Feature  #577  Lua Support! We export all the cocos2d-x classes & methods to lua! 
-                   Please compile and run HelloLua, and read HelloLua/Resource/hello.lua for more details. 
-                   And the lua new project template/wizard is ready on xcode3, xcode4 and VisualStudio2008 & 2010 
+                   Please compile and run HelloLua, and read HelloLua/Resource/hello.Lua for more details. 
+                   And the Lua new project template/wizard is ready on xcode3, xcode4 and VisualStudio2008 & 2010 
     Feature  #398  Xcode4 templates! Run install-template-xcode.sh to do the magic
     Feature  #323  Internationalization support! Add CCApplication::getCurrentLanguage() method on all platforms
     Feature  #529  add static node() method to CCLayerColor & CCLayerGradient

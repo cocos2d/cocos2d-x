@@ -37,7 +37,7 @@
 NS_CC_BEGIN
 
 class Event;
-class TouchEvent;
+class EventTouch;
 class Node;
 
 /**
@@ -84,12 +84,9 @@ public:
     
     /** Removes all listeners */
     void removeAllListeners();
-    
-    /** Sets listener's priority with node's draw order. */
-    void setPriorityWithSceneGraph(EventListener* listener, Node* node);
 
     /** Sets listener's priority with fixed value. */
-    void setPriorityWithFixedValue(EventListener* listener, int fixedPriority);
+    void setPriority(EventListener* listener, int fixedPriority);
 
     /** Whether to enable dispatching events */
     void setEnabled(bool isEnabled);
@@ -101,8 +98,12 @@ public:
      *  Also removes all EventListeners marked for deletion from the
      *  event dispatcher list.
      */
-    void dispatchEvent(Event* event, bool forceSortListeners = true);
+    void dispatchEvent(Event* event, bool forceSortListeners = false);
 
+    void setDirtyForEventType(const std::string& eventType, bool isDirty);
+    
+    bool isDirtyForEventType(const std::string& eventType);
+    
 public:
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
@@ -123,7 +124,7 @@ private:
     void addEventListenerWithItem(EventListenerItem* item);
     
     /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
-    void dispatchTouchEvent(TouchEvent* event);
+    void dispatchTouchEvent(EventTouch* event);
     
     /** Gets event the listener list for the event type. */
     std::vector<EventListenerItem*>* getListenerItemsForType(const std::string& eventType);
@@ -141,7 +142,11 @@ private:
     /**
      * Listeners map.
      */
-    std::map<std::string, std::vector<EventListenerItem*>*>* _listeners;
+    std::map<std::string, std::vector<EventListenerItem*>*> _listeners;
+    
+    /// Priority dirty flag
+    std::map<std::string, bool> _priorityDirtyFlagMap;
+    
     std::vector<EventListenerItem*> _toAddedListeners;
     
     int   _inDispatch;        ///< Whether it's in dispatching event

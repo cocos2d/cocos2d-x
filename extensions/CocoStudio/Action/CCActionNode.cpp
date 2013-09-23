@@ -362,6 +362,7 @@ void ActionNode::stopAction()
 int ActionNode::getFirstFrameIndex()
 {
 	int frameindex = 99999;
+	bool bFindFrame = false;
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
 		Array* cArray = (Array*)(_frameArray->getObjectAtIndex(n));
@@ -369,7 +370,7 @@ int ActionNode::getFirstFrameIndex()
 		{
 			continue;
 		}
-
+		bFindFrame = true;
 		ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(0));
 		int iFrameIndex = frame->getFrameIndex();
 
@@ -378,13 +379,17 @@ int ActionNode::getFirstFrameIndex()
 			frameindex = iFrameIndex;
 		}
 	}
-
+	if (!bFindFrame)
+	{
+		frameindex = 0;
+	}
 	return frameindex;
 }
 
 int ActionNode::getLastFrameIndex()
 {
 	int frameindex = -1;
+	bool bFindFrame = false;
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
 		Array* cArray = (Array*)(_frameArray->getObjectAtIndex(n));
@@ -392,6 +397,7 @@ int ActionNode::getLastFrameIndex()
 		{
 			continue;
 		}
+		bFindFrame = true;
 		int lastInex = cArray->count() - 1;
 		ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(lastInex));
 		int iFrameIndex = frame->getFrameIndex();
@@ -401,7 +407,10 @@ int ActionNode::getLastFrameIndex()
 			frameindex = iFrameIndex;
 		}
 	}
-
+	if (!bFindFrame)
+	{
+		frameindex = 0;
+	}
 	return frameindex;
 }
 bool ActionNode::updateActionToTimeLine(float fTime)

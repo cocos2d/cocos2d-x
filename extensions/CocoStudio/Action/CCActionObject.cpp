@@ -118,6 +118,7 @@ void ActionObject::addActionNode(ActionNode* node)
 		return;
 	}
 	_actionNodeList->addObject(node);
+	node->setUnitTime(_fUnitTime);
 }
 void ActionObject::removeActionNode(ActionNode* node)
 {

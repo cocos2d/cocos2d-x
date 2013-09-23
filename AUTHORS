@@ -579,6 +579,9 @@ Developers:
         Fixing a bug that crash appears when extending cc.ScrollView in JS.
         Fixing a bug that cc.registerTargettedDelegate doesn't support pure js object as its target.
         
+    elwinarens (Elwin Arens)
+        Minor spelling changes in description of CCScene.h
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

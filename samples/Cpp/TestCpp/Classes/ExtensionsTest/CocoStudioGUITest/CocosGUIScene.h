@@ -35,14 +35,14 @@ using namespace cocos2d::extension;
 class CocosGUITestScene : public TestScene
 {
 public:
-	CocosGUITestScene(bool bPortrait = false);
+	CocosGUITestScene(bool portrait = false);
     virtual ~CocosGUITestScene();
 	virtual void runThisTest();
     
 	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(Object* pSender);
+	virtual void MainMenuCallback(Object* sender);
     
-    void toCocosGUIExampleScene(Object* pSender);
+    void toCocosGUIExampleScene(Object* sender);
     
     void load(Object* pSender, int count);
     void loadTextureCallBack(Object *obj);
@@ -51,9 +51,9 @@ public:
     
     UILayer* ul;
     
-    LabelTTF* m_pLabel;
+    LabelTTF* _label;
     
-    Menu* m_pItemMenu;
+    Menu* _itemMenu;
 };
 
 #endif /* defined(__TestCpp__CocosGUIScene__) */

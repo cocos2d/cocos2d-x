@@ -1,7 +1,7 @@
 #include "CCDevice.h"
 #include "ccTypes.h"
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCAccelerationEvent.h"
+#include "event_dispatcher/CCEventAcceleration.h"
 
 #import <UIKit/UIKit.h>
 
@@ -95,8 +95,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
             break;
     }
 
-    cocos2d::AccelerationEvent event;
-    event.acc = *_acceleration;
+    cocos2d::EventAcceleration event(*_acceleration);
     cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
 }
 

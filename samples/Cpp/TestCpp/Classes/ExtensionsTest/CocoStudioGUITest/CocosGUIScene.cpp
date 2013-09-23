@@ -10,7 +10,7 @@ const char* gui_scene_names[2] =
 };
 
 CocosGUITestScene::CocosGUITestScene(bool bPortrait)
-: m_pLabel(NULL)
+: _label(NULL)
 {
 	TestScene::init();
 }
@@ -39,19 +39,20 @@ void CocosGUITestScene::runThisTest()
 //    /*
     Size s = CCDirector::getInstance()->getWinSize();
     
-    m_pItemMenu = CCMenu::create();
-    m_pItemMenu->setPosition(Point::ZERO);
+    _itemMenu = CCMenu::create();
+    _itemMenu->setPosition(Point::ZERO);
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < 1; ++i)
     {
-        MenuItemFont* pItem = MenuItemFont::create(gui_scene_names[i], this,
-                                                   menu_selector(CocosGUITestScene::menuCallback));
-        pItem->setPosition(Point(s.width / 2, s.height - s.height / 4 - (i + 1) * 40));
-        pItem->setTag(i);
-        m_pItemMenu->addChild(pItem);
+        auto item = MenuItemFont::create(
+                                         gui_scene_names[i],
+                                         CC_CALLBACK_1( CocosGUITestScene::menuCallback, this));
+        item->setPosition(Point(s.width / 2, s.height - s.height / 4 - (i + 1) * 40));
+        item->setTag(i);
+        _itemMenu->addChild(item);
     }
-    addChild(m_pItemMenu);
+    addChild(_itemMenu);
 //     */
 }
 void CocosGUITestScene::MainMenuCallback(Object* pSender)
@@ -62,11 +63,12 @@ void CocosGUITestScene::MainMenuCallback(Object* pSender)
 	pScene->release();    
 }
 
-void CocosGUITestScene::toCocosGUIExampleScene(Object* pSender)
+void CocosGUITestScene::toCocosGUIExampleScene(Object* sender)
 {
-    ((UIScrollView*)pSender)->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
-    ((UIScrollView*)pSender)->getChildByName("backtotopbutton")->setBright(false);
-    ((UIScrollView*)pSender)->getChildByName("backtotopbutton")->setTouchEnabled(false);
+    auto scrollView = static_cast<UIScrollView*>(sender);
+    scrollView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
+    scrollView->getChildByName("backtotopbutton")->setBright(false);
+    scrollView->getChildByName("backtotopbutton")->setTouchEnabled(false);
     CCLOG("p2 click");
     ul->removeFromParent();
     
@@ -76,7 +78,7 @@ void CocosGUITestScene::load(Object *pSender, int count)
 {
     char tmp[10];
     sprintf(tmp,"%d", count);
-    m_pLabel->setString(CCString::createWithFormat("%i", count)->getCString());
+    _label->setString(CCString::createWithFormat("%i", count)->getCString());
 }
 
 void CocosGUITestScene::menuCallback(Object *pSender)

@@ -1382,10 +1382,20 @@ private:
 protected:
     
     /// Upates event priority for this node.
-    inline void updateEventPriorityIndex() { _eventPriority = ++_globalEventPriorityIndex; };
+    inline void updateEventPriorityIndex() {
+        _oldEventPriority = _eventPriority;
+        _eventPriority = ++_globalEventPriorityIndex;
+        if (_oldEventPriority != _eventPriority)
+        {
+            setDirtyForAllEventListeners();
+        }
+    };
     
     /// Removes all event listeners that associated with this node.
     void removeAllEventListeners();
+    
+    /// Sets dirty for event listener.
+    void setDirtyForAllEventListeners();
     
     /// lazy allocs
     void childrenAlloc(void);
