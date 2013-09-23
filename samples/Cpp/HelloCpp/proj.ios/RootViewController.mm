@@ -69,8 +69,11 @@
     return YES;
 }
 
-
-
+//fix not hide status on ios7
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
