@@ -314,7 +314,7 @@ void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
 	}
 	obj = ns;
 
-    JSObject  *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, obj, "(function () { return cc.BuilderReader; })()"));
+    JSObject  *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, obj, "(function () { return cc._Reader; })()"));
     JS_DefineFunction(cx, tmpObj, "create", js_CocosBuilder_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "loadScene", js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     

@@ -14,7 +14,7 @@ cc.BuilderReader.setResourcePath = function (rootPath) {
 cc.BuilderReader.load = function(file, owner, parentSize)
 {
     // Load the node graph using the correct function
-    var reader = cc.BuilderReader.create();
+    var reader = cc._Reader.create();
     reader.setCCBRootPath(cc.BuilderReader._resourcePath);
     
     var node;
