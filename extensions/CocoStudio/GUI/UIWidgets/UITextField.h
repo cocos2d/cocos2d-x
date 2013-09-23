@@ -106,7 +106,10 @@ typedef void (CCObject::*SEL_TextFieldDeleteBackwardEvent)(CCObject*);
 #define coco_TextField_DeleteBackward_selector(_SELECTOR) (SEL_TextFieldDeleteBackwardEvent)(&_SELECTOR)
 /************************/
 
-//class UITextField : public UIWidget
+/** class UITextField : public UIWidget
+*   @js NA
+*   @lua NA
+*/
 class UITextField : public UIWidget
 {
 public:
