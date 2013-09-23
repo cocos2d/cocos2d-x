@@ -47,6 +47,21 @@ class CCEGL;
 class CCEGLView;
 ref class WP8Keyboard;
 
+ref class WP8Window sealed
+{
+public:
+
+	WP8Window(Windows::UI::Core::CoreWindow^ parentWindow);
+
+protected:
+    void OnOrientationChanged(Platform::Object^ sender);
+
+private:
+    Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
+
+};
+
+
 class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
 public:
@@ -72,13 +87,15 @@ public:
 	void OnWindowClosed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CoreWindowEventArgs^ args);
 	void OnResuming(Platform::Object^ sender, Platform::Object^ args);
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
-
+    void OnOrientationChanged();
 private:
 	private:
 		void OnRendering();
 		void UpdateForWindowSizeChange();
 		void ValidateDevice();
-
+        Windows::Foundation::Point TransformToOrientation(Windows::Foundation::Point point, bool dipsToPixels);
+        
+        Windows::Foundation::Rect m_windowBounds;
 		Windows::Foundation::EventRegistrationToken m_eventToken;
 		Windows::Foundation::Point m_lastPoint;
 		bool m_lastPointValid;
@@ -121,6 +138,9 @@ private:
 	ESContext m_esContext;
 	bool m_textInputEnabled;
     WP8Keyboard^ mKeyboard;
+    WP8Window^ m_wp8Window;
+    Windows::Graphics::Display::DisplayOrientations m_orientation;
+
 };
 
 NS_CC_END
