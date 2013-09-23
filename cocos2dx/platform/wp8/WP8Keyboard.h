@@ -25,14 +25,14 @@ THE SOFTWARE.
 #ifndef __WP8_KEYBOARD_H__
 #define __WP8_KEYBOARD_H__
 
+NS_CC_BEGIN
 
 ref class WP8Keyboard sealed
 {
 public:
 	WP8Keyboard(Windows::UI::Core::CoreWindow^ parentWindow);
 
-	bool HitTest(int x, int y);
-	void SetFocus(bool hasFocus);
+    void SetFocus(bool hasFocus);
 
 	property bool HasFocus
     {
@@ -42,20 +42,23 @@ public:
 protected:
 	void OnKeyDown(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
     void OnCharacterReceived(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CharacterReceivedEventArgs^ args);
-	//void OnRender();
+	void ShowKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
+	void HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
 
 private:
+    ~WP8Keyboard();
     Platform::Agile<Windows::UI::Core::CoreWindow> m_parentWindow;
 	Windows::Phone::UI::Core::KeyboardInputBuffer^ m_inputBuffer;
 	Windows::Foundation::EventRegistrationToken m_keydownToken;
 	Windows::Foundation::EventRegistrationToken m_characterReceivedToken;
+	Windows::Foundation::EventRegistrationToken m_showKeyboardToken;
+	Windows::Foundation::EventRegistrationToken m_hideKeyboardToken;
 
-	int m_x, m_y, m_width, m_height;
-	Platform::String^ m_text;
 	bool m_hasFocus;
 
 	Windows::Phone::UI::Core::CoreInputScope m_inputScope;
 };
 
+NS_CC_END
 
 #endif    // end of __WP8_KEYBOARD_H__
