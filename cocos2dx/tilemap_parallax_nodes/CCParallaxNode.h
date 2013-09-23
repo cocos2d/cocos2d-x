@@ -52,8 +52,13 @@ public:
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset
     It returns self, so you can chain several addChilds.
     @since v0.8
+    @js ctor
     */
     CCParallaxNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParallaxNode();
 
     static CCParallaxNode * create();

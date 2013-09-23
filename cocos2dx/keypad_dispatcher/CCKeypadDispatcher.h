@@ -45,6 +45,8 @@ struct _ccCArray;
 /**
 @class CCKeypadDispatcher
 @brief Dispatch the keypad message from the phone
+@js NA
+@lua NA
 */
 class CC_DLL CCKeypadDispatcher : public CCObject
 {
