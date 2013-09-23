@@ -42,6 +42,8 @@ NS_CC_EXT_BEGIN
 
 /** @brief Singleton that handles asynchrounous http requests
  * Once the request completed, a callback will issued in main thread when it provided during make request
+ * @js NA
+ * @lua NA
  */
 class CCHttpClient : public CCObject
 {

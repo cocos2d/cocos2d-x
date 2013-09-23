@@ -29,7 +29,10 @@
 
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate
 {
 public:
