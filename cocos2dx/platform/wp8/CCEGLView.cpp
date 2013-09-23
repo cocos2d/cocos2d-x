@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "support/CCPointExtension.h"
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
+#include "WP8Keyboard.h"
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -55,100 +56,6 @@ using namespace Platform;
 NS_CC_BEGIN
 
 static CCEGLView* s_pEglView = NULL;
-
-
-#if 0
-CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
-
-	auto p = TransformToOrientation(args->CurrentPoint->Position);
-	float x = getScaledDPIValue(p.X);
-	float y = getScaledDPIValue(p.Y);
-    CCPoint pt(x, y);
-
-	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
-
-	if(zoomFactor > 0.0f) {
-		pt.x /= zoomFactor;
-		pt.y /= zoomFactor;
-	}
-	return pt;
-}
-#endif
-
-#if 0
-void CCEGLView::ShowKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
-{
-    CCEGLView::sharedOpenGLView()->ShowKeyboard(args->OccludedRect);
-}
-
-void CCEGLView::HideKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
-{
-    CCEGLView::sharedOpenGLView()->HideKeyboard(args->OccludedRect);
-}
-#endif
-
-void CCEGLView::setIMEKeyboardState(bool bOpen)
-{
-	m_textInputEnabled = bOpen;
-    if(!mKeyboard)
-        mKeyboard = ref new WP8Keyboard(m_window.Get());
-
-    mKeyboard->SetFocus(m_textInputEnabled);
-}
-
-
-#if !defined(WINAPI_PARTITION_PHONE)
-
-void CCEGLView::OnTextKeyDown(Object^ sender, KeyRoutedEventArgs^ args)
-{
-	if(!m_textInputEnabled)
-	{
-		return;
-	}
-
-    auto key = args->Key;
-
-    switch(key)
-    {
-    default:
-        break;
-    }
-}
-
-void CCEGLView::OnTextKeyUp(Object^ sender, KeyRoutedEventArgs^ args)
-{
-	if(!m_textInputEnabled)
-	{
-		return;
-	}
-
-	args->Handled = true;
-
-    auto key = args->Key;
-
-    switch(key)
-    {
-    case VirtualKey::Escape:
-        CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
-		args->Handled = true;
-        break;
-	case VirtualKey::Back:
-        CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
-        break;
-    case VirtualKey::Enter:
-		setIMEKeyboardState(false);
-        CCIMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
-        break;
-    default:
-        char szUtf8[8] = {0};
-        int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)m_textBox->Text->Data(), 1, szUtf8, sizeof(szUtf8), NULL, NULL);
-        CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
-        break;
-    }	
-	m_textBox->Text = "";
-}
-#endif
-
 
 CCEGLView::CCEGLView()
 	: m_window(nullptr)
@@ -187,6 +94,15 @@ bool CCEGLView::Create(CoreWindow^ window)
 	UpdateForWindowSizeChange();
 	m_initialized = true;
     return bRet;
+}
+
+void CCEGLView::setIMEKeyboardState(bool bOpen)
+{
+	m_textInputEnabled = bOpen;
+    if(!mKeyboard)
+        mKeyboard = ref new WP8Keyboard(m_window.Get());
+
+    mKeyboard->SetFocus(m_textInputEnabled);
 }
 
 void CCEGLView::swapBuffers()
@@ -334,13 +250,12 @@ void CCEGLView::OnRendering()
 	if(m_running && m_initialized)
 	{
 		CCDirector::sharedDirector()->mainLoop();
-		// TODO: fix audio
-		// CocosDenshion::SimpleAudioEngine::sharedEngine()->render();
 	}
 }
 
 void CCEGLView::HideKeyboard(Rect r)
 {
+    return; // not yet implemented
 	int height = m_keyboardRect.Height;
 	float factor = m_fScaleY / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
@@ -358,6 +273,7 @@ void CCEGLView::HideKeyboard(Rect r)
 
 void CCEGLView::ShowKeyboard(Rect r)
 {
+    return; // not yet implemented
 	int height = r.Height;
 	float factor = m_fScaleY / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
@@ -399,6 +315,24 @@ CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 	return pt;
 }
 
+
+#if 0
+CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
+
+	auto p = TransformToOrientation(args->CurrentPoint->Position);
+	float x = getScaledDPIValue(p.X);
+	float y = getScaledDPIValue(p.Y);
+    CCPoint pt(x, y);
+
+	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
+
+	if(zoomFactor > 0.0f) {
+		pt.x /= zoomFactor;
+		pt.y /= zoomFactor;
+	}
+	return pt;
+}
+#endif
 
 
 
