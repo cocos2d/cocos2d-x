@@ -265,18 +265,12 @@ void CCArmature::addBone(CCBone *bone, const char *parentName)
         }
         else
         {
-            if (m_pParentBone)
-                m_pParentBone->addChildBone(bone);
-            else
-                m_pTopBoneList->addObject(bone);
+            m_pTopBoneList->addObject(bone);
         }
     }
     else
     {
-        if (m_pParentBone)
-            m_pParentBone->addChildBone(bone);
-        else
-            m_pTopBoneList->addObject(bone);
+        m_pTopBoneList->addObject(bone);
     }
 
     bone->setArmature(this);
@@ -522,6 +516,8 @@ void CCArmature::draw()
                     }
                 }
                 armature->draw();
+
+                m_pAtlas = armature->getTextureAtlas();
             }
             break;
             default:
