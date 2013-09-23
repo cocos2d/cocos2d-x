@@ -26,7 +26,6 @@
 #define __LAYOUT_H__
 
 #include "../BaseClasses/UIWidget.h"
-#include "LayoutExecutant.h"
 
 NS_CC_EXT_BEGIN
 
@@ -36,6 +35,14 @@ typedef enum
     LAYOUT_COLOR_SOLID,
     LAYOUT_COLOR_GRADIENT
 }LayoutBackGroundColorType;
+
+typedef enum
+{
+    LAYOUT_ABSOLUTE,
+    LAYOUT_LINEAR_VERTICAL,
+    LAYOUT_LINEAR_HORIZONTAL,
+    LAYOUT_RELATIVE
+}LayoutType;
 
 class Layout : public UIWidget
 {
@@ -54,24 +61,6 @@ public:
      * Allocates and initializes a layout.
      */
     static Layout* create();
-    
-    /**
-     * Sets a LayoutExecutant for doing layout.
-     *
-     * @see LayoutExecutant
-     *
-     * @param LayoutExecutant pointer.
-     */
-    virtual void setLayoutExecutant(LayoutExecutant* exe);
-    
-    /**
-     * Gets the LayoutExecutant of Layout
-     *
-     * @see LayoutExecutant
-     *
-     * @return LayoutExecutant pointer.
-     */
-    virtual LayoutExecutant* getLayoutExecutant() const;
     
     //override "hitTest" method of widget.
     virtual bool hitTest(const Point &pt);
@@ -178,6 +167,26 @@ public:
      * Content size is widget's texture size.
      */
     virtual const Size& getContentSize() const;
+    
+    /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    virtual void setLayoutType(LayoutType type);
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    virtual LayoutType getLayoutType() const;
+    
+    virtual void doLayout();
 
     /**
      * Returns the "class name" of widget.
@@ -197,7 +206,6 @@ protected:
     void addBackGroundImage();
 protected:
     bool _clippingEnabled;
-    LayoutExecutant* _layoutExecutant;
     
     //background
     bool _backGroundScale9Enabled;
@@ -214,6 +222,7 @@ protected:
     Point _alongVector;
     int _cOpacity;
     Size _backGroundImageTextureSize;
+    LayoutType _layoutType;
 };
 
 class RectClippingNode : public ClippingNode
