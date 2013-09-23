@@ -517,7 +517,7 @@ void CCArmature::draw()
                 }
                 armature->draw();
 
-				m_pAtlas = armature->getTextureAtlas();
+                m_pAtlas = armature->getTextureAtlas();
             }
             break;
             default:

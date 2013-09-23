@@ -165,11 +165,11 @@ void CCBone::update(float delta)
     if (m_pParentBone)
         m_bBoneTransformDirty = m_bBoneTransformDirty || m_pParentBone->isTransformDirty();
 
-	CCBone *armatureParentBone = m_pArmature->getParentBone();
-	if (armatureParentBone && !m_bBoneTransformDirty)
-	{
-		m_bBoneTransformDirty = armatureParentBone->isTransformDirty();
-	}
+    CCBone *armatureParentBone = m_pArmature->getParentBone();
+    if (armatureParentBone && !m_bBoneTransformDirty)
+    {
+        m_bBoneTransformDirty = armatureParentBone->isTransformDirty();
+    }
 
     if (m_bBoneTransformDirty)
     {
@@ -188,13 +188,13 @@ void CCBone::update(float delta)
         {
             m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pParentBone->m_tWorldTransform);
         }
-		else
-		{
-			if (armatureParentBone)
-			{
-				m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, armatureParentBone->nodeToArmatureTransform());
-			}
-		}
+        else
+        {
+            if (armatureParentBone)
+            {
+                m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, armatureParentBone->nodeToArmatureTransform());
+            }
+        }
     }
 
     CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty || m_pArmature->getArmatureTransformDirty());
@@ -224,16 +224,16 @@ void CCBone::updateDisplayedOpacity(GLubyte parentOpacity)
     updateColor();
 }
 
-void CCBone::setColor(const ccColor3B& color)
+void CCBone::setColor(const ccColor3B &color)
 {
-	CCNodeRGBA::setColor(color);
-	updateColor();
+    CCNodeRGBA::setColor(color);
+    updateColor();
 }
 
 void CCBone::setOpacity(GLubyte opacity)
 {
-	CCNodeRGBA::setOpacity(opacity);
-	updateColor();
+    CCNodeRGBA::setOpacity(opacity);
+    updateColor();
 }
 
 void CCBone::updateColor()
