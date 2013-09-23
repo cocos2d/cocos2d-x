@@ -18,6 +18,9 @@
 		<string>Icon-114.png</string>
 		<string>Icon-72.png</string>
 		<string>Icon-144.png</string>
+		<string>Icon-76.png</string>
+		<string>Icon-120.png</string>
+		<string>Icon-152.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string>org.cocos2dx.hellocpp</string>
