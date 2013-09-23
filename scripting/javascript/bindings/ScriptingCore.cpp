@@ -1065,7 +1065,7 @@ JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
 }
 
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
-    JSString *tmp = v.isString() ? JS_ValueToString(cx, v) : NULL;
+    JSString *tmp = (v.isString() || v.isNumber()) ? JS_ValueToString(cx, v) : NULL;
     JSB_PRECONDITION3(tmp, cx, JS_FALSE, "Error processing arguments");
 
     JSStringWrapper str(tmp);
@@ -1602,7 +1602,7 @@ jsval long_long_to_jsval(JSContext* cx, long long v) {
     return OBJECT_TO_JSVAL(tmp);
 }
 
-jsval std_string_to_jsval(JSContext* cx, std::string& v) {
+jsval std_string_to_jsval(JSContext* cx, const std::string& v) {
     return c_string_to_jsval(cx, v.c_str());
 }
 

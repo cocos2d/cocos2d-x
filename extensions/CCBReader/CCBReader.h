@@ -374,7 +374,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    void addOwnerCallbackName(const std::string name);
+    void addOwnerCallbackName(const std::string& name);
     /**
      *  @js NA
      *  @lua NA
@@ -389,7 +389,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    void addDocumentCallbackName(const std::string name);
+    void addDocumentCallbackName(const std::string& name);
     /**
      *  @js NA
      *  @lua NA
