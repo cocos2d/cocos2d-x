@@ -628,7 +628,7 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
         CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
     }
     
-    if (manager) manager->_delegate->onSuccess();
+    if (manager->_delegate) manager->_delegate->onSuccess();
 }
 
 AssetsManager* AssetsManager::create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback )
