@@ -784,10 +784,13 @@ BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, C
             if(selectorTarget == kCCBTargetTypeDocumentRoot) {
                 pCCBReader->addDocumentCallbackNode(pNode);
                 pCCBReader->addDocumentCallbackName(selectorName);
-                
+                // Since there isn't a Control::EventType::NONE, add a TOUCH_DOWN type as a placeholder.
+                pCCBReader->addDocumentCallbackControlEvents(CCControlEventTouchDown);
             } else {
                 pCCBReader->addOwnerCallbackNode(pNode);
                 pCCBReader->addOwnerCallbackName(selectorName);
+                // Since there isn't a Control::EventType::NONE, add a TOUCH_DOWN type as a placeholder.
+                pCCBReader->addOwnerCallbackControlEvents(CCControlEventTouchDown);
             }
         }
     }
@@ -847,10 +850,11 @@ BlockCCControlData * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, C
             if(selectorTarget == kCCBTargetTypeDocumentRoot) {
                 pCCBReader->addDocumentCallbackNode(pNode);
                 pCCBReader->addDocumentCallbackName(selectorName);
-                
+                pCCBReader->addDocumentCallbackControlEvents(controlEvents);
             } else {
                 pCCBReader->addOwnerCallbackNode(pNode);
                 pCCBReader->addOwnerCallbackName(selectorName);
+                pCCBReader->addOwnerCallbackControlEvents(controlEvents);
             }
         }
     }
