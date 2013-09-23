@@ -529,6 +529,13 @@ JSBool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp) {
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
         jsval jsThis = JSVAL_VOID;
         jsval jsFunc = argv[0];
+
+        if (jsFunc.isUndefined())
+        {
+            JS_ReportError(cx, "The callback function is undefined.");
+            return JS_FALSE;
+        }
+
         if (argc == 2) {
             jsThis = argv[1];
         }
