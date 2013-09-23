@@ -7,7 +7,7 @@ KeypadTest::KeypadTest()
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
-    setKeypadEnabled(true);
+    setKeyboardEnabled(true);
 
     // create a label to display the tip string
     _label = LabelTTF::create("Please press any key...", "Arial", 22);
@@ -22,13 +22,13 @@ KeypadTest::~KeypadTest()
     _label->release();
 }
 
-void KeypadTest::onKeyReleased(KeyboardEvent::KeyCode keycode, Event* event)
+void KeypadTest::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event)
 {
-    if (keycode == KeyboardEvent::KeyCode::KEY_BACKSPACE)
+    if (keycode == EventKeyboard::KeyCode::KEY_BACKSPACE)
     {
         _label->setString("BACK clicked!");
     }
-    else if (keycode == KeyboardEvent::KeyCode::KEY_MENU)
+    else if (keycode == EventKeyboard::KeyCode::KEY_MENU)
     {
         _label->setString("MENU clicked!");
     }

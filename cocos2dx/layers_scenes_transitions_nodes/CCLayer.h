@@ -33,8 +33,9 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
+#include "physics/CCPhysicsSetting.h"
 
-#include "event_dispatcher/CCKeyboardEvent.h"
+#include "event_dispatcher/CCEventKeyboard.h"
 
 NS_CC_BEGIN
 
@@ -45,9 +46,9 @@ NS_CC_BEGIN
 
 class TouchScriptHandlerEntry;
 
-class TouchEventListener;
-class KeyboardEventListener;
-class AccelerationEventListener;
+class EventListenerTouch;
+class EventListenerKeyboard;
+class EventListenerAcceleration;
 
 //
 // Layer
@@ -113,7 +114,6 @@ public:
     @since v0.8.0
     */
     CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
-    virtual void onRegisterTouchListener();
 
     /** whether or not it will receive Touch events.
     You can enable / disable touch events with this property.
@@ -145,17 +145,18 @@ public:
 
     virtual bool isKeyboardEnabled() const;
     virtual void setKeyboardEnabled(bool value);
- /** Please use onKeyPressed instead. */
+    
+    /** Please use onKeyPressed instead. */
     virtual void keyPressed(int keyCode) final {};
     
-    /** Please use onKeyRelease instead. */
+    /** Please use onKeyReleased instead. */
     virtual void keyReleased(int keyCode) final {};
     
-    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event) {};
-    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event) {};
+    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
-    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return false; };
-    CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return isKeyboardEnabled(); };
+    CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value) { setKeyboardEnabled(value); };
 
     /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
@@ -178,20 +179,28 @@ public:
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish() override;
+    
+#ifdef CC_USE_PHYSICS
+    virtual void addChild(Node* child) override;
+    virtual void addChild(Node* child, int zOrder) override;
+    virtual void addChild(Node* child, int zOrder, int tag) override;
+#endif // CC_USE_PHYSICS
 
 protected:
+    void addTouchListener();
+    
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
-    TouchEventListener* _touchListener;
-    KeyboardEventListener* _keyboardListener;
-    AccelerationEventListener* _accelerationListener;
+    EventListenerTouch* _touchListener;
+    EventListenerKeyboard* _keyboardListener;
+    EventListenerAcceleration* _accelerationListener;
 private:
     Touch::DispatchMode _touchMode;
     bool _swallowsTouches;
     
-    int executeScriptTouchHandler(TouchEvent::EventCode eventType, Touch* touch);
-    int executeScriptTouchesHandler(TouchEvent::EventCode eventType, const std::vector<Touch*>& touches);
+    int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
+    int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
 };
 
 #ifdef __apple__

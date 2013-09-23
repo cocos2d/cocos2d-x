@@ -863,7 +863,7 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      * @code
-     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+     * node->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      * @endcode
      * 
      * @param shaderProgram The shader program which fetchs from ShaderCache.
@@ -877,8 +877,8 @@ public:
      *
      * @code
      * Camera* camera = node->getCamera();
-     * camera->setEyeXYZ(0, 0, 415/2);
-     * camera->setCenterXYZ(0, 0, 0);
+     * camera->setEye(0, 0, 415/2);
+     * camera->setCenter(0, 0, 0);
      * @endcode
      *
      * @return A Camera object that lets you move the node using a gluLookAt
@@ -1381,7 +1381,21 @@ private:
     
 protected:
     
-    inline void updateEventPriorityIndex() { _eventPriority = ++_globalEventPriorityIndex; };
+    /// Upates event priority for this node.
+    inline void updateEventPriorityIndex() {
+        _oldEventPriority = _eventPriority;
+        _eventPriority = ++_globalEventPriorityIndex;
+        if (_oldEventPriority != _eventPriority)
+        {
+            setDirtyForAllEventListeners();
+        }
+    };
+    
+    /// Removes all event listeners that associated with this node.
+    void removeAllEventListeners();
+    
+    /// Sets dirty for event listener.
+    void setDirtyForAllEventListeners();
     
     /// lazy allocs
     void childrenAlloc(void);
@@ -1460,8 +1474,9 @@ protected:
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
-    int _eventPriority;
-    static int _globalEventPriorityIndex;
+    int _eventPriority;           ///< The scene graph based priority of event listener.
+    int _oldEventPriority;        ///< The old scene graph based priority of event listener.
+    static int _globalEventPriorityIndex;    ///< The index of global event priority.
 };
 
 //#pragma mark - NodeRGBA

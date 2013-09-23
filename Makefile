@@ -12,7 +12,7 @@ box2d:
 box2d-clean:
 	$(MAKE) -C external/Box2D/proj.$(PLATFORM) clean
 
-libextensions: cocosdenshion chipmunk box2d
+libextensions: chipmunk cocosdenshion  box2d
 	$(MAKE) -C extensions/proj.$(PLATFORM)
 libextensions-clean:
 	$(MAKE) -C extensions/proj.$(PLATFORM) clean
@@ -47,7 +47,7 @@ simplegame: libcocos2dx
 simplegame-clean:
 	$(MAKE) -C samples/Cpp/SimpleGame/proj.$(PLATFORM) clean
 
-all: box2d cocosdenshion libextensions libcocos2dx lua hellocpp testcpp simplegame
+all: chipmunk cocosdenshion libextensions libcocos2dx lua hellocpp testcpp simplegame
 clean: libcocos2dx-clean box2d-clean chipmunk-clean cocosdenshion-clean libextensions-clean lua-clean hellocpp-clean testcpp-clean simplegame-clean
 
 # Haven't yet got the lua projects working with emscripten

@@ -1,17 +1,17 @@
 TARGET = libcocos2d.so
 
 INCLUDES += \
-			-I../platform/third_party/linux/libfreetype2 \
-			-I../platform/third_party/common/etc \
-		       -I../platform/third_party/common/s3tc \
-		      -I../platform/third_party/common/atitc \
-			-I../../extensions \
-			-I../../extensions/CCBReader \
-			-I../../extensions/GUI/CCControlExtension \
-			-I../../extensions/GUI/CCControlExtension \
-			-I../../external/chipmunk/include/chipmunk \
-			-I../../extensions/network \
-            -I../../extensions/Components \
+	-I../platform/third_party/linux/libfreetype2 \
+	-I../platform/third_party/common/etc \
+	-I../platform/third_party/common/s3tc \
+        -I../platform/third_party/common/atitc \
+	-I../../extensions \
+	-I../../extensions/CCBReader \
+	-I../../extensions/GUI/CCControlExtension \
+	-I../../extensions/GUI/CCControlExtension \
+	-I../../external/chipmunk/include/chipmunk \
+	-I../../extensions/network \
+        -I../../extensions/Components
 
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \
@@ -39,16 +39,18 @@ SOURCES = ../actions/CCAction.cpp \
 ../cocoa/CCString.cpp \
 ../cocoa/CCDataVisitor.cpp \
 ../cocoa/CCData.cpp \
-../event_dispatcher/CCAccelerationEvent.cpp \
-../event_dispatcher/CCAccelerationEventListener.cpp \
+../event_dispatcher/CCEventAcceleration.cpp \
+../event_dispatcher/CCEventListenerAcceleration.cpp \
 ../event_dispatcher/CCEvent.cpp \
 ../event_dispatcher/CCEventDispatcher.cpp \
 ../event_dispatcher/CCEventListener.cpp \
-../event_dispatcher/CCKeyboardEvent.cpp \
-../event_dispatcher/CCKeyboardEventListener.cpp \
+../event_dispatcher/CCEventKeyboard.cpp \
+../event_dispatcher/CCEventListenerKeyboard.cpp \
 ../event_dispatcher/CCTouch.cpp \
-../event_dispatcher/CCTouchEvent.cpp \
-../event_dispatcher/CCTouchEventListener.cpp \
+../event_dispatcher/CCEventTouch.cpp \
+../event_dispatcher/CCEventListenerTouch.cpp \
+../event_dispatcher/CCEventCustom.cpp \
+../event_dispatcher/CCEventListenerCustom.cpp \
 ../draw_nodes/CCDrawingPrimitives.cpp \
 ../draw_nodes/CCDrawNode.cpp \
 ../effects/CCGrabber.cpp \
@@ -81,6 +83,21 @@ SOURCES = ../actions/CCAction.cpp \
 ../particle_nodes/CCParticleSystem.cpp \
 ../particle_nodes/CCParticleSystemQuad.cpp \
 ../particle_nodes/CCParticleBatchNode.cpp \
+../physics/Box2D/CCPhysicsContactInfo.cpp \
+../physics/Box2D/CCPhysicsJointInfo.cpp \
+../physics/Box2D/CCPhysicsShapeInfo.cpp \
+../physics/Box2D/CCPhysicsBodyInfo.cpp \
+../physics/Box2D/CCPhysicsWorldInfo.cpp \
+../physics/chipmunk/CCPhysicsContactInfo.cpp \
+../physics/chipmunk/CCPhysicsJointInfo.cpp \
+../physics/chipmunk/CCPhysicsShapeInfo.cpp \
+../physics/chipmunk/CCPhysicsBodyInfo.cpp \
+../physics/chipmunk/CCPhysicsWorldInfo.cpp \
+../physics/CCPhysicsBody.cpp \
+../physics/CCPhysicsContact.cpp \
+../physics/CCPhysicsShape.cpp \
+../physics/CCPhysicsJoint.cpp \
+../physics/CCPhysicsWorld.cpp \
 ../platform/CCSAXParser.cpp \
 ../platform/CCThread.cpp \
 ../platform/CCEGLViewProtocol.cpp \
@@ -161,6 +178,8 @@ include cocos2dx.mk
 
 CXXFLAGS += -Wno-sequence-point
 CCFLAGS += -Wno-sequence-point
+
+STATICLIBS += $(LIB_DIR)/libchipmunk.a
 
 TARGET := $(LIB_DIR)/$(TARGET)
 

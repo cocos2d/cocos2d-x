@@ -31,6 +31,11 @@ CCBReader/CCParticleSystemQuadLoader.cpp \
 CCBReader/CCScale9SpriteLoader.cpp \
 CCBReader/CCScrollViewLoader.cpp \
 CCBReader/CCSpriteLoader.cpp \
+CocoStudio/Action/CCActionFrame.cpp \
+CocoStudio/Action/CCActionFrameEasing.cpp \
+CocoStudio/Action/CCActionManagerEx.cpp \
+CocoStudio/Action/CCActionNode.cpp \
+CocoStudio/Action/CCActionObject.cpp \
 CocoStudio/Armature/CCArmature.cpp \
 CocoStudio/Armature/CCBone.cpp \
 CocoStudio/Armature/animation/CCArmatureAnimation.cpp \
@@ -43,8 +48,8 @@ CocoStudio/Armature/display/CCDisplayFactory.cpp \
 CocoStudio/Armature/display/CCDisplayManager.cpp \
 CocoStudio/Armature/display/CCSkin.cpp \
 CocoStudio/Armature/physics/CCColliderDetector.cpp \
-CocoStudio/Armature/utils/CCArmatureDefine.cpp \
 CocoStudio/Armature/utils/CCArmatureDataManager.cpp \
+CocoStudio/Armature/utils/CCArmatureDefine.cpp \
 CocoStudio/Armature/utils/CCDataReaderHelper.cpp \
 CocoStudio/Armature/utils/CCSpriteFrameCacheHelper.cpp \
 CocoStudio/Armature/utils/CCTransformHelp.cpp \
@@ -55,10 +60,6 @@ CocoStudio/Components/CCComAudio.cpp \
 CocoStudio/Components/CCComController.cpp \
 CocoStudio/Components/CCComRender.cpp \
 CocoStudio/Components/CCInputDelegate.cpp \
-CocoStudio/GUI/Action/UIAction.cpp \
-CocoStudio/GUI/Action/UIActionFrame.cpp \
-CocoStudio/GUI/Action/UIActionManager.cpp \
-CocoStudio/GUI/Action/UIActionNode.cpp \
 CocoStudio/GUI/BaseClasses/UIRootWidget.cpp \
 CocoStudio/GUI/BaseClasses/UIWidget.cpp \
 CocoStudio/GUI/Layouts/Layout.cpp \

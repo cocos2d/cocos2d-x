@@ -400,22 +400,20 @@ int LuaEngine::handleKeypadEvent(void* data)
     if (0 == handler)
         return 0;
     
-    int action = keypadScriptData->actionType;
+    EventKeyboard::KeyCode action = keypadScriptData->actionType;
 
-    //FIXME:
-//    switch (action)
-//    {
-//        case kTypeBackClicked:
-//            _stack->pushString("backClicked");
-//            break;
-//            
-//        case kTypeMenuClicked:
-//            _stack->pushString("menuClicked");
-//            break;
-//            
-//        default:
-//            return 0;
-//    }
+    switch(action)
+    {
+        case EventKeyboard::KeyCode::KEY_BACKSPACE:
+			_stack->pushString("backClicked");
+			break;
+		case EventKeyboard::KeyCode::KEY_MENU:
+            _stack->pushString("menuClicked");
+			break;
+		default:
+			break;
+    }
+
     int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     return ret;
@@ -486,19 +484,19 @@ int LuaEngine::handleTouchEvent(void* data)
     
     switch (touchScriptData->actionType)
     {
-        case TouchEvent::EventCode::BEGAN:
+        case EventTouch::EventCode::BEGAN:
             _stack->pushString("began");
             break;
             
-        case TouchEvent::EventCode::MOVED:
+        case EventTouch::EventCode::MOVED:
             _stack->pushString("moved");
             break;
             
-        case TouchEvent::EventCode::ENDED:
+        case EventTouch::EventCode::ENDED:
             _stack->pushString("ended");
             break;
             
-        case TouchEvent::EventCode::CANCELLED:
+        case EventTouch::EventCode::CANCELLED:
             _stack->pushString("cancelled");
             break;
             
@@ -535,19 +533,19 @@ int LuaEngine::handleTouchesEvent(void* data)
     
     switch (touchesScriptData->actionType)
     {
-        case TouchEvent::EventCode::BEGAN:
+        case EventTouch::EventCode::BEGAN:
             _stack->pushString("began");
             break;
             
-        case TouchEvent::EventCode::MOVED:
+        case EventTouch::EventCode::MOVED:
             _stack->pushString("moved");
             break;
             
-        case TouchEvent::EventCode::ENDED:
+        case EventTouch::EventCode::ENDED:
             _stack->pushString("ended");
             break;
             
-        case TouchEvent::EventCode::CANCELLED:
+        case EventTouch::EventCode::CANCELLED:
             _stack->pushString("cancelled");
             break;
             

@@ -156,54 +156,54 @@ void ShaderCache::reloadDefaultShaders()
     // reset all programs and reload them
     
     // Position Texture Color shader
-    GLProgram *p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);    
+    GLProgram *p = getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);    
     p->reset();
     loadDefaultShader(p, kShaderType_PositionTextureColor);
 
     // Position Texture Color alpha test
-    p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     p->reset();    
     loadDefaultShader(p, kShaderType_PositionTextureColorAlphaTest);
     
     //
     // Position, Color shader
     //
-    p = programForKey(GLProgram::SHADER_NAME_POSITION_COLOR);
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionColor);
     
     //
     // Position Texture shader
     //
-    p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE);
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionTexture);
     
     //
     // Position, Texture attribs, 1 Color as uniform shader
     //
-    p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR);
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionTexture_uColor);
     
     //
     // Position Texture A8 Color shader
     //
-    p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR);
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionTextureA8Color);
     
     //
     // Position and 1 color passed as a uniform (to simulate glColor4ub )
     //
-    p = programForKey(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_Position_uColor);
     
     //
 	// Position, Legth(TexCoords, Color (used by Draw Node basically )
 	//
-    p = programForKey(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionLengthTexureColor);
 }

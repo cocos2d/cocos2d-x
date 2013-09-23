@@ -40,9 +40,12 @@ public:
 	/** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static ArmatureDataManager *sharedArmatureDataManager() { return ArmatureDataManager::getInstance(); }
 
+    /** @deprecated Use destoryInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purge() { ArmatureDataManager::destoryInstance(); };
+    
     static ArmatureDataManager *getInstance();
-
-    static void purge();
+    static void destoryInstance();
+    
 private:
 	/**
      * @js ctor

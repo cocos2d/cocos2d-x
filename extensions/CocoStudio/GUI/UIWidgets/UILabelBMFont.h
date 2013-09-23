@@ -58,13 +58,18 @@ public:
     virtual void setAnchorPoint(const Point &pt);
     virtual const Size& getContentSize() const;
     virtual Node* getVirtualRenderer();
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void labelBMFontScaleChangedWithSize();
 protected:
-    LabelBMFont* m_pLabelBMFontRenderer;
-    bool m_bFntFileHasInit;
+    LabelBMFont* _labelBMFontRenderer;
+    bool _fntFileHasInit;
 };
     
 NS_CC_EXT_END

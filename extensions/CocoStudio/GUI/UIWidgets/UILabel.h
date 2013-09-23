@@ -117,6 +117,11 @@ public:
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer();
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     void setTextAreaSize(const Size &size);
     void setTextHorizontalAlignment(TextHAlignment alignment);
     void setTextVerticalAlignment(TextVAlignment alignment);
@@ -134,12 +139,12 @@ protected:
     void clickScale(float scale);
     void labelScaleChangedWithSize();
 protected:
-    bool m_bTouchScaleChangeEnabled;
-    float m_fNormalScaleValue;
-    std::string m_sFontName;
-    int m_nFontSize;
-    float m_fOnSelectedScaleOffset;
-    LabelTTF* m_pLabelRenderer;
+    bool _touchScaleChangeEnabled;
+    float _normalScaleValue;
+    std::string _fontName;
+    int _fontSize;
+    float _onSelectedScaleOffset;
+    LabelTTF* _labelRenderer;
 };
 
 NS_CC_EXT_END

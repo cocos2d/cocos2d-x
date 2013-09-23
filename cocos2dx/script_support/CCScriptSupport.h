@@ -27,7 +27,8 @@
 
 #include "platform/CCCommon.h"
 #include "event_dispatcher/CCTouch.h"
-#include "event_dispatcher/CCTouchEvent.h"
+#include "event_dispatcher/CCEventTouch.h"
+#include "event_dispatcher/CCEventKeyboard.h"
 #include "cocoa/CCSet.h"
 #include <map>
 #include <string>
@@ -253,7 +254,7 @@ struct SchedulerScriptData
 
 struct TouchesScriptData
 {
-    TouchEvent::EventCode actionType;
+    EventTouch::EventCode actionType;
     void* nativeObject;
     const std::vector<Touch*>& touches;
     
@@ -262,7 +263,7 @@ struct TouchesScriptData
      * @js NA
      * @lua NA
      */
-    TouchesScriptData(TouchEvent::EventCode inActionType, void* inNativeObject, const std::vector<Touch*>& inTouches)
+    TouchesScriptData(EventTouch::EventCode inActionType, void* inNativeObject, const std::vector<Touch*>& inTouches)
     : actionType(inActionType),
       nativeObject(inNativeObject),
       touches(inTouches)
@@ -272,7 +273,7 @@ struct TouchesScriptData
 
 struct TouchScriptData
 {
-    TouchEvent::EventCode actionType;
+    EventTouch::EventCode actionType;
     void* nativeObject;
     Touch* touch;
     
@@ -281,7 +282,7 @@ struct TouchScriptData
      * @js NA
      * @lua NA
      */
-    TouchScriptData(TouchEvent::EventCode inActionType, void* inNativeObject, Touch* inTouch)
+    TouchScriptData(EventTouch::EventCode inActionType, void* inNativeObject, Touch* inTouch)
     : actionType(inActionType),
       nativeObject(inNativeObject),
       touch(inTouch)
@@ -291,7 +292,7 @@ struct TouchScriptData
 
 struct KeypadScriptData
 {
-    int actionType;
+    EventKeyboard::KeyCode actionType;
     void* nativeObject;
     
     // Constructor
@@ -299,7 +300,7 @@ struct KeypadScriptData
      * @js NA
      * @lua NA
      */
-    KeypadScriptData(int inActionType,void* inNativeObject)
+    KeypadScriptData(EventKeyboard::KeyCode inActionType,void* inNativeObject)
     : actionType(inActionType),nativeObject(inNativeObject)
     {
     }
