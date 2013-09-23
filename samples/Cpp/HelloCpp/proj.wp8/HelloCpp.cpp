@@ -36,6 +36,8 @@ void HelloCpp::Initialize(CoreApplicationView^ applicationView)
 
 void HelloCpp::SetWindow(CoreWindow^ window)
 {
+    // Specify the orientation of your application here
+    // The choices are DisplayOrientations::Portrait or DisplayOrientations::Landscape
 	DisplayProperties::AutoRotationPreferences = Windows::Graphics::Display::DisplayOrientations::Portrait;
 
 	window->VisibilityChanged +=
