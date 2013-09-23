@@ -42,7 +42,10 @@ struct BlockCCControlData {
 
 /* Forward declaration. */
 class CCBReader;
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCNodeLoader : public CCObject {
     public:
         CCNodeLoader();

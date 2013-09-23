@@ -33,10 +33,14 @@ NS_CC_EXT_BEGIN
 
 /**
  *	@brief	format and manage armature configuration and armature animation
+ *  @lua NA
  */
 class  CCArmatureDataManager : public CCObject
 {
 public:
+    /**
+     *  @js getInstance
+     */
     static CCArmatureDataManager *sharedArmatureDataManager();
 
     static void purge();

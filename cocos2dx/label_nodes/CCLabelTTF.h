@@ -57,9 +57,20 @@ NS_CC_BEGIN
 class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCLabelTTF();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLabelTTF();
-    const char* description();    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    const char* description();
     
     /** creates a CCLabelTTF with a font name and font size in points
      @since v2.0.1

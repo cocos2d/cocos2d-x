@@ -67,7 +67,14 @@ class CCParticleSystem;
 class CC_DLL CCParticleBatchNode : public CCNode, public CCTextureProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleBatchNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleBatchNode();
 
     /** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use */
@@ -103,7 +110,9 @@ public:
     // sets a new texture. it will be retained
     virtual void setTexture(CCTexture2D *texture);
     virtual void setBlendFunc(ccBlendFunc blendFunc);
-    // returns the blending function used for the texture
+    /** returns the blending function used for the texture
+     * @js NA
+     */
     virtual ccBlendFunc getBlendFunc(void);
 
     void visit();

@@ -35,7 +35,10 @@ typedef enum
     LAYOUT_PARAMETER_LINEAR,
     LAYOUT_PARAMETER_RELATIVE
 }LayoutParameterType;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class LayoutParameter : public CCObject
 {
 public:
@@ -85,7 +88,10 @@ protected:
     UIMargin m_margin;
     LayoutParameterType m_eLayoutParameterType;
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class LinearLayoutParameter : public LayoutParameter
 {
 public:
@@ -125,7 +131,10 @@ public:
 protected:
     UILinearGravity m_eLinearGravity;
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class RelativeLayoutParameter : public LayoutParameter
 {
 public:
