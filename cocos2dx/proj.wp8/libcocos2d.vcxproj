@@ -60,20 +60,20 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -332,6 +332,7 @@
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
     <ClCompile Include="..\platform\wp8\CCEGLView.cpp" />
     <ClCompile Include="..\platform\wp8\Direct3DBase.cpp" />
+    <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp" />
     <ClCompile Include="..\platform\wp8\ModalLayer.cpp" />
     <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
     <ClCompile Include="..\shaders\CCGLProgram.cpp" />
@@ -484,6 +485,7 @@
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
     <ClInclude Include="..\platform\wp8\CCEGLView.h" />
     <ClInclude Include="..\platform\wp8\Direct3DBase.h" />
+    <ClInclude Include="..\platform\wp8\WP8Keyboard.h" />
     <ClInclude Include="..\platform\wp8\ModalLayer.h" />
     <ClInclude Include="..\script_support\CCScriptSupport.h" />
     <ClInclude Include="..\shaders\CCGLProgram.h" />
