@@ -56,19 +56,18 @@ ActionNode::~ActionNode()
 {
 	if (_action == NULL)
 	{
-		CC_SAFE_RELEASE(_actionSpawn);
+		CC_SAFE_RELEASE_NULL(_actionSpawn);
 	}
 	else
 	{
-		CC_SAFE_RELEASE(_action);
+		CC_SAFE_RELEASE_NULL(_action);
 	}
 	
 	if (_frameArray != NULL)
 	{
 		_frameArray->removeAllObjects();
-		CC_SAFE_RELEASE(_frameArray);
+		CC_SAFE_RELEASE_NULL(_frameArray);
 	}
-
 }
 
 void ActionNode::initWithDictionary(cs::JsonDictionary *dic,Object* root)
@@ -308,18 +307,15 @@ Spawn * ActionNode::refreshActionProperty()
 
 	if (_action == NULL)
 	{
-		CC_SAFE_RELEASE(_actionSpawn);
+		CC_SAFE_RELEASE_NULL(_actionSpawn);
 	}
 	else
 	{
-		CC_SAFE_RELEASE(_action);
+		CC_SAFE_RELEASE_NULL(_action);
 	}
 
 	_actionSpawn = Spawn::create(cSpawnArray);
-	if (_actionSpawn != NULL)
-	{
-		_actionSpawn->retain();
-	}
+	CC_SAFE_RETAIN(_actionSpawn);
 	return _actionSpawn;
 }
 
