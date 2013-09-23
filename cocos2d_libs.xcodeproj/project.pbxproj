@@ -396,10 +396,6 @@
 		5032F0D417E3405400C9D250 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08917E3405400C9D250 /* Layout.cpp */; };
 		5032F0D517E3405400C9D250 /* Layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08A17E3405400C9D250 /* Layout.h */; };
 		5032F0D617E3405400C9D250 /* Layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08A17E3405400C9D250 /* Layout.h */; };
-		5032F0D717E3405400C9D250 /* LayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08B17E3405400C9D250 /* LayoutExecutant.cpp */; };
-		5032F0D817E3405400C9D250 /* LayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08B17E3405400C9D250 /* LayoutExecutant.cpp */; };
-		5032F0D917E3405400C9D250 /* LayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08C17E3405400C9D250 /* LayoutExecutant.h */; };
-		5032F0DA17E3405400C9D250 /* LayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08C17E3405400C9D250 /* LayoutExecutant.h */; };
 		5032F0DB17E3405400C9D250 /* LayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08D17E3405400C9D250 /* LayoutParameter.cpp */; };
 		5032F0DC17E3405400C9D250 /* LayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F08D17E3405400C9D250 /* LayoutParameter.cpp */; };
 		5032F0DD17E3405400C9D250 /* LayoutParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F08E17E3405400C9D250 /* LayoutParameter.h */; };
@@ -2502,8 +2498,6 @@
 		5032F08717E3405400C9D250 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
 		5032F08917E3405400C9D250 /* Layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Layout.cpp; sourceTree = "<group>"; };
 		5032F08A17E3405400C9D250 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
-		5032F08B17E3405400C9D250 /* LayoutExecutant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutExecutant.cpp; sourceTree = "<group>"; };
-		5032F08C17E3405400C9D250 /* LayoutExecutant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutExecutant.h; sourceTree = "<group>"; };
 		5032F08D17E3405400C9D250 /* LayoutParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutParameter.cpp; sourceTree = "<group>"; };
 		5032F08E17E3405400C9D250 /* LayoutParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutParameter.h; sourceTree = "<group>"; };
 		5032F08F17E3405400C9D250 /* UILayoutDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutDefine.cpp; sourceTree = "<group>"; };
@@ -4242,8 +4236,6 @@
 			children = (
 				5032F08917E3405400C9D250 /* Layout.cpp */,
 				5032F08A17E3405400C9D250 /* Layout.h */,
-				5032F08B17E3405400C9D250 /* LayoutExecutant.cpp */,
-				5032F08C17E3405400C9D250 /* LayoutExecutant.h */,
 				5032F08D17E3405400C9D250 /* LayoutParameter.cpp */,
 				5032F08E17E3405400C9D250 /* LayoutParameter.h */,
 				5032F08F17E3405400C9D250 /* UILayoutDefine.cpp */,
@@ -6812,7 +6804,6 @@
 				5032F0CD17E3405400C9D250 /* UIRootWidget.h in Headers */,
 				5032F0D117E3405400C9D250 /* UIWidget.h in Headers */,
 				5032F0D517E3405400C9D250 /* Layout.h in Headers */,
-				5032F0D917E3405400C9D250 /* LayoutExecutant.h in Headers */,
 				5032F0DD17E3405400C9D250 /* LayoutParameter.h in Headers */,
 				5032F0E117E3405400C9D250 /* UILayoutDefine.h in Headers */,
 				5032F0E517E3405400C9D250 /* CocosGUI.h in Headers */,
@@ -7383,7 +7374,6 @@
 				5032F0CE17E3405400C9D250 /* UIRootWidget.h in Headers */,
 				5032F0D217E3405400C9D250 /* UIWidget.h in Headers */,
 				5032F0D617E3405400C9D250 /* Layout.h in Headers */,
-				5032F0DA17E3405400C9D250 /* LayoutExecutant.h in Headers */,
 				5032F0DE17E3405400C9D250 /* LayoutParameter.h in Headers */,
 				5032F0E217E3405400C9D250 /* UILayoutDefine.h in Headers */,
 				5032F0E617E3405400C9D250 /* CocosGUI.h in Headers */,
@@ -8343,7 +8333,6 @@
 				5032F0CB17E3405400C9D250 /* UIRootWidget.cpp in Sources */,
 				5032F0CF17E3405400C9D250 /* UIWidget.cpp in Sources */,
 				5032F0D317E3405400C9D250 /* Layout.cpp in Sources */,
-				5032F0D717E3405400C9D250 /* LayoutExecutant.cpp in Sources */,
 				5032F0DB17E3405400C9D250 /* LayoutParameter.cpp in Sources */,
 				5032F0DF17E3405400C9D250 /* UILayoutDefine.cpp in Sources */,
 				5032F0E317E3405400C9D250 /* CocosGUI.cpp in Sources */,
@@ -8686,7 +8675,6 @@
 				5032F0CC17E3405400C9D250 /* UIRootWidget.cpp in Sources */,
 				5032F0D017E3405400C9D250 /* UIWidget.cpp in Sources */,
 				5032F0D417E3405400C9D250 /* Layout.cpp in Sources */,
-				5032F0D817E3405400C9D250 /* LayoutExecutant.cpp in Sources */,
 				5032F0DC17E3405400C9D250 /* LayoutParameter.cpp in Sources */,
 				5032F0E017E3405400C9D250 /* UILayoutDefine.cpp in Sources */,
 				5032F0E417E3405400C9D250 /* CocosGUI.cpp in Sources */,
