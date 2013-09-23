@@ -14,6 +14,7 @@ using namespace Windows::UI::Core;
 using namespace Windows::System;
 using namespace Windows::Foundation;
 using namespace Windows::Graphics::Display;
+using namespace Windows::Phone::UI::Input;
 using namespace concurrency;
 USING_NS_CC;
 
@@ -97,7 +98,13 @@ void HelloCpp::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 
 void HelloCpp::OnActivated(CoreApplicationView^ applicationView, IActivatedEventArgs^ args)
 {
+	HardwareButtons::BackPressed += ref new EventHandler<BackPressedEventArgs^>(this, &HelloCpp::OnBackButtonPressed);   
 	CoreWindow::GetForCurrentThread()->Activate();
+}
+
+void HelloCpp::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ args)
+{
+    // Leave args->Handled set to false and the app will quit when user presses the back button on the phone
 }
 
 void HelloCpp::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)

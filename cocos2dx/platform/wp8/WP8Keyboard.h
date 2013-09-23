@@ -22,23 +22,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __ModalLayer_WP8_H__
-#define __ModalLayer_WP8_H__
+#ifndef __WP8_KEYBOARD_H__
+#define __WP8_KEYBOARD_H__
 
-#include "cocos2d.h"
+NS_CC_BEGIN
 
-class ModalLayer : public cocos2d::CCLayer
+ref class WP8Keyboard sealed
 {
 public:
-	~ModalLayer();
-    virtual bool init();
-    void setMessage(const char* pszMsg);
-    void menuCloseCallback(CCObject* pSender);
-    virtual bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
-    CREATE_FUNC(ModalLayer);
+	WP8Keyboard(Windows::UI::Core::CoreWindow^ parentWindow);
+
+    void SetFocus(bool hasFocus);
+
+	property bool HasFocus
+    {
+        bool get() { return m_hasFocus; }
+    }
+
+protected:
+	void OnKeyDown(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
+    void OnCharacterReceived(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CharacterReceivedEventArgs^ args);
+	void ShowKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
+	void HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
 
 private:
-	CCNode* m_frame;
+    ~WP8Keyboard();
+    Platform::Agile<Windows::UI::Core::CoreWindow> m_parentWindow;
+	Windows::Phone::UI::Core::KeyboardInputBuffer^ m_inputBuffer;
+	Windows::Foundation::EventRegistrationToken m_keydownToken;
+	Windows::Foundation::EventRegistrationToken m_characterReceivedToken;
+	Windows::Foundation::EventRegistrationToken m_showKeyboardToken;
+	Windows::Foundation::EventRegistrationToken m_hideKeyboardToken;
+
+	bool m_hasFocus;
+
+	Windows::Phone::UI::Core::CoreInputScope m_inputScope;
 };
 
-#endif    // end of __ModalLayer_WP8_H__
+NS_CC_END
+
+#endif    // end of __WP8_KEYBOARD_H__

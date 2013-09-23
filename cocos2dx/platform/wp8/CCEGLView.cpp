@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 cocos2d-x.org
 Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "support/CCPointExtension.h"
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
+#include "WP8Keyboard.h"
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -48,151 +49,13 @@ using namespace Windows::UI::ViewManagement;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::ApplicationModel::Activation;
+using namespace Windows::Phone::UI::Core;
+using namespace Platform;
+
 
 NS_CC_BEGIN
 
 static CCEGLView* s_pEglView = NULL;
-
-
-#if 0
-CCPoint DirectXView::GetCCPoint(PointerEventArgs^ args) {
-
-	auto p = TransformToOrientation(args->CurrentPoint->Position);
-	float x = getScaledDPIValue(p.X);
-	float y = getScaledDPIValue(p.Y);
-    CCPoint pt(x, y);
-
-	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
-
-	if(zoomFactor > 0.0f) {
-		pt.x /= zoomFactor;
-		pt.y /= zoomFactor;
-	}
-	return pt;
-}
-
-void DirectXView::ShowKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
-{
-    CCEGLView::sharedOpenGLView()->ShowKeyboard(args->OccludedRect);
-}
-
-void DirectXView::HideKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
-{
-    CCEGLView::sharedOpenGLView()->HideKeyboard(args->OccludedRect);
-}
-
-void DirectXView::setIMEKeyboardState(bool bOpen)
-{
-	m_textInputEnabled = bOpen;
-	if(m_textInputEnabled)
-	{
-#if !defined(WINAPI_PARTITION_PHONE)
-		m_textBox->IsEnabled = true;
-		m_textBox->Focus(FocusState::Pointer);
-#endif	
-	}
-	else
-	{
-#if !defined(WINAPI_PARTITION_PHONE)
-		m_dummy->Focus(FocusState::Pointer);
-		m_textBox->IsEnabled = false;
-#endif	
-	}
-}
-
-
-#if !defined(WINAPI_PARTITION_PHONE)
-
-void DirectXView::OnTextKeyDown(Object^ sender, KeyRoutedEventArgs^ args)
-{
-	if(!m_textInputEnabled)
-	{
-		return;
-	}
-
-    auto key = args->Key;
-
-    switch(key)
-    {
-    default:
-        break;
-    }
-}
-
-void DirectXView::OnTextKeyUp(Object^ sender, KeyRoutedEventArgs^ args)
-{
-	if(!m_textInputEnabled)
-	{
-		return;
-	}
-
-	args->Handled = true;
-
-    auto key = args->Key;
-
-    switch(key)
-    {
-    case VirtualKey::Escape:
-        CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
-		args->Handled = true;
-        break;
-	case VirtualKey::Back:
-        CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
-        break;
-    case VirtualKey::Enter:
-		setIMEKeyboardState(false);
-        CCIMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
-        break;
-    default:
-        char szUtf8[8] = {0};
-        int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)m_textBox->Text->Data(), 1, szUtf8, sizeof(szUtf8), NULL, NULL);
-        CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
-        break;
-    }	
-	m_textBox->Text = "";
-}
-#endif
-
-
-void DirectXView::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
-{
-    // Phone applications operate in a memory-constrained environment, so when entering
-    // the background it is a good idea to free memory-intensive objects that will be
-    // easy to restore upon reactivation. The swapchain and backbuffer are good candidates
-    // here, as they consume a large amount of memory and can be reinitialized quickly.
-    m_swapChain = nullptr;
-    m_renderTargetView = nullptr;
-    m_depthStencilView = nullptr;
-}
-
-void DirectXView::OnWindowSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
-{
-	ResizeWindow();
-	CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
-}
-
-void DirectXView::OnLogicalDpiChanged(Object^ sender)
-{
-	//SetDpi(DisplayProperties::LogicalDpi);
-}
-
-void DirectXView::OnOrientationChanged(Object^ sender)
-{
-	ResizeWindow();
-	CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
-}
-
-void DirectXView::OnDisplayContentsInvalidated(Object^ sender)
-{
-	CCEGLView::sharedOpenGLView()->ValidateDevice();
-}
-
-void DirectXView::OnRendering(Object^ sender, Object^ args)
-{
-	CCEGLView::sharedOpenGLView()->OnRendering();
-}
-#endif
-
 
 CCEGLView::CCEGLView()
 	: m_window(nullptr)
@@ -201,11 +64,13 @@ CCEGLView::CCEGLView()
 	, m_lastPointValid(false)
 	, m_running(false)
 	, m_initialized(false)
+    , m_textInputEnabled(false)
 	, m_windowClosed(false)
 	, m_windowVisible(true)
+    , mKeyboard(nullptr)
 {
 	s_pEglView = this;
-    strcpy(m_szViewName, "Cocos2dxWP8");
+    strcpy_s(m_szViewName, "Cocos2dxWP8");
 }
 
 CCEGLView::~CCEGLView()
@@ -216,22 +81,11 @@ CCEGLView::~CCEGLView()
 	// TODO: cleanup 
 }
 
-#if defined(WINAPI_PARTITION_PHONE)
 bool CCEGLView::Create(CoreWindow^ window)
-#else
-bool CCEGLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
-#endif
 {
     bool bRet = false;
 	m_window = window;
-
 	m_bSupportTouch = true;
-
-#if 0
-	bool done = false;
-	while(!done) {};  
-#endif // 0
-
 
  	esInitContext ( &m_esContext );
 	m_esContext.hWnd = WINRT_EGL_WINDOW(window);
@@ -245,6 +99,15 @@ bool CCEGLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
 		DisplayOrientations::PortraitFlipped;
 	m_initialized = true;
     return bRet;
+}
+
+void CCEGLView::setIMEKeyboardState(bool bOpen)
+{
+	m_textInputEnabled = bOpen;
+    if(!mKeyboard)
+        mKeyboard = ref new WP8Keyboard(m_window.Get());
+
+    mKeyboard->SetFocus(m_textInputEnabled);
 }
 
 void CCEGLView::swapBuffers()
@@ -331,10 +194,7 @@ void CCEGLView::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 }
 
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
-{
 
-}
 
 void CCEGLView::resize(int width, int height)
 {
@@ -395,13 +255,12 @@ void CCEGLView::OnRendering()
 	if(m_running && m_initialized)
 	{
 		CCDirector::sharedDirector()->mainLoop();
-		// TODO: fix audio
-		// CocosDenshion::SimpleAudioEngine::sharedEngine()->render();
 	}
 }
 
 void CCEGLView::HideKeyboard(Rect r)
 {
+    return; // not yet implemented
 	int height = m_keyboardRect.Height;
 	float factor = m_fScaleY / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
@@ -419,6 +278,7 @@ void CCEGLView::HideKeyboard(Rect r)
 
 void CCEGLView::ShowKeyboard(Rect r)
 {
+    return; // not yet implemented
 	int height = r.Height;
 	float factor = m_fScaleY / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
@@ -460,6 +320,24 @@ CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 	return pt;
 }
 
+
+#if 0
+CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
+
+	auto p = TransformToOrientation(args->CurrentPoint->Position);
+	float x = getScaledDPIValue(p.X);
+	float y = getScaledDPIValue(p.Y);
+    CCPoint pt(x, y);
+
+	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
+
+	if(zoomFactor > 0.0f) {
+		pt.x /= zoomFactor;
+		pt.y /= zoomFactor;
+	}
+	return pt;
+}
+#endif
 
 
 

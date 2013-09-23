@@ -3596,7 +3596,6 @@
     <None Include="..\Resources\**\*.*" />
     <None Include="..\Resources\**\*.*" />
     <None Include="..\Resources\**\*.*" />
-    <None Include="..\Resources\**\*.*" />
     <None Include="Assets\Resources\animations\animations.plist">
       <Filter>Assets\Resources\animations</Filter>
     </None>
