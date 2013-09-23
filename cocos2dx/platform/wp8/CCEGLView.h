@@ -40,12 +40,12 @@ THE SOFTWARE.
 #include <DirectXMath.h>
 
 #include "esUtil.h"
-#include "WP8Keyboard.h"
 
 NS_CC_BEGIN
 
 class CCEGL;
 class CCEGLView;
+ref class WP8Keyboard;
 
 class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
