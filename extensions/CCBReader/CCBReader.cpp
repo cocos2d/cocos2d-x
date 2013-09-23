@@ -109,6 +109,7 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
     this->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
     this->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
     this->mOwnerOutletNodes->retain();
+    this->mCCBRootPath = pCCBReader->getCCBRootPath();
     init();
 }
 
@@ -141,7 +142,7 @@ CCBReader::~CCBReader() {
     mOwnerOutletNames.clear();
     CC_SAFE_RELEASE(mOwnerCallbackNodes);
     mOwnerCallbackNames.clear();
-
+    CC_SAFE_RELEASE(mOwnerOwnerCallbackControlEvents);
     // Clear string cache.
 
     this->mStringCache.clear();
@@ -164,6 +165,7 @@ const std::string& CCBReader::getCCBRootPath() const
 
 bool CCBReader::init()
 {
+    mOwnerOwnerCallbackControlEvents = new CCArray();
     // Setup action manager
     CCBAnimationManager *pActionManager = new CCBAnimationManager();
     setAnimationManager(pActionManager);
@@ -990,6 +992,10 @@ void CCBReader::addOwnerCallbackNode(CCNode *node) {
     mOwnerCallbackNodes->addObject(node);
 }
 
+void CCBReader::addOwnerCallbackControlEvents(CCControlEvent type)
+{
+    mOwnerOwnerCallbackControlEvents->addObject(CCInteger::create((int)type));
+}
 
 void CCBReader::addDocumentCallbackName(std::string name) {
     mActionManager->addDocumentCallbackName(name);
@@ -999,6 +1005,10 @@ void CCBReader::addDocumentCallbackNode(CCNode *node) {
     mActionManager->addDocumentCallbackNode(node);
 }
 
+void CCBReader::addDocumentCallbackControlEvents(CCControlEvent eventType)
+{
+    mActionManager->addDocumentCallbackControlEvents(eventType);
+}
 
 CCArray* CCBReader::getOwnerCallbackNames() {
     CCArray* pRet = CCArray::createWithCapacity(mOwnerCallbackNames.size());
@@ -1013,6 +1023,11 @@ CCArray* CCBReader::getOwnerCallbackNames() {
 
 CCArray* CCBReader::getOwnerCallbackNodes() {
     return mOwnerCallbackNodes;
+}
+
+CCArray* CCBReader::getOwnerCallbackControlEvents()
+{
+    return mOwnerOwnerCallbackControlEvents;
 }
 
 CCArray* CCBReader::getOwnerOutletNames() {
