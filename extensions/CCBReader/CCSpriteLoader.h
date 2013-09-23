@@ -7,7 +7,10 @@ NS_CC_EXT_BEGIN
 
 /* Forward declaration. */
 class CCBReader;
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCSpriteLoader : public CCNodeLoader {
     public:
         virtual ~CCSpriteLoader() {};

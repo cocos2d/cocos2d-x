@@ -32,7 +32,10 @@
 #define DICTOOL DictionaryHelper::shareHelper()
 
 NS_CC_EXT_BEGIN
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class DictionaryHelper
 {
 public:

@@ -34,7 +34,9 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 class CCArmature;
-
+/**
+*   @lua NA
+*/
 class CCBone : public CCNodeRGBA
 {
 public:

@@ -39,6 +39,9 @@ NS_CC_BEGIN
 // for CCPoint assignement operator and copy constructor
 class CC_DLL CCSize;
 
+/**
+ * @js NA
+ */
 class CC_DLL CCPoint
 {
 public:
@@ -48,34 +51,67 @@ public:
 public:
     CCPoint();
     CCPoint(float x, float y);
+    /**
+     * @lua NA
+     */
     CCPoint(const CCPoint& other);
+    /**
+     * @lua NA
+     */
     CCPoint(const CCSize& size);
+    /**
+     * @lua NA
+     */
     CCPoint& operator= (const CCPoint& other);
+    /**
+     * @lua NA
+     */
     CCPoint& operator= (const CCSize& size);
+    /**
+     * @lua NA
+     */
     CCPoint operator+(const CCPoint& right) const;
+    /**
+     * @lua NA
+     */
     CCPoint operator-(const CCPoint& right) const;
+    /**
+     * @lua NA
+     */
     CCPoint operator-() const;
+    /**
+     * @lua NA
+     */
     CCPoint operator*(float a) const;
+    /**
+     * @lua NA
+     */
     CCPoint operator/(float a) const;
+    /**
+     * @lua NA
+     */
     void setPoint(float x, float y);
     bool equals(const CCPoint& target) const;
     
     /** @returns if points have fuzzy equality which means equal with some degree of variance.
-     @since v2.1.4
+     * @since v2.1.4
+     * @lua NA
      */
     bool fuzzyEquals(const CCPoint& target, float variance) const;
 
     /** Calculates distance between point an origin
-     @return float
-     @since v2.1.4
+     * @return float
+     * @since v2.1.4
+     * @lua NA
      */
     inline float getLength() const {
         return sqrtf(x*x + y*y);
     };
 
     /** Calculates the square length of a CCPoint (not calling sqrt() )
-     @return float
-     @since v2.1.4
+     * @return float
+     * @since v2.1.4
+     * @lua NA
      */
     inline float getLengthSq() const {
         return dot(*this); //x*x + y*y;
@@ -203,6 +239,9 @@ public:
     }
 };
 
+/**
+ * @js NA
+ */
 class CC_DLL CCSize
 {
 public:
@@ -212,18 +251,51 @@ public:
 public:
     CCSize();
     CCSize(float width, float height);
+    /**
+     * @lua NA
+     */
     CCSize(const CCSize& other);
+    /**
+     * @lua NA
+     */
     CCSize(const CCPoint& point);
+    /**
+     * @lua NA
+     */
     CCSize& operator= (const CCSize& other);
+    /**
+     * @lua NA
+     */
     CCSize& operator= (const CCPoint& point);
+    /**
+     * @lua NA
+     */
     CCSize operator+(const CCSize& right) const;
+    /**
+     * @lua NA
+     */
     CCSize operator-(const CCSize& right) const;
+    /**
+     * @lua NA
+     */
     CCSize operator*(float a) const;
+    /**
+     * @lua NA
+     */
     CCSize operator/(float a) const;
+    /**
+     * @lua NA
+     */
     void setSize(float width, float height);
+    /**
+     * @lua NA
+     */
     bool equals(const CCSize& target) const;
 };
 
+/**
+ * @js NA
+ */
 class CC_DLL CCRect
 {
 public:
@@ -233,7 +305,13 @@ public:
 public:
     CCRect();
     CCRect(float x, float y, float width, float height);
+    /**
+     * @lua NA
+     */
     CCRect(const CCRect& other);
+    /**
+     * @lua NA
+     */
     CCRect& operator= (const CCRect& other);
     void setRect(float x, float y, float width, float height);
     float getMinX() const; /// return the leftmost x-value of current rect
