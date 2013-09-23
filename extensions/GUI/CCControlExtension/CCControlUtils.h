@@ -61,7 +61,10 @@ typedef struct
  * @{
  */
 
-//helper class to store ccColor3B's in mutable arrays
+/**helper class to store ccColor3B's in mutable arrays
+ * @js NA
+ * @lua NA
+ **/
 class CCColor3bObject : public CCObject
 {
 public:

@@ -74,10 +74,19 @@ protected:
     CC_PROPERTY(ccV3F_C4B_T2F_Quad *, m_pQuads, Quads)
 
 public:
-
+    /**
+     * @js ctor
+     */
     CCTextureAtlas();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTextureAtlas();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     const char* description();
 
     /** creates a TextureAtlas with an filename and with an initial capacity for Quads.

@@ -30,7 +30,10 @@ THE SOFTWARE.
 #include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCComRender : public cocos2d::CCComponent
 {
 protected:

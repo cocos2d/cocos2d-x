@@ -44,6 +44,8 @@ class CCProfilingTimer;
  cocos2d builtin profiler.
 
  To use it, enable set the CC_ENABLE_PROFILERS=1 in the ccConfig.h file
+ *@js NA
+ *@lua NA
  */
 
 class CC_DLL CCProfiler : public CCObject
@@ -65,7 +67,10 @@ public:
 
     CCDictionary* m_pActiveTimers;
 };
-
+/**
+ *@js NA
+ *@lua NA
+ */
 class CCProfilingTimer : public CCObject
 {
 public:
