@@ -208,6 +208,8 @@
 		1AAF0C0F169829F200C5F611 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF0C01169829E200C5F611 /* jsb.js */; };
 		1AAF0C1516982A0000C5F611 /* js_bindings_system_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF0C1116982A0000C5F611 /* js_bindings_system_functions.cpp */; };
 		1AAF0C1616982A0000C5F611 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF0C1316982A0000C5F611 /* js_bindings_system_registration.cpp */; };
+		1AF2872C17F011EB00642436 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2872B17F011EA00642436 /* jsb_deprecated.js */; };
+		1AF2872D17F011F900642436 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2872B17F011EA00642436 /* jsb_deprecated.js */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
 		A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275431517C094001B78AA /* OpenGLES.framework */; };
 		A92275461517C094001B78AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; };
@@ -615,6 +617,7 @@
 		1AAF0C1216982A0000C5F611 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
 		1AAF0C1316982A0000C5F611 /* js_bindings_system_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_registration.cpp; sourceTree = "<group>"; };
 		1AAF0C1416982A0000C5F611 /* js_bindings_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_registration.h; sourceTree = "<group>"; };
+		1AF2872B17F011EA00642436 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* WatermelonWithMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatermelonWithMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -757,16 +760,17 @@
 		15A3D5861682F3BC002FB0C5 /* js */ = {
 			isa = PBXGroup;
 			children = (
-				1A3F8836170A80BA000159E1 /* jsb_opengl_constants.js */,
-				1AA51AE016F715C9000FDF05 /* jsb_chipmunk_constants.js */,
-				1AA51ADC16F714D2000FDF05 /* jsb_cocos2d_constants.js */,
 				1AAF0C01169829E200C5F611 /* jsb.js */,
 				1AAF0BFB169829E200C5F611 /* jsb_chipmunk.js */,
+				1AA51AE016F715C9000FDF05 /* jsb_chipmunk_constants.js */,
 				1AAF0BFC169829E200C5F611 /* jsb_cocos2d.js */,
+				1AA51ADC16F714D2000FDF05 /* jsb_cocos2d_constants.js */,
 				1A0B931F16EDC8870062524A /* jsb_cocos2d_extension.js */,
 				1AAF0BFD169829E200C5F611 /* jsb_cocosbuilder.js */,
 				1AAF0BFE169829E200C5F611 /* jsb_debugger.js */,
+				1AF2872B17F011EA00642436 /* jsb_deprecated.js */,
 				1AAF0BFF169829E200C5F611 /* jsb_opengl.js */,
+				1A3F8836170A80BA000159E1 /* jsb_opengl_constants.js */,
 				1AAF0C00169829E200C5F611 /* jsb_sys.js */,
 			);
 			path = js;
@@ -1502,6 +1506,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AF2872D17F011F900642436 /* jsb_deprecated.js in Resources */,
 				1A3F8838170A80C8000159E1 /* jsb_opengl_constants.js in Resources */,
 				1AA51AE216F715D2000FDF05 /* jsb_chipmunk_constants.js in Resources */,
 				1AA51ADE16F714DC000FDF05 /* jsb_cocos2d_constants.js in Resources */,
@@ -1717,6 +1722,7 @@
 				1A36F85E17EFED6D000D0275 /* json_value.cpp in Sources */,
 				1A36F86017EFED6D000D0275 /* json_writer.cpp in Sources */,
 				1A36F86217EFED6D000D0275 /* CCSGUIReader.cpp in Sources */,
+				1AF2872C17F011EB00642436 /* jsb_deprecated.js in Sources */,
 				1A36F86317EFED6D000D0275 /* CCSSceneReader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
