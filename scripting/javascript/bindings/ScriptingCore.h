@@ -231,7 +231,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
 jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );
 jsval long_long_to_jsval(JSContext* cx, long long v);
-jsval std_string_to_jsval(JSContext* cx, string& v);
+jsval std_string_to_jsval(JSContext* cx, const string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
 jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v);
 jsval ccrect_to_jsval(JSContext* cx, CCRect& v);
