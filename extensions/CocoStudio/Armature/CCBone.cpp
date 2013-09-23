@@ -165,6 +165,13 @@ void Bone::update(float delta)
     if (_parentBone)
         _boneTransformDirty = _boneTransformDirty || _parentBone->isTransformDirty();
 
+    CCBone *armatureParentBone = _armature->getParentBone();
+    if (armatureParentBone && !_boneTransformDirty)
+    {
+        _boneTransformDirty = armatureParentBone->isTransformDirty();
+    }
+
+
     if (_boneTransformDirty)
     {
         if (_armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
@@ -181,6 +188,13 @@ void Bone::update(float delta)
         if(_parentBone)
         {
             _worldTransform = AffineTransformConcat(_worldTransform, _parentBone->_worldTransform);
+        }
+        else
+        {
+            if (armatureParentBone)
+            {
+                _worldTransform = CCAffineTransformConcat(_worldTransform, armatureParentBone->getNodeToArmatureTransform());
+            }
         }
     }
 
@@ -211,15 +225,15 @@ void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
     updateColor();
 }
 
-void Bone::setColor(const Color3B& color)
+void Bone::setColor(const Color3B &color)
 {
     CCNodeRGBA::setColor(color);
-	updateColor();
+    updateColor();
 }
 void Bone::setOpacity(GLubyte opacity)
 {
     CCNodeRGBA::setOpacity(opacity);
-	updateColor();
+    updateColor();
 }
 
 void Bone::updateColor()

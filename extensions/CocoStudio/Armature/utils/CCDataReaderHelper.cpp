@@ -136,7 +136,7 @@ static const char *CONFIG_FILE_PATH = "config_file_path";
 NS_CC_EXT_ARMATURE_BEGIN
 
 
-	std::vector<std::string> s_arrConfigFileList;
+std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
 static float s_CocoStudioVersion = VERSION_COMBINED;
@@ -169,8 +169,8 @@ void DataReaderHelper::loadData()
             }
             else
             {
-				std::unique_lock<std::mutex> lk(_sleepMutex);
-				_sleepCondition.wait(lk);
+                std::unique_lock<std::mutex> lk(_sleepMutex);
+                _sleepCondition.wait(lk);
                 continue;
             }
         }
@@ -243,12 +243,12 @@ void DataReaderHelper::clear()
 }
 
 DataReaderHelper::DataReaderHelper()
-	: _loadingThread(nullptr)
-	, _asyncStructQueue(nullptr)
-	, _dataQueue(nullptr)
-	, need_quit(false)
-	, _asyncRefCount(0)
-	, _asyncRefTotalCount(0)
+    : _loadingThread(nullptr)
+    , _asyncStructQueue(nullptr)
+    , _dataQueue(nullptr)
+    , need_quit(false)
+    , _asyncRefCount(0)
+    , _asyncRefTotalCount(0)
 {
 
 }
@@ -257,11 +257,11 @@ DataReaderHelper::~DataReaderHelper()
 {
     need_quit = true;
 
-	_sleepCondition.notify_one();
-	if (_loadingThread) _loadingThread->join();
+    _sleepCondition.notify_one();
+    if (_loadingThread) _loadingThread->join();
 
-	CC_SAFE_DELETE(_loadingThread);
-	_dataReaderHelper = NULL;
+    CC_SAFE_DELETE(_loadingThread);
+    _dataReaderHelper = NULL;
 }
 
 void DataReaderHelper::addDataFromFile(const char *filePath)
@@ -354,15 +354,15 @@ void DataReaderHelper::addDataFromFileAsync(const char *filePath, Object *target
         _asyncStructQueue = new std::queue<AsyncStruct *>();
         _dataQueue = new std::queue<DataInfo *>();
 
-		// create a new thread to load images
-		_loadingThread = new std::thread(&DataReaderHelper::loadData, this);
+        // create a new thread to load images
+        _loadingThread = new std::thread(&DataReaderHelper::loadData, this);
 
         need_quit = false;
     }
 
     if (0 == _asyncRefCount)
     {
-		Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this, 0, false);
+        Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this, 0, false);
     }
 
     ++_asyncRefCount;
@@ -854,26 +854,26 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
     }
 
 
-	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-	CCFrameData **frames = (CCFrameData **)movBoneData->frameList.data->arr;
-	for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
-	{
-		if (i > 0)
-		{
-			float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
-			float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+    //! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
+    CCFrameData **frames = (CCFrameData **)movBoneData->frameList.data->arr;
+    for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
+    {
+        if (i > 0)
+        {
+            float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
+            float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
 
-			if (difSkewX < -M_PI || difSkewX > M_PI)
-			{
-				frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
-			}
+            if (difSkewX < -M_PI || difSkewX > M_PI)
+            {
+                frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+            }
 
-			if (difSkewY < -M_PI || difSkewY > M_PI)
-			{
-				frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
-			}
-		}
-	}
+            if (difSkewY < -M_PI || difSkewY > M_PI)
+            {
+                frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+            }
+        }
+    }
 
 
     //
@@ -1429,29 +1429,29 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(cs::JsonDictionary &json)
     }
 
 
-	if (s_CocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
-	{
-		//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-		CCFrameData **frames = (CCFrameData **)movementBoneData->frameList.data->arr;
-		for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
-		{
-			if (i > 0)
-			{
-				float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
-				float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+    if (s_CocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
+    {
+        //! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
+        CCFrameData **frames = (CCFrameData **)movementBoneData->frameList.data->arr;
+        for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
+        {
+            if (i > 0)
+            {
+                float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
+                float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
 
-				if (difSkewX < -M_PI || difSkewX > M_PI)
-				{
-					frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
-				}
+                if (difSkewX < -M_PI || difSkewX > M_PI)
+                {
+                    frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+                }
 
-				if (difSkewY < -M_PI || difSkewY > M_PI)
-				{
-					frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
-				}
-			}
-		}
-	}
+                if (difSkewY < -M_PI || difSkewY > M_PI)
+                {
+                    frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+                }
+            }
+        }
+    }
 
     if (s_CocoStudioVersion < VERSION_COMBINED)
     {
@@ -1478,7 +1478,7 @@ FrameData *DataReaderHelper::decodeFrame(cs::JsonDictionary &json)
     frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
     frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
     frameData->blendType = (BlendType)json.getItemIntValue(A_BLEND_TYPE, 0);
-	frameData->isTween = (bool)json.getItemBoolvalue(A_TWEEN_FRAME, true);
+    frameData->isTween = (bool)json.getItemBoolvalue(A_TWEEN_FRAME, true);
 
     const char *event = json.getItemStringValue(A_EVENT);
     if (event != NULL)
@@ -1531,7 +1531,7 @@ TextureData *DataReaderHelper::decodeTexture(cs::JsonDictionary &json)
 ContourData *DataReaderHelper::decodeContour(cs::JsonDictionary &json)
 {
     ContourData *contourData = new ContourData();
-	contourData->init();
+    contourData->init();
 
     int length = json.getArrayItemCount(VERTEX_POINT);
     for (int i = length - 1; i >= 0; i--)
