@@ -135,6 +135,7 @@ void DisplayManager::addDisplay(Node *display, int index)
         if (SpriteDisplayData *spriteDisplayData = (SpriteDisplayData *)decoDisplay->getDisplayData())
         {
             skin->setSkinData(spriteDisplayData->skinData);
+            ((CCSpriteDisplayData *)displayData)->skinData = spriteDisplayData->skinData;
         }
         else
         {
@@ -256,8 +257,8 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 
         if (RGBAProtocol *rgbaProtocaol = dynamic_cast<RGBAProtocol *>(_displayRenderNode))
         {
-			rgbaProtocaol->setColor(_bone->getDisplayedColor());
-			rgbaProtocaol->setOpacity(_bone->getDisplayedOpacity());
+            rgbaProtocaol->setColor(_bone->getDisplayedColor());
+            rgbaProtocaol->setOpacity(_bone->getDisplayedOpacity());
         }
 
         _displayRenderNode->retain();

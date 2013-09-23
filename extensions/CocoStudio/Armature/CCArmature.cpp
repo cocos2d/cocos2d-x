@@ -261,18 +261,12 @@ void Armature::addBone(Bone *bone, const char *parentName)
         }
         else
         {
-            if (_parentBone)
-                _parentBone->addChildBone(bone);
-            else
-                _topBoneList->addObject(bone);
+            _topBoneList->addObject(bone);
         }
     }
     else
     {
-        if (_parentBone)
-            _parentBone->addChildBone(bone);
-        else
-            _topBoneList->addObject(bone);
+        _topBoneList->addObject(bone);
     }
 
     bone->setArmature(this);
@@ -338,7 +332,7 @@ Dictionary *Armature::getBoneDic()
     return _boneDic;
 }
 
-const AffineTransform& Armature::getNodeToParentTransform() const
+const AffineTransform &Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
@@ -387,16 +381,16 @@ const AffineTransform& Armature::getNodeToParentTransform() const
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
         _transform = AffineTransformMake( cy * _scaleX,  sy * _scaleX,
-                                              -sx * _scaleY, cx * _scaleY,
-                                              x, y );
+                                          -sx * _scaleY, cx * _scaleY,
+                                          x, y );
 
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
             AffineTransform skewMatrix = AffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(_skewY)),
-                                           tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f,
-                                           0.0f, 0.0f );
+                                         tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f,
+                                         0.0f, 0.0f );
             _transform = AffineTransformConcat(skewMatrix, _transform);
 
             // adjust anchor point
@@ -452,7 +446,7 @@ void Armature::update(float dt)
     Object *object = NULL;
     CCARRAY_FOREACH(_topBoneList, object)
     {
-        static_cast<Bone*>(object)->update(dt);
+        static_cast<Bone *>(object)->update(dt);
     }
 
     _armatureTransformDirty = false;
@@ -523,6 +517,8 @@ void Armature::draw()
                     }
                 }
                 armature->draw();
+
+                _atlas = armature->getTextureAtlas();
             }
             break;
             default:
@@ -679,7 +675,7 @@ Bone *Armature::getBoneAtPoint(float x, float y)
 
     for(int i = length - 1; i >= 0; i--)
     {
-        bs = static_cast<Bone*>( _children->getObjectAtIndex(i) );
+        bs = static_cast<Bone *>( _children->getObjectAtIndex(i) );
         if(bs->getDisplayManager()->containPoint(x, y))
         {
             return bs;

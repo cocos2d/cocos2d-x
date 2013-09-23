@@ -84,10 +84,10 @@ bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 
     if (ret)
     {
-		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
-		setTextureAtlas(atlas);
+        TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
+        setTextureAtlas(atlas);
 
-		_displayName = pszSpriteFrameName;
+        _displayName = pszSpriteFrameName;
     }
 
     return ret;
@@ -99,10 +99,10 @@ bool Skin::initWithFile(const char *pszFilename)
 
     if (ret)
     {
-		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
-		setTextureAtlas(atlas);
+        TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
+        setTextureAtlas(atlas);
 
-		_displayName = pszFilename;
+        _displayName = pszFilename;
     }
 
     return ret;
@@ -118,6 +118,7 @@ void Skin::setSkinData(const BaseData &var)
     setPosition(Point(_skinData.x, _skinData.y));
 
     _skinTransform = getNodeToParentTransform();
+    updateArmatureTransform();
 }
 
 const BaseData &Skin::getSkinData() const
