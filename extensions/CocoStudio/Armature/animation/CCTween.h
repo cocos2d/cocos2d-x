@@ -33,7 +33,10 @@ NS_CC_EXT_BEGIN
 
 class CCBone;
 class CCArmatureAnimation;
-
+/**
+*   @js  NA
+*   @lua NA
+*/
 class  CCTween : public CCProcessBase
 {
 public:

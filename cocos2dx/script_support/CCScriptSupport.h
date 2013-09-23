@@ -50,7 +50,10 @@ enum ccScriptType {
     kScriptTypeLua,
     kScriptTypeJavascript
 };
-
+/**
+ * @js NA
+ * @lua NA
+ */
 class CCScriptHandlerEntry : public CCObject
 {
 public:
@@ -81,6 +84,8 @@ protected:
 /**
  * @addtogroup script_support
  * @{
+ * @js NA
+ * @lua NA
  */
 
 class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
@@ -122,7 +127,10 @@ private:
 };
 
 
-
+/**
+ * @js NA
+ * @lua NA
+ */
 class CCTouchScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
@@ -160,6 +168,10 @@ private:
 // Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
 // It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
 // So a crash will appear on Win32 if you click the close button.
+/**
+ * @js NA
+ * @lua NA
+ */
 class CC_DLL CCScriptEngineProtocol
 {
 public:
@@ -239,6 +251,8 @@ public:
  CCScriptEngineManager is a singleton which holds an object instance of CCScriptEngineProtocl
  It helps cocos2d-x and the user code to find back LuaEngine object
  @since v0.99.5-x-0.8.5
+ @js NA
+ @lua NA
  */
 class CC_DLL CCScriptEngineManager
 {

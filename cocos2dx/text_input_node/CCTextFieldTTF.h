@@ -36,6 +36,8 @@ class CCTextFieldTTF;
 /**
  * @addtogroup input
  * @{
+ * @js NA
+ * @lua NA
  */
 
 class CC_DLL CCTextFieldDelegate
@@ -93,11 +95,18 @@ public:
 
 /**
 @brief    A simple text input field with TTF font.
+@js NA
 */
 class CC_DLL CCTextFieldTTF : public CCLabelTTF, public CCIMEDelegate
 {
 public:
+    /**
+     *  @lua NA
+     */
     CCTextFieldTTF();
+    /**
+     *  @lua NA
+     */
     virtual ~CCTextFieldTTF();
 
     //char * description();
