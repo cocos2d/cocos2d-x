@@ -57,6 +57,17 @@ NS_CC_BEGIN
 
 static CCEGLView* s_pEglView = NULL;
 
+WP8Window::WP8Window(CoreWindow^ window)
+{
+	m_window = window;
+    DisplayProperties::OrientationChanged += ref new DisplayPropertiesEventHandler(this, &WP8Window::OnOrientationChanged);
+}
+
+void WP8Window::OnOrientationChanged(Platform::Object^ sender)
+{
+    CCEGLView::sharedOpenGLView()->OnOrientationChanged();
+}
+
 CCEGLView::CCEGLView()
 	: m_window(nullptr)
 	, m_fFrameZoomFactor(1.0f)
@@ -91,12 +102,9 @@ bool CCEGLView::Create(CoreWindow^ window)
 	m_esContext.hWnd = WINRT_EGL_WINDOW(window);
     esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
 
+    m_wp8Window = ref new WP8Window(window);
+    m_orientation = DisplayProperties::CurrentOrientation;
 	UpdateForWindowSizeChange();
-	DisplayProperties::AutoRotationPreferences = 
-		DisplayOrientations::Landscape | 
-		DisplayOrientations::LandscapeFlipped | 
-		DisplayOrientations::Portrait | 
-		DisplayOrientations::PortraitFlipped;
 	m_initialized = true;
     return bRet;
 }
@@ -128,6 +136,10 @@ void CCEGLView::end()
 }
 
 
+void CCEGLView::OnOrientationChanged()
+{
+    UpdateForWindowSizeChange();
+}
 
 void CCEGLView::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
 {
@@ -302,13 +314,65 @@ void CCEGLView::ValidateDevice()
 
 void CCEGLView::UpdateForWindowSizeChange()
 {
-	CCEGLViewProtocol::setFrameSize(ConvertDipsToPixels(m_window->Bounds.Width),ConvertDipsToPixels(m_window->Bounds.Height));
+    float width, height;
+
+    m_orientation = DisplayProperties::CurrentOrientation;
+    m_windowBounds = m_window->Bounds;
+
+    if(m_orientation == DisplayOrientations::Landscape || m_orientation == DisplayOrientations::LandscapeFlipped)
+    {
+        width = ConvertDipsToPixels(m_window->Bounds.Height);
+        height = ConvertDipsToPixels(m_window->Bounds.Width);
+    }
+    else
+    {
+        width = ConvertDipsToPixels(m_window->Bounds.Width);
+        height = ConvertDipsToPixels(m_window->Bounds.Height);
+    }
+
+    CCSize designSize = getDesignResolutionSize();
+    m_obScreenSize = CCSizeMake(width, height);
+    //CCDirector::sharedDirector()->reshapeProjection(m_obScreenSize);
+    setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+
 }
 
+
+Point CCEGLView::TransformToOrientation(Point point, bool dipsToPixels)
+{
+    Point returnValue;
+
+    switch (DisplayProperties::CurrentOrientation)
+    {
+    case DisplayOrientations::Portrait:
+        returnValue = point;
+        break;
+    case DisplayOrientations::Landscape:
+        returnValue = Point(point.Y, m_windowBounds.Width - point.X);
+        break;
+    case DisplayOrientations::PortraitFlipped:
+        returnValue = Point(m_windowBounds.Width - point.X, m_windowBounds.Height - point.Y);
+        break;
+    case DisplayOrientations::LandscapeFlipped:
+        returnValue = Point(m_windowBounds.Height -point.Y, point.X);
+        break;
+    default:
+        throw ref new Platform::FailureException();
+        break;
+    }
+
+    return dipsToPixels ? Point(ConvertDipsToPixels(returnValue.X),
+                                ConvertDipsToPixels(returnValue.Y)) 
+                        : returnValue;
+}
+
+#if 1
+
 CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
-	auto p = args->CurrentPoint;
-	float x = getScaledDPIValue(p->Position.X);
-	float y = getScaledDPIValue(p->Position.Y);
+
+	auto p = TransformToOrientation(args->CurrentPoint->Position, false);
+	float x = getScaledDPIValue(p.X);
+	float y = getScaledDPIValue(p.Y);
     CCPoint pt(x, y);
 
 	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
@@ -320,13 +384,11 @@ CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 	return pt;
 }
 
-
-#if 0
+#else
 CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
-
-	auto p = TransformToOrientation(args->CurrentPoint->Position);
-	float x = getScaledDPIValue(p.X);
-	float y = getScaledDPIValue(p.Y);
+	auto p = args->CurrentPoint;
+	float x = getScaledDPIValue(p->Position.X);
+	float y = getScaledDPIValue(p->Position.Y);
     CCPoint pt(x, y);
 
 	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
