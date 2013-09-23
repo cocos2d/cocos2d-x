@@ -47,7 +47,7 @@ _gEndColor(Color3B::WHITE),
 _alongVector(Point(0.0f, -1.0f)),
 _cOpacity(255),
 _backGroundImageTextureSize(Size::ZERO),
-_layoutType(LAYOUT_DEFAULT)
+_layoutType(LAYOUT_ABSOLUTE)
 {
     _widgetType = WidgetTypeContainer;
 }
@@ -420,7 +420,7 @@ void Layout::doLayout()
 {
     switch (_layoutType)
     {
-        case LAYOUT_DEFAULT:
+        case LAYOUT_ABSOLUTE:
             break;
         case LAYOUT_LINEAR_VERTICAL:
         {

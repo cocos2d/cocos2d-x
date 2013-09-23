@@ -198,7 +198,7 @@ public:
      *
      * @param LayoutType
      */
-    void setLayoutType(LayoutType type);
+    virtual void setLayoutType(LayoutType type);
     
     /**
      * Gets LayoutType.
@@ -207,7 +207,7 @@ public:
      *
      * @return LayoutType
      */
-    LayoutType getLayoutType() const;
+    virtual LayoutType getLayoutType() const;
     
     virtual void doLayout();
     
