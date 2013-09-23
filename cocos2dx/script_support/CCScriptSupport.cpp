@@ -49,10 +49,10 @@ CCScriptHandlerEntry* CCScriptHandlerEntry::create(int nHandler)
 
 CCScriptHandlerEntry::~CCScriptHandlerEntry(void)
 {
-	if (m_nHandler != NULL)
+	if (m_nHandler != 0)
 	{
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
-        m_nHandler = NULL;
+        m_nHandler = 0;
     }
 }
 
@@ -101,11 +101,11 @@ CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::create(int nHandler,
 
 CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
 {
-    if (m_nHandler != NULL)
+    if (m_nHandler != 0)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
         LUALOG("[LUA] Remove touch event handler: %d", m_nHandler);
-        m_nHandler = NULL;
+        m_nHandler = 0;
     }
 }
 
