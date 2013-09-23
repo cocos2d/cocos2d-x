@@ -38,7 +38,10 @@ typedef enum
 }LayoutType;
 
 class Layout;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class LayoutExecutant : public CCObject
 {
 public:
@@ -106,7 +109,10 @@ public:
     //To do layout.
     virtual void doLayout();
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class LinearHorizontalLayoutExecutant : public LayoutExecutant
 {
 public:
@@ -129,7 +135,10 @@ public:
     //To do layout.
     virtual void doLayout();
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class RelativeLayoutExecutant : public LayoutExecutant
 {
 public:

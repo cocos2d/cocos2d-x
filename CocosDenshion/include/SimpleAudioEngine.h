@@ -63,26 +63,36 @@ class EXPORT_DLL SimpleAudioEngine : public TypeInfo
 {
 public:
     SimpleAudioEngine();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~SimpleAudioEngine();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual long getClassTypeInfo() {
         return getHashCodeByString(typeid(CocosDenshion::SimpleAudioEngine).name());
     }
 
     /**
     @brief Get the shared Engine object,it will new one when first time be called
+    @js getInstance
     */
     static SimpleAudioEngine* sharedEngine();
 
     /**
     @brief Release the shared Engine object
     @warning It must be called before the application exit, or a memroy leak will be casued.
+    @lua NA
     */
     static void end();
 
     /**
      @brief Preload background music
      @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
+     @js preloadMusic
      */
     void preloadBackgroundMusic(const char* pszFilePath);
     
@@ -90,8 +100,12 @@ public:
     @brief Play background music
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
     @param bLoop Whether the background music loop or not
+    @js playMusic
     */
     void playBackgroundMusic(const char* pszFilePath, bool bLoop);
+    /**
+     @js playMusic
+     */
     void playBackgroundMusic(const char* pszFilePath) {
     	this->playBackgroundMusic(pszFilePath, false);
     }
@@ -99,44 +113,56 @@ public:
     /**
     @brief Stop playing background music
     @param bReleaseData If release the background music data or not.As default value is false
+    @js stopMusic
     */
     void stopBackgroundMusic(bool bReleaseData);
+    /**
+     @js stopMusic
+     */
     void stopBackgroundMusic() {
     	this->stopBackgroundMusic(false);
     }
 
     /**
     @brief Pause playing background music
+    @js pauseMusic
     */
     void pauseBackgroundMusic();
 
     /**
     @brief Resume playing background music
+    @js resumeMusic
     */
     void resumeBackgroundMusic();
 
     /**
     @brief Rewind playing background music
+    @js rewindMusic
     */
     void rewindBackgroundMusic();
-
+    /**
+     *  @js willPlayMusic
+     */
     bool willPlayBackgroundMusic();
 
     /**
     @brief Whether the background music is playing
     @return If is playing return true,or return false
+    @js isMusicPlaying
     */
     bool isBackgroundMusicPlaying();
 
     // properties
     /**
     @brief The volume of the background music max value is 1.0,the min value is 0.0
+    @js getMusicVolume
     */
     float getBackgroundMusicVolume();
 
     /**
     @brief set the volume of background music
     @param volume must be in 0.0~1.0
+    @js setMusicVolume
     */
     void setBackgroundMusicVolume(float volume);
 

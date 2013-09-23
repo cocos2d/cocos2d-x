@@ -33,7 +33,10 @@ NS_CC_EXT_BEGIN
 
 class CCBone;
 
-//! CCDisplayManager manages CCBone's display
+/**! CCDisplayManager manages CCBone's display
+*   @js NA
+*   @lua NA
+*/
 class  CCDisplayManager : public CCObject
 {
 public:

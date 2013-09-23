@@ -62,6 +62,9 @@ public:
     virtual void setVisible(bool visible);
     virtual void setContentSize(const CCSize& size);
 	virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    /**
+     *  @js NA
+     */
     virtual void visit(void);
 	virtual void onEnter(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);

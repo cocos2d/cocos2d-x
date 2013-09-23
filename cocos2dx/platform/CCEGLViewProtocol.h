@@ -38,24 +38,39 @@ class CCSet;
 /**
  * @addtogroup platform
  * @{
+ * @js NA
  */
 
 class CC_DLL CCEGLViewProtocol
 {
 public:
+    /**
+     * @lua NA
+     */
     CCEGLViewProtocol();
+    /**
+     * @lua NA
+     */
     virtual ~CCEGLViewProtocol();
 
-    /** Force destroying EGL view, subclass must implement this method. */
+    /** Force destroying EGL view, subclass must implement this method. 
+     * @lua NA
+     */
     virtual void    end() = 0;
 
-    /** Get whether opengl render system is ready, subclass must implement this method. */
+    /** Get whether opengl render system is ready, subclass must implement this method. 
+     * @lua NA
+     */
     virtual bool    isOpenGLReady() = 0;
 
-    /** Exchanges the front and back buffers, subclass must implement this method. */
+    /** Exchanges the front and back buffers, subclass must implement this method. 
+     * @lua NA
+     */
     virtual void    swapBuffers() = 0;
 
-    /** Open or close IME keyboard , subclass must implement this method. */
+    /** Open or close IME keyboard , subclass must implement this method. 
+     * @lua NA
+     */
     virtual void    setIMEKeyboardState(bool bOpen) = 0;
 
     /**
@@ -110,22 +125,39 @@ public:
 
     /**
      * Get whether GL_SCISSOR_TEST is enable
+     * @lua NA
      */
     virtual bool isScissorEnabled();
 
     /**
      * Get the current scissor rectangle
+     * @lua NA
      */
     virtual CCRect getScissorRect();
-
+    /**
+     * @lua NA
+     */
     virtual void setViewName(const char* pszViewName);
-
+    /**
+     * @lua NA
+     */
     const char* getViewName();
 
-    /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
+    /** Touch events are handled by default; if you want to customize your handlers, please override these functions: 
+     * @lua NA
+     */
     virtual void handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
+    /**
+     * @lua NA
+     */
     virtual void handleTouchesMove(int num, int ids[], float xs[], float ys[]);
+    /**
+     * @lua NA
+     */
     virtual void handleTouchesEnd(int num, int ids[], float xs[], float ys[]);
+    /**
+     * @lua NA
+     */
     virtual void handleTouchesCancel(int num, int ids[], float xs[], float ys[]);
 
     /**

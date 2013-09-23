@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
-
+/**
+ * @js NA
+ */
 class CC_DLL CCNotificationCenter : public CCObject
 {
 public:
@@ -111,6 +113,10 @@ private:
     int     m_scriptHandler;
 };
 
+/**
+ * @js NA
+ * @lua NA
+ */
 class CC_DLL CCNotificationObserver : public CCObject
 {
 public:
