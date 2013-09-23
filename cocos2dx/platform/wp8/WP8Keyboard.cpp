@@ -31,13 +31,41 @@ using namespace Windows::UI::Core;
 using namespace Windows::Phone::UI::Core;
 using namespace Windows::System;
 using namespace Platform;
-using namespace std;
+using namespace Windows::UI::ViewManagement;
+
+NS_CC_BEGIN
 
 WP8Keyboard::WP8Keyboard(CoreWindow^ parentWindow)
 {
 	m_parentWindow = parentWindow;
 	m_inputBuffer = ref new KeyboardInputBuffer();
+
+    auto inputPane = InputPane::GetForCurrentView();
+	m_showKeyboardToken = inputPane->Showing += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &WP8Keyboard::ShowKeyboard);
+	m_hideKeyboardToken = inputPane->Hiding += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &WP8Keyboard::HideKeyboard);
 }
+
+WP8Keyboard::~WP8Keyboard()
+{
+    auto inputPane = InputPane::GetForCurrentView();
+    if(inputPane)
+    {
+        inputPane->Showing -= m_showKeyboardToken;
+        inputPane->Hiding  -= m_hideKeyboardToken;
+    }
+}
+
+
+void WP8Keyboard::ShowKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
+{
+    CCEGLView::sharedOpenGLView()->ShowKeyboard(args->OccludedRect);
+}
+
+void WP8Keyboard::HideKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
+{
+    CCEGLView::sharedOpenGLView()->HideKeyboard(args->OccludedRect);
+}
+
 
 void WP8Keyboard::SetFocus(bool hasFocus)
 {
@@ -95,4 +123,4 @@ void WP8Keyboard::OnCharacterReceived(CoreWindow^ sender, CharacterReceivedEvent
     CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
 }
 
-
+NS_CC_END
