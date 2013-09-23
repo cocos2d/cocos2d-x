@@ -619,7 +619,7 @@ public:
         dataVal[1] = INT_TO_JSVAL(arg1);
         jsval jsRet;
 
-        ScriptingCore::getInstance()->executeJSFunctionWithThisObj(OBJECT_TO_JSVAL(_jsTarget), OBJECT_TO_JSVAL(_jsFunc), dataVal);
+        ScriptingCore::getInstance()->executeJSFunctionWithThisObj(OBJECT_TO_JSVAL(_jsTarget), OBJECT_TO_JSVAL(_jsFunc), 2,dataVal,&jsRet);
     }
 
     void setJSTarget(JSObject* pJSTarget)

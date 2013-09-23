@@ -926,7 +926,7 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
             int nCount = ownerCallbackNames->count();
             for (int i = 0 ; i < nCount; i++) {
                 pCCBReader->addOwnerCallbackName((dynamic_cast<CCString*>(ownerCallbackNames->objectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerCallbackNode(dynamic_cast<CCNode*>(ownerCallbackNames->objectAtIndex(i)) );
+                pCCBReader->addOwnerCallbackNode(dynamic_cast<CCNode*>(ownerCallbackNodes->objectAtIndex(i)) );
             }
         }
         //set variables
@@ -938,8 +938,8 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
             assert(ownerOutletNames->count() == ownerOutletNodes->count());
             int nCount = ownerOutletNames->count();
             for (int i = 0 ; i < nCount; i++) {
-                pCCBReader->addOwnerOutletName((dynamic_cast<CCString*>(ownerOutletNames->objectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerOutletNode(dynamic_cast<CCNode*>(ownerOutletNodes->objectAtIndex(i)) );
+                pCCBReader->addOwnerOutletName((static_cast<CCString*>(ownerOutletNames->objectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerOutletNode(static_cast<CCNode*>(ownerOutletNodes->objectAtIndex(i)) );
             }
         }
     }
