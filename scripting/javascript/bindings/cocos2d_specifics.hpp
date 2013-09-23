@@ -196,7 +196,7 @@ public:
     static void removeDelegateForJSObject(JSObject* pJSObj);
 
     void setJSObject(JSObject *obj);
-    void registerStandardDelegate();
+    void registerStandardDelegate(int priority);
     void registerTargetedDelegate(int priority, bool swallowsTouches);
 	// unregister touch delegate.
 	// Normally, developer should invoke cc.unregisterTouchDelegate() in when the scene exits.

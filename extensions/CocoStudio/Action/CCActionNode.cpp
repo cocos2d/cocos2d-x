@@ -56,17 +56,17 @@ ActionNode::~ActionNode()
 {
 	if (m_action == NULL)
 	{
-		CC_SAFE_RELEASE(m_actionSpawn);
+		CC_SAFE_RELEASE_NULL(m_actionSpawn);
 	}
 	else
 	{
-		CC_SAFE_RELEASE(m_action);
+		CC_SAFE_RELEASE_NULL(m_action);
 	}
 
 	if (m_FrameArray != NULL)
 	{
 		m_FrameArray->removeAllObjects();
-		CC_SAFE_RELEASE(m_FrameArray);
+		CC_SAFE_RELEASE_NULL(m_FrameArray);
 	}
 
 }
@@ -300,20 +300,23 @@ CCSpawn * ActionNode::refreshActionProperty()
 			}
 		}
 		CCSequence* cSequence = CCSequence::create(cSequenceArray);
-		cSpawnArray->addObject(cSequence);
+		if (cSequence != NULL)
+		{
+			cSpawnArray->addObject(cSequence);
+		}
 	}
 
 	if (m_action == NULL)
 	{
-		CC_SAFE_RELEASE(m_actionSpawn);
+		CC_SAFE_RELEASE_NULL(m_actionSpawn);
 	}
 	else
 	{
-		CC_SAFE_RELEASE(m_action);
+		CC_SAFE_RELEASE_NULL(m_action);
 	}
 
 	m_actionSpawn = CCSpawn::create(cSpawnArray);
-	m_actionSpawn->retain();
+	CC_SAFE_RETAIN(m_actionSpawn);
 	return m_actionSpawn;
 }
 
