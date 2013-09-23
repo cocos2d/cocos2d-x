@@ -49,10 +49,10 @@ ScriptHandlerEntry* ScriptHandlerEntry::create(int nHandler)
 
 ScriptHandlerEntry::~ScriptHandlerEntry(void)
 {
-    if (_handler != NULL )
+    if (_handler != 0 )
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
-        _handler = NULL;
+        _handler = 0;
     }
 }
 
@@ -101,11 +101,11 @@ TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int nHandler,
 
 TouchScriptHandlerEntry::~TouchScriptHandlerEntry(void)
 {
-	if (_handler != NULL )
+	if (_handler != 0 )
 	{
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
         LUALOG("[LUA] Remove touch event handler: %d", _handler);
-        _handler = NULL;
+        _handler = 0;
     }
 }
 
