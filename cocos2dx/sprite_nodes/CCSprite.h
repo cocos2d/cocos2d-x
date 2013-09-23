@@ -164,11 +164,14 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     CCSprite(void);
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~CCSprite(void);
     
@@ -241,6 +244,7 @@ public:
      *
      * @param   pszFilename The path to an image file in local file system
      * @return  true if the sprite is initialized properly, false otherwise.
+     * @js init
      */
     virtual bool initWithFile(const char *pszFilename);
     
@@ -254,6 +258,7 @@ public:
      * @param   pszFilename The path to an image file in local file system.
      * @param   rect        The rectangle assigned the content area from texture.
      * @return  true if the sprite is initialized properly, false otherwise.
+     * @js init
      */
     virtual bool initWithFile(const char *pszFilename, const CCRect& rect);
     
@@ -264,6 +269,9 @@ public:
     virtual void setTexture(CCTexture2D *texture);
     virtual CCTexture2D* getTexture(void);
     inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
+    /**
+     * @js NA
+     */
     inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
     /// @}
 
@@ -271,6 +279,9 @@ public:
     /// @name Functions inherited from CCNode
     virtual void setScaleX(float fScaleX);
     virtual void setScaleY(float fScaleY);
+    /**
+     * @lua NA
+     */
     virtual void setPosition(const CCPoint& pos);
     virtual void setRotation(float fRotation);
     virtual void setRotationX(float fRotationX);
@@ -376,6 +387,7 @@ public:
     
     /**
      * Returns the current displayed frame.
+     * @js NA
      */
     virtual CCSpriteFrame* displayFrame(void);
     
@@ -408,7 +420,8 @@ public:
     inline virtual void setDirty(bool bDirty) { m_bDirty = bDirty; }
     
     /**
-     * Returns the quad (tex coords, vertex coords and color) information. 
+     * Returns the quad (tex coords, vertex coords and color) information.
+     * @js NA
      */
     inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
 
@@ -458,6 +471,7 @@ public:
      * sprite->setScaleX(sprite->getScaleX() * -1);
      *
      * @return true if the sprite is flipped horizaontally, false otherwise.
+     * @js isFlippedX
      */
     bool isFlipX(void);
     /**
@@ -476,6 +490,7 @@ public:
      * sprite->setScaleY(sprite->getScaleY() * -1);
      * 
      * @return true if the sprite is flipped vertically, flase otherwise.
+     * @js isFlippedY
      */
     bool isFlipY(void);
     /**

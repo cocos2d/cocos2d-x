@@ -45,6 +45,8 @@ public:
 @brief 
 The CCAccelerometerDelegate defines a single method for
 receiving acceleration-related data from the system.
+@js NA
+@lua NA
 */
 class CC_DLL CCAccelerometerDelegate
 {

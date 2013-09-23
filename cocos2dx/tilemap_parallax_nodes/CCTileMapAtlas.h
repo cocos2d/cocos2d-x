@@ -59,7 +59,14 @@ class CC_DLL CCTileMapAtlas : public CCAtlasNode
     /** TileMap info */
     CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
 public:
+    /**
+     * @js ctor
+     */
     CCTileMapAtlas();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCTileMapAtlas();
     
     /** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
@@ -72,8 +79,9 @@ public:
     */
     bool initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
     /** returns a tile from position x,y.
-    For the moment only channel R is used
-    */
+     For the moment only channel R is used
+     @js getTileAt
+     */
     ccColor3B tileAt(const CCPoint& position);
     /** sets a tile at position x,y.
     For the moment only channel R is used
