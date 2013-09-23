@@ -26,7 +26,6 @@
 #define __LAYOUT_H__
 
 #include "../BaseClasses/UIWidget.h"
-#include "LayoutExecutant.h"
 
 NS_CC_EXT_BEGIN
 
@@ -36,6 +35,16 @@ typedef enum
     LAYOUT_COLOR_SOLID,
     LAYOUT_COLOR_GRADIENT
 }LayoutBackGroundColorType;
+
+typedef enum
+{
+    LAYOUT_DEFAULT,
+    LAYOUT_LINEAR_VERTICAL,
+    LAYOUT_LINEAR_HORIZONTAL,
+    LAYOUT_RELATIVE
+}LayoutType;
+
+
 /**
  *  @js NA
  *  @lua NA
@@ -57,24 +66,6 @@ public:
      * Allocates and initializes a layout.
      */
     static Layout* create();
-    
-    /**
-     * Sets a LayoutExecutant for doing layout.
-     *
-     * @see LayoutExecutant
-     *
-     * @param LayoutExecutant pointer.
-     */
-    virtual void setLayoutExecutant(LayoutExecutant* exe);
-    
-    /**
-     * Gets the LayoutExecutant of Layout
-     *
-     * @see LayoutExecutant
-     *
-     * @return LayoutExecutant pointer.
-     */
-    virtual LayoutExecutant* getLayoutExecutant() const;
     
     //override "hitTest" method of widget.
     virtual bool hitTest(const CCPoint &pt);
@@ -187,6 +178,26 @@ public:
      */
     virtual const char* getDescription() const;
     
+    /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    void setLayoutType(LayoutType type);
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    LayoutType getLayoutType() const;
+    
+    virtual void doLayout();
+    
     /*Compatible*/
     /**
      * These methods will be removed
@@ -209,7 +220,6 @@ protected:
     void addBackGroundImage();
 protected:
     bool m_bClippingEnabled;
-    LayoutExecutant* m_pLayoutExecutant;
     
     //background
     bool m_bBackGroundScale9Enable;
@@ -226,6 +236,7 @@ protected:
     CCPoint m_AlongVector;
     int m_nCOpacity;
     CCSize m_backGroundImageTextureSize;
+    LayoutType m_eLayoutType;
 };
 /**
  *  @js NA
