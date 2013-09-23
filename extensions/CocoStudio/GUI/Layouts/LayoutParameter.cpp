@@ -51,11 +51,7 @@ void LayoutParameter::setMargin(const UIMargin &margin)
             Layout* containerParent = dynamic_cast<Layout*>(parent);
             if (containerParent)
             {
-                LayoutExecutant* exe = containerParent->getLayoutExecutant();
-                if (exe)
-                {
-                    exe->doLayout();
-                }
+                containerParent->doLayout();
             }
         }
     }
@@ -95,10 +91,9 @@ void LinearLayoutParameter::setGravity(UILinearGravity gravity)
             Layout* containerParent = dynamic_cast<Layout*>(parent);
             if (containerParent)
             {
-                LayoutExecutant* exe = containerParent->getLayoutExecutant();
-                if (exe && (exe->getLayoutType() == LAYOUT_LINEAR_HORIZONTAL || exe->getLayoutType() == LAYOUT_LINEAR_VERTICAL))
+                if ((containerParent->getLayoutType() == LAYOUT_LINEAR_HORIZONTAL || containerParent->getLayoutType() == LAYOUT_LINEAR_VERTICAL))
                 {
-                    exe->doLayout();
+                    containerParent->doLayout();
                 }
             }
         }
@@ -134,10 +129,9 @@ void RelativeLayoutParameter::setAlign(UIRelativeAlign align)
             Layout* containerParent = dynamic_cast<Layout*>(parent);
             if (containerParent)
             {
-                LayoutExecutant* exe = containerParent->getLayoutExecutant();
-                if (exe && (exe->getLayoutType() == LAYOUT_RELATIVE))
+                if ((containerParent->getLayoutType() == LAYOUT_RELATIVE))
                 {
-                    exe->doLayout();
+                    containerParent->doLayout();
                 }
             }
         }
@@ -161,10 +155,9 @@ void RelativeLayoutParameter::setRelativeToWidgetName(const char *name)
             Layout* containerParent = dynamic_cast<Layout*>(parent);
             if (containerParent)
             {
-                LayoutExecutant* exe = containerParent->getLayoutExecutant();
-                if (exe && (exe->getLayoutType() == LAYOUT_RELATIVE))
+                if ((containerParent->getLayoutType() == LAYOUT_RELATIVE))
                 {
-                    exe->doLayout();
+                    containerParent->doLayout();
                 }
             }
         }
@@ -188,10 +181,9 @@ void RelativeLayoutParameter::setRelativeName(const char* name)
             Layout* containerParent = dynamic_cast<Layout*>(parent);
             if (containerParent)
             {
-                LayoutExecutant* exe = containerParent->getLayoutExecutant();
-                if (exe && (exe->getLayoutType() == LAYOUT_RELATIVE))
+                if ((containerParent->getLayoutType() == LAYOUT_RELATIVE))
                 {
-                    exe->doLayout();
+                    containerParent->doLayout();
                 }
             }
         }
