@@ -28,67 +28,35 @@
 NS_CC_EXT_BEGIN
 
 UIDragPanel::UIDragPanel()
-: m_pInnerContainer(NULL)
-, m_bTouchPressed(false)
-, m_bTouchMoved(false)
-, m_bTouchReleased(false)
-, m_bTouchCanceld(false)
-, m_touchStartNodeSpace(Point::ZERO)
-, m_touchStartWorldSpace(Point::ZERO)
-, m_touchEndWorldSpace(Point::ZERO)
-, m_fSlidTime(0.0f)
-, m_eMoveType(DRAGPANEL_MOVE_TYPE_AUTOMOVE)
-, m_fAutoMoveDuration(0.5f)
-, m_fAutoMoveEaseRate(2.0f)
-, m_eBerthDirection(DRAGPANEL_BERTH_DIR_NONE)
-, m_pBerthToLeftListener(NULL)
-, m_pfnBerthToLeftSelector(NULL)
-, m_pBerthToRightListener(NULL)
-, m_pfnBerthToRightSelector(NULL)
-, m_pBerthToTopListener(NULL)
-, m_pfnBerthToTopSelector(NULL)
-, m_pBerthToBottomListener(NULL)
-, m_pfnBerthToBottomSelector(NULL)
-, m_pBerthToLeftBottomListener(NULL)
-, m_pfnBerthToLeftBottomSelector(NULL)
-, m_pBerthToLeftTopListener(NULL)
-, m_pfnBerthToLeftTopSelector(NULL)
-, m_pBerthToRightBottomListener(NULL)
-, m_pfnBerthToRightBottomSelector(NULL)
-, m_pBerthToRightTopListener(NULL)
-, m_pfnBerthToRightTopSelector(NULL)
-, m_bBounceEnable(false)
-, m_eBounceDirection(DRAGPANEL_BOUNCE_DIR_NONE)
-, m_fBounceDuration(0.5f)
-, m_fBounceEaseRate(2.0f)
-, m_pBounceOverListener(NULL)
-, m_pfnBounceOverSelector(NULL)
-, m_pBounceToLeftBottomListener(NULL)
-, m_pfnBounceToLeftBottomSelector(NULL)
-, m_pBounceToLeftTopListener(NULL)
-, m_pfnBounceToLeftTopSelector(NULL)
-, m_pBounceToRightBottomListener(NULL)
-, m_pfnBounceToRightBottomSelector(NULL)
-, m_pBounceToRightTopListener(NULL)
-, m_pfnBounceToRightTopSelector(NULL)
-, m_pBounceToLeftListener(NULL)
-, m_pfnBounceToLeftSelector(NULL)
-, m_pBounceToTopListener(NULL)
-, m_pfnBounceToTopSelector(NULL)
-, m_pBounceToRightListener(NULL)
-, m_pfnBounceToRightSelector(NULL)
-, m_pBounceToBottomListener(NULL)
-, m_pfnBounceToBottomSelector(NULL)
-, m_bRunningAction(false)
-, m_nActionType(0)
-, m_pActionWidget(NULL)
-, m_fDuration(0.0f)
-, m_elapsed(0.0f)
-, m_bFirstTick(false)
-, m_positionDelta(Point::ZERO)
-, m_startPosition(Point::ZERO)
-, m_previousPosition(Point::ZERO)
-, m_endPosition(Point::ZERO)
+: _innerContainer(NULL)
+, _touchPressed(false)
+, _touchMoved(false)
+, _touchReleased(false)
+, _touchCanceld(false)
+, _touchStartNodeSpace(Point::ZERO)
+, _touchStartWorldSpace(Point::ZERO)
+, _touchEndWorldSpace(Point::ZERO)
+, _slidTime(0.0f)
+, _moveType(DRAGPANEL_MOVE_TYPE_AUTOMOVE)
+, _autoMoveDuration(0.5f)
+, _autoMoveEaseRate(2.0f)
+, _eventLister(NULL)
+, _eventSelector(NULL)
+, _berthDirection(DRAGPANEL_BERTH_DIR_NONE)
+, _bounceEnable(false)
+, _bounceDirection(DRAGPANEL_BOUNCE_DIR_NONE)
+, _bounceDuration(0.5f)
+, _bounceEaseRate(2.0f)
+, _runningAction(false)
+, _actionType(0)
+, _actionWidget(NULL)
+, _duration(0.0f)
+, _elapsed(0.0f)
+, _firstTick(false)
+, _positionDelta(Point::ZERO)
+, _startPosition(Point::ZERO)
+, _previousPosition(Point::ZERO)
+, _endPosition(Point::ZERO)
 {
     
 }
@@ -126,8 +94,8 @@ void UIDragPanel::initRenderer()
 {
     Layout::initRenderer();
     
-    m_pInnerContainer = Layout::create();
-    Layout::addChild(m_pInnerContainer);
+    _innerContainer = Layout::create();
+    Layout::addChild(_innerContainer);
 
 }
 
@@ -139,7 +107,7 @@ void UIDragPanel::releaseResoures()
     _renderer->removeFromParentAndCleanup(true);
     _renderer->release();
     
-    Layout::removeChild(m_pInnerContainer);
+    Layout::removeChild(_innerContainer);
     
     _children->release();
 }
@@ -176,7 +144,7 @@ void UIDragPanel::onTouchLongClicked(const Point &touchPoint)
 void UIDragPanel::update(float dt)
 {
     // widget action
-    if (m_bRunningAction)
+    if (_runningAction)
     {
         if (actionIsDone())
         {
@@ -194,14 +162,14 @@ void UIDragPanel::update(float dt)
 
 bool UIDragPanel::addChild(UIWidget *widget)
 {
-    m_pInnerContainer->addChild(widget);
+    _innerContainer->addChild(widget);
     return true;
 }
 
 bool UIDragPanel::removeChild(UIWidget *child)
 {
     bool value = false;
-    if (m_pInnerContainer->removeChild(child))
+    if (_innerContainer->removeChild(child))
     {
         value = true;
     }
@@ -211,28 +179,28 @@ bool UIDragPanel::removeChild(UIWidget *child)
 
 void UIDragPanel::removeAllChildren()
 {
-    m_pInnerContainer->removeAllChildren();
+    _innerContainer->removeAllChildren();
 }
 
 Array* UIDragPanel::getChildren()
 {
-    return m_pInnerContainer->getChildren();
+    return _innerContainer->getChildren();
 }
 
 void UIDragPanel::onSizeChanged()
 {
     Layout::onSizeChanged();
-    Size innerSize = m_pInnerContainer->getSize();
+    Size innerSize = _innerContainer->getSize();
     float orginInnerSizeWidth = innerSize.width;
     float orginInnerSizeHeight = innerSize.height;
     float innerSizeWidth = MAX(orginInnerSizeWidth, _size.width);
     float innerSizeHeight = MAX(orginInnerSizeHeight, _size.height);
-    m_pInnerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
+    _innerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
 }
 
 const Size& UIDragPanel::getInnerContainerSize() const
 {
-	return m_pInnerContainer->getContentSize();
+	return _innerContainer->getContentSize();
 }
 
 void UIDragPanel::setInnerContainerSize(const cocos2d::Size &size)
@@ -255,18 +223,20 @@ void UIDragPanel::setInnerContainerSize(const cocos2d::Size &size)
     {
         innerSizeHeight = size.height;
     }
-    m_pInnerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(Point(0, _size.height - m_pInnerContainer->getSize().height));
+    _innerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
+    _innerContainer->setPosition(Point(0, _size.height - _innerContainer->getSize().height));
 }
 
 const Point& UIDragPanel::getInnerContainerPosition() const
 {
-    return m_pInnerContainer->getPosition();
+    return _innerContainer->getPosition();
 }
 
 void UIDragPanel::setInnerContainerPosition(const Point &point, bool animated)
 {
-    Point delta = point - m_pInnerContainer->getPosition();
+    Point delta = point - _innerContainer->getPosition();
+
+//    Point delta = ccpSub(point, _innerContainer->getPosition());
     setInnerContainerOffset(delta, animated);
 }
 
@@ -280,8 +250,8 @@ void UIDragPanel::setInnerContainerOffset(const Point &offset, bool animated)
         {
             delta = calculateToBoundaryDeltaPosition(delta);
         }
-        actionStartWithWidget(m_pInnerContainer);
-        moveByWithDuration(m_fAutoMoveDuration, delta);
+        actionStartWithWidget(_innerContainer);
+        moveByWithDuration(_autoMoveDuration, delta);
     }
     else
     {
@@ -310,18 +280,18 @@ void UIDragPanel::handlePressLogic(const Point &touchPoint)
     // check inner rect < drag panel rect
     if (checkContainInnerRect())
     {
-        m_bTouchPressed = false;
+        _touchPressed = false;
         return;
     }        
     
-    m_bTouchPressed = true;
-    m_bTouchMoved = false;
-    m_bTouchReleased = false;
-    m_bTouchCanceld = false;
+    _touchPressed = true;
+    _touchMoved = false;
+    _touchReleased = false;
+    _touchCanceld = false;
     
-    if (m_bRunningAction)
+    if (_runningAction)
     {
-        switch (m_eMoveType)
+        switch (_moveType)
         {
             case DRAGPANEL_MOVE_TYPE_AUTOMOVE:
                 stopAutoMove();
@@ -329,7 +299,7 @@ void UIDragPanel::handlePressLogic(const Point &touchPoint)
                 break;
                 
             case DRAGPANEL_MOVE_TYPE_BOUNCE:
-                m_bTouchPressed = false;
+                _touchPressed = false;
                 break;
                 
             default:
@@ -338,38 +308,39 @@ void UIDragPanel::handlePressLogic(const Point &touchPoint)
     }
     
     Point nsp = _renderer->convertToNodeSpace(touchPoint);
-    m_touchStartNodeSpace = nsp;
+    _touchStartNodeSpace = nsp;
     
-    m_touchStartWorldSpace = touchPoint;    
+    _touchStartWorldSpace = touchPoint;
 }
 
 void UIDragPanel::handleMoveLogic(const Point &touchPoint)
 {
-    if (!m_bTouchPressed)
+    if (!_touchPressed)
     {
         return;
     }
     
     // check touch out of drag panel boundary
-    if (m_bTouchCanceld)
+    if (_touchCanceld)
     {
         return;
     }
         
-    m_bTouchMoved = true;
+    _touchMoved = true;
     
     Point nsp = _renderer->convertToNodeSpace(touchPoint);
-    Point delta = nsp - m_touchStartNodeSpace;
-    m_touchStartNodeSpace = nsp;
+    Point delta = nsp - _touchStartNodeSpace;
+//    Point delta = ccpSub(nsp, _touchStartNodeSpace);
+    _touchStartNodeSpace = nsp;
     
     // reset berth dir to none
-    if (!m_bBounceEnable)
+    if (!_bounceEnable)
     {
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_NONE;
+        _berthDirection = DRAGPANEL_BERTH_DIR_NONE;
     }
     
     // check will berth (bounce disable)
-    if (!m_bBounceEnable)
+    if (!_bounceEnable)
     {
         if (checkToBoundaryWithDeltaPosition(delta))
         {
@@ -379,16 +350,16 @@ void UIDragPanel::handleMoveLogic(const Point &touchPoint)
     // move
     moveWithDelta(delta);
     // check bounce or berth
-    if (m_bBounceEnable)
+    if (_bounceEnable)
     {
         // bounce
         if (!hitTest(touchPoint))
         {
-            m_bTouchMoved = false;
+            _touchMoved = false;
             
             if (checkNeedBounce())
             {
-                m_bTouchCanceld = true;
+                _touchCanceld = true;
                 startBounce();
             }
         }
@@ -405,25 +376,25 @@ void UIDragPanel::handleMoveLogic(const Point &touchPoint)
 
 void UIDragPanel::handleReleaseLogic(const Point &touchPoint)
 {
-    if (!m_bTouchPressed)
+    if (!_touchPressed)
     {
         return;
     }
     
-    m_bTouchPressed = false;
-    m_bTouchMoved = false;
-    m_bTouchReleased = true;
-    m_bTouchCanceld = false;
+    _touchPressed = false;
+    _touchMoved = false;
+    _touchReleased = true;
+    _touchCanceld = false;
     
     // check touch out of drag panel boundary
-    if (m_bTouchCanceld)
+    if (_touchCanceld)
     {
         return;
     }
     
     if (hitTest(touchPoint))
     {
-        m_touchEndWorldSpace = touchPoint;
+        _touchEndWorldSpace = touchPoint;
         startAutoMove();
     }
 }
@@ -443,6 +414,7 @@ void UIDragPanel::interceptTouchEvent(int handleState, UIWidget *sender, const P
             
         case 1:
         {
+//            float offset = ccpDistance(sender->getTouchStartPos(), touchPoint);
             float offset = sender->getTouchStartPos().getDistance(touchPoint);
             if (offset > 5.0)
             {
@@ -463,9 +435,9 @@ void UIDragPanel::interceptTouchEvent(int handleState, UIWidget *sender, const P
 
 void UIDragPanel::recordSlidTime(float dt)
 {
-    if (m_bTouchPressed)
+    if (_touchPressed)
     {
-        m_fSlidTime += dt;
+        _slidTime += dt;
     }
 }
 
@@ -474,8 +446,8 @@ bool UIDragPanel::checkContainInnerRect()
 {
     float width = _size.width;
     float height = _size.height;
-    float innerWidth = m_pInnerContainer->getSize().width;
-    float innerHeight = m_pInnerContainer->getSize().height;
+    float innerWidth = _innerContainer->getSize().width;
+    float innerHeight = _innerContainer->getSize().height;
     
     if (innerWidth <= width && innerHeight <= height)
     {
@@ -487,15 +459,16 @@ bool UIDragPanel::checkContainInnerRect()
 
 // move
 void UIDragPanel::moveWithDelta(const Point &delta)
-{    
-    Point newPos = m_pInnerContainer->getPosition() + delta;
-    m_pInnerContainer->setPosition(newPos);
+{
+    Point newPos = _innerContainer->getPosition() + delta;
+//    Point newPos = ccpAdd(_innerContainer->getPosition(), delta);
+    _innerContainer->setPosition(newPos);
 }
 
 // auto move
 void UIDragPanel::autoMove()
 {
-    if (m_bBounceEnable)
+    if (_bounceEnable)
     {
         if (checkNeedBounce())
         {
@@ -512,46 +485,47 @@ void UIDragPanel::autoMoveOver()
     if (checkBerth())
     {        
         berthEvent();
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_NONE;
+        _berthDirection = DRAGPANEL_BERTH_DIR_NONE;
     }
 }
 
 void UIDragPanel::startAutoMove()
 {    
-    m_eMoveType = DRAGPANEL_MOVE_TYPE_AUTOMOVE;
+    _moveType = DRAGPANEL_MOVE_TYPE_AUTOMOVE;
     
     actionStop();
-    
-    Point delta = m_touchEndWorldSpace - m_touchStartWorldSpace;
-    delta.x /= m_fSlidTime * 60;
-    delta.y /= m_fSlidTime * 60;
-    m_fSlidTime = 0.0;
+
+    Point delta = _touchEndWorldSpace - _touchStartWorldSpace;
+//    Point delta = ccpSub(m_touchEndWorldSpace, _touchStartWorldSpace);
+    delta.x /= _slidTime * 60;
+    delta.y /= _slidTime * 60;
+    _slidTime = 0.0;
     
     // bounceEnable is disable
-    if (!m_bBounceEnable)
+    if (!_bounceEnable)
     {
         if (checkToBoundaryWithDeltaPosition(delta))
         {
             delta = calculateToBoundaryDeltaPosition(delta);
         }
     }
-    actionStartWithWidget(m_pInnerContainer);
-    moveByWithDuration(m_fAutoMoveDuration, delta);
+    actionStartWithWidget(_innerContainer);
+    moveByWithDuration(_autoMoveDuration, delta);
 }
 
 void UIDragPanel::stopAutoMove()
 {
-    m_eMoveType = DRAGPANEL_MOVE_TYPE_NONE;
+    _moveType = DRAGPANEL_MOVE_TYPE_NONE;
 }
 
 void UIDragPanel::setAutoMoveDuration(float duration)
 {
-    m_fAutoMoveDuration = duration;
+    _autoMoveDuration = duration;
 }
 
 void UIDragPanel::setAutoMoveEaseRate(float rate)
 {
-    m_fAutoMoveEaseRate = rate;
+    _autoMoveEaseRate = rate;
 }
 
 // berth
@@ -560,10 +534,10 @@ void UIDragPanel::setAutoMoveEaseRate(float rate)
 
 bool UIDragPanel::checkToBoundaryWithDeltaPosition(const Point&  delta)
 {
-    float innerLeft = m_pInnerContainer->getLeftInParent();
-    float innerTop = m_pInnerContainer->getTopInParent();
-    float innerRight = m_pInnerContainer->getRightInParent();
-    float innerBottom = m_pInnerContainer->getBottomInParent();
+    float innerLeft = _innerContainer->getLeftInParent();
+    float innerTop = _innerContainer->getTopInParent();
+    float innerRight = _innerContainer->getRightInParent();
+    float innerBottom = _innerContainer->getBottomInParent();
     
     float left = 0;
     float top = _size.height;
@@ -623,10 +597,10 @@ bool UIDragPanel::checkToBoundaryWithDeltaPosition(const Point&  delta)
 
 Point UIDragPanel::calculateToBoundaryDeltaPosition(const Point& paramDelta)
 {
-    float innerLeft = m_pInnerContainer->getLeftInParent();
-    float innerTop = m_pInnerContainer->getTopInParent();
-    float innerRight = m_pInnerContainer->getRightInParent();
-    float innerBottom = m_pInnerContainer->getBottomInParent();
+    float innerLeft = _innerContainer->getLeftInParent();
+    float innerTop = _innerContainer->getTopInParent();
+    float innerRight = _innerContainer->getRightInParent();
+    float innerBottom = _innerContainer->getBottomInParent();
     
     float left = 0;
     float top = _size.height;
@@ -677,16 +651,16 @@ Point UIDragPanel::calculateToBoundaryDeltaPosition(const Point& paramDelta)
 
 bool UIDragPanel::isBerth()
 {
-    return m_eBerthDirection != DRAGPANEL_BERTH_DIR_NONE;
+    return _berthDirection != DRAGPANEL_BERTH_DIR_NONE;
 }
 
 // check berth
 bool UIDragPanel::checkBerth()
 {
-    float innerLeft = m_pInnerContainer->getLeftInParent();
-    float innerTop = m_pInnerContainer->getTopInParent();
-    float innerRight = m_pInnerContainer->getRightInParent();
-    float innerBottom = m_pInnerContainer->getBottomInParent();
+    float innerLeft = _innerContainer->getLeftInParent();
+    float innerTop = _innerContainer->getTopInParent();
+    float innerRight = _innerContainer->getRightInParent();
+    float innerBottom = _innerContainer->getBottomInParent();
     
     float left = 0;
     float top = _size.height;
@@ -695,38 +669,38 @@ bool UIDragPanel::checkBerth()
     
     if (innerLeft == left && innerBottom == bottom) // left bottom
     {
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_LEFTBOTTOM;
+        _berthDirection = DRAGPANEL_BERTH_DIR_LEFTBOTTOM;
     }
     else if (innerLeft == left && innerTop == top) // left top
     {
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_LFETTOP;
+        _berthDirection = DRAGPANEL_BERTH_DIR_LFETTOP;
     }
     else if (innerRight == right && innerBottom == bottom) // right bottom
     {
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_RIGHTBOTTOM;
+        _berthDirection = DRAGPANEL_BERTH_DIR_RIGHTBOTTOM;
     }
     else if (innerRight == right && innerTop == top) // right top
     {
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_RIGHTTOP;
+        _berthDirection = DRAGPANEL_BERTH_DIR_RIGHTTOP;
     }
     else if (innerLeft == left) // left
     {
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_LEFT;
+        _berthDirection = DRAGPANEL_BERTH_DIR_LEFT;
     }
     else if (innerRight == right) // right
     {
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_RIGHT;
+        _berthDirection = DRAGPANEL_BERTH_DIR_RIGHT;
     }
     else if (innerTop == top) // top
     {
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_TOP;
+        _berthDirection = DRAGPANEL_BERTH_DIR_TOP;
     }
     else if (innerBottom == bottom) // bottom
     {
-        m_eBerthDirection = DRAGPANEL_BERTH_DIR_BOTTOM;
+        _berthDirection = DRAGPANEL_BERTH_DIR_BOTTOM;
     }
     
-    if (m_eBerthDirection != DRAGPANEL_BERTH_DIR_NONE)
+    if (_berthDirection != DRAGPANEL_BERTH_DIR_NONE)
     {
         return true;
     }    
@@ -736,7 +710,7 @@ bool UIDragPanel::checkBerth()
 
 void UIDragPanel::berthEvent()
 {
-    switch (m_eBerthDirection)
+    switch (_berthDirection)
     {
         case DRAGPANEL_BERTH_DIR_LEFTBOTTOM:
             berthToLeftBottomEvent();
@@ -777,134 +751,91 @@ void UIDragPanel::berthEvent()
 
 void UIDragPanel::berthToLeftBottomEvent()
 {
-    if (m_pBerthToLeftBottomListener && m_pfnBerthToLeftBottomSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBerthToLeftBottomListener->*m_pfnBerthToLeftBottomSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BERTH_LEFTBOTTOM);
     }
 }
 
 void UIDragPanel::berthToLeftTopEvent()
 {
-    if (m_pBerthToLeftTopListener && m_pfnBerthToLeftTopSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBerthToLeftTopListener->*m_pfnBerthToLeftTopSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BERTH_LFETTOP);
     }
 }
 
 void UIDragPanel::berthToRightBottomEvent()
 {
-    if (m_pBerthToRightBottomListener && m_pfnBerthToRightBottomSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBerthToRightBottomListener->*m_pfnBerthToRightBottomSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BERTH_RIGHTBOTTOM);
     }
 }
 
 void UIDragPanel::berthToRightTopEvent()
 {
-    if (m_pBerthToRightTopListener && m_pfnBerthToRightTopSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBerthToRightTopListener->*m_pfnBerthToRightTopSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BERTH_RIGHTTOP);
     }
 }
 
 void UIDragPanel::berthToLeftEvent()
 {
-    if (m_pBerthToLeftListener && m_pfnBerthToLeftSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBerthToLeftListener->*m_pfnBerthToLeftSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BERTH_LEFT);
     }
 }
 
 void UIDragPanel::berthToTopEvent()
 {
-    if (m_pBerthToTopListener && m_pfnBerthToTopSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBerthToTopListener->*m_pfnBerthToTopSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BERTH_TOP);
     }
 }
 
 void UIDragPanel::berthToRightEvent()
 {
-    if (m_pBerthToRightListener && m_pfnBerthToRightSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBerthToRightListener->*m_pfnBerthToRightSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BERTH_RIGHT);
     }
 }
 
 void UIDragPanel::berthToBottomEvent()
 {
-    if (m_pBerthToBottomListener && m_pfnBerthToBottomSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBerthToBottomListener->*m_pfnBerthToBottomSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BERTH_BOTTOM);
     }
 }
 
-void UIDragPanel::addBerthToLeftBottomEvent(Object *target, SEL_DragPanelBerthToLeftBottomEvent selector)
+void UIDragPanel::addEventListener(Object *target, SEL_DragPanelEvent selector)
 {
-    m_pBerthToLeftBottomListener = target;
-    m_pfnBerthToLeftBottomSelector = selector;
+    _eventLister = target;
+    _eventSelector = selector;
 }
-
-void UIDragPanel::addBerthToLeftTopEvent(Object *target, SEL_DragPanelBerthToLeftTopEvent selector)
-{
-    m_pBerthToLeftTopListener = target;
-    m_pfnBerthToLeftTopSelector = selector;
-}
-
-void UIDragPanel::addBerthToRightBottomEvent(Object *target, SEL_DragPanelBerthToRightBottomEvent selector)
-{
-    m_pBerthToRightBottomListener = target;
-    m_pfnBerthToRightBottomSelector = selector;
-}
-
-void UIDragPanel::addBerthToRightTopEvent(Object *target, SEL_DragPanelBerthToRightTopEvent selector)
-{
-    m_pBerthToRightTopListener = target;
-    m_pfnBerthToRightTopSelector = selector;
-}
-
-void UIDragPanel::addBerthToLeftEvent(Object *target, SEL_DragPanelBerthToLeftEvent selector)
-{
-    m_pBerthToLeftListener = target;
-    m_pfnBerthToLeftSelector = selector;
-}
-
-void UIDragPanel::addBerthToTopEvent(Object *target, SEL_DragPanelBerthToTopEvent selector)
-{
-    m_pBerthToTopListener = target;
-    m_pfnBerthToTopSelector = selector;
-}
-
-void UIDragPanel::addBerthToRightEvent(Object *target, SEL_DragPanelBerthToRightEvent selector)
-{
-    m_pBerthToRightListener = target;
-    m_pfnBerthToRightSelector = selector;
-}
-
-void UIDragPanel::addBerthToBottomEvent(Object *target, SEL_DragPanelBerthToBottomEvent selector)
-{
-    m_pBerthToBottomListener = target;
-    m_pfnBerthToBottomSelector = selector;
-}
-
 
 // bounce
 bool UIDragPanel::isBounceEnable()
 {
-    return m_bBounceEnable;
+    return _bounceEnable;
 }
 
 void UIDragPanel::setBounceEnable(bool bounce)
 {
-    m_bBounceEnable = bounce;
+    _bounceEnable = bounce;
 }
 
 bool UIDragPanel::checkNeedBounce()
 {
-    float innerLeft = m_pInnerContainer->getLeftInParent();
-    float innerTop = m_pInnerContainer->getTopInParent();
-    float innerRight = m_pInnerContainer->getRightInParent();
-    float innerBottom = m_pInnerContainer->getBottomInParent();
+    float innerLeft = _innerContainer->getLeftInParent();
+    float innerTop = _innerContainer->getTopInParent();
+    float innerRight = _innerContainer->getRightInParent();
+    float innerBottom = _innerContainer->getBottomInParent();
     
     float left = 0;
     float top = _size.height;
@@ -924,27 +855,27 @@ bool UIDragPanel::checkNeedBounce()
 
 void UIDragPanel::startBounce()
 {
-    if (m_eMoveType == DRAGPANEL_MOVE_TYPE_BOUNCE)
+    if (_moveType == DRAGPANEL_MOVE_TYPE_BOUNCE)
     {
         return;
     }
     
     actionStop();
-    m_eMoveType = DRAGPANEL_MOVE_TYPE_BOUNCE;
+    _moveType = DRAGPANEL_MOVE_TYPE_BOUNCE;
     bounceToCorner();
 }
 
 void UIDragPanel::stopBounce()
 {
-    m_eMoveType = DRAGPANEL_MOVE_TYPE_NONE;
+    _moveType = DRAGPANEL_MOVE_TYPE_NONE;
 }
 
 void UIDragPanel::bounceToCorner()
 {
-    float innerLeft = m_pInnerContainer->getLeftInParent();
-    float innerTop = m_pInnerContainer->getTopInParent();
-    float innerRight = m_pInnerContainer->getRightInParent();
-    float innerBottom = m_pInnerContainer->getBottomInParent();
+    float innerLeft = _innerContainer->getLeftInParent();
+    float innerTop = _innerContainer->getTopInParent();
+    float innerRight = _innerContainer->getRightInParent();
+    float innerBottom = _innerContainer->getBottomInParent();
     
     float width = _size.width;
     float height = _size.height;
@@ -966,7 +897,7 @@ void UIDragPanel::bounceToCorner()
         to_x = left;
         to_y = bottom;
         
-        m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_LEFTBOTTOM;
+        _bounceDirection = DRAGPANEL_BOUNCE_DIR_LEFTBOTTOM;
     }
     else if (innerLeft > left && innerTop < top) // left top
     {
@@ -975,7 +906,7 @@ void UIDragPanel::bounceToCorner()
         to_x = left;
         to_y = top;
         
-        m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_LEFTTOP;
+        _bounceDirection = DRAGPANEL_BOUNCE_DIR_LEFTTOP;
     }
     else if (innerRight < right && innerBottom > bottom) // right bottom
     {
@@ -984,7 +915,7 @@ void UIDragPanel::bounceToCorner()
         to_x = right;
         to_y = bottom;
         
-        m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_RIGHTBOTTOM;
+        _bounceDirection = DRAGPANEL_BOUNCE_DIR_RIGHTBOTTOM;
     }
     else if (innerRight < right && innerTop < top) // right top
     {
@@ -993,7 +924,7 @@ void UIDragPanel::bounceToCorner()
         to_x = right;
         to_y = top;
         
-        m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_RIGHTTOP;
+        _bounceDirection = DRAGPANEL_BOUNCE_DIR_RIGHTTOP;
     }
     else if (innerLeft > left) // left
     {
@@ -1002,7 +933,7 @@ void UIDragPanel::bounceToCorner()
         to_x = left;
         to_y = from_y;
         
-        m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_LEFT;
+        _bounceDirection = DRAGPANEL_BOUNCE_DIR_LEFT;
     }
     else if (innerTop < top) // top
     {
@@ -1011,7 +942,7 @@ void UIDragPanel::bounceToCorner()
         to_x = from_x;
         to_y = top;
         
-        m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_TOP;
+        _bounceDirection = DRAGPANEL_BOUNCE_DIR_TOP;
     }
     else if (innerRight < right) // right
     {
@@ -1020,7 +951,7 @@ void UIDragPanel::bounceToCorner()
         to_x = right;
         to_y = from_y;
         
-        m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_RIGHT;
+        _bounceDirection = DRAGPANEL_BOUNCE_DIR_RIGHT;
     }
     else if (innerBottom > bottom) // bottom
     {
@@ -1029,21 +960,20 @@ void UIDragPanel::bounceToCorner()
         to_x = from_x;
         to_y = bottom;
         
-        m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_BOTTOM;
+        _bounceDirection = DRAGPANEL_BOUNCE_DIR_BOTTOM;
     }
-    delta = Point(to_x, to_y) + Point(from_x, from_y);
+    delta = Point(to_x, to_y) - Point(from_x, from_y);
+//    delta = ccpSub(ccp(to_x, to_y), ccp(from_x, from_y));
     
-    actionStartWithWidget(m_pInnerContainer);
-    moveByWithDuration(m_fBounceDuration, delta);
+    actionStartWithWidget(_innerContainer);
+    moveByWithDuration(_bounceDuration, delta);
 }
 
 void UIDragPanel::bounceOver()
 {
     stopBounce();
     
-    bounceOverEvent();
-    
-    switch (m_eBounceDirection)
+    switch (_bounceDirection)
     {
         case DRAGPANEL_BOUNCE_DIR_LEFTBOTTOM:
             bounceToLeftBottomEvent();
@@ -1081,176 +1011,114 @@ void UIDragPanel::bounceOver()
             break;
     }
     
-    m_eBounceDirection = DRAGPANEL_BOUNCE_DIR_NONE;
-}
-
-void UIDragPanel::bounceOverEvent()
-{
-    if (m_pBounceOverListener && m_pfnBounceOverSelector)
-    {
-        (m_pBounceOverListener->*m_pfnBounceOverSelector)(this);
-    }
+    _bounceDirection = DRAGPANEL_BOUNCE_DIR_NONE;
 }
 
 void UIDragPanel::bounceToLeftBottomEvent()
 {
-    if (m_pBounceToLeftBottomListener && m_pfnBounceToLeftBottomSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBounceToLeftBottomListener->*m_pfnBounceToLeftBottomSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BOUNCE_LEFTBOTTOM);
     }
 }
 
 void UIDragPanel::bounceToLeftTopEvent()
 {
-    if (m_pBounceToLeftTopListener && m_pfnBounceToLeftTopSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBounceToLeftTopListener->*m_pfnBounceToLeftTopSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BOUNCE_LEFTTOP);
     }
 }
 
 void UIDragPanel::bounceToRightBottomEvent()
 {
-    if (m_pBounceToRightBottomListener && m_pfnBounceToRightBottomSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBounceToRightBottomListener->*m_pfnBounceToRightBottomSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BOUNCE_RIGHTBOTTOM);
     }
 }
 
 void UIDragPanel::bounceToRightTopEvent()
 {
-    if (m_pBounceToRightTopListener && m_pfnBounceToRightTopSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBounceToRightTopListener->*m_pfnBounceToRightTopSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BOUNCE_RIGHTTOP);
     }
 }
 
 void UIDragPanel::bounceToLeftEvent()
 {
-    if (m_pBounceToLeftListener && m_pfnBounceToLeftSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBounceToLeftListener->*m_pfnBounceToLeftSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BOUNCE_LEFT);
     }
 }
 
 void UIDragPanel::bounceToTopEvent()
 {
-    if (m_pBounceToTopListener && m_pfnBounceToTopSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBounceToTopListener->*m_pfnBounceToTopSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BOUNCE_TOP);
     }
 }
 
 void UIDragPanel::bounceToRightEvent()
 {
-    if (m_pBounceToRightListener && m_pfnBounceToRightSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBounceToRightListener->*m_pfnBounceToRightSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BOUNCE_RIGHT);
     }
 }
 
 void UIDragPanel::bounceToBottomEvent()
 {
-    if (m_pBounceToBottomListener && m_pfnBounceToBottomSelector)
+    if (_eventLister && _eventSelector)
     {
-        (m_pBounceToBottomListener->*m_pfnBounceToBottomSelector)(this);
+        (_eventLister->*_eventSelector)(this, DRAGPANEL_EVENT_BOUNCE_BOTTOM);
     }
-}
-
-void UIDragPanel::addBounceOverEvent(Object *target, SEL_DragPanelBounceOverEvent selector)
-{
-    m_pBounceOverListener = target;
-    m_pfnBounceOverSelector = selector;
-}
-
-void UIDragPanel::addBounceToLeftBottomEvent(Object *target, SEL_DragPanelBounceToLeftBottomEvent selector)
-{
-    m_pBounceToLeftBottomListener = target;
-    m_pfnBounceToLeftBottomSelector = selector;
-}
-
-void UIDragPanel::addBounceToLeftTopEvent(Object *target, SEL_DragPanelBounceToLeftTopEvent selector)
-{
-    m_pBounceToLeftTopListener = target;
-    m_pfnBounceToLeftTopSelector = selector;
-}
-
-void UIDragPanel::addBounceToRightBottomEvent(Object *target, SEL_DragPanelBounceToRightBottomEvent selector)
-{
-    m_pBounceToRightBottomListener = target;
-    m_pfnBounceToRightBottomSelector = selector;
-}
-
-void UIDragPanel::addBounceToRightTopEvent(Object *target, SEL_DragPanelBounceToRightTopEvent selector)
-{
-    m_pBounceToRightTopListener = target;
-    m_pfnBounceToRightTopSelector = selector;
-}
-
-void UIDragPanel::addBounceToLeftEvent(Object *target, SEL_DragPanelBounceToLeftEvent selector)
-{
-    m_pBounceToLeftListener = target;
-    m_pfnBounceToLeftSelector = selector;
-}
-
-void UIDragPanel::addBounceToTopEvent(Object *target, SEL_DragPanelBounceToTopEvent selector)
-{
-    m_pBounceToTopListener = target;
-    m_pfnBounceToTopSelector = selector;
-}
-
-void UIDragPanel::addBounceToRightEvent(Object *target, SEL_DragPanelBounceToRightEvent selector)
-{
-    m_pBounceToRightListener = target;
-    m_pfnBounceToRightSelector = selector;
-}
-
-void UIDragPanel::addBounceToBottomEvent(Object *target, SEL_DragPanelBounceToBottomEvent selector)
-{
-    m_pBounceToBottomListener = target;
-    m_pfnBounceToBottomSelector = selector;
 }
 
 // widget action
 void UIDragPanel::actionWithDuration(float duration)
 {
-    m_fDuration = duration;
+    _duration = duration;
         
-    if (m_fDuration == 0)
+    if (_duration == 0)
     {
-        m_fDuration = FLT_EPSILON;
+        _duration = FLT_EPSILON;
     }
     
-    m_elapsed = 0;
-    m_bFirstTick = true;
+    _elapsed = 0;
+    _firstTick = true;
 }
 
 bool UIDragPanel::actionIsDone()
 {
-    bool value = (m_elapsed >= m_fDuration);
+    bool value = (_elapsed >= _duration);
     return value;
 }
 
 void UIDragPanel::actionStartWithWidget(UIWidget *widget)
 {
-    m_bRunningAction = true;
-    m_pActionWidget = widget;
+    _runningAction = true;
+    _actionWidget = widget;
 }
 
 void UIDragPanel::actionStep(float dt)
 {
-    if (m_bFirstTick)
+    if (_firstTick)
     {
-        m_bFirstTick = false;
-        m_elapsed = 0;
+        _firstTick = false;
+        _elapsed = 0;
     }
     else
     {
-        m_elapsed += dt;
+        _elapsed += dt;
     }
     
     actionUpdate(MAX (0,
-                      MIN(1, m_elapsed /
-                          MAX(m_fDuration, FLT_EPSILON)
+                      MIN(1, _elapsed /
+                          MAX(_duration, FLT_EPSILON)
                           )
                       )
                  );        
@@ -1258,7 +1126,7 @@ void UIDragPanel::actionStep(float dt)
 
 void UIDragPanel::actionUpdate(float dt)
 {
-    switch (m_nActionType)
+    switch (_actionType)
     {
         case 1: // move by
             moveByUpdate(dt);
@@ -1275,12 +1143,12 @@ void UIDragPanel::actionUpdate(float dt)
 
 void UIDragPanel::actionStop()
 {
-    m_bRunningAction = false;
+    _runningAction = false;
 }
 
 void UIDragPanel::actionDone()
 {
-    switch (m_eMoveType)
+    switch (_moveType)
     {
         case DRAGPANEL_MOVE_TYPE_AUTOMOVE:
             autoMoveOver();
@@ -1299,27 +1167,27 @@ void UIDragPanel::actionDone()
 void UIDragPanel::moveByWithDuration(float duration, const Point& deltaPosition)
 {
     actionWithDuration(duration);
-    m_positionDelta = deltaPosition;
+    _positionDelta = deltaPosition;
     moveByInit();
-    m_nActionType = 1;
+    _actionType = 1;
 }
 
 void UIDragPanel::moveByInit()
 {
-    m_previousPosition = m_startPosition = m_pActionWidget->getPosition();
+    _previousPosition = _startPosition = _actionWidget->getPosition();
 }
 
 void UIDragPanel::moveByUpdate(float t)
 {
     float easeRate = 0.0f;
-    switch (m_eMoveType)
+    switch (_moveType)
     {
         case DRAGPANEL_MOVE_TYPE_AUTOMOVE:
-            easeRate = m_fAutoMoveEaseRate;
+            easeRate = _autoMoveEaseRate;
             break;
             
         case DRAGPANEL_MOVE_TYPE_BOUNCE:
-            easeRate = m_fBounceEaseRate;
+            easeRate = _bounceEaseRate;
             break;
             
         default:
@@ -1327,15 +1195,19 @@ void UIDragPanel::moveByUpdate(float t)
     }
     t = powf(t, 1 / easeRate);
     
-    Point currentPos = m_pActionWidget->getPosition();
-    Point diff = currentPos - m_previousPosition;
-    m_startPosition = m_startPosition + diff;
+    Point currentPos = _actionWidget->getPosition();
+    Point diff = currentPos - _previousPosition;
+    _startPosition = _startPosition + diff;
+//    Point diff = ccpSub(currentPos, _previousPosition);
+//    _startPosition = ccpAdd( _startPosition, diff);
     
-    Point newPos = m_startPosition + (m_positionDelta * t);
-    m_pActionWidget->setPosition(newPos);
-    m_previousPosition = newPos;
+//    Point newPos = ccpAdd( _startPosition, ccpMult(_positionDelta, t) );
+    Point newPos = _startPosition + (_positionDelta * t);
     
-    switch (m_eMoveType)
+    _actionWidget->setPosition(newPos);
+    _previousPosition = newPos;
+    
+    switch (_moveType)
     {
         case DRAGPANEL_MOVE_TYPE_AUTOMOVE:
             autoMove();
@@ -1350,15 +1222,16 @@ void UIDragPanel::moveByUpdate(float t)
 void UIDragPanel::moveToWithDuration(float duration, const Point& position)
 {
     actionWithDuration(duration);
-    m_endPosition = position;    
+    _endPosition = position;
     moveToInit();
-    m_nActionType = 2;
+    _actionType = 2;
 }
 
 void UIDragPanel::moveToInit()
 {
     moveByInit();
-    m_positionDelta =  m_endPosition - m_pActionWidget->getPosition();
+    _positionDelta = _endPosition - _actionWidget->getPosition();
+//    _positionDelta = ccpSub( _endPosition, _actionWidget->getPosition() );
 }
 
 void UIDragPanel::moveToUpdate(float t)
@@ -1368,7 +1241,12 @@ void UIDragPanel::moveToUpdate(float t)
 
 Layout* UIDragPanel::getInnerContainer()
 {
-    return m_pInnerContainer;
+    return _innerContainer;
+}
+
+const char* UIDragPanel::getDescription() const
+{
+    return "DragPanel";
 }
 
 NS_CC_EXT_END

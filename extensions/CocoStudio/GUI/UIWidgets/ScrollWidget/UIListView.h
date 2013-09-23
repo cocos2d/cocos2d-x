@@ -53,13 +53,17 @@ typedef enum LISTVIEW_MOVE_DIR
     LISTVIEW_MOVE_DIR_RIGHT,
 }ListViewMoveDirection;
 
+typedef enum
+{
+    LISTVIEW_EVENT_INIT_CHILD,
+    LISTVIEW_EVENT_UPDATE_CHILD,
+}ListViewEventType;
+
 /**
  *  list view event
  */
-typedef void (cocos2d::Object::*SEL_ListViewInitChildEvent)(cocos2d::Object*);
-typedef void (cocos2d::Object::*SEL_ListViewUpdateChildEvent)(cocos2d::Object*);
-#define coco_ListView_InitChild_selector(_SELECTOR) (SEL_ListViewInitChildEvent)(&_SELECTOR)
-#define coco_ListView_UpdateChild_selector(_SELECTOR) (SEL_ListViewUpdateChildEvent)(&_SELECTOR)
+typedef void (Object::*SEL_ListViewEvent)(Object*, ListViewEventType);
+#define listvieweventselector(_SELECTOR)(SEL_ListViewEvent)(&_SELECTOR)
 
 class UIListView : public Layout
 {
@@ -124,13 +128,9 @@ public:
      *  add event call-back function
      */
     /**
-     *  add init child event
+     *  add event
      */
-    void addInitChildEvent(cocos2d::Object* target, SEL_ListViewInitChildEvent seletor);
-    /**
-     *  add udpate child event
-     */
-    void addUpdateChildEvent(cocos2d::Object* target, SEL_ListViewUpdateChildEvent selector);
+    void addEventListenter(cocos2d::Object* target, SEL_ListViewEvent selector);
     
     /* gui mark */
     /**
@@ -139,6 +139,10 @@ public:
     /**/
     virtual void update(float dt);
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool init();
     
@@ -188,52 +192,50 @@ protected:
     
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
-    ListViewDirection m_eDirection;
-    ListViewMoveDirection m_eMoveDirection;
+    ListViewDirection _direction;
+    ListViewMoveDirection _moveDirection;
     
-    float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
-    float m_fTouchMoveStartLocation;
-    float m_fTopBoundary;//test
-    float m_fBottomBoundary;//test
-    float m_fLeftBoundary;
-    float m_fRightBoundary;                
+    float _touchStartLocation;
+    float _touchEndLocation;
+    float _touchMoveStartLocation;
+    float _topBoundary;//test
+    float _bottomBoundary;//test
+    float _leftBoundary;
+    float _rightBoundary;
     
-    bool m_bAutoScroll;
+    bool _autoScroll;
     
-    float m_fAutoScrollOriginalSpeed;
-    float m_fAutoScrollAcceleration;
+    float _autoScrollOriginalSpeed;
+    float _autoScrollAcceleration;
     
-    bool m_bBePressed;
-    float m_fSlidTime;
-    Point moveChildPoint;
-    float m_fChildFocusCancelOffset;    
+    bool _bePressed;
+    float _slidTime;
+    Point _moveChildPoint;
+    float _childFocusCancelOffset;
     
-    cocos2d::Object* m_pInitChildListener;
-    SEL_ListViewInitChildEvent m_pfnInitChildSelector;
-    cocos2d::Object* m_pUpdateChildListener;
-    SEL_ListViewUpdateChildEvent m_pfnUpdateChildSelector;
+    Object* _eventListener;
+    SEL_ListViewEvent _eventSelector;
     
-    Array* m_pChildPool;
-    Array* m_pUpdatePool;
+    Array* _childPool;
+    Array* _updatePool;
     
-    int m_nDataLength;
-    int m_nBegin;
-    int m_nEnd;
-    UIWidget* m_pUpdateChild;
-    int m_nUpdateDataIndex;
-    bool m_bUpdateSuccess;
+    int _dataLength;
+    int _begin;
+    int _end;
+    UIWidget* _updateChild;
+    int _updateDataIndex;
+    bool _updateSuccess;
     
-    Array* m_overTopArray;
-    Array* m_overBottomArray;
-    Array* m_overLeftArray;
-    Array* m_overRightArray;
+    Array* _overTopArray;
+    Array* _overBottomArray;
+    Array* _overLeftArray;
+    Array* _overRightArray;
     
-    float m_fDisBoundaryToChild_0;
-    float m_fDisBetweenChild;
+    float _disBoundaryToChild_0;
+    float _disBetweenChild;
     
     /* gui mark */
-    float m_fScrollDegreeRange;
+    float _scrollDegreeRange;
     /**/
 };
 

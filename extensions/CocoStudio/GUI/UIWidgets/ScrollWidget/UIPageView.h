@@ -30,8 +30,13 @@
 
 NS_CC_EXT_BEGIN
 
-typedef void (Object::*SEL_PageViewPageTurningEvent)(Object*);
-#define coco_PageView_PageTurning_selector(_SELECTOR) (SEL_PageViewPageTurningEvent)(&_SELECTOR)
+typedef enum
+{
+    PAGEVIEW_EVENT_TURNING,
+}PageViewEventType;
+
+typedef void (Object::*SEL_PageViewEvent)(Object*, PageViewEventType);
+#define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
 typedef enum {
     PAGEVIEW_TOUCHLEFT,
@@ -110,8 +115,8 @@ public:
      */
     int getCurPageIndex() const;
     
-    //Add call back function called when page turning.
-    void addPageTurningEvent(Object *target, SEL_PageViewPageTurningEvent selector);
+    // event
+    void addEventListener(Object *target, SEL_PageViewEvent selector);
     
     //override "removeChild" method of widget.
     virtual bool removeChild(UIWidget* widget);
@@ -134,6 +139,10 @@ public:
     //override "update" method of widget.
     virtual void update(float dt);
 
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool addChild(UIWidget* widget);
     virtual bool init();
@@ -154,25 +163,24 @@ protected:
 
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
-    int m_nCurPageIdx;
-    Array* m_pages;
-    PVTouchDir m_touchMoveDir;
-    float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
-    float m_fTouchMoveStartLocation;
-    Point movePagePoint;
-    UIWidget* m_pLeftChild;
-    UIWidget* m_pRightChild;
-    float m_fLeftBoundary;
-    float m_fRightBoundary;
-    bool m_bIsAutoScrolling;
-    float m_fAutoScrollDistance;
-    float m_fAutoScrollSpeed;
-    int m_nAutoScrollDir;
-    float m_fChildFocusCancelOffset;
-    Object* m_pPageTurningListener;
-    SEL_PageViewPageTurningEvent m_pfnPageTurningSelector;
-    float m_fScrollDegreeRange;
+    int _curPageIdx;
+    Array* _pages;
+    PVTouchDir _touchMoveDir;
+    float _touchStartLocation;
+    float _touchEndLocation;
+    float _touchMoveStartLocation;
+    Point _movePagePoint;
+    UIWidget* _leftChild;
+    UIWidget* _rightChild;
+    float _leftBoundary;
+    float _rightBoundary;
+    bool _isAutoScrolling;
+    float _autoScrollDistance;
+    float _autoScrollSpeed;
+    int _autoScrollDir;
+    float _childFocusCancelOffset;
+    Object* _eventListener;
+    SEL_PageViewEvent _eventSelector;
 };
 
 NS_CC_EXT_END

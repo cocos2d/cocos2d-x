@@ -158,7 +158,7 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addPercentEvent(Object* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListener(Object* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const Point &touchPoint);
@@ -180,6 +180,11 @@ public:
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual void initRenderer();
     float getPercentWithBallPos(float location);
@@ -191,38 +196,36 @@ protected:
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
 protected:
-    Node*  m_pBarRenderer;
-    Node* m_pProgressBarRenderer;
-    Size m_ProgressBarTextureSize;
+    Node*  _barRenderer;
+    Node* _progressBarRenderer;
+    Size _progressBarTextureSize;
     
-    Sprite* m_pSlidBallNormalRenderer;
-    Sprite* m_pSlidBallPressedRenderer;
-    Sprite* m_pSlidBallDisabledRenderer;
-    Node* m_pSlidBallRenderer;
+    Sprite* _slidBallNormalRenderer;
+    Sprite* _slidBallPressedRenderer;
+    Sprite* _slidBallDisabledRenderer;
+    Node* _slidBallRenderer;
     
-    float m_fBarLength;
-    int m_nPercent;
+    float _barLength;
+    int _percent;
     
-    float m_fBarNodeScaleValue;
-    float m_fTouchMoveStartLocation;
-    bool m_bScale9Enabled;
-    bool m_bPrevIgnoreSize;
-    std::string m_strTextureFile;
-    std::string m_strProgressBarTextureFile;
-    std::string m_strSlidBallNormalTextureFile;
-    std::string m_strSlidBallPressedTextureFile;
-    std::string m_strSlidBallDisabledTextureFile;
+    bool _scale9Enabled;
+    bool _prevIgnoreSize;
+    std::string _textureFile;
+    std::string _progressBarTextureFile;
+    std::string _slidBallNormalTextureFile;
+    std::string _slidBallPressedTextureFile;
+    std::string _slidBallDisabledTextureFile;
 
-    Rect m_capInsetsBarRenderer;
-    Rect m_capInsetsProgressBarRenderer;
+    Rect _capInsetsBarRenderer;
+    Rect _capInsetsProgressBarRenderer;
 
-    Object*       m_pSlidPercentListener;
-    SEL_SlidPercentChangedEvent    m_pfnSlidPercentSelector;
-    TextureResType m_eBarTexType;
-    TextureResType m_eProgressBarTexType;
-    TextureResType m_eBallNTexType;
-    TextureResType m_eBallPTexType;
-    TextureResType m_eBallDTexType;
+    Object*       _slidPercentListener;
+    SEL_SlidPercentChangedEvent    _slidPercentSelector;
+    TextureResType _barTexType;
+    TextureResType _progressBarTexType;
+    TextureResType _ballNTexType;
+    TextureResType _ballPTexType;
+    TextureResType _ballDTexType;
 };
 
 NS_CC_EXT_END

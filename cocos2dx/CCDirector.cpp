@@ -49,6 +49,7 @@ THE SOFTWARE.
 #include "actions/CCActionManager.h"
 #include "sprite_nodes/CCAnimationCache.h"
 #include "event_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCEventDispatcher.h"
 #include "support/user_default/CCUserDefault.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
@@ -696,14 +697,18 @@ void Director::purgeDirector()
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
     NotificationCenter::destroyInstance();
-
+    EventDispatcher::destroyInstance();
+    
     GL::invalidateStateCache();
     
     CHECK_GL_ERROR_DEBUG();
     
     // OpenGL view
-    _openGLView->end();
-    _openGLView = nullptr;
+    if (_openGLView)
+    {
+        _openGLView->end();
+        _openGLView = nullptr;
+    }
 
     // delete Director
     release();

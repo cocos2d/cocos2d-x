@@ -46,14 +46,16 @@ enum SCROLLVIEW_MOVE_DIR
     SCROLLVIEW_MOVE_DIR_RIGHT,
 };
 
-typedef void (Object::*SEL_ScrollToTopEvent)(Object*);
-typedef void (Object::*SEL_ScrollToBottomEvent)(Object*);
-typedef void (Object::*SEL_ScrollToLeftEvent)(Object*);
-typedef void (Object::*SEL_ScrollToRightEvent)(Object*);
-#define coco_ScrollToTopSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToTopEvent)(&_SELECTOR)
-#define coco_ScrollToBottomSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToBottomEvent)(&_SELECTOR)
-#define coco_ScrollToLeftSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToLeftEvent)(&_SELECTOR)
-#define coco_ScrollToRightSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToRightEvent)(&_SELECTOR)
+typedef enum
+{
+    SCROLLVIEW_EVENT_SCROLL_TO_TOP,
+    SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
+    SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
+    SCROLLVIEW_EVENT_SCROLL_TO_RIGHT,
+}ScrollviewEventType;
+
+typedef void (Object::*SEL_ScrollViewEvent)(Object*, ScrollviewEventType);
+#define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
 class UIScrollView : public Layout , public UIScrollInterface
@@ -130,24 +132,9 @@ public:
 	const Size& getInnerContainerSize() const;
     
     /**
-     * Add call back function called when scrollview scrolled to top.
+     * Add call back function called scrollview event triggered
      */
-    void addScrollToTopEvent(Object* target, SEL_ScrollToTopEvent selector);
-    
-    /**
-     * Add call back function called when scrollview scrolled to bottom.
-     */
-    void addScrollToBottomEvent(Object* target, SEL_ScrollToBottomEvent selector);
-    
-    /**
-     * Add call back function called when scrollview scrolled to left.
-     */
-    void addScrollToLeftEvent(Object* target, SEL_ScrollToLeftEvent selector);
-    
-    /**
-     * Add call back function called when scrollview scrolled to right.
-     */
-    void addScrollToRightEvent(Object* target, SEL_ScrollToRightEvent selector);
+    void addEventListener(Object* target, SEL_ScrollViewEvent selector);    
     
     //override "setLayoutExecutant" method of widget.
     virtual void setLayoutExecutant(LayoutExecutant* exe);
@@ -183,6 +170,11 @@ public:
     virtual void onTouchLongClicked(const Point &touchPoint);
     
     virtual void update(float dt);
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -212,45 +204,36 @@ protected:
     virtual void onSizeChanged();
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
-    SCROLLVIEW_DIR m_eDirection;
-    SCROLLVIEW_MOVE_DIR m_eMoveDirection;
-    float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
-    float m_fTouchMoveStartLocation;
-    float m_fTopBoundary;//test
-    float m_fBottomBoundary;//test
-    float m_fLeftBoundary;
-    float m_fRightBoundary;
+    Layout* _innerContainer;
     
+    SCROLLVIEW_DIR _direction;
+    SCROLLVIEW_MOVE_DIR _moveDirection;
+    float _touchStartLocation;
+    float _touchEndLocation;
+    float _touchMoveStartLocation;
+    float _topBoundary;//test
+    float _bottomBoundary;//test
+    float _leftBoundary;
+    float _rightBoundary;
     
-    int m_nMoveDirection;//0 pull down, 1 push up
+    bool _topEnd;
+    bool _bottomEnd;
+    bool _leftEnd;
+    bool _rightEnd;
     
-    bool m_bTopEnd;
-    bool m_bBottomEnd;
-    bool m_bLeftEnd;
-    bool m_bRightEnd;
+    bool _autoScroll;
     
-    bool m_bAutoScroll;
+    float _autoScrollOriginalSpeed;
+    float _autoScrollAcceleration;
     
-    float m_fAutoScrollOriginalSpeed;
-    float m_fAutoScrollAcceleration;
+    bool _bePressed;
+    float _slidTime;
+    Point _moveChildPoint;
+    float _childFocusCancelOffset;
     
-    bool m_bBePressed;
-    float m_fSlidTime;
-    Point moveChildPoint;
-    float m_fChildFocusCancelOffset;
+    Object* _eventListener;
+    SEL_ScrollViewEvent _eventSelector;
     
-    Object* m_pScrollToTopListener;
-    SEL_ScrollToTopEvent m_pfnScrollToTopSelector;
-    Object* m_pScrollToBottomListener;
-    SEL_ScrollToBottomEvent m_pfnScrollToBottomSelector;
-    Object* m_pScrollToLeftListener;
-    SEL_ScrollToLeftEvent m_pfnScrollToLeftSelector;
-    Object* m_pScrollToRightListener;
-    SEL_ScrollToRightEvent m_pfnScrollToRightSelector;
-    
-    Layout* m_pInnerContainer;
-    float m_fScrollDegreeRange;
 };
 
 NS_CC_EXT_END

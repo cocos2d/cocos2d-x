@@ -45,16 +45,18 @@ draw_nodes/CCDrawingPrimitives.cpp \
 draw_nodes/CCDrawNode.cpp \
 effects/CCGrabber.cpp \
 effects/CCGrid.cpp \
-event_dispatcher/CCAccelerationEvent.cpp \
-event_dispatcher/CCAccelerationEventListener.cpp \
+event_dispatcher/CCEventAcceleration.cpp \
+event_dispatcher/CCEventListenerAcceleration.cpp \
+event_dispatcher/CCEventCustom.cpp \
+event_dispatcher/CCEventListenerCustom.cpp \
 event_dispatcher/CCEvent.cpp \
 event_dispatcher/CCEventDispatcher.cpp \
 event_dispatcher/CCEventListener.cpp \
-event_dispatcher/CCKeyboardEvent.cpp \
-event_dispatcher/CCKeyboardEventListener.cpp \
+event_dispatcher/CCEventKeyboard.cpp \
+event_dispatcher/CCEventListenerKeyboard.cpp \
 event_dispatcher/CCTouch.cpp \
-event_dispatcher/CCTouchEvent.cpp \
-event_dispatcher/CCTouchEventListener.cpp \
+event_dispatcher/CCEventTouch.cpp \
+event_dispatcher/CCEventListenerTouch.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -96,6 +98,21 @@ particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
+physics/CCPhysicsBody.cpp \
+physics/CCPhysicsContact.cpp \
+physics/CCPhysicsJoint.cpp \
+physics/CCPhysicsShape.cpp \
+physics/CCPhysicsWorld.cpp \
+physics/Box2D/CCPhysicsBodyInfo.cpp \
+physics/Box2D/CCPhysicsContactInfo.cpp \
+physics/Box2D/CCPhysicsJointInfo.cpp \
+physics/Box2D/CCPhysicsShapeInfo.cpp \
+physics/Box2D/CCPhysicsWorldInfo.cpp \
+physics/chipmunk/CCPhysicsBodyInfo.cpp \
+physics/chipmunk/CCPhysicsContactInfo.cpp \
+physics/chipmunk/CCPhysicsJointInfo.cpp \
+physics/chipmunk/CCPhysicsShapeInfo.cpp \
+physics/chipmunk/CCPhysicsWorldInfo.cpp \
 platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
@@ -149,7 +166,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/platform/third_party/common/etc \
                     $(LOCAL_PATH)/platform/third_party/common/s3tc \
-                    $(LOCAL_PATH)/platform/third_party/common/atitc
+                    $(LOCAL_PATH)/platform/third_party/common/atitc \
+                    $(LOCAL_PATH)/../external/chipmunk/include/chipmunk
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
@@ -157,7 +175,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/platform/third_party/common/etc \
                     $(LOCAL_PATH)/platform/third_party/common/s3tc \
-                    $(LOCAL_PATH)/platform/third_party/common/atitc
+                    $(LOCAL_PATH)/platform/third_party/common/atitc \
+                    $(LOCAL_PATH)/../external/chipmunk/include/chipmunk
 
 
 LOCAL_LDLIBS := -lGLESv2 \
@@ -176,6 +195,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
+LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi -DUSE_FILE32API
@@ -188,3 +208,4 @@ $(call import-module,libpng)
 $(call import-module,libtiff)
 $(call import-module,libwebp)
 $(call import-module,libfreetype2)
+$(call import-module,external/chipmunk)

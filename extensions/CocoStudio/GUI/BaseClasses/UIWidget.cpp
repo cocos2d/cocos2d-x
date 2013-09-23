@@ -68,10 +68,7 @@ _sizeType(SIZE_ABSOLUTE),
 _sizePercent(Point::ZERO),
 _positionType(POSITION_ABSOLUTE),
 _positionPercent(Point::ZERO),
-_isRunning(false),
-
-/*temp action*/
-_bindingAction(NULL)
+_isRunning(false)
 {
     
 }
@@ -1158,6 +1155,11 @@ LayoutParameter* UIWidget::getLayoutParameter()
     return _layoutParameter;
 }
 
+const char* UIWidget::getDescription() const
+{
+    return "Widget";
+}
+
 /*temp action*/
 void UIWidget::setActionTag(int tag)
 {
@@ -1167,11 +1169,6 @@ void UIWidget::setActionTag(int tag)
 int UIWidget::getActionTag()
 {
 	return _actionTag;
-}
-
-void UIWidget::setBindingAction(UIActionNode *actionNode)
-{
-    _bindingAction = actionNode;
 }
 
 GUIRenderer::GUIRenderer():

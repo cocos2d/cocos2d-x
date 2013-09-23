@@ -623,7 +623,7 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
         AnimationCache * animationCache = AnimationCache::getInstance();
         animationCache->addAnimationsWithFile(animationFile.c_str());
         
-        ccAnimation = animationCache->animationByName(animation.c_str());
+        ccAnimation = animationCache->getAnimation(animation.c_str());
     }
     return ccAnimation;
 }

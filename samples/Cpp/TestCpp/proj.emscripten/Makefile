@@ -57,6 +57,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
 	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp \
 	../Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 	../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
@@ -76,6 +77,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/PerformanceTest/PerformanceTest.cpp \
 	../Classes/PerformanceTest/PerformanceTextureTest.cpp \
 	../Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+	../Classes/PhysicsTest/PhysicsTest.cpp \
 	../Classes/RenderTextureTest/RenderTextureTest.cpp \
 	../Classes/RotateWorldTest/RotateWorldTest.cpp \
 	../Classes/SceneTest/SceneTest.cpp \

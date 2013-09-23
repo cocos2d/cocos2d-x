@@ -33,7 +33,7 @@
 #include "event_dispatcher/CCTouch.h"
 #include "CCInvocation.h"
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCTouchEventListener.h"
+#include "event_dispatcher/CCEventListenerTouch.h"
 
 NS_CC_EXT_BEGIN
 

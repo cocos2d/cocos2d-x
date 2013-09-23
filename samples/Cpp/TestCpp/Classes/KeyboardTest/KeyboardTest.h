@@ -1,8 +1,6 @@
 #ifndef _KEYBOARD_TEST_H_
 #define _KEYBOARD_TEST_H_
 
-#ifdef CC_KEYBOARD_SUPPORT
-
 #include "cocos2d.h"
 #include "../testBasic.h"
 
@@ -12,8 +10,8 @@ public:
     KeyboardTest();
     ~KeyboardTest();
 
-    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event);
-    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event);
+    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
 private:
     LabelTTF*            _label;
@@ -25,6 +23,5 @@ public:
     virtual void runThisTest();
 };
 
-#endif
 
 #endif

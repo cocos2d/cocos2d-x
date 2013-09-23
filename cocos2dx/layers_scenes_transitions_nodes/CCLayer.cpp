@@ -35,13 +35,14 @@ THE SOFTWARE.
 // extern
 #include "kazmath/GL/matrix.h"
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCTouchEventListener.h"
-#include "event_dispatcher/CCTouchEvent.h"
-#include "event_dispatcher/CCKeyboardEvent.h"
-#include "event_dispatcher/CCKeyboardEventListener.h"
-#include "event_dispatcher/CCAccelerationEvent.h"
-#include "event_dispatcher/CCAccelerationEventListener.h"
+#include "event_dispatcher/CCEventListenerTouch.h"
+#include "event_dispatcher/CCEventTouch.h"
+#include "event_dispatcher/CCEventKeyboard.h"
+#include "event_dispatcher/CCEventListenerKeyboard.h"
+#include "event_dispatcher/CCEventAcceleration.h"
+#include "event_dispatcher/CCEventListenerAcceleration.h"
 #include "platform/CCDevice.h"
+#include "CCScene.h"
 
 NS_CC_BEGIN
 
@@ -98,22 +99,30 @@ Layer *Layer::create()
 
 /// Touch and Accelerometer related
 
-void Layer::onRegisterTouchListener()
-{    
-    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
+void Layer::addTouchListener()
+{
+    if (_touchListener != nullptr)
+        return;
+    
+    auto dispatcher = EventDispatcher::getInstance();    
+    
+    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE )
+    {
         // Register Touch Event
-        auto listener = TouchEventListener::create(Touch::DispatchMode::ALL_AT_ONCE);
+        auto listener = EventListenerTouch::create(Touch::DispatchMode::ALL_AT_ONCE);
         
         listener->onTouchesBegan = CC_CALLBACK_2(Layer::onTouchesBegan, this);
         listener->onTouchesMoved = CC_CALLBACK_2(Layer::onTouchesMoved, this);
         listener->onTouchesEnded = CC_CALLBACK_2(Layer::onTouchesEnded, this);
         listener->onTouchesCancelled = CC_CALLBACK_2(Layer::onTouchesCancelled, this);
         
-        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         _touchListener = listener;
-    } else {
+    }
+    else
+    {
         // Register Touch Event
-        auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+        auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
         listener->setSwallowTouches(_swallowsTouches);
         
         listener->onTouchBegan = CC_CALLBACK_2(Layer::onTouchBegan, this);
@@ -121,12 +130,12 @@ void Layer::onRegisterTouchListener()
         listener->onTouchEnded = CC_CALLBACK_2(Layer::onTouchEnded, this);
         listener->onTouchCancelled = CC_CALLBACK_2(Layer::onTouchCancelled, this);
         
-        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         _touchListener = listener;
     }
 }
 
-int Layer::executeScriptTouchHandler(TouchEvent::EventCode eventType, Touch* touch)
+int Layer::executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch)
 {
     if (kScriptTypeNone != _scriptType)
     {
@@ -139,7 +148,7 @@ int Layer::executeScriptTouchHandler(TouchEvent::EventCode eventType, Touch* tou
     return 0;
 }
 
-int Layer::executeScriptTouchesHandler(TouchEvent::EventCode eventType, const std::vector<Touch*>& touches)
+int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches)
 {
     if (kScriptTypeNone != _scriptType)
     {
@@ -167,7 +176,7 @@ void Layer::setTouchEnabled(bool enabled)
         {
             if (enabled)
             {
-                this->onRegisterTouchListener();
+                this->addTouchListener();
             }
             else
             {
@@ -240,7 +249,7 @@ void Layer::setAccelerometerEnabled(bool enabled)
             
             if (enabled)
             {
-                _accelerationListener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
+                _accelerationListener = EventListenerAcceleration::create(CC_CALLBACK_2(Layer::onAcceleration, this));
                 dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
             }
         }
@@ -271,6 +280,23 @@ void Layer::onAcceleration(Acceleration* pAccelerationValue, Event* event)
     }
 }
 
+void Layer::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(keyCode);
+    CC_UNUSED_PARAM(event);
+}
+
+void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(event);
+    if(kScriptTypeNone != _scriptType)
+    {
+        KeypadScriptData data(keyCode, this);
+        ScriptEvent event(kKeypadEvent,&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+}
+
 /// isKeyboardEnabled getter
 bool Layer::isKeyboardEnabled() const
 {
@@ -289,7 +315,7 @@ void Layer::setKeyboardEnabled(bool enabled)
         
         if (enabled)
         {
-            auto listener = KeyboardEventListener::create();
+            auto listener = EventListenerKeyboard::create();
             listener->onKeyPressed = CC_CALLBACK_2(Layer::onKeyPressed, this);
             listener->onKeyReleased = CC_CALLBACK_2(Layer::onKeyReleased, this);
             
@@ -306,7 +332,7 @@ void Layer::onEnter()
     // since events are propagated in reverse order
     if (_touchEnabled)
     {
-        this->onRegisterTouchListener();
+        this->addTouchListener();
     }
 
     // then iterate over all the children
@@ -317,8 +343,8 @@ void Layer::onEnter()
     {
         auto dispatcher = EventDispatcher::getInstance();
         dispatcher->removeEventListener(_accelerationListener);
-        auto listener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
-        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        _accelerationListener = EventListenerAcceleration::create(CC_CALLBACK_2(Layer::onAcceleration, this));
+        dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
     }
 }
 
@@ -345,7 +371,8 @@ void Layer::onEnterTransitionDidFinish()
     if (_accelerometerEnabled)
     {
         auto dispatcher = EventDispatcher::getInstance();
-        _accelerationListener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
+        dispatcher->removeEventListener(_accelerationListener);
+        _accelerationListener = EventListenerAcceleration::create(CC_CALLBACK_2(Layer::onAcceleration, this));
         dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
     }
     
@@ -356,7 +383,7 @@ bool Layer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        return executeScriptTouchHandler(TouchEvent::EventCode::BEGAN, pTouch) == 0 ? false : true;
+        return executeScriptTouchHandler(EventTouch::EventCode::BEGAN, pTouch) == 0 ? false : true;
     }
 
     CC_UNUSED_PARAM(pTouch);
@@ -369,7 +396,7 @@ void Layer::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchHandler(TouchEvent::EventCode::MOVED, pTouch);
+        executeScriptTouchHandler(EventTouch::EventCode::MOVED, pTouch);
         return;
     }
 
@@ -381,7 +408,7 @@ void Layer::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchHandler(TouchEvent::EventCode::ENDED, pTouch);
+        executeScriptTouchHandler(EventTouch::EventCode::ENDED, pTouch);
         return;
     }
 
@@ -393,7 +420,7 @@ void Layer::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchHandler(TouchEvent::EventCode::CANCELLED, pTouch);
+        executeScriptTouchHandler(EventTouch::EventCode::CANCELLED, pTouch);
         return;
     }
 
@@ -405,7 +432,7 @@ void Layer::onTouchesBegan(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchesHandler(TouchEvent::EventCode::BEGAN, pTouches);
+        executeScriptTouchesHandler(EventTouch::EventCode::BEGAN, pTouches);
         return;
     }
 
@@ -417,7 +444,7 @@ void Layer::onTouchesMoved(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchesHandler(TouchEvent::EventCode::MOVED, pTouches);
+        executeScriptTouchesHandler(EventTouch::EventCode::MOVED, pTouches);
         return;
     }
 
@@ -429,7 +456,7 @@ void Layer::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchesHandler(TouchEvent::EventCode::ENDED, pTouches);
+        executeScriptTouchesHandler(EventTouch::EventCode::ENDED, pTouches);
         return;
     }
 
@@ -441,13 +468,37 @@ void Layer::onTouchesCancelled(const std::vector<Touch*>& pTouches, Event *pEven
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchesHandler(TouchEvent::EventCode::CANCELLED, pTouches);
+        executeScriptTouchesHandler(EventTouch::EventCode::CANCELLED, pTouches);
         return;
     }
 
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
+
+
+#ifdef CC_USE_PHYSICS
+void Layer::addChild(Node* child)
+{
+    Node::addChild(child);
+}
+
+void Layer::addChild(Node* child, int zOrder)
+{
+    Node::addChild(child, zOrder);
+}
+
+void Layer::addChild(Node* child, int zOrder, int tag)
+{
+    Node::addChild(child, zOrder, tag);
+    
+    if (this->getParent() &&
+        dynamic_cast<Scene*>(this->getParent()) != nullptr)
+    {
+        dynamic_cast<Scene*>(this->getParent())->addChildToPhysicsWorld(child);
+    }
+}
+#endif
 
 // LayerRGBA
 LayerRGBA::LayerRGBA()
@@ -679,7 +730,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         updateColor();
         setContentSize(Size(w, h));
 
-        setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_COLOR));
         return true;
     }
     return false;

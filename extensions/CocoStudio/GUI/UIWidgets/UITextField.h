@@ -70,6 +70,8 @@ public:
     bool getInsertText();
     void setDeleteBackward(bool deleteBackward);
     bool getDeleteBackward();
+    
+
 protected:
     bool m_bMaxLengthEnabled;
     int m_nMaxLength;
@@ -82,14 +84,16 @@ protected:
 };
 
 
-typedef void (Object::*SEL_TextFieldAttachWithIMEEvent)(Object*);
-#define coco_TextField_AttachWithIME_selector(_SELECTOR) (SEL_TextFieldAttachWithIMEEvent)(&_SELECTOR)
-typedef void (Object::*SEL_TextFieldDetachWithIMEEvent)(Object*);
-#define coco_TextField_DetachWithIME_selector(_SELECTOR) (SEL_TextFieldDetachWithIMEEvent)(&_SELECTOR)
-typedef void (Object::*SEL_TextFieldInsertTextEvent)(Object*);
-#define coco_TextField_InsertText_selector(_SELECTOR) (SEL_TextFieldInsertTextEvent)(&_SELECTOR)
-typedef void (Object::*SEL_TextFieldDeleteBackwardEvent)(Object*);
-#define coco_TextField_DeleteBackward_selector(_SELECTOR) (SEL_TextFieldDeleteBackwardEvent)(&_SELECTOR)
+typedef enum
+{
+    TEXTFIELD_EVENT_ATTACH_WITH_IME,
+    TEXTFIELD_EVENT_DETACH_WITH_IME,
+    TEXTFIELD_EVENT_INDERT_TEXT,
+    TEXTFIELD_EVENT_DELETE_BACKWARD,
+}TextFiledEventType;
+
+typedef void (Object::*SEL_TextFieldEvent)(Object*, TextFiledEventType);
+#define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
 //class UITextField : public UIWidget
 class UITextField : public UIWidget
@@ -124,14 +128,14 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addAttachWithIMEEvent(Object* target, SEL_TextFieldAttachWithIMEEvent selecor);
-    void addDetachWithIMEEvent(Object* target, SEL_TextFieldDetachWithIMEEvent selecor);
-    void addInsertTextEvent(Object* target, SEL_TextFieldInsertTextEvent selecor);
-    void addDeleteBackwardEvent(Object* target, SEL_TextFieldDeleteBackwardEvent selecor);
+    void addEventListener(Object* target, SEL_TextFieldEvent selecor);
     virtual void setAnchorPoint(const Point &pt);
     virtual void setColor(const Color3B &color);
     virtual void setOpacity(int opacity);
-    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     /*compatibel*/
     /**
      * These methods will be removed
@@ -150,21 +154,15 @@ protected:
     virtual void onSizeChanged();
     void textfieldRendererScaleChangedWithSize();
 protected:
-    float m_fTouchWidth;
-    float m_fTouchHeight;
-    bool m_bUseTouchArea;
+    UICCTextField* _textFieldRenderer;
     
-    Object* m_pAttachWithIMEListener;
-    Object* m_pDetachWithIMEListener;
-    Object* m_pInsertTextListener;
-    Object* m_pDeleteBackwardListener;
+    float _touchWidth;
+    float _touchHeight;
+    bool _useTouchArea;
     
-    SEL_TextFieldAttachWithIMEEvent m_pfnAttachWithIMESelector;
-    SEL_TextFieldDetachWithIMEEvent m_pfnDetachWithIMESelector;
-    SEL_TextFieldInsertTextEvent m_pfnInsertTextSelector;
-    SEL_TextFieldDeleteBackwardEvent m_pfnDeleteBackwardSelector;
+    Object* _eventListener;
+    SEL_TextFieldEvent _eventSelector;
     
-    UICCTextField* m_pTextFieldRenderer;
 };
 
 NS_CC_EXT_END

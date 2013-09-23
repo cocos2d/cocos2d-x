@@ -875,10 +875,14 @@ public:
     virtual void onEnter();
     virtual void onExit();
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
-    void setBindingAction(UIActionNode* actionNode);
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
@@ -950,9 +954,6 @@ protected:
     PositionType _positionType;
     Point _positionPercent;
     bool _isRunning;
-    
-    /*temp action*/
-    UIActionNode* _bindingAction;
 };
 
 class GUIRenderer : public NodeRGBA

@@ -42,7 +42,7 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "event_dispatcher/CCEventDispatcher.h"
 #include "event_dispatcher/CCEvent.h"
-#include "event_dispatcher/CCTouchEvent.h"
+#include "event_dispatcher/CCEventTouch.h"
 
 // externals
 #include "kazmath/GL/matrix.h"
@@ -126,6 +126,8 @@ Node::Node(void)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
+, _eventPriority(0)
+, _oldEventPriority(0)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -176,10 +178,7 @@ Node::~Node()
     
     CC_SAFE_DELETE(_componentContainer);
     
-    for (auto iter = _eventlisteners.begin(); iter != _eventlisteners.end(); ++iter)
-    {
-        EventDispatcher::getInstance()->removeEventListener(*iter);
-    }
+    removeAllEventListeners();
 }
 
 bool Node::init()
@@ -826,7 +825,7 @@ void Node::visit()
         }
         // self draw
         this->draw();
-        _eventPriority = ++_globalEventPriorityIndex;
+        updateEventPriorityIndex();
 
         for( ; i < _children->count(); i++ )
         {
@@ -838,7 +837,7 @@ void Node::visit()
     else
     {
         this->draw();
-        _eventPriority = ++_globalEventPriorityIndex;
+        updateEventPriorityIndex();
     }
 
     // reset for next frame
@@ -950,7 +949,9 @@ void Node::onExit()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
-    arrayMakeObjectsPerformSelector(_children, onExit, Node*);    
+    arrayMakeObjectsPerformSelector(_children, onExit, Node*);
+    
+    removeAllEventListeners();
 }
 
 void Node::setActionManager(ActionManager* actionManager)
@@ -1304,6 +1305,28 @@ void Node::associateEventListener(EventListener* listener)
 void Node::dissociateEventListener(EventListener* listener)
 {
     _eventlisteners.erase(listener);
+}
+
+void Node::removeAllEventListeners()
+{
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    auto eventListenersCopy = _eventlisteners;
+    
+    for (auto& listener : eventListenersCopy)
+    {
+        dispatcher->removeEventListener(listener);
+    }
+}
+
+void Node::setDirtyForAllEventListeners()
+{
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    for (auto& listener : _eventlisteners)
+    {
+        dispatcher->setDirtyForEventType(listener->_type, true);
+    }
 }
 
 // NodeRGBA

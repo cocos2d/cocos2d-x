@@ -25,7 +25,10 @@
 #include "shaders/CCShaderCache.h"
 #include "textures/CCTextureCache.h"
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCAccelerationEvent.h"
+#include "event_dispatcher/CCEventAcceleration.h"
+#include "event_dispatcher/CCEventKeyboard.h"
+
+#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
@@ -67,6 +70,36 @@ struct engine {
 };
 
 static struct engine engine;
+
+static char* editboxText = NULL;
+extern EditTextCallback s_pfEditTextCallback;
+extern void* s_ctx;
+
+extern "C" {
+	JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {	
+		jsize  size = env->GetArrayLength(text);
+		pthread_mutex_lock(&(engine.app->mutex));
+		if (size > 0) {
+			
+
+			jbyte * data = (jbyte*)env->GetByteArrayElements(text, 0);
+			char* pBuf = (char*)malloc(size+1);
+			if (pBuf != NULL) {
+				memcpy(pBuf, data, size);
+				pBuf[size] = '\0';
+				editboxText = pBuf;				
+			}
+			env->ReleaseByteArrayElements(text, data, 0);
+			
+		} else {
+			char* pBuf = (char*)malloc(1);
+			pBuf[0] = '\0';
+			editboxText = pBuf;			
+		}
+		pthread_cond_broadcast(&engine.app->cond);
+		pthread_mutex_unlock(&(engine.app->mutex));
+	}
+}
 
 typedef struct cocos_dimensions {
     int w;
@@ -198,7 +231,14 @@ static void engine_draw_frame(struct engine* engine) {
     /* // Just fill the screen with a color. */
     /* glClearColor(((float)engine->state.x)/engine->width, engine->state.angle, */
     /*         ((float)engine->state.y)/engine->height, 1); */
-    /* glClear(GL_COLOR_BUFFER_BIT); */
+    /* glClear(GL_COLOR_BUFFER_BIT); */	
+	
+	if (s_pfEditTextCallback && editboxText)
+	{
+		s_pfEditTextCallback(editboxText, s_ctx);
+		free(editboxText);
+		editboxText = NULL;
+	}	
 
     eglSwapBuffers(engine->display, engine->surface);
 }
@@ -349,6 +389,34 @@ static int32_t handle_touch_input(AInputEvent *event) {
     }
 }
 
+/*
+* Handle Key Inputs
+*/
+static int32_t handle_key_input(AInputEvent *event)
+{
+    if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
+    {
+        switch (AKeyEvent_getKeyCode(event))
+        {
+        case AKEYCODE_BACK:	
+            {
+                cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, false);
+                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+            }
+            return 1;
+        case AKEYCODE_MENU:
+            {
+                cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
+                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+            }
+            return 1;
+        default:
+            break;
+        }
+    }
+    return 0;
+}
+
 /**
  * Process the next input event.
  */
@@ -365,6 +433,8 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 
         return handle_touch_input(event);
     }
+	else
+		return handle_key_input(event);
 
     return 0;
 }
@@ -445,6 +515,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
         case APP_CMD_GAINED_FOCUS:
             if (cocos2d::Director::getInstance()->getOpenGLView()) {
                 cocos2d::Application::getInstance()->applicationWillEnterForeground();
+				engine->animating = 1;
             }
 
             break;
@@ -526,21 +597,24 @@ void android_main(struct android_app* state) {
                             // ACONFIGURATION_ORIENTATION_ANY
                             // ACONFIGURATION_ORIENTATION_PORT
                             // ACONFIGURATION_ORIENTATION_SQUARE
-                            cocos2d::AccelerationEvent accEvent;
-                            accEvent.acc.x = event.acceleration.x;
-                            accEvent.acc.y = -event.acceleration.y;
-                            accEvent.acc.z = event.acceleration.z;
-                            accEvent.acc.timestamp = 0;
+                            cocos2d::Acceleration acc;
+                            acc.x = -event.acceleration.x/10;
+                            acc.y = -event.acceleration.y/10;
+                            acc.z = event.acceleration.z/10;
+                            acc.timestamp = 0;
+                            cocos2d::EventAcceleration accEvent(acc);
+
                             cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
                         } else {
                             // ACONFIGURATION_ORIENTATION_LAND
                             // swap x and y parameters
+                            cocos2d::Acceleration acc;
+                            acc.x = event.acceleration.y/10;
+                            acc.y = -event.acceleration.x/10;
+                            acc.z = event.acceleration.z/10;
+                            acc.timestamp = 0;
+                            cocos2d::EventAcceleration accEvent(acc);
 
-                            cocos2d::AccelerationEvent accEvent;
-                            accEvent.acc.x = -event.acceleration.y;
-                            accEvent.acc.y = event.acceleration.x;
-                            accEvent.acc.z = event.acceleration.z;
-                            accEvent.acc.timestamp = 0;
                             cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
                         }
                     }

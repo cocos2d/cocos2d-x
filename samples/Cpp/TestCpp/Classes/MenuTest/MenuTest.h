@@ -106,9 +106,6 @@ class RemoveMenuItemWhenMove : public Layer
 public:
     RemoveMenuItemWhenMove();
     ~RemoveMenuItemWhenMove();
-    
-    virtual void onRegisterTouchListener() override;
-//    virtual void registerWithTouchDispatcher(void);
     virtual bool onTouchBegan(Touch  *touch, Event  *event);
     virtual void onTouchMoved(Touch  *touch, Event  *event);
     

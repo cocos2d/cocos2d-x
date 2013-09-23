@@ -37,7 +37,7 @@
 NS_CC_BEGIN
 
 class Event;
-class TouchEvent;
+class EventTouch;
 class Node;
 
 /**
@@ -55,11 +55,14 @@ public:
     /** Gets the singleton of EventDispatcher */
     static EventDispatcher* getInstance();
 
+    /** Destroys the singleton of EventDispatcher */
+    static void destroyInstance();
+    
     /** Adds a event listener for a specified event with the priority of scene graph.
      *  @param listener The listener of a specified event.
      *  @param node The priority of the listener is based on the draw order of this node.
      *  @note  The priority of scene graph will be fixed value 0. So the order of listener item
-     *          in the vector will be ' <0, =0, scene graph, >0'.
+     *          in the vector will be ' <0, scene graph (0 priority), >0'.
      */
     void addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node);
 
@@ -67,6 +70,7 @@ public:
      *  @param listener The listener of a specified event.
      *  @param fixedPriority The fixed priority of the listener.
      *  @note A lower priority will be called before the ones that have a higher value.
+     *        0 priority is forbidden for fixed priority since it's used for scene graph based priority.
      */
     void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
@@ -80,12 +84,9 @@ public:
     
     /** Removes all listeners */
     void removeAllListeners();
-    
-    /** Sets listener's priority with node's draw order. */
-    void setPriorityWithSceneGraph(EventListener* listener, Node* node);
 
     /** Sets listener's priority with fixed value. */
-    void setPriorityWithFixedValue(EventListener* listener, int fixedPriority);
+    void setPriority(EventListener* listener, int fixedPriority);
 
     /** Whether to enable dispatching events */
     void setEnabled(bool isEnabled);
@@ -97,8 +98,12 @@ public:
      *  Also removes all EventListeners marked for deletion from the
      *  event dispatcher list.
      */
-    void dispatchEvent(Event* event, bool toSortListeners = true);
+    void dispatchEvent(Event* event, bool forceSortListeners = false);
 
+    void setDirtyForEventType(const std::string& eventType, bool isDirty);
+    
+    bool isDirtyForEventType(const std::string& eventType);
+    
 public:
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
@@ -109,6 +114,7 @@ private:
         int            fixedPriority;   // The higher the number, the higher the priority
         Node*          node;            // Weak reference.
         EventListener* listener;
+        ~EventListenerItem();
     };
     
     /** Constructor of EventDispatcher */
@@ -118,7 +124,7 @@ private:
     void addEventListenerWithItem(EventListenerItem* item);
     
     /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
-    void dispatchTouchEvent(TouchEvent* event);
+    void dispatchTouchEvent(EventTouch* event);
     
     /** Gets event the listener list for the event type. */
     std::vector<EventListenerItem*>* getListenerItemsForType(const std::string& eventType);
@@ -126,18 +132,25 @@ private:
     /** Sorts the listeners of specified type by priority */
     void sortAllEventListenerItemsForType(const std::string& eventType);
     
-    /** Removes all listeners that have been unregistered. */
-    void removeUnregisteredListeners();
+    /** Updates all listener items
+     *  1) Removes all listener items that have been marked as 'removed' when dispatching event.
+     *  2) Adds all listener items that have been marked as 'added' when dispatching event.
+     */
+    void updateListenerItems();
 
 private:
     /**
      * Listeners map.
      */
-    std::map<std::string, std::vector<EventListenerItem*>*>* _listeners;
-
-    int               _inDispatch;
-    std::list<Node*>  _eventNodes;
-    bool              _isEnabled;
+    std::map<std::string, std::vector<EventListenerItem*>*> _listeners;
+    
+    /// Priority dirty flag
+    std::map<std::string, bool> _priorityDirtyFlagMap;
+    
+    std::vector<EventListenerItem*> _toAddedListeners;
+    
+    int   _inDispatch;        ///< Whether it's in dispatching event
+    bool  _isEnabled;         ///< Whether to enable dispatching event
 };
 
 

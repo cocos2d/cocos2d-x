@@ -42,7 +42,7 @@ public:
     /**
      * Default constructor
      */
-    LayoutParameter() : m_margin(UIMargin()){m_eLayoutParameterType = LAYOUT_PARAMETER_NONE;};
+    LayoutParameter() : _margin(UIMargin()){_layoutParameterType = LAYOUT_PARAMETER_NONE;};
     
     /**
      * Default destructor
@@ -82,8 +82,8 @@ public:
      */
     LayoutParameterType getLayoutType() const;
 protected:
-    UIMargin m_margin;
-    LayoutParameterType m_eLayoutParameterType;
+    UIMargin _margin;
+    LayoutParameterType _layoutParameterType;
 };
 
 class LinearLayoutParameter : public LayoutParameter
@@ -92,7 +92,7 @@ public:
     /**
      * Default constructor
      */
-    LinearLayoutParameter() : m_eLinearGravity(LINEAR_GRAVITY_NONE){m_eLayoutParameterType = LAYOUT_PARAMETER_LINEAR;};
+    LinearLayoutParameter() : m_eLinearGravity(LINEAR_GRAVITY_NONE){_layoutParameterType = LAYOUT_PARAMETER_LINEAR;};
     
     /**
      * Default destructor
@@ -132,7 +132,7 @@ public:
     /**
      * Default constructor
      */
-    RelativeLayoutParameter() : m_eRelativeAlign(RELATIVE_ALIGN_NONE),m_strRelativeWidgetName(""),m_strRelativeLayoutName(""){m_eLayoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
+    RelativeLayoutParameter() : m_eRelativeAlign(RELATIVE_ALIGN_NONE),m_strRelativeWidgetName(""),m_strRelativeLayoutName(""){_layoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
     
     /**
      * Default destructor
