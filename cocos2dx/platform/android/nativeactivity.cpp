@@ -150,6 +150,7 @@ static cocos_dimensions engine_init_display(struct engine* engine) {
      */
     const EGLint attribs[] = {
             EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+            EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
             EGL_BLUE_SIZE, 5,
             EGL_GREEN_SIZE, 6,
             EGL_RED_SIZE, 5,
