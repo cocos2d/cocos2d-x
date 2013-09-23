@@ -55,6 +55,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    
+    CCFileUtils::sharedFileUtils()->addSearchPath("res");
+    
 #ifdef JS_OBFUSCATED
     ScriptingCore::getInstance()->runScript("game.js");
 #else
