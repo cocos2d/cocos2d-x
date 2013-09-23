@@ -122,6 +122,9 @@ public:
     void updateDisplayedColor(const ccColor3B &parentColor);
     void updateDisplayedOpacity(GLubyte parentOpacity);
 
+	void setColor(const ccColor3B& color);
+	void setOpacity(GLubyte opacity);
+
     //! Update color to render display
     void updateColor();
 
