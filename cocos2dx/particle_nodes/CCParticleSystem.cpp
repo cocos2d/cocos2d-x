@@ -411,9 +411,9 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                         image->release();
                     }
                 }
-				if (_configName.length()>0)
+                if (_configName.length()>0)
                 {
-                    _yCoordFlipped = dictionary->valueForKey("yCoordFlipped")->intValue();
+                  _yCoordFlipped = dictionary->valueForKey("yCoordFlipped")->intValue();
                 }
                 CCASSERT( this->_texture != NULL, "CCParticleSystem: error loading the texture");
             }
@@ -735,10 +735,10 @@ void ParticleSystem::update(float dt)
 
                     p->pos.x = - cosf(p->modeB.angle) * p->modeB.radius;
                     p->pos.y = - sinf(p->modeB.angle) * p->modeB.radius;
-					if (_yCoordFlipped == 1)
-               		{
-                		p->pos.y = -p->pos.y;
-                	}
+                    if (_yCoordFlipped == 1)
+                    {
+                      p->pos.y = -p->pos.y;
+                    }
 				}
 
                 // color
