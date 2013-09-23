@@ -576,9 +576,9 @@ class JSB_ControlButtonTarget : public CCObject
 {
 public:
     JSB_ControlButtonTarget()
-        : _jsFunc(nullptr),
+        : _jsFunc(NULL),
         _type(CCControlEventTouchDown),
-        _jsTarget(nullptr),
+        _jsTarget(NULL),
         _needUnroot(false)
     {}
 
@@ -593,7 +593,7 @@ public:
 
         JS_RemoveObjectRoot(cx, &_jsFunc);
 
-        for (auto iter = _jsNativeTargetMap.begin(); iter != _jsNativeTargetMap.end(); ++iter)
+        for (std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator iter = _jsNativeTargetMap.begin(); iter != _jsNativeTargetMap.end(); ++iter)
         {
             if (this == iter->second)
             {
@@ -677,8 +677,10 @@ static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContex
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing control event");
 
         // Check whether the target already exists.
-        auto range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(jsDelegate);
-        for (auto it = range.first; it != range.second; ++it)
+        std::pair<std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator,std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator> range;
+        range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(jsDelegate);
+        std::map<JSObject*, JSB_ControlButtonTarget*>::iterator it = range.first;
+        for (; it != range.second; ++it)
         {
             if (it->second->_jsFunc == jsFunc && arg2 == it->second->_type)
             {
@@ -696,7 +698,7 @@ static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContex
         nativeDelegate->setEventType(arg2);
 
         CCArray* nativeDelegateArray = static_cast<CCArray*>(cobj->getUserObject());
-        if (nullptr == nativeDelegateArray)
+        if (NULL == nativeDelegateArray)
         {
             nativeDelegateArray = new CCArray();
             nativeDelegateArray->init();
@@ -737,10 +739,12 @@ static JSBool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSCon
         obj = JSVAL_TO_OBJECT(argv[0]);
         JSObject* jsFunc = JSVAL_TO_OBJECT(argv[1]);
 
-        JSB_ControlButtonTarget* nativeTargetToRemoved = nullptr;
+        JSB_ControlButtonTarget* nativeTargetToRemoved = NULL;
 
-        auto range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(obj);
-        for (auto it = range.first; it != range.second; ++it)
+        std::pair<std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator,std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator> range;
+        range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(obj);
+        std::map<JSObject*, JSB_ControlButtonTarget*>::iterator it = range.first;
+        for (; it != range.second; ++it)
         {
             if (it->second->_jsFunc == jsFunc && arg2 == it->second->_type)
             {
