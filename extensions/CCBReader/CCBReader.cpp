@@ -975,7 +975,7 @@ bool CCBReader::isJSControlled() {
     return jsControlled;
 }
 
-void CCBReader::addOwnerCallbackName(const std::string name) {
+void CCBReader::addOwnerCallbackName(const std::string& name) {
     mOwnerCallbackNames.push_back(name);
 }
 
@@ -988,7 +988,7 @@ void CCBReader::addOwnerCallbackControlEvents(CCControlEvent type)
     mOwnerOwnerCallbackControlEvents->addObject(CCInteger::create((int)type));
 }
 
-void CCBReader::addDocumentCallbackName(const std::string name) {
+void CCBReader::addDocumentCallbackName(const std::string& name) {
     mActionManager->addDocumentCallbackName(name);
 }
 
