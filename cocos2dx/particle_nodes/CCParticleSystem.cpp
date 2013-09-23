@@ -81,7 +81,7 @@ NS_CC_BEGIN
 //
 
 ParticleSystem::ParticleSystem()
-: m_configName("")
+: _configName("")
 , _isBlendAdditive(false)
 , _isAutoRemoveOnFinish(false)
 , _plistFile("")
@@ -117,7 +117,7 @@ ParticleSystem::ParticleSystem()
 , _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 , _opacityModifyRGB(false)
 , _positionType(PositionType::FREE)
-, m_yCoordFlipped(0)
+, _yCoordFlipped(0)
 {
     modeA.gravity = Point::ZERO;
     modeA.speed = 0;
@@ -207,11 +207,10 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
         // self, not super
         if(this->initWithTotalParticles(maxParticles))
         {
-			// Emitter name in particle designer 2.0
-			const String * configNameConstStr = dictionary->valueForKey("configName");
-            m_configName = configNameConstStr->getCString();
-			//sprintf(m_configName, "%s", dictionary->valueForKey("configName").c_str()); 
-			
+            // Emitter name in particle designer 2.0
+            const String * configNameConstStr = dictionary->valueForKey("configName");
+            _configName = configNameConstStr->getCString();
+
             // angle
             _angle = dictionary->valueForKey("angle")->floatValue();
             _angleVar = dictionary->valueForKey("angleVariance")->floatValue();
@@ -220,7 +219,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             _duration = dictionary->valueForKey("duration")->floatValue();
 
             // blend function 
-            if (m_configName.length()>0)
+            if (_configName.length()>0)
             {
                 _blendFunc.src = dictionary->valueForKey("blendFuncSource")->floatValue();
             }
@@ -298,7 +297,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             // or Mode B: radius movement
             else if (_emitterMode == Mode::RADIUS)
             {
-                if (m_configName.length()>0)
+                if (_configName.length()>0)
                 {
                     modeB.startRadius = dictionary->valueForKey("maxRadius")->intValue();
                 }
@@ -307,7 +306,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                     modeB.startRadius = dictionary->valueForKey("maxRadius")->floatValue();
                 }
                 modeB.startRadiusVar = dictionary->valueForKey("maxRadiusVariance")->floatValue();
-                if (m_configName.length()>0)
+                if (_configName.length()>0)
                 {
                     modeB.endRadius = dictionary->valueForKey("minRadius")->intValue();
                 }
@@ -316,7 +315,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                     modeB.endRadius = dictionary->valueForKey("minRadius")->floatValue();
                 }
                 modeB.endRadiusVar = 0.0f;
-               if (m_configName.length()>0)
+               if (_configName.length()>0)
                 {
                     modeB.rotatePerSecond = dictionary->valueForKey("rotatePerSecond")->intValue();
                 }
@@ -412,9 +411,9 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                         image->release();
                     }
                 }
-				if (m_configName.length()>0)
+				if (_configName.length()>0)
                 {
-                    m_yCoordFlipped = dictionary->valueForKey("yCoordFlipped")->intValue();
+                    _yCoordFlipped = dictionary->valueForKey("yCoordFlipped")->intValue();
                 }
                 CCASSERT( this->_texture != NULL, "CCParticleSystem: error loading the texture");
             }
@@ -709,9 +708,9 @@ void ParticleSystem::update(float dt)
                     tmp = radial + tangential + modeA.gravity;
                     tmp = tmp * dt;
                     p->modeA.dir = p->modeA.dir + tmp;
-					if (m_configName.length()>0)
+					if (_configName.length()>0)
 					{
-						if (m_yCoordFlipped == -1)
+						if (_yCoordFlipped == -1)
 						{
 							 tmp = p->modeA.dir * dt;
 						}
@@ -736,7 +735,7 @@ void ParticleSystem::update(float dt)
 
                     p->pos.x = - cosf(p->modeB.angle) * p->modeB.radius;
                     p->pos.y = - sinf(p->modeB.angle) * p->modeB.radius;
-					if (m_yCoordFlipped == 1)
+					if (_yCoordFlipped == 1)
                		{
                 		p->pos.y = -p->pos.y;
                 	}

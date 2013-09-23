@@ -457,7 +457,7 @@ protected:
     tParticle *_particles;
 
 	//Emitter name
-	std::string m_configName;
+	std::string _configName;
 
     // color modulate
     //    BOOL colorModulate;
@@ -544,7 +544,7 @@ protected:
     /** does the alpha value modify color */
     bool _opacityModifyRGB;
 	/** does FlippedY variance of each particle */
-    int m_yCoordFlipped;
+    int _yCoordFlipped;
 
 
     /** particles movement type: Free or Grouped
