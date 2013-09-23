@@ -300,7 +300,10 @@ Spawn * ActionNode::refreshActionProperty()
 			}
 		}
 		Sequence* cSequence = Sequence::create(cSequenceArray);
-		cSpawnArray->addObject(cSequence);
+		if (cSequence != NULL)
+		{
+			cSpawnArray->addObject(cSequence);
+		}
 	}
 
 	if (_action == NULL)
