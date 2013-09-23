@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include "CCBSequence.h"
+#include "GUI/CCControlExtension/CCControl.h"
 
 
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
@@ -199,6 +200,7 @@ private:
     
     std::vector<std::string> mOwnerCallbackNames;
     CCArray* mOwnerCallbackNodes;
+    CCArray* mOwnerOwnerCallbackControlEvents;
     std::string mCCBRootPath;
     bool hasScriptingOwner;    
     bool init();
@@ -354,6 +356,7 @@ public:
     
     CCArray* getOwnerCallbackNames();
     CCArray* getOwnerCallbackNodes();
+    CCArray* getOwnerCallbackControlEvents();
     CCArray* getOwnerOutletNames();
     CCArray* getOwnerOutletNodes();
     CCArray* getNodesWithAnimationManagers();
@@ -371,22 +374,32 @@ public:
      *  @js NA
      *  @lua NA
      */
-    void addOwnerCallbackName(std::string name);
+    void addOwnerCallbackName(const std::string name);
     /**
      *  @js NA
      *  @lua NA
      */
     void addOwnerCallbackNode(CCNode *node);
+     /**
+     *  @js NA
+     *  @lua NA
+     */
+    void addOwnerCallbackControlEvents(CCControlEvent type);
     /**
      *  @js NA
      *  @lua NA
      */
-    void addDocumentCallbackName(std::string name);
+    void addDocumentCallbackName(const std::string name);
     /**
      *  @js NA
      *  @lua NA
      */
     void addDocumentCallbackNode(CCNode *node);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    void addDocumentCallbackControlEvents(CCControlEvent eventType);
     /**
      *  @js NA
      *  @lua NA

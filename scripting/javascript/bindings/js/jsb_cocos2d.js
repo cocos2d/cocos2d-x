@@ -133,6 +133,20 @@ cc._c4b = function( r, g, b, a )
 cc.c4 = cc.c4b;
 cc._c4 = cc._c4b;
 
+/**
+ * convert Color3B to a string of color for style.
+ * e.g.  Color3B(255,6,255)  to : "#ff06ff"
+ * @param clr
+ * @return {String}
+ */
+cc.convertColor3BtoHexString = function (clr) {
+    var hR = clr.r.toString(16);
+    var hG = clr.g.toString(16);
+    var hB = clr.b.toString(16);
+    var stClr = "#" + (clr.r < 16 ? ("0" + hR) : hR) + (clr.g < 16 ? ("0" + hG) : hG) + (clr.b < 16 ? ("0" + hB) : hB);
+    return stClr;
+};
+
 //
 // Color 4F
 //
