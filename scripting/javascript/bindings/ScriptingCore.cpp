@@ -558,7 +558,7 @@ void ScriptingCore::reset()
 ScriptingCore::~ScriptingCore()
 {
     cleanup();
-    
+
     assert(pInstance == this);
     if(pInstance == this)
     {

@@ -43,12 +43,13 @@ class ScriptingCore : public CCScriptEngineProtocol
     
     static ScriptingCore* pInstance;
 
+	static ScriptingCore* pInstance = NULL;
+
 	ScriptingCore();
 public:
 	~ScriptingCore();
 
-	static ScriptingCore *getInstance()
-    {
+	static ScriptingCore *getInstance() {
         if (pInstance == NULL) {
             pInstance = new ScriptingCore();
         }
