@@ -71,6 +71,8 @@ js_proxy_t *_js_native_global_ht = NULL;
 js_type_class_t *_js_global_type_ht = NULL;
 char *_js_log_buf = NULL;
 
+ScriptingCore* ScriptingCore::pInstance = NULL;
+
 std::vector<sc_register_sth> registrationList;
 
 // name ~> JSScript map
@@ -556,6 +558,12 @@ void ScriptingCore::reset()
 ScriptingCore::~ScriptingCore()
 {
     cleanup();
+    
+    assert(pInstance == this);
+    if(pInstance == this)
+    {
+        pInstance = NULL;
+    }
 }
 
 void ScriptingCore::cleanup()
