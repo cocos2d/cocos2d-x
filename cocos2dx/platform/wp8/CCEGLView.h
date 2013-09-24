@@ -78,6 +78,10 @@ public:
     kmMat4* getOrientationMatrix() {return &m_orientationMatrix;};
     kmMat4* getReverseOrientationMatrix (){return &m_reverseOrientationMatrix;};
 
+    Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
+
+
+
     virtual void setIMEKeyboardState(bool bOpen);
 	void ShowKeyboard(Windows::Foundation::Rect r);
 	void HideKeyboard(Windows::Foundation::Rect r);

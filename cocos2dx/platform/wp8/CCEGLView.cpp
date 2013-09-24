@@ -219,6 +219,9 @@ void CCEGLView::setFrameZoomFactor(float fZoomFactor)
     m_fFrameZoomFactor = fZoomFactor;
     resize(m_obScreenSize.width * fZoomFactor, m_obScreenSize.height * fZoomFactor);
     centerWindow();
+
+
+
     CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
 }
 
@@ -339,9 +342,10 @@ void CCEGLView::UpdateForWindowSizeChange()
     else
     {
         m_obScreenSize = CCSizeMake(width, height);
-    }
-
-    //setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+        CCSize designSize = getDesignResolutionSize();
+        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+        CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
+   }
 }
 
 void CCEGLView::UpdateOrientationMatrix()
