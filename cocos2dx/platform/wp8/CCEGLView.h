@@ -73,14 +73,15 @@ public:
     virtual bool isOpenGLReady();
     virtual void end();
     virtual void swapBuffers();
-    virtual void setFrameSize(float width, float height);
+    virtual void setViewPortInPoints(float x , float y , float w , float h);
+    virtual void setScissorInPoints(float x , float y , float w , float h);
     kmMat4* getOrientationMatrix() {return &m_orientationMatrix;};
     kmMat4* getReverseOrientationMatrix (){return &m_reverseOrientationMatrix;};
 
     virtual void setIMEKeyboardState(bool bOpen);
 	void ShowKeyboard(Windows::Foundation::Rect r);
 	void HideKeyboard(Windows::Foundation::Rect r);
-	// DirectX 
+
     virtual bool Create(Windows::UI::Core::CoreWindow^ window);
 
 	void OnPointerPressed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::PointerEventArgs^ args);
@@ -92,27 +93,7 @@ public:
 	void OnResuming(Platform::Object^ sender, Platform::Object^ args);
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
     void OnOrientationChanged();
-private:
-	private:
-		void OnRendering();
-		void UpdateForWindowSizeChange();
-        void UpdateOrientationMatrix();
 
-		void ValidateDevice();
-        Windows::Foundation::Point TransformToOrientation(Windows::Foundation::Point point, bool dipsToPixels);
-        
-        Windows::Foundation::Rect m_windowBounds;
-		Windows::Foundation::EventRegistrationToken m_eventToken;
-		Windows::Foundation::Point m_lastPoint;
-		bool m_lastPointValid;
-		bool m_windowClosed;
-		bool m_windowVisible;
-        kmMat4 m_orientationMatrix;
-        kmMat4 m_reverseOrientationMatrix;
-
-public:
-
-    // winrt platform functions
 	Windows::UI::Core::CoreWindow^ getWindow() { return m_window.Get(); };
 	
 	int Run();
@@ -135,20 +116,38 @@ public:
 protected:
 
 private:
-    Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
+	void OnRendering();
+	void UpdateForWindowSizeChange();
+    void UpdateOrientationMatrix();
 
-	bool m_running;
+	void ValidateDevice();
+    Windows::Foundation::Point TransformToOrientation(Windows::Foundation::Point point, bool dipsToPixels);
+ 	CCPoint GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
+       
+    Windows::Foundation::Rect m_windowBounds;
+	Windows::Foundation::EventRegistrationToken m_eventToken;
+	Windows::Foundation::Point m_lastPoint;
+
+        
+    Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
+    Windows::Graphics::Display::DisplayOrientations m_orientation;
+	Windows::Foundation::Rect m_keyboardRect;
+
+	bool m_lastPointValid;
+	bool m_windowClosed;
+	bool m_windowVisible;
+    kmMat4 m_orientationMatrix;
+    kmMat4 m_reverseOrientationMatrix;
+    
+    bool m_running;
 	bool m_initialized;
     bool m_bSupportTouch;
     float m_fFrameZoomFactor;
-	Windows::Foundation::Rect m_keyboardRect;
-	CCPoint GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
 
 	ESContext m_esContext;
 	bool m_textInputEnabled;
     WP8Keyboard^ mKeyboard;
     WP8Window^ m_wp8Window;
-    Windows::Graphics::Display::DisplayOrientations m_orientation;
 
 };
 
