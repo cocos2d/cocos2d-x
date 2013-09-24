@@ -35,9 +35,21 @@ class CC_DLL CCComponent : public CCObject
 protected:
     CCComponent(void);
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCComponent(void);
     virtual bool init();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
     virtual void update(float delta);
     virtual void serialize(void* r);

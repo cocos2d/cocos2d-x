@@ -74,6 +74,10 @@ typedef union {
     CCObject*           ccobjectValue;
 } CCLuaValueField;
 
+/** Lua support for cocos2d-x
+ *  @js NA
+ *  @lua NA
+ */
 class CCLuaValue
 {
 public:

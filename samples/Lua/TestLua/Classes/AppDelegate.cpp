@@ -36,6 +36,22 @@ bool AppDelegate::applicationDidFinishLaunching()
     // register lua engine
     CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    CCSize designSize = CCSize(480,320);
+    std::vector<std::string> searchPaths;
+    if(screenSize.height > 320)
+    {
+        CCSize resourceSize(960,640);
+        searchPaths.push_back("hd");
+        searchPaths.push_back("hd/scenetest");
+        pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+    }
+    else
+    {
+        searchPaths.push_back("scenetest");
+    }
+    
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
     
     CCLuaStack *pStack = pEngine->getLuaStack();
     lua_State *tolua_s = pStack->getLuaState();
@@ -46,7 +62,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_web_socket_open(tolua_s);
 #endif
     
-    std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY

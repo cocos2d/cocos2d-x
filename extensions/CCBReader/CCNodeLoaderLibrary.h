@@ -10,7 +10,10 @@ class CCNodeLoader;
 
 typedef std::map<std::string, CCNodeLoader *> CCNodeLoaderMap;
 typedef std::pair<std::string, CCNodeLoader *> CCNodeLoaderMapEntry;
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCNodeLoaderLibrary : public CCObject {
     private:
         CCNodeLoaderMap mCCNodeLoaders;

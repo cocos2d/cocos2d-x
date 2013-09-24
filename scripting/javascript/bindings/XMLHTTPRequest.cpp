@@ -211,7 +211,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient 
         status = 200;
         readyState = DONE;
         data << concatenated;
-        
+        dataSize = buffer->size();
     }
     else
     {
