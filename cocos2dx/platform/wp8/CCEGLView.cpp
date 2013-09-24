@@ -227,11 +227,7 @@ float CCEGLView::getFrameZoomFactor()
     return m_fFrameZoomFactor;
 }
 
-void CCEGLView::setFrameSize(float width, float height)
-{
-	// not implemented in WinRT. Window is always full screen
-    // CCEGLViewProtocol::setFrameSize(width, height);
-}
+
 
 void CCEGLView::centerWindow()
 {
@@ -439,7 +435,45 @@ CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 }
 #endif
 
+void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
+{
+    switch(m_orientation)
+	{
+		case DisplayOrientations::Landscape:
+		case DisplayOrientations::LandscapeFlipped:
+            glViewport((GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
+                       (GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+                       (GLsizei)(h * m_fScaleY),
+                       (GLsizei)(w * m_fScaleX));
+			break;
 
+        default:
+            glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+                       (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
+                       (GLsizei)(w * m_fScaleX),
+                       (GLsizei)(h * m_fScaleY));
+	}
+}
+
+void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
+{
+    switch(m_orientation)
+	{
+		case DisplayOrientations::Landscape:
+		case DisplayOrientations::LandscapeFlipped:
+            glViewport((GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
+                       (GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+                       (GLsizei)(h * m_fScaleY),
+                       (GLsizei)(w * m_fScaleX));
+			break;
+
+        default:
+            glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+                       (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
+                       (GLsizei)(w * m_fScaleX),
+                       (GLsizei)(h * m_fScaleY));
+	}
+}
 
 
 NS_CC_END
