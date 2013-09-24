@@ -283,7 +283,20 @@ protected:
     void _updateCellPositions();
 public:
     void _updateContentSize();
-
+    
+    enum TableViewScriptEventType
+    {
+        kTableViewScroll   = 0,
+        kTableViewZoom,
+        kTableCellTouched,
+        kTableCellHighLight,
+        kTableCellUnhighLight,
+        kTableCellWillRecycle,
+        kTableCellSizeForIndex,
+        kTableCellSizeAtIndex,
+        kNumberOfCellsInTableView,
+    };
+    void unregisterAllScriptHandler();
 };
 
 
