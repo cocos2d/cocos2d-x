@@ -267,31 +267,6 @@ void CCDirector::drawScene(void)
 
     kmGLPushMatrix();
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    kmMat4 orientationCorrection;
-    switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
-	{
-		case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
-			kmMat4RotationZ(&orientationCorrection, M_PI);
-			break;
-
-		case Windows::Graphics::Display::DisplayOrientations::Landscape:
-            kmMat4RotationZ(&orientationCorrection, 3 * M_PI_2);
-			break;
-			
-		case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
-            kmMat4RotationZ(&orientationCorrection, M_PI_2);
-			break;
-
-        default:
-			kmMat4Identity(&orientationCorrection);
-	}
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPushMatrix();
-    kmGLMultMatrix(&orientationCorrection);
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-#endif
-
     // draw the scene
     if (m_pRunningScene)
     {
@@ -309,11 +284,6 @@ void CCDirector::drawScene(void)
         showStats();
     }
     
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPopMatrix();
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-#endif
     kmGLPopMatrix();
 
     m_uTotalFrames++;
@@ -403,7 +373,17 @@ void CCDirector::setViewport()
 {
     if (m_pobOpenGLView)
     {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+        switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
+	    {
+		    case Windows::Graphics::Display::DisplayOrientations::Landscape:
+		    case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
+			    break;
+	    }
         m_pobOpenGLView->setViewPortInPoints(0, 0, m_obWinSizeInPoints.width, m_obWinSizeInPoints.height);
+#else
+        m_pobOpenGLView->setViewPortInPoints(0, 0, m_obWinSizeInPoints.width, m_obWinSizeInPoints.height);
+#endif
     }
 }
 
@@ -440,6 +420,28 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
+            
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+            kmMat4 orientationCorrection;
+            switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
+	        {
+		        case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
+			        kmMat4RotationZ(&orientationCorrection, M_PI);
+			        break;
+
+		        case Windows::Graphics::Display::DisplayOrientations::Landscape:
+                    kmMat4RotationZ(&orientationCorrection, -M_PI_2);
+			        break;
+			
+		        case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
+                    kmMat4RotationZ(&orientationCorrection, M_PI_2);
+			        break;
+
+                default:
+			        kmMat4Identity(&orientationCorrection);
+	        }
+            kmGLMultMatrix(&orientationCorrection);
+#endif
 
             // issue #1334
             kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
