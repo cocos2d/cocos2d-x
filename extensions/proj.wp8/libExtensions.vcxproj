@@ -213,7 +213,6 @@
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutExecutant.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp" />
@@ -346,7 +345,6 @@
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h" />
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h" />
     <ClInclude Include="..\CocoStudio\GUI\Layouts\Layout.h" />
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutExecutant.h" />
     <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutParameter.h" />
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\CocosGUI.h" />
