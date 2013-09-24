@@ -582,6 +582,9 @@ Developers:
     elwinarens (Elwin Arens)
         Minor spelling changes in description of CCScene.h
         
+    signmotion (Andrey Syrokomsky)
+        Fixed some compiling-warnings (MSVC2012).
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
