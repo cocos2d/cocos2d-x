@@ -395,25 +395,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-            kmMat4 orientationCorrection;
-            switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
-	        {
-		        case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
-			        kmMat4RotationZ(&orientationCorrection, M_PI);
-			        break;
-
-		        case Windows::Graphics::Display::DisplayOrientations::Landscape:
-                    kmMat4RotationZ(&orientationCorrection, -M_PI_2);
-			        break;
-			
-		        case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
-                    kmMat4RotationZ(&orientationCorrection, M_PI_2);
-			        break;
-
-                default:
-			        kmMat4Identity(&orientationCorrection);
-	        }
-            kmGLMultMatrix(&orientationCorrection);
+            kmGLMultMatrix(CCEGLView::sharedOpenGLView()->getOrientationMatrix());
 #endif
             kmMat4 orthoMatrix;
             kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
@@ -433,27 +415,9 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLLoadIdentity();
             
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-            kmMat4 orientationCorrection;
-            switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
-	        {
-		        case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
-			        kmMat4RotationZ(&orientationCorrection, M_PI);
-			        break;
-
-		        case Windows::Graphics::Display::DisplayOrientations::Landscape:
-                    kmMat4RotationZ(&orientationCorrection, -M_PI_2);
-			        break;
-			
-		        case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
-                    kmMat4RotationZ(&orientationCorrection, M_PI_2);
-			        break;
-
-                default:
-			        kmMat4Identity(&orientationCorrection);
-	        }
-            kmGLMultMatrix(&orientationCorrection);
+            //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
+            kmGLMultMatrix(CCEGLView::sharedOpenGLView()->getOrientationMatrix());
 #endif
-
             // issue #1334
             kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
             // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
@@ -548,7 +512,12 @@ GLToClipTransform(kmMat4 *transformOut)
 {
 	kmMat4 projection;
 	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-	
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
+	kmMat4Multiply(&projection, CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix(), &projection);
+#endif
+
 	kmMat4 modelview;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
 	
