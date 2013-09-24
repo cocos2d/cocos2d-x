@@ -394,6 +394,27 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
         {
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+            kmMat4 orientationCorrection;
+            switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
+	        {
+		        case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
+			        kmMat4RotationZ(&orientationCorrection, M_PI);
+			        break;
+
+		        case Windows::Graphics::Display::DisplayOrientations::Landscape:
+                    kmMat4RotationZ(&orientationCorrection, -M_PI_2);
+			        break;
+			
+		        case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
+                    kmMat4RotationZ(&orientationCorrection, M_PI_2);
+			        break;
+
+                default:
+			        kmMat4Identity(&orientationCorrection);
+	        }
+            kmGLMultMatrix(&orientationCorrection);
+#endif
             kmMat4 orthoMatrix;
             kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
             kmGLMultMatrix(&orthoMatrix);
