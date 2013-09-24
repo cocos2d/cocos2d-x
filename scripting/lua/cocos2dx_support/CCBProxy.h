@@ -8,7 +8,9 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-
+/**
+ *  @js NA
+ */
 class CCBProxy : public CCLayer{
 public:
     CCBProxy() { }
@@ -19,7 +21,10 @@ public:
     const char* getNodeTypeName(CCNode* pNode);
     void setCallback(CCNode* pNode,int nHandle);
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBLayerLoader:public CCLayerLoader{
 public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCBLayerLoader, loader);

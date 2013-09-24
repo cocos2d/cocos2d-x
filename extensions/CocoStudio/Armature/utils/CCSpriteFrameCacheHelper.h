@@ -30,7 +30,10 @@ THE SOFTWARE.
 using namespace std;
 
 NS_CC_EXT_BEGIN
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class  CCSpriteFrameCacheHelper
 {
 public:

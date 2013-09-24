@@ -1475,6 +1475,21 @@ Layout* UIDragPanel::getInnerContainer()
     return m_pInnerContainer;
 }
 
+void UIDragPanel::setLayoutType(LayoutType type)
+{
+    m_pInnerContainer->setLayoutType(type);
+}
+
+LayoutType UIDragPanel::getLayoutType() const
+{
+    return m_pInnerContainer->getLayoutType();
+}
+
+void UIDragPanel::doLayout()
+{
+    m_pInnerContainer->doLayout();
+}
+
 const char* UIDragPanel::getDescription() const
 {
     return "DragPanel";

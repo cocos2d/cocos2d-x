@@ -31,7 +31,10 @@ THE SOFTWARE.
 #include <string>
 
 NS_CC_EXT_BEGIN
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class CCComAttribute : public cocos2d::CCComponent
 {
 protected:

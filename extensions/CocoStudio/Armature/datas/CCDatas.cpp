@@ -280,15 +280,18 @@ CCFrameData::~CCFrameData(void)
 {
 }
 
-void CCFrameData::copy(CCFrameData *frameData)
+void CCFrameData::copy(const CCBaseData *node)
 {
-    CCBaseData::copy(frameData);
+    CCBaseData::copy(node);
 
-    duration = frameData->duration;
-    displayIndex = frameData->displayIndex;
-    tweenEasing = frameData->tweenEasing;
-    blendType = frameData->blendType;
-    isTween = frameData->isTween;
+	if (const CCFrameData *frameData = dynamic_cast<const CCFrameData*>(node))
+	{
+		duration = frameData->duration;
+		displayIndex = frameData->displayIndex;
+		tweenEasing = frameData->tweenEasing;
+		blendType = frameData->blendType;
+		isTween = frameData->isTween;
+	}
 }
 
 CCMovementBoneData::CCMovementBoneData()

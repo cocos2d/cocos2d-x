@@ -135,6 +135,7 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
         if (CCSpriteDisplayData *spriteDisplayData = (CCSpriteDisplayData *)decoDisplay->getDisplayData())
         {
             skin->setSkinData(spriteDisplayData->skinData);
+            ((CCSpriteDisplayData *)displayData)->skinData = spriteDisplayData->skinData;
         }
         else
         {
@@ -256,8 +257,8 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
         if (CCRGBAProtocol *rgbaProtocaol = dynamic_cast<CCRGBAProtocol *>(m_pDisplayRenderNode))
         {
-			rgbaProtocaol->setColor(m_pBone->getDisplayedColor());
-			rgbaProtocaol->setOpacity(m_pBone->getDisplayedOpacity());
+            rgbaProtocaol->setColor(m_pBone->getDisplayedColor());
+            rgbaProtocaol->setOpacity(m_pBone->getDisplayedOpacity());
         }
 
         m_pDisplayRenderNode->retain();
