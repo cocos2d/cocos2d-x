@@ -15,6 +15,7 @@ using namespace Windows::System;
 using namespace Windows::Foundation;
 using namespace Windows::Graphics::Display;
 using namespace Windows::Phone::UI::Input;
+using namespace Windows::Graphics::Display;
 using namespace concurrency;
 USING_NS_CC;
 
@@ -37,8 +38,8 @@ void HelloCpp::Initialize(CoreApplicationView^ applicationView)
 void HelloCpp::SetWindow(CoreWindow^ window)
 {
     // Specify the orientation of your application here
-    // The choices are DisplayOrientations::Portrait or DisplayOrientations::Landscape
-	DisplayProperties::AutoRotationPreferences = Windows::Graphics::Display::DisplayOrientations::Portrait;
+    // The choices are DisplayOrientations::Portrait or DisplayOrientations::Landscape or DisplayOrientations::LandscapeFlipped
+	DisplayProperties::AutoRotationPreferences = DisplayOrientations::Portrait | DisplayOrientations::Landscape | DisplayOrientations::LandscapeFlipped;
 
 	window->VisibilityChanged +=
 		ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &HelloCpp::OnVisibilityChanged);
