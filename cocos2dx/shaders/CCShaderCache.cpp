@@ -86,15 +86,14 @@ CCShaderCache::~CCShaderCache()
 
 bool CCShaderCache::init()
 {
+    GLboolean hasCompiler = true;
     m_pPrograms = new CCDictionary();
-    GLboolean hasCompiler;
     glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
-    hasCompiler = FALSE;
     if(hasCompiler)
     {
         loadDefaultShaders();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) && defined(CC_PLATFORM_WINRT_SAVE_SHADERS)
-     savePrecompiledShaders(m_pPrograms);
+        savePrecompiledShaders(m_pPrograms);
 #endif   
     }
     else
