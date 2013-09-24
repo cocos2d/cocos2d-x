@@ -1,6 +1,8 @@
 cocos2d-x-3.0alpha1 @??? 2013
 [all platforms]
      [FIX]          Texture: use CCLOG to log when a texture is being decoded in software
+[Android]
+     [NEW]          re-introduce Cocos2dxHelper.runOnGLThread(Runnable)
 
 cocos2d-x-3.0alpha0 @Sep.19 2013
 [all platforms]
