@@ -373,17 +373,7 @@ void CCDirector::setViewport()
 {
     if (m_pobOpenGLView)
     {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-        switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
-	    {
-		    case Windows::Graphics::Display::DisplayOrientations::Landscape:
-		    case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
-			    break;
-	    }
         m_pobOpenGLView->setViewPortInPoints(0, 0, m_obWinSizeInPoints.width, m_obWinSizeInPoints.height);
-#else
-        m_pobOpenGLView->setViewPortInPoints(0, 0, m_obWinSizeInPoints.width, m_obWinSizeInPoints.height);
-#endif
     }
 }
 
