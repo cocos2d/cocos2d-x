@@ -47,7 +47,7 @@ m_gEndColor(ccWHITE),
 m_AlongVector(ccp(0.0f, -1.0f)),
 m_nCOpacity(255),
 m_backGroundImageTextureSize(CCSizeZero),
-m_eLayoutType(LAYOUT_DEFAULT)
+m_eLayoutType(LAYOUT_ABSOLUTE)
 {
     m_WidgetType = WidgetTypeContainer;
 }
@@ -420,7 +420,7 @@ void Layout::doLayout()
 {
     switch (m_eLayoutType)
     {
-        case LAYOUT_DEFAULT:
+        case LAYOUT_ABSOLUTE:
             break;
         case LAYOUT_LINEAR_VERTICAL:
         {
