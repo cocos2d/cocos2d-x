@@ -366,7 +366,7 @@ Point CCEGLView::TransformToOrientation(Point point, bool dipsToPixels)
                         : returnValue;
 }
 
-#if 1
+#if 0
 
 CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 

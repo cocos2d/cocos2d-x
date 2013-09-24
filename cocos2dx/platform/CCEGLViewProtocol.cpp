@@ -150,10 +150,29 @@ void CCEGLViewProtocol::setTouchDelegate(EGLTouchDelegate * pDelegate)
 
 void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    switch(Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
+	{
+		case Windows::Graphics::Display::DisplayOrientations::Landscape:
+		case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
+            glViewport((GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
+                       (GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+                       (GLsizei)(h * m_fScaleY),
+                       (GLsizei)(w * m_fScaleX));
+			break;
+
+        default:
+            glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+                       (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
+                       (GLsizei)(w * m_fScaleX),
+                       (GLsizei)(h * m_fScaleY));
+	}
+#else
     glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
                (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
                (GLsizei)(w * m_fScaleX),
                (GLsizei)(h * m_fScaleY));
+#endif
 }
 
 void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
