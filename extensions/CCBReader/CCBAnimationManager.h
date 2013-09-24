@@ -6,9 +6,13 @@
 #include "CCBSequence.h"
 #include "CCBValue.h"
 #include "CCBSequenceProperty.h"
+#include "GUI/CCControlExtension/CCControl.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBAnimationManagerDelegate
 {
 public:
@@ -34,6 +38,7 @@ private:
     CCArray *mDocumentOutletNodes;
     CCArray *mDocumentCallbackNames;
     CCArray *mDocumentCallbackNodes;
+    CCArray *mDocumentCallbackControlEvents;
     CCArray *mKeyframeCallbacks;
     CCDictionary *mKeyframeCallFuncs;
 
@@ -46,7 +51,13 @@ private:
     
 public:
     bool jsControlled;
+    /**
+     *  @js ctor
+     */
     CCBAnimationManager();
+    /**
+     *  @js NA
+     */
     ~CCBAnimationManager();
 
 
@@ -67,6 +78,7 @@ public:
 
     void addDocumentCallbackNode(CCNode *node);
     void addDocumentCallbackName(std::string name);
+    void addDocumentCallbackControlEvents(CCControlEvent eventType);
     void addDocumentOutletNode(CCNode *node);
     void addDocumentOutletName(std::string name);
 
@@ -75,6 +87,7 @@ public:
     std::string getDocumentControllerName();
     CCArray* getDocumentCallbackNames();
     CCArray* getDocumentCallbackNodes();
+    CCArray* getDocumentCallbackControlEvents();
     CCArray* getDocumentOutletNames();
     CCArray* getDocumentOutletNodes();
     std::string getLastCompletedSequenceName();
@@ -105,11 +118,15 @@ public:
     void runAnimationsForSequenceNamedTweenDuration(const char *pName, float fTweenDuration);
     void runAnimationsForSequenceNamed(const char *pName);
     void runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuraiton);
-
+    /**
+     *  @lua NA
+     */
     void setAnimationCompletedCallback(CCObject *target, SEL_CallFunc callbackFunc);
 
     void debug();
-    
+    /**
+     *  @js setCallFuncForJSCallbackNamed
+     */
     void setCallFunc(CCCallFunc *callFunc, const std::string &callbackNamed);
 
     CCObject* actionForCallbackChannel(CCBSequenceProperty* channel);
@@ -126,7 +143,10 @@ private:
     void runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     void sequenceCompleted();
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBSetSpriteFrame : public CCActionInstant
 {
 private:
@@ -143,7 +163,10 @@ public:
 };
 
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBSoundEffect : public CCActionInstant
 {
 private:
@@ -159,7 +182,10 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBRotateTo : public CCActionInterval
 {
 private:
@@ -175,7 +201,10 @@ public:
     virtual void startWithTarget(CCNode *pNode);
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBRotateXTo: public CCActionInterval {
 private:
     float mStartAngle;
@@ -189,7 +218,10 @@ public:
     virtual void update(float time);
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBRotateYTo: public CCActionInterval {
 private:
     float mStartAngle;

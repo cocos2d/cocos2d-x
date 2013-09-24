@@ -59,9 +59,16 @@ class CC_DLL CCSpriteFrameCache : public CCObject
 {
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
+    /**
+     * @js ctor
+     */
     CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
 public:
     bool init(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCSpriteFrameCache(void);
 
 private:
@@ -72,15 +79,19 @@ public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
      * If you want to use another texture, you should use the addSpriteFramesWithFile:texture method.
+     * @js addSpriteFrames
      */
     void addSpriteFramesWithFile(const char *pszPlist);
 
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
-    @since v0.99.5
-    */
+     @since v0.99.5
+     @js addSpriteFrames
+     */
     void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
 
-    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. */
+    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
+     * @js addSpriteFrames
+     */
     void addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture);
 
     /** Adds an sprite frame with a given name.
@@ -102,7 +113,9 @@ public:
      */
     void removeUnusedSpriteFrames(void);
 
-    /** Deletes an sprite frame from the sprite frame cache. */
+    /** Deletes an sprite frame from the sprite frame cache. 
+     *  @js getSpriteFrame
+     */
     void removeSpriteFrameByName(const char *pszName);
 
     /** Removes multiple Sprite Frames from a plist file.
@@ -127,11 +140,14 @@ public:
     /** Returns an Sprite Frame that was previously added.
      If the name is not found it will return nil.
      You should retain the returned copy if you are going to use it.
+     @js getSpriteFrame
      */
     CCSpriteFrame* spriteFrameByName(const char *pszName);
 
 public:
-    /** Returns the shared instance of the Sprite Frame cache */
+    /** Returns the shared instance of the Sprite Frame cache 
+     *  @js getInstance
+     */
     static CCSpriteFrameCache* sharedSpriteFrameCache(void);
 
     /** Purges the cache. It releases all the Sprite Frames and the retained instance. */

@@ -46,6 +46,8 @@ enum TargetPlatform
 /**
  * @addtogroup platform
  * @{
+ * @js NA
+ * @lua NA
  */
 
 class CC_DLL CCApplicationProtocol

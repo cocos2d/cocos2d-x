@@ -369,7 +369,14 @@ public:
     CC_PROPERTY(int, m_nEmitterMode, EmitterMode)
 
 public:
+    /**
+     * @js ctor
+     */
     CCParticleSystem();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleSystem();
 
     /** creates an initializes a CCParticleSystem from a plist file.

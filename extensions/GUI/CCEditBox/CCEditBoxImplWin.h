@@ -36,7 +36,10 @@
 NS_CC_EXT_BEGIN
 
 class CCEditBox;
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCEditBoxImplWin : public CCEditBoxImpl
 {
 public:

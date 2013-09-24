@@ -19,6 +19,9 @@
 		<string>Icon-Small.png</string>
 		<string>Icon-Small@2x.png</string>
 		<string>Icon-144.png</string>
+		<string>Icon-76.png</string>
+		<string>Icon-120.png</string>
+		<string>Icon-152.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string>com.yourcompany.${PRODUCT_NAME:rfc1034identifier}</string>

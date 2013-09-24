@@ -41,6 +41,10 @@ class CCGridBase;
 class CC_DLL CCGridAction : public CCActionInterval
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse(void);
@@ -80,7 +84,10 @@ public:
     void setVertex(const CCPoint& position, const ccVertex3F& vertex);
 
 public:
-    /** creates the action with size and duration */
+    /** creates the action with size and duration 
+     *  @js NA
+     *  @lua NA
+     */
     static CCGrid3DAction* create(float duration, const CCSize& gridSize);
 };
 
@@ -99,7 +106,10 @@ public:
     virtual CCGridBase* getGrid(void);
 
 public:
-    /** creates the action with size and duration */
+    /** creates the action with size and duration 
+     *  @js NA
+     *  @lua NA
+     */
     static CCTiledGrid3DAction* create(float duration, const CCSize& gridSize);
 };
 
@@ -107,6 +117,10 @@ public:
 class CC_DLL CCAccelDeccelAmplitude : public CCActionInterval
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCAccelDeccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);
@@ -133,6 +147,10 @@ protected:
 class CC_DLL CCAccelAmplitude : public CCActionInterval
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCAccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);
@@ -158,6 +176,10 @@ protected:
 class CC_DLL CCDeccelAmplitude : public CCActionInterval
 {
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCDeccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);
