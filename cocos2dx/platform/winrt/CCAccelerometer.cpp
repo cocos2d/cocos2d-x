@@ -22,10 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "cocos2d.h"
 #include "CCAccelerometer.h"
 using namespace Windows::Foundation;
 using namespace Windows::Devices::Sensors;
-
+using namespace Windows::Graphics::Display;
 
 
 NS_CC_BEGIN
@@ -65,12 +66,45 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 				<Accelerometer^,AccelerometerReadingChangedEventArgs^>
 				([=](Accelerometer^, AccelerometerReadingChangedEventArgs^)
 			{
-
 				AccelerometerReading^ reading = m_accelerometer->GetCurrentReading();
 				m_obAccelerationValue.x = reading->AccelerationX;
 				m_obAccelerationValue.y = reading->AccelerationY;
 				m_obAccelerationValue.z = reading->AccelerationZ;
-				m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+
+ #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+                auto orientation = CCEGLView::sharedOpenGLView()->getDeviceOrientation();
+
+                switch (orientation)
+                {
+                case DisplayOrientations::Portrait:
+ 				    m_obAccelerationValue.x = reading->AccelerationX;
+				    m_obAccelerationValue.y = reading->AccelerationY;
+                    break;
+                
+                case DisplayOrientations::Landscape:
+				    m_obAccelerationValue.x = -reading->AccelerationY;
+				    m_obAccelerationValue.y = reading->AccelerationX;
+                    break;
+                
+                case DisplayOrientations::PortraitFlipped:
+				    m_obAccelerationValue.x = -reading->AccelerationX;
+				    m_obAccelerationValue.y = reading->AccelerationY;
+                    break;
+                
+                case DisplayOrientations::LandscapeFlipped:
+ 				    m_obAccelerationValue.x = reading->AccelerationY;
+				    m_obAccelerationValue.y = reading->AccelerationX;
+                      break;
+              
+                default:
+  				    m_obAccelerationValue.x = reading->AccelerationX;
+				    m_obAccelerationValue.y = reading->AccelerationY;
+                    break;
+               }
+#endif
+
+                m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+
 			});
 		}
 	}
