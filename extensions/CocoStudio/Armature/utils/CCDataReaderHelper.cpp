@@ -855,7 +855,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
 
     //! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-    CCFrameData **frames = (CCFrameData **)movBoneData->frameList.data->arr;
+    FrameData **frames = (FrameData **)movBoneData->frameList.data->arr;
     for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
     {
         if (i > 0)
