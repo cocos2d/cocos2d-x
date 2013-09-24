@@ -372,9 +372,6 @@
     <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutExecutant.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
@@ -770,9 +767,6 @@
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\Layouts\Layout.h">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutExecutant.h">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutParameter.h">
