@@ -456,8 +456,8 @@ protected:
     //! Array of particles
     tParticle *_particles;
 
-	//Emitter name
-	std::string _configName;
+    //Emitter name
+    std::string _configName;
 
     // color modulate
     //    BOOL colorModulate;
@@ -543,7 +543,7 @@ protected:
     BlendFunc _blendFunc;
     /** does the alpha value modify color */
     bool _opacityModifyRGB;
-	/** does FlippedY variance of each particle */
+    /** does FlippedY variance of each particle */
     int _yCoordFlipped;
 
 
