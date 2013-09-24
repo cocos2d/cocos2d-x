@@ -103,9 +103,10 @@ bool CCEGLView::Create(CoreWindow^ window)
     esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
 
     m_wp8Window = ref new WP8Window(window);
-    m_orientation = DisplayProperties::CurrentOrientation;
-	UpdateForWindowSizeChange();
-	m_initialized = true;
+    m_orientation = DisplayOrientations::None;
+    m_initialized = false;
+    UpdateForWindowSizeChange();
+
     return bRet;
 }
 
@@ -127,7 +128,7 @@ void CCEGLView::swapBuffers()
 bool CCEGLView::isOpenGLReady()
 {
 	// TODO: need to revisit this
-    return (m_window.Get() != nullptr);
+    return (m_window.Get() != nullptr && m_orientation != DisplayOrientations::None);
 }
 
 void CCEGLView::end()
@@ -317,8 +318,9 @@ void CCEGLView::UpdateForWindowSizeChange()
     float width, height;
 
     m_orientation = DisplayProperties::CurrentOrientation;
-    m_windowBounds = m_window->Bounds;
 
+    m_windowBounds = m_window->Bounds;
+    
     if(m_orientation == DisplayOrientations::Landscape || m_orientation == DisplayOrientations::LandscapeFlipped)
     {
         width = ConvertDipsToPixels(m_window->Bounds.Height);
@@ -330,11 +332,17 @@ void CCEGLView::UpdateForWindowSizeChange()
         height = ConvertDipsToPixels(m_window->Bounds.Height);
     }
 
-    CCSize designSize = getDesignResolutionSize();
-    m_obScreenSize = CCSizeMake(width, height);
-    //CCDirector::sharedDirector()->reshapeProjection(m_obScreenSize);
-    setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
-
+    //CCSize designSize = getDesignResolutionSize();
+    if(!m_initialized)
+    {
+        m_initialized = true;
+        CCEGLViewProtocol::setFrameSize(width, height);
+    }
+    else
+    {
+        m_obScreenSize = CCSizeMake(width, height);
+    }
+    //setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
 }
 
 
