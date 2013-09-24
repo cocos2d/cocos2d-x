@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "../CCBone.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @lua NA
+ */
 class CCSkin : public CCSprite
 {
 public:
@@ -37,6 +39,9 @@ public:
     static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
     static CCSkin *create(const char *pszFileName);
 public:
+    /**
+     *  @js ctor
+     */
     CCSkin();
 
     bool initWithSpriteFrameName(const char *pszSpriteFrameName);

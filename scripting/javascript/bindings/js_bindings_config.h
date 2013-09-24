@@ -71,7 +71,9 @@
 	} while(0)
 #endif
 
-
+#define JSB_PRECONDITION3( condition, context, ret_value, ...) do { \
+    if( ! (condition) ) return (ret_value); \
+} while(0)
 
 /** @def JSB_REPRESENT_LONGLONG_AS_STR
  When JSB_REPRESENT_LONGLONG_AS_STR is defined, the long long will be represented as JS strings.

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Fri May 24 13:02:46 2013.
+** Generated automatically by tolua++-1.0.92 on Mon Sep 23 12:06:47 2013.
 */
 
 /****************************************************************************
@@ -65613,7 +65613,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"GL_RGBA4",GL_RGBA4);
   tolua_constant(tolua_S,"GL_RGB5_A1",GL_RGB5_A1);
   tolua_constant(tolua_S,"GL_DEPTH_COMPONENT16",GL_DEPTH_COMPONENT16);
-  tolua_constant(tolua_S,"GL_STENCIL_INDEX",GL_STENCIL_INDEX);
   tolua_constant(tolua_S,"GL_STENCIL_INDEX8",GL_STENCIL_INDEX8);
   tolua_constant(tolua_S,"GL_RENDERBUFFER_WIDTH",GL_RENDERBUFFER_WIDTH);
   tolua_constant(tolua_S,"GL_RENDERBUFFER_HEIGHT",GL_RENDERBUFFER_HEIGHT);

@@ -266,6 +266,26 @@ public:
     Layout* getInnerContainer();
     
     /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    virtual void setLayoutType(LayoutType type);
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    virtual LayoutType getLayoutType() const;
+    
+    virtual void doLayout();
+    
+    /**
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;

@@ -46,7 +46,10 @@ enum AnimationType
 
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  CCProcessBase : public CCObject
 {
 public:

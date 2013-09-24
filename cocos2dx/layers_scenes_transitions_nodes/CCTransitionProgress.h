@@ -43,9 +43,19 @@ class CC_DLL CCTransitionProgress : public CCTransitionScene
 {
 public:
     static CCTransitionProgress* create(float t, CCScene* scene);
-
+    /**
+     *  @js ctor
+     */
     CCTransitionProgress();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);

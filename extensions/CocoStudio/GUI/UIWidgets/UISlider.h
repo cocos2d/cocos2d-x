@@ -42,6 +42,11 @@ typedef void (CCObject::*SEL_SlidPercentChangedEvent)(CCObject*,SliderEventType)
 typedef void (CCObject::*SEL_PercentChangedEvent)(CCObject*);
 #define coco_percentchangedselector(_SELECTOR) (SEL_PercentChangedEvent)(&_SELECTOR)
 /************/
+
+/**
+*   @js NA
+*   @lua NA
+*/
 class UISlider : public UIWidget
 {
 public:
