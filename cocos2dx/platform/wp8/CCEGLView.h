@@ -38,6 +38,7 @@ THE SOFTWARE.
 
 #include <agile.h>
 #include <DirectXMath.h>
+#include "kazmath/mat4.h"
 
 #include "esUtil.h"
 
@@ -73,6 +74,9 @@ public:
     virtual void end();
     virtual void swapBuffers();
     virtual void setFrameSize(float width, float height);
+    kmMat4* getOrientationMatrix() {return &m_orientationMatrix;};
+    kmMat4* getReverseOrientationMatrix (){return &m_reverseOrientationMatrix;};
+
     virtual void setIMEKeyboardState(bool bOpen);
 	void ShowKeyboard(Windows::Foundation::Rect r);
 	void HideKeyboard(Windows::Foundation::Rect r);
@@ -92,6 +96,8 @@ private:
 	private:
 		void OnRendering();
 		void UpdateForWindowSizeChange();
+        void UpdateOrientationMatrix();
+
 		void ValidateDevice();
         Windows::Foundation::Point TransformToOrientation(Windows::Foundation::Point point, bool dipsToPixels);
         
@@ -101,6 +107,9 @@ private:
 		bool m_lastPointValid;
 		bool m_windowClosed;
 		bool m_windowVisible;
+        kmMat4 m_orientationMatrix;
+        kmMat4 m_reverseOrientationMatrix;
+
 public:
 
     // winrt platform functions
