@@ -44,7 +44,7 @@ Configuration::Configuration()
 : _maxTextureSize(0) 
 , _maxModelviewStackDepth(0)
 , _supportsPVRTC(false)
-, _supportsETC(false)
+, _supportsETC1(false)
 , _supportsS3TC(false)
 , _supportsATITC(false)
 , _supportsNPOT(false)
@@ -128,8 +128,8 @@ void Configuration::gatherGPUInfo()
 	_valueDict->setObject(Integer::create((int)_maxSamplesAllowed), "gl.max_samples_allowed");
 #endif
     
-    _supportsETC = checkForGLExtension("GL_OES_compressed_ETC1_RGB8_texture");
-    _valueDict->setObject(Bool::create(_supportsETC), "gl.supports_ETC");
+    _supportsETC1 = checkForGLExtension("GL_OES_compressed_ETC1_RGB8_texture");
+    _valueDict->setObject(Bool::create(_supportsETC1), "gl.supports_ETC1");
     
     _supportsS3TC = checkForGLExtension("GL_EXT_texture_compression_s3tc");
     _valueDict->setObject(Bool::create(_supportsS3TC), "gl.supports_S3TC");
@@ -231,7 +231,7 @@ bool Configuration::supportsETC() const
 {
     //GL_ETC1_RGB8_OES is not defined in old opengl version
 #ifdef GL_ETC1_RGB8_OES
-    return _supportsETC;
+    return _supportsETC1;
 #else
     return false;
 #endif
