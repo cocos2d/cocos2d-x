@@ -150,6 +150,7 @@ static cocos_dimensions engine_init_display(struct engine* engine) {
      */
     const EGLint attribs[] = {
             EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+            EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
             EGL_BLUE_SIZE, 5,
             EGL_GREEN_SIZE, 6,
             EGL_RED_SIZE, 5,
@@ -212,6 +213,30 @@ static cocos_dimensions engine_init_display(struct engine* engine) {
 }
 
 /**
+ * Invoke the dispatching of the next bunch of Runnables in the Java-Land
+ */
+static void dispatch_pending_runnables() {
+    static cocos2d::JniMethodInfo info;
+    static bool initialized = false;
+
+    if (!initialized) {
+        initialized = cocos2d::JniHelper::getStaticMethodInfo(
+            info,
+            "org/cocos2dx/lib/Cocos2dxHelper",
+            "dispatchPendingRunnables",
+            "()V"
+        );
+
+        if (!initialized) {
+            LOGW("Unable to dispatch pending Runnables!");
+            return;
+        }
+    }
+
+    info.env->CallStaticVoidMethod(info.classID, info.methodID);
+}
+
+/**
  * Just the current frame in the display.
  */
 static void engine_draw_frame(struct engine* engine) {
@@ -225,6 +250,7 @@ static void engine_draw_frame(struct engine* engine) {
         return;
     }
 
+    dispatch_pending_runnables();
     cocos2d::Director::getInstance()->mainLoop();
     LOG_RENDER_DEBUG("engine_draw_frame : just called cocos' mainLoop()");
 

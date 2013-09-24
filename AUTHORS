@@ -596,6 +596,9 @@ Retired Core Developers:
         
     michaelcontento
         [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
+        Prevent nullptr access in AssetsManager
+        [Android] re-introduce Cocos2dxHelper.runOnGLThread(Runnable)
+        [Android] added EGL_RENDERABLE_TYPE to OpenGL attributes
         
     bmanGH
         Use gl caching functions in TexturePVR::createGLTexture()
