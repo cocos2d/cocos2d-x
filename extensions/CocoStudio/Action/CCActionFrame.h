@@ -39,7 +39,10 @@ enum FrameType
 	kKeyframeFade,
 	kKeyframeMax
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class ActionFrame:public CCObject
 {
 
@@ -125,7 +128,10 @@ protected:
 	int m_frameIndex;
 	float m_fTime;
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class ActionMoveFrame:public ActionFrame
 {
 public:
@@ -165,7 +171,10 @@ public:
 protected:
 	CCPoint m_position;
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class ActionScaleFrame:public ActionFrame
 {
 public:
@@ -220,7 +229,10 @@ protected:
 	float m_scaleX;
 	float m_scaleY;
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class ActionRotationFrame:public ActionFrame
 {
 public:
@@ -260,7 +272,10 @@ public:
 protected:
 	float m_rotation;
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class ActionFadeFrame:public ActionFrame
 {
 public:
@@ -300,7 +315,10 @@ public:
 protected:
 	float m_opacity;
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class ActionTintFrame:public ActionFrame
 {
 

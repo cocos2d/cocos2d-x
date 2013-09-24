@@ -59,7 +59,14 @@ class CC_DLL CCProgressTimer : public CCNodeRGBA
 #endif // EMSCRIPTEN
 {
 public:
+    /**
+     * @js ctor
+     */
     CCProgressTimer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCProgressTimer(void);
 
     /**    Change the percentage to change progress. */
@@ -77,6 +84,9 @@ public:
     void setPercentage(float fPercentage);
     void setSprite(CCSprite *pSprite);
     void setType(CCProgressTimerType type);
+    /**
+     *  @js setReverseDirection
+     */
     void setReverseProgress(bool reverse);
 
     virtual void draw(void);

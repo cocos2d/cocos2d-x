@@ -62,7 +62,10 @@ public:
     static void purgeConfiguration(void);
 
 public:
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
 	virtual ~CCConfiguration(void);
 
     /** OpenGL Max texture size. */

@@ -43,7 +43,10 @@ struct cpShape;
 NS_CC_EXT_BEGIN
 
 class CCBone;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class ColliderBody : public CCObject
 {
 public:
@@ -69,6 +72,8 @@ private:
 
 /*
  *  @brief  ContourSprite used to draw the contour of the display
+ *  @js NA
+ *  @lua NA
  */
 class CCColliderDetector : public CCObject
 {

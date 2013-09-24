@@ -36,6 +36,8 @@ NS_CC_BEGIN
 
 /**
 @brief    Input Method Edit Message Dispatcher.
+@js NA
+@lua NA
 */
 class CC_DLL CCIMEDispatcher
 {
