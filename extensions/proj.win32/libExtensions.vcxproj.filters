@@ -384,9 +384,6 @@
     <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutExecutant.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
@@ -465,7 +462,6 @@
     <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDefine.cpp">
       <Filter>CocoStudio\Armature\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
@@ -480,6 +476,9 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Action\CCActionObject.cpp">
       <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -740,9 +739,6 @@
     <ClInclude Include="..\CocoStudio\GUI\Layouts\Layout.h">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutExecutant.h">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutParameter.h">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClInclude>
@@ -845,7 +841,6 @@
     <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h">
       <Filter>CocoStudio\Json\lib_json</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionFrame.h">
       <Filter>CocoStudio\Action</Filter>
     </ClInclude>
@@ -860,6 +855,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Action\CCActionObject.h">
       <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h">
+      <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

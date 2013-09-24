@@ -127,7 +127,10 @@ enum EditBoxInputFlag
 class CCEditBox;
 class CCEditBoxImpl;
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCEditBoxDelegate 
 {
 public:
@@ -197,8 +200,13 @@ public:
     
     /**
      * Gets/Sets the delegate for edit box.
+     *  @lua NA
      */
     void setDelegate(CCEditBoxDelegate* pDelegate);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     CCEditBoxDelegate* getDelegate();
     /**
      * Registers a script function that will be called for EditBox events.
@@ -223,15 +231,18 @@ public:
      * @endcode
      *
      * @param handler A number that indicates a lua function.
+     * @js NA
      */
     void registerScriptEditBoxHandler(int handler);
     
     /**
      * Unregisters a script function that will be called for EditBox events.
+     * @js NA
      */
     void unregisterScriptEditBoxHandler(void);
     /**
      * get a script Handler
+     * @js NA
      */
     int  getScriptEditBoxHandler(void){ return m_nScriptEditBoxHandler ;}
     /**
@@ -347,15 +358,44 @@ public:
     virtual void setVisible(bool visible);
     virtual void setContentSize(const CCSize& size);
 	virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    /**
+     *  @js NA
+     */
     virtual void visit(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
 	virtual void onEnter(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
     
-    /* callback funtions */
+    /** callback funtions 
+     *  @js NA
+     */
     void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
     
 protected:

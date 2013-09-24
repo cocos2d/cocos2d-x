@@ -55,8 +55,19 @@ class CCSpriteFrame;
 class CC_DLL CCAnimationFrame : public CCObject
 {
 public:
+    /**
+     * @js ctor
+     */
     CCAnimationFrame();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCAnimationFrame();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
     bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo);
@@ -85,7 +96,14 @@ You can animate a CCAnimation object by using the CCAnimate action. Example:
 class CC_DLL CCAnimation : public CCObject
 {
 public:
+    /**
+     * @js ctor
+     */
     CCAnimation();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCAnimation(void);
 public:
     /** Creates an animation
@@ -96,6 +114,7 @@ public:
     /* Creates an animation with an array of CCSpriteFrame and a delay between frames in seconds.
      The frames will be added with one "delay unit".
      @since v0.99.5
+     @js create
     */
     static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
 
@@ -115,6 +134,7 @@ public:
     /** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
      The frame will be added with one "delay unit".
      Added to facilitate the migration from v0.8 to v0.9.
+     * @js addSpriteFrameWithFile
      */  
     void addSpriteFrameWithFileName(const char *pszFileName);
 
@@ -123,19 +143,26 @@ public:
      Added to facilitate the migration from v0.8 to v0.9.
      */
     void addSpriteFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
-
+    /**
+     * @lua NA
+     */
     bool init();
 
     /** Initializes a CCAnimation with frames and a delay between frames
-    @since v0.99.5
+     @since v0.99.5
+     @lua NA
     */
     bool initWithSpriteFrames(CCArray *pFrames, float delay = 0.0f);
 
     /** Initializes a CCAnimation with CCAnimationFrame
-    @since v2.0
+     @since v2.0
+     @lua NA
     */
     bool initWithAnimationFrames(CCArray* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
     /** total Delay units of the CCAnimation. */

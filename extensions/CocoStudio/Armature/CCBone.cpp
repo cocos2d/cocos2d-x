@@ -165,6 +165,12 @@ void CCBone::update(float delta)
     if (m_pParentBone)
         m_bBoneTransformDirty = m_bBoneTransformDirty || m_pParentBone->isTransformDirty();
 
+    CCBone *armatureParentBone = m_pArmature->getParentBone();
+    if (armatureParentBone && !m_bBoneTransformDirty)
+    {
+        m_bBoneTransformDirty = armatureParentBone->isTransformDirty();
+    }
+
     if (m_bBoneTransformDirty)
     {
         if (m_pArmature->getArmatureData()->dataVersion >= VERSION_COMBINED)
@@ -181,6 +187,13 @@ void CCBone::update(float delta)
         if(m_pParentBone)
         {
             m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pParentBone->m_tWorldTransform);
+        }
+        else
+        {
+            if (armatureParentBone)
+            {
+                m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, armatureParentBone->nodeToArmatureTransform());
+            }
         }
     }
 
@@ -208,6 +221,18 @@ void CCBone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _realOpacity = 255;
     CCNodeRGBA::updateDisplayedOpacity(parentOpacity);
+    updateColor();
+}
+
+void CCBone::setColor(const ccColor3B &color)
+{
+    CCNodeRGBA::setColor(color);
+    updateColor();
+}
+
+void CCBone::setOpacity(GLubyte opacity)
+{
+    CCNodeRGBA::setOpacity(opacity);
     updateColor();
 }
 

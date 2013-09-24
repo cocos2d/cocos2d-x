@@ -45,7 +45,6 @@
 #include "UIHelper.h"
 #include "../../Reader/CCSGUIReader.h"
 #include "UILayer.h"
-#include "../Layouts/LayoutExecutant.h"
 #include "../UIWidgets/Compatible/CompatibleClasses.h"
 
 NS_CC_EXT_BEGIN

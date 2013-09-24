@@ -37,6 +37,8 @@ NS_CC_BEGIN
 
 /* On iOS, should create autorelease pool when create a new thread
  * and release it when the thread end.
+ * @js NA
+ * @lua NA
  */
 class CC_DLL CCThread
 {

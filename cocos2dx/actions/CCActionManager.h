@@ -57,7 +57,14 @@ struct _hashElement;
 class CC_DLL CCActionManager : public CCObject
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCActionManager(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCActionManager(void);
 
     // actions

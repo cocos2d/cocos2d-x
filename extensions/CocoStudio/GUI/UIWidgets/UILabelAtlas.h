@@ -28,7 +28,10 @@
 #include "../BaseClasses/UIWidget.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UICCLabelAtlas : public CCLabelAtlas
 {
 public:
@@ -51,7 +54,10 @@ public:
     virtual void updateDisplayedOpacity(GLubyte opacity);
     virtual void draw(void);
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UILabelAtlas : public UIWidget
 {
 public:

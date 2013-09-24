@@ -9,6 +9,8 @@
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_ccbreader.h"
 #include "js_bindings_system_registration.h"
+#include "js_bindings_chipmunk_registration.h"
+#include "jsb_opengl_registration.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -104,6 +106,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     sc->addRegisterCallback(register_CCBuilderReader);
     sc->addRegisterCallback(jsb_register_system);
+    sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(JSB_register_opengl);
     
     sc->start();
 

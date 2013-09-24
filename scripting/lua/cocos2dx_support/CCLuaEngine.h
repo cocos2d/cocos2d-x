@@ -40,7 +40,10 @@ extern "C" {
 
 NS_CC_BEGIN
 
-// Lua support for cocos2d-x
+/** Lua support for cocos2d-x
+ *  @js NA
+ *  @lua NA
+ */
 class CCLuaEngine : public CCScriptEngineProtocol
 {
 public:

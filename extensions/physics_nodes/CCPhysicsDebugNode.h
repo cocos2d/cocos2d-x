@@ -40,6 +40,8 @@ NS_CC_EXT_BEGIN
  - Objective-Chipmunk
  
  @since v2.1
+ @js NA
+ @lua NA
  */
 
 class CCPhysicsDebugNode : public CCDrawNode

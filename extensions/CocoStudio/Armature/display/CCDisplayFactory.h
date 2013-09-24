@@ -34,7 +34,10 @@ class CCSkin;
 class CCBone;
 class CCDecorativeDisplay;
 class CCDisplayData;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class CCDisplayFactory
 {
 public:
