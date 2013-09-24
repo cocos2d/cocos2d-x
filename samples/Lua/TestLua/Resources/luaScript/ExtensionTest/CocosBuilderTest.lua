@@ -43,6 +43,12 @@ ccb["TestAnimationsLayer"] = TestAnimationsLayer
 TestAnimationsLayerOwner = TestAnimationsLayerOwner or {}
 ccb["TestAnimationsLayerOwner"] = TestAnimationsLayerOwner
 
+TestScrollViewLayer = TestScrollViewLayer or {}
+ccb["TestScrollViewLayer"] = TestScrollViewLayer
+
+TestScrollViewLayerOwner = TestScrollViewLayerOwner or {}
+ccb["TestScrollViewLayerOwner"] = TestScrollViewLayerOwner
+
 TestTimelineLayer = TestTimelineLayer or {}
 ccb["TestTimelineLayer"] = TestTimelineLayer
 
@@ -231,7 +237,22 @@ TestAnimationsLayer["onCCControlButtonFunkyClicked"] = onCCControlButtonFunkyCli
 
 
 local function onScrollViewTestClicked()
-    print("onScrollViewTestClicked")
+    local scene  = CCScene:create()
+    local  proxy = CCBProxy:create()
+    local  node  = CCBReaderLoad("cocosbuilderRes/ccb/ccb/TestScrollViews.ccbi",proxy,true,"TestTimelineLayerOwner")
+    local  layer = tolua.cast(node,"CCLayer")
+    if nil ~= TestTimelineLayerOwner["mTestTitleLabelTTF"] then
+        local ccLabelTTF = tolua.cast(TestTimelineLayerOwner["mTestTitleLabelTTF"],"CCLabelTTF")
+        if nil ~= ccLabelTTF then
+            ccLabelTTF:setString("ccb/ccb/TestScrollViews.ccbi")
+        end
+    end
+
+    if nil ~= scene then
+        scene:addChild(layer)
+        scene:addChild(CreateBackMenuItem())
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, ccc3(0,0,0))) 
+    end
 end
 
 local function onTimelineCallbackSoundClicked()
@@ -249,7 +270,7 @@ local function onTimelineCallbackSoundClicked()
     if nil ~= scene then
         scene:addChild(layer)
         scene:addChild(CreateBackMenuItem())
-        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, ccc3(0,0,0))); 
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, scene, ccc3(0,0,0))) 
     end 
 end
 

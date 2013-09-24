@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		153FF73E17F0389500CBA943 /* lua_cocos2dx_extensions_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 153FF73C17F0389100CBA943 /* lua_cocos2dx_extensions_manual.cpp */; };
 		159B8972175B97D30005B47D /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159B896E175B97D30005B47D /* CCBProxy.cpp */; };
 		159B8973175B97D30005B47D /* Lua_extensions_CCB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159B8970175B97D30005B47D /* Lua_extensions_CCB.cpp */; };
 		159B8978175B9AB30005B47D /* CCBReaderLoad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159B8977175B9AB30005B47D /* CCBReaderLoad.lua */; };
@@ -219,6 +220,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		153FF73C17F0389100CBA943 /* lua_cocos2dx_extensions_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extensions_manual.cpp; sourceTree = "<group>"; };
+		153FF73D17F0389300CBA943 /* lua_cocos2dx_extensions_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_extensions_manual.h; sourceTree = "<group>"; };
 		159B896E175B97D30005B47D /* CCBProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBProxy.cpp; sourceTree = "<group>"; };
 		159B896F175B97D30005B47D /* CCBProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProxy.h; sourceTree = "<group>"; };
 		159B8970175B97D30005B47D /* Lua_extensions_CCB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lua_extensions_CCB.cpp; sourceTree = "<group>"; };
@@ -1163,6 +1166,8 @@
 		46C1007916BF786A00F74D54 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				153FF73C17F0389100CBA943 /* lua_cocos2dx_extensions_manual.cpp */,
+				153FF73D17F0389300CBA943 /* lua_cocos2dx_extensions_manual.h */,
 				159C08D3175F8221004ED7D4 /* Lua_web_socket.cpp */,
 				159C08D4175F8221004ED7D4 /* Lua_web_socket.h */,
 				159B896E175B97D30005B47D /* CCBProxy.cpp */,
@@ -1567,6 +1572,7 @@
 				159B8973175B97D30005B47D /* Lua_extensions_CCB.cpp in Sources */,
 				159C08D5175F8221004ED7D4 /* Lua_web_socket.cpp in Sources */,
 				159C08FE175F84B6004ED7D4 /* WebSocket.cpp in Sources */,
+				153FF73E17F0389500CBA943 /* lua_cocos2dx_extensions_manual.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
