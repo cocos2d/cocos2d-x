@@ -36,6 +36,8 @@ void TestCpp::Initialize(CoreApplicationView^ applicationView)
 
 void TestCpp::SetWindow(CoreWindow^ window)
 {
+    // Specify the orientation of your application here
+    // The choices are DisplayOrientations::Portrait or DisplayOrientations::Landscape
 	DisplayProperties::AutoRotationPreferences = Windows::Graphics::Display::DisplayOrientations::Landscape;
 
 	window->VisibilityChanged +=
@@ -53,10 +55,6 @@ void TestCpp::SetWindow(CoreWindow^ window)
 	window->PointerReleased +=
 		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &TestCpp::OnPointerReleased);
 
-	 DisplayProperties::AutoRotationPreferences =
-		Windows::Graphics::Display::DisplayOrientations::Landscape;
-
-
     CCEGLView* eglView = new CCEGLView();
 	eglView->Create(window);
     eglView->setViewName("TestCpp");
@@ -70,6 +68,7 @@ void TestCpp::Run()
 {
     CCApplication::sharedApplication()->run();
 }
+
 
 void TestCpp::Uninitialize()
 {

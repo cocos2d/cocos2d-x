@@ -13,10 +13,11 @@ How to build for WinRT (Windows 8.0)
     
     git submodule update 
 
-3. Use the cocos2d-winrt.vc2012.sln to build the cocos2d-x and sample projects
+3. Use the cocos2d-winrt.vc2012.sln solution to build the WinRT cocos2d-x and sample projects
 
-4. Support for Windows Phone 8 will be available soon.
+4. Use the cocos2d-wp8.vc2012.sln solution to build the Windows Phone 8.0 cocos2d-x and sample projects Support for Windows Phone 8 device rotation will be available soon.
 
+5. Open the cocos2d-winrt.vc2012.sln solution in Visual Studio 2013 and update all of the projects to build the WinRT cocos2d-x and sample projects for Windows 8.1.
 
 [cocos2d-x][1] is a multi-platform 2D game framework in C++, branched on
 [cocos2d-iphone][2] and licensed under MIT.  The master branch on github uses
