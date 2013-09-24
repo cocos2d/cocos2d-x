@@ -254,13 +254,13 @@ namespace cocos2d {
         }
         
         JNIEnv *pEnv = JniHelper::getEnv();
-        if (!env) {
+        if (!pEnv) {
             return NULL;
         }
 
-        const char* chars = env->GetStringUTFChars(jstr, NULL);
+        const char* chars = pEnv->GetStringUTFChars(jstr, NULL);
         std::string ret(chars);
-        env->ReleaseStringUTFChars(jstr, chars);
+        pEnv->ReleaseStringUTFChars(jstr, chars);
 
         return ret;
     }
