@@ -308,7 +308,7 @@ NS_CC_EXT_BEGIN
 					}
                     pAudio->preloadBackgroundMusic(pPath.c_str());
 					pAudio->setFile(pPath.c_str());
-					bool bLoop = subDict->getItemIntValue("loop", 0);
+					const bool bLoop = (subDict->getItemIntValue("loop", 0) != 0);
 					pAudio->setLoop(bLoop);
                     gb->addComponent(pAudio);
 					pAudio->playBackgroundMusic(pPath.c_str(), bLoop);
@@ -354,7 +354,7 @@ NS_CC_EXT_BEGIN
 		int y = dict->getItemIntValue("y", 0);
 		node->setPosition(Point(x, y));
 		
-		bool bVisible = (bool)(dict->getItemIntValue("visible", 1));
+		const bool bVisible = (dict->getItemIntValue("visible", 1) != 0);
 		node->setVisible(bVisible);
 		
 		int nTag = dict->getItemIntValue("objecttag", -1);
