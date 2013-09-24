@@ -332,6 +332,8 @@ void CCEGLView::UpdateForWindowSizeChange()
         height = ConvertDipsToPixels(m_window->Bounds.Height);
     }
 
+    UpdateOrientationMatrix();
+
     //CCSize designSize = getDesignResolutionSize();
     if(!m_initialized)
     {
@@ -342,8 +344,36 @@ void CCEGLView::UpdateForWindowSizeChange()
     {
         m_obScreenSize = CCSizeMake(width, height);
     }
+
     //setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
 }
+
+void CCEGLView::UpdateOrientationMatrix()
+{
+    kmMat4Identity(&m_orientationMatrix);
+    kmMat4Identity(&m_reverseOrientationMatrix);
+    switch(m_orientation)
+	{
+		case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
+			kmMat4RotationZ(&m_orientationMatrix, M_PI);
+			kmMat4RotationZ(&m_reverseOrientationMatrix, -M_PI);
+			break;
+
+		case Windows::Graphics::Display::DisplayOrientations::Landscape:
+            kmMat4RotationZ(&m_orientationMatrix, -M_PI_2);
+			kmMat4RotationZ(&m_reverseOrientationMatrix, M_PI_2);
+			break;
+			
+		case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
+            kmMat4RotationZ(&m_orientationMatrix, M_PI_2);
+            kmMat4RotationZ(&m_reverseOrientationMatrix, -M_PI_2);
+			break;
+
+        default:
+            break;
+	}
+}
+
 
 
 Point CCEGLView::TransformToOrientation(Point point, bool dipsToPixels)
@@ -374,7 +404,7 @@ Point CCEGLView::TransformToOrientation(Point point, bool dipsToPixels)
                         : returnValue;
 }
 
-#if 0
+#if 1
 
 CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 
