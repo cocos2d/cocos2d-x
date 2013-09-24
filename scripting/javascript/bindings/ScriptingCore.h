@@ -40,13 +40,15 @@ class ScriptingCore : public CCScriptEngineProtocol
 	JSObject  *global_;
 	JSObject  *debugGlobal_;
 	SimpleRunLoop* runLoop;
+    
+    static ScriptingCore* pInstance;
 
 	ScriptingCore();
 public:
 	~ScriptingCore();
 
-	static ScriptingCore *getInstance() {
-		static ScriptingCore* pInstance = NULL;
+	static ScriptingCore *getInstance()
+    {
         if (pInstance == NULL) {
             pInstance = new ScriptingCore();
         }
