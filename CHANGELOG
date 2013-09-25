@@ -14,6 +14,8 @@ cocos2d-x-2.2.0 @Sep.25 2013
      [NEW]    Binded these functions: CCNode::setScale(float, float) CCBAnimationManager::addDocumentCallbackControlEvents/getDocumentCallbackControlEvents
               CCBReader::getOwnerCallbackControlEvents/addDocumentCallbackControlEvents
      [NEW]    Supported Armature
+[Lua binding]
+     [NEW]    Binded CCTableView and CCScrollView
 
 cocos2d-x-2.1.5 @Aug.23 2013 hotfix for v2.1.4
 [All platforms]
