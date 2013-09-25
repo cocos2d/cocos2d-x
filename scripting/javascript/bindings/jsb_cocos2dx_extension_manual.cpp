@@ -973,37 +973,37 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
 
 static JSBool jsb_CCArmature_setCPBody(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CCArmature* real = (CCArmature *)(proxy ? proxy->ptr : NULL);
-	TEST_NATIVE_OBJECT(cx, real)
-    
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-    
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CCArmature* real = (CCArmature *)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, real)
+
+    jsval *argvp = JS_ARGV(cx,vp);
+    JSBool ok = JS_TRUE;
+
     cpBody* arg0;
-    
-	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
-	if( ! ok ) return JS_FALSE;
-    
-	real->setBody((cpBody*)arg0);
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
+
+    ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
+    if( ! ok ) return JS_FALSE;
+
+    real->setBody((cpBody*)arg0);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return JS_TRUE;
 }
 
 static JSBool jsb_CCArmature_getShapeList(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CCArmature* real = (CCArmature *)(proxy ? proxy->ptr : NULL);
-	TEST_NATIVE_OBJECT(cx, real)
-    
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CCArmature* real = (CCArmature *)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, real)
+
     if (argc == 0)
     {
         cpShape* shape = real->getShapeList();
-        
+
         JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
-        
+
         int i = 0;
         while (shape)
         {
@@ -1017,11 +1017,11 @@ static JSBool jsb_CCArmature_getShapeList(JSContext *cx, uint32_t argc, jsval *v
             shape = next;
             ++i;
         }
-        
+
         JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsretArr));
         return JS_TRUE;
     }
-    
+
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
     return JS_FALSE;
 }
