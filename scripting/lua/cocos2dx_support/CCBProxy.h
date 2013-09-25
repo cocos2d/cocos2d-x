@@ -19,7 +19,7 @@ public:
     CCBReader* createCCBreader();
     CCNode* readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,bool bSetOwner = false);
     const char* getNodeTypeName(CCNode* pNode);
-    void setCallback(CCNode* pNode,int nHandle);
+    void setCallback(CCNode* pNode,int nHandle, int nControlEvents = 0);
 };
 /**
  *  @js NA
