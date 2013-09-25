@@ -36,6 +36,8 @@ files
     "LuaCocos2d.h"
     "Lua_extensions_CCB.cpp"
     "Lua_extensions_CCB.h"
+    "lua_cocos2dx_extensions_manual.cpp"
+    "lua_cocos2dx_extensions_manual.h"
     "tolua_fix.c"
     "tolua_fix.h"
 }

@@ -28,6 +28,7 @@
 									<listOptionValue builtIn="false" value="COCOS2D_DEBUG=1"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.includePath.892081154" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}&quot;"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
@@ -58,8 +59,8 @@
 								<option id="com.qnx.qcc.option.linker.libraries.1760958269" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="lua"/>
 									<listOptionValue builtIn="false" value="extensions"/>
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="bps"/>
@@ -180,8 +181,8 @@
 								<option id="com.qnx.qcc.option.linker.libraries.1701813567" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="lua"/>
 									<listOptionValue builtIn="false" value="extensions"/>
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="bps"/>
@@ -281,8 +282,8 @@
 								<option id="com.qnx.qcc.option.linker.libraries.1289108024" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="lua"/>
 									<listOptionValue builtIn="false" value="extensions"/>
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="bps"/>
@@ -381,8 +382,8 @@
 								<option id="com.qnx.qcc.option.linker.libraries.1736864271" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="lua"/>
 									<listOptionValue builtIn="false" value="extensions"/>
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="bps"/>
@@ -479,8 +480,8 @@
 								<option id="com.qnx.qcc.option.linker.libraries.1179286572" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="lua"/>
 									<listOptionValue builtIn="false" value="extensions"/>
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="bps"/>
@@ -579,8 +580,8 @@
 								<option id="com.qnx.qcc.option.linker.libraries.1031790004" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="lua"/>
 									<listOptionValue builtIn="false" value="extensions"/>
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="bps"/>
@@ -678,8 +679,8 @@
 								<option id="com.qnx.qcc.option.linker.libraries.1325336223" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="lua"/>
 									<listOptionValue builtIn="false" value="extensions"/>
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="bps"/>
