@@ -1,9 +1,12 @@
 cocos2d-x-3.0alpha1 @??? 2013
 [all platforms]
+     [DOC]          Added RELEASE_NOTES and CODING_STYLE.md files
      [FIX]          Texture: use CCLOG to log when a texture is being decoded in software
 [Android]
      [FIX]          Added EGL_RENDERABLE_TYPE to OpenGL attributes
      [NEW]          Added Cocos2dxHelper.runOnGLThread(Runnable) again
+[Mac]
+     [FIX]          Removed unused CCLOG() from GL initialization
 
 cocos2d-x-3.0alpha0 @Sep.19 2013
 [all platforms]
