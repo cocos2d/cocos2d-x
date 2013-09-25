@@ -71,9 +71,9 @@ protected:
     /* After adding all the methods, add the ivars */
     /* all ivars must start with _ */
     /* Do not use Hungarian notation */
-    TextureAtlas*       _textureAtlas;      /// SpriteBatchNode texture atlas (weak reference)
-    int                 _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
-    SpriteBatchNode*    _batchNode;         /// Used batch node (weak reference)
+    TextureAtlas*       _textureAtlas;
+    int                 _atlasIndex;
+    SpriteBatchNode*    _batchNode;
 };
 
 ```
