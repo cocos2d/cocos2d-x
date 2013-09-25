@@ -73,7 +73,7 @@ CCBone::CCBone()
     m_tWorldTransform = CCAffineTransformMake(1, 0, 0, 1, 0, 0);
     m_bBoneTransformDirty = true;
     m_eBlendType = BLEND_NORMAL;
-	m_tWorldInfo = NULL;
+    m_tWorldInfo = NULL;
 }
 
 
@@ -83,7 +83,7 @@ CCBone::~CCBone(void)
     CC_SAFE_DELETE(m_pChildren);
     CC_SAFE_DELETE(m_pTween);
     CC_SAFE_DELETE(m_pDisplayManager);
-	CC_SAFE_DELETE(m_tWorldInfo);
+    CC_SAFE_DELETE(m_tWorldInfo);
 
     if(m_pBoneData)
     {
@@ -121,8 +121,8 @@ bool CCBone::init(const char *name)
         m_pDisplayManager = new CCDisplayManager();
         m_pDisplayManager->init(this);
 
-		CC_SAFE_DELETE(m_tWorldInfo);
-		m_tWorldInfo = new CCBaseData();
+        CC_SAFE_DELETE(m_tWorldInfo);
+        m_tWorldInfo = new CCBaseData();
 
         bRet = true;
     }
