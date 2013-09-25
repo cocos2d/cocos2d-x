@@ -180,21 +180,28 @@ void CCBone::update(float delta)
             m_pTweenData->scaleY -= 1;
         }
 
-        CCTransformHelp::nodeToMatrix(*m_pTweenData, m_tWorldTransform);
+		m_tWorldInfo.copy(m_pTweenData);
 
-        m_tWorldTransform = CCAffineTransformConcat(nodeToParentTransform(), m_tWorldTransform);
+		m_tWorldInfo.x += m_obPosition.x;
+		m_tWorldInfo.y += m_obPosition.y;
+		m_tWorldInfo.scaleX *= m_fScaleX;
+		m_tWorldInfo.scaleY *= m_fScaleY;
+		m_tWorldInfo.skewX += m_fSkewX + m_fRotationX;
+		m_tWorldInfo.skewY += m_fSkewY - m_fRotationY;
 
         if(m_pParentBone)
         {
-            m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pParentBone->m_tWorldTransform);
+			applyParentTransform(m_pParentBone);
         }
         else
         {
             if (armatureParentBone)
             {
-                m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, armatureParentBone->nodeToArmatureTransform());
+				applyParentTransform(armatureParentBone);
             }
         }
+
+		CCTransformHelp::nodeToMatrix(m_tWorldInfo, m_tWorldTransform);
     }
 
     CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty || m_pArmature->getArmatureTransformDirty());
@@ -209,6 +216,15 @@ void CCBone::update(float delta)
     m_bBoneTransformDirty = false;
 }
 
+void CCBone::applyParentTransform(CCBone *parent)
+{
+	m_tWorldInfo.x = m_tWorldInfo.x * parent->m_tWorldTransform.a + m_tWorldInfo.y * parent->m_tWorldTransform.c + parent->m_tWorldInfo.x;
+	m_tWorldInfo.y = m_tWorldInfo.x * parent->m_tWorldTransform.b + m_tWorldInfo.y * parent->m_tWorldTransform.d + parent->m_tWorldInfo.y;
+	m_tWorldInfo.scaleX = m_tWorldInfo.scaleX * parent->m_tWorldInfo.scaleX;
+	m_tWorldInfo.scaleY = m_tWorldInfo.scaleY * parent->m_tWorldInfo.scaleY;
+	m_tWorldInfo.skewX = m_tWorldInfo.skewX + parent->m_tWorldInfo.skewX;
+	m_tWorldInfo.skewY = m_tWorldInfo.skewY + parent->m_tWorldInfo.skewY;
+}
 
 void CCBone::updateDisplayedColor(const ccColor3B &parentColor)
 {
