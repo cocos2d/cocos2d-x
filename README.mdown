@@ -3,9 +3,9 @@ cocos2d-x
 
 How to build for WinRT (Windows 8.0)
 
-1. Use the winrt branch
+1. Use the master branch (or dev branch for the latest changes)
 
-    git checkout winrt
+    git checkout master
     
 2. You will need to checkout the git submodules before building the winrt project
 
