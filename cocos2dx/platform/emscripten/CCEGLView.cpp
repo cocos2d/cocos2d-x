@@ -28,10 +28,9 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "event_dispatcher/CCTouch.h"
 #include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCKeyboardEvent.h"
+#include "event_dispatcher/CCEventKeyboard.h"
 #include "text_input_node/CCIMEDispatcher.h"
 #include "CCGL.h"
-#include "CCAccelerometer.h"
 #include "CCApplication.h"
 
 #include <emscripten/emscripten.h>
