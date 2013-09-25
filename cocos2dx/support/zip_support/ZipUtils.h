@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include <string>
 #include "CCPlatformDefine.h"
+#include "platform/CCPlatformConfig.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtilsAndroid.h"
