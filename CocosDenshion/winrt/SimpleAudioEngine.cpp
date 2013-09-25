@@ -68,7 +68,6 @@ SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 
 void SimpleAudioEngine::end()
 {
-    // 停止音乐播放并回收资源
     sharedAudioController()->StopBackgroundMusic(true);
     sharedAudioController()->StopAllSoundEffects();
     sharedAudioController()->ReleaseResources();
