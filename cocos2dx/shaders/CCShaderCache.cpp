@@ -29,6 +29,15 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "ccShaders.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#include "precompiled/winrt/ccShaders_winrt.h"
+#include "CCWinRTUtils.h"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#include "precompiled/wp8/ccShaders_wp8.h"
+#endif
+
 NS_CC_BEGIN
 
 enum {
@@ -77,8 +86,22 @@ CCShaderCache::~CCShaderCache()
 
 bool CCShaderCache::init()
 {
+    GLboolean hasCompiler = true;
     m_pPrograms = new CCDictionary();
-    loadDefaultShaders();
+    glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
+    if(hasCompiler)
+    {
+        loadDefaultShaders();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) && defined(CC_PLATFORM_WINRT_SAVE_SHADERS)
+        savePrecompiledShaders(m_pPrograms);
+#endif   
+    }
+    else
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+        loadDefaultPrecompiledShaders();
+#endif
+    }
     return true;
 }
 
@@ -153,6 +176,78 @@ void CCShaderCache::loadDefaultShaders()
     p->release();
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+void CCShaderCache::loadDefaultPrecompiledShaders()
+{
+    // Position Texture Color shader
+    CCGLProgram *p = new CCGLProgram();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTextureColor);
+    m_pPrograms->setObject(p, kCCShader_PositionTextureColor);
+    p->release();
+
+    // Position Texture Color alpha test
+    p = new CCGLProgram();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTextureColorAlphaTest);
+
+    m_pPrograms->setObject(p, kCCShader_PositionTextureColorAlphaTest);
+    p->release();
+
+    //
+    // Position, Color shader
+    //
+    p = new CCGLProgram();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionColor);
+
+    m_pPrograms->setObject(p, kCCShader_PositionColor);
+    p->release();
+
+    //
+    // Position Texture shader
+    //
+    p = new CCGLProgram();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTexture);
+
+    m_pPrograms->setObject(p, kCCShader_PositionTexture);
+    p->release();
+
+    //
+    // Position, Texture attribs, 1 Color as uniform shader
+    //
+    p = new CCGLProgram();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTexture_uColor);
+
+    m_pPrograms->setObject(p ,kCCShader_PositionTexture_uColor);
+    p->release();
+
+    //
+    // Position Texture A8 Color shader
+    //
+    p = new CCGLProgram();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTextureA8Color);
+    
+    m_pPrograms->setObject(p, kCCShader_PositionTextureA8Color);
+    p->release();
+
+    //
+    // Position and 1 color passed as a uniform (to simulate glColor4ub )
+    //
+    p = new CCGLProgram();
+    loadDefaultPrecompiledShader(p, kCCShaderType_Position_uColor);
+    
+    m_pPrograms->setObject(p, kCCShader_Position_uColor);
+    p->release();
+    
+    //
+	// Position, Legth(TexCoords, Color (used by Draw Node basically )
+	//
+    p = new CCGLProgram();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionLengthTexureColor);
+    
+    m_pPrograms->setObject(p, kCCShader_PositionLengthTexureColor);
+    p->release();
+}
+#endif
+
 void CCShaderCache::reloadDefaultShaders()
 {
     // reset all programs and reload them
@@ -209,6 +304,121 @@ void CCShaderCache::reloadDefaultShaders()
     p->reset();
     loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
 }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+void CCShaderCache::loadDefaultPrecompiledShader(CCGLProgram *p, int type)
+{
+    switch (type) {
+        case kCCShaderType_PositionTextureColor:
+            p->initWithPrecompiledProgramByteArray((const GLchar*)ShaderPositionTextureColor, sizeof(ShaderPositionTextureColor));
+            p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+            p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
+            p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+            break;
+        case kCCShaderType_PositionTextureColorAlphaTest:
+            p->initWithPrecompiledProgramByteArray((const GLchar*)ShaderPositionTextureColorAlphaTest, sizeof(ShaderPositionTextureColorAlphaTest));
+            p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+            p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
+            p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+            break;
+        case kCCShaderType_PositionColor:  
+            p->initWithPrecompiledProgramByteArray((const GLchar*)ShaderPositionColor, sizeof(ShaderPositionColor));
+            p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+            p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
+            break;
+        case kCCShaderType_PositionTexture:
+            p->initWithPrecompiledProgramByteArray((const GLchar*)ShaderPositionTexture, sizeof(ShaderPositionTexture));
+            p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+            p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+            break;
+        case kCCShaderType_PositionTexture_uColor:
+            p->initWithPrecompiledProgramByteArray((const GLchar*)ShaderPositionTexture_uColor, sizeof(ShaderPositionTexture_uColor));
+            p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+            p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+            break;
+        case kCCShaderType_PositionTextureA8Color:
+            p->initWithPrecompiledProgramByteArray((const GLchar*)ShaderPositionTextureA8Color, sizeof(ShaderPositionTextureA8Color));
+            p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+            p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
+            p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+            break;
+        case kCCShaderType_Position_uColor:
+            p->initWithPrecompiledProgramByteArray((const GLchar*)ShaderPosition_uColor, sizeof(ShaderPosition_uColor));
+            p->addAttribute("aVertex", kCCVertexAttrib_Position);    
+            break;
+        case kCCShaderType_PositionLengthTexureColor:
+            p->initWithPrecompiledProgramByteArray((const GLchar*)ShaderPositionLengthTextureColor, sizeof(ShaderPositionLengthTextureColor));
+            p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+            p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+            p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
+            break;
+        default:
+            CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
+            return;
+    }
+    
+    p->updateUniforms();
+    
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void CCShaderCache::reloadDefaultPrecompiledShaders()
+{
+    // reset all programs and reload them
+    
+    // Position Texture Color shader
+    CCGLProgram *p = programForKey(kCCShader_PositionTextureColor);    
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTextureColor);
+
+    // Position Texture Color alpha test
+    p = programForKey(kCCShader_PositionTextureColorAlphaTest);
+    p->reset();    
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTextureColorAlphaTest);
+    
+    //
+    // Position, Color shader
+    //
+    p = programForKey(kCCShader_PositionColor);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionColor);
+    
+    //
+    // Position Texture shader
+    //
+    p = programForKey(kCCShader_PositionTexture);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTexture);
+    
+    //
+    // Position, Texture attribs, 1 Color as uniform shader
+    //
+    p = programForKey(kCCShader_PositionTexture_uColor);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTexture_uColor);
+    
+    //
+    // Position Texture A8 Color shader
+    //
+    p = programForKey(kCCShader_PositionTextureA8Color);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionTextureA8Color);
+    
+    //
+    // Position and 1 color passed as a uniform (to simulate glColor4ub )
+    //
+    p = programForKey(kCCShader_Position_uColor);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_Position_uColor);
+    
+    //
+	// Position, Legth(TexCoords, Color (used by Draw Node basically )
+	//
+    p = programForKey(kCCShader_PositionLengthTexureColor);
+    p->reset();
+    loadDefaultPrecompiledShader(p, kCCShaderType_PositionLengthTexureColor);
+}
+#endif
 
 void CCShaderCache::loadDefaultShader(CCGLProgram *p, int type)
 {

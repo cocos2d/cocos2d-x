@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>17b52f90-9b33-4188-8a0e-808582bbabbc</UniqueIdentifier>
+      <Extensions>ico;bmp;dlg;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;resw;resjson</Extensions>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{75a4d4c5-4978-4bf9-a391-fbbd7b2d35b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources">
+      <UniqueIdentifier>{c09e6c12-88ba-4ac4-a100-934ae83cb526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Resources\fonts">
+      <UniqueIdentifier>{c20ecf31-94f4-4ac0-bac7-f3d6f170c765}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ClickAndMoveTest">
+      <UniqueIdentifier>{c4067854-d06e-431d-b750-d76dab15655d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\ApplicationIcon.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AlignmentGrid.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Tiles\FlipCycleTileLarge.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Tiles\FlipCycleTileMedium.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Tiles\FlipCycleTileSmall.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Tiles\IconicTileMediumLarge.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Tiles\IconicTileSmall.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Resources\CloseNormal.png">
+      <Filter>Assets\Resources</Filter>
+    </Image>
+    <Image Include="Assets\Resources\CloseSelected.png">
+      <Filter>Assets\Resources</Filter>
+    </Image>
+    <Image Include="Assets\Resources\HelloWorld.png">
+      <Filter>Assets\Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="HelloCpp.cpp" />
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HelloCpp.h" />
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppMacros.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="WMAppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\Resources\fonts\arial.ttf">
+      <Filter>Assets\Resources\fonts</Filter>
+    </Font>
+    <Font Include="Assets\Resources\fonts\Marker Felt.ttf">
+      <Filter>Assets\Resources\fonts</Filter>
+    </Font>
+  </ItemGroup>
+</Project>

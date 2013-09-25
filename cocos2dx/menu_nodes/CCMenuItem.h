@@ -104,10 +104,7 @@ public:
     virtual bool isEnabled();
     //@note: It's 'setIsEnable' in cocos2d-iphone. 
     virtual void setEnabled(bool value);
-    virtual bool isSelected();
-    
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual bool isSelected();      
     
     /** set the target/selector of the menu item*/
     void setTarget(CCObject *rec, SEL_MenuHandler selector);
@@ -310,8 +307,6 @@ public:
     virtual void unselected();
     virtual void setEnabled(bool bEnabled);
     
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
 protected:
     virtual void updateImagesVisibility();
 };
@@ -426,8 +421,6 @@ public:
     virtual void unselected();
     virtual void setEnabled(bool var);
     
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
 };
 
 
