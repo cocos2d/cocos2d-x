@@ -1,0 +1,59 @@
+class CCTableViewCell: public CCNode
+{
+    unsigned int getIdx();
+    void setIdx(unsigned int uIdx);
+    void reset();
+    void setObjectID(unsigned int uIdx);
+    unsigned int getObjectID();
+};
+
+
+enum CCTableViewVerticalFillOrder
+{
+    kCCTableViewFillTopDown,
+    kCCTableViewFillBottomUp
+};
+
+class CCTableView : public CCScrollView
+{
+    CCTableView();
+    virtual ~CCTableView();
+
+    void setVerticalFillOrder(CCTableViewVerticalFillOrder order);
+    CCTableViewVerticalFillOrder getVerticalFillOrder();
+
+    bool initWithViewSize(CCSize size, CCNode* container = NULL);
+    void updateCellAtIndex(unsigned int idx);
+
+    void insertCellAtIndex(unsigned int idx);
+    void removeCellAtIndex(unsigned int idx);
+
+    void reloadData();
+
+    CCTableViewCell *dequeueCell();
+    CCTableViewCell *cellAtIndex(unsigned int idx);
+
+    virtual void scrollViewDidScroll(CCScrollView* view);
+    virtual void scrollViewDidZoom(CCScrollView* view) {}
+
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+
+    void _updateContentSize();
+
+    enum TableViewScriptEventType
+    {
+        kTableViewScroll   = 0,
+        kTableViewZoom,
+        kTableCellTouched,
+        kTableCellHighLight,
+        kTableCellUnhighLight,
+        kTableCellWillRecycle,
+        kTableCellSizeForIndex,
+        kTableCellSizeAtIndex,
+        kNumberOfCellsInTableView,
+    };
+    void unregisterAllScriptHandler();
+};
