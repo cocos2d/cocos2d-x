@@ -154,7 +154,7 @@ void SimpleAudioEngine::stopAllEffects()
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
-
+    UNUSED_PARAM(pszFilePath);
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)

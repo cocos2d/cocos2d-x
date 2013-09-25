@@ -22,6 +22,8 @@
 static const int STREAMING_BUFFER_SIZE = 65536;
 static const int MAX_BUFFER_COUNT = 3;
 
+#define UNUSED_PARAM(unusedparam) (void)unusedparam
+
 struct SoundEffectData
 {
 	unsigned int				m_soundID;

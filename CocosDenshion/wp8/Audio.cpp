@@ -30,6 +30,7 @@ void AudioEngineCallbacks::Initialize(Audio *audio)
 // to be closed down and restarted.  The error code is given in error.
 void  _stdcall AudioEngineCallbacks::OnCriticalError(HRESULT Error)
 {
+    UNUSED_PARAM(Error);
     m_audio->SetEngineExperiencedCriticalError();
 };
 
@@ -300,9 +301,6 @@ void Audio::PlaySoundEffect(unsigned int sound)
 		m_soundEffects[sound].m_soundEffectSourceVoice->SubmitSourceBuffer(&m_soundEffects[sound].m_audioBuffer)
 		);
 
-	XAUDIO2_BUFFER buf = {0};
-	XAUDIO2_VOICE_STATE state = {0};
-
     if (m_engineExperiencedCriticalError) {
         // If there's an error, then we'll recreate the engine on the next render pass
         return;
@@ -470,7 +468,6 @@ std::string CCUnicodeToUtf8(const wchar_t* pwszStr)
 		size_t len = wcslen(pwszStr);
 		if (len <= 0) break;
 		
-		size_t convertedChars = 0;
 		char * pszUtf8Str = new char[len*3 + 1];
 		WideCharToMultiByte(CP_UTF8, 0, pwszStr, len+1, pszUtf8Str, len*3 + 1, 0, 0);
 		ret = pszUtf8Str;
