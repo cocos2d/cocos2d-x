@@ -80,19 +80,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>CCArmature</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/CCArmature</locationURI>
-		</link>
-		<link>
 			<name>CCBReader</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/CCBReader</locationURI>
 		</link>
 		<link>
-			<name>Components</name>
+			<name>CocoStudio</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Components</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CocoStudio</locationURI>
 		</link>
 		<link>
 			<name>GUI</name>
