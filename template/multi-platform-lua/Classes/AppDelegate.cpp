@@ -46,6 +46,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_web_socket_open(tolua_s);
 #endif
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+    CCFileUtils::sharedFileUtils()->addSearchPath("script");
+#endif
+
     std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
     pEngine->executeScriptFile(path.c_str());
 
