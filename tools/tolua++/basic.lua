@@ -200,6 +200,9 @@ local CCObjectTypes = {
     "CCControlSwitch",
     "CCEditBox",
     "CCInteger",
+    "CCScrollView",
+    "CCTableViewCell",
+    "CCTableView",
 }
 
 -- register CCObject types

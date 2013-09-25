@@ -12,7 +12,8 @@ local ExtensionTestEnum =
     TEST_WEBSOCKET          = 3,
     TEST_EDITBOX            = 4,
 	TEST_TABLEVIEW          = 5,
-    TEST_MAX_COUNT          = 6,
+    TEST_SCROLLVIEW         = 6,
+    TEST_MAX_COUNT          = 7,
 }
 
 local testsName =
@@ -23,6 +24,7 @@ local testsName =
     "WebSocketTest",
     "EditBoxTest",
     "TableViewTest",
+    "ScrollViewTest",
 }
 
 --Create toMainLayr MenuItem
@@ -989,11 +991,195 @@ local function runEditBoxTest()
     EditEmail:registerScriptEditBoxHandler(editBoxTextEventHandle)
     newLayer:addChild(EditEmail)   
     newLayer:setPosition(ccp(10, 20))
-    
-	
-	newScene:addChild(newLayer)
-	return newScene
+
+
+    newScene:addChild(newLayer)
+    return newScene
 end
+
+local TableViewTestLayer = class("TableViewTestLayer")
+TableViewTestLayer.__index = TableViewTestLayer
+
+function TableViewTestLayer.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, TableViewTestLayer)
+    return target
+end
+
+function TableViewTestLayer.scrollViewDidScroll(view)
+    print("scrollViewDidScroll")
+end
+
+function TableViewTestLayer.scrollViewDidZoom(view)
+    print("scrollViewDidZoom")
+end
+
+function TableViewTestLayer.tableCellTouched(table,cell)
+    print("cell touched at index: " .. cell:getIdx())
+end
+
+function TableViewTestLayer.cellSizeForTable(table,idx) 
+    return 60,60
+end
+
+function TableViewTestLayer.tableCellAtIndex(table, idx)
+    local strValue = string.format("%d",idx)
+    local cell = table:dequeueCell()
+    local label = nil
+    if nil == cell then
+        cell = CCTableViewCell:new()
+        local sprite = CCSprite:create("Images/Icon.png")
+        sprite:setAnchorPoint(CCPointMake(0,0))
+        sprite:setPosition(CCPointMake(0, 0))
+        cell:addChild(sprite)
+
+        label = CCLabelTTF:create(strValue, "Helvetica", 20.0)
+        label:setPosition(CCPointMake(0,0))
+        label:setAnchorPoint(CCPointMake(0,0))
+        label:setTag(123)
+        cell:addChild(label)
+    else
+        label = tolua.cast(cell:getChildByTag(123),"CCLabelTTF")
+        if nil ~= label then
+            label:setString(strValue)
+        end
+    end
+
+    return cell
+end
+
+function TableViewTestLayer.numberOfCellsInTableView(table)
+   return 25
+end
+
+function TableViewTestLayer:init()
+
+    local winSize = CCDirector:sharedDirector():getWinSize()
+
+    local tableView = CCTableView:create(CCSizeMake(600,60))
+    tableView:setDirection(kCCScrollViewDirectionHorizontal)
+    tableView:setPosition(CCPointMake(20, winSize.height / 2 - 150))
+    self:addChild(tableView)
+    --registerScriptHandler functions must be before the reloadData function
+    tableView:registerScriptHandler(TableViewTestLayer.scrollViewDidScroll,CCTableView.kTableViewScroll)
+    tableView:registerScriptHandler(TableViewTestLayer.scrollViewDidZoom,CCTableView.kTableViewZoom)
+    tableView:registerScriptHandler(TableViewTestLayer.tableCellTouched,CCTableView.kTableCellTouched)
+    tableView:registerScriptHandler(TableViewTestLayer.cellSizeForTable,CCTableView.kTableCellSizeForIndex)
+    tableView:registerScriptHandler(TableViewTestLayer.tableCellAtIndex,CCTableView.kTableCellSizeAtIndex)
+    tableView:registerScriptHandler(TableViewTestLayer.numberOfCellsInTableView,CCTableView.kNumberOfCellsInTableView)  
+    tableView:reloadData()
+
+    tableView = CCTableView:create(CCSizeMake(60, 350))
+    tableView:setDirection(kCCScrollViewDirectionVertical)
+    tableView:setPosition(CCPointMake(winSize.width - 150, winSize.height / 2 - 150))
+    tableView:setVerticalFillOrder(kCCTableViewFillTopDown)
+    self:addChild(tableView)
+    tableView:registerScriptHandler(TableViewTestLayer.scrollViewDidScroll,CCTableView.kTableViewScroll)
+    tableView:registerScriptHandler(TableViewTestLayer.scrollViewDidZoom,CCTableView.kTableViewZoom)
+    tableView:registerScriptHandler(TableViewTestLayer.tableCellTouched,CCTableView.kTableCellTouched)
+    tableView:registerScriptHandler(TableViewTestLayer.cellSizeForTable,CCTableView.kTableCellSizeForIndex)
+    tableView:registerScriptHandler(TableViewTestLayer.tableCellAtIndex,CCTableView.kTableCellSizeAtIndex)
+    tableView:registerScriptHandler(TableViewTestLayer.numberOfCellsInTableView,CCTableView.kNumberOfCellsInTableView)
+    tableView:reloadData()
+    
+    -- Back Menu
+    local pToMainMenu = CCMenu:create()
+    CreateExtensionsBasicLayerMenu(pToMainMenu)
+    pToMainMenu:setPosition(CCPointMake(0, 0))
+    self:addChild(pToMainMenu,10)
+
+    return true
+end
+
+function TableViewTestLayer.create()
+    local layer = TableViewTestLayer.extend(CCLayer:create())
+    if nil ~= layer then
+        layer:init()
+    end
+
+    return layer
+end
+
+local function runTableViewTest()
+    local newScene = CCScene:create()
+    local newLayer = TableViewTestLayer.create()
+    newScene:addChild(newLayer)
+    return newScene
+end
+
+local function runScrollViewTest()
+    local newScene = CCScene:create()
+    local newLayer = CCLayer:create()
+
+    -- Back Menu
+    local pToMainMenu = CCMenu:create()
+    CreateExtensionsBasicLayerMenu(pToMainMenu)
+    pToMainMenu:setPosition(ccp(0, 0))
+    newLayer:addChild(pToMainMenu,10)
+
+    local layerColor = CCLayerColor:create(ccc4(128,64,0,255))
+    newLayer:addChild(layerColor)
+
+    local scrollView1 = CCScrollView:create()
+    local screenSize = CCDirector:sharedDirector():getWinSize()
+    local function scrollView1DidScroll()
+        print("scrollView1DidScroll")
+    end
+    local function scrollView1DidZoom()
+        print("scrollView1DidZoom")
+    end
+    if nil ~= scrollView1 then
+        scrollView1:setViewSize(CCSizeMake(screenSize.width / 2,screenSize.height))
+        scrollView1:setPosition(CCPointMake(0,0))
+        scrollView1:setScale(1.0)
+        scrollView1:ignoreAnchorPointForPosition(true)
+        local flowersprite1 =  CCSprite:create("ccb/flower.jpg")
+        if nil ~= flowersprite1 then
+            scrollView1:setContainer(flowersprite1)
+            scrollView1:updateInset()
+        end
+        scrollView1:setDirection(kCCScrollViewDirectionBoth)
+        scrollView1:setClippingToBounds(true)
+        scrollView1:setBounceable(true)
+        scrollView1:registerScriptHandler(scrollView1DidScroll,CCScrollView.kScrollViewScroll)
+        scrollView1:registerScriptHandler(scrollView1DidZoom,CCScrollView.kScrollViewZoom)
+    end
+    newLayer:addChild(scrollView1)
+
+    local scrollView2 = CCScrollView:create()
+    local function scrollView2DidScroll()
+        print("scrollView2DidScroll")
+    end
+    local function scrollView2DidZoom()
+        print("scrollView2DidZoom")
+    end
+    if nil ~= scrollView2 then
+        scrollView2:setViewSize(CCSizeMake(screenSize.width / 2,screenSize.height))
+        scrollView2:setPosition(CCPointMake(screenSize.width / 2,0))
+        scrollView2:setScale(1.0)
+        scrollView2:ignoreAnchorPointForPosition(true)
+        local flowersprite2 =  CCSprite:create("ccb/flower.jpg")
+        if nil ~= flowersprite2 then
+            scrollView2:setContainer(flowersprite2)
+            scrollView2:updateInset()
+        end
+        scrollView2:setDirection(kCCScrollViewDirectionBoth)
+        scrollView2:setClippingToBounds(true)
+        scrollView2:setBounceable(true)
+        scrollView2:setDelegate()
+        scrollView2:registerScriptHandler(scrollView2DidScroll,CCScrollView.kScrollViewScroll)
+        scrollView2:registerScriptHandler(scrollView2DidZoom,CCScrollView.kScrollViewZoom)
+    end
+    newLayer:addChild(scrollView2)
+
+    newScene:addChild(newLayer)
+    return newScene
+end
+
 
 local CreateExtensionsTestTable = 
 {
@@ -1002,7 +1188,8 @@ local CreateExtensionsTestTable =
 	runCocosBuilder,
 	runWebSocketTest,
 	runEditBoxTest,
-	runTableViewTest,	
+	runTableViewTest,
+    runScrollViewTest,
 }
 
 local s = CCDirector:sharedDirector():getWinSize()
