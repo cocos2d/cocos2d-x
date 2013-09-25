@@ -42,19 +42,6 @@ LayoutParameter* LayoutParameter::create()
 void LayoutParameter::setMargin(const UIMargin &margin)
 {
     _margin = margin;
-    UIWidget* subClass = dynamic_cast<UIWidget*>(this);
-    if (subClass)
-    {
-        UIWidget* parent = subClass->getParent();
-        if (parent)
-        {
-            Layout* containerParent = dynamic_cast<Layout*>(parent);
-            if (containerParent)
-            {
-                containerParent->doLayout();
-            }
-        }
-    }
 }
 
 const UIMargin& LayoutParameter::getMargin() const
@@ -81,28 +68,12 @@ LinearLayoutParameter* LinearLayoutParameter::create()
 
 void LinearLayoutParameter::setGravity(UILinearGravity gravity)
 {
-    m_eLinearGravity = gravity;
-    UIWidget* subClass = dynamic_cast<UIWidget*>(this);
-    if (subClass)
-    {
-        UIWidget* parent = subClass->getParent();
-        if (parent)
-        {
-            Layout* containerParent = dynamic_cast<Layout*>(parent);
-            if (containerParent)
-            {
-                if ((containerParent->getLayoutType() == LAYOUT_LINEAR_HORIZONTAL || containerParent->getLayoutType() == LAYOUT_LINEAR_VERTICAL))
-                {
-                    containerParent->doLayout();
-                }
-            }
-        }
-    }
+    _linearGravity = gravity;
 }
 
 UILinearGravity LinearLayoutParameter::getGravity() const
 {
-    return m_eLinearGravity;
+    return _linearGravity;
 }
 
 RelativeLayoutParameter* RelativeLayoutParameter::create()
@@ -119,80 +90,32 @@ RelativeLayoutParameter* RelativeLayoutParameter::create()
 
 void RelativeLayoutParameter::setAlign(UIRelativeAlign align)
 {
-    m_eRelativeAlign = align;
-    UIWidget* subClass = dynamic_cast<UIWidget*>(this);
-    if (subClass)
-    {
-        UIWidget* parent = subClass->getParent();
-        if (parent)
-        {
-            Layout* containerParent = dynamic_cast<Layout*>(parent);
-            if (containerParent)
-            {
-                if ((containerParent->getLayoutType() == LAYOUT_RELATIVE))
-                {
-                    containerParent->doLayout();
-                }
-            }
-        }
-    }
+    _relativeAlign = align;
 }
 
 UIRelativeAlign RelativeLayoutParameter::getAlign() const
 {
-    return m_eRelativeAlign;
+    return _relativeAlign;
 }
 
 void RelativeLayoutParameter::setRelativeToWidgetName(const char *name)
 {
-    m_strRelativeWidgetName = name;
-    UIWidget* subClass = dynamic_cast<UIWidget*>(this);
-    if (subClass)
-    {
-        UIWidget* parent = subClass->getParent();
-        if (parent)
-        {
-            Layout* containerParent = dynamic_cast<Layout*>(parent);
-            if (containerParent)
-            {
-                if ((containerParent->getLayoutType() == LAYOUT_RELATIVE))
-                {
-                    containerParent->doLayout();
-                }
-            }
-        }
-    }
+    _relativeWidgetName = name;
 }
 
 const char* RelativeLayoutParameter::getRelativeToWidgetName() const
 {
-    return m_strRelativeWidgetName.c_str();
+    return _relativeWidgetName.c_str();
 }
 
 void RelativeLayoutParameter::setRelativeName(const char* name)
 {
-    m_strRelativeLayoutName = name;
-    UIWidget* subClass = dynamic_cast<UIWidget*>(this);
-    if (subClass)
-    {
-        UIWidget* parent = subClass->getParent();
-        if (parent)
-        {
-            Layout* containerParent = dynamic_cast<Layout*>(parent);
-            if (containerParent)
-            {
-                if ((containerParent->getLayoutType() == LAYOUT_RELATIVE))
-                {
-                    containerParent->doLayout();
-                }
-            }
-        }
-    }
+    _relativeLayoutName = name;
 }
 
 const char* RelativeLayoutParameter::getRelativeName() const
 {
-    return m_strRelativeLayoutName.c_str();
+    return _relativeLayoutName.c_str();
 }
 
 NS_CC_EXT_END
