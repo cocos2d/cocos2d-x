@@ -790,19 +790,19 @@ void CCScrollView::registerScriptHandler(int nFunID,int nScriptEventType)
 }
 void CCScrollView::unregisterScriptHandler(int nScriptEventType)
 {
-    std::map<int,int>::iterator Iter = m_mapScriptHandler.find(nScriptEventType);
+    std::map<int,int>::iterator iter = m_mapScriptHandler.find(nScriptEventType);
     
-    if (m_mapScriptHandler.end() != Iter)
+    if (m_mapScriptHandler.end() != iter)
     {
-        m_mapScriptHandler.erase(Iter);
+        m_mapScriptHandler.erase(iter);
     }
 }
 int  CCScrollView::getScriptHandler(int nScriptEventType)
 {
-    std::map<int,int>::iterator Iter = m_mapScriptHandler.find(nScriptEventType);
+    std::map<int,int>::iterator iter = m_mapScriptHandler.find(nScriptEventType);
     
-    if (m_mapScriptHandler.end() != Iter)
-        return Iter->second;
+    if (m_mapScriptHandler.end() != iter)
+        return iter->second;
     
     return 0;
 }

@@ -65,7 +65,6 @@ class CCScrollView : public CCLayer
         kScrollViewZoom,
     };
 
-    void registerScriptHandler(LUA_FUNCTION nFunID,int scriptHandlerType);
     void unregisterScriptHandler(int scriptHandlerType);
     int  getScriptHandler(int scriptHandlerType);
 };
