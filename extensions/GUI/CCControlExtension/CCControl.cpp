@@ -132,7 +132,11 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
             {
                 int nHandler = this->getHandleOfControlEvent(controlEvents);
                 if (-1 != nHandler) {
-                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"",this);
+                    CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+                    pArrayArgs->addObject(CCString::create(""));
+                    pArrayArgs->addObject(this);
+                    pArrayArgs->addObject(CCInteger::create(1 << i));
+                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(nHandler, pArrayArgs);
                 }
             }
         }

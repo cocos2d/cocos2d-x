@@ -3,7 +3,7 @@ cocos2d-x
 
 How to build for WinRT (Windows 8.0)
 
-1. Use the master branch (or dev branch for the latest changes)
+1. Use the master branch
 
     git checkout master
     

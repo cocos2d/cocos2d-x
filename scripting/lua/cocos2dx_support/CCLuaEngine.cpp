@@ -387,4 +387,57 @@ int CCLuaEngine::executeTableViewEvent(int nEventType,cocos2d::extension::CCTabl
     return nRet;
 }
 
+int CCLuaEngine::executeEventWithArgs(int nHandler, CCArray* pArgs)
+{
+    if (NULL == pArgs)
+        return 0;
+    
+    CCObject*   pObject = NULL;
+    
+    CCInteger*  pIntVal = NULL;
+    CCString*   pStrVal = NULL;
+    CCDouble*   pDoubleVal = NULL;
+    CCFloat*    pFloatVal = NULL;
+    CCBool*     pBoolVal = NULL;
+   
+
+    int nArgNums = 0;
+    for (int i = 0; i < pArgs->count(); i++)
+    {
+        pObject = pArgs->objectAtIndex(i);
+        if (NULL != (pIntVal = dynamic_cast<CCInteger*>(pObject)))
+        {
+            m_stack->pushInt(pIntVal->getValue());
+            nArgNums++;
+        }
+        else if (NULL != (pStrVal = dynamic_cast<CCString*>(pObject)))
+        {
+            m_stack->pushString(pStrVal->getCString());
+            nArgNums++;
+        }
+        else if (NULL != (pDoubleVal = dynamic_cast<CCDouble*>(pObject)))
+        {
+            m_stack->pushFloat(pDoubleVal->getValue());
+            nArgNums++;
+        }
+        else if (NULL != (pFloatVal = dynamic_cast<CCFloat*>(pObject)))
+        {
+            m_stack->pushFloat(pFloatVal->getValue());
+            nArgNums++;
+        }
+        else if (NULL != (pBoolVal = dynamic_cast<CCBool*>(pObject)))
+        {
+            m_stack->pushBoolean(pBoolVal->getValue());
+            nArgNums++;
+        }
+        else if(NULL != pObject)
+        {
+            m_stack->pushCCObject(pObject, "CCObject");
+            nArgNums++;
+        }
+    }
+    
+    return  m_stack->executeFunctionByHandler(nHandler, nArgNums);
+}
+
 NS_CC_END
