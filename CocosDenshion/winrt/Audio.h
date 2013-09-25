@@ -85,10 +85,10 @@ private:
     StreamingVoiceContext       m_voiceContext;
 
     typedef std::map<unsigned int, SoundEffectData> EffectList;
-	EffectList				    m_soundEffects;         // 音效列表
+	EffectList				    m_soundEffects;
 
-    unsigned int                m_backgroundID;         // 背景音乐
-    std::string                 m_backgroundFile;       // 背景音乐文件
+    unsigned int                m_backgroundID;
+    std::string                 m_backgroundFile;
     bool                        m_backgroundLoop;
 
     float                       m_soundEffctVolume;
@@ -122,7 +122,6 @@ public:
         return m_engineExperiencedCriticalError;
     }
 
-    // 控制接口
     void PlayBackgroundMusic(const char* pszFilePath, bool bLoop);
     void StopBackgroundMusic(bool bReleaseData);
     void PauseBackgroundMusic();
