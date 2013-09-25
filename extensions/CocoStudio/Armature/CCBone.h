@@ -193,7 +193,7 @@ protected:
     CCAffineTransform m_tWorldTransform;
 
     //! World Point, Scale, Rotation in armature space
-    CC_SYNTHESIZE_READONLY(CCBaseData, m_tWorldInfo, WorldInfo);
+    CC_SYNTHESIZE_READONLY(CCBaseData*, m_tWorldInfo, WorldInfo);
 };
 
 NS_CC_EXT_END
