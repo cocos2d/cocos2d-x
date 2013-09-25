@@ -2492,6 +2492,8 @@
 		46B9C9611786763E00F808DD /* ccTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccTypes.cpp; sourceTree = "<group>"; };
 		5032C77D17F1065A00FA4642 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		5032C77E17F1065A00FA4642 /* CHANGELOG */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
+		5032C78017F3773C00FA4642 /* CODING_STYLE.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = CODING_STYLE.md; sourceTree = "<group>"; };
+		5032C78117F3773C00FA4642 /* RELEASE_NOTES */ = {isa = PBXFileReference; lastKnownFileType = text; path = RELEASE_NOTES; sourceTree = "<group>"; };
 		5032F07217E3403E00C9D250 /* CCSGUIReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSGUIReader.cpp; sourceTree = "<group>"; };
 		5032F07317E3403E00C9D250 /* CCSGUIReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSGUIReader.h; sourceTree = "<group>"; };
 		5032F08417E3405400C9D250 /* UIRootWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRootWidget.cpp; sourceTree = "<group>"; };
@@ -3785,6 +3787,8 @@
 			children = (
 				5032C77D17F1065A00FA4642 /* AUTHORS */,
 				5032C77E17F1065A00FA4642 /* CHANGELOG */,
+				5032C78017F3773C00FA4642 /* CODING_STYLE.md */,
+				5032C78117F3773C00FA4642 /* RELEASE_NOTES */,
 				1ADB26DC17CC92AD00634B5E /* scripting */,
 				A03F2FD7178145F2006731B9 /* extensions */,
 				A03F2ED7178143BA006731B9 /* CocosDenshion */,
