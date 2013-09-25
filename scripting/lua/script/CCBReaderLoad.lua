@@ -102,7 +102,7 @@ function CCBuilderReaderLoad(strFilePath,proxy,owner)
                 local callfunc = CCCallFunc:create(ccb[documentControllerName][callbackName])
                 animationManager:setCallFuncForLuaCallbackNamed(callfunc, callbackCombine)
             elseif 2 == callbackType and nil ~= owner then --Owner callback
-                local callfunc = CCCallFunc:create(owner[callbackName])--need check
+                local callfunc = CCCallFunc:create(owner[callbackName])
                 animationManager:setCallFuncForLuaCallbackNamed(callfunc, callbackCombine)
             end
         end
@@ -117,6 +117,6 @@ function CCBuilderReaderLoad(strFilePath,proxy,owner)
 end
 
 function CCBReaderLoad(strFilePath,proxy,bSetOwner,strOwnerName)
-    print("CCBReaderLoad was deprecated, Please use CCBuilderReaderLoad(strFilePath,proxy,owner) instead.In the newest CocosBuilderTest,you can how this new function used")
+    print("CCBReaderLoad was deprecated, Please use CCBuilderReaderLoad(strFilePath,proxy,owner) instead.In the newest CocosBuilderTest,you can find out the usage of this new function")
     return
 end
