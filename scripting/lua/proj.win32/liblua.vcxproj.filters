@@ -60,6 +60,9 @@
     <ClCompile Include="..\cocos2dx_support\Lua_web_socket.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\tolua\tolua++.h">
@@ -108,6 +111,9 @@
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\Lua_web_socket.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
   </ItemGroup>
