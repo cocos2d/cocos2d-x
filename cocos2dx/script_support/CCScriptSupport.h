@@ -240,6 +240,9 @@ public:
 
     /** function for common event */
     virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) = 0;
+    
+    /** function for c++ call back lua funtion */
+    virtual int executeEventWithArgs(int nHandler, CCArray* pArgs) { return 0; }
 
     /** called by CCAssert to allow scripting engine to handle failed assertions
      * @return true if the assert was handled by the script engine, false otherwise.
