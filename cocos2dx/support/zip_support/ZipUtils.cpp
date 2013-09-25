@@ -474,7 +474,7 @@ ZipFile::~ZipFile()
     }
     if (_dataThread && _dataThread->zipFile)
     {
-        unzClose(_dataThread);
+        unzClose(_dataThread->zipFile);
     }
     CC_SAFE_DELETE(_data);
     CC_SAFE_DELETE(_dataThread);
