@@ -122,9 +122,10 @@ void UIListViewTest_Vertical::listViewEvent(CCObject *pSender, ListViewEventType
             UIListView* list = dynamic_cast<UIListView*>(pSender);
             int index = list->getUpdateDataIndex();
             
-            if (index < 0 || index >= list->getDataLength())
+            if (index < 0 || index >= list->getDataLength())           
             {
                 list->setUpdateSuccess(false);
+                return;
             }
             
             CCString* ccstr = static_cast<CCString*>(m_array->objectAtIndex(index));

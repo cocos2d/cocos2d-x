@@ -51,8 +51,6 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("scenetest");
     }
     
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
-    
     CCLuaStack *pStack = pEngine->getLuaStack();
     lua_State *tolua_s = pStack->getLuaState();
     tolua_extensions_ccb_open(tolua_s);
