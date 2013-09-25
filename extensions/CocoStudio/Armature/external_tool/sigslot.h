@@ -84,7 +84,12 @@
 #if defined(SIGSLOT_PURE_ISO) || (!defined(WIN32) && !defined(__GNUG__) && !defined(SIGSLOT_USE_POSIX_THREADS))
 #	define _SIGSLOT_SINGLE_THREADED
 #elif defined(WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+// TODO: CC_PLATFORM_WINRT/CC_PLATFORM_WP8 need to implement _SIGSLOT_HAS_WIN32_THREADS
+#	define _SIGSLOT_SINGLE_THREADED
+#else
 #	define _SIGSLOT_HAS_WIN32_THREADS
+#endif
 #	include <windows.h>
 #elif defined(__GNUG__) || defined(SIGSLOT_USE_POSIX_THREADS)
 #	define _SIGSLOT_HAS_POSIX_THREADS
