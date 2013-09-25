@@ -153,6 +153,11 @@ cc.CONTROL_STATE_DISABLED = 1 << 2; // Disabled state of a control. This state i
 cc.CONTROL_STATE_SELECTED = 1 << 3;  // Selected state of a control. This state indicates that the control is currently selected. You can retrieve and set this value through the selected property.
 cc.CONTROL_STATE_INITIAL = 1 << 3;
 
+// Armature
+CC_MovementEventType_START = 0;
+CC_MovementEventType_COMPLETE = 1;
+CC_MovementEventType_LOOP_COMPLETE = 2;
+
 // PhysicsDebugNode
 cc.PhysicsDebugNode.create = function( space ) {
     var s = space;
@@ -169,6 +174,14 @@ cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
 
 // PhysicsSprite
 cc.PhysicsSprite.prototype.setBody = function( body ) {
+    var b = body;
+    if( body.handle !== undefined )
+        b = body.handle;
+    return this._setCPBody( b );
+};
+
+// Armature
+cc.Armature.prototype.setBody = function( body ) {
     var b = body;
     if( body.handle !== undefined )
         b = body.handle;
