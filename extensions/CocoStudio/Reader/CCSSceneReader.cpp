@@ -307,6 +307,15 @@ NS_CC_EXT_BEGIN
 					{
 						continue;
 					}
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+                    // no MP3 support for CC_PLATFORM_WP8
+                    std::string::size_type pos = pPath.find(".mp3");
+					if (pos  == pPath.npos)
+					{
+						continue;
+					}
+					pPath.replace(pos, pPath.length(), ".wav");
+#endif
                     pAudio->preloadBackgroundMusic(pPath.c_str());
 					pAudio->setFile(pPath.c_str());
 					bool bLoop = subDict->getItemIntValue("loop", 0);
