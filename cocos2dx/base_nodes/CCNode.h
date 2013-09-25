@@ -1507,7 +1507,7 @@ public:
     virtual bool isCascadeColorEnabled();
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
-    virtual void setOpacityModifyRGB(bool bValue) {};
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);};
     virtual bool isOpacityModifyRGB() { return false; };
 
 protected:
