@@ -293,9 +293,7 @@ public:
 
     /** BlendFunction. Conforms to CCBlendProtocol protocol */
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
-
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+   
     virtual void setColor(const ccColor3B &color);
     virtual void setOpacity(GLubyte opacity);
 
