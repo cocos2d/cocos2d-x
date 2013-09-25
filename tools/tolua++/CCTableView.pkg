@@ -1,6 +1,5 @@
 class CCTableViewCell: public CCNode
 {
-    CCTableViewCell() {}
     unsigned int getIdx();
     void setIdx(unsigned int uIdx);
     void reset();
