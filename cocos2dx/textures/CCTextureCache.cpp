@@ -2,6 +2,7 @@
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
 
@@ -41,7 +42,13 @@ THE SOFTWARE.
 #include <cctype>
 #include <queue>
 #include <list>
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <pthread.h>
+#else
+#include "CCWinRTUtils.h"
+using namespace concurrency;
+#endif
 
 using namespace std;
 
@@ -79,7 +86,9 @@ static unsigned long s_nAsyncRefCount = 0;
 static bool need_quit = false;
 
 static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
+
 static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
+
 
 static CCImage::EImageFormat computeImageFormatType(string& filename)
 {
@@ -97,12 +106,47 @@ static CCImage::EImageFormat computeImageFormatType(string& filename)
     {
         ret = CCImage::kFmtTiff;
     }
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
     {
         ret = CCImage::kFmtWebp;
     }
+#endif
    
     return ret;
+}
+
+static void loadImageData(AsyncStruct *pAsyncStruct)
+{
+    const char *filename = pAsyncStruct->filename.c_str();
+
+    // compute image type
+    CCImage::EImageFormat imageType = computeImageFormatType(pAsyncStruct->filename);
+    if (imageType == CCImage::kFmtUnKnown)
+    {
+        CCLOG("unsupported format %s",filename);
+        delete pAsyncStruct;
+        return;
+    }
+        
+    // generate image            
+    CCImage *pImage = new CCImage();
+    if (pImage && !pImage->initWithImageFileThreadSafe(filename, imageType))
+    {
+        CC_SAFE_RELEASE(pImage);
+        CCLOG("can not load %s", filename);
+        return;
+    }
+
+    // generate image info
+    ImageInfo *pImageInfo = new ImageInfo();
+    pImageInfo->asyncStruct = pAsyncStruct;
+    pImageInfo->image = pImage;
+    pImageInfo->imageType = imageType;
+    // put the image info into the queue
+    pthread_mutex_lock(&s_ImageInfoMutex);
+    s_pImageQueue->push(pImageInfo);
+    pthread_mutex_unlock(&s_ImageInfoMutex);   
 }
 
 static void* loadImage(void* data)
@@ -124,7 +168,7 @@ static void* loadImage(void* data)
                 break;
             }
             else {
-            	pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
+                pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
                 continue;
             }
         }
@@ -133,39 +177,8 @@ static void* loadImage(void* data)
             pAsyncStruct = pQueue->front();
             pQueue->pop();
             pthread_mutex_unlock(&s_asyncStructQueueMutex);
+            loadImageData(pAsyncStruct);
         }        
-
-        const char *filename = pAsyncStruct->filename.c_str();
-
-        // compute image type
-        CCImage::EImageFormat imageType = computeImageFormatType(pAsyncStruct->filename);
-        if (imageType == CCImage::kFmtUnKnown)
-        {
-            CCLOG("unsupported format %s",filename);
-            delete pAsyncStruct;
-            
-            continue;
-        }
-        
-        // generate image            
-        CCImage *pImage = new CCImage();
-        if (pImage && !pImage->initWithImageFileThreadSafe(filename, imageType))
-        {
-            CC_SAFE_RELEASE(pImage);
-            CCLOG("can not load %s", filename);
-            continue;
-        }
-
-        // generate image info
-        ImageInfo *pImageInfo = new ImageInfo();
-        pImageInfo->asyncStruct = pAsyncStruct;
-        pImageInfo->image = pImage;
-        pImageInfo->imageType = imageType;
-
-        // put the image info into the queue
-        pthread_mutex_lock(&s_ImageInfoMutex);
-        s_pImageQueue->push(pImageInfo);
-        pthread_mutex_unlock(&s_ImageInfoMutex);    
     }
     
     if( s_pAsyncStructQueue != NULL )
@@ -183,6 +196,7 @@ static void* loadImage(void* data)
     
     return 0;
 }
+
 
 // implementation CCTextureCache
 
@@ -209,7 +223,6 @@ CCTextureCache::~CCTextureCache()
 {
     CCLOGINFO("cocos2d: deallocing CCTextureCache.");
     need_quit = true;
-
     pthread_cond_signal(&s_SleepCondition);
     CC_SAFE_RELEASE(m_pTextures);
 }
@@ -252,9 +265,12 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     std::string pathKey = path;
 
     pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
+
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey;
+
+
     if (texture != NULL)
     {
         if (target && selector)
@@ -264,6 +280,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
         
         return;
     }
+
 
     // lazy init
     if (s_pAsyncStructQueue == NULL)
@@ -275,8 +292,9 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
         pthread_mutex_init(&s_ImageInfoMutex, NULL);
         pthread_mutex_init(&s_SleepMutex, NULL);
         pthread_cond_init(&s_SleepCondition, NULL);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
         pthread_create(&s_loadingThread, NULL, loadImage, NULL);
-
+#endif
         need_quit = false;
     }
 
@@ -298,12 +316,19 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     data->target = target;
     data->selector = selector;
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // add async struct into queue
     pthread_mutex_lock(&s_asyncStructQueueMutex);
     s_pAsyncStructQueue->push(data);
     pthread_mutex_unlock(&s_asyncStructQueueMutex);
-
     pthread_cond_signal(&s_SleepCondition);
+#else
+    // WinRT uses an Async Task to load the image since the ThreadPool has a limited number of threads
+    //std::replace( data->filename.begin(), data->filename.end(), '/', '\\'); 
+    create_task([this, data] {
+        loadImageData(data);
+    });
+#endif
 }
 
 void CCTextureCache::addImageAsyncCallBack(float dt)

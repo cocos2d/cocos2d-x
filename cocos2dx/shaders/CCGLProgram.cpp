@@ -120,6 +120,25 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
     return true;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+bool CCGLProgram::initWithPrecompiledProgramByteArray(const GLchar* shaderByteArray, GLint length)
+{
+    m_uProgram = glCreateProgram();
+    CHECK_GL_ERROR_DEBUG();
+
+    m_uVertShader = m_uFragShader = 0;
+
+    glProgramBinaryOES(m_uProgram, GL_PROGRAM_BINARY_ANGLE, shaderByteArray, length);
+
+    CHECK_GL_ERROR_DEBUG();
+    m_pHashForUniforms = NULL;
+    
+    CHECK_GL_ERROR_DEBUG();
+
+    return true;
+}
+#endif
+
 bool CCGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
     const GLchar * vertexSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(vShaderFilename).c_str())->getCString();
@@ -241,7 +260,7 @@ bool CCGLProgram::link()
     
     m_uVertShader = m_uFragShader = 0;
 	
-#if DEBUG
+#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     glGetProgramiv(m_uProgram, GL_LINK_STATUS, &status);
 	
     if (status == GL_FALSE)
