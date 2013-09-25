@@ -175,7 +175,6 @@ void Audio::Start()
         return;
     }
 
-    // 播放背景音乐
     if (! m_backgroundFile.empty())
         PlayBackgroundMusic(m_backgroundFile.c_str(), m_backgroundLoop);
 }
@@ -208,7 +207,6 @@ void Audio::PlayBackgroundMusic(const char* pszFilePath, bool bLoop)
         return;
     }
 
-    // 把背景音乐当作普通音效播放
     StopBackgroundMusic(true);
     PlaySoundEffect(pszFilePath, bLoop, m_backgroundID, true);
 }
@@ -219,10 +217,8 @@ void Audio::StopBackgroundMusic(bool bReleaseData)
         return;
     }
 
-    // 停止播放
     StopSoundEffect(m_backgroundID);
 
-    // 释放掉
     if (bReleaseData)
         UnloadSoundEffect(m_backgroundID);
 }
@@ -267,7 +263,6 @@ void Audio::SetBackgroundVolume(float volume)
         return;
     }
 
-    // 调整背景音乐音量
     if (m_soundEffects.end() != m_soundEffects.find(m_backgroundID))
     {
         m_soundEffects[m_backgroundID].m_soundEffectSourceVoice->SetVolume(volume);
@@ -290,7 +285,6 @@ void Audio::SetSoundEffectVolume(float volume)
     EffectList::iterator iter;
 	for (iter = m_soundEffects.begin(); iter != m_soundEffects.end(); iter++)
 	{
-        // 调整所有音效的音量，背景音乐除外
         if (iter->first != m_backgroundID)
             iter->second.m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
 	}
@@ -310,7 +304,6 @@ void Audio::PlaySoundEffect(const char* pszFilePath, bool bLoop, unsigned int& s
         PreloadSoundEffect(pszFilePath, isMusic);
     }
 
-    // 依然没有资源
     if (m_soundEffects.end() == m_soundEffects.find(sound))
         return;
 
@@ -419,7 +412,6 @@ void Audio::RewindSoundEffect(unsigned int sound)
     if (m_soundEffects.end() == m_soundEffects.find(sound))
         return;
 
-    // 先停止，再播放
     StopSoundEffect(sound);
     PlaySoundEffect(sound);
 }
@@ -576,7 +568,7 @@ void Audio::UnloadSoundEffect(unsigned int sound)
 	}
 
 	m_soundEffects[sound].m_soundEffectSourceVoice = nullptr;
-	m_soundEffects[sound].m_soundEffectStarted = false;
+	m_soundEffects[sound].m_soundEffectStarted = false;//
     ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));
 
     m_soundEffects.erase(sound);
