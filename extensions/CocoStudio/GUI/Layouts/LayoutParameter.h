@@ -92,7 +92,7 @@ public:
     /**
      * Default constructor
      */
-    LinearLayoutParameter() : m_eLinearGravity(LINEAR_GRAVITY_NONE){_layoutParameterType = LAYOUT_PARAMETER_LINEAR;};
+    LinearLayoutParameter() : _linearGravity(LINEAR_GRAVITY_NONE){_layoutParameterType = LAYOUT_PARAMETER_LINEAR;};
     
     /**
      * Default destructor
@@ -123,7 +123,7 @@ public:
      */
     UILinearGravity getGravity() const;
 protected:
-    UILinearGravity m_eLinearGravity;
+    UILinearGravity _linearGravity;
 };
 
 class RelativeLayoutParameter : public LayoutParameter
@@ -132,7 +132,7 @@ public:
     /**
      * Default constructor
      */
-    RelativeLayoutParameter() : m_eRelativeAlign(RELATIVE_ALIGN_NONE),m_strRelativeWidgetName(""),m_strRelativeLayoutName(""){_layoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
+    RelativeLayoutParameter() : _relativeAlign(RELATIVE_ALIGN_NONE),_relativeWidgetName(""),_relativeLayoutName(""){_layoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
     
     /**
      * Default destructor
@@ -191,9 +191,9 @@ public:
      */
     const char* getRelativeName() const;
 protected:
-    UIRelativeAlign m_eRelativeAlign;
-    std::string m_strRelativeWidgetName;
-    std::string m_strRelativeLayoutName;
+    UIRelativeAlign _relativeAlign;
+    std::string _relativeWidgetName;
+    std::string _relativeLayoutName;
 };
 
 NS_CC_EXT_END
