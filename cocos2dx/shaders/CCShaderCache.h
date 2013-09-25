@@ -68,6 +68,14 @@ public:
     /** reload the default shaders */
     void reloadDefaultShaders();
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+     /** loads the default precompiled shaders */
+    void loadDefaultPrecompiledShaders();
+
+     /** reload the default precompiled shaders */
+    void reloadDefaultPrecompiledShaders();
+#endif
+
     /** returns a GL program for a given key 
      *  @js getProgram
      */
@@ -79,7 +87,9 @@ public:
 private:
     bool init();
     void loadDefaultShader(CCGLProgram *program, int type);
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    void loadDefaultPrecompiledShader(CCGLProgram *program, int type);
+#endif
     CCDictionary* m_pPrograms;
 
 };
