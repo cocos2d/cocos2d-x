@@ -139,7 +139,8 @@ void TextureCacheEmscripten::addImageAsyncCallBack_emscripten(AsyncStruct *data,
 #endif
 
     // cache the texture
-    _textures->setObject(texture, filename);
+    _textures.insert( std::make_pair(filename, texture) );
+    texture->retain();
     texture->autorelease();
 
     Object *target = data->target;
@@ -163,7 +164,9 @@ void TextureCacheEmscripten::addImageAsync(const char *path, Object *target, SEL
 
     // optimization
     std::string pathKey = FileUtils::getInstance()->fullPathForFilename(path);
-    texture = (Texture2D*)_textures->objectForKey(pathKey.c_str());
+    auto it = _textures.find(pathKey);
+    if( it != _textures.end() )
+            texture = it->second;
 
     std::string fullpath = pathKey;
     if (texture != NULL)
