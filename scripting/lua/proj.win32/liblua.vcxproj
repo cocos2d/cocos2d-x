@@ -64,7 +64,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;%(PreprocessorDefinitions);COCOS2D_DEBUG</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -128,6 +128,7 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\cocos2dx_support\CCLuaValue.cpp" />
     <ClCompile Include="..\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
     <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp" />
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.cpp" />
     <ClCompile Include="..\cocos2dx_support\Lua_extensions_CCB.cpp" />
     <ClCompile Include="..\cocos2dx_support\Lua_web_socket.cpp" />
     <ClCompile Include="..\cocos2dx_support\tolua_fix.c" />
@@ -145,6 +146,7 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\cocos2dx_support\CCLuaValue.h" />
     <ClInclude Include="..\cocos2dx_support\Cocos2dxLuaLoader.h" />
     <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h" />
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.h" />
     <ClInclude Include="..\cocos2dx_support\Lua_extensions_CCB.h" />
     <ClInclude Include="..\cocos2dx_support\Lua_web_socket.h" />
     <ClInclude Include="..\cocos2dx_support\tolua_fix.h" />

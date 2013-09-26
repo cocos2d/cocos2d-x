@@ -257,6 +257,14 @@ void CCNode::setScale(float scale)
     m_bTransformDirty = m_bInverseDirty = true;
 }
 
+/// scale setter
+void CCNode::setScale(float fScaleX,float fScaleY)
+{
+    m_fScaleX = fScaleX;
+    m_fScaleY = fScaleY;
+    m_bTransformDirty = m_bInverseDirty = true;
+}
+
 /// scaleX getter
 float CCNode::getScaleX()
 {

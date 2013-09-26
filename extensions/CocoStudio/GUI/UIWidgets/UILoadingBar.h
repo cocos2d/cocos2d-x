@@ -34,7 +34,10 @@ typedef enum
     LoadingBarTypeLeft,
     LoadingBarTypeRight
 }LoadingBarType;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UILoadingBar : public UIWidget
 {
 public:
@@ -116,6 +119,11 @@ public:
     
     //override "getVirtualRenderer" method of widget.
     virtual CCNode* getVirtualRenderer();
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
     /*Compatible*/
     /**

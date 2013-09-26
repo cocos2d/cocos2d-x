@@ -618,6 +618,139 @@ tolua_lerror:
 }
 #endif//#ifndef TOLUA_DISABLE
 
+/* method: load of class  CCBReader */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBReader_load00
+static int tolua_Cocos2d_CCBReader_load00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCBReader",0,&tolua_err) ||
+        !tolua_isstring(tolua_S, 2, 0, &tolua_err)            ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCBReader* self = (CCBReader*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'load'", NULL);
+#endif
+        const char* pszFileName = tolua_tostring(tolua_S,2,0);
+        CCNode* tolua_ret = self->readNodeGraphFromFile(pszFileName);
+        int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'load'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif//#ifndef TOLUA_DISABLE
+
+/* method: load of class  CCBReader */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBReader_load01
+static int tolua_Cocos2d_CCBReader_load01(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCBReader",0,&tolua_err) ||
+        !tolua_isstring(tolua_S, 2, 0, &tolua_err)            ||
+        !tolua_isusertype(tolua_S, 3, "CCObject", 0, &tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        CCBReader* self = (CCBReader*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'load'", NULL);
+#endif
+        const char* pszFileName = tolua_tostring(tolua_S,2,0);
+        CCObject* pOwner = static_cast<CCObject*>(tolua_tousertype(tolua_S, 3, 0));
+        //In lua owner always define in lua script by table, so owner is always nullptr
+        CCNode* tolua_ret = self->readNodeGraphFromFile(pszFileName,pOwner);
+        int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+    }
+    return 1;
+tolua_lerror:
+    return tolua_Cocos2d_CCBReader_load00(tolua_S);
+}
+#endif//#ifndef TOLUA_DISABLE
+
+/* method: load of class  CCBReader */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBReader_load02
+static int tolua_Cocos2d_CCBReader_load02(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCBReader",0,&tolua_err) ||
+        !tolua_isstring(tolua_S, 2, 0, &tolua_err)            ||
+        !tolua_isusertype(tolua_S, 3, "CCObject", 0, &tolua_err) ||
+        !tolua_isusertype(tolua_S, 4, "CCSize", 0, &tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        CCBReader* self = (CCBReader*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'load'", NULL);
+#endif
+        const char* pszFileName = tolua_tostring(tolua_S,2,0);
+        //In lua owner always define in lua script by table, so owner is always nullptr
+        CCObject* pOwner = static_cast<CCObject*>(tolua_tousertype(tolua_S, 3, 0));
+        CCSize size = *((CCSize*)  tolua_tousertype(tolua_S,4,0));
+        
+        CCNode* tolua_ret = self->readNodeGraphFromFile(pszFileName,pOwner,size);
+        int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+    }
+    return 1;
+tolua_lerror:
+    return tolua_Cocos2d_CCBReader_load01(tolua_S);
+}
+#endif//#ifndef TOLUA_DISABLE
+
+/* method: getOwnerCallbackControlEvents of class  CCBReader */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBReader_getOwnerCallbackControlEvents00
+static int tolua_Cocos2d_CCBReader_getOwnerCallbackControlEvents00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCBReader",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCBReader* self = (CCBReader*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwnerCallbackControlEvents'", NULL);
+#endif
+        CCArray* tolua_ret = self->getOwnerCallbackControlEvents();
+        int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getOwnerCallbackControlEvents'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif//#ifndef TOLUA_DISABLE
+
 /* method: new of class  CCBAnimationManager */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBAnimationManager_new00
 static int tolua_Cocos2d_CCBAnimationManager_new00(lua_State* tolua_S)
@@ -1780,6 +1913,39 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getDocumentCallbackControlEvents of class  CCBAnimationManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBAnimationManager_getDocumentCallbackControlEvents00
+static int tolua_Cocos2d_CCBAnimationManager_getDocumentCallbackControlEvents00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCBAnimationManager",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCBAnimationManager* self = (CCBAnimationManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDocumentCallbackControlEvents'", NULL);
+#endif
+        CCArray* tolua_ret = self->getDocumentCallbackControlEvents();
+        int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getDocumentCallbackControlEvents'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+
 /* method: create of class  CCBProxy_ */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCArray_create00
 static int tolua_Cocos2d_CCBProxy_create00(lua_State* tolua_S)
@@ -1901,9 +2067,9 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getOwnerCallbackNodes of class  CCBReader */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBProxy_createCCBreader00
-static int tolua_Cocos2d_CCBProxy_createCCBreader00(lua_State* tolua_S)
+/* method: createCCBReader of class  CCBReader */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBProxy_createCCBReader00
+static int tolua_Cocos2d_CCBProxy_createCCBReader00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -1917,10 +2083,10 @@ static int tolua_Cocos2d_CCBProxy_createCCBreader00(lua_State* tolua_S)
     {
         CCBProxy* self = (CCBProxy*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'CreateCCBreader'", NULL);
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createCCBReader'", NULL);
 #endif
         {
-            CCBReader* tolua_ret = (CCBReader*) self->createCCBreader();
+            CCBReader* tolua_ret = (CCBReader*) self->createCCBReader();
             int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBReader");
@@ -2021,7 +2187,8 @@ static int tolua_Cocos2d_CCBProxy_setCallback00(lua_State* tolua_S)
         !tolua_isusertype(tolua_S,1,"CCBProxy",0,&tolua_err) ||
         !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
         !toluafix_isfunction(tolua_S, 3, "LUA_FUNCTION", 0, &tolua_err)  ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        !tolua_isnumber(tolua_S, 4, 1, &tolua_err)  ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
         )
         goto tolua_lerror;
     else
@@ -2034,7 +2201,8 @@ static int tolua_Cocos2d_CCBProxy_setCallback00(lua_State* tolua_S)
         {
             CCNode* pNode = ((CCNode*)tolua_tousertype(tolua_S,2,0));
             LUA_FUNCTION nFunID = (  toluafix_ref_function(tolua_S,3,0));
-            self->setCallback(pNode, nFunID);
+            int   nControlEvents = (int)tolua_tonumber(tolua_S, 4, 1);
+            self->setCallback(pNode, nFunID, nControlEvents);
         }
     }
     return 0;
@@ -2077,7 +2245,11 @@ TOLUA_API int tolua_extensions_ccb_open(lua_State* tolua_S){
       tolua_function(tolua_S,"new",tolua_Cocos2d_CCBReader_new01);
       tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCBReader_new01_local);
       tolua_function(tolua_S,".call",tolua_Cocos2d_CCBReader_new01_local);
-    tolua_function(tolua_S, "getOwner", tolua_Cocos2d_ccbreader_getOwner00);
+      tolua_function(tolua_S, "getOwner", tolua_Cocos2d_ccbreader_getOwner00);
+      tolua_function(tolua_S, "load", tolua_Cocos2d_CCBReader_load00);
+      tolua_function(tolua_S, "load", tolua_Cocos2d_CCBReader_load01);
+      tolua_function(tolua_S, "load", tolua_Cocos2d_CCBReader_load02);
+      tolua_function(tolua_S, "getOwnerCallbackControlEvents", tolua_Cocos2d_CCBReader_getOwnerCallbackControlEvents00);
      tolua_endmodule(tolua_S);
      #ifdef __cplusplus
      tolua_cclass(tolua_S,"CCBAnimationManager","CCBAnimationManager","CCObject",tolua_collect_CCBAnimationManager);
@@ -2121,6 +2293,7 @@ TOLUA_API int tolua_extensions_ccb_open(lua_State* tolua_S){
       tolua_function(tolua_S,"debug",tolua_Cocos2d_CCBAnimationManager_debug00);
       tolua_function(tolua_S,"getDocumentControllerName",tolua_Cocos2d_CCBAnimationManager_getDocumentControllerName00);
       tolua_function(tolua_S, "setCallFuncForLuaCallbackNamed", tolua_Cocos2d_CCBAnimationManager_setCallFuncForLuaCallbackNamed00);
+    tolua_function(tolua_S, "getDocumentCallbackControlEvents", tolua_Cocos2d_CCBAnimationManager_getDocumentCallbackControlEvents00);
      tolua_endmodule(tolua_S);
      #ifdef __cplusplus
      tolua_cclass(tolua_S,"CCBProxy","CCBProxy","CCLayer",tolua_collect_CCBProxy);
@@ -2133,7 +2306,7 @@ TOLUA_API int tolua_extensions_ccb_open(lua_State* tolua_S){
       tolua_function(tolua_S,".call",tolua_Cocos2d_CCBProxy_new00_local);
       tolua_function(tolua_S,"delete",tolua_Cocos2d_CCBProxy_delete00);
       tolua_function(tolua_S, "create", tolua_Cocos2d_CCBProxy_create00);
-      tolua_function(tolua_S, "createCCBReader", tolua_Cocos2d_CCBProxy_createCCBreader00);
+      tolua_function(tolua_S, "createCCBReader", tolua_Cocos2d_CCBProxy_createCCBReader00);
       tolua_function(tolua_S, "readCCBFromFile", tolua_Cocos2d_CCBProxy_readCCBFromFile00);
       tolua_function(tolua_S, "getNodeTypeName", tolua_Cocos2d_CCBProxy_getNodeTypeName00);
       tolua_function(tolua_S, "setCallback", tolua_Cocos2d_CCBProxy_setCallback00);

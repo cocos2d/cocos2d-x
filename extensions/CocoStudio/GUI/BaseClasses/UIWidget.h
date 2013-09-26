@@ -84,12 +84,10 @@ typedef void (CCObject::*SEL_CancelEvent)(CCObject*);
 #define coco_releaseselector(_SELECTOR) (cocos2d::extension::SEL_ReleaseEvent)(&_SELECTOR)
 #define coco_cancelselector(_SELECTOR) (cocos2d::extension::SEL_CancelEvent)(&_SELECTOR)
 /************************/
-
-
-//class UILayer;
-/*temp action*/
-class UIActionNode;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIWidget : public CCObject
 {
 public:    
@@ -884,6 +882,11 @@ public:
      */
     virtual const CCSize& getContentSize() const;
     
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
     virtual void onEnter();
     virtual void onExit();
     
@@ -984,7 +987,6 @@ public:
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
-    void setBindingAction(UIActionNode* actionNode);
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
@@ -1057,8 +1059,6 @@ protected:
     CCPoint m_positionPercent;
     bool m_bIsRunning;
     
-    /*temp action*/
-    UIActionNode* m_pBindingAction;
     /*Compatible*/
     CCObject*       m_pPushListener;
     SEL_PushEvent    m_pfnPushSelector;
@@ -1070,7 +1070,10 @@ protected:
     SEL_ReleaseEvent    m_pfnCancelSelector;
     /************/
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class GUIRenderer : public CCNodeRGBA
 {
 public:

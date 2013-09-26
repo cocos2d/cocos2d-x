@@ -331,4 +331,9 @@ void UILoadingBar::setScale9Scale()
     dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setPreferredSize(CCSizeMake(width, m_barRendererTextureSize.height));
 }
 
+const char* UILoadingBar::getDescription() const
+{
+    return "LoadingBar";
+}
+
 NS_CC_EXT_END

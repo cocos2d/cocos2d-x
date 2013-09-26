@@ -31,7 +31,6 @@ NS_CC_EXT_BEGIN
 #define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<cocos2d::extension::CCScale9Sprite*>(m_pImageRenderer)
 
 UIImageView::UIImageView():
-m_nViewType(1),
 m_nClickCount(0),
 m_fClickTimeInterval(0.0),
 m_bStartCheckDoubleClick(false),
@@ -367,6 +366,11 @@ void UIImageView::imageTextureScaleChangedWithSize()
             m_pImageRenderer->setScaleY(scaleY);
         }
     }
+}
+
+const char* UIImageView::getDescription() const
+{
+    return "ImageView";
 }
 
 NS_CC_EXT_END

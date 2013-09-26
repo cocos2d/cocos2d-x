@@ -59,6 +59,8 @@ NS_CC_EXT_BEGIN
 
 /**
 * The base node include a lot of attributes.
+* @js NA
+* @lua NA
 */
 class  CCBaseData : public CCObject
 {
@@ -118,7 +120,10 @@ enum DisplayType
 
     CS_DISPLAY_MAX
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class  CCDisplayData : public CCObject
 {
 public:
@@ -133,7 +138,10 @@ public:
 };
 
 
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class  CCSpriteDisplayData : public CCDisplayData
 {
 public:
@@ -160,7 +168,10 @@ public:
     CCBaseData skinData;
 };
 
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class  CCArmatureDisplayData  : public CCDisplayData
 {
 public:
@@ -186,7 +197,10 @@ public:
 
 };
 
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class  CCParticleDisplayData : public CCDisplayData
 {
 public:
@@ -211,6 +225,8 @@ public:
 * CCBoneData used to init a CCBone.
 * CCBoneData keeps a CCDisplayData list, a CCBone can have many display to change.
 * The display information saved in the CCDisplayData
+* @js NA
+* @lua NA
 */
 class  CCBoneData : public CCBaseData
 {
@@ -236,6 +252,8 @@ public:
 * CCArmatureData saved the CCArmature name and Bonedata needed for the CCBones in this CCArmature
 * When we create a CCArmature, we need to get each CCBone's CCBoneData as it's init information.
 * So we can get a CCBoneData from the CCDictionary saved in the CCArmatureData.
+* @js NA
+* @lua NA
 */
 class  CCArmatureData : public CCObject
 {
@@ -272,7 +290,10 @@ enum CCBlendType
     BLEND_ERASE
 };
 
-
+/**
+* @js NA
+* @lua NA
+*/
 class  CCFrameData : public CCBaseData
 {
 public:
@@ -281,7 +302,7 @@ public:
     CCFrameData();
     ~CCFrameData();
 
-    virtual void copy(CCFrameData *frameData);
+    virtual void copy(const CCBaseData *node);
 public:
     int frameID;
     int duration;                //! The frame will last duration frames
@@ -305,7 +326,10 @@ public:
     std::string strSoundEffect;
 };
 
-
+/**
+* @js NA
+* @lua NA
+*/
 class  CCMovementBoneData : public CCObject
 {
 public:
@@ -327,7 +351,10 @@ public:
     CCArray frameList;
 };
 
-
+/**
+* @js NA
+* @lua NA
+*/
 class  CCMovementData : public CCObject
 {
 public:
@@ -380,6 +407,8 @@ public:
 *  CCAnimationData include all movement infomation for the CCArmature
 *  The struct is CCAnimationData -> CCMovementData -> CCMovementBoneData -> CCFrameData
 *                                              -> MovementFrameData
+*  @js NA
+*  @lua NA
 */
 class  CCAnimationData : public CCObject
 {
@@ -413,6 +442,8 @@ struct CCContourVertex2 : public CCObject
 
 /*
 * CCContourData include a contour vertex information
+* @js NA
+* @lua NA
 */
 class  CCContourData : public CCObject
 {
@@ -433,6 +464,8 @@ public:
 
 /*
 * CCTextureData include a texture's information
+* @js NA
+* @lua NA
 */
 class  CCTextureData : public CCObject
 {

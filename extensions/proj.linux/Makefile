@@ -101,14 +101,9 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Armature/utils/CCTransformHelp.cpp \
 ../CocoStudio/Armature/utils/CCTweenFunction.cpp \
 ../CocoStudio/Armature/utils/CCUtilMath.cpp \
-../CocoStudio/GUI/Action/UIAction.cpp \
-../CocoStudio/GUI/Action/UIActionFrame.cpp \
-../CocoStudio/GUI/Action/UIActionManager.cpp \
-../CocoStudio/GUI/Action/UIActionNode.cpp \
 ../CocoStudio/GUI/BaseClasses/UIRootWidget.cpp \
 ../CocoStudio/GUI/BaseClasses/UIWidget.cpp \
 ../CocoStudio/GUI/Layouts/Layout.cpp \
-../CocoStudio/GUI/Layouts/LayoutExecutant.cpp \
 ../CocoStudio/GUI/Layouts/LayoutParameter.cpp \
 ../CocoStudio/GUI/Layouts/UILayoutDefine.cpp \
 ../CocoStudio/GUI/System/CocosGUI.cpp \
@@ -141,6 +136,11 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Json/lib_json/json_writer.cpp \
 ../CocoStudio/Reader/CCSSceneReader.cpp \
 ../CocoStudio/Reader/CCSGUIReader.cpp \
+../CocoStudio/Action/CCActionManager.cpp \
+../CocoStudio/Action/CCActionObject.cpp \
+../CocoStudio/Action/CCActionNode.cpp \
+../CocoStudio/Action/CCActionFrame.cpp \
+../CocoStudio/Action/CCActionFrameEasing.cpp \
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 

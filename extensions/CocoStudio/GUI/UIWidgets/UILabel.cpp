@@ -224,4 +224,9 @@ void UILabel::labelScaleChangedWithSize()
     
 }
 
+const char* UILabel::getDescription() const
+{
+    return "Label";
+}
+
 NS_CC_EXT_END

@@ -28,7 +28,10 @@
 #include "../Layouts/Layout.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIRootWidget : public Layout
 {
 public:
@@ -46,6 +49,11 @@ public:
      * Allocates and initializes a widget.
      */
     static UIRootWidget* create();
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     //initializes state of widget.
     virtual bool init();

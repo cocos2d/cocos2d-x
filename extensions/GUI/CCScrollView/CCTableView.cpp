@@ -83,6 +83,7 @@ CCTableView::~CCTableView()
     CC_SAFE_DELETE(m_pIndices);
     CC_SAFE_RELEASE(m_pCellsUsed);
     CC_SAFE_RELEASE(m_pCellsFreed);
+    unregisterAllScriptHandler();
 }
 
 void CCTableView::setVerticalFillOrder(CCTableViewVerticalFillOrder fillOrder)
@@ -645,6 +646,19 @@ void CCTableView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 
         m_pTouchedCell = NULL;
     }
+}
+
+void CCTableView::unregisterAllScriptHandler()
+{
+    unregisterScriptHandler(kTableViewScroll);
+    unregisterScriptHandler(kTableViewZoom);
+    unregisterScriptHandler(kTableCellTouched);
+    unregisterScriptHandler(kTableCellHighLight);
+    unregisterScriptHandler(kTableCellUnhighLight);
+    unregisterScriptHandler(kTableCellWillRecycle);
+    unregisterScriptHandler(kTableCellSizeForIndex);
+    unregisterScriptHandler(kTableCellSizeAtIndex);
+    unregisterScriptHandler(kNumberOfCellsInTableView);
 }
 
 NS_CC_EXT_END

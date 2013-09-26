@@ -29,8 +29,7 @@ NS_CC_EXT_BEGIN
 
 UILayer::UILayer():
 m_pRootWidget(NULL),
-m_pInputManager(NULL),
-m_updateEnableWidget(NULL)
+m_pInputManager(NULL)
 {
     
 }
@@ -39,8 +38,6 @@ UILayer::~UILayer()
 {
     m_pRootWidget->release();
     CC_SAFE_DELETE(m_pInputManager);
-    m_updateEnableWidget->removeAllObjects();
-    CC_SAFE_RELEASE_NULL(m_updateEnableWidget);
 }
 
 bool UILayer::init()
@@ -53,8 +50,6 @@ bool UILayer::init()
         addChild(m_pRootWidget->getRenderer());
         m_pInputManager = new UIInputManager();
         m_pInputManager->setRootWidget(m_pRootWidget);
-        m_updateEnableWidget = CCArray::create();
-        m_updateEnableWidget->retain();
         return true;
     }
     return false;
@@ -108,46 +103,6 @@ void UILayer::setVisible(bool visible)
 {
     CCLayer::setVisible(visible);
     m_pRootWidget->setVisible(visible);
-}
-
-void UILayer::update(float dt)
-{
-    if (!m_updateEnableWidget)
-    {
-        return;
-    }
-    ccArray* arrayWidget = m_updateEnableWidget->data;
-    int length = arrayWidget->num;
-    for (int i=0; i<length; i++)
-    {
-        dynamic_cast<UIWidget*>(arrayWidget->arr[i])->update(dt);
-    }
-}
-
-void UILayer::addUpdateEnableWidget(UIWidget* widget)
-{
-    if (!widget || !m_updateEnableWidget)
-    {
-        return;
-    }
-    if (m_updateEnableWidget->containsObject(widget))
-    {
-        return;
-    }
-    m_updateEnableWidget->addObject(widget);
-}
-
-void UILayer::removeUpdateEnableWidget(UIWidget* widget)
-{
-    if (!widget || !m_updateEnableWidget)
-    {
-        return;
-    }
-    if (!m_updateEnableWidget->containsObject(widget))
-    {
-        return;
-    }
-    m_updateEnableWidget->removeObject(widget);
 }
 
 UIWidget* UILayer::getWidgetByTag(int tag)

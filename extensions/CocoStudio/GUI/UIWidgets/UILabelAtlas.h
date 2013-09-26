@@ -28,7 +28,10 @@
 #include "../BaseClasses/UIWidget.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UICCLabelAtlas : public CCLabelAtlas
 {
 public:
@@ -51,7 +54,10 @@ public:
     virtual void updateDisplayedOpacity(GLubyte opacity);
     virtual void draw(void);
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UILabelAtlas : public UIWidget
 {
 public:
@@ -87,6 +93,11 @@ public:
     
     //override "getVirtualRenderer" method of widget.
     virtual CCNode* getVirtualRenderer();
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();

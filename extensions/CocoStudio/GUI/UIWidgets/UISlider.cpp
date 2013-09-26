@@ -37,8 +37,6 @@ m_pSlidBallDisabledRenderer(NULL),
 m_pSlidBallRenderer(NULL),
 m_fBarLength(0.0),
 m_nPercent(0),
-m_fBarNodeScaleValue(1.0),
-m_fTouchMoveStartLocation(0.0),
 m_bScale9Enabled(false),
 m_bPrevIgnoreSize(true),
 m_strTextureFile(""),
@@ -418,7 +416,7 @@ float UISlider::getPercentWithBallPos(float px)
     return (((px-(-m_fBarLength/2.0f))/m_fBarLength)*100.0f);
 }
 
-void UISlider::addPercentEvent(cocos2d::CCObject *target, SEL_SlidPercentChangedEvent selector)
+void UISlider::addEventListener(cocos2d::CCObject *target, SEL_SlidPercentChangedEvent selector)
 {
     m_pSlidPercentListener = target;
     m_pfnSlidPercentSelector = selector;
@@ -549,4 +547,10 @@ void UISlider::onPressStateChangedToDisabled()
     m_pSlidBallPressedRenderer->setVisible(false);
     m_pSlidBallDisabledRenderer->setVisible(true);
 }
+
+const char* UISlider::getDescription() const
+{
+    return "Slider";
+}
+
 NS_CC_EXT_END

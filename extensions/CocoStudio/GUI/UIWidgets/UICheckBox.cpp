@@ -305,7 +305,7 @@ void UICheckBox::unSelectedEvent()
     }
 }
 
-void UICheckBox::addSelectedStateEvent(cocos2d::CCObject *target, SEL_SelectedStateEvent selector)
+void UICheckBox::addEventListener(cocos2d::CCObject *target, SEL_SelectedStateEvent selector)
 {
     m_pSelectedStateEventListener = target;
     m_pfnSelectedStateEventSelector = selector;
@@ -472,6 +472,11 @@ void UICheckBox::frontCrossDisabledTextureScaleChangedWithSize()
         m_pFrontCrossDisabledRenderer->setScaleX(scaleX);
         m_pFrontCrossDisabledRenderer->setScaleY(scaleY);
     }
+}
+
+const char* UICheckBox::getDescription() const
+{
+    return "CheckBox";
 }
 
 NS_CC_EXT_END

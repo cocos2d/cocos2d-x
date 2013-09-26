@@ -48,7 +48,9 @@ typedef void (CCObject::*SEL_FrameEventCallFunc)(CCBone *, const char *, int, in
 #define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
 
-
+/**
+ *  @lua NA
+ */
 class  CCArmatureAnimation : public CCProcessBase
 {
 public:
@@ -163,16 +165,19 @@ protected:
 
     /**
      * Update(float dt) will call this handler, you can handle your logic here
+     * @js NA
      */
     void updateHandler();
 
     /**
      * Update current key frame, and process auto stop, pause
+     * @js NA
      */
     void updateFrameData(float currentPercent);
 
     /**
      * Emit a frame event
+     * @js NA
      */
     void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 

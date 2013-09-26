@@ -42,6 +42,11 @@ typedef void (CCObject::*SEL_SlidPercentChangedEvent)(CCObject*,SliderEventType)
 typedef void (CCObject::*SEL_PercentChangedEvent)(CCObject*);
 #define coco_percentchangedselector(_SELECTOR) (SEL_PercentChangedEvent)(&_SELECTOR)
 /************/
+
+/**
+*   @js NA
+*   @lua NA
+*/
 class UISlider : public UIWidget
 {
 public:
@@ -163,7 +168,7 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addPercentEvent(CCObject* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListener(CCObject* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const CCPoint &touchPoint);
@@ -185,6 +190,11 @@ public:
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
     /*Compatible*/
     /**
@@ -228,8 +238,6 @@ protected:
     float m_fBarLength;
     int m_nPercent;
     
-    float m_fBarNodeScaleValue;
-    float m_fTouchMoveStartLocation;
     bool m_bScale9Enabled;
     bool m_bPrevIgnoreSize;
     std::string m_strTextureFile;

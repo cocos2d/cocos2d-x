@@ -28,7 +28,10 @@
 #include "../BaseClasses/UIWidget.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UILabel : public UIWidget
 {
 public:
@@ -116,6 +119,11 @@ public:
     
     //override "getVirtualRenderer" method of widget.
     virtual CCNode* getVirtualRenderer();
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
     void setTextAreaSize(const CCSize &size);
     void setTextHorizontalAlignment(CCTextAlignment alignment);

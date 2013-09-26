@@ -29,8 +29,11 @@
 
 
 NS_CC_EXT_BEGIN
-
-class UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate, public CCTouchDelegate
+/**
+ *  @js NA
+ *  @lua NA
+ */
+class UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate
 {
 public:
     UICCTextField();
@@ -81,7 +84,18 @@ protected:
     bool m_bDeleteBackward;
 };
 
+typedef enum
+{
+    TEXTFIELD_EVENT_ATTACH_WITH_IME,
+    TEXTFIELD_EVENT_DETACH_WITH_IME,
+    TEXTFIELD_EVENT_INDERT_TEXT,
+    TEXTFIELD_EVENT_DELETE_BACKWARD,
+}TextFiledEventType;
 
+typedef void (CCObject::*SEL_TextFieldEvent)(CCObject*, TextFiledEventType);
+#define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
+
+/*******Compatible*******/
 typedef void (CCObject::*SEL_TextFieldAttachWithIMEEvent)(CCObject*);
 #define coco_TextField_AttachWithIME_selector(_SELECTOR) (SEL_TextFieldAttachWithIMEEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_TextFieldDetachWithIMEEvent)(CCObject*);
@@ -90,8 +104,12 @@ typedef void (CCObject::*SEL_TextFieldInsertTextEvent)(CCObject*);
 #define coco_TextField_InsertText_selector(_SELECTOR) (SEL_TextFieldInsertTextEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_TextFieldDeleteBackwardEvent)(CCObject*);
 #define coco_TextField_DeleteBackward_selector(_SELECTOR) (SEL_TextFieldDeleteBackwardEvent)(&_SELECTOR)
+/************************/
 
-//class UITextField : public UIWidget
+/** class UITextField : public UIWidget
+*   @js NA
+*   @lua NA
+*/
 class UITextField : public UIWidget
 {
 public:
@@ -124,13 +142,22 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
+    void addEventListener(CCObject* target, SEL_TextFieldEvent selecor);
+
+    /*******Compatible*******/
     void addAttachWithIMEEvent(CCObject* target, SEL_TextFieldAttachWithIMEEvent selecor);
     void addDetachWithIMEEvent(CCObject* target, SEL_TextFieldDetachWithIMEEvent selecor);
     void addInsertTextEvent(CCObject* target, SEL_TextFieldInsertTextEvent selecor);
     void addDeleteBackwardEvent(CCObject* target, SEL_TextFieldDeleteBackwardEvent selecor);
+    /**************/
     virtual void setAnchorPoint(const CCPoint &pt);
     virtual void setColor(const ccColor3B &color);
     virtual void setOpacity(int opacity);
+    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
     /*compatibel*/
     /**
@@ -150,10 +177,16 @@ protected:
     virtual void onSizeChanged();
     void textfieldRendererScaleChangedWithSize();
 protected:
+    UICCTextField* m_pTextFieldRenderer;
+
     float m_fTouchWidth;
     float m_fTouchHeight;
     bool m_bUseTouchArea;
     
+    CCObject* m_pEventListener;
+    SEL_TextFieldEvent m_pfnEventSelector;
+
+    /*******Compatible*******/
     CCObject* m_pAttachWithIMEListener;
     CCObject* m_pDetachWithIMEListener;
     CCObject* m_pInsertTextListener;
@@ -163,8 +196,8 @@ protected:
     SEL_TextFieldDetachWithIMEEvent m_pfnDetachWithIMESelector;
     SEL_TextFieldInsertTextEvent m_pfnInsertTextSelector;
     SEL_TextFieldDeleteBackwardEvent m_pfnDeleteBackwardSelector;
-    
-    UICCTextField* m_pTextFieldRenderer;
+    /**************/
+
 };
 
 NS_CC_EXT_END

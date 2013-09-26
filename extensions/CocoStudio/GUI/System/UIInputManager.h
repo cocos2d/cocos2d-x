@@ -29,7 +29,10 @@
 #include "../Layouts/Layout.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIInputManager
 {
 public:

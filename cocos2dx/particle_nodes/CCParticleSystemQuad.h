@@ -63,7 +63,14 @@ protected:
     GLuint                m_pBuffersVBO[2]; //0: vertex  1: indices
 
 public:
+    /**
+     * @js ctor
+     */
     CCParticleSystemQuad();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleSystemQuad();
 
     /** creates an initializes a CCParticleSystemQuad from a plist file.
@@ -87,16 +94,40 @@ public:
     @since v0.99.4
     */
     void setTextureWithRect(CCTexture2D *texture, const CCRect& rect);
-    // super methods
+    /** super methods
+     *  @js NA
+     *  @lua NA
+     */
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
+    /**
+     * @js NA
+     */
     virtual void setTexture(CCTexture2D* texture);
+    /**
+     * @js NA
+     */
     virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
+    /**
+     * @js NA
+     */
     virtual void postStep();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void draw();
+    /**
+     * @js NA
+     */
     virtual void setBatchNode(CCParticleBatchNode* batchNode);
+    /**
+     * @js NA
+     */
     virtual void setTotalParticles(unsigned int tp);
     
     /** listen the event that coming to foreground on Android
+     *  @js NA
+     *  @lua NA
      */
     void listenBackToForeground(CCObject *obj);
 

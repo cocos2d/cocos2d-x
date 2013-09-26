@@ -28,7 +28,10 @@
 #include "../BaseClasses/UIWidget.h"
 
 NS_CC_EXT_BEGIN
-    
+/**
+*   @js NA
+*   @lua NA
+*/    
 class UILabelBMFont : public UIWidget
 {
 public:
@@ -58,6 +61,10 @@ public:
     virtual void setAnchorPoint(const CCPoint &pt);
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();

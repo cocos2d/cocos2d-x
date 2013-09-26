@@ -33,7 +33,10 @@
 
 NS_CC_EXT_BEGIN
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class UILayer : public CCLayer
 {
     
@@ -125,10 +128,6 @@ public:
      */
     UIRootWidget* getRootWidget();
     
-    //update method
-    void update(float dt);
-    void addUpdateEnableWidget(UIWidget* widget);
-    void removeUpdateEnableWidget(UIWidget* widget);
     /*compatible*/
     /**
      * These methods will be removed
@@ -139,7 +138,6 @@ public:
 protected:
     UIRootWidget* m_pRootWidget;
     UIInputManager* m_pInputManager;
-    CCArray* m_updateEnableWidget;
 };
 
 NS_CC_EXT_END
