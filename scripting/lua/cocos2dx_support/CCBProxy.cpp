@@ -24,12 +24,10 @@
 
 #include "CCBProxy.h"
 
-CCBReader* CCBProxy::createCCBreader()
+CCBReader* CCBProxy::createCCBReader()
 {
     CCNodeLoaderLibrary *ccNodeLoaderLibrary = CCNodeLoaderLibrary::sharedCCNodeLoaderLibrary();
-    
-    ccNodeLoaderLibrary->registerCCNodeLoader("", CCBLayerLoader::loader());
-    
+        
     CCBReader * pCCBReader = new CCBReader(ccNodeLoaderLibrary);
     pCCBReader->autorelease();
     
