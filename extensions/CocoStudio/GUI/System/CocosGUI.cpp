@@ -28,7 +28,7 @@ NS_CC_EXT_BEGIN
 
 const char* CocosGUIVersion()
 {
-    return "CocosGUI v0.3.0.0";
+    return "CocosGUI v1.0.0.0";
 }
 
 NS_CC_EXT_END
