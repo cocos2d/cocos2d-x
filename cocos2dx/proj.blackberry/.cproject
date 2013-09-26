@@ -9,7 +9,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cocos2dx"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cocos2dx/Device-Debug"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -32,6 +32,8 @@
 									<listOptionValue builtIn="false" value="COCOS2D_DEBUG=1"/>
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 									<listOptionValue builtIn="false" value="__ARM_NEON__"/>
+									<listOptionValue builtIn="false" value="_FILE_OFFSET_BITS=64"/>
+									<listOptionValue builtIn="false" value="_LARGEFILE64_SOURCE"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.includePath.354280457" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
@@ -115,7 +117,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cocos2dx"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cocos2dx/Device-Release"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -215,7 +217,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cocos2dx"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cocos2dx/Device-Profile"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -318,7 +320,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cocos2dx"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cocos2dx/Device-Coverage"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -421,7 +423,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cocos2dx"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cocos2dx/Simulator"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -523,7 +525,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cocos2dx"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cocos2dx/Simulator-Profile"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -625,7 +627,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cocos2dx"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cocos2dx/Simulator-Coverage"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -753,4 +755,5 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>
