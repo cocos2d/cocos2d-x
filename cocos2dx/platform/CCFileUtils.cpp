@@ -503,8 +503,10 @@ unsigned char* FileUtils::getFileData(const char* filename, const char* mode, un
         fseek(fp,0,SEEK_END);
         *size = ftell(fp);
         fseek(fp,0,SEEK_SET);
-        buffer = new unsigned char[*size];
+		unsigned long bufferSize = *size;
+        buffer = new unsigned char[bufferSize + 1];
         *size = fread(buffer,sizeof(unsigned char), *size,fp);
+		buffer[bufferSize] = 0;
         fclose(fp);
     } while (0);
     

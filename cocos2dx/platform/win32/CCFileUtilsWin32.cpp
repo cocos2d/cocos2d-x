@@ -138,13 +138,13 @@ unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mod
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
         
         *size = ::GetFileSize(fileHandle, NULL);
-
-        pBuffer = new unsigned char[*size];
+		unsigned long bufferSize = *size;
+        pBuffer = new unsigned char[bufferSize + 1];
         DWORD sizeRead = 0;
         BOOL successed = FALSE;
         successed = ::ReadFile(fileHandle, pBuffer, *size, &sizeRead, NULL);
         ::CloseHandle(fileHandle);
-
+        pBuffer[bufferSize] = 0;
         if (!successed)
         {
             CC_SAFE_DELETE_ARRAY(pBuffer);
