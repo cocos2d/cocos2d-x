@@ -40,6 +40,11 @@ extern "C" {
 
 NS_CC_BEGIN
 
+namespace extension {
+    class CCTableViewCell;
+    class CCTableView;
+}
+
 /** Lua support for cocos2d-x
  *  @js NA
  *  @lua NA
@@ -118,6 +123,10 @@ public:
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
     virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL);
+    
+    int executeTableViewEvent(int nEventType,cocos2d::extension::CCTableView* pTableView,void* pValue = NULL, CCArray* pResultArray = NULL);
+    
+    virtual int executeEventWithArgs(int nHandler, CCArray* pArgs);
 
     virtual bool handleAssert(const char *msg);
     

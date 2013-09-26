@@ -9,6 +9,8 @@
 #include "cocos-ext.h"
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
+#include "js_manual_conversions.h"
+#include "js_bindings_chipmunk_auto_classes.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -679,7 +681,7 @@ static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContex
         // Check whether the target already exists.
         std::pair<std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator,std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator> range;
         range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(jsDelegate);
-        std::map<JSObject*, JSB_ControlButtonTarget*>::iterator it = range.first;
+        std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator it = range.first;
         for (; it != range.second; ++it)
         {
             if (it->second->_jsFunc == jsFunc && arg2 == it->second->_type)
@@ -743,7 +745,7 @@ static JSBool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSCon
 
         std::pair<std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator,std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator> range;
         range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(obj);
-        std::map<JSObject*, JSB_ControlButtonTarget*>::iterator it = range.first;
+        std::multimap<JSObject*, JSB_ControlButtonTarget*>::iterator it = range.first;
         for (; it != range.second; ++it)
         {
             if (it->second->_jsFunc == jsFunc && arg2 == it->second->_type)
@@ -969,12 +971,68 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
     return JS_FALSE;
 }
 
+static JSBool jsb_CCArmature_setCPBody(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CCArmature* real = (CCArmature *)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, real)
+
+    jsval *argvp = JS_ARGV(cx,vp);
+    JSBool ok = JS_TRUE;
+
+    cpBody* arg0;
+
+    ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
+    if( ! ok ) return JS_FALSE;
+
+    real->setBody((cpBody*)arg0);
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return JS_TRUE;
+}
+
+static JSBool jsb_CCArmature_getShapeList(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CCArmature* real = (CCArmature *)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, real)
+
+    if (argc == 0)
+    {
+        cpShape* shape = real->getShapeList();
+
+        JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+
+        int i = 0;
+        while (shape)
+        {
+            cpShape *next = shape->next_private;
+
+            jsval ret_jsval = c_class_to_jsval( cx, shape, JSB_cpShape_object, JSB_cpShape_class, "cpShape" );
+
+            if(!JS_SetElement(cx, jsretArr, i, &ret_jsval)) {
+                break;
+            }
+            shape = next;
+            ++i;
+        }
+
+        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsretArr));
+        return JS_TRUE;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return JS_FALSE;
+}
+
 extern JSObject* jsb_CCScrollView_prototype;
 extern JSObject* jsb_CCTableView_prototype;
 extern JSObject* jsb_CCEditBox_prototype;
 extern JSObject* jsb_CCArmatureAnimation_prototype;
 extern JSObject* jsb_CCArmatureDataManager_prototype;
 extern JSObject* jsb_CCControl_prototype;
+extern JSObject* jsb_CCArmature_prototype;
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
 {
@@ -991,6 +1049,9 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
     
     JS_DefineFunction(cx, jsb_CCArmatureDataManager_prototype, "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     
+    JS_DefineFunction(cx, jsb_CCArmature_prototype, "_setCPBody", jsb_CCArmature_setCPBody, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, jsb_CCArmature_prototype, "getShapeList", jsb_CCArmature_getShapeList, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JSObject *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.TableView; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);

@@ -1,0 +1,70 @@
+enum CCScrollViewDirection {
+    kCCScrollViewDirectionNone = -1,
+    kCCScrollViewDirectionHorizontal = 0,
+    kCCScrollViewDirectionVertical = 1,
+    kCCScrollViewDirectionBoth = 2,
+};
+
+class CCScrollView : public CCLayer
+{
+    CCScrollView();
+    virtual ~CCScrollView();
+
+    bool init();
+    virtual void registerWithTouchDispatcher();
+    static CCScrollView* create(CCSize size, CCNode* container = NULL);
+    static CCScrollView* create();
+    bool initWithViewSize(CCSize size, CCNode* container = NULL);
+    void setContentOffset(CCPoint offset, bool animated = false);
+    CCPoint getContentOffset();
+    void setContentOffsetInDuration(CCPoint offset, float dt); 
+    void setZoomScale(float s);
+    void setZoomScale(float s, bool animated);
+    float getZoomScale();
+    void setZoomScaleInDuration(float s, float dt);
+    CCPoint minContainerOffset();
+    CCPoint maxContainerOffset(); 
+    bool isNodeVisible(CCNode * node);
+    void pause(CCObject* sender);
+    void resume(CCObject* sender);
+    bool isDragging();
+    bool isTouchMoved();
+    bool isBounceable();
+    void setBounceable(bool bBounceable);
+
+    CCSize getViewSize();
+    void setViewSize(CCSize size);
+
+    CCNode * getContainer();
+    void setContainer(CCNode * pContainer);
+
+    CCScrollViewDirection getDirection();
+    virtual void setDirection(CCScrollViewDirection eDirection);
+
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+
+    virtual void setContentSize(const CCSize & size);
+    virtual const CCSize& getContentSize() const;
+
+    void updateInset();
+
+    bool isClippingToBounds();
+    void setClippingToBounds(bool bClippingToBounds);
+
+    virtual void addChild(CCNode * child, int zOrder, int tag);
+    virtual void addChild(CCNode * child, int zOrder);
+    virtual void addChild(CCNode * child);
+    void setTouchEnabled(bool e);
+
+    enum ScrollViewScriptEventType
+    {
+        kScrollViewScroll   = 0,
+        kScrollViewZoom,
+    };
+
+    void unregisterScriptHandler(int scriptHandlerType);
+    int  getScriptHandler(int scriptHandlerType);
+};
