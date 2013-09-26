@@ -37,7 +37,14 @@ NS_CC_BEGIN
 class CC_DLL CCImage : public CCObject
 {
 public:
+    /**
+     @js ctor
+     */
     CCImage();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCImage();
 
     typedef enum
@@ -88,6 +95,7 @@ public:
     @param nLength  data length expressed in (number of) bytes.
     @param nWidth, nHeight, nBitsPerComponent are used for kFmtRawData.
     @return true if loaded correctly.
+    @js NA
     */
     bool initWithImageData(void * pData, 
                            int nDataLen, 
@@ -104,6 +112,7 @@ public:
     @param  eAlignMask  the test Alignment
     @param  pFontName   the name of the font used to draw the text. If nil, use the default system font.
     @param  nSize       the font size, if 0, use the system default size.
+    @js NA
     */
     bool initWithString(
         const char *    pText, 
@@ -114,7 +123,10 @@ public:
         int             nSize = 0);
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    
+        /**
+         * @js NA
+         * @lua NA
+         */
         bool initWithStringShadowStroke(
                                             const char *    pText,
                                             int             nWidth      = 0,

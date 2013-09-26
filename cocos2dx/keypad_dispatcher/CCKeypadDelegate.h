@@ -33,6 +33,8 @@ NS_CC_BEGIN
 /**
  * @addtogroup input
  * @{
+ * @js NA
+ * @lua NA
  */
 
 class CC_DLL CCKeypadDelegate
@@ -46,10 +48,12 @@ public:
 };
 
 /**
-@brief
-CCKeypadHandler
-Object than contains the CCKeypadDelegate.
-*/
+ * @brief
+ * CCKeypadHandler
+ * Object than contains the CCKeypadDelegate.
+ * @js NA
+ * @lua NA
+ */
 class CC_DLL CCKeypadHandler : public CCObject
 {
 public:

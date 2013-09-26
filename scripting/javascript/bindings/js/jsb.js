@@ -12,3 +12,4 @@ require('jsb_opengl_constants.js');
 require('jsb_opengl.js');
 require('jsb_cocosbuilder.js');
 require('jsb_sys.js');
+require('jsb_deprecated.js');

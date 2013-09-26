@@ -39,6 +39,8 @@ class CCTouchDispatcher;
 /**
  * @addtogroup input
  * @{
+ * @js NA
+ * @lua NA
  */
 
 class CC_DLL CCTouchDelegate
@@ -78,6 +80,8 @@ public:
  (The name TargetedTouchDelegate relates to updates "targeting" their specific
  handler, without bothering the other handlers.)
  @since v0.8
+ @js NA
+ @lua NA
  */
  class CC_DLL CCTargetedTouchDelegate : public CCTouchDelegate
  {
@@ -96,6 +100,8 @@ public:
 /** @brief
  This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Canceled).
  @since v0.8
+ @js NA
+ @lua NA
  */
  class CC_DLL CCStandardTouchDelegate : public CCTouchDelegate
  {

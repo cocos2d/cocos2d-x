@@ -30,7 +30,10 @@
 #include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCSortableObject
 {
 public:
@@ -38,7 +41,10 @@ public:
     virtual void setObjectID(unsigned int objectID) = 0;
     virtual unsigned int getObjectID() = 0;
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCArrayForObjectSorting : public CCArray
 {
 public:

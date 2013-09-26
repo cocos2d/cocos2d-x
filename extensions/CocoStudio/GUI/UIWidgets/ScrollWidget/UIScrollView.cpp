@@ -732,14 +732,19 @@ Layout* UIScrollView::getInnerContainer()
     return m_pInnerContainer;
 }
 
-void UIScrollView::setLayoutExecutant(LayoutExecutant *exe)
+void UIScrollView::setLayoutType(LayoutType type)
 {
-    m_pInnerContainer->setLayoutExecutant(exe);
+    m_pInnerContainer->setLayoutType(type);
 }
 
-LayoutExecutant* UIScrollView::getLayoutExecutant() const
+LayoutType UIScrollView::getLayoutType() const
 {
-    return m_pInnerContainer->getLayoutExecutant();
+    return m_pInnerContainer->getLayoutType();
+}
+
+void UIScrollView::doLayout()
+{
+    m_pInnerContainer->doLayout();
 }
 
 const char* UIScrollView::getDescription() const
