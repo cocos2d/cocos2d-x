@@ -114,7 +114,8 @@ void CCSkin::setSkinData(const CCBaseData &var)
 
     setScaleX(m_sSkinData.scaleX);
     setScaleY(m_sSkinData.scaleY);
-    setRotation(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setRotationX(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setRotationY(CC_RADIANS_TO_DEGREES(-m_sSkinData.skewY));
     setPosition(ccp(m_sSkinData.x, m_sSkinData.y));
 
     m_tSkinTransform = nodeToParentTransform();
