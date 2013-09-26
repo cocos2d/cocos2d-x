@@ -16,6 +16,10 @@ cocos2d-x-2.2.0 @Sep.25 2013
      [NEW]    Supported Armature
 [Lua binding]
      [NEW]    Binded CCTableView and CCScrollView
+[Windows8]
+     [NEW]    Initial version of Windows8
+[WinPhone8]
+     [NEW]    Initial version of WinPhone8
 
 cocos2d-x-2.1.5 @Aug.23 2013 hotfix for v2.1.4
 [All platforms]
