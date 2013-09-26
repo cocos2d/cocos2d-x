@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Collision\b2BroadPhase.cpp" />
+    <ClCompile Include="..\Collision\b2CollideCircle.cpp" />
+    <ClCompile Include="..\Collision\b2CollideEdge.cpp" />
+    <ClCompile Include="..\Collision\b2CollidePolygon.cpp" />
+    <ClCompile Include="..\Collision\b2Collision.cpp" />
+    <ClCompile Include="..\Collision\b2Distance.cpp" />
+    <ClCompile Include="..\Collision\b2DynamicTree.cpp" />
+    <ClCompile Include="..\Collision\b2TimeOfImpact.cpp" />
+    <ClCompile Include="..\Collision\Shapes\b2ChainShape.cpp" />
+    <ClCompile Include="..\Collision\Shapes\b2CircleShape.cpp" />
+    <ClCompile Include="..\Collision\Shapes\b2EdgeShape.cpp" />
+    <ClCompile Include="..\Collision\Shapes\b2PolygonShape.cpp" />
+    <ClCompile Include="..\Common\b2BlockAllocator.cpp" />
+    <ClCompile Include="..\Common\b2Draw.cpp" />
+    <ClCompile Include="..\Common\b2Math.cpp" />
+    <ClCompile Include="..\Common\b2Settings.cpp" />
+    <ClCompile Include="..\Common\b2StackAllocator.cpp" />
+    <ClCompile Include="..\Common\b2Timer.cpp" />
+    <ClCompile Include="..\Dynamics\b2Body.cpp" />
+    <ClCompile Include="..\Dynamics\b2ContactManager.cpp" />
+    <ClCompile Include="..\Dynamics\b2Fixture.cpp" />
+    <ClCompile Include="..\Dynamics\b2Island.cpp" />
+    <ClCompile Include="..\Dynamics\b2World.cpp" />
+    <ClCompile Include="..\Dynamics\b2WorldCallbacks.cpp" />
+    <ClCompile Include="..\Dynamics\Contacts\b2ChainAndCircleContact.cpp" />
+    <ClCompile Include="..\Dynamics\Contacts\b2ChainAndPolygonContact.cpp" />
+    <ClCompile Include="..\Dynamics\Contacts\b2CircleContact.cpp" />
+    <ClCompile Include="..\Dynamics\Contacts\b2Contact.cpp" />
+    <ClCompile Include="..\Dynamics\Contacts\b2ContactSolver.cpp" />
+    <ClCompile Include="..\Dynamics\Contacts\b2EdgeAndCircleContact.cpp" />
+    <ClCompile Include="..\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp" />
+    <ClCompile Include="..\Dynamics\Contacts\b2PolygonAndCircleContact.cpp" />
+    <ClCompile Include="..\Dynamics\Contacts\b2PolygonContact.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2DistanceJoint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2FrictionJoint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2GearJoint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2Joint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2MouseJoint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2PrismaticJoint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2PulleyJoint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2RevoluteJoint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2RopeJoint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2WeldJoint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2WheelJoint.cpp" />
+    <ClCompile Include="..\Rope\b2Rope.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Box2D.h" />
+    <ClInclude Include="..\Collision\b2BroadPhase.h" />
+    <ClInclude Include="..\Collision\b2Collision.h" />
+    <ClInclude Include="..\Collision\b2Distance.h" />
+    <ClInclude Include="..\Collision\b2DynamicTree.h" />
+    <ClInclude Include="..\Collision\b2TimeOfImpact.h" />
+    <ClInclude Include="..\Collision\Shapes\b2ChainShape.h" />
+    <ClInclude Include="..\Collision\Shapes\b2CircleShape.h" />
+    <ClInclude Include="..\Collision\Shapes\b2EdgeShape.h" />
+    <ClInclude Include="..\Collision\Shapes\b2PolygonShape.h" />
+    <ClInclude Include="..\Collision\Shapes\b2Shape.h" />
+    <ClInclude Include="..\Common\b2BlockAllocator.h" />
+    <ClInclude Include="..\Common\b2Draw.h" />
+    <ClInclude Include="..\Common\b2GrowableStack.h" />
+    <ClInclude Include="..\Common\b2Math.h" />
+    <ClInclude Include="..\Common\b2Settings.h" />
+    <ClInclude Include="..\Common\b2StackAllocator.h" />
+    <ClInclude Include="..\Common\b2Timer.h" />
+    <ClInclude Include="..\Dynamics\b2Body.h" />
+    <ClInclude Include="..\Dynamics\b2ContactManager.h" />
+    <ClInclude Include="..\Dynamics\b2Fixture.h" />
+    <ClInclude Include="..\Dynamics\b2Island.h" />
+    <ClInclude Include="..\Dynamics\b2TimeStep.h" />
+    <ClInclude Include="..\Dynamics\b2World.h" />
+    <ClInclude Include="..\Dynamics\b2WorldCallbacks.h" />
+    <ClInclude Include="..\Dynamics\Contacts\b2ChainAndCircleContact.h" />
+    <ClInclude Include="..\Dynamics\Contacts\b2ChainAndPolygonContact.h" />
+    <ClInclude Include="..\Dynamics\Contacts\b2CircleContact.h" />
+    <ClInclude Include="..\Dynamics\Contacts\b2Contact.h" />
+    <ClInclude Include="..\Dynamics\Contacts\b2ContactSolver.h" />
+    <ClInclude Include="..\Dynamics\Contacts\b2EdgeAndCircleContact.h" />
+    <ClInclude Include="..\Dynamics\Contacts\b2EdgeAndPolygonContact.h" />
+    <ClInclude Include="..\Dynamics\Contacts\b2PolygonAndCircleContact.h" />
+    <ClInclude Include="..\Dynamics\Contacts\b2PolygonContact.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2DistanceJoint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2FrictionJoint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2GearJoint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2Joint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2MouseJoint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2PrismaticJoint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2PulleyJoint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2RevoluteJoint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2RopeJoint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2WeldJoint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2WheelJoint.h" />
+    <ClInclude Include="..\Rope\b2Rope.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{79fc91d4-974c-4bc7-8e8c-79e194437de7}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>libBox2D</ProjectName>
+    <RootNamespace>Box2D</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WP8\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

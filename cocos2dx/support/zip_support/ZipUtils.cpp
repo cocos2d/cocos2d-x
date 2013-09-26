@@ -171,8 +171,7 @@ int ZipUtils::ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, 
         // not enough memory ?
         if (err != Z_STREAM_END)
         {
-            delete [] *out;
-            *out = new unsigned char[bufferSize * BUFFER_INC_FACTOR];
+            *out = (unsigned char*)realloc(*out, bufferSize * BUFFER_INC_FACTOR);
             
             /* not enough memory, ouch */
             if (! *out )
@@ -474,7 +473,7 @@ ZipFile::~ZipFile()
     }
     if (_dataThread && _dataThread->zipFile)
     {
-        unzClose(_dataThread);
+        unzClose(_dataThread->zipFile);
     }
     CC_SAFE_DELETE(_data);
     CC_SAFE_DELETE(_dataThread);
