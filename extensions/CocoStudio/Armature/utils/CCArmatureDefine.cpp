@@ -28,7 +28,7 @@ NS_CC_EXT_BEGIN
 
 const char *armatureVersion()
 {
-    return "0.4.0.0";
+    return "1.0.0.0";
 }
 
 NS_CC_EXT_END
