@@ -29,6 +29,10 @@
 #undef CC_PROFILER_RESET_INSTANCE
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#define srandom srand
+#endif
+
 static std::function<NodeChildrenMainScene*()> createFunctions[] =
 {
     CL(IterateSpriteSheetForLoop),
