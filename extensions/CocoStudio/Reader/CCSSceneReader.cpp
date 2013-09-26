@@ -39,7 +39,7 @@ NS_CC_EXT_BEGIN
 
 	const char* SceneReader::sceneReaderVersion()
 	{
-		return "0.1.0.0";
+		return "1.0.0.0";
 	}
 
     cocos2d::Node* SceneReader::createNodeWithSceneFile(const char* pszFileName)
