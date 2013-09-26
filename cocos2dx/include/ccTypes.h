@@ -403,6 +403,10 @@ public:
 } ccFontStroke;
 
 // font attributes
+/**
+ *  @js NA
+ *  @lua NA
+ */
 typedef struct _ccFontDefinition
 {
 public:

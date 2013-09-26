@@ -31,7 +31,10 @@ NS_CC_BEGIN
 
 class CCComponent;
 class CCNode;
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CC_DLL CCComponentContainer
 {
 protected:

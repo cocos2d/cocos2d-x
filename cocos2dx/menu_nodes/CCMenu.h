@@ -59,31 +59,48 @@ class CC_DLL CCMenu : public CCLayerRGBA
     bool m_bEnabled;
     
 public:
+    /**
+     *  @js ctor
+     */
     CCMenu() : m_pSelectedItem(NULL) {}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCMenu(){}
 
     /** creates an empty CCMenu */
     static CCMenu* create();
 
-    /** creates a CCMenu with CCMenuItem objects */
+    /** creates a CCMenu with CCMenuItem objects 
+     * @lua NA
+     */
     static CCMenu* create(CCMenuItem* item, ...);
 
-    /** creates a CCMenu with a CCArray of CCMenuItem objects */
+    /** creates a CCMenu with a CCArray of CCMenuItem objects 
+     * @js NA
+     */
     static CCMenu* createWithArray(CCArray* pArrayOfItems);
 
     /** creates a CCMenu with it's item, then use addChild() to add 
       * other items. It is used for script, it can't init with undetermined
       * number of variables.
+      * @js NA
     */
     static CCMenu* createWithItem(CCMenuItem* item);
     
-    /** creates a CCMenu with CCMenuItem objects */
+    /** creates a CCMenu with CCMenuItem objects 
+     * @js NA
+     * @lua NA
+     */
     static CCMenu* createWithItems(CCMenuItem *firstItem, va_list args);
 
     /** initializes an empty CCMenu */
     bool init();
 
-    /** initializes a CCMenu with a NSArray of CCMenuItem objects */
+    /** initializes a CCMenu with a NSArray of CCMenuItem objects 
+     * @lua NA
+     */
     bool initWithArray(CCArray* pArrayOfItems);
 
     /** align items vertically */
@@ -100,14 +117,40 @@ public:
     */
     void alignItemsHorizontallyWithPadding(float padding);
 
-    /** align items in rows of columns */
+    /** align items in rows of columns 
+     * @code
+     * when this function bound to js,the input params are changed
+     * js:var alignItemsInColumns(...)
+     * @endcode
+     * @lua NA
+     */
     void alignItemsInColumns(unsigned int columns, ...);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void alignItemsInColumns(unsigned int columns, va_list args);
+    /**
+     * @js NA
+     */
     void alignItemsInColumnsWithArray(CCArray* rows);
 
-    /** align items in columns of rows */
+    /** align items in columns of rows 
+     * @code
+     * when this function bound to js,the input params are changed
+     * js:var alignItemsInRows(...)
+     * @endcode
+     * @lua NA
+     */
     void alignItemsInRows(unsigned int rows, ...);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void alignItemsInRows(unsigned int rows, va_list args);
+    /**
+     * @js NA
+     */
     void alignItemsInRowsWithArray(CCArray* columns);
 
     /** set event handler priority. By default it is: kCCMenuTouchPriority */
@@ -131,6 +174,8 @@ public:
     /**
     @since v0.99.5
     override onExit
+    *  @js NA
+    *  @lua NA
     */
     virtual void onExit();
 

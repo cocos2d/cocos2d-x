@@ -258,7 +258,6 @@
 		37BB5B2F17E86CEC002746B4 /* UIRootWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5AF817E86CEC002746B4 /* UIRootWidget.cpp */; };
 		37BB5B3017E86CEC002746B4 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5AFA17E86CEC002746B4 /* UIWidget.cpp */; };
 		37BB5B3117E86CEC002746B4 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5AFD17E86CEC002746B4 /* Layout.cpp */; };
-		37BB5B3217E86CEC002746B4 /* LayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5AFF17E86CEC002746B4 /* LayoutExecutant.cpp */; };
 		37BB5B3317E86CEC002746B4 /* LayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B0117E86CEC002746B4 /* LayoutParameter.cpp */; };
 		37BB5B3417E86CEC002746B4 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B0317E86CEC002746B4 /* UILayoutDefine.cpp */; };
 		37BB5B3517E86CEC002746B4 /* CocosGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5B0617E86CEC002746B4 /* CocosGUI.cpp */; };
@@ -978,8 +977,6 @@
 		37BB5AFB17E86CEC002746B4 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
 		37BB5AFD17E86CEC002746B4 /* Layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Layout.cpp; sourceTree = "<group>"; };
 		37BB5AFE17E86CEC002746B4 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
-		37BB5AFF17E86CEC002746B4 /* LayoutExecutant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutExecutant.cpp; sourceTree = "<group>"; };
-		37BB5B0017E86CEC002746B4 /* LayoutExecutant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutExecutant.h; sourceTree = "<group>"; };
 		37BB5B0117E86CEC002746B4 /* LayoutParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutParameter.cpp; sourceTree = "<group>"; };
 		37BB5B0217E86CEC002746B4 /* LayoutParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutParameter.h; sourceTree = "<group>"; };
 		37BB5B0317E86CEC002746B4 /* UILayoutDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutDefine.cpp; sourceTree = "<group>"; };
@@ -2669,8 +2666,6 @@
 			children = (
 				37BB5AFD17E86CEC002746B4 /* Layout.cpp */,
 				37BB5AFE17E86CEC002746B4 /* Layout.h */,
-				37BB5AFF17E86CEC002746B4 /* LayoutExecutant.cpp */,
-				37BB5B0017E86CEC002746B4 /* LayoutExecutant.h */,
 				37BB5B0117E86CEC002746B4 /* LayoutParameter.cpp */,
 				37BB5B0217E86CEC002746B4 /* LayoutParameter.h */,
 				37BB5B0317E86CEC002746B4 /* UILayoutDefine.cpp */,
@@ -3711,7 +3706,6 @@
 				37BB5B2F17E86CEC002746B4 /* UIRootWidget.cpp in Sources */,
 				37BB5B3017E86CEC002746B4 /* UIWidget.cpp in Sources */,
 				37BB5B3117E86CEC002746B4 /* Layout.cpp in Sources */,
-				37BB5B3217E86CEC002746B4 /* LayoutExecutant.cpp in Sources */,
 				37BB5B3317E86CEC002746B4 /* LayoutParameter.cpp in Sources */,
 				37BB5B3417E86CEC002746B4 /* UILayoutDefine.cpp in Sources */,
 				37BB5B3517E86CEC002746B4 /* CocosGUI.cpp in Sources */,

@@ -148,6 +148,8 @@ public:
     //override "update" method of widget.
     virtual void update(float dt);
     
+    virtual void doLayout(){};
+    
     /**
      * Returns the "class name" of widget.
      */

@@ -33,7 +33,10 @@
 
 NS_CC_EXT_BEGIN
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class UILayer : public CCLayer
 {
     

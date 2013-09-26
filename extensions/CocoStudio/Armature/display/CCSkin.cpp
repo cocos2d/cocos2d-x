@@ -84,10 +84,10 @@ bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 
     if (ret)
     {
-		CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-		setTextureAtlas(atlas);
+        CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+        setTextureAtlas(atlas);
 
-		m_strDisplayName = pszSpriteFrameName;
+        m_strDisplayName = pszSpriteFrameName;
     }
 
     return ret;
@@ -99,10 +99,10 @@ bool CCSkin::initWithFile(const char *pszFilename)
 
     if (ret)
     {
-		CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-		setTextureAtlas(atlas);
+        CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+        setTextureAtlas(atlas);
 
-		m_strDisplayName = pszFilename;
+        m_strDisplayName = pszFilename;
     }
 
     return ret;
@@ -114,10 +114,12 @@ void CCSkin::setSkinData(const CCBaseData &var)
 
     setScaleX(m_sSkinData.scaleX);
     setScaleY(m_sSkinData.scaleY);
-    setRotation(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setRotationX(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setRotationY(CC_RADIANS_TO_DEGREES(-m_sSkinData.skewY));
     setPosition(ccp(m_sSkinData.x, m_sSkinData.y));
 
     m_tSkinTransform = nodeToParentTransform();
+    updateArmatureTransform();
 }
 
 const CCBaseData &CCSkin::getSkinData()
