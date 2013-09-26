@@ -2067,9 +2067,9 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getOwnerCallbackNodes of class  CCBReader */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBProxy_createCCBreader00
-static int tolua_Cocos2d_CCBProxy_createCCBreader00(lua_State* tolua_S)
+/* method: createCCBReader of class  CCBReader */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBProxy_createCCBReader00
+static int tolua_Cocos2d_CCBProxy_createCCBReader00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -2083,10 +2083,10 @@ static int tolua_Cocos2d_CCBProxy_createCCBreader00(lua_State* tolua_S)
     {
         CCBProxy* self = (CCBProxy*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'CreateCCBreader'", NULL);
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createCCBReader'", NULL);
 #endif
         {
-            CCBReader* tolua_ret = (CCBReader*) self->createCCBreader();
+            CCBReader* tolua_ret = (CCBReader*) self->createCCBReader();
             int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBReader");
@@ -2306,7 +2306,7 @@ TOLUA_API int tolua_extensions_ccb_open(lua_State* tolua_S){
       tolua_function(tolua_S,".call",tolua_Cocos2d_CCBProxy_new00_local);
       tolua_function(tolua_S,"delete",tolua_Cocos2d_CCBProxy_delete00);
       tolua_function(tolua_S, "create", tolua_Cocos2d_CCBProxy_create00);
-      tolua_function(tolua_S, "createCCBReader", tolua_Cocos2d_CCBProxy_createCCBreader00);
+      tolua_function(tolua_S, "createCCBReader", tolua_Cocos2d_CCBProxy_createCCBReader00);
       tolua_function(tolua_S, "readCCBFromFile", tolua_Cocos2d_CCBProxy_readCCBFromFile00);
       tolua_function(tolua_S, "getNodeTypeName", tolua_Cocos2d_CCBProxy_getNodeTypeName00);
       tolua_function(tolua_S, "setCallback", tolua_Cocos2d_CCBProxy_setCallback00);
