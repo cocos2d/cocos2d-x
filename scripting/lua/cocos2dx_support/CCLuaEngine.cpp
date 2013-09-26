@@ -402,7 +402,7 @@ int CCLuaEngine::executeEventWithArgs(int nHandler, CCArray* pArgs)
    
 
     int nArgNums = 0;
-    for (int i = 0; i < pArgs->count(); i++)
+    for (unsigned int i = 0; i < pArgs->count(); i++)
     {
         pObject = pArgs->objectAtIndex(i);
         if (NULL != (pIntVal = dynamic_cast<CCInteger*>(pObject)))
