@@ -86,22 +86,25 @@ CCShaderCache::~CCShaderCache()
 
 bool CCShaderCache::init()
 {
-    GLboolean hasCompiler = true;
     m_pPrograms = new CCDictionary();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    GLboolean hasCompiler = true;
     glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
     if(hasCompiler)
     {
         loadDefaultShaders();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) && defined(CC_PLATFORM_WINRT_SAVE_SHADERS)
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) && defined(CC_PLATFORM_WINRT_SAVE_SHADERS)
         savePrecompiledShaders(m_pPrograms);
-#endif   
+    #endif
     }
     else
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         loadDefaultPrecompiledShaders();
-#endif
     }
+#else
+    loadDefaultShaders();
+#endif
     return true;
 }
 
