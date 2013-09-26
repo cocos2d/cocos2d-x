@@ -137,6 +137,8 @@ NS_CC_EXT_BEGIN
 /**
  * @addtogroup cocosbuilder
  * @{
+ * @js NA
+ * @lua NA
  */
 
 class CCBFile : public CCNode
@@ -203,48 +205,145 @@ private:
 public:
     
     bool jsControlled;
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     CCBReader(CCNodeLoaderLibrary *pCCNodeLoaderLibrary, CCBMemberVariableAssigner *pCCBMemberVariableAssigner = NULL, CCBSelectorResolver *pCCBSelectorResolver = NULL, CCNodeLoaderListener *pCCNodeLoaderListener = NULL);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     CCBReader(CCBReader *pCCBReader);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCBReader();
+    /**
+     *  @js ctor
+     */
     CCBReader();
    
     void setCCBRootPath(const char* pCCBRootPath);
     const std::string& getCCBRootPath() const;
-
+    /**
+     *  @js load
+     *  @lua NA
+     */
     CCNode* readNodeGraphFromFile(const char *pCCBFileName);
+    /**
+     *  @js load
+     *  @lua NA
+     */
     CCNode* readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner);
+    /**
+     *  @js load
+     *  @lua NA
+     */
     CCNode* readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner, const CCSize &parentSize);
-    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     CCNode* readNodeGraphFromData(CCData *pData, CCObject *pOwner, const CCSize &parentSize);
-   
+    /**
+     *  @js loadScene
+     *  @lua NA
+     */
     CCScene* createSceneWithNodeGraphFromFile(const char *pCCBFileName);
+    /**
+     *  @js loadScene
+     *  @lua NA
+     */
     CCScene* createSceneWithNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner);
+    /**
+     *  @js loadScene
+     *  @lua NA
+     */
     CCScene* createSceneWithNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner, const CCSize &parentSize);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     CCBMemberVariableAssigner* getCCBMemberVariableAssigner();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     CCBSelectorResolver* getCCBSelectorResolver();
-    
+    /**
+     *  @js getActionManager
+     */
     CCBAnimationManager* getAnimationManager();
+    /**
+     *  @js setActionManager
+     */
     void setAnimationManager(CCBAnimationManager *pAnimationManager);
     
-    // Used in CCNodeLoader::parseProperties()
+    /** Used in CCNodeLoader::parseProperties()
+     *  @js NA
+     *  @lua NA
+     */
     std::set<std::string>* getAnimatedProperties();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     std::set<std::string>& getLoadedSpriteSheet();
     CCObject* getOwner();
 
-    /* Utility methods. */
+    /** Utility methods. 
+     *  @js NA
+     *  @lua NA
+     */
     static std::string lastPathComponent(const char* pString);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     static std::string deletePathExtension(const char* pString);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     static std::string toLowerCase(const char* pCCString);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     static bool endsWith(const char* pString, const char* pEnding);
 
-    /* Parse methods. */
+    /** Parse methods. 
+     *  @js NA
+     *  @lua NA
+     */
     int readInt(bool pSigned);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     unsigned char readByte();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     bool readBool();
     std::string readUTF8();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     float readFloat();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     std::string readCachedString();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     bool isJSControlled();
             
     
@@ -259,19 +358,45 @@ public:
     CCArray* getOwnerOutletNodes();
     CCArray* getNodesWithAnimationManagers();
     CCArray* getAnimationManagersForNodes();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     CCDictionary* getAnimationManagers();
+    /**
+     *  @js NA
+     */
     void setAnimationManagers(CCDictionary* x);  // weak reference
-    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     void addOwnerCallbackName(std::string name);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     void addOwnerCallbackNode(CCNode *node);
-    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     void addDocumentCallbackName(std::string name);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     void addDocumentCallbackNode(CCNode *node);
-    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     static float getResolutionScale();
     static void setResolutionScale(float scale);
-    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     CCNode* readFileWithCleanUp(bool bCleanUp, CCDictionary* am);
     
     void addOwnerOutletName(std::string name);

@@ -49,6 +49,24 @@ public:
     virtual std::string getWritablePath();
     virtual bool isFileExist(const std::string& strFilePath);
     virtual bool isAbsolutePath(const std::string& strPath);
+	virtual void addSearchPath(const char* path);
+	virtual void removeSearchPath(const char *path);
+
+	/* transfer utf8 to gbk */
+	std::string utf8Togbk(const char *src);
+
+	virtual std::string fullPathForFilename(const char* pszFileName);
+
+	protected:
+    /**
+     *  Gets full path for filename, resolution directory and search path.
+     *
+     *  @param filename The file name.
+     *  @param resolutionDirectory The resolution directory.
+     *  @param searchPath The search path.
+     *  @return The full path of the file. It will return an empty string if the full path of the file doesn't exist.
+     */
+    virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath);
 };
 
 // end of platform group

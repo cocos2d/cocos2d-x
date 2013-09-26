@@ -197,7 +197,7 @@ public:
 
     void setJSObject(JSObject *obj);
     void registerStandardDelegate();
-    void registerTargettedDelegate(int priority, bool swallowsTouches);
+    void registerTargetedDelegate(int priority, bool swallowsTouches);
 	// unregister touch delegate.
 	// Normally, developer should invoke cc.unregisterTouchDelegate() in when the scene exits.
 	// So this function need to be binded.

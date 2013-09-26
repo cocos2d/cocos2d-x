@@ -51,7 +51,14 @@ class CC_DLL CCTMXObjectGroup : public CCObject
     /** array of the objects */
     CC_PROPERTY(CCArray*, m_pObjects, Objects);
 public:
+    /**
+     * @js ctor
+     */
     CCTMXObjectGroup();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCTMXObjectGroup();
 
     inline const char* getGroupName(){ return m_sGroupName.c_str(); }

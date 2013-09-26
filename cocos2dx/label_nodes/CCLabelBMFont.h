@@ -104,6 +104,8 @@ typedef struct _KerningHashElement
 
 /** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
 @since v0.8
+@js NA
+@lua NA
 */
 class CC_DLL CCBMFontConfiguration : public CCObject
 {
@@ -125,7 +127,15 @@ public://@public
     std::set<unsigned int> *m_pCharacterSet;
 public:
     CCBMFontConfiguration();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCBMFontConfiguration();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     const char * description();
 
     /** allocates a CCBMFontConfiguration with a FNT file */
@@ -182,8 +192,14 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCLabelBMFont();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLabelBMFont();
     /** Purges the cached data.
     Removes from memory the cached configurations and the atlas name dictionary.
@@ -242,6 +258,7 @@ public:
 
     void setFntFile(const char* fntFile);
     const char* getFntFile();
+	CCBMFontConfiguration* getConfiguration() const;
 #if CC_LABELBMFONT_DEBUG_DRAW
     virtual void draw();
 #endif // CC_LABELBMFONT_DEBUG_DRAW

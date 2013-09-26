@@ -119,7 +119,14 @@ class CC_DLL CCTMXTiledMap : public CCNode
     /** properties */
     CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
 public:
+    /**
+     * @js ctor
+     */
     CCTMXTiledMap();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCTMXTiledMap();
 
     /** creates a TMX Tiled Map with a TMX file.*/
@@ -134,13 +141,19 @@ public:
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
     bool initWithXML(const char* tmxString, const char* resourcePath);
 
-    /** return the TMXLayer for the specific layer */
+    /** return the TMXLayer for the specific layer
+     *  @js getLayer
+     */
     CCTMXLayer* layerNamed(const char *layerName);
 
-    /** return the TMXObjectGroup for the specific group */
+    /** return the TMXObjectGroup for the specific group 
+     *  @js getObjectGroup
+     */
     CCTMXObjectGroup* objectGroupNamed(const char *groupName);
 
-    /** return the value for the specific property name */
+    /** return the value for the specific property name 
+     *  @js getProperty
+     */
     CCString *propertyNamed(const char *propertyName);
 
     /** return properties dictionary for tile GID */

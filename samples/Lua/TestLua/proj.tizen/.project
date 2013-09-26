@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>TestLua</name>
+	<name>proj.tizen</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -30,7 +30,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/TestLua/Debug}</value>
+					<value>${workspace_loc:/${ProjName}/Debug-Tizen-Emulator}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
@@ -94,7 +94,7 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1360216703005</id>
+			<id>1373009863403</id>
 			<name></name>
 			<type>26</type>
 			<matcher>

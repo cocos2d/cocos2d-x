@@ -34,7 +34,10 @@ extern "C" {
 #include "CCLuaValue.h"
 
 NS_CC_BEGIN
-
+/** Lua support for cocos2d-x
+ *  @js NA
+ *  @lua NA
+ */
 class CCLuaStack : public CCObject
 {
 public:
