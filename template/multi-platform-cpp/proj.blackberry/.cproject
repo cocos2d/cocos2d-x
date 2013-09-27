@@ -32,15 +32,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../extensions"/>
-									<listOptionValue builtIn="false" value="../../../../external"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/..&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/blackberry}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/kazmath}/../include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion/include}&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.677527501" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -73,17 +73,17 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1640397005" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/blackberry/libraries}/${CPUVARDIR}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.94618092" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
-									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.blackberry/${ConfigName}/libBox2D.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.blackberry/${ConfigName}/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}/${ConfigName}/libextensions.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Box2D}/${ConfigName}/libBox2D.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk}/${ConfigName}/libchipmunk.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}/libcocos2dx.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1796308793" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -131,15 +131,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../extensions"/>
-									<listOptionValue builtIn="false" value="../../../../external"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/..&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/blackberry}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/kazmath}/../include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion/include}&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1693572296" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -171,17 +171,17 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1976822869" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/blackberry/libraries}/${CPUVARDIR}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.597387014" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
-									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.blackberry/${ConfigName}/libBox2D.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.blackberry/${ConfigName}/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}/${ConfigName}/libextensions.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Box2D}/${ConfigName}/libBox2D.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk}/${ConfigName}/libchipmunk.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}/libcocos2dx.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1937120791" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -228,15 +228,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../extensions"/>
-									<listOptionValue builtIn="false" value="../../../../external"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/..&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/blackberry}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/kazmath}/../include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion/include}&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.749046634" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -270,17 +270,17 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1615583479" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/blackberry/libraries}/${CPUVARDIR}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.1434184051" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
-									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.blackberry/${ConfigName}/libBox2D.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.blackberry/${ConfigName}/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}/${ConfigName}/libextensions.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Box2D}/${ConfigName}/libBox2D.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk}/${ConfigName}/libchipmunk.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}/libcocos2dx.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1434626404" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -327,15 +327,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../extensions"/>
-									<listOptionValue builtIn="false" value="../../../../external"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/..&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/blackberry}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/kazmath}/../include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion/include}&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1482845801" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -369,17 +369,17 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.172097509" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/blackberry/libraries}/${CPUVARDIR}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.1287776919" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
-									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.blackberry/${ConfigName}/libBox2D.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.blackberry/${ConfigName}/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}/${ConfigName}/libextensions.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Box2D}/${ConfigName}/libBox2D.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk}/${ConfigName}/libchipmunk.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}/libcocos2dx.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.289488351" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -425,15 +425,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../extensions"/>
-									<listOptionValue builtIn="false" value="../../../../external"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/..&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/blackberry}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/kazmath}/../include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion/include}&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.739668251" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -466,17 +466,17 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.880489672" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/blackberry/libraries}/${CPUVARDIR}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.1867792515" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
-									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.blackberry/${ConfigName}/libBox2D.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.blackberry/${ConfigName}/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}/${ConfigName}/libextensions.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Box2D}/${ConfigName}/libBox2D.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk}/${ConfigName}/libchipmunk.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}/libcocos2dx.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.211273388" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -522,15 +522,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../extensions"/>
-									<listOptionValue builtIn="false" value="../../../../external"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/..&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/blackberry}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/kazmath}/../include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion/include}&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.823933521" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -564,17 +564,17 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1204179500" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/blackberry/libraries}/${CPUVARDIR}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.653674459" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
-									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.blackberry/${ConfigName}/libBox2D.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.blackberry/${ConfigName}/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}/${ConfigName}/libextensions.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Box2D}/${ConfigName}/libBox2D.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk}/${ConfigName}/libchipmunk.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}/libcocos2dx.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.541903123" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -620,15 +620,15 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../extensions"/>
-									<listOptionValue builtIn="false" value="../../../../external"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/..&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/blackberry}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/kazmath}/../include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion/include}&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1397796662" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -662,17 +662,17 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1949291872" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CocosDenshion}/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/blackberry/libraries}/${CPUVARDIR}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.2020635567" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
-									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.blackberry/${ConfigName}/libBox2D.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.blackberry/${ConfigName}/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/extensions}/${ConfigName}/libextensions.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Box2D}/${ConfigName}/libBox2D.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/chipmunk}/${ConfigName}/libchipmunk.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/${ConfigName}/libcocos2dx.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libtiff.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx}/../platform/third_party/blackberry/libraries/${CPUVARDIR}/libwebp.a&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1027962671" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
