@@ -65,11 +65,15 @@ CCTextureAtlas *CCSpriteFrameCacheHelper::getTexureAtlasWithTexture(CCTexture2D 
 CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()
 {
     m_pTextureAtlasDic = new CCDictionary();
+    m_pScheduler = CCDirector::sharedDirector()->getScheduler();
+    m_pScheduler->retain();
+    m_pScheduler->scheduleUpdateForTarget(this, 0, false);
 }
 
 CCSpriteFrameCacheHelper::~CCSpriteFrameCacheHelper()
 {
     CC_SAFE_RELEASE_NULL(m_pTextureAtlasDic);
+    CC_SAFE_RELEASE_NULL(m_pScheduler);
 }
 
 NS_CC_EXT_END

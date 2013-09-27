@@ -459,6 +459,8 @@ void CCArmature::draw()
         ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     }
 
+    unsigned int number = 0;
+
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pChildren, object)
     {
@@ -482,8 +484,7 @@ void CCArmature::draw()
                 {
                     if (m_pAtlas)
                     {
-                        m_pAtlas->drawQuads();
-                        m_pAtlas->removeAllQuads();
+                        m_pAtlas->drawNumberOfQuads(number, m_pAtlas->getTotalQuads() - number);
                     }
                 }
 
@@ -492,12 +493,12 @@ void CCArmature::draw()
                     return;
 
                 skin->updateTransform();
+                number ++;
 
                 if (blendType != BLEND_NORMAL)
                 {
                     updateBlendType(blendType);
-                    m_pAtlas->drawQuads();
-                    m_pAtlas->removeAllQuads();
+                    m_pAtlas->drawNumberOfQuads(number, m_pAtlas->getTotalQuads() - number);
                     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
                 }
             }
@@ -511,8 +512,7 @@ void CCArmature::draw()
                 {
                     if (m_pAtlas)
                     {
-                        m_pAtlas->drawQuads();
-                        m_pAtlas->removeAllQuads();
+                        m_pAtlas->drawNumberOfQuads(number, m_pAtlas->getTotalQuads() - number);
                     }
                 }
                 armature->draw();
@@ -524,8 +524,7 @@ void CCArmature::draw()
             {
                 if (m_pAtlas)
                 {
-                    m_pAtlas->drawQuads();
-                    m_pAtlas->removeAllQuads();
+                    m_pAtlas->drawNumberOfQuads(number, m_pAtlas->getTotalQuads() - number);
                 }
                 node->visit();
 
@@ -539,8 +538,7 @@ void CCArmature::draw()
         {
             if (m_pAtlas)
             {
-                m_pAtlas->drawQuads();
-                m_pAtlas->removeAllQuads();
+                m_pAtlas->drawNumberOfQuads(number, m_pAtlas->getTotalQuads() - number);
             }
             node->visit();
 
@@ -551,8 +549,7 @@ void CCArmature::draw()
 
     if(m_pAtlas && !m_pBatchNode && m_pParentBone == NULL)
     {
-        m_pAtlas->drawQuads();
-        m_pAtlas->removeAllQuads();
+        m_pAtlas->drawNumberOfQuads(number, m_pAtlas->getTotalQuads() - number);
     }
 }
 

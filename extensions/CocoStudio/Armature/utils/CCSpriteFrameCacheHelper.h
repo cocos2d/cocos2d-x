@@ -51,6 +51,7 @@ private:
     ~CCSpriteFrameCacheHelper();
 
     CCDictionary *m_pTextureAtlasDic;
+    CCScheduler *m_pScheduler;
 
     static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };
