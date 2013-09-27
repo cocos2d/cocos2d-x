@@ -61,6 +61,7 @@ build_*_vc10/
 *.xcscheme
 *.xcworkspacedata
 *.xcuserstate
+*.xccheckout
 xcschememanagement.plist
 build/
 .DS_Store
