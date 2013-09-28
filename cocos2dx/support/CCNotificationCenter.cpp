@@ -182,6 +182,30 @@ void NotificationCenter::postNotification(const char *name, Object *sender)
     Array* ObserversCopy = Array::createWithCapacity(_observers->count());
     ObserversCopy->addObjectsFromArray(_observers);
     Object* obj = NULL;
+
+    // CRASH FIX:
+    // Maintain a strong reference to the target of each observer while we iterate through the observers list
+    // in order to avoid crashes caused by destroyed targets. Since CCNotificationObserver only maintains a weak
+    // reference to each observer target, it's possible in some cases that client code responding this notification
+    // could cause one or more of the observer targets in 'ObserversCopy' to be destroyed while we are still iterating
+    // through the array. There is nothing client code can do to avoid this even if it correctly unregisters
+    // the observer for the destroyed object since removeObserver() will not affect the local copy of the observers
+    // list we have made here. Fix this by using strong references to each target object until we are done with it.
+    CCARRAY_FOREACH(ObserversCopy, obj)
+    {
+        NotificationObserver * observer = static_cast<NotificationObserver*>(obj);
+
+        if (observer)
+        {
+            Object * observerTarget = observer->getTarget();
+
+            if (observerTarget)
+            {
+                observerTarget->retain();
+            }
+        }
+    }
+
     CCARRAY_FOREACH(ObserversCopy, obj)
     {
         NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
@@ -200,6 +224,15 @@ void NotificationCenter::postNotification(const char *name, Object *sender)
             {
                 observer->performSelector(sender);
             }
+        }
+
+		// END CRASH FIX:
+        // Cleanup. We are finished with the target object now so release it at this point.
+        Object * observerTarget = observer->getTarget();
+
+        if (observerTarget)
+        {
+            observerTarget->release();
         }
     }
 }
