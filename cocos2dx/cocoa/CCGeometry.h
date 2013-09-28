@@ -408,13 +408,13 @@ public:
     /** equals to Point(0.5, 0.5) */
     static const Point ANCHOR_MIDDLE;
     /** equals to Point(0, 0) */
-    static const Point ANCHOR_LOWER_LEFT;
+    static const Point ANCHOR_BOTTOM_LEFT;
     /** equals to Point(0, 1) */
-    static const Point ANCHOR_UPPER_LEFT;
+    static const Point ANCHOR_TOP_LEFT;
     /** equals to Point(1, 0) */
-    static const Point ANCHOR_LOWER_RIGHT;
+    static const Point ANCHOR_BOTTOM_RIGHT;
     /** equals to Point(1, 1) */
-    static const Point ANCHOR_UPPER_RIGHT;
+    static const Point ANCHOR_TOP_RIGHT;
     /** equals to Point(1, 0.5) */
     static const Point ANCHOR_MIDDLE_RIGHT;
     /** equals to Point(0, 0.5) */
