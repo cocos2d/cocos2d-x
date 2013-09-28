@@ -260,6 +260,15 @@ Point Point::getIntersectPoint(const Point& A, const Point& B, const Point& C, c
 }
 
 const Point Point::ZERO = Point(0, 0);
+const Point Point::ANCHOR_MIDDLE = Point(0.5, 0.5);
+const Point Point::ANCHOR_LOWER_LEFT = Point(0, 0);
+const Point Point::ANCHOR_UPPER_LEFT = Point(0, 1);
+const Point Point::ANCHOR_LOWER_RIGHT = Point(1, 0);
+const Point Point::ANCHOR_UPPER_RIGHT = Point(1, 1);
+const Point Point::ANCHOR_MIDDLE_RIGHT = Point(1, .5);
+const Point Point::ANCHOR_MIDDLE_LEFT = Point(0, 0.5);
+const Point Point::ANCHOR_MIDDLE_TOP = Point(0.5, 1);
+const Point Point::ANCHOR_MIDDLE_BOTTOM = Point(0.5, 0);
 
 // implementation of Size
 
