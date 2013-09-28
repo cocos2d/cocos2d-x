@@ -508,7 +508,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         Dictionary *dict = new Dictionary();
         dict->init();
         // Parse everything automatically
-        const char* pArray[] = {"name", "type", "width", "height", "gid"};
+        const char* pArray[] = {"name", "type", "width", "height", "gid","rotation"};
         
         for(size_t i = 0; i < sizeof(pArray)/sizeof(pArray[0]); ++i )
         {
