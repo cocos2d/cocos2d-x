@@ -36,12 +36,12 @@ PhysicsShapeInfo::PhysicsShapeInfo(PhysicsShape* shape)
 
 PhysicsShapeInfo::~PhysicsShapeInfo()
 {
-    for (auto it = shapes.begin(); it != shapes.end(); it++)
+    for (auto shape : shapes)
     {
-        cpShapeFree(*it);
+        auto it = map.find(shape);
+        if (it != map.end()) map.erase(shape);
         
-        auto mit = map.find(*it);
-        if (mit != map.end()) map.erase(*it);
+        cpShapeFree(shape);
     }
 }
 

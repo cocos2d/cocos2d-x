@@ -145,10 +145,12 @@ public:
      * @brief get the first body shapes.
      */
     inline PhysicsShape* getShape() { return _shapes.size() >= 1 ? _shapes.front() : nullptr; }
+    PhysicsShape* getShapeByTag(int tag);
     /*
      * @brief remove a shape from body
      */
     void removeShape(PhysicsShape* shape);
+    void removeShapeByTag(int tag);
     /*
      * @brief remove all shapes
      */
@@ -215,6 +217,12 @@ public:
     
     //virtual Clonable* clone() const override;
     
+    inline bool isEnable() { return _enable; }
+    void setEnable(bool enable);
+    
+    inline int getTag() { return _tag; }
+    inline void setTag(int tag) { _tag = tag; }
+    
 protected:
     
     bool init();
@@ -235,12 +243,14 @@ protected:
     PhysicsWorld*               _world;
     PhysicsBodyInfo*            _info;
     bool                        _dynamic;
+    bool                        _enable;
     bool                        _massDefault;
     bool                        _angularDampingDefault;
     float                       _mass;
     float                       _area;
     float                       _density;
     float                       _angularDamping;
+    int                         _tag;
     
     int    _categoryBitmask;
     int    _contactTestBitmask;

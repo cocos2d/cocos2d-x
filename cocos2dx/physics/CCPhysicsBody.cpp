@@ -63,12 +63,14 @@ PhysicsBody::PhysicsBody()
 , _world(nullptr)
 , _info(nullptr)
 , _dynamic(false)
+, _enable(true)
 , _massDefault(true)
 , _angularDampingDefault(true)
 , _mass(MASS_DEFAULT)
 , _area(0.0)
 , _density(DENSITY_DEFAULT)
 , _angularDamping(ANGULARDAMPING_DEFAULT)
+, _tag(0)
 {
 }
 
@@ -76,10 +78,7 @@ PhysicsBody::~PhysicsBody()
 {
     CC_SAFE_DELETE(_info);
     
-    for (auto it = _shapes.begin(); it != _shapes.end(); ++it)
-    {
-        delete *it;
-    }
+    removeAllShapes();
     
     for (auto it = _joints.begin(); it != _joints.end(); ++it)
     {
@@ -373,6 +372,81 @@ void PhysicsBody::setAngularDamping(float angularDamping)
     _angularDampingDefault = false;
     
     cpBodySetMoment(_info->body, _angularDamping);
+}
+
+PhysicsShape* PhysicsBody::getShapeByTag(int tag)
+{
+    for (auto shape : _shapes)
+    {
+        if (shape->getTag() == tag)
+        {
+            return shape;
+        }
+    }
+    
+    return nullptr;
+}
+
+void PhysicsBody::removeShapeByTag(int tag)
+{
+    for (auto shape : _shapes)
+    {
+        if (shape->getTag() == tag)
+        {
+            removeShape(shape);
+            return;
+        }
+    }
+}
+
+void PhysicsBody::removeShape(PhysicsShape* shape)
+{
+    auto it = std::find(_shapes.begin(), _shapes.end(), shape);
+    
+    if (it != _shapes.end())
+    {
+        if (_world)
+        {
+            _world->removeShape(shape);
+        }
+        
+        _shapes.erase(it);
+        delete shape;
+    }
+}
+
+void PhysicsBody::removeAllShapes()
+{
+    for (auto shape : _shapes)
+    {
+        if (_world)
+        {
+            _world->removeShape(shape);
+        }
+        
+        delete shape;
+    }
+    
+    _shapes.clear();
+}
+
+void PhysicsBody::setEnable(bool enable)
+{
+    if (_enable != enable)
+    {
+        _enable = enable;
+        
+        if (_world)
+        {
+            if (enable)
+            {
+                _world->addBody(this);
+            }else
+            {
+                _world->removeBody(this);
+            }
+        }
+    }
 }
 
 //Clonable* PhysicsBody::clone() const
