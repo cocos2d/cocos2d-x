@@ -52,6 +52,7 @@ Developers:
         Fix some bugs with Set class
         Add ccDrawSolidCircle
         Add Rect::unionWithRect
+        Fix a memory leak in Set::removeAllObjects.
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
@@ -538,6 +539,7 @@ Developers:
     pktangyue
         Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
         Fixing a bug that Color and Opacity of Scale9Sprite will not be changed when it's added to NodeRGBA and run with FadeIn/Out actions.
+        Adding *.xccheckout to gitignore.
         
     jllust
         Fixing a bug that CCLabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads sometimes.
@@ -579,6 +581,12 @@ Developers:
         Fixing a bug that crash appears when extending cc.ScrollView in JS.
         Fixing a bug that cc.registerTargettedDelegate doesn't support pure js object as its target.
         
+    elwinarens (Elwin Arens)
+        Minor spelling changes in description of CCScene.h
+        
+    signmotion (Andrey Syrokomsky)
+        Fixed some compiling-warnings (MSVC2012).
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
@@ -593,6 +601,9 @@ Retired Core Developers:
         
     michaelcontento
         [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
+        Prevent nullptr access in AssetsManager
+        [Android] re-introduce Cocos2dxHelper.runOnGLThread(Runnable)
+        [Android] added EGL_RENDERABLE_TYPE to OpenGL attributes
         
     bmanGH
         Use gl caching functions in TexturePVR::createGLTexture()

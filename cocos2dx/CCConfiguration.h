@@ -152,7 +152,7 @@ protected:
     GLint           _maxTextureSize;
     GLint           _maxModelviewStackDepth;
     bool            _supportsPVRTC;
-    bool            _supportsETC;
+    bool            _supportsETC1;
     bool            _supportsS3TC;
     bool            _supportsATITC;
     bool            _supportsNPOT;
