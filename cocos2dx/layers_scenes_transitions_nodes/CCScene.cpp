@@ -137,7 +137,7 @@ void Scene::addChildToPhysicsWorld(Node* child)
                 
                 if (sp->getPhysicsBody())
                 {
-                    _physicsWorld->addChild(sp->getPhysicsBody());
+                    _physicsWorld->addBody(sp->getPhysicsBody());
                 }
             }
         };

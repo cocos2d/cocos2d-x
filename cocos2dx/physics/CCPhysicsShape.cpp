@@ -32,6 +32,7 @@
 #endif
 
 #include "CCPhysicsBody.h"
+#include "CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsBodyInfo.h"
 #include "Box2D/CCPhysicsBodyInfo.h"
@@ -45,6 +46,8 @@ PhysicsShape::PhysicsShape()
 : _body(nullptr)
 , _info(nullptr)
 , _type(Type::UNKNOWN)
+, _tag(0)
+, _enable(true)
 {
     
 }
@@ -66,6 +69,25 @@ bool PhysicsShape::init(PhysicsBody* body, Type type)
     _type = type;
     
     return true;
+}
+
+void PhysicsShape::setEnable(bool enable)
+{
+    if (_enable != enable)
+    {
+        _enable = enable;
+        
+        if (_body->getWorld() && _body->isEnable())
+        {
+            if (enable)
+            {
+                _body->getWorld()->addShape(this);
+            }else
+            {
+                _body->getWorld()->removeShape(this);
+            }
+        }
+    }
 }
 
 void PhysicsShape::addToBody()

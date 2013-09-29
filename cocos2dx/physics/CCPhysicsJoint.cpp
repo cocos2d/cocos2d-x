@@ -46,6 +46,8 @@ PhysicsJoint::PhysicsJoint()
 : _bodyA(nullptr)
 , _bodyB(nullptr)
 , _info(nullptr)
+, _enable(false)
+, _tag(0)
 {
     
 }
@@ -79,6 +81,21 @@ bool PhysicsJoint::init(cocos2d::PhysicsBody *a, cocos2d::PhysicsBody *b)
     return false;
 }
 
+void PhysicsJoint::setEnable(bool enable)
+{
+    if (_enable != enable)
+    {
+        _enable = enable;
+        
+        if (enable)
+        {
+            
+        }else
+        {
+            
+        }
+    }
+}
 
 PhysicsJointPin::PhysicsJointPin()
 {

@@ -58,6 +58,10 @@ public:
 public:
     inline PhysicsBody* getBody(){ return _body; }
     inline Type getType() { return _type; }
+    inline void setTag(int tag) { _tag = tag; }
+    inline int getTag() { return _tag; }
+    void setEnable(bool enable);
+    inline bool isEnable() { return _enable; }
     
 protected:
     bool init(PhysicsBody* body, Type type);
@@ -77,6 +81,8 @@ protected:
     PhysicsBody* _body;
     PhysicsShapeInfo* _info;
     Type _type;
+    int _tag;
+    bool _enable;
     
     friend class PhysicsWorld;
     friend class PhysicsBody;

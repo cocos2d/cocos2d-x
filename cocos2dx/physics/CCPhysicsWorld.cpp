@@ -34,6 +34,7 @@
 #include "CCPhysicsBody.h"
 #include "CCPhysicsShape.h"
 #include "CCPhysicsContact.h"
+#include "CCPhysicsJoint.h"
 
 #include "chipmunk/CCPhysicsWorldInfo.h"
 #include "Box2D/CCPhysicsWorldInfo.h"
@@ -43,6 +44,8 @@
 #include "Box2D/CCPhysicsShapeInfo.h"
 #include "chipmunk/CCPhysicsContactInfo.h"
 #include "Box2D/CCPhysicsContactInfo.h"
+#include "chipmunk/CCPhysicsJointInfo.h"
+#include "Box2D/CCPhysicsJointInfo.h"
 #include "chipmunk/CCPhysicsHelper.h"
 
 #include "draw_nodes/CCDrawNode.h"
@@ -110,34 +113,69 @@ bool PhysicsWorld::init()
     return true;
 }
 
+void PhysicsWorld::addJoint(PhysicsJoint* joint)
+{
+    auto it = std::find(_joints.begin(), _joints.end(), joint);
+    
+    if (it == _joints.end())
+    {
+        _joints.push_back(joint);
+        
+        if (!cpSpaceContainsConstraint(_info->space, joint->_info->joint))
+        {
+            cpSpaceAddConstraint(_info->space, joint->_info->joint);
+        }
+    }
+    
+}
+
+void PhysicsWorld::removeJoint(PhysicsJoint* joint)
+{
+    
+}
+
+void PhysicsWorld::removeAllJoints()
+{
+    
+}
+
 void PhysicsWorld::addShape(PhysicsShape* shape)
 {
-    for (auto it = shape->_info->shapes.begin(); it != shape->_info->shapes.end(); it++)
+    for (auto cps : shape->_info->shapes)
     {
+        if (cpSpaceContainsShape(_info->space, cps))
+        {
+            continue;
+        }
+        
         if (cpBodyIsStatic(shape->getBody()->_info->body))
         {
-            cpSpaceAddStaticShape(_info->space, *it);
+            cpSpaceAddStaticShape(_info->space, cps);
         }else
         {
-            cpSpaceAddShape(_info->space, *it);
+            cpSpaceAddShape(_info->space, cps);
         }
     }
 }
 
-void PhysicsWorld::addChild(PhysicsBody* body)
+void PhysicsWorld::addBody(PhysicsBody* body)
 {
-    auto shapes = body->getShapes();
-    
-    // add body to space
-    if (body->isDynamic())
+    if (body->isEnable())
     {
-        cpSpaceAddBody(_info->space, body->_info->body);
-    }
-    
-    // add shapes to space
-    for (auto it = shapes.begin(); it != shapes.end(); it++)
-    {
-        addShape(*it);
+        // add body to space
+        if (body->isDynamic())
+        {
+            cpSpaceAddBody(_info->space, body->_info->body);
+        }
+        
+        // add shapes to space
+        for (auto shape : body->getShapes())
+        {
+            if (shape->isEnable())
+            {
+                addShape(shape);
+            }
+        }
     }
     
     if (_bodys == nullptr)
@@ -147,6 +185,54 @@ void PhysicsWorld::addChild(PhysicsBody* body)
     }else
     {
         _bodys->addObject(body);
+    }
+}
+
+void PhysicsWorld::removeBody(PhysicsBody* body)
+{
+    for (auto shape : body->getShapes())
+    {
+        for (auto cps : shape->_info->shapes)
+        {
+            if (cpSpaceContainsShape(_info->space, cps))
+            {
+                cpSpaceRemoveShape(_info->space, cps);
+            }
+        }
+    }
+    
+    if (cpSpaceContainsBody(_info->space, body->_info->body))
+    {
+        cpSpaceRemoveBody(_info->space, body->_info->body);
+    }
+    
+    if (_bodys != nullptr)
+    {
+        _bodys->removeObject(body);
+    }
+}
+
+void PhysicsWorld::removeBodyByTag(int tag)
+{
+    for (Object* obj : *_bodys)
+    {
+        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
+        if (body->getTag() == tag)
+        {
+            removeBody(body);
+            return;
+        }
+    }
+}
+
+void PhysicsWorld::removeShape(PhysicsShape* shape)
+{
+    for (auto cps : shape->_info->shapes)
+    {
+        if (cpSpaceContainsShape(_info->space, cps))
+        {
+            cpSpaceRemoveShape(_info->space, cps);
+        }
     }
 }
 
@@ -171,17 +257,16 @@ void PhysicsWorld::debugDraw()
     if (_debugDraw && _bodys != nullptr)
     {
         _drawNode= DrawNode::create();
-        
-        Object* child = nullptr;
-        CCARRAY_FOREACH(_bodys, child)
+
+        for (Object* obj : *_bodys)
         {
-            PhysicsBody* body = dynamic_cast<PhysicsBody*>(child);
+            PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
             
             std::vector<PhysicsShape*> shapes = body->getShapes();
             
-            for (auto it = shapes.begin(); it != shapes.end(); ++it)
+            for (auto shape : shapes)
             {
-                drawWithShape(_drawNode, *it);
+                drawWithShape(_drawNode, shape);
             }
         }
         
