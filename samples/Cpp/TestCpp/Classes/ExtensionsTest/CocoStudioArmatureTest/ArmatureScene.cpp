@@ -906,7 +906,7 @@ void TestBoundingBox::draw()
 {
     CC_NODE_DRAW_SETUP();
 
-    rect = CCRectApplyAffineTransform(armature->boundingBox(), armature->nodeToParentTransform());
+    rect = armature->boundingBox();
 
     ccDrawColor4B(100, 100, 100, 255);
     ccDrawRect(rect.origin, ccp(rect.getMaxX(), rect.getMaxY()));

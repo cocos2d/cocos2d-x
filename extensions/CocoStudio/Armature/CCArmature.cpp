@@ -667,7 +667,7 @@ CCRect CCArmature::boundingBox()
         }
     }
 
-    return boundingBox;
+    return CCRectApplyAffineTransform(boundingBox, nodeToParentTransform());
 }
 
 CCBone *CCArmature::getBoneAtPoint(float x, float y)
