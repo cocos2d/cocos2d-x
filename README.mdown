@@ -3,10 +3,12 @@ cocos2d-x
 
 How to build for WinRT (Windows 8.0)
 
+Do not download the zip version of the cocos2d-x repo. You need to clone the repo using git.
+
 1. Use the master branch
 
-    git checkout master
-    
+    git checkout master 
+
 2. You will need to checkout the git submodules before building the winrt project
 
     git submodule init
