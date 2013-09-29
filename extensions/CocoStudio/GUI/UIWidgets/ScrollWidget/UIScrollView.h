@@ -135,13 +135,7 @@ public:
      * Add call back function called scrollview event triggered
      */
     void addEventListener(Object* target, SEL_ScrollViewEvent selector);    
-    
-    //override "setLayoutExecutant" method of widget.
-    virtual void setLayoutExecutant(LayoutExecutant* exe);
-    
-    //override "getLayoutExecutant" method of widget.
-    virtual LayoutExecutant* getLayoutExecutant() const;
-    
+        
     //override "addChild" method of widget.
     virtual bool addChild(UIWidget* widget);
     
@@ -170,6 +164,26 @@ public:
     virtual void onTouchLongClicked(const Point &touchPoint);
     
     virtual void update(float dt);
+    
+    /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    virtual void setLayoutType(LayoutType type);
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    virtual LayoutType getLayoutType() const;
+    
+    virtual void doLayout();
     
     /**
      * Returns the "class name" of widget.

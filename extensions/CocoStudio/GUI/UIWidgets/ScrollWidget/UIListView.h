@@ -139,6 +139,8 @@ public:
     /**/
     virtual void update(float dt);
     
+    virtual void doLayout(){};
+    
     /**
      * Returns the "class name" of widget.
      */

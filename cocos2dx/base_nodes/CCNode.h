@@ -619,7 +619,7 @@ public:
      *     node->setPosition(0,0);
      * }
      * @endcode
-     * This sample code traverses all children nodes, and set theie position to (0,0)
+     * This sample code traverses all children nodes, and set their position to (0,0)
      *
      * @return An array of children
      */
