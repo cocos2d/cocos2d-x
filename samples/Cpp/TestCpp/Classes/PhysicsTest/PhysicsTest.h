@@ -3,24 +3,42 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class PhysicsTestLayer : public Layer
+
+class PhysicsDemo : public BaseTest
 {
-    Texture2D* _spriteTexture;    // weak ref
+protected:
     Scene* _scene;
     
 public:
-    PhysicsTestLayer();
-    ~PhysicsTestLayer();
-
-    void createResetButton();
+    PhysicsDemo();
+    virtual ~PhysicsDemo();
     
-    inline void setScene(Scene* scene) { _scene = scene; }
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
     void toggleDebugCallback(Object* sender);
+};
+
+class PhysicsDemoClickAdd : public PhysicsDemo
+{
+private:
+    Texture2D* _spriteTexture;    // weak ref
+    
+public:
+    void onEnter();
+    std::string subtitle();
+    
     void addNewSpriteAtPosition(Point p);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
-    virtual void onAcceleration(Acceleration* acc, Event* event) override;
-} ;
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onAcceleration(Acceleration* acc, Event* event);
+};
 
 class PhysicsTestScene : public TestScene
 {
