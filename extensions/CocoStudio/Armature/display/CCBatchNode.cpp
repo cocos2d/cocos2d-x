@@ -42,13 +42,23 @@ CCBatchNode *CCBatchNode::create()
 
 CCBatchNode::CCBatchNode()
     : m_pAtlas(NULL)
+    , m_pTextureAtlasDic(NULL)
 {
+}
+
+CCBatchNode::~CCBatchNode()
+{
+    CC_SAFE_RELEASE_NULL(m_pTextureAtlasDic);
 }
 
 bool CCBatchNode::init()
 {
     bool ret = CCNode::init();
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    
+    CC_SAFE_DELETE(m_pTextureAtlasDic);
+    m_pTextureAtlasDic = new CCDictionary();
+
     return ret;
 }
 
@@ -114,6 +124,19 @@ void CCBatchNode::draw()
         m_pAtlas->drawQuads();
         m_pAtlas->removeAllQuads();
     }
+}
+
+CCTextureAtlas *CCBatchNode::getTexureAtlasWithTexture(CCTexture2D *texture)
+{
+    int key = texture->getName();
+
+    CCTextureAtlas *atlas = (CCTextureAtlas *)m_pTextureAtlasDic->objectForKey(key);
+    if (atlas == NULL)
+    {
+        atlas = CCTextureAtlas::createWithTexture(texture, 4);
+        m_pTextureAtlasDic->setObject(atlas, key);
+    }
+    return atlas;
 }
 
 NS_CC_EXT_END

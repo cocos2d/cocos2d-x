@@ -136,6 +136,8 @@ public:
     virtual void setAnimation(CCArmatureAnimation *animation);
     virtual CCArmatureAnimation *getAnimation();
 
+    virtual CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
+
 #if ENABLE_PHYSICS_BOX2D_DETECT
     virtual b2Fixture *getShapeList();
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
@@ -177,6 +179,8 @@ protected:
     CCPoint m_pOffsetPoint;
 
     CCArmatureAnimation *m_pAnimation;
+
+    CCDictionary *m_pTextureAtlasDic;
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     CC_PROPERTY(b2Body *, m_pBody, Body);

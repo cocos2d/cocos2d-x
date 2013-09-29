@@ -82,13 +82,7 @@ bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
     bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
 
-    if (ret)
-    {
-        CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-        setTextureAtlas(atlas);
-
-        m_strDisplayName = pszSpriteFrameName;
-    }
+    m_strDisplayName = pszSpriteFrameName;
 
     return ret;
 }
@@ -97,13 +91,7 @@ bool CCSkin::initWithFile(const char *pszFilename)
 {
     bool ret = CCSprite::initWithFile(pszFilename);
 
-    if (ret)
-    {
-        CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-        setTextureAtlas(atlas);
-
-        m_strDisplayName = pszFilename;
-    }
+    m_strDisplayName = pszFilename;
 
     return ret;
 }
@@ -200,6 +188,21 @@ CCAffineTransform CCSkin::nodeToWorldTransformAR()
     displayTransform.ty = anchorPoint.y;
 
     return CCAffineTransformConcat(displayTransform, m_pBone->getArmature()->nodeToWorldTransform());
+}
+
+void CCSkin::setBone(CCBone *bone)
+{
+    m_pBone = bone;
+    if(CCArmature *armature = m_pBone->getArmature())
+    {
+        CCTextureAtlas *atlas = armature->getTexureAtlasWithTexture(m_pobTexture);
+        setTextureAtlas(atlas);
+    }
+}
+
+CCBone *CCSkin::getBone()
+{
+    return m_pBone;
 }
 
 NS_CC_EXT_END
