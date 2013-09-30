@@ -50,15 +50,15 @@ public:
     static Timer* create(Object *target, SEL_SCHEDULE selector);
     /** Allocates a timer with a target, a selector and an interval in seconds. */
     static Timer* create(Object *target, SEL_SCHEDULE selector, float seconds);
-    /** Allocates a timer with a script callback function and an interval in seconds. 
+    /** Allocates a timer with a script callback function and an interval in seconds, repeat in number of times to repeat, delay in seconds.. 
      * @js NA
      * @lua NA
      */
-    static Timer* createWithScriptHandler(int nHandler, float seconds);
+	static Timer* createWithScriptHandler(int entryId, int nHandler, float seconds, unsigned int repeat = kRepeatForever, float delay = 0.0f);
 
     CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector) { return Timer::create(target, selector); }
     CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector, float seconds) { return Timer::create(target, selector, seconds); }
-    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithScriptHandler(int nHandler, float seconds) { return Timer::createWithScriptHandler(nHandler, seconds); }
+    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithScriptHandler(int entryId, int nHandler, float seconds) { return Timer::createWithScriptHandler(entryId, nHandler, seconds); }
 
     Timer(void);
 
@@ -66,8 +66,14 @@ public:
     bool initWithTarget(Object *target, SEL_SCHEDULE selector);
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
     bool initWithTarget(Object *target, SEL_SCHEDULE selector, float seconds, unsigned int nRepeat, float fDelay);
-    /** Initializes a timer with a script callback function and an interval in seconds. */
-    bool initWithScriptHandler(int nHandler, float seconds);
+	/** Initializes a timer with a script callback function and an interval in seconds*/
+	inline bool initWithScriptHandler(int entryId, int handler, float seconds)
+	{
+		return initWithScriptHandler(entryId, handler, seconds, kRepeatForever, 0.0f);
+	}
+
+	/** Initializes a timer with a script callback function and an interval in seconds, repeat in number of times to repeat, delay in seconds. . */
+	bool initWithScriptHandler(int entryId, int handler, float seconds, unsigned int repeat, float delay);
 
     /** get interval in seconds */
     float getInterval() const;
@@ -96,6 +102,7 @@ protected:
     SEL_SCHEDULE _selector;
     
     int _scriptHandler;
+	int _scriptEntryId;
 };
 
 //
@@ -213,7 +220,19 @@ public:
      If 'interval' is 0, it will be called every frame.
      return schedule script entry ID, used for unscheduleScriptFunc().
      */
-    unsigned int scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused);
+    inline unsigned int scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)
+	{
+		return scheduleScriptFunc(nHandler, fInterval, kRepeatForever, .0f, bPaused);
+	}
+
+	/** The scheduled script callback will be called every 'interval' seconds.
+	If paused is true, then it won't be called until it is resumed.
+	If 'interval' is 0, it will be called every frame.
+	repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
+	delay is the amount of time the action will wait before it'll start
+	return schedule script entry ID, used for unscheduleScriptFunc().
+	 */
+	unsigned int scheduleScriptFunc(unsigned int nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused);
     
     /** Unschedule a script entry. */
     void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);

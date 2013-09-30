@@ -57,21 +57,37 @@ ScriptHandlerEntry::~ScriptHandlerEntry(void)
 
 SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create(int nHandler, float fInterval, bool bPaused)
 {
-    SchedulerScriptHandlerEntry* pEntry = new SchedulerScriptHandlerEntry(nHandler);
-    pEntry->init(fInterval, bPaused);
-    pEntry->autorelease();
-    return pEntry;
+	return create(nHandler, fInterval, kRepeatForever, 0.0f, bPaused);
+}
+
+SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create( int nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused )
+{
+	SchedulerScriptHandlerEntry* pEntry = new SchedulerScriptHandlerEntry(nHandler);
+	pEntry->init(fInterval, repeat, delay, bPaused);
+	pEntry->autorelease();
+	return pEntry;
 }
 
 bool SchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
 {
     _timer = new Timer();
-    _timer->initWithScriptHandler(_handler, fInterval);
+    _timer->initWithScriptHandler(_entryId, _handler, fInterval, kRepeatForever, 0.0f);
     _timer->autorelease();
     _timer->retain();
     _paused = bPaused;
     LUALOG("[LUA] ADD script schedule: %d, entryID: %d", _handler, _entryId);
     return true;
+}
+
+bool SchedulerScriptHandlerEntry::init(float fInterval, unsigned int repeat, float delay, bool bPaused)
+{
+	_timer = new Timer();
+	_timer->initWithScriptHandler(_entryId, _handler, fInterval, repeat, delay);
+	_timer->autorelease();
+	_timer->retain();
+	_paused = bPaused;
+	LUALOG("[LUA] ADD script schedule: %d, entryID: %d", _handler, _entryId);
+	return true;
 }
 
 SchedulerScriptHandlerEntry::~SchedulerScriptHandlerEntry(void)

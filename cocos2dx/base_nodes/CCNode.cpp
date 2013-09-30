@@ -1068,9 +1068,19 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
     _scheduler->scheduleSelector(selector, this, interval , repeat, delay, !_running);
 }
 
+void Node::schedule( int handler, float interval, unsigned int repeat, float delay )
+{
+	_scheduler->scheduleScriptFunc(handler, interval, repeat, delay, !_running);
+}
+
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
 {
     this->schedule(selector, 0.0f, 0, delay);
+}
+
+void Node::scheduleOnce( int handler, float delay )
+{
+	this->schedule(handler, 0.0f, 0, delay);
 }
 
 void Node::unschedule(SEL_SCHEDULE selector)
