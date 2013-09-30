@@ -279,15 +279,13 @@ namespace
         127,-97,-25,-8,0,63,-61,-61,-4,127,-1,-29,-4,63,-64,15,-32,0,0,23,-1,-2,3,-16,
         63,15,-61,-16,0,31,-127,-127,-8,31,-1,-127,-8,31,-128,7,-128,0,0};
     
-    static inline int
-    get_pixel(int x, int y)
+    static inline int get_pixel(int x, int y)
     {
         return (logo_image[(x>>3) + y*logo_row_length]>>(~x&0x7)) & 1;
     }
     
 #define	RAND_MAX	0x7fffffff
-    static inline float
-    frand(void)
+    static inline float frand(void)
     {
         return rand()/RAND_MAX;
     }
@@ -299,7 +297,7 @@ Node* PhysicsDemoLogoSmash::makeBall(float x, float y)
     ball->setScale(0.1);
     
     PhysicsBody* body = PhysicsBody::createCircle(0.95);
-    body->setDynamic(false);
+    //body->setDynamic(false);
     ball->setPhysicsBody(body);
     
     ball->setPosition(Point(x, y));
@@ -312,6 +310,7 @@ void PhysicsDemoLogoSmash::onEnter()
     PhysicsDemo::onEnter();
     _draw = DrawNode::create();
     
+    _scene->getPhysicsWorld()->setGravity(Point(0, 0));
     //addChild(makeBall(200, 200));
     for (int y = 0; y < logo_height; ++y)
     {
@@ -330,14 +329,15 @@ void PhysicsDemoLogoSmash::onEnter()
     
     
     Sprite* bullet = Sprite::create("Images/ball.png");
-    bullet->setScale(0.2);
+    bullet->setScale(0.5);
     
-    PhysicsBody* body = PhysicsBody::createCircle(3);
-    body->setDynamic(false);
+    PhysicsBody* body = PhysicsBody::createCircle(3, INFINITY);
     body->setVelocity(Point(400, 0));
     bullet->setPhysicsBody(body);
     
     bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));
+    
+    addChild(bullet);
 }
 
 std::string PhysicsDemoLogoSmash::title()
