@@ -22,7 +22,7 @@ cocos2d-x is:
 How to start a new game
 -----------------------
 
-1. Download the code from [Github][3] or from [cocos2d download site][4]
+1. Download the code from [cocos2d download site][4]
 
 2. Run the `create-multi-platform-projects.py` script
 
@@ -138,7 +138,7 @@ Contact us
 [1]: http://www.cocos2d-x.org "cocos2d-x"
 [2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [3]: http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Download
-[4]: https://github.com/cocos2d/cocos2d-x/tree/develop
+[4]: http://www.cocos2d-x.org/download/version#Cocos2d-x
 [5]: http://www.box2d.org "Box2D"
 [6]: http://www.chipmunk-physics.net "Chipmunk2D"
 [7]: http://esotericsoftware.com/ "http://esotericsoftware.com/"
