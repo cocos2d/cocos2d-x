@@ -259,7 +259,7 @@ protected:
     friend class PhysicsWorld;
     friend class PhysicsShape;
     friend class PhysicsJoint;
-    friend class Sprite;
+    friend class Node;
 };
 
 NS_CC_END
