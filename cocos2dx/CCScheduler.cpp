@@ -81,6 +81,7 @@ Timer::Timer()
 , _interval(0.0f)
 , _selector(NULL)
 , _scriptHandler(0)
+, _scriptEntryId(0)
 {
 }
 
@@ -104,23 +105,29 @@ Timer* Timer::create(Object *target, SEL_SCHEDULE selector, float seconds)
     return pTimer;
 }
 
-Timer* Timer::createWithScriptHandler(int handler, float seconds)
+Timer* Timer::createWithScriptHandler(int entryId, int handler, float seconds, unsigned int repeat, float delay)
 {
     Timer *pTimer = new Timer();
 
-    pTimer->initWithScriptHandler(handler, seconds);
+    pTimer->initWithScriptHandler(entryId, handler, seconds, repeat, delay);
     pTimer->autorelease();
 
     return pTimer;
 }
 
-bool Timer::initWithScriptHandler(int handler, float seconds)
+bool Timer::initWithScriptHandler(int entryId, int handler, float seconds, unsigned int repeat, float delay)
 {
-    _scriptHandler = handler;
-    _elapsed = -1;
-    _interval = seconds;
-
-    return true;
+	_target = NULL;
+	_selector = NULL;
+	_scriptHandler = handler;
+	_scriptEntryId = entryId;
+	_elapsed = -1;
+	_interval = seconds;
+	_delay = delay;
+	_useDelay = (delay > 0.0f) ? true : false;
+	_repeat = repeat;
+	_runForever = (repeat == kRepeatForever) ? true : false;
+	return true;
 }
 
 bool Timer::initWithTarget(Object *target, SEL_SCHEDULE selector)
@@ -211,13 +218,21 @@ void Timer::update(float dt)
 
                     _elapsed = 0;
                     _timesExecuted += 1;
-
                 }
             }
 
             if (!_runForever && _timesExecuted > _repeat)
-            {    //unschedule timer
-                Director::getInstance()->getScheduler()->unscheduleSelector(_selector, _target);
+            {
+				//unschedule timer
+				if (_selector && _target)
+				{
+					Director::getInstance()->getScheduler()->unscheduleSelector(_selector, _target);
+				}
+				
+				if (0 != _scriptHandler)
+				{
+					Director::getInstance()->getScheduler()->unscheduleScriptEntry(_scriptEntryId);
+				}	
             }
         }
     }
@@ -671,16 +686,16 @@ void Scheduler::unscheduleAllForTarget(Object *target)
     unscheduleUpdateForTarget(target);
 }
 
-unsigned int Scheduler::scheduleScriptFunc(unsigned int handler, float interval, bool paused)
+unsigned int Scheduler::scheduleScriptFunc(unsigned int nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused )
 {
-    SchedulerScriptHandlerEntry* pEntry = SchedulerScriptHandlerEntry::create(handler, interval, paused);
-    if (!_scriptHandlerEntries)
-    {
-        _scriptHandlerEntries = Array::createWithCapacity(20);
-        _scriptHandlerEntries->retain();
-    }
-    _scriptHandlerEntries->addObject(pEntry);
-    return pEntry->getEntryId();
+	SchedulerScriptHandlerEntry* pEntry = SchedulerScriptHandlerEntry::create(nHandler, fInterval, repeat, delay, bPaused);
+	if (!_scriptHandlerEntries)
+	{
+		_scriptHandlerEntries = Array::createWithCapacity(20);
+		_scriptHandlerEntries->retain();
+	}
+	_scriptHandlerEntries->addObject(pEntry);
+	return pEntry->getEntryId();
 }
 
 void Scheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)

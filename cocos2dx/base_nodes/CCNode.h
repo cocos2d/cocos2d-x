@@ -1133,6 +1133,7 @@ public:
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
+	void schedule(int handler, float interval, unsigned int repeat, float delay);
     
     /**
      * Schedules a custom selector with an interval time in seconds.
@@ -1153,6 +1154,7 @@ public:
      * @lua NA
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
+	void scheduleOnce(int handler, float delay);
     
     /**
      * Schedules a custom selector, the scheduled selector will be ticked every frame

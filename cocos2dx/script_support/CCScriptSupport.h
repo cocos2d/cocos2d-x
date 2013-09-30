@@ -96,6 +96,7 @@ public:
      * @lua NA
      */
     static SchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
+	static SchedulerScriptHandlerEntry* create(int nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused);
     /**
      * @js NA
      * @lua NA
@@ -139,6 +140,7 @@ private:
     {
     }
     bool init(float fInterval, bool bPaused);
+	bool init(float fInterval, unsigned int repeat, float delay, bool bPaused);
     
     cocos2d::Timer*   _timer;
     bool                _paused;
