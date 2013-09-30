@@ -46,8 +46,13 @@ PhysicsShape::PhysicsShape()
 : _body(nullptr)
 , _info(nullptr)
 , _type(Type::UNKNOWN)
+, _area(0)
+, _mass(0)
+, _angularDamping(0)
+, _density(0)
 , _tag(0)
 , _enable(true)
+, _isAddToBody(false)
 {
     
 }
@@ -69,6 +74,11 @@ bool PhysicsShape::init(PhysicsBody* body, Type type)
     _type = type;
     
     return true;
+}
+
+void PhysicsShape::setMass(float mass)
+{
+    
 }
 
 void PhysicsShape::setEnable(bool enable)
@@ -173,11 +183,12 @@ PhysicsShapeEdgeSegment::~PhysicsShapeEdgeSegment()
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
 // PhysicsShapeCircle
-PhysicsShapeCircle* PhysicsShapeCircle::create(PhysicsBody* body, float radius, Point offset/* = Point(0, 0)*/)
+PhysicsShapeCircle* PhysicsShapeCircle::create(PhysicsBody* body, float radius, float density/* = 0*/, Point offset/* = Point(0, 0)*/)
 {
     PhysicsShapeCircle* shape = new PhysicsShapeCircle();
-    if (shape && shape->init(body, radius, offset))
+    if (shape && shape->init(body, radius, density, offset))
     {
+        shape->autorelease();
         return shape;
     }
     
@@ -185,7 +196,7 @@ PhysicsShapeCircle* PhysicsShapeCircle::create(PhysicsBody* body, float radius, 
     return nullptr;
 }
 
-bool PhysicsShapeCircle::init(PhysicsBody* body, float radius, Point offset /*= Point(0, 0)*/)
+bool PhysicsShapeCircle::init(PhysicsBody* body, float radius, float density/* = 0*/, Point offset /*= Point(0, 0)*/)
 {
     do
     {
@@ -195,8 +206,15 @@ bool PhysicsShapeCircle::init(PhysicsBody* body, float radius, Point offset /*= 
         
         CC_BREAK_IF(shape == nullptr);
         
+        _density = density;
+        _area = PhysicsHelper::cpfloat2float(cpAreaForCircle(0, radius));
+        _mass = _density * _area;
+        if (_mass != 0)
+        {
+            _angularDamping = cpMomentForCircle(_density, 0, radius, PhysicsHelper::point2cpv(offset));
+        }
+        
         _info->add(shape);
-        addToBody();
         
         return true;
     } while (false);
@@ -210,6 +228,7 @@ PhysicsShapeEdgeSegment* PhysicsShapeEdgeSegment::create(PhysicsBody* body, Poin
     PhysicsShapeEdgeSegment* shape = new PhysicsShapeEdgeSegment();
     if (shape && shape->init(body, a, b, border))
     {
+        shape->autorelease();
         return shape;
     }
     
@@ -230,8 +249,10 @@ bool PhysicsShapeEdgeSegment::init(PhysicsBody* body, Point a, Point b, float bo
         
         CC_BREAK_IF(shape == nullptr);
         
+        _density = INFINITY;
+        _angularDamping = INFINITY;
+        
         _info->add(shape);
-        addToBody();
         
         return true;
     } while (false);
@@ -240,11 +261,12 @@ bool PhysicsShapeEdgeSegment::init(PhysicsBody* body, Point a, Point b, float bo
 }
 
 // PhysicsShapeBox
-PhysicsShapeBox* PhysicsShapeBox::create(PhysicsBody* body, Size size, Point offset/* = Point(0, 0)*/)
+PhysicsShapeBox* PhysicsShapeBox::create(PhysicsBody* body, Size size, float density/* = 0*/, Point offset/* = Point(0, 0)*/)
 {
     PhysicsShapeBox* shape = new PhysicsShapeBox();
-    if (shape && shape->init(body, size, offset))
+    if (shape && shape->init(body, size, density, offset))
     {
+        shape->autorelease();
         return shape;
     }
     
@@ -252,7 +274,7 @@ PhysicsShapeBox* PhysicsShapeBox::create(PhysicsBody* body, Size size, Point off
     return nullptr;
 }
 
-bool PhysicsShapeBox::init(PhysicsBody* body, Size size, Point offset /*= Point(0, 0)*/)
+bool PhysicsShapeBox::init(PhysicsBody* body, Size size, float density/* = 0*/, Point offset /*= Point(0, 0)*/)
 {
     do
     {
@@ -262,8 +284,15 @@ bool PhysicsShapeBox::init(PhysicsBody* body, Size size, Point offset /*= Point(
         
         CC_BREAK_IF(shape == nullptr);
         
+        _density = density;
+        _area = PhysicsHelper::cpfloat2float(cpAreaForPoly(4, ((cpPolyShape*)shape)->verts));
+        _mass = _density * _area;
+        if (_mass != 0)
+        {
+            _angularDamping = cpMomentForBox(_mass, PhysicsHelper::float2cpfloat(size.width), PhysicsHelper::float2cpfloat(size.height));
+        }
+        
         _info->add(shape);
-        addToBody();
         
         return true;
     } while (false);
@@ -272,11 +301,12 @@ bool PhysicsShapeBox::init(PhysicsBody* body, Size size, Point offset /*= Point(
 }
 
 // PhysicsShapeCircle
-PhysicsShapePolygon* PhysicsShapePolygon::create(PhysicsBody* body, Point* points, int count, Point offset/* = Point(0, 0)*/)
+PhysicsShapePolygon* PhysicsShapePolygon::create(PhysicsBody* body, Point* points, int count, float density/* = 0*/, Point offset/* = Point(0, 0)*/)
 {
     PhysicsShapePolygon* shape = new PhysicsShapePolygon();
-    if (shape && shape->init(body, points, count, offset))
+    if (shape && shape->init(body, points, count, density, offset))
     {
+        shape->autorelease();
         return shape;
     }
     
@@ -284,7 +314,7 @@ PhysicsShapePolygon* PhysicsShapePolygon::create(PhysicsBody* body, Point* point
     return nullptr;
 }
 
-bool PhysicsShapePolygon::init(PhysicsBody* body, Point* points, int count, Point offset /*= Point(0, 0)*/)
+bool PhysicsShapePolygon::init(PhysicsBody* body, Point* points, int count, float density/* = 0*/, Point offset /*= Point(0, 0)*/)
 {
     do
     {
@@ -293,11 +323,19 @@ bool PhysicsShapePolygon::init(PhysicsBody* body, Point* points, int count, Poin
         cpVect* vecs = new cpVect[count];
         PhysicsHelper::points2cpvs(points, vecs, count);
         cpShape* shape = cpPolyShapeNew(bodyInfo()->body, count, vecs, PhysicsHelper::point2cpv(offset));
+        CC_SAFE_DELETE(vecs);
         
         CC_BREAK_IF(shape == nullptr);
         
+        _density = density;
+        _area = PhysicsHelper::cpfloat2float(cpAreaForPoly(((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts));
+        _mass = _density * _area;
+        if (_mass != 0)
+        {
+            _angularDamping = cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, PhysicsHelper::point2cpv(offset));
+        }
+        
         _info->add(shape);
-        addToBody();
         
         return true;
     } while (false);
@@ -311,6 +349,7 @@ PhysicsShapeEdgeBox* PhysicsShapeEdgeBox::create(PhysicsBody* body, Size size, f
     PhysicsShapeEdgeBox* shape = new PhysicsShapeEdgeBox();
     if (shape && shape->init(body, size, border, offset))
     {
+        shape->autorelease();
         return shape;
     }
     
@@ -344,7 +383,8 @@ bool PhysicsShapeEdgeBox::init(PhysicsBody* body, Size size, float border/* = 1*
         }
         CC_BREAK_IF(i < 4);
         
-        addToBody();
+        _mass = INFINITY;
+        _angularDamping = INFINITY;
         
         return true;
     } while (false);
@@ -357,7 +397,8 @@ PhysicsShapeEdgePolygon* PhysicsShapeEdgePolygon::create(PhysicsBody* body, Poin
 {
     PhysicsShapeEdgePolygon* shape = new PhysicsShapeEdgePolygon();
     if (shape && shape->init(body, points, count, border))
-    { 
+    {
+        shape->autorelease();
         return shape;
     }
     
@@ -385,11 +426,13 @@ bool PhysicsShapeEdgePolygon::init(PhysicsBody* body, Point* points, int count, 
 			cpShapeSetFriction(shape, 1.0f);
             _info->add(shape);
         }
+        CC_SAFE_DELETE(vec);
+        
         CC_BREAK_IF(i < count);
         
-        addToBody();
+        _mass = INFINITY;
+        _angularDamping = INFINITY;
         
-        if (vec != nullptr) delete[] vec;
         return true;
     } while (false);
     
@@ -404,6 +447,7 @@ PhysicsShapeEdgeChain* PhysicsShapeEdgeChain::create(PhysicsBody* body, Point* p
     PhysicsShapeEdgeChain* shape = new PhysicsShapeEdgeChain();
     if (shape && shape->init(body, points, count, border))
     {
+        shape->autorelease();
         return shape;
     }
     
@@ -431,11 +475,12 @@ bool PhysicsShapeEdgeChain::init(PhysicsBody* body, Point* points, int count, fl
 			cpShapeSetFriction(shape, 1.0f);
             _info->add(shape);
         }
+        if (vec != nullptr) delete[] vec;
         CC_BREAK_IF(i < count);
         
-        addToBody();
+        _mass = INFINITY;
+        _angularDamping = INFINITY;
         
-        if (vec != nullptr) delete[] vec;
         return true;
     } while (false);
     

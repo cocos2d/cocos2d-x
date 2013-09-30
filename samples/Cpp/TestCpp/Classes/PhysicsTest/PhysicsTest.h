@@ -6,6 +6,13 @@
 #include "../BaseTest.h"
 
 
+class PhysicsTestScene : public TestScene
+{
+public:
+    virtual bool initTest() override;
+    virtual void runThisTest();
+};
+
 class PhysicsDemo : public BaseTest
 {
 protected:
@@ -15,9 +22,9 @@ public:
     PhysicsDemo();
     virtual ~PhysicsDemo();
     
-    virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual void onEnter() override;
+    virtual std::string title() override;
+    virtual std::string subtitle() override;
     
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
@@ -27,24 +34,29 @@ public:
 
 class PhysicsDemoClickAdd : public PhysicsDemo
 {
-private:
-    Texture2D* _spriteTexture;    // weak ref
-    
 public:
-    void onEnter();
-    std::string subtitle();
+    void onEnter() override;
+    std::string subtitle() override;
     
     void addNewSpriteAtPosition(Point p);
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
-    void onAcceleration(Acceleration* acc, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onAcceleration(Acceleration* acc, Event* event) override;
+    
+private:
+    Texture2D* _spriteTexture;    // weak ref
 };
 
-class PhysicsTestScene : public TestScene
+class PhysicsDemoLogoSmash : public PhysicsDemo
 {
 public:
-    virtual bool initTest() override;
-    virtual void runThisTest();
+    void onEnter() override;
+    std::string title() override;
+    
+    Node* makeBall(float x, float y);
+    
+private:
+    DrawNode* _draw;
 };
 
 #endif

@@ -58,10 +58,17 @@ public:
 public:
     inline PhysicsBody* getBody(){ return _body; }
     inline Type getType() { return _type; }
+    inline float getMass() { return _mass; }
+    void setMass(float mass);
+    inline float getArea() { return _area; }
+    inline float getDensity() { return _density; }
+    void setDensity(float density);
+    inline float getAngularDumping() { return _angularDamping; }
     inline void setTag(int tag) { _tag = tag; }
     inline int getTag() { return _tag; }
     void setEnable(bool enable);
     inline bool isEnable() { return _enable; }
+    void addToBody();
     
 protected:
     bool init(PhysicsBody* body, Type type);
@@ -71,8 +78,6 @@ protected:
      */
     PhysicsBodyInfo* bodyInfo() const;
     
-    void addToBody();
-    
 protected:
     PhysicsShape();
     virtual ~PhysicsShape() = 0;
@@ -81,8 +86,13 @@ protected:
     PhysicsBody* _body;
     PhysicsShapeInfo* _info;
     Type _type;
+    float _area;
+    float _mass;
+    float _angularDamping;
+    float _density;
     int _tag;
     bool _enable;
+    bool _isAddToBody;
     
     friend class PhysicsWorld;
     friend class PhysicsBody;
@@ -91,9 +101,11 @@ protected:
 /** A circle shape */
 class PhysicsShapeCircle : public PhysicsShape
 {
+public:
+    static PhysicsShapeCircle* create(PhysicsBody* body, float radius, float density = 0, Point offset = Point(0, 0));
+    
 protected:
-    static PhysicsShapeCircle* create(PhysicsBody* body, float radius, Point offset = Point(0, 0));
-    bool init(PhysicsBody* body, float radius, Point offset = Point(0, 0));
+    bool init(PhysicsBody* body, float radius, float density = 0, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapeCircle();
@@ -105,9 +117,11 @@ protected:
 /** A box shape */
 class PhysicsShapeBox : public PhysicsShape
 {
+public:
+    static PhysicsShapeBox* create(PhysicsBody* body, Size size, float density = 0, Point offset = Point(0, 0));
+    
 protected:
-    static PhysicsShapeBox* create(PhysicsBody* body, Size size, Point offset = Point(0, 0));
-    bool init(PhysicsBody* body, Size size, Point offset = Point(0, 0));
+    bool init(PhysicsBody* body, Size size, float density = 0, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapeBox();
@@ -119,9 +133,11 @@ protected:
 /** A polygon shape */
 class PhysicsShapePolygon : public PhysicsShape
 {
+public:
+    static PhysicsShapePolygon* create(PhysicsBody* body, Point* points, int count, float density = 0, Point offset = Point(0, 0));
+    
 protected:
-    static PhysicsShapePolygon* create(PhysicsBody* body, Point* points, int count, Point offset = Point(0, 0));
-    bool init(PhysicsBody* body, Point* points, int count, Point offset = Point(0, 0));
+    bool init(PhysicsBody* body, Point* points, int count, float density = 0, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapePolygon();
@@ -133,8 +149,10 @@ protected:
 /** A segment shape */
 class PhysicsShapeEdgeSegment : public PhysicsShape
 {
-protected:
+public:
     static PhysicsShapeEdgeSegment* create(PhysicsBody* body, Point a, Point b, float border = 1);
+    
+protected:
     bool init(PhysicsBody* body, Point a, Point b, float border = 1);
     
 protected:
