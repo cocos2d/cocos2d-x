@@ -22,8 +22,8 @@ void SpriteLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, con
 
 void SpriteLoader::onHandlePropTypeFlip(Node * pNode, Node * pParent, const char * pPropertyName, bool * pFlip, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_FLIP) == 0) {
-        ((Sprite *)pNode)->setFlipX(pFlip[0]);
-        ((Sprite *)pNode)->setFlipY(pFlip[1]);
+        ((Sprite *)pNode)->setFlippedX(pFlip[0]);
+        ((Sprite *)pNode)->setFlippedY(pFlip[1]);
     } else {
         NodeLoader::onHandlePropTypeFlip(pNode, pParent, pPropertyName, pFlip, ccbReader);
     }

@@ -22,7 +22,7 @@ CurlTest::CurlTest()
 
 // the test code is
 // http://curl.haxx.se/mail/lib-2009-12/0071.html
-void CurlTest::ccTouchesEnded(Set  *touches, Event  *event)
+void CurlTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
     CURL *curl;
     CURLcode res;

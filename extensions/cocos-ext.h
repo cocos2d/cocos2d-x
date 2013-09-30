@@ -59,25 +59,25 @@
 #include "CocoStudio/Armature/display/CCDisplayManager.h"
 #include "CocoStudio/Armature/display/CCSkin.h"
 #include "CocoStudio/Armature/physics/CCColliderDetector.h"
-#include "CocoStudio/Armature/physics/CCPhysicsWorld.h"
 #include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
-#include "CocoStudio/Armature/utils/CCConstValue.h"
 #include "CocoStudio/Armature/utils/CCDataReaderHelper.h"
 #include "CocoStudio/Armature/utils/CCTweenFunction.h"
 #include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
-#include "CocoStudio/Armature/external_tool/sigslot.h"
 
 #include "CocoStudio/Components/CCComAttribute.h"
 #include "CocoStudio/Components/CCComAudio.h"
 #include "CocoStudio/Components/CCComController.h"
 #include "CocoStudio/Components/CCComRender.h"
 
+#include "CocoStudio/GUI/System/CocosGUI.h"
+
 #include "CocoStudio/Json/CSContentJsonDictionary.h"
 #include "CocoStudio/Json/DictionaryHelper.h"
 
 #include "CocoStudio/Reader/CCSSceneReader.h"
+#include "CocoStudio/Reader/CCSGUIReader.h"
 
-
+#include "CocoStudio/Action/CCActionManagerEx.h"
 
 #include "CCDeprecated-ext.h"
 

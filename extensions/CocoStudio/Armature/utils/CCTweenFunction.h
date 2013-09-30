@@ -29,22 +29,23 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include <math.h>
 
-namespace cocos2d { namespace extension { namespace armature {
-    
-enum TweenType{
+NS_CC_EXT_ARMATURE_BEGIN
+
+enum CCTweenType
+{
     TWEEN_EASING_MIN = -1,
-    
+
     Linear,
-    
+
     Sine_EaseIn,
     Sine_EaseInOut,
     Sine_EaseOut,
-    
-    
+
+
     Quad_EaseIn,
     Quad_EaseOut,
     Quad_EaseInOut,
-    
+
     Cubic_EaseIn,
     Cubic_EaseOut,
     Cubic_EaseInOut,
@@ -52,83 +53,84 @@ enum TweenType{
     Quart_EaseIn,
     Quart_EaseOut,
     Quart_EaseInOut,
-    
+
     Quint_EaseIn,
     Quint_EaseOut,
     Quint_EaseInOut,
-    
+
     Expo_EaseIn,
     Expo_EaseOut,
     Expo_EaseInOut,
-    
+
     Circ_EaseIn,
     Circ_EaseOut,
     Circ_EaseInOut,
-    
+
     Elastic_EaseIn,
     Elastic_EaseOut,
     Elastic_EaseInOut,
-    
+
     Back_EaseIn,
     Back_EaseOut,
     Back_EaseInOut,
-    
+
     Bounce_EaseIn,
     Bounce_EaseOut,
     Bounce_EaseInOut,
-    
+
     TWEEN_EASING_MAX = 10000
 };
-    
-class  TweenFunction{
+
+class  TweenFunction
+{
 public:
-    
-    static float tweenTo(float from, float change, float time, float duration, TweenType tweenType);
-    
+
+    static float tweenTo(float from, float change, float time, float duration, CCTweenType tweenType);
+
     static float linear(float t, float b, float c, float d);
-    
+
     static float sineEaseIn(float t, float b, float c, float d);
     static float sineEaseOut(float t, float b, float c, float d);
     static float sineEaseInOut(float t, float b, float c, float d);
-    
+
     static float quadEaseIn(float t, float b, float c, float d);
     static float quadEaseOut(float t, float b, float c, float d);
     static float quadEaseInOut(float t, float b, float c, float d);
-    
+
     static float cubicEaseIn(float t, float b, float c, float d);
     static float cubicEaseOut(float t, float b, float c, float d);
     static float cubicEaseInOut(float t, float b, float c, float d);
-    
+
     static float quartEaseIn(float t, float b, float c, float d);
     static float quartEaseOut(float t, float b, float c, float d);
     static float quartEaseInOut(float t, float b, float c, float d);
-    
+
     static float quintEaseIn(float t, float b, float c, float d);
     static float quintEaseOut(float t, float b, float c, float d);
     static float quintEaseInOut(float t, float b, float c, float d);
-    
+
     static float expoEaseIn(float t, float b, float c, float d);
     static float expoEaseOut(float t, float b, float c, float d);
     static float expoEaseInOut(float t, float b, float c, float d);
-    
+
     static float circEaseIn(float t, float b, float c, float d);
     static float circEaseOut(float t, float b, float c, float d);
     static float circEaseInOut(float t, float b, float c, float d);
-    
+
     static float elasticEaseIn(float t, float b, float c, float d, float a = 0, float p = 0);
     static float elasticEaseOut(float t, float b, float c, float d, float a = 0, float p = 0);
     static float elasticEaseInOut(float t, float b, float c, float d, float a = 0, float p = 0);
-    
+
     static float backEaseIn(float t, float b, float c, float d, float s = 0);
     static float backEaseOut(float t, float b, float c, float d, float s = 0);
     static float backEaseInOut(float t, float b, float c, float d, float s = 0);
-    
+
     static float bounceEaseIn(float t, float b, float c, float d);
     static float bounceEaseOut(float t, float b, float c, float d);
     static float bounceEaseInOut(float t, float b, float c, float d);
 };
-    
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCTWEENFUNCTION_H__*/

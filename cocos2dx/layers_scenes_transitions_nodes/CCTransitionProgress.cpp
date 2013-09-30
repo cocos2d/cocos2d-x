@@ -139,7 +139,7 @@ ProgressTimer* TransitionProgressRadialCCW::progressTimerNodeWithRenderTexture(R
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
 
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlipY(true);
+    pNode->getSprite()->setFlippedY(true);
     pNode->setType(ProgressTimer::Type::RADIAL);
 
     //    Return the radial type that we want to use
@@ -183,7 +183,7 @@ ProgressTimer* TransitionProgressRadialCW::progressTimerNodeWithRenderTexture(Re
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlipY(true);
+    pNode->getSprite()->setFlippedY(true);
     pNode->setType( ProgressTimer::Type::RADIAL );
     
     //    Return the radial type that we want to use
@@ -215,7 +215,7 @@ ProgressTimer* TransitionProgressHorizontal::progressTimerNodeWithRenderTexture(
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlipY(true);
+    pNode->getSprite()->setFlippedY(true);
     pNode->setType( ProgressTimer::Type::BAR);
     
     pNode->setMidpoint(Point(1, 0));
@@ -248,7 +248,7 @@ ProgressTimer* TransitionProgressVertical::progressTimerNodeWithRenderTexture(Re
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlipY(true);
+    pNode->getSprite()->setFlippedY(true);
     pNode->setType(ProgressTimer::Type::BAR);
     
     pNode->setMidpoint(Point(0, 0));
@@ -294,7 +294,7 @@ ProgressTimer* TransitionProgressInOut::progressTimerNodeWithRenderTexture(Rende
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlipY(true);
+    pNode->getSprite()->setFlippedY(true);
     pNode->setType( ProgressTimer::Type::BAR);
     
     pNode->setMidpoint(Point(0.5f, 0.5f));
@@ -328,7 +328,7 @@ ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(Rende
     ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlipY(true);
+    pNode->getSprite()->setFlippedY(true);
     pNode->setType( ProgressTimer::Type::BAR );
     
     pNode->setMidpoint(Point(0.5f, 0.5f));

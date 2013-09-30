@@ -74,9 +74,9 @@ public:
 
     void updateSize(Point &touchLocation);
 
-    virtual void ccTouchesBegan(Set  *touches, Event  *event);
-    virtual void ccTouchesMoved(Set  *touches, Event  *event);
-    virtual void ccTouchesEnded(Set  *touches, Event  *event);
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
 };
 
 class LayerTest2 : public LayerTest
@@ -99,7 +99,7 @@ class LayerGradientTest : public LayerTest
 {
 public:
     LayerGradientTest();
-    virtual void ccTouchesMoved(Set * touches, Event *event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
     virtual std::string title();
     virtual std::string subtitle();
     void toggleItem(cocos2d::Object *sender);

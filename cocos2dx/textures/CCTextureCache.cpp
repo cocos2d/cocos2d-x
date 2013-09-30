@@ -89,12 +89,15 @@ TextureCache::~TextureCache()
 
 void TextureCache::destroyInstance()
 {
-    // notify sub thread to quick
-    _sharedTextureCache->_needQuit = true;
-    _sharedTextureCache->_sleepCondition.notify_one();
-    if (_sharedTextureCache->_loadingThread) _sharedTextureCache->_loadingThread->join();
-
-    CC_SAFE_RELEASE_NULL(_sharedTextureCache);
+    if (_sharedTextureCache)
+    {
+        // notify sub thread to quick
+        _sharedTextureCache->_needQuit = true;
+        _sharedTextureCache->_sleepCondition.notify_one();
+        if (_sharedTextureCache->_loadingThread) _sharedTextureCache->_loadingThread->join();
+        
+        CC_SAFE_RELEASE_NULL(_sharedTextureCache);
+    }
 }
 
 const char* TextureCache::description() const

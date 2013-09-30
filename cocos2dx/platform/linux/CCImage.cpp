@@ -452,6 +452,7 @@ bool Image::initWithString(
 		_height = (short)dc.iMaxLineHeight;
         _renderFormat = Texture2D::PixelFormat::RGBA8888;
 		_preMulti = true;
+        _dataLen = _width * _height * 4;
 
 		bRet = true;
 

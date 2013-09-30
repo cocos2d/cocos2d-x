@@ -23,7 +23,6 @@ local function MenuLayerMainMenu()
 
     local ret = cc.Layer:create()
     ret:setTouchEnabled(true)
-    ret:setTouchPriority(cc.MENU_HANDLER_PRIORITY  + 1)
     ret:setTouchMode(cc.TOUCHES_ONE_BY_ONE )
 
     -- Font Item

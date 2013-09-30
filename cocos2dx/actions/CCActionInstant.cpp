@@ -216,7 +216,7 @@ bool FlipX::initWithFlipX(bool x) {
 
 void FlipX::update(float time) {
     CC_UNUSED_PARAM(time);
-    static_cast<Sprite*>(_target)->setFlipX(_flipX);
+    static_cast<Sprite*>(_target)->setFlippedX(_flipX);
 }
 
 FlipX* FlipX::reverse() const
@@ -256,7 +256,7 @@ bool FlipY::initWithFlipY(bool y) {
 
 void FlipY::update(float time) {
     CC_UNUSED_PARAM(time);
-    static_cast<Sprite*>(_target)->setFlipY(_flipY);
+    static_cast<Sprite*>(_target)->setFlippedY(_flipY);
 }
 
 FlipY* FlipY::reverse() const

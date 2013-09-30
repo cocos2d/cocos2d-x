@@ -28,21 +28,20 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "CCDisplayFactory.h"
 #include "../datas/CCDatas.h"
-#include "../external_tool/sigslot.h"
 
 
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 #include "../physics/CCColliderDetector.h"
 #endif
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
-class  DecorativeDisplay: public Object, public sigslot::has_slots<>
+class  DecorativeDisplay: public Object
 {
 public:
     static DecorativeDisplay *create();
 public:
-    /**
+	/**
      * @js ctor
      */
     DecorativeDisplay(void);
@@ -59,13 +58,11 @@ protected:
     CC_SYNTHESIZE_RETAIN(Node *, _display, Display);
     CC_SYNTHESIZE_RETAIN(DisplayData *, _displayData, DisplayData);
 
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SYNTHESIZE_RETAIN(ColliderDetector *, _colliderDetector, ColliderDetector);
 #endif
-public:
-    void anchorPointChanged(float pointX, float pointY);
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCDECORATIVEDISPLAY_H__*/

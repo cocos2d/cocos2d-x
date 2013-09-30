@@ -27,21 +27,27 @@ THE SOFTWARE.
 #define __CCANIMATION_H__
 
 #include "CCProcessBase.h"
-#include "../external_tool/sigslot.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 
 enum MovementEventType
 {
-	START,
-	COMPLETE,
-	LOOP_COMPLETE
+    START,
+    COMPLETE,
+    LOOP_COMPLETE
 };
 
 
 class Armature;
 class Bone;
+
+typedef void (Object::*SEL_MovementEventCallFunc)(Armature *, MovementEventType, const char *);
+typedef void (Object::*SEL_FrameEventCallFunc)(Bone *, const char *, int, int);
+
+#define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
+#define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
+
 
 class  ArmatureAnimation : public ProcessBase
 {
@@ -52,7 +58,7 @@ public:
      */
     static ArmatureAnimation *create(Armature *armature);
 public:
-    /**
+	/**
      * @js ctor
      */
     ArmatureAnimation();
@@ -73,6 +79,17 @@ public:
      * @param animationScale Scale value
      */
     virtual void setAnimationScale(float animationScale);
+    virtual float getAnimationScale() const;
+
+    /**
+     * Scale animation play speed.
+     * @param animationScale Scale value
+     */
+    virtual void setSpeedScale(float speedScale);
+    virtual float getSpeedScale() const;
+
+    //! The animation update speed
+    virtual void setAnimationInternal(float animationInternal);
 
     /**
      * Play animation by animation name.
@@ -106,7 +123,7 @@ public:
 
     /**
      * Play animation by index, the other param is the same to play.
-     * @param  animationIndex  the animation index you want to play
+     * @param  _animationIndex  the animation index you want to play
      */
     void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
@@ -130,6 +147,25 @@ public:
     int getMovementCount();
 
     void update(float dt);
+
+    /**
+     * Get current movementID
+     * @return The name of current movement
+     */
+    std::string getCurrentMovementID();
+
+    /**
+     * Set armature's movement event callback function
+     * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+     */
+    void setMovementEventCallFunc(Object *target, SEL_MovementEventCallFunc callFunc);
+
+    /**
+     * Set armature's frame event callback function
+     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+     */
+    void setFrameEventCallFunc(Object *target, SEL_FrameEventCallFunc callFunc);
+
 protected:
 
     /**
@@ -142,10 +178,18 @@ protected:
      */
     void updateFrameData(float currentPercent);
 
+    /**
+     * Emit a frame event
+     */
+    void frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
+
+    friend class Tween;
 protected:
     //! AnimationData save all MovementDatas this animation used.
     CC_SYNTHESIZE_RETAIN(AnimationData *, _animationData, AnimationData);
 
+    //! Scale the animation speed
+    float _speedScale;
 
     MovementData *_movementData;				//! MovementData save all MovementFrameDatas this animation used.
 
@@ -153,20 +197,33 @@ protected:
 
     std::string _movementID;				//! Current movment's name
 
-    int _prevFrameIndex;						//! Prev key frame index
-    int _toIndex;								//! The frame index in MovementData->_movFrameDataArr, it's different from _frameIndex.
+    int _toIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
     Array *_tweenList;
-public:
-    /**
-     * MovementEvent signal. This will emit a signal when trigger a event.
-     * The 1st param is the Armature. The 2nd param is Event Type, like START, COMPLETE. The 3rd param is Movement ID, also called Movement Name.
-     */
-    sigslot::signal3<Armature *, MovementEventType, const char *> MovementEventSignal;
 
-    sigslot::signal2<Bone *, const char *> FrameEventSignal;
+protected:
+    /**
+     * MovementEvent CallFunc.
+     * @param Armature* a Armature
+     * @param MovementEventType, Event Type, like START, COMPLETE.
+     * @param const char*, Movement ID, also called Movement Name
+     */
+    SEL_MovementEventCallFunc _movementEventCallFunc;
+
+    /**
+     * FrameEvent CallFunc.
+     * @param Bone*, a Bone
+     * @param const char*, the name of this frame event
+     * @param int, origin frame index
+     * @param int, current frame index, animation may be delayed
+     */
+    SEL_FrameEventCallFunc _frameEventCallFunc;
+
+
+    Object *_movementEventTarget;
+    Object *_frameEventTarget;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCANIMATION_H__*/
