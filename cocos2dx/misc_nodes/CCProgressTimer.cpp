@@ -170,6 +170,14 @@ GLubyte ProgressTimer::getOpacity() const
     return _sprite->getOpacity();
 }
 
+void ProgressTimer::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+    _sprite->updateDisplayedOpacity(parentOpacity);
+    
+    NodeRGBA::updateDisplayedOpacity(parentOpacity);
+    updateColor();
+}
+
 // Interval
 
 ///
