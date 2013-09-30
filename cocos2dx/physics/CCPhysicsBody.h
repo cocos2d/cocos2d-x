@@ -37,13 +37,6 @@ class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
 class PhysicsShape;
-class PhysicsShapeCircle;
-class PhysicsShapeBox;
-class PhysicsShapePolygon;
-class PhysicsShapeEdgeSegment;
-class PhysicsShapeEdgeBox;
-class PhysicsShapeEdgePolygon;
-class PhysicsShapeEdgeChain;
 
 class PhysicsBodyInfo;
 /**
@@ -56,16 +49,16 @@ public:
     /**
      * @brief Create a body contains a circle shape.
      */
-    static PhysicsBody* createCircle(float radius);
+    static PhysicsBody* createCircle(float radius, float density = 1);
     /**
      * @brief Create a body contains a box shape.
      */
-    static PhysicsBody* createBox(Size size);
+    static PhysicsBody* createBox(Size size, float density = 1);
     /**
      * @brief Create a body contains a polygon shape.
      * points is an array of Point structs defining a convex hull with a clockwise winding.
      */
-    static PhysicsBody* createPolygon(Point* points, int count);
+    static PhysicsBody* createPolygon(Point* points, int count, float density = 1);
     
     /**
      * @brief Create a body contains a EdgeSegment shape.
@@ -84,37 +77,7 @@ public:
      */
     static PhysicsBody* createEdgeChain(Point* points, int count, float border = 1);
     
-    /**
-     * @brief Attach a circle shape with body
-     */
-    virtual PhysicsShapeCircle* addCircle(float radius, Point offset = Point(0, 0));
-    /**
-     * @brief Attach a box shape with body
-     */
-    virtual PhysicsShapeBox* addBox(Size size, Point offset = Point(0, 0));
-    /**
-     * @brief Attach a polygon shape with body
-     */
-    virtual PhysicsShapePolygon* addPolygon(Point* points, int count, Point offset = Point(0, 0));
-    
-    /**
-     * @brief Attach a edge segment shape with body
-     */
-    virtual PhysicsShapeEdgeSegment* addEdgeSegment(Point a, Point b, float border = 1);
-    /**
-     * @brief Attach a edge box shape with body
-     */
-    virtual PhysicsShapeEdgeBox* addEdgeBox(Size size, float border = 1, Point offset = Point(0, 0));
-    /**
-     * @brief Attach a edge polygon shape with body
-     * points is an array of Point structs defining a convex hull with a clockwise winding.
-     */
-    virtual PhysicsShapeEdgePolygon* addEdgePolygon(Point* points, int count, float border = 1);
-    /**
-     * @brief Attach a edge chain shape with body
-     * points is an array of Point structs defining a convex hull with a clockwise winding.
-     */
-    virtual PhysicsShapeEdgeChain* addEdgeChain(Point* points, int count, float border = 1);
+    virtual void addShape(PhysicsShape* shape);
     
     /**
      * @brief Applies a immediate force to body.
@@ -136,6 +99,9 @@ public:
      * @brief Applies a torque force to body.
      */
     virtual void applyTorque(float torque);
+    
+    virtual void setVelocity(Point velocity);
+    virtual Point getVelocity();
     
     /*
      * @brief get the body shapes.
@@ -226,11 +192,9 @@ public:
 protected:
     
     bool init();
-    bool initStatic();
     
     virtual void setPosition(Point position);
     virtual void setRotation(float rotation);
-    virtual void addShape(PhysicsShape* shape);
     
 protected:
     PhysicsBody();
