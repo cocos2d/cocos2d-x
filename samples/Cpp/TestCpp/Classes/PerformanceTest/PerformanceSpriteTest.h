@@ -25,6 +25,9 @@ public:
     {
     }
 
+    virtual void restartCallback(Object* sender);
+    virtual void nextCallback(Object* sender);
+    virtual void backCallback(Object* sender);
     virtual void showCurrentTest();
 };
 
@@ -45,12 +48,33 @@ public:
 
     int getSubTestNum() { return subtestNumber; }
     int getNodesNum() { return quantityNodes; }
-
+    
+    virtual void onEnter();
+    virtual void onExit();
+    void  updateAutoTest(float dt);
+    void  onAutoTest(Object* sender);
+private:
+    void  dumpProfilerFPS();
+    void  beginAutoTest();
+    void  endAutoTest();
+    void  nextAutoTest();
+    void  finishAutoTest();
+    void  autoShowSpriteTests(int curCase, int subTest,int nodes);
+public:
+    static bool _s_autoTest;
+    static int  _s_nSpriteCurCase;
 protected:
     int            lastRenderedCount;
     int            quantityNodes;
     SubTest        *_subTest;
     int            subtestNumber;
+    std::vector<float> _vecFPS;
+    int            _executeTimes;
+    const  int MAX_AUTO_TEST_TIMES  = 25;
+    const  int MAX_SPRITE_TEST_CASE = 7;
+    const  int MAX_SUB_TEST_NUMS    = 9;
+    const  int AUTO_TEST_NODE_NUM1  = 500;
+    const  int AUTO_TEST_NODE_NUM2  = 1500;
 };
 
 class SpritePerformTest1 : public SpriteMainScene
