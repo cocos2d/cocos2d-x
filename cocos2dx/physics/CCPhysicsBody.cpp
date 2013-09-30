@@ -273,16 +273,19 @@ bool PhysicsBody::init()
 
 void PhysicsBody::setDynamic(bool dynamic)
 {
-    _dynamic = dynamic;
-    if (_world != nullptr && cpBodyIsStatic(_info->body) == (cpBool)_dynamic)
+    if (dynamic != _dynamic)
     {
         if (dynamic)
         {
-            cpSpaceConvertBodyToDynamic(_world->_info->space, _info->body, _mass, _angularDamping);
+            cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
+            cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_angularDamping));
         }else
         {
-            cpSpaceConvertBodyToStatic(_world->_info->space, _info->body);
+            cpBodySetMass(_info->body, INFINITY);
+            cpBodySetMoment(_info->body, INFINITY);
         }
+        
+        _dynamic = dynamic;
     }
 }
 
@@ -293,7 +296,7 @@ bool PhysicsBody::initStatic()
         _info = new PhysicsBodyInfo();
         CC_BREAK_IF(_info == nullptr);
         
-        _info->body = cpBodyNewStatic();
+        _info->body = cpBodyNew(INFINITY, INFINITY);
         CC_BREAK_IF(_info->body == nullptr);
         _dynamic = false;
         

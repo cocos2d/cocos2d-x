@@ -129,15 +129,15 @@ void Scene::addChildToPhysicsWorld(Node* child)
 {
     if (_physicsWorld)
     {
-        auto addToPhysicsWorldFunc = [this](Object* node) -> void
+        auto addToPhysicsWorldFunc = [this](Object* child) -> void
         {
-            if (dynamic_cast<Sprite*>(node) != nullptr)
+            if (dynamic_cast<Node*>(child) != nullptr)
             {
-                Sprite* sp = dynamic_cast<Sprite*>(node);
+                Node* node = dynamic_cast<Node*>(child);
                 
-                if (sp->getPhysicsBody())
+                if (node->getPhysicsBody())
                 {
-                    _physicsWorld->addBody(sp->getPhysicsBody());
+                    _physicsWorld->addBody(node->getPhysicsBody());
                 }
             }
         };

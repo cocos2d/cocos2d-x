@@ -2,18 +2,16 @@
 #include "../testResource.h"
 USING_NS_CC;
 
-
-
-static std::function<Layer*()> createFunctions[] = {
-    
-    CL(PhysicsDemoClickAdd),
-};
-
-static int sceneIdx=-1;
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
 namespace
 {
+    static std::function<Layer*()> createFunctions[] = {
+        
+        CL(PhysicsDemoClickAdd),
+    };
+    
+    static int sceneIdx=-1;
+#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
+    
     static Layer* next()
     {
         sceneIdx++;
@@ -157,11 +155,11 @@ void PhysicsDemoClickAdd::onEnter()
     setTouchEnabled(true);
     setAccelerometerEnabled(true);
     
-    auto sp = Sprite::create();
+    auto node = Node::create();
     auto body = PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size);
-    sp->setPhysicsBody(body);
-    sp->setPosition(VisibleRect::center());
-    this->addChild(sp);
+    node->setPhysicsBody(body);
+    node->setPosition(VisibleRect::center());
+    this->addChild(node);
     
     auto parent = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
     _spriteTexture = parent->getTexture();
