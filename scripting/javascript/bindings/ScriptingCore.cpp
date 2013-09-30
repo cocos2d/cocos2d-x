@@ -106,40 +106,41 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
     }
 }
 
-static void getTouchesFuncName(int eventType, std::string &funcName) {
-    switch(eventType) {
-        case CCTOUCHBEGAN:
+static void getTouchesFuncName(EventTouch::EventCode eventCode, std::string &funcName)
+{
+    switch(eventCode)
+    {
+        case EventTouch::EventCode::BEGAN:
             funcName = "onTouchesBegan";
             break;
-        case CCTOUCHENDED:
+        case EventTouch::EventCode::ENDED:
             funcName = "onTouchesEnded";
             break;
-        case CCTOUCHMOVED:
+        case EventTouch::EventCode::MOVED:
             funcName = "onTouchesMoved";
             break;
-        case CCTOUCHCANCELLED:
+        case EventTouch::EventCode::CANCELLED:
             funcName = "onTouchesCancelled";
             break;
     }
-
 }
 
-static void getTouchFuncName(int eventType, std::string &funcName) {
-    switch(eventType) {
-        case CCTOUCHBEGAN:
+static void getTouchFuncName(EventTouch::EventCode eventCode, std::string &funcName)
+{
+    switch(eventCode) {
+        case EventTouch::EventCode::BEGAN:
             funcName = "onTouchBegan";
             break;
-        case CCTOUCHENDED:
+        case EventTouch::EventCode::ENDED:
             funcName = "onTouchEnded";
             break;
-        case CCTOUCHMOVED:
+        case EventTouch::EventCode::MOVED:
             funcName = "onTouchMoved";
             break;
-        case CCTOUCHCANCELLED:
+        case EventTouch::EventCode::CANCELLED:
             funcName = "onTouchCancelled";
             break;
     }
-
 }
 
 static void rootObject(JSContext *cx, JSObject *obj) {
@@ -520,6 +521,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
                                     &length);
     if (data) {
         script = JS_DecodeScript(cx, data, length, NULL, NULL);
+        CC_SAFE_DELETE_ARRAY(data);
     }
     
     // b) no jsc file, check js file
@@ -834,12 +836,12 @@ int ScriptingCore::handleTouchesEvent(void* data)
         return 0;
     
     TouchesScriptData* touchesScriptData = static_cast<TouchesScriptData*>(data);
-    if (NULL == touchesScriptData->nativeObject || NULL == touchesScriptData->touches)
+    if (NULL == touchesScriptData->nativeObject || touchesScriptData->touches.empty())
         return 0;
     
     Layer* pLayer = static_cast<Layer*>(touchesScriptData->nativeObject);
-    int eventType = touchesScriptData->actionType;
-    Set *pTouches = touchesScriptData->touches;
+    EventTouch::EventCode eventType = touchesScriptData->actionType;
+    const std::vector<Touch*>& touches = touchesScriptData->touches;
     
     std::string funcName = "";
     getTouchesFuncName(eventType, funcName);
@@ -848,21 +850,26 @@ int ScriptingCore::handleTouchesEvent(void* data)
 
     JS_AddNamedObjectRoot(this->cx_, &jsretArr, "touchArray");
     int count = 0;
-    for(SetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
+    
+    for (auto& touch : touches)
+    {
         jsval jsret;
-        getJSTouchObject(this->cx_, (Touch *) *it, jsret);
-        if (!JS_SetElement(this->cx_, jsretArr, count, &jsret)) {
+        getJSTouchObject(this->cx_, touch, jsret);
+        if (!JS_SetElement(this->cx_, jsretArr, count, &jsret))
+        {
             break;
         }
+        ++count;
     }
 
     executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsretArr);
 
     JS_RemoveObjectRoot(this->cx_, &jsretArr);
 
-    for(SetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
+    for (auto& touch : touches)
+    {
         jsval jsret;
-        removeJSTouchObject(this->cx_, (Touch *) *it, jsret);
+        removeJSTouchObject(this->cx_, touch, jsret);
     }
 
     return 1;
@@ -878,7 +885,7 @@ int ScriptingCore::handleTouchEvent(void* data)
         return 0;
     
     Layer* pLayer = static_cast<Layer*>(touchScriptData->nativeObject);
-    int eventType = touchScriptData->actionType;
+    EventTouch::EventCode eventType = touchScriptData->actionType;
     Touch *pTouch = touchScriptData->touch;
 
     
@@ -974,17 +981,36 @@ int ScriptingCore::handleKeypadEvent(void* data)
     if (NULL == keypadScriptData->nativeObject)
         return 0;
     
-    int action = keypadScriptData->actionType;
+    EventKeyboard::KeyCode action = keypadScriptData->actionType;
     
 	js_proxy_t * p = jsb_get_native_proxy(keypadScriptData->nativeObject);
 
-	if (p){
-		switch(action){
-		case kTypeBackClicked:
-			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "backClicked");
+	if (p)
+    {
+        JSBool ret = JS_FALSE;
+        switch(action)
+        {
+        case EventKeyboard::KeyCode::KEY_BACKSPACE:
+			ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onBackClicked");
+            if (!ret)
+            {
+                ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "backClicked");
+                if (ret)
+                {
+                    CCLOG("backClicked will be deprecated, please use onBackClicked instead.");
+                }
+            }
 			break;
-		case kTypeMenuClicked:
-			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "menuClicked");
+		case EventKeyboard::KeyCode::KEY_MENU:
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onMenuClicked");
+            if (!ret)
+            {
+                ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "menuClicked");
+                if (ret)
+                {
+                    CCLOG("menuClicked will be deprecated, please use onMenuClicked instead.");
+                }
+            }
 			break;
 		default:
 			break;
@@ -996,8 +1022,8 @@ int ScriptingCore::handleKeypadEvent(void* data)
 }
 
 
-int ScriptingCore::executeCustomTouchesEvent(int eventType,
-                                       Set *pTouches, JSObject *obj)
+int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
+                                       const std::vector<Touch*>& touches, JSObject *obj)
 {
     jsval retval;
     std::string funcName;
@@ -1006,29 +1032,33 @@ int ScriptingCore::executeCustomTouchesEvent(int eventType,
     JSObject *jsretArr = JS_NewArrayObject(this->cx_, 0, NULL);
     JS_AddNamedObjectRoot(this->cx_, &jsretArr, "touchArray");
     int count = 0;
-    for(SetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
+    for (auto& touch : touches)
+    {
         jsval jsret;
-        getJSTouchObject(this->cx_, (Touch *) *it, jsret);
+        getJSTouchObject(this->cx_, touch, jsret);
         if (!JS_SetElement(this->cx_, jsretArr, count, &jsret)) {
             break;
         }
+        ++count;
     }
 
     jsval jsretArrVal = OBJECT_TO_JSVAL(jsretArr);
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsretArrVal, &retval);
     JS_RemoveObjectRoot(this->cx_, &jsretArr);
 
-    for(SetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
+    for (auto& touch : touches)
+    {
         jsval jsret;
-        removeJSTouchObject(this->cx_, (Touch *) *it, jsret);
+        removeJSTouchObject(this->cx_, touch, jsret);
     }
 
     return 1;
 }
 
 
-int ScriptingCore::executeCustomTouchEvent(int eventType,
-                                           Touch *pTouch, JSObject *obj) {
+int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
+                                           Touch *pTouch, JSObject *obj)
+{
     jsval retval;
     std::string funcName;
     getTouchFuncName(eventType, funcName);
@@ -1045,9 +1075,10 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
 }
 
 
-int ScriptingCore::executeCustomTouchEvent(int eventType,
+int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
                                            Touch *pTouch, JSObject *obj,
-                                           jsval &retval) {
+                                           jsval &retval)
+{
 
     std::string funcName;
     getTouchFuncName(eventType, funcName);

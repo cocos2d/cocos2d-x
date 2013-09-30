@@ -36,15 +36,20 @@ THE SOFTWARE.
 #include "effects/CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "actions/CCActionManager.h"
 #include "script_support/CCScriptSupport.h"
 #include "shaders/CCGLProgram.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCEvent.h"
+#include "event_dispatcher/CCEventTouch.h"
 
 // externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
 #include "support/component/CCComponentContainer.h"
+
+
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -80,6 +85,7 @@ bool nodeComparisonLess(Object* p1, Object* p2)
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
+int Node::_globalEventPriorityIndex = 0;
 
 Node::Node(void)
 : _rotationX(0.0f)
@@ -120,6 +126,8 @@ Node::Node(void)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
+, _eventPriority(0)
+, _oldEventPriority(0)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -166,7 +174,11 @@ Node::~Node()
     // children
     CC_SAFE_RELEASE(_children);
     
+    removeAllComponents();
+    
     CC_SAFE_DELETE(_componentContainer);
+    
+    removeAllEventListeners();
 }
 
 bool Node::init()
@@ -287,6 +299,14 @@ void Node::setScale(float scale)
 float Node::getScaleX() const
 {
     return _scaleX;
+}
+
+/// scale setter
+void Node::setScale(float scaleX,float scaleY)
+{
+    _scaleX = scaleX;
+    _scaleY = scaleY;
+    _transformDirty = _inverseDirty = true;
 }
 
 /// scaleX setter
@@ -813,6 +833,7 @@ void Node::visit()
         }
         // self draw
         this->draw();
+        updateEventPriorityIndex();
 
         for( ; i < _children->count(); i++ )
         {
@@ -824,6 +845,7 @@ void Node::visit()
     else
     {
         this->draw();
+        updateEventPriorityIndex();
     }
 
     // reset for next frame
@@ -935,7 +957,9 @@ void Node::onExit()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
-    arrayMakeObjectsPerformSelector(_children, onExit, Node*);    
+    arrayMakeObjectsPerformSelector(_children, onExit, Node*);
+    
+    removeAllEventListeners();
 }
 
 void Node::setActionManager(ActionManager* actionManager)
@@ -1274,6 +1298,43 @@ void Node::removeAllComponents()
 {
     if( _componentContainer )
         _componentContainer->removeAll();
+}
+
+void Node::resetEventPriorityIndex()
+{
+    _globalEventPriorityIndex = 0;
+}
+
+void Node::associateEventListener(EventListener* listener)
+{
+    _eventlisteners.insert(listener);
+}
+
+void Node::dissociateEventListener(EventListener* listener)
+{
+    _eventlisteners.erase(listener);
+}
+
+void Node::removeAllEventListeners()
+{
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    auto eventListenersCopy = _eventlisteners;
+    
+    for (auto& listener : eventListenersCopy)
+    {
+        dispatcher->removeEventListener(listener);
+    }
+}
+
+void Node::setDirtyForAllEventListeners()
+{
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    for (auto& listener : _eventlisteners)
+    {
+        dispatcher->setDirtyForEventType(listener->_type, true);
+    }
 }
 
 // NodeRGBA

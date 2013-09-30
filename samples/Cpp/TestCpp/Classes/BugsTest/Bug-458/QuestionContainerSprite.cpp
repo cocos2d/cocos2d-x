@@ -41,18 +41,18 @@ bool QuestionContainerSprite::init()
 
         auto corner2 = Sprite::create("Images/bugs/corner.png");
         corner2->setPosition(Point(-corner->getPosition().x, corner->getPosition().y));
-        corner2->setFlipX(true);
+        corner2->setFlippedX(true);
         addChild(corner2);
 
         auto corner3 = Sprite::create("Images/bugs/corner.png");
         corner3->setPosition(Point(corner->getPosition().x, -corner->getPosition().y));
-        corner3->setFlipY(true);
+        corner3->setFlippedY(true);
         addChild(corner3);
 
         auto corner4 = Sprite::create("Images/bugs/corner.png");
         corner4->setPosition(Point(corner2->getPosition().x, -corner2->getPosition().y));
-        corner4->setFlipX(true);
-        corner4->setFlipY(true);
+        corner4->setFlippedX(true);
+        corner4->setFlippedY(true);
         addChild(corner4);
 
         auto edge = Sprite::create("Images/bugs/edge.png");
@@ -63,7 +63,7 @@ bool QuestionContainerSprite::init()
         auto edge2 = Sprite::create("Images/bugs/edge.png");
         edge2->setScaleX(width);
         edge2->setPosition(Point(corner->getPosition().x + (corner->getContentSize().width / 2) + (width / 2), -corner->getPosition().y));
-        edge2->setFlipY(true);
+        edge2->setFlippedY(true);
         addChild(edge2);
 
         auto edge3 = Sprite::create("Images/bugs/edge.png");

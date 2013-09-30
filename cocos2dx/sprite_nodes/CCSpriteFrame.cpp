@@ -126,6 +126,7 @@ SpriteFrame* SpriteFrame::clone() const
     SpriteFrame *copy = new SpriteFrame();
     copy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
     copy->setTexture(_texture);
+    copy->autorelease();
     return copy;
 }
 

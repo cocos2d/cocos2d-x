@@ -96,7 +96,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
 
     _descendants.reserve(capacity);
 
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
@@ -156,7 +156,8 @@ void SpriteBatchNode::visit(void)
     transform();
 
     draw();
-
+    updateEventPriorityIndex();
+    
     if (_grid && _grid->isActive())
     {
         _grid->afterDraw(this);

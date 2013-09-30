@@ -63,8 +63,8 @@ public:
     virtual void setEnabled(bool enabled);
 
     // overrides
-    virtual bool ccTouchBegan(Touch* touch, Event* pEvent) override;
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual bool onTouchBegan(Touch* touch, Event* pEvent) override;
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
 
 protected:
     void updateSliderPosition(Point location);

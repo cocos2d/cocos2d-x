@@ -4,7 +4,7 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 ////----#include "cocos2d.h"
-// #include "touch_dispatcher/CCTouch.h"
+// #include "event_dispatcher/CCTouch.h"
 // #include "CCParticleExample.h"
 
 class ParticleTestScene : public TestScene
@@ -33,9 +33,9 @@ public:
     void backCallback(Object* sender);
     void toggleCallback(Object* sender);
 
-    virtual void ccTouchesBegan(Set  *touches, Event  *event);
-    virtual void ccTouchesMoved(Set  *touches, Event  *event);
-    virtual void ccTouchesEnded(Set  *touches, Event  *event);
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
 
     virtual void update(float dt);
     void setEmitterPosition();

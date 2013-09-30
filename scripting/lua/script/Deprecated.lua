@@ -28,6 +28,12 @@ function CCTextureCacheDeprecated.purgeSharedTextureCache()
     return cc.TextureCache:destroyInstance()
 end
 rawset(CCTextureCache,"purgeSharedTextureCache",CCTextureCacheDeprecated.purgeSharedTextureCache)
+
+function CCTextureCacheDeprecated.addUIImage(self, image, key)
+    deprecatedTip("CCTextureCache:addUIImage","CCTextureCache:addImage")
+    return self:addImage(image,key)
+end
+rawset(CCTextureCache,"addUIImage",CCTextureCacheDeprecated.addUIImage)
 --functions of CCTextureCache will be deprecated end
 
 --functions of CCAnimation will be deprecated begin
@@ -111,6 +117,11 @@ function CCMenuDeprecated.createWithItem(self,...)
     return self:create(...)
 end
 rawset(CCMenu,"createWithItem",CCMenuDeprecated.createWithItem)
+
+function CCMenuDeprecated.setHandlerPriority(self)
+    print("\n********** \n".."setHandlerPriority was deprecated in 3.0. \n**********")
+end
+rawset(CCMenu,"setHandlerPriority",CCMenuDeprecated.setHandlerPriority)
 --functions of CCMenu will be deprecated end
 
 --functions of CCNode will be deprecated begin
@@ -986,11 +997,40 @@ if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTar
 end
 --functions of WebSocket will be deprecated end
 
---enums of CCRenderTexture will be deprecated begin
+--functions of CCRenderTexture will be deprecated begin
 local CCRenderTextureDeprecated = { }
 function CCRenderTextureDeprecated.newCCImage(self)
     deprecatedTip("CCRenderTexture:newCCImage","CCRenderTexture:newImage")
     return self:newImage()
 end
 rawset(CCRenderTexture, "newCCImage", CCRenderTextureDeprecated.newCCImage)
---enums of CCRenderTexture will be deprecated end
+--functions of CCRenderTexture will be deprecated end
+
+--functions of Sprite will be deprecated begin
+local CCSpriteDeprecated = { }
+function CCSpriteDeprecated.setFlipX(self,flag)
+    deprecatedTip("CCSpriteDeprecated:setFlipX","CCSpriteDeprecated:setFlippedX")
+    return self:setFlippedX(flag)
+end
+rawset(cc.Sprite, "setFlipX", CCSpriteDeprecated.setFlipX)
+
+function CCSpriteDeprecated.setFlipY(self,flag)
+    deprecatedTip("CCSpriteDeprecated:setFlipY","CCSpriteDeprecated:setFlippedY")
+    return self:setFlippedY(flag)
+end
+rawset(cc.Sprite, "setFlipY", CCSpriteDeprecated.setFlipY)
+--functions of Sprite will be deprecated end
+
+
+--functions of Layer will be deprecated begin
+local CCLayerDeprecated = {}
+function CCLayerDeprecated.setKeypadEnabled( self, enabled)
+    return self:setKeyboardEnabled(enabled)
+end
+rawset(cc.Layer, "setKeypadEnabled", CCLayerDeprecated.setKeypadEnabled )
+
+function CCLayerDeprecated.isKeypadEnabled(self)
+    return self:isKeyboardEnabled()
+end
+rawset(cc.Layer, "isKeypadEnabled", CCLayerDeprecated.isKeypadEnabled )
+--functions of Layer will be deprecated end

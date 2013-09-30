@@ -14,6 +14,7 @@
 #include "js_bindings_core.h"
 #include "js_manual_conversions.h"
 #include "js_bindings_system_functions.h"
+#include "ScriptingCore.h"
 
 USING_NS_CC;
 
@@ -31,7 +32,7 @@ JSBool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = localStorageGetItem((char*)arg0  );
 
-	jsval ret_jsval = charptr_to_jsval( cx, ret_val);
+	jsval ret_jsval = c_string_to_jsval(cx, ret_val ? ret_val : "");
 	JS_SET_RVAL(cx, vp, ret_jsval );
 
 	return JS_TRUE;

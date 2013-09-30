@@ -40,7 +40,7 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
 
 void GLESDebugDraw::initShader( void )
 {
-    mShaderProgram = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    mShaderProgram = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
 
     mColorLocation = glGetUniformLocation( mShaderProgram->getProgram(), "u_color");
 }
@@ -246,5 +246,4 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
     CC_INCREMENT_GL_DRAWS(1);
 
     CHECK_GL_ERROR_DEBUG();
-    
 }

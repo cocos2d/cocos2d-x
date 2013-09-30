@@ -307,18 +307,20 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
 Dictionary* FileUtilsApple::createDictionaryWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename);
-    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
-    NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
+    NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
+    NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:path];
     
-    if (pDict != nil)
+    if (dict != nil)
     {
-        Dictionary* pRet = Dictionary::create();
-        for (id key in [pDict allKeys]) {
-            id value = [pDict objectForKey:key];
-            addValueToDict(key, value, pRet);
+        auto ret = new Dictionary();
+        ret->init();
+        
+        for (id key in [dict allKeys]) {
+            id value = [dict objectForKey:key];
+            addValueToDict(key, value, ret);
         }
         
-        return pRet;
+        return ret;
     }
     else
     {

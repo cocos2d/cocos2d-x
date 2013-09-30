@@ -26,7 +26,6 @@ enum {
 MenuLayerMainMenu::MenuLayerMainMenu()
 {
     setTouchEnabled(true);
-    setTouchPriority(Menu::HANDLER_PRIORITY + 1);
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
 
     // Font Item    
@@ -114,20 +113,20 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
-bool MenuLayerMainMenu::ccTouchBegan(Touch *touch, Event * event)
+bool MenuLayerMainMenu::onTouchBegan(Touch *touch, Event * event)
 {
     return true;
 }
 
-void MenuLayerMainMenu::ccTouchEnded(Touch *touch, Event * event)
+void MenuLayerMainMenu::onTouchEnded(Touch *touch, Event * event)
 {
 }
 
-void MenuLayerMainMenu::ccTouchCancelled(Touch *touch, Event * event)
+void MenuLayerMainMenu::onTouchCancelled(Touch *touch, Event * event)
 {
 }
 
-void MenuLayerMainMenu::ccTouchMoved(Touch *touch, Event * event)
+void MenuLayerMainMenu::onTouchMoved(Touch *touch, Event * event)
 {
 }
 
@@ -148,8 +147,8 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 
 void MenuLayerMainMenu::allowTouches(float dt)
 {
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY+1, this);
+//    auto director = Director::getInstance();
+//    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY+1, this);
     unscheduleAllSelectors();
     log("TOUCHES ALLOWED AGAIN");
 }
@@ -157,8 +156,8 @@ void MenuLayerMainMenu::allowTouches(float dt)
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
 {
     // hijack all touch events for 5 seconds
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY-1, this);
+//    auto director = Director::getInstance();
+//    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY-1, this);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     log("TOUCHES DISABLED FOR 5 SECONDS");
 }
@@ -491,10 +490,10 @@ MenuLayerPriorityTest::MenuLayerPriorityTest()
     MenuItemFont::setFontSize(48);
     item1 = MenuItemFont::create("Toggle priority", [&](Object *sender) {
 		if( _priority) {
-			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY + 20);
+//			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY + 20);
 			_priority = false;
 		} else {
-			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY - 20);
+//			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY - 20);
 			_priority = true;
 		}
 	});
@@ -573,6 +572,17 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     menu->setPosition(Point(s.width/2, s.height/2));
     
     setTouchEnabled(true);
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    
+    // Register Touch Event
+    _touchListener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    _touchListener->setSwallowTouches(false);
+    
+    _touchListener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);
+    _touchListener->onTouchMoved = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchMoved, this);
+    
+    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(_touchListener, -129);
+    
 }
 
 void RemoveMenuItemWhenMove::goBack(Object *pSender)
@@ -582,20 +592,16 @@ void RemoveMenuItemWhenMove::goBack(Object *pSender)
 
 RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()
 {
+    EventDispatcher::getInstance()->removeEventListener(_touchListener);
     CC_SAFE_RELEASE(item);
 }
 
-void RemoveMenuItemWhenMove::registerWithTouchDispatcher(void)
-{
-    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, -129, false);
-}
-
-bool RemoveMenuItemWhenMove::ccTouchBegan(Touch  *touch, Event  *event)
+bool RemoveMenuItemWhenMove::onTouchBegan(Touch  *touch, Event  *event)
 {
     return true;
 }
 
-void RemoveMenuItemWhenMove::ccTouchMoved(Touch  *touch, Event  *event)
+void RemoveMenuItemWhenMove::onTouchMoved(Touch  *touch, Event  *event)
 {
     if (item)
     {
@@ -607,6 +613,8 @@ void RemoveMenuItemWhenMove::ccTouchMoved(Touch  *touch, Event  *event)
 
 void MenuTestScene::runThisTest()
 {
+    MenuItemFont::setFontSize(20);
+    
     auto layer1 = new MenuLayerMainMenu();
     auto layer2 = new MenuLayer2();
     auto layer3 = new MenuLayer3();

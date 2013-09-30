@@ -59,7 +59,7 @@ class KeypadDispatcher;
 class Accelerometer;
 
 /**
-@brief Class that creates and handle the main Window and manages how
+@brief Class that creates and handles the main Window and manages how
 and when to execute the Scenes.
  
  The Director is also responsible for:
@@ -117,7 +117,7 @@ public:
 
     // attribute
 
-    /** Get current running Scene. Director can only run one Scene at the time */
+    /** Get current running Scene. Director can only run one Scene at a time */
     inline Scene* getRunningScene() { return _runningScene; }
 
     /** Get the FPS value */
@@ -178,7 +178,7 @@ public:
     Node* getNotificationNode();
     void setNotificationNode(Node *node);
     
-    /** Director delegate. It shall implemente the DirectorDelegate protocol
+    /** Director delegate. It shall implement the DirectorDelegate protocol
      @since v0.99.5
      * @js NA
      * @lua NA
@@ -240,20 +240,20 @@ public:
      */
     void pushScene(Scene *scene);
 
-    /** Pops out a scene from the queue.
+    /** Pops out a scene from the stack.
      * This scene will replace the running one.
      * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
      * ONLY call it if there is a running scene.
      */
     void popScene();
 
-    /** Pops out all scenes from the queue until the root scene in the queue.
+    /** Pops out all scenes from the stack until the root scene in the queue.
      * This scene will replace the running one.
      * Internally it will call `popToSceneStackLevel(1)`
      */
     void popToRootScene();
 
-    /** Pops out all scenes from the queue until it reaches `level`.
+    /** Pops out all scenes from the stack until it reaches `level`.
      If level is 0, it will end the director.
      If level is 1, it will pop all scenes until it reaches to root scene.
      If level is <= than the current stack level, it won't do anything.
@@ -301,7 +301,7 @@ public:
 
     // Memory Helper
 
-    /** Removes cached all cocos2d cached data.
+    /** Removes all cocos2d cached data.
      It will purge the TextureCache, SpriteFrameCache, LabelBMFont cache
      @since v0.99.3
      */
@@ -351,65 +351,13 @@ public:
      @since v2.0
      */
     void setActionManager(ActionManager* actionManager);
-    
-    /** Gets the TouchDispatcher associated with this director
-     @since v2.0
-     * @js NA
-     * @lua NA
-     */
-    TouchDispatcher* getTouchDispatcher() const;
-    
-    /** Sets the TouchDispatcher associated with this director
-     @since v2.0
-     * @js NA
-     * @lua NA
-     */
-    void setTouchDispatcher(TouchDispatcher* touchDispatcher);
-
-    /** Gets the KeyboardDispatcher associated with this director
-     @note Supported on Mac and Linux only now.
-     @since v3.0
-     * @js NA
-     * @lua NA
-     */
-    KeyboardDispatcher* getKeyboardDispatcher() const;
-
-    /** Sets the KeyboardDispatcher associated with this director
-     @note Supported on Mac and Linux only now.
-     @since v3.0
-     * @js NA
-     * @lua NA
-     */
-    void setKeyboardDispatcher(KeyboardDispatcher* keyboardDispatcher);
-    
-    /** Gets the KeypadDispatcher associated with this director
-     @since v2.0
-     * @js NA
-     * @lua NA
-     */
-    KeypadDispatcher* getKeypadDispatcher() const;
-
-    /** Sets the KeypadDispatcher associated with this director
-     @since v2.0
-     * @js NA
-     * @lua NA
-     */
-    void setKeypadDispatcher(KeypadDispatcher* keypadDispatcher);
-    
-    /** Gets Accelerometer associated with this director
-     @since v2.0
-     *@js NA
-     *@lua NA
-     */
-    Accelerometer* getAccelerometer() const;
-    
-    /** Sets Accelerometer associated with this director
-     @since v2.0
-     */
-    void setAccelerometer(Accelerometer* acc);
-
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
+    
+    /**
+     *  get Frame Rate
+     */
+    float getFrameRate() const { return _frameRate; }
 
 protected:
     void purgeDirector();
@@ -435,28 +383,7 @@ protected:
      @since v2.0
      */
     ActionManager* _actionManager;
-    
-    /** TouchDispatcher associated with this director
-     @since v2.0
-     */
-    TouchDispatcher* _touchDispatcher;
-    
-    /** KeyboardDispatcher associated with this director
-     @note Supported on Mac and Linux only now.
-     @since v3.0
-     */
-    KeyboardDispatcher* _keyboardDispatcher;
-    
-    /** KeypadDispatcher associated with this director
-     @since v2.0
-     */
-    KeypadDispatcher* _keypadDispatcher;
-    
-    /** Accelerometer associated with this director
-     @since v2.0
-     */
-    Accelerometer* _accelerometer;
-    
+        
     /* delta time since last tick to main loop */
 	float _deltaTime;
     

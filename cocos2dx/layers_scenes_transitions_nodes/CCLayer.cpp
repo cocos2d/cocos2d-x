@@ -26,9 +26,6 @@ THE SOFTWARE.
 
 #include <stdarg.h>
 #include "CCLayer.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
-#include "keypad_dispatcher/CCKeypadDispatcher.h"
-#include "CCAccelerometer.h"
 #include "CCDirector.h"
 #include "script_support/CCScriptSupport.h"
 #include "shaders/CCShaderCache.h"
@@ -37,7 +34,15 @@ THE SOFTWARE.
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"
-#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCEventListenerTouch.h"
+#include "event_dispatcher/CCEventTouch.h"
+#include "event_dispatcher/CCEventKeyboard.h"
+#include "event_dispatcher/CCEventListenerKeyboard.h"
+#include "event_dispatcher/CCEventAcceleration.h"
+#include "event_dispatcher/CCEventListenerAcceleration.h"
+#include "platform/CCDevice.h"
+#include "CCScene.h"
 
 NS_CC_BEGIN
 
@@ -46,10 +51,11 @@ Layer::Layer()
 : _touchEnabled(false)
 , _accelerometerEnabled(false)
 , _keyboardEnabled(false)
-, _keypadEnabled(false)
-, _touchPriority(0)
 , _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
 , _swallowsTouches(true)
+, _touchListener(nullptr)
+, _keyboardListener(nullptr)
+, _accelerationListener(nullptr)
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Point(0.5f, 0.5f));
@@ -93,31 +99,56 @@ Layer *Layer::create()
 
 /// Touch and Accelerometer related
 
-void Layer::registerWithTouchDispatcher()
+void Layer::addTouchListener()
 {
-    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
-
-    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
-        pDispatcher->addStandardDelegate(this, 0);
-    } else {
-        pDispatcher->addTargetedDelegate(this, _touchPriority, _swallowsTouches);
+    if (_touchListener != nullptr)
+        return;
+    
+    auto dispatcher = EventDispatcher::getInstance();    
+    
+    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE )
+    {
+        // Register Touch Event
+        auto listener = EventListenerTouch::create(Touch::DispatchMode::ALL_AT_ONCE);
+        
+        listener->onTouchesBegan = CC_CALLBACK_2(Layer::onTouchesBegan, this);
+        listener->onTouchesMoved = CC_CALLBACK_2(Layer::onTouchesMoved, this);
+        listener->onTouchesEnded = CC_CALLBACK_2(Layer::onTouchesEnded, this);
+        listener->onTouchesCancelled = CC_CALLBACK_2(Layer::onTouchesCancelled, this);
+        
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        _touchListener = listener;
+    }
+    else
+    {
+        // Register Touch Event
+        auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+        listener->setSwallowTouches(_swallowsTouches);
+        
+        listener->onTouchBegan = CC_CALLBACK_2(Layer::onTouchBegan, this);
+        listener->onTouchMoved = CC_CALLBACK_2(Layer::onTouchMoved, this);
+        listener->onTouchEnded = CC_CALLBACK_2(Layer::onTouchEnded, this);
+        listener->onTouchCancelled = CC_CALLBACK_2(Layer::onTouchCancelled, this);
+        
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        _touchListener = listener;
     }
 }
 
-int Layer::executeScriptTouchHandler(int eventType, Touch* touch)
+int Layer::executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch)
 {
     if (kScriptTypeNone != _scriptType)
     {
         TouchScriptData data(eventType, this, touch);
         ScriptEvent event(kTouchEvent, &data);
-        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);        
+        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 
     //can not reach it
     return 0;
 }
 
-int Layer::executeScriptTouchesHandler(int eventType, Set* touches)
+int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches)
 {
     if (kScriptTypeNone != _scriptType)
     {
@@ -145,12 +176,12 @@ void Layer::setTouchEnabled(bool enabled)
         {
             if (enabled)
             {
-                this->registerWithTouchDispatcher();
+                this->addTouchListener();
             }
             else
             {
-                // have problems?
-                Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
+                EventDispatcher::getInstance()->removeEventListener(_touchListener);
+                _touchListener = nullptr;
             }
         }
     }
@@ -161,20 +192,6 @@ void Layer::setTouchMode(Touch::DispatchMode mode)
     if(_touchMode != mode)
     {
         _touchMode = mode;
-        
-		if( _touchEnabled)
-        {
-			setTouchEnabled(false);
-			setTouchEnabled(true);
-		}
-    }
-}
-
-void Layer::setTouchPriority(int priority)
-{
-    if (_touchPriority != priority)
-    {
-        _touchPriority = priority;
         
 		if( _touchEnabled)
         {
@@ -196,12 +213,6 @@ void Layer::setSwallowsTouches(bool swallowsTouches)
             setTouchEnabled(true);
         }
     }
-}
-
-
-int Layer::getTouchPriority() const
-{
-    return _touchPriority;
 }
 
 Touch::DispatchMode Layer::getTouchMode() const
@@ -228,16 +239,18 @@ void Layer::setAccelerometerEnabled(bool enabled)
     {
         _accelerometerEnabled = enabled;
 
+        Device::setAccelerometerEnabled(enabled);
+        
         if (_running)
         {
-            Director* pDirector = Director::getInstance();
+            auto dispatcher = EventDispatcher::getInstance();
+            dispatcher->removeEventListener(_accelerationListener);
+            _accelerationListener = nullptr;
+            
             if (enabled)
             {
-                pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(Layer::didAccelerate, this));
-            }
-            else
-            {
-                pDirector->getAccelerometer()->setDelegate(nullptr);
+                _accelerationListener = EventListenerAcceleration::create(CC_CALLBACK_2(Layer::onAcceleration, this));
+                dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
             }
         }
     }
@@ -249,14 +262,13 @@ void Layer::setAccelerometerInterval(double interval) {
     {
         if (_running)
         {
-            Director* pDirector = Director::getInstance();
-            pDirector->getAccelerometer()->setAccelerometerInterval(interval);
+            Device::setAccelerometerInterval(interval);
         }
     }
 }
 
 
-void Layer::didAccelerate(Acceleration* pAccelerationValue)
+void Layer::onAcceleration(Acceleration* pAccelerationValue, Event* event)
 {
     CC_UNUSED_PARAM(pAccelerationValue);
     
@@ -264,6 +276,23 @@ void Layer::didAccelerate(Acceleration* pAccelerationValue)
     {
         BasicScriptData data(this,(void*)pAccelerationValue);
         ScriptEvent event(kAccelerometerEvent,&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+}
+
+void Layer::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(keyCode);
+    CC_UNUSED_PARAM(event);
+}
+
+void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(event);
+    if(kScriptTypeNone != _scriptType)
+    {
+        KeypadScriptData data(keyCode, this);
+        ScriptEvent event(kKeypadEvent,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 }
@@ -280,76 +309,30 @@ void Layer::setKeyboardEnabled(bool enabled)
     {
         _keyboardEnabled = enabled;
 
-        Director* pDirector = Director::getInstance();
+        auto dispatcher = EventDispatcher::getInstance();
+        dispatcher->removeEventListener(_keyboardListener);
+        _keyboardListener = nullptr;
+        
         if (enabled)
         {
-            pDirector->getKeyboardDispatcher()->setKeyPressDelegate( CC_CALLBACK_1(Layer::keyPressed, this) );
-            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate( CC_CALLBACK_1(Layer::keyReleased, this) );
+            auto listener = EventListenerKeyboard::create();
+            listener->onKeyPressed = CC_CALLBACK_2(Layer::onKeyPressed, this);
+            listener->onKeyReleased = CC_CALLBACK_2(Layer::onKeyReleased, this);
+            
+            dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+            _keyboardListener = listener;
         }
-        else
-        {
-            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(nullptr);
-            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(nullptr);
-        }
-    }
-}
-
-/// isKeypadEnabled getter
-bool Layer::isKeypadEnabled() const
-{
-    return _keypadEnabled;
-}
-/// isKeypadEnabled setter
-void Layer::setKeypadEnabled(bool enabled)
-{
-    if (enabled != _keypadEnabled)
-    {
-        _keypadEnabled = enabled;
-
-        if (_running)
-        {
-            Director* pDirector = Director::getInstance();
-            if (enabled)
-            {
-                pDirector->getKeypadDispatcher()->addDelegate(this);
-            }
-            else
-            {
-                pDirector->getKeypadDispatcher()->removeDelegate(this);
-            }
-        }
-    }
-}
-
-void Layer::keyBackClicked(void)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        KeypadScriptData data(kTypeBackClicked, this);
-        ScriptEvent event(kKeypadEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-}
-
-void Layer::keyMenuClicked(void)
-{
-    if (kScriptTypeLua == _scriptType)
-    {
-        KeypadScriptData data(kTypeMenuClicked, this);
-        ScriptEvent event(kKeypadEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 }
 
 /// Callbacks
 void Layer::onEnter()
 {
-    Director* pDirector = Director::getInstance();
     // register 'parent' nodes first
     // since events are propagated in reverse order
     if (_touchEnabled)
     {
-        this->registerWithTouchDispatcher();
+        this->addTouchListener();
     }
 
     // then iterate over all the children
@@ -358,35 +341,27 @@ void Layer::onEnter()
     // add this layer to concern the Accelerometer Sensor
     if (_accelerometerEnabled)
     {
-        pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(Layer::didAccelerate, this));
-    }
-
-    // add this layer to concern the keypad msg
-    if (_keypadEnabled)
-    {
-        pDirector->getKeypadDispatcher()->addDelegate(this);
+        auto dispatcher = EventDispatcher::getInstance();
+        dispatcher->removeEventListener(_accelerationListener);
+        _accelerationListener = EventListenerAcceleration::create(CC_CALLBACK_2(Layer::onAcceleration, this));
+        dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
     }
 }
 
 void Layer::onExit()
 {
-    Director* pDirector = Director::getInstance();
-    if( _touchEnabled )
-    {
-        pDirector->getTouchDispatcher()->removeDelegate(this);
-    }
+    auto dispatcher = EventDispatcher::getInstance();
 
+    dispatcher->removeEventListener(_touchListener);
+    _touchListener = nullptr;
+    
     // remove this layer from the delegates who concern Accelerometer Sensor
-    if (_accelerometerEnabled)
-    {
-		pDirector->getAccelerometer()->setDelegate(nullptr);
-    }
-
+    dispatcher->removeEventListener(_accelerationListener);
+    _accelerationListener = nullptr;
+    
     // remove this layer from the delegates who concern the keypad msg
-    if (_keypadEnabled)
-    {
-        pDirector->getKeypadDispatcher()->removeDelegate(this);
-    }
+    dispatcher->removeEventListener(_keyboardListener);
+    _keyboardListener = nullptr;
 
     Node::onExit();
 }
@@ -395,18 +370,20 @@ void Layer::onEnterTransitionDidFinish()
 {
     if (_accelerometerEnabled)
     {
-        Director* pDirector = Director::getInstance();
-        pDirector->getAccelerometer()->setDelegate(CC_CALLBACK_1(Layer::didAccelerate, this));
+        auto dispatcher = EventDispatcher::getInstance();
+        dispatcher->removeEventListener(_accelerationListener);
+        _accelerationListener = EventListenerAcceleration::create(CC_CALLBACK_2(Layer::onAcceleration, this));
+        dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
     }
     
     Node::onEnterTransitionDidFinish();
 }
 
-bool Layer::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool Layer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        return executeScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
+        return executeScriptTouchHandler(EventTouch::EventCode::BEGAN, pTouch) == 0 ? false : true;
     }
 
     CC_UNUSED_PARAM(pTouch);
@@ -415,11 +392,11 @@ bool Layer::ccTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void Layer::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void Layer::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchHandler(CCTOUCHMOVED, pTouch);
+        executeScriptTouchHandler(EventTouch::EventCode::MOVED, pTouch);
         return;
     }
 
@@ -427,11 +404,11 @@ void Layer::ccTouchMoved(Touch *pTouch, Event *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
     
-void Layer::ccTouchEnded(Touch *pTouch, Event *pEvent)
+void Layer::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchHandler(CCTOUCHENDED, pTouch);
+        executeScriptTouchHandler(EventTouch::EventCode::ENDED, pTouch);
         return;
     }
 
@@ -439,11 +416,11 @@ void Layer::ccTouchEnded(Touch *pTouch, Event *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
 
-void Layer::ccTouchCancelled(Touch *pTouch, Event *pEvent)
+void Layer::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
+        executeScriptTouchHandler(EventTouch::EventCode::CANCELLED, pTouch);
         return;
     }
 
@@ -451,11 +428,11 @@ void Layer::ccTouchCancelled(Touch *pTouch, Event *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }    
 
-void Layer::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void Layer::onTouchesBegan(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchesHandler(CCTOUCHBEGAN, pTouches);
+        executeScriptTouchesHandler(EventTouch::EventCode::BEGAN, pTouches);
         return;
     }
 
@@ -463,11 +440,11 @@ void Layer::ccTouchesBegan(Set *pTouches, Event *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
 
-void Layer::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void Layer::onTouchesMoved(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchesHandler(CCTOUCHMOVED, pTouches);
+        executeScriptTouchesHandler(EventTouch::EventCode::MOVED, pTouches);
         return;
     }
 
@@ -475,11 +452,11 @@ void Layer::ccTouchesMoved(Set *pTouches, Event *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
 
-void Layer::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void Layer::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchesHandler(CCTOUCHENDED, pTouches);
+        executeScriptTouchesHandler(EventTouch::EventCode::ENDED, pTouches);
         return;
     }
 
@@ -487,17 +464,41 @@ void Layer::ccTouchesEnded(Set *pTouches, Event *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
 
-void Layer::ccTouchesCancelled(Set *pTouches, Event *pEvent)
+void Layer::onTouchesCancelled(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
     if (kScriptTypeNone != _scriptType)
     {
-        executeScriptTouchesHandler(CCTOUCHCANCELLED, pTouches);
+        executeScriptTouchesHandler(EventTouch::EventCode::CANCELLED, pTouches);
         return;
     }
 
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
+
+
+#ifdef CC_USE_PHYSICS
+void Layer::addChild(Node* child)
+{
+    Node::addChild(child);
+}
+
+void Layer::addChild(Node* child, int zOrder)
+{
+    Node::addChild(child, zOrder);
+}
+
+void Layer::addChild(Node* child, int zOrder, int tag)
+{
+    Node::addChild(child, zOrder, tag);
+    
+    if (this->getParent() &&
+        dynamic_cast<Scene*>(this->getParent()) != nullptr)
+    {
+        dynamic_cast<Scene*>(this->getParent())->addChildToPhysicsWorld(child);
+    }
+}
+#endif
 
 // LayerRGBA
 LayerRGBA::LayerRGBA()
@@ -729,7 +730,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         updateColor();
         setContentSize(Size(w, h));
 
-        setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_COLOR));
         return true;
     }
     return false;
