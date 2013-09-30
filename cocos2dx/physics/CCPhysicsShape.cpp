@@ -208,11 +208,8 @@ bool PhysicsShapeCircle::init(PhysicsBody* body, float radius, float density/* =
         
         _density = density;
         _area = PhysicsHelper::cpfloat2float(cpAreaForCircle(0, radius));
-        _mass = _density * _area;
-        if (_mass != 0)
-        {
-            _angularDamping = cpMomentForCircle(_density, 0, radius, PhysicsHelper::point2cpv(offset));
-        }
+        _mass = _density == INFINITY ? INFINITY : _density * _area;
+        _angularDamping = _mass == INFINITY ? INFINITY : cpMomentForCircle(_mass, 0, radius, PhysicsHelper::point2cpv(offset));
         
         _info->add(shape);
         

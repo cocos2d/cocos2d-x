@@ -64,6 +64,7 @@ public:
     inline float getDensity() { return _density; }
     void setDensity(float density);
     inline float getAngularDumping() { return _angularDamping; }
+    void setAngularDumping(float angularDumping);
     inline void setTag(int tag) { _tag = tag; }
     inline int getTag() { return _tag; }
     void setEnable(bool enable);
