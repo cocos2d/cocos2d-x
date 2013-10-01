@@ -51,6 +51,8 @@ static id s_sharedDirectorCaller;
 +(void) destroy
 {
     [s_sharedDirectorCaller release];
+    NSObject* dl = ((CCDirectorCaller*)s_sharedDirectorCaller)->displayLink;
+    [dl invalidate];
     s_sharedDirectorCaller = nil;
 }
 
@@ -61,7 +63,6 @@ static id s_sharedDirectorCaller;
 
 -(void) dealloc
 {
-    [displayLink release];
     [super dealloc];
 }
 
