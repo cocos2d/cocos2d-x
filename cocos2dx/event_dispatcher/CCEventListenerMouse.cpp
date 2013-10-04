@@ -78,12 +78,22 @@ bool EventListenerMouse::init()
         auto mouseEvent = static_cast<EventMouse*>(event);
         switch (mouseEvent->_mouseEventType)
         {
+            case EventMouse::MouseEventType::MOUSE_DOWN:
+                if(onMouseDown != nullptr)
+                    onMouseDown(event);
+                break;
+            case EventMouse::MouseEventType::MOUSE_UP:
+                if(onMouseUp != nullptr)
+                    onMouseUp(event);
+                break;
+            case EventMouse::MouseEventType::MOUSE_MOVE:
+                if(onMouseMove != nullptr)
+                    onMouseMove(event);
+                break;
             case EventMouse::MouseEventType::MOUSE_SCROLL:
-            {
                 if(onMouseScroll != nullptr)
                     onMouseScroll(event);
                 break;
-            }
             default:
                 break;
         }

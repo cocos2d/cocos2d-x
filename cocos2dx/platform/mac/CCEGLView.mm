@@ -195,6 +195,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
 {
     EGLView* eglView = EGLView::getInstance();
     if(nullptr == eglView) return;
+
     if(GLFW_MOUSE_BUTTON_LEFT == button)
     {
         if(GLFW_PRESS == action)
@@ -204,6 +205,10 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             {
                 int id = 0;
                 eglView->handleTouchesBegin(1, &id, &s_mouseX, &s_mouseY);
+
+                EventMouse event(EventMouse::MouseEventType::MOUSE_DOWN);
+                event.setCursorPosition(s_mouseX, s_mouseY);
+                EventDispatcher::getInstance()->dispatchEvent(&event);
             }
         }
         else if(GLFW_RELEASE == action)
@@ -213,6 +218,10 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             {
                 int id = 0;
                 eglView->handleTouchesEnd(1, &id, &s_mouseX, &s_mouseY);
+
+                EventMouse event(EventMouse::MouseEventType::MOUSE_UP);
+                event.setCursorPosition(s_mouseX, s_mouseY);
+                EventDispatcher::getInstance()->dispatchEvent(&event);
             }
         }
     }
@@ -236,12 +245,17 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
             eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
         }
     }
+
+    EventMouse event(EventMouse::MouseEventType::MOUSE_MOVE);
+    event.setCursorPosition(s_mouseX, s_mouseY);
+    EventDispatcher::getInstance()->dispatchEvent(&event);
 }
 
 void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
 {
     EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
     event.setScrollData((float)x, (float)y);
+    event.setCursorPosition(s_mouseX, s_mouseY);
     EventDispatcher::getInstance()->dispatchEvent(&event);
 }
 
