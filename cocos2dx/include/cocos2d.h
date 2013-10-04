@@ -269,6 +269,8 @@ THE SOFTWARE.
 #include "event_dispatcher/CCEventListenerAcceleration.h"
 #include "event_dispatcher/CCEventCustom.h"
 #include "event_dispatcher/CCEventListenerCustom.h"
+#include "event_dispatcher/CCEventListenerMouse.h"
+#include "event_dispatcher/CCEventMouse.h"
 
 // root
 #include "CCCamera.h"

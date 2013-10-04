@@ -125,7 +125,7 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     CCASSERT(listener && node, "Invalid parameters.");
     CCASSERT(!listener->_isRegistered, "The listener has been registered.");
     
-    if (!listener->checkAvaiable())
+    if (!listener->checkAvailable())
         return;
     
     auto item = new EventListenerItem();
@@ -147,7 +147,7 @@ void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener,
     CCASSERT(!listener->_isRegistered, "The listener has been registered.");
     CCASSERT(fixedPriority != 0, "0 priority is forbidden for fixed priority since it's used for scene graph based priority.");
     
-    if (!listener->checkAvaiable())
+    if (!listener->checkAvailable())
         return;
     
     auto item = new EventListenerItem();

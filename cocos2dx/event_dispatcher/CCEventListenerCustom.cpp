@@ -80,10 +80,10 @@ EventListenerCustom* EventListenerCustom::clone()
     return ret;
 }
 
-bool EventListenerCustom::checkAvaiable()
+bool EventListenerCustom::checkAvailable()
 {
     bool ret = false;
-    if (EventListener::checkAvaiable() && _onCustomEvent != nullptr)
+    if (EventListener::checkAvailable() && _onCustomEvent != nullptr)
     {
         ret = true;
     }

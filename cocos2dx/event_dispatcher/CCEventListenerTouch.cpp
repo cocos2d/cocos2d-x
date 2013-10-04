@@ -80,7 +80,7 @@ EventListenerTouch* EventListenerTouch::create(Touch::DispatchMode mode)
     return ret;
 }
 
-bool EventListenerTouch::checkAvaiable()
+bool EventListenerTouch::checkAvailable()
 {
     if (_dispatchMode == Touch::DispatchMode::ALL_AT_ONCE)
     {

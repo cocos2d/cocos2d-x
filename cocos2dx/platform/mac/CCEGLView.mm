@@ -28,6 +28,7 @@
 #include "event_dispatcher/CCTouch.h"
 #include "event_dispatcher/CCEventDispatcher.h"
 #include "event_dispatcher/CCEventKeyboard.h"
+#include "event_dispatcher/CCEventMouse.h"
 #include "CCIMEDispatcher.h"
 
 NS_CC_BEGIN
@@ -175,6 +176,7 @@ public:
     static void OnGLFWError(int errorID, const char* errorDesc);
     static void OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
     static void OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
+    static void OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y);
     static void OnGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void OnGLFWCharCallback(GLFWwindow* window, unsigned int character);
     static void OnGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
@@ -234,6 +236,13 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
             eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
         }
     }
+}
+
+void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+{
+    EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
+    event.setScrollData((float)x, (float)y);
+    EventDispatcher::getInstance()->dispatchEvent(&event);
 }
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -300,10 +309,11 @@ bool EGLView::init(const char *viewName, float width, float height, float frameZ
     
     glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseCallBack);
     glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseMoveCallBack);
+    glfwSetScrollCallback(_mainWindow, EGLViewEventHandler::OnGLFWMouseScrollCallback);
     glfwSetCharCallback(_mainWindow, EGLViewEventHandler::OnGLFWCharCallback);
     glfwSetKeyCallback(_mainWindow, EGLViewEventHandler::OnGLFWKeyCallback);
     glfwSetWindowPosCallback(_mainWindow, EGLViewEventHandler::OnGLFWWindowPosCallback);
-    
+
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
     

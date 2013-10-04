@@ -40,7 +40,7 @@ public:
     
     /// Overrides
     virtual EventListenerTouch* clone() override;
-    virtual bool checkAvaiable() override;
+    virtual bool checkAvailable() override;
     
     virtual ~EventListenerTouch();
     

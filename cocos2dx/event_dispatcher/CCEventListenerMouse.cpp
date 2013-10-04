@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,25 +20,21 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
- 
+
  ****************************************************************************/
 
-#include "CCEventListenerKeyboard.h"
-#include "CCEventKeyboard.h"
-#include "ccMacros.h"
+#include "CCEventListenerMouse.h"
 
 NS_CC_BEGIN
 
-bool EventListenerKeyboard::checkAvailable()
+bool EventListenerMouse::checkAvailable()
 {
-    CCASSERT(onKeyPressed && onKeyReleased, "");
-    
     return true;
 }
 
-EventListenerKeyboard* EventListenerKeyboard::create()
+EventListenerMouse* EventListenerMouse::create()
 {
-    auto ret = new EventListenerKeyboard();
+    auto ret = new EventListenerMouse();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -50,14 +46,16 @@ EventListenerKeyboard* EventListenerKeyboard::create()
     return ret;
 }
 
-EventListenerKeyboard* EventListenerKeyboard::clone()
+EventListenerMouse* EventListenerMouse::clone()
 {
-    auto ret = new EventListenerKeyboard();
+    auto ret = new EventListenerMouse();
     if (ret && ret->init())
     {
         ret->autorelease();
-        ret->onKeyPressed = onKeyPressed;
-        ret->onKeyReleased = onKeyReleased;
+        ret->onMouseUp = onMouseUp;
+        ret->onMouseDown = onMouseDown;
+        ret->onMouseMove = onMouseMove;
+        ret->onMouseScroll = onMouseScroll;
     }
     else
     {
@@ -66,33 +64,36 @@ EventListenerKeyboard* EventListenerKeyboard::clone()
     return ret;
 }
 
-EventListenerKeyboard::EventListenerKeyboard()
-: onKeyPressed(nullptr)
-, onKeyReleased(nullptr)
+EventListenerMouse::EventListenerMouse()
+: onMouseUp(nullptr)
+, onMouseDown(nullptr)
+, onMouseMove(nullptr)
+, onMouseScroll(nullptr)
 {
 }
 
-bool EventListenerKeyboard::init()
+bool EventListenerMouse::init()
 {
     auto listener = [this](Event* event){
-        auto keyboardEvent = static_cast<EventKeyboard*>(event);
-        if (keyboardEvent->_isPressed)
+        auto mouseEvent = static_cast<EventMouse*>(event);
+        switch (mouseEvent->_mouseEventType)
         {
-            if (onKeyPressed != nullptr)
-                onKeyPressed(keyboardEvent->_keyCode, event);
-        }
-        else
-        {
-            if (onKeyReleased != nullptr)
-                onKeyReleased(keyboardEvent->_keyCode, event);
+            case EventMouse::MouseEventType::MOUSE_SCROLL:
+            {
+                if(onMouseScroll != nullptr)
+                    onMouseScroll(event);
+                break;
+            }
+            default:
+                break;
         }
     };
-    
-    if (EventListener::init(EventKeyboard::EVENT_TYPE, listener))
+
+    if (EventListener::init(EventMouse::EVENT_TYPE, listener))
     {
         return true;
     }
-    
+
     return false;
 }
 
