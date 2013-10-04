@@ -1,3 +1,17 @@
+################################################################################
+#
+# TOPLEVEL MAKEFILE
+#
+# Available platforms are:
+# - linux
+# - emscripten
+# - nacl
+#
+# See cocos2dx/proj.PLATFORM/cocos2dx.mk header comment for platform specific
+# Makefile options.
+#
+################################################################################
+
 PLATFORM ?= linux
 
 all:
@@ -12,7 +26,7 @@ box2d:
 box2d-clean:
 	$(MAKE) -C external/Box2D/proj.$(PLATFORM) clean
 
-libextensions: chipmunk cocosdenshion  box2d
+libextensions: chipmunk box2d
 	$(MAKE) -C extensions/proj.$(PLATFORM)
 libextensions-clean:
 	$(MAKE) -C extensions/proj.$(PLATFORM) clean
@@ -27,44 +41,45 @@ cocosdenshion: libcocos2dx
 cocosdenshion-clean:
 	$(MAKE) -C CocosDenshion/proj.$(PLATFORM) clean
 
-lua: libextensions
-	$(MAKE) -C scripting/lua/proj.$(PLATFORM)
-lua-clean:
-	$(MAKE) -C scripting/lua/proj.$(PLATFORM) clean
-
 hellocpp: libcocos2dx
 	$(MAKE) -C samples/Cpp/HelloCpp/proj.$(PLATFORM)
 hellocpp-clean:
 	$(MAKE) -C samples/Cpp/HelloCpp/proj.$(PLATFORM) clean
 
-testcpp: libcocos2dx libextensions
+testcpp: libcocos2dx libextensions cocosdenshion
 	$(MAKE) -C samples/Cpp/TestCpp/proj.$(PLATFORM)
 testcpp-clean:
 	$(MAKE) -C samples/Cpp/TestCpp/proj.$(PLATFORM) clean
 
-simplegame: libcocos2dx
+simplegame: libcocos2dx cocosdenshion
 	$(MAKE) -C samples/Cpp/SimpleGame/proj.$(PLATFORM)
 simplegame-clean:
 	$(MAKE) -C samples/Cpp/SimpleGame/proj.$(PLATFORM) clean
 
-all: chipmunk cocosdenshion libextensions libcocos2dx lua hellocpp testcpp simplegame
-clean: libcocos2dx-clean box2d-clean chipmunk-clean cocosdenshion-clean libextensions-clean lua-clean hellocpp-clean testcpp-clean simplegame-clean
+all: box2d libextensions libcocos2dx cocosdenshion hellocpp testcpp simplegame
+clean: libcocos2dx-clean box2d-clean chipmunk-clean cocosdenshion-clean libextensions-clean hellocpp-clean testcpp-clean simplegame-clean
 
 # Haven't yet got the lua projects working with emscripten
 ifneq ($(PLATFORM),emscripten)
 
-hellolua: libcocos2dx lua
+lua: libextensions
+	$(MAKE) -C scripting/lua/proj.$(PLATFORM)
+lua-clean:
+	$(MAKE) -C scripting/lua/proj.$(PLATFORM) clean
+
+
+hellolua: libcocos2dx lua cocosdenshion
 	$(MAKE) -C samples/Lua/HelloLua/proj.$(PLATFORM)
 hellolua-clean:
 	$(MAKE) -C samples/Lua/HelloLua/proj.$(PLATFORM) clean
 
-testlua: libcocos2dx lua
+testlua: libcocos2dx lua cocosdenshion
 	$(MAKE) -C samples/Lua/TestLua/proj.$(PLATFORM)
 testlua-clean:
 	$(MAKE) -C samples/Lua/TestLua/proj.$(PLATFORM) clean
 	
-all: hellolua testlua
-clean: hellolua-clean testlua-clean
+all: lua hellolua testlua
+clean: lua-clean hellolua-clean testlua-clean
 endif
 
 .PHONY: all clean
