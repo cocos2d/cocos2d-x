@@ -40,7 +40,7 @@ public:
     
     /// Overrides
     virtual EventListenerKeyboard* clone() override;
-    virtual bool checkAvaiable() override;
+    virtual bool checkAvailable() override;
     
     std::function<void(EventKeyboard::KeyCode, Event* event)> onKeyPressed;
     std::function<void(EventKeyboard::KeyCode, Event* event)> onKeyReleased;

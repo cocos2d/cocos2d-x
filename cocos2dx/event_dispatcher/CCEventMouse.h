@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,32 +20,56 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__CCAccelerometerListener__
-#define __cocos2d_libs__CCAccelerometerListener__
+#ifndef __cocos2d_libs__CCMouseEvent__
+#define __cocos2d_libs__CCMouseEvent__
 
-#include "CCEventListener.h"
-#include "ccTypes.h"
+#include "CCEvent.h"
 
 NS_CC_BEGIN
 
-class EventListenerAcceleration : public EventListener
+class EventMouse : public Event
 {
 public:
-    static EventListenerAcceleration* create(std::function<void(Acceleration*, Event* event)> callback);
-    virtual ~EventListenerAcceleration();
-    
-    /// Overrides
-    virtual EventListenerAcceleration* clone() override;
-    virtual bool checkAvailable() override;
+    /**
+    * Different types of MouseEvent
+    */
+    enum class MouseEventType
+    {
+        MOUSE_NONE,
+//        todo: support other mouse events
+//        MOUSE_DOWN,
+//        MOUSE_UP,
+//        MOUSE_MOVE,
+        MOUSE_SCROLL,
+    };
+
+    static const char* EVENT_TYPE;
+
+    EventMouse(MouseEventType mouseEventCode)
+     : Event(EVENT_TYPE)
+     , _mouseEventType(mouseEventCode)
+    {};
+
+    /** Set mouse scroll data */
+    inline void setScrollData(float scrollX, float scrollY) { _scrollX = scrollX; _scrollY = scrollY; };
+
+    inline float getScrollX() { return _scrollX; };
+    inline float getScrollY() { return _scrollY; };
+
 private:
-    EventListenerAcceleration();
-    
-    bool init(std::function<void(Acceleration*, Event* event)> callback);
-    std::function<void(Acceleration*, Event*)> onAccelerationEvent;
+    MouseEventType _mouseEventType;
+    int _mouseButton;
+    bool _isPressed;
+//    Point _position;
+    float _scrollX;
+    float _scrollY;
+
+    friend class EventListenerMouse;
 };
 
 NS_CC_END
 
-#endif /* defined(__cocos2d_libs__CCAccelerometerListener__) */
+#endif /* defined(__cocos2d_libs__CCMouseEvent__) */

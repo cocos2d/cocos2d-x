@@ -474,6 +474,14 @@
 		5032F12C17E3405400C9D250 /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5032F0B917E3405400C9D250 /* UITextField.cpp */; };
 		5032F12D17E3405400C9D250 /* UITextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0BA17E3405400C9D250 /* UITextField.h */; };
 		5032F12E17E3405400C9D250 /* UITextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032F0BA17E3405400C9D250 /* UITextField.h */; };
+		74AC82C531789567859A6B87 /* CCEventListenerMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC882A431F0D74588E061B /* CCEventListenerMouse.h */; };
+		74AC85C979C63D940AA45294 /* CCEventListenerMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC854FD18300AEC02172B0 /* CCEventListenerMouse.cpp */; };
+		74AC8686FCD77F36EA94F1ED /* CCEventListenerMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC854FD18300AEC02172B0 /* CCEventListenerMouse.cpp */; };
+		74AC87F3383B0D17B776EB5F /* CCEventMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8876F7EA7CECF3140FA5 /* CCEventMouse.h */; };
+		74AC884FD3AE2C3FE9001E54 /* CCEventListenerMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC882A431F0D74588E061B /* CCEventListenerMouse.h */; };
+		74AC89CDED7D772462E10AD7 /* CCEventMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC851366F9EFDBD5DB9400 /* CCEventMouse.cpp */; };
+		74AC8B1D2F7641204F4E648F /* CCEventMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8876F7EA7CECF3140FA5 /* CCEventMouse.h */; };
+		74AC8E240EB5F7B104DE0A05 /* CCEventMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC851366F9EFDBD5DB9400 /* CCEventMouse.cpp */; };
 		A035A5431782286100987F6C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A5421782286100987F6C /* libwebsockets.a */; };
 		A03F25661780BAE8006731B9 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1DDC1780BAE4006731B9 /* CCAction.cpp */; };
 		A03F25671780BAE8006731B9 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1DDD1780BAE4006731B9 /* CCAction.h */; };
@@ -2541,6 +2549,10 @@
 		5032F0B617E3405400C9D250 /* UISlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISlider.h; sourceTree = "<group>"; };
 		5032F0B917E3405400C9D250 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
 		5032F0BA17E3405400C9D250 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
+		74AC851366F9EFDBD5DB9400 /* CCEventMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventMouse.cpp; sourceTree = "<group>"; };
+		74AC854FD18300AEC02172B0 /* CCEventListenerMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventListenerMouse.cpp; sourceTree = "<group>"; };
+		74AC882A431F0D74588E061B /* CCEventListenerMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventListenerMouse.h; sourceTree = "<group>"; };
+		74AC8876F7EA7CECF3140FA5 /* CCEventMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventMouse.h; sourceTree = "<group>"; };
 		A035A5421782286100987F6C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = external/libwebsockets/mac/lib/libwebsockets.a; sourceTree = "<group>"; };
 		A03F1DDC1780BAE4006731B9 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCAction.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		A03F1DDD1780BAE4006731B9 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCAction.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -3984,6 +3996,10 @@
 				1A6CC66817E07C89006DEE69 /* CCEventListener.h */,
 				1A6CC66D17E07C89006DEE69 /* CCTouch.cpp */,
 				1A6CC66E17E07C89006DEE69 /* CCTouch.h */,
+				74AC851366F9EFDBD5DB9400 /* CCEventMouse.cpp */,
+				74AC8876F7EA7CECF3140FA5 /* CCEventMouse.h */,
+				74AC854FD18300AEC02172B0 /* CCEventListenerMouse.cpp */,
+				74AC882A431F0D74588E061B /* CCEventListenerMouse.h */,
 			);
 			path = event_dispatcher;
 			sourceTree = "<group>";
@@ -6541,6 +6557,8 @@
 				4621FCCB17ED716100CD3B52 /* CCEventListenerKeyboard.h in Headers */,
 				4621FCCF17ED716100CD3B52 /* CCEventListenerTouch.h in Headers */,
 				4621FCD317ED716100CD3B52 /* CCEventTouch.h in Headers */,
+				74AC8B1D2F7641204F4E648F /* CCEventMouse.h in Headers */,
+				74AC884FD3AE2C3FE9001E54 /* CCEventListenerMouse.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7268,6 +7286,8 @@
 				4621FCCC17ED716100CD3B52 /* CCEventListenerKeyboard.h in Headers */,
 				4621FCD017ED716100CD3B52 /* CCEventListenerTouch.h in Headers */,
 				4621FCD417ED716100CD3B52 /* CCEventTouch.h in Headers */,
+				74AC87F3383B0D17B776EB5F /* CCEventMouse.h in Headers */,
+				74AC82C531789567859A6B87 /* CCEventListenerMouse.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8083,6 +8103,8 @@
 				4621FCC917ED716100CD3B52 /* CCEventListenerKeyboard.cpp in Sources */,
 				4621FCCD17ED716100CD3B52 /* CCEventListenerTouch.cpp in Sources */,
 				4621FCD117ED716100CD3B52 /* CCEventTouch.cpp in Sources */,
+				74AC89CDED7D772462E10AD7 /* CCEventMouse.cpp in Sources */,
+				74AC8686FCD77F36EA94F1ED /* CCEventListenerMouse.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8585,6 +8607,8 @@
 				4621FCCA17ED716100CD3B52 /* CCEventListenerKeyboard.cpp in Sources */,
 				4621FCCE17ED716100CD3B52 /* CCEventListenerTouch.cpp in Sources */,
 				4621FCD217ED716100CD3B52 /* CCEventTouch.cpp in Sources */,
+				74AC8E240EB5F7B104DE0A05 /* CCEventMouse.cpp in Sources */,
+				74AC85C979C63D940AA45294 /* CCEventListenerMouse.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

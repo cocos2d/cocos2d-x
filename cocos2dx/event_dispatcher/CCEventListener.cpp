@@ -44,7 +44,7 @@ bool EventListener::init(const std::string& t, std::function<void(Event*)> callb
     return true;
 }
 
-bool EventListener::checkAvaiable()
+bool EventListener::checkAvailable()
 { 
 	return (_onEvent != nullptr);
 }
