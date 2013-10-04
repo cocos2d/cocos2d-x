@@ -54,9 +54,9 @@ INCLUDES = -I../..
 CXXFLAGS += -w
 
 ifeq ($(DEBUG), 1)
-DEFINES = -D_DEBUG
+DEFINES += -D_DEBUG
 else
-DEFINES =
+DEFINES +=
 endif
 
 TARGET := $(LIB_DIR)/$(TARGET)
