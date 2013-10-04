@@ -39,10 +39,9 @@ public:
     enum class MouseEventType
     {
         MOUSE_NONE,
-//        todo: support other mouse events
-//        MOUSE_DOWN,
-//        MOUSE_UP,
-//        MOUSE_MOVE,
+        MOUSE_DOWN,
+        MOUSE_UP,
+        MOUSE_MOVE,
         MOUSE_SCROLL,
     };
 
@@ -51,19 +50,26 @@ public:
     EventMouse(MouseEventType mouseEventCode)
      : Event(EVENT_TYPE)
      , _mouseEventType(mouseEventCode)
+     , _x(0.0f)
+     , _y(0.0f)
+     , _scrollX(0.0f)
+     , _scrollY(0.0f)
     {};
 
     /** Set mouse scroll data */
     inline void setScrollData(float scrollX, float scrollY) { _scrollX = scrollX; _scrollY = scrollY; };
-
     inline float getScrollX() { return _scrollX; };
     inline float getScrollY() { return _scrollY; };
+
+    inline void setCursorPosition(float x, float y) { _x = x; _y = y; };
+    inline float getCursorX() { return _x; };
+    inline float getCursorY() { return _y; };
 
 private:
     MouseEventType _mouseEventType;
     int _mouseButton;
-    bool _isPressed;
-//    Point _position;
+    float _x;
+    float _y;
     float _scrollX;
     float _scrollY;
 
