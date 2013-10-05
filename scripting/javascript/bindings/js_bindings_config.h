@@ -141,7 +141,7 @@
  Set this to 1 to enable the debugger
  */
 #ifndef JSB_ENABLE_DEBUGGER
-#define JSB_ENABLE_DEBUGGER 0
+#define JSB_ENABLE_DEBUGGER 1
 #endif // JSB_ENABLE_DEBUGGER
 
 #if JSB_ENABLE_DEBUGGER
