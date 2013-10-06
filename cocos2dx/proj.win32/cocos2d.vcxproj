@@ -358,7 +358,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\label_nodes\CCFontAtlas.h" />
     <ClInclude Include="..\label_nodes\CCFontAtlasCache.h" />
     <ClInclude Include="..\label_nodes\CCFontAtlasFactory.h" />
-    <ClInclude Include="..\label_nodes\CCFontCache.h" />
     <ClInclude Include="..\label_nodes\CCFontDefinition.h" />
     <ClInclude Include="..\label_nodes\CCFontFNT.h" />
     <ClInclude Include="..\label_nodes\CCFontFreeType.h" />

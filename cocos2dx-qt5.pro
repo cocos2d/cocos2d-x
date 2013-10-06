@@ -1,4 +1,6 @@
 
+include(cocos2dx/proj.qt5/user_configuration.pri)
+
 TEMPLATE = subdirs
 
 CONFIG += ordered

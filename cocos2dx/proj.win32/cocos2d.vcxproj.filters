@@ -1032,9 +1032,6 @@
     <ClInclude Include="..\label_nodes\CCFontAtlasFactory.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\label_nodes\CCFontCache.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\label_nodes\CCFontDefinition.h">
       <Filter>label_nodes</Filter>
     </ClInclude>

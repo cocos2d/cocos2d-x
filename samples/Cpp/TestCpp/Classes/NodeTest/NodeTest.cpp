@@ -236,16 +236,16 @@ Test5::Test5()
 
     auto rot = RotateBy::create(2, 360);
     auto rot_back = rot->reverse();
-    auto forever = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    auto forever2 = forever->clone();
-    forever->setTag(101);
-    forever2->setTag(102);
+    auto repeat = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto repeat2 = repeat->clone();
+    repeat->setTag(101);
+    repeat2->setTag(102);
                                                   
     addChild(sp1, 0, kTagSprite1);
     addChild(sp2, 0, kTagSprite2);
             
-    sp1->runAction(forever);
-    sp2->runAction(forever2);
+    sp1->runAction(repeat);
+    sp2->runAction(repeat2);
     
     schedule( schedule_selector(Test5::addAndRemove), 2.0f);
 }

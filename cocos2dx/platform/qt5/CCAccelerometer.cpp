@@ -25,11 +25,13 @@
  *
  **/
 
-#include "CCAccelerometer.h"
 #include "AccelerometerListener.h"
 
 #include <QAccelerometer>
 #include <QAccelerometerReading>
+
+#include "event_dispatcher/CCEventAcceleration.h"
+#include "event_dispatcher/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -39,7 +41,6 @@ shared_accelerometer = NULL;
 Accelerometer::Accelerometer()
     : m_accelerometer(new QAccelerometer)
     , m_listener(new AccelerometerListener(this))
-    , m_function(nullptr)
 {
     QObject::connect(m_accelerometer, SIGNAL(readingChanged()),
             m_listener, SLOT(onReadingChanged()));
@@ -61,15 +62,7 @@ Accelerometer::sharedAccelerometer()
     return shared_accelerometer;
 }
 
-
-void
-Accelerometer::setDelegate(std::function<void(Acceleration*)> function)
-{
-    m_function = function;
-}
-
-void
-Accelerometer::setAccelerometerInterval(float interval)
+void Accelerometer::setAccelerometerInterval(float interval)
 {
     if (interval == 0.0) {
         m_accelerometer->setDataRate(0.0);
@@ -79,22 +72,16 @@ Accelerometer::setAccelerometerInterval(float interval)
     }
 }
 
-void
-Accelerometer::readingChanged()
+void Accelerometer::readingChanged()
 {
-    if (m_function == NULL) {
-        return;
-    }
-
     QAccelerometerReading *reading = m_accelerometer->reading();
 
-    Acceleration accel;
-    accel.x = reading->x();
-    accel.y = reading->y();
-    accel.z = reading->z();
-    accel.timestamp = reading->timestamp();
-
-    m_function(&accel);
+    _acceleration.x = reading->x();
+    _acceleration.y = reading->y();
+    _acceleration.z = reading->z();
+    _acceleration.timestamp = reading->timestamp();
+    EventAcceleration event(_acceleration);
+    EventDispatcher::getInstance()->dispatchEvent(&event);
 }
 
 NS_CC_END
