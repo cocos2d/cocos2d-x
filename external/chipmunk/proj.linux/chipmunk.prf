@@ -2,7 +2,7 @@
 # Do not include this file in your project: see cocos2dx.pri.
 ################################################################################
 
-linux {
+*linux-* {
     # We will compile chipmunk on demand using Makefile.
     build_chipmunk.name = Build chipmunk static library
     build_chipmunk.input = $$PWD/Makefile

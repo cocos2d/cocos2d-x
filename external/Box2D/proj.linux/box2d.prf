@@ -2,7 +2,7 @@
 # Do not include this file in your project: see cocos2dx.pri.
 ################################################################################
 
-linux {
+*linux-* {
     # We will compile box2d on demand using Makefile.
     build_box2d.name = Build box2d static library
     build_box2d.input = $$PWD/Makefile
