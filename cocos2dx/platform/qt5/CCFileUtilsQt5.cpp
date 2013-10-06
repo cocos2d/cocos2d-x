@@ -49,9 +49,9 @@ class CC_DLL FileUtilsQt5 : public FileUtils
         FileUtilsQt5();
 
         /* override funtions */
-        virtual bool init();
-        virtual std::string getWritablePath();
-        virtual bool isFileExist(const std::string& strFilePath);
+        bool init() override;
+        std::string getWritablePath() const override;
+        bool isFileExist(const std::string& strFilePath) const override;
 };
 
 FileUtils *

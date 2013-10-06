@@ -6,55 +6,33 @@ TEMPLATE = lib
 # Uncomment the following line to build Cocos2D-X as static library
 #CONFIG += static
 
+# FIXME: provide way to use Box2D or remove Box2D at all.
 LIBS += $${COCOS2DX_SYSTEM_LIBS}
 
 #SOURCES += $$files(../Collision/*.cpp)
 
-SOURCES += ../actions/CCAction.cpp \
-../actions/CCActionCamera.cpp \
-../actions/CCActionEase.cpp \
-../actions/CCActionGrid.cpp \
-../actions/CCActionGrid3D.cpp \
-../actions/CCActionInstant.cpp \
-../actions/CCActionInterval.cpp \
-../actions/CCActionManager.cpp \
-../actions/CCActionPageTurn3D.cpp \
-../actions/CCActionProgressTimer.cpp \
-../actions/CCActionTiledGrid.cpp \
-../actions/CCActionCatmullRom.cpp \
-../actions/CCActionTween.cpp \
+cocos2d_chipmunk {
+    LIBS += -L$${LIB_OUTPUT_DIR} -Wl,-Bstatic -lchipmunk -Wl,-Bdynamic
+    SOURCES += $$files(../physics/chipmunk/*.cpp)
+}
+cocos2d_box2d {
+    LIBS += -L$${LIB_OUTPUT_DIR} -Wl,-Bstatic -lBox2D -Wl,-Bdynamic
+    SOURCES += $$files(../physics/Box2D/*.cpp)
+}
+
+SOURCES += $$files(../actions/*.cpp) \
+$$files(../physics/*.cpp) \
+$$files(../event_dispatcher/*.cpp) \
+$$files(../cocoa/*.cpp) \
+$$files(../effects/*.cpp) \
+$$files(../misc_nodes/*.cpp) \
+$$files(../label_nodes/*.cpp) \
+../platform/third_party/common/s3tc/s3tc.cpp \
+../platform/third_party/common/atitc/atitc.cpp \
 ../base_nodes/CCAtlasNode.cpp \
 ../base_nodes/CCNode.cpp \
-../cocoa/CCAffineTransform.cpp \
-../cocoa/CCAutoreleasePool.cpp \
-../cocoa/CCGeometry.cpp \
-../cocoa/CCNS.cpp \
-../cocoa/CCObject.cpp \
-../cocoa/CCSet.cpp \
-../cocoa/CCArray.cpp \
-../cocoa/CCDictionary.cpp \
-../cocoa/CCString.cpp \
-../cocoa/CCDataVisitor.cpp \
-../cocoa/CCData.cpp \
 ../draw_nodes/CCDrawingPrimitives.cpp \
 ../draw_nodes/CCDrawNode.cpp \
-../effects/CCGrabber.cpp \
-../effects/CCGrid.cpp \
-../event_dispatcher/CCAccelerationEvent.cpp \
-../event_dispatcher/CCAccelerationEventListener.cpp \
-../event_dispatcher/CCEvent.cpp \
-../event_dispatcher/CCEventDispatcher.cpp \
-../event_dispatcher/CCEventListener.cpp \
-../event_dispatcher/CCKeyboardEvent.cpp \
-../event_dispatcher/CCKeyboardEventListener.cpp \
-../event_dispatcher/CCTouch.cpp \
-../event_dispatcher/CCTouchEvent.cpp \
-../event_dispatcher/CCTouchEventListener.cpp \
-../event_dispatcher/CCCustomEvent.cpp \
-../event_dispatcher/CCCustomEventListener.cpp \
-../label_nodes/CCLabelAtlas.cpp \
-../label_nodes/CCLabelBMFont.cpp \
-../label_nodes/CCLabelTTF.cpp \
 ../layers_scenes_transitions_nodes/CCLayer.cpp \
 ../layers_scenes_transitions_nodes/CCScene.cpp \
 ../layers_scenes_transitions_nodes/CCTransition.cpp \
@@ -62,10 +40,6 @@ SOURCES += ../actions/CCAction.cpp \
 ../layers_scenes_transitions_nodes/CCTransitionProgress.cpp \
 ../menu_nodes/CCMenu.cpp \
 ../menu_nodes/CCMenuItem.cpp \
-../misc_nodes/CCMotionStreak.cpp \
-../misc_nodes/CCProgressTimer.cpp \
-../misc_nodes/CCClippingNode.cpp \
-../misc_nodes/CCRenderTexture.cpp \
 ../particle_nodes/CCParticleExamples.cpp \
 ../particle_nodes/CCParticleSystem.cpp \
 ../particle_nodes/CCParticleSystemQuad.cpp \
@@ -143,7 +117,18 @@ SOURCES += ../actions/CCAction.cpp \
 ../cocos2d.cpp
 
 # Headers with QObject subclasses (will be processed by moc)
-HEADERS += ../platform/qt5/AccelerometerListener.h
+HEADERS += ../platform/qt5/AccelerometerListener.h \
+$$files(../actions/*.h) \
+$$files(../physics/*.h) \
+$$files(../physics/chipmunk/*.h) \
+$$files(../physics/Box2D/*.h) \
+$$files(../event_dispatcher/*.h) \
+$$files(../cocoa/*.h) \
+$$files(../effects/*.h) \
+$$files(../misc_nodes/*.h) \
+$$files(../label_nodes/*.h) \
+../platform/third_party/common/s3tc/s3tc.h \
+../platform/third_party/common/atitc/atitc.h
 
 # WebP
 INCLUDEPATH += ../../external/libwebp/webp

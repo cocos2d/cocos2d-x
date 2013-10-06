@@ -716,12 +716,7 @@
 			<name>src/label_nodes/CCFontAtlasFactory.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/label_nodes/CCFontAtlasFactory.h</locationURI>
-		</link>
-		<link>
-			<name>src/label_nodes/CCFontCache.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/label_nodes/CCFontCache.h</locationURI>
-		</link>
+                </link>
 		<link>
 			<name>src/label_nodes/CCFontDefinition.cpp</name>
 			<type>1</type>

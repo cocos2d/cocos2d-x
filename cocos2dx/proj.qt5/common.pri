@@ -1,12 +1,22 @@
 
+include(user_configuration.pri)
+
 DEFINES += CC_TARGET_QT5
 
 CONFIG += silent
 
+*macx-* {
+    QMAKE_CXXFLAGS += -stdlib=libc++
+}
+
 # Disable some warnings to make compiler output easier to read during development
-DISABLED_WARNINGS = -Wno-ignored-qualifiers -Wno-unused-parameter -Wno-psabi
-QMAKE_CXXFLAGS += $${DISABLED_WARNINGS} -Wno-reorder
-QMAKE_CFLAGS += $${DISABLED_WARNINGS}
+DISABLED_WARNINGS = -Wno-ignored-qualifiers -Wno-unused-parameter -Wno-sign-compare -Wno-unused-variable
+*-g++* {
+    DISABLED_WARNINGS += -Wno-psabi
+}
+
+QMAKE_CXXFLAGS_WARN_ON += $${DISABLED_WARNINGS} -Wno-reorder
+QMAKE_CFLAGS_WARN_ON += $${DISABLED_WARNINGS}
 
 # C++11 support (Pick the first one if you have an old GCC version)
 #QMAKE_CXXFLAGS += -Doverride= -std=c++0x
@@ -15,8 +25,10 @@ CONFIG += c++11
 OS_TYPE = linux
 
 CONFIG(debug, debug|release) {
+    DEFINES += COCOS2D_DEBUG=1
     BUILD_TYPE = debug
 } else {
+    DEFINES += COCOS2D_DEBUG=0
     BUILD_TYPE = release
 }
 
@@ -51,7 +63,7 @@ LINK_AGAINST_COCOSDENSHION = -lcocosdenshion
 
 # Extensions library
 INCLUDEPATH += $${PWD}/../../extensions
-LINK_AGAINST_COCOSEXTENSION = -lextension -lbox2d -lchipmunk -lcurl
+LINK_AGAINST_COCOSEXTENSION = -lextension -lchipmunk -lbox2d -lcurl
 
 # Physics engines (pick one)
 DEFINES += CC_ENABLE_CHIPMUNK_INTEGRATION

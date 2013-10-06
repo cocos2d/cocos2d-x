@@ -30,8 +30,8 @@
 #define CCACCELEROMETER_QT5_H
 
 #include "platform/CCCommon.h"
-#include "platform/CCAccelerometerDelegate.h"
-#include <functional>
+#include "CCAccelerometer.h"
+#include "event_dispatcher/CCEventAcceleration.h"
 
 class QAccelerometer;
 class AccelerometerListener;
@@ -52,7 +52,6 @@ public:
 
     static Accelerometer *sharedAccelerometer();
 
-    void setDelegate(std::function<void(Acceleration*)> function);
     void setAccelerometerInterval(float interval);
 
     /* Functions to be called from AccelerometerListener */
@@ -61,7 +60,7 @@ public:
 private:
     QAccelerometer *m_accelerometer;
     AccelerometerListener *m_listener;
-    std::function<void(Acceleration*)> m_function;
+    Acceleration _acceleration;
 };
 
 NS_CC_END

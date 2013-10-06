@@ -5,6 +5,9 @@ TEMPLATE = lib
 
 SOURCES += $$files(../qt5/*.cpp)
 
+HEADERS += $$files(../qt5/*.h) \
+    $$files(../include/*.h)
+
 INCLUDEPATH += ..
 INCLUDEPATH += ../include
 
