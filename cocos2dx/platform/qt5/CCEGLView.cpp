@@ -105,7 +105,10 @@ Cocos2DQt5OpenGLIntegration::Cocos2DQt5OpenGLIntegration(EGLView *view, int widt
     windowFlags |= Qt::WindowSystemMenuHint;
     setFlags(windowFlags);
 
+    QSurfaceFormat format;
+    format.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
     m_context = new QOpenGLContext(this);
+    m_context->setFormat(format);
     m_context->create();
     m_context->makeCurrent(this);
 }
