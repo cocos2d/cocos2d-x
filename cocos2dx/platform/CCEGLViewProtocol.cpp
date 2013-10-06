@@ -351,8 +351,8 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
     
     for (auto& touch : touchEvent._touches)
     {
-        // delete the touch object.
-        delete touch;
+        // release the touch object.
+        touch->release();
     }
 }
 
