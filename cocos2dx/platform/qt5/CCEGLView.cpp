@@ -64,6 +64,7 @@ class Cocos2DQt5OpenGLIntegration : public QWindow {
         bool event(QEvent *event) override;
 
         void swapBuffers();
+        void setInputMethodVisible(bool visible);
 
     private:
         static const int MOUSE_TOUCH_ID = 0;
@@ -82,6 +83,7 @@ class Cocos2DQt5OpenGLIntegration : public QWindow {
         QOpenGLContext *m_context;
         MouseState m_mouseState;
         QPointF m_pitchStartPos;
+        bool m_isInputMethodVisible;
 };
 
 Cocos2DQt5OpenGLIntegration::Cocos2DQt5OpenGLIntegration(EGLView *view, int width, int height)
@@ -136,23 +138,36 @@ Cocos2DQt5OpenGLIntegration::touchEvent(QTouchEvent *event)
 
 void Cocos2DQt5OpenGLIntegration::keyPressEvent(QKeyEvent *event)
 {
-    EventKeyboard::KeyCode code = keycodeForQtEvent(event);
-    if (code != EventKeyboard::KeyCode::KEY_NONE) {
-        EventKeyboard event(code, /*isPressed*/ true);
-        EventDispatcher::getInstance()->dispatchEvent(&event);
+    if (m_isInputMethodVisible) {
+        if (event->key() == Qt::Key_Backspace) {
+            IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+        } else if (event->key() == Qt::Key_Enter) {
+            m_egl_view->setIMEKeyboardState(false);
+        } else {
+            QByteArray text = event->text().toUtf8();
+            IMEDispatcher::sharedDispatcher()->dispatchInsertText(text.data(), text.length());
+        }
     } else {
-        CCLOG("Unknown key pressed, Qt key code: %d.", event->key());
+        EventKeyboard::KeyCode code = keycodeForQtEvent(event);
+        if (code != EventKeyboard::KeyCode::KEY_NONE) {
+            EventKeyboard event(code, /*isPressed*/ true);
+            EventDispatcher::getInstance()->dispatchEvent(&event);
+        } else {
+            CCLOG("Unknown key pressed, Qt key code: %d.", event->key());
+        }
     }
 }
 
 void Cocos2DQt5OpenGLIntegration::keyReleaseEvent(QKeyEvent *event)
 {
-    EventKeyboard::KeyCode code = keycodeForQtEvent(event);
-    if (code != EventKeyboard::KeyCode::KEY_NONE) {
-        EventKeyboard event(code, /*isPressed*/ false);
-        EventDispatcher::getInstance()->dispatchEvent(&event);
-    } else {
-        CCLOG("Unknown key released, Qt key code: %d.", event->key());
+    if (!m_isInputMethodVisible) {
+        EventKeyboard::KeyCode code = keycodeForQtEvent(event);
+        if (code != EventKeyboard::KeyCode::KEY_NONE) {
+            EventKeyboard event(code, /*isPressed*/ false);
+            EventDispatcher::getInstance()->dispatchEvent(&event);
+        } else {
+            CCLOG("Unknown key released, Qt key code: %d.", event->key());
+        }
     }
 }
 
@@ -259,6 +274,11 @@ void Cocos2DQt5OpenGLIntegration::swapBuffers()
 {
     m_context->swapBuffers(this);
     m_context->makeCurrent(this);
+}
+
+void Cocos2DQt5OpenGLIntegration::setInputMethodVisible(bool visible)
+{
+    m_isInputMethodVisible = visible;
 }
 
 #define CC_LETTER_CASE(letter) \
@@ -437,23 +457,23 @@ EGLView::setFrameSize(float width, float height)
     EGLViewProtocol::setFrameSize(width, height);
 }
 
-void
-EGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
     if (m_integration != NULL) {
         m_integration->swapBuffers();
     }
 }
 
-void
-EGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
     QGuiApplication *app = static_cast<QGuiApplication*>(QGuiApplication::instance());
-    app->inputMethod()->setVisible(bOpen);
+    if (app->inputMethod()->isVisible() != bOpen) {
+        app->inputMethod()->setVisible(bOpen);
+        m_integration->setInputMethodVisible(bOpen);
+    }
 }
 
-void
-EGLView::end()
+void EGLView::end()
 {
     QGuiApplication::exit(0);
 }
