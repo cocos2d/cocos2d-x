@@ -2135,11 +2135,9 @@ JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp)
     return JS_TRUE;
 }
 
-static void _clientSocketWriteAndClearString(std::string& s) {
-#if JSB_DEBUGGER_OUTPUT_STDOUT
-    write(STDOUT_FILENO, s.c_str(), s.length());
-#endif
-    write(clientSocket, s.c_str(), s.length());
+static void _clientSocketWriteAndClearString(std::string& s)
+{
+    ::write(clientSocket, s.c_str(), s.length());
     s.clear();
 }
 

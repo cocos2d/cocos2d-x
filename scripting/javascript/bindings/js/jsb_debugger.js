@@ -4,8 +4,7 @@ require('debugger/transport.js', "debug");
 require('debugger/actors/root.js', "debug");
 require('debugger/actors/script.js', "debug");
 require('debugger/main.js', "debug");
-// require('debugger/jsb-tests/testactors.js', "debug");
-// require('debugger/jsb-tests/test_dbgglobal.js', "debug");
+
 
 dbg = {
   LONG_STRING_LENGTH: 10000,
