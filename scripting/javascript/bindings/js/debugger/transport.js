@@ -54,6 +54,28 @@ this.DebuggerTransport = function DebuggerTransport(aInput, aOutput)
   this.hooks = null;
 }
 
+function utf16to8(str) {
+    var out, i, len, c;
+
+    out = "";
+    len = str.length;
+    for(i = 0; i < len; i++) 
+    { 
+        c = str.charCodeAt(i);   if ((c >= 0x0001) && (c <= 0x007F)) {       out += str.charAt(i);   } else if (c > 0x07FF)
+        {
+            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+            out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
+            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+        } 
+        else
+        {
+            out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
+            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+        }
+    }
+    return out;
+}
+
 DebuggerTransport.prototype = {
   /**
    * Transmit a packet.
@@ -67,8 +89,10 @@ DebuggerTransport.prototype = {
     // TODO (bug 709088): remove pretty printing when the protocol is done.
     let data = JSON.stringify(aPacket, null, 2);
     // data = this._converter.ConvertFromUnicode(data);
-    log("data len: "+data.length);
-    this._outgoing = data.length + ':' + data;
+    log("data1 len: "+data.length);
+    let data_for_len = utf16to8(data);
+    log("data2 len: "+data_for_len.length);
+    this._outgoing = data_for_len.length + ':' + data;
     log("_outgoing len: "+this._outgoing.length);
     this._flushOutgoing();
   },
