@@ -100,6 +100,30 @@ CCBAnimationManager::~CCBAnimationManager()
     CC_SAFE_RELEASE(_target);
 }
 
+float CCBAnimationManager::getSequenceDuration(const std::string &name)
+{
+    int id = getSequenceId(name.c_str());
+    
+    if(id==-1)
+    {
+        CCLOGERROR("can not found sequence %s",name.c_str());
+        
+        return 0;
+    }
+    
+    CCBSequence* s = getSequence(id);
+    
+    if(s==NULL){
+        
+        CCLOGERROR("sequence %s is NULL",name.c_str());
+        
+        return 0;
+        
+    }
+    
+    return s->getDuration();
+}
+
 Array* CCBAnimationManager::getSequences()
 {
     return _sequences;
