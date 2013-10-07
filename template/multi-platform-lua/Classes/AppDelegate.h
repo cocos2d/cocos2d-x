@@ -32,6 +32,12 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+	/**
+	@brief  The function be called when config like orientation was changed
+	@param  the pointer of the application
+	*/
+	virtual void applicationConfigChanged();
 };
 
 #endif  // __APP_DELEGATE_H__

@@ -534,6 +534,18 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                 engine_draw_frame(engine);
             }
             break;
+		case APP_CMD_CONFIG_CHANGED: {
+			// Orientation changed
+			cocos2d::EGLView *view = cocos2d::Director::getInstance()->getOpenGLView();
+
+			cocos2d::Size size = view->getFrameSize();
+
+			view->setFrameSize(size.height, size.width);
+			view->setDesignResolutionSize(size.height, size.width, ResolutionPolicy::SHOW_ALL);
+			// Notify app about changes
+			cocos2d::Application::getInstance()->applicationConfigChanged();
+			break;
+		}
         case APP_CMD_TERM_WINDOW:
             // The window is being hidden or closed, clean it up.
             engine_term_display(engine);
