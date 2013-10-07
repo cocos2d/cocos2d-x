@@ -1,4 +1,8 @@
-dbg = {};
+dbg = {
+  LONG_STRING_LENGTH: 10000,
+  LONG_STRING_INITIAL_LENGTH: 1000,
+  LONG_STRING_READ_LENGTH: 1000
+};
 dbg.log = log;
 
 var textCommandProcessor = {};
@@ -299,7 +303,39 @@ jsonResponder.onBreakpoint = function (filename, linenumber) {
                     "data" : {"jsfilename" : filename,
                               "linenumber" : linenumber}};
 
-    this.write(JSON.stringify(response));
+    dbg.log("onBreakpoint: " + JSON.stringify(response));
+
+var breakInfo = { "from":"tabThreadActor111", "type":"paused", "actor":"pauseActor",
+   "why":{ "type":"breakpoint", "actors":["breakpointActor1"] },
+   "frame":{ "actor":"frameActor", "depth":1,
+             "type":"call", "where":{ "url":"sample.js", "line":3 },
+             "environment":{ "type":"function", "actor":"gFrameActor",
+                             "function":{ "type":"object", "class":"Function", "actor":"gActor" },
+                             "functionName":"g",
+                             "bindings":{ arguments: [ { "y": { "value":"argument to g", "configurable":"false",
+                                                                "writable":true, "enumerable":true } } ] },
+                             "parent":{ "type":"function", "actor":"fFrameActor",
+                                        "function":{ "type":"object", "class":"Function", "actor":"fActor" },
+                                        "functionName":"f",
+                                        "bindings": { arguments: [ { "x": { "value":"argument to f", "configurable":"false",
+                                                                     "writable":true, "enumerable":true } } ],
+                                                      variables: { "z": { "value":"value of z", "configurable":"false",
+                                                                          "writable":true, "enumerable":true } } },
+                                        "parent":{ "type":"object", "actor":"globalCodeActor",
+                                                   "object":{ "type":"object", "class":"Global",
+                                                              "actor":"globalObjectActor" }
+                                                 }
+                                      }
+                           },
+                        "callee":"gActor", "calleeName":"g",
+             "this":{ "type":"object", "class":"Function", "actor":"gActor" },
+             "arguments":["argument to g"]
+           }
+ };
+
+    _RDPWrite(breakInfo);
+
+    //this.write(JSON.stringify(response));
 }
 
 jsonResponder.onStep = function (filename, linenumber) {
@@ -332,10 +368,45 @@ textResponder.write = function (str) {
     _bufferWrite(String.fromCharCode(23));
 }
 
-textResponder.onBreakpoint = function (filename, linenumber) {
-    var shortFilename = filename.substring(filename.lastIndexOf("/") + 1);
-    var response = "Breakpoint hit at " + shortFilename + " line number : " + linenumber;
-    this.write(response);
+var breakpointFrame = null;
+
+textResponder.onBreakpoint = function (frame) {//filename, linenumber) {
+    // var shortFilename = filename.substring(filename.lastIndexOf("/") + 1);
+    // var response = "Breakpoint hit at " + shortFilename + " line number : " + linenumber;
+    // dbg.log("textResponder.onBreakpoint:"+response);
+
+    var breakInfo = { "from":"tabThreadActor111", "type":"paused", "actor":"pauseActor",
+   "why":{ "type":"breakpoint", "actors":["breakpointActor1"] },
+   "frame":{ "actor":"frameActor", "depth":1,
+             "type":"call", "where":{ "url":"sample.js", "line":3 },
+             "environment":{ "type":"function", "actor":"gFrameActor",
+                             "function":{ "type":"object", "class":"Function", "actor":"gActor" },
+                             "functionName":"g",
+                             "bindings":{ arguments: [ { "y": { "value":"argument to g", "configurable":"false",
+                                                                "writable":true, "enumerable":true } } ] },
+                             "parent":{ "type":"function", "actor":"fFrameActor",
+                                        "function":{ "type":"object", "class":"Function", "actor":"fActor" },
+                                        "functionName":"f",
+                                        "bindings": { arguments: [ { "x": { "value":"argument to f", "configurable":"false",
+                                                                     "writable":true, "enumerable":true } } ],
+                                                      variables: { "z": { "value":"value of z", "configurable":"false",
+                                                                          "writable":true, "enumerable":true } } },
+                                        "parent":{ "type":"object", "actor":"globalCodeActor",
+                                                   "object":{ "type":"object", "class":"Global",
+                                                              "actor":"globalObjectActor" }
+                                                 }
+                                      }
+                           },
+                        "callee":"gActor", "calleeName":"g",
+             "this":{ "type":"object", "class":"Function", "actor":"gActor" },
+             "arguments":["argument to g"]
+           }
+ };
+
+    breakpointFrame = frame;
+    _RDPWrite(breakInfo);
+
+    // this.write(response);
 }
 
 textResponder.onStep = function (filename, linenumber) {
@@ -420,8 +491,9 @@ textResponder.commandNotFound = function () {
 
 var breakpointHandler = {
 	hit: function (frame) {
+        dbg.log("breakpointHandler hit");
         try {
-            dbg.responder.onBreakpoint(frame.script.url, frame.script.getOffsetLine(frame.offset));
+            dbg.responder.onBreakpoint(frame);//frame.script.url, frame.script.getOffsetLine(frame.offset));
         } catch (e) {
             dbg.log("exception " + e);
         }
@@ -487,6 +559,71 @@ var debugObject = function (r, isNormal) {
 
 dbg.breakLine = 0;
 
+dbg.scriptSourceActorMap = {};
+
+
+
+addFiles = function() {
+    for (var key in dbg.scripts)
+    {
+        dbg.log("sources:" + key);
+        var scripts = dbg.scripts[key];
+        for (var i = 0; i < scripts.length; ++i)
+        {
+            dbg.log("url:" + scripts[i].source.url);
+            dbg.log("-----------");
+
+            dbg.scriptSourceActorMap[key+"_SourceActor"] = scripts[i];
+
+            _RDPWrite(
+            {
+                from: "tabThreadActor111",
+                type: "newSource",
+                source: {
+                    actor: key+"_SourceActor",
+                    url: "file://" + scripts[i].source.url,
+                    isBlackBoxed: false
+                }
+            });
+        }
+    }
+};
+
+addInitialSource = function(sourceActor, script)
+{
+    _RDPWrite(
+    {
+        from: sourceActor,
+        source: {
+             type: "longString",
+             initial: script.source.text.substring(0, dbg.LONG_STRING_INITIAL_LENGTH),
+             length: script.source.text.length,
+             actor: sourceActor+"_LongString"
+        }
+    });
+}
+
+addSource = function(longStringActor, script)
+{
+    _RDPWrite(
+    {
+        from: longStringActor,
+        substring: script.source.text
+    });
+}
+
+isStringStartWith = function (str, substring) {
+    var reg = new RegExp("^"+substring);
+    return reg.test(str);
+};
+
+isStringEndsWith = function (str, substring) {
+    var reg = new RegExp(substring + "$");
+    return reg.test(str);
+};
+
+var breakpointActorIndex = 0;
+
 this.processInput = function (inputstr, frame, script) {
     var command_func;
     var command_return;
@@ -498,6 +635,240 @@ this.processInput = function (inputstr, frame, script) {
         return;
     }
 
+//     var testStr = "104:{\
+//   \"to\": \"tabThreadActor111\",\
+//   \"type\": \"resume\",\
+//   \"resumeLimit\": null,\
+//   \"pauseOnExceptions\": false\
+// }60:{\
+//   \"to\": \"ActionsTest.js_SourceActor\",\
+//   \"type\": \"source\"\
+// }";
+
+    // for (var i = 0; i < testArr.length; ++i)
+    // {
+    //     dbg.log("split: " +"{"+ testArr[i] + ",length= "+testArr.length);
+    // }
+
+    var inputArr = inputstr.split(/\d+:{/g);
+
+    if (inputArr.length > 1)
+    {
+        inputArr.shift();
+        for (var i = 0; i < inputArr.length; ++i) {
+            // dbg.log("---> "+inputArr[i]);
+            processInput("{"+inputArr[i], frame, script);
+        }
+        return;
+    }
+
+    // dbg.log("inputStr:"+inputstr);
+
+    if (inputstr === "connected")
+    {
+        var rootInit = {from:"root",applicationType:"browser",traits:{sources: true}};
+        _RDPWrite(rootInit);
+        return;
+    }
+
+    // var semi = inputstr.indexOf(":");
+
+    // if (semi === -1)
+    // {
+    //     dbg.log("wrong input remote debugger protocol string.");
+    //     return;
+    // }
+
+    var jsonStr = inputstr;//.substring(semi+1);
+    dbg.log("jsonStr:" + jsonStr);
+    var jsonObj = JSON.parse(jsonStr);
+    // for (var key in jsonObj)
+    // {
+    //     dbg.log("["+key+"]="+jsonObj[key]);
+    // }
+
+    if (jsonObj.to === "root" && jsonObj.type === "listTabs")
+    {
+        _RDPWrite({ from:"root", tabs:[{ actor:"JSBTabActor", title:"Hello cocos2d-x JSB", url:"http://www.cocos2d-x.org" }], selected:0 });
+    }
+    else if (jsonObj.to === "JSBTabActor" && jsonObj.type === "attach")
+    {
+        _RDPWrite({ from:"JSBTabActor", type:"tabAttached", threadActor:"tabThreadActor111" });
+    }
+    else if (jsonObj.to === "tabThreadActor111" && jsonObj.type === "attach")
+    {
+        _RDPWrite(
+        {
+            from: "tabThreadActor111",
+            type: "paused",
+            actor: "JSBTabActor",
+            poppedFrames: [],
+            why: {
+                type: "attached"
+            }
+        });
+    }
+    else if (jsonObj.to === "tabThreadActor111" && jsonObj.type === "sources")
+    {
+        addFiles();
+    }
+    else if (jsonObj.to && isStringEndsWith(jsonObj.to, "_SourceActor") && jsonObj.type === "source")
+    {
+        dbg.log("require source ...: " + jsonObj.to);
+        var script = dbg.scriptSourceActorMap[jsonObj.to];
+
+        if (script)
+        {
+            addInitialSource(jsonObj.to, script);
+        }
+    }
+    else if (jsonObj.to && isStringEndsWith(jsonObj.to, "_LongString") && jsonObj.type === "substring")
+    {
+        var sourceActor = jsonObj.to.substring(0, jsonObj.to.length-"_LongString".length);
+        dbg.log("source actor: " + sourceActor);
+        var script = dbg.scriptSourceActorMap[sourceActor];
+
+        if (script)
+        {
+            addSource(jsonObj.to, script);
+        }
+
+        _RDPWrite({
+            from: "tabThreadActor111",
+            type: "resumed"
+        });
+    }
+    else if (jsonObj.to === "tabThreadActor111" && jsonObj.type === "resume")
+    {
+        dbg.log("resume type to server....");
+        _RDPWrite({
+            from: "tabThreadActor111",
+            type: "resumed"
+        });
+    }
+    else if (jsonObj.to === "tabThreadActor111" && jsonObj.type === "setBreakpoint")
+    {
+        ++breakpointActorIndex;
+
+        var scripts = dbg.scripts[jsonObj.location.url],
+        tmpScript = null;
+
+        if (scripts) {
+            var breakLine = jsonObj.location.line,
+            off = -1;
+            for (var n=0; n < scripts.length; n++) {
+                offsets = scripts[n].getLineOffsets(breakLine);
+                if (offsets.length > 0) {
+                    off = offsets[0];
+                    tmpScript = scripts[n];
+                    break;
+                }
+            }
+            if (off >= 0) {
+                tmpScript.setBreakpoint(off, breakpointHandler);
+                // return ({commandname : "break",
+                //          success : true,
+                //          jsfilename : md[2],
+                //          breakpointlinenumber : breakLine});
+            } else {
+                // return ({commandname : "break",
+                //          success : false,
+                //          stringResult : "no valid offsets at that line"});
+            }
+        } else {
+            // return ({commandname : "break",
+            //          success : false,
+            //          jsfilename : md[2],
+            //          stringResult : "Invalid script name"});
+        }
+
+        _RDPWrite({ from: "tabThreadActor111", "actor":"breakpointActor"+breakpointActorIndex});
+        // jsonObj.location.url
+        // jsonObj.location.line
+    }
+    else if (isStringStartWith(jsonObj.to, "breakpointActor") && jsonObj.type === "delete")
+    {
+        _RDPWrite({ from: jsonObj.to });
+    }
+    else if (jsonObj.to === "tabThreadActor111" && jsonObj.type === "frames")
+    {
+        dbg.log("sdfsld...."+breakpointFrame.arguments);
+
+    // var arr = breakpointFrame.getOwnPropertyNames();
+    // log("names: "+ arr);
+
+    var parentEnv = breakpointFrame.environment.parent;
+    log("parentEnv:" + parentEnv);
+    log("parentEnv.type:" + parentEnv.type);
+    log("parentEnv.actor:" + parentEnv.actor);
+    log("parentEnv.functionName:" + parentEnv.functionName);
+    log("parentEnv.object:" + parentEnv.object);
+    log("parentEnv.object.type:" + parentEnv.object.type);
+    log("parentEnv.object.class:" + parentEnv.object.class);
+    var keys = Object.keys(parentEnv.object);
+    log("keys: " + keys);
+
+    parentEnv = parentEnv.parent;
+    log("2parentEnv:" + parentEnv);
+    log("parentEnv.type:" + parentEnv.type);
+    log("parentEnv.actor:" + parentEnv.actor);
+    log("parentEnv.functionName:" + parentEnv.functionName);
+
+    var bindings = parentEnv.bindings;
+    log("bindings:" + bindings);
+
+    var args = bindings.arguments;
+    log("args:"+args);
+
+    var vars = bindings.variables;
+    log("vars:" + vars);
+
+        // if (breakpointFrame != null)
+        {
+            dbg.log("get frames.....");
+            var obj =    {
+                "from": "tabThreadActor111",
+                "frame":{ "actor":"frameActor", "depth":1,
+             "type":"call", "where":{ "url":"sample.js", "line":3 },
+             "environment":{ "type":"function", "actor":"gFrameActor",
+                             "function":{ "type":"object", "class":"Function", "actor":"gActor" },
+                             "functionName":"g",
+                             "bindings":{ arguments: [ { "y": { "value":"argument to g", "configurable":"false",
+                                                                "writable":true, "enumerable":true } } ] },
+                             "parent":{ "type":"function", "actor":"fFrameActor",
+                                        "function":{ "type":"object", "class":"Function", "actor":"fActor" },
+                                        "functionName":"f",
+                                        "bindings": { arguments: [ { "x": { "value":"argument to f", "configurable":"false",
+                                                                     "writable":true, "enumerable":true } } ],
+                                                      variables: { "z": { "value":"value of z", "configurable":"false",
+                                                                          "writable":true, "enumerable":true } } },
+                                        "parent":{ "type":"object", "actor":"globalCodeActor",
+                                                   "object":{ "type":"object", "class":"Global",
+                                                              "actor":"globalObjectActor" }
+                                                 }
+                                      }
+                           },
+                        "callee":"gActor", "calleeName":"g",
+             "this":{ "type":"object", "class":"Function", "actor":"gActor" },
+             "arguments":["argument to g"]
+           }};
+
+            _RDPWrite(obj);
+
+            breakpointFrame = null;
+        }
+    }
+    else if (jsonObj.type === "interrupt")
+    {
+        _RDPWrite({
+            from: "tabThreadActor111",
+            type: "resumed"
+        });
+    }
+
+
+
+    return;
     // remove Carriage Return's
 	inputstr = inputstr.replace(/\r+/, "");
 
@@ -570,9 +941,15 @@ _printHelp = function() {
 
 dbg.scripts = [];
 
+_RDPWrite = function(jsonObj){
+    var buf = JSON.stringify(jsonObj);
+    _bufferWrite("" + buf.length + ":" + buf);
+};
+
 dbg.onNewScript = function (script) {
+    dbg.log("onNewScript, "+script.url);
 	// skip if the url is this script
-	var last = script.url.split("/").pop();
+	// var last = script.url.split("/").pop();
 
 	var children = script.getChildScripts(),
 	arr = [script].concat(children);
@@ -584,9 +961,13 @@ dbg.onNewScript = function (script) {
 	 var offsets = arr[i].getLineOffsets(j);
 	 dbg.log("  off: " + offsets.join(",") + "; line: " + j);
 	 }
-	 }
-	*/
-	dbg.scripts[last] = arr;
+	 }*/
+	
+	dbg.scripts["file://"+script.url] = arr;
+
+    // dbg.log("source: "+script.source.text);
+
+
 };
 
 dbg.onError = function (frame, report) {
@@ -594,6 +975,11 @@ dbg.onError = function (frame, report) {
 		_socketWrite(dbg.socket, "!! exception @ " + report.file + ":" + report.line);
 	}
 	dbg.log("!! exception");
+};
+
+dbg.onDebuggerStatement = function(frame)
+{
+    dbg.log("onDebuggerStatement...");
 };
 
 this._prepareDebugger = function (global) {
