@@ -618,7 +618,6 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
     
     for (auto searchIt = _searchPathArray.begin(); searchIt != _searchPathArray.end(); ++searchIt) {
         for (auto resolutionIt = _searchResolutionsOrderArray.begin(); resolutionIt != _searchResolutionsOrderArray.end(); ++resolutionIt) {
-            
             fullpath = this->getPathForFilename(newFilename, *resolutionIt, *searchIt);
             
             if (fullpath.length() > 0)

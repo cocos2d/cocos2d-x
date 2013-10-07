@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Test for Bug </title>
+
+  <script type="application/javascript" src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css">
+  <script type="application/javascript;version=1.8" src="inspector-helpers.js"></script>
+  <script type="application/javascript;version=1.8">
+Components.utils.import("resource://gre/modules/devtools/Loader.jsm");
+
+const Promise = devtools.require("sdk/core/promise");
+const inspector = devtools.require("devtools/server/actors/inspector");
+
+window.onload = function() {
+  SimpleTest.waitForExplicitFinish();
+  runNextTest();
+}
+
+var gWalker = null;
+var gClient = null;
+
+function assertOwnership() {
+  return assertOwnershipTrees(gWalker);
+}
+
+addTest(function setup() {
+  let url = document.getElementById("inspectorContent").href;
+  attachURL(url, function(err, client, tab, doc) {
+    gInspectee = doc;
+    let {InspectorFront} = devtools.require("devtools/server/actors/inspector");
+    let inspector = InspectorFront(client, tab);
+    promiseDone(inspector.getWalker().then(walker => {
+      ok(walker, "getWalker() should return an actor.");
+      gClient = client;
+      gWalker = walker;
+    }).then(runNextTest));
+  });
+});
+
+addTest(function testReleaseSubtree() {
+  let originalOwnershipSize = 0;
+  let longlist = null;
+  let firstChild = null;
+  promiseDone(gWalker.querySelectorAll(gWalker.rootNode, "#longlist div").then(list => {
+    // Make sure we have the 26 children of longlist in our ownership tree.
+    is(list.length, 26, "Expect 26 div children.");
+    // Make sure we've read in all those children and incorporated them in our ownership tree.
+    return list.items();
+  }).then((items)=> {
+    originalOwnershipSize = assertOwnership();
+    ok(originalOwnershipSize > 26, "Should have at least 26 items in our ownership tree");
+    firstChild = items[0].actorID;
+  }).then(() => {
+    // Now get the longlist and release it from the ownership tree.
+    return gWalker.querySelector(gWalker.rootNode, "#longlist");
+  }).then(node => {
+    longlist = node.actorID;
+    return gWalker.releaseNode(node);
+  }).then(() => {
+    // Our ownership size should now be 27 fewer (we forgot about #longlist + 26 children)
+    let newOwnershipSize = assertOwnership();
+    is(newOwnershipSize, originalOwnershipSize - 27, "Ownership tree should have dropped by 27 nodes");
+    // Now verify that some nodes have gone away
+    return checkMissing(gClient, longlist);
+  }).then(() => {
+    return checkMissing(gClient, firstChild);
+  }).then(runNextTest));
+});
+
+addTest(function cleanup() {
+  delete gWalker;
+  delete gClient;
+  runNextTest();
+});
+
+
+  </script>
+</head>
+<body>
+<a target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=">Mozilla Bug </a>
+<a id="inspectorContent" target="_blank" href="inspector-traversal-data.html">Test Document</a>
+<p id="display"></p>
+<div id="content" style="display: none">
+
+</div>
+<pre id="test">
+</pre>
+</body>
+</html>

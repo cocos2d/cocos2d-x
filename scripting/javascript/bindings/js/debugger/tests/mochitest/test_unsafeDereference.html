@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=837723
+
+When we use Debugger.Object.prototype.unsafeDereference to get a non-D.O
+reference to a content object in chrome, that reference should be via an
+xray wrapper.
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Mozilla Bug 837723</title>
+  <script type="application/javascript" src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css">
+</head>
+<body>
+<pre id="test">
+<script>
+
+Components.utils.import("resource://gre/modules/jsdebugger.jsm");
+addDebuggerToGlobal(this);
+
+window.onload = function () {
+  SimpleTest.waitForExplicitFinish();
+
+  var iframe = document.createElement("iframe");
+  iframe.src = "http://mochi.test:8888/chrome/toolkit/devtools/server/tests/mochitest/nonchrome_unsafeDereference.html";
+
+  iframe.onload = function () {
+    var dbg = new Debugger;
+    var contentDO = dbg.addDebuggee(iframe.contentWindow);
+    var xhrDesc = contentDO.getOwnPropertyDescriptor('xhr');
+
+    isnot(xhrDesc, undefined, "xhr should be visible as property of content global");
+    isnot(xhrDesc.value, undefined, "xhr should have a value");
+
+    var xhr = xhrDesc.value.unsafeDereference();
+
+    is(typeof xhr, "object", "we should be able to deference xhr's value's D.O");
+    is(xhr.timeout, 1742, "chrome should see the xhr's 'timeout' property");
+    is(xhr.expando, undefined, "chrome should not see the xhr's 'expando' property");
+
+    SimpleTest.finish();
+  }
+
+  document.body.appendChild(iframe);
+}
+
+</script>
+</pre>
+</body>
+</html>

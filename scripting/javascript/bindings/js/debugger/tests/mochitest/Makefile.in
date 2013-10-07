@@ -1,0 +1,31 @@
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+DEPTH		= @DEPTH@
+topsrcdir	= @top_srcdir@
+srcdir		= @srcdir@
+VPATH		= @srcdir@
+relativesrcdir	= @relativesrcdir@
+
+include $(DEPTH)/config/autoconf.mk
+
+MOCHITEST_CHROME_FILES	= \
+	inspector-helpers.js \
+	inspector-traversal-data.html \
+	test_inspector-changeattrs.html \
+	test_inspector-changevalue.html \
+	test_inspector-mutations-attr.html \
+	test_inspector-mutations-childlist.html \
+	test_inspector-mutations-frameload.html \
+	test_inspector-mutations-value.html \
+	test_inspector-release.html \
+	test_inspector-retain.html \
+	test_inspector-pseudoclass-lock.html \
+	test_inspector-traversal.html \
+	test_unsafeDereference.html \
+	nonchrome_unsafeDereference.html \
+	$(NULL)
+
+include $(topsrcdir)/config/rules.mk

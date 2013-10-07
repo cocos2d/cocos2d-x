@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Test for Bug </title>
+
+  <script type="application/javascript" src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css">
+  <script type="application/javascript;version=1.8" src="inspector-helpers.js"></script>
+  <script type="application/javascript;version=1.8">
+Components.utils.import("resource://gre/modules/devtools/Loader.jsm");
+
+const Promise = devtools.require("sdk/core/promise");
+const inspector = devtools.require("devtools/server/actors/inspector");
+
+window.onload = function() {
+  SimpleTest.waitForExplicitFinish();
+  runNextTest();
+}
+
+var gInspectee = null;
+var gWalker = null;
+var gClient = null;
+var gChildFrame = null;
+var gChildDocument = null;
+var gCleanupConnection = null;
+
+function setup(callback) {
+  let url = document.getElementById("inspectorContent").href;
+  gCleanupConnection = attachURL(url, function(err, client, tab, doc) {
+    gInspectee = doc;
+    let {InspectorFront} = devtools.require("devtools/server/actors/inspector");
+    let inspector = InspectorFront(client, tab);
+    promiseDone(inspector.getWalker().then(walker => {
+      gClient = client;
+      gWalker = walker;
+    }).then(callback));
+  });
+}
+
+function teardown() {
+  gWalker = null;
+  gClient = null;
+  gInspectee = null;
+  gChildFrame = null;
+  if (gCleanupConnection) {
+    gCleanupConnection();
+    gCleanupConnection = null;
+  }
+}
+
+function assertOwnership() {
+  return assertOwnershipTrees(gWalker);
+}
+
+function loadChildSelector(selector) {
+  return gWalker.querySelector(gWalker.rootNode, "#childFrame").then(frame => {
+    ok(frame.numChildren > 0, "Child frame should consider its loaded document as a child.");
+    gChildFrame = frame;
+    return gWalker.children(frame);
+  }).then(children => {
+    return gWalker.querySelectorAll(children.nodes[0], selector);
+  }).then(nodeList => {
+    return nodeList.items();
+  });
+}
+
+function getUnloadedDoc(mutations) {
+  for (let change of mutations) {
+    if (isUnload(change)) {
+      return change.target;
+    }
+  }
+  return null;
+}
+
+addTest(function loadNewChild() {
+  setup(() => {
+    let beforeUnloadSize = 0;
+    // Load a bunch of fronts for actors inside the child frame.
+    promiseDone(loadChildSelector("#longlist div").then(() => {
+      let childFrame = gInspectee.querySelector("#childFrame");
+      childFrame.src = "data:text/html,<html>new child</html>";
+      return waitForMutation(gWalker, isChildList);
+    }).then(mutations => {
+      let unloaded = getUnloadedDoc(mutations);
+      mutations = assertSrcChange(mutations);
+      mutations = assertUnload(mutations);
+      mutations = assertFrameLoad(mutations);
+      mutations = assertChildList(mutations);
+
+      is(mutations.length, 0, "Got the expected mutations.");
+
+      assertOwnership();
+
+      return checkMissing(gClient, unloaded);
+    }).then(() => {
+      teardown();
+    }).then(runNextTest));
+  });
+});
+
+addTest(function loadNewChildTwice() {
+  setup(() => {
+    let beforeUnloadSize = 0;
+    // Load a bunch of fronts for actors inside the child frame.
+    promiseDone(loadChildSelector("#longlist div").then(() => {
+      let childFrame = gInspectee.querySelector("#childFrame");
+      childFrame.src = "data:text/html,<html>new child</html>";
+      return waitForMutation(gWalker, isChildList);
+    }).then(mutations => {
+      // The first load went through as expected (as tested in loadNewChild)
+      // Now change the source again, but this time we *don't* expect
+      // an unload, because we haven't seen the new child document yet.
+      let childFrame = gInspectee.querySelector("#childFrame");
+      childFrame.src = "data:text/html,<html>second new child</html>";
+      return waitForMutation(gWalker, isChildList);
+    }).then(mutations => {
+      mutations = assertSrcChange(mutations);
+      mutations = assertFrameLoad(mutations);
+      mutations = assertChildList(mutations);
+      ok(!getUnloadedDoc(mutations), "Should not have gotten an unload.");
+
+      is(mutations.length, 0, "Got the expected mutations.");
+
+      assertOwnership();
+    }).then(() => {
+      teardown();
+    }).then(runNextTest));
+  });
+});
+
+
+addTest(function loadNewChildTwiceAndCareAboutIt() {
+  setup(() => {
+    let beforeUnloadSize = 0;
+    // Load a bunch of fronts for actors inside the child frame.
+    promiseDone(loadChildSelector("#longlist div").then(() => {
+      let childFrame = gInspectee.querySelector("#childFrame");
+      childFrame.src = "data:text/html,<html>new child</html>";
+      return waitForMutation(gWalker, isChildList);
+    }).then(mutations => {
+      // Read the new child
+      return loadChildSelector("#longlist div");
+    }).then(() => {
+      // Now change the source again, and expect the same results as loadNewChild.
+      let childFrame = gInspectee.querySelector("#childFrame");
+      childFrame.src = "data:text/html,<html>second new child</html>";
+      return waitForMutation(gWalker, isChildList);
+    }).then(mutations => {
+      let unloaded = getUnloadedDoc(mutations);
+
+      mutations = assertSrcChange(mutations);
+      mutations = assertUnload(mutations);
+      mutations = assertFrameLoad(mutations);
+      mutations = assertChildList(mutations);
+
+      is(mutations.length, 0, "Got the expected mutations.");
+
+      assertOwnership();
+
+      return checkMissing(gClient, unloaded);
+    }).then(() => {
+      teardown();
+    }).then(runNextTest));
+  });
+});
+
+addTest(function testBack() {
+  setup(() => {
+    let beforeUnloadSize = 0;
+    // Load a bunch of fronts for actors inside the child frame.
+    promiseDone(loadChildSelector("#longlist div").then(() => {
+      let childFrame = gInspectee.querySelector("#childFrame");
+      childFrame.src = "data:text/html,<html>new child</html>";
+      return waitForMutation(gWalker, isChildList);
+    }).then(mutations => {
+      // Read the new child
+      return loadChildSelector("#longlist div");
+    }).then(() => {
+      // Now use history.back to change the source, and expect the same results as loadNewChild.
+      let childFrame = gInspectee.querySelector("#childFrame");
+      childFrame.contentWindow.history.back();
+      return waitForMutation(gWalker, isChildList);
+    }).then(mutations => {
+      let unloaded = getUnloadedDoc(mutations);
+      mutations = assertSrcChange(mutations);
+      mutations = assertUnload(mutations);
+      mutations = assertFrameLoad(mutations);
+      mutations = assertChildList(mutations);
+      is(mutations.length, 0, "Got the expected mutations.");
+
+      assertOwnership();
+
+      return checkMissing(gClient, unloaded);
+    }).then(() => {
+      teardown();
+    }).then(runNextTest));
+  });
+});
+
+  </script>
+</head>
+<body>
+<a target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=">Mozilla Bug </a>
+<a id="inspectorContent" target="_blank" href="inspector-traversal-data.html">Test Document</a>
+<p id="display"></p>
+<div id="content" style="display: none">
+
+</div>
+<pre id="test">
+</pre>
+</body>
+</html>
