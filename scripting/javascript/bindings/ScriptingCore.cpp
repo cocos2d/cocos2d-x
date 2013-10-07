@@ -392,7 +392,6 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
         global = global_;
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
     if (script) {
-        // JSAutoCompartment ac(cx, global);
         JSAutoCompartment ac(cx, global);
         JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
         if (JS_FALSE == evaluatedOK) {
@@ -463,19 +462,23 @@ void ScriptingCore::createGlobalContext() {
     
     this->cx_ = JS_NewContext(rt_, 8192);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
-    JS_SetVersion(this->cx_, JSVERSION_LATEST);
+    
+//    JS_SetVersion(this->cx_, JSVERSION_LATEST);
     
     // Only disable METHODJIT on iOS.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
-    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
-#endif
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_
+//    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
+//    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
+//#endif
     
     JS_SetErrorReporter(this->cx_, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
     //JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
+    
     this->global_ = NewGlobalObject(cx_);
+    JSAutoCompartment ac(cx_, global_);
+
 #if JSB_ENABLE_DEBUGGER
     JS_SetDebugMode(cx_, JS_TRUE);
 #endif
@@ -500,6 +503,8 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (!path) {
         return false;
     }
+    
+    
     cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
     std::string fullPath = futil->fullPathForFilename(path);
     if (global == NULL) {
@@ -508,7 +513,12 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (cx == NULL) {
         cx = cx_;
     }
-    JSScript *script = NULL;    
+    
+    JSAutoCompartment ac(cx, global);
+    
+    uint32_t oldopts = JS_GetOptions(cx);
+    JS_SetOptions(cx, oldopts | JSOPTION_COMPILE_N_GO | JSOPTION_NO_SCRIPT_RVAL);
+    
     js::RootedObject obj(cx, global);
 	JS::CompileOptions options(cx);
 	options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
@@ -519,6 +529,8 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     void *data = futil->getFileData(byteCodePath.c_str(),
                                     "rb",
                                     &length);
+    
+    js::RootedScript script(cx);
     if (data) {
         script = JS_DecodeScript(cx, data, length, NULL, NULL);
         CC_SAFE_DELETE_ARRAY(data);
@@ -930,15 +942,16 @@ JSBool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, ui
     
     do
     {
+        JSAutoCompartment ac(cx, obj);
+        
         if (JS_HasProperty(cx, obj, name, &hasAction) && hasAction) {
             if (!JS_GetProperty(cx, obj, name, &temp_retval)) {
                 break;
             }
             if (temp_retval == JSVAL_VOID) {
                 break;
-            }
+            }            
             
-            JSAutoCompartment ac(cx, obj);
             if (retVal) {
                 bRet = JS_CallFunctionName(cx, obj, name, argc, vp, retVal);
             }
@@ -1099,6 +1112,8 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
 {
     if (NULL == evt)
         return 0;
+ 
+    JSAutoCompartment ac(cx_, global_);
     
     switch (evt->type)
     {
@@ -1199,7 +1214,7 @@ JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
 }
 
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
-    JSString *tmp = v.isString() ? JS_ValueToString(cx, v) : NULL;
+    JSString *tmp = JS_ValueToString(cx, v);
     JSB_PRECONDITION3(tmp, cx, JS_FALSE, "Error processing arguments");
 
     JSStringWrapper str(tmp);
@@ -1736,14 +1751,24 @@ jsval long_long_to_jsval(JSContext* cx, long long v) {
     return OBJECT_TO_JSVAL(tmp);
 }
 
-jsval std_string_to_jsval(JSContext* cx, const std::string& v) {
-    return c_string_to_jsval(cx, v.c_str());
+jsval std_string_to_jsval(JSContext* cx, const std::string& v)
+{
+    return c_string_to_jsval(cx, v.c_str(), v.size());
 }
 
-jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) {
-    if (v == NULL) {
+jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
+{
+    if (v == NULL)
+    {
         return JSVAL_NULL;
     }
+    
+    if (0 == length)
+    {
+        auto emptyStr = JS_NewStringCopyZ(cx, "");
+        return STRING_TO_JSVAL(emptyStr);
+    }
+    
     jsval ret = JSVAL_NULL;
     int utf16_size = 0;
     jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, length, &utf16_size);
@@ -1914,6 +1939,8 @@ void SimpleRunLoop::update(float dt) {
 }
 
 void ScriptingCore::debugProcessInput(string str) {
+    JSAutoCompartment ac(cx_, debugGlobal_);
+    
     JSString* jsstr = JS_NewStringCopyZ(cx_, str.c_str());
     jsval argv[3] = {
         STRING_TO_JSVAL(jsstr),
@@ -1921,12 +1948,13 @@ void ScriptingCore::debugProcessInput(string str) {
         script
     };
     jsval outval;
-    JSAutoCompartment ac(cx_, debugGlobal_);
+    
     JS_CallFunctionName(cx_, debugGlobal_, "processInput", 3, argv, &outval);
 }
 
 void ScriptingCore::enableDebugger() {
     if (debugGlobal_ == NULL) {
+        JSAutoCompartment ac0(cx_, global_);
         debugGlobal_ = NewGlobalObject(cx_, true);
         JS_WrapObject(cx_, &debugGlobal_);
         JSAutoCompartment ac(cx_, debugGlobal_);
@@ -1940,6 +1968,7 @@ void ScriptingCore::enableDebugger() {
         runScript("jsb_debugger.js", debugGlobal_);
 //        runScript("SysTest/script.js", debugGlobal_);
         
+        CCLOG("before _prepareDebugger...");
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(global_);
         jsval outval;
@@ -1947,6 +1976,8 @@ void ScriptingCore::enableDebugger() {
         if (!ok) {
             JS_ReportPendingException(cx_);
         }
+        
+        CCLOG("after _prepareDebugger...");
         // define the start debugger function
         JS_DefineFunction(cx_, global_, "startDebugger", JSBDebug_StartDebugger, 3, JSPROP_READONLY | JSPROP_PERMANENT);
         // start bg thread
@@ -1954,6 +1985,7 @@ void ScriptingCore::enableDebugger() {
         auto t = std::thread(&serverEntryPoint);
         t.detach();
 
+        CCLOG("after _prepareDebugger...02");
         Scheduler* scheduler = Director::getInstance()->getScheduler();
         scheduler->scheduleUpdateForTarget(this->runLoop, 0, false);
     }
@@ -1991,15 +2023,23 @@ JSBool jsGetScript(JSContext* cx, unsigned argc, jsval* vp)
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug)
 {
-    JSObject* glob = JS_NewGlobalObject(cx, &global_class, NULL);
-    if (!glob) {
+    JS::CompartmentOptions options;
+    options.setZone(JS::FreshZone)
+    .setVersion(JSVERSION_LATEST);
+    JS::RootedObject glob(cx, JS_NewGlobalObject(cx, &global_class, NULL, options));
+    
+    if (!glob)
+    {
         return NULL;
     }
+    
     JSAutoCompartment ac(cx, glob);
     JSBool ok = JS_TRUE;
     ok = JS_InitStandardClasses(cx, glob);
     if (ok)
-        JS_InitReflect(cx, glob);
+    {
+        ok = JS_InitReflect(cx, glob) != NULL;
+    }
     if (ok && debug)
         ok = JS_DefineDebuggerObject(cx, glob);
     if (!ok)
@@ -2240,14 +2280,18 @@ static void serverEntryPoint(void)
             // read/write data
             TRACE_DEBUGGER_SERVER("debug server : client connected");
             
-            if (recieveIndex == 0)
-            {                    
-                replyToClient(clientSocket, "{\"from\":\"root\",\"applicationType\":\"browser\",\"traits\":{\"sources\": true}}");
-                ++recieveIndex;
-            }
+            inData = "connected";
+            // process any input, send any output
+            clearBuffers();
+            
+//            if (recieveIndex == 0)
+//            {                    
+//                replyToClient(clientSocket, "{\"from\":\"root\",\"applicationType\":\"browser\",\"traits\":{\"sources\": true}}");
+//                ++recieveIndex;
+//            }
 
             
-            char buf[256] = {0};
+            char buf[1024] = {0};
             int readBytes = 0;
             while ((readBytes = ::recv(clientSocket, buf, sizeof(buf), 0)) > 0)
             {
