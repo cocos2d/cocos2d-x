@@ -26,7 +26,13 @@ THE SOFTWARE.
 #include "CCWinRTUtils.h"
 #include "shaders/CCGLProgram.h"
 #include "sha1.h"
+
+#if (CC_TARGET_PLATFORM == CCPLATFORM_WINRT)
 #include "shaders/precompiled/winrt/precompiledshaders.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#include "shaders/precompiled/wp8/precompiledshaders.h"
+#endif
+
 
 using namespace Windows::Graphics::Display;
 using namespace Windows::Storage;
@@ -117,6 +123,7 @@ std::string CCPrecompiledShaders::addShaders(const GLchar* vShaderByteArray, con
 void CCPrecompiledShaders::loadPrecompiledPrograms()
 {
     m_precompiledPrograms.clear();
+#if defined(PRECOMPILED_SHADERS)
     for(int i = 0; i < s_numPrograms; i++)
     {
         PrecompiledProgram* p = new PrecompiledProgram();
@@ -125,6 +132,7 @@ void CCPrecompiledShaders::loadPrecompiledPrograms()
         p->length = s_programLengths[i];
         m_precompiledPrograms[s_programKeys[i]] = p;
     }
+#endif
 }
 
 bool CCPrecompiledShaders::loadProgram(GLuint program, const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
@@ -149,10 +157,8 @@ bool CCPrecompiledShaders::addProgram(GLuint program, const std::string& id)
         return true;
 
     auto it2 = m_precompiledPrograms.find(id);
-    if(it2 != m_precompiledPrograms.end())
-        return true;
-
-    m_isDirty = true;
+    if(it2 == m_precompiledPrograms.end())
+        m_isDirty = true;
 
     CompiledProgram* p = new CompiledProgram();
 
@@ -185,6 +191,9 @@ void CCPrecompiledShaders::savePrecompiledPrograms(Windows::Storage::StorageFold
         Platform::String^ programKeys = "const char* s_programKeys[] = {";
 
         int numPrograms = 0;
+
+        dataWriter->WriteString(L"#define PRECOMPILED_SHADERS\n\n");
+
 
         for (auto iter = m_programs.begin(); iter != m_programs.end(); ++iter) 
         {
