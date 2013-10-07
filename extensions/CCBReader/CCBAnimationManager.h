@@ -27,6 +27,8 @@ public:
     
     virtual bool init();
     
+    float getSequenceDuration(const std::string &name); 
+    
     Array* getSequences();
     void setSequences(Array* seq);
 
