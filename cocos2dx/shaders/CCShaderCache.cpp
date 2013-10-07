@@ -29,9 +29,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "ccShaders.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#include "CCPrecompiledShaders.h"
-#endif
 
 NS_CC_BEGIN
 
@@ -85,12 +82,6 @@ bool CCShaderCache::init()
 {
     m_pPrograms = new CCDictionary();
     loadDefaultShaders();
-
-//#define CC_PLATFORM_WINRT_SAVE_SHADERS
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) && defined(CC_PLATFORM_WINRT_SAVE_SHADERS)
-        CCPrecompiledShaders::sharedPrecompiledShaders()->savePrecompiledShaders();
-    #endif
-
     return true;
 }
 
