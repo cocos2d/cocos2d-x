@@ -65,6 +65,52 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "platform/ios/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+#include "platform/blackberry/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "platform/win32/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "platform/mac/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include "platform/linux/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+
+// MARMALADE CHANGE
+// Added for Marmalade support
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+#include "platform/Marmalade/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
+#include "platform/nacl/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+#include "platform/emscripten/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+#include "platform/tizen/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_QT5)
+#include "platform/qt5/CCEGLView.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_QT5
+
 
 /**
  Position of the FPS
@@ -916,6 +962,13 @@ void Director::createStatsLabel()
     _drawsLabel->setPosition(Point(0, 34*factor) + CC_DIRECTOR_STATS_POSITION);
     _SPFLabel->setPosition(Point(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
+}
+
+void Director::setDesignResolutionSize(float width, float height, int resolutionPolicy)
+{
+    ResolutionPolicy temp[]={ResolutionPolicy::EXACT_FIT,ResolutionPolicy::NO_BORDER,ResolutionPolicy::SHOW_ALL,ResolutionPolicy::FIXED_HEIGHT,ResolutionPolicy::FIXED_WIDTH,ResolutionPolicy::UNKNOWN};
+        
+    EGLView::getInstance()->setDesignResolutionSize(width, height, temp[resolutionPolicy]);
 }
 
 float Director::getContentScaleFactor() const
