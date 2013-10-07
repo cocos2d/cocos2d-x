@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Test for Bug </title>
+
+  <script type="application/javascript" src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css">
+  <script type="application/javascript;version=1.8" src="inspector-helpers.js"></script>
+  <script type="application/javascript;version=1.8">
+Components.utils.import("resource://gre/modules/devtools/Loader.jsm");
+
+const Promise = devtools.require("sdk/core/promise");
+const inspector = devtools.require("devtools/server/actors/inspector");
+
+window.onload = function() {
+  SimpleTest.waitForExplicitFinish();
+  runNextTest();
+}
+
+var gInspectee = null;
+var gWalker = null;
+var gClient = null;
+var attrNode;
+var attrFront;
+
+addTest(function setup() {
+  let url = document.getElementById("inspectorContent").href;
+  attachURL(url, function(err, client, tab, doc) {
+    gInspectee = doc;
+    let {InspectorFront} = devtools.require("devtools/server/actors/inspector");
+    let inspector = InspectorFront(client, tab);
+    promiseDone(inspector.getWalker().then(walker => {
+      ok(walker, "getWalker() should return an actor.");
+      gClient = client;
+      gWalker = walker;
+    }).then(runNextTest));
+  });
+});
+
+addTest(setupAttrTest);
+addTest(testAddAttribute);
+addTest(testChangeAttribute);
+addTest(testRemoveAttribute);
+addTest(setupFrameAttrTest);
+addTest(testAddAttribute);
+addTest(testChangeAttribute);
+addTest(testRemoveAttribute);
+
+function setupAttrTest() {
+  attrNode = gInspectee.querySelector("#a")
+  promiseDone(gWalker.querySelector(gWalker.rootNode, "#a").then(node => {
+    attrFront = node;
+  }).then(runNextTest));
+}
+
+function setupFrameAttrTest() {
+  let frame = gInspectee.querySelector('#childFrame');
+  attrNode = frame.contentDocument.querySelector("#a");
+
+  promiseDone(gWalker.querySelector(gWalker.rootNode, "#childFrame").then(childFrame => {
+    return gWalker.children(childFrame);
+  }).then(children => {
+    let nodes = children.nodes;
+    ok(nodes.length, 1, "There should be only one child of the iframe");
+    is(nodes[0].nodeType, Node.DOCUMENT_NODE, "iframe child should be a document node");
+    return gWalker.querySelector(nodes[0], "#a");
+  }).then(node => {
+    attrFront = node;
+  }).then(runNextTest));
+}
+
+function testAddAttribute() {
+  attrNode.setAttribute("data-newattr", "newvalue");
+  attrNode.setAttribute("data-newattr2", "newvalue");
+  gWalker.once("mutations", () => {
+    is(attrFront.attributes.length, 3, "Should have id and two new attributes.");
+    is(attrFront.getAttribute("data-newattr"), "newvalue", "Node front should have the first new attribute");
+    is(attrFront.getAttribute("data-newattr2"), "newvalue", "Node front should have the second new attribute.");
+    runNextTest();
+  });
+}
+
+function testChangeAttribute() {
+  attrNode.setAttribute("data-newattr", "changedvalue");
+  gWalker.once("mutations", () => {
+    is(attrFront.attributes.length, 3, "Should have id and two new attributes.");
+    is(attrFront.getAttribute("data-newattr"), "changedvalue", "Node front should have the changed first value");
+    is(attrFront.getAttribute("data-newattr2"), "newvalue", "Second value should remain unchanged.");
+    runNextTest();
+  });
+}
+
+function testRemoveAttribute() {
+  attrNode.removeAttribute("data-newattr2");
+  gWalker.once("mutations", () => {
+    is(attrFront.attributes.length, 2, "Should have id and one remaining attribute.");
+    is(attrFront.getAttribute("data-newattr"), "changedvalue", "Node front should still have the first value");
+    ok(!attrFront.hasAttribute("data-newattr2"), "Second value should be removed.");
+    runNextTest();
+  })
+}
+
+addTest(function cleanup() {
+  delete gInspectee;
+  delete gWalker;
+  delete gClient;
+  runNextTest();
+});
+
+
+  </script>
+</head>
+<body>
+<a target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=">Mozilla Bug </a>
+<a id="inspectorContent" target="_blank" href="inspector-traversal-data.html">Test Document</a>
+<p id="display"></p>
+<div id="content" style="display: none">
+
+</div>
+<pre id="test">
+</pre>
+</body>
+</html>

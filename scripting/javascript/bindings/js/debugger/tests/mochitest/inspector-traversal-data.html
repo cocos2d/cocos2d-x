@@ -1,0 +1,54 @@
+<html>
+<head>
+  <script type="text/javascript">
+    window.onload = function() {
+      // Put a copy of the body in an iframe to test frame traversal.
+      var body = document.querySelector("body");
+      var data = "data:text/html,<html>" + body.outerHTML + "<html>";
+      var iframe = document.createElement("iframe");
+      iframe.setAttribute("id", "childFrame");
+      iframe.onload = function() {
+        window.opener.postMessage('ready', '*')
+      };
+      iframe.src = data;
+      body.appendChild(iframe);
+    }
+  </script>
+<body>
+  <h1>Inspector Actor Tests</h1>
+  <span id="longstring">longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong</span>
+  <span id="shortstring">short</span>
+  <span id="empty"></span>
+  <div id="longlist" data-test="exists">
+    <div id="a">a</div>
+    <div id="b">b</div>
+    <div id="c">c</div>
+    <div id="d">d</div>
+    <div id="e">e</div>
+    <div id="f">f</div>
+    <div id="g">g</div>
+    <div id="h">h</div>
+    <div id="i">i</div>
+    <div id="j">j</div>
+    <div id="k">k</div>
+    <div id="l">l</div>
+    <div id="m">m</div>
+    <div id="n">n</div>
+    <div id="o">o</div>
+    <div id="p">p</div>
+    <div id="q">q</div>
+    <div id="r">r</div>
+    <div id="s">s</div>
+    <div id="t">t</div>
+    <div id="u">u</div>
+    <div id="v">v</div>
+    <div id="w">w</div>
+    <div id="x">x</div>
+    <div id="y">y</div>
+    <div id="z">z</div>
+  </div>
+  <div id="longlist-sibling">
+    <div id="longlist-sibling-firstchild"></div>
+  </div>
+</body>
+</html>

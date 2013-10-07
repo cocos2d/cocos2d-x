@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Test for Bug </title>
+
+  <script type="application/javascript" src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css">
+  <script type="application/javascript;version=1.8" src="inspector-helpers.js"></script>
+  <script type="application/javascript;version=1.8">
+Components.utils.import("resource://gre/modules/devtools/Loader.jsm");
+
+const Promise = devtools.require("sdk/core/promise");
+const inspector = devtools.require("devtools/server/actors/inspector");
+
+window.onload = function() {
+  SimpleTest.waitForExplicitFinish();
+  runNextTest();
+}
+
+var gInspectee = null;
+var gWalker = null;
+var gClient = null;
+var gCleanupConnection = null;
+
+function setup(callback) {
+  let url = document.getElementById("inspectorContent").href;
+  gCleanupConnection = attachURL(url, function(err, client, tab, doc) {
+    gInspectee = doc;
+    let {InspectorFront} = devtools.require("devtools/server/actors/inspector");
+    let inspector = InspectorFront(client, tab);
+    promiseDone(inspector.getWalker().then(walker => {
+      gClient = client;
+      gWalker = walker;
+    }).then(callback));
+  });
+}
+
+function teardown() {
+  gWalker = null;
+  gClient = null;
+  gInspectee = null;
+  if (gCleanupConnection) {
+    gCleanupConnection();
+    gCleanupConnection = null;
+  }
+}
+
+function assertOwnership() {
+  let num = assertOwnershipTrees(gWalker);
+}
+
+function setParent(nodeSelector, newParentSelector) {
+  let node = gInspectee.querySelector(nodeSelector);
+  if (newParentSelector) {
+    let newParent = gInspectee.querySelector(newParentSelector);
+    newParent.appendChild(node);
+  } else {
+    node.parentNode.removeChild(node);
+  }
+}
+
+function loadSelector(selector) {
+  return gWalker.querySelectorAll(gWalker.rootNode, selector).then(nodeList => {
+    return nodeList.items();
+  });
+}
+
+function loadSelectors(selectors) {
+  return Promise.all([loadSelector(sel) for (sel of selectors)]);
+}
+
+function doMoves(moves) {
+  for (let move of moves) {
+    setParent(move[0], move[1]);
+  }
+}
+
+/**
+ * Test a set of tree rearrangements and make sure they cause the expected changes.
+ */
+
+var gDummySerial = 0;
+
+function mutationTest(testSpec) {
+  return function() {
+    setup(() => {
+      promiseDone(loadSelectors(testSpec.load || ["html"]).then(() => {
+        gWalker.autoCleanup = !!testSpec.autoCleanup;
+        if (testSpec.preCheck) {
+          testSpec.preCheck();
+        }
+        doMoves(testSpec.moves || []);
+
+        // Some of these moves will trigger no mutation events,
+        // so do a dummy change to the root node to trigger
+        // a mutation event anyway.
+        gInspectee.documentElement.setAttribute("data-dummy", gDummySerial++);
+
+        gWalker.once("mutations", (mutations) => {
+          // Filter out our dummy mutation.
+          let mutations = mutations.filter(change => {
+            if (change.type == "attributes" &&
+                change.attributeName == "data-dummy") {
+              return false;
+            }
+            return true;
+          });
+          assertOwnership();
+          if (testSpec.postCheck) {
+            testSpec.postCheck(mutations);
+          }
+          teardown();
+          runNextTest();
+        });
+      }));
+    })
+  }
+}
+
+// Verify that our dummy mutation works.
+addTest(mutationTest({
+  autoCleanup: false,
+  postCheck: function(mutations) {
+    is(mutations.length, 0, "Dummy mutation is filtered out.");
+  }
+}));
+
+// Test a simple move to a different location in the sibling list for the same
+// parent.
+addTest(mutationTest({
+  autoCleanup: false,
+  load: ["#longlist div"],
+  moves: [
+    ["#a", "#longlist"]
+  ],
+  postCheck: function(mutations) {
+    let remove = mutations[0];
+    is(remove.type, "childList", "First mutation should be a childList.")
+    ok(remove.removed.length > 0, "First mutation should be a removal.")
+    let add = mutations[1];
+    is(add.type, "childList", "Second mutation should be a childList removal.")
+    ok(add.added.length > 0, "Second mutation should be an addition.")
+    let a = add.added[0];
+    is(a.id, "a", "Added node should be #a");
+    is(a.parentNode(), remove.target, "Should still be a child of longlist.");
+    is(remove.target, add.target, "First and second mutations should be against the same node.");
+  }
+}));
+
+// Test a move to another location that is within our ownership tree.
+addTest(mutationTest({
+  autoCleanup: false,
+  load: ["#longlist div", "#longlist-sibling"],
+  moves: [
+    ["#a", "#longlist-sibling"]
+  ],
+  postCheck: function(mutations) {
+    let remove = mutations[0];
+    is(remove.type, "childList", "First mutation should be a childList.")
+    ok(remove.removed.length > 0, "First mutation should be a removal.")
+    let add = mutations[1];
+    is(add.type, "childList", "Second mutation should be a childList removal.")
+    ok(add.added.length > 0, "Second mutation should be an addition.")
+    let a = add.added[0];
+    is(a.id, "a", "Added node should be #a");
+    is(a.parentNode(), add.target, "Should still be a child of longlist.");
+    is(add.target.id, "longlist-sibling", "long-sibling should be the target.");
+  }
+}));
+
+// Move an unseen node with a seen parent into our ownership tree - should generate a
+// childList pair with no adds or removes.
+addTest(mutationTest({
+  autoCleanup: false,
+  load: ["#longlist"],
+  moves: [
+    ["#longlist-sibling", "#longlist"]
+  ],
+  postCheck: function(mutations) {
+    is(mutations.length, 2, "Should generate two mutations");
+    is(mutations[0].type, "childList", "Should be childList mutations.");
+    is(mutations[0].added.length, 0, "Should have no adds.");
+    is(mutations[0].removed.length, 0, "Should have no removes.");
+    is(mutations[1].type, "childList", "Should be childList mutations.");
+    is(mutations[1].added.length, 0, "Should have no adds.");
+    is(mutations[1].removed.length, 0, "Should have no removes.");
+  }
+}));
+
+// Move an unseen node with an unseen parent into our ownership tree.  Should only
+// generate one childList mutation with no adds or removes.
+addTest(mutationTest({
+  autoCleanup: false,
+  load: ["#longlist div"],
+  moves: [
+    ["#longlist-sibling-firstchild", "#longlist"]
+  ],
+  postCheck: function(mutations) {
+    is(mutations.length, 1, "Should generate two mutations");
+    is(mutations[0].type, "childList", "Should be childList mutations.");
+    is(mutations[0].added.length, 0, "Should have no adds.");
+    is(mutations[0].removed.length, 0, "Should have no removes.");
+  }
+}));
+
+// Move a node between unseen nodes, should generate no mutations.
+addTest(mutationTest({
+  autoCleanup: false,
+  load: ["html"],
+  moves: [
+    ["#longlist-sibling", "#longlist"]
+  ],
+  postCheck: function(mutations) {
+    is(mutations.length, 0, "Should generate no mutations.");
+  }
+}));
+
+// Orphan a node and don't clean it up
+addTest(mutationTest({
+  autoCleanup: false,
+  load: ["#longlist div"],
+  moves: [
+    ["#longlist", null]
+  ],
+  postCheck: function(mutations) {
+    is(mutations.length, 1, "Should generate one mutation.");
+    let change = mutations[0];
+    is(change.type, "childList", "Should be a childList.");
+    is(change.removed.length, 1, "Should have removed a child.");
+    let ownership = clientOwnershipTree(gWalker);
+    is(ownership.orphaned.length, 1, "Should have one orphaned subtree.");
+    is(ownershipTreeSize(ownership.orphaned[0]), 27, "Should have orphaned longlist and 26 children.");
+  }
+}));
+
+// Orphan a node, and do clean it up.
+addTest(mutationTest({
+  autoCleanup: true,
+  load: ["#longlist div"],
+  moves: [
+    ["#longlist", null]
+  ],
+  postCheck: function(mutations) {
+    is(mutations.length, 1, "Should generate one mutation.");
+    let change = mutations[0];
+    is(change.type, "childList", "Should be a childList.");
+    is(change.removed.length, 1, "Should have removed a child.");
+    let ownership = clientOwnershipTree(gWalker);
+    is(ownership.orphaned.length, 0, "Should have no orphaned subtrees.");
+  }
+}));
+
+// Orphan a node by moving it into the tree but out of our visible subtree.
+addTest(mutationTest({
+  autoCleanup: false,
+  load: ["#longlist div"],
+  moves: [
+    ["#longlist", "#longlist-sibling"]
+  ],
+  postCheck: function(mutations) {
+    is(mutations.length, 1, "Should generate one mutation.");
+    let change = mutations[0];
+    is(change.type, "childList", "Should be a childList.");
+    is(change.removed.length, 1, "Should have removed a child.");
+    let ownership = clientOwnershipTree(gWalker);
+    is(ownership.orphaned.length, 1, "Should have one orphaned subtree.");
+    is(ownershipTreeSize(ownership.orphaned[0]), 27, "Should have orphaned longlist and 26 children.");
+  }
+}));
+
+// Orphan a node by moving it into the tree but out of our visible subtree, and clean it up.
+addTest(mutationTest({
+  autoCleanup: true,
+  load: ["#longlist div"],
+  moves: [
+    ["#longlist", "#longlist-sibling"]
+  ],
+  postCheck: function(mutations) {
+    is(mutations.length, 1, "Should generate one mutation.");
+    let change = mutations[0];
+    is(change.type, "childList", "Should be a childList.");
+    is(change.removed.length, 1, "Should have removed a child.");
+    let ownership = clientOwnershipTree(gWalker);
+    is(ownership.orphaned.length, 0, "Should have no orphaned subtrees.");
+  }
+}));
+
+
+addTest(function cleanup() {
+  delete gInspectee;
+  delete gWalker;
+  delete gClient;
+  runNextTest();
+});
+
+
+  </script>
+</head>
+<body>
+<a target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=">Mozilla Bug </a>
+<a id="inspectorContent" target="_blank" href="inspector-traversal-data.html">Test Document</a>
+<p id="display"></p>
+<div id="content" style="display: none">
+
+</div>
+<pre id="test">
+</pre>
+</body>
+</html>

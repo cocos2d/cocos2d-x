@@ -662,9 +662,10 @@ JSBool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 2 && argv[1].isString()) {
             JSString* globalName = JSVAL_TO_STRING(argv[1]);
             JSStringWrapper name(globalName);
-            js::RootedObject* rootedGlobal = globals[name];
-            if (rootedGlobal) {
-                res = ScriptingCore::getInstance()->runScript(path, rootedGlobal->get());
+//            js::RootedObject* rootedGlobal = globals[name];
+            JSObject* debugObj = ScriptingCore::getInstance()->getDebugGlobal();
+            if (debugObj) {
+                res = ScriptingCore::getInstance()->runScript(path, debugObj);
             } else {
                 JS_ReportError(cx, "Invalid global object: %s", (char*)name);
                 return JS_FALSE;
@@ -1964,9 +1965,9 @@ void ScriptingCore::enableDebugger() {
         JS_DefineFunction(cx_, debugGlobal_, "_bufferRead", JSBDebug_BufferRead, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_lockVM", JSBDebug_LockExecution, 2, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_unlockVM", JSBDebug_UnlockExecution, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-
+        
+        
         runScript("jsb_debugger.js", debugGlobal_);
-//        runScript("SysTest/script.js", debugGlobal_);
         
         CCLOG("before _prepareDebugger...");
         // prepare the debugger
@@ -2266,7 +2267,6 @@ static void serverEntryPoint(void)
 
     listen(s, 1);
 
-    int recieveIndex = 0;
 	while (true) {
         clientSocket = accept(s, NULL, NULL);
 
@@ -2284,144 +2284,13 @@ static void serverEntryPoint(void)
             // process any input, send any output
             clearBuffers();
             
-//            if (recieveIndex == 0)
-//            {                    
-//                replyToClient(clientSocket, "{\"from\":\"root\",\"applicationType\":\"browser\",\"traits\":{\"sources\": true}}");
-//                ++recieveIndex;
-//            }
-
-            
             char buf[1024] = {0};
             int readBytes = 0;
             while ((readBytes = ::recv(clientSocket, buf, sizeof(buf), 0)) > 0)
             {
                 buf[readBytes] = '\0';
-                TRACE_DEBUGGER_SERVER("debug server : received command >%s", buf);
+//                TRACE_DEBUGGER_SERVER("debug server : received command >%s", buf);
                 
-//                if (recieveIndex == 1)
-//                {
-//                    replyToClient(clientSocket, "{ \"from\":\"root\", \"tabs\":[{ \"actor\":\"JSBTabActor\", \"title\":\"Hello cocos2d-x JSB\", \"url\":\"http://www.cocos2d-x.org\" }], \"selected\":0 }");
-//                }
-//                else if (recieveIndex == 2)
-//                {
-//                    replyToClient(clientSocket, "{ \"from\":\"JSBTabActor\", \"type\":\"tabAttached\", \"threadActor\":\"tabThreadActor111\" }");
-//                }
-//                else if (recieveIndex == 3)
-//                {
-//                    replyToClient(clientSocket, "{\
-//                                  \"from\": \"tabThreadActor111\",\
-//                                  \"type\": \"paused\",\
-//                                  \"actor\": \"JSBTabActor\",\
-//                                  \"poppedFrames\": [],\
-//                                  \"why\": {\
-//                                  \"type\": \"attached\"\
-//                                  }\
-//                                  }");
-//                    
-//
-//
-//                    //replyToClient(clientSocket, "{ \"from\":\"JSBTabActor\", \"type\":\"tabNavigated\", \"state\":\"start\", \"url\":\"my_url.js\" }");
-//                }
-//                else if (recieveIndex == 4)
-//                {                    
-//                    replyToClient(clientSocket, "{\
-//                                  \"from\": \"tabThreadActor111\",\
-//                                  \"type\": \"newSource\",\
-//                                  \"source\": {\
-//                                  \"actor\": \"source_actor1\",\
-//                                  \"url\": \"file://~/Project/cocos2d-html5/cocos2d/CCDirector.js\",\
-//                                  \"isBlackBoxed\": false\
-//                                  }\
-//                                  }");
-//                    
-//                    replyToClient(clientSocket,
-//                    "{\
-//                        \"sources\": [\
-//                                    {\
-//                                    \"actor\": \"source_actor1\",\
-//                                    \"url\": \"file://~/Project/cocos2d-html5/cocos2d/CCDirector.js\",\
-//                                    \"isBlackBoxed\": false\
-//                                    }\
-//                                    ],\
-//                        \"from\": \"tabThreadActor111\"\
-//                                  }");
-//                }
-//                else if (recieveIndex == 5)
-//                {
-//                    replyToClient(clientSocket, "{\
-//                                  \"from\": \"source_actor1\",\
-//                                  \"source\": {\
-//                                      \"type\": \"longString\",\
-//                                      \"initial\": \"var cc = cc || {}; cc.Director = {};\",\
-//                                      \"length\": 100,\
-//                                      \"actor\": \"conn2.longString48\"\
-//                                  }\
-//                                  }");
-//                }
-//                else if (recieveIndex == 6)
-//                {
-//                    replyToClient(clientSocket, "{\
-//                                  \"from\": \"conn2.longString48\",\
-//                                  \"substring\": \"var cc = cc || {}; cc.Director = {};\
-//\\ncc.Sprite = {};\"\
-//                                  }");
-//                    
-//                    
-//                    replyToClient(clientSocket, "{\
-//                                  \"from\": \"tabThreadActor111\",\
-//                                  \"type\": \"resumed\"\
-//                                  }");
-//                }
-//                else if (recieveIndex == 7)
-//                {
-//                    replyToClient(clientSocket, "{\
-//                                  \"from\": \"tabThreadActor111\",\
-//                                  \"type\": \"resumed\"\
-//                                  }");
-//                }
-//                else if (recieveIndex == 8)
-//                {
-//                    replyToClient(clientSocket, "{ \"from\":\"tabThreadActor111\", \"actor\":\"breakActor\"}");//, \"actualLocation\":2 }");
-//                }
-//                else if (recieveIndex == 9)
-//                {
-//                    replyToClient(clientSocket, "{ \"from\":\"breakActor\" }");
-//                }
-//                else if (recieveIndex == 10)
-//                {
-//                    replyToClient(clientSocket, "{\
-//                                  \"from\": \"tabThreadActor111\",\
-//                                  \"type\": \"resumed\"\
-//                                  }");
-//                }
-//                else
-//                {
-//                    
-//                    
-//                    std::string recvBuf = buf;
-//                    auto found = recvBuf.find("setBreakpoint");
-//                    if (found != std::string::npos)
-//                    {
-//                        replyToClient(clientSocket, "{ \"from\":\"tabThreadActor111\", \"actor\":\"breakActor\"}");//, \"actualLocation\":2 }");
-//                    }
-//                    
-//                    found = recvBuf.find("delete");
-//                    if (found != std::string::npos)
-//                    {
-//                        replyToClient(clientSocket, "{ \"from\":\"breakActor\" }");
-//                    }
-//                    
-//                    found = recvBuf.find("interrupt");
-//                    if (found != std::string::npos)
-//                    {
-//                        replyToClient(clientSocket, "{\
-//                                      \"from\": \"tabThreadActor111\",\
-//                                      \"type\": \"resumed\"\
-//                                      }");
-//                    }
-//                    
-//                }
-//                ++recieveIndex;
                 // no other thread is using this
                     inData.append(buf);
                     // process any input, send any output

@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Test for Bug </title>
+
+  <script type="application/javascript" src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css">
+  <script type="application/javascript;version=1.8" src="inspector-helpers.js"></script>
+  <script type="application/javascript;version=1.8">
+Components.utils.import("resource://gre/modules/devtools/Loader.jsm");
+
+const Promise = devtools.require("sdk/core/promise");
+const inspector = devtools.require("devtools/server/actors/inspector");
+
+window.onload = function() {
+  SimpleTest.waitForExplicitFinish();
+  runNextTest();
+}
+
+const testSummaryLength = 10;
+inspector.setValueSummaryLength(testSummaryLength);
+SimpleTest.registerCleanupFunction(function() {
+  inspector.setValueSummaryLength(inspector.DEFAULT_VALUE_SUMMARY_LENGTH);
+});
+
+var gInspectee = null;
+var gWalker = null;
+var gClient = null;
+var valueNode;
+var valueFront;
+var longString = "stringstringstringstringstringstringstringstringstringstringstring";
+var truncatedLongString = longString.substring(0, testSummaryLength);
+var shortString = "str";
+var shortString2 = "str2";
+
+addTest(function setup() {
+  let url = document.getElementById("inspectorContent").href;
+  attachURL(url, function(err, client, tab, doc) {
+    gInspectee = doc;
+    let {InspectorFront} = devtools.require("devtools/server/actors/inspector");
+    let inspector = InspectorFront(client, tab);
+    promiseDone(inspector.getWalker().then(walker => {
+      ok(walker, "getWalker() should return an actor.");
+      gClient = client;
+      gWalker = walker;
+    }).then(runNextTest));
+  });
+});
+
+addTest(setupValueTest);
+addTest(testKeepLongValue);
+addTest(testSetShortValue);
+addTest(testKeepShortValue);
+addTest(testSetLongValue);
+addTest(setupFrameValueTest);
+addTest(testKeepLongValue);
+addTest(testSetShortValue);
+addTest(testKeepShortValue);
+addTest(testSetLongValue);
+
+function setupValueTest() {
+  valueNode = gInspectee.querySelector("#longstring").firstChild;
+  promiseDone(gWalker.querySelector(gWalker.rootNode, "#longstring").then(node => {
+    return gWalker.children(node);
+  }).then(children => {
+    valueFront = children.nodes[0];
+  }).then(runNextTest));
+}
+
+function setupFrameValueTest() {
+  let frame = gInspectee.querySelector('#childFrame');
+  valueNode = frame.contentDocument.querySelector("#longstring").firstChild;
+
+  promiseDone(gWalker.querySelector(gWalker.rootNode, "#childFrame").then(childFrame => {
+    return gWalker.children(childFrame);
+  }).then(children => {
+    let nodes = children.nodes;
+    ok(nodes.length, 1, "There should be only one child of the iframe");
+    is(nodes[0].nodeType, Node.DOCUMENT_NODE, "iframe child should be a document node");
+    return gWalker.querySelector(nodes[0], "#longstring");
+  }).then(node => {
+    return gWalker.children(node);
+  }).then(children => {
+    valueFront = children.nodes[0];
+  }).then(runNextTest));
+}
+
+function testKeepLongValue() {
+  // After first setup we should have a long string in the node
+  is(valueFront.shortValue.length, testSummaryLength, "After setup the test node should be truncated.");
+  ok(valueFront.incompleteValue, "After setup the node value should be incomplete.");
+  valueNode.nodeValue = longString;
+  gWalker.once("mutations", () => {
+    is(valueFront.shortValue, truncatedLongString, "Value should have changed to a truncated value");
+    ok(valueFront.incompleteValue, "Node value should stay incomplete.");
+    runNextTest();
+  });
+}
+
+function testSetShortValue() {
+  valueNode.nodeValue = shortString;
+  gWalker.once("mutations", () => {
+    is(valueFront.shortValue, shortString, "Value should not be truncated.");
+    ok(!valueFront.incompleteValue, "Value should not be incomplete.");
+    runNextTest();
+  });
+}
+
+function testKeepShortValue() {
+  valueNode.nodeValue = shortString2;
+  gWalker.once("mutations", () => {
+    is(valueFront.shortValue, shortString2, "Value should not be truncated.");
+    ok(!valueFront.incompleteValue, "Value should not be incomplete.");
+    runNextTest();
+  });
+}
+
+function testSetLongValue() {
+  valueNode.nodeValue = longString;
+  gWalker.once("mutations", () => {
+    is(valueFront.shortValue, truncatedLongString, "Value should have changed to a truncated value");
+    ok(valueFront.incompleteValue, "Node value should stay incomplete.");
+    runNextTest();
+  });
+}
+
+addTest(function cleanup() {
+  delete gInspectee;
+  delete gWalker;
+  delete gClient;
+  runNextTest();
+});
+
+
+  </script>
+</head>
+<body>
+<a target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=">Mozilla Bug </a>
+<a id="inspectorContent" target="_blank" href="inspector-traversal-data.html">Test Document</a>
+<p id="display"></p>
+<div id="content" style="display: none">
+
+</div>
+<pre id="test">
+</pre>
+</body>
+</html>

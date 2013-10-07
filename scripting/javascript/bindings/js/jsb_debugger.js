@@ -1,9 +1,20 @@
+require('debugger/DevToolsUtils.js', "debug");
+require('debugger/core/promise.js', "debug");
+require('debugger/transport.js', "debug");
+require('debugger/actors/root.js', "debug");
+require('debugger/actors/script.js', "debug");
+require('debugger/main.js', "debug");
+// require('debugger/jsb-tests/testactors.js', "debug");
+// require('debugger/jsb-tests/test_dbgglobal.js', "debug");
+
 dbg = {
   LONG_STRING_LENGTH: 10000,
   LONG_STRING_INITIAL_LENGTH: 1000,
   LONG_STRING_READ_LENGTH: 1000
 };
 dbg.log = log;
+
+var globalDebuggee = null;
 
 var textCommandProcessor = {};
 
@@ -624,7 +635,87 @@ isStringEndsWith = function (str, substring) {
 
 var breakpointActorIndex = 0;
 
+var globalVar = this;
+
+function TestTabActor(aConnection, aGlobal)
+{
+  this.conn = aConnection;
+  this._global = aGlobal;
+  this._threadActor = new ThreadActor(this, this._global);
+  this.conn.addActor(this._threadActor);
+  this._attached = false;
+}
+
+TestTabActor.prototype = {
+  constructor: TestTabActor,
+  actorPrefix: "TestTabActor",
+
+  grip: function() {
+    return { actor: this.actorID, title: "Hello Cocos2d-X JSB", url: "http://cocos2d-x.org" };
+  },
+
+  onAttach: function(aRequest) {
+    this._attached = true;
+    return { type: "tabAttached", threadActor: this._threadActor.actorID };
+  },
+
+  onDetach: function(aRequest) {
+    if (!this._attached) {
+      return { "error":"wrongState" };
+    }
+    return { type: "detached" };
+  },
+
+  // Hooks for use by TestTabActors.
+  addToParentPool: function(aActor) {
+    this.conn.addActor(aActor);
+  },
+
+  removeFromParentPool: function(aActor) {
+    this.conn.removeActor(aActor);
+  }
+};
+
+TestTabActor.prototype.requestTypes = {
+  "attach": TestTabActor.prototype.onAttach,
+  "detach": TestTabActor.prototype.onDetach
+};
+
+function TestTabList(aConnection) {
+  this.conn = aConnection;
+
+  // An array of actors for each global added with
+  // DebuggerServer.addTestGlobal.
+  this._tabActors = [];
+
+  // A pool mapping those actors' names to the actors.
+  this._tabActorPool = new ActorPool(aConnection);
+
+  // for (let global of gTestGlobals) {
+    let actor = new TestTabActor(aConnection, globalDebuggee);
+    actor.selected = false;
+    this._tabActors.push(actor);
+    this._tabActorPool.addActor(actor);
+  // }
+  if (this._tabActors.length > 0) {
+    this._tabActors[0].selected = true;
+  }
+
+  aConnection.addActorPool(this._tabActorPool);
+}
+
+TestTabList.prototype = {
+  constructor: TestTabList,
+  iterator: function() {
+    for (let actor of this._tabActors) {
+      yield actor;
+    }
+  }
+};
+
 this.processInput = function (inputstr, frame, script) {
+
+
     var command_func;
     var command_return;
 	var commands_array = [];
@@ -634,6 +725,49 @@ this.processInput = function (inputstr, frame, script) {
     if (!inputstr) {
         return;
     }
+
+    if (inputstr === "connected")
+    {
+
+        DebuggerServer.createRootActor = (conn => {
+            return new RootActor(conn, { tabList: new TestTabList(conn) });
+        });
+        DebuggerServer.init(() => true);
+        DebuggerServer.openListener(5086);
+
+        // log("debuggerServer: " + debuggerServer);
+        // log("onSocketAccepted: " + debuggerServer.onSocketAccepted);
+
+        if (debuggerServer && debuggerServer.onSocketAccepted)
+        {
+            var aTransport = {
+                host: "127.0.0.1",
+                port: 5086,
+                openInputStream: function() {
+                    return {
+                        close: function(){}
+                    };
+                },
+                openOutputStream: function() {
+                    return {
+                        close: function(){},
+                        write: function(){},
+                        asyncWait: function(){}
+                    };
+                },
+            };
+
+            debuggerServer.onSocketAccepted(null, aTransport);
+        }
+        return;
+    }
+
+    if (DebuggerServer && DebuggerServer._transport && DebuggerServer._transport.onDataAvailable)
+    {
+        DebuggerServer._transport.onDataAvailable(inputstr);
+    }
+
+    return;
 
 //     var testStr = "104:{\
 //   \"to\": \"tabThreadActor111\",\
@@ -983,17 +1117,19 @@ dbg.onDebuggerStatement = function(frame)
 };
 
 this._prepareDebugger = function (global) {
-	var tmp = new Debugger(global);
-	tmp.onNewScript = dbg.onNewScript;
-	tmp.onDebuggerStatement = dbg.onDebuggerStatement;
-	tmp.onError = dbg.onError;
-	dbg.dbg = tmp;
 
-    // use the text command processor at startup
-    dbg.getCommandProcessor = textCommandProcessor.getCommandProcessor;
+    globalDebuggee = global;
+	// var tmp = new Debugger(global);
+	// tmp.onNewScript = dbg.onNewScript;
+	// tmp.onDebuggerStatement = dbg.onDebuggerStatement;
+	// tmp.onError = dbg.onError;
+	// dbg.dbg = tmp;
 
-    // use the text responder at startup
-    dbg.responder = textResponder;
+ //    // use the text command processor at startup
+ //    dbg.getCommandProcessor = textCommandProcessor.getCommandProcessor;
+
+ //    // use the text responder at startup
+ //    dbg.responder = textResponder;
 };
 
 this._startDebugger = function (global, files, startFunc) {
