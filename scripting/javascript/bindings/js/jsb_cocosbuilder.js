@@ -11,6 +11,10 @@ cc.BuilderReader.setResourcePath = function (rootPath) {
     cc.BuilderReader._resourcePath = rootPath;
 };
 
+cc.BuilderReader.setResolutionScale=function(scale){
+    cc._Reader.setResolutionScale(scale)
+};
+
 cc.BuilderReader.load = function(file, owner, parentSize)
 {
     // Load the node graph using the correct function
