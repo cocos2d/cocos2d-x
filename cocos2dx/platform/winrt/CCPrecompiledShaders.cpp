@@ -57,7 +57,7 @@ CCPrecompiledShaders* CCPrecompiledShaders::sharedPrecompiledShaders(void)
 CCPrecompiledShaders::CCPrecompiledShaders(void) 
     : m_isDirty(false)
 {
-
+    Init();
 }
 
 void CCPrecompiledShaders::Init(void)
@@ -66,6 +66,7 @@ void CCPrecompiledShaders::Init(void)
     m_precompiledPrograms.clear();
 
     // add existing precomiled programs to dictionary
+    loadPrecompiledPrograms();
 }
 
 CCPrecompiledShaders::~CCPrecompiledShaders(void)
@@ -128,11 +129,6 @@ void CCPrecompiledShaders::loadPrecompiledPrograms()
 
 bool CCPrecompiledShaders::loadProgram(GLuint program, const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
-    if(m_precompiledPrograms.size() == 0)
-    {
-        loadPrecompiledPrograms();
-    }
-
     std::string id = computeHash(vShaderByteArray, fShaderByteArray);
 
     auto it = m_precompiledPrograms.find(id);
@@ -144,14 +140,16 @@ bool CCPrecompiledShaders::loadProgram(GLuint program, const GLchar* vShaderByte
     return true;
 }
 
-
-
 bool CCPrecompiledShaders::addProgram(GLuint program, const std::string& id)
 {
     int length;
 
     auto it = m_programs.find(id);
     if(it != m_programs.end())
+        return true;
+
+    auto it2 = m_precompiledPrograms.find(id);
+    if(it2 != m_precompiledPrograms.end())
         return true;
 
     m_isDirty = true;
@@ -173,7 +171,6 @@ bool CCPrecompiledShaders::addProgram(GLuint program, const std::string& id)
 
 void CCPrecompiledShaders::savePrecompiledPrograms(Windows::Storage::StorageFolder^ folder)
 {
-
     Platform::String ^fileName = L"precompiledshaders.h";
 
     auto saveTask = create_task(folder->CreateFileAsync(fileName, CreationCollisionOption::ReplaceExisting));
@@ -247,6 +244,9 @@ void CCPrecompiledShaders::savePrecompiledPrograms(Windows::Storage::StorageFold
 
 void CCPrecompiledShaders::savePrecompiledShaders()
 {
+    if(!m_isDirty)
+        return;
+
     FolderPicker^ folderPicker = ref new FolderPicker();
     folderPicker->SuggestedStartLocation = PickerLocationId::Desktop;
     folderPicker->FileTypeFilter->Append(".h");
@@ -254,7 +254,10 @@ void CCPrecompiledShaders::savePrecompiledShaders()
     auto saveTask = create_task(folderPicker->PickSingleFolderAsync());
     saveTask.then([this](StorageFolder^ folder)
     {
-        savePrecompiledPrograms(folder);
+        if(folder != nullptr)
+        {
+            savePrecompiledPrograms(folder);
+        }
 	});
 }
 #endif
