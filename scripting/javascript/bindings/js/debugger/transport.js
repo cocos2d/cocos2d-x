@@ -54,28 +54,6 @@ this.DebuggerTransport = function DebuggerTransport(aInput, aOutput)
   this.hooks = null;
 }
 
-function utf16to8(str) {
-    var out, i, len, c;
-
-    out = "";
-    len = str.length;
-    for(i = 0; i < len; i++) 
-    { 
-        c = str.charCodeAt(i);   if ((c >= 0x0001) && (c <= 0x007F)) {       out += str.charAt(i);   } else if (c > 0x07FF)
-        {
-            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
-            out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
-            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
-        } 
-        else
-        {
-            out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
-            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
-        }
-    }
-    return out;
-}
-
 DebuggerTransport.prototype = {
   /**
    * Transmit a packet.
@@ -193,6 +171,7 @@ DebuggerTransport.prototype = {
 
     try {
       // packet = this._converter.ConvertToUnicode(packet);
+      packet = utf8to16(packet);
       var parsed = JSON.parse(packet);
     } catch(e) {
       let msg = "Error parsing incoming packet: " + packet + " (" + e + " - " + e.stack + ")";
