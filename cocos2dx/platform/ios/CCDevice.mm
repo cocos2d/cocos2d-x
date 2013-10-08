@@ -6,7 +6,7 @@
 #import <UIKit/UIKit.h>
 
 // Accelerometer
-#include<CoreMotion/CoreMotion.h>
+#import<CoreMotion/CoreMotion.h>
 #import<CoreFoundation/CoreFoundation.h>
 
 @interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
