@@ -32,7 +32,7 @@ end
 
 function ArmatureTestScene:runThisTest()
     cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/TestBone0.png", "armature/TestBone0.plist", "armature/TestBone.json")
-    cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.json")
+    cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.ExportJson")
     cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml")
     cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml")
     cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml")
