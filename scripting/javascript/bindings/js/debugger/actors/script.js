@@ -278,7 +278,7 @@ ThreadActor.prototype = {
       }
       packet.why = aReason;
       resolve(onPacket(packet)).then(this.conn.send.bind(this.conn));
-      _lockVM(aFrame, aFrame.script);
+      _lockVM();
       return this._nest();
     } catch(e) {
       let msg = "Got an exception during TA__pauseAndRespond: " + e +

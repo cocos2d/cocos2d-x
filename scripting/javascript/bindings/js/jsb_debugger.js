@@ -84,7 +84,7 @@ TestTabList.prototype = {
   }
 };
 
-this.processInput = function (inputstr, frame, script) {
+this.processInput = function (inputstr) {
 
     if (!inputstr) {
         return;
