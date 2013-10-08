@@ -2143,7 +2143,7 @@ JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp)
 
 static void _clientSocketWriteAndClearString(std::string& s)
 {
-    ::write(clientSocket, s.c_str(), s.length());
+    ::send(clientSocket, s.c_str(), s.length(), 0);
     s.clear();
 }
 
@@ -2215,8 +2215,8 @@ static void clearBuffers() {
 static void serverEntryPoint(void)
 {
     // start a server, accept the connection and keep reading data from it
-    struct addrinfo hints, *result, *rp;
-    int s;
+    struct addrinfo hints, *result = nullptr, *rp = nullptr;
+    int s = 0;
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_INET;       // IPv4
     hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
@@ -2225,7 +2225,13 @@ static void serverEntryPoint(void)
     stringstream portstr;
     portstr << JSB_DEBUGGER_PORT;
 
-    int err;
+    int err = 0;
+   
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    WSADATA wsaData;
+    err = WSAStartup(MAKEWORD(2, 2),&wsaData); 
+#endif
+
     if ((err = getaddrinfo(NULL, portstr.str().c_str(), &hints, &result)) != 0) {
         LOGD("getaddrinfo error : %s\n", gai_strerror(err));
     }
