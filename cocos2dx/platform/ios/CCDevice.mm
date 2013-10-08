@@ -6,13 +6,13 @@
 #import <UIKit/UIKit.h>
 
 // Accelerometer
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <functional>
+#include<CoreMotion/CoreMotion.h>
+#import<CoreFoundation/CoreFoundation.h>
 
 @interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
     cocos2d::Acceleration *_acceleration;
+    CMMotionManager *_motionManager;
 }
 
 + (id) sharedAccelerometerDispather;
@@ -38,6 +38,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 - (id) init
 {
     _acceleration = new cocos2d::Acceleration();
+    _motionManager = [[CMMotionManager alloc] init];
     return self;
 }
 
@@ -45,6 +46,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 {
     s_pAccelerometerDispatcher = nullptr;
     delete _acceleration;
+    [_motionManager release];
     [super dealloc];
 }
 
@@ -52,25 +54,27 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 {
     if (isEnabled)
     {
-        [[UIAccelerometer sharedAccelerometer] setDelegate:self];
+        [_motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+            [self accelerometer:accelerometerData];
+        }];
     }
     else
     {
-        [[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+        [_motionManager stopAccelerometerUpdates];
     }
 }
 
 -(void) setAccelerometerInterval:(float)interval
 {
-    [[UIAccelerometer sharedAccelerometer] setUpdateInterval:interval];
+    _motionManager.accelerometerUpdateInterval = interval;
 }
 
-- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+- (void)accelerometer:(CMAccelerometerData *)accelerometerData
 {
-    _acceleration->x = acceleration.x;
-    _acceleration->y = acceleration.y;
-    _acceleration->z = acceleration.z;
-    _acceleration->timestamp = acceleration.timestamp;
+    _acceleration->x = accelerometerData.acceleration.x;
+    _acceleration->y = accelerometerData.acceleration.y;
+    _acceleration->z = accelerometerData.acceleration.z;
+    _acceleration->timestamp = accelerometerData.timestamp;
     
     double tmp = _acceleration->x;
     

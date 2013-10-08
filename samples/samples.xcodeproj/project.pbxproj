@@ -1356,6 +1356,9 @@
 		B36FB10617990E14005F39FB /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
 		B36FB10917990F13005F39FB /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
 		B3F4402117DF06F0003B4F84 /* PhysicsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */; };
+		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D60AE43717F9142200757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D60AE43817F9143D00757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		ED32BBA817DDDA4E004E0169 /* ShaderTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */; };
 		ED743D1517D098AF0004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1617D098B60004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
@@ -3134,6 +3137,7 @@
 		A0BD5A1D178F5F6C008915C5 /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
 		B3F4401F17DF06F0003B4F84 /* PhysicsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsTest.cpp; path = PhysicsTest/PhysicsTest.cpp; sourceTree = "<group>"; };
 		B3F4402017DF06F0003B4F84 /* PhysicsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsTest.h; path = PhysicsTest/PhysicsTest.h; sourceTree = "<group>"; };
+		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderTest2.cpp; sourceTree = "<group>"; };
 		EDF3D9C217D9B67C00D4C480 /* ShaderTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTest2.h; sourceTree = "<group>"; };
@@ -3164,6 +3168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D60AE43717F9142200757E4B /* CoreMotion.framework in Frameworks */,
 				1A119860178538E400D62A44 /* libcocos2dx iOS.a in Frameworks */,
 				1A119861178538E400D62A44 /* libCocosDenshion iOS.a in Frameworks */,
 				1A119862178538E400D62A44 /* libcocos2dx-extensions iOS.a in Frameworks */,
@@ -3266,6 +3271,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D60AE43817F9143D00757E4B /* CoreMotion.framework in Frameworks */,
 				A01E17D01784C23400B0CA4A /* libjsbindings iOS.a in Frameworks */,
 				A01E17611784C06E00B0CA4A /* libbox2d iOS.a in Frameworks */,
 				A01E17621784C06E00B0CA4A /* libchipmunk iOS.a in Frameworks */,
@@ -3585,6 +3591,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */,
 				B36FB10917990F13005F39FB /* libcocos2dx iOS.a in Frameworks */,
 				A07A522B1783A1EC0073F6A7 /* libbox2d iOS.a in Frameworks */,
 				A07A522C1783A1EC0073F6A7 /* libchipmunk iOS.a in Frameworks */,
@@ -3888,6 +3895,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D60AE43317F7FFE100757E4B /* CoreMotion.framework */,
 				A035A71117822E9E00987F6C /* libsqlite3.dylib */,
 				1A9F808C177E98A600D9A1CB /* libcurl.dylib */,
 				15C6482E165F399D007D4F18 /* libz.dylib */,
