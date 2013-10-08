@@ -911,7 +911,7 @@ SpriteZVertex::SpriteZVertex()
     auto node = Node::create();
     // camera uses the center of the image as the pivoting point
     node->setContentSize( Size(s.width,s.height) );
-    node->setAnchorPoint( Point(0.5f, 0.5f));
+    node->setAnchorPoint( Point::ANCHOR_MIDDLE);
     node->setPosition( Point(s.width/2, s.height/2));
 
     addChild(node, 0);
@@ -994,7 +994,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
     // camera uses the center of the image as the pivoting point
     batch->setContentSize( Size(s.width,s.height));
-    batch->setAnchorPoint( Point(0.5f, 0.5f));
+    batch->setAnchorPoint( Point::ANCHOR_MIDDLE);
     batch->setPosition( Point(s.width/2, s.height/2));
     
     batch->setShaderProgram(alphaTestShader);
@@ -1052,13 +1052,13 @@ SpriteAnchorPoint::SpriteAnchorPoint()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( Point::ZERO );
+                sprite->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
                 break;
             case 1:
-                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point::ANCHOR_MIDDLE );
                 break;
             case 2:
-                sprite->setAnchorPoint( Point(1,1) );
+                sprite->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
                 break;
         }
         
@@ -1104,13 +1104,13 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( Point::ZERO );
+                sprite->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
                 break;
             case 1:
-                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point::ANCHOR_MIDDLE );
                 break;
             case 2:
-                sprite->setAnchorPoint( Point(1,1) );
+                sprite->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
                 break;
         }
 
@@ -1142,7 +1142,7 @@ Sprite6::Sprite6()
 
     auto s = Director::getInstance()->getWinSize();
 
-    batch->setAnchorPoint( Point(0.5f, 0.5f) );
+    batch->setAnchorPoint( Point::ANCHOR_MIDDLE );
     batch->setContentSize( Size(s.width, s.height) );
     
     
@@ -1803,13 +1803,13 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( Point::ZERO );
+                sprite->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
                 break;
             case 1:
-                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point::ANCHOR_MIDDLE );
                 break;
             case 2:
-                sprite->setAnchorPoint( Point(1,1) );
+                sprite->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
                 break;
         }
         
@@ -1880,13 +1880,13 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( Point::ZERO );
+                sprite->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
                 break;
             case 1:
-                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point::ANCHOR_MIDDLE );
                 break;
             case 2:
-                sprite->setAnchorPoint( Point(1,1) );
+                sprite->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
                 break;
         }
         
@@ -1955,13 +1955,13 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         switch(i) 
         {
             case 0:
-                sprite->setAnchorPoint( Point::ZERO );
+                sprite->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
                 break;
             case 1:
-                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point::ANCHOR_MIDDLE );
                 break;
             case 2:
-                sprite->setAnchorPoint( Point(1,1) );
+                sprite->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
                 break;
         }
         
@@ -2032,13 +2032,13 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         
         switch(i) {
             case 0:
-                sprite->setAnchorPoint( Point::ZERO );
+                sprite->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
                 break;
             case 1:
-                sprite->setAnchorPoint( Point(0.5f, 0.5f) );
+                sprite->setAnchorPoint( Point::ANCHOR_MIDDLE );
                 break;
             case 2:
-                sprite->setAnchorPoint( Point(1,1) );
+                sprite->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
                 break;
         }
         
@@ -2578,7 +2578,7 @@ SpriteChildrenAnchorPoint::SpriteChildrenAnchorPoint()
     // anchor (0,0)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
     sprite1->setPosition(Point(s.width/4,s.height/2));
-    sprite1->setAnchorPoint( Point(0,0) );
+    sprite1->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
 
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
@@ -2606,7 +2606,7 @@ SpriteChildrenAnchorPoint::SpriteChildrenAnchorPoint()
     // anchor (0.5, 0.5)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
     sprite1->setPosition(Point(s.width/2,s.height/2));
-    sprite1->setAnchorPoint( Point(0.5f, 0.5f) );
+    sprite1->setAnchorPoint( Point::ANCHOR_MIDDLE );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
     sprite2->setPosition(Point(20,30));
@@ -2632,7 +2632,7 @@ SpriteChildrenAnchorPoint::SpriteChildrenAnchorPoint()
     // anchor (1,1)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
     sprite1->setPosition(Point(s.width/2+s.width/4,s.height/2));
-    sprite1->setAnchorPoint( Point(1,1) );
+    sprite1->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
 
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
@@ -2691,7 +2691,7 @@ SpriteBatchNodeChildrenAnchorPoint::SpriteBatchNodeChildrenAnchorPoint()
     // anchor (0,0)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
     sprite1->setPosition(Point(s.width/4,s.height/2));
-    sprite1->setAnchorPoint( Point(0,0) );
+    sprite1->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
     sprite2->setPosition(Point(20,30));
@@ -2717,7 +2717,7 @@ SpriteBatchNodeChildrenAnchorPoint::SpriteBatchNodeChildrenAnchorPoint()
     // anchor (0.5, 0.5)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
     sprite1->setPosition(Point(s.width/2,s.height/2));
-    sprite1->setAnchorPoint( Point(0.5f, 0.5f) );
+    sprite1->setAnchorPoint( Point::ANCHOR_MIDDLE );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
     sprite2->setPosition(Point(20,30));
@@ -2743,7 +2743,7 @@ SpriteBatchNodeChildrenAnchorPoint::SpriteBatchNodeChildrenAnchorPoint()
     // anchor (1,1)
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_08.png");
     sprite1->setPosition(Point(s.width/2+s.width/4,s.height/2));
-    sprite1->setAnchorPoint( Point(1,1) );
+    sprite1->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
     
     sprite2 = Sprite::createWithSpriteFrameName("grossini_dance_02.png");
     sprite2->setPosition(Point(20,30));
@@ -3638,13 +3638,13 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(Point::ZERO);
+            sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             break;
         case 1:
-            sprite->setAnchorPoint(Point(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
             break;
         case 2:
-            sprite->setAnchorPoint(Point(1, 1));
+            sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
             break;
         }
 
@@ -3716,13 +3716,13 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(Point::ZERO);
+            sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             break;
         case 1:
-            sprite->setAnchorPoint(Point(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
             break;
         case 2:
-            sprite->setAnchorPoint(Point(1, 1));
+            sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
             break;
         }
 
@@ -3791,13 +3791,13 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(Point::ZERO);
+            sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             break;
         case 1:
-            sprite->setAnchorPoint(Point(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
             break;
         case 2:
-            sprite->setAnchorPoint(Point(1, 1));
+            sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
             break;
         }
 
@@ -3873,13 +3873,13 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(Point::ZERO);
+            sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             break;
         case 1:
-            sprite->setAnchorPoint(Point(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
             break;
         case 2:
-            sprite->setAnchorPoint(Point(1, 1));
+            sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
             break;
         }
 
@@ -3955,13 +3955,13 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(Point::ZERO);
+            sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             break;
         case 1:
-            sprite->setAnchorPoint(Point(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
             break;
         case 2:
-            sprite->setAnchorPoint(Point(1, 1));
+            sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
             break;
         }
 
@@ -4037,13 +4037,13 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
         switch (i)
         {
         case 0:
-            sprite->setAnchorPoint(Point::ZERO);
+            sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             break;
         case 1:
-            sprite->setAnchorPoint(Point(0.5f, 0.5f));
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
             break;
         case 2:
-            sprite->setAnchorPoint(Point(1, 1));
+            sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
             break;
         }
 
@@ -4320,13 +4320,13 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
         switch(i)
         {
             case 0:
-                sprite->setAnchorPoint(Point::ZERO);
+                sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
                 break;
             case 1:
-                sprite->setAnchorPoint(Point(0.5f, 0.5f));
+                sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
                 break;
             case 2:
-                sprite->setAnchorPoint(Point(1,1));
+                sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
                 break;
         }
         
@@ -4396,13 +4396,13 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         switch(i)
         {
             case 0:
-                sprite->setAnchorPoint(Point::ZERO);
+                sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
                 break;
             case 1:
-                sprite->setAnchorPoint(Point(0.5f, 0.5f));
+                sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
                 break;
             case 2:
-                sprite->setAnchorPoint(Point(1,1));
+                sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
                 break;
         }
         
@@ -4469,13 +4469,13 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         switch(i)
         {
             case 0:
-                sprite->setAnchorPoint(Point::ZERO);
+                sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
                 break;
             case 1:
-                sprite->setAnchorPoint(Point(0.5f, 0.5f));
+                sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
                 break;
             case 2:
-                sprite->setAnchorPoint(Point(1,1));
+                sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
                 break;
         }
         
@@ -4552,13 +4552,13 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         switch(i)
         {
             case 0:
-                sprite->setAnchorPoint(Point::ZERO);
+                sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
                 break;
             case 1:
-                sprite->setAnchorPoint(Point(0.5f, 0.5f));
+                sprite->setAnchorPoint(Point::ANCHOR_MIDDLE);
                 break;
             case 2:
-                sprite->setAnchorPoint(Point(1,1));
+                sprite->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
                 break;
         }
         
