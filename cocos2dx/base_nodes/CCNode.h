@@ -288,6 +288,15 @@ public:
      */
     virtual float getScale() const;
     
+     /**
+     * Changes both X and Y scale factor of the node.
+     *
+     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
+     *
+     * @param scaleX     The scale factor on X axis.
+     * @param scaleY     The scale factor on Y axis.
+     */
+    virtual void setScale(float scaleX,float scaleY);
     
     /**
      * Changes the position (x,y) of the node in OpenGL coordinates
