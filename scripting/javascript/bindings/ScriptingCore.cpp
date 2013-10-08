@@ -201,6 +201,12 @@ void js_log(const char *format, ...) {
     int len = vsnprintf(_js_log_buf, kMaxLogLen, format, vl);
     va_end(vl);
     if (len) {
+        std::string logBuf = _js_log_buf;
+        if (std::string::npos != logBuf.find("unknown (can't convert to")
+            || std::string::npos != logBuf.find("too much recursion"))
+        {
+            log("exception....");
+        }
         CCLOG("JS: %s\n", _js_log_buf);
     }
 }
@@ -2204,13 +2210,6 @@ static void clearBuffers() {
     if (outData.length() > 0) {
         _clientSocketWriteAndClearString(outData);
     }
-}
-
-static int replyToClient(int socket, const std::string& buf)
-{
-    std::stringstream bufSend;
-    bufSend << buf.length() << ":" << buf;
-    return ::send(socket, bufSend.str().c_str(), bufSend.str().length(), 0);
 }
 
 static void serverEntryPoint(void)

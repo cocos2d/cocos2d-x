@@ -145,6 +145,16 @@
 		1A219E2617E8A2CD00EE4980 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0359A4017821D9B00987F6C /* KeyboardTest.cpp */; };
 		1A2B004518025A4F009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
 		1A2B004618025A4F009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B004E1803B90E009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B004F1803B911009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B00501803B912009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B00511803B913009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B00521803B918009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B00531803B919009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B00541803B91A009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B00551803B91B009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B00561803B91B009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
+		1A2B00571803B91C009E8C43 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B004418025A4F009E8C43 /* js */; };
 		1A33319A17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */; };
 		1A33319B17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */; };
 		1A6FB4DE17854A6A00CDF010 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C417854A6A00CDF010 /* animations */; };
@@ -3663,6 +3673,15 @@
 			name = "Lua Common";
 			sourceTree = "<group>";
 		};
+		1A2B004B1803B8D4009E8C43 /* JS Common */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B004418025A4F009E8C43 /* js */,
+			);
+			name = "JS Common";
+			path = Javascript/TestJavascript;
+			sourceTree = "<group>";
+		};
 		1A33319117E2DF4E00ED3802 /* NewEventDispatcherTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -3731,6 +3750,7 @@
 				A035AE8A1782564100987F6C /* HelloCpp */,
 				1A1197E51785374900D62A44 /* HelloLua */,
 				1A119C8D17853D6300D62A44 /* Lua Common */,
+				1A2B004B1803B8D4009E8C43 /* JS Common */,
 				A035A9F9178240E000987F6C /* MoonWarriors */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				A035AD78178254FF00987F6C /* SimpleGame */,
@@ -5041,7 +5061,6 @@
 		A035A5F21782296200987F6C /* TestJavascript */ = {
 			isa = PBXGroup;
 			children = (
-				1A2B004418025A4F009E8C43 /* js */,
 				A035A6321782296200987F6C /* proj.mac */,
 				A01E17741784C0DF00B0CA4A /* proj.ios */,
 				A035A6F4178229ED00987F6C /* JS Tests */,
@@ -6507,6 +6526,7 @@
 				A01E191E1784C5CE00B0CA4A /* Icon-144.png in Resources */,
 				A01E191F1784C5CE00B0CA4A /* Icon-57.png in Resources */,
 				A01E19201784C5CE00B0CA4A /* Icon-72.png in Resources */,
+				1A2B00521803B918009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6528,6 +6548,7 @@
 				A01E194B1784C7B200B0CA4A /* Icon@2x.png in Resources */,
 				A01E192A1784C7A400B0CA4A /* main.js in Resources */,
 				A01E192B1784C7A400B0CA4A /* MoonWarriors-jsb.js in Resources */,
+				1A2B00551803B91B009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6543,6 +6564,7 @@
 				A01E196B1784C83200B0CA4A /* Icon-144.png in Resources */,
 				A01E196C1784C83200B0CA4A /* Icon-57.png in Resources */,
 				A01E196D1784C83200B0CA4A /* Icon-72.png in Resources */,
+				1A2B00561803B91B009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6558,6 +6580,7 @@
 				A01E198C1784C88400B0CA4A /* Icon-57.png in Resources */,
 				A01E198D1784C88400B0CA4A /* Icon-72.png in Resources */,
 				A01E19941784C89300B0CA4A /* Published files iOS in Resources */,
+				1A2B00571803B91C009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6577,6 +6600,7 @@
 				A01E19DA1784DA0600B0CA4A /* index.html in Resources */,
 				A01E19F41784DA0600B0CA4A /* obfuscate.xml in Resources */,
 				A01E1A141784DC0800B0CA4A /* res in Resources */,
+				1A2B00531803B919009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6599,6 +6623,7 @@
 				A01E1A3F1784DC4000B0CA4A /* build.xml in Resources */,
 				A01E1A4E1784DC4000B0CA4A /* index.html in Resources */,
 				A01E1A5B1784DC4000B0CA4A /* res in Resources */,
+				1A2B00541803B91A009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6683,6 +6708,7 @@
 				A035A9B11782355600987F6C /* InfoPlist.strings in Resources */,
 				A035A9B21782355600987F6C /* MainMenu.xib in Resources */,
 				A035A9B31782355600987F6C /* Icon.icns in Resources */,
+				1A2B004E1803B90E009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6697,6 +6723,7 @@
 				A035AA6E178240E000987F6C /* Icon.icns in Resources */,
 				A035AA881782413200987F6C /* res in Resources */,
 				A035AA8B1782413200987F6C /* src in Resources */,
+				1A2B004F1803B911009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6708,6 +6735,7 @@
 				A035AB37178242AF00987F6C /* MainMenu.xib in Resources */,
 				A035AB38178242AF00987F6C /* Icon.icns in Resources */,
 				A035AC001782435F00987F6C /* Published-iOS in Resources */,
+				1A2B00501803B912009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6719,6 +6747,7 @@
 				A035ACAB178245AB00987F6C /* MainMenu.xib in Resources */,
 				A035ACAC178245AB00987F6C /* Icon.icns in Resources */,
 				A035ACB9178245FD00987F6C /* Published files iOS in Resources */,
+				1A2B00511803B913009E8C43 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
