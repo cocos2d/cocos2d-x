@@ -256,6 +256,7 @@ void CCPrecompiledShaders::savePrecompiledShaders()
     if(!m_isDirty)
         return;
 
+
     FolderPicker^ folderPicker = ref new FolderPicker();
     folderPicker->SuggestedStartLocation = PickerLocationId::Desktop;
     folderPicker->FileTypeFilter->Append(".h");
@@ -266,7 +267,8 @@ void CCPrecompiledShaders::savePrecompiledShaders()
         if(folder != nullptr)
         {
             savePrecompiledPrograms(folder);
-        }
+            m_isDirty = false;
+       }
 	});
 }
 #endif
