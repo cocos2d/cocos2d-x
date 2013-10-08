@@ -52,6 +52,7 @@ public:
     CC_PROPERTY(CCBone *, m_pBone, Bone);
 
 protected:
+    CCArmature *m_pArmature;
     CCAffineTransform m_tSkinTransform;
     CC_SYNTHESIZE_READONLY(std::string, m_strDisplayName, DisplayName)
 };

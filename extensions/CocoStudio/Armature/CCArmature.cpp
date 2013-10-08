@@ -457,7 +457,7 @@ void CCArmature::update(float dt)
 
 void CCArmature::draw()
 {
-    if (m_pParentBone == NULL)
+    if (m_pParentBone == NULL && m_pBatchNode == NULL)
     {
         CC_NODE_DRAW_SETUP();
         ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
