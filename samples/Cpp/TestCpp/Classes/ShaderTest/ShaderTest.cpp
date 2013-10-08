@@ -143,6 +143,20 @@ void ShaderTestDemo::precompileShaders()
     node->loadShaderVertex("Shaders/example_Flower.vsh", "Shaders/example_Flower.fsh");
     node->loadShaderVertex("Shaders/example_Plasma.vsh", "Shaders/example_Plasma.fsh");
     node->release();
+
+
+    GLchar * fragSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathForFilename("Shaders/example_HorizontalColor.fsh").c_str())->getCString();
+    CCGLProgram *p = new CCGLProgram();
+    p->initWithVertexShaderByteArray(ccPositionTexture_vert, fragSource);
+    p->link();
+
+    fragSource = (GLchar*) CCString::createWithContentsOfFile(
+                                CCFileUtils::sharedFileUtils()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();\
+    p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
+    p->link();
+    p->release();
+    
+    
 }
 #endif
 
