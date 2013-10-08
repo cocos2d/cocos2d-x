@@ -69,7 +69,14 @@ bool CCFileUtilsWinRT::isFileExist(const std::string& strFilePath)
 {
     bool ret = false;
     FILE * pf = 0;
-	const char* path = strFilePath.c_str();
+
+    std::string strPath = strFilePath;
+    if (!isAbsolutePath(strPath))
+    { // Not absolute path, add the default root path at the beginning.
+        strPath.insert(0, m_strDefaultResRootPath);
+    }
+
+    const char* path = strPath.c_str();
 
 	if (path && strlen(path) && (pf = fopen(path, "rb")))
     {
