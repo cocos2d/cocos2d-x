@@ -25,6 +25,7 @@
 #ifndef __HTTP_REQUEST_H__
 #define __HTTP_REQUEST_H__
 
+#include <algorithm>
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 
@@ -214,7 +215,21 @@ public:
    	{
    		return _headers;
    	}
-    
+
+    /** Get the value of Accept-Encoding header **/
+    inline const char* getAcceptEncoding() {
+        for (std::vector<std::string>::iterator it = _headers.begin(); it != _headers.end(); ++it) {
+            int colon = it->find_first_of(":");
+            std::string key = it->substr(0, colon-1);
+            std::string val = it->substr(it->find_first_not_of(" \t", colon+1)); // strip leading whitespaces
+            std::transform(key.begin(), key.end(), key.begin(), ::tolower); // case insensitive
+            if(key.compare("accept-encoding") == 0) {
+                return val.c_str();
+            }
+        }
+        return NULL;
+     }
+
 protected:
     // properties
     Type             _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
