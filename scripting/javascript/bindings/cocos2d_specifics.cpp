@@ -268,16 +268,22 @@ JSBool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc > 0) {
 		cocos2d::Array* array = cocos2d::Array::create();
-		uint32_t i = 0;
-		while (i < argc) {
-			js_proxy_t *proxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
-			proxy = jsb_get_js_proxy(tmpObj);
-			cocos2d::Object *item = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
-			TEST_NATIVE_OBJECT(cx, item)
-			array->addObject(item);
-			i++;
-		}
+        if (argc == 1 && JS_IsArrayObject(cx, JSVAL_TO_OBJECT(argv[0]))) {
+            JSBool ok = JS_TRUE;
+            ok &= jsval_to_ccarray(cx, argv[0], &array);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        } else {
+            uint32_t i = 0;
+            while (i < argc) {
+                js_proxy_t *proxy;
+                JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
+                proxy = jsb_get_js_proxy(tmpObj);
+                cocos2d::Object *item = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
+                TEST_NATIVE_OBJECT(cx, item)
+                array->addObject(item);
+                i++;
+            }
+        }
 		cocos2d::FiniteTimeAction* ret = cocos2d::Sequence::create(array);
 		jsval jsret;
 		do {
@@ -306,16 +312,22 @@ JSBool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc > 0) {
 		cocos2d::Array* array = cocos2d::Array::create();
-		uint32_t i = 0;
-		while (i < argc) {
-			js_proxy_t *proxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
-			proxy = jsb_get_js_proxy(tmpObj);
-			cocos2d::Object *item = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
-			TEST_NATIVE_OBJECT(cx, item)
-			array->addObject(item);
-			i++;
-		}
+        if (argc == 1 && JS_IsArrayObject(cx, JSVAL_TO_OBJECT(argv[0]))) {
+            JSBool ok = JS_TRUE;
+            ok &= jsval_to_ccarray(cx, argv[0], &array);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        } else {
+            uint32_t i = 0;
+            while (i < argc) {
+                js_proxy_t *proxy;
+                JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
+                proxy = jsb_get_js_proxy(tmpObj);
+                cocos2d::Object *item = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
+                TEST_NATIVE_OBJECT(cx, item)
+                array->addObject(item);
+                i++;
+            }
+        }
 		cocos2d::FiniteTimeAction* ret = cocos2d::Spawn::create(array);
 		jsval jsret;
 		do {
