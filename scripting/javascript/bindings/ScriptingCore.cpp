@@ -60,7 +60,6 @@ static vector<string> g_queue;
 static std::mutex g_qMutex;
 static std::mutex g_rwMutex;
 static bool vmLock = false;
-static jsval frame = JSVAL_NULL, script = JSVAL_NULL;
 static int clientSocket = -1;
 
 // server entry point for the bg thread
@@ -193,14 +192,18 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj,
 }
 
 void js_log(const char *format, ...) {
-    if (_js_log_buf == NULL) {
+
+    if (_js_log_buf == NULL)
+    {
         _js_log_buf = (char *)calloc(sizeof(char), kMaxLogLen+1);
+        _js_log_buf[kMaxLogLen] = '\0';
     }
     va_list vl;
     va_start(vl, format);
     int len = vsnprintf(_js_log_buf, kMaxLogLen, format, vl);
     va_end(vl);
-    if (len) {
+    if (len > 0)
+    {
         std::string logBuf = _js_log_buf;
         if (std::string::npos != logBuf.find("unknown (can't convert to")
             || std::string::npos != logBuf.find("too much recursion"))
@@ -1949,14 +1952,12 @@ void ScriptingCore::debugProcessInput(string str) {
     JSAutoCompartment ac(cx_, debugGlobal_);
     
     JSString* jsstr = JS_NewStringCopyZ(cx_, str.c_str());
-    jsval argv[3] = {
-        STRING_TO_JSVAL(jsstr),
-        frame,
-        script
+    jsval argv[] = {
+        STRING_TO_JSVAL(jsstr)
     };
     jsval outval;
     
-    JS_CallFunctionName(cx_, debugGlobal_, "processInput", 3, argv, &outval);
+    JS_CallFunctionName(cx_, debugGlobal_, "processInput", 1, argv, &outval);
 }
 
 void ScriptingCore::enableDebugger() {
@@ -1969,7 +1970,7 @@ void ScriptingCore::enableDebugger() {
         JS_DefineFunction(cx_, debugGlobal_, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_bufferRead", JSBDebug_BufferRead, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_lockVM", JSBDebug_LockExecution, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(cx_, debugGlobal_, "_lockVM", JSBDebug_LockExecution, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_unlockVM", JSBDebug_UnlockExecution, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         
         
@@ -2162,11 +2163,14 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 // this should lock the execution of the running thread, waiting for a signal
 JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp)
 {
-    if (argc == 2) {
-        printf("locking vm\n");
-        jsval* argv = JS_ARGV(cx, vp);
-        frame = argv[0];
-        script = argv[1];
+    if (argc == 0)
+    {
+        if (vmLock)
+        {
+            CCLOG("%s", "vm has been locked.");
+            return JS_TRUE;
+        }
+        CCLOG("%s","locking vm\n");
         vmLock = true;
         while (vmLock) {
             // try to read the input, if there's anything
@@ -2180,9 +2184,8 @@ JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp)
             g_qMutex.unlock();
             std::this_thread::yield();
         }
-        printf("vm unlocked\n");
-        frame = JSVAL_NULL;
-        script = JSVAL_NULL;
+        CCLOG("%s","vm unlocked\n");
+
         return JS_TRUE;
     }
     JS_ReportError(cx, "invalid call to _lockVM");
