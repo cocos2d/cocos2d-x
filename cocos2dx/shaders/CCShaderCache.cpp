@@ -41,6 +41,7 @@ enum {
     kCCShaderType_PositionTextureA8Color,
     kCCShaderType_Position_uColor,
     kCCShaderType_PositionLengthTexureColor,
+    kCCShaderType_ControlSwitch,
     
     kCCShaderType_MAX,
 };
@@ -153,6 +154,15 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
     
     m_pPrograms->setObject(p, kCCShader_PositionLengthTexureColor);
+    p->release();
+
+    //
+	// ControlSwitch
+	//
+    p = new CCGLProgram();
+    loadDefaultShader(p, kCCShaderType_ControlSwitch);
+    
+    m_pPrograms->setObject(p, kCCShader_ControlSwitch);
     p->release();
 }
 
@@ -280,6 +290,16 @@ void CCShaderCache::loadDefaultShader(CCGLProgram *p, int type)
             p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
             
             break;
+
+       case kCCShaderType_ControlSwitch:
+            p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccExSwitchMask_frag);
+
+            p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+            p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
+            p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+
+            break;
+
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;
