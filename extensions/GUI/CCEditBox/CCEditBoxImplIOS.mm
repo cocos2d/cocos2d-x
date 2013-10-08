@@ -488,7 +488,7 @@ bool EditBoxImplIOS::isEditing()
 void EditBoxImplIOS::setText(const char* pText)
 {
     _systemControl.textField.text = [NSString stringWithUTF8String:pText];
-	if(_systemControl.textField.hidden == YES) {
+	//if(_systemControl.textField.hidden == YES) {
 		setInactiveText(pText);
 		if(strlen(pText) == 0)
 		{
@@ -500,7 +500,7 @@ void EditBoxImplIOS::setText(const char* pText)
 			_label->setVisible(true);
 			_labelPlaceHolder->setVisible(false);
 		}
-	}
+	//}
 }
 
 const char*  EditBoxImplIOS::getText(void)
