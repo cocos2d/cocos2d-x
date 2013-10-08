@@ -12,7 +12,7 @@ protected:
     virtual ~PlayerController(void);
     
 public:
-    virtual void ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event);
+    virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event) override;
     
 public:
     virtual bool init();

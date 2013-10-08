@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 class Skin;
 class Bone;
@@ -38,28 +38,26 @@ class DisplayData;
 class DisplayFactory
 {
 public:
-	static void addDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
-	static void createDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-	static void updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
+    static void addDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
+    static void createDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
+    static void updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-	static void addSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
-	static void createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-	static void updateSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
+    static void addSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
+    static void createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
+    static void initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, const char *displayName, Skin *skin);
+    static void updateSpriteDisplay(Bone *bone, Node *display, float dt, bool dirty);
 
-	static void addArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
-	static void createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-	static void updateArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-	static void addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
-	static void createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-	static void updateParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
+    static void addArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
+    static void createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
+    static void updateArmatureDisplay(Bone *bone, Node *display, float dt, bool dirty);
 
-	static void addShaderDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
-	static void createShaderDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-
+    static void addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
+    static void createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
+    static void updateParticleDisplay(Bone *bone, Node *display, float dt, bool dirty);
 };
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCDISPLAYFACTORY_H__*/

@@ -39,7 +39,7 @@ NS_CC_EXT_BEGIN
 
 	const char* SceneReader::sceneReaderVersion()
 	{
-		return "0.1.0.0";
+		return "1.0.0.0";
 	}
 
     cocos2d::Node* SceneReader::createNodeWithSceneFile(const char* pszFileName)
@@ -49,13 +49,7 @@ NS_CC_EXT_BEGIN
 		cocos2d::Node *pNode = NULL;
         do {
 			  CC_BREAK_IF(pszFileName == NULL);
-			  std::string strFileName(pszFileName);
-			  if (std::string::npos != strFileName.find_last_of('/'))
-			  {
-				  strFileName = strFileName.substr(0, strFileName.find_last_of('/') + 1);
-				  cocos2d::CCFileUtils::getInstance()->addSearchPath(strFileName.c_str());
-			  }
-              pData = (char*)(cocos2d::CCFileUtils::getInstance()->getFileData(pszFileName, "r", &size));
+              pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pszFileName, "r", &size));
               CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
               cs::JsonDictionary *jsonDict = new cs::JsonDictionary();
               jsonDict->initWithDescription(pData);
@@ -107,12 +101,12 @@ NS_CC_EXT_BEGIN
 					const char *plistFile = fileData->getItemStringValue("plistFile");
 					if (file != NULL)
 					{
-						pPath.append(cocos2d::CCFileUtils::getInstance()->fullPathForFilename(file));
+						pPath.append(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
 					}
 
 					if (plistFile != NULL)
 					{
-						pPlistFile.append(cocos2d::CCFileUtils::getInstance()->fullPathForFilename(plistFile));
+						pPlistFile.append(cocos2d::FileUtils::getInstance()->fullPathForFilename(plistFile));
 					}
 					CC_SAFE_DELETE(fileData);
                 }
@@ -205,7 +199,6 @@ NS_CC_EXT_BEGIN
                 }
                 else if(comName != NULL && strcmp(comName, "CCArmature") == 0)
                 {
-					continue;
 					if (nResType != 0)
 					{
 						continue;
@@ -245,7 +238,7 @@ NS_CC_EXT_BEGIN
 						textupath += file_path;
 						textupath.append(textureFileName);
 
-						cocos2d::extension::armature::CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
+						cocos2d::extension::armature::ArmatureDataManager::getInstance()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
 
 					}
 
@@ -315,23 +308,23 @@ NS_CC_EXT_BEGIN
 					}
                     pAudio->preloadBackgroundMusic(pPath.c_str());
 					pAudio->setFile(pPath.c_str());
-					bool bLoop = subDict->getItemIntValue("loop", 0);
+					const bool bLoop = (subDict->getItemIntValue("loop", 0) != 0);
 					pAudio->setLoop(bLoop);
                     gb->addComponent(pAudio);
 					pAudio->playBackgroundMusic(pPath.c_str(), bLoop);
                 }
 				else if(comName != NULL && strcmp(comName, "GUIComponent") == 0)
 				{
-					/*	cocos2d::extension::UILayer *pLayer = cocos2d::extension::UILayer::create();
+                    cocos2d::extension::UILayer *pLayer = cocos2d::extension::UILayer::create();
 					pLayer->scheduleUpdate();
 					UIWidget* widget=cocos2d::extension::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
 					pLayer->addWidget(widget);
-					CCComRender *pRender = CCComRender::create(pLayer, "GUIComponent");
+					ComRender *pRender = ComRender::create(pLayer, "GUIComponent");
 					if (pComName != NULL)
 					{
 					pRender->setName(pComName);
 					}
-					gb->addComponent(pRender);*/
+					gb->addComponent(pRender);
 				}
                 
                 CC_SAFE_DELETE(subDict);
@@ -361,7 +354,7 @@ NS_CC_EXT_BEGIN
 		int y = dict->getItemIntValue("y", 0);
 		node->setPosition(Point(x, y));
 		
-		bool bVisible = (bool)(dict->getItemIntValue("visible", 1));
+		const bool bVisible = (dict->getItemIntValue("visible", 1) != 0);
 		node->setVisible(bVisible);
 		
 		int nTag = dict->getItemIntValue("objecttag", -1);

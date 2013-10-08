@@ -25,18 +25,18 @@ THE SOFTWARE.
 #include "CCProcessBase.h"
 #include "../utils/CCUtilMath.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 ProcessBase::ProcessBase(void)
-    : _animationScale(1)
+    : _processScale(1)
     , _isPause(true)
     , _isComplete(true)
-	, _isPlaying(false)
-	, _currentPercent(0.0f)
-	, _rawDuration(0)
-	, _loopType(ANIMATION_LOOP_BACK)
-	, _tweenEasing(Linear)
-	, _durationTween(0)
+    , _isPlaying(false)
+    , _currentPercent(0.0f)
+    , _rawDuration(0)
+    , _loopType(ANIMATION_LOOP_BACK)
+    , _tweenEasing(Linear)
+    , _durationTween(0)
     , _currentFrame(0)
     , _curFrameIndex(0)
     , _isLoopBack(false)
@@ -45,7 +45,7 @@ ProcessBase::ProcessBase(void)
      *  set _animationInternal defualt value to Director::getInstance()
      *  ->getAnimationInterval(), in line with game update speed
      */
-    _animationInternal = Director::getInstance()->getAnimationInterval();
+    _animationInternal = CCDirector::getInstance()->getAnimationInterval();
 }
 
 
@@ -57,17 +57,20 @@ ProcessBase::~ProcessBase(void)
 void ProcessBase::pause()
 {
     _isPause = true;
+    _isPlaying = false;
 }
 
 
 void ProcessBase::resume()
 {
     _isPause = false;
+    _isPlaying = true;
 }
 
 void ProcessBase::stop()
 {
     _isComplete = true;
+    _isPlaying = false;
     _currentFrame = 0;
     _currentPercent = 0;
 }
@@ -80,11 +83,11 @@ void ProcessBase::play(void *animation, int durationTo, int durationTween,  int 
     _currentFrame = 0;
 
     /*
-     *  Set _totalFrames to durationTo, it is used for change tween between two animation.
-     *  When changing end, _totalFrames will be setted to _durationTween
+     *  Set m_iTotalFrames to durationTo, it is used for change tween between two animation.
+     *  When changing end, m_iTotalFrames will be setted to _durationTween
      */
     _nextFrameIndex = durationTo;
-    _tweenEasing = (TweenType)tweenEasing;
+    _tweenEasing = (CCTweenType)tweenEasing;
 
 }
 
@@ -97,7 +100,7 @@ void ProcessBase::update(float dt)
     }
 
     /*
-     *  Fileter the _duration <=0 and dt >1
+     *  Fileter the m_iDuration <=0 and dt >1
      *  If dt>1, generally speaking  the reason is the device is stuck.
      */
     if(_rawDuration <= 0 || dt > 1)
@@ -107,24 +110,27 @@ void ProcessBase::update(float dt)
 
     if (_nextFrameIndex <= 0)
     {
-        _currentFrame = _nextFrameIndex = 1;
+        _currentPercent = 1;
+        _currentFrame = 0;
     }
+    else
+    {
+        /*
+        *  update _currentFrame, every update add the frame passed.
+        *  dt/_animationInternal determine it is not a frame animation. If frame speed changed, it will not make our
+        *  animation speed slower or quicker.
+        */
+        _currentFrame += _processScale * (dt / _animationInternal);
 
-    /*
-     *  update _currentFrame, every update add the frame passed.
-     *  dt/_animationInternal determine it is not a frame animation. If frame speed changed, it will not make our
-     *  animation speed slower or quicker.
-     */
-    _currentFrame += _animationScale * (dt / _animationInternal);
 
+        _currentPercent = _currentFrame / _nextFrameIndex;
 
-    _currentPercent = _currentFrame / _nextFrameIndex;
-
-    /*
-     *	if _currentFrame is bigger or equal than _totalFrames, then reduce it util _currentFrame is
-     *  smaller than _totalFrames
-     */
-    _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
+        /*
+        *	if _currentFrame is bigger or equal than m_iTotalFrames, then reduce it util _currentFrame is
+        *  smaller than m_iTotalFrames
+        */
+        _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
+    }
 
     updateHandler();
 }
@@ -134,12 +140,13 @@ void ProcessBase::update(float dt)
 void ProcessBase::gotoFrame(int frameIndex)
 {
     _curFrameIndex = frameIndex;
-    stop();
+    pause();
 }
 
 int ProcessBase::getCurrentFrameIndex()
 {
+    _curFrameIndex = _rawDuration * _currentPercent;
     return _curFrameIndex;
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END

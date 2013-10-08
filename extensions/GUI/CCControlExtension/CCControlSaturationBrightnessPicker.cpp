@@ -181,7 +181,7 @@ bool ControlSaturationBrightnessPicker::checkSliderPosition(Point location)
 }
 
 
-bool ControlSaturationBrightnessPicker::ccTouchBegan(Touch* touch, Event* event)
+bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* event)
 {
     if (!isEnabled() || !isVisible())
     {
@@ -196,7 +196,7 @@ bool ControlSaturationBrightnessPicker::ccTouchBegan(Touch* touch, Event* event)
 }
 
 
-void ControlSaturationBrightnessPicker::ccTouchMoved(Touch* touch, Event* event)
+void ControlSaturationBrightnessPicker::onTouchMoved(Touch* touch, Event* event)
 {
     // Get the touch location
     Point touchLocation=getTouchLocation(touch);

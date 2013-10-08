@@ -133,6 +133,11 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
         _scale9Image = batchnode;
         CC_SAFE_RETAIN(_scale9Image);
     }
+    
+    if (!_scale9Image)
+    {
+        return false;
+    }
 
     _scale9Image->removeAllChildrenWithCleanup(true);
 
@@ -687,6 +692,10 @@ void Scale9Sprite::updateCapInset()
 
 void Scale9Sprite::setOpacityModifyRGB(bool var)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
     _opacityModifyRGB = var;
     Object* child;
     Array* children = _scale9Image->getChildren();
@@ -772,6 +781,11 @@ void Scale9Sprite::visit()
 
 void Scale9Sprite::setColor(const Color3B& color)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
+    
     NodeRGBA::setColor(color);
     Object* child;
     Array* children = _scale9Image->getChildren();
@@ -792,6 +806,10 @@ const Color3B& Scale9Sprite::getColor() const
 
 void Scale9Sprite::setOpacity(GLubyte opacity)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
     NodeRGBA::setOpacity(opacity);
     Object* child;
     Array* children = _scale9Image->getChildren();
@@ -812,6 +830,10 @@ GLubyte Scale9Sprite::getOpacity() const
 
 void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
     NodeRGBA::updateDisplayedColor(parentColor);
     Object* child;
     Array* children = _scale9Image->getChildren();
@@ -827,6 +849,10 @@ void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
 
 void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
     NodeRGBA::updateDisplayedOpacity(parentOpacity);
     Object* child;
     Array* children = _scale9Image->getChildren();

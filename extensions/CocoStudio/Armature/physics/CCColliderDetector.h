@@ -28,46 +28,43 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
+#ifndef PT_RATIO
+#define PT_RATIO 32
+#endif
+
+
 class b2Body;
+class b2Fixture;
 struct b2Filter;
 
-namespace cocos2d { namespace extension { namespace armature {
+struct cpBody;
+struct cpShape;
+
+NS_CC_EXT_ARMATURE_BEGIN
 
 class Bone;
 
 class ColliderBody : public Object
 {
 public:
-	ColliderBody(b2Body *b2b, ContourData *contourData)
-		:_pB2b(NULL)
-		,_contourData(NULL)
-	{
-		this->_pB2b = b2b;
-		this->_contourData = contourData;
-		CC_SAFE_RETAIN(_contourData);
-	}
-    /**
-     * @js NA
-     * @lua NA
-     */
-	~ColliderBody()
-	{
-		CC_SAFE_RELEASE(_contourData);
-	}
+#if ENABLE_PHYSICS_BOX2D_DETECT
+    CC_SYNTHESIZE(b2Fixture *, _fixture, B2Fixture)
+    CC_SYNTHESIZE(b2Filter *, _filter, B2Filter)
 
-	inline b2Body *getB2Body()
-	{
-		return _pB2b;
-	}
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+    CC_SYNTHESIZE(cpShape *, _shape, Shape)
+#endif
 
-	inline ContourData *getContourData()
-	{
-		return _contourData;
-	}
+public:
+    ColliderBody(ContourData *contourData);
+    ~ColliderBody();
 
+    inline ContourData *getContourData()
+    {
+        return _contourData;
+    }
 private:
-	b2Body *_pB2b;
-	ContourData *_contourData;
+    ContourData *_contourData;
 };
 
 /*
@@ -76,40 +73,49 @@ private:
 class ColliderDetector : public Object
 {
 public:
-	static ColliderDetector *create();
+    static ColliderDetector *create();
     static ColliderDetector *create(Bone *bone);
 public:
-    /**
+	/**
      * @js ctor
      */
-	ColliderDetector();
+    ColliderDetector();
     /**
      * @js NA
      * @lua NA
      */
-	~ColliderDetector(void);
-    
+    ~ColliderDetector(void);
+
     virtual bool init();
-	virtual bool init(Bone *bone);
-    
+    virtual bool init(Bone *bone);
+
     void addContourData(ContourData *contourData);
     void addContourDataList(Array *contourDataList);
-    
-	void removeContourData(ContourData *contourData);
-	void removeAll();
-    
+
+    void removeContourData(ContourData *contourData);
+    void removeAll();
+
     void updateTransform(AffineTransform &t);
 
-	void setColliderFilter(b2Filter &filter);
-
     void setActive(bool active);
-private:
-    Array *_colliderBodyList;
-    
-	CC_SYNTHESIZE(Bone*, _bone, Bone);
+    bool getActive();
 
+    Array *getColliderBodyList();
+
+protected:
+    Array *_colliderBodyList;
+    CC_SYNTHESIZE(Bone *, _bone, Bone);
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+    CC_PROPERTY(b2Body *, _body, Body);
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+    CC_PROPERTY(cpBody *, _body, Body);
+#endif
+
+protected:
+    bool _active;
 };
-		
-}}} // namespace cocos2d { namespace extension { namespace armature {
+
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCCOLLIDERDETECTOR_H__*/

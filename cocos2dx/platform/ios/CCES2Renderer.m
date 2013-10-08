@@ -33,6 +33,10 @@
 #import "CCES2Renderer.h"
 #import "OpenGL_Internal.h"
 
+#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
+#define NSLog(...)       do {} while (0)
+#endif
+
 @implementation CCES2Renderer
 
 @synthesize context=context_;

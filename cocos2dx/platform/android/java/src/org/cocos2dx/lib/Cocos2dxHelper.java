@@ -23,11 +23,14 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
+import java.lang.Runnable;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
@@ -43,6 +46,7 @@ public class Cocos2dxHelper {
 	// Constants
 	// ===========================================================
 	private static final String PREFS_NAME = "Cocos2dxPrefsFile";
+	private static final int RUNNABLES_PER_FRAME = 5;
 
 	// ===========================================================
 	// Fields
@@ -56,6 +60,7 @@ public class Cocos2dxHelper {
 	private static String sFileDirectory;
 	private static Activity sActivity = null;
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
+	private static ConcurrentLinkedQueue<Runnable> jobs = new ConcurrentLinkedQueue<Runnable>();
 
     /**
      * Optional meta-that can be in the manifest for this component, specifying
@@ -69,11 +74,25 @@ public class Cocos2dxHelper {
 	// Constructors
 	// ===========================================================
 
+	public static void dispatchPendingRunnables() {
+		for (int i = RUNNABLES_PER_FRAME; i > 0; i--) {
+			Runnable job = jobs.poll();
+			if (job == null) {
+				return;
+			}
+			job.run();
+		}
+	}
+
+	public static void runOnGLThread(final Runnable r) {
+		jobs.add(r);
+	}
+
 	public static void init(final Activity activity) {
 		final ApplicationInfo applicationInfo = activity.getApplicationInfo();
 		
-		Cocos2dxHelper.sActivity = activity;
-
+        initListener();
+            
         try {
         // Get the lib_name from AndroidManifest.xml metadata
             ActivityInfo ai =
@@ -100,6 +119,51 @@ public class Cocos2dxHelper {
 
 		//Cocos2dxHelper.nativeSetAssetManager(sAssetManager);
         Cocos2dxBitmap.setContext(activity);
+        sActivity = activity;                   
+	}
+	
+	public static void initListener() {
+        Cocos2dxHelper.sCocos2dxHelperListener = new Cocos2dxHelperListener() {
+            
+            @Override
+            public void showEditTextDialog(final String title, final String message,
+                    final int inputMode, final int inputFlag, final int returnType, final int maxLength) {           	
+            	sActivity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						new Cocos2dxEditBoxDialog(sActivity,
+	                            title,
+	            				message,
+	            				inputMode,
+	            				inputFlag,
+	            				returnType,
+	            				maxLength).show();
+					}
+				});	
+            }
+            	
+            
+            @Override
+            public void showDialog(final String title, final String message) {
+
+                sActivity.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        new AlertDialog.Builder(sActivity)
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setPositiveButton("Ok", 
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // TODO Auto-generated method stub
+                                    }
+                                }).create().show();
+                    }
+                });
+            }
+        };
 	}
 
     public static Activity getActivity() {
@@ -240,13 +304,7 @@ public class Cocos2dxHelper {
 	public static void setEditTextDialogResult(final String pResult) {
 		try {
 			final byte[] bytesUTF8 = pResult.getBytes("UTF8");
-
-			Cocos2dxHelper.sCocos2dxHelperListener.runOnGLThread(new Runnable() {
-				@Override
-				public void run() {
-					Cocos2dxHelper.nativeSetEditTextDialogResult(bytesUTF8);
-				}
-			});
+			Cocos2dxHelper.nativeSetEditTextDialogResult(bytesUTF8);			
 		} catch (UnsupportedEncodingException pUnsupportedEncodingException) {
 			/* Nothing. */
 		}
@@ -342,9 +400,7 @@ public class Cocos2dxHelper {
 	// ===========================================================
 
 	public static interface Cocos2dxHelperListener {
-		public void showDialog(final String pTitle, final String pMessage);
-		public void showEditTextDialog(final String pTitle, final String pMessage, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength);
-
-		public void runOnGLThread(final Runnable pRunnable);
+		public void showDialog(final String title, final String message);
+		public void showEditTextDialog(final String title, final String message, final int inputMode, final int inputFlag, final int returnType, final int maxLength);
 	}
 }

@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "CCTransition.h"
 #include "CCCamera.h"
 #include "CCDirector.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionEase.h"
@@ -161,7 +160,9 @@ void TransitionScene::onEnter()
     Scene::onEnter();
     
     // disable events while transitions
-    Director::getInstance()->getTouchDispatcher()->setDispatchEvents(false);
+//    Director::getInstance()->getTouchDispatcher()->setDispatchEvents(false);
+
+    EventDispatcher::getInstance()->setEnabled(false);
     
     // outScene should not receive the onEnter callback
     // only the onExitTransitionDidStart
@@ -176,8 +177,9 @@ void TransitionScene::onExit()
     Scene::onExit();
     
     // enable events while transitions
-    Director::getInstance()->getTouchDispatcher()->setDispatchEvents(true);
+//    Director::getInstance()->getTouchDispatcher()->setDispatchEvents(true);
     
+    EventDispatcher::getInstance()->setEnabled(true);
     _outScene->onExit();
 
     // _inScene should not receive the onEnter callback

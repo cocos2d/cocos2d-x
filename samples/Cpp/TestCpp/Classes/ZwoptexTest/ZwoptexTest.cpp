@@ -114,8 +114,8 @@ void ZwoptexGenericTest::onEnter()
     sprite1->setPosition(Point( s.width/2-80, s.height/2));
     addChild(sprite1);
 
-    sprite1->setFlipX(false);
-    sprite1->setFlipY(false);
+    sprite1->setFlippedX(false);
+    sprite1->setFlippedY(false);
 
     auto layer2 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
     layer2->setPosition(Point(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
@@ -125,8 +125,8 @@ void ZwoptexGenericTest::onEnter()
     sprite2->setPosition(Point( s.width/2 + 80, s.height/2));
     addChild(sprite2);
 
-    sprite2->setFlipX(false);
-    sprite2->setFlipY(false);
+    sprite2->setFlippedX(false);
+    sprite2->setFlippedY(false);
 
     schedule(schedule_selector(ZwoptexGenericTest::startIn05Secs), 1.0f);
     
@@ -171,10 +171,10 @@ void ZwoptexGenericTest::flipSprites(float dt)
             break;
     }
 
-    sprite1->setFlipX(fx);
-    sprite2->setFlipX(fx);
-    sprite1->setFlipY(fy);
-    sprite2->setFlipY(fy);
+    sprite1->setFlippedX(fx);
+    sprite2->setFlippedX(fx);
+    sprite1->setFlippedY(fy);
+    sprite2->setFlippedY(fy);
 
     if(++spriteFrameIndex > 14)
     {

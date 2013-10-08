@@ -27,19 +27,57 @@ THE SOFTWARE.
 
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-#include "../utils/CCConstValue.h"
 #include "../CCArmature.h"
 #include "../../Json/CSContentJsonDictionary.h"
 
-namespace tinyxml2 { class XMLElement; }
+#include <string>
+#include <queue>
+#include <list>
+#include <mutex>
+#include <thread>
 
-namespace cocos2d { namespace extension { namespace armature {
-
-
-class  DataReaderHelper
+namespace tinyxml2
 {
+    class XMLElement;
+}
+
+NS_CC_EXT_ARMATURE_BEGIN
+
+
+class  DataReaderHelper : Object
+{
+protected:
+
+	enum ConfigType
+	{
+		DragonBone_XML,
+		CocoStudio_JSON
+	};
+
+	typedef struct _AsyncStruct
+	{
+		std::string    filename;
+		std::string    fileContent;
+		ConfigType     configType;
+		std::string    baseFilePath;
+		Object       *target;
+		SEL_SCHEDULE   selector;
+		bool           autoLoadSpriteFile;
+	} AsyncStruct;
+
+	typedef struct _DataInfo
+	{
+		AsyncStruct *asyncStruct;
+		std::queue<std::string>      configFileQueue;
+	} DataInfo;
 
 public:
+
+	/** @deprecated Use getInstance() instead */
+	CC_DEPRECATED_ATTRIBUTE static DataReaderHelper *sharedDataReaderHelper() { return DataReaderHelper::getInstance(); }
+
+	static DataReaderHelper *getInstance();
+
     /**
      * Scale the position data, used for multiresolution adapter
      * It won't effect the data already read.
@@ -47,34 +85,33 @@ public:
     static void setPositionReadScale(float scale);
     static float getPositionReadScale();
 
-    static void addDataFromFile(const char *filePath);
-
+    static void purge();
     static void clear();
+public:
+	/**
+     * @js ctor
+     */
+	DataReaderHelper();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~DataReaderHelper();
+
+    void addDataFromFile(const char *filePath);
+    void addDataFromFileAsync(const char *filePath, Object *target, SEL_SCHEDULE selector);
+
+    void addDataAsyncCallBack(float dt);
+
 public:
 
     /**
      * Translate XML export from Dragon Bone flash tool to datas, and save them.
      * When you add a new xml, the data already saved will be keeped.
      *
-     * @param xmlPath Path of xml file
+     * @param xmlPath The cache of the xml
      */
-    static void addDataFromXML(const char *xmlPath);
-
-    /**
-     * Translate XML export from Dragon Bone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
-     *
-     * @param xmlPakPath Path of pak file
-     */
-    static void addDataFromXMLPak(const char *xmlPakPath);
-
-    /**
-     * Translate XML export from Dragon Bone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
-     *
-     * @param fileContent The cache of the xml
-     */
-    static void addDataFromCache(const char *fileContent);
+    static void addDataFromCache(const char *pFileContent, DataInfo *dataInfo = NULL);
 
 
 
@@ -106,9 +143,7 @@ public:
     static ContourData *decodeContour(tinyxml2::XMLElement *contourXML);
 
 public:
-
-    static void addDataFromJson(const char *filePath);
-    static void addDataFromJsonCache(const char *fileContent);
+    static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
 
     static ArmatureData *decodeArmature(cs::JsonDictionary &json);
     static BoneData *decodeBone(cs::JsonDictionary &json);
@@ -124,8 +159,37 @@ public:
     static ContourData *decodeContour(cs::JsonDictionary &json);
 
     static void decodeNode(BaseData *node, cs::JsonDictionary &json);
+
+protected:
+	void loadData();
+
+
+
+
+	std::condition_variable		_sleepCondition;
+
+	std::thread     *_loadingThread;
+
+	std::mutex      _sleepMutex;
+
+	std::mutex      _asyncStructQueueMutex;
+	std::mutex      _dataInfoMutex;
+
+	std::mutex      _addDataMutex;
+
+	  
+	unsigned long _asyncRefCount;
+	unsigned long _asyncRefTotalCount;
+
+	bool need_quit;
+
+	std::queue<AsyncStruct *> *_asyncStructQueue;
+	std::queue<DataInfo *>   *_dataQueue;
+
+
+    static DataReaderHelper *_dataReaderHelper;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCDATAREADERHELPER_H__*/
