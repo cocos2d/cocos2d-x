@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCBatchNode.h"
 #include "../utils/CCArmatureDefine.h"
 #include "../CCArmature.h"
+#include "CCSkin.h"
 
 NS_CC_EXT_BEGIN
 
@@ -62,6 +63,16 @@ bool CCBatchNode::init()
     return ret;
 }
 
+void CCBatchNode::addChild(CCNode *pChild)
+{
+    CCNode::addChild(pChild);
+}
+
+void CCBatchNode::addChild(CCNode *child, int zOrder)
+{
+    CCNode::addChild(child, zOrder);
+}
+
 void CCBatchNode::addChild(CCNode *child, int zOrder, int tag)
 {
     CCNode::addChild(child, zOrder, tag);
@@ -69,6 +80,54 @@ void CCBatchNode::addChild(CCNode *child, int zOrder, int tag)
     if (armature != NULL)
     {
         armature->setBatchNode(this);
+        
+        CCDictionary *dict = armature->getBoneDic();
+        CCDictElement *element = NULL;
+        CCDICT_FOREACH(dict, element)
+        {
+            CCBone *bone = static_cast<CCBone*>(element->getObject());
+            
+            CCArray *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+            CCObject *object = NULL;
+            CCARRAY_FOREACH(displayList, object)
+            {
+                CCDecorativeDisplay *display = static_cast<CCDecorativeDisplay*>(object);
+                
+                if (CCSkin *skin = dynamic_cast<CCSkin*>(display->getDisplay()))
+                {
+                    skin->setTextureAtlas(getTexureAtlasWithTexture(skin->getTexture()));
+                }
+            }
+        }
+    }
+}
+
+void CCBatchNode::removeChild(CCNode* child, bool cleanup)
+{
+    CCNode::removeChild(child, cleanup);
+    CCArmature *armature = dynamic_cast<CCArmature *>(child);
+    if (armature != NULL)
+    {
+        armature->setBatchNode(NULL);
+
+        CCDictionary *dict = armature->getBoneDic();
+        CCDictElement *element = NULL;
+        CCDICT_FOREACH(dict, element)
+        {
+            CCBone *bone = static_cast<CCBone*>(element->getObject());
+
+            CCArray *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+            CCObject *object = NULL;
+            CCARRAY_FOREACH(displayList, object)
+            {
+                CCDecorativeDisplay *display = static_cast<CCDecorativeDisplay*>(object);
+
+                if (CCSkin *skin = dynamic_cast<CCSkin*>(display->getDisplay()))
+                {
+                    skin->setTextureAtlas(armature->getTexureAtlasWithTexture(skin->getTexture()));
+                }
+            }
+        }
     }
 }
 

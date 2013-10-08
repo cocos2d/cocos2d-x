@@ -73,6 +73,7 @@ CCSkin *CCSkin::create(const char *pszFileName)
 
 CCSkin::CCSkin()
     : m_pBone(NULL)
+    , m_pArmature(NULL)
     , m_strDisplayName("")
 {
     m_tSkinTransform = CCAffineTransformIdentity;
@@ -117,6 +118,10 @@ const CCBaseData &CCSkin::getSkinData()
 void CCSkin::updateArmatureTransform()
 {
     m_sTransform = CCAffineTransformConcat(m_tSkinTransform, m_pBone->nodeToArmatureTransform());
+    if(m_pArmature && m_pArmature->getBatchNode())
+    {
+        m_sTransform = CCAffineTransformConcat(m_sTransform, m_pArmature->nodeToParentTransform());
+    }
 }
 
 void CCSkin::updateTransform()
@@ -195,6 +200,8 @@ void CCSkin::setBone(CCBone *bone)
     m_pBone = bone;
     if(CCArmature *armature = m_pBone->getArmature())
     {
+        m_pArmature = armature;
+
         CCTextureAtlas *atlas = armature->getTexureAtlasWithTexture(m_pobTexture);
         setTextureAtlas(atlas);
     }
