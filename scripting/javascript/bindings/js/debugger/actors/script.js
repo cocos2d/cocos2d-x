@@ -313,6 +313,8 @@ ThreadActor.prototype = {
     //   }
     // }
 
+    _unlockVM();
+
     if (aRequest && aRequest.forceCompletion) {
       // TODO: remove this when Debugger.Frame.prototype.pop is implemented in
       // bug 736733.
@@ -329,6 +331,7 @@ ThreadActor.prototype = {
     }
 
     if (aRequest && aRequest.resumeLimit) {
+      log("resumeLimit...");
       // Bind these methods because some of the hooks are called with 'this'
       // set to the current frame.
       let pauseAndRespond = (aFrame, onPacket=function (k) k) => {
@@ -408,13 +411,16 @@ ThreadActor.prototype = {
       if (stepFrame) {
         switch (steppingType) {
           case "step":
+            log("--> step...");
             this.dbg.onEnterFrame = onEnterFrame;
             // Fall through.
           case "next":
+            log("--> next...");
             stepFrame.onStep = onStep;
             stepFrame.onPop = onPop;
             break;
           case "finish":
+            log("--> finish...");
             stepFrame.onPop = onPop;
         }
       }
