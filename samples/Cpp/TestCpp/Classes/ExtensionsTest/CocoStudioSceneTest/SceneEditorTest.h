@@ -28,9 +28,6 @@ public:
     //back to Extensions Main Layer
     void toExtensionsMainLayer(cocos2d::Object *sender);
 
-	//get Fish based on Tag and name of Compoent
-	cocos2d::extension::armature::Armature* getFish(int nTag, const char *pszName);
-
 private:
 	cocos2d::Node *_curNode;
 };

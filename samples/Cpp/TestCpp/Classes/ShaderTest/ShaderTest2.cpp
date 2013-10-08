@@ -13,7 +13,8 @@ namespace ShaderTest2
         CL(NoiseSpriteTest),
         CL(EdgeDetectionSpriteTest),
         CL(BloomSpriteTest),
-        CL(CelShadingSpriteTest)
+        CL(CelShadingSpriteTest),
+        CL(LensFlareSpriteTest)
     };
     
     static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
@@ -451,6 +452,44 @@ void CelShadingSprite::setCustomUniforms()
     getShaderProgram()->setUniformLocationWith2fv(_resolutionLoc, _resolution, 1);
 }
 
+class LensFlareSprite : public ShaderSprite, public ShaderSpriteCreator<LensFlareSprite>
+{
+public:
+    LensFlareSprite();
+    
+private:
+    GLfloat _resolution[2];
+    GLfloat _textureResolution[2];
+    GLuint _resolutionLoc;
+    GLuint _textureResolutionLoc;
+protected:
+    virtual void buildCustomUniforms();
+    virtual void setCustomUniforms();
+};
+
+LensFlareSprite::LensFlareSprite()
+{
+    _fragSourceFile = "Shaders/example_lensFlare.fsh";
+}
+
+void LensFlareSprite::buildCustomUniforms()
+{
+    _resolutionLoc = glGetUniformLocation( getShaderProgram()->getProgram(), "resolution");
+    _textureResolutionLoc = glGetUniformLocation( getShaderProgram()->getProgram(), "textureResolution");
+}
+
+void LensFlareSprite::setCustomUniforms()
+{
+    _textureResolution[0] = getTexture()->getContentSizeInPixels().width;
+    _textureResolution[1] = getTexture()->getContentSizeInPixels().height;
+    
+    _resolution[0] = getContentSize().width;
+    _resolution[1] = getContentSize().height;
+    
+    getShaderProgram()->setUniformLocationWith2fv(_resolutionLoc, _resolution, 1);
+    getShaderProgram()->setUniformLocationWith2fv(_textureResolutionLoc, _textureResolution, 1);
+}
+
 NormalSpriteTest::NormalSpriteTest()
 {
     if (ShaderTestDemo2::init())
@@ -546,5 +585,18 @@ CelShadingSpriteTest::CelShadingSpriteTest()
         sprite2->setPosition(Point(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
+    }
+}
+
+LensFlareSpriteTest::LensFlareSpriteTest()
+{
+    if (ShaderTestDemo2::init())
+    {
+        auto s = Director::getInstance()->getWinSize();
+        LensFlareSprite* sprite = LensFlareSprite::createSprite("Images/noise.png");
+        Rect rect = Rect::ZERO;
+        rect.size = Size(480,320);
+        sprite->setPosition(Point(s.width * 0.5, s.height/2));
+        addChild(sprite);
     }
 }

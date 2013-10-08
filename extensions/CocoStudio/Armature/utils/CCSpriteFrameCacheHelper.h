@@ -29,32 +29,28 @@ THE SOFTWARE.
 
 using namespace std;
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 class  SpriteFrameCacheHelper
 {
 public:
-    static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
+	/** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper(){ return SpriteFrameCacheHelper::getInstance(); }
 
-    static void purgeSpriteFrameCacheHelper();
+    static SpriteFrameCacheHelper *getInstance();
+
+    static void purge();
 public:
 
     /**
-     *	@brief	Add sprite frame to SpriteFrameCache, it will save display name and it's relative image name
-     *
+     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
-    void addSpriteFrameFromDict(Dictionary *dictionary, Texture2D *pobTexture, const char *imagePath);
-
-    /**
-     * Get this display in which image
-     */
-    const char *getDisplayImagePath(const char *displayName);
-    TextureAtlas *getTextureAtlas(const char *displayName);
+    TextureAtlas *getTexureAtlasWithTexture(Texture2D *texture);
 
 private:
-    /**
+	/**
      * @js ctor
      */
     SpriteFrameCacheHelper();
@@ -64,12 +60,11 @@ private:
      */
     ~SpriteFrameCacheHelper();
 
-    std::map<std::string, std::string> _display2ImageMap;
-    Dictionary *_display2TextureAtlas;
+    Dictionary *_textureAtlasDic;
 
-    static SpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
+    static SpriteFrameCacheHelper *_spriteFrameCacheHelper;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCSPRITEFRAMECACHEHELPER_H__*/

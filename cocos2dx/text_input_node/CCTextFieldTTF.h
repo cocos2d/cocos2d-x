@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "label_nodes/CCLabelTTF.h"
 #include "text_input_node/CCIMEDelegate.h"
-#include "touch_dispatcher/CCTouchDelegateProtocol.h"
 
 NS_CC_BEGIN
 

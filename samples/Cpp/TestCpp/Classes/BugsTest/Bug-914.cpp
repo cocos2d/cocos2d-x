@@ -63,14 +63,14 @@ bool Bug914Layer::init()
     return false;
 }
 
-void Bug914Layer::ccTouchesMoved(Set *touches, Event * event)
+void Bug914Layer::onTouchesMoved(const std::vector<Touch*>& touches, Event * event)
 {
-    log("Number of touches: %d", touches->count());
+    log("Number of touches: %d", (int)touches.size());
 }
 
-void Bug914Layer::ccTouchesBegan(Set *touches, Event * event)
+void Bug914Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event * event)
 {
-    ccTouchesMoved(touches, event);
+    onTouchesMoved(touches, event);
 }
 
 void Bug914Layer::restart(Object* sender)

@@ -11,7 +11,7 @@ typedef enum tagPaddleState
     kPaddleStateUngrabbed
 } PaddleState; 
 
-class Paddle : public Sprite, public TargetedTouchDelegate, public Clonable
+class Paddle : public Sprite, public Clonable
 {
     PaddleState        _state;
 
@@ -24,9 +24,9 @@ public:
     virtual void onEnter();
     virtual void onExit();
     bool containsTouchLocation(Touch* touch);
-    virtual bool ccTouchBegan(Touch* touch, Event* event);
-    virtual void ccTouchMoved(Touch* touch, Event* event);
-    virtual void ccTouchEnded(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
     virtual Paddle* clone() const;
 
     static Paddle* createWithTexture(Texture2D* aTexture);

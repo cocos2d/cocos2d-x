@@ -109,7 +109,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsi
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR));
     _uniformColor = glGetUniformLocation( getShaderProgram()->getProgram(), "u_color");
 
     return true;

@@ -15,6 +15,15 @@ public:
      *  @return The DPI of device.
      */
     static int getDPI();
+    
+    /**
+     * To enable or disable accelerometer.
+     */
+    static void setAccelerometerEnabled(bool isEnabled);
+    /**
+     *  Sets the interval of accelerometer.
+     */
+    static void setAccelerometerInterval(float interval);
 };
 
 

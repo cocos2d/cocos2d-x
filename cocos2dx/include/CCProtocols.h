@@ -223,7 +223,7 @@ class CC_DLL LabelProtocol
 {
 public:
     /**
-     * Sets a new label using an string
+     * Sets a new label using a string
      *
      * @param label A null terminated string
      * @js NA

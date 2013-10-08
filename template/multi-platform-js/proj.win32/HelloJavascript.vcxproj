@@ -175,11 +175,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\game.ico" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />

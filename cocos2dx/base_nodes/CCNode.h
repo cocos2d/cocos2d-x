@@ -37,6 +37,9 @@
 #include "kazmath/kazmath.h"
 #include "script_support/CCScriptSupport.h"
 #include "CCProtocols.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -52,6 +55,7 @@ class ActionManager;
 class Component;
 class Dictionary;
 class ComponentContainer;
+class EventDispatcher;
 
 /**
  * @addtogroup base_nodes
@@ -71,6 +75,8 @@ bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2);
 #else
 bool nodeComparisonLess(Object* p1, Object* p2);
 #endif
+
+class EventListener;
 
 /** @brief Node is the main element. Anything that gets drawn or contains things that get drawn is a Node.
  The most popular Nodes are: Scene, Layer, Sprite, Menu.
@@ -134,7 +140,7 @@ public:
     static const int INVALID_TAG = -1;
 
     /// @{
-    /// @name Constructor, Distructor and Initializers
+    /// @name Constructor, Destructor and Initializers
 
     /**
      * Allocates and initializes a node.
@@ -204,8 +210,7 @@ public:
      * @return The Z order.
      */
     virtual int getZOrder() const;
-
-
+    
     /**
      * Sets the real OpenGL Z vertex.
      *
@@ -614,7 +619,7 @@ public:
      *     node->setPosition(0,0);
      * }
      * @endcode
-     * This sample code traverses all children nodes, and set theie position to (0,0)
+     * This sample code traverses all children nodes, and set their position to (0,0)
      *
      * @return An array of children
      */
@@ -858,7 +863,7 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      * @code
-     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+     * node->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      * @endcode
      * 
      * @param shaderProgram The shader program which fetchs from ShaderCache.
@@ -872,8 +877,8 @@ public:
      *
      * @code
      * Camera* camera = node->getCamera();
-     * camera->setEyeXYZ(0, 0, 415/2);
-     * camera->setCenterXYZ(0, 0, 0);
+     * camera->setEye(0, 0, 415/2);
+     * camera->setCenter(0, 0, 0);
      * @endcode
      *
      * @return A Camera object that lets you move the node using a gluLookAt
@@ -1361,7 +1366,37 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
+
+private:
+    friend class Director;
+    friend class EventDispatcher;
+    
+    int getEventPriority() const { return _eventPriority; };
+    
+    void associateEventListener(EventListener* listener);
+    void dissociateEventListener(EventListener* listener);
+    
+    static void resetEventPriorityIndex();
+    std::set<EventListener*> _eventlisteners;
+    
 protected:
+    
+    /// Upates event priority for this node.
+    inline void updateEventPriorityIndex() {
+        _oldEventPriority = _eventPriority;
+        _eventPriority = ++_globalEventPriorityIndex;
+        if (_oldEventPriority != _eventPriority)
+        {
+            setDirtyForAllEventListeners();
+        }
+    };
+    
+    /// Removes all event listeners that associated with this node.
+    void removeAllEventListeners();
+    
+    /// Sets dirty for event listener.
+    void setDirtyForAllEventListeners();
+    
     /// lazy allocs
     void childrenAlloc(void);
     
@@ -1439,6 +1474,9 @@ protected:
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
+    int _eventPriority;           ///< The scene graph based priority of event listener.
+    int _oldEventPriority;        ///< The old scene graph based priority of event listener.
+    static int _globalEventPriorityIndex;    ///< The index of global event priority.
 };
 
 //#pragma mark - NodeRGBA

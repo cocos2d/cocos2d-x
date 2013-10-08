@@ -121,7 +121,9 @@ void Set::removeAllObjects()
         
         tmp = it;
         ++tmp;
+        Object * obj = *it;
         _set->erase(it);
+        CC_SAFE_RELEASE(obj);
         it = tmp;
     }
 }

@@ -63,7 +63,7 @@ bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
         setupVBO();
 #endif
 
-        setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
         
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO

@@ -36,6 +36,7 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
+#include "physics/CCPhysicsBody.h"
 
 NS_CC_BEGIN
 
@@ -460,6 +461,20 @@ public:
      */
     void setFlippedY(bool flippedY);
     
+#ifdef CC_USE_PHYSICS
+    /**
+     *   set the PhysicsBody that let the sprite effect with physics
+     */
+    virtual void setPhysicsBody(PhysicsBody* body);
+    
+    /**
+     *   get the PhysicsBody the sprite have
+     */
+    PhysicsBody* getPhysicsBody() const;
+    
+    virtual void visit() override;
+#endif
+    
     /// @} End of Sprite properties getter/setters
     
     /** @deprecated Use isFlippedY() instead */
@@ -575,6 +590,10 @@ protected:
     // image is flipped
     bool _flippedX;                              /// Whether the sprite is flipped horizaontally or not.
     bool _flippedY;                              /// Whether the sprite is flipped vertically or not.
+    
+#ifdef CC_USE_PHYSICS
+    PhysicsBody* _physicsBody;        ///< the physicsBody the node have
+#endif
 };
 
 

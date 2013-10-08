@@ -26,12 +26,11 @@ THE SOFTWARE.
 #include "cocoa/CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
-#include "touch_dispatcher/CCTouch.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "event_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCEventKeyboard.h"
 #include "text_input_node/CCIMEDispatcher.h"
-#include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "CCGL.h"
-#include "CCAccelerometer.h"
 #include "CCApplication.h"
 
 #include <emscripten/emscripten.h>

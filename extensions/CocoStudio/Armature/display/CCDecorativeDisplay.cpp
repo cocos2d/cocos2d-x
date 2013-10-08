@@ -23,9 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDecorativeDisplay.h"
-#include "../utils/CCConstValue.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 DecorativeDisplay *DecorativeDisplay::create()
 {
@@ -44,7 +43,7 @@ DecorativeDisplay::DecorativeDisplay()
     , _displayData(NULL)
 
 {
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     _colliderDetector = NULL;
 #endif
 }
@@ -55,7 +54,7 @@ DecorativeDisplay::~DecorativeDisplay(void)
     CC_SAFE_RELEASE_NULL(_displayData);
     CC_SAFE_RELEASE_NULL(_display);
 
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SAFE_RELEASE_NULL(_colliderDetector);
 #endif
 }
@@ -65,9 +64,4 @@ bool DecorativeDisplay::init()
     return true;
 }
 
-
-void DecorativeDisplay::anchorPointChanged(float pointX, float pointY)
-{
-}
-
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END

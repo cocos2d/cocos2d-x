@@ -49,7 +49,8 @@ public:
     void purgeSceneReader();
     static const char* sceneReaderVersion();
     cocos2d::Node* createNodeWithSceneFile(const char *pszFileName);
-    private:
+
+private:
     cocos2d::Node* createObject(cs::JsonDictionary * inputFiles, cocos2d::Node* parent);
     void setPropertyFromJsonDict(cocos2d::Node *node, cs::JsonDictionary* dict);
 

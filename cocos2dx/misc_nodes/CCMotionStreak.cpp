@@ -125,7 +125,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader program
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     setTexture(texture);
     setColor(color);

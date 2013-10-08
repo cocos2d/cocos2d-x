@@ -7,7 +7,6 @@ LOCAL_MODULE := cocos2dxandroid_static
 LOCAL_MODULE_FILENAME := libcocos2dandroid
 
 LOCAL_SRC_FILES := \
-CCAccelerometer.cpp \
 CCApplication.cpp \
 CCCommon.cpp \
 CCDevice.cpp \
