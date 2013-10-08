@@ -69,6 +69,7 @@ enum {
 #define kCCShader_PositionTextureA8Color            "ShaderPositionTextureA8Color"
 #define kCCShader_Position_uColor                   "ShaderPosition_uColor"
 #define kCCShader_PositionLengthTexureColor         "ShaderPositionLengthTextureColor"
+#define kCCShader_ControlSwitch                     "Shader_ControlSwitch"
 
 // uniform names
 #define kCCUniformPMatrix_s				"CC_PMatrix"
