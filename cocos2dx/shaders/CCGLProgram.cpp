@@ -143,22 +143,21 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 bool CCGLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
+    bool haveProgram = false;
 
     m_uProgram = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
     m_uVertShader = m_uFragShader = 0;
 
-    CCPrecompiledShaders::sharedPrecompiledShaders()->loadProgram(m_uProgram, vShaderByteArray, fShaderByteArray);
+    haveProgram = CCPrecompiledShaders::sharedPrecompiledShaders()->loadProgram(m_uProgram, vShaderByteArray, fShaderByteArray);
 
     CHECK_GL_ERROR_DEBUG();
     m_pHashForUniforms = NULL;
 
     CHECK_GL_ERROR_DEBUG();  
 
-
-
-    return true;
+    return haveProgram;
 }
 #endif
 
