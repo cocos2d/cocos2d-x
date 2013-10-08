@@ -14,7 +14,7 @@ void main(void)
 
     // animate
     float tt = mod(time,2.0)/2.0;
-    float ss = pow(tt,.2)*0.5 + 0.5;
+    float ss = pow(abs(tt),.2)*0.5 + 0.5;
     ss -= ss*0.2*sin(tt*6.2831*5.0)*exp(-tt*6.0);
     p *= vec2(0.5,1.5) + ss*vec2(0.5,-0.5);
 
@@ -27,7 +27,7 @@ void main(void)
     float d = (13.0*h - 22.0*h*h + 10.0*h*h*h)/(6.0-5.0*h);
 
     // color
-    float f = step(r,d) * pow(1.0-r/d,0.25);
+    float f = step(r,d) * pow(abs(1.0-r/d),0.25);
 
     gl_FragColor = vec4(f,0.0,0.0,1.0);
 }
