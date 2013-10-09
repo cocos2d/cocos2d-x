@@ -311,6 +311,10 @@ public:
             }
         }
 
+        if (request->getAcceptEncoding() != NULL) {
+          setOption(CURLOPT_ACCEPT_ENCODING, request->getAcceptEncoding());
+        }
+
         return setOption(CURLOPT_URL, request->getUrl())
                 && setOption(CURLOPT_WRITEFUNCTION, callback)
                 && setOption(CURLOPT_WRITEDATA, stream)
