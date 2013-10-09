@@ -42,11 +42,6 @@ files
     ("../GUI/CCScrollView")
     "*.h"
     "*.cpp"
-
-    ["spine"]
-    ("../spine")
-    "*.h"
-    "*.cpp"
 }
 
 if {{ defined CC_ENABLE_CHIPMUNK_INTEGRATION or defined CC_ENABLE_BOX2D_INTEGRATION }}
