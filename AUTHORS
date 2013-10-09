@@ -618,7 +618,8 @@ Retired Core Developers:
         
     rablwupei
         Fixed a memory leak in ScriptingCore::runScript()
-        Fixed a memory leak in Spine
+        Fixed a memory leak in Spine.
+        Added support of passing array to cc.Sequence.create and cc.Spawn.create.
 
 
 Cocos2d-x can not grow so fast without the active community.
