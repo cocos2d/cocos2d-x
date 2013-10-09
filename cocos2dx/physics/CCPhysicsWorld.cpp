@@ -286,7 +286,6 @@ void PhysicsWorld::debugDraw()
 void PhysicsWorld::setScene(Scene *scene)
 {
     _scene = scene;
-    scene->retain();
 }
 
 void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
@@ -413,7 +412,6 @@ PhysicsWorld::~PhysicsWorld()
 {
     CC_SAFE_DELETE(_info);
     CC_SAFE_RELEASE(_bodys);
-    CC_SAFE_RELEASE(_scene);
 }
 
 NS_CC_END

@@ -6,6 +6,7 @@ namespace
 {
     static std::function<Layer*()> createFunctions[] = {
         CL(PhysicsDemoLogoSmash),
+        CL(PhysicsDemoPyramidStack),
         CL(PhysicsDemoClickAdd),
     };
     
@@ -48,10 +49,17 @@ namespace
     }
 }
 
+
+bool PhysicsTestScene::_debugDraw = false;
+
 bool PhysicsTestScene::initTest()
 {
 #ifdef CC_USE_PHYSICS
-    return TestScene::initWithPhysics();
+    if(TestScene::initWithPhysics())
+    {
+        this->getPhysicsWorld()->setDebugDraw(_debugDraw);
+        return true;
+    }
 #else
     return TestScene::init();
 #endif
@@ -68,6 +76,12 @@ void PhysicsTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 #else
 #endif
+}
+
+void PhysicsTestScene::toggleDebug()
+{
+    _debugDraw = !_debugDraw;
+    getPhysicsWorld()->setDebugDraw(_debugDraw);
 }
 
 PhysicsDemo::PhysicsDemo()
@@ -94,6 +108,7 @@ std::string PhysicsDemo::subtitle()
 void PhysicsDemo::restartCallback(Object* sender)
 {
     auto s = new PhysicsTestScene();
+    s->initTest();
     s->addChild( restart() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -102,6 +117,7 @@ void PhysicsDemo::restartCallback(Object* sender)
 void PhysicsDemo::nextCallback(Object* sender)
 {
     auto s = new PhysicsTestScene();
+    s->initTest();
     s->addChild( next() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -110,6 +126,7 @@ void PhysicsDemo::nextCallback(Object* sender)
 void PhysicsDemo::backCallback(Object* sender)
 {
     auto s = new PhysicsTestScene();
+    s->initTest();
     s->addChild( back() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -119,7 +136,10 @@ void PhysicsDemo::onEnter()
 {
     BaseTest::onEnter();
     
-    _scene = dynamic_cast<Scene*>(this->getParent());
+    _scene = dynamic_cast<PhysicsTestScene*>(this->getParent());
+    
+    _spriteTexture = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100)->getTexture();
+    
 #ifdef CC_USE_PHYSICS
     // menu for debug layer
     MenuItemFont::setFontSize(18);
@@ -132,48 +152,7 @@ void PhysicsDemo::onEnter()
 #endif
 }
 
-
-void PhysicsDemo::toggleDebugCallback(Object* sender)
-{
-#ifdef CC_USE_PHYSICS
-    if (_scene != nullptr)
-    {
-        _scene->getPhysicsWorld()->setDebugDraw(!_scene->getPhysicsWorld()->isDebugDraw());
-    }
-#endif
-}
-
-void PhysicsDemoClickAdd::onEnter()
-{
-    PhysicsDemo::onEnter();
-    
-#ifdef CC_USE_PHYSICS
-    setTouchEnabled(true);
-    setAccelerometerEnabled(true);
-    
-    auto node = Node::create();
-    auto body = PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size);
-    node->setPhysicsBody(body);
-    node->setPosition(VisibleRect::center());
-    this->addChild(node);
-    
-    auto parent = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
-    _spriteTexture = parent->getTexture();
-    
-    addNewSpriteAtPosition(VisibleRect::center());
-    
-#else
-    auto label = LabelTTF::create("Should define CC_USE_BOX2D or CC_USE_CHIPMUNK\n to run this test case",
-                                  "Arial",
-                                  18);
-    auto size = Director::getInstance()->getWinSize();
-    label->setPosition(Point(size.width/2, size.height/2));
-    
-    addChild(label);
-#endif
-}
-
-void PhysicsDemoClickAdd::addNewSpriteAtPosition(Point p)
+void PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
 {
 #ifdef CC_USE_PHYSICS
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
@@ -187,10 +166,47 @@ void PhysicsDemoClickAdd::addNewSpriteAtPosition(Point p)
     posy = (posy % 3) * 121;
     
     auto sp = Sprite::createWithTexture(_spriteTexture, Rect(posx, posy, 85, 121));
-    auto body = PhysicsBody::createBox(Size(48, 108));
-    sp->setPhysicsBody(body);
+    sp->setScale(scale);
+    sp->setPhysicsBody(PhysicsBody::createBox(Size(48.0f * scale, 108.0f * scale)));
     this->addChild(sp);
     sp->setPosition(p);
+#endif
+}
+
+
+void PhysicsDemo::toggleDebugCallback(Object* sender)
+{
+#ifdef CC_USE_PHYSICS
+    if (_scene != nullptr)
+    {
+        _scene->toggleDebug();
+    }
+#endif
+}
+
+void PhysicsDemoClickAdd::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+#ifdef CC_USE_PHYSICS
+    setTouchEnabled(true);
+    setAccelerometerEnabled(true);
+    
+    auto node = Node::create();
+    node->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size));
+    node->setPosition(VisibleRect::center());
+    this->addChild(node);
+    
+    addGrossiniAtPosition(VisibleRect::center());
+    
+#else
+    auto label = LabelTTF::create("Should define CC_USE_BOX2D or CC_USE_CHIPMUNK\n to run this test case",
+                                  "Arial",
+                                  18);
+    auto size = Director::getInstance()->getWinSize();
+    label->setPosition(Point(size.width/2, size.height/2));
+    
+    addChild(label);
 #endif
 }
 
@@ -207,7 +223,7 @@ void PhysicsDemoClickAdd::onTouchesEnded(const std::vector<Touch*>& touches, Eve
     {
         auto location = touch->getLocation();
         
-        addNewSpriteAtPosition( location );
+        addGrossiniAtPosition( location );
     }
 }
 
@@ -289,15 +305,12 @@ namespace
 
 Node* PhysicsDemoLogoSmash::makeBall(float x, float y)
 {
-    Sprite* ball = Sprite::create("Images/ball.png");
+    auto ball = Sprite::create("Images/ball.png");
     ball->setScale(0.1);
     
-    PhysicsBody* body = PhysicsBody::createCircle(0.95);
+    auto body = PhysicsBody::createCircle(0.95, PhysicsMaterial(1, 0, 0));
     body->setMass(1.0);
     body->setAngularDamping(PHYSICS_INFINITY);
-    
-    body->getShape()->setElasticity(0);
-    body->getShape()->setFriction(0);
     
     //body->setDynamic(false);
     ball->setPhysicsBody(body);
@@ -310,7 +323,6 @@ Node* PhysicsDemoLogoSmash::makeBall(float x, float y)
 void PhysicsDemoLogoSmash::onEnter()
 {
     PhysicsDemo::onEnter();
-    _draw = DrawNode::create();
     
     _scene->getPhysicsWorld()->setGravity(Point(0, 0));
     //addChild(makeBall(200, 200));
@@ -330,13 +342,11 @@ void PhysicsDemoLogoSmash::onEnter()
     }
     
     
-    Sprite* bullet = Sprite::create("Images/ball.png");
+    auto bullet = Sprite::create("Images/ball.png");
     bullet->setScale(0.5);
     
-    PhysicsBody* body = PhysicsBody::createCircle(8, PHYSICS_INFINITY);
+    auto body = PhysicsBody::createCircle(8, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
     body->setVelocity(Point(400, 0));
-    body->getShape()->setElasticity(0);
-    body->getShape()->setFriction(0);
     bullet->setPhysicsBody(body);
     
     bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));
@@ -347,4 +357,40 @@ void PhysicsDemoLogoSmash::onEnter()
 std::string PhysicsDemoLogoSmash::title()
 {
     return "Logo Smash";
+}
+
+void PhysicsDemoPyramidStack::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    auto node = Node::create();
+    node->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
+    this->addChild(node);
+    
+    auto ball = Sprite::create("Images/ball.png");
+    ball->setScale(1);
+    ball->setPhysicsBody(PhysicsBody::createCircle(10));
+    ball->setPosition(VisibleRect::bottom() + Point(0, 60));
+    this->addChild(ball);
+    
+	for(int i=0; i<14; i++){
+		for(int j=0; j<=i; j++){
+			addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2);
+		}
+	}
+}
+std::string PhysicsDemoPyramidStack::title()
+{
+    return "Pyramid Stack";
+}
+
+
+void PhysicsDemoPlink::onEnter()
+{
+    PhysicsDemo::onEnter();
+}
+
+std::string PhysicsDemoPlink::title()
+{
+    return "Plink";
 }

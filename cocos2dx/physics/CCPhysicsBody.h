@@ -30,15 +30,21 @@
 
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
+
+#include "CCPhysicsShape.h"
+
 #include <vector>
 
 NS_CC_BEGIN
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
-class PhysicsShape;
 
 class PhysicsBodyInfo;
+
+
+const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT = {0.0f, 1.0f, 1.0f};
+
 /**
  * A body affect by physics.
  * it can attach one or more shapes.
@@ -49,33 +55,33 @@ public:
     /**
      * @brief Create a body contains a circle shape.
      */
-    static PhysicsBody* createCircle(float radius, float density = 1);
+    static PhysicsBody* createCircle(float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     /**
      * @brief Create a body contains a box shape.
      */
-    static PhysicsBody* createBox(Size size, float density = 1);
+    static PhysicsBody* createBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     /**
      * @brief Create a body contains a polygon shape.
      * points is an array of Point structs defining a convex hull with a clockwise winding.
      */
-    static PhysicsBody* createPolygon(Point* points, int count, float density = 1);
+    static PhysicsBody* createPolygon(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
     /**
      * @brief Create a body contains a EdgeSegment shape.
      */
-    static PhysicsBody* createEdgeSegment(Point a, Point b, float border = 1);
+    static PhysicsBody* createEdgeSegment(Point a, Point b, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /**
      * @brief Create a body contains a EdgeBox shape.
      */
-    static PhysicsBody* createEdgeBox(Size size, float border = 1);
+    static PhysicsBody* createEdgeBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /**
      * @brief Create a body contains a EdgePolygon shape.
      */
-    static PhysicsBody* createEdgePolygon(Point* points, int count, float border = 1);
+    static PhysicsBody* createEdgePolygon(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /**
      * @brief Create a body contains a EdgeChain shape.
      */
-    static PhysicsBody* createEdgeChain(Point* points, int count, float border = 1);
+    static PhysicsBody* createEdgeChain(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
     virtual void addShape(PhysicsShape* shape);
     

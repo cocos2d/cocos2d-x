@@ -37,7 +37,27 @@ class PhysicsShapeInfo;
 class PhysicsBody;
 class PhysicsBodyInfo;
 
-/** 
+
+typedef struct PhysicsMaterial
+{
+    float density;
+    float elasticity;
+    float friction;
+    
+    PhysicsMaterial()
+    : density(0.0f)
+    , elasticity(0.0f)
+    , friction(0.0f){}
+    
+    PhysicsMaterial(float density, float elasticity, float friction)
+    : density(density)
+    , elasticity(elasticity)
+    , friction(friction){}
+}PhysicsMaterial;
+
+const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT = {0.0f, 1.0f, 1.0f};
+
+/**
  * @brief A shape for body. You do not create PhysicsWorld objects directly, instead, you can view PhysicsBody to see how to create it.
  */
 class PhysicsShape : public Object
@@ -58,11 +78,7 @@ public:
 public:
     inline PhysicsBody* getBody(){ return _body; }
     inline Type getType() { return _type; }
-    inline float getMass() { return _mass; }
-    void setMass(float mass);
     inline float getArea() { return _area; }
-    inline float getDensity() { return _density; }
-    void setDensity(float density);
     inline float getAngularDumping() { return _angularDamping; }
     void setAngularDumping(float angularDumping);
     inline void setTag(int tag) { _tag = tag; }
@@ -71,13 +87,16 @@ public:
     inline bool isEnable() { return _enable; }
     void addToBody();
     
+    inline float getMass() { return _mass; }
+    void setMass(float mass);
+    inline float getDensity() { return _material.density; }
+    void setDensity(float density);
     void setElasticity(float elasticity);
     void setFriction(float friction);
     
-    
-    
 protected:
-    bool init(Type type);
+    bool init(Type type, PhysicsMaterial material);
+    void initEnd();
     
     /**
      * @brief PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
@@ -97,7 +116,7 @@ protected:
     float _area;
     float _mass;
     float _angularDamping;
-    float _density;
+    PhysicsMaterial _material;
     int _tag;
     bool _enable;
     
@@ -109,10 +128,10 @@ protected:
 class PhysicsShapeCircle : public PhysicsShape
 {
 public:
-    static PhysicsShapeCircle* create(float radius, float density = 0, Point offset = Point(0, 0));
+    static PhysicsShapeCircle* create(float radius, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
     
 protected:
-    bool init(float radius, float density = 0, Point offset = Point(0, 0));
+    bool init(float radius, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapeCircle();
@@ -125,10 +144,10 @@ protected:
 class PhysicsShapeBox : public PhysicsShape
 {
 public:
-    static PhysicsShapeBox* create(Size size, float density = 0, Point offset = Point(0, 0));
+    static PhysicsShapeBox* create(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
     
 protected:
-    bool init(Size size, float density = 0, Point offset = Point(0, 0));
+    bool init(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapeBox();
@@ -141,10 +160,10 @@ protected:
 class PhysicsShapePolygon : public PhysicsShape
 {
 public:
-    static PhysicsShapePolygon* create(Point* points, int count, float density = 0, Point offset = Point(0, 0));
+    static PhysicsShapePolygon* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
     
 protected:
-    bool init(Point* points, int count, float density = 0, Point offset = Point(0, 0));
+    bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapePolygon();
@@ -157,10 +176,10 @@ protected:
 class PhysicsShapeEdgeSegment : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeSegment* create(Point a, Point b, float border = 1);
+    static PhysicsShapeEdgeSegment* create(Point a, Point b, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
-    bool init(Point a, Point b, float border = 1);
+    bool init(Point a, Point b, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgeSegment();
@@ -173,10 +192,10 @@ protected:
 class PhysicsShapeEdgeBox : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeBox* create(Size size, float border = 0, Point offset = Point(0, 0));
+    static PhysicsShapeEdgeBox* create(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, Point offset = Point(0, 0));
     
 protected:
-    bool init(Size size, float border = 1, Point offset = Point(0, 0));
+    bool init(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapeEdgeBox();
@@ -189,10 +208,10 @@ protected:
 class PhysicsShapeEdgePolygon : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgePolygon* create(Point* points, int count, float border = 1);
+    static PhysicsShapeEdgePolygon* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
-    bool init(Point* points, int count, float border = 1);
+    bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgePolygon();
@@ -205,10 +224,10 @@ protected:
 class PhysicsShapeEdgeChain : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeChain* create(Point* points, int count, float border = 1);
+    static PhysicsShapeEdgeChain* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
-    bool init(Point* points, int count, float border = 1);
+    bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgeChain();
