@@ -23,6 +23,9 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import java.util.Set;
+import java.util.LinkedHashSet;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
@@ -40,6 +43,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+import android.preference.PreferenceManager.OnActivityResultListener;
 
 public class Cocos2dxHelper {
 	// ===========================================================
@@ -60,7 +64,8 @@ public class Cocos2dxHelper {
 	private static String sFileDirectory;
 	private static Activity sActivity = null;
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
-	private static ConcurrentLinkedQueue<Runnable> jobs = new ConcurrentLinkedQueue<Runnable>();
+	private static Queue<Runnable> jobs = new ConcurrentLinkedQueue<Runnable>();
+	private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
 
     /**
      * Optional meta-that can be in the manifest for this component, specifying
@@ -86,6 +91,14 @@ public class Cocos2dxHelper {
 
 	public static void runOnGLThread(final Runnable r) {
 		jobs.add(r);
+	}
+
+	public static void addOnActivityResultListener(OnActivityResultListener listener) {
+	    onActivityResultListeners.add(listener);
+	}
+
+	public static Set<OnActivityResultListener> getOnActivityResultListeners() {
+	    return onActivityResultListeners;
 	}
 
 	public static void init(final Activity activity) {

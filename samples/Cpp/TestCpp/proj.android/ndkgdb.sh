@@ -59,6 +59,6 @@ NDK_MODULE_PATH="${COCOS2DX_ROOT}":"${COCOS2DX_ROOT}"/cocos2dx/platform/third_pa
     --adb="${SDK_ROOT}"/platform-tools/adb \
     --tui \
     --verbose \
-    --launch=android.app.NativeActivity \
+    --launch=org.cocos2dx.lib.Cocos2dxNativeActivity \
     --force \
     --nowait
