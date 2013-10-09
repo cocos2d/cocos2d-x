@@ -59,8 +59,8 @@ static string outData;
 static vector<string> g_queue;
 static std::mutex g_qMutex;
 static std::mutex g_rwMutex;
-static bool vmLock = false;
 static int clientSocket = -1;
+static unsigned long s_nestedLoopLevel = 0;
 
 // server entry point for the bg thread
 static void serverEntryPoint(void);
@@ -1937,14 +1937,22 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
 
 #pragma mark - Debug
 
-void SimpleRunLoop::update(float dt) {
-    std::lock_guard<std::mutex> lk(g_qMutex);
-
-    while (g_queue.size() > 0) {
+void SimpleRunLoop::update(float dt)
+{
+    g_qMutex.lock();
+    size_t size = g_queue.size();
+    g_qMutex.unlock();
+    
+    while (size > 0)
+    {
+        g_qMutex.lock();
         vector<string>::iterator first = g_queue.begin();
         string str = *first;
-        ScriptingCore::getInstance()->debugProcessInput(str);
         g_queue.erase(first);
+        size = g_queue.size();
+        g_qMutex.unlock();
+        
+        ScriptingCore::getInstance()->debugProcessInput(str);
     }
 }
 
@@ -1960,6 +1968,73 @@ void ScriptingCore::debugProcessInput(string str) {
     JS_CallFunctionName(cx_, debugGlobal_, "processInput", 1, argv, &outval);
 }
 
+static bool NS_ProcessNextEvent()
+{
+    g_qMutex.lock();
+    size_t size = g_queue.size();
+    g_qMutex.unlock();
+    
+    while (size > 0)
+    {
+        g_qMutex.lock();
+        vector<string>::iterator first = g_queue.begin();
+        string str = *first;
+        g_queue.erase(first);
+        size = g_queue.size();
+        g_qMutex.unlock();
+        
+        ScriptingCore::getInstance()->debugProcessInput(str);
+    }
+//    std::this_thread::yield();
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    
+    return true;
+}
+
+JSBool JSBDebug_enterNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
+{
+    enum {
+        NS_OK = 0,
+        NS_ERROR_UNEXPECTED
+    };
+    
+#define NS_SUCCEEDED(v) ((v) == NS_OK)
+    
+    int rv = NS_OK;
+    
+    uint32_t nestLevel = ++s_nestedLoopLevel;
+
+    while (NS_SUCCEEDED(rv) && s_nestedLoopLevel >= nestLevel) {
+        if (!NS_ProcessNextEvent())
+            rv = NS_ERROR_UNEXPECTED;
+    }
+    
+    CCASSERT(s_nestedLoopLevel <= nestLevel,
+             "nested event didn't unwind properly");
+    
+    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
+    return JS_TRUE;
+}
+
+JSBool JSBDebug_exitNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
+{
+    if (s_nestedLoopLevel > 0) {
+        --s_nestedLoopLevel;
+    } else {
+        JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(0));
+        return JS_TRUE;
+    }
+    
+    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
+    return JS_TRUE;
+}
+
+JSBool JSBDebug_getEventLoopNestLevel(JSContext* cx, unsigned argc, jsval* vp)
+{
+    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
+    return JS_TRUE;
+}
+
 void ScriptingCore::enableDebugger() {
     if (debugGlobal_ == NULL) {
         JSAutoCompartment ac0(cx_, global_);
@@ -1970,8 +2045,9 @@ void ScriptingCore::enableDebugger() {
         JS_DefineFunction(cx_, debugGlobal_, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_bufferRead", JSBDebug_BufferRead, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_lockVM", JSBDebug_LockExecution, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_unlockVM", JSBDebug_UnlockExecution, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(cx_, debugGlobal_, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(cx_, debugGlobal_, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(cx_, debugGlobal_, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         
         
         runScript("jsb_debugger.js", debugGlobal_);
@@ -2124,21 +2200,21 @@ JSBool JSBDebug_StartDebugger(JSContext* cx, unsigned argc, jsval* vp)
 
 JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp)
 {
-    if (argc == 0) {
-        JSString* str;
-        // this is safe because we're already inside a lock (from clearBuffers)
-        if (vmLock) {
-            g_rwMutex.lock();
-        }
-        str = JS_NewStringCopyZ(cx, inData.c_str());
-        inData.clear();
-        if (vmLock) {
-            g_rwMutex.unlock();
-        }
-        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
-    } else {
-        JS_SET_RVAL(cx, vp, JSVAL_NULL);
-    }
+//    if (argc == 0) {
+//        JSString* str;
+//        // this is safe because we're already inside a lock (from clearBuffers)
+//        if (vmLock) {
+//            g_rwMutex.lock();
+//        }
+//        str = JS_NewStringCopyZ(cx, inData.c_str());
+//        inData.clear();
+//        if (vmLock) {
+//            g_rwMutex.unlock();
+//        }
+//        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
+//    } else {
+//        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+//    }
     return JS_TRUE;
 }
 
@@ -2160,47 +2236,9 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
     return JS_TRUE;
 }
 
-// this should lock the execution of the running thread, waiting for a signal
-JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp)
-{
-    if (argc == 0)
-    {
-        if (vmLock)
-        {
-            CCLOG("%s", "vm has been locked.");
-            return JS_TRUE;
-        }
-        CCLOG("%s","locking vm\n");
-        vmLock = true;
-        while (vmLock) {
-            // try to read the input, if there's anything
-            g_qMutex.lock();
-            while (g_queue.size() > 0) {
-                vector<string>::iterator first = g_queue.begin();
-                string str = *first;
-                ScriptingCore::getInstance()->debugProcessInput(str);
-                g_queue.erase(first);
-            }
-            g_qMutex.unlock();
-            std::this_thread::yield();
-        }
-        CCLOG("%s","vm unlocked\n");
-
-        return JS_TRUE;
-    }
-    JS_ReportError(cx, "invalid call to _lockVM");
-    return JS_FALSE;
-}
-
-JSBool JSBDebug_UnlockExecution(JSContext* cx, unsigned argc, jsval* vp)
-{
-    vmLock = false;
-    return JS_TRUE;
-}
-
 static void processInput(string data) {
     std::lock_guard<std::mutex> lk(g_qMutex);
-    g_queue.push_back(string(data));
+    g_queue.push_back(data);
 }
 
 static void clearBuffers() {
