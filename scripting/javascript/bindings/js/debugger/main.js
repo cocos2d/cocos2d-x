@@ -42,8 +42,15 @@ function dumpn(str) {
 
 function dbg_assert(cond, e) {
   if (!cond) {
+    log("assert >>>> " + cond.toString());
     return e;
   }
+}
+
+function XPCInspector() {
+  this.exitNestedEventLoop = _exitNestedEventLoop;
+  this.enterNestedEventLoop = _enterNestedEventLoop;
+  this.eventLoopNestLevel = _getEventLoopNestLevel;
 }
 
 //loadSubScript.call(this, "resource://gre/modules/devtools/server/transport.js");
@@ -179,7 +186,7 @@ var DebuggerServer = {
       return;
     }
 
-    this.xpcInspector = null;//Cc["@mozilla.org/jsinspector;1"].getService(Ci.nsIJSInspector);
+    this.xpcInspector = new XPCInspector();//Cc["@mozilla.org/jsinspector;1"].getService(Ci.nsIJSInspector);
     this.initTransport(aAllowConnectionCallback);
     this.addActors("resource://gre/modules/devtools/server/actors/root.js");
 
