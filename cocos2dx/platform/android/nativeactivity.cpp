@@ -215,10 +215,10 @@ static cocos_dimensions engine_init_display(struct engine* engine) {
 /**
  * Invoke the dispatching of the next bunch of Runnables in the Java-Land
  */
+static bool initialized = false;
 static void dispatch_pending_runnables() {
     static cocos2d::JniMethodInfo info;
-    static bool initialized = false;
-
+    
     if (!initialized) {
         initialized = cocos2d::JniHelper::getStaticMethodInfo(
             info,
@@ -652,7 +652,7 @@ void android_main(struct android_app* state) {
                 engine_term_display(&engine);
 
                 memset(&engine, 0, sizeof(engine));
-
+                initialized = false;
                 return;
             }
         }
