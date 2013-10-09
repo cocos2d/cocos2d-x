@@ -587,18 +587,6 @@ Developers:
     signmotion (Andrey Syrokomsky)
         Fixed some compiling-warnings (MSVC2012).
         
-Retired Core Developers:
-    WenSheng Yang
-        Author of windows port, CCTextField,
-        Designer of CCApplication/CCEGLView/platform structure.
-        He's working together with 2dx core team but leading FishingJoy game
-
-    Bin Zhang
-        core-team member but put himself in FishingJoy game since 2012.
-
-    RongHong Huang (flyingpaper)
-        Author of cocos2d-xna and spent all his time on wp7.
-        
     michaelcontento
         [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
         Prevent nullptr access in AssetsManager
@@ -621,6 +609,20 @@ Retired Core Developers:
         Fixed a memory leak in Spine.
         Added support of passing array to cc.Sequence.create and cc.Spawn.create.
         Fixed a bug that sys.localStorage.getItem() does not support non-ascii string.
+        Fixed a memory leak in XMLHttpRequest.
+        
+Retired Core Developers:
+    WenSheng Yang
+        Author of windows port, CCTextField,
+        Designer of CCApplication/CCEGLView/platform structure.
+        He's working together with 2dx core team but leading FishingJoy game
+
+    Bin Zhang
+        core-team member but put himself in FishingJoy game since 2012.
+
+    RongHong Huang (flyingpaper)
+        Author of cocos2d-xna and spent all his time on wp7.
+        
 
 
 Cocos2d-x can not grow so fast without the active community.
