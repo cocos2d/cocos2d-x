@@ -615,6 +615,9 @@ Retired Core Developers:
         Project creator: use absolute path for json config files
         Documentation fixes
         A better way to locate project creator
+        
+    rablwupei
+        Fixed a memory leak in ScriptingCore::runScript()
 
 
 Cocos2d-x can not grow so fast without the active community.
