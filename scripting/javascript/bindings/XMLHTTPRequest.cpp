@@ -99,6 +99,8 @@ void MinXmlHttpRequest::_gotHeader(string header)
             pch = strtok (NULL, " ");
         }
     }
+    
+    CC_SAFE_DELETE_ARRAY(cstr);
 }
 
 /**
