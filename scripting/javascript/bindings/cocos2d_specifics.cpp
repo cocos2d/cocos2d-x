@@ -1938,7 +1938,7 @@ JSBool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
                 tmpCObj->setPureJSTarget(tmpObj);
             }
             
-            JSScheduleWrapper::setTargetForSchedule(argv[1], tmpCObj);
+            JSScheduleWrapper::setTargetForSchedule(argv[0], tmpCObj);
             JSScheduleWrapper::setTargetForJSObject(tmpObj, tmpCObj);
         }
         
