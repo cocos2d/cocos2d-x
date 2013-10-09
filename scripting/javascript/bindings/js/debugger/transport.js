@@ -67,11 +67,11 @@ DebuggerTransport.prototype = {
     // TODO (bug 709088): remove pretty printing when the protocol is done.
     let data = JSON.stringify(aPacket, null, 2);
     // data = this._converter.ConvertFromUnicode(data);
-    log("data1 len: "+data.length);
+
     let data_for_len = utf16to8(data);
-    log("data2 len: "+data_for_len.length);
+
     this._outgoing = data_for_len.length + ':' + data;
-    log("_outgoing len: "+this._outgoing.length);
+
     this._flushOutgoing();
   },
 
