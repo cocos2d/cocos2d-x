@@ -71,13 +71,20 @@ public:
     inline bool isEnable() { return _enable; }
     void addToBody();
     
+    void setElasticity(float elasticity);
+    void setFriction(float friction);
+    
+    
+    
 protected:
-    bool init(PhysicsBody* body, Type type);
+    bool init(Type type);
     
     /**
      * @brief PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
      */
     PhysicsBodyInfo* bodyInfo() const;
+    
+    inline void setBody(PhysicsBody* body) { _body = body; }
     
 protected:
     PhysicsShape();
@@ -93,7 +100,6 @@ protected:
     float _density;
     int _tag;
     bool _enable;
-    bool _isAddToBody;
     
     friend class PhysicsWorld;
     friend class PhysicsBody;
@@ -103,10 +109,10 @@ protected:
 class PhysicsShapeCircle : public PhysicsShape
 {
 public:
-    static PhysicsShapeCircle* create(PhysicsBody* body, float radius, float density = 0, Point offset = Point(0, 0));
+    static PhysicsShapeCircle* create(float radius, float density = 0, Point offset = Point(0, 0));
     
 protected:
-    bool init(PhysicsBody* body, float radius, float density = 0, Point offset = Point(0, 0));
+    bool init(float radius, float density = 0, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapeCircle();
@@ -119,10 +125,10 @@ protected:
 class PhysicsShapeBox : public PhysicsShape
 {
 public:
-    static PhysicsShapeBox* create(PhysicsBody* body, Size size, float density = 0, Point offset = Point(0, 0));
+    static PhysicsShapeBox* create(Size size, float density = 0, Point offset = Point(0, 0));
     
 protected:
-    bool init(PhysicsBody* body, Size size, float density = 0, Point offset = Point(0, 0));
+    bool init(Size size, float density = 0, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapeBox();
@@ -135,10 +141,10 @@ protected:
 class PhysicsShapePolygon : public PhysicsShape
 {
 public:
-    static PhysicsShapePolygon* create(PhysicsBody* body, Point* points, int count, float density = 0, Point offset = Point(0, 0));
+    static PhysicsShapePolygon* create(Point* points, int count, float density = 0, Point offset = Point(0, 0));
     
 protected:
-    bool init(PhysicsBody* body, Point* points, int count, float density = 0, Point offset = Point(0, 0));
+    bool init(Point* points, int count, float density = 0, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapePolygon();
@@ -151,10 +157,10 @@ protected:
 class PhysicsShapeEdgeSegment : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeSegment* create(PhysicsBody* body, Point a, Point b, float border = 1);
+    static PhysicsShapeEdgeSegment* create(Point a, Point b, float border = 1);
     
 protected:
-    bool init(PhysicsBody* body, Point a, Point b, float border = 1);
+    bool init(Point a, Point b, float border = 1);
     
 protected:
     PhysicsShapeEdgeSegment();
@@ -167,10 +173,10 @@ protected:
 class PhysicsShapeEdgeBox : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeBox* create(PhysicsBody* body, Size size, float border = 0, Point offset = Point(0, 0));
+    static PhysicsShapeEdgeBox* create(Size size, float border = 0, Point offset = Point(0, 0));
     
 protected:
-    bool init(PhysicsBody* body, Size size, float border = 1, Point offset = Point(0, 0));
+    bool init(Size size, float border = 1, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapeEdgeBox();
@@ -183,10 +189,10 @@ protected:
 class PhysicsShapeEdgePolygon : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgePolygon* create(PhysicsBody* body, Point* points, int count, float border = 1);
+    static PhysicsShapeEdgePolygon* create(Point* points, int count, float border = 1);
     
 protected:
-    bool init(PhysicsBody* body, Point* points, int count, float border = 1);
+    bool init(Point* points, int count, float border = 1);
     
 protected:
     PhysicsShapeEdgePolygon();
@@ -199,10 +205,10 @@ protected:
 class PhysicsShapeEdgeChain : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeChain* create(PhysicsBody* body, Point* points, int count, float border = 1);
+    static PhysicsShapeEdgeChain* create(Point* points, int count, float border = 1);
     
 protected:
-    bool init(PhysicsBody* body, Point* points, int count, float border = 1);
+    bool init(Point* points, int count, float border = 1);
     
 protected:
     PhysicsShapeEdgeChain();

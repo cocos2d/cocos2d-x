@@ -57,6 +57,8 @@ NS_CC_BEGIN
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
+const float PHYSICS_INFINITY = INFINITY;
+
 int PhysicsWorld::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data)
 {
     PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
