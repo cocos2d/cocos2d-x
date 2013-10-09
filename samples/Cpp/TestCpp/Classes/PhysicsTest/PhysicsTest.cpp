@@ -51,11 +51,7 @@ namespace
 bool PhysicsTestScene::initTest()
 {
 #ifdef CC_USE_PHYSICS
-    if (TestScene::initWithPhysics())
-    {
-        this->getPhysicsWorld()->setDebugDraw(true);
-        return true;
-    }
+    return TestScene::initWithPhysics();
 #else
     return TestScene::init();
 #endif
@@ -297,6 +293,12 @@ Node* PhysicsDemoLogoSmash::makeBall(float x, float y)
     ball->setScale(0.1);
     
     PhysicsBody* body = PhysicsBody::createCircle(0.95);
+    body->setMass(1.0);
+    body->setAngularDamping(PHYSICS_INFINITY);
+    
+    body->getShape()->setElasticity(0);
+    body->getShape()->setFriction(0);
+    
     //body->setDynamic(false);
     ball->setPhysicsBody(body);
     
@@ -331,8 +333,10 @@ void PhysicsDemoLogoSmash::onEnter()
     Sprite* bullet = Sprite::create("Images/ball.png");
     bullet->setScale(0.5);
     
-    PhysicsBody* body = PhysicsBody::createCircle(3, INFINITY);
+    PhysicsBody* body = PhysicsBody::createCircle(8, PHYSICS_INFINITY);
     body->setVelocity(Point(400, 0));
+    body->getShape()->setElasticity(0);
+    body->getShape()->setFriction(0);
     bullet->setPhysicsBody(body);
     
     bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));

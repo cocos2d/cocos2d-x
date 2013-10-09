@@ -28,10 +28,17 @@
 NS_CC_BEGIN
 
 std::map<cpShape*, PhysicsShapeInfo*> PhysicsShapeInfo::map;
+cpBody* PhysicsShapeInfo::shareBody = nullptr;
 
 PhysicsShapeInfo::PhysicsShapeInfo(PhysicsShape* shape)
 : shape(shape)
 {
+    if (shareBody == nullptr)
+    {
+        shareBody = cpBodyNewStatic();
+    }
+    
+    body = shareBody;
 }
 
 PhysicsShapeInfo::~PhysicsShapeInfo()

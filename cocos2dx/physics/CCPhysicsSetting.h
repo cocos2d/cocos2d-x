@@ -43,4 +43,9 @@
 #define CC_USE_PHYSICS
 #endif
 
+namespace cocos2d
+{
+    extern const float PHYSICS_INFINITY;
+}
+
 #endif // __CCPHYSICS_SETTING_H__
