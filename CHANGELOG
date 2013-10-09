@@ -7,6 +7,8 @@ cocos2d-x-3.0alpha1 @??? 2013
      [NEW]          Added Cocos2dxHelper.runOnGLThread(Runnable) again
 [Mac]
      [FIX]          Removed unused CCLOG() from GL initialization
+[Javascript binding]
+     [FIX]          Fixed a memory leak in ScriptingCore::runScript()
 
 cocos2d-x-3.0alpha0 @Sep.19 2013
 [all platforms]
