@@ -278,7 +278,6 @@ ThreadActor.prototype = {
       }
       packet.why = aReason;
       resolve(onPacket(packet)).then(this.conn.send.bind(this.conn));
-      _lockVM();
       return this._nest();
     } catch(e) {
       let msg = "Got an exception during TA__pauseAndRespond: " + e +
@@ -304,16 +303,15 @@ ThreadActor.prototype = {
     // In case of multiple nested event loops (due to multiple debuggers open in
     // different tabs or multiple debugger clients connected to the same tab)
     // only allow resumption in a LIFO order.
-    // if (DebuggerServer.xpcInspector.eventLoopNestLevel > 1) {
-    //   let lastNestRequestor = DebuggerServer.xpcInspector.lastNestRequestor;
-    //   if (lastNestRequestor.connection != this.conn) {
-    //     return { error: "wrongOrder",
-    //              message: "trying to resume in the wrong order.",
-    //              lastPausedUrl: lastNestRequestor.url };
-    //   }
-    // }
-
-    _unlockVM();
+    if (DebuggerServer.xpcInspector.eventLoopNestLevel() > 1) {
+      log("DebuggerServer.xpcInspector.eventLoopNestLevel: "+DebuggerServer.xpcInspector.eventLoopNestLevel());
+      // let lastNestRequestor = DebuggerServer.xpcInspector.lastNestRequestor;
+      // if (lastNestRequestor.connection != this.conn) {
+      //   return { error: "wrongOrder",
+      //            message: "trying to resume in the wrong order.",
+      //            lastPausedUrl: lastNestRequestor.url };
+      // }
+    }
 
     if (aRequest && aRequest.forceCompletion) {
       // TODO: remove this when Debugger.Frame.prototype.pop is implemented in
@@ -325,8 +323,7 @@ ThreadActor.prototype = {
 
       this.dbg.getNewestFrame().pop(aRequest.completionValue);
       let packet = this._resumed();
-      // DebuggerServer.xpcInspector.exitNestedEventLoop();
-      _unlockVM();
+      DebuggerServer.xpcInspector.exitNestedEventLoop();
       return { type: "resumeLimit", frameFinished: aRequest.forceCompletion };
     }
 
@@ -431,8 +428,7 @@ ThreadActor.prototype = {
       this.dbg.onExceptionUnwind = this.onExceptionUnwind.bind(this);
     }
     let packet = this._resumed();
-    _unlockVM();
-    // DebuggerServer.xpcInspector.exitNestedEventLoop();
+    DebuggerServer.xpcInspector.exitNestedEventLoop();
     return packet;
   },
 
@@ -913,7 +909,7 @@ ThreadActor.prototype = {
     let requestor = Object.create(null);
     requestor.url = this._hooks.url;
     requestor.connection = this.conn;
-    // DebuggerServer.xpcInspector.enterNestedEventLoop(requestor);
+    DebuggerServer.xpcInspector.enterNestedEventLoop(requestor);
 
     dbg_assert(this.state === "running");
 
