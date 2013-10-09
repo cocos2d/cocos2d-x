@@ -2,6 +2,7 @@
 #define __CCEGLVIEWPROTOCOL_H__
 
 #include "ccTypes.h"
+#include "../text_input_node/CCKeyboardConfig.h"
 
 enum ResolutionPolicy
 {
@@ -73,6 +74,11 @@ public:
      */
     virtual void    setIMEKeyboardState(bool bOpen) = 0;
 
+	/** Open or close IME keyboard , subclass must implement this method.
+     * @lua NA
+     */
+    virtual void	setKeyboardConfig(const CCKeyboardConfig& keyboardConfig);
+	
     /**
      * Get the frame size of EGL view.
      * In general, it returns the screen size since the EGL view is a fullscreen view.

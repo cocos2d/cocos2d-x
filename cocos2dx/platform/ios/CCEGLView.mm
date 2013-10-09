@@ -70,6 +70,11 @@ void CCEGLView::swapBuffers()
     [[EAGLView sharedEGLView] swapBuffers];
 }
 
+void CCEGLView::setKeyboardConfig(const CCKeyboardConfig& keyboardConfig)
+{
+	[[EAGLView sharedEGLView] setKeyboardConfig:keyboardConfig];
+}
+
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
     if (bOpen)

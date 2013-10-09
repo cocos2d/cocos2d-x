@@ -46,6 +46,7 @@ public:
     virtual void    swapBuffers();
     
     virtual void setIMEKeyboardState(bool bOpen);
+    virtual void setKeyboardConfig(const CCKeyboardConfig& keyboardConfig);
     
     static CCEGLView* sharedOpenGLView();
 
