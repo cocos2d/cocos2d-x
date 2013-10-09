@@ -11,12 +11,17 @@ class PhysicsTestScene : public TestScene
 public:
     virtual bool initTest() override;
     virtual void runThisTest();
+    
+    void toggleDebug();
+    
+private:
+    static bool _debugDraw;
 };
 
 class PhysicsDemo : public BaseTest
 {
 protected:
-    Scene* _scene;
+    PhysicsTestScene* _scene;
     
 public:
     PhysicsDemo();
@@ -30,6 +35,11 @@ public:
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
     void toggleDebugCallback(Object* sender);
+    
+    void addGrossiniAtPosition(Point p, float scale = 1.0);
+    
+private:
+    Texture2D* _spriteTexture;    // weak ref
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
@@ -38,13 +48,8 @@ public:
     void onEnter() override;
     std::string subtitle() override;
     
-    void addNewSpriteAtPosition(Point p);
-    
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
     void onAcceleration(Acceleration* acc, Event* event) override;
-    
-private:
-    Texture2D* _spriteTexture;    // weak ref
 };
 
 class PhysicsDemoLogoSmash : public PhysicsDemo
@@ -54,9 +59,20 @@ public:
     std::string title() override;
     
     Node* makeBall(float x, float y);
-    
-private:
-    DrawNode* _draw;
+};
+
+class PhysicsDemoPyramidStack : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
+};
+
+class PhysicsDemoPlink : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
 };
 
 #endif

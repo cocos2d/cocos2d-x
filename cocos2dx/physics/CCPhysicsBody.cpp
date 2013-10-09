@@ -92,12 +92,12 @@ PhysicsBody::~PhysicsBody()
     }
 }
 
-PhysicsBody* PhysicsBody::createCircle(float radius, float density)
+PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeCircle::create(radius, density));
+        body->addShape(PhysicsShapeCircle::create(radius, material));
         body->autorelease();
         return body;
     }
@@ -106,12 +106,12 @@ PhysicsBody* PhysicsBody::createCircle(float radius, float density)
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createBox(Size size, float density)
+PhysicsBody* PhysicsBody::createBox(Size size, PhysicsMaterial material)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeBox::create(size, density));
+        body->addShape(PhysicsShapeBox::create(size, material));
         body->autorelease();
         return body;
     }
@@ -120,12 +120,12 @@ PhysicsBody* PhysicsBody::createBox(Size size, float density)
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createPolygon(Point* points, int count, float density)
+PhysicsBody* PhysicsBody::createPolygon(Point* points, int count, PhysicsMaterial material)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapePolygon::create(points, count, density));
+        body->addShape(PhysicsShapePolygon::create(points, count, material));
         body->autorelease();
         return body;
     }
@@ -134,12 +134,12 @@ PhysicsBody* PhysicsBody::createPolygon(Point* points, int count, float density)
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createEdgeSegment(Point a, Point b, float border/* = 1*/)
+PhysicsBody* PhysicsBody::createEdgeSegment(Point a, Point b, PhysicsMaterial material, float border/* = 1*/)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeEdgeSegment::create(a, b, border));
+        body->addShape(PhysicsShapeEdgeSegment::create(a, b, material, border));
         body->_dynamic = false;
         body->autorelease();
         return body;
@@ -149,28 +149,12 @@ PhysicsBody* PhysicsBody::createEdgeSegment(Point a, Point b, float border/* = 1
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createEdgeBox(Size size, float border/* = 1*/)
+PhysicsBody* PhysicsBody::createEdgeBox(Size size, PhysicsMaterial material, float border/* = 1*/)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeEdgeBox::create(size, border));
-        body->_dynamic = false;
-        body->autorelease();
-        return body;
-    }
-    
-    CC_SAFE_DELETE(body);
-    
-    return nullptr;
-}
-
-PhysicsBody* PhysicsBody::createEdgePolygon(Point* points, int count, float border/* = 1*/)
-{
-    PhysicsBody* body = new PhysicsBody();
-    if (body && body->init())
-    {
-        body->addShape(PhysicsShapePolygon::create(points, count, border));
+        body->addShape(PhysicsShapeEdgeBox::create(size, material, border));
         body->_dynamic = false;
         body->autorelease();
         return body;
@@ -181,12 +165,28 @@ PhysicsBody* PhysicsBody::createEdgePolygon(Point* points, int count, float bord
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createEdgeChain(Point* points, int count, float border/* = 1*/)
+PhysicsBody* PhysicsBody::createEdgePolygon(Point* points, int count, PhysicsMaterial material, float border/* = 1*/)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeEdgeChain::create(points, count, border));
+        body->addShape(PhysicsShapeEdgePolygon::create(points, count, material, border));
+        body->_dynamic = false;
+        body->autorelease();
+        return body;
+    }
+    
+    CC_SAFE_DELETE(body);
+    
+    return nullptr;
+}
+
+PhysicsBody* PhysicsBody::createEdgeChain(Point* points, int count, PhysicsMaterial material, float border/* = 1*/)
+{
+    PhysicsBody* body = new PhysicsBody();
+    if (body && body->init())
+    {
+        body->addShape(PhysicsShapeEdgeChain::create(points, count, material, border));
         body->_dynamic = false;
         body->autorelease();
         return body;
@@ -311,9 +311,18 @@ void PhysicsBody::addShape(PhysicsShape* shape)
         
         if (shape->getAngularDumping() > 0)
         {
-            _angularDamping = (_angularDampingDefault ? 0 : _angularDamping) + shape->getAngularDumping();
-            _angularDampingDefault = false;
-            cpBodySetMoment(_info->body, _angularDamping);
+            if (shape->getAngularDumping() == INFINITY)
+            {
+                _angularDamping = INFINITY;
+                _angularDampingDefault = false;
+                cpBodySetMoment(_info->body, _angularDamping);
+            }
+            else if (_angularDamping != INFINITY)
+            {
+                _angularDamping = (_angularDampingDefault ? 0 : _angularDamping) + shape->getAngularDumping();
+                _angularDampingDefault = false;
+                cpBodySetMoment(_info->body, _angularDamping);
+            }
         }
         
         if (_world != nullptr) _world->addShape(shape);

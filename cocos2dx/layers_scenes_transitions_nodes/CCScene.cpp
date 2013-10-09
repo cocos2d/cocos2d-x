@@ -43,6 +43,7 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+    CC_SAFE_DELETE(_physicsWorld);
 }
 
 bool Scene::init()
