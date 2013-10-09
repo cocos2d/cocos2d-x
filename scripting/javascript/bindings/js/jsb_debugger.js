@@ -3,6 +3,7 @@ require('debugger/core/promise.js', "debug");
 require('debugger/transport.js', "debug");
 require('debugger/actors/root.js', "debug");
 require('debugger/actors/script.js', "debug");
+// require('debugger/actors/webconsole.js', "debug");
 require('debugger/main.js', "debug");
 
 
@@ -125,8 +126,6 @@ this.processInput = function (inputstr) {
 
     if (DebuggerServer && DebuggerServer._transport && DebuggerServer._transport.onDataAvailable)
     {
-        inputstr = utf16to8(inputstr);
-        inputstr = utf8to16(inputstr);
         DebuggerServer._transport.onDataAvailable(inputstr);
     }
 };
