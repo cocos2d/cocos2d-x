@@ -271,7 +271,8 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     Dictionary* animationManagers = Dictionary::create();
     Node *pNodeGraph = readFileWithCleanUp(true, animationManagers);
     
-    if (pNodeGraph && _actionManager->getAutoPlaySequenceId() != -1 && !_jsControlled)
+//    if (pNodeGraph && _actionManager->getAutoPlaySequenceId() != -1 && !_jsControlled)
+    if (pNodeGraph && _actionManager->getAutoPlaySequenceId() != -1)
     {
         // Auto play animations
         _actionManager->runAnimationsForSequenceIdTweenDuration(_actionManager->getAutoPlaySequenceId(), 0);
