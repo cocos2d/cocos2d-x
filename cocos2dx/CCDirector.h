@@ -353,6 +353,11 @@ public:
     void setActionManager(ActionManager* actionManager);
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
+    
+    /**
+     *  get Frame Rate
+     */
+    float getFrameRate() const { return _frameRate; }
 
 protected:
     void purgeDirector();
