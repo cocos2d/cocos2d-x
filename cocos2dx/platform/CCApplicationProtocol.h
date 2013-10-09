@@ -57,6 +57,13 @@ public:
     */
     virtual void applicationWillEnterForeground() = 0;
 
+	/**
+	@brief  This function will be called when config like orientation was changed.
+	* @js NA
+	* @lua NA
+	*/
+	virtual void applicationConfigChanged() = 0;
+
     /**
     @brief    Callback by Director for limit FPS.
     @param interval The time, expressed in seconds, between current frame and next.
