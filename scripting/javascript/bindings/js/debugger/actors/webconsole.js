@@ -6,38 +6,38 @@
 
 "use strict";
 
-let Cc = Components.classes;
-let Ci = Components.interfaces;
-let Cu = Components.utils;
+// let Cc = Components.classes;
+// let Ci = Components.interfaces;
+// let Cu = Components.utils;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
+// Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-XPCOMUtils.defineLazyModuleGetter(this, "Services",
-                                  "resource://gre/modules/Services.jsm");
+// XPCOMUtils.defineLazyModuleGetter(this, "Services",
+//                                   "resource://gre/modules/Services.jsm");
 
-XPCOMUtils.defineLazyModuleGetter(this, "WebConsoleUtils",
-                                  "resource://gre/modules/devtools/WebConsoleUtils.jsm");
+// XPCOMUtils.defineLazyModuleGetter(this, "WebConsoleUtils",
+//                                   "resource://gre/modules/devtools/WebConsoleUtils.jsm");
 
-XPCOMUtils.defineLazyModuleGetter(this, "ConsoleServiceListener",
-                                  "resource://gre/modules/devtools/WebConsoleUtils.jsm");
+// XPCOMUtils.defineLazyModuleGetter(this, "ConsoleServiceListener",
+//                                   "resource://gre/modules/devtools/WebConsoleUtils.jsm");
 
-XPCOMUtils.defineLazyModuleGetter(this, "ConsoleAPIListener",
-                                  "resource://gre/modules/devtools/WebConsoleUtils.jsm");
+// XPCOMUtils.defineLazyModuleGetter(this, "ConsoleAPIListener",
+//                                   "resource://gre/modules/devtools/WebConsoleUtils.jsm");
 
-XPCOMUtils.defineLazyModuleGetter(this, "ConsoleProgressListener",
-                                  "resource://gre/modules/devtools/WebConsoleUtils.jsm");
+// XPCOMUtils.defineLazyModuleGetter(this, "ConsoleProgressListener",
+//                                   "resource://gre/modules/devtools/WebConsoleUtils.jsm");
 
-XPCOMUtils.defineLazyModuleGetter(this, "JSTermHelpers",
-                                  "resource://gre/modules/devtools/WebConsoleUtils.jsm");
+// XPCOMUtils.defineLazyModuleGetter(this, "JSTermHelpers",
+//                                   "resource://gre/modules/devtools/WebConsoleUtils.jsm");
 
-XPCOMUtils.defineLazyModuleGetter(this, "JSPropertyProvider",
-                                  "resource://gre/modules/devtools/WebConsoleUtils.jsm");
+// XPCOMUtils.defineLazyModuleGetter(this, "JSPropertyProvider",
+//                                   "resource://gre/modules/devtools/WebConsoleUtils.jsm");
 
-XPCOMUtils.defineLazyModuleGetter(this, "NetworkMonitor",
-                                  "resource://gre/modules/devtools/WebConsoleUtils.jsm");
+// XPCOMUtils.defineLazyModuleGetter(this, "NetworkMonitor",
+//                                   "resource://gre/modules/devtools/WebConsoleUtils.jsm");
 
-XPCOMUtils.defineLazyModuleGetter(this, "ConsoleAPIStorage",
-                                  "resource://gre/modules/ConsoleAPIStorage.jsm");
+// XPCOMUtils.defineLazyModuleGetter(this, "ConsoleAPIStorage",
+//                                   "resource://gre/modules/ConsoleAPIStorage.jsm");
 
 
 /**
@@ -54,29 +54,30 @@ function WebConsoleActor(aConnection, aParentActor)
 {
   this.conn = aConnection;
 
-  if (aParentActor instanceof BrowserTabActor &&
-      aParentActor.browser instanceof Ci.nsIDOMWindow) {
-    // B2G tab actor |this.browser| points to a DOM chrome window, not
-    // a xul:browser element.
-    //
-    // TODO: bug 802246 - b2g has only one tab actor, the shell.xul, which is
-    // not properly supported by the console actor - see bug for details.
-    //
-    // Below we work around the problem: selecting the shell.xul tab actor
-    // behaves as if the user picked the global console actor.
-    //this._window = aParentActor.browser;
-    this._window = Services.wm.getMostRecentWindow("navigator:browser");
-    this._isGlobalActor = true;
-  }
-  else if (aParentActor instanceof BrowserTabActor &&
-           aParentActor.browser instanceof Ci.nsIDOMElement) {
-    // Firefox for desktop tab actor |this.browser| points to the xul:browser
-    // element.
-    this._window = aParentActor.browser.contentWindow;
-  }
-  else {
+  // if (aParentActor instanceof BrowserTabActor &&
+  //     aParentActor.browser instanceof Ci.nsIDOMWindow) {
+  //   // B2G tab actor |this.browser| points to a DOM chrome window, not
+  //   // a xul:browser element.
+  //   //
+  //   // TODO: bug 802246 - b2g has only one tab actor, the shell.xul, which is
+  //   // not properly supported by the console actor - see bug for details.
+  //   //
+  //   // Below we work around the problem: selecting the shell.xul tab actor
+  //   // behaves as if the user picked the global console actor.
+  //   //this._window = aParentActor.browser;
+  //   this._window = Services.wm.getMostRecentWindow("navigator:browser");
+  //   this._isGlobalActor = true;
+  // }
+  // else if (aParentActor instanceof BrowserTabActor &&
+  //          aParentActor.browser instanceof Ci.nsIDOMElement) {
+  //   // Firefox for desktop tab actor |this.browser| points to the xul:browser
+  //   // element.
+  //   this._window = aParentActor.browser.contentWindow;
+  // }
+  // else 
+  {
     // In all other cases we should behave as the global console actor.
-    this._window = Services.wm.getMostRecentWindow("navigator:browser");
+    this._window = globalDebuggee;//Services.wm.getMostRecentWindow("navigator:browser");
     this._isGlobalActor = true;
   }
 
@@ -92,12 +93,12 @@ function WebConsoleActor(aConnection, aParentActor)
   this._getDebuggerGlobal(this.window);
 
   this._onObserverNotification = this._onObserverNotification.bind(this);
-  Services.obs.addObserver(this._onObserverNotification,
-                           "inner-window-destroyed", false);
-  if (this._isGlobalActor) {
-    Services.obs.addObserver(this._onObserverNotification,
-                             "last-pb-context-exited", false);
-  }
+  // Services.obs.addObserver(this._onObserverNotification,
+  //                          "inner-window-destroyed", false);
+  // if (this._isGlobalActor) {
+  //   Services.obs.addObserver(this._onObserverNotification,
+  //                            "last-pb-context-exited", false);
+  // }
 }
 
 WebConsoleActor.prototype =
@@ -198,7 +199,7 @@ WebConsoleActor.prototype =
     return { actor: this.actorID };
   },
 
-  hasNativeConsoleAPI: BrowserTabActor.prototype.hasNativeConsoleAPI,
+  hasNativeConsoleAPI: false,//BrowserTabActor.prototype.hasNativeConsoleAPI,
 
   _createValueGrip: ThreadActor.prototype.createValueGrip,
   _stringIsLong: ThreadActor.prototype._stringIsLong,
