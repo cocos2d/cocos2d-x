@@ -59,9 +59,8 @@ static string outData;
 static vector<string> g_queue;
 static std::mutex g_qMutex;
 static std::mutex g_rwMutex;
-static bool vmLock = false;
-static jsval frame = JSVAL_NULL, script = JSVAL_NULL;
 static int clientSocket = -1;
+static unsigned long s_nestedLoopLevel = 0;
 
 // server entry point for the bg thread
 static void serverEntryPoint(void);
@@ -193,14 +192,18 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj,
 }
 
 void js_log(const char *format, ...) {
-    if (_js_log_buf == NULL) {
+
+    if (_js_log_buf == NULL)
+    {
         _js_log_buf = (char *)calloc(sizeof(char), kMaxLogLen+1);
+        _js_log_buf[kMaxLogLen] = '\0';
     }
     va_list vl;
     va_start(vl, format);
     int len = vsnprintf(_js_log_buf, kMaxLogLen, format, vl);
     va_end(vl);
-    if (len) {
+    if (len > 0)
+    {
         CCLOG("JS: %s\n", _js_log_buf);
     }
 }
@@ -392,7 +395,6 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
         global = global_;
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
     if (script) {
-        // JSAutoCompartment ac(cx, global);
         JSAutoCompartment ac(cx, global);
         JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
         if (JS_FALSE == evaluatedOK) {
@@ -406,9 +408,6 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
 void ScriptingCore::start() {
     // for now just this
     this->createGlobalContext();
-#if JSB_ENABLE_DEBUGGER
-	this->enableDebugger();
-#endif //JSB_ENABLE_DEBUGGER
 }
 
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
@@ -476,9 +475,7 @@ void ScriptingCore::createGlobalContext() {
     //JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
     this->global_ = NewGlobalObject(cx_);
-#if JSB_ENABLE_DEBUGGER
-    JS_SetDebugMode(cx_, JS_TRUE);
-#endif
+
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
         callback(this->cx_, this->global_);
@@ -500,6 +497,8 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (!path) {
         return false;
     }
+    
+    
     cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
     std::string fullPath = futil->fullPathForFilename(path);
     if (global == NULL) {
@@ -516,9 +515,10 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
     unsigned long length = 0;
-    void *data = futil->getFileData(byteCodePath.c_str(),
+    unsigned char* data = futil->getFileData(byteCodePath.c_str(),
                                     "rb",
                                     &length);
+    
     if (data) {
         script = JS_DecodeScript(cx, data, length, NULL, NULL);
         CC_SAFE_DELETE_ARRAY(data);
@@ -650,9 +650,10 @@ JSBool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 2 && argv[1].isString()) {
             JSString* globalName = JSVAL_TO_STRING(argv[1]);
             JSStringWrapper name(globalName);
-            js::RootedObject* rootedGlobal = globals[name];
-            if (rootedGlobal) {
-                res = ScriptingCore::getInstance()->runScript(path, rootedGlobal->get());
+//            js::RootedObject* rootedGlobal = globals[name];
+            JSObject* debugObj = ScriptingCore::getInstance()->getDebugGlobal();
+            if (debugObj) {
+                res = ScriptingCore::getInstance()->runScript(path, debugObj);
             } else {
                 JS_ReportError(cx, "Invalid global object: %s", (char*)name);
                 return JS_FALSE;
@@ -930,15 +931,16 @@ JSBool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, ui
     
     do
     {
+        JSAutoCompartment ac(cx, obj);
+        
         if (JS_HasProperty(cx, obj, name, &hasAction) && hasAction) {
             if (!JS_GetProperty(cx, obj, name, &temp_retval)) {
                 break;
             }
             if (temp_retval == JSVAL_VOID) {
                 break;
-            }
+            }            
             
-            JSAutoCompartment ac(cx, obj);
             if (retVal) {
                 bRet = JS_CallFunctionName(cx, obj, name, argc, vp, retVal);
             }
@@ -1099,6 +1101,8 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
 {
     if (NULL == evt)
         return 0;
+ 
+    JSAutoCompartment ac(cx_, global_);
     
     switch (evt->type)
     {
@@ -1199,7 +1203,7 @@ JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
 }
 
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
-    JSString *tmp = v.isString() ? JS_ValueToString(cx, v) : NULL;
+    JSString *tmp = JS_ValueToString(cx, v);
     JSB_PRECONDITION3(tmp, cx, JS_FALSE, "Error processing arguments");
 
     JSStringWrapper str(tmp);
@@ -1736,14 +1740,24 @@ jsval long_long_to_jsval(JSContext* cx, long long v) {
     return OBJECT_TO_JSVAL(tmp);
 }
 
-jsval std_string_to_jsval(JSContext* cx, const std::string& v) {
-    return c_string_to_jsval(cx, v.c_str());
+jsval std_string_to_jsval(JSContext* cx, const std::string& v)
+{
+    return c_string_to_jsval(cx, v.c_str(), v.size());
 }
 
-jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) {
-    if (v == NULL) {
+jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
+{
+    if (v == NULL)
+    {
         return JSVAL_NULL;
     }
+    
+    if (0 == length)
+    {
+        auto emptyStr = JS_NewStringCopyZ(cx, "");
+        return STRING_TO_JSVAL(emptyStr);
+    }
+    
     jsval ret = JSVAL_NULL;
     int utf16_size = 0;
     jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, length, &utf16_size);
@@ -1902,43 +1916,254 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
 
 #pragma mark - Debug
 
-void SimpleRunLoop::update(float dt) {
-    std::lock_guard<std::mutex> lk(g_qMutex);
-
-    while (g_queue.size() > 0) {
+void SimpleRunLoop::update(float dt)
+{
+    g_qMutex.lock();
+    size_t size = g_queue.size();
+    g_qMutex.unlock();
+    
+    while (size > 0)
+    {
+        g_qMutex.lock();
         vector<string>::iterator first = g_queue.begin();
         string str = *first;
-        ScriptingCore::getInstance()->debugProcessInput(str);
         g_queue.erase(first);
+        size = g_queue.size();
+        g_qMutex.unlock();
+        
+        ScriptingCore::getInstance()->debugProcessInput(str);
     }
 }
 
 void ScriptingCore::debugProcessInput(string str) {
+    JSAutoCompartment ac(cx_, debugGlobal_);
+    
     JSString* jsstr = JS_NewStringCopyZ(cx_, str.c_str());
-    jsval argv[3] = {
-        STRING_TO_JSVAL(jsstr),
-        frame,
-        script
+    jsval argv[] = {
+        STRING_TO_JSVAL(jsstr)
     };
     jsval outval;
-    JSAutoCompartment ac(cx_, debugGlobal_);
-    JS_CallFunctionName(cx_, debugGlobal_, "processInput", 3, argv, &outval);
+    
+    JS_CallFunctionName(cx_, debugGlobal_, "processInput", 1, argv, &outval);
 }
 
-void ScriptingCore::enableDebugger() {
-    if (debugGlobal_ == NULL) {
+static bool NS_ProcessNextEvent()
+{
+    g_qMutex.lock();
+    size_t size = g_queue.size();
+    g_qMutex.unlock();
+    
+    while (size > 0)
+    {
+        g_qMutex.lock();
+        vector<string>::iterator first = g_queue.begin();
+        string str = *first;
+        g_queue.erase(first);
+        size = g_queue.size();
+        g_qMutex.unlock();
+        
+        ScriptingCore::getInstance()->debugProcessInput(str);
+    }
+//    std::this_thread::yield();
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    
+    return true;
+}
+
+JSBool JSBDebug_enterNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
+{
+    enum {
+        NS_OK = 0,
+        NS_ERROR_UNEXPECTED
+    };
+    
+#define NS_SUCCEEDED(v) ((v) == NS_OK)
+    
+    int rv = NS_OK;
+    
+    uint32_t nestLevel = ++s_nestedLoopLevel;
+
+    while (NS_SUCCEEDED(rv) && s_nestedLoopLevel >= nestLevel) {
+        if (!NS_ProcessNextEvent())
+            rv = NS_ERROR_UNEXPECTED;
+    }
+    
+    CCASSERT(s_nestedLoopLevel <= nestLevel,
+             "nested event didn't unwind properly");
+    
+    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
+    return JS_TRUE;
+}
+
+JSBool JSBDebug_exitNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
+{
+    if (s_nestedLoopLevel > 0) {
+        --s_nestedLoopLevel;
+    } else {
+        JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(0));
+        return JS_TRUE;
+    }
+    
+    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
+    return JS_TRUE;
+}
+
+JSBool JSBDebug_getEventLoopNestLevel(JSContext* cx, unsigned argc, jsval* vp)
+{
+    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
+    return JS_TRUE;
+}
+
+//#pragma mark - Debugger
+
+static void _clientSocketWriteAndClearString(std::string& s)
+{
+    ::send(clientSocket, s.c_str(), s.length(), 0);
+    s.clear();
+}
+
+static void processInput(string data) {
+    std::lock_guard<std::mutex> lk(g_qMutex);
+    g_queue.push_back(data);
+}
+
+static void clearBuffers() {
+    std::lock_guard<std::mutex> lk(g_rwMutex);
+    // only process input if there's something and we're not locked
+    if (inData.length() > 0) {
+        processInput(inData);
+        inData.clear();
+    }
+    if (outData.length() > 0) {
+        _clientSocketWriteAndClearString(outData);
+    }
+}
+
+static void serverEntryPoint(void)
+{
+    // start a server, accept the connection and keep reading data from it
+    struct addrinfo hints, *result = nullptr, *rp = nullptr;
+    int s = 0;
+    memset(&hints, 0, sizeof(struct addrinfo));
+    hints.ai_family = AF_INET;       // IPv4
+    hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
+    hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
+    
+    stringstream portstr;
+    portstr << JSB_DEBUGGER_PORT;
+    
+    int err = 0;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    WSADATA wsaData;
+    err = WSAStartup(MAKEWORD(2, 2),&wsaData);
+#endif
+    
+    if ((err = getaddrinfo(NULL, portstr.str().c_str(), &hints, &result)) != 0) {
+        LOGD("getaddrinfo error : %s\n", gai_strerror(err));
+    }
+    
+    for (rp = result; rp != NULL; rp = rp->ai_next) {
+        if ((s = socket(rp->ai_family, rp->ai_socktype, 0)) < 0) {
+            continue;
+        }
+        int optval = 1;
+        if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
+            close(s);
+			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
+            return;
+        }
+        
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		if ((setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval))) < 0) {
+			close(s);
+			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_NOSIGPIPE");
+			return;
+		}
+#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        
+        if ((::bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
+            break;
+        }
+        close(s);
+        s = -1;
+    }
+    if (s < 0 || rp == NULL) {
+		TRACE_DEBUGGER_SERVER("debug server : error creating/binding socket");
+        return;
+    }
+    
+    freeaddrinfo(result);
+    
+    listen(s, 1);
+    
+	while (true) {
+        clientSocket = accept(s, NULL, NULL);
+        
+        if (clientSocket < 0)
+        {
+            TRACE_DEBUGGER_SERVER("debug server : error on accept");
+            return;
+        }
+        else
+        {
+            // read/write data
+            TRACE_DEBUGGER_SERVER("debug server : client connected");
+            
+            inData = "connected";
+            // process any input, send any output
+            clearBuffers();
+            
+            char buf[1024] = {0};
+            int readBytes = 0;
+            while ((readBytes = ::recv(clientSocket, buf, sizeof(buf), 0)) > 0)
+            {
+                buf[readBytes] = '\0';
+                // TRACE_DEBUGGER_SERVER("debug server : received command >%s", buf);
+                
+                // no other thread is using this
+                inData.append(buf);
+                // process any input, send any output
+                clearBuffers();
+            } // while(read)
+            
+            close(clientSocket);
+        }
+	} // while(true)
+}
+
+JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
+{
+    if (argc == 1) {
+        jsval* argv = JS_ARGV(cx, vp);
+        JSStringWrapper strWrapper(argv[0]);
+        // this is safe because we're already inside a lock (from clearBuffers)
+        outData.append(strWrapper.get());
+        _clientSocketWriteAndClearString(outData);
+    }
+    return JS_TRUE;
+}
+
+void ScriptingCore::enableDebugger()
+{
+    JS_SetDebugMode(cx_, JS_TRUE);
+    
+    if (debugGlobal_ == NULL)
+    {
+        JSAutoCompartment ac0(cx_, global_);
         debugGlobal_ = NewGlobalObject(cx_, true);
         JS_WrapObject(cx_, &debugGlobal_);
         JSAutoCompartment ac(cx_, debugGlobal_);
         // these are used in the debug program
         JS_DefineFunction(cx_, debugGlobal_, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_bufferRead", JSBDebug_BufferRead, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_lockVM", JSBDebug_LockExecution, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_unlockVM", JSBDebug_UnlockExecution, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-
+        JS_DefineFunction(cx_, debugGlobal_, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(cx_, debugGlobal_, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(cx_, debugGlobal_, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        
+        
         runScript("jsb_debugger.js", debugGlobal_);
-
+        
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(global_);
         jsval outval;
@@ -1946,46 +2171,14 @@ void ScriptingCore::enableDebugger() {
         if (!ok) {
             JS_ReportPendingException(cx_);
         }
-        // define the start debugger function
-        JS_DefineFunction(cx_, global_, "startDebugger", JSBDebug_StartDebugger, 3, JSPROP_READONLY | JSPROP_PERMANENT);
-        // start bg thread
         
+        // start bg thread
         auto t = std::thread(&serverEntryPoint);
         t.detach();
 
         Scheduler* scheduler = Director::getInstance()->getScheduler();
         scheduler->scheduleUpdateForTarget(this->runLoop, 0, false);
     }
-}
-
-JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp)
-{
-    JSObject* debugGlobal = ScriptingCore::getInstance()->getDebugGlobal();
-    if (argc >= 2) {
-        jsval* argv = JS_ARGV(cx, vp);
-        jsval out;
-        JS_WrapObject(cx, &debugGlobal);
-        JSAutoCompartment ac(cx, debugGlobal);
-        JS_CallFunctionName(cx, debugGlobal, "_startDebugger", argc, argv, &out);
-        return JS_TRUE;
-    }
-    return JS_FALSE;
-}
-
-JSBool jsGetScript(JSContext* cx, unsigned argc, jsval* vp)
-{
-    jsval* argv = JS_ARGV(cx, vp);
-    if (argc == 1 && argv[0].isString()) {
-        JSString* str = argv[0].toString();
-        JSStringWrapper wrapper(str);
-        JSScript* script = filename_script[(char *)wrapper];
-        if (script) {
-            JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL((JSObject*)script));
-        } else {
-            JS_SET_RVAL(cx, vp, JSVAL_NULL);
-        }
-    }
-    return JS_TRUE;
 }
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug)
@@ -2055,191 +2248,6 @@ js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
 {
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
-}
-
-//#pragma mark - Debugger
-
-JSBool JSBDebug_StartDebugger(JSContext* cx, unsigned argc, jsval* vp)
-{
-    JSObject* debugGlobal = ScriptingCore::getInstance()->getDebugGlobal();
-    if (argc >= 2) {
-        jsval* argv = JS_ARGV(cx, vp);
-        jsval out;
-        JS_WrapObject(cx, &debugGlobal);
-        JSAutoCompartment ac(cx, debugGlobal);
-        JS_CallFunctionName(cx, debugGlobal, "_startDebugger", argc, argv, &out);
-        return JS_TRUE;
-    }
-    return JS_FALSE;
-}
-
-JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp)
-{
-    if (argc == 0) {
-        JSString* str;
-        // this is safe because we're already inside a lock (from clearBuffers)
-        if (vmLock) {
-            g_rwMutex.lock();
-        }
-        str = JS_NewStringCopyZ(cx, inData.c_str());
-        inData.clear();
-        if (vmLock) {
-            g_rwMutex.unlock();
-        }
-        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
-    } else {
-        JS_SET_RVAL(cx, vp, JSVAL_NULL);
-    }
-    return JS_TRUE;
-}
-
-static void _clientSocketWriteAndClearString(std::string& s) {
-#if JSB_DEBUGGER_OUTPUT_STDOUT
-    write(STDOUT_FILENO, s.c_str(), s.length());
-#endif
-    write(clientSocket, s.c_str(), s.length());
-    s.clear();
-}
-
-JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
-{
-    if (argc == 1) {
-        jsval* argv = JS_ARGV(cx, vp);
-        JSStringWrapper strWrapper(argv[0]);
-        // this is safe because we're already inside a lock (from clearBuffers)
-        outData.append(strWrapper.get());
-        _clientSocketWriteAndClearString(outData);
-    }
-    return JS_TRUE;
-}
-
-// this should lock the execution of the running thread, waiting for a signal
-JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp)
-{
-    if (argc == 2) {
-        printf("locking vm\n");
-        jsval* argv = JS_ARGV(cx, vp);
-        frame = argv[0];
-        script = argv[1];
-        vmLock = true;
-        while (vmLock) {
-            // try to read the input, if there's anything
-            g_qMutex.lock();
-            while (g_queue.size() > 0) {
-                vector<string>::iterator first = g_queue.begin();
-                string str = *first;
-                ScriptingCore::getInstance()->debugProcessInput(str);
-                g_queue.erase(first);
-            }
-            g_qMutex.unlock();
-            std::this_thread::yield();
-        }
-        printf("vm unlocked\n");
-        frame = JSVAL_NULL;
-        script = JSVAL_NULL;
-        return JS_TRUE;
-    }
-    JS_ReportError(cx, "invalid call to _lockVM");
-    return JS_FALSE;
-}
-
-JSBool JSBDebug_UnlockExecution(JSContext* cx, unsigned argc, jsval* vp)
-{
-    vmLock = false;
-    return JS_TRUE;
-}
-
-static void processInput(string data) {
-    std::lock_guard<std::mutex> lk(g_qMutex);
-    g_queue.push_back(string(data));
-}
-
-static void clearBuffers() {
-    std::lock_guard<std::mutex> lk(g_rwMutex);
-    // only process input if there's something and we're not locked
-    if (inData.length() > 0) {
-        processInput(inData);
-        inData.clear();
-    }
-    if (outData.length() > 0) {
-        _clientSocketWriteAndClearString(outData);
-    }
-}
-
-static void serverEntryPoint(void)
-{
-    // start a server, accept the connection and keep reading data from it
-    struct addrinfo hints, *result, *rp;
-    int s;
-    memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;       // IPv4
-    hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
-    hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
-
-    stringstream portstr;
-    portstr << JSB_DEBUGGER_PORT;
-
-    int err;
-    if ((err = getaddrinfo(NULL, portstr.str().c_str(), &hints, &result)) != 0) {
-        LOGD("getaddrinfo error : %s\n", gai_strerror(err));
-    }
-
-    for (rp = result; rp != NULL; rp = rp->ai_next) {
-        if ((s = socket(rp->ai_family, rp->ai_socktype, 0)) < 0) {
-            continue;
-        }
-        int optval = 1;
-        if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
-            close(s);
-			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
-            return;
-        }
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-		if ((setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval))) < 0) {
-			close(s);
-			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_NOSIGPIPE");
-			return;
-		}
-#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
-        if ((::bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
-            break;
-        }
-        close(s);
-        s = -1;
-    }
-    if (s < 0 || rp == NULL) {
-		TRACE_DEBUGGER_SERVER("debug server : error creating/binding socket");
-        return;
-    }
-
-    freeaddrinfo(result);
-
-    listen(s, 1);
-
-	while (true) {
-        clientSocket = accept(s, NULL, NULL);
-        if (clientSocket < 0)
-            {
-                TRACE_DEBUGGER_SERVER("debug server : error on accept");
-                return;
-            } else {
-            // read/write data
-            TRACE_DEBUGGER_SERVER("debug server : client connected");
-            char buf[256];
-            int readBytes;
-            while ((readBytes = read(clientSocket, buf, 256)) > 0) {
-                buf[readBytes] = '\0';
-                TRACE_DEBUGGER_SERVER("debug server : received command >%s", buf);
-                // no other thread is using this
-                inData.append(buf);
-                // process any input, send any output
-                clearBuffers();
-            } // while(read)
-            close(clientSocket);
-        }
-	} // while(true)
 }
 
 static Color3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)

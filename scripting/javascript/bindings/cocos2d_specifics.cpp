@@ -3228,10 +3228,13 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
             CC_SAFE_DELETE_ARRAY(data);
             
             JS_SET_RVAL(cx, vp, jsret);
-            return JS_TRUE;
         }
-        JS_ReportError(cx, "get file(%s) data fails", arg0);
-        return JS_FALSE;
+        else
+        {
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        }
+
+        return JS_TRUE;
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
     return JS_FALSE;
