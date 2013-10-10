@@ -465,23 +465,19 @@ void ScriptingCore::createGlobalContext() {
     
     this->cx_ = JS_NewContext(rt_, 8192);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
-    
-//    JS_SetVersion(this->cx_, JSVERSION_LATEST);
+    JS_SetVersion(this->cx_, JSVERSION_LATEST);
     
     // Only disable METHODJIT on iOS.
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_
-//    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
-//    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
-//#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
+    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
+#endif
     
     JS_SetErrorReporter(this->cx_, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
     //JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
-    
     this->global_ = NewGlobalObject(cx_);
-    JSAutoCompartment ac(cx_, global_);
-
 #if JSB_ENABLE_DEBUGGER
     JS_SetDebugMode(cx_, JS_TRUE);
 #endif
@@ -516,12 +512,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (cx == NULL) {
         cx = cx_;
     }
-    
-    JSAutoCompartment ac(cx, global);
-    
-    uint32_t oldopts = JS_GetOptions(cx);
-    JS_SetOptions(cx, oldopts | JSOPTION_COMPILE_N_GO | JSOPTION_NO_SCRIPT_RVAL);
-    
+    JSScript *script = NULL;    
     js::RootedObject obj(cx, global);
 	JS::CompileOptions options(cx);
 	options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
@@ -529,11 +520,10 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
     unsigned long length = 0;
-    void *data = futil->getFileData(byteCodePath.c_str(),
+    unsigned char* data = futil->getFileData(byteCodePath.c_str(),
                                     "rb",
                                     &length);
     
-    js::RootedScript script(cx);
     if (data) {
         script = JS_DecodeScript(cx, data, length, NULL, NULL);
         CC_SAFE_DELETE_ARRAY(data);
@@ -2098,23 +2088,15 @@ JSBool jsGetScript(JSContext* cx, unsigned argc, jsval* vp)
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug)
 {
-    JS::CompartmentOptions options;
-    options.setZone(JS::FreshZone)
-    .setVersion(JSVERSION_LATEST);
-    JS::RootedObject glob(cx, JS_NewGlobalObject(cx, &global_class, NULL, options));
-    
-    if (!glob)
-    {
+    JSObject* glob = JS_NewGlobalObject(cx, &global_class, NULL);
+    if (!glob) {
         return NULL;
     }
-    
     JSAutoCompartment ac(cx, glob);
     JSBool ok = JS_TRUE;
     ok = JS_InitStandardClasses(cx, glob);
     if (ok)
-    {
-        ok = JS_InitReflect(cx, glob) != NULL;
-    }
+        JS_InitReflect(cx, glob);
     if (ok && debug)
         ok = JS_DefineDebuggerObject(cx, glob);
     if (!ok)
