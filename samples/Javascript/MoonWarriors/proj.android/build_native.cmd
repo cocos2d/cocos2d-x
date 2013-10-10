@@ -56,7 +56,8 @@ exit /b 1
 set COCOS2DX_ROOT=%~dp0..\..\..\..
 set APP_ROOT=%~dp0..
 set APP_ANDROID_ROOT=%~dp0
-set BINDINGS_JS_ROOT=%APP_ROOT%\..\..\scripting\javascript\bindings\js
+set RESROUCE_ROOT="%APP_ROOT%\..\Shared\games\MoonWarriors\res"
+set BINDINGS_JS_ROOT=%APP_ROOT%\..\..\..\scripting\javascript\bindings\js
 
 if "%buildexternalsfromsource%"=="1" (goto :MODULE1) else (goto :MODULE2)
 :MODULE1
@@ -81,10 +82,16 @@ mkdir %APP_ANDROID_ROOT%\assets
 mkdir %APP_ANDROID_ROOT%\assets\res
 
 rem copy Resources/* into assets' root
-xcopy /e /q /r /y %APP_ROOT%\Resources\* %APP_ANDROID_ROOT%\assets
+xcopy /e /q /r /y %RESROUCE_ROOT%\* %APP_ANDROID_ROOT%\assets
+
+rem copy MoonWarriors js
+xcopy /e /q /r /y %RESROUCE_ROOT%\..\src\* %APP_ANDROID_ROOT%\assets
+
+rem copy MoonWarriors-native.js
+xcopy /e /q /r /y %RESROUCE_ROOT%\..\*.js %APP_ANDROID_ROOT%\assets
 
 rem copy bindings/*.js into assets' root
-xcopy /e /q /r /y %BINDINGS_JS_ROOT%\* %APP_ANDROID_ROOT%\assets
+xcopy /e /q /r /y %BINDINGS_JS_ROOT%\*.js %APP_ANDROID_ROOT%\assets
 
 call %NDK_ROOT%\ndk-build.cmd %PARALLEL_BUILD_FLAG% NDK_LOG=0 V=0
 pause
