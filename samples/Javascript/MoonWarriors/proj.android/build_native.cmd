@@ -88,10 +88,10 @@ rem copy MoonWarriors js
 xcopy /e /q /r /y %RESROUCE_ROOT%\..\src\* %APP_ANDROID_ROOT%\assets
 
 rem copy MoonWarriors-native.js
-xcopy /e /q /r /y %RESROUCE_ROOT%\..\*.js %APP_ANDROID_ROOT%\assets
+xcopy /e /q /r /y %RESROUCE_ROOT%\..\* %APP_ANDROID_ROOT%\assets
 
 rem copy bindings/*.js into assets' root
-xcopy /e /q /r /y %BINDINGS_JS_ROOT%\*.js %APP_ANDROID_ROOT%\assets
+xcopy /e /q /r /y %BINDINGS_JS_ROOT%\* %APP_ANDROID_ROOT%\assets
 
 call %NDK_ROOT%\ndk-build.cmd %PARALLEL_BUILD_FLAG% NDK_LOG=0 V=0
 pause
