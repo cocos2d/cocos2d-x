@@ -8400,7 +8400,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cpp/TestCpp/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2dx/platform/mac $(SRCROOT)/../external/libwebsockets/mac/include";
 			};
 			name = Debug;
 		};
@@ -8418,7 +8418,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cpp/TestCpp/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2dx/platform/mac $(SRCROOT)/../external/libwebsockets/mac/include";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -9141,9 +9141,9 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2/freetype\"",
-					"\"$(SRCROOT)/../extensions\"",
-					"\"$(SRCROOT)/../external\"",
+					"$(SRCROOT)/../cocos2dx/platform/third_party/ios/libfreetype2/freetype",
+					"$(SRCROOT)/../extensions",
+					"$(SRCROOT)/../external",
 				);
 				INFOPLIST_FILE = "Cpp/TestCpp/proj.ios/Test-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -9173,9 +9173,9 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2/freetype\"",
-					"\"$(SRCROOT)/../extensions\"",
-					"\"$(SRCROOT)/../external\"",
+					"$(SRCROOT)/../cocos2dx/platform/third_party/ios/libfreetype2/freetype",
+					"$(SRCROOT)/../extensions",
+					"$(SRCROOT)/../external",
 				);
 				INFOPLIST_FILE = "Cpp/TestCpp/proj.ios/Test-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -9265,7 +9265,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../CocosDenshion/include\" \"$(SRCROOT)/../external/chipmunk/include/chipmunk\" \"$(SRCROOT)/../cocos2dx/\" \"$(SRCROOT)/../cocos2dx/include\" \"$(SRCROOT)/../cocos2dx/kazmath/include\" \"$(SRCROOT)/../extensions\" \"$(SRCROOT)/../external\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../audio/include\" \"$(SRCROOT)/../external/chipmunk/include/chipmunk\" \"$(SRCROOT)/../cocos2dx/\" \"$(SRCROOT)/../cocos2dx/include\" \"$(SRCROOT)/../cocos2dx/kazmath/include\" \"$(SRCROOT)/../extensions\" \"$(SRCROOT)/../external\"";
 			};
 			name = Debug;
 		};
@@ -9291,7 +9291,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../CocosDenshion/include\" \"$(SRCROOT)/../external/chipmunk/include/chipmunk\" \"$(SRCROOT)/../cocos2dx/\" \"$(SRCROOT)/../cocos2dx/include\" \"$(SRCROOT)/../cocos2dx/kazmath/include\" \"$(SRCROOT)/../extensions\" \"$(SRCROOT)/../external\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../audio/include\" \"$(SRCROOT)/../external/chipmunk/include/chipmunk\" \"$(SRCROOT)/../cocos2dx/\" \"$(SRCROOT)/../cocos2dx/include\" \"$(SRCROOT)/../cocos2dx/kazmath/include\" \"$(SRCROOT)/../extensions\" \"$(SRCROOT)/../external\"";
 			};
 			name = Release;
 		};

@@ -23,9 +23,9 @@ libcocos2dx-clean:
 	$(MAKE) -C cocos2dx/proj.$(PLATFORM) clean
 
 cocosdenshion: libcocos2dx
-	$(MAKE) -C CocosDenshion/proj.$(PLATFORM)
+	$(MAKE) -C audio/proj.$(PLATFORM)
 cocosdenshion-clean:
-	$(MAKE) -C CocosDenshion/proj.$(PLATFORM) clean
+	$(MAKE) -C audio/proj.$(PLATFORM) clean
 
 lua: libextensions
 	$(MAKE) -C scripting/lua/proj.$(PLATFORM)
