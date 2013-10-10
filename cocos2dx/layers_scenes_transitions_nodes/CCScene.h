@@ -88,6 +88,7 @@ protected:
 #endif // CC_USE_PHYSICS
     
     friend class Layer;
+    friend class SpriteBatchNode;
 };
 
 // end of scene group

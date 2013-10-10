@@ -28,12 +28,13 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCLayer.h"
 #include "sprite_nodes/CCSprite.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 #include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 
 Scene::Scene()
-#ifdef _physicsWorld
+#ifdef CC_USE_PHYSICS
 : _physicsWorld(nullptr)
 #endif
 {
@@ -130,9 +131,17 @@ void Scene::addChildToPhysicsWorld(Node* child)
 {
     if (_physicsWorld)
     {
-        auto addToPhysicsWorldFunc = [this](Object* child) -> void
+        std::function<void(Object*)> addToPhysicsWorldFunc = nullptr;
+        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Object* child) -> void
         {
-            if (dynamic_cast<Node*>(child) != nullptr)
+            if (dynamic_cast<SpriteBatchNode*>(child) != nullptr)
+            {
+                Object* subChild = nullptr;
+                CCARRAY_FOREACH((dynamic_cast<SpriteBatchNode*>(child))->getChildren(), subChild)
+                {
+                    addToPhysicsWorldFunc(subChild);
+                }
+            }else if (dynamic_cast<Node*>(child) != nullptr)
             {
                 Node* node = dynamic_cast<Node*>(child);
                 
