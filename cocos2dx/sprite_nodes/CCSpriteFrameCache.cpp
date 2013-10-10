@@ -344,7 +344,11 @@ void SpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
     Dictionary* dict = Dictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
-
+    if (dict == nullptr)
+    {
+        CCLOG("cocos2d:SpriteFrameCache:removeSpriteFramesFromFile: create dict by %s fail.",plist);
+        return;
+    }
     removeSpriteFramesFromDictionary((Dictionary*)dict);
 
     // remove it from the cache
