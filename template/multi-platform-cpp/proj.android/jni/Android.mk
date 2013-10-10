@@ -22,7 +22,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,cocos2dx)
 $(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
-$(call import-module,CocosDenshion/android)
+$(call import-module,audio/android)
 $(call import-module,extensions)
 $(call import-module,external/Box2D)
 $(call import-module,cocos2dx/platform/android)
