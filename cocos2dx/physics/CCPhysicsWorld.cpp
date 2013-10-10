@@ -188,8 +188,6 @@ void PhysicsWorld::addBody(PhysicsBody* body)
     {
         _bodys->addObject(body);
     }
-    
-    body->retain();
 }
 
 void PhysicsWorld::removeBody(PhysicsBody* body)
@@ -214,8 +212,6 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     {
         _bodys->removeObject(body);
     }
-    
-    body->release();
 }
 
 void PhysicsWorld::removeBodyByTag(int tag)

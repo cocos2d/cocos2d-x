@@ -92,6 +92,19 @@ PhysicsBody::~PhysicsBody()
     }
 }
 
+PhysicsBody* PhysicsBody::create()
+{
+    PhysicsBody* body = new PhysicsBody();
+    if (body && body->init())
+    {
+        body->autorelease();
+        return body;
+    }
+    
+    CC_SAFE_DELETE(body);
+    return nullptr;
+}
+
 PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
 {
     PhysicsBody* body = new PhysicsBody();

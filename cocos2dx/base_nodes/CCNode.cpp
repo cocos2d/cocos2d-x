@@ -832,16 +832,6 @@ void Node::visit()
         return;
     }
     
-#ifdef CC_USE_PHYSICS
-    if (_physicsBody)
-    {
-        _physicsPositionMark = false;
-        _physicsRotationMark = false;
-        setPosition(_physicsBody->getPosition());
-        setRotation(_physicsBody->getRotation());
-    }
-#endif
-    
     kmGLPushMatrix();
 
      if (_grid && _grid->isActive())
@@ -1302,6 +1292,16 @@ Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
 
 void Node::updateTransform()
 {
+#ifdef CC_USE_PHYSICS
+    if (_physicsBody)
+    {
+        _physicsPositionMark = false;
+        _physicsRotationMark = false;
+        setPosition(_physicsBody->getPosition());
+        setRotation(_physicsBody->getRotation());
+    }
+#endif
+    
     // Recursively iterate over children
     arrayMakeObjectsPerformSelector(_children, updateTransform, Node*);
 }

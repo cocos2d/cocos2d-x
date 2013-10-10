@@ -59,6 +59,9 @@ public:
     std::string title() override;
     
     Node* makeBall(float x, float y);
+    
+private:
+    SpriteBatchNode* _ball;
 };
 
 class PhysicsDemoPyramidStack : public PhysicsDemo

@@ -7,6 +7,7 @@ namespace
     static std::function<Layer*()> createFunctions[] = {
         CL(PhysicsDemoLogoSmash),
         CL(PhysicsDemoPyramidStack),
+        CL(PhysicsDemoPlink),
         CL(PhysicsDemoClickAdd),
     };
     
@@ -141,6 +142,7 @@ void PhysicsDemo::onEnter()
     _spriteTexture = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100)->getTexture();
     
 #ifdef CC_USE_PHYSICS
+    
     // menu for debug layer
     MenuItemFont::setFontSize(18);
     auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(PhysicsDemo::toggleDebugCallback, this));
@@ -305,7 +307,7 @@ namespace
 
 Node* PhysicsDemoLogoSmash::makeBall(float x, float y)
 {
-    auto ball = Sprite::create("Images/ball.png");
+    auto ball = Sprite::createWithTexture(_ball->getTexture());
     ball->setScale(0.1);
     
     auto body = PhysicsBody::createCircle(0.95, PhysicsMaterial(1, 0, 0));
@@ -325,7 +327,9 @@ void PhysicsDemoLogoSmash::onEnter()
     PhysicsDemo::onEnter();
     
     _scene->getPhysicsWorld()->setGravity(Point(0, 0));
-    //addChild(makeBall(200, 200));
+    
+    _ball = SpriteBatchNode::create("Images/ball.png", sizeof(logo_image)/sizeof(logo_image[0]));
+    addChild(_ball);
     for (int y = 0; y < logo_height; ++y)
     {
         for (int x = 0; x < logo_width; ++x)
@@ -335,14 +339,14 @@ void PhysicsDemoLogoSmash::onEnter()
                 float x_jitter = 0.05*frand();
                 float y_jitter = 0.05*frand();
                 
-                addChild(makeBall(2*(x - logo_width/2 + x_jitter) + VisibleRect::getVisibleRect().size.width/2,
+                _ball->addChild(makeBall(2*(x - logo_width/2 + x_jitter) + VisibleRect::getVisibleRect().size.width/2,
                                   2*(logo_height-y + y_jitter) + VisibleRect::getVisibleRect().size.height/2 - logo_height/2));
             }
         }
     }
     
     
-    auto bullet = Sprite::create("Images/ball.png");
+    auto bullet = Sprite::createWithTexture(_ball->getTexture());
     bullet->setScale(0.5);
     
     auto body = PhysicsBody::createCircle(8, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
@@ -351,7 +355,7 @@ void PhysicsDemoLogoSmash::onEnter()
     
     bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));
     
-    addChild(bullet);
+    _ball->addChild(bullet);
 }
 
 std::string PhysicsDemoLogoSmash::title()
@@ -373,8 +377,10 @@ void PhysicsDemoPyramidStack::onEnter()
     ball->setPosition(VisibleRect::bottom() + Point(0, 60));
     this->addChild(ball);
     
-	for(int i=0; i<14; i++){
-		for(int j=0; j<=i; j++){
+	for(int i=0; i<14; i++)
+    {
+		for(int j=0; j<=i; j++)
+        {
 			addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2);
 		}
 	}
@@ -388,6 +394,25 @@ std::string PhysicsDemoPyramidStack::title()
 void PhysicsDemoPlink::onEnter()
 {
     PhysicsDemo::onEnter();
+    
+    auto node = Node::create();
+    auto body = PhysicsBody::create();
+    body->setDynamic(false);
+    node->setPhysicsBody(body);
+    
+    Point tris[] = { Point(-15, -15), Point(0, 10), Point(15, -15) };
+    
+    auto rect = VisibleRect::getVisibleRect();
+    for (int i = 0; i < 9; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            body->addShape(PhysicsShapePolygon::create(tris, 3, PHYSICSSHAPE_MATERIAL_DEFAULT, Point(rect.origin.x + rect.size.width/9*i + (j%2)*40 - 20, rect.origin.y + j*70)));
+        }
+    }
+    
+    addChild(node);
+    
 }
 
 std::string PhysicsDemoPlink::title()

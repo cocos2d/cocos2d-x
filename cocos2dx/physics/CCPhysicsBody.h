@@ -52,6 +52,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT = {0.0f, 1.0f, 1.0f};
 class PhysicsBody : public Object//, public Clonable
 {
 public:
+    static PhysicsBody* create();
     /**
      * @brief Create a body contains a circle shape.
      */
