@@ -56,11 +56,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-#if JSB_ENABLE_DEBUGGER
-    ScriptingCore::getInstance()->runScript("main.debug.js");
-#else
+
     ScriptingCore::getInstance()->runScript("MoonWarriors-jsb.js");
-#endif
 
     return true;
 }
