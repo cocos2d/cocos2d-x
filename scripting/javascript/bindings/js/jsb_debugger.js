@@ -4,7 +4,6 @@ require('debugger/transport.js', "debug");
 require('debugger/actors/root.js', "debug");
 require('debugger/actors/script.js', "debug");
 require('debugger/main.js', "debug");
-require('debugger/actors/webconsole.js', "debug");
 
 var globalDebuggee = null;
 
