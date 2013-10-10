@@ -1359,6 +1359,14 @@
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		D60AE43717F9142200757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		D60AE43817F9143D00757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D6408CA8180650F200FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D6408CAB1806510600FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D6408CAC1806511F00FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D6408CAD1806512D00FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D6408CAE1806513A00FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D6408CAF1806514400FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D6408CB01806515200FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D6408CB11806516600FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		ED32BBA817DDDA4E004E0169 /* ShaderTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */; };
 		ED743D1517D098AF0004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1617D098B60004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
@@ -3148,6 +3156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6408CB01806515200FB5B4C /* CoreMotion.framework in Frameworks */,
 				1A1197CA1785363400D62A44 /* libcocos2dx iOS.a in Frameworks */,
 				1A1198241785381C00D62A44 /* libCocosDenshion iOS.a in Frameworks */,
 				1A1198271785383B00D62A44 /* libcocos2dx-extensions iOS.a in Frameworks */,
@@ -3253,6 +3262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6408CAB1806510600FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E16991784BE0000B0CA4A /* libcocos2dx iOS.a in Frameworks */,
 				A01E169A1784BE0000B0CA4A /* libCocosDenshion iOS.a in Frameworks */,
 				A01E16881784BDA100B0CA4A /* libz.dylib in Frameworks */,
@@ -3295,6 +3305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6408CAC1806511F00FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E18441784C45400B0CA4A /* libjsbindings iOS.a in Frameworks */,
 				A01E18451784C45400B0CA4A /* libbox2d iOS.a in Frameworks */,
 				A01E18461784C45400B0CA4A /* libchipmunk iOS.a in Frameworks */,
@@ -3318,6 +3329,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6408CAD1806512D00FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E18791784C4D600B0CA4A /* libjsbindings iOS.a in Frameworks */,
 				A01E187A1784C4D600B0CA4A /* libbox2d iOS.a in Frameworks */,
 				A01E187B1784C4D600B0CA4A /* libchipmunk iOS.a in Frameworks */,
@@ -3341,6 +3353,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6408CAE1806513A00FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E18AE1784C4DC00B0CA4A /* libjsbindings iOS.a in Frameworks */,
 				A01E18AF1784C4DC00B0CA4A /* libbox2d iOS.a in Frameworks */,
 				A01E18B01784C4DC00B0CA4A /* libchipmunk iOS.a in Frameworks */,
@@ -3364,6 +3377,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6408CAF1806514400FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E18E31784C4E000B0CA4A /* libjsbindings iOS.a in Frameworks */,
 				A01E18E41784C4E000B0CA4A /* libbox2d iOS.a in Frameworks */,
 				A01E18E51784C4E000B0CA4A /* libchipmunk iOS.a in Frameworks */,
@@ -3387,6 +3401,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6408CB11806516600FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E19FB1784DA0600B0CA4A /* libjsbindings iOS.a in Frameworks */,
 				A01E19FC1784DA0600B0CA4A /* libbox2d iOS.a in Frameworks */,
 				A01E19FD1784DA0600B0CA4A /* libchipmunk iOS.a in Frameworks */,
@@ -3613,6 +3628,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6408CA8180650F200FB5B4C /* CoreMotion.framework in Frameworks */,
 				B36FB10617990E14005F39FB /* libcocos2dx iOS.a in Frameworks */,
 				A07A53751784AC9B0073F6A7 /* libz.dylib in Frameworks */,
 				A07A537B1784AC9B0073F6A7 /* OpenGLES.framework in Frameworks */,
