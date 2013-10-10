@@ -2014,6 +2014,136 @@ JSBool JSBDebug_getEventLoopNestLevel(JSContext* cx, unsigned argc, jsval* vp)
     return JS_TRUE;
 }
 
+//#pragma mark - Debugger
+
+static void _clientSocketWriteAndClearString(std::string& s)
+{
+    ::send(clientSocket, s.c_str(), s.length(), 0);
+    s.clear();
+}
+
+static void processInput(string data) {
+    std::lock_guard<std::mutex> lk(g_qMutex);
+    g_queue.push_back(data);
+}
+
+static void clearBuffers() {
+    std::lock_guard<std::mutex> lk(g_rwMutex);
+    // only process input if there's something and we're not locked
+    if (inData.length() > 0) {
+        processInput(inData);
+        inData.clear();
+    }
+    if (outData.length() > 0) {
+        _clientSocketWriteAndClearString(outData);
+    }
+}
+
+static void serverEntryPoint(void)
+{
+    // start a server, accept the connection and keep reading data from it
+    struct addrinfo hints, *result = nullptr, *rp = nullptr;
+    int s = 0;
+    memset(&hints, 0, sizeof(struct addrinfo));
+    hints.ai_family = AF_INET;       // IPv4
+    hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
+    hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
+    
+    stringstream portstr;
+    portstr << JSB_DEBUGGER_PORT;
+    
+    int err = 0;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    WSADATA wsaData;
+    err = WSAStartup(MAKEWORD(2, 2),&wsaData);
+#endif
+    
+    if ((err = getaddrinfo(NULL, portstr.str().c_str(), &hints, &result)) != 0) {
+        LOGD("getaddrinfo error : %s\n", gai_strerror(err));
+    }
+    
+    for (rp = result; rp != NULL; rp = rp->ai_next) {
+        if ((s = socket(rp->ai_family, rp->ai_socktype, 0)) < 0) {
+            continue;
+        }
+        int optval = 1;
+        if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
+            close(s);
+			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
+            return;
+        }
+        
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		if ((setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval))) < 0) {
+			close(s);
+			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_NOSIGPIPE");
+			return;
+		}
+#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        
+        if ((::bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
+            break;
+        }
+        close(s);
+        s = -1;
+    }
+    if (s < 0 || rp == NULL) {
+		TRACE_DEBUGGER_SERVER("debug server : error creating/binding socket");
+        return;
+    }
+    
+    freeaddrinfo(result);
+    
+    listen(s, 1);
+    
+	while (true) {
+        clientSocket = accept(s, NULL, NULL);
+        
+        if (clientSocket < 0)
+        {
+            TRACE_DEBUGGER_SERVER("debug server : error on accept");
+            return;
+        }
+        else
+        {
+            // read/write data
+            TRACE_DEBUGGER_SERVER("debug server : client connected");
+            
+            inData = "connected";
+            // process any input, send any output
+            clearBuffers();
+            
+            char buf[1024] = {0};
+            int readBytes = 0;
+            while ((readBytes = ::recv(clientSocket, buf, sizeof(buf), 0)) > 0)
+            {
+                buf[readBytes] = '\0';
+                // TRACE_DEBUGGER_SERVER("debug server : received command >%s", buf);
+                
+                // no other thread is using this
+                inData.append(buf);
+                // process any input, send any output
+                clearBuffers();
+            } // while(read)
+            
+            close(clientSocket);
+        }
+	} // while(true)
+}
+
+JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
+{
+    if (argc == 1) {
+        jsval* argv = JS_ARGV(cx, vp);
+        JSStringWrapper strWrapper(argv[0]);
+        // this is safe because we're already inside a lock (from clearBuffers)
+        outData.append(strWrapper.get());
+        _clientSocketWriteAndClearString(outData);
+    }
+    return JS_TRUE;
+}
+
 void ScriptingCore::enableDebugger()
 {
     JS_SetDebugMode(cx_, JS_TRUE);
@@ -2027,7 +2157,6 @@ void ScriptingCore::enableDebugger()
         // these are used in the debug program
         JS_DefineFunction(cx_, debugGlobal_, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_bufferRead", JSBDebug_BufferRead, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(cx_, debugGlobal_, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -2043,46 +2172,13 @@ void ScriptingCore::enableDebugger()
             JS_ReportPendingException(cx_);
         }
         
-        // define the start debugger function
-        JS_DefineFunction(cx_, global_, "startDebugger", JSBDebug_StartDebugger, 3, JSPROP_READONLY | JSPROP_PERMANENT);
         // start bg thread
-        
         auto t = std::thread(&serverEntryPoint);
         t.detach();
 
         Scheduler* scheduler = Director::getInstance()->getScheduler();
         scheduler->scheduleUpdateForTarget(this->runLoop, 0, false);
     }
-}
-
-JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp)
-{
-    JSObject* debugGlobal = ScriptingCore::getInstance()->getDebugGlobal();
-    if (argc >= 2) {
-        jsval* argv = JS_ARGV(cx, vp);
-        jsval out;
-        JS_WrapObject(cx, &debugGlobal);
-        JSAutoCompartment ac(cx, debugGlobal);
-        JS_CallFunctionName(cx, debugGlobal, "_startDebugger", argc, argv, &out);
-        return JS_TRUE;
-    }
-    return JS_FALSE;
-}
-
-JSBool jsGetScript(JSContext* cx, unsigned argc, jsval* vp)
-{
-    jsval* argv = JS_ARGV(cx, vp);
-    if (argc == 1 && argv[0].isString()) {
-        JSString* str = argv[0].toString();
-        JSStringWrapper wrapper(str);
-        JSScript* script = filename_script[(char *)wrapper];
-        if (script) {
-            JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL((JSObject*)script));
-        } else {
-            JS_SET_RVAL(cx, vp, JSVAL_NULL);
-        }
-    }
-    return JS_TRUE;
 }
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug)
@@ -2152,170 +2248,6 @@ js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
 {
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
-}
-
-//#pragma mark - Debugger
-
-JSBool JSBDebug_StartDebugger(JSContext* cx, unsigned argc, jsval* vp)
-{
-    JSObject* debugGlobal = ScriptingCore::getInstance()->getDebugGlobal();
-    if (argc >= 2) {
-        jsval* argv = JS_ARGV(cx, vp);
-        jsval out;
-        JS_WrapObject(cx, &debugGlobal);
-        JSAutoCompartment ac(cx, debugGlobal);
-        JS_CallFunctionName(cx, debugGlobal, "_startDebugger", argc, argv, &out);
-        return JS_TRUE;
-    }
-    return JS_FALSE;
-}
-
-JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp)
-{
-//    if (argc == 0) {
-//        JSString* str;
-//        // this is safe because we're already inside a lock (from clearBuffers)
-//        if (vmLock) {
-//            g_rwMutex.lock();
-//        }
-//        str = JS_NewStringCopyZ(cx, inData.c_str());
-//        inData.clear();
-//        if (vmLock) {
-//            g_rwMutex.unlock();
-//        }
-//        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
-//    } else {
-//        JS_SET_RVAL(cx, vp, JSVAL_NULL);
-//    }
-    return JS_TRUE;
-}
-
-static void _clientSocketWriteAndClearString(std::string& s)
-{
-    ::send(clientSocket, s.c_str(), s.length(), 0);
-    s.clear();
-}
-
-JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
-{
-    if (argc == 1) {
-        jsval* argv = JS_ARGV(cx, vp);
-        JSStringWrapper strWrapper(argv[0]);
-        // this is safe because we're already inside a lock (from clearBuffers)
-        outData.append(strWrapper.get());
-        _clientSocketWriteAndClearString(outData);
-    }
-    return JS_TRUE;
-}
-
-static void processInput(string data) {
-    std::lock_guard<std::mutex> lk(g_qMutex);
-    g_queue.push_back(data);
-}
-
-static void clearBuffers() {
-    std::lock_guard<std::mutex> lk(g_rwMutex);
-    // only process input if there's something and we're not locked
-    if (inData.length() > 0) {
-        processInput(inData);
-        inData.clear();
-    }
-    if (outData.length() > 0) {
-        _clientSocketWriteAndClearString(outData);
-    }
-}
-
-static void serverEntryPoint(void)
-{
-    // start a server, accept the connection and keep reading data from it
-    struct addrinfo hints, *result = nullptr, *rp = nullptr;
-    int s = 0;
-    memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;       // IPv4
-    hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
-    hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
-
-    stringstream portstr;
-    portstr << JSB_DEBUGGER_PORT;
-
-    int err = 0;
-   
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    WSADATA wsaData;
-    err = WSAStartup(MAKEWORD(2, 2),&wsaData); 
-#endif
-
-    if ((err = getaddrinfo(NULL, portstr.str().c_str(), &hints, &result)) != 0) {
-        LOGD("getaddrinfo error : %s\n", gai_strerror(err));
-    }
-
-    for (rp = result; rp != NULL; rp = rp->ai_next) {
-        if ((s = socket(rp->ai_family, rp->ai_socktype, 0)) < 0) {
-            continue;
-        }
-        int optval = 1;
-        if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
-            close(s);
-			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
-            return;
-        }
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-		if ((setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval))) < 0) {
-			close(s);
-			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_NOSIGPIPE");
-			return;
-		}
-#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
-        if ((::bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
-            break;
-        }
-        close(s);
-        s = -1;
-    }
-    if (s < 0 || rp == NULL) {
-		TRACE_DEBUGGER_SERVER("debug server : error creating/binding socket");
-        return;
-    }
-
-    freeaddrinfo(result);
-
-    listen(s, 1);
-
-	while (true) {
-        clientSocket = accept(s, NULL, NULL);
-
-        if (clientSocket < 0)
-        {
-            TRACE_DEBUGGER_SERVER("debug server : error on accept");
-            return;
-        }
-        else
-        {
-            // read/write data
-            TRACE_DEBUGGER_SERVER("debug server : client connected");
-            
-            inData = "connected";
-            // process any input, send any output
-            clearBuffers();
-            
-            char buf[1024] = {0};
-            int readBytes = 0;
-            while ((readBytes = ::recv(clientSocket, buf, sizeof(buf), 0)) > 0)
-            {
-                buf[readBytes] = '\0';
-//                TRACE_DEBUGGER_SERVER("debug server : received command >%s", buf);
-                
-                // no other thread is using this
-                    inData.append(buf);
-                    // process any input, send any output
-                    clearBuffers();
-            } // while(read)
-            
-            close(clientSocket);
-        }
-	} // while(true)
 }
 
 static Color3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)
