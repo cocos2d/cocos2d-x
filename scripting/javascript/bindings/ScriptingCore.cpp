@@ -408,9 +408,6 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
 void ScriptingCore::start() {
     // for now just this
     this->createGlobalContext();
-#if JSB_ENABLE_DEBUGGER
-	this->enableDebugger();
-#endif //JSB_ENABLE_DEBUGGER
 }
 
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
@@ -478,9 +475,7 @@ void ScriptingCore::createGlobalContext() {
     //JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
     this->global_ = NewGlobalObject(cx_);
-#if JSB_ENABLE_DEBUGGER
-    JS_SetDebugMode(cx_, JS_TRUE);
-#endif
+
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
         callback(this->cx_, this->global_);
@@ -2019,8 +2014,12 @@ JSBool JSBDebug_getEventLoopNestLevel(JSContext* cx, unsigned argc, jsval* vp)
     return JS_TRUE;
 }
 
-void ScriptingCore::enableDebugger() {
-    if (debugGlobal_ == NULL) {
+void ScriptingCore::enableDebugger()
+{
+    JS_SetDebugMode(cx_, JS_TRUE);
+    
+    if (debugGlobal_ == NULL)
+    {
         JSAutoCompartment ac0(cx_, global_);
         debugGlobal_ = NewGlobalObject(cx_, true);
         JS_WrapObject(cx_, &debugGlobal_);

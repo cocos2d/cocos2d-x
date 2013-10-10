@@ -58,6 +58,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->start();
     
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    sc->enableDebugger();
+#endif
+    
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 #ifdef JS_OBFUSCATED
