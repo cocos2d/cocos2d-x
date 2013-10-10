@@ -204,12 +204,6 @@ void js_log(const char *format, ...) {
     va_end(vl);
     if (len > 0)
     {
-        std::string logBuf = _js_log_buf;
-        if (std::string::npos != logBuf.find("unknown (can't convert to")
-            || std::string::npos != logBuf.find("too much recursion"))
-        {
-            log("exception....");
-        }
         CCLOG("JS: %s\n", _js_log_buf);
     }
 }
@@ -2052,7 +2046,6 @@ void ScriptingCore::enableDebugger() {
         
         runScript("jsb_debugger.js", debugGlobal_);
         
-        CCLOG("before _prepareDebugger...");
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(global_);
         jsval outval;
@@ -2061,7 +2054,6 @@ void ScriptingCore::enableDebugger() {
             JS_ReportPendingException(cx_);
         }
         
-        CCLOG("after _prepareDebugger...");
         // define the start debugger function
         JS_DefineFunction(cx_, global_, "startDebugger", JSBDebug_StartDebugger, 3, JSPROP_READONLY | JSPROP_PERMANENT);
         // start bg thread
@@ -2069,7 +2061,6 @@ void ScriptingCore::enableDebugger() {
         auto t = std::thread(&serverEntryPoint);
         t.detach();
 
-        CCLOG("after _prepareDebugger...02");
         Scheduler* scheduler = Director::getInstance()->getScheduler();
         scheduler->scheduleUpdateForTarget(this->runLoop, 0, false);
     }
