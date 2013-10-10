@@ -133,19 +133,3 @@ this._prepareDebugger = function (global) {
     globalDebuggee = global;
 };
 
-this._startDebugger = function (global, files, startFunc) {
-	// dbg.log("[DBG] starting debug session");
-	for (var i in files) {
-		try {
-			global['eval']("require('" + files[i] + "');");
-		} catch (e) {
-			dbg.log("[DBG] error evaluating file: " + files[i]);
-		}
-	}
-	// dbg.log("[DBG] all files required");
-	if (startFunc) {
-		// dbg.log("executing start func: " + startFunc);
-		global['eval'](startFunc);
-	}
-	// beginDebug();
-}

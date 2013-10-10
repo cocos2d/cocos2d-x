@@ -245,14 +245,6 @@ jsval ccaffinetransform_to_jsval(JSContext* cx, const AffineTransform& t);
 jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t);
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
-JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp);
-JSBool jsGetScript(JSContext* cx, unsigned argc, jsval* vp);
-
-JSBool JSBDebug_StartDebugger(JSContext* cx, unsigned argc, jsval* vp);
-JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp);
-JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp);
-JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp);
-JSBool JSBDebug_UnlockExecution(JSContext* cx, unsigned argc, jsval* vp);
 
 // just a simple utility to avoid mem leaking when using JSString
 class JSStringWrapper
