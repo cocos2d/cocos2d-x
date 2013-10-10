@@ -59,6 +59,7 @@ include ../../../cocos2dx/proj.linux/cocos2dx.mk
 
 TARGET := $(LIB_DIR)/$(TARGET)
 SHAREDLIBS += -lextension
+STATICLIBS += $(LIB_DIR)/libbox2d.a
 
 all: $(TARGET)
 
