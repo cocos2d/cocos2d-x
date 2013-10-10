@@ -311,6 +311,7 @@ void ClippingNode::visit()
         GLProgram *program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
         GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
         // set our alphaThreshold
+        program->use();
         program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
         // we need to recursively apply this shader to all the nodes in the stencil node
         // XXX: we should have a way to apply shader to all nodes without having to do this
