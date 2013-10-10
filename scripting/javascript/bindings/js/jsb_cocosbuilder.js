@@ -148,12 +148,12 @@ cc.BuilderReader.load = function(file, owner, parentSize)
             if (callbackType == 1) // Document callback
             {
                 var callfunc = cc.CallFunc.create(controller[callbackName], controller);
-                animationManager.setCallFuncForJSCallbackNamed(callfunc, keyframeCallbacks[j]);
+                animationManager.setCallFunc(callfunc, keyframeCallbacks[j]);
             }
             else if (callbackType == 2 && owner) // Owner callback
             {
                 var callfunc = cc.CallFunc.create(owner[callbackName], owner);
-                animationManager.setCallFuncForJSCallbackNamed(callfunc, keyframeCallbacks[j]);
+                animationManager.setCallFunc(callfunc, keyframeCallbacks[j]);
             }
         }
         
