@@ -427,6 +427,7 @@ void StressTest2::shouldNotLeak(float dt)
     unschedule( schedule_selector(StressTest2::shouldNotLeak) );
     auto sublayer = static_cast<Layer*>( getChildByTag(kTagSprite1) );
     sublayer->removeAllChildrenWithCleanup(true); 
+    removeChild(sublayer);//这个空的layer没有被移除，是不是leak了？？？
 }
 
 std::string StressTest2::title()
