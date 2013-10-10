@@ -60,6 +60,7 @@ public:
     static jobject classloader;
 
 private:
+    static void detach_current_thread (void *env);
     static bool cacheEnv(JavaVM* jvm);
 
     static bool getMethodInfo_DefaultClassLoader(JniMethodInfo &methodinfo,
