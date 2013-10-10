@@ -95,7 +95,7 @@ fi
 done
 
 # copy bindings/*.js into assets' root
-cp -f "$BINDINGS_JS_ROOT"/*.js "$APP_ANDROID_ROOT"/assets
+cp -rf "$BINDINGS_JS_ROOT"/* "$APP_ANDROID_ROOT"/assets
 
 # copy icons (if they exist)
 file="$APP_ANDROID_ROOT"/assets/Icon-72.png
