@@ -69,6 +69,8 @@ struct engine {
     struct saved_state state;
 };
 
+static bool isContentRectChanged;
+
 static struct engine engine;
 
 static char* editboxText = NULL;
@@ -106,10 +108,17 @@ typedef struct cocos_dimensions {
     int h;
 } cocos_dimensions;
 
+static void onContentRectChanged(ANativeActivity* activity, const ARect* rect) {
+	isContentRectChanged = true;
+}
+
 static void cocos_init(cocos_dimensions d, struct android_app* app) {
     LOGI("cocos_init(...)");
     pthread_t thisthread = pthread_self();
     LOGI("pthread_self() = %X", thisthread);
+
+	isContentRectChanged = false;
+	app->activity->callbacks->onContentRectChanged = onContentRectChanged;
 
     cocos2d::FileUtilsAndroid::setassetmanager(app->activity->assetManager);
 
@@ -656,6 +665,15 @@ void android_main(struct android_app* state) {
                 return;
             }
         }
+
+		if (isContentRectChanged) {
+			isContentRectChanged = false;
+
+			int32_t newWidth = ANativeWindow_getWidth(engine.app->window);
+			int32_t newHeight = ANativeWindow_getHeight(engine.app->window);
+
+			cocos2d::Application::getInstance()->applicationOrientationChanged(newWidth, newHeight);
+		}
 
         if (engine.animating) {
             // Done with events; draw next animation frame.

@@ -32,6 +32,13 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+	/**
+	@brief  The function be called when the application orientation was changed
+	@param  new width
+	@param  new height
+	*/
+	virtual void applicationOrientationChanged(int newWidth, int newHeight);
 };
 
 #endif // _APP_DELEGATE_H_

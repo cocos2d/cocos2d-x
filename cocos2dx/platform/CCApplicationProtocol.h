@@ -57,6 +57,15 @@ public:
     */
     virtual void applicationWillEnterForeground() = 0;
 
+	/**
+	@brief  This function will be called when the application orientation was changed.
+	@param new width
+	@param new height
+	* @js NA
+	* @lua NA
+	*/
+	virtual void applicationOrientationChanged(int newWidth, int newHeight) = 0;
+
     /**
     @brief    Callback by Director for limit FPS.
     @param interval The time, expressed in seconds, between current frame and next.
