@@ -1,7 +1,7 @@
 TARGET = liblua.so
 
 INCLUDES += -I.. -I../lua -I../tolua -I../cocos2dx_support -I../../auto-generated/lua-bindings \
-        -I../Classes -I../../../CocosDenshion/include -I../../../extensions -I../../../external/chipmunk/include/chipmunk
+        -I../Classes -I../../../audio/include -I../../../extensions -I../../../external/chipmunk/include/chipmunk
 
 SOURCES = ../lua/lapi.c \
           ../lua/lauxlib.c \
