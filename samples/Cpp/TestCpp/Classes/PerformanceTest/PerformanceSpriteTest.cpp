@@ -14,6 +14,12 @@ enum {
     kTagMenuLayer = (kMaxNodes + 1000),
 };
 
+const  int MAX_AUTO_TEST_TIMES  = 25;
+const  int MAX_SPRITE_TEST_CASE = 7;
+const  int MAX_SUB_TEST_NUMS    = 9;
+const  int AUTO_TEST_NODE_NUM1  = 500;
+const  int AUTO_TEST_NODE_NUM2  = 1500;
+
 ////////////////////////////////////////////////////////
 //
 // SubTest
@@ -506,7 +512,7 @@ void SpriteMainScene::updateAutoTest(float dt)
     {
         _executeTimes += 1;
         _vecFPS.push_back(Director::getInstance()->getFrameRate());
-        if ( _executeTimes >= SpriteMainScene::MAX_AUTO_TEST_TIMES )
+        if ( _executeTimes >= MAX_AUTO_TEST_TIMES )
         {
             dumpProfilerFPS();
             nextAutoTest();
@@ -609,25 +615,25 @@ void  SpriteMainScene::endAutoTest()
 
 void  SpriteMainScene::nextAutoTest()
 {
-    if ( SpriteMainScene::_s_nSpriteCurCase < SpriteMainScene::MAX_SPRITE_TEST_CASE )
+    if ( SpriteMainScene::_s_nSpriteCurCase < MAX_SPRITE_TEST_CASE )
     {
-        if ( subtestNumber < SpriteMainScene::MAX_SUB_TEST_NUMS )
+        if ( subtestNumber < MAX_SUB_TEST_NUMS )
         {
             subtestNumber += 1;
             autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, subtestNumber, quantityNodes);
         }
-        else if ( subtestNumber == SpriteMainScene::MAX_SUB_TEST_NUMS )
+        else if ( subtestNumber == MAX_SUB_TEST_NUMS )
         {
-            if (quantityNodes == SpriteMainScene::AUTO_TEST_NODE_NUM1)
+            if (quantityNodes == AUTO_TEST_NODE_NUM1)
             {
-                autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, 1, SpriteMainScene::AUTO_TEST_NODE_NUM2);
+                autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, 1, AUTO_TEST_NODE_NUM2);
             }
             else
             {
-                if (SpriteMainScene::_s_nSpriteCurCase + 1 < SpriteMainScene::MAX_SPRITE_TEST_CASE)
+                if (SpriteMainScene::_s_nSpriteCurCase + 1 < MAX_SPRITE_TEST_CASE)
                 {
                     SpriteMainScene::_s_nSpriteCurCase += 1;
-                    autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, 1, SpriteMainScene::AUTO_TEST_NODE_NUM1);
+                    autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, 1, AUTO_TEST_NODE_NUM1);
                 }
                 else
                 {

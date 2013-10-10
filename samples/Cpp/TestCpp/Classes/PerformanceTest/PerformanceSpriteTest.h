@@ -70,11 +70,6 @@ protected:
     int            subtestNumber;
     std::vector<float> _vecFPS;
     int            _executeTimes;
-    const  int MAX_AUTO_TEST_TIMES  = 25;
-    const  int MAX_SPRITE_TEST_CASE = 7;
-    const  int MAX_SUB_TEST_NUMS    = 9;
-    const  int AUTO_TEST_NODE_NUM1  = 500;
-    const  int AUTO_TEST_NODE_NUM2  = 1500;
 };
 
 class SpritePerformTest1 : public SpriteMainScene
