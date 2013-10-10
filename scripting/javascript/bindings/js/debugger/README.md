@@ -9,6 +9,10 @@ Requirement
 How To Use
 ----------
 
+### Prepare ###
+
+Please refer to https://developer.mozilla.org/en-US/docs/Tools/Remote_Debugging .
+
 ### Enable Debugger Support For Your JSB Project ###
 
 ```
