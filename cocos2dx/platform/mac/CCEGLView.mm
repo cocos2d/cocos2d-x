@@ -221,6 +221,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
     if(GLFW_PRESS == action)
     {
         EventMouse event(EventMouse::MouseEventType::MOUSE_DOWN);
+        //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
         event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
         event.setMouseButton(button);
         EventDispatcher::getInstance()->dispatchEvent(&event);
@@ -228,6 +229,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
     else if(GLFW_RELEASE == action)
     {
         EventMouse event(EventMouse::MouseEventType::MOUSE_UP);
+        //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
         event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
         event.setMouseButton(button);
         EventDispatcher::getInstance()->dispatchEvent(&event);
@@ -254,6 +256,7 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
     }
 
     EventMouse event(EventMouse::MouseEventType::MOUSE_MOVE);
+    //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
     event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
     EventDispatcher::getInstance()->dispatchEvent(&event);
 }
@@ -264,7 +267,8 @@ void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x
     if(nullptr == eglView) return;
 
     EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
-    event.setScrollData((float)x, (float)y);
+    //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+    event.setScrollData((float)x, -(float)y);
     event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
     EventDispatcher::getInstance()->dispatchEvent(&event);
 }
