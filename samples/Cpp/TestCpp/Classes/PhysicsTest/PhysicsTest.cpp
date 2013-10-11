@@ -298,7 +298,6 @@ namespace
         return (logo_image[(x>>3) + y*logo_row_length]>>(~x&0x7)) & 1;
     }
     
-#define	RAND_MAX	0x7fffffff
     static inline float frand(void)
     {
         return rand()/RAND_MAX;
