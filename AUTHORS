@@ -610,6 +610,9 @@ Developers:
         Added support of passing array to cc.Sequence.create and cc.Spawn.create.
         Fixed a bug that sys.localStorage.getItem() does not support non-ascii string.
         Fixed a memory leak in XMLHttpRequest.
+    
+    Keita Obo (ktaobo)
+        Avoid unnecessary object duplication using passing arguments by reference.
         
 Retired Core Developers:
     WenSheng Yang
