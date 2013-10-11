@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include=".\pch.cpp" />
+    <ClCompile Include="..\wp8\Audio.cpp" />
+    <ClCompile Include="..\wp8\MediaStreamer.cpp" />
+    <ClCompile Include="..\wp8\SimpleAudioEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include=".\pch.h" />
+    <ClInclude Include="..\wp8\Audio.h" />
+    <ClInclude Include="..\wp8\corewrappers.h" />
+    <ClInclude Include="..\wp8\DirectXHelper.h" />
+    <ClInclude Include="..\wp8\MediaStreamer.h" />
+  </ItemGroup>
+</Project>

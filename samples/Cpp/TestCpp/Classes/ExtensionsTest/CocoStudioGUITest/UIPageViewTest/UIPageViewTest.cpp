@@ -78,9 +78,8 @@ bool UIPageViewTest::init()
             layout->addChild(label);
             
             pageView->addPage(layout);
-        }
-        
-        pageView->addPageTurningEvent(this, coco_PageView_PageTurning_selector(UIPageViewTest::pageTurningEvent));
+        }        
+        pageView->addEventListener(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
         
         m_pUiLayer->addWidget(pageView);
         
@@ -89,10 +88,19 @@ bool UIPageViewTest::init()
     return false;
 }
 
-void UIPageViewTest::pageTurningEvent(CCObject *pSender)
+void UIPageViewTest::pageViewEvent(CCObject *pSender, PageViewEventType type)
 {
-    UIPageView* pageView = dynamic_cast<UIPageView*>(pSender);
-    CCLOG("page = %d", pageView->getPage());
-    
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("page = %d", pageView->getPage() + 1)->getCString());
+    switch (type)
+    {
+        case PAGEVIEW_EVENT_TURNING:
+        {
+            UIPageView* pageView = dynamic_cast<UIPageView*>(pSender);
+            
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("page = %d", pageView->getPage() + 1)->getCString());
+        }
+            break;
+            
+        default:
+            break;
+    }
 }

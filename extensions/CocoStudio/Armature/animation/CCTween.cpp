@@ -99,7 +99,14 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
 {
     CCProcessBase::play(NULL, durationTo, durationTween, loop, tweenEasing);
 
-    m_eLoopType = (AnimationType)loop;
+    if (loop)
+    {
+        m_eLoopType = ANIMATION_TO_LOOP_BACK;
+    }
+    else
+    {
+        m_eLoopType = ANIMATION_NO_LOOP;
+    }
 
     m_iTotalDuration = 0;
     m_iBetweenDuration = 0;
@@ -135,15 +142,6 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
     }
     else if (m_pMovementBoneData->frameList.count() > 1)
     {
-        if (loop)
-        {
-            m_eLoopType = ANIMATION_TO_LOOP_BACK;
-        }
-        else
-        {
-            m_eLoopType = ANIMATION_NO_LOOP;
-        }
-
         m_iDurationTween = durationTween * m_pMovementBoneData->scale;
 
         if (loop && m_pMovementBoneData->delay != 0)
@@ -341,7 +339,7 @@ CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
     node = node == NULL ? m_pTweenData : node;
     if (!m_pFrom->isTween)
     {
-        return m_pFrom;
+        percent = 0;
     }
 
 

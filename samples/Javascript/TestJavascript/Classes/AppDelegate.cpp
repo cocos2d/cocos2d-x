@@ -12,6 +12,7 @@
 #include "jsb_opengl_registration.h"
 #include "XMLHTTPRequest.h"
 #include "jsb_websocket.h"
+#include "js_bindings_ccbreader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -48,11 +49,15 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     sc->addRegisterCallback(register_jsb_websocket);
+    sc->addRegisterCallback(register_CCBuilderReader);
 
     sc->start();
-
+    
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    
+    CCFileUtils::sharedFileUtils()->addSearchPath("res");
+    
 #ifdef JS_OBFUSCATED
     ScriptingCore::getInstance()->runScript("game.js");
 #else

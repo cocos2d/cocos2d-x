@@ -38,7 +38,10 @@ namespace tinyxml2
 NS_CC_EXT_BEGIN
 
 typedef struct _DataInfo DataInfo;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class  CCDataReaderHelper : CCObject
 {
 public:

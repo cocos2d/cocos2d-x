@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "effects/CCGrid.h"
 // extern
 #include "kazmath/GL/matrix.h"
+#include "CCEGLView.h"
 
 NS_CC_BEGIN
 
@@ -368,6 +369,15 @@ void CCRenderTexture::begin()
     
     CCDirector *director = CCDirector::sharedDirector();
     director->setProjection(director->getProjection());
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    kmMat4 modifiedProjection;
+    kmGLGetMatrix(KM_GL_PROJECTION, &modifiedProjection);
+    kmMat4Multiply(&modifiedProjection, CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix(), &modifiedProjection);
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLLoadMatrix(&modifiedProjection);
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+#endif
 
     const CCSize& texSize = m_pTexture->getContentSizeInPixels();
 

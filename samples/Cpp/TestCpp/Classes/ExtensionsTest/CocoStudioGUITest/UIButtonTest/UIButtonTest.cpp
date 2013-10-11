@@ -49,9 +49,7 @@ bool UIButtonTest::init()
         button->setTouchEnable(true);
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        button->addPushDownEvent(this, coco_pushselector(UIButtonTest::touchBeganEvent));
-        button->addMoveEvent(this, coco_moveselector(UIButtonTest::touchMovedEvent));
-        button->addReleaseEvent(this, coco_releaseselector(UIButtonTest::touchEndedEvent));
+        button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         m_pUiLayer->addWidget(button);
 
         return true;
@@ -59,21 +57,30 @@ bool UIButtonTest::init()
     return false;
 }
 
-void UIButtonTest::touchBeganEvent(CCObject *pSender)
+void UIButtonTest::touchEvent(CCObject *pSender, TouchEventType type)
 {
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Down")->getCString());
+    switch (type)
+    {
+        case TOUCH_EVENT_BEGAN:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Down")->getCString());
+            break;
+            
+        case TOUCH_EVENT_MOVED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Move")->getCString());
+            break;
+            
+        case TOUCH_EVENT_ENDED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Up")->getCString());
+            break;
+            
+        case TOUCH_EVENT_CANCELED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Cancelled")->getCString());
+            break;
+            
+        default:
+            break;
+    }
 }
-
-void UIButtonTest::touchMovedEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Move")->getCString());
-}
-
-void UIButtonTest::touchEndedEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Up")->getCString());
-}
-
 
 // UIButtonTest_Scale9
 UIButtonTest_Scale9::UIButtonTest_Scale9()
@@ -119,9 +126,7 @@ bool UIButtonTest_Scale9::init()
         button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setSize(CCSizeMake(150, button->getContentSize().height * 1.5f));
-        button->addPushDownEvent(this, coco_pushselector(UIButtonTest_Scale9::touchBeganEvent));
-        button->addMoveEvent(this, coco_moveselector(UIButtonTest_Scale9::touchMovedEvent));
-        button->addReleaseEvent(this, coco_releaseselector(UIButtonTest_Scale9::touchEndedEvent));
+        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
         m_pUiLayer->addWidget(button);
         
         return true;
@@ -129,19 +134,29 @@ bool UIButtonTest_Scale9::init()
     return false;
 }
 
-void UIButtonTest_Scale9::touchBeganEvent(CCObject *pSender)
+void UIButtonTest_Scale9::touchEvent(CCObject *pSender, TouchEventType type)
 {
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Down")->getCString());
-}
-
-void UIButtonTest_Scale9::touchMovedEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Move")->getCString());
-}
-
-void UIButtonTest_Scale9::touchEndedEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Up")->getCString());
+    switch (type)
+    {
+        case TOUCH_EVENT_BEGAN:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Down")->getCString());
+            break;
+            
+        case TOUCH_EVENT_MOVED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Move")->getCString());
+            break;
+            
+        case TOUCH_EVENT_ENDED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Up")->getCString());
+            break;
+            
+        case TOUCH_EVENT_CANCELED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Cancelled")->getCString());
+            break;
+            
+        default:
+            break;
+    }
 }
 
 // UIButtonTest_PressAction
@@ -185,9 +200,7 @@ bool UIButtonTest_PressedAction::init()
         button->setPressedActionEnabled(true);
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        button->addPushDownEvent(this, coco_pushselector(UIButtonTest::touchBeganEvent));
-        button->addMoveEvent(this, coco_moveselector(UIButtonTest::touchMovedEvent));
-        button->addReleaseEvent(this, coco_releaseselector(UIButtonTest::touchEndedEvent));
+        button->addTouchEventListener(this, toucheventselector(UIButtonTest_PressedAction::touchEvent));
         m_pUiLayer->addWidget(button);
         
         return true;
@@ -195,17 +208,27 @@ bool UIButtonTest_PressedAction::init()
     return false;
 }
 
-void UIButtonTest_PressedAction::touchBeganEvent(CCObject *pSender)
+void UIButtonTest_PressedAction::touchEvent(CCObject *pSender, TouchEventType type)
 {
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Down")->getCString());
-}
-
-void UIButtonTest_PressedAction::touchMovedEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Move")->getCString());
-}
-
-void UIButtonTest_PressedAction::touchEndedEvent(CCObject *pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Up")->getCString());
+    switch (type)
+    {
+        case TOUCH_EVENT_BEGAN:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Down")->getCString());
+            break;
+            
+        case TOUCH_EVENT_MOVED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Move")->getCString());
+            break;
+            
+        case TOUCH_EVENT_ENDED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Up")->getCString());
+            break;
+            
+        case TOUCH_EVENT_CANCELED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Cancelled")->getCString());
+            break;
+            
+        default:
+            break;
+    }
 }

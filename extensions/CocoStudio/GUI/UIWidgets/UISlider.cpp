@@ -416,7 +416,7 @@ float UISlider::getPercentWithBallPos(float px)
     return (((px-(-m_fBarLength/2.0f))/m_fBarLength)*100.0f);
 }
 
-void UISlider::addPercentEvent(cocos2d::CCObject *target, SEL_SlidPercentChangedEvent selector)
+void UISlider::addEventListener(cocos2d::CCObject *target, SEL_SlidPercentChangedEvent selector)
 {
     m_pSlidPercentListener = target;
     m_pfnSlidPercentSelector = selector;

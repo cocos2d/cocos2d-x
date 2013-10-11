@@ -73,6 +73,7 @@ CCBone::CCBone()
     m_tWorldTransform = CCAffineTransformMake(1, 0, 0, 1, 0, 0);
     m_bBoneTransformDirty = true;
     m_eBlendType = BLEND_NORMAL;
+    m_tWorldInfo = NULL;
 }
 
 
@@ -82,6 +83,7 @@ CCBone::~CCBone(void)
     CC_SAFE_DELETE(m_pChildren);
     CC_SAFE_DELETE(m_pTween);
     CC_SAFE_DELETE(m_pDisplayManager);
+    CC_SAFE_DELETE(m_tWorldInfo);
 
     if(m_pBoneData)
     {
@@ -119,6 +121,8 @@ bool CCBone::init(const char *name)
         m_pDisplayManager = new CCDisplayManager();
         m_pDisplayManager->init(this);
 
+        CC_SAFE_DELETE(m_tWorldInfo);
+        m_tWorldInfo = new CCBaseData();
 
         bRet = true;
     }
@@ -165,6 +169,12 @@ void CCBone::update(float delta)
     if (m_pParentBone)
         m_bBoneTransformDirty = m_bBoneTransformDirty || m_pParentBone->isTransformDirty();
 
+    CCBone *armatureParentBone = m_pArmature->getParentBone();
+    if (armatureParentBone && !m_bBoneTransformDirty)
+    {
+        m_bBoneTransformDirty = armatureParentBone->isTransformDirty();
+    }
+
     if (m_bBoneTransformDirty)
     {
         if (m_pArmature->getArmatureData()->dataVersion >= VERSION_COMBINED)
@@ -174,14 +184,28 @@ void CCBone::update(float delta)
             m_pTweenData->scaleY -= 1;
         }
 
-        CCTransformHelp::nodeToMatrix(*m_pTweenData, m_tWorldTransform);
+        m_tWorldInfo->copy(m_pTweenData);
 
-        m_tWorldTransform = CCAffineTransformConcat(nodeToParentTransform(), m_tWorldTransform);
+        m_tWorldInfo->x += m_obPosition.x;
+        m_tWorldInfo->y += m_obPosition.y;
+        m_tWorldInfo->scaleX *= m_fScaleX;
+        m_tWorldInfo->scaleY *= m_fScaleY;
+        m_tWorldInfo->skewX += m_fSkewX + m_fRotationX;
+        m_tWorldInfo->skewY += m_fSkewY - m_fRotationY;
 
         if(m_pParentBone)
         {
-            m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pParentBone->m_tWorldTransform);
+            applyParentTransform(m_pParentBone);
         }
+        else
+        {
+            if (armatureParentBone)
+            {
+                applyParentTransform(armatureParentBone);
+            }
+        }
+
+        CCTransformHelp::nodeToMatrix(*m_tWorldInfo, m_tWorldTransform);
     }
 
     CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty || m_pArmature->getArmatureTransformDirty());
@@ -196,6 +220,17 @@ void CCBone::update(float delta)
     m_bBoneTransformDirty = false;
 }
 
+void CCBone::applyParentTransform(CCBone *parent)
+{
+    float x = m_tWorldInfo->x;
+    float y = m_tWorldInfo->y;
+    m_tWorldInfo->x = x * parent->m_tWorldTransform.a + y * parent->m_tWorldTransform.c + parent->m_tWorldInfo->x;
+    m_tWorldInfo->y = x * parent->m_tWorldTransform.b + y * parent->m_tWorldTransform.d + parent->m_tWorldInfo->y;
+    m_tWorldInfo->scaleX = m_tWorldInfo->scaleX * parent->m_tWorldInfo->scaleX;
+    m_tWorldInfo->scaleY = m_tWorldInfo->scaleY * parent->m_tWorldInfo->scaleY;
+    m_tWorldInfo->skewX = m_tWorldInfo->skewX + parent->m_tWorldInfo->skewX;
+    m_tWorldInfo->skewY = m_tWorldInfo->skewY + parent->m_tWorldInfo->skewY;
+}
 
 void CCBone::updateDisplayedColor(const ccColor3B &parentColor)
 {
@@ -208,6 +243,18 @@ void CCBone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _realOpacity = 255;
     CCNodeRGBA::updateDisplayedOpacity(parentOpacity);
+    updateColor();
+}
+
+void CCBone::setColor(const ccColor3B &color)
+{
+    CCNodeRGBA::setColor(color);
+    updateColor();
+}
+
+void CCBone::setOpacity(GLubyte opacity)
+{
+    CCNodeRGBA::setOpacity(opacity);
     updateColor();
 }
 

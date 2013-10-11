@@ -14,6 +14,10 @@ typedef UILabel UITextArea;
 typedef Layout UIContainerWidget;
 typedef UIButton UITextButton;
 typedef UIWidget UINodeContainer;
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIZoomButton : public UITextButton
 {
 public:

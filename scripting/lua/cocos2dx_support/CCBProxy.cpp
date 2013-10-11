@@ -24,12 +24,10 @@
 
 #include "CCBProxy.h"
 
-CCBReader* CCBProxy::createCCBreader()
+CCBReader* CCBProxy::createCCBReader()
 {
     CCNodeLoaderLibrary *ccNodeLoaderLibrary = CCNodeLoaderLibrary::sharedCCNodeLoaderLibrary();
-    
-    ccNodeLoaderLibrary->registerCCNodeLoader("", CCBLayerLoader::loader());
-    
+        
     CCBReader * pCCBReader = new CCBReader(ccNodeLoaderLibrary);
     pCCBReader->autorelease();
     
@@ -134,7 +132,7 @@ const char* CCBProxy::getNodeTypeName(CCNode* pNode)
     return "No Support";
 }
 
-void CCBProxy::setCallback(CCNode* pNode,int nHandle)
+void CCBProxy::setCallback(CCNode* pNode,int nHandle,int nControlEvents)
 {
     if (NULL == pNode) {
         return;
@@ -147,15 +145,20 @@ void CCBProxy::setCallback(CCNode* pNode,int nHandle)
             pMenuItem->registerScriptTapHandler(nHandle);
         }
     }
-    else  if (NULL != dynamic_cast<CCControlButton*>(pNode))
+    else  if (NULL != dynamic_cast<CCControl*>(pNode))
     {
-        CCControlButton *pBtnItem = dynamic_cast<CCControlButton*>(pNode);
-        if (NULL != pBtnItem) {
-            //UNOD,need Btn Pros to addHanldeOfControlEvent
-            pBtnItem->addHandleOfControlEvent(nHandle,CCControlEventTouchUpInside);
+        
+        CCControl* pControl = dynamic_cast<CCControl*>(pNode);
+        if (NULL != pControl)
+        {
+            for (int i = 0; i < kControlEventTotalNumber; i++)
+            {
+                if ((nControlEvents & (1 << i)))
+                {
+                    pControl->addHandleOfControlEvent(nHandle, 1 << i);
+                }
+            }
         }
     }
-    
-    
 }
 

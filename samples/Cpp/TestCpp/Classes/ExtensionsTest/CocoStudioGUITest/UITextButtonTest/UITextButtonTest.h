@@ -33,9 +33,7 @@ public:
     UITextButtonTest();
     ~UITextButtonTest();
     bool init();
-    void touchBeganEvent(CCObject *pSender);
-    void touchMovedEvent(CCObject *pSender);
-    void touchEndedEvent(CCObject *pSender);
+    void touchEvent(CCObject *pSender, TouchEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UITextButtonTest)
@@ -48,9 +46,7 @@ public:
     UITextButtonTest_Scale9();
     ~UITextButtonTest_Scale9();
     bool init();
-    void touchBeganEvent(CCObject *pSender);
-    void touchMovedEvent(CCObject *pSender);
-    void touchEndedEvent(CCObject *pSender);
+    void touchEvent(CCObject *pSender, TouchEventType type);    
     
 protected:
     UI_SCENE_CREATE_FUNC(UITextButtonTest_Scale9)

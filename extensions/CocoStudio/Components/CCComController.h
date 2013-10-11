@@ -29,7 +29,10 @@ THE SOFTWARE.
 #include "CCInputDelegate.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCComController : public cocos2d::CCComponent, public CCInputDelegate
 {
 protected:

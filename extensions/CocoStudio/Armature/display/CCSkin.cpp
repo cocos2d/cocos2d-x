@@ -80,14 +80,27 @@ CCSkin::CCSkin()
 
 bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
+    CCAssert(pszSpriteFrameName != NULL, "");
 
-    if (ret)
+    CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
+    bool ret = true;
+
+    if (pFrame != NULL)
     {
-		CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-		setTextureAtlas(atlas);
+        ret = initWithSpriteFrame(pFrame);
 
-		m_strDisplayName = pszSpriteFrameName;
+        if (ret)
+        {
+            CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+            setTextureAtlas(atlas);
+
+            m_strDisplayName = pszSpriteFrameName;
+        }
+    }
+    else
+    {
+        CCLOG("Init CCSkin filed! Cann't find CCSpriteFrame with %s.", pszSpriteFrameName);
+        ret = init();
     }
 
     return ret;
@@ -99,10 +112,10 @@ bool CCSkin::initWithFile(const char *pszFilename)
 
     if (ret)
     {
-		CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-		setTextureAtlas(atlas);
+        CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+        setTextureAtlas(atlas);
 
-		m_strDisplayName = pszFilename;
+        m_strDisplayName = pszFilename;
     }
 
     return ret;
@@ -114,10 +127,12 @@ void CCSkin::setSkinData(const CCBaseData &var)
 
     setScaleX(m_sSkinData.scaleX);
     setScaleY(m_sSkinData.scaleY);
-    setRotation(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setRotationX(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setRotationY(CC_RADIANS_TO_DEGREES(-m_sSkinData.skewY));
     setPosition(ccp(m_sSkinData.x, m_sSkinData.y));
 
     m_tSkinTransform = nodeToParentTransform();
+    updateArmatureTransform();
 }
 
 const CCBaseData &CCSkin::getSkinData()

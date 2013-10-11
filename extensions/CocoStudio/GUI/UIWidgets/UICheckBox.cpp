@@ -305,7 +305,7 @@ void UICheckBox::unSelectedEvent()
     }
 }
 
-void UICheckBox::addSelectedStateEvent(cocos2d::CCObject *target, SEL_SelectedStateEvent selector)
+void UICheckBox::addEventListener(cocos2d::CCObject *target, SEL_SelectedStateEvent selector)
 {
     m_pSelectedStateEventListener = target;
     m_pfnSelectedStateEventSelector = selector;

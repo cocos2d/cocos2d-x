@@ -50,7 +50,7 @@ bool UIScene::init()
 void UIScene::toExtensionsMainLayer(CCObject* sender)
 {
     UISceneManager::purgeUISceneManager();
-    UIActionManager::purgeUIActionManager();
+    ActionManager::purgeActionManager();
     UIHelper::purgeUIHelper();
     CCSSceneReader::sharedSceneReader()->purgeSceneReader();
     

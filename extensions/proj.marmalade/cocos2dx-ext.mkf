@@ -59,51 +59,40 @@ files
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Armature/Animation"]
+	["CocoStudio/Armature/animation"]
     ("../CocoStudio/Armature/animation")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Armature/Datas"]
+	["CocoStudio/Armature/datas"]
     ("../CocoStudio/Armature/datas")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Armature/Display"]
+	["CocoStudio/Armature/display"]
     ("../CocoStudio/Armature/display")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Armature/Physics"]
+	["CocoStudio/Armature/physics"]
     ("../CocoStudio/Armature/physics")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Armature/Utils"]
+	["CocoStudio/Armature/utils"]
     ("../CocoStudio/Armature/utils")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Armature/External_tool"]
+	["CocoStudio/Armature/external_tool"]
     ("../CocoStudio/Armature/external_tool")
     "*.h"
-    "*.cpp"
 	
     ["CocoStudio/Components"]
     ("../CocoStudio/Components")
     "*.h"
     "*.cpp"
-
-    ["CocoStudio/GUI"]
-    ("../CocoStudio/GUI")
-    "*.h"
-    "*.cpp"
-	
-	["CocoStudio/GUI/Action"]
-    ("../CocoStudio/GUI/Action")
-    "*.h"
-    "*.cpp"
-	
+		
 	["CocoStudio/GUI/BaseClasses"]
     ("../CocoStudio/GUI/BaseClasses")
     "*.h"
@@ -127,7 +116,6 @@ files
 	["CocoStudio/GUI/UIWidgets/Compatible"]
     ("../CocoStudio/GUI/UIWidgets/Compatible")
     "*.h"
-    "*.cpp"
 	
 	["CocoStudio/GUI/UIWidgets/ScrollWidget"]
     ("../CocoStudio/GUI/UIWidgets/ScrollWidget")
@@ -139,8 +127,18 @@ files
     "*.h"
     "*.cpp"
 
+    ["CocoStudio/Json/lib_json"]
+    ("../CocoStudio/Json/lib_json")
+    "*.h"
+    "*.cpp"
+
 	["CocoStudio/Reader"]
     ("../CocoStudio/Reader")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/Action"]
+    ("../CocoStudio/Action")
     "*.h"
     "*.cpp"
 }

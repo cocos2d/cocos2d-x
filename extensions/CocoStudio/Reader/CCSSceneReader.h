@@ -30,25 +30,28 @@
 #include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
+/**
+*   @js NA
+*   @lua NA
+*/
+class CCSSceneReader
+{
+public:
+	CCSSceneReader(void);
+	~CCSSceneReader(void);
 
-	class CCSSceneReader
-	{
-		public:
-			CCSSceneReader(void);
-			~CCSSceneReader(void);
+public:
+	static CCSSceneReader* sharedSceneReader();
+	void purgeSceneReader();
+	static const char* sceneReaderVersion();
+	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
+private:
+    cocos2d::CCNode* createObject(cs::CSJsonDictionary * inputFiles, cocos2d::CCNode* parent);
+    void setPropertyFromJsonDict(cocos2d::CCNode *node, cs::CSJsonDictionary* dict);
 
-        public:
-			static CCSSceneReader* sharedSceneReader();
-			void purgeSceneReader();
-			static const char* sceneReaderVersion();
-			cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
-	    private:
-		    cocos2d::CCNode* createObject(cs::CSJsonDictionary * inputFiles, cocos2d::CCNode* parent);
-            void setPropertyFromJsonDict(cocos2d::CCNode *node, cs::CSJsonDictionary* dict);
-
-	    private:
-			static CCSSceneReader* s_sharedReader;
-	};
+private:
+	static CCSSceneReader* s_sharedReader;
+};
 
 
 NS_CC_EXT_END

@@ -44,7 +44,10 @@ typedef void (CCObject::*SEL_UnSelectEvent)(CCObject*);
 #define coco_selectselector(_SELECTOR) (cocos2d::extension::SEL_SelectEvent)(&_SELECTOR)
 #define coco_unselectselector(_SELECTOR) (cocos2d::extension::SEL_UnSelectEvent)(&_SELECTOR)
 /************************/
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UICheckBox : public UIWidget
 {
 public:
@@ -141,7 +144,7 @@ public:
     virtual void setAnchorPoint(const CCPoint &pt);
     
     //add a call back function would called when checkbox is selected or unselected.
-    void addSelectedStateEvent(CCObject* target,SEL_SelectedStateEvent selector);
+    void addEventListener(CCObject* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
