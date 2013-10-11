@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libExtensions", "libExtensions.vcxproj", "{A5CE59F9-2785-4E08-BD3C-0F370EECA439}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|Win32 = Debug|Win32
+		Release|ARM = Release|ARM
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Debug|ARM.ActiveCfg = Debug|ARM
+		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Debug|ARM.Build.0 = Debug|ARM
+		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Debug|Win32.Build.0 = Debug|Win32
+		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Release|ARM.ActiveCfg = Release|ARM
+		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Release|ARM.Build.0 = Release|ARM
+		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Release|Win32.ActiveCfg = Release|Win32
+		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

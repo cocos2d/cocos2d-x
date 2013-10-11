@@ -79,6 +79,8 @@ def checkParams(context):
         platforms_list = ["ios",
                           "android",
                           "win32",
+                          "winrt",
+                          "wp8",
                           "mac",
                           "blackberry",
                           "linux",

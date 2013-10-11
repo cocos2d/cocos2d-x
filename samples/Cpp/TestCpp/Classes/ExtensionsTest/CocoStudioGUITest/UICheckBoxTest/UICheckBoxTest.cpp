@@ -53,8 +53,7 @@ bool UICheckBoxTest::init()
                               "cocosgui/check_box_normal_disable.png",
                               "cocosgui/check_box_active_disable.png");
         checkBox->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        checkBox->addSelectEvent(this, coco_selectselector(UICheckBoxTest::selectedEvent));
-        checkBox->addUnSelectEvent(this, coco_selectselector(UICheckBoxTest::unSelectedEvent));
+        checkBox->addEventListener(this, checkboxselectedeventselector(UICheckBoxTest::selectedStateEvent));
         m_pUiLayer->addWidget(checkBox);
         
         return true;
@@ -62,12 +61,19 @@ bool UICheckBoxTest::init()
     return false;
 }
 
-void UICheckBoxTest::selectedEvent(CCObject* pSender)
+void UICheckBoxTest::selectedStateEvent(CCObject *pSender, CheckBoxEventType type)
 {
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Selected")->getCString());
-}
-
-void UICheckBoxTest::unSelectedEvent(CCObject* pSender)
-{
-    m_pDisplayValueLabel->setText(CCString::createWithFormat("Unselected")->getCString());
+    switch (type)
+    {
+        case CHECKBOX_STATE_EVENT_UNSELECTED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Unselected")->getCString());
+            break;
+            
+        case CHECKBOX_STATE_EVENT_SELECTED:
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("Selected")->getCString());
+            break;
+            
+        default:
+            break;
+    }
 }

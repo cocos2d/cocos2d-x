@@ -7,6 +7,7 @@ Thumbs.db
 *.pdb
 *.aps
 *.vcproj.*.user
+*.vcxproj.user
 *.vspscc
 *_i.c
 *.i
@@ -30,6 +31,9 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 ipch/
 *.opensdf
+Generated Files
+AppPackages
+*.hps
 
 # Ignore files build by ndk and eclipse
 libs/
@@ -38,6 +42,22 @@ obj/
 gen/
 assets/
 local.properties
+
+# Ignore specific winrt files 
+cocos2dx/platform/third_party/winrt/freetype/src
+cocos2dx/platform/third_party/winrt/libpng/lpng142
+cocos2dx/platform/third_party/winrt/libjpeg/jpeg-8b
+cocos2dx/platform/third_party/winrt/libtiff/tiff-4.0.1
+cocos2dx/platform/third_party/winrt/zlib/zlib-1.2.5
+cocos2dx/platform/third_party/wp8/freetype/src
+cocos2dx/platform/third_party/wp8/libpng/lpng142
+cocos2dx/platform/third_party/wp8/libjpeg/jpeg-8b
+cocos2dx/platform/third_party/wp8/libtiff/tiff-4.0.1
+cocos2dx/platform/third_party/wp8/zlib/zlib-1.2.5
+samples/Cpp/HelloCpp/proj.winrt/Assets/Resources/
+samples/Cpp/TestCpp/proj.winrt/Assets/Resources/
+samples/Cpp/HelloCpp/proj.wp8/Assets/Resources/
+samples/Cpp/TestCpp/proj.wp8/Assets/Resources/
 
 # Ignore files built by NaCl
 samples/Cpp/HelloCpp/proj.nacl/Resources/
@@ -67,6 +87,7 @@ build/
 ._.*
 xcuserdata/
 DerivedData/
+*.xccheckout
 
 # Ignore files built by bada
 .Simulator-Debug/

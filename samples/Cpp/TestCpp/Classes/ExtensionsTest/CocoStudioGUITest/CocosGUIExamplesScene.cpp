@@ -51,7 +51,7 @@ CocosGUIExamplesScene::~CocosGUIExamplesScene()
     
     CCSSceneReader::sharedSceneReader()->purgeSceneReader();
     UIHelper::purgeUIHelper();
-	UIActionManager::purgeUIActionManager();
+	ActionManager::purgeActionManager();
 }
 
 void CocosGUIExamplesScene::onEnter()

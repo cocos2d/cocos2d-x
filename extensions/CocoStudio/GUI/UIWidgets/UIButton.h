@@ -28,7 +28,10 @@
 #include "../BaseClasses/UIWidget.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIButton : public UIWidget
 {
 public:
@@ -175,12 +178,6 @@ public:
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
-    
-    virtual void setNormalSpriteFrame(CCSpriteFrame* frame);
-    virtual void setPressedSpriteFrame(CCSpriteFrame* frame);
-    virtual void setDisabledSpriteFrame(CCSpriteFrame* frame);
-    
-    
     /*Compatible*/
     /**
      * These methods will be removed

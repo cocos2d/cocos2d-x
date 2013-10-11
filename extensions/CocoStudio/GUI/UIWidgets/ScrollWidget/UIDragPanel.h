@@ -72,6 +72,34 @@ enum DRAGPANEL_BOUNCE_DIR
     DRAGPANEL_BOUNCE_DIR_BOTTOM,
 };
 
+typedef enum
+{
+    DRAGPANEL_EVENT_BERTH_LEFTBOTTOM,
+    DRAGPANEL_EVENT_BERTH_LFETTOP,
+    DRAGPANEL_EVENT_BERTH_RIGHTBOTTOM,
+    DRAGPANEL_EVENT_BERTH_RIGHTTOP,
+    DRAGPANEL_EVENT_BERTH_LEFT,
+    DRAGPANEL_EVENT_BERTH_TOP,
+    DRAGPANEL_EVENT_BERTH_RIGHT,
+    DRAGPANEL_EVENT_BERTH_BOTTOM,
+    DRAGPANEL_EVENT_BOUNCE_LEFTBOTTOM,
+    DRAGPANEL_EVENT_BOUNCE_LEFTTOP,
+    DRAGPANEL_EVENT_BOUNCE_RIGHTBOTTOM,
+    DRAGPANEL_EVENT_BOUNCE_RIGHTTOP,
+    DRAGPANEL_EVENT_BOUNCE_LEFT,
+    DRAGPANEL_EVENT_BOUNCE_TOP,
+    DRAGPANEL_EVENT_BOUNCE_RIGHT,
+    DRAGPANEL_EVENT_BOUNCE_BOTTOM,
+}DragPanelEventType;
+
+/**
+ *  dragpanel event
+ */
+typedef void (CCObject::*SEL_DragPanelEvent)(CCObject*, DragPanelEventType);
+#define dragpaneleventselector(_SELECTOR)(SEL_DragPanelEvent)(&_SELECTOR)
+
+
+/*******Compatible*******/
 /**
  *  dragpanel berth event
  */
@@ -113,6 +141,8 @@ typedef void (CCObject::*SEL_DragPanelBounceToRightEvent)(CCObject*);
 #define coco_DragPanel_BounceToRight_selector(_SELECTOR) (SEL_DragPanelBounceToRightEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToBottomEvent)(CCObject*);
 #define coco_DragPanel_BounceToBottom_selector(_SELECTOR) (SEL_DragPanelBounceToBottomEvent)(&_SELECTOR)
+
+/**************************/
 
 class UIDragPanel : public Layout, public UIScrollInterface
 {
@@ -180,6 +210,12 @@ public:
     bool isBerth();
     
     /**
+     *  event
+     */
+    void addEventListener(CCObject* target, SEL_DragPanelEvent selector);
+    
+    /*******Compatible*******/
+    /**
      *  berth event by direction
      */
     void addBerthToLeftBottomEvent(CCObject* target, SEL_DragPanelBerthToLeftBottomEvent selector);
@@ -190,6 +226,7 @@ public:
     void addBerthToTopEvent(CCObject* target, SEL_DragPanelBerthToTopEvent selector);
     void addBerthToRightEvent(CCObject* target, SEL_DragPanelBerthToRightEvent selector);
     void addBerthToBottomEvent(CCObject* target, SEL_DragPanelBerthToBottomEvent selector);
+    /*************************/
     
     /**
      *  get and set bounce enable
@@ -207,7 +244,8 @@ public:
     /**
      *  bounce event by dircetion
      */
-    void addBounceOverEvent(CCObject* target, SEL_DragPanelBounceOverEvent selector);
+    
+    /*******Compatible*******/
     void addBounceToLeftBottomEvent(CCObject* target, SEL_DragPanelBounceToLeftBottomEvent selector);
     void addBounceToLeftTopEvent(CCObject* target, SEL_DragPanelBounceToLeftTopEvent selector);
     void addBounceToRightBottomEvent(CCObject* target, SEL_DragPanelBounceToRightBottomEvent selector);
@@ -216,6 +254,7 @@ public:
     void addBounceToTopEvent(CCObject* target, SEL_DragPanelBounceToTopEvent selector);
     void addBounceToRightEvent(CCObject* target, SEL_DragPanelBounceToRightEvent selector);
     void addBounceToBottomEvent(CCObject* target, SEL_DragPanelBounceToBottomEvent selector);
+    /*************************/
     
     /**
      * Gets inner container of dragpanel.
@@ -225,6 +264,26 @@ public:
      * @return inner container.
      */
     Layout* getInnerContainer();
+    
+    /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    virtual void setLayoutType(LayoutType type);
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    virtual LayoutType getLayoutType() const;
+    
+    virtual void doLayout();
     
     /**
      * Returns the "class name" of widget.
@@ -291,7 +350,6 @@ protected:
     void bounceToCorner();
     void bounceOver();
     // bounce event
-    void bounceOverEvent();
     void bounceToLeftBottomEvent();
     void bounceToRightBottomEvent();
     void bounceToLeftTopEvent();
@@ -348,9 +406,37 @@ protected:
     float m_fAutoMoveDuration;
     float m_fAutoMoveEaseRate;
     
+    
+    
     // berth
     DRAGPANEL_BERTH_DIR m_eBerthDirection;
     
+    // bounce
+    bool m_bBounceEnable;
+    DRAGPANEL_BOUNCE_DIR m_eBounceDirection;
+    float m_fBounceDuration;
+    float m_fBounceEaseRate;
+    
+    // event
+    CCObject* m_pEventLister;
+    SEL_DragPanelEvent m_pfnEventSelector;
+    
+    float m_bRunningAction;
+    int m_nActionType;
+    
+    UIWidget* m_pActionWidget;
+    
+    float m_fDuration;
+    float m_elapsed;
+    bool m_bFirstTick;
+    
+    CCPoint m_positionDelta;
+    CCPoint m_startPosition;
+    CCPoint m_previousPosition;
+    
+    CCPoint m_endPosition;
+    
+    /*compatible*/
     // berth event
     CCObject* m_pBerthToLeftListener;
     SEL_DragPanelBerthToLeftEvent m_pfnBerthToLeftSelector;
@@ -368,13 +454,12 @@ protected:
     SEL_DragPanelBerthToRightBottomEvent m_pfnBerthToRightBottomSelector;
     CCObject* m_pBerthToRightTopListener;
     SEL_DragPanelBerthToRightTopEvent m_pfnBerthToRightTopSelector;
+    /********/
+
     
-    // bounce
-    bool m_bBounceEnable;
-    DRAGPANEL_BOUNCE_DIR m_eBounceDirection;
-    float m_fBounceDuration;
-    float m_fBounceEaseRate;
+
     
+    /*compatible*/
     // bounce event
     CCObject* m_pBounceOverListener;
     SEL_DragPanelBounceOverEvent m_pfnBounceOverSelector;
@@ -393,24 +478,12 @@ protected:
     CCObject* m_pBounceToRightListener;
     SEL_DragPanelBounceToRightEvent m_pfnBounceToRightSelector;
     CCObject* m_pBounceToBottomListener;
-    SEL_DragPanelBounceToBottomEvent m_pfnBounceToBottomSelector;        
+    SEL_DragPanelBounceToBottomEvent m_pfnBounceToBottomSelector;
+    /********/
     
     
     
-    float m_bRunningAction;
-    int m_nActionType;
-    
-    UIWidget* m_pActionWidget;
-    
-    float m_fDuration;
-    float m_elapsed;
-    bool m_bFirstTick;
-    
-    CCPoint m_positionDelta;
-    CCPoint m_startPosition;
-    CCPoint m_previousPosition;
-    
-    CCPoint m_endPosition;
+
 };
 
 NS_CC_EXT_END

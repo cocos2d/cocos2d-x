@@ -57,7 +57,8 @@ class CCDictionary;
  *      // ......
  *  }
  *  @endcode
- *
+ *  @js NA
+ *  @lua NA
  */
 class CC_DLL CCDictElement
 {
@@ -166,6 +167,7 @@ public:
  *  CCInteger* pInteger = (CCInteger*)pDict->objectForKey("key3");
  *  CCLog("{ key3: %d }", pInteger->getValue());
  *  @endcode
+ *  @js NA
  *
  */
 
@@ -174,11 +176,13 @@ class CC_DLL CCDictionary : public CCObject
 public:
     /** 
      * The constructor of CCDictionary.
+     * @lua NA
      */
     CCDictionary();
 
     /**
      * The destructor of CCDictionary
+     * @lua NA
      */
     ~CCDictionary();
 
@@ -311,6 +315,7 @@ public:
      *  @param pElement  The element need to be removed.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectsForKeys(CCArray*), removeAllObjects().
+     *  @lua NA
      */
     void removeObjectForElememt(CCDictElement* pElement);
     
@@ -327,6 +332,8 @@ public:
     /**
      *  This function is used for deepcopy elements from source dictionary to destination dictionary.
      *  You shouldn't invoke this function manually since it's called by CCObject::copy.
+     *  @lua NA
+     *  @js  NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
     /// @}
@@ -336,6 +343,7 @@ public:
      *
      *  @return The random object. 
      *  @see objectForKey(intptr_t), objectForKey(const std::string&)
+     *  @lua NA
      */
     CCObject* randomObject();
     
@@ -367,6 +375,7 @@ public:
      *  Write a dictionary to a plist file.
      *  @param fullPath The full path of the plist file. You can get writeable path by getWritablePath()
      *  @return true if successed, false if failed
+     *  @lua NA
      */
     bool writeToFile(const char *fullPath);
      
@@ -380,10 +389,13 @@ public:
      *
      *  @param  pFileName  The name of the plist file.
      *  @return A dictionary which isn't an autorelease object.
+     *  @lua NA
      */
     static CCDictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
 
-    /* override functions */
+    /* override functions 
+     * @lua NA
+     */
     virtual void acceptVisitor(CCDataVisitor &visitor);
 
 private:

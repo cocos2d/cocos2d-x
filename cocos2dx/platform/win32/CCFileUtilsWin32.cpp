@@ -93,7 +93,7 @@ bool CCFileUtilsWin32::isAbsolutePath(const std::string& strPath)
 }
 std::string CCFileUtilsWin32::fullPathForFilename(const char* pszFileName)
 {
-	std:string pszFileNameAscii = utf8Togbk(pszFileName);
+	std::string pszFileNameAscii = utf8Togbk(pszFileName);
 	return CCFileUtils::fullPathForFilename(pszFileNameAscii.c_str());
 }
 

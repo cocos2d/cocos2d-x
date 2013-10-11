@@ -34,7 +34,10 @@ typedef enum
     LoadingBarTypeLeft,
     LoadingBarTypeRight
 }LoadingBarType;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UILoadingBar : public UIWidget
 {
 public:

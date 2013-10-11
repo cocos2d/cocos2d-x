@@ -431,54 +431,6 @@ void UIButton::setAnchorPoint(const CCPoint &pt)
     m_pTitleRenderer->setPosition(ccp(m_size.width*(0.5f-m_anchorPoint.x), m_size.height*(0.5f-m_anchorPoint.y)));
 }
 
-void UIButton::setNormalSpriteFrame(CCSpriteFrame *frame)
-{
-    if (!frame)
-    {
-        return;
-    }
-    if (m_bScale9Enabled)
-    {
-        dynamic_cast<CCScale9Sprite*>(m_pButtonNormalRenderer)->setSpriteFrame(frame);
-    }
-    else
-    {
-        dynamic_cast<CCSprite*>(m_pButtonNormalRenderer)->setDisplayFrame(frame);
-    }
-}
-
-void UIButton::setPressedSpriteFrame(CCSpriteFrame *frame)
-{
-    if (!frame)
-    {
-        return;
-    }
-    if (m_bScale9Enabled)
-    {
-        dynamic_cast<CCScale9Sprite*>(m_pButtonClickedRenderer)->setSpriteFrame(frame);
-    }
-    else
-    {
-        dynamic_cast<CCSprite*>(m_pButtonClickedRenderer)->setDisplayFrame(frame);
-    }
-}
-
-void UIButton::setDisabledSpriteFrame(CCSpriteFrame *frame)
-{
-    if (!frame)
-    {
-        return;
-    }
-    if (m_bScale9Enabled)
-    {
-        dynamic_cast<CCScale9Sprite*>(m_pButtonDisableRenderer)->setSpriteFrame(frame);
-    }
-    else
-    {
-        dynamic_cast<CCSprite*>(m_pButtonDisableRenderer)->setDisplayFrame(frame);
-    }
-}
-
 void UIButton::onSizeChanged()
 {
     normalTextureScaleChangedWithSize();
