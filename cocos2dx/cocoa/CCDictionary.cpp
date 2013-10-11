@@ -90,7 +90,7 @@ unsigned int Dictionary::count()
 Array* Dictionary::allKeys()
 {
     int iKeyCount = this->count();
-    if (iKeyCount <= 0) return NULL;
+    if (iKeyCount <= 0) return Array::createWithCapacity(0);
 
     Array* pArray = Array::createWithCapacity(iKeyCount);
 
