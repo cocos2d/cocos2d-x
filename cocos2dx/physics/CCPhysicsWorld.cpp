@@ -53,6 +53,8 @@
 #include "layers_scenes_transitions_nodes/CCScene.h"
 #include "CCDirector.h"
 
+#include <algorithm>
+
 NS_CC_BEGIN
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
