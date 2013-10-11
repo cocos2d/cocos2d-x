@@ -36,11 +36,11 @@ public:
 
 class ScriptingCore : public ScriptEngineProtocol
 {
-	JSRuntime *rt_;
-	JSContext *cx_;
-	JSObject  *global_;
-	JSObject  *debugGlobal_;
-	SimpleRunLoop* runLoop;
+	JSRuntime *_rt;
+	JSContext *_cx;
+	JSObject  *_global;
+	JSObject  *_debugGlobal;
+	SimpleRunLoop* _runLoop;
 
 	ScriptingCore();
 public:
@@ -150,7 +150,7 @@ public:
 	 * @return the global context
 	 */
 	JSContext* getGlobalContext() {
-		return cx_;
+		return _cx;
 	};
 
 	/**
@@ -191,8 +191,8 @@ public:
 	 */
 	void debugProcessInput(string str);
 	void enableDebugger();
-	JSObject* getDebugGlobal() { return debugGlobal_; }
-    JSObject* getGlobalObject() { return global_; }
+	JSObject* getDebugGlobal() { return _debugGlobal; }
+    JSObject* getGlobalObject() { return _global; }
     
  private:
     void string_report(jsval val);
