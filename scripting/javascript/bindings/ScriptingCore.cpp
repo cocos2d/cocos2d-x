@@ -181,12 +181,12 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj,
         // So we have to check the availability of 'retVal'.
         if (retVal)
         {
-            JS_CallFunctionValue(cx_, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, retVal);
+            JS_CallFunctionValue(_cx, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, retVal);
         }
         else
         {
             jsval jsRet;
-            JS_CallFunctionValue(cx_, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, &jsRet);
+            JS_CallFunctionValue(_cx, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, &jsRet);
         }
     }
 }
@@ -348,16 +348,16 @@ static JSClass global_class = {
 };
 
 ScriptingCore::ScriptingCore()
-: rt_(NULL)
-, cx_(NULL)
-, global_(NULL)
-, debugGlobal_(NULL)
+: _rt(nullptr)
+, _cx(nullptr)
+, _global(nullptr)
+, _debugGlobal(nullptr)
 {
     // set utf8 strings internally (we don't need utf16)
     // XXX: Removed in SpiderMonkey 19.0
     //JS_SetCStringsAreUTF8();
     this->addRegisterCallback(registerDefaultClasses);
-    this->runLoop = new SimpleRunLoop();
+    this->_runLoop = new SimpleRunLoop();
 }
 
 void ScriptingCore::string_report(jsval val) {
@@ -390,9 +390,9 @@ void ScriptingCore::string_report(jsval val) {
 JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *filename, JSContext* cx, JSObject* global)
 {
     if (cx == NULL)
-        cx = cx_;
+        cx = _cx;
     if (global == NULL)
-        global = global_;
+        global = _global;
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
     if (script) {
         JSAutoCompartment ac(cx, global);
@@ -444,41 +444,41 @@ static JSSecurityCallbacks securityCallbacks = {
 };
 
 void ScriptingCore::createGlobalContext() {
-    if (this->cx_ && this->rt_) {
-        ScriptingCore::removeAllRoots(this->cx_);
-        JS_DestroyContext(this->cx_);
-        JS_DestroyRuntime(this->rt_);
-        this->cx_ = NULL;
-        this->rt_ = NULL;
+    if (this->_cx && this->_rt) {
+        ScriptingCore::removeAllRoots(this->_cx);
+        JS_DestroyContext(this->_cx);
+        JS_DestroyRuntime(this->_rt);
+        this->_cx = NULL;
+        this->_rt = NULL;
     }
     // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
-    this->rt_ = JS_NewRuntime(8L * 1024L * 1024L, JS_USE_HELPER_THREADS);
-    JS_SetGCParameter(rt_, JSGC_MAX_BYTES, 0xffffffff);
+    this->_rt = JS_NewRuntime(8L * 1024L * 1024L, JS_USE_HELPER_THREADS);
+    JS_SetGCParameter(_rt, JSGC_MAX_BYTES, 0xffffffff);
 	
-    JS_SetTrustedPrincipals(rt_, &shellTrustedPrincipals);
-    JS_SetSecurityCallbacks(rt_, &securityCallbacks);
-	JS_SetNativeStackQuota(rt_, JSB_MAX_STACK_QUOTA);
+    JS_SetTrustedPrincipals(_rt, &shellTrustedPrincipals);
+    JS_SetSecurityCallbacks(_rt, &securityCallbacks);
+	JS_SetNativeStackQuota(_rt, JSB_MAX_STACK_QUOTA);
     
-    this->cx_ = JS_NewContext(rt_, 8192);
-    JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
-    JS_SetVersion(this->cx_, JSVERSION_LATEST);
+    this->_cx = JS_NewContext(_rt, 8192);
+    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
+    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
     // Only disable METHODJIT on iOS.
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
-    JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
+    JS_SetOptions(this->_cx, JS_GetOptions(this->_cx) & ~JSOPTION_METHODJIT);
+    JS_SetOptions(this->_cx, JS_GetOptions(this->_cx) & ~JSOPTION_METHODJIT_ALWAYS);
 #endif
     
-    JS_SetErrorReporter(this->cx_, ScriptingCore::reportError);
+    JS_SetErrorReporter(this->_cx, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
-    //JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
+    //JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
-    this->global_ = NewGlobalObject(cx_);
+    this->_global = NewGlobalObject(_cx);
 
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
-        callback(this->cx_, this->global_);
+        callback(this->_cx, this->_global);
     }
 }
 
@@ -502,10 +502,10 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
     std::string fullPath = futil->fullPathForFilename(path);
     if (global == NULL) {
-        global = global_;
+        global = _global;
     }
     if (cx == NULL) {
-        cx = cx_;
+        cx = _cx;
     }
     JSScript *script = NULL;    
     js::RootedObject obj(cx, global);
@@ -570,16 +570,16 @@ ScriptingCore::~ScriptingCore()
 void ScriptingCore::cleanup()
 {
     localStorageFree();
-    removeAllRoots(cx_);
-    if (cx_)
+    removeAllRoots(_cx);
+    if (_cx)
     {
-        JS_DestroyContext(cx_);
-        cx_ = NULL;
+        JS_DestroyContext(_cx);
+        _cx = NULL;
     }
-    if (rt_)
+    if (_rt)
     {
-        JS_DestroyRuntime(rt_);
-        rt_ = NULL;
+        JS_DestroyRuntime(_rt);
+        _rt = NULL;
     }
     JS_ShutDown();
     if (_js_log_buf) {
@@ -826,7 +826,7 @@ int ScriptingCore::handleMenuClickedEvent(void* data)
     js_proxy_t *proxy = jsb_get_native_proxy(menuItem);
     dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
 
-    executeJSFunctionFromReservedSpot(this->cx_, p->obj, dataVal, retval);
+    executeJSFunctionFromReservedSpot(this->_cx, p->obj, dataVal, retval);
 
     return 1;
 }
@@ -847,16 +847,16 @@ int ScriptingCore::handleTouchesEvent(void* data)
     std::string funcName = "";
     getTouchesFuncName(eventType, funcName);
 
-    JSObject *jsretArr = JS_NewArrayObject(this->cx_, 0, NULL);
+    JSObject *jsretArr = JS_NewArrayObject(this->_cx, 0, NULL);
 
-    JS_AddNamedObjectRoot(this->cx_, &jsretArr, "touchArray");
+    JS_AddNamedObjectRoot(this->_cx, &jsretArr, "touchArray");
     int count = 0;
     
     for (auto& touch : touches)
     {
         jsval jsret;
-        getJSTouchObject(this->cx_, touch, jsret);
-        if (!JS_SetElement(this->cx_, jsretArr, count, &jsret))
+        getJSTouchObject(this->_cx, touch, jsret);
+        if (!JS_SetElement(this->_cx, jsretArr, count, &jsret))
         {
             break;
         }
@@ -865,12 +865,12 @@ int ScriptingCore::handleTouchesEvent(void* data)
 
     executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsretArr);
 
-    JS_RemoveObjectRoot(this->cx_, &jsretArr);
+    JS_RemoveObjectRoot(this->_cx, &jsretArr);
 
     for (auto& touch : touches)
     {
         jsval jsret;
-        removeJSTouchObject(this->cx_, touch, jsret);
+        removeJSTouchObject(this->_cx, touch, jsret);
     }
 
     return 1;
@@ -926,7 +926,7 @@ JSBool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, ui
     JSBool bRet = JS_FALSE;
     JSBool hasAction;
     jsval temp_retval;
-    JSContext* cx = this->cx_;
+    JSContext* cx = this->_cx;
     JSObject* obj = JSVAL_TO_OBJECT(owner);
     
     do
@@ -1031,14 +1031,14 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
     std::string funcName;
     getTouchesFuncName(eventType, funcName);
 
-    JSObject *jsretArr = JS_NewArrayObject(this->cx_, 0, NULL);
-    JS_AddNamedObjectRoot(this->cx_, &jsretArr, "touchArray");
+    JSObject *jsretArr = JS_NewArrayObject(this->_cx, 0, NULL);
+    JS_AddNamedObjectRoot(this->_cx, &jsretArr, "touchArray");
     int count = 0;
     for (auto& touch : touches)
     {
         jsval jsret;
-        getJSTouchObject(this->cx_, touch, jsret);
-        if (!JS_SetElement(this->cx_, jsretArr, count, &jsret)) {
+        getJSTouchObject(this->_cx, touch, jsret);
+        if (!JS_SetElement(this->_cx, jsretArr, count, &jsret)) {
             break;
         }
         ++count;
@@ -1046,12 +1046,12 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
 
     jsval jsretArrVal = OBJECT_TO_JSVAL(jsretArr);
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsretArrVal, &retval);
-    JS_RemoveObjectRoot(this->cx_, &jsretArr);
+    JS_RemoveObjectRoot(this->_cx, &jsretArr);
 
     for (auto& touch : touches)
     {
         jsval jsret;
-        removeJSTouchObject(this->cx_, touch, jsret);
+        removeJSTouchObject(this->_cx, touch, jsret);
     }
 
     return 1;
@@ -1066,12 +1066,12 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
     getTouchFuncName(eventType, funcName);
 
     jsval jsTouch;
-    getJSTouchObject(this->cx_, pTouch, jsTouch);
+    getJSTouchObject(this->_cx, pTouch, jsTouch);
 
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
     // Remove touch object from global hash table and unroot it.
-    removeJSTouchObject(this->cx_, pTouch, jsTouch);
+    removeJSTouchObject(this->_cx, pTouch, jsTouch);
     return 1;
 
 }
@@ -1086,12 +1086,12 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
     getTouchFuncName(eventType, funcName);
 
     jsval jsTouch;
-    getJSTouchObject(this->cx_, pTouch, jsTouch);
+    getJSTouchObject(this->_cx, pTouch, jsTouch);
 
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
     // Remove touch object from global hash table and unroot it.
-    removeJSTouchObject(this->cx_, pTouch, jsTouch);
+    removeJSTouchObject(this->_cx, pTouch, jsTouch);
 
     return 1;
 
@@ -1102,7 +1102,7 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
     if (NULL == evt)
         return 0;
  
-    JSAutoCompartment ac(cx_, global_);
+    JSAutoCompartment ac(_cx, _global);
     
     switch (evt->type)
     {
@@ -1936,15 +1936,15 @@ void SimpleRunLoop::update(float dt)
 }
 
 void ScriptingCore::debugProcessInput(string str) {
-    JSAutoCompartment ac(cx_, debugGlobal_);
+    JSAutoCompartment ac(_cx, _debugGlobal);
     
-    JSString* jsstr = JS_NewStringCopyZ(cx_, str.c_str());
+    JSString* jsstr = JS_NewStringCopyZ(_cx, str.c_str());
     jsval argv[] = {
         STRING_TO_JSVAL(jsstr)
     };
     jsval outval;
     
-    JS_CallFunctionName(cx_, debugGlobal_, "processInput", 1, argv, &outval);
+    JS_CallFunctionName(_cx, _debugGlobal, "processInput", 1, argv, &outval);
 }
 
 static bool NS_ProcessNextEvent()
@@ -2146,30 +2146,30 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 
 void ScriptingCore::enableDebugger()
 {
-    JS_SetDebugMode(cx_, JS_TRUE);
+    JS_SetDebugMode(_cx, JS_TRUE);
     
-    if (debugGlobal_ == NULL)
+    if (_debugGlobal == NULL)
     {
-        JSAutoCompartment ac0(cx_, global_);
-        debugGlobal_ = NewGlobalObject(cx_, true);
-        JS_WrapObject(cx_, &debugGlobal_);
-        JSAutoCompartment ac(cx_, debugGlobal_);
+        JSAutoCompartment ac0(_cx, _global);
+        _debugGlobal = NewGlobalObject(_cx, true);
+        JS_WrapObject(_cx, &_debugGlobal);
+        JSAutoCompartment ac(_cx, _debugGlobal);
         // these are used in the debug program
-        JS_DefineFunction(cx_, debugGlobal_, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-        JS_DefineFunction(cx_, debugGlobal_, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, _debugGlobal, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, _debugGlobal, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, _debugGlobal, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, _debugGlobal, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, _debugGlobal, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         
         
-        runScript("jsb_debugger.js", debugGlobal_);
+        runScript("jsb_debugger.js", _debugGlobal);
         
         // prepare the debugger
-        jsval argv = OBJECT_TO_JSVAL(global_);
+        jsval argv = OBJECT_TO_JSVAL(_global);
         jsval outval;
-        JSBool ok = JS_CallFunctionName(cx_, debugGlobal_, "_prepareDebugger", 1, &argv, &outval);
+        JSBool ok = JS_CallFunctionName(_cx, _debugGlobal, "_prepareDebugger", 1, &argv, &outval);
         if (!ok) {
-            JS_ReportPendingException(cx_);
+            JS_ReportPendingException(_cx);
         }
         
         // start bg thread
@@ -2177,7 +2177,7 @@ void ScriptingCore::enableDebugger()
         t.detach();
 
         Scheduler* scheduler = Director::getInstance()->getScheduler();
-        scheduler->scheduleUpdateForTarget(this->runLoop, 0, false);
+        scheduler->scheduleUpdateForTarget(this->_runLoop, 0, false);
     }
 }
 
