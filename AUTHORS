@@ -614,6 +614,9 @@ Developers:
     Keita Obo (ktaobo)
         Avoid unnecessary object duplication for Scale9Sprite.
         
+    jimmystar
+        Fixed a bug that cc.Scheduler.schedule(target, func) without repeat argument couldn't repeat schedule forever on device.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
