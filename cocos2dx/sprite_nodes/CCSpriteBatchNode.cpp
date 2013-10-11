@@ -40,6 +40,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
 #include "support/CCProfiling.h"
+#include "layers_scenes_transitions_nodes/CCLayer.h"
+#include "layers_scenes_transitions_nodes/CCScene.h"
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -180,6 +182,17 @@ void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
     Node::addChild(child, zOrder, tag);
 
     appendChild(sprite);
+    
+    
+    if (this->getParent() &&
+        dynamic_cast<Layer*>(this->getParent()) != nullptr)
+    {
+        if (this->getParent()->getParent() &&
+            dynamic_cast<Scene*>(this->getParent()->getParent()))
+        {
+            dynamic_cast<Scene*>(this->getParent()->getParent())->addChildToPhysicsWorld(child);
+        }
+    }
 }
 
 // override reorderChild

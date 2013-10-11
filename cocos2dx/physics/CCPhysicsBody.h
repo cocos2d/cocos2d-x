@@ -30,22 +30,21 @@
 
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
+
+#include "CCPhysicsShape.h"
+
 #include <vector>
 
 NS_CC_BEGIN
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
-class PhysicsShape;
-class PhysicsShapeCircle;
-class PhysicsShapeBox;
-class PhysicsShapePolygon;
-class PhysicsShapeEdgeSegment;
-class PhysicsShapeEdgeBox;
-class PhysicsShapeEdgePolygon;
-class PhysicsShapeEdgeChain;
 
 class PhysicsBodyInfo;
+
+
+const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT = {0.0f, 1.0f, 1.0f};
+
 /**
  * A body affect by physics.
  * it can attach one or more shapes.
@@ -53,68 +52,39 @@ class PhysicsBodyInfo;
 class PhysicsBody : public Object//, public Clonable
 {
 public:
+    static PhysicsBody* create();
     /**
      * @brief Create a body contains a circle shape.
      */
-    static PhysicsBody* createCircle(float radius);
+    static PhysicsBody* createCircle(float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     /**
      * @brief Create a body contains a box shape.
      */
-    static PhysicsBody* createBox(Size size);
+    static PhysicsBody* createBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     /**
      * @brief Create a body contains a polygon shape.
      * points is an array of Point structs defining a convex hull with a clockwise winding.
      */
-    static PhysicsBody* createPolygon(Point* points, int count);
+    static PhysicsBody* createPolygon(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
     /**
      * @brief Create a body contains a EdgeSegment shape.
      */
-    static PhysicsBody* createEdgeSegment(Point a, Point b, float border = 1);
+    static PhysicsBody* createEdgeSegment(Point a, Point b, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /**
      * @brief Create a body contains a EdgeBox shape.
      */
-    static PhysicsBody* createEdgeBox(Size size, float border = 1);
+    static PhysicsBody* createEdgeBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /**
      * @brief Create a body contains a EdgePolygon shape.
      */
-    static PhysicsBody* createEdgePolygon(Point* points, int count, float border = 1);
+    static PhysicsBody* createEdgePolygon(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /**
      * @brief Create a body contains a EdgeChain shape.
      */
-    static PhysicsBody* createEdgeChain(Point* points, int count, float border = 1);
+    static PhysicsBody* createEdgeChain(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
-    /**
-     * @brief Attach a circle shape with body
-     */
-    virtual PhysicsShapeCircle* addCircle(float radius, Point offset = Point(0, 0));
-    /**
-     * @brief Attach a box shape with body
-     */
-    virtual PhysicsShapeBox* addBox(Size size, Point offset = Point(0, 0));
-    /**
-     * @brief Attach a polygon shape with body
-     */
-    virtual PhysicsShapePolygon* addPolygon(Point* points, int count, Point offset = Point(0, 0));
-    
-    /**
-     * @brief Attach a edge segment shape with body
-     */
-    virtual PhysicsShapeEdgeSegment* addEdgeSegment(Point a, Point b, float border = 1);
-    /**
-     * @brief Attach a edge box shape with body
-     */
-    virtual PhysicsShapeEdgeBox* addEdgeBox(Size size, float border = 1, Point offset = Point(0, 0));
-    /**
-     * @brief Attach a edge polygon shape with body
-     * points is an array of Point structs defining a convex hull with a clockwise winding.
-     */
-    virtual PhysicsShapeEdgePolygon* addEdgePolygon(Point* points, int count, float border = 1);
-    /**
-     * @brief Attach a edge chain shape with body
-     * points is an array of Point structs defining a convex hull with a clockwise winding.
-     */
-    virtual PhysicsShapeEdgeChain* addEdgeChain(Point* points, int count, float border = 1);
+    virtual void addShape(PhysicsShape* shape);
     
     /**
      * @brief Applies a immediate force to body.
@@ -137,6 +107,9 @@ public:
      */
     virtual void applyTorque(float torque);
     
+    virtual void setVelocity(Point velocity);
+    virtual Point getVelocity();
+    
     /*
      * @brief get the body shapes.
      */
@@ -145,10 +118,12 @@ public:
      * @brief get the first body shapes.
      */
     inline PhysicsShape* getShape() { return _shapes.size() >= 1 ? _shapes.front() : nullptr; }
+    PhysicsShape* getShapeByTag(int tag);
     /*
      * @brief remove a shape from body
      */
     void removeShape(PhysicsShape* shape);
+    void removeShapeByTag(int tag);
     /*
      * @brief remove all shapes
      */
@@ -215,14 +190,18 @@ public:
     
     //virtual Clonable* clone() const override;
     
+    inline bool isEnable() { return _enable; }
+    void setEnable(bool enable);
+    
+    inline int getTag() { return _tag; }
+    inline void setTag(int tag) { _tag = tag; }
+    
 protected:
     
     bool init();
-    bool initStatic();
     
     virtual void setPosition(Point position);
     virtual void setRotation(float rotation);
-    virtual void addShape(PhysicsShape* shape);
     
 protected:
     PhysicsBody();
@@ -235,12 +214,14 @@ protected:
     PhysicsWorld*               _world;
     PhysicsBodyInfo*            _info;
     bool                        _dynamic;
+    bool                        _enable;
     bool                        _massDefault;
     bool                        _angularDampingDefault;
     float                       _mass;
     float                       _area;
     float                       _density;
     float                       _angularDamping;
+    int                         _tag;
     
     int    _categoryBitmask;
     int    _contactTestBitmask;
@@ -249,7 +230,7 @@ protected:
     friend class PhysicsWorld;
     friend class PhysicsShape;
     friend class PhysicsJoint;
-    friend class Sprite;
+    friend class Node;
 };
 
 NS_CC_END
