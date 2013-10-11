@@ -191,13 +191,14 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
 
         off_t size = AAsset_getLength(asset);
 
-        pData = new unsigned char[size];
+        pData = new unsigned char[size + 1];
 
         int bytesread = AAsset_read(asset, (void*)pData, size);
         if (pSize)
         {
             *pSize = bytesread;
         }
+        pData[size] = 0;
 
         AAsset_close(asset);
     }
@@ -214,9 +215,11 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
             fseek(fp,0,SEEK_END);
             size = ftell(fp);
             fseek(fp,0,SEEK_SET);
-            pData = new unsigned char[size];
+            unsigned long bufferSize = size;
+            pData = new unsigned char[bufferSize + 1];
             size = fread(pData,sizeof(unsigned char), size,fp);
             fclose(fp);
+            pData[bufferSize] = 0;
             
             if (pSize)
             {
