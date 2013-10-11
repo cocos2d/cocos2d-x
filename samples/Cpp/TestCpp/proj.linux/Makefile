@@ -141,7 +141,7 @@ include ../../../../cocos2dx/proj.linux/cocos2dx.mk
 INCLUDES +=	 -I../ \
 	-I../../ \
 	-I../Classes \
-	-I$(COCOS_ROOT)/CocosDenshion/include \
+	-I$(COCOS_ROOT)/audio/include \
 	-I$(COCOS_ROOT)/extensions/ \
 	-I$(COCOS_ROOT)/external/ \
 	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
