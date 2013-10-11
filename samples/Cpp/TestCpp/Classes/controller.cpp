@@ -50,6 +50,7 @@ struct {
 	{ "FontTest", []() { return new FontTestScene(); } },
 	{ "IntervalTest", [](){return new IntervalTestScene(); } },
 	{ "KeyboardTest", []() { return new KeyboardTestScene(); } },
+    { "MouseTest", []() { return new MouseTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "KeypadTest", []() { return new KeypadTestScene(); } },
 #endif

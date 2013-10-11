@@ -28,6 +28,15 @@
 
 #include "CCEvent.h"
 
+#define MOUSE_BUTTON_LEFT       0
+#define MOUSE_BUTTON_RIGHT      1
+#define MOUSE_BUTTON_MIDDLE     2
+#define MOUSE_BUTTON_4          3
+#define MOUSE_BUTTON_5          4
+#define MOUSE_BUTTON_6          5
+#define MOUSE_BUTTON_7          6
+#define MOUSE_BUTTON_8          7
+
 NS_CC_BEGIN
 
 class EventMouse : public Event
@@ -50,6 +59,7 @@ public:
     EventMouse(MouseEventType mouseEventCode)
      : Event(EVENT_TYPE)
      , _mouseEventType(mouseEventCode)
+     , _mouseButton(0)
      , _x(0.0f)
      , _y(0.0f)
      , _scrollX(0.0f)
@@ -62,6 +72,8 @@ public:
     inline float getScrollY() { return _scrollY; };
 
     inline void setCursorPosition(float x, float y) { _x = x; _y = y; };
+    inline void setMouseButton(int button) { _mouseButton = button; };
+    inline int getMouseButton() { return _mouseButton; };
     inline float getCursorX() { return _x; };
     inline float getCursorY() { return _y; };
 
