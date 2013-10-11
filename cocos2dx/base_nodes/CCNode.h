@@ -38,6 +38,7 @@
 #include "script_support/CCScriptSupport.h"
 #include "CCProtocols.h"
 #include "event_dispatcher/CCEventDispatcher.h"
+#include "physics/CCPhysicsSetting.h"
 
 #include <vector>
 
@@ -56,6 +57,9 @@ class Component;
 class Dictionary;
 class ComponentContainer;
 class EventDispatcher;
+#ifdef CC_USE_PHYSICS
+class PhysicsBody;
+#endif
 
 /**
  * @addtogroup base_nodes
@@ -1374,6 +1378,19 @@ public:
      */
     virtual void removeAllComponents();
     /// @} end of component functions
+    
+    
+#ifdef CC_USE_PHYSICS
+    /**
+     *   set the PhysicsBody that let the sprite effect with physics
+     */
+    virtual void setPhysicsBody(PhysicsBody* body);
+    
+    /**
+     *   get the PhysicsBody the sprite have
+     */
+    PhysicsBody* getPhysicsBody() const;
+#endif
 
 
 private:
@@ -1486,6 +1503,12 @@ protected:
     int _eventPriority;           ///< The scene graph based priority of event listener.
     int _oldEventPriority;        ///< The old scene graph based priority of event listener.
     static int _globalEventPriorityIndex;    ///< The index of global event priority.
+    
+#ifdef CC_USE_PHYSICS
+    PhysicsBody* _physicsBody;        ///< the physicsBody the node have
+    bool _physicsPositionMark;        ///< set this mark to false will skip the setRotation to physicsBody one time
+    bool _physicsRotationMark;        ///< set this mark to false will skip the setPosition to physicsBody one time
+#endif
 };
 
 //#pragma mark - NodeRGBA

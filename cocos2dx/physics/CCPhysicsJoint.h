@@ -49,6 +49,10 @@ protected:
 public:
     PhysicsBody* getBodyA() { return _bodyA; }
     PhysicsBody* getBodyB() { return _bodyB; }
+    inline int getTag() { return _tag; }
+    inline void setTag(int tag) { _tag = tag; }
+    inline bool isEnable() { return _enable; }
+    void setEnable(bool enable);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b);
@@ -62,8 +66,11 @@ protected:
     PhysicsBody* _bodyA;
     PhysicsBody* _bodyB;
     PhysicsJointInfo* _info;
+    bool _enable;
+    int _tag;
     
     friend class PhysicsBody;
+    friend class PhysicsWorld;
 };
 
 /*

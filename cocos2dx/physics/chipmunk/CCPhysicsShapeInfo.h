@@ -46,8 +46,10 @@ public:
     
 public:
     std::vector<cpShape*> shapes;
-    static std::map<cpShape*, PhysicsShapeInfo*> map;
     PhysicsShape* shape;
+    cpBody* body;
+    static std::map<cpShape*, PhysicsShapeInfo*> map;
+    static cpBody* shareBody;
     
 private:
     PhysicsShapeInfo(PhysicsShape* shape);

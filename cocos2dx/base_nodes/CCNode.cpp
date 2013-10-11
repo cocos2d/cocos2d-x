@@ -44,6 +44,10 @@ THE SOFTWARE.
 #include "event_dispatcher/CCEvent.h"
 #include "event_dispatcher/CCEventTouch.h"
 
+#ifdef CC_USE_PHYSICS
+#include "physics/CCPhysicsBody.h"
+#endif
+
 // externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
@@ -128,6 +132,11 @@ Node::Node(void)
 , _componentContainer(NULL)
 , _eventPriority(0)
 , _oldEventPriority(0)
+#ifdef CC_USE_PHYSICS
+, _physicsBody(nullptr)
+, _physicsPositionMark(true)
+, _physicsRotationMark(true)
+#endif
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -179,6 +188,10 @@ Node::~Node()
     CC_SAFE_DELETE(_componentContainer);
     
     removeAllEventListeners();
+    
+#ifdef CC_USE_PHYSICS
+    CC_SAFE_RELEASE(_physicsBody);
+#endif
 }
 
 bool Node::init()
@@ -257,6 +270,15 @@ void Node::setRotation(float newRotation)
 {
     _rotationX = _rotationY = newRotation;
     _transformDirty = _inverseDirty = true;
+    
+#ifdef CC_USE_PHYSICS
+    if (_physicsBody && _physicsRotationMark)
+    {
+        _physicsBody->setRotation(newRotation);
+    }
+    
+    _physicsRotationMark = true;
+#endif
 }
 
 float Node::getRotationX() const
@@ -340,6 +362,15 @@ void Node::setPosition(const Point& newPosition)
 {
     _position = newPosition;
     _transformDirty = _inverseDirty = true;
+    
+#ifdef CC_USE_PHYSICS
+    if (_physicsBody && _physicsPositionMark)
+    {
+        _physicsBody->setPosition(newPosition);
+    }
+    
+    _physicsPositionMark = true;
+#endif
 }
 
 void Node::getPosition(float* x, float* y) const
@@ -808,6 +839,7 @@ void Node::visit()
     {
         return;
     }
+    
     kmGLPushMatrix();
 
      if (_grid && _grid->isActive())
@@ -1268,6 +1300,16 @@ Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
 
 void Node::updateTransform()
 {
+#ifdef CC_USE_PHYSICS
+    if (_physicsBody)
+    {
+        _physicsPositionMark = false;
+        _physicsRotationMark = false;
+        setPosition(_physicsBody->getPosition());
+        setRotation(_physicsBody->getRotation());
+    }
+#endif
+    
     // Recursively iterate over children
     arrayMakeObjectsPerformSelector(_children, updateTransform, Node*);
 }
@@ -1336,6 +1378,26 @@ void Node::setDirtyForAllEventListeners()
         dispatcher->setDirtyForEventType(listener->_type, true);
     }
 }
+
+#ifdef CC_USE_PHYSICS
+void Node::setPhysicsBody(PhysicsBody* body)
+{
+    if (_physicsBody != nullptr)
+    {
+        _physicsBody->release();
+    }
+    
+    _physicsBody = body;
+    _physicsBody->retain();
+    _physicsBody->setPosition(getPosition());
+    _physicsBody->setRotation(getRotation());
+}
+
+PhysicsBody* Node::getPhysicsBody() const
+{
+    return _physicsBody;
+}
+#endif //CC_USE_PHYSICS
 
 // NodeRGBA
 NodeRGBA::NodeRGBA()

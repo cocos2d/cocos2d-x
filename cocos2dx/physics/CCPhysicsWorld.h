@@ -28,6 +28,8 @@
 #ifndef __CCPHYSICS_WORLD_H__
 #define __CCPHYSICS_WORLD_H__
 
+#include <list>
+
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
 
@@ -86,14 +88,18 @@ public:
     /** set the debug draw */
     inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
     
+    virtual void removeBody(PhysicsBody* body);
+    virtual void removeBodyByTag(int tag);
+    
 protected:
     static PhysicsWorld* create();
     bool init();
     
     void setScene(Scene* scene);
     
-    virtual void addChild(PhysicsBody* body);
+    virtual void addBody(PhysicsBody* body);
     virtual void addShape(PhysicsShape* shape);
+    virtual void removeShape(PhysicsShape* shape);
     virtual void update(float delta);
     
     virtual void debugDraw();
@@ -120,6 +126,7 @@ protected:
     
     
     Array* _bodys;
+    std::list<PhysicsJoint*> _joints;
     Scene* _scene;
     
     bool _debugDraw;
@@ -132,6 +139,7 @@ protected:
     friend class Sprite;
     friend class Scene;
     friend class PhysicsBody;
+    friend class PhysicsShape;
 };
 
 NS_CC_END

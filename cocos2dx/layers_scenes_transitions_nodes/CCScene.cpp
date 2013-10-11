@@ -28,12 +28,13 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCLayer.h"
 #include "sprite_nodes/CCSprite.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 #include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 
 Scene::Scene()
-#ifdef _physicsWorld
+#ifdef CC_USE_PHYSICS
 : _physicsWorld(nullptr)
 #endif
 {
@@ -43,6 +44,9 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+#ifdef CC_USE_PHYSICS
+    CC_SAFE_DELETE(_physicsWorld);
+#endif
 }
 
 bool Scene::init()
@@ -129,15 +133,23 @@ void Scene::addChildToPhysicsWorld(Node* child)
 {
     if (_physicsWorld)
     {
-        auto addToPhysicsWorldFunc = [this](Object* node) -> void
+        std::function<void(Object*)> addToPhysicsWorldFunc = nullptr;
+        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Object* child) -> void
         {
-            if (dynamic_cast<Sprite*>(node) != nullptr)
+            if (dynamic_cast<SpriteBatchNode*>(child) != nullptr)
             {
-                Sprite* sp = dynamic_cast<Sprite*>(node);
-                
-                if (sp->getPhysicsBody())
+                Object* subChild = nullptr;
+                CCARRAY_FOREACH((dynamic_cast<SpriteBatchNode*>(child))->getChildren(), subChild)
                 {
-                    _physicsWorld->addChild(sp->getPhysicsBody());
+                    addToPhysicsWorldFunc(subChild);
+                }
+            }else if (dynamic_cast<Node*>(child) != nullptr)
+            {
+                Node* node = dynamic_cast<Node*>(child);
+                
+                if (node->getPhysicsBody())
+                {
+                    _physicsWorld->addBody(node->getPhysicsBody());
                 }
             }
         };
