@@ -612,7 +612,7 @@ Developers:
         Fixed a memory leak in XMLHttpRequest.
     
     Keita Obo (ktaobo)
-        Avoid unnecessary object duplication using passing arguments by reference.
+        Avoid unnecessary object duplication for Scale9Sprite.
         
 Retired Core Developers:
     WenSheng Yang
