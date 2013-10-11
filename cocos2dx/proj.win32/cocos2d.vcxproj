@@ -182,7 +182,9 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\event_dispatcher\CCEventListenerAcceleration.cpp" />
     <ClCompile Include="..\event_dispatcher\CCEventListenerCustom.cpp" />
     <ClCompile Include="..\event_dispatcher\CCEventListenerKeyboard.cpp" />
+    <ClCompile Include="..\event_dispatcher\CCEventListenerMouse.cpp" />
     <ClCompile Include="..\event_dispatcher\CCEventListenerTouch.cpp" />
+    <ClCompile Include="..\event_dispatcher\CCEventMouse.cpp" />
     <ClCompile Include="..\event_dispatcher\CCEventTouch.cpp" />
     <ClCompile Include="..\event_dispatcher\CCTouch.cpp" />
     <ClCompile Include="..\label_nodes\CCFont.cpp" />
@@ -344,7 +346,9 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\event_dispatcher\CCEventListenerAcceleration.h" />
     <ClInclude Include="..\event_dispatcher\CCEventListenerCustom.h" />
     <ClInclude Include="..\event_dispatcher\CCEventListenerKeyboard.h" />
+    <ClInclude Include="..\event_dispatcher\CCEventListenerMouse.h" />
     <ClInclude Include="..\event_dispatcher\CCEventListenerTouch.h" />
+    <ClInclude Include="..\event_dispatcher\CCEventMouse.h" />
     <ClInclude Include="..\event_dispatcher\CCEventTouch.h" />
     <ClInclude Include="..\event_dispatcher\CCTouch.h" />
     <ClInclude Include="..\include\ccConfig.h" />

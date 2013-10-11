@@ -572,6 +572,12 @@
     <ClCompile Include="..\event_dispatcher\CCEventTouch.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventListenerMouse.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventMouse.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -1153,6 +1159,12 @@
       <Filter>event_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\event_dispatcher\CCEventTouch.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventListenerMouse.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventMouse.h">
       <Filter>event_dispatcher</Filter>
     </ClInclude>
   </ItemGroup>

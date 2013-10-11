@@ -204,7 +204,7 @@ void TestController::onTouchMoved(Touch* touch, Event  *event)
 void TestController::onMouseScroll(Event *event)
 {
     auto mouseEvent = static_cast<EventMouse*>(event);
-    float nMoveY = -mouseEvent->getScrollY();
+    float nMoveY = mouseEvent->getScrollY() * 6;
 
     auto curPos  = _itemMenu->getPosition();
     auto nextPos = Point(curPos.x, curPos.y + nMoveY);

@@ -301,6 +301,9 @@
     <Filter Include="Classes\KeyboardTest">
       <UniqueIdentifier>{8d7d37cd-5cc2-4a7d-9bd2-7b5c928adbb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\InputTest">
+      <UniqueIdentifier>{8e8124bd-adb2-4a8f-8727-9868a9c42d80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -696,6 +699,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\KeyboardTest\KeyboardTest.cpp">
       <Filter>Classes\KeyboardTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\InputTest\MouseTest.cpp">
+      <Filter>Classes\InputTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1269,6 +1275,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\KeyboardTest\KeyboardTest.h">
       <Filter>Classes\KeyboardTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\InputTest\MouseTest.h">
+      <Filter>Classes\InputTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
