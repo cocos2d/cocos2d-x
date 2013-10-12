@@ -119,10 +119,10 @@ public:
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     
-    virtual bool onTouchBegan(Touch* touch, Event* event) override;
-    virtual void onTouchEnded(Touch* touch, Event* event) override;
-    virtual void onTouchCancelled(Touch* touch, Event* event) override;
-    virtual void onTouchMoved(Touch* touch, Event* event) override;
+    virtual bool onTouchBegan(Touch* touch, Event* event);
+    virtual void onTouchEnded(Touch* touch, Event* event);
+    virtual void onTouchCancelled(Touch* touch, Event* event);
+    virtual void onTouchMoved(Touch* touch, Event* event);
     
     virtual void onEnter() override;
     virtual void onExit() override;

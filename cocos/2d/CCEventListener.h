@@ -54,7 +54,7 @@ public:
     virtual ~EventListener();
     
     /** Checks whether the listener is available. */
-    virtual bool checkAvaiable() = 0;
+    virtual bool checkAvailable() = 0;
     
     /** Clones the listener, its subclasses have to override this method. */
     virtual EventListener* clone() = 0;
