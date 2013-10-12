@@ -216,10 +216,6 @@ public:
     virtual void onTouchCancelled(Touch *touch, Event *event);
     
     // Overrides
-//    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
     virtual void setContentSize(const Size & size) override;
     virtual const Size& getContentSize() const override;
     /**
@@ -230,7 +226,6 @@ public:
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node * child) override;
-    void setTouchEnabled(bool e) override;
 
 protected:
     /**

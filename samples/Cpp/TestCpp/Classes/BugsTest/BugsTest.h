@@ -8,8 +8,8 @@ class BugsTestMainLayer : public Layer
 public:
     virtual void onEnter();
 
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
-    virtual void onTouchesMoved(const std::vector<Touch*>&touches, Event  *event) override;
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    virtual void onTouchesMoved(const std::vector<Touch*>&touches, Event  *event);
 
 protected:
     Point _beginPos;

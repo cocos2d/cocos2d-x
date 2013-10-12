@@ -9,8 +9,8 @@ public:
     static Scene* scene();
     virtual bool init();
 
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event * event) override;
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event * event) override;
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event * event);
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event * event);
     void restart(Object* sender);
 
     CREATE_FUNC(Bug914Layer);

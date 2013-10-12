@@ -109,8 +109,16 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
 
         this->setViewSize(size);
 
-        setTouchEnabled(true);
-        setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+        this->onEnterHook = [this]() {
+            auto dispatcher = EventDispatcher::getInstance();
+            auto listener = EventListenerTouchOneByOne::create();
+            listener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
+            listener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
+            listener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
+            listener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
+            
+            dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        };
         
         _touches.reserve(EventTouch::MAX_TOUCHES);
         
@@ -177,16 +185,16 @@ void ScrollView::resume(Object* sender)
     _container->resumeSchedulerAndActions();
 }
 
-void ScrollView::setTouchEnabled(bool e)
-{
-    Layer::setTouchEnabled(e);
-    if (!e)
-    {
-        _dragging = false;
-        _touchMoved = false;
-        _touches.clear();
-    }
-}
+//void ScrollView::setTouchEnabled(bool e)
+//{
+//    Layer::setTouchEnabled(e);
+//    if (!e)
+//    {
+//        _dragging = false;
+//        _touchMoved = false;
+//        _touches.clear();
+//    }
+//}
 
 void ScrollView::setContentOffset(Point offset, bool animated/* = false*/)
 {

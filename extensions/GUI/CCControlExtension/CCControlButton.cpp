@@ -96,7 +96,6 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         this->setTitleLabelDispatchTable(Dictionary::create());
         this->setBackgroundSpriteDispatchTable(Dictionary::create());
 
-        setTouchEnabled(true);
         _isPushed = false;
         _zoomOnTouchDown = true;
 

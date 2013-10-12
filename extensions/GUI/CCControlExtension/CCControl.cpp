@@ -93,17 +93,18 @@ Control::~Control()
     CC_SAFE_RELEASE(_dispatchTable);
 }
 
-////Menu - Events
-//void Control::registerWithTouchDispatcher()
-//{
-//    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
-//}
-
 void Control::onEnter()
 {
     Layer::onEnter();
 
-    this->setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    auto dispatcher = EventDispatcher::getInstance();
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(Control::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(Control::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(Control::onTouchEnded, this);
+    touchListener->onTouchCancelled = CC_CALLBACK_2(Control::onTouchCancelled, this);
+    
+    dispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
 
 void Control::onExit()
