@@ -378,7 +378,7 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         layout->addChild(button);
         
         LinearLayoutParameter* lp1 = LinearLayoutParameter::create();
-        button->setLayoutParameter(lp1);
+        button->setLayoutParameter(lp1, LINEAR_LAYOUT_PARAMETER);
         lp1->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
         lp1->setMargin(UIMargin(0, 5, 0, 10));
         
@@ -390,7 +390,7 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         layout->addChild(textButton);
         
         LinearLayoutParameter* lp2 = LinearLayoutParameter::create();
-        textButton->setLayoutParameter(lp2);
+        textButton->setLayoutParameter(lp2,LINEAR_LAYOUT_PARAMETER);
         lp2->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
         lp2->setMargin(UIMargin(0, 10, 0, 10));
         
@@ -403,7 +403,7 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         layout->addChild(button_scale9);
         
         LinearLayoutParameter* lp3 = LinearLayoutParameter::create();
-        button_scale9->setLayoutParameter(lp3);
+        button_scale9->setLayoutParameter(lp3,LINEAR_LAYOUT_PARAMETER);
         lp3->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
         lp3->setMargin(UIMargin(0, 10, 0, 10));
         
@@ -461,7 +461,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         layout->addChild(button);
         
         LinearLayoutParameter* lp1 = LinearLayoutParameter::create();
-        button->setLayoutParameter(lp1);
+        button->setLayoutParameter(lp1,LINEAR_LAYOUT_PARAMETER);
         lp1->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
         lp1->setMargin(UIMargin(0, 10, 0, 10));
         
@@ -473,7 +473,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         layout->addChild(textButton);
         
         LinearLayoutParameter* lp2 = LinearLayoutParameter::create();
-        textButton->setLayoutParameter(lp2);
+        textButton->setLayoutParameter(lp2,LINEAR_LAYOUT_PARAMETER);
         lp2->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
         lp2->setMargin(UIMargin(0, 10, 0, 10));
         
@@ -486,7 +486,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         layout->addChild(button_scale9);
         
         LinearLayoutParameter* lp3 = LinearLayoutParameter::create();
-        button_scale9->setLayoutParameter(lp3);
+        button_scale9->setLayoutParameter(lp3,LINEAR_LAYOUT_PARAMETER);
         lp3->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
         lp3->setMargin(UIMargin(0, 10, 0, 10));
         
@@ -545,8 +545,8 @@ bool UIPanelTest_Layout_Relative::init()
         layout->addChild(button);
         
         RelativeLayoutParameter* rp1 = RelativeLayoutParameter::create();
-        button->setLayoutParameter(rp1);
-        rp1->setAlign(RELATIVE_ALIGN_PARENT_BOTTOM);
+        button->setLayoutParameter(rp1,RELATIVE_LAYOUT_PARAMETER);
+        rp1->setAlign(RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
 //        rp1->setMargin(UIMargin(0, 10, 0, 10));
         
         
@@ -557,8 +557,8 @@ bool UIPanelTest_Layout_Relative::init()
         layout->addChild(textButton);
         
         RelativeLayoutParameter* rp2 = RelativeLayoutParameter::create();
-        textButton->setLayoutParameter(rp2);
-        rp2->setAlign(RELATIVE_ALIGN_PARENT_LEFT);
+        textButton->setLayoutParameter(rp2,RELATIVE_LAYOUT_PARAMETER);
+        rp2->setAlign(RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
         
         
         UIButton* button_scale9 = UIButton::create();
@@ -569,8 +569,8 @@ bool UIPanelTest_Layout_Relative::init()
         layout->addChild(button_scale9);
         
         RelativeLayoutParameter* rp3 = RelativeLayoutParameter::create();
-        textButton->setLayoutParameter(rp3);
-        rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT);
+        textButton->setLayoutParameter(rp3,RELATIVE_LAYOUT_PARAMETER);
+        rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL);
         
         
         layout->doLayout();
