@@ -610,6 +610,12 @@ Developers:
         Added support of passing array to cc.Sequence.create and cc.Spawn.create.
         Fixed a bug that sys.localStorage.getItem() does not support non-ascii string.
         Fixed a memory leak in XMLHttpRequest.
+    
+    Keita Obo (ktaobo)
+        Avoid unnecessary object duplication for Scale9Sprite.
+        
+    jimmystar
+        Fixed a bug that cc.Scheduler.schedule(target, func) without repeat argument couldn't repeat schedule forever on device.
         
 Retired Core Developers:
     WenSheng Yang

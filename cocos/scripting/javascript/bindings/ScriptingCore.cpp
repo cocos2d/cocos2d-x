@@ -1935,16 +1935,15 @@ void SimpleRunLoop::update(float dt)
     }
 }
 
-void ScriptingCore::debugProcessInput(string str) {
+void ScriptingCore::debugProcessInput(string str)
+{
     JSAutoCompartment ac(_cx, _debugGlobal);
     
     JSString* jsstr = JS_NewStringCopyZ(_cx, str.c_str());
-    jsval argv[] = {
-        STRING_TO_JSVAL(jsstr)
-    };
+    jsval argv = STRING_TO_JSVAL(jsstr);
     jsval outval;
     
-    JS_CallFunctionName(_cx, _debugGlobal, "processInput", 1, argv, &outval);
+    JS_CallFunctionName(_cx, _debugGlobal, "processInput", 1, &argv, &outval);
 }
 
 static bool NS_ProcessNextEvent()
