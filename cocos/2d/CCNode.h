@@ -928,6 +928,7 @@ public:
      * @lua NA
      */
     virtual void onEnter();
+    std::function<void()> onEnterHook;
 
     /** Event callback that is invoked when the Node enters in the 'stage'.
      * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
@@ -936,6 +937,7 @@ public:
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish();
+    std::function<void()> onEnterTransitionDidFinishHook;
 
     /** 
      * Event callback that is invoked every time the Node leaves the 'stage'.
@@ -946,6 +948,7 @@ public:
      * @lua NA
      */
     virtual void onExit();
+    std::function<void()> onExitHook;
 
     /** 
      * Event callback that is called every time the Node leaves the 'stage'.
@@ -954,7 +957,8 @@ public:
      * @lua NA
      */
     virtual void onExitTransitionDidStart();
-
+    std::function<void()> onExitTransitionDidStartHook;
+    
     /// @} end of event callbacks.
 
 

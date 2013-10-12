@@ -57,8 +57,8 @@ public:
     void onEnter() override;
     std::string subtitle() override;
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
-    void onAcceleration(Acceleration* acc, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onAcceleration(Acceleration* acc, Event* event);
 };
 
 class PhysicsDemoLogoSmash : public PhysicsDemo

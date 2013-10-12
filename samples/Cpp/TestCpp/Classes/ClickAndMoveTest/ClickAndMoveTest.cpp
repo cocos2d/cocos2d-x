@@ -17,8 +17,13 @@ void ClickAndMoveTestScene::runThisTest()
 
 MainLayer::MainLayer()
 {
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    this->onEnterHook = [this](){
+        auto dispatcher = EventDispatcher::getInstance();
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = CC_CALLBACK_2(MainLayer::onTouchBegan, this);
+        listener->onTouchEnded = CC_CALLBACK_2(MainLayer::onTouchEnded, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    };
     
     auto sprite = Sprite::create(s_pathGrossini);
     

@@ -98,7 +98,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     void pokeHoleAtPoint(Point point);
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
 private:
 	ClippingNode* _outerClipper;
     Node* _holes;

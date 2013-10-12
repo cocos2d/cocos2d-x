@@ -136,6 +136,11 @@ Node::Node(void)
 , _physicsBody(nullptr)
 #endif
 {
+    onEnterHook = nullptr;
+    onEnterTransitionDidFinishHook = nullptr;
+    onExitHook = nullptr;
+    onExitTransitionDidStartHook = nullptr;
+    
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
     _actionManager = director->getActionManager();
@@ -945,6 +950,11 @@ void Node::onEnter()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+    
+    if (onEnterHook)
+    {
+        onEnterHook();
+    }
 }
 
 void Node::onEnterTransitionDidFinish()
@@ -960,10 +970,20 @@ void Node::onEnterTransitionDidFinish()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+    
+    if (onEnterTransitionDidFinishHook)
+    {
+        onEnterTransitionDidFinishHook();
+    }
 }
 
 void Node::onExitTransitionDidStart()
 {
+    if (onExitTransitionDidStartHook)
+    {
+        onExitTransitionDidStartHook();
+    }
+    
     arrayMakeObjectsPerformSelector(_children, onExitTransitionDidStart, Node*);
     if (_scriptType != kScriptTypeNone)
     {
@@ -976,6 +996,11 @@ void Node::onExitTransitionDidStart()
 
 void Node::onExit()
 {
+    if (onExitHook)
+    {
+        onExitHook();
+    }
+    
     this->pauseSchedulerAndActions();
 
     _running = false;

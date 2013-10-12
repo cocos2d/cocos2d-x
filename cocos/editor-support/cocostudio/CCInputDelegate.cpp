@@ -112,7 +112,7 @@ void InputDelegate::setTouchEnabled(bool enabled)
         {            
             if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
                 // Register Touch Event
-                auto listener = EventListenerTouch::create(Touch::DispatchMode::ALL_AT_ONCE);
+                auto listener = EventListenerTouchAllAtOnce::create();
                 
                 listener->onTouchesBegan = CC_CALLBACK_2(InputDelegate::onTouchesBegan, this);
                 listener->onTouchesMoved = CC_CALLBACK_2(InputDelegate::onTouchesMoved, this);
@@ -123,7 +123,7 @@ void InputDelegate::setTouchEnabled(bool enabled)
                 _touchListener = listener;
             } else {
                 // Register Touch Event
-                auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+                auto listener = EventListenerTouchOneByOne::create();
                 listener->setSwallowTouches(true);
                 
                 listener->onTouchBegan = CC_CALLBACK_2(InputDelegate::onTouchBegan, this);

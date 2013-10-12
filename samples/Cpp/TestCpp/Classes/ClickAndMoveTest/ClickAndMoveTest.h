@@ -13,8 +13,8 @@ class MainLayer : public Layer
 {
 public:
     MainLayer();
-    virtual bool onTouchBegan(Touch* touch, Event  *event) override;
-    virtual void onTouchEnded(Touch* touch, Event  *event) override;
+    virtual bool onTouchBegan(Touch* touch, Event  *event);
+    virtual void onTouchEnded(Touch* touch, Event  *event);
 };
 
 #endif
