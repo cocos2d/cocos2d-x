@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-bool EventListenerKeyboard::checkAvaiable()
+bool EventListenerKeyboard::checkAvailable()
 {
     CCASSERT(onKeyPressed && onKeyReleased, "");
     

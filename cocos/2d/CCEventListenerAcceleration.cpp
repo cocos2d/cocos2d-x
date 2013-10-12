@@ -84,7 +84,7 @@ EventListenerAcceleration* EventListenerAcceleration::clone()
     return ret;
 }
 
-bool EventListenerAcceleration::checkAvaiable()
+bool EventListenerAcceleration::checkAvailable()
 {
     CCASSERT(onAccelerationEvent, "");
     

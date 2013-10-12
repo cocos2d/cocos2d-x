@@ -125,7 +125,7 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     CCASSERT(listener && node, "Invalid parameters.");
     CCASSERT(!listener->_isRegistered, "The listener has been registered.");
     
-    if (!listener->checkAvaiable())
+    if (!listener->checkAvailable())
         return;
     
     auto item = new EventListenerItem();
@@ -147,7 +147,7 @@ void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener,
     CCASSERT(!listener->_isRegistered, "The listener has been registered.");
     CCASSERT(fixedPriority != 0, "0 priority is forbidden for fixed priority since it's used for scene graph based priority.");
     
-    if (!listener->checkAvaiable())
+    if (!listener->checkAvailable())
         return;
     
     auto item = new EventListenerItem();
@@ -294,37 +294,14 @@ void EventDispatcher::dispatchEvent(Event* event, bool forceSortListeners)
 
 void EventDispatcher::dispatchTouchEvent(EventTouch* event)
 {
-    auto touchListeners = getListenerItemsForType(EventTouch::EVENT_TYPE);
-    if (touchListeners == nullptr)
+    auto oneByOnelisteners = getListenerItemsForType(EventTouch::MODE_ONE_BY_ONE);
+    auto allAtOncelisteners = getListenerItemsForType(EventTouch::MODE_ALL_AT_ONCE);
+    
+    // If there aren't any touch listeners, return directly.
+    if (nullptr == oneByOnelisteners && nullptr == allAtOncelisteners)
         return;
     
-    std::vector<EventDispatcher::EventListenerItem*> oneByOnelisteners;
-    oneByOnelisteners.reserve(touchListeners->size());
-    
-    std::vector<EventDispatcher::EventListenerItem*> allInOnelisteners;
-    allInOnelisteners.reserve(touchListeners->size());
-    
-    EventListenerTouch* touchEventListener = nullptr;
-    
-    std::for_each(touchListeners->begin(), touchListeners->end(), [&](EventListenerItem*& item){
-
-        touchEventListener = static_cast<EventListenerTouch*>(item->listener);
-        
-        if (touchEventListener->_dispatchMode == Touch::DispatchMode::ONE_BY_ONE)
-        {
-            oneByOnelisteners.push_back(item);
-        }
-        else if (touchEventListener->_dispatchMode == Touch::DispatchMode::ALL_AT_ONCE)
-        {
-            allInOnelisteners.push_back(item);
-        }
-        else
-        {
-            CCASSERT(false, "Not supported touch listener type.");
-        }
-    });
-    
-    bool isNeedsMutableSet = (oneByOnelisteners.size() > 0 && allInOnelisteners.size() > 0);
+    bool isNeedsMutableSet = (oneByOnelisteners && allAtOncelisteners);
     
     std::vector<Touch*> orignalTouches = event->getTouches();
     std::vector<Touch*> mutableTouches(orignalTouches.size());
@@ -333,7 +310,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     //
     // process the target handlers 1st
     //
-    if (oneByOnelisteners.size() > 0)
+    if (oneByOnelisteners)
     {
         auto mutableTouchesIter = mutableTouches.begin();
         auto touchesIter = orignalTouches.begin();
@@ -342,7 +319,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
         {
             bool isSwallowed = false;
 
-            for (auto& item : oneByOnelisteners)
+            for (auto& item : *oneByOnelisteners)
             {
                 // Skip if the listener was removed.
                 if (item->listener == nullptr)
@@ -353,7 +330,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 bool isClaimed = false;
                 std::vector<Touch*>::iterator removedIter;
                 
-                auto touchEventListener = static_cast<EventListenerTouch*>(item->listener);
+                auto touchEventListener = static_cast<EventListenerTouchOneByOne*>(item->listener);
                 EventTouch::EventCode eventCode = event->getEventCode();
                 
                 if (eventCode == EventTouch::EventCode::BEGAN)
@@ -434,9 +411,9 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     //
     // process standard handlers 2nd
     //
-    if (allInOnelisteners.size() > 0 && mutableTouches.size() > 0)
+    if (allAtOncelisteners && mutableTouches.size() > 0)
     {
-        for (auto& item : allInOnelisteners)
+        for (auto& item : *allAtOncelisteners)
         {
             // Skip if the listener was removed.
             if (item->listener == nullptr)
@@ -444,7 +421,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
             
             event->setCurrentTarget(item->node);
             
-            auto touchEventListener = static_cast<EventListenerTouch*>(item->listener);
+            auto touchEventListener = static_cast<EventListenerTouchAllAtOnce*>(item->listener);
             
             switch (event->getEventCode())
             {

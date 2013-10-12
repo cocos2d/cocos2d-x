@@ -127,9 +127,6 @@ bool Menu::initWithArray(Array* pArrayOfItems)
 {
     if (Layer::init())
     {
-        setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-        setTouchEnabled(true);
-
         _enabled = true;
         // menu in the center of the screen
         Size s = Director::getInstance()->getWinSize();
@@ -188,8 +185,15 @@ void Menu::onEnter()
 {
     Layer::onEnter();
     
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    auto eventDispatcher = EventDispatcher::getInstance();
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(Menu::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(Menu::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);
+    touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
+    
+    eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
 
 void Menu::onExit()

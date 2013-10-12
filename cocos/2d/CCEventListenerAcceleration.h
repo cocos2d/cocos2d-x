@@ -38,7 +38,7 @@ public:
     
     /// Overrides
     virtual EventListenerAcceleration* clone() override;
-    virtual bool checkAvaiable() override;
+    virtual bool checkAvailable() override;
 private:
     EventListenerAcceleration();
     
