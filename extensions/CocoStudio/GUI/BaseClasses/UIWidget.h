@@ -1052,7 +1052,6 @@ protected:
 	int m_nActionTag;
     CCSize m_size;
     CCSize m_customSize;
-//    LayoutParameter* m_pLayoutParameter;
     CCDictionary* m_pLayoutParameterDictionary;
     bool m_bIgnoreSize;
     CCArray* m_children;
