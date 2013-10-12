@@ -1166,12 +1166,12 @@ WidgetType UIWidget::getWidgetType() const
     return m_WidgetType;
 }
 
-void UIWidget::setLayoutParameter(LayoutParameter *parameter, const char *type)
+void UIWidget::setLayoutParameter(LayoutParameter *parameter)
 {
-    m_pLayoutParameterDictionary->setObject(parameter, type);
+    m_pLayoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
 }
 
-LayoutParameter* UIWidget::getLayoutParameter(const char *type)
+LayoutParameter* UIWidget::getLayoutParameter(LayoutParameterType type)
 {
     return dynamic_cast<LayoutParameter*>(m_pLayoutParameterDictionary->objectForKey(type));
 }
