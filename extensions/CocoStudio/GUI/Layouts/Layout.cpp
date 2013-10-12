@@ -248,19 +248,19 @@ void Layout::supplyTheLayoutParameterLackToChild(UIWidget *child)
         case LAYOUT_LINEAR_HORIZONTAL:
         case LAYOUT_LINEAR_VERTICAL:
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LINEAR_LAYOUT_PARAMETER));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(LinearLayoutParameter::create(), LINEAR_LAYOUT_PARAMETER);
+                child->setLayoutParameter(LinearLayoutParameter::create());
             }
             break;
         }
         case LAYOUT_RELATIVE:
         {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(RELATIVE_LAYOUT_PARAMETER));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(RelativeLayoutParameter::create(), RELATIVE_LAYOUT_PARAMETER);
+                child->setLayoutParameter(RelativeLayoutParameter::create());
             }
             break;
         }
@@ -481,7 +481,7 @@ void Layout::doLayout()
             for (int i=0; i<length; ++i)
             {
                 UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LINEAR_LAYOUT_PARAMETER));
+                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
                 {
@@ -522,7 +522,7 @@ void Layout::doLayout()
             for (int i=0; i<length; ++i)
             {
                 UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LINEAR_LAYOUT_PARAMETER));
+                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
                 {
@@ -564,7 +564,7 @@ void Layout::doLayout()
             for (int i=0; i<length; i++)
             {
                 UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(RELATIVE_LAYOUT_PARAMETER));
+                RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                 layoutParameter->m_bPut = false;
             }
             
@@ -573,7 +573,7 @@ void Layout::doLayout()
                 for (int i=0; i<length; i++)
                 {
                     UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                    RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(RELATIVE_LAYOUT_PARAMETER));
+                    RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                     
                     if (layoutParameter)
                     {
@@ -594,7 +594,7 @@ void Layout::doLayout()
                             relativeWidget = CCUIHELPER->seekWidgetByRelativeName(this, relativeName);
                             if (relativeWidget)
                             {
-                                relativeWidgetLP = dynamic_cast<RelativeLayoutParameter*>(relativeWidget->getLayoutParameter(RELATIVE_LAYOUT_PARAMETER));
+                                relativeWidgetLP = dynamic_cast<RelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                             }
                         }
                         switch (align)
@@ -804,7 +804,7 @@ void Layout::doLayout()
                         UIMargin mg = layoutParameter->getMargin();
                         if (relativeWidget)
                         {
-                            relativeWidgetMargin = relativeWidget->getLayoutParameter(RELATIVE_LAYOUT_PARAMETER)->getMargin();
+                            relativeWidgetMargin = relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE)->getMargin();
                         }
                         //handle margin
                         switch (align)

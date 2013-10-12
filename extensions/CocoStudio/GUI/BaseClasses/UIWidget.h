@@ -823,7 +823,7 @@ public:
      *
      * @param type  Relative or Linear
      */
-    void setLayoutParameter(LayoutParameter* parameter, const char* type);
+    void setLayoutParameter(LayoutParameter* parameter);
     
     /**
      * Gets LayoutParameter of widget.
@@ -834,7 +834,7 @@ public:
      *
      * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter(const char* type);
+    LayoutParameter* getLayoutParameter(LayoutParameterType type);
     
     /**
      * Ignore the widget size
