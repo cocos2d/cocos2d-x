@@ -820,15 +820,21 @@ public:
      * @see LayoutParameter
      *
      * @param LayoutParameter pointer
+     *
+     * @param type  Relative or Linear
      */
-    void setLayoutParameter(LayoutParameter* parameter);
+    void setLayoutParameter(LayoutParameter* parameter, const char* type);
     
     /**
      * Gets LayoutParameter of widget.
      *
      * @see LayoutParameter
+     *
+     * @param type  Relative or Linear
+     *
+     * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter();
+    LayoutParameter* getLayoutParameter(const char* type);
     
     /**
      * Ignore the widget size
@@ -1046,7 +1052,8 @@ protected:
 	int m_nActionTag;
     CCSize m_size;
     CCSize m_customSize;
-    LayoutParameter* m_pLayoutParameter;
+//    LayoutParameter* m_pLayoutParameter;
+    CCDictionary* m_pLayoutParameterDictionary;
     bool m_bIgnoreSize;
     CCArray* m_children;
     bool m_bAffectByClipping;
