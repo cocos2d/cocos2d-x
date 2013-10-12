@@ -207,8 +207,7 @@ void UIDragPanel::update(float dt)
 
 bool UIDragPanel::addChild(UIWidget *widget)
 {
-    m_pInnerContainer->addChild(widget);
-    return true;
+    return m_pInnerContainer->addChild(widget);
 }
 
 bool UIDragPanel::removeChild(UIWidget *child)

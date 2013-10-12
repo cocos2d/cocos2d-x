@@ -224,6 +224,7 @@ void UIPageView::updateBoundaryPages()
     {
         m_pLeftChild = NULL;
         m_pRightChild = NULL;
+        return;
     }
     m_pLeftChild = dynamic_cast<UIWidget*>(m_pages->objectAtIndex(0));
     m_pRightChild = dynamic_cast<UIWidget*>(m_pages->lastObject());
