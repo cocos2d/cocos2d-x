@@ -237,7 +237,11 @@ static CCEAGLView *view = 0;
     
     context_ = [renderer_ context];
     
-    discardFramebufferSupported_ = (BOOL)GL_EXT_discard_framebuffer;
+#if GL_EXT_discard_framebuffer == 1
+    discardFramebufferSupported_ = YES;
+#else
+    discardFramebufferSupported_ = NO;
+#endif
     
     CHECK_GL_ERROR();
     
