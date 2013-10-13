@@ -41,8 +41,20 @@ class ScrollView;
 class ScrollViewDelegate
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ScrollViewDelegate() {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void scrollViewDidScroll(ScrollView* view) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void scrollViewDidZoom(ScrollView* view) = 0;
 };
 
@@ -76,8 +88,14 @@ public:
      * @return autoreleased scroll view object
      */
     static ScrollView* create();
-
+    /**
+     * @js ctor
+     */
     ScrollView();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ScrollView();
 
     bool init();
@@ -89,8 +107,6 @@ public:
      * @return scroll view object
      */
     bool initWithViewSize(Size size, Node* container = NULL);
-
-    virtual void registerWithTouchDispatcher();
 
     /**
      * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
@@ -172,8 +188,18 @@ public:
      */
     Direction getDirection() const { return _direction; }
     virtual void setDirection(Direction eDirection) { _direction = eDirection; }
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     ScrollViewDelegate* getDelegate() { return _delegate; }
+    /**
+     * @code
+     * when this function bound to js or lua,the input param are changed
+     * in js: var setDelegate(var jsObject)
+     * in lua: local setDelegate()
+     * @endcode
+     */
     void setDelegate(ScrollViewDelegate* pDelegate) { _delegate = pDelegate; }
 
 	void updateInset();
@@ -184,13 +210,22 @@ public:
     bool isClippingToBounds() { return _clippingToBounds; }
     void setClippingToBounds(bool bClippingToBounds) { _clippingToBounds = bClippingToBounds; }
 
+    virtual bool onTouchBegan(Touch *touch, Event *event);
+    virtual void onTouchMoved(Touch *touch, Event *event);
+    virtual void onTouchEnded(Touch *touch, Event *event);
+    virtual void onTouchCancelled(Touch *touch, Event *event);
+    
     // Overrides
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
+//    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
+//    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+//    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
+//    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
     virtual void setContentSize(const Size & size) override;
     virtual const Size& getContentSize() const override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit() override;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void addChild(Node * child, int zOrder) override;
@@ -299,9 +334,9 @@ protected:
      */
     float _touchLength;
     /**
-     * UITouch objects to detect multitouch
+     * Touch objects to detect multitouch
      */
-    Array* _touches;
+    std::vector<Touch*> _touches;
     /**
      * size to clip. Node boundingBox uses contentSize directly.
      * It's semantically different what it actually means to common scroll views.

@@ -71,7 +71,14 @@ class EditBox;
 class EditBoxImplIOS : public EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImplIOS(EditBox* pEditText);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EditBoxImplIOS();
     
     virtual bool initWithSize(const Size& size);
@@ -93,7 +100,15 @@ public:
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
 	virtual void setAnchorPoint(const Point& anchorPoint);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual void onEnter(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();

@@ -14,7 +14,6 @@ struct {
 	const char *test_name;
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
-
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
@@ -43,15 +42,14 @@ struct {
 #endif
 	{ "CurrentLanguageTest", []() { return new CurrentLanguageTestScene(); } },
 	{ "DrawPrimitivesTest", [](){return new DrawPrimitivesTestScene();} },
+    { "EventDispatcherTest(NEW)", []() { return new EventDispatcherTestScene(); } },
 	{ "EffectAdvancedTest", []() { return new EffectAdvanceScene(); } },
 	{ "EffectsTest", [](){return new EffectTestScene();} },
 	{ "ExtensionsTest", []() { return new ExtensionsTestScene(); } },
 	{ "FileUtilsTest", []() { return new FileUtilsTestScene(); } },
 	{ "FontTest", []() { return new FontTestScene(); } },
 	{ "IntervalTest", [](){return new IntervalTestScene(); } },
-#ifdef CC_KEYBOARD_SUPPORT
 	{ "KeyboardTest", []() { return new KeyboardTestScene(); } },
-#endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "KeypadTest", []() { return new KeypadTestScene(); } },
 #endif
@@ -65,11 +63,13 @@ struct {
 	{ "ParallaxTest", [](){return new ParallaxTestScene(); } },
 	{ "ParticleTest", [](){return new ParticleTestScene(); } },
 	{ "PerformanceTest", []() { return new PerformanceTestScene(); } },
+	{ "PhysicsTest", []() { return new PhysicsTestScene(); } },
 	{ "RenderTextureTest", [](){return new RenderTextureScene(); } },
 	{ "RotateWorldTest", [](){return new RotateWorldTestScene(); } },
 	{ "SceneTest", [](){return new SceneTestScene();} },
 	{ "SchedulerTest", [](){return new SchedulerTestScene(); } },
 	{ "ShaderTest", []() { return new ShaderTestScene(); } },
+    { "ShaderTestSprite", []() { return new ShaderTestScene2(); } },
 	{ "SpineTest", []() { return new SpineTestScene(); } },
 	{ "SpriteTest", [](){return new SpriteTestScene(); } },
 	{ "TextInputTest", [](){return new TextInputTestScene(); } },
@@ -124,6 +124,14 @@ TestController::TestController()
 
     addChild(menu, 1);
 
+    // Register Touch Event
+    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(TestController::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(TestController::onTouchMoved, this);
+    
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 TestController::~TestController()
@@ -142,7 +150,7 @@ void TestController::menuCallback(Object * sender)
     // create the test scene and run it
     auto scene = g_aTestNames[idx].callback();
 
-    if (scene)
+    if (scene && scene->initTest())
     {
         scene->runThisTest();
         scene->release();
@@ -157,17 +165,14 @@ void TestController::closeCallback(Object * sender)
 #endif
 }
 
-void TestController::ccTouchesBegan(Set  *touches, Event  *event)
+bool TestController::onTouchBegan(Touch* touch, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
-
-    _beginPos = touch->getLocation();    
+    _beginPos = touch->getLocation();
+    return true;
 }
 
-void TestController::ccTouchesMoved(Set  *touches, Event  *event)
+void TestController::onTouchMoved(Touch* touch, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
-
     auto touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;
 

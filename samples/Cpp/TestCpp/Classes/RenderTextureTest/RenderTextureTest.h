@@ -24,7 +24,7 @@ public:
     ~RenderTextureSave();
     virtual std::string title();
     virtual std::string subtitle();
-    virtual void ccTouchesMoved(Set* touches, Event* event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
     void clearImage(Object *pSender);
     void saveImage(Object *pSender);
 
@@ -52,9 +52,9 @@ class RenderTextureZbuffer : public RenderTextureTest
 public:
     RenderTextureZbuffer();
 
-    virtual void ccTouchesMoved(Set* touches, Event* event);
-    virtual void ccTouchesBegan(Set* touches, Event* event);
-    virtual void ccTouchesEnded(Set* touches, Event* event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event* event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     virtual std::string title();
     virtual std::string subtitle();
 
@@ -116,7 +116,7 @@ class SimpleSprite : public Sprite
 public:
     SpriteRenderTextureBug();
     
-    virtual void ccTouchesEnded(Set* touches, Event* event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     virtual std::string title();
     virtual std::string subtitle();
     

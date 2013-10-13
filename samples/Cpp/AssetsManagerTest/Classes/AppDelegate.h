@@ -60,7 +60,7 @@ public:
     virtual void onSuccess();
     
 private:
-    cocos2d::extension::AssetsManager* getAssetsManager();
+    cocos2d::extension::AssetsManager* pAssetsManager;
     void createDownloadedDir();
     
     cocos2d::MenuItemFont *pItemEnter;

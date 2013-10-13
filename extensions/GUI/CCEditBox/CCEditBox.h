@@ -39,11 +39,17 @@ class EditBoxImpl;
 class EditBoxDelegate 
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EditBoxDelegate() {};
     
     /**
      * This method is called when an edit box gains focus after keyboard is shown.
      * @param editBox The edit box object that generated the event.
+     * @js NA
+     * @lua NA
      */
     virtual void editBoxEditingDidBegin(EditBox* editBox) {};
     
@@ -51,6 +57,8 @@ public:
     /**
      * This method is called when an edit box loses focus after keyboard is hidden.
      * @param editBox The edit box object that generated the event.
+     * @js NA
+     * @lua NA
      */
     virtual void editBoxEditingDidEnd(EditBox* editBox) {};
     
@@ -58,12 +66,16 @@ public:
      * This method is called when the edit box text was changed.
      * @param editBox The edit box object that generated the event.
      * @param text The new text.
+     * @js NA
+     * @lua NA
      */
     virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) {};
     
     /**
      * This method is called when the return button was pressed or the outside area of keyboard was touched.
      * @param editBox The edit box object that generated the event.
+     * @js NA
+     * @lua NA
      */
     virtual void editBoxReturn(EditBox* editBox) = 0;
     
@@ -178,11 +190,14 @@ public:
 
     /**
      * Constructor.
+     * @js ctor
      */
     EditBox(void);
     
     /**
      * Destructor.
+     * @js NA
+     * @lua NA
      */
     virtual ~EditBox(void);
 
@@ -194,8 +209,13 @@ public:
     
     /**
      * Gets/Sets the delegate for edit box.
+     * @lua NA
      */
     void setDelegate(EditBoxDelegate* pDelegate);
+    /**
+     * @js NA
+     * @lua NA
+     */
     EditBoxDelegate* getDelegate();
     /**
      * Registers a script function that will be called for EditBox events.
@@ -220,15 +240,21 @@ public:
      * @endcode
      *
      * @param handler A number that indicates a lua function.
+     * @js NA
+     * @lua NA
      */
     void registerScriptEditBoxHandler(int handler);
     
     /**
      * Unregisters a script function that will be called for EditBox events.
+     * @js NA
+     * @lua NA
      */
     void unregisterScriptEditBoxHandler(void);
     /**
      * get a script Handler
+     * @js NA
+     * @lua NA
      */
     int  getScriptEditBoxHandler(void){ return _scriptEditBoxHandler ;}
     /**
@@ -344,15 +370,46 @@ public:
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
 	virtual void setAnchorPoint(const Point& anchorPoint);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual void onEnter(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void keyboardDidShow(IMEKeyboardNotificationInfo& info);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void keyboardWillHide(IMEKeyboardNotificationInfo& info);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info);
     
-    /* callback funtions */
+    /* callback funtions
+     * @js NA
+     * @lua NA
+     */
     void touchDownAction(Object *sender, Control::EventType controlEvent);
     
 protected:

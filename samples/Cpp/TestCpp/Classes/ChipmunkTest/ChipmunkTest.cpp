@@ -209,28 +209,26 @@ void ChipmunkTestLayer::onEnter()
     Layer::onEnter();
 }
 
-void ChipmunkTestLayer::ccTouchesEnded(Set* touches, Event* event)
+void ChipmunkTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
 
-    for( auto &item: *touches)
+    for( auto &touch: touches)
     {
-        auto touch = static_cast<Touch*>(item);
-
         auto location = touch->getLocation();
 
         addNewSpriteAtPosition( location );
     }
 }
 
-void ChipmunkTestLayer::didAccelerate(Acceleration* pAccelerationValue)
+void ChipmunkTestLayer::onAcceleration(Acceleration* acc, Event* event)
 {
     static float prevX=0, prevY=0;
 
 #define kFilterFactor 0.05f
 
-    float accelX = (float) pAccelerationValue->x * kFilterFactor + (1- kFilterFactor)*prevX;
-    float accelY = (float) pAccelerationValue->y * kFilterFactor + (1- kFilterFactor)*prevY;
+    float accelX = (float) acc->x * kFilterFactor + (1- kFilterFactor)*prevX;
+    float accelY = (float) acc->y * kFilterFactor + (1- kFilterFactor)*prevY;
 
     prevX = accelX;
     prevY = accelY;

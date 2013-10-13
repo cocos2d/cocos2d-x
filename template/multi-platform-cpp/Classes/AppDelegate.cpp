@@ -13,8 +13,8 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
-    Director* director = Director::getInstance();
-    EGLView* eglView = EGLView::getInstance();
+    auto director = Director::getInstance();
+    auto eglView = EGLView::getInstance();
 
     director->setOpenGLView(eglView);
 	
@@ -25,7 +25,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    Scene *scene = HelloWorld::scene();
+    auto scene = HelloWorld::createScene();
 
     // run
     director->runWithScene(scene);

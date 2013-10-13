@@ -64,22 +64,37 @@ protected:
     int         boxSize;
     
 public:
+    /**
+     * @js ctor
+     */
     ControlSaturationBrightnessPicker();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlSaturationBrightnessPicker();
     virtual bool initWithTargetAndPos(Node* target, Point pos);
 
     static ControlSaturationBrightnessPicker* create(Node* target, Point pos);
 
     virtual void setEnabled(bool enabled);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void updateWithHSV(HSV hsv);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void updateDraggerWithHSV(HSV hsv);
 
 protected:    
     void updateSliderPosition(Point location);
     bool checkSliderPosition(Point location);
 
-    virtual bool ccTouchBegan(Touch* touch, Event* pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
+    virtual bool onTouchBegan(Touch* touch, Event* pEvent);
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent);
 };
 
 // end of GUI group

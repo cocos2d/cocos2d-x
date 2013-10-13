@@ -28,7 +28,7 @@
  */
 
 #include "CCControlSlider.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "CCDirector.h"
 
 NS_CC_EXT_BEGIN
@@ -203,7 +203,7 @@ Point ControlSlider::locationFromTouch(Touch* touch)
 }
 
 
-bool ControlSlider::ccTouchBegan(Touch* touch, Event* pEvent)
+bool ControlSlider::onTouchBegan(Touch* touch, Event* pEvent)
 {
     if (!isTouchInside(touch) || !isEnabled() || !isVisible())
     {
@@ -215,13 +215,13 @@ bool ControlSlider::ccTouchBegan(Touch* touch, Event* pEvent)
     return true;
 }
 
-void ControlSlider::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void ControlSlider::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     Point location = locationFromTouch(pTouch);
     sliderMoved(location);
 }
 
-void ControlSlider::ccTouchEnded(Touch *pTouch, Event *pEvent)
+void ControlSlider::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     sliderEnded(Point::ZERO);
 }

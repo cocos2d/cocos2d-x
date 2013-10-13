@@ -4,26 +4,7 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>DefaultBone.png</key>
-			<dict>
-				<key>width</key>
-				<integer>90</integer>
-				<key>height</key>
-				<integer>30</integer>
-				<key>originalWidth</key>
-				<integer>90</integer>
-				<key>originalHeight</key>
-				<integer>30</integer>
-				<key>x</key>
-				<integer>0</integer>
-				<key>y</key>
-				<integer>0</integer>
-				<key>offsetX</key>
-				<real>0</real>
-				<key>offsetY</key>
-				<real>0</real>
-			</dict>
-			<key>testAnimationResource\1.png</key>
+			<key>testAnimationResource/1.png</key>
 			<dict>
 				<key>width</key>
 				<integer>201</integer>
@@ -34,7 +15,7 @@
 				<key>originalHeight</key>
 				<integer>320</integer>
 				<key>x</key>
-				<integer>92</integer>
+				<integer>0</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -42,7 +23,7 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>testAnimationResource\2.png</key>
+			<key>testAnimationResource/2.png</key>
 			<dict>
 				<key>width</key>
 				<integer>186</integer>
@@ -53,7 +34,7 @@
 				<key>originalHeight</key>
 				<integer>252</integer>
 				<key>x</key>
-				<integer>295</integer>
+				<integer>203</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -61,7 +42,7 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>testAnimationResource\3.png</key>
+			<key>testAnimationResource/3.png</key>
 			<dict>
 				<key>width</key>
 				<integer>247</integer>
@@ -72,7 +53,7 @@
 				<key>originalHeight</key>
 				<integer>479</integer>
 				<key>x</key>
-				<integer>483</integer>
+				<integer>391</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -80,7 +61,7 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>testAnimationResource\4.png</key>
+			<key>testAnimationResource/4.png</key>
 			<dict>
 				<key>width</key>
 				<integer>141</integer>
@@ -91,7 +72,7 @@
 				<key>originalHeight</key>
 				<integer>110</integer>
 				<key>x</key>
-				<integer>732</integer>
+				<integer>640</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -99,7 +80,7 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>testAnimationResource\5.png</key>
+			<key>testAnimationResource/5.png</key>
 			<dict>
 				<key>width</key>
 				<integer>190</integer>
@@ -110,7 +91,7 @@
 				<key>originalHeight</key>
 				<integer>236</integer>
 				<key>x</key>
-				<integer>875</integer>
+				<integer>783</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -118,7 +99,7 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>testAnimationResource\6.png</key>
+			<key>testAnimationResource/6.png</key>
 			<dict>
 				<key>width</key>
 				<integer>474</integer>
@@ -129,7 +110,7 @@
 				<key>originalHeight</key>
 				<integer>402</integer>
 				<key>x</key>
-				<integer>1067</integer>
+				<integer>975</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -137,7 +118,7 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>testAnimationResource\7.png</key>
+			<key>testAnimationResource/7.png</key>
 			<dict>
 				<key>width</key>
 				<integer>146</integer>
@@ -148,7 +129,7 @@
 				<key>originalHeight</key>
 				<integer>112</integer>
 				<key>x</key>
-				<integer>1543</integer>
+				<integer>1451</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -156,7 +137,7 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>testAnimationResource\8.png</key>
+			<key>testAnimationResource/8.png</key>
 			<dict>
 				<key>width</key>
 				<integer>135</integer>
@@ -167,7 +148,7 @@
 				<key>originalHeight</key>
 				<integer>180</integer>
 				<key>x</key>
-				<integer>1691</integer>
+				<integer>1599</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -175,7 +156,7 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>testAnimationResource\hat.png</key>
+			<key>testAnimationResource/hat.png</key>
 			<dict>
 				<key>width</key>
 				<integer>452</integer>

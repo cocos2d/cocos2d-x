@@ -58,8 +58,14 @@ public:
      * @see initWithSprites
      */
     static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite);
-
+    /**
+     * @js ctor
+     */
     ControlSlider();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlSlider();
 
     /** 
@@ -86,9 +92,9 @@ protected:
     void sliderMoved(Point location);
     void sliderEnded(Point location);
 
-    virtual bool ccTouchBegan(Touch* touch, Event* pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
+    virtual bool onTouchBegan(Touch* touch, Event* pEvent);
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent);
+    virtual void onTouchEnded(Touch *pTouch, Event *pEvent);
 
     /** Returns the value for the given location. */
     float valueForLocation(Point location);

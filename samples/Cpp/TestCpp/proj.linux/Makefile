@@ -52,14 +52,36 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/ExtensionsTest.cpp \
 	../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
 	../Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
-	../Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
-	../Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
+    ../Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
+	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest/UIDragPanelTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest/UILabelAtlasTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest/UILabelBMFontTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest/UILabelTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest/UINodeContainerTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest/UIPanelTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest/UITextAreaTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest/UITextButtonTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp \
 	../Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
+	../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
 	../Classes/KeyboardTest/KeyboardTest.cpp \
@@ -80,11 +102,13 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/PerformanceTest/PerformanceTest.cpp \
 	../Classes/PerformanceTest/PerformanceTextureTest.cpp \
 	../Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+	../Classes/PhysicsTest/PhysicsTest.cpp \
 	../Classes/RenderTextureTest/RenderTextureTest.cpp \
 	../Classes/RotateWorldTest/RotateWorldTest.cpp \
 	../Classes/SceneTest/SceneTest.cpp \
 	../Classes/SchedulerTest/SchedulerTest.cpp \
 	../Classes/ShaderTest/ShaderTest.cpp \
+	../Classes/ShaderTest/ShaderTest2.cpp \
 	../Classes/SpriteTest/SpriteTest.cpp \
 	../Classes/TextInputTest/TextInputTest.cpp \
 	../Classes/Texture2dTest/Texture2dTest.cpp \
@@ -117,7 +141,7 @@ include ../../../../cocos2dx/proj.linux/cocos2dx.mk
 INCLUDES +=	 -I../ \
 	-I../../ \
 	-I../Classes \
-	-I$(COCOS_ROOT)/CocosDenshion/include \
+	-I$(COCOS_ROOT)/audio/include \
 	-I$(COCOS_ROOT)/extensions/ \
 	-I$(COCOS_ROOT)/external/ \
 	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk

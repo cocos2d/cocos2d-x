@@ -34,8 +34,20 @@ NS_CC_EXT_BEGIN
 class ControlSwitchSprite : public Sprite, public ActionTweenDelegate
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ControlSwitchSprite();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlSwitchSprite();
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool initWithMaskSprite(
         Sprite *maskSprite, 
         Sprite *onSprite, 
@@ -43,12 +55,40 @@ public:
         Sprite *thumbSprite,
         LabelTTF* onLabel, 
         LabelTTF* offLabel);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void draw();
+    /**
+     * @js NA
+     * @lua NA
+     */
     void needsLayout();
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setSliderXPosition(float sliderXPosition);
+    /**
+     * @js NA
+     * @lua NA
+     */
     float getSliderXPosition() {return _sliderXPosition;}
+    /**
+     * @js NA
+     * @lua NA
+     */
     float onSideWidth();
+    /**
+     * @js NA
+     * @lua NA
+     */
     float offSideWidth();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void updateTweenAction(float value, const char* key);
 /** Contains the position (in x-axis) of the slider inside the receiver. */
     float _sliderXPosition;
@@ -230,7 +270,7 @@ void ControlSwitchSprite::needsLayout()
     rt->end();
 
     setTexture(rt->getSprite()->getTexture());
-    setFlipY(true);
+    setFlippedY(true);
 }
 
 void ControlSwitchSprite::setSliderXPosition(float sliderXPosition)
@@ -386,7 +426,7 @@ Point ControlSwitch::locationFromTouch(Touch* pTouch)
     return touchLocation;
 }
 
-bool ControlSwitch::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool ControlSwitch::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
@@ -405,7 +445,7 @@ bool ControlSwitch::ccTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void ControlSwitch::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void ControlSwitch::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     Point location    = this->locationFromTouch(pTouch);
     location            = Point(location.x - _initialTouchXPosition, 0);
@@ -415,7 +455,7 @@ void ControlSwitch::ccTouchMoved(Touch *pTouch, Event *pEvent)
     _switchSprite->setSliderXPosition(location.x);
 }
 
-void ControlSwitch::ccTouchEnded(Touch *pTouch, Event *pEvent)
+void ControlSwitch::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     Point location   = this->locationFromTouch(pTouch);
     
@@ -431,7 +471,7 @@ void ControlSwitch::ccTouchEnded(Touch *pTouch, Event *pEvent)
     }
 }
 
-void ControlSwitch::ccTouchCancelled(Touch *pTouch, Event *pEvent)
+void ControlSwitch::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     Point location   = this->locationFromTouch(pTouch);
     

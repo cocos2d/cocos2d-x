@@ -53,8 +53,14 @@ public:
     static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, LabelTTF* onLabel, LabelTTF* offLabel);
     /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
     static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
-
+    /**
+     * @js ctor
+     */
     ControlSwitch();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlSwitch();
 
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
@@ -79,10 +85,10 @@ public:
     Point locationFromTouch(Touch* touch);
 
     // Overrides
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
+    virtual bool onTouchBegan(Touch *pTouch, Event *pEvent) override;
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
+    virtual void onTouchCancelled(Touch *pTouch, Event *pEvent) override;
 
 protected:
     /** Sprite which represents the view. */

@@ -17,5 +17,5 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static cocos2dxandroid_static cocosdens
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,cocos2dx)
-$(call import-module,CocosDenshion/android)
+$(call import-module,audio/android)
 $(call import-module,cocos2dx/platform/android)

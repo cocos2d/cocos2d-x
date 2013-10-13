@@ -75,7 +75,7 @@ void ArrayForObjectSorting::removeSortedObject(SortableObject* object)
     if (this->count() == 0) {
         return;
     }
-    unsigned int idx;
+    int idx;
     SortableObject* foundObj;
     idx = this->indexOfSortedObject(object);
     
@@ -91,7 +91,7 @@ void ArrayForObjectSorting::removeSortedObject(SortableObject* object)
 void ArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, SortableObject* object)
 {
     SortableObject* foundObj;
-    unsigned int  idx;
+    int  idx;
     
     idx = this->indexOfSortedObject(object);
     if (idx < this->count() && idx != CC_INVALID_INDEX)
@@ -117,7 +117,7 @@ SortableObject* ArrayForObjectSorting::objectWithObjectID(unsigned int tag)
         return NULL;
     }
     
-    unsigned int  idx;
+    int  idx;
     SortableObject* foundObj;
     
     foundObj = new SortedObject();

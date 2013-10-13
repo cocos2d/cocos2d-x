@@ -1266,9 +1266,9 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set  *touches, cocos2d::Event  *event)
+void BitmapFontMultiLineAlignment::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    auto touch = (Touch *)touches->anyObject();
+    auto touch = touches[0];
     auto location = touch->getLocationInView();
 
     if (this->_arrowsShouldRetain->getBoundingBox().containsPoint(location))
@@ -1278,7 +1278,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set  *touches, cocos2
     }
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event)
+void BitmapFontMultiLineAlignment::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
     _drag = false;
     this->snapArrowsToEdge();
@@ -1286,14 +1286,14 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set  *touches, cocos2
     this->_arrowsBarShouldRetain->setVisible(false);
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::Set  *touches, cocos2d::Event  *event)
+void BitmapFontMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
     if (! _drag)
     {
         return;
     }
 
-    auto touch = (Touch *)touches->anyObject();
+    auto touch = touches[0];
     auto location = touch->getLocationInView();
 
     auto winSize = Director::getInstance()->getWinSize();
