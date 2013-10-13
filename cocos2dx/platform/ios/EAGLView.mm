@@ -237,8 +237,7 @@ static CCEAGLView *view = 0;
     
     context_ = [renderer_ context];
     
-
-    //discardFramebufferSupported_ = [[Configuration sharedConfiguration] supportsDiscardFramebuffer];
+    discardFramebufferSupported_ = (BOOL)GL_EXT_discard_framebuffer;
     
     CHECK_GL_ERROR();
     
@@ -288,7 +287,7 @@ static CCEAGLView *view = 0;
         glResolveMultisampleFramebufferAPPLE();
     }
     
-    if( discardFramebufferSupported_)
+    if(discardFramebufferSupported_)
     {    
         if (multiSampling_)
         {
