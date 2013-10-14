@@ -56,8 +56,7 @@ NS_CC_BEGIN
 namespace
 {
     static const float MASS_DEFAULT = 1.0;
-    static const float DENSITY_DEFAULT = 1.0;
-    static const float ANGULARDAMPING_DEFAULT = 200;
+    static const float MOMENT_DEFAULT = 200;
 }
 
 PhysicsBody::PhysicsBody()
@@ -67,11 +66,11 @@ PhysicsBody::PhysicsBody()
 , _dynamic(true)
 , _enable(true)
 , _massDefault(true)
-, _angularDampingDefault(true)
+, _momentDefault(true)
 , _mass(MASS_DEFAULT)
 , _area(0.0)
-, _density(DENSITY_DEFAULT)
-, _angularDamping(ANGULARDAMPING_DEFAULT)
+, _density(0)
+, _moment(MOMENT_DEFAULT)
 , _tag(0)
 {
 }
@@ -217,7 +216,7 @@ bool PhysicsBody::init()
         _info = new PhysicsBodyInfo();
         CC_BREAK_IF(_info == nullptr);
         
-        _info->body = cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_angularDamping));
+        _info->body = cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment));
         CC_BREAK_IF(_info->body == nullptr);
         
         return true;
@@ -233,7 +232,7 @@ void PhysicsBody::setDynamic(bool dynamic)
         if (dynamic)
         {
             cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
-            cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_angularDamping));
+            cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
         }else
         {
             cpBodySetMass(_info->body, PHYSICS_INFINITY);
@@ -322,21 +321,7 @@ void PhysicsBody::addShape(PhysicsShape* shape)
             }
         }
         
-        if (shape->getAngularDumping() > 0)
-        {
-            if (shape->getAngularDumping() == INFINITY)
-            {
-                _angularDamping = INFINITY;
-                _angularDampingDefault = false;
-                cpBodySetMoment(_info->body, _angularDamping);
-            }
-            else if (_angularDamping != INFINITY)
-            {
-                _angularDamping = (_angularDampingDefault ? 0 : _angularDamping) + shape->getAngularDumping();
-                _angularDampingDefault = false;
-                cpBodySetMoment(_info->body, _angularDamping);
-            }
-        }
+        addMoment(shape->getMoment());
         
         if (_world != nullptr) _world->addShape(shape);
         
@@ -371,10 +356,110 @@ void PhysicsBody::applyTorque(float torque)
 
 void PhysicsBody::setMass(float mass)
 {
+    if (mass <= 0)
+    {
+        return;
+    }
+    
     _mass = mass;
     _massDefault = false;
     
+    // update density
+    if (_mass == PHYSICS_INFINITY)
+    {
+        _density = PHYSICS_INFINITY;
+    }
+    else
+    {
+        if (_area > 0)
+        {
+            _density = _mass / _area;
+        }else
+        {
+            _density = 0;
+        }
+    }
+    
     cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
+}
+
+void PhysicsBody::addMass(float mass)
+{
+    if (mass == PHYSICS_INFINITY)
+    {
+        mass = PHYSICS_INFINITY;
+        _massDefault = false;
+        _density = PHYSICS_INFINITY;
+    }
+    else if (mass == -PHYSICS_INFINITY)
+    {
+        return;
+    }
+    else if (_mass != PHYSICS_INFINITY)
+    {
+        if (_massDefault)
+        {
+            _mass = 0;
+            _massDefault = false;
+        }
+        
+        if (_mass + mass > 0)
+        {
+            _mass +=  mass;
+        }else
+        {
+            _mass = MASS_DEFAULT;
+            _massDefault = true;
+        }
+        
+        if (_area > 0)
+        {
+            _density = _mass / _area;
+        }
+        else
+        {
+            _density = 0;
+        }
+    }
+}
+
+void PhysicsBody::addMoment(float moment)
+{
+    if (moment == PHYSICS_INFINITY)
+    {
+        // if moment is INFINITY, the moment of the body will become INFINITY
+        _moment = PHYSICS_INFINITY;
+        _momentDefault = false;
+    }
+    else if (moment == -PHYSICS_INFINITY)
+    {
+        // if moment is -INFINITY, it won't change
+        return;
+    }
+    else
+    {
+        // if moment of the body is INFINITY is has no effect
+        if (_moment != PHYSICS_INFINITY)
+        {
+            if (_momentDefault)
+            {
+                _moment = 0;
+                _momentDefault = false;
+            }
+            
+            if (_moment + moment > 0)
+            {
+                _moment += moment;
+            }
+            else
+            {
+                _moment = MOMENT_DEFAULT;
+                _momentDefault = true;
+            }
+        }
+    }
+    
+    cpBodySetMoment(_info->body, moment);
 }
 
 void PhysicsBody::setVelocity(Point velocity)
@@ -387,12 +472,12 @@ Point PhysicsBody::getVelocity()
     return PhysicsHelper::cpv2point(cpBodyGetVel(_info->body));
 }
 
-void PhysicsBody::setAngularDamping(float angularDamping)
+void PhysicsBody::setMoment(float moment)
 {
-    _angularDamping = angularDamping;
-    _angularDampingDefault = false;
+    _moment = moment;
+    _momentDefault = false;
     
-    cpBodySetMoment(_info->body, _angularDamping);
+    cpBodySetMoment(_info->body, _moment);
 }
 
 PhysicsShape* PhysicsBody::getShapeByTag(int tag)
@@ -434,42 +519,11 @@ void PhysicsBody::removeShape(PhysicsShape* shape)
         _shapes.erase(it);
         
         
-        // deduce the mass, area and angularDamping
-        if (_mass != PHYSICS_INFINITY && shape->getMass() != PHYSICS_INFINITY)
-        {
-            if (_mass - shape->getMass() <= 0)
-            {
-                _mass = MASS_DEFAULT;
-                _massDefault = true;
-            }else
-            {
-                _mass = _mass = shape->getMass();
-            }
-            
-            _area -= shape->getArea();
-            
-            if (_mass == PHYSICS_INFINITY)
-            {
-                _density = PHYSICS_INFINITY;
-            }
-            else if (_area > 0)
-            {
-                _density = _mass / _area;
-            }
-            else
-            {
-                _density = DENSITY_DEFAULT;
-            }
-            
-            if (_angularDamping - shape->getAngularDumping() > 0)
-            {
-                _angularDamping -= shape->getAngularDumping();
-            }else
-            {
-                _angularDamping = ANGULARDAMPING_DEFAULT;
-                _angularDampingDefault = true;
-            }
-        }
+        // deduce the area, mass and moment
+        // area must update before mass, because the density changes depend on it.
+        _area -= shape->getArea();
+        addMass(-shape->getMass());
+        addMoment(-shape->getMoment());
         
         shape->release();
     }
