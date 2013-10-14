@@ -1,4 +1,5 @@
 {
+    "rename":               [],
     "remove":               ["assets",
                              "bin",
 						 	 "libs",

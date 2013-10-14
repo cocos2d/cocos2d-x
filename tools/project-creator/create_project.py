@@ -111,6 +111,14 @@ def processPlatformProjects(context, platform):
 
         java_package_path = os.path.join(*dst_pkg)
 
+    # rename files and folders
+    for item in data["rename"]:
+        tmp = item.replace("PACKAGE_PATH", java_package_path)
+        src = tmp.replace("PROJECT_NAME", context["src_project_name"])
+        dst = tmp.replace("PROJECT_NAME", context["dst_project_name"])
+        if os.path.exists(os.path.join(proj_path, src)):
+            os.rename(os.path.join(proj_path, src), os.path.join(proj_path, dst))
+
     # remove useless files and folders
     for item in data["remove"]:
         dst = item.replace("PROJECT_NAME", context["dst_project_name"])
