@@ -27,9 +27,9 @@ THE SOFTWARE.
 #include "CCScene.h"
 #include "CCDirector.h"
 #include "CCLayer.h"
-#include "sprite_nodes/CCSprite.h"
-#include "sprite_nodes/CCSpriteBatchNode.h"
-#include "physics/CCPhysicsWorld.h"
+#include "CCSprite.h"
+#include "CCSpriteBatchNode.h"
+#include "CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 

@@ -25,8 +25,8 @@
 #ifndef cocos2d_libs_EventListener_h
 #define cocos2d_libs_EventListener_h
 
-#include "platform/CCPlatformMacros.h"
-#include "cocoa/CCObject.h"
+#include "CCPlatformMacros.h"
+#include "CCObject.h"
 
 #include <functional>
 #include <string>

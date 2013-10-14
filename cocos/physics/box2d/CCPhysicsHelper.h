@@ -28,8 +28,8 @@
 #ifndef __CCPHYSICS_HELPER_H__
 #define __CCPHYSICS_HELPER_H__
 
-#include "platform/CCPlatformMacros.h"
-#include "cocoa/CCGeometry.h"
+#include "CCPlatformMacros.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN
 

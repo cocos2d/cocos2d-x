@@ -25,13 +25,13 @@ THE SOFTWARE.
 #include "CCProgressTimer.h"
 
 #include "ccMacros.h"
-#include "textures/CCTextureCache.h"
-#include "shaders/CCGLProgram.h"
-#include "shaders/CCShaderCache.h"
-#include "shaders/ccGLStateCache.h"
+#include "CCTextureCache.h"
+#include "CCGLProgram.h"
+#include "CCShaderCache.h"
+#include "ccGLStateCache.h"
 #include "CCDirector.h"
-#include "support/TransformUtils.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "TransformUtils.h"
+#include "CCDrawingPrimitives.h"
 // extern
 #include "kazmath/GL/matrix.h"
 

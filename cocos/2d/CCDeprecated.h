@@ -29,7 +29,7 @@
 #define __COCOS2D_CCDEPRECATED_H__
 
 #include <math.h>
-#include "cocoa/CCGeometry.h"
+#include "CCGeometry.h"
 #include "ccTypes.h"
 
 NS_CC_BEGIN

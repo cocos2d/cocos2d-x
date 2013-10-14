@@ -26,10 +26,10 @@
 #define __SCRIPT_SUPPORT_H__
 
 #include "platform/CCCommon.h"
-#include "event_dispatcher/CCTouch.h"
-#include "event_dispatcher/CCEventTouch.h"
-#include "event_dispatcher/CCEventKeyboard.h"
-#include "cocoa/CCSet.h"
+#include "CCTouch.h"
+#include "CCEventTouch.h"
+#include "CCEventKeyboard.h"
+#include "CCSet.h"
 #include <map>
 #include <string>
 #include <list>

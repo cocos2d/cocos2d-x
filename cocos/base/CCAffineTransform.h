@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __COCOA_CGAFFINETRANSFORM_H__
 
 #include "CCGeometry.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

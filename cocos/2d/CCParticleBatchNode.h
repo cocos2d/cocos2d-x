@@ -29,7 +29,7 @@
 #ifndef __CCPARTICLEBATCHNODE_H__
 #define __CCPARTICLEBATCHNODE_H__
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCProtocols.h"
 
 NS_CC_BEGIN

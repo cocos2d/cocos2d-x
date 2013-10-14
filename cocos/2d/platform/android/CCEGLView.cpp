@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCEGLView.h"
-#include "cocoa/CCSet.h"
+#include "CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
 #include "jni/IMEJni.h"

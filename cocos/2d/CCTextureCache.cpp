@@ -35,9 +35,9 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCThread.h"
-#include "support/ccUtils.h"
+#include "ccUtils.h"
 #include "CCScheduler.h"
-#include "cocoa/CCString.h"
+#include "CCString.h"
 
 
 #ifdef EMSCRIPTEN

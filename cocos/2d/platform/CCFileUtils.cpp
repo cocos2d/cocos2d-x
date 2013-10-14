@@ -24,11 +24,11 @@ THE SOFTWARE.
 
 #include "CCFileUtils.h"
 #include "CCDirector.h"
-#include "cocoa/CCDictionary.h"
-#include "cocoa/CCString.h"
+#include "CCDictionary.h"
+#include "CCString.h"
 #include "CCSAXParser.h"
-#include "support/tinyxml2/tinyxml2.h"
-#include "support/zip_support/unzip.h"
+#include "tinyxml2.h"
+#include "unzip.h"
 #include <stack>
 
 using namespace std;

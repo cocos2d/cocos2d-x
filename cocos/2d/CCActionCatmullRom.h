@@ -40,8 +40,8 @@
 #include <vector>
 
 #include "CCActionInterval.h"
-#include "base_nodes/CCNode.h"
-#include "cocoa/CCGeometry.h"
+#include "CCNode.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN;
 

@@ -29,11 +29,11 @@ THE SOFTWARE.
 #include <string>
 #include <map>
 
-#include "cocoa/CCObject.h"
-#include "cocoa/CCGeometry.h"
+#include "CCObject.h"
+#include "CCGeometry.h"
 #include "ccTypes.h"
 #ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
+#include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 
 NS_CC_BEGIN

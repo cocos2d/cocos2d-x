@@ -40,10 +40,10 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCGL.h"
 #include "CCDirector.h"
-#include "shaders/ccGLStateCache.h"
-#include "shaders/CCShaderCache.h"
-#include "shaders/CCGLProgram.h"
-#include "actions/CCActionCatmullRom.h"
+#include "ccGLStateCache.h"
+#include "CCShaderCache.h"
+#include "CCGLProgram.h"
+#include "CCActionCatmullRom.h"
 #include <string.h>
 #include <cmath>
 

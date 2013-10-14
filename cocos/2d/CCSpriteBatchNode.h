@@ -30,9 +30,9 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCProtocols.h"
-#include "textures/CCTextureAtlas.h"
+#include "CCTextureAtlas.h"
 #include "ccMacros.h"
 
 NS_CC_BEGIN

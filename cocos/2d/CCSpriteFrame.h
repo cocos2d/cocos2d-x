@@ -27,10 +27,10 @@ THE SOFTWARE.
 #ifndef __SPRITE_CCSPRITE_FRAME_H__
 #define __SPRITE_CCSPRITE_FRAME_H__
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCProtocols.h"
-#include "cocoa/CCObject.h"
-#include "cocoa/CCGeometry.h"
+#include "CCObject.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN
 

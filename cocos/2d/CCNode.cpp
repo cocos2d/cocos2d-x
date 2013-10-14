@@ -29,29 +29,29 @@ THE SOFTWARE.
 
 #include <algorithm>
 
-#include "cocoa/CCString.h"
-#include "support/data_support/ccCArray.h"
-#include "support/TransformUtils.h"
+#include "CCString.h"
+#include "ccCArray.h"
+#include "TransformUtils.h"
 #include "CCCamera.h"
-#include "effects/CCGrid.h"
+#include "CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
-#include "event_dispatcher/CCTouch.h"
-#include "actions/CCActionManager.h"
-#include "script_support/CCScriptSupport.h"
-#include "shaders/CCGLProgram.h"
-#include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCEvent.h"
-#include "event_dispatcher/CCEventTouch.h"
+#include "CCTouch.h"
+#include "CCActionManager.h"
+#include "CCScriptSupport.h"
+#include "CCGLProgram.h"
+#include "CCEventDispatcher.h"
+#include "CCEvent.h"
+#include "CCEventTouch.h"
 
 #ifdef CC_USE_PHYSICS
-#include "physics/CCPhysicsBody.h"
+#include "CCPhysicsBody.h"
 #endif
 
 // externals
 #include "kazmath/GL/matrix.h"
-#include "support/component/CCComponent.h"
-#include "support/component/CCComponentContainer.h"
+#include "CCComponent.h"
+#include "CCComponentContainer.h"
 
 
 

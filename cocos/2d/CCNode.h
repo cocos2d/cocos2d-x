@@ -29,16 +29,16 @@
 #define __PLATFORM_CCNODE_H__
 
 #include "ccMacros.h"
-#include "cocoa/CCAffineTransform.h"
-#include "cocoa/CCArray.h"
+#include "CCAffineTransform.h"
+#include "CCArray.h"
 #include "CCGL.h"
-#include "shaders/ccGLStateCache.h"
-#include "shaders/CCGLProgram.h"
+#include "ccGLStateCache.h"
+#include "CCGLProgram.h"
 #include "kazmath/kazmath.h"
-#include "script_support/CCScriptSupport.h"
+#include "CCScriptSupport.h"
 #include "CCProtocols.h"
-#include "event_dispatcher/CCEventDispatcher.h"
-#include "physics/CCPhysicsSetting.h"
+#include "CCEventDispatcher.h"
+#include "CCPhysicsSetting.h"
 
 #include <vector>
 
