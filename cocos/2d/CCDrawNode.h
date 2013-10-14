@@ -80,7 +80,7 @@ public:
     void drawCubicBezier(const Point& from, const Point& control1, const Point& control2, const Point& to, unsigned int segments, const Color4F &color);
 
     /** draw a quadratic bezier curve with color and number of segments */
-    void drawQuadraticBezier(const Point& from, const Point& control, const Point& to, unsigned int segments, const Color4F &color)
+    void drawQuadraticBezier(const Point& from, const Point& control, const Point& to, unsigned int segments, const Color4F &color);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
