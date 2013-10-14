@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 
-#include "support/component/CCComponentContainer.h"
-#include "support/component/CCComponent.h"
+#include "CCComponentContainer.h"
+#include "CCComponent.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN

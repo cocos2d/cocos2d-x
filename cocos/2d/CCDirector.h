@@ -27,15 +27,15 @@ THE SOFTWARE.
 #ifndef __CCDIRECTOR_H__
 #define __CCDIRECTOR_H__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 #include "ccTypes.h"
-#include "cocoa/CCGeometry.h"
-#include "cocoa/CCArray.h"
+#include "CCGeometry.h"
+#include "CCArray.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
-#include "label_nodes/CCLabelAtlas.h"
+#include "CCLabelAtlas.h"
 
 
 NS_CC_BEGIN

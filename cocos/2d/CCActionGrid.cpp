@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCActionGrid.h"
 #include "CCDirector.h"
-#include "effects/CCGrid.h"
+#include "CCGrid.h"
 
 NS_CC_BEGIN
 // implementation of GridAction

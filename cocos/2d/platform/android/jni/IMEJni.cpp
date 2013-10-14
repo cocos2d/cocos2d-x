@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "IMEJni.h"
-#include "text_input_node/CCIMEDispatcher.h"
+#include "CCIMEDispatcher.h"
 #include "JniHelper.h"
 
 #include <android/log.h>

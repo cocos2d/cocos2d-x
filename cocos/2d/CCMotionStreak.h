@@ -26,11 +26,11 @@ THE SOFTWARE.
 #define __CCMOTION_STREAK_H__
 
 #include "CCProtocols.h"
-#include "textures/CCTexture2D.h"
+#include "CCTexture2D.h"
 #include "ccTypes.h"
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
+#include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 
 NS_CC_BEGIN

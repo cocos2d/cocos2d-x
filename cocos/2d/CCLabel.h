@@ -26,7 +26,7 @@
 #ifndef _COCOS2D_CCLABEL_H_
 #define _COCOS2D_CCLABEL_H_
 
-#include "sprite_nodes/CCSpriteBatchNode.h"
+#include "CCSpriteBatchNode.h"
 #include "CCLabelTextFormatProtocol.h"
 #include "ccTypes.h"
 

@@ -36,12 +36,12 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "platform/CCImage.h"
 #include "CCGL.h"
-#include "support/ccUtils.h"
-#include "platform/CCPlatformMacros.h"
+#include "ccUtils.h"
+#include "CCPlatformMacros.h"
 #include "CCDirector.h"
-#include "shaders/CCGLProgram.h"
-#include "shaders/ccGLStateCache.h"
-#include "shaders/CCShaderCache.h"
+#include "CCGLProgram.h"
+#include "ccGLStateCache.h"
+#include "CCShaderCache.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "CCTextureCache.h"

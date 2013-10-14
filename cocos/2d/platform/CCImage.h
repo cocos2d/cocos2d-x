@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CC_IMAGE_H__
 #define __CC_IMAGE_H__
 
-#include "cocoa/CCObject.h"
-#include "textures/CCTexture2D.h"
+#include "CCObject.h"
+#include "CCTexture2D.h"
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
 // such as RGB888, RGB5A1

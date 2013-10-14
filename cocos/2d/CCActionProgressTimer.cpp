@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCActionProgressTimer.h"
-#include "misc_nodes/CCProgressTimer.h"
+#include "CCProgressTimer.h"
 
 NS_CC_BEGIN
 

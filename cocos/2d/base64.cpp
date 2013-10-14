@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "support/base64.h"
+#include "base64.h"
 
 namespace cocos2d {
 

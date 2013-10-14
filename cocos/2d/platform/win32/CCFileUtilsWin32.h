@@ -25,7 +25,7 @@
 #define __CC_FILEUTILS_WIN32_H__
 
 #include "platform/CCFileUtils.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include <string>
 #include <vector>

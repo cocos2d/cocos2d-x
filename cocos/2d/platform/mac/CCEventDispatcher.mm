@@ -29,7 +29,7 @@
 
 #import "CCEventDispatcher.h"
 #import "ccConfig.h"
-#include "support/data_support/utlist.h"
+#include "utlist.h"
 
 #include "CCDirector.h"
 #include "platform/mac/CCEventDispatcher.h"

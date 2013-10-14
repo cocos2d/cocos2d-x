@@ -24,9 +24,9 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../.. \
-                    $(LOCAL_PATH)/../../include \
-                    $(LOCAL_PATH)/../../kazmath/include \
-                    $(LOCAL_PATH)/../../platform/third_party/common/etc
+                    $(LOCAL_PATH)/../../../base \
+                    $(LOCAL_PATH)/../../../math/kazmath/include \
+                    $(LOCAL_PATH)/../../../physics
 
 LOCAL_LDLIBS := -lGLESv1_CM \
                 -lGLESv2 \
@@ -47,8 +47,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES	:= android_native_app_glue cocos_libpng_static coco
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,libjpeg)
-$(call import-module,libpng)
-$(call import-module,libtiff)
-$(call import-module,libwebp)
+$(call import-module,jpeg/prebuilt/android)
+$(call import-module,png/prebuilt/android)
+$(call import-module,tiff/prebuilt/android)
+$(call import-module,webp/prebuilt/android)
 $(call import-module,android/native_app_glue)

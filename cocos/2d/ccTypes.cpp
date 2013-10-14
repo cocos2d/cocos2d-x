@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "include/ccTypes.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 

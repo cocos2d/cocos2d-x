@@ -28,7 +28,7 @@ THE SOFTWARE.
 #define __CCTYPES_H__
 
 #include <string>
-#include "cocoa/CCGeometry.h"
+#include "CCGeometry.h"
 #include "CCGL.h"
 
 

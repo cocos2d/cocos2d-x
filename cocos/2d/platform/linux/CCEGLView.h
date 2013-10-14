@@ -9,7 +9,7 @@
 #define EGLVIEW_H_
 
 #include "platform/CCCommon.h"
-#include "cocoa/CCGeometry.h"
+#include "CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
 #include "platform/third_party/linux/glfw/glfw3.h"
 #include <set>

@@ -31,9 +31,9 @@ THE SOFTWARE.
 #include <functional>
 
 // cocos2d includes
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCProtocols.h"
-#include "cocoa/CCArray.h"
+#include "CCArray.h"
 
 NS_CC_BEGIN
 

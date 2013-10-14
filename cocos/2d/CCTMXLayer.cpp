@@ -26,11 +26,11 @@ THE SOFTWARE.
 #include "CCTMXLayer.h"
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
-#include "sprite_nodes/CCSprite.h"
-#include "textures/CCTextureCache.h"
-#include "shaders/CCShaderCache.h"
-#include "shaders/CCGLProgram.h"
-#include "support/data_support/ccCArray.h"
+#include "CCSprite.h"
+#include "CCTextureCache.h"
+#include "CCShaderCache.h"
+#include "CCGLProgram.h"
+#include "ccCArray.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN

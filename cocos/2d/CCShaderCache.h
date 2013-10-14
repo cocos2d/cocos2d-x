@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <string>
 #include <unordered_map>
 
-#include "cocoa/CCDictionary.h"
+#include "CCDictionary.h"
 
 NS_CC_BEGIN
 

@@ -27,10 +27,10 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
-#include "support/data_support/utlist.h"
-#include "support/data_support/ccCArray.h"
-#include "cocoa/CCArray.h"
-#include "script_support/CCScriptSupport.h"
+#include "utlist.h"
+#include "ccCArray.h"
+#include "CCArray.h"
+#include "CCScriptSupport.h"
 
 using namespace std;
 
