@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_CACHE_H__
 #define __CC_ANIMATION_CACHE_H__
 
-#include "cocoa/CCObject.h"
-#include "cocoa/CCDictionary.h"
+#include "CCObject.h"
+#include "CCDictionary.h"
 
 #include <string>
 

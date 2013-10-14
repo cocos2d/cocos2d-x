@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef RAY_2_H
 #define RAY_2_H
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include "utility.h"
 #include "vec2.h"
 

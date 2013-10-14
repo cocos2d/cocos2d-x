@@ -27,15 +27,15 @@ THE SOFTWARE.
 #ifndef __CCLAYER_H__
 #define __CCLAYER_H__
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCProtocols.h"
-#include "cocoa/CCArray.h"
+#include "CCArray.h"
 #ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
+#include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
-#include "physics/CCPhysicsSetting.h"
+#include "CCPhysicsSetting.h"
 
-#include "event_dispatcher/CCEventKeyboard.h"
+#include "CCEventKeyboard.h"
 
 NS_CC_BEGIN
 

@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <jni.h>
 #include <string>
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

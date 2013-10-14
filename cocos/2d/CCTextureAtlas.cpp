@@ -28,14 +28,14 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "CCTextureCache.h"
 #include "ccMacros.h"
-#include "shaders/CCGLProgram.h"
-#include "shaders/ccGLStateCache.h"
-#include "support/CCNotificationCenter.h"
+#include "CCGLProgram.h"
+#include "ccGLStateCache.h"
+#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCGL.h"
 // support
 #include "CCTexture2D.h"
-#include "cocoa/CCString.h"
+#include "CCString.h"
 #include <stdlib.h>
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong

@@ -35,8 +35,8 @@ THE SOFTWARE.
 #include <string>
 #include <unordered_map>
 
-#include "cocoa/CCObject.h"
-#include "textures/CCTexture2D.h"
+#include "CCObject.h"
+#include "CCTexture2D.h"
 #include "platform/CCImage.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

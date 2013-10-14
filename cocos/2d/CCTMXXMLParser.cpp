@@ -31,8 +31,8 @@ THE SOFTWARE.
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
 #include "platform/CCFileUtils.h"
-#include "support/zip_support/ZipUtils.h"
-#include "support/base64.h"
+#include "ZipUtils.h"
+#include "base64.h"
 
 using namespace std;
 

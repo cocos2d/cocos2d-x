@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ccCArray.h"
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 
 NS_CC_BEGIN
 

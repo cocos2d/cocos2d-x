@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCTMXTiledMap.h"
 #include "CCTMXXMLParser.h"
 #include "CCTMXLayer.h"
-#include "sprite_nodes/CCSprite.h"
+#include "CCSprite.h"
 
 NS_CC_BEGIN
 

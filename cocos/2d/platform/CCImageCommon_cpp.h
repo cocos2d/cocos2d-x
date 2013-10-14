@@ -40,25 +40,20 @@ extern "C"
 #include "etc1.h"
 #include "jpeglib.h"
 }
-#include "third_party/common/s3tc/s3tc.h"
-#include "third_party/common/atitc/atitc.h"
-#if defined(__native_client__) || defined(EMSCRIPTEN)
-// TODO(sbc): I'm pretty sure all platforms should be including
-// webph headers in this way.
-#include "webp/decode.h"
-#else
+#include "s3tc.h"
+#include "atitc.h"
+
 #include "decode.h"
-#endif
 
 #include "ccMacros.h"
-#include "platform/CCCommon.h"
+#include "CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "CCConfiguration.h"
-#include "support/ccUtils.h"
-#include "support/zip_support/ZipUtils.h"
+#include "ccUtils.h"
+#include "ZipUtils.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCFileUtilsAndroid.h"
+#include "android/CCFileUtilsAndroid.h"
 #endif
 
 #define CC_GL_ATC_RGB_AMD                                          0x8C92
