@@ -23,13 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCMotionStreak.h"
-#include "textures/CCTextureCache.h"
-#include "shaders/ccGLStateCache.h"
-#include "shaders/CCGLProgram.h"
-#include "shaders/CCShaderCache.h"
+#include "CCTextureCache.h"
+#include "ccGLStateCache.h"
+#include "CCGLProgram.h"
+#include "CCShaderCache.h"
 #include "ccMacros.h"
 
-#include "support/CCVertex.h"
+#include "CCVertex.h"
 
 NS_CC_BEGIN
 

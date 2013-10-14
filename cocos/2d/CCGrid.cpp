@@ -23,15 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "ccMacros.h"
-#include "effects/CCGrid.h"
+#include "CCGrid.h"
 #include "CCDirector.h"
-#include "effects/CCGrabber.h"
-#include "support/ccUtils.h"
-#include "shaders/CCGLProgram.h"
-#include "shaders/CCShaderCache.h"
-#include "shaders/ccGLStateCache.h"
+#include "CCGrabber.h"
+#include "ccUtils.h"
+#include "CCGLProgram.h"
+#include "CCShaderCache.h"
+#include "ccGLStateCache.h"
 #include "CCGL.h"
-#include "support/TransformUtils.h"
+#include "TransformUtils.h"
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
 

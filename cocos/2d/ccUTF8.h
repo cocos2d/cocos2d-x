@@ -8,7 +8,7 @@
 #ifndef __cocos2dx__ccUTF8__
 #define __cocos2dx__ccUTF8__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include <vector>
 
 NS_CC_BEGIN

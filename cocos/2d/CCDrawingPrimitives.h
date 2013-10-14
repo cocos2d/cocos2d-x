@@ -42,7 +42,7 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "ccMacros.h"
-#include "cocoa/CCGeometry.h"    // for Point
+#include "CCGeometry.h"    // for Point
 
 /**
  @file

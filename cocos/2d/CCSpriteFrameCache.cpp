@@ -26,17 +26,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocoa/CCNS.h"
+#include "CCNS.h"
 #include "ccMacros.h"
-#include "textures/CCTextureCache.h"
+#include "CCTextureCache.h"
 #include "CCSpriteFrameCache.h"
 #include "CCSpriteFrame.h"
 #include "CCSprite.h"
-#include "support/TransformUtils.h"
+#include "TransformUtils.h"
 #include "platform/CCFileUtils.h"
-#include "cocoa/CCString.h"
-#include "cocoa/CCArray.h"
-#include "cocoa/CCDictionary.h"
+#include "CCString.h"
+#include "CCArray.h"
+#include "CCDictionary.h"
 #include <vector>
 
 using namespace std;

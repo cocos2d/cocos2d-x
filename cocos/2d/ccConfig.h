@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCCONFIG_H__
 #define __CCCONFIG_H__
 
-#include "platform/CCPlatformConfig.h"
+#include "CCPlatformConfig.h"
 
 /**
  @file

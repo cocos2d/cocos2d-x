@@ -25,10 +25,10 @@ THE SOFTWARE.
 #include "CCMenu.h"
 #include "CCDirector.h"
 #include "CCApplication.h"
-#include "event_dispatcher/CCTouch.h"
+#include "CCTouch.h"
 #include "CCStdC.h"
-#include "cocoa/CCInteger.h"
-#include "event_dispatcher/CCEventListenerTouch.h"
+#include "CCInteger.h"
+#include "CCEventListenerTouch.h"
 
 
 #include <vector>

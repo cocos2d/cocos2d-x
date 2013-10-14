@@ -25,11 +25,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCMenuItem.h"
-#include "actions/CCActionInterval.h"
-#include "sprite_nodes/CCSprite.h"
-#include "label_nodes/CCLabelAtlas.h"
-#include "label_nodes/CCLabelTTF.h"
-#include "script_support/CCScriptSupport.h"
+#include "CCActionInterval.h"
+#include "CCSprite.h"
+#include "CCLabelAtlas.h"
+#include "CCLabelTTF.h"
+#include "CCScriptSupport.h"
 #include <stdarg.h>
 #include <cstring>
 

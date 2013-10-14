@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 #include "CCActionInstant.h"
-#include "base_nodes/CCNode.h"
-#include "sprite_nodes/CCSprite.h"
-#include "script_support/CCScriptSupport.h"
+#include "CCNode.h"
+#include "CCSprite.h"
+#include "CCScriptSupport.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

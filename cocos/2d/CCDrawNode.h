@@ -30,7 +30,7 @@
 #ifndef __CCDRAWNODES_CCDRAW_NODE_H__
 #define __CCDRAWNODES_CCDRAW_NODE_H__
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "ccTypes.h"
 
 NS_CC_BEGIN

@@ -26,7 +26,7 @@
 #define __cocos2d_libs__TouchEvent__
 
 #include "CCEvent.h"
-#include "event_dispatcher/CCTouch.h"
+#include "CCTouch.h"
 #include <vector>
 
 NS_CC_BEGIN

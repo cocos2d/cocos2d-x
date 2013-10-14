@@ -37,47 +37,47 @@ THE SOFTWARE.
 #include "ccConfig.h"
 
 // actions
-#include "actions/CCAction.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionCamera.h"
-#include "actions/CCActionManager.h"
-#include "actions/CCActionEase.h"
-#include "actions/CCActionPageTurn3D.h"
-#include "actions/CCActionGrid.h"
-#include "actions/CCActionProgressTimer.h"
-#include "actions/CCActionGrid3D.h"
-#include "actions/CCActionTiledGrid.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionTween.h"
-#include "actions/CCActionCatmullRom.h"
+#include "CCAction.h"
+#include "CCActionInterval.h"
+#include "CCActionCamera.h"
+#include "CCActionManager.h"
+#include "CCActionEase.h"
+#include "CCActionPageTurn3D.h"
+#include "CCActionGrid.h"
+#include "CCActionProgressTimer.h"
+#include "CCActionGrid3D.h"
+#include "CCActionTiledGrid.h"
+#include "CCActionInstant.h"
+#include "CCActionTween.h"
+#include "CCActionCatmullRom.h"
 
 // base_nodes
-#include "base_nodes/CCNode.h"
-#include "base_nodes/CCAtlasNode.h"
+#include "CCNode.h"
+#include "CCAtlasNode.h"
 
 // cocoa
-#include "cocoa/CCAffineTransform.h"
-#include "cocoa/CCDictionary.h"
-#include "cocoa/CCObject.h"
-#include "cocoa/CCArray.h"
-#include "cocoa/CCGeometry.h"
-#include "cocoa/CCSet.h"
-#include "cocoa/CCAutoreleasePool.h"
-#include "cocoa/CCInteger.h"
-#include "cocoa/CCFloat.h"
-#include "cocoa/CCDouble.h"
-#include "cocoa/CCBool.h"
-#include "cocoa/CCString.h"
-#include "cocoa/CCNS.h"
-#include "cocoa/CCData.h"
+#include "CCAffineTransform.h"
+#include "CCDictionary.h"
+#include "CCObject.h"
+#include "CCArray.h"
+#include "CCGeometry.h"
+#include "CCSet.h"
+#include "CCAutoreleasePool.h"
+#include "CCInteger.h"
+#include "CCFloat.h"
+#include "CCDouble.h"
+#include "CCBool.h"
+#include "CCString.h"
+#include "CCNS.h"
+#include "CCData.h"
 
 // draw nodes
-#include "draw_nodes/CCDrawingPrimitives.h"
-#include "draw_nodes/CCDrawNode.h"
+#include "CCDrawingPrimitives.h"
+#include "CCDrawNode.h"
 
 // effects
-#include "effects/CCGrabber.h"
-#include "effects/CCGrid.h"
+#include "CCGrabber.h"
+#include "CCGrid.h"
 
 // include
 #include "CCEventType.h"
@@ -87,40 +87,40 @@ THE SOFTWARE.
 #include "ccTypes.h"
 
 // label_nodes
-#include "label_nodes/CCLabelAtlas.h"
-#include "label_nodes/CCLabelTTF.h"
-#include "label_nodes/CCLabelBMFont.h"
-#include "label_nodes/CCLabel.h"
+#include "CCLabelAtlas.h"
+#include "CCLabelTTF.h"
+#include "CCLabelBMFont.h"
+#include "CCLabel.h"
 
 // layers_scenes_transitions_nodes
-#include "layers_scenes_transitions_nodes/CCLayer.h"
-#include "layers_scenes_transitions_nodes/CCScene.h"
-#include "layers_scenes_transitions_nodes/CCTransition.h"
-#include "layers_scenes_transitions_nodes/CCTransitionPageTurn.h"
-#include "layers_scenes_transitions_nodes/CCTransitionProgress.h"
+#include "CCLayer.h"
+#include "CCScene.h"
+#include "CCTransition.h"
+#include "CCTransitionPageTurn.h"
+#include "CCTransitionProgress.h"
 
 // menu_nodes
-#include "menu_nodes/CCMenu.h"
-#include "menu_nodes/CCMenuItem.h"
+#include "CCMenu.h"
+#include "CCMenuItem.h"
 
 // misc_nodes
-#include "misc_nodes/CCClippingNode.h"
-#include "misc_nodes/CCMotionStreak.h"
-#include "misc_nodes/CCProgressTimer.h"
-#include "misc_nodes/CCRenderTexture.h"
+#include "CCClippingNode.h"
+#include "CCMotionStreak.h"
+#include "CCProgressTimer.h"
+#include "CCRenderTexture.h"
 
 // particle_nodes
-#include "particle_nodes/CCParticleBatchNode.h"
-#include "particle_nodes/CCParticleSystem.h"
-#include "particle_nodes/CCParticleExamples.h"
-#include "particle_nodes/CCParticleSystemQuad.h"
+#include "CCParticleBatchNode.h"
+#include "CCParticleSystem.h"
+#include "CCParticleExamples.h"
+#include "CCParticleSystemQuad.h"
 
 // physics
-#include "physics/CCPhysicsBody.h"
-#include "physics/CCPhysicsContact.h"
-#include "physics/CCPhysicsShape.h"
-#include "physics/CCPhysicsJoint.h"
-#include "physics/CCPhysicsWorld.h"
+#include "CCPhysicsBody.h"
+#include "CCPhysicsContact.h"
+#include "CCPhysicsShape.h"
+#include "CCPhysicsJoint.h"
+#include "CCPhysicsWorld.h"
 
 // platform
 #include "platform/CCDevice.h"
@@ -129,8 +129,8 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "platform/CCSAXParser.h"
 #include "platform/CCThread.h"
-#include "platform/CCPlatformConfig.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformConfig.h"
+#include "CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCApplication.h"
@@ -175,58 +175,57 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 // script_support
-#include "script_support/CCScriptSupport.h"
+#include "CCScriptSupport.h"
 
 // shaders
-#include "shaders/CCGLProgram.h"
-#include "shaders/ccGLStateCache.h"
-#include "shaders/CCShaderCache.h"
-#include "shaders/ccShaders.h"
+#include "CCGLProgram.h"
+#include "ccGLStateCache.h"
+#include "CCShaderCache.h"
+#include "ccShaders.h"
 
 // sprite_nodes
-#include "sprite_nodes/CCAnimation.h"
-#include "sprite_nodes/CCAnimationCache.h"
-#include "sprite_nodes/CCSprite.h"
-#include "sprite_nodes/CCSpriteBatchNode.h"
-#include "sprite_nodes/CCSpriteFrame.h"
-#include "sprite_nodes/CCSpriteFrameCache.h"
+#include "CCAnimation.h"
+#include "CCAnimationCache.h"
+#include "CCSprite.h"
+#include "CCSpriteBatchNode.h"
+#include "CCSpriteFrame.h"
+#include "CCSpriteFrameCache.h"
 
 // support
-#include "support/ccUTF8.h"
-#include "support/CCNotificationCenter.h"
-#include "support/CCProfiling.h"
-#include "support/user_default/CCUserDefault.h"
-#include "support/CCVertex.h"
-#include "support/tinyxml2/tinyxml2.h"
+#include "ccUTF8.h"
+#include "CCNotificationCenter.h"
+#include "CCProfiling.h"
+#include "CCUserDefault.h"
+#include "CCVertex.h"
 
 // text_input_node
-#include "text_input_node/CCIMEDelegate.h"
-#include "text_input_node/CCIMEDispatcher.h"
-#include "text_input_node/CCTextFieldTTF.h"
+#include "CCIMEDelegate.h"
+#include "CCIMEDispatcher.h"
+#include "CCTextFieldTTF.h"
 
 // textures
-#include "textures/CCTexture2D.h"
-#include "textures/CCTextureAtlas.h"
-#include "textures/CCTextureCache.h"
+#include "CCTexture2D.h"
+#include "CCTextureAtlas.h"
+#include "CCTextureCache.h"
 
 // tilemap_parallax_nodes
-#include "tilemap_parallax_nodes/CCParallaxNode.h"
-#include "tilemap_parallax_nodes/CCTMXLayer.h"
-#include "tilemap_parallax_nodes/CCTMXObjectGroup.h"
-#include "tilemap_parallax_nodes/CCTMXTiledMap.h"
-#include "tilemap_parallax_nodes/CCTMXXMLParser.h"
-#include "tilemap_parallax_nodes/CCTileMapAtlas.h"
+#include "CCParallaxNode.h"
+#include "CCTMXLayer.h"
+#include "CCTMXObjectGroup.h"
+#include "CCTMXTiledMap.h"
+#include "CCTMXXMLParser.h"
+#include "CCTileMapAtlas.h"
 
 // EventDispatcher
-#include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCEventListenerTouch.h"
-#include "event_dispatcher/CCEventTouch.h"
-#include "event_dispatcher/CCEventListenerKeyboard.h"
-#include "event_dispatcher/CCEventKeyboard.h"
-#include "event_dispatcher/CCEventAcceleration.h"
-#include "event_dispatcher/CCEventListenerAcceleration.h"
-#include "event_dispatcher/CCEventCustom.h"
-#include "event_dispatcher/CCEventListenerCustom.h"
+#include "CCEventDispatcher.h"
+#include "CCEventListenerTouch.h"
+#include "CCEventTouch.h"
+#include "CCEventListenerKeyboard.h"
+#include "CCEventKeyboard.h"
+#include "CCEventAcceleration.h"
+#include "CCEventListenerAcceleration.h"
+#include "CCEventCustom.h"
+#include "CCEventListenerCustom.h"
 
 // root
 #include "CCCamera.h"
@@ -235,8 +234,8 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 
 // component
-#include "support/component/CCComponent.h"
-#include "support/component/CCComponentContainer.h"
+#include "CCComponent.h"
+#include "CCComponentContainer.h"
 
 // Deprecated include
 #include "CCDeprecated.h"

@@ -24,7 +24,7 @@ def gen_android_mk(mkfile, pathes, suffix = ("c", "cpp",), exclude = ()):
     filestrio = cStringIO.StringIO()
     for filename in filelst:
         filestrio.write(' \\\n')
-        filestrio.write(os.path.relpath(filename, os.path.dirname(os.path.join(COCOS_ROOT, mkfile))))
+        filestrio.write("$(LOCAL_PATH)/"+os.path.relpath(filename, os.path.dirname(os.path.join(COCOS_ROOT, mkfile))))
     filestrio.write('\n')
     
     # read mk file

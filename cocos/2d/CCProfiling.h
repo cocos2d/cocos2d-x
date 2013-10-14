@@ -28,8 +28,8 @@ THE SOFTWARE.
 #include <string>
 #include <chrono>
 #include "ccConfig.h"
-#include "cocoa/CCObject.h"
-#include "cocoa/CCDictionary.h"
+#include "CCObject.h"
+#include "CCDictionary.h"
 
 NS_CC_BEGIN
 

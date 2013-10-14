@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CC_TEXT_FIELD_H__
 #define __CC_TEXT_FIELD_H__
 
-#include "label_nodes/CCLabelTTF.h"
-#include "text_input_node/CCIMEDelegate.h"
+#include "CCLabelTTF.h"
+#include "CCIMEDelegate.h"
 
 NS_CC_BEGIN
 

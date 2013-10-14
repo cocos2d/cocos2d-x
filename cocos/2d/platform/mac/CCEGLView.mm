@@ -25,9 +25,9 @@
 #include "EAGLView.h"
 #include "CCDirector.h"
 #include "CCSet.h"
-#include "event_dispatcher/CCTouch.h"
-#include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCEventKeyboard.h"
+#include "CCTouch.h"
+#include "CCEventDispatcher.h"
+#include "CCEventKeyboard.h"
 #include "CCIMEDispatcher.h"
 
 NS_CC_BEGIN

@@ -28,8 +28,8 @@
 #ifndef __CCPHYSICS_BODY_INFO_H__
 #define __CCPHYSICS_BODY_INFO_H__
 #include "chipmunk.h"
-#include "platform/CCPlatformMacros.h"
-#include "cocoa/CCObject.h"
+#include "CCPlatformMacros.h"
+#include "CCObject.h"
 
 NS_CC_BEGIN
 

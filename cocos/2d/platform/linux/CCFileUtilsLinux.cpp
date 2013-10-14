@@ -8,7 +8,7 @@
 #include "platform/CCCommon.h"
 #include "ccMacros.h"
 #include "CCApplication.h"
-#include "cocoa/CCString.h"
+#include "CCString.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdio.h>

@@ -28,7 +28,7 @@
 #ifndef __MISCNODE_CCCLIPPING_NODE_H__
 #define __MISCNODE_CCCLIPPING_NODE_H__
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN
