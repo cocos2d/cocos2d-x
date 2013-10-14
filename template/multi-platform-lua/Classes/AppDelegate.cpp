@@ -56,3 +56,8 @@ void AppDelegate::applicationWillEnterForeground()
 
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
+
+// this function will be called when the app orientation was changed
+void AppDelegate::applicationOrientationChanged(int newWidth, int newHeight) {
+
+}
