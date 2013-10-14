@@ -6,9 +6,9 @@
 
 # define global variables
 PLATFORMS = {
-    "cpp" : ["ios", "android", "win32", "mac", "linux"],
-    "lua" : ["ios", "android", "win32", "mac", "linux"],
-    "javascript" : ["ios", "android", "win32", "mac"]
+    "cpp" : ["ios_mac", "android", "win32", "linux"],
+    "lua" : ["ios_mac", "android", "win32", "linux"],
+    "javascript" : ["ios_mac", "android", "win32"]
 }
 
 
