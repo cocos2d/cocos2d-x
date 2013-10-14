@@ -294,33 +294,10 @@ void PhysicsBody::addShape(PhysicsShape* shape)
         shape->setBody(this);
         _shapes.push_back(shape);
         
-        // calculate the mass, area and desity
+        // calculate the area, mass, and desity
+        // area must update before mass, because the density changes depend on it.
         _area += shape->getArea();
-        if (_mass == PHYSICS_INFINITY || shape->getMass() == PHYSICS_INFINITY)
-        {
-            _mass = PHYSICS_INFINITY;
-            _massDefault = false;
-        }else
-        {
-            if (shape->getMass() > 0)
-            {
-                _mass = (_massDefault ? 0 : _mass) + shape->getMass();
-                _massDefault = false;
-            }
-        }
-        cpBodySetMass(_info->body, _mass);
-        
-        if (!_massDefault)
-        {
-            if (_mass == PHYSICS_INFINITY)
-            {
-                _density = PHYSICS_INFINITY;
-            }else
-            {
-                _density = _mass / _area;
-            }
-        }
-        
+        addMass(shape->getMass());
         addMoment(shape->getMoment());
         
         if (_world != nullptr) _world->addShape(shape);
