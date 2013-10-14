@@ -30,10 +30,10 @@ THE SOFTWARE.
 #if CC_USE_ARRAY_VECTOR
 #include <vector>
 #include <algorithm>
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 #include "ccMacros.h"
 #else
-#include "support/data_support/ccCArray.h"
+#include "ccCArray.h"
 #endif
 
 

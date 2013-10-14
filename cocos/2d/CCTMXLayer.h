@@ -27,10 +27,10 @@ THE SOFTWARE.
 #define __CCTMX_LAYER_H__
 
 #include "CCTMXObjectGroup.h"
-#include "base_nodes/CCAtlasNode.h"
-#include "sprite_nodes/CCSpriteBatchNode.h"
+#include "CCAtlasNode.h"
+#include "CCSpriteBatchNode.h"
 #include "CCTMXXMLParser.h"
-#include "support/data_support/ccCArray.h"
+#include "ccCArray.h"
 NS_CC_BEGIN
 
 class TMXMapInfo;

@@ -7,51 +7,51 @@ LOCAL_MODULE := box2d_static
 LOCAL_MODULE_FILENAME := libbox2d
 
 LOCAL_SRC_FILES := \
-Collision/b2BroadPhase.cpp \
-Collision/b2CollideCircle.cpp \
-Collision/b2CollideEdge.cpp \
-Collision/b2CollidePolygon.cpp \
-Collision/b2Collision.cpp \
-Collision/b2Distance.cpp \
-Collision/b2DynamicTree.cpp \
-Collision/b2TimeOfImpact.cpp \
-Collision/Shapes/b2ChainShape.cpp \
-Collision/Shapes/b2CircleShape.cpp \
-Collision/Shapes/b2EdgeShape.cpp \
-Collision/Shapes/b2PolygonShape.cpp \
-Common/b2BlockAllocator.cpp \
-Common/b2Draw.cpp \
-Common/b2Math.cpp \
-Common/b2Settings.cpp \
-Common/b2StackAllocator.cpp \
-Common/b2Timer.cpp \
-Dynamics/b2Body.cpp \
-Dynamics/b2ContactManager.cpp \
-Dynamics/b2Fixture.cpp \
-Dynamics/b2Island.cpp \
-Dynamics/b2World.cpp \
-Dynamics/b2WorldCallbacks.cpp \
-Dynamics/Contacts/b2ChainAndCircleContact.cpp \
-Dynamics/Contacts/b2ChainAndPolygonContact.cpp \
-Dynamics/Contacts/b2CircleContact.cpp \
-Dynamics/Contacts/b2Contact.cpp \
-Dynamics/Contacts/b2ContactSolver.cpp \
-Dynamics/Contacts/b2EdgeAndCircleContact.cpp \
-Dynamics/Contacts/b2EdgeAndPolygonContact.cpp \
-Dynamics/Contacts/b2PolygonAndCircleContact.cpp \
-Dynamics/Contacts/b2PolygonContact.cpp \
-Dynamics/Joints/b2DistanceJoint.cpp \
-Dynamics/Joints/b2FrictionJoint.cpp \
-Dynamics/Joints/b2GearJoint.cpp \
-Dynamics/Joints/b2Joint.cpp \
-Dynamics/Joints/b2MouseJoint.cpp \
-Dynamics/Joints/b2PrismaticJoint.cpp \
-Dynamics/Joints/b2PulleyJoint.cpp \
-Dynamics/Joints/b2RevoluteJoint.cpp \
-Dynamics/Joints/b2RopeJoint.cpp \
-Dynamics/Joints/b2WeldJoint.cpp \
-Dynamics/Joints/b2WheelJoint.cpp \
-Rope/b2Rope.cpp
+$(LOCAL_PATH)/Collision/b2BroadPhase.cpp \
+$(LOCAL_PATH)/Collision/b2CollideCircle.cpp \
+$(LOCAL_PATH)/Collision/b2CollideEdge.cpp \
+$(LOCAL_PATH)/Collision/b2CollidePolygon.cpp \
+$(LOCAL_PATH)/Collision/b2Collision.cpp \
+$(LOCAL_PATH)/Collision/b2Distance.cpp \
+$(LOCAL_PATH)/Collision/b2DynamicTree.cpp \
+$(LOCAL_PATH)/Collision/b2TimeOfImpact.cpp \
+$(LOCAL_PATH)/Collision/Shapes/b2ChainShape.cpp \
+$(LOCAL_PATH)/Collision/Shapes/b2CircleShape.cpp \
+$(LOCAL_PATH)/Collision/Shapes/b2EdgeShape.cpp \
+$(LOCAL_PATH)/Collision/Shapes/b2PolygonShape.cpp \
+$(LOCAL_PATH)/Common/b2BlockAllocator.cpp \
+$(LOCAL_PATH)/Common/b2Draw.cpp \
+$(LOCAL_PATH)/Common/b2Math.cpp \
+$(LOCAL_PATH)/Common/b2Settings.cpp \
+$(LOCAL_PATH)/Common/b2StackAllocator.cpp \
+$(LOCAL_PATH)/Common/b2Timer.cpp \
+$(LOCAL_PATH)/Dynamics/b2Body.cpp \
+$(LOCAL_PATH)/Dynamics/b2ContactManager.cpp \
+$(LOCAL_PATH)/Dynamics/b2Fixture.cpp \
+$(LOCAL_PATH)/Dynamics/b2Island.cpp \
+$(LOCAL_PATH)/Dynamics/b2World.cpp \
+$(LOCAL_PATH)/Dynamics/b2WorldCallbacks.cpp \
+$(LOCAL_PATH)/Dynamics/Contacts/b2ChainAndCircleContact.cpp \
+$(LOCAL_PATH)/Dynamics/Contacts/b2ChainAndPolygonContact.cpp \
+$(LOCAL_PATH)/Dynamics/Contacts/b2CircleContact.cpp \
+$(LOCAL_PATH)/Dynamics/Contacts/b2Contact.cpp \
+$(LOCAL_PATH)/Dynamics/Contacts/b2ContactSolver.cpp \
+$(LOCAL_PATH)/Dynamics/Contacts/b2EdgeAndCircleContact.cpp \
+$(LOCAL_PATH)/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp \
+$(LOCAL_PATH)/Dynamics/Contacts/b2PolygonAndCircleContact.cpp \
+$(LOCAL_PATH)/Dynamics/Contacts/b2PolygonContact.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2DistanceJoint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2FrictionJoint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2GearJoint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2Joint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2MouseJoint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2PrismaticJoint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2PulleyJoint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2RevoluteJoint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2RopeJoint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2WeldJoint.cpp \
+$(LOCAL_PATH)/Dynamics/Joints/b2WheelJoint.cpp \
+$(LOCAL_PATH)/Rope/b2Rope.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 

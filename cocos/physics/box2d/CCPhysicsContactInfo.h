@@ -27,7 +27,7 @@
 
 #ifndef __CCPHYSICS_CONTACT_INFO_H__
 #define __CCPHYSICS_CONTACT_INFO_H__
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 NS_CC_BEGIN
 
 class PhysicsContactInfo

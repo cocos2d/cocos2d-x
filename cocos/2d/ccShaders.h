@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCSHADER_H__
 
 #include "CCGL.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

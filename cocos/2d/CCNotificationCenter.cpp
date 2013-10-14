@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCNotificationCenter.h"
-#include "cocoa/CCArray.h"
-#include "script_support/CCScriptSupport.h"
+#include "CCArray.h"
+#include "CCScriptSupport.h"
 #include <string>
 
 using namespace std;

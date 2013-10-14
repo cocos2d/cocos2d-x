@@ -27,16 +27,16 @@ THE SOFTWARE.
 #ifndef __SPITE_NODE_CCSPRITE_H__
 #define __SPITE_NODE_CCSPRITE_H__
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCProtocols.h"
-#include "textures/CCTextureAtlas.h"
+#include "CCTextureAtlas.h"
 #include "ccTypes.h"
-#include "cocoa/CCDictionary.h"
+#include "CCDictionary.h"
 #include <string>
 #ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
+#include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
-#include "physics/CCPhysicsBody.h"
+#include "CCPhysicsBody.h"
 
 NS_CC_BEGIN
 

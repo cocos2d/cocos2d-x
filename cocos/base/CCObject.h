@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCOBJECT_H__
 #define __CCOBJECT_H__
 
-#include "cocoa/CCDataVisitor.h"
+#include "CCDataVisitor.h"
 #include "ccMacros.h"
 
 #ifdef EMSCRIPTEN

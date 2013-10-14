@@ -24,19 +24,19 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCConfiguration.h"
-#include "misc_nodes/CCRenderTexture.h"
+#include "CCRenderTexture.h"
 #include "CCDirector.h"
 #include "platform/CCImage.h"
-#include "shaders/CCGLProgram.h"
-#include "shaders/ccGLStateCache.h"
+#include "CCGLProgram.h"
+#include "ccGLStateCache.h"
 #include "CCConfiguration.h"
-#include "support/ccUtils.h"
-#include "textures/CCTextureCache.h"
+#include "ccUtils.h"
+#include "CCTextureCache.h"
 #include "platform/CCFileUtils.h"
 #include "CCGL.h"
-#include "support/CCNotificationCenter.h"
+#include "CCNotificationCenter.h"
 #include "CCEventType.h"
-#include "effects/CCGrid.h"
+#include "CCGrid.h"
 // extern
 #include "kazmath/GL/matrix.h"
 

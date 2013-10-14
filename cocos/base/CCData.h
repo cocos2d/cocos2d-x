@@ -25,7 +25,7 @@
 #ifndef __CCDATA_H__
 #define __CCDATA_H__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include "CCObject.h"
 
 NS_CC_BEGIN

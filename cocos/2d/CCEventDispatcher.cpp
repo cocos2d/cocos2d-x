@@ -25,7 +25,7 @@
 #include "CCEvent.h"
 #include "CCEventTouch.h"
 #include "CCEventListenerTouch.h"
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCDirector.h"
 
 #include <algorithm>

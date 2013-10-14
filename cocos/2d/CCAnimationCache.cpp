@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCAnimation.h"
 #include "CCSpriteFrame.h"
 #include "CCSpriteFrameCache.h"
-#include "cocoa/CCString.h"
+#include "CCString.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;

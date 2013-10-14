@@ -25,7 +25,7 @@
 #ifndef __CC_EVENT_DISPATCHER_H__
 #define __CC_EVENT_DISPATCHER_H__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include "CCEventListener.h"
 
 #include <functional>

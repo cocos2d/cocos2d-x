@@ -27,15 +27,15 @@ THE SOFTWARE.
 
 #include "CCGL.h"
 #include "CCParticleSystemQuad.h"
-#include "sprite_nodes/CCSpriteFrame.h"
+#include "CCSpriteFrame.h"
 #include "CCDirector.h"
 #include "CCParticleBatchNode.h"
-#include "textures/CCTextureAtlas.h"
-#include "shaders/CCShaderCache.h"
-#include "shaders/ccGLStateCache.h"
-#include "shaders/CCGLProgram.h"
-#include "support/TransformUtils.h"
-#include "support/CCNotificationCenter.h"
+#include "CCTextureAtlas.h"
+#include "CCShaderCache.h"
+#include "ccGLStateCache.h"
+#include "CCGLProgram.h"
+#include "TransformUtils.h"
+#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 
 // extern
