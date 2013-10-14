@@ -79,8 +79,8 @@ public:
     inline PhysicsBody* getBody(){ return _body; }
     inline Type getType() { return _type; }
     inline float getArea() { return _area; }
-    inline float getAngularDumping() { return _angularDamping; }
-    void setAngularDumping(float angularDumping);
+    inline float getMoment() { return _moment; }
+    void setMoment(float moment);
     inline void setTag(int tag) { _tag = tag; }
     inline int getTag() { return _tag; }
     void setEnable(bool enable);
@@ -115,7 +115,7 @@ protected:
     Type _type;
     float _area;
     float _mass;
-    float _angularDamping;
+    float _moment;
     PhysicsMaterial _material;
     int _tag;
     bool _enable;

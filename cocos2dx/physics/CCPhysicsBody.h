@@ -172,21 +172,49 @@ public:
     
     /*
      * @brief set the body mass.
+     * @note if you need add/subtract mass to body, don't use setMass(getMass() +/- mass), because the mass of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMass() instead.
      */
     void setMass(float mass);
     /*
      * @brief get the body mass.
      */
     inline float getMass() { return _mass; }
+    /*
+     * @brief add mass to body.
+     * if _mass(mass of the body) == PHYSICS_INFINITY, it remains.
+     * if mass == PHYSICS_INFINITY, _mass will be PHYSICS_INFINITY.
+     * if mass == -PHYSICS_INFINITY, _mass will not change.
+     * if mass + _mass <= 0, _mass will equal to MASS_DEFAULT(1.0)
+     * other wise, mass = mass + _mass;
+     */
+    void addMass(float mass);
     
+    /*
+     * @brief set the body moment of inertia.
+     * @note if you need add/subtract moment to body, don't use setMoment(getMoment() +/- moment), because the moment of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMoment() instead.
+     */
+    void setMoment(float moment);
+    /*
+     * @brief get the body moment of inertia.
+     */
+    inline float getMoment(float moment) { return _moment; }
+    /*
+     * @brief add moment of inertia to body.
+     * if _moment(moment of the body) == PHYSICS_INFINITY, it remains.
+     * if moment == PHYSICS_INFINITY, _moment will be PHYSICS_INFINITY.
+     * if moment == -PHYSICS_INFINITY, _moment will not change.
+     * if moment + _moment <= 0, _moment will equal to MASS_DEFAULT(1.0)
+     * other wise, moment = moment + _moment;
+     */
+    void addMoment(float moment);
     /*
      * @brief set angular damping.
      */
-    void setAngularDamping(float angularDamping);
+    //void setAngularDamping(float angularDamping);
     /*
      * @brief get angular damping.
      */
-    inline float getAngularDamping() { return _angularDamping; }
+    //inline float getAngularDamping() { return _angularDamping; }
     
     //virtual Clonable* clone() const override;
     
@@ -195,6 +223,7 @@ public:
     
     inline int getTag() { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
+    
     
 protected:
     
@@ -216,11 +245,12 @@ protected:
     bool                        _dynamic;
     bool                        _enable;
     bool                        _massDefault;
-    bool                        _angularDampingDefault;
+    bool                        _momentDefault;
     float                       _mass;
     float                       _area;
     float                       _density;
-    float                       _angularDamping;
+    float                       _moment;
+    //float                       _angularDamping;
     int                         _tag;
     
     int    _categoryBitmask;

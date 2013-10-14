@@ -48,7 +48,7 @@ PhysicsShape::PhysicsShape()
 , _type(Type::UNKNOWN)
 , _area(0)
 , _mass(0)
-, _angularDamping(0)
+, _moment(0)
 , _tag(0)
 , _enable(true)
 {
@@ -234,7 +234,7 @@ bool PhysicsShapeCircle::init(float radius, PhysicsMaterial material/* = Materia
         
         _area = PhysicsHelper::cpfloat2float(cpAreaForCircle(0, radius));
         _mass = _material.density == PHYSICS_INFINITY ? PHYSICS_INFINITY : _material.density * _area;
-        _angularDamping = _mass == PHYSICS_INFINITY ? PHYSICS_INFINITY : cpMomentForCircle(_mass, 0, radius, PhysicsHelper::point2cpv(offset));
+        _moment = _mass == PHYSICS_INFINITY ? PHYSICS_INFINITY : cpMomentForCircle(_mass, 0, radius, PhysicsHelper::point2cpv(offset));
         
         _info->add(shape);
         
@@ -273,7 +273,7 @@ bool PhysicsShapeEdgeSegment::init(Point a, Point b, PhysicsMaterial material/* 
         CC_BREAK_IF(shape == nullptr);
         
         _mass = PHYSICS_INFINITY;
-        _angularDamping = PHYSICS_INFINITY;
+        _moment = PHYSICS_INFINITY;
         
         _info->add(shape);
         
@@ -311,7 +311,7 @@ bool PhysicsShapeBox::init(Size size, PhysicsMaterial material/* = MaterialDefau
         
         _area = PhysicsHelper::cpfloat2float(cpAreaForPoly(4, ((cpPolyShape*)shape)->verts));
         _mass = _material.density == PHYSICS_INFINITY ? PHYSICS_INFINITY : _material.density * _area;
-        _angularDamping = _mass == PHYSICS_INFINITY ? PHYSICS_INFINITY : cpMomentForBox(_mass, PhysicsHelper::float2cpfloat(size.width), PhysicsHelper::float2cpfloat(size.height));
+        _moment = _mass == PHYSICS_INFINITY ? PHYSICS_INFINITY : cpMomentForBox(_mass, PhysicsHelper::float2cpfloat(size.width), PhysicsHelper::float2cpfloat(size.height));
         
         _info->add(shape);
         
@@ -352,7 +352,7 @@ bool PhysicsShapePolygon::init(Point* points, int count, PhysicsMaterial materia
         
         _area = PhysicsHelper::cpfloat2float(cpAreaForPoly(((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts));
         _mass = _material.density == PHYSICS_INFINITY ? PHYSICS_INFINITY : _material.density * _area;
-        _angularDamping = _mass == PHYSICS_INFINITY ? PHYSICS_INFINITY : cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, PhysicsHelper::point2cpv(offset));
+        _moment = _mass == PHYSICS_INFINITY ? PHYSICS_INFINITY : cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, PhysicsHelper::point2cpv(offset));
         
         _info->add(shape);
         
@@ -401,7 +401,7 @@ bool PhysicsShapeEdgeBox::init(Size size, PhysicsMaterial material/* = MaterialD
         CC_BREAK_IF(i < 4);
         
         _mass = PHYSICS_INFINITY;
-        _angularDamping = PHYSICS_INFINITY;
+        _moment = PHYSICS_INFINITY;
         
         initEnd();
         
@@ -450,7 +450,7 @@ bool PhysicsShapeEdgePolygon::init(Point* points, int count, PhysicsMaterial mat
         CC_BREAK_IF(i < count);
         
         _mass = PHYSICS_INFINITY;
-        _angularDamping = PHYSICS_INFINITY;
+        _moment = PHYSICS_INFINITY;
         
         initEnd();
         
@@ -500,7 +500,7 @@ bool PhysicsShapeEdgeChain::init(Point* points, int count, PhysicsMaterial mater
         CC_BREAK_IF(i < count);
         
         _mass = PHYSICS_INFINITY;
-        _angularDamping = PHYSICS_INFINITY;
+        _moment = PHYSICS_INFINITY;
         
         initEnd();
         
