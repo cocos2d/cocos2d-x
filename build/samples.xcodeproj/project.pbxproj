@@ -2830,17 +2830,17 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				460E45011807E711000CDD6D /* SimpleGame */,
-				46A174831807D934005B8026 /* HelloCpp */,
 				46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */,
 				A035AC3B178245AA00987F6C /* CocosDragonJS */,
 				A035AAC7178242AE00987F6C /* CrystalCraze */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				46A174831807D934005B8026 /* HelloCpp */,
 				1A1197E51785374900D62A44 /* HelloLua */,
-				1A119C8D17853D6300D62A44 /* Lua Common */,
 				1A2B004B1803B8D4009E8C43 /* JS Common */,
+				1A119C8D17853D6300D62A44 /* Lua Common */,
 				A035A9F9178240E000987F6C /* MoonWarriors */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				460E45011807E711000CDD6D /* SimpleGame */,
 				A0359B0B17821DB400987F6C /* TestCpp */,
 				A035A5F21782296200987F6C /* TestJavascript */,
 				1A119872178539CD00D62A44 /* TestLua */,
@@ -7563,6 +7563,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../cocos/2d/platform/mac",
+					"$(SRCROOT)/../external/glfw3/include/mac",
 				);
 				INFOPLIST_FILE = ../samples/Cpp/HelloCpp/proj.mac/HelloCpp_Info.plist;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -7585,6 +7586,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../cocos/2d/platform/mac",
+					"$(SRCROOT)/../external/glfw3/include/mac",
 				);
 				INFOPLIST_FILE = ../samples/Cpp/HelloCpp/proj.mac/HelloCpp_Info.plist;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -7754,14 +7756,15 @@
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../cocos",
+					"$(SRCROOT)/../cocos/base",
+					"$(SRCROOT)/../cocos/physics",
+					"$(SRCROOT)/../cocos/math/kazmath/include",
+					"$(SRCROOT)/../cocos/2d",
+					"$(SRCROOT)/../cocos/audio/include",
 					"$(SRCROOT)/../extensions",
 					"$(SRCROOT)/../external",
-					"$(SRCROOT)/../cocos/audio/include",
 					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
-					"$(SRCROOT)/../cocos/2d",
-					"$(SRCROOT)/../cocos/2d/include",
-					"$(SRCROOT)/../cocos/math/kazmath/include",
-					"$(SRCROOT)/../cocos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7787,14 +7790,15 @@
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../cocos",
+					"$(SRCROOT)/../cocos/base",
+					"$(SRCROOT)/../cocos/physics",
+					"$(SRCROOT)/../cocos/math/kazmath/include",
+					"$(SRCROOT)/../cocos/2d",
+					"$(SRCROOT)/../cocos/audio/include",
 					"$(SRCROOT)/../extensions",
 					"$(SRCROOT)/../external",
-					"$(SRCROOT)/../cocos/audio/include",
 					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
-					"$(SRCROOT)/../cocos/2d",
-					"$(SRCROOT)/../cocos/2d/include",
-					"$(SRCROOT)/../cocos/math/kazmath/include",
-					"$(SRCROOT)/../cocos",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
