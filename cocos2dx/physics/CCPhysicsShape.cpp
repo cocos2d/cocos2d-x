@@ -71,11 +71,6 @@ bool PhysicsShape::init(Type type, PhysicsMaterial material/* = MaterialDefault*
     return true;
 }
 
-void PhysicsShape::setMass(float mass)
-{
-    
-}
-
 void PhysicsShape::setEnable(bool enable)
 {
     if (_enable != enable)
@@ -95,9 +90,38 @@ void PhysicsShape::setEnable(bool enable)
     }
 }
 
-void PhysicsShape::addToBody()
+void PhysicsShape::setMass(float mass)
 {
-    if(_body != nullptr) _body->addShape(this);
+    if (mass < 0)
+    {
+        return;
+    }
+    
+    
+    if (_body)
+    {
+        _body->addMass(-_mass);
+        _body->addMass(mass);
+    };
+    
+    _mass = mass;
+}
+
+void PhysicsShape::setMoment(float moment)
+{
+    if (moment < 0)
+    {
+        return;
+    }
+    
+    
+    if (_body)
+    {
+        _body->addMoment(-_moment);
+        _body->addMoment(moment);
+    };
+    
+    _moment = moment;
 }
 
 PhysicsBodyInfo* PhysicsShape::bodyInfo() const

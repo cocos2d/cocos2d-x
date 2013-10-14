@@ -85,7 +85,6 @@ public:
     inline int getTag() { return _tag; }
     void setEnable(bool enable);
     inline bool isEnable() { return _enable; }
-    void addToBody();
     
     inline float getMass() { return _mass; }
     void setMass(float mass);
