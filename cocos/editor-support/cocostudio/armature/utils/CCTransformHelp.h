@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __CCTRANSFORMHELP_H__
 
 #include "CCArmatureDefine.h"
-#include "../datas/CCDatas.h"
+#include "armature/datas/CCDatas.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 /*
  * use to calculate the matrix of node from parent node
@@ -44,19 +44,19 @@ public:
     static void transformFromParentWithoutScale(BaseData &node, const BaseData &parentNode);
     static void transformToParentWithoutScale(BaseData &node, const BaseData &parentNode);
 
-    static void nodeToMatrix(const BaseData &_node, AffineTransform &_matrix);
-    static void matrixToNode(const AffineTransform &_matrix, BaseData &_node);
+    static void nodeToMatrix(const BaseData &_node, cocos2d::AffineTransform &_matrix);
+    static void matrixToNode(const cocos2d::AffineTransform &_matrix, BaseData &_node);
 
     static void nodeConcat(BaseData &target, BaseData &source);
     static void nodeSub(BaseData &target, BaseData &source);
 public:
-    static AffineTransform helpMatrix1;
-    static AffineTransform helpMatrix2;
+    static cocos2d::AffineTransform helpMatrix1;
+    static cocos2d::AffineTransform helpMatrix2;
 
-    static Point helpPoint1;
-    static Point helpPoint2;
+    static cocos2d::Point helpPoint1;
+    static cocos2d::Point helpPoint2;
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCTRANSFORMHELP_H__*/

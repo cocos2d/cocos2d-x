@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
 #define VERSION_COMBINED 0.30f
 #define VERSION_CHANGE_ROTATION_RANGE 1.0f
@@ -48,14 +47,10 @@ THE SOFTWARE.
 #define CS_RETURN_IF(cond) if (cond) return
 #define CS_RETURN_NULL_IF(cond) if (cond) return NULL;
 
-#define NS_CC_EXT_ARMATURE_BEGIN namespace cocos2d { namespace extension { namespace armature {
-#define NS_CC_EXT_ARMATURE_END   }}}
-#define USING_NS_CC_EXT_ARMATURE using namespace cocos2d::extension::armature
-
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 const char *armatureVersion();
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCARMATUREDEFINE_H__*/

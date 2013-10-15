@@ -22,12 +22,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Layout.h"
-#include "../System/UILayer.h"
-#include "../System/UIHelper.h"
-#include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "layout.h"
+#include "system/UILayer.h"
+#include "system/UIHelper.h"
+#include "GUI/CCControlExtension/CCScale9Sprite.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+ using namespace cocos2d::extension;
+
+namespace gui {
 
 #define DYNAMIC_CAST_CLIPPINGLAYER dynamic_cast<RectClippingNode*>(_renderer)
 
@@ -779,4 +782,4 @@ bool RectClippingNode::isEnabled() const
     return _enabled;
 }
 
-NS_CC_EXT_END
+}

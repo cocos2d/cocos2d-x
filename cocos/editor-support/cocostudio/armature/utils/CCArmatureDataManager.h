@@ -26,15 +26,15 @@ THE SOFTWARE.
 #define __CCARMATUREDATAMANAGER_H__
 
 #include "CCArmatureDefine.h"
-#include "../datas/CCDatas.h"
+#include "armature/datas/CCDatas.h"
 
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 /**
  *	@brief	format and manage armature configuration and armature animation
  */
-class  ArmatureDataManager : public Object
+class  ArmatureDataManager : public cocos2d::Object
 {
 public:
 	/** @deprecated Use getInstance() instead */
@@ -133,7 +133,7 @@ public:
      *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      *			It will load data in a new thread
      */
-    void addArmatureFileInfoAsync(const char *configFilePath, Object *target, SEL_SCHEDULE selector);
+    void addArmatureFileInfoAsync(const char *configFilePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
      *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
@@ -144,7 +144,7 @@ public:
      *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      *			It will load data in a new thread
      */
-    void addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, Object *target, SEL_SCHEDULE selector);
+    void addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
@@ -163,35 +163,35 @@ public:
     bool isAutoLoadSpriteFile();
 
 
-    Dictionary *getArmatureDatas() const;
-    Dictionary *getAnimationDatas() const;
-    Dictionary *getTextureDatas() const;
+    cocos2d::Dictionary *getArmatureDatas() const;
+    cocos2d::Dictionary *getAnimationDatas() const;
+    cocos2d::Dictionary *getTextureDatas() const;
 private:
     /**
      *	@brief	save amature datas
      *  @key	std::string
      *  @value	ArmatureData *
      */
-    Dictionary *_armarureDatas;
+    cocos2d::Dictionary *_armarureDatas;
 
     /**
      *	@brief	save animation datas
      *  @key	std::string
      *  @value	AnimationData *
      */
-    Dictionary *_animationDatas;
+    cocos2d::Dictionary *_animationDatas;
 
     /**
      *	@brief	save texture datas
      *  @key	std::string
      *  @value	TextureData *
      */
-    Dictionary *_textureDatas;
+    cocos2d::Dictionary *_textureDatas;
 
     bool _autoLoadSpriteFile;
 };
 
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif/*__CCARMATUREDATAMANAGER_H__*/

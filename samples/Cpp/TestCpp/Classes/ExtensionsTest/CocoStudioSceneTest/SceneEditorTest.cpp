@@ -2,16 +2,19 @@
 #include "cocos-ext.h"
 #include "../ExtensionsTest.h"
 #include "SceneEditorTest.h"
+#include "CocoStudio.h"
+#include "system/CocosGUI.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cocostudio;
+using namespace gui;
 
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
-    armature::ArmatureDataManager::getInstance()->destoryInstance();
+    ArmatureDataManager::getInstance()->destoryInstance();
 	SceneReader::getInstance()->purgeSceneReader();
-	cocos2d::extension::ActionManagerEx::shareManager()->purgeActionManager();
-	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
+	ActionManagerEx::shareManager()->purgeActionManager();
+	UIHelper::instance()->purgeUIHelper();
 }
 
 SceneEditorTestLayer::SceneEditorTestLayer()
@@ -77,7 +80,7 @@ cocos2d::Node* SceneEditorTestLayer::createGameScene()
     pNode->addChild(menuBack);
     
     //ui action
-	cocos2d::extension::ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 

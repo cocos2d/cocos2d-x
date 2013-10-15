@@ -2,12 +2,11 @@
 #define __CCB_SEQUENCE_PROPERTY_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 #include "CCBKeyframe.h"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
-class CCBSequenceProperty : public Object
+class CCBSequenceProperty : public cocos2d::Object
 {
 public:
     /**
@@ -28,14 +27,14 @@ public:
     int getType();
     void setType(int type);
     
-    Array* getKeyframes();
+    cocos2d::Array* getKeyframes();
 
 private:
     std::string _name;
     int _type;
-    Array *_keyframes;
+    cocos2d::Array *_keyframes;
 };
 
-NS_CC_EXT_END
+}
 
 #endif // __CCB_SEQUENCE_PROPERTY_H__

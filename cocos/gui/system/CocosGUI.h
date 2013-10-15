@@ -26,29 +26,29 @@
 #define __COCOSGUI_H__
 
 
-#include "../BaseClasses/UIWidget.h"
-#include "../Layouts/Layout.h"
-#include "../BaseClasses/UIRootWidget.h"
-#include "../UIWidgets/UIButton.h"
-#include "../UIWidgets/UICheckBox.h"
-#include "../UIWidgets/UIImageView.h"
-#include "../UIWidgets/UILabel.h"
-#include "../UIWidgets/UILabelAtlas.h"
-#include "../UIWidgets/UILoadingBar.h"
-#include "../UIWidgets/ScrollWidget/UIScrollView.h"
-#include "../UIWidgets/UISlider.h"
-#include "../UIWidgets/UITextField.h"
-#include "../UIWidgets/ScrollWidget/UIListView.h"
-#include "../UIWidgets/ScrollWidget/UIDragPanel.h"
-#include "../UIWidgets/UILabelBMFont.h"
-#include "../UIWidgets/ScrollWidget/UIPageView.h"
+#include "base-classes/UIWidget.h"
+#include "layouts/Layout.h"
+#include "base-classes/UIRootWidget.h"
+#include "widgets/UIButton.h"
+#include "widgets/UICheckBox.h"
+#include "widgets/UIImageView.h"
+#include "widgets/UILabel.h"
+#include "widgets/UILabelAtlas.h"
+#include "widgets/UILoadingBar.h"
+#include "widgets/scroll-widget/UIScrollView.h"
+#include "widgets/UISlider.h"
+#include "widgets/UITextField.h"
+#include "widgets/scroll-widget/UIListView.h"
+#include "widgets/scroll-widget/UIDragPanel.h"
+#include "widgets/UILabelBMFont.h"
+#include "widgets/scroll-widget/UIPageView.h"
 #include "UIHelper.h"
-#include "../../Reader/CCSGUIReader.h"
+#include "reader/CCSGUIReader.h"
 #include "UILayer.h"
-NS_CC_EXT_BEGIN
+namespace gui {
 
 const char* CocosGUIVersion();
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CocosGUITest__Cocos__) */

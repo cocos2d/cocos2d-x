@@ -27,10 +27,11 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+ #include "spine/spine.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
 using namespace std;
+using namespace spine;
 
 //------------------------------------------------------------------
 //

@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCARMATURE_DATAS_H__
 #define __CCARMATURE_DATAS_H__
 
-#include "../utils/CCArmatureDefine.h"
-#include "../utils/CCTweenFunction.h"
+#include "armature/utils/CCArmatureDefine.h"
+#include "armature/utils/CCTweenFunction.h"
 
 
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\
@@ -55,12 +55,12 @@ public: \
 	return NULL;\
 }
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 /**
 * The base node include a lot of attributes.
 */
-class  BaseData : public Object
+class  BaseData : public cocos2d::Object
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(BaseData)
@@ -89,8 +89,8 @@ public:
     */
     virtual void subtract(BaseData *from, BaseData *to, bool limit);
 
-    virtual void setColor(const Color4B &color);
-    virtual Color4B getColor();
+    virtual void setColor(const cocos2d::Color4B &color);
+    virtual cocos2d::Color4B getColor();
 public:
     float x;					//! position x attribute
     float y;					//! position y attribute
@@ -126,7 +126,7 @@ enum DisplayType
     CS_DISPLAY_MAX
 };
 
-class  DisplayData : public Object
+class  DisplayData : public cocos2d::Object
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
@@ -269,8 +269,8 @@ public:
 public:
     std::string name;                //! the bone's name
     std::string parentName;     //! the bone parent's name
-    Array displayDataList;    //! save DisplayData informations for the Bone
-    AffineTransform boneDataTransform;
+    cocos2d::Array displayDataList;    //! save DisplayData informations for the Bone
+    cocos2d::AffineTransform boneDataTransform;
 };
 
 
@@ -279,7 +279,7 @@ public:
 * When we create a Armature, we need to get each Bone's BoneData as it's init information.
 * So we can get a BoneData from the Dictionary saved in the ArmatureData.
 */
-class  ArmatureData : public Object
+class  ArmatureData : public cocos2d::Object
 {
 public:
     CC_CREATE_NO_PARAM(ArmatureData)
@@ -299,7 +299,7 @@ public:
     BoneData *getBoneData(const char *boneName);
 public:
     std::string name;
-    Dictionary boneDataDic;
+    cocos2d::Dictionary boneDataDic;
     float dataVersion;
 };
 
@@ -362,7 +362,7 @@ public:
 };
 
 
-class  MovementBoneData : public Object
+class  MovementBoneData : public cocos2d::Object
 {
 public:
     CC_CREATE_NO_PARAM(MovementBoneData)
@@ -387,11 +387,11 @@ public:
     float duration;        //! this Bone in this movement will last m_iDuration frames
     std::string name;    //! bone name
 
-    Array frameList;
+    cocos2d::Array frameList;
 };
 
 
-class  MovementData : public Object
+class  MovementData : public cocos2d::Object
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(MovementData)
@@ -442,7 +442,7 @@ public:
     * @key	const char *
     * @value	MovementBoneData *
     */
-    Dictionary movBoneDataDic;
+    cocos2d::Dictionary movBoneDataDic;
 };
 
 
@@ -451,7 +451,7 @@ public:
 *  The struct is AnimationData -> MovementData -> MovementBoneData -> FrameData
 *                                              -> MovementFrameData
 */
-class  AnimationData : public Object
+class  AnimationData : public cocos2d::Object
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(AnimationData)
@@ -471,12 +471,12 @@ public:
     int getMovementCount();
 public:
     std::string name;
-    Dictionary movementDataDic;
+    cocos2d::Dictionary movementDataDic;
     std::vector<std::string> movementNames;
 };
 
 
-struct ContourVertex2 : public Object
+struct ContourVertex2 : public cocos2d::Object
 {
     ContourVertex2(float x, float y)
     {
@@ -491,7 +491,7 @@ struct ContourVertex2 : public Object
 /*
 * ContourData include a contour vertex information
 */
-class  ContourData : public Object
+class  ContourData : public cocos2d::Object
 {
 public:
     CC_CREATE_NO_PARAM(ContourData)
@@ -507,9 +507,9 @@ public:
     ~ContourData(void);
 
     virtual bool init();
-    virtual void addVertex(Point *vertex);
+    virtual void addVertex(cocos2d::Point *vertex);
 public:
-    Array vertexList;	//! Save contour vertex info, vertex saved in a Point
+    cocos2d::Array vertexList;	//! Save contour vertex info, vertex saved in a Point
 };
 
 
@@ -518,7 +518,7 @@ public:
 /*
 * TextureData include a texture's information
 */
-class  TextureData : public Object
+class  TextureData : public cocos2d::Object
 {
 public:
     CC_CREATE_NO_PARAM(TextureData)
@@ -547,10 +547,10 @@ public:
 
     std::string name;	//! The texture's name
 
-    Array contourDataList;
+    cocos2d::Array contourDataList;
 };
 
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCARMATURE_DATAS_H__*/

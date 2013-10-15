@@ -26,10 +26,9 @@
 #define __ActionFrameEasing_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
-#include "../Json/CSContentJsonDictionary.h"
+#include "json/CSContentJsonDictionary.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 enum FrameEasingType
 {
@@ -68,6 +67,6 @@ public:
 	float easeValue(float t);
 };
 
-NS_CC_EXT_END
+}
 
 #endif

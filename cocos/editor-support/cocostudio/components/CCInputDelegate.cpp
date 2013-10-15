@@ -24,7 +24,9 @@ THE SOFTWARE.
 
 #include "CCInputDelegate.h"
 
-NS_CC_EXT_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 InputDelegate::InputDelegate(void)
 : _touchEnabled(false)
@@ -228,4 +230,4 @@ void InputDelegate::setKeypadEnabled(bool enabled)
 }
 
 
-NS_CC_EXT_END
+}

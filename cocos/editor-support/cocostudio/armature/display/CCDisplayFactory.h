@@ -25,10 +25,10 @@ THE SOFTWARE.
 #ifndef __CCDISPLAYFACTORY_H__
 #define __CCDISPLAYFACTORY_H__
 
-#include "../utils/CCArmatureDefine.h"
-#include "../datas/CCDatas.h"
+#include "armature/utils/CCArmatureDefine.h"
+#include "armature/datas/CCDatas.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 class Skin;
 class Bone;
@@ -45,19 +45,19 @@ public:
     static void addSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     static void createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
     static void initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, const char *displayName, Skin *skin);
-    static void updateSpriteDisplay(Bone *bone, Node *display, float dt, bool dirty);
+    static void updateSpriteDisplay(Bone *bone, cocos2d::Node *display, float dt, bool dirty);
 
 
     static void addArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     static void createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-    static void updateArmatureDisplay(Bone *bone, Node *display, float dt, bool dirty);
+    static void updateArmatureDisplay(Bone *bone, cocos2d::Node *display, float dt, bool dirty);
 
     static void addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     static void createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-    static void updateParticleDisplay(Bone *bone, Node *display, float dt, bool dirty);
+    static void updateParticleDisplay(Bone *bone, cocos2d::Node *display, float dt, bool dirty);
 };
 
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCDISPLAYFACTORY_H__*/

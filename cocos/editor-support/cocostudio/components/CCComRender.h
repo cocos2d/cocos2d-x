@@ -26,10 +26,8 @@ THE SOFTWARE.
 #define __CC_EXTENTIONS_CCCOMNODE_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
-#include "ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 class ComRender : public cocos2d::Component
 {
@@ -61,5 +59,5 @@ private:
     cocos2d::Node *_render;
 };
 
-NS_CC_EXT_END
+}
 #endif  // __FUNDATION__CCCOMPONENT_H__

@@ -25,9 +25,9 @@
 #ifndef __UILOADINGBAR_H__
 #define __UILOADINGBAR_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "base-classes/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 typedef enum
 {
@@ -106,16 +106,16 @@ public:
      *
      * @param capInsets    capinsets for loadingbar
      */
-    void setCapInsets(const Rect &capInsets);
+    void setCapInsets(const cocos2d::Rect &capInsets);
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
     //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const;
     
     //override "getVirtualRenderer" method of widget.
-    virtual Node* getVirtualRenderer();
+    virtual cocos2d::Node* getVirtualRenderer();
     
     /**
      * Returns the "class name" of widget.
@@ -130,15 +130,15 @@ protected:
     LoadingBarType _barType;
     int _percent;
     float _totalLength;
-    Node* _barRenderer;
+    cocos2d::Node* _barRenderer;
     TextureResType _renderBarTexType;
-    Size _barRendererTextureSize;
+    cocos2d::Size _barRendererTextureSize;
     bool _scale9Enabled;
     bool _prevIgnoreSize;
-    Rect _capInsets;
+    cocos2d::Rect _capInsets;
     std::string _textureFile;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CocoGUI__UILoadingBar__) */
