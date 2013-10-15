@@ -2923,19 +2923,19 @@
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
+				1A57FFF7180BC5160088DEC7 /* CHANGELOG */,
+				46A15FCC1807A544005B8026 /* AUTHORS */,
+				46A15FCE1807A544005B8026 /* README.md */,
 				46A169A11807B037005B8026 /* 2d */,
 				46A15FD01807A56F005B8026 /* audio */,
-				46A15FCC1807A544005B8026 /* AUTHORS */,
 				1A5700A2180BC5E60088DEC7 /* base */,
-				1A57FFF7180BC5160088DEC7 /* CHANGELOG */,
 				46A167981807AF4D005B8026 /* extensions */,
 				1A57033E180BD0490088DEC7 /* external */,
 				1551A341158F2AB200E66CFE /* Frameworks */,
 				46A170851807CE87005B8026 /* math */,
 				46A170611807CE7A005B8026 /* physics */,
-				1551A340158F2AB200E66CFE /* Products */,
-				46A15FCE1807A544005B8026 /* README.md */,
 				46A163891807AAA8005B8026 /* scripting */,
+				1551A340158F2AB200E66CFE /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5259,6 +5259,7 @@
 			isa = PBXGroup;
 			children = (
 				46A170621807CE7A005B8026 /* box2d */,
+				46A170791807CE7A005B8026 /* chipmunk */,
 				46A1706E1807CE7A005B8026 /* CCPhysicsBody.cpp */,
 				46A1706F1807CE7A005B8026 /* CCPhysicsBody.h */,
 				46A170701807CE7A005B8026 /* CCPhysicsContact.cpp */,
@@ -5270,7 +5271,6 @@
 				46A170761807CE7A005B8026 /* CCPhysicsShape.h */,
 				46A170771807CE7A005B8026 /* CCPhysicsWorld.cpp */,
 				46A170781807CE7A005B8026 /* CCPhysicsWorld.h */,
-				46A170791807CE7A005B8026 /* chipmunk */,
 			);
 			name = physics;
 			path = ../cocos/physics;
@@ -7525,7 +7525,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/scripting/lua/luajit/ios\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/external/\" \"$(SRCROOT)/external/libwebsockets/ios/include\" \"$(SRCROOT)/extensions/network\" \"$(SRCROOT)/extensions/LocalStorage\" \"$(SRCROOT)/extensions/\"";
@@ -7548,7 +7547,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/scripting/lua/luajit/ios\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/external/\" \"$(SRCROOT)/external/libwebsockets/ios/include\" \"$(SRCROOT)/extensions/network\" \"$(SRCROOT)/extensions/LocalStorage\" \"$(SRCROOT)/extensions/\"";
@@ -7572,7 +7570,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/scripting/lua/luajit/mac\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/external/\" \"$(SRCROOT)/external/libwebsockets/mac/include\" \"$(SRCROOT)/extensions/network\" \"$(SRCROOT)/extensions/LocalStorage\" \"$(SRCROOT)/extensions/\"";
@@ -7597,7 +7594,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/scripting/lua/luajit/mac\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/external/\" \"$(SRCROOT)/external/libwebsockets/mac/include\" \"$(SRCROOT)/extensions/network\" \"$(SRCROOT)/extensions/LocalStorage\" \"$(SRCROOT)/extensions/\"";
@@ -7644,7 +7640,6 @@
 					"$(inherited)",
 					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -7655,7 +7650,6 @@
 					"$(inherited)",
 					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
