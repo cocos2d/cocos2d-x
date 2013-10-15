@@ -53,6 +53,9 @@ CCLayer *CreateLayer(int index)
     case TEST_ARMATURE_NESTING:
         pLayer = new TestArmatureNesting();
         break;
+    case TEST_ARMATURE_NESTING_2:
+        pLayer = new TestArmatureNesting2();
+        break;
     default:
         break;
     }
@@ -110,8 +113,6 @@ ArmatureTestScene::ArmatureTestScene(bool bPortrait)
 }
 void ArmatureTestScene::runThisTest()
 {
-
-
     s_nActionIdx = -1;
     addChild(NextTest());
 
@@ -232,6 +233,10 @@ void TestAsynchronousLoading::onEnter()
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/Cowboy.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+
 
     //! load data directly
     // 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
@@ -980,3 +985,188 @@ void TestArmatureNesting::registerWithTouchDispatcher()
 {
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN + 1, true);
 }
+
+
+
+
+Hero *Hero::create(const char *name)
+{
+    Hero *hero = new Hero();
+    if (hero && hero->init(name))
+    {
+        hero->autorelease();
+        return hero;
+    }
+    CC_SAFE_DELETE(hero);
+    return NULL;
+}
+
+Hero::Hero()
+    : m_pMount(NULL)
+    , m_pLayer(NULL)
+{
+}
+
+void Hero::changeMount(CCArmature *armature)
+{
+    if (armature == NULL)
+    {
+        retain();
+
+        playByIndex(0);
+        //Remove hero from display list
+        m_pMount->getBone("hero")->removeDisplay(0);
+        m_pMount->stopAllActions();
+
+        //Set position to current position
+        setPosition(m_pMount->getPosition());
+        //Add to layer
+        m_pLayer->addChild(this);
+
+        release();
+
+        setMount(armature);
+    }
+    else
+    {
+        setMount(armature);
+
+        retain();
+        //Remove from layer
+        removeFromParentAndCleanup(false);
+
+        //Get the hero bone
+        CCBone *bone = armature->getBone("hero");
+        //Add hero as a display to this bone
+        bone->addDisplay(this, 0);
+        //Change this bone's display
+        bone->changeDisplayByIndex(0, true);
+        bone->setIgnoreMovementBoneData(true);
+
+        setPosition(ccp(0,0));
+        //Change animation
+        playByIndex(1);
+
+        setScale(1);
+
+        release();
+    }
+
+}
+
+void Hero::playByIndex(int index)
+{
+    m_pAnimation->playByIndex(index);
+    if (m_pMount)
+    {
+        m_pMount->getAnimation()->playByIndex(index);
+    }
+}
+
+void TestArmatureNesting2::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+    setTouchEnabled(true);
+
+    touchedMenu = false;
+
+    CCLabelTTF* label = CCLabelTTF::create("Change Mount", "Arial", 20);
+    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestArmatureNesting2::ChangeMountCallback));
+
+    CCMenu* pMenu =CCMenu::create(pMenuItem, NULL);
+
+    pMenu->setPosition( CCPointZero );
+    pMenuItem->setPosition( ccp( VisibleRect::right().x - 67, VisibleRect::bottom().y + 50) );
+
+    addChild(pMenu, 2);
+
+    //Create a hero
+    hero = Hero::create("hero");
+    hero->setLayer(this);
+    hero->playByIndex(0);
+    hero->setPosition(ccp(VisibleRect::left().x + 20, VisibleRect::left().y));
+    addChild(hero);
+
+    //Create 3 mount
+    horse = createMount("horse", VisibleRect::center());
+
+    horse2 = createMount("horse", ccp(120, 200));
+    horse2->setOpacity(200);
+    
+    bear = createMount("bear", ccp(300,70));
+}
+void TestArmatureNesting2::onExit()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    ArmatureTestLayer::onExit();
+}
+std::string TestArmatureNesting2::title()
+{
+    return "Test CCArmature Nesting 2";
+}
+std::string TestArmatureNesting2::subtitle()
+{
+    return "Move to a mount and press the ChangeMount Button.";
+}
+bool TestArmatureNesting2::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    CCPoint point = pTouch->getLocation();
+
+    CCArmature *armature = hero->getMount() == NULL ? hero : hero->getMount(); 
+
+    //Set armature direction
+    if (point.x < armature->getPositionX())
+    {
+        armature->setScaleX(-1);
+    }
+    else
+    {
+        armature->setScaleX(1);
+    }
+
+    CCActionInterval *move = CCMoveTo::create(2, point);
+    armature->stopAllActions();
+    armature->runAction(CCSequence::create(move,  CCCallFunc::create(this, NULL), NULL));
+
+    return false;
+}
+void TestArmatureNesting2::registerWithTouchDispatcher()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
+}
+
+void TestArmatureNesting2::ChangeMountCallback(CCObject* pSender)
+{
+    hero->stopAllActions();
+
+    if (hero->getMount())
+    {
+        hero->changeMount(NULL);
+    }
+    else
+    {
+        if (ccpDistance(hero->getPosition(), horse->getPosition()) < 20)
+        {
+            hero->changeMount(horse);
+        }
+        else if (ccpDistance(hero->getPosition(), horse2->getPosition()) < 20)
+        {
+            hero->changeMount(horse2);
+        }
+        else if (ccpDistance(hero->getPosition(), bear->getPosition()) < 20)
+        {
+            hero->changeMount(bear);
+        }
+    }
+}
+
+CCArmature * TestArmatureNesting2::createMount(const char *name, CCPoint position)
+{
+    CCArmature *armature = CCArmature::create(name);
+    armature->getAnimation()->playByIndex(0);
+    armature->setPosition(position);
+    addChild(armature);
+
+    return armature;
+}
+
