@@ -311,8 +311,8 @@ public:
             }
         }
 
-        if (request->getAcceptEncoding() != NULL) {
-          setOption(CURLOPT_ACCEPT_ENCODING, request->getAcceptEncoding());
+        if (const char *acceptEncoding = request->getAcceptEncoding()) {
+          setOption(CURLOPT_ACCEPT_ENCODING, acceptEncoding);
         }
 
         return setOption(CURLOPT_URL, request->getUrl())
