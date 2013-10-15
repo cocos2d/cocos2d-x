@@ -59,10 +59,9 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 #ifndef __CC_SOCKETIO_H__
 #define __CC_SOCKETIO_H__
 
-#include "ExtensionMacros.h"
 #include "cocos2d.h"
 
-NS_CC_EXT_BEGIN
+namespace network {
 
 //forward declarations
 class SIOClientImpl;
@@ -104,7 +103,7 @@ private:
 
 	static SocketIO *_inst;
 
-	Dictionary* _sockets;
+	cocos2d::Dictionary* _sockets;
 
 	SIOClientImpl* getSocket(const std::string& uri);
 	void addSocket(const std::string& uri, SIOClientImpl* socket);
@@ -123,7 +122,7 @@ typedef std::map<std::string, SIOEvent> EventRegistry;
      *  @brief A single connection to a socket.io endpoint
      */
 class SIOClient
-	: public Object
+	: public cocos2d::Object
 {
 private:
 	int _port;
@@ -182,6 +181,6 @@ public:
 
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CC_JSB_SOCKETIO_H__) */

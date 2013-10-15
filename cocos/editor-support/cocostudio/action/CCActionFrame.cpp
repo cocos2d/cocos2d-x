@@ -24,7 +24,9 @@
 
 #include "CCActionFrame.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace cocostudio {
 
 ActionFrame::ActionFrame()
 : _frameType(0)
@@ -222,4 +224,4 @@ Action* ActionTintFrame::getAction(float fDuration)
 }
 
 
-NS_CC_EXT_END
+}

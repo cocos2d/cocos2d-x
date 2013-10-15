@@ -31,12 +31,12 @@ THE SOFTWARE.
 #include "display/CCDecorativeDisplay.h"
 #include "display/CCDisplayManager.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 
 class Armature;
 
-class Bone : public NodeRGBA
+class Bone : public cocos2d::NodeRGBA
 {
 public:
     /**
@@ -84,7 +84,7 @@ public:
      */
     void addDisplay(DisplayData *displayData, int index);
 
-    void addDisplay(Node *display, int index);
+    void addDisplay(cocos2d::Node *display, int index);
 
     void changeDisplayByIndex(int index, bool force);
 
@@ -124,7 +124,7 @@ public:
 
     void update(float delta);
 
-    void updateDisplayedColor(const Color3B &parentColor);
+    void updateDisplayedColor(const cocos2d::Color3B &parentColor);
     void updateDisplayedOpacity(GLubyte parentOpacity);
 
     //! Update color to render display
@@ -144,15 +144,15 @@ public:
 
     virtual bool isTransformDirty();
 
-    virtual AffineTransform getNodeToArmatureTransform() const;
-    virtual AffineTransform getNodeToWorldTransform() const override;
+    virtual cocos2d::AffineTransform getNodeToArmatureTransform() const;
+    virtual cocos2d::AffineTransform getNodeToWorldTransform() const override;
 
     Node *getDisplayRenderNode();
 
     /*
      * Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
      */
-    virtual Array *getColliderBodyList();
+    virtual cocos2d::Array *getColliderBodyList();
 
 public:
     /*
@@ -188,9 +188,9 @@ protected:
     bool _boneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
-    AffineTransform _worldTransform;
+    cocos2d::AffineTransform _worldTransform;
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCBONE_H__*/

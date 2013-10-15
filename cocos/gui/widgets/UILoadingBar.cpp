@@ -23,9 +23,12 @@
  ****************************************************************************/
 
 #include "UILoadingBar.h"
-#include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "GUI/CCControlExtension/CCScale9Sprite.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+ using namespace cocos2d::extension;
+
+namespace gui {
 
 #define DYNAMIC_CAST_CCSPRITE dynamic_cast<cocos2d::Sprite*>(_barRenderer)
 
@@ -336,4 +339,4 @@ const char* UILoadingBar::getDescription() const
     return "LoadingBar";
 }
 
-NS_CC_EXT_END
+}

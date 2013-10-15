@@ -24,8 +24,10 @@ THE SOFTWARE.
 
 #include "CCUtilMath.h"
 
+using namespace cocos2d;
 
-NS_CC_EXT_ARMATURE_BEGIN
+
+namespace cocostudio {
 
 bool isSpriteContainPoint(Sprite *sprite, Point point, Point &outPoint)
 {
@@ -75,4 +77,4 @@ Point circleTo(float t, Point &center, float radius, float fromRadian, float rad
     return p;
 }
 
-NS_CC_EXT_ARMATURE_END
+}

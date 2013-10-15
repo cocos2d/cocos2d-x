@@ -24,7 +24,9 @@
 
 #include "UIRootWidget.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace gui {
 
 UIRootWidget::UIRootWidget()
 {
@@ -61,4 +63,4 @@ const char* UIRootWidget::getDescription() const
     return "RootWidget";
 }
 
-NS_CC_EXT_END
+}

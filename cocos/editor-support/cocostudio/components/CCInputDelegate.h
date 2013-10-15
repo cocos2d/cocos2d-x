@@ -26,9 +26,8 @@ THE SOFTWARE.
 #define __CC_EXTENTIONS_CCINPUTDELEGATE_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 class InputDelegate
 {
@@ -79,12 +78,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void setTouchMode(Touch::DispatchMode mode);
+    virtual void setTouchMode(cocos2d::Touch::DispatchMode mode);
     /**
      * @js NA
      * @lua NA
      */
-    virtual Touch::DispatchMode getTouchMode() const;
+    virtual cocos2d::Touch::DispatchMode getTouchMode() const;
     /**
      * @js NA
      * @lua NA
@@ -96,44 +95,44 @@ public:
      */
     virtual int  getTouchPriority() const;
  /** @deprecated Please override onAcceleration */
-    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final { CC_UNUSED_PARAM(accelerationValue); };
+    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(cocos2d::Acceleration* accelerationValue) final { CC_UNUSED_PARAM(accelerationValue); };
     // Deprecated touch callbacks.
-    CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
     
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(cocos2d::Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(cocos2d::Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(cocos2d::Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(cocos2d::Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     
-    virtual void onAcceleration(Acceleration* acc, Event* event) {};
+    virtual void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* event) {};
 
-    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {};
-    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {};
+    virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
+    virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
     
-    virtual bool onTouchBegan(Touch *touch, Event *event);
-    virtual void onTouchMoved(Touch *touch, Event *event);
-    virtual void onTouchEnded(Touch *touch, Event *event);
-    virtual void onTouchCancelled(Touch *touch, Event *event);
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *event);
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
-    virtual void onTouchesCancelled(const std::vector<Touch*>& touches, Event *event);
+    virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+    virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
+    virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+    virtual void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
+    virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    virtual void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
 protected:   
     bool _touchEnabled;
-    EventListener* _touchListener;
+    cocos2d::EventListener* _touchListener;
     bool _accelerometerEnabled;
-    EventListener*  _accelerometerListener;
+    cocos2d::EventListener*  _accelerometerListener;
     bool _keypadEnabled;
-    EventListener*  _keyboardListener;
+    cocos2d::EventListener*  _keyboardListener;
 private:
      int _touchPriority;
-    Touch::DispatchMode _touchMode;
+    cocos2d::Touch::DispatchMode _touchMode;
 };
 
-NS_CC_EXT_END
+}
 
 #endif  // __FUNDATION__CCCOMPONENT_H__

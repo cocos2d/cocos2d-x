@@ -25,9 +25,9 @@
 #ifndef __UIROOTWIDGET_H__
 #define __UIROOTWIDGET_H__
 
-#include "../Layouts/Layout.h"
+#include "layouts/Layout.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 class UIRootWidget : public Layout
 {
@@ -56,6 +56,6 @@ protected:
     virtual bool init();
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CocoGUI__RootWidget__) */

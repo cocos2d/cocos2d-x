@@ -27,7 +27,7 @@
 #include <math.h>
 #include <spine/extension.h>
 
-namespace cocos2d { namespace extension {
+namespace spine {
 
 Animation* Animation_create (const char* name, int timelineCount) {
 	Animation* self = NEW(Animation);
@@ -496,4 +496,4 @@ void AttachmentTimeline_setFrame (AttachmentTimeline* self, int frameIndex, floa
 		self->attachmentNames[frameIndex] = 0;
 }
 
-}} // namespace cocos2d { namespace extension {
+} // namespace spine {

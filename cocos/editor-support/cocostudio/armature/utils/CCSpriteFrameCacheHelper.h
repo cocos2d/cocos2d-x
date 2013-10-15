@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 class  SpriteFrameCacheHelper
 {
@@ -47,7 +47,7 @@ public:
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
-    TextureAtlas *getTexureAtlasWithTexture(Texture2D *texture);
+    cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture);
 
 private:
 	/**
@@ -60,11 +60,11 @@ private:
      */
     ~SpriteFrameCacheHelper();
 
-    Dictionary *_textureAtlasDic;
+    cocos2d::Dictionary *_textureAtlasDic;
 
     static SpriteFrameCacheHelper *_spriteFrameCacheHelper;
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCSPRITEFRAMECACHEHELPER_H__*/

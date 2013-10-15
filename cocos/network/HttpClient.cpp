@@ -32,7 +32,9 @@
 
 #include "platform/CCFileUtils.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace network {
 
 static std::mutex       s_requestQueueMutex;
 static std::mutex       s_responseQueueMutex;
@@ -514,6 +516,6 @@ void HttpClient::dispatchResponseCallbacks(float delta)
     
 }
 
-NS_CC_EXT_END
+}
 
 

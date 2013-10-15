@@ -25,9 +25,9 @@
 #ifndef __UILABEL_H__
 #define __UILABEL_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "base-classes/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 class UILabel : public UIWidget
 {
@@ -109,22 +109,22 @@ public:
     virtual bool isFlipY();
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const Point &pt);
+    virtual void setAnchorPoint(const cocos2d::Point &pt);
     
     //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const;
     
     //override "getVirtualRenderer" method of widget.
-    virtual Node* getVirtualRenderer();
+    virtual cocos2d::Node* getVirtualRenderer();
     
     /**
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
     
-    void setTextAreaSize(const Size &size);
-    void setTextHorizontalAlignment(TextHAlignment alignment);
-    void setTextVerticalAlignment(TextVAlignment alignment);
+    void setTextAreaSize(const cocos2d::Size &size);
+    void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
+    void setTextVerticalAlignment(cocos2d::TextVAlignment alignment);
 
     
     void setTouchScaleChangeAble(bool able){setTouchScaleChangeEnabled(able);};
@@ -144,9 +144,9 @@ protected:
     std::string _fontName;
     int _fontSize;
     float _onSelectedScaleOffset;
-    LabelTTF* _labelRenderer;
+    cocos2d::LabelTTF* _labelRenderer;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CocoGUI__Label__) */

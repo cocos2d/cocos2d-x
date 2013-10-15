@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include <math.h>
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 #define CC_DOUBLE_PI (M_PI*2)
 
@@ -36,20 +36,20 @@ NS_CC_EXT_ARMATURE_BEGIN
 
 
 //! hit test function
-bool isSpriteContainPoint(Sprite *sprite, Point point);
-bool isSpriteContainPoint(Sprite *sprite, Point point, Point &outPoint);
+bool isSpriteContainPoint(cocos2d::Sprite *sprite, cocos2d::Point point);
+bool isSpriteContainPoint(cocos2d::Sprite *sprite, cocos2d::Point point, cocos2d::Point &outPoint);
 
 #define CC_SPRITE_CONTAIN_POINT(sprite, point) isSpriteContainPoint((sprite), (point))
 #define CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint) isSpriteContainPoint((sprite), (point), outPoint)
 
 
 //! motion curve function
-Point bezierTo(float t, Point &point1, Point &point2, Point &point3);
-Point bezierTo(float t, Point &point1, Point &point2, Point &point3, Point &point4);
+cocos2d::Point bezierTo(float t, cocos2d::Point &point1, cocos2d::Point &point2, cocos2d::Point &point3);
+cocos2d::Point bezierTo(float t, cocos2d::Point &point1, cocos2d::Point &point2, cocos2d::Point &point3, cocos2d::Point &point4);
 
-Point circleTo(float t, Point &center, float radius, float fromRadian, float radianDif);
+cocos2d::Point circleTo(float t, cocos2d::Point &center, float radius, float fromRadian, float radianDif);
 
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCUTILMATH_H__*/

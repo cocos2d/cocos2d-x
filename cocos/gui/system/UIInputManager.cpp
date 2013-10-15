@@ -25,7 +25,9 @@
 #include "UIInputManager.h"
 #include "UIHelper.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace gui {
 
 UIInputManager::UIInputManager():
 _manageredWidget(NULL),
@@ -205,4 +207,4 @@ UIWidget* UIInputManager::getRootWidget()
     return _rootWidget;
 }
 
-NS_CC_EXT_END
+}
