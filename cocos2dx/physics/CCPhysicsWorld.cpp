@@ -175,10 +175,7 @@ void PhysicsWorld::addBody(PhysicsBody* body)
         // add shapes to space
         for (auto shape : body->getShapes())
         {
-            if (shape->isEnable())
-            {
-                addShape(shape);
-            }
+            addShape(shape);
         }
     }
     

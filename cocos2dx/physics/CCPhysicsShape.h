@@ -41,17 +41,17 @@ class PhysicsBodyInfo;
 typedef struct PhysicsMaterial
 {
     float density;
-    float elasticity;
+    float restitution;
     float friction;
     
     PhysicsMaterial()
     : density(0.0f)
-    , elasticity(0.0f)
+    , restitution(0.0f)
     , friction(0.0f){}
     
-    PhysicsMaterial(float density, float elasticity, float friction)
+    PhysicsMaterial(float density, float restitution, float friction)
     : density(density)
-    , elasticity(elasticity)
+    , restitution(restitution)
     , friction(friction){}
 }PhysicsMaterial;
 
@@ -83,19 +83,25 @@ public:
     void setMoment(float moment);
     inline void setTag(int tag) { _tag = tag; }
     inline int getTag() { return _tag; }
-    void setEnable(bool enable);
-    inline bool isEnable() { return _enable; }
     
     inline float getMass() { return _mass; }
     void setMass(float mass);
     inline float getDensity() { return _material.density; }
     void setDensity(float density);
-    void setElasticity(float elasticity);
+    void setRestitution(float restitution);
     void setFriction(float friction);
+    void setMaterial(PhysicsMaterial material);
+    
+    virtual float calculateDefaultMoment() { return 0; }
+    virtual float calculateDefaultArea() { return 0; }
+    virtual Point getOffset() { return Point::ZERO; }
+    virtual Point getCenter() { return getOffset(); }
+    
+    static Point* recenterPoints(Point* points, int count, Point center);
+    static Point getPolyonCenter(Point* points, int count);
     
 protected:
-    bool init(Type type, PhysicsMaterial material);
-    void initEnd();
+    bool init(Type type);
     
     /**
      * @brief PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
@@ -117,7 +123,6 @@ protected:
     float _moment;
     PhysicsMaterial _material;
     int _tag;
-    bool _enable;
     
     friend class PhysicsWorld;
     friend class PhysicsBody;
@@ -128,15 +133,20 @@ class PhysicsShapeCircle : public PhysicsShape
 {
 public:
     static PhysicsShapeCircle* create(float radius, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
+    static float calculateArea(float radius);
+    static float calculateMoment(float mass, float radius, Point offset = Point(0, 0));
     
+    float calculateDefaultArea() override;
+    float calculateDefaultMoment() override;
+    
+    float getRadius();
+    Point getOffset();
 protected:
     bool init(float radius, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
     
 protected:
     PhysicsShapeCircle();
-    virtual ~PhysicsShapeCircle();
-    
-    friend class PhysicsBody;
+    ~PhysicsShapeCircle();
 };
 
 /** A box shape */
@@ -144,6 +154,15 @@ class PhysicsShapeBox : public PhysicsShape
 {
 public:
     static PhysicsShapeBox* create(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
+    static float calculateArea(Size size);
+    static float calculateMoment(float mass, Size size, Point offset = Point(0, 0));
+    
+    float calculateDefaultArea() override;
+    float calculateDefaultMoment() override;
+    
+    Point* getPoints(Point* points);
+    Size getSize();
+    Point getOffset() override { return _offset; }
     
 protected:
     bool init(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
@@ -152,7 +171,8 @@ protected:
     PhysicsShapeBox();
     virtual ~PhysicsShapeBox();
     
-    friend class PhysicsBody;
+protected:
+    Point _offset;
 };
 
 /** A polygon shape */
@@ -160,7 +180,15 @@ class PhysicsShapePolygon : public PhysicsShape
 {
 public:
     static PhysicsShapePolygon* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
+    static float calculateArea(Point* points, int count);
+    static float calculateMoment(float mass, Point* points, int count, Point offset = Point(0, 0));
     
+    float calculateDefaultArea() override;
+    float calculateDefaultMoment() override;
+    
+    Point* getPoints(Point* points);
+    int getPointsCount();
+    Point getCenter() override;
 protected:
     bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
     
@@ -168,7 +196,8 @@ protected:
     PhysicsShapePolygon();
     virtual ~PhysicsShapePolygon();
     
-    friend class PhysicsBody;
+protected:
+    Point _center;
 };
 
 /** A segment shape */
@@ -177,12 +206,19 @@ class PhysicsShapeEdgeSegment : public PhysicsShape
 public:
     static PhysicsShapeEdgeSegment* create(Point a, Point b, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
+    Point getPointA();
+    Point getPointB();
+    Point getCenter() override;
+    
 protected:
     bool init(Point a, Point b, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgeSegment();
     virtual ~PhysicsShapeEdgeSegment();
+    
+protected:
+    Point _center;
     
     friend class PhysicsBody;
 };
@@ -192,6 +228,9 @@ class PhysicsShapeEdgeBox : public PhysicsShape
 {
 public:
     static PhysicsShapeEdgeBox* create(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, Point offset = Point(0, 0));
+    Point getOffset() override { return _offset; }
+    Point* getPoints(Point* points);
+    int getPointsCount();
     
 protected:
     bool init(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, Point offset = Point(0, 0));
@@ -199,6 +238,9 @@ protected:
 protected:
     PhysicsShapeEdgeBox();
     virtual ~PhysicsShapeEdgeBox();
+    
+protected:
+    Point _offset;
     
     friend class PhysicsBody;
 };
@@ -208,6 +250,9 @@ class PhysicsShapeEdgePolygon : public PhysicsShape
 {
 public:
     static PhysicsShapeEdgePolygon* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    Point getCenter() override;
+    Point* getPoints(Point* points);
+    int getPointsCount();
     
 protected:
     bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
@@ -217,6 +262,9 @@ protected:
     virtual ~PhysicsShapeEdgePolygon();
     
     friend class PhysicsBody;
+    
+protected:
+    Point _center;
 };
 
 /** a chain shape */
@@ -224,6 +272,9 @@ class PhysicsShapeEdgeChain : public PhysicsShape
 {
 public:
     static PhysicsShapeEdgeChain* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    Point getCenter() override;
+    Point* getPoints(Point* points);
+    int getPointsCount();
     
 protected:
     bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
@@ -231,6 +282,9 @@ protected:
 protected:
     PhysicsShapeEdgeChain();
     virtual ~PhysicsShapeEdgeChain();
+    
+protected:
+    Point _center;
     
     friend class PhysicsBody;
 };

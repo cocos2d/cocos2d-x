@@ -364,7 +364,7 @@ void PhysicsBody::addMass(float mass)
 {
     if (mass == PHYSICS_INFINITY)
     {
-        mass = PHYSICS_INFINITY;
+        _mass = PHYSICS_INFINITY;
         _massDefault = false;
         _density = PHYSICS_INFINITY;
     }
@@ -398,6 +398,8 @@ void PhysicsBody::addMass(float mass)
             _density = 0;
         }
     }
+    
+    cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
 }
 
 void PhysicsBody::addMoment(float moment)
@@ -436,7 +438,7 @@ void PhysicsBody::addMoment(float moment)
         }
     }
     
-    cpBodySetMoment(_info->body, moment);
+    cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
 }
 
 void PhysicsBody::setVelocity(Point velocity)
@@ -454,7 +456,7 @@ void PhysicsBody::setMoment(float moment)
     _moment = moment;
     _momentDefault = false;
     
-    cpBodySetMoment(_info->body, _moment);
+    cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
 }
 
 PhysicsShape* PhysicsBody::getShapeByTag(int tag)

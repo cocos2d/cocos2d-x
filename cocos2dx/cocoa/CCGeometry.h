@@ -97,12 +97,32 @@ public:
      * @js NA
      * @lua NA
      */
+    Point& operator+=(const Point& right);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point operator-(const Point& right) const;
     /**
      * @js NA
      * @lua NA
      */
+    Point& operator-=(const Point& right);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point operator-() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
+    bool operator==(const Point& right);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    bool operator!=(const Point& right);
     /**
      * @js NA
      * @lua NA
