@@ -24,8 +24,10 @@ THE SOFTWARE.
 
 #include "CCSpriteFrameCacheHelper.h"
 
+using namespace cocos2d;
 
-NS_CC_EXT_ARMATURE_BEGIN
+
+namespace cocostudio {
 
 SpriteFrameCacheHelper *SpriteFrameCacheHelper::_spriteFrameCacheHelper = NULL;
 
@@ -72,4 +74,4 @@ SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
     CC_SAFE_RELEASE_NULL(_textureAtlasDic);
 }
 
-NS_CC_EXT_ARMATURE_END
+}

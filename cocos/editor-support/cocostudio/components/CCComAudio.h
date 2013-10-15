@@ -26,9 +26,8 @@ THE SOFTWARE.
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 class ComAudio : public cocos2d::Component
 {
@@ -95,6 +94,6 @@ private:
 	bool _loop;
 };
 
-NS_CC_EXT_END
+}
 
 #endif  // __FUNDATION__CCCOMPONENT_H__

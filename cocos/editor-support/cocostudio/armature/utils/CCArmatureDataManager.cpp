@@ -28,8 +28,9 @@ THE SOFTWARE.
 #include "CCDataReaderHelper.h"
 #include "CCSpriteFrameCacheHelper.h"
 
+using namespace cocos2d;
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 static ArmatureDataManager *s_sharedArmatureDataManager = NULL;
 
@@ -245,4 +246,4 @@ Dictionary *ArmatureDataManager::getTextureDatas() const
     return _textureDatas;
 }
 
-NS_CC_EXT_ARMATURE_END
+}

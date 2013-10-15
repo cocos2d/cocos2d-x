@@ -26,13 +26,12 @@
 #define __ActionMANAGER_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 #include "CCActionObject.h"
-#include "../Json/CSContentJsonDictionary.h"
+#include "json/CSContentJsonDictionary.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
-class ActionManagerEx:public Object
+class ActionManagerEx:public cocos2d::Object
 {
 public:
     
@@ -77,7 +76,7 @@ public:
 	void playActionByName(const char* jsonName,const char* actionName);
     
     /*init properties with json dictionay*/
-    void initWithDictionary(const char* jsonName,cs::JsonDictionary* dic,Object* root);
+    void initWithDictionary(const char* jsonName,JsonDictionary* dic,cocos2d::Object* root);
 
 	/**
      * Release all actions.
@@ -86,9 +85,9 @@ public:
 	void releaseActions();
 
 protected:
-	Dictionary* _pActionDic;
+	cocos2d::Dictionary* _pActionDic;
 };
 
-NS_CC_EXT_END
+}
 
 #endif

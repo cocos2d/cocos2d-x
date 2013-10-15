@@ -27,12 +27,12 @@
 #define __CCHTTPREQUEST_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
 #include "HttpRequest.h"
 #include "HttpResponse.h"
+ #include "HttpClient.h"
 
-NS_CC_EXT_BEGIN
+namespace network {
 
 /**
  * @addtogroup Network
@@ -43,7 +43,7 @@ NS_CC_EXT_BEGIN
 /** @brief Singleton that handles asynchrounous http requests
  * Once the request completed, a callback will issued in main thread when it provided during make request
  */
-class HttpClient : public Object
+class HttpClient : public cocos2d::Object
 {
 public:
     /** Return the shared instance **/
@@ -112,6 +112,6 @@ private:
 // end of Network group
 /// @}
 
-NS_CC_EXT_END
+}
 
 #endif //__CCHTTPREQUEST_H__

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCComController.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 ComController::ComController(void)
 {
@@ -76,4 +76,4 @@ ComController* ComController::create(void)
 	return pRet;
 }
 
-NS_CC_EXT_END
+}

@@ -6,7 +6,6 @@ LOCAL_MODULE    := cocos_extension_static
 LOCAL_MODULE_FILENAME := libextension
 
 LOCAL_SRC_FILES := \
-$(LOCAL_PATH)/CCDeprecated-ext.cpp \
 $(LOCAL_PATH)/assets-manager/AssetsManager.cpp \
 $(LOCAL_PATH)/GUI/CCControlExtension/CCControl.cpp \
 $(LOCAL_PATH)/GUI/CCControlExtension/CCControlButton.cpp \
@@ -47,15 +46,12 @@ LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/CCBReader \
                            $(LOCAL_PATH)/GUI/CCControlExtension \
-                           $(LOCAL_PATH)/GUI/CCScrollView \
-                           $(LOCAL_PATH)/network \
-                           $(LOCAL_PATH)/LocalStorage 
+                           $(LOCAL_PATH)/GUI/CCScrollView 
                     
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,cocos2dx)
+$(call import-module,2d)
 $(call import-module,audio/android)
-$(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
-$(call import-module,external/Box2D)
-$(call import-module,external/chipmunk)
-$(call import-module,external/libwebsockets/android)
+$(call import-module,Box2D)
+$(call import-module,chipmunk)
+$(call import-module,websockets/prebuilt/android)

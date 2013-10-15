@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CCSKIN_H__
 #define __CCSKIN_H__
 
-#include "../utils/CCArmatureDefine.h"
-#include "../CCBone.h"
+#include "armature/utils/CCArmatureDefine.h"
+#include "armature/CCBone.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
-class Skin : public Sprite
+class Skin : public cocos2d::Sprite
 {
 public:
     static Skin *create();
@@ -45,17 +45,17 @@ public:
     void updateArmatureTransform();
     void updateTransform();
 
-    AffineTransform getNodeToWorldTransform() const;
-    AffineTransform getNodeToWorldTransformAR() const;
+    cocos2d::AffineTransform getNodeToWorldTransform() const;
+    cocos2d::AffineTransform getNodeToWorldTransformAR() const;
 
     CC_PROPERTY_PASS_BY_REF(BaseData, _skinData, SkinData);
     CC_SYNTHESIZE(Bone *, _bone, Bone);
 
 protected:
-    AffineTransform _skinTransform;
+    cocos2d::AffineTransform _skinTransform;
     CC_SYNTHESIZE_READONLY(std::string, _displayName, DisplayName)
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCSKIN_H__*/

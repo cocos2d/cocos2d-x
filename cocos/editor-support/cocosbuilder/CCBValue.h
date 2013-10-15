@@ -2,28 +2,27 @@
 #define __CCB_VALUE_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
 /*
  These classes are wrapper of basic types, such as Color3B
  */
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
-class Color3BWapper : public Object
+class Color3BWapper : public cocos2d::Object
 {
 public:
-    static Color3BWapper* create(const Color3B& color);
+    static Color3BWapper* create(const cocos2d::Color3B& color);
     
-    const Color3B& getColor() const;
+    const cocos2d::Color3B& getColor() const;
     
 private:
-    Color3B color;
+    cocos2d::Color3B color;
 };
 
 
 
-class CCBValue : public Object
+class CCBValue : public cocos2d::Object
 {
 public:
     
@@ -42,7 +41,7 @@ public:
     static CCBValue* create(float fValue);
     static CCBValue* create(unsigned char byte);
     static CCBValue* create(const char* pStr);
-    static CCBValue* create(Array* pArr);
+    static CCBValue* create(cocos2d::Array* pArr);
 
     
     int getIntValue();
@@ -50,7 +49,7 @@ public:
     bool getBoolValue();
     unsigned char getByteValue();
     const char* getStringValue();
-    Array *getArrayValue();
+    cocos2d::Array *getArrayValue();
     
     Type getType();
     
@@ -62,10 +61,10 @@ private:
     } _value;
     
     std::string _strValue;
-    Array* _arrValue;
+    cocos2d::Array* _arrValue;
     Type _type;
 };
 
-NS_CC_EXT_END
+}
 
 #endif // __CCB_VALUE_H__

@@ -25,14 +25,14 @@ THE SOFTWARE.
 
 #include "CCTween.h"
 #include "CCArmatureAnimation.h"
-#include "../CCBone.h"
-#include "../CCArmature.h"
-#include "../utils/CCUtilMath.h"
-#include "../utils/CCTweenFunction.h"
-#include "../utils/CCTransformHelp.h"
+#include "armature/CCBone.h"
+#include "armature/CCArmature.h"
+#include "armature/utils/CCUtilMath.h"
+#include "armature/utils/CCTweenFunction.h"
+#include "armature/utils/CCTransformHelp.h"
 
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 Tween *Tween::create(Bone *bone)
 {
@@ -462,4 +462,4 @@ float Tween::updateFrameData(float currentPercent)
     return currentPercent;
 }
 
-NS_CC_EXT_ARMATURE_END
+}

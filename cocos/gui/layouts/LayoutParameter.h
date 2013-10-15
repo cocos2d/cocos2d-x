@@ -27,7 +27,7 @@
 
 #include "UILayoutDefine.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 typedef enum
 {
@@ -36,7 +36,7 @@ typedef enum
     LAYOUT_PARAMETER_RELATIVE
 }LayoutParameterType;
 
-class LayoutParameter : public Object
+class LayoutParameter : public cocos2d::Object
 {
 public:
     /**
@@ -196,6 +196,6 @@ protected:
     std::string _relativeLayoutName;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__LayoutParameter__) */

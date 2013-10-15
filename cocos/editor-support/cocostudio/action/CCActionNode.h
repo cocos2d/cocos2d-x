@@ -26,13 +26,12 @@
 #define __ActionNODE_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 #include "CCActionFrame.h"
-#include "../Json/CSContentJsonDictionary.h"
+#include "json/CSContentJsonDictionary.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
-class ActionNode:public Object
+class ActionNode:public cocos2d::Object
 {
 public:
     
@@ -77,14 +76,14 @@ public:
      *
      * @param  node which will run a action
      */
-	void setObject(Object* node);
+	void setObject(cocos2d::Object* node);
     
     /**
      * Gets node which will run a action.
      *
      * @return  node which will run a action
      */
-	Object* getObject();
+	cocos2d::Object* getObject();
 
     /**
      * Insets a ActionFrame to ActionNode.
@@ -148,7 +147,7 @@ public:
 	virtual void stopAction();
 	
     /*init properties with a json dictionary*/
-    virtual void initWithDictionary(cs::JsonDictionary* dic,Object* root);
+    virtual void initWithDictionary(JsonDictionary* dic,cocos2d::Object* root);
 protected:
 	int _currentFrameIndex;
 	int _destFrameIndex;
@@ -156,21 +155,21 @@ protected:
 	float _fUnitTime;
     
 	int _actionTag;
-	Spawn * _actionSpawn;
-	Action* _action;
-	Object* _object;
+	cocos2d::Spawn * _actionSpawn;
+	cocos2d::Action* _action;
+	cocos2d::Object* _object;
     
-	Array* _frameArray;
+	cocos2d::Array* _frameArray;
 	int _frameArrayNum;
 
 protected:
-	virtual Node* getActionNode();
-	virtual Spawn * refreshActionProperty();
+	virtual cocos2d::Node* getActionNode();
+	virtual cocos2d::Spawn * refreshActionProperty();
 	virtual void runAction();
-	virtual void initActionNodeFromRoot(Object* root);
+	virtual void initActionNodeFromRoot(cocos2d::Object* root);
 	virtual void easingToFrame(float duration,float delayTime,ActionFrame* destFrame);
 };
 
-NS_CC_EXT_END
+}
 
 #endif

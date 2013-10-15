@@ -30,7 +30,6 @@
 #ifndef __CC_WEBSOCKET_H__
 #define __CC_WEBSOCKET_H__
 
-#include "ExtensionMacros.h"
 #include "cocos2d.h"
 #include <list>
 
@@ -38,7 +37,7 @@ struct libwebsocket;
 struct libwebsocket_context;
 struct libwebsocket_protocols;
 
-NS_CC_EXT_BEGIN
+namespace network {
 
 class WsThreadHelper;
 class WsMessage;
@@ -162,6 +161,6 @@ private:
     struct libwebsocket_protocols* _wsProtocols;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CC_JSB_WEBSOCKET_H__) */

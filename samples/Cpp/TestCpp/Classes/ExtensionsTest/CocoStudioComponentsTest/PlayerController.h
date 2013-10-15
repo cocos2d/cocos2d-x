@@ -3,9 +3,10 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "CocoStudio.h"
 
 
-class PlayerController : public cocos2d::extension::ComController
+class PlayerController : public cocostudio::ComController
 {
 protected:
     PlayerController(void);

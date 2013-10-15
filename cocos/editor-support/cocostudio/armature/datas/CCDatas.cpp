@@ -23,10 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDatas.h"
-#include "../utils/CCUtilMath.h"
-#include "../utils/CCTransformHelp.h"
+#include "armature/utils/CCUtilMath.h"
+#include "armature/utils/CCTransformHelp.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 
 BaseData::BaseData()
@@ -425,4 +427,4 @@ ContourData *TextureData::getContourData(int index)
 }
 
 
-NS_CC_EXT_ARMATURE_END
+}

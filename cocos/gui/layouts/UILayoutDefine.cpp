@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "UILayoutDefine.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 
 UIMargin::UIMargin(void) : left(0), top(0), right(0), bottom(0)
@@ -57,4 +57,4 @@ bool UIMargin::equals(const UIMargin &target) const
     return (left == target.left && top == target.top && right == target.right && bottom == target.bottom);
 }
 
-NS_CC_EXT_END
+}

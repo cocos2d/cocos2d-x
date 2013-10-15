@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 #include "controller.h"
 #include "SimpleAudioEngine.h"
+#include "cocostudio/armature/utils/CCArmatureDataManager.h"
 #include "cocos-ext.h"
 
 USING_NS_CC;
@@ -15,7 +16,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
-	cocos2d::extension::armature::ArmatureDataManager::destoryInstance();
+	cocostudio::ArmatureDataManager::destoryInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()

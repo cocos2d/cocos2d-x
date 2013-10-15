@@ -25,9 +25,9 @@
 #ifndef __LAYOUT_H__
 #define __LAYOUT_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "base-classes/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 typedef enum
 {
@@ -63,7 +63,7 @@ public:
     static Layout* create();
     
     //override "hitTest" method of widget.
-    virtual bool hitTest(const Point &pt);
+    virtual bool hitTest(const cocos2d::Point &pt);
     
     //background
     /**
@@ -81,7 +81,7 @@ public:
      * @param capinsets of background image.
      *
      */
-    void setBackGroundImageCapInsets(const Rect& capInsets);
+    void setBackGroundImageCapInsets(const cocos2d::Rect& capInsets);
     
     /**
      * Sets Color Type for layout.
@@ -102,7 +102,7 @@ public:
      *
      * @param color
      */
-    void setBackGroundColor(const Color3B &color);
+    void setBackGroundColor(const cocos2d::Color3B &color);
     
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_GRADIENT
@@ -111,7 +111,7 @@ public:
      *
      * @param end color
      */
-    void setBackGroundColor(const Color3B &startColor, const Color3B &endColor);
+    void setBackGroundColor(const cocos2d::Color3B &startColor, const cocos2d::Color3B &endColor);
     
     /**
      * Sets background opacity layout.
@@ -125,10 +125,10 @@ public:
      *
      * @param vector
      */
-    void setBackGroundColorVector(const Point &vector);
+    void setBackGroundColorVector(const cocos2d::Point &vector);
     
     //override "setColor" method of widget.
-    virtual void setColor(const Color3B &color);
+    virtual void setColor(const cocos2d::Color3B &color);
     
     //override "setOpacity" method of widget.
     virtual void setOpacity(int opacity);
@@ -143,7 +143,7 @@ public:
      *
      * @return background image texture size.
      */
-    const Size& getBackGroundImageTextureSize() const;
+    const cocos2d::Size& getBackGroundImageTextureSize() const;
     
     /**
      * Changes if layout can clip it's content and child.
@@ -166,7 +166,7 @@ public:
      *
      * Content size is widget's texture size.
      */
-    virtual const Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const;
     
     /**
      * Sets LayoutType.
@@ -209,43 +209,43 @@ protected:
     
     //background
     bool _backGroundScale9Enabled;
-    Node* _backGroundImage;
+    cocos2d::Node* _backGroundImage;
     std::string _backGroundImageFileName;
-    Rect _backGroundImageCapInsets;
+    cocos2d::Rect _backGroundImageCapInsets;
     LayoutBackGroundColorType _colorType;
     TextureResType _bgImageTexType;
-    LayerColor* _colorRender;
-    LayerGradient* _gradientRender;
-    Color3B _cColor;
-    Color3B _gStartColor;
-    Color3B _gEndColor;
-    Point _alongVector;
+    cocos2d::LayerColor* _colorRender;
+    cocos2d::LayerGradient* _gradientRender;
+    cocos2d::Color3B _cColor;
+    cocos2d::Color3B _gStartColor;
+    cocos2d::Color3B _gEndColor;
+    cocos2d::Point _alongVector;
     int _cOpacity;
-    Size _backGroundImageTextureSize;
+    cocos2d::Size _backGroundImageTextureSize;
     LayoutType _layoutType;
 };
 
-class RectClippingNode : public ClippingNode
+class RectClippingNode : public cocos2d::ClippingNode
 {
 public:
     virtual ~RectClippingNode();
     virtual bool init();
     static RectClippingNode* create();
-    void setClippingSize(const Size& size);
+    void setClippingSize(const cocos2d::Size& size);
     void setClippingEnabled(bool enabled);
     virtual void visit();
     void setEnabled(bool enabled);
     bool isEnabled() const;
 protected:
-    DrawNode* m_pInnerStencil;
+    cocos2d::DrawNode* m_pInnerStencil;
     bool _enabled;
 private:
     RectClippingNode();
-    Point rect[4];
-    Size _clippingSize;
+    cocos2d::Point rect[4];
+    cocos2d::Size _clippingSize;
     bool _clippingEnabled;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__Layout__) */

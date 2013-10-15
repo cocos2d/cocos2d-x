@@ -23,9 +23,13 @@
  ****************************************************************************/
 
 #include "CCSSceneReader.h"
-#include "cocos-ext.h"
+#include "CocoStudio.h"
+#include "system/CocosGUI.h"
 
-NS_CC_EXT_BEGIN
+using namespace cocos2d;
+using namespace gui;
+
+namespace cocostudio {
 
 	SceneReader* SceneReader::s_sharedReader = NULL;
 
@@ -51,7 +55,7 @@ NS_CC_EXT_BEGIN
 			  CC_BREAK_IF(pszFileName == NULL);
               pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pszFileName, "r", &size));
               CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
-              cs::JsonDictionary *jsonDict = new cs::JsonDictionary();
+              JsonDictionary *jsonDict = new JsonDictionary();
               jsonDict->initWithDescription(pData);
               pNode = createObject(jsonDict,NULL);
               CC_SAFE_DELETE(jsonDict);
@@ -60,7 +64,7 @@ NS_CC_EXT_BEGIN
         return pNode;
 	}
 
-	Node* SceneReader::createObject(cs::JsonDictionary * inputFiles, Node* parenet)
+	Node* SceneReader::createObject(JsonDictionary * inputFiles, Node* parenet)
     {
         const char *className = inputFiles->getItemStringValue("classname"); 
         if(strcmp(className, "CCNode") == 0)
@@ -81,7 +85,7 @@ NS_CC_EXT_BEGIN
             int count = inputFiles->getArrayItemCount("components");
             for (int i = 0; i < count; i++)
             {
-                cs::JsonDictionary * subDict = inputFiles->getSubItemFromArray("components", i);
+                JsonDictionary * subDict = inputFiles->getSubItemFromArray("components", i);
                 if (!subDict)
 				{
 				   CC_SAFE_DELETE(subDict);
@@ -90,7 +94,7 @@ NS_CC_EXT_BEGIN
                 const char *comName = subDict->getItemStringValue("classname");
 				const char *pComName = subDict->getItemStringValue("name");
                 
-				cs::JsonDictionary *fileData = subDict->getSubDictionary("fileData");
+				JsonDictionary *fileData = subDict->getSubDictionary("fileData");
 				std::string pPath;
                 std::string pPlistFile;
 				int nResType = 0;
@@ -212,7 +216,7 @@ NS_CC_EXT_BEGIN
 					}
 					unsigned long size = 0;
 					const char *des = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(),"r" , &size));
-					cs::JsonDictionary *jsonDict = new cs::JsonDictionary();
+					JsonDictionary *jsonDict = new JsonDictionary();
 					jsonDict->initWithDescription(des);
 					if(NULL == des || strcmp(des, "") == 0)
 					{
@@ -220,7 +224,7 @@ NS_CC_EXT_BEGIN
 					}
 
 					int childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
-					cs::JsonDictionary* subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
+					JsonDictionary* subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
 					const char *name = DICTOOL->getStringValue_json(subData, "name");
 
 					childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
@@ -238,11 +242,11 @@ NS_CC_EXT_BEGIN
 						textupath += file_path;
 						textupath.append(textureFileName);
 
-						cocos2d::extension::armature::ArmatureDataManager::getInstance()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
+						ArmatureDataManager::getInstance()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
 
 					}
 
-					cocos2d::extension::armature::Armature *pAr = cocos2d::extension::armature::Armature::create(name);
+					Armature *pAr = Armature::create(name);
 					ComRender *pRender = ComRender::create(pAr, "CCArmature");
 					if (pComName != NULL)
 					{
@@ -315,9 +319,9 @@ NS_CC_EXT_BEGIN
                 }
 				else if(comName != NULL && strcmp(comName, "GUIComponent") == 0)
 				{
-                    cocos2d::extension::UILayer *pLayer = cocos2d::extension::UILayer::create();
+                    gui::UILayer *pLayer = gui::UILayer::create();
 					pLayer->scheduleUpdate();
-					UIWidget* widget=cocos2d::extension::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
+					UIWidget* widget= gui::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
 					pLayer->addWidget(widget);
 					ComRender *pRender = ComRender::create(pLayer, "GUIComponent");
 					if (pComName != NULL)
@@ -332,7 +336,7 @@ NS_CC_EXT_BEGIN
 
             for (int i = 0; i < inputFiles->getArrayItemCount("gameobjects"); i++)
             {
-                cs::JsonDictionary * subDict = inputFiles->getSubItemFromArray("gameobjects", i);
+                JsonDictionary * subDict = inputFiles->getSubItemFromArray("gameobjects", i);
                 if (!subDict)
                 {
                     break;
@@ -348,7 +352,7 @@ NS_CC_EXT_BEGIN
     }
 
 
-    void SceneReader::setPropertyFromJsonDict(cocos2d::Node *node, cs::JsonDictionary* dict)
+    void SceneReader::setPropertyFromJsonDict(cocos2d::Node *node, JsonDictionary* dict)
     {
 		int x = dict->getItemIntValue("x", 0);
 		int y = dict->getItemIntValue("y", 0);
@@ -384,7 +388,7 @@ NS_CC_EXT_BEGIN
     void SceneReader::purgeSceneReader()
     {
 		CC_SAFE_DELETE(s_sharedReader);
-		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
+		DictionaryHelper::shareHelper()->purgeDictionaryHelper();
     }
 
-NS_CC_EXT_END
+}

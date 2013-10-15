@@ -30,7 +30,7 @@ USING_NS_CC;
 using std::min;
 using std::max;
 
-namespace cocos2d { namespace extension {
+namespace spine {
 
 CCSkeleton* CCSkeleton::createWithData (SkeletonData* skeletonData, bool ownsSkeletonData) {
 	CCSkeleton* node = new CCSkeleton(skeletonData, ownsSkeletonData);
@@ -287,4 +287,4 @@ bool CCSkeleton::isOpacityModifyRGB () const {
 	return premultipliedAlpha;
 }
 
-}} // namespace cocos2d { namespace extension {
+} // namespace spine {
