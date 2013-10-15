@@ -65,12 +65,16 @@ PhysicsBody::PhysicsBody()
 , _info(nullptr)
 , _dynamic(true)
 , _enable(true)
+, _rotationEnable(true)
+, _gravityEnable(true)
 , _massDefault(true)
 , _momentDefault(true)
 , _mass(MASS_DEFAULT)
-, _area(0.0)
-, _density(0)
+, _area(0.0f)
+, _density(0.0f)
 , _moment(MOMENT_DEFAULT)
+, _linearDamping(0.0f)
+, _angularDamping(0.0f)
 , _tag(0)
 {
 }
@@ -102,6 +106,11 @@ PhysicsBody* PhysicsBody::create()
     
     CC_SAFE_DELETE(body);
     return nullptr;
+}
+
+void update(float delta)
+{
+    
 }
 
 PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
@@ -229,17 +238,46 @@ void PhysicsBody::setDynamic(bool dynamic)
 {
     if (dynamic != _dynamic)
     {
-        if (dynamic)
+        _dynamic = dynamic;
+        if (_world != nullptr)
         {
-            cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
-            cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
-        }else
-        {
-            cpBodySetMass(_info->body, PHYSICS_INFINITY);
-            cpBodySetMoment(_info->body, PHYSICS_INFINITY);
+            if (dynamic)
+            {
+                cpSpaceAddBody(_world->_info->space, _info->body);
+            }else
+            {
+                cpSpaceRemoveBody(_world->_info->space, _info->body);
+            }
         }
         
-        _dynamic = dynamic;
+    }
+}
+
+void PhysicsBody::setRotationEnable(bool enable)
+{
+    if (_rotationEnable != enable)
+    {
+        cpBodySetMoment(_info->body, enable ? _moment : PHYSICS_INFINITY);
+        _rotationEnable = enable;
+    }
+}
+
+void PhysicsBody::setGravityEnable(bool enable)
+{
+    if (_gravityEnable != enable)
+    {
+        _gravityEnable = enable;
+        
+        if (_world != nullptr)
+        {
+            if (enable)
+            {
+                applyForce(_world->getGravity());
+            }else
+            {
+                applyForce(-_world->getGravity());
+            }
+        }
     }
 }
 
@@ -300,7 +338,10 @@ void PhysicsBody::addShape(PhysicsShape* shape)
         addMass(shape->getMass());
         addMoment(shape->getMoment());
         
-        if (_world != nullptr) _world->addShape(shape);
+        if (_world != nullptr)
+        {
+            _world->addShape(shape);
+        }
         
         shape->retain();
     }
@@ -308,7 +349,7 @@ void PhysicsBody::addShape(PhysicsShape* shape)
 
 void PhysicsBody::applyForce(Point force)
 {
-    applyForce(force, Point());
+    applyForce(force, Point::ZERO);
 }
 
 void PhysicsBody::applyForce(Point force, Point offset)
@@ -438,7 +479,10 @@ void PhysicsBody::addMoment(float moment)
         }
     }
     
-    cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
+    if (_rotationEnable)
+    {
+        cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
+    }
 }
 
 void PhysicsBody::setVelocity(Point velocity)
@@ -451,12 +495,45 @@ Point PhysicsBody::getVelocity()
     return PhysicsHelper::cpv2point(cpBodyGetVel(_info->body));
 }
 
+void PhysicsBody::setAngularVelocity(float velocity)
+{
+    cpBodySetAngVel(_info->body, PhysicsHelper::float2cpfloat(velocity));
+}
+
+float PhysicsBody::getAngularVelocity()
+{
+    return PhysicsHelper::cpfloat2float(cpBodyGetAngVel(_info->body));
+}
+
+void PhysicsBody::setVelocityLimit(float limit)
+{
+    cpBodySetVelLimit(_info->body, PhysicsHelper::float2cpfloat(limit));
+}
+
+float PhysicsBody::getVelocityLimit()
+{
+    return PhysicsHelper::cpfloat2float(cpBodyGetVelLimit(_info->body));
+}
+
+void PhysicsBody::setAngularVelocityLimit(float limit)
+{
+    cpBodySetVelLimit(_info->body, PhysicsHelper::float2cpfloat(limit));
+}
+
+float PhysicsBody::getAngularVelocityLimit()
+{
+    return PhysicsHelper::cpfloat2float(cpBodyGetAngVelLimit(_info->body));
+}
+
 void PhysicsBody::setMoment(float moment)
 {
     _moment = moment;
     _momentDefault = false;
     
-    cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
+    if (_rotationEnable)
+    {
+        cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
+    }
 }
 
 PhysicsShape* PhysicsBody::getShapeByTag(int tag)
@@ -539,6 +616,22 @@ void PhysicsBody::setEnable(bool enable)
                 _world->removeBody(this);
             }
         }
+    }
+}
+
+bool PhysicsBody::isResting()
+{
+    return cpBodyIsSleeping(_info->body) == cpTrue;
+}
+
+void PhysicsBody::update(float delta)
+{
+    // damping compute
+    if (_dynamic)
+    {
+        _info->body->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+        _info->body->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+        _info->body->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
     }
 }
 

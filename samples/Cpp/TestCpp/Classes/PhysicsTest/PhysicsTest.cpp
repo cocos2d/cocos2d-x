@@ -169,7 +169,16 @@ void PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
     
     auto sp = Sprite::createWithTexture(_spriteTexture, Rect(posx, posy, 85, 121));
     sp->setScale(scale);
-    sp->setPhysicsBody(PhysicsBody::createBox(Size(48.0f * scale, 108.0f * scale)));
+    auto body = PhysicsBody::createBox(Size(48.0f * scale, 108.0f * scale));
+    
+    static int abc = 0;
+    
+    if (abc++ > 0)
+    {
+        body->setGravityEnable(false);
+    }
+    
+    sp->setPhysicsBody(body);
     this->addChild(sp);
     sp->setPosition(p);
 #endif
