@@ -102,75 +102,6 @@
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp">
       <Filter>GUI\CCScrollView</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCBFileLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCBKeyframe.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCBReader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCBSequence.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCBSequenceProperty.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCBValue.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCControlLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLayerGradientLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLayerLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCMenuItemImageLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCNode+CCBRelativePositioning.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCNodeLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCNodeLoaderLibrary.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCParticleSystemQuadLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp">
       <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
@@ -224,9 +155,6 @@
     </ClCompile>
     <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp">
       <Filter>GUI\CCEditBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
-      <Filter>AssetsManager</Filter>
     </ClCompile>
     <ClCompile Include="..\spine\Animation.cpp">
       <Filter>spine</Filter>
@@ -298,18 +226,6 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\CCDeprecated-ext.cpp" />
-    <ClCompile Include="..\CocoStudio\Components\CCComAttribute.cpp">
-      <Filter>CocoStudio\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Components\CCComAudio.cpp">
-      <Filter>CocoStudio\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Components\CCComController.cpp">
-      <Filter>CocoStudio\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Components\CCInputDelegate.cpp">
-      <Filter>CocoStudio\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\animation\CCArmatureAnimation.cpp">
       <Filter>CocoStudio\Armature\animation</Filter>
     </ClCompile>
@@ -363,27 +279,6 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\CCBone.cpp">
       <Filter>CocoStudio\Armature</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Json\CSContentJsonDictionary.cpp">
-      <Filter>CocoStudio\Json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp">
-      <Filter>CocoStudio\Json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_value.cpp">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Components\CCComRender.cpp">
-      <Filter>CocoStudio\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDefine.cpp">
       <Filter>CocoStudio\Armature\utils</Filter>
@@ -454,9 +349,6 @@
     <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
@@ -505,9 +397,6 @@
     <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutExecutant.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
@@ -529,20 +418,128 @@
     <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
       <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp">
+    <ClCompile Include="..\assets-manager\AssetsManager.cpp">
+      <Filter>AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCBFileLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCBKeyframe.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCBReader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCBSequence.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCBSequenceProperty.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCBValue.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCControlButtonLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCControlLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCLabelBMFontLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCLabelTTFLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCLayerColorLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCLayerGradientLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCLayerLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCMenuItemImageLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCMenuItemLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCNode+CCBRelativePositioning.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCNodeLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCNodeLoaderLibrary.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCParticleSystemQuadLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCScale9SpriteLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCScrollViewLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCSpriteLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocosbuilder\CCBAnimationManager.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\action\CCActionFrame.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\CCActionManagerEx.cpp">
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\action\CCActionFrameEasing.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\CCActionNode.cpp">
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\action\CCActionManagerEx.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\CCActionObject.cpp">
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\action\CCActionNode.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Action\CCActionFrameEasing.cpp">
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\action\CCActionObject.cpp">
       <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\components\CCComAttribute.cpp">
+      <Filter>CocoStudio\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\components\CCComAudio.cpp">
+      <Filter>CocoStudio\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\components\CCComController.cpp">
+      <Filter>CocoStudio\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\components\CCComRender.cpp">
+      <Filter>CocoStudio\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\components\CCInputDelegate.cpp">
+      <Filter>CocoStudio\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\reader\CCSGUIReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\reader\CCSSceneReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\json\CSContentJsonDictionary.cpp">
+      <Filter>CocoStudio\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos\editor-support\cocostudio\json\DictionaryHelper.cpp">
+      <Filter>CocoStudio\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\jsoncpp\json_reader.cpp">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\jsoncpp\json_value.cpp">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\jsoncpp\json_writer.cpp">
+      <Filter>CocoStudio\Json\lib_json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -568,87 +565,6 @@
     </ClInclude>
     <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h">
       <Filter>GUI\CCScrollView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBAnimationManager.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBFileLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBKeyframe.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBReader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBSelectorResolver.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBSequence.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBSequenceProperty.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBValue.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCControlButtonLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCControlLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLayerColorLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLayerGradientLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLayerLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCMenuItemImageLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCMenuItemLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCMenuLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCNode+CCBRelativePositioning.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCNodeLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCNodeLoaderLibrary.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCNodeLoaderListener.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCParticleSystemQuadLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCScrollViewLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCSpriteLoader.h">
-      <Filter>CCBReader</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h">
       <Filter>GUI\CCControlExtension</Filter>
@@ -709,9 +625,6 @@
     </ClInclude>
     <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImpl.h">
       <Filter>GUI\CCEditBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\AssetsManager\AssetsManager.h">
-      <Filter>AssetsManager</Filter>
     </ClInclude>
     <ClInclude Include="..\spine\Animation.h">
       <Filter>spine</Filter>
@@ -785,18 +698,6 @@
     <ClInclude Include="..\network\SocketIO.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Components\CCComAttribute.h">
-      <Filter>CocoStudio\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Components\CCComAudio.h">
-      <Filter>CocoStudio\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Components\CCComController.h">
-      <Filter>CocoStudio\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h">
-      <Filter>CocoStudio\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\animation\CCArmatureAnimation.h">
       <Filter>CocoStudio\Armature\animation</Filter>
     </ClInclude>
@@ -853,48 +754,6 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\CCBone.h">
       <Filter>CocoStudio\Armature</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\CSContentJsonDictionary.h">
-      <Filter>CocoStudio\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h">
-      <Filter>CocoStudio\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\autolink.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\config.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\features.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\forwards.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_batchallocator.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_lib.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_tool.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\reader.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\value.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Components\CCComRender.h">
-      <Filter>CocoStudio\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
@@ -965,36 +824,174 @@
     <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h">
+    <ClInclude Include="..\assets-manager\AssetsManager.h">
+      <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCBAnimationManager.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCBFileLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCBKeyframe.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCBMemberVariableAssigner.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCBReader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCBSelectorResolver.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCBSequence.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCBSequenceProperty.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCBValue.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCControlButtonLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCControlLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCLabelBMFontLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCLabelTTFLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCLayerColorLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCLayerGradientLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCLayerLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCMenuItemImageLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCMenuItemLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCMenuLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCNode+CCBRelativePositioning.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCNodeLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCNodeLoaderLibrary.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCNodeLoaderListener.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCParticleSystemQuadLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCScale9SpriteLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCScrollViewLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocosbuilder\CCSpriteLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\action\CCActionFrame.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\action\CCActionFrameEasing.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\action\CCActionManagerEx.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\action\CCActionNode.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\action\CCActionObject.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\components\CCComAttribute.h">
+      <Filter>CocoStudio\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\components\CCComAudio.h">
+      <Filter>CocoStudio\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\components\CCComController.h">
+      <Filter>CocoStudio\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\components\CCComRender.h">
+      <Filter>CocoStudio\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\components\CCInputDelegate.h">
+      <Filter>CocoStudio\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\reader\CCSGUIReader.h">
       <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\CCActionFrame.h">
-      <Filter>CocoStudio\Action</Filter>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\reader\CCSSceneReader.h">
+      <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\CCActionFrameEasing.h">
-      <Filter>CocoStudio\Action</Filter>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\json\CSContentJsonDictionary.h">
+      <Filter>CocoStudio\Json</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\CCActionManagerEx.h">
-      <Filter>CocoStudio\Action</Filter>
+    <ClInclude Include="..\..\cocos\editor-support\cocostudio\json\DictionaryHelper.h">
+      <Filter>CocoStudio\Json</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\CCActionNode.h">
-      <Filter>CocoStudio\Action</Filter>
+    <ClInclude Include="..\..\external\jsoncpp\json_lib.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Action\CCActionObject.h">
-      <Filter>CocoStudio\Action</Filter>
+    <ClInclude Include="..\..\external\jsoncpp\json_tool.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\jsoncpp\reader.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\jsoncpp\value.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\jsoncpp\writer.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\jsoncpp\autolink.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\jsoncpp\config.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\jsoncpp\features.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\jsoncpp\forwards.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\jsoncpp\json_batchallocator.h">
+      <Filter>CocoStudio\Json\lib_json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\CocoStudio\Json\lib_json\json_internalarray.inl">
+    <None Include="..\..\external\jsoncpp\json_internalmap.inl">
       <Filter>CocoStudio\Json\lib_json</Filter>
     </None>
-    <None Include="..\CocoStudio\Json\lib_json\json_internalmap.inl">
+    <None Include="..\..\external\jsoncpp\json_valueiterator.inl">
       <Filter>CocoStudio\Json\lib_json</Filter>
     </None>
-    <None Include="..\CocoStudio\Json\lib_json\json_valueiterator.inl">
+    <None Include="..\..\external\jsoncpp\sconscript">
       <Filter>CocoStudio\Json\lib_json</Filter>
     </None>
-    <None Include="..\CocoStudio\Json\lib_json\sconscript">
+    <None Include="..\..\external\jsoncpp\json_internalarray.inl">
       <Filter>CocoStudio\Json\lib_json</Filter>
     </None>
   </ItemGroup>
