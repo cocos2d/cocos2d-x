@@ -59,7 +59,7 @@ m_WidgetType(WidgetTypeWidget),
 m_nActionTag(0),
 m_size(CCSizeZero),
 m_customSize(CCSizeZero),
-m_pLayoutParameter(NULL),
+m_pLayoutParameterDictionary(NULL),
 m_bIgnoreSize(false),
 m_children(NULL),
 m_bAffectByClipping(false),
@@ -88,7 +88,8 @@ UIWidget::~UIWidget()
 {
     releaseResoures();
     setParent(NULL);
-    CC_SAFE_RELEASE_NULL(m_pLayoutParameter);
+    m_pLayoutParameterDictionary->removeAllObjects();
+    CC_SAFE_RELEASE(m_pLayoutParameterDictionary);
     CC_SAFE_RELEASE(m_pScheduler);
 }
 
@@ -108,6 +109,8 @@ bool UIWidget::init()
 {
     m_children = CCArray::create();
     m_children->retain();
+    m_pLayoutParameterDictionary = CCDictionary::create();
+    CC_SAFE_RETAIN(m_pLayoutParameterDictionary);
     initRenderer();
     m_pRenderer->retain();
     m_pRenderer->setZOrder(m_nWidgetZOrder);
@@ -975,36 +978,12 @@ bool UIWidget::isEnabled() const
 
 float UIWidget::getLeftInParent()
 {
-    float leftPos = 0.0f;
-    switch (m_WidgetType)
-    {
-        case WidgetTypeWidget:
-            leftPos = getPosition().x - getAnchorPoint().x * m_size.width;
-            break;
-        case WidgetTypeContainer:
-            leftPos = getPosition().x;
-            break;
-        default:
-            break;
-    }
-    return leftPos;
+    return getPosition().x - getAnchorPoint().x * m_size.width;;
 }
 
 float UIWidget::getBottomInParent()
 {
-    float bottomPos = 0.0f;
-    switch (m_WidgetType)
-    {
-        case WidgetTypeWidget:
-            bottomPos = getPosition().y - getAnchorPoint().y * m_size.height;
-            break;
-        case WidgetTypeContainer:
-            bottomPos = getPosition().y;
-            break;
-        default:
-            break;
-    }
-    return bottomPos;
+    return getPosition().y - getAnchorPoint().y * m_size.height;;
 }
 
 float UIWidget::getRightInParent()
@@ -1189,17 +1168,12 @@ WidgetType UIWidget::getWidgetType() const
 
 void UIWidget::setLayoutParameter(LayoutParameter *parameter)
 {
-    if (m_pLayoutParameter)
-    {
-        CC_SAFE_RELEASE_NULL(m_pLayoutParameter);
-    }
-    m_pLayoutParameter = parameter;
-    CC_SAFE_RETAIN(m_pLayoutParameter);
+    m_pLayoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
 }
 
-LayoutParameter* UIWidget::getLayoutParameter()
+LayoutParameter* UIWidget::getLayoutParameter(LayoutParameterType type)
 {
-    return m_pLayoutParameter;
+    return dynamic_cast<LayoutParameter*>(m_pLayoutParameterDictionary->objectForKey(type));
 }
 
 const char* UIWidget::getDescription() const
