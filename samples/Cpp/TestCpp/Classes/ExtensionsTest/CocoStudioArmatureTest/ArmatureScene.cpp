@@ -1153,7 +1153,7 @@ void TestArmatureNesting2::ChangeMountCallback(CCObject* pSender)
         {
             hero->changeMount(horse2);
         }
-        else if (ccpDistance(hero->getPosition(), bear->getPosition()) < 20)
+        else if (ccpDistance(hero->getPosition(), bear->getPosition()) < 30)
         {
             hero->changeMount(bear);
         }
