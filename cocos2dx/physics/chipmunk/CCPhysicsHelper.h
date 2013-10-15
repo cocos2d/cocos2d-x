@@ -50,6 +50,8 @@ public:
         {
             points[i] = cpv2point(cpvs[i]);
         }
+        
+        return points;
     }
     
     static cpVect* points2cpvs(const Point* points, cpVect* cpvs, int count)

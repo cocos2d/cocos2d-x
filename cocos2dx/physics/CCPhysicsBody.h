@@ -109,6 +109,12 @@ public:
     
     virtual void setVelocity(Point velocity);
     virtual Point getVelocity();
+    virtual void setAngularVelocity(float velocity);
+    virtual float getAngularVelocity();
+    virtual void setVelocityLimit(float limit);
+    virtual float getVelocityLimit();
+    virtual void setAngularVelocityLimit(float limit);
+    virtual float getAngularVelocityLimit();
     
     /*
      * @brief get the body shapes.
@@ -214,12 +220,23 @@ public:
     /*
      * @brief get angular damping.
      */
-    //inline float getAngularDamping() { return _angularDamping; }
+    inline float getLinearDamping() { return _linearDamping; }
+    inline void setLinearDamping(float damping) { _linearDamping = damping; }
+    inline float getAngularDamping() { return _angularDamping; }
+    inline void setAngularDamping(float damping) { _angularDamping = damping; }
     
     //virtual Clonable* clone() const override;
     
+    bool isResting();
     inline bool isEnable() { return _enable; }
     void setEnable(bool enable);
+    
+    inline bool isRotationEnable() { return _rotationEnable; }
+    void setRotationEnable(bool enable);
+    
+    inline bool isGravityEnable() { return _gravityEnable; }
+    void setGravityEnable(bool enable);
+    
     
     inline int getTag() { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
@@ -231,6 +248,8 @@ protected:
     
     virtual void setPosition(Point position);
     virtual void setRotation(float rotation);
+    
+    virtual void update(float delta) override;
     
 protected:
     PhysicsBody();
@@ -244,13 +263,16 @@ protected:
     PhysicsBodyInfo*            _info;
     bool                        _dynamic;
     bool                        _enable;
+    bool                        _rotationEnable;
+    bool                        _gravityEnable;
     bool                        _massDefault;
     bool                        _momentDefault;
     float                       _mass;
     float                       _area;
     float                       _density;
     float                       _moment;
-    //float                       _angularDamping;
+    float                       _linearDamping;
+    float                       _angularDamping;
     int                         _tag;
     
     int    _categoryBitmask;

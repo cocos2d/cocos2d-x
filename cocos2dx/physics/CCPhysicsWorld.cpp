@@ -164,8 +164,16 @@ void PhysicsWorld::addShape(PhysicsShape* shape)
 
 void PhysicsWorld::addBody(PhysicsBody* body)
 {
+    CCASSERT(body != nullptr, "the body can not be nullptr");
+    
     if (body->isEnable())
     {
+        //is gravity enable
+        if (!body->isGravityEnable())
+        {
+            body->applyForce(-_gravity);
+        }
+        
         // add body to space
         if (body->isDynamic())
         {
@@ -191,6 +199,18 @@ void PhysicsWorld::addBody(PhysicsBody* body)
 
 void PhysicsWorld::removeBody(PhysicsBody* body)
 {
+    CCASSERT(body != nullptr, "the body can not be nullptr");
+    
+    if (body->getWorld() == this)
+    {
+        // reset the gravity
+        if (!body->isGravityEnable())
+        {
+            body->applyForce(-_gravity);
+        }
+    }
+    
+    // remove shaps
     for (auto shape : body->getShapes())
     {
         for (auto cps : shape->_info->shapes)
@@ -202,6 +222,7 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
         }
     }
     
+    // remove body
     if (cpSpaceContainsBody(_info->space, body->_info->body))
     {
         cpSpaceRemoveBody(_info->space, body->_info->body);
@@ -239,6 +260,11 @@ void PhysicsWorld::removeShape(PhysicsShape* shape)
 
 void PhysicsWorld::update(float delta)
 {
+    for (auto body : *_bodys)
+    {
+        body->update(delta);
+    }
+    
     cpSpaceStep(_info->space, delta);
     
     if (_drawNode)
@@ -370,8 +396,23 @@ void PhysicsWorld::collisionSeparateCallback(const PhysicsContact& contact)
 
 void PhysicsWorld::setGravity(Point gravity)
 {
+    if (_bodys != nullptr)
+    {
+        for (auto child : *_bodys)
+        {
+            PhysicsBody* body = dynamic_cast<PhysicsBody*>(child);
+            
+            // reset gravity for body
+            if (!body->isGravityEnable())
+            {
+                body->applyForce(-_gravity);
+                body->applyForce(gravity);
+            }
+        }
+    }
+    
     _gravity = gravity;
-    cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(_gravity));
+    cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(gravity));
 }
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)

@@ -897,7 +897,7 @@ void Node::transformAncestors()
 #ifdef CC_USE_PHYSICS
 void Node::updatePhysicsTransform()
 {
-    if (_physicsBody)
+    if (_physicsBody && _physicsBody->isEnable() && !_physicsBody->isResting())
     {
         _position = _physicsBody->getPosition();
         _rotationX = _rotationY = _physicsBody->getRotation();
