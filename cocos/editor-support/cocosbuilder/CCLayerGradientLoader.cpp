@@ -1,6 +1,6 @@
 #include "CCLayerGradientLoader.h"
 
-
+using namespace cocos2d;
 
 #define PROPERTY_STARTCOLOR "startColor"
 #define PROPERTY_ENDCOLOR "endColor"
@@ -9,7 +9,7 @@
 #define PROPERTY_VECTOR "vector"
 #define PROPERTY_BLENDFUNC "blendFunc"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 void LayerGradientLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_STARTCOLOR) == 0) {
@@ -51,4 +51,4 @@ void LayerGradientLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, co
     }
 }
 
-NS_CC_EXT_END
+}

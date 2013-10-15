@@ -27,14 +27,13 @@
 #define __UILAYER_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
-#include "../BaseClasses/UIRootWidget.h"
-#include "../System/UIInputManager.h"
+#include "base-classes/UIRootWidget.h"
+#include "system/UIInputManager.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 
-class UILayer : public Layer
+class UILayer : public cocos2d::Layer
 {
     
 public:
@@ -60,10 +59,10 @@ public:
     virtual void onExit();
     virtual void onEnterTransitionDidFinish();
     
-    virtual bool onTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void onTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void onTouchEnded(Touch *pTouch, Event *pEvent);
-    virtual void onTouchCancelled(Touch *pTouch, Event *pEvent);
+    virtual bool onTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
+    virtual void onTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
+    virtual void onTouchEnded(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
+    virtual void onTouchCancelled(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
     
     /**
      * Add a widget to UILayer, for drawing.
@@ -130,7 +129,7 @@ protected:
     UIInputManager* _inputManager;
 };
 
-NS_CC_EXT_END
+}
 
 
 

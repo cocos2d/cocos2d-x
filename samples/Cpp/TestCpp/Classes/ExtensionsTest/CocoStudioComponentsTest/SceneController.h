@@ -3,9 +3,9 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "CocoStudio.h"
 
-
-class SceneController : public cocos2d::extension::ComController
+class SceneController : public cocostudio::ComController
 {
 protected:
     SceneController(void);
@@ -32,7 +32,7 @@ public:
    
 protected:
     cocos2d::Array *_targets;
-	cocos2d::Array *_projectiles;
+	  cocos2d::Array *_projectiles;
 };
 
 

@@ -26,10 +26,10 @@ THE SOFTWARE.
 #ifndef __CCPROCESSBASE_H__
 #define __CCPROCESSBASE_H__
 
-#include "../utils/CCArmatureDefine.h"
-#include "../datas/CCDatas.h"
+#include "armature/utils/CCArmatureDefine.h"
+#include "armature/datas/CCDatas.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 enum AnimationType
 {
@@ -47,7 +47,7 @@ enum AnimationType
 };
 
 
-class  ProcessBase : public Object
+class  ProcessBase : public cocos2d::Object
 {
 public:
 	/**
@@ -169,6 +169,6 @@ protected:
     bool _isLoopBack;
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCPROCESSBASE_H__*/

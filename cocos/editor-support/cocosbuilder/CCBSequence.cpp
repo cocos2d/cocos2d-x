@@ -4,7 +4,7 @@ using namespace cocos2d;
 using namespace std;
 
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 CCBSequence::CCBSequence()
 : _duration(0.0f)
@@ -86,4 +86,4 @@ void CCBSequence::setChainedSequenceId(int nChainedSequenceId)
     mChainedSequenceId = nChainedSequenceId;
 }
 
-NS_CC_EXT_END
+}

@@ -23,9 +23,11 @@
  ****************************************************************************/
 
 #include "CCActionManagerEx.h"
-#include "../Json/DictionaryHelper.h"
+#include "json/DictionaryHelper.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace cocostudio {
 
 static ActionManagerEx* sharedActionManager = NULL;
 
@@ -55,7 +57,7 @@ ActionManagerEx::~ActionManagerEx()
     _pActionDic->release();
 }
 
-void ActionManagerEx::initWithDictionary(const char* jsonName,cs::JsonDictionary *dic,Object* root)
+void ActionManagerEx::initWithDictionary(const char* jsonName,JsonDictionary *dic,Object* root)
 {
 	std::string path = jsonName;
 	int pos = path.find_last_of("/");
@@ -66,7 +68,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,cs::JsonDictionary
     for (int i=0; i<actionCount; i++) {
         ActionObject* action = new ActionObject();
 		action->autorelease();
-        cs::JsonDictionary* actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
+        JsonDictionary* actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
         action->initWithDictionary(actionDic,root);
         actionList->addObject(action);
 		CC_SAFE_DELETE(actionDic);
@@ -108,4 +110,4 @@ void ActionManagerEx::releaseActions()
 
 }
 
-NS_CC_EXT_END
+}

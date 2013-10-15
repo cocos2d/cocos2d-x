@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include <math.h>
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 enum CCTweenType
 {
@@ -131,6 +131,6 @@ public:
 };
 
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCTWEENFUNCTION_H__*/

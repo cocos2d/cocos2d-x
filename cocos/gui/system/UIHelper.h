@@ -26,12 +26,12 @@
 #define __UIHELPER_H__
 
 #include "UIInputManager.h"
-#include "../../Json/CSContentJsonDictionary.h"
+#include "json/CSContentJsonDictionary.h"
 
 
-#define CCUIHELPER cocos2d::extension::UIHelper::instance()
+#define CCUIHELPER gui::UIHelper::instance()
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 class UIHelper
 {
@@ -116,9 +116,9 @@ protected:
     float _fileDesignWidth;
     float _fileDesignHeight;
     //texture
-    Array* _textureFiles;
+    cocos2d::Array* _textureFiles;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CocoGUI__UISystem__) */

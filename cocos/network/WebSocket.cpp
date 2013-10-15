@@ -37,7 +37,9 @@
 
 #include "libwebsockets.h"
 
-NS_CC_EXT_BEGIN
+using namespace cocos2d;
+
+namespace network {
 
 class WsMessage
 {
@@ -645,4 +647,4 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
     }
 }
 
-NS_CC_EXT_END
+}

@@ -25,18 +25,18 @@ THE SOFTWARE.
 #ifndef __CCDECORATIVEDISPLAY_H__
 #define __CCDECORATIVEDISPLAY_H__
 
-#include "../utils/CCArmatureDefine.h"
+#include "armature/utils/CCArmatureDefine.h"
 #include "CCDisplayFactory.h"
-#include "../datas/CCDatas.h"
+#include "armature/datas/CCDatas.h"
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 #include "../physics/CCColliderDetector.h"
 #endif
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
-class  DecorativeDisplay: public Object
+class  DecorativeDisplay: public cocos2d::Object
 {
 public:
     static DecorativeDisplay *create();
@@ -55,7 +55,7 @@ public:
 
 protected:
 
-    CC_SYNTHESIZE_RETAIN(Node *, _display, Display);
+    CC_SYNTHESIZE_RETAIN(cocos2d::Node *, _display, Display);
     CC_SYNTHESIZE_RETAIN(DisplayData *, _displayData, DisplayData);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
@@ -63,6 +63,6 @@ protected:
 #endif
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCDECORATIVEDISPLAY_H__*/

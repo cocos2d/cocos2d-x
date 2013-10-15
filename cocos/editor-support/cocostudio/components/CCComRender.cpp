@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCComRender.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 ComRender::ComRender(void)
 : _render(NULL)
@@ -76,4 +76,4 @@ ComRender* ComRender::create(cocos2d::Node *pNode, const char *comName)
 	return pRet;
 }
 
-NS_CC_EXT_END
+}

@@ -23,12 +23,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDisplayManager.h"
-#include "../CCBone.h"
-#include "../CCArmature.h"
-#include "../utils/CCUtilMath.h"
-#include "../display/CCSkin.h"
+#include "armature/CCBone.h"
+#include "armature/CCArmature.h"
+#include "armature/utils/CCUtilMath.h"
+#include "armature/display/CCSkin.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 DisplayManager *DisplayManager::create(Bone *bone)
 {
@@ -392,4 +394,4 @@ Point DisplayManager::getAnchorPointInPoints()
 }
 
 
-NS_CC_EXT_ARMATURE_END
+}

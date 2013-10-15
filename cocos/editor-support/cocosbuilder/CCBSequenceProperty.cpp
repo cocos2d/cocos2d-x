@@ -3,7 +3,7 @@
 using namespace cocos2d;
 using namespace std;
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 CCBSequenceProperty::CCBSequenceProperty()
 : _name("")
@@ -50,4 +50,4 @@ Array* CCBSequenceProperty::getKeyframes()
     return _keyframes;
 }
 
-NS_CC_EXT_END
+}

@@ -3,9 +3,9 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "CocoStudio.h"
 
-
-class ProjectileController : public cocos2d::extension::ComController
+class ProjectileController : public cocostudio::ComController
 {
 protected:
     ProjectileController(void);

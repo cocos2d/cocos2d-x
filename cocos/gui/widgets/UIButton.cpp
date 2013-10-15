@@ -23,9 +23,12 @@
  ****************************************************************************/
 
 #include "UIButton.h"
-#include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "GUI/CCControlExtension/CCScale9Sprite.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+ using namespace cocos2d::extension;
+
+namespace gui {
 
 #define NORMALRENDERERZ (0)
 #define PRESSEDRENDERERZ (0)
@@ -614,4 +617,4 @@ const char* UIButton::getDescription() const
     return "Button";
 }
 
-NS_CC_EXT_END
+}

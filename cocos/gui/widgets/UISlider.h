@@ -25,16 +25,16 @@
 #ifndef __UISLIDER_H__
 #define __UISLIDER_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "base-classes/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 typedef enum
 {
     SLIDER_PERCENTCHANGED
 }SliderEventType;
 
-typedef void (CCObject::*SEL_SlidPercentChangedEvent)(Object*,SliderEventType);
+typedef void (cocos2d::CCObject::*SEL_SlidPercentChangedEvent)(cocos2d::Object*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
 class UISlider : public UIWidget
@@ -76,21 +76,21 @@ public:
      *
      * @param capInsets    capinsets for slider
      */
-    void setCapInsets(const Rect &capInsets);
+    void setCapInsets(const cocos2d::Rect &capInsets);
     
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
      * @param capInsets    capinsets for slider
      */
-    void setCapInsetsBarRenderer(const Rect &capInsets);
+    void setCapInsetsBarRenderer(const cocos2d::Rect &capInsets);
     
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
      * @param capInsets    capinsets for slider
      */
-    void setCapInsetProgressBarRebderer(const Rect &capInsets);
+    void setCapInsetProgressBarRebderer(const cocos2d::Rect &capInsets);
     
     /**
      * Load textures for slider ball.
@@ -158,25 +158,25 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addEventListener(Object* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListener(cocos2d::Object* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const Point &touchPoint);
+    virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
     
     //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const Point &touchPoint);
+    virtual void onTouchMoved(const cocos2d::Point &touchPoint);
     
     //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const Point &touchPoint);
+    virtual void onTouchEnded(const cocos2d::Point &touchPoint);
     
     //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const Point &touchPoint);
+    virtual void onTouchCancelled(const cocos2d::Point &touchPoint);
     
     //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const;
     
     //override "getVirtualRenderer" method of widget.
-    virtual Node* getVirtualRenderer();
+    virtual cocos2d::Node* getVirtualRenderer();
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
@@ -196,14 +196,14 @@ protected:
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
 protected:
-    Node*  _barRenderer;
-    Node* _progressBarRenderer;
-    Size _progressBarTextureSize;
+    cocos2d::Node*  _barRenderer;
+    cocos2d::Node* _progressBarRenderer;
+    cocos2d::Size _progressBarTextureSize;
     
-    Sprite* _slidBallNormalRenderer;
-    Sprite* _slidBallPressedRenderer;
-    Sprite* _slidBallDisabledRenderer;
-    Node* _slidBallRenderer;
+    cocos2d::Sprite* _slidBallNormalRenderer;
+    cocos2d::Sprite* _slidBallPressedRenderer;
+    cocos2d::Sprite* _slidBallDisabledRenderer;
+    cocos2d::Node* _slidBallRenderer;
     
     float _barLength;
     int _percent;
@@ -216,10 +216,10 @@ protected:
     std::string _slidBallPressedTextureFile;
     std::string _slidBallDisabledTextureFile;
 
-    Rect _capInsetsBarRenderer;
-    Rect _capInsetsProgressBarRenderer;
+    cocos2d::Rect _capInsetsBarRenderer;
+    cocos2d::Rect _capInsetsProgressBarRenderer;
 
-    Object*       _slidPercentListener;
+    cocos2d::Object*       _slidPercentListener;
     SEL_SlidPercentChangedEvent    _slidPercentSelector;
     TextureResType _barTexType;
     TextureResType _progressBarTexType;
@@ -228,6 +228,6 @@ protected:
     TextureResType _ballDTexType;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CocoGUI__UISlider__) */

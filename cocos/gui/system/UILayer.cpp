@@ -25,7 +25,9 @@
 #include "UILayer.h"
 #include "UIHelper.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace gui {
 
 UILayer::UILayer():
 _rootWidget(NULL),
@@ -162,4 +164,4 @@ void UILayer::onTouchCancelled(Touch *pTouch, Event *pEvent)
     _inputManager->onTouchCancelled(pTouch);
 }
 
-NS_CC_EXT_END
+}

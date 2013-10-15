@@ -24,7 +24,9 @@
 
 #include "UICheckBox.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace gui {
 
 UICheckBox::UICheckBox():
 _backGroundBoxRenderer(NULL),
@@ -461,4 +463,4 @@ const char* UICheckBox::getDescription() const
     return "CheckBox";
 }
 
-NS_CC_EXT_END
+}

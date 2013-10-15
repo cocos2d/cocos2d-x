@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "utils/CCTransformHelp.h"
 #include "display/CCDisplayManager.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 Bone *Bone::create()
 {
@@ -373,4 +375,4 @@ Array *Bone::getColliderBodyList()
 }
 
 
-NS_CC_EXT_ARMATURE_END
+}

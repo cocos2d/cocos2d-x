@@ -28,9 +28,11 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "../../testBasic.h"
+#include "system/CocosGUI.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
+using namespace gui;
 
 class CocosGUITestScene : public TestScene
 {

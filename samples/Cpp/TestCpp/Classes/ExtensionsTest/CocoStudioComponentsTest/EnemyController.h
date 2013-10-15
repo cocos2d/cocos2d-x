@@ -3,9 +3,10 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "CocoStudio.h"
 
 
-class EnemyController : public cocos2d::extension::ComController
+class EnemyController : public cocostudio::ComController
 {
 protected:
     EnemyController(void);

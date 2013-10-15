@@ -25,7 +25,9 @@ THE SOFTWARE.
 #include "CCTransformHelp.h"
 #include "CCUtilMath.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 AffineTransform TransformHelp::helpMatrix1;
 AffineTransform TransformHelp::helpMatrix2;
@@ -149,4 +151,4 @@ void TransformHelp::nodeSub(BaseData &target, BaseData &source)
     target.scaleY -= source.scaleY;
 }
 
-NS_CC_EXT_ARMATURE_END
+}

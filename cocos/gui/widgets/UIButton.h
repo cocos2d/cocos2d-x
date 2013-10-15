@@ -25,9 +25,9 @@
 #ifndef __UIBUTTON_H__
 #define __UIBUTTON_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "base-classes/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 class UIButton : public UIWidget
 {
@@ -92,31 +92,31 @@ public:
      *
      * @param capInsets    capinsets for button
      */
-    void setCapInsets(const Rect &capInsets);
+    void setCapInsets(const cocos2d::Rect &capInsets);
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
      * @param capInsets    capinsets for button
      */
-    void setCapInsetsNormalRenderer(const Rect &capInsets);
+    void setCapInsetsNormalRenderer(const cocos2d::Rect &capInsets);
     
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
      * @param capInsets    capinsets for button
      */
-    void setCapInsetsPressedRenderer(const Rect &capInsets);
+    void setCapInsetsPressedRenderer(const cocos2d::Rect &capInsets);
     
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
      * @param capInsets    capinsets for button
      */
-    void setCapInsetsDisabledRenderer(const Rect &capInsets);
+    void setCapInsetsDisabledRenderer(const cocos2d::Rect &capInsets);
     
     //override "setAnchorPoint" of widget.
-    virtual void setAnchorPoint(const Point &pt);
+    virtual void setAnchorPoint(const cocos2d::Point &pt);
     
     /**
      * Sets if button is using scale9 renderer.
@@ -148,10 +148,10 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
     //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const;
     
     //override "getVirtualRenderer" method of widget.
-    virtual Node* getVirtualRenderer();
+    virtual cocos2d::Node* getVirtualRenderer();
     
     /**
      * Sets color to widget
@@ -160,12 +160,12 @@ public:
      *
      * @param color
      */
-    virtual void setColor(const Color3B &color);
+    virtual void setColor(const cocos2d::Color3B &color);
     
     void setTitleText(const char* text);
     const char* getTitleText() const;
-    void setTitleColor(const Color3B& color);
-    const Color3B& getTitleColor() const;
+    void setTitleColor(const cocos2d::Color3B& color);
+    const cocos2d::Color3B& getTitleColor() const;
     void setTitleFontSize(float size);
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
@@ -187,28 +187,28 @@ protected:
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
 protected:
-    Node* _buttonNormalRenderer;
-    Node* _buttonClickedRenderer;
-    Node* _buttonDisableRenderer;
-    LabelTTF* _titleRenderer;
+    cocos2d::Node* _buttonNormalRenderer;
+    cocos2d::Node* _buttonClickedRenderer;
+    cocos2d::Node* _buttonDisableRenderer;
+    cocos2d::LabelTTF* _titleRenderer;
     std::string _normalFileName;
     std::string _clickedFileName;
     std::string _disabledFileName;
     bool _prevIgnoreSize;
     bool _scale9Enabled;
-    Rect _capInsetsNormal;
-    Rect _capInsetsPressed;
-    Rect _capInsetsDisabled;
+    cocos2d::Rect _capInsetsNormal;
+    cocos2d::Rect _capInsetsPressed;
+    cocos2d::Rect _capInsetsDisabled;
     TextureResType _normalTexType;
     TextureResType _pressedTexType;
     TextureResType _disabledTexType;
-    Size _normalTextureSize;
-    Size _pressedTextureSize;
-    Size _disabledTextureSize;
+    cocos2d::Size _normalTextureSize;
+    cocos2d::Size _pressedTextureSize;
+    cocos2d::Size _disabledTextureSize;
     bool _pressedActionEnabled;
-    Color3B _titleColor;
+    cocos2d::Color3B _titleColor;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CocoGUI__UIButton__) */

@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __CCBATCHNODE_H__
 #define __CCBATCHNODE_H__
 
-#include "../utils/CCArmatureDefine.h"
+#include "armature/utils/CCArmatureDefine.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
-class BatchNode : public Node
+class BatchNode : public cocos2d::Node
 {
 public:
     static BatchNode *create();
@@ -40,14 +40,14 @@ public:
     BatchNode();
 
     virtual bool init();
-    virtual void addChild(Node *child, int zOrder, int tag);
+    virtual void addChild(cocos2d::Node *child, int zOrder, int tag);
     virtual void visit();
     void draw();
 
 protected:
-    TextureAtlas *_atlas;
+    cocos2d::TextureAtlas *_atlas;
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCBATCHNODE_H__*/

@@ -23,8 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCComAttribute.h"
+using namespace cocos2d;
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 ComAttribute::ComAttribute(void)
 : _attributes(NULL)
@@ -44,7 +45,7 @@ bool ComAttribute::init()
     _attributes = Dictionary::create();
     _attributes->retain();
 
-	_jsonDict = new cs::JsonDictionary();
+	_jsonDict = new JsonDictionary();
     return true;
 }
 
@@ -184,9 +185,9 @@ Object* ComAttribute::getObject(const char *key) const
     return _attributes->objectForKey(key);
 }
 
-cs::JsonDictionary* ComAttribute::getDict() const
+JsonDictionary* ComAttribute::getDict() const
 {
 	return _jsonDict;
 }
 
-NS_CC_EXT_END
+}
