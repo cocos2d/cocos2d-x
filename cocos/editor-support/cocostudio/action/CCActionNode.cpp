@@ -24,11 +24,14 @@ THE SOFTWARE.
 
 #include "CCActionNode.h"
 #include "CCActionFrameEasing.h"
-#include "../GUI/BaseClasses/UIWidget.h"
-#include "../GUI/System/UIHelper.h"
-#include "../Json/DictionaryHelper.h"
+#include "base-classes/UIWidget.h"
+#include "system/UIHelper.h"
+#include "json/DictionaryHelper.h"
 
-NS_CC_EXT_BEGIN
+using namespace cocos2d;
+using namespace gui;
+
+namespace cocostudio {
 
 	ActionNode::ActionNode()
 	: _currentFrameIndex(0)
@@ -70,13 +73,13 @@ ActionNode::~ActionNode()
 	}
 }
 
-void ActionNode::initWithDictionary(cs::JsonDictionary *dic,Object* root)
+void ActionNode::initWithDictionary(JsonDictionary *dic,Object* root)
 {
 	setActionTag(DICTOOL->getIntValue_json(dic, "ActionTag"));
 	int actionFrameCount = DICTOOL->getArrayCount_json(dic, "actionframelist");
 	for (int i=0; i<actionFrameCount; i++) {
 
-		cs::JsonDictionary* actionFrameDic = DICTOOL->getDictionaryFromArray_json(dic, "actionframelist", i);
+		JsonDictionary* actionFrameDic = DICTOOL->getDictionaryFromArray_json(dic, "actionframelist", i);
 		int frameInex = DICTOOL->getIntValue_json(actionFrameDic,"frameid");
 
 		bool existPosition = DICTOOL->checkObjectExist_json(actionFrameDic,"positionx");
@@ -477,4 +480,4 @@ void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* destF
 	cAction->update(delayTime);
 }
 
-NS_CC_EXT_END
+}

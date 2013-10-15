@@ -27,9 +27,10 @@
 #define SPINE_CCSKELETON_H_
 
 #include <spine/spine.h>
+ #include "RegionAttachment.h"
 #include "cocos2d.h"
 
-namespace cocos2d { namespace extension {
+namespace spine {
 
 /**
 Draws a skeleton.
@@ -107,6 +108,6 @@ private:
 	void initialize ();
 };
 
-}} // namespace cocos2d { namespace extension {
+} // namespace spine {
 
 #endif /* SPINE_CCSKELETON_H_ */

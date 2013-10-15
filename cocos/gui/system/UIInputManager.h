@@ -26,9 +26,9 @@
 #define __UIINPUTMANAGER_H__
 
 #include "cocos2d.h"
-#include "../Layouts/Layout.h"
+#include "layouts/Layout.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 class UIInputManager
 {
@@ -64,34 +64,34 @@ public:
      *
      * @return true that find a widget selected, false otherwise.
      */
-    bool checkEventWidget(const Point &touchPoint);
+    bool checkEventWidget(const cocos2d::Point &touchPoint);
     
     
     void update(float dt);
-    bool onTouchBegan(Touch* touch);
-    void onTouchMoved(Touch* touch);
-    void onTouchEnd(Touch* touch);
-    void onTouchCancelled(Touch* touch);
+    bool onTouchBegan(cocos2d::Touch* touch);
+    void onTouchMoved(cocos2d::Touch* touch);
+    void onTouchEnd(cocos2d::Touch* touch);
+    void onTouchCancelled(cocos2d::Touch* touch);
     
     void setRootWidget(UIWidget* root);
     UIWidget* getRootWidget();
     void addCheckedDoubleClickWidget(UIWidget* widget);
 protected:
-    bool checkTouchEvent(UIWidget* root, const Point& touchPoint);
+    bool checkTouchEvent(UIWidget* root, const cocos2d::Point& touchPoint);
 protected:
-    Array* _manageredWidget;
-    Array* _selectedWidgets;
-    Point _touchBeganedPoint;
-    Point _touchMovedPoint;
-    Point _touchEndedPoint;
-    Point _touchCanceledPoint;
+    cocos2d::Array* _manageredWidget;
+    cocos2d::Array* _selectedWidgets;
+    cocos2d::Point _touchBeganedPoint;
+    cocos2d::Point _touchMovedPoint;
+    cocos2d::Point _touchEndedPoint;
+    cocos2d::Point _touchCanceledPoint;
     bool _touchDown;
     float _longClickTime;
     float _longClickRecordTime;
-    Array* _checkedDoubleClickWidget;
+    cocos2d::Array* _checkedDoubleClickWidget;
     UIWidget* _rootWidget;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CocoGUI__UIInputManager__) */

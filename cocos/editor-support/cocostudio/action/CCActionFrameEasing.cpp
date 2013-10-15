@@ -24,8 +24,8 @@
 
 #include <math.h>
 #include "CCActionFrameEasing.h"
-#include "../Json/DictionaryHelper.h"
-NS_CC_EXT_BEGIN
+#include "json/DictionaryHelper.h"
+namespace cocostudio {
 
 #ifndef M_PI_X_2
 #define M_PI_X_2 (float)M_PI * 2.0f
@@ -186,4 +186,4 @@ float ActionFrameEasing::easeValue(float t)
 	return 0;
 }
 
-NS_CC_EXT_END
+}

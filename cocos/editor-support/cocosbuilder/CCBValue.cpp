@@ -1,6 +1,8 @@
 #include "CCBValue.h"
 
-NS_CC_EXT_BEGIN
+using namespace cocos2d;
+
+namespace cocosbuilder {
 
 // Implementation of Color3BWapper
 
@@ -154,4 +156,4 @@ CCBValue::Type CCBValue::getType()
     return _type;
 }
 
-NS_CC_EXT_END
+}

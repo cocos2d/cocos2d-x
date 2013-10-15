@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCColliderDetector.h"
-#include "../CCBone.h"
-#include "../utils/CCTransformHelp.h"
+#include "armature/CCBone.h"
+#include "armature/utils/CCTransformHelp.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
@@ -32,8 +32,9 @@ THE SOFTWARE.
 #include "chipmunk.h"
 #endif
 
+using namespace cocos2d;
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
@@ -393,4 +394,4 @@ cpBody *ColliderDetector::getBody()
 #endif
 
 
-NS_CC_EXT_ARMATURE_END
+}

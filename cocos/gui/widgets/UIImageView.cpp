@@ -23,9 +23,12 @@
  ****************************************************************************/
 
 #include "UIImageView.h"
-#include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "GUI/CCControlExtension/CCScale9Sprite.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+ using namespace cocos2d::extension;
+
+namespace gui {
 
 #define DYNAMIC_CAST_CCSPRITE dynamic_cast<cocos2d::Sprite*>(_imageRenderer)
 #define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<cocos2d::extension::Scale9Sprite*>(_imageRenderer)
@@ -373,4 +376,4 @@ const char* UIImageView::getDescription() const
     return "ImageView";
 }
 
-NS_CC_EXT_END
+}

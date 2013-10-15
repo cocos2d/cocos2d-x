@@ -23,12 +23,14 @@
  ****************************************************************************/
 
 #include "UIHelper.h"
-#include "../../Json/DictionaryHelper.h"
+#include "json/DictionaryHelper.h"
 #include "cocos2d.h"
-#include "../../Reader/CCSGUIReader.h"
+#include "reader/CCSGUIReader.h"
 
+using namespace cocos2d;
+using namespace cocostudio;
 
-NS_CC_EXT_BEGIN
+namespace gui {
     
 static UIHelper* helperInstance = NULL;
 
@@ -59,7 +61,7 @@ _fileDesignWidth(0.0f)
 
 UIHelper::~UIHelper()
 {
-    cocos2d::extension::CCSGUIReader::purgeCCSGUIReader();
+    cocostudio::CCSGUIReader::purgeCCSGUIReader();
 }
 
 void UIHelper::init()
@@ -238,4 +240,4 @@ UIWidget* UIHelper::seekActionWidgetByActionTag(UIWidget* root, int tag)
 	return NULL;
 }
 
-NS_CC_EXT_END
+}

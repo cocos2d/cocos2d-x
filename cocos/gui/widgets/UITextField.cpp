@@ -24,7 +24,9 @@
 
 #include "UITextField.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace gui {
 
 UICCTextField::UICCTextField()
 : m_bMaxLengthEnabled(false)
@@ -565,4 +567,4 @@ const char* UITextField::getDescription() const
     return "TextField";
 }
 
-NS_CC_EXT_END
+}

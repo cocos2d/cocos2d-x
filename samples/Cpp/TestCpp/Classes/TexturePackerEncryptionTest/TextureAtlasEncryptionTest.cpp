@@ -1,6 +1,6 @@
 #include "TextureAtlasEncryptionTest.h"
 #include "../testResource.h"
-#include "support/zip_support/ZipUtils.h"
+#include "ZipUtils.h"
 
 std::string TextureAtlasEncryptionDemo::title()
 {

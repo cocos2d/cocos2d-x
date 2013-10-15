@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __CCDATAREADERHELPER_H__
 
 #include "CCArmatureDefine.h"
-#include "../datas/CCDatas.h"
-#include "../CCArmature.h"
-#include "../../Json/CSContentJsonDictionary.h"
+#include "armature/datas/CCDatas.h"
+#include "armature/CCArmature.h"
+#include "json/CSContentJsonDictionary.h"
 
 #include <string>
 #include <queue>
@@ -41,10 +41,10 @@ namespace tinyxml2
     class XMLElement;
 }
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 
-class  DataReaderHelper : Object
+class  DataReaderHelper : cocos2d::Object
 {
 protected:
 
@@ -60,8 +60,8 @@ protected:
 		std::string    fileContent;
 		ConfigType     configType;
 		std::string    baseFilePath;
-		Object       *target;
-		SEL_SCHEDULE   selector;
+		cocos2d::Object       *target;
+		cocos2d::SEL_SCHEDULE   selector;
 		bool           autoLoadSpriteFile;
 	} AsyncStruct;
 
@@ -99,7 +99,7 @@ public:
     ~DataReaderHelper();
 
     void addDataFromFile(const char *filePath);
-    void addDataFromFileAsync(const char *filePath, Object *target, SEL_SCHEDULE selector);
+    void addDataFromFileAsync(const char *filePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
 
     void addDataAsyncCallBack(float dt);
 
@@ -145,20 +145,20 @@ public:
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
 
-    static ArmatureData *decodeArmature(cs::JsonDictionary &json);
-    static BoneData *decodeBone(cs::JsonDictionary &json);
-    static DisplayData *decodeBoneDisplay(cs::JsonDictionary &json);
+    static ArmatureData *decodeArmature(JsonDictionary &json);
+    static BoneData *decodeBone(JsonDictionary &json);
+    static DisplayData *decodeBoneDisplay(JsonDictionary &json);
 
-    static AnimationData *decodeAnimation(cs::JsonDictionary &json);
-    static MovementData *decodeMovement(cs::JsonDictionary &json);
-    static MovementBoneData *decodeMovementBone(cs::JsonDictionary &json);
-    static FrameData *decodeFrame(cs::JsonDictionary &json);
+    static AnimationData *decodeAnimation(JsonDictionary &json);
+    static MovementData *decodeMovement(JsonDictionary &json);
+    static MovementBoneData *decodeMovementBone(JsonDictionary &json);
+    static FrameData *decodeFrame(JsonDictionary &json);
 
-    static TextureData *decodeTexture(cs::JsonDictionary &json);
+    static TextureData *decodeTexture(JsonDictionary &json);
 
-    static ContourData *decodeContour(cs::JsonDictionary &json);
+    static ContourData *decodeContour(JsonDictionary &json);
 
-    static void decodeNode(BaseData *node, cs::JsonDictionary &json);
+    static void decodeNode(BaseData *node, JsonDictionary &json);
 
 protected:
 	void loadData();
@@ -190,6 +190,6 @@ protected:
     static DataReaderHelper *_dataReaderHelper;
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCDATAREADERHELPER_H__*/

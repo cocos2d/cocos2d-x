@@ -24,7 +24,9 @@
 
 #include "UILabelAtlas.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace gui {
 
 UICCLabelAtlas::UICCLabelAtlas()
 {
@@ -172,4 +174,4 @@ const char* UILabelAtlas::getDescription() const
     return "LabelAtlase";
 }
 
-NS_CC_EXT_END
+}

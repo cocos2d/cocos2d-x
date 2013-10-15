@@ -1,6 +1,6 @@
 #include "CCParticleSystemQuadLoader.h"
 
-
+using namespace cocos2d;
 
 #define PROPERTY_EMITERMODE "emitterMode"
 #define PROPERTY_POSVAR "posVar"
@@ -25,7 +25,7 @@
 #define PROPERTY_ENDRADIUS "endRadius"
 #define PROPERTY_ROTATEPERSECOND "rotatePerSecond"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 void ParticleSystemQuadLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_EMITERMODE) == 0) {
@@ -133,4 +133,4 @@ void ParticleSystemQuadLoader::onHandlePropTypeTexture(Node * pNode, Node * pPar
     }
 }
 
-NS_CC_EXT_END
+}

@@ -23,11 +23,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCSkin.h"
-#include "../utils/CCTransformHelp.h"
-#include "../utils/CCSpriteFrameCacheHelper.h"
-#include "../CCArmature.h"
+#include "armature/utils/CCTransformHelp.h"
+#include "armature/utils/CCSpriteFrameCacheHelper.h"
+#include "armature/CCArmature.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 #if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -201,4 +203,4 @@ AffineTransform Skin::getNodeToWorldTransformAR() const
     return AffineTransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
 }
 
-NS_CC_EXT_ARMATURE_END
+}

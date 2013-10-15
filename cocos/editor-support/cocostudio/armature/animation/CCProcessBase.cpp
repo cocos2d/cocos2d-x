@@ -23,9 +23,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCProcessBase.h"
-#include "../utils/CCUtilMath.h"
+#include "armature/utils/CCUtilMath.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 ProcessBase::ProcessBase(void)
     : _processScale(1)
@@ -149,4 +151,4 @@ int ProcessBase::getCurrentFrameIndex()
     return _curFrameIndex;
 }
 
-NS_CC_EXT_ARMATURE_END
+}

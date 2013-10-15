@@ -28,11 +28,11 @@
 #define COCOSTUDIO_CSCONTENTJSONDICTIONARY_H
 
 
-#include "lib_json/json_lib.h"
+#include "json.h"
 #include <vector>
 #include <string>
 
-namespace cs {
+namespace cocostudio {
 
     typedef enum _DicItemType
     {
@@ -90,12 +90,12 @@ namespace cs {
         std::vector<std::string> getAllMemberNames();
 
     protected:
-        CSJson::Value m_cValue;
+        Json::Value m_cValue;
 
     private:
-        void initWithValue(CSJson::Value& value);
-        inline bool isKeyValidate(const char *pszKey, CSJson::Value& root);
-        inline CSJson::Value * validateArrayItem(const char *pszArrayKey, int nIndex);
+        void initWithValue(Json::Value& value);
+        inline bool isKeyValidate(const char *pszKey, Json::Value& root);
+        inline Json::Value * validateArrayItem(const char *pszArrayKey, int nIndex);
     };
 
 }

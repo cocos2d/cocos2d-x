@@ -28,11 +28,13 @@
  ****************************************************************************/
 
 #include "SocketIO.h"
-#include "cocos-ext.h"
-#include "network/WebSocket.h"
+#include "WebSocket.h"
+#include "HttpClient.h"
 #include <algorithm>
 
-NS_CC_EXT_BEGIN
+using namespace cocos2d;
+
+namespace network {
 
 //class declarations
 
@@ -41,7 +43,7 @@ NS_CC_EXT_BEGIN
  *		   Clients/endpoints may share the same impl to accomplish multiplexing on the same websocket
  */
 class SIOClientImpl : 
-	public Object, 
+	public cocos2d::Object, 
 	public WebSocket::Delegate
 {
 private: 
@@ -51,7 +53,7 @@ private:
 
 	WebSocket *_ws;
 
-	Dictionary* _clients;
+	cocos2d::Dictionary* _clients;
 
 public:
 	SIOClientImpl(const std::string& host, int port);
@@ -59,10 +61,10 @@ public:
 
 	static SIOClientImpl* create(const std::string& host, int port);
 	
-	virtual void onOpen(cocos2d::extension::WebSocket* ws);
-    virtual void onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data);
-    virtual void onClose(cocos2d::extension::WebSocket* ws);
-    virtual void onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error);
+	virtual void onOpen(WebSocket* ws);
+    virtual void onMessage(WebSocket* ws, const WebSocket::Data& data);
+    virtual void onClose(WebSocket* ws);
+    virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error);
 
 	void connect();
 	void disconnect();
@@ -350,7 +352,7 @@ void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::strin
 	_ws->send(msg);
 }
 
-void SIOClientImpl::onOpen(cocos2d::extension::WebSocket* ws)
+void SIOClientImpl::onOpen(WebSocket* ws)
 {
 	_connected = true;
 
@@ -370,7 +372,7 @@ void SIOClientImpl::onOpen(cocos2d::extension::WebSocket* ws)
 	log("SIOClientImpl::onOpen socket connected!");
 }
 
-void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data)
+void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 {
 	log("SIOClientImpl::onMessage received: %s", data.bytes);
 
@@ -467,7 +469,7 @@ void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::
 	return;
 }
 
-void SIOClientImpl::onClose(cocos2d::extension::WebSocket* ws)
+void SIOClientImpl::onClose(WebSocket* ws)
 {
 	if(_clients->count() > 0)
     {
@@ -484,7 +486,7 @@ void SIOClientImpl::onClose(cocos2d::extension::WebSocket* ws)
 	this->release();
 }
 
-void SIOClientImpl::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error)
+void SIOClientImpl::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
 {
 }
 
@@ -698,4 +700,4 @@ void SocketIO::removeSocket(const std::string& uri)
 	_sockets->removeObjectForKey(uri);
 }
 
-NS_CC_EXT_END
+}

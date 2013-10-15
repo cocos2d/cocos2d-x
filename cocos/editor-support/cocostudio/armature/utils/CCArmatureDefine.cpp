@@ -24,11 +24,11 @@ THE SOFTWARE.
 
 #include "CCArmatureDefine.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 const char *armatureVersion()
 {
     return "0.4.0.0";
 }
 
-NS_CC_EXT_ARMATURE_END
+}

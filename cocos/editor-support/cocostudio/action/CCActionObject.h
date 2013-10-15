@@ -26,13 +26,12 @@
 #define __ActionObject_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 #include "CCActionNode.h"
-#include "../Json/CSContentJsonDictionary.h"
+#include "json/CSContentJsonDictionary.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
-class ActionObject:public Object
+class ActionObject:public cocos2d::Object
 {
 public:
     
@@ -142,10 +141,10 @@ public:
 	void updateToFrameByTime(float fTime);
 
     /*init properties with a json dictionary*/
-    void initWithDictionary(cs::JsonDictionary* dic,Object* root);
+    void initWithDictionary(JsonDictionary* dic,cocos2d::Object* root);
     
 protected:
-	Array* _actionNodeList;/*actionnode*/
+	cocos2d::Array* _actionNodeList;/*actionnode*/
 	std::string _name;
 	bool _loop;
 	bool _bPause;
@@ -154,6 +153,6 @@ protected:
 	float _currentTime;
 };
 
-NS_CC_EXT_END
+}
 
 #endif

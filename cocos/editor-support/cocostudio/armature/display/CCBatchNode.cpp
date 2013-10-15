@@ -23,10 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCBatchNode.h"
-#include "../utils/CCArmatureDefine.h"
-#include "../CCArmature.h"
+#include "armature/utils/CCArmatureDefine.h"
+#include "armature/CCArmature.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 BatchNode *BatchNode::create()
 {
@@ -117,4 +119,4 @@ void BatchNode::draw()
     }
 }
 
-NS_CC_EXT_ARMATURE_END
+}
