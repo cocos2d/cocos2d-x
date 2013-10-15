@@ -198,6 +198,13 @@ public:
     
     virtual void doLayout();
     
+    /**
+     * Adds a child to the container.
+     *
+     * @param child A child widget
+     */
+    virtual bool addChild(UIWidget* child);
+    
     /*Compatible*/
     /**
      * These methods will be removed
@@ -218,6 +225,8 @@ protected:
     
     //init background image renderer.
     void addBackGroundImage();
+    
+    void supplyTheLayoutParameterLackToChild(UIWidget* child);
 protected:
     bool m_bClippingEnabled;
     
