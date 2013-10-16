@@ -40,7 +40,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
-    FileUtils::getInstance()->addSearchPath("js");
+    FileUtils::getInstance()->addSearchPath("script");
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);

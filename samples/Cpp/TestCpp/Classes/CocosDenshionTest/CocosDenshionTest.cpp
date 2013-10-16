@@ -1,7 +1,7 @@
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include "GUI/CCControlExtension/CCControlSlider.h"
+#include "extensions/GUI/CCControlExtension/CCControlSlider.h"
 
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFOR_ANDROID)
