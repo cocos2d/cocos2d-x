@@ -2,7 +2,7 @@
 #define __CCB_CCBANIMATION_MANAGER_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "extensions/ExtensionMacros.h"
 #include "CCBSequence.h"
 #include "CCBValue.h"
 #include "CCBSequenceProperty.h"

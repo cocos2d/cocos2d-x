@@ -10,7 +10,7 @@
 #define __TestCpp__CCEditBoxTest__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 class EditBoxTest : public cocos2d::Layer, public cocos2d::extension::EditBoxDelegate
 {

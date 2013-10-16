@@ -2,7 +2,7 @@
 #define _TESTHEADERLAYER_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "cocosbuilder/CocosBuilder.h"
 
 class TestHeaderLayer
