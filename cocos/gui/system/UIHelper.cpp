@@ -23,9 +23,9 @@
  ****************************************************************************/
 
 #include "UIHelper.h"
-#include "json/DictionaryHelper.h"
+#include "cocostudio/json/DictionaryHelper.h"
 #include "cocos2d.h"
-#include "reader/CCSGUIReader.h"
+#include "cocostudio/reader/CCSGUIReader.h"
 
 using namespace cocos2d;
 using namespace cocostudio;

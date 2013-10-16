@@ -23,9 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCSkin.h"
-#include "armature/utils/CCTransformHelp.h"
-#include "armature/utils/CCSpriteFrameCacheHelper.h"
-#include "armature/CCArmature.h"
+#include "cocostudio/armature/utils/CCTransformHelp.h"
+#include "cocostudio/armature/utils/CCSpriteFrameCacheHelper.h"
+#include "cocostudio/armature/CCArmature.h"
 
 using namespace cocos2d;
 

@@ -12,6 +12,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace cocosbuilder;
 
 static void removeSelector(std::string &str) {
     size_t found;
@@ -79,7 +80,7 @@ JSBool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, 
         
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
 		js_proxy_t *proxy = jsb_get_js_proxy(obj);
-		cocos2d::extension::CCBAnimationManager *node = (cocos2d::extension::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
+		cocosbuilder::CCBAnimationManager *node = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
         
         JSCCBAnimationWrapper *tmpCobj = new JSCCBAnimationWrapper();
         tmpCobj->autorelease();
@@ -103,10 +104,10 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
     jsval *argv = JS_ARGV(cx, vp);
     JSBool ok = JS_TRUE;
     JSObject *obj;
-    cocos2d::extension::CCBReader* cobj;
+    cocosbuilder::CCBReader* cobj;
     obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocos2d::extension::CCBReader *)(proxy ? proxy->ptr : NULL);
+    cobj = (cocosbuilder::CCBReader *)(proxy ? proxy->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, cobj)
     
     if (argc == 2) {
@@ -188,10 +189,10 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 	jsval *argv = JS_ARGV(cx, vp);
     JSBool ok = JS_TRUE;
 	JSObject *obj;
-	cocos2d::extension::CCBReader* cobj;
+	cocosbuilder::CCBReader* cobj;
 	obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cobj = (cocos2d::extension::CCBReader *)(proxy ? proxy->ptr : NULL);
+	cobj = (cocosbuilder::CCBReader *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, cobj)
     
 	if (argc == 2) {
@@ -277,7 +278,7 @@ JSBool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
     
     ccNodeLoaderLibrary->registerNodeLoader("", JSLayerLoader::loader());
     
-    cocos2d::extension::CCBReader * ret = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
+    CCBReader * ret = new CCBReader(ccNodeLoaderLibrary);
     ret->autorelease();
     
     jsval jsret;
@@ -287,7 +288,7 @@ JSBool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
             jsret = OBJECT_TO_JSVAL(proxy->obj);
         } else {
             // create a new js obj of that class
-            proxy = js_get_or_create_proxy<cocos2d::extension::CCBReader>(cx, ret);
+            proxy = js_get_or_create_proxy<CCBReader>(cx, ret);
             jsret = OBJECT_TO_JSVAL(proxy->obj);
         }
     } else {

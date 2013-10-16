@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include <string>
-#include "json/CSContentJsonDictionary.h"
+#include "cocostudio/json/CSContentJsonDictionary.h"
 
 namespace cocostudio {
 

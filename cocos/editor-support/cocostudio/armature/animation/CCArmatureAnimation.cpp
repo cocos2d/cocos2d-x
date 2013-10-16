@@ -23,11 +23,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCArmatureAnimation.h"
-#include "armature/CCArmature.h"
-#include "armature/CCBone.h"
-#include "armature/utils/CCArmatureDefine.h"
-#include "armature/utils/CCUtilMath.h"
-#include "armature/datas/CCDatas.h"
+#include "cocostudio/armature/CCArmature.h"
+#include "cocostudio/armature/CCBone.h"
+#include "cocostudio/armature/utils/CCArmatureDefine.h"
+#include "cocostudio/armature/utils/CCUtilMath.h"
+#include "cocostudio/armature/datas/CCDatas.h"
 
 using namespace cocos2d;
 

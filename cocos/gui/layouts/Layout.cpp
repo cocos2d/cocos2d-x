@@ -25,7 +25,7 @@
 #include "layout.h"
 #include "system/UILayer.h"
 #include "system/UIHelper.h"
-#include "GUI/CCControlExtension/CCScale9Sprite.h"
+#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
  using namespace cocos2d;
  using namespace cocos2d::extension;

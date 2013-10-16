@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
 
-USING_NS_CC_EXT;
+using namespace network;
 
 /*
  [Constructor(in DOMString url, in optional DOMString protocols)]
@@ -242,7 +242,7 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 		JSObject *obj = JS_NewObject(cx, js_cocos2dx_websocket_class, js_cocos2dx_websocket_prototype, NULL);
 		
         
-		cocos2d::extension::WebSocket* cobj = new cocos2d::extension::WebSocket();
+		WebSocket* cobj = new WebSocket();
         JSB_WebSocketDelegate* delegate = new JSB_WebSocketDelegate();
         delegate->setJSDelegate(obj);
         

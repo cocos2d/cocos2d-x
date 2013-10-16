@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
-#include "CocosBuilder.h"
+#include "cocosbuilder/CocosBuilder.h"
 
 /*
  * Note: for some pretty hard fucked up reason, the order of inheritance is important!
