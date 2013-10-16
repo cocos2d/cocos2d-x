@@ -24,7 +24,9 @@ THE SOFTWARE.
 
 #include "CCDecorativeDisplay.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 DecorativeDisplay *DecorativeDisplay::create()
 {
@@ -64,4 +66,4 @@ bool DecorativeDisplay::init()
     return true;
 }
 
-NS_CC_EXT_ARMATURE_END
+}

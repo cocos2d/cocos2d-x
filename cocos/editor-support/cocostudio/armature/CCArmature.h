@@ -35,7 +35,7 @@ THE SOFTWARE.
 class b2Body;
 struct cpBody;
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 CC_DEPRECATED_ATTRIBUTE typedef ProcessBase CCProcessBase;
 CC_DEPRECATED_ATTRIBUTE typedef BaseData CCBaseData;
@@ -66,7 +66,7 @@ CC_DEPRECATED_ATTRIBUTE typedef ArmatureAnimation CCArmatureAnimation;
 CC_DEPRECATED_ATTRIBUTE typedef Armature CCArmature;
 CC_DEPRECATED_ATTRIBUTE typedef ArmatureDataManager CCArmatureDataManager;
 
-class  Armature : public NodeRGBA, public BlendProtocol
+class  Armature : public cocos2d::NodeRGBA, public cocos2d::BlendProtocol
 {
 
 public:
@@ -139,12 +139,12 @@ public:
      * Get Armature's bone dictionary
      * @return Armature's bone dictionary
      */
-    Dictionary *getBoneDic();
+    cocos2d::Dictionary *getBoneDic();
 
     /**
      * This boundingBox will calculate all bones' boundingBox every time
      */
-    virtual Rect getBoundingBox() const;
+    virtual cocos2d::Rect getBoundingBox() const;
 
     Bone *getBoneAtPoint(float x, float y);
 
@@ -157,10 +157,10 @@ public:
     virtual void update(float dt) override;
     virtual void draw() override;
 
-    virtual const AffineTransform& getNodeToParentTransform() const override;
+    virtual const cocos2d::AffineTransform& getNodeToParentTransform() const override;
 
-    inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
-    inline const BlendFunc &getBlendFunc(void) const override{ return _blendFunc; }
+    inline void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
+    inline const cocos2d::BlendFunc &getBlendFunc(void) const override{ return _blendFunc; }
 	
 
     /**
@@ -195,7 +195,7 @@ protected:
 
     CC_SYNTHESIZE(std::string, _name, Name);
 
-    CC_SYNTHESIZE(TextureAtlas *, _atlas, TextureAtlas);
+    CC_SYNTHESIZE(cocos2d::TextureAtlas *, _atlas, TextureAtlas);
 
     CC_SYNTHESIZE(Bone *, _parentBone, ParentBone);
 
@@ -204,13 +204,13 @@ protected:
 protected:
     mutable bool _armatureTransformDirty;
 
-    Dictionary *_boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
+    cocos2d::Dictionary *_boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
 
-    Array *_topBoneList;
+    cocos2d::Array *_topBoneList;
 
-    BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
+    cocos2d::BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
-    Point _offsetPoint;
+    cocos2d::Point _offsetPoint;
 
     ArmatureAnimation *_animation;
 
@@ -221,6 +221,6 @@ protected:
 #endif
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCARMATURE_H__*/

@@ -25,9 +25,9 @@
 #ifndef __UIIMAGEVIEW_H__
 #define __UIIMAGEVIEW_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "base-classes/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 class UIImageView : public UIWidget
 {
@@ -60,7 +60,7 @@ public:
      * Updates the texture rect of the UIImageView in points.
      * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
      */
-    void setTextureRect(const Rect& rect);
+    void setTextureRect(const cocos2d::Rect& rect);
     
     /**
      * Sets if imageview is using scale9 renderer.
@@ -74,7 +74,7 @@ public:
      *
      * @param capInsets    capinsets for imageview
      */
-    void setCapInsets(const Rect &capInsets);
+    void setCapInsets(const cocos2d::Rect &capInsets);
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
@@ -89,13 +89,13 @@ public:
     virtual bool isFlipY();
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const Point &pt);
+    virtual void setAnchorPoint(const cocos2d::Point &pt);
     
     //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const Point &touchPoint);
+    virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
     
     //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const Point &touchPoint);
+    virtual void onTouchEnded(const cocos2d::Point &touchPoint);
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
@@ -105,8 +105,8 @@ public:
     void setDoubleClickEnabled(bool able);
     void doubleClickEvent();
     void checkDoubleClick(float dt);
-    virtual const Size& getContentSize() const;
-    virtual Node* getVirtualRenderer();
+    virtual const cocos2d::Size& getContentSize() const;
+    virtual cocos2d::Node* getVirtualRenderer();
     
     /**
      * Returns the "class name" of widget.
@@ -124,13 +124,13 @@ protected:
     bool _doubleClickEnabled;
     bool _scale9Enabled;
     bool _prevIgnoreSize;
-    Rect _capInsets;
-    Node* _imageRenderer;
+    cocos2d::Rect _capInsets;
+    cocos2d::Node* _imageRenderer;
     std::string _textureFile;
     TextureResType _imageTexType;
-    Size _imageTextureSize;
+    cocos2d::Size _imageTextureSize;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__CocoGUI__UIImageView__) */

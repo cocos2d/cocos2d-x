@@ -12,6 +12,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace network;
 
 SocketIOTestLayer::SocketIOTestLayer(void)
 	: _sioClient(NULL)
@@ -206,7 +207,7 @@ void SocketIOTestLayer::onMenuTestEndpointDisconnectClicked(cocos2d::Object *sen
 
 // Delegate methods
 
-void SocketIOTestLayer::onConnect(cocos2d::extension::SIOClient* client)
+void SocketIOTestLayer::onConnect(network::SIOClient* client)
 {
 	log("SocketIOTestLayer::onConnect called");
 
@@ -216,7 +217,7 @@ void SocketIOTestLayer::onConnect(cocos2d::extension::SIOClient* client)
 
 }
 
-void SocketIOTestLayer::onMessage(cocos2d::extension::SIOClient* client, const std::string& data)
+void SocketIOTestLayer::onMessage(network::SIOClient* client, const std::string& data)
 {
 	log("SocketIOTestLayer::onMessage received: %s", data.c_str());
 	
@@ -226,7 +227,7 @@ void SocketIOTestLayer::onMessage(cocos2d::extension::SIOClient* client, const s
 
 }
 
-void SocketIOTestLayer::onClose(cocos2d::extension::SIOClient* client)
+void SocketIOTestLayer::onClose(network::SIOClient* client)
 {
 	log("SocketIOTestLayer::onClose called");
 
@@ -246,7 +247,7 @@ void SocketIOTestLayer::onClose(cocos2d::extension::SIOClient* client)
 	
 }
 
-void SocketIOTestLayer::onError(cocos2d::extension::SIOClient* client, const std::string& data)
+void SocketIOTestLayer::onError(network::SIOClient* client, const std::string& data)
 {
 	log("SocketIOTestLayer::onError received: %s", data.c_str());
 

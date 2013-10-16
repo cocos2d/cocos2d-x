@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCCOLLIDERDETECTOR_H__
 #define __CCCOLLIDERDETECTOR_H__
 
-#include "../utils/CCArmatureDefine.h"
-#include "../datas/CCDatas.h"
+#include "armature/utils/CCArmatureDefine.h"
+#include "armature/datas/CCDatas.h"
 
 #ifndef PT_RATIO
 #define PT_RATIO 32
@@ -40,11 +40,11 @@ struct b2Filter;
 struct cpBody;
 struct cpShape;
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 class Bone;
 
-class ColliderBody : public Object
+class ColliderBody : public cocos2d::Object
 {
 public:
 #if ENABLE_PHYSICS_BOX2D_DETECT
@@ -70,7 +70,7 @@ private:
 /*
  *  @brief  ContourSprite used to draw the contour of the display
  */
-class ColliderDetector : public Object
+class ColliderDetector : public cocos2d::Object
 {
 public:
     static ColliderDetector *create();
@@ -90,20 +90,20 @@ public:
     virtual bool init(Bone *bone);
 
     void addContourData(ContourData *contourData);
-    void addContourDataList(Array *contourDataList);
+    void addContourDataList(cocos2d::Array *contourDataList);
 
     void removeContourData(ContourData *contourData);
     void removeAll();
 
-    void updateTransform(AffineTransform &t);
+    void updateTransform(cocos2d::AffineTransform &t);
 
     void setActive(bool active);
     bool getActive();
 
-    Array *getColliderBodyList();
+    cocos2d::Array *getColliderBodyList();
 
 protected:
-    Array *_colliderBodyList;
+    cocos2d::Array *_colliderBodyList;
     CC_SYNTHESIZE(Bone *, _bone, Bone);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
@@ -116,6 +116,6 @@ protected:
     bool _active;
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCCOLLIDERDETECTOR_H__*/

@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "CCProcessBase.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 
 enum MovementEventType
@@ -42,8 +42,8 @@ enum MovementEventType
 class Armature;
 class Bone;
 
-typedef void (Object::*SEL_MovementEventCallFunc)(Armature *, MovementEventType, const char *);
-typedef void (Object::*SEL_FrameEventCallFunc)(Bone *, const char *, int, int);
+typedef void (cocos2d::Object::*SEL_MovementEventCallFunc)(Armature *, MovementEventType, const char *);
+typedef void (cocos2d::Object::*SEL_FrameEventCallFunc)(Bone *, const char *, int, int);
 
 #define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
@@ -158,13 +158,13 @@ public:
      * Set armature's movement event callback function
      * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
      */
-    void setMovementEventCallFunc(Object *target, SEL_MovementEventCallFunc callFunc);
+    void setMovementEventCallFunc(cocos2d::Object *target, SEL_MovementEventCallFunc callFunc);
 
     /**
      * Set armature's frame event callback function
      * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
      */
-    void setFrameEventCallFunc(Object *target, SEL_FrameEventCallFunc callFunc);
+    void setFrameEventCallFunc(cocos2d::Object *target, SEL_FrameEventCallFunc callFunc);
 
 protected:
 
@@ -199,7 +199,7 @@ protected:
 
     int _toIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
-    Array *_tweenList;
+    cocos2d::Array *_tweenList;
 
 protected:
     /**
@@ -220,10 +220,10 @@ protected:
     SEL_FrameEventCallFunc _frameEventCallFunc;
 
 
-    Object *_movementEventTarget;
-    Object *_frameEventTarget;
+    cocos2d::Object *_movementEventTarget;
+    cocos2d::Object *_frameEventTarget;
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCANIMATION_H__*/

@@ -25,16 +25,16 @@ THE SOFTWARE.
 #ifndef __CCDISPLAYMANAGER_H__
 #define __CCDISPLAYMANAGER_H__
 
-#include "../utils/CCArmatureDefine.h"
-#include "../display/CCDecorativeDisplay.h"
-#include "../datas/CCDatas.h"
+#include "armature/utils/CCArmatureDefine.h"
+#include "armature/display/CCDecorativeDisplay.h"
+#include "armature/datas/CCDatas.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 class Bone;
 
 //! DisplayManager manages Bone's display
-class  DisplayManager : public Object
+class  DisplayManager : public cocos2d::Object
 {
 public:
     static DisplayManager *create(Bone *bone);
@@ -72,11 +72,11 @@ public:
      */
     void addDisplay(DisplayData *displayData, int index);
 
-    void addDisplay(Node *display, int index);
+    void addDisplay(cocos2d::Node *display, int index);
 
     void removeDisplay(int index);
 
-    Array *getDecorativeDisplayList();
+    cocos2d::Array *getDecorativeDisplayList();
 
     /**
      * Change display by index. You can just use this method to change display in the display list.
@@ -90,7 +90,7 @@ public:
     void changeDisplayByIndex(int index, bool force);
 
 
-    Node *getDisplayRenderNode();
+    cocos2d::Node *getDisplayRenderNode();
 
     int getCurrentDisplayIndex();
 
@@ -113,16 +113,16 @@ public:
      */
     virtual bool isVisible();
 
-    Size getContentSize();
-    Rect getBoundingBox();
+    cocos2d::Size getContentSize();
+    cocos2d::Rect getBoundingBox();
 
-    Point getAnchorPoint();
-    Point getAnchorPointInPoints();
+    cocos2d::Point getAnchorPoint();
+    cocos2d::Point getAnchorPointInPoints();
 
     /**
      * Check if the position is inside the bone.
      */
-    virtual bool containPoint(Point &_point);
+    virtual bool containPoint(cocos2d::Point &_point);
 
     /**
      * Check if the position is inside the bone.
@@ -130,9 +130,9 @@ public:
     virtual bool containPoint(float x, float y);
 
 protected:
-    Array *_decoDisplayList;
+    cocos2d::Array *_decoDisplayList;
     //! Display render node.
-    Node *_displayRenderNode;
+    cocos2d::Node *_displayRenderNode;
     //! Include current display information, like contour sprite, etc.
     DecorativeDisplay *_currentDecoDisplay;
     //! Current display index
@@ -146,6 +146,6 @@ protected:
     Bone *_bone;
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCDISPLAYMANAGER_H__*/

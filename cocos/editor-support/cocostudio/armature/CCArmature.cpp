@@ -35,8 +35,10 @@ THE SOFTWARE.
 #include "chipmunk.h"
 #endif
 
+using namespace cocos2d;
 
-NS_CC_EXT_ARMATURE_BEGIN
+
+namespace cocostudio {
 
 Armature *Armature::create()
 {
@@ -788,4 +790,4 @@ cpShape *Armature::getShapeList()
 #endif
 
 
-NS_CC_EXT_ARMATURE_END
+}

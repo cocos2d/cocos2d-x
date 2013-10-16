@@ -24,7 +24,7 @@
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
 #include "ccTypes.h"
-#include "cocoa/CCGeometry.h"
+#include "CCGeometry.h"
 
 #include <stdlib.h>
 #include <stdio.h>

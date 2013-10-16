@@ -23,11 +23,13 @@
  ****************************************************************************/
 
 #include "UIWidget.h"
-#include "../System/UILayer.h"
-#include "../Layouts/Layout.h"
-#include "../System/UIHelper.h"
+#include "system/UILayer.h"
+#include "layouts/Layout.h"
+#include "system/UIHelper.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace gui {
 
 #define DYNAMIC_CAST_CCBLENDPROTOCOL dynamic_cast<cocos2d::BlendProtocol*>(_renderer)
 
@@ -1215,4 +1217,4 @@ void GUIRenderer::visit()
     NodeRGBA::visit();
 }
 
-NS_CC_EXT_END
+}

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "CCInputDelegate.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 class ComController : public cocos2d::Component, public InputDelegate
 {
@@ -59,6 +59,6 @@ public:
     static ComController* create(void);
 };
 
-NS_CC_EXT_END
+}
 
 #endif  // __FUNDATION__CCCOMPONENT_H__

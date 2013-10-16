@@ -26,9 +26,8 @@
 #define __ActionFRAME_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 enum FrameType
 {
@@ -40,7 +39,7 @@ enum FrameType
 	kKeyframeMax
 };
 
-class ActionFrame:public Object
+class ActionFrame:public cocos2d::Object
 {
 
 public:
@@ -118,7 +117,7 @@ public:
      *
      * @return CCAction
      */
-	virtual Action* getAction(float fDuration);
+	virtual cocos2d::Action* getAction(float fDuration);
 protected:
 	int _frameType;
 	int _easingType;
@@ -145,14 +144,14 @@ public:
      *
      * @param the move action position.
      */
-	void setPosition(Point pos);
+	void setPosition(cocos2d::Point pos);
     
     /**
      * Gets the move action position.
      *
      * @return the move action position.
      */
-	Point getPosition();
+	cocos2d::Point getPosition();
 
     /**
      * Gets the CCAction of ActionFrame.
@@ -161,9 +160,9 @@ public:
      *
      * @return CCAction
      */
-	virtual Action* getAction(float fDuration);
+	virtual cocos2d::Action* getAction(float fDuration);
 protected:
-	Point _position;
+	cocos2d::Point _position;
 };
 
 class ActionScaleFrame:public ActionFrame
@@ -215,7 +214,7 @@ public:
      *
      * @return CCAction
      */
-	virtual Action* getAction(float fDuration);
+	virtual cocos2d::Action* getAction(float fDuration);
 protected:
 	float _scaleX;
 	float _scaleY;
@@ -256,7 +255,7 @@ public:
      *
      * @return CCAction
      */
-	virtual Action* getAction(float fDuration);
+	virtual cocos2d::Action* getAction(float fDuration);
 protected:
 	float _rotation;
 };
@@ -296,7 +295,7 @@ public:
      *
      * @return CCAction
      */
-	virtual Action* getAction(float fDuration);
+	virtual cocos2d::Action* getAction(float fDuration);
 protected:
 	float _opacity;
 };
@@ -321,14 +320,14 @@ public:
      *
      * @param ccolor the tint action color
      */
-	void setColor(Color3B ccolor);
+	void setColor(cocos2d::Color3B ccolor);
     
     /**
      * Gets the tint action color.
      *
      * @return the tint action color.
      */
-	Color3B getColor();
+	cocos2d::Color3B getColor();
     
     /**
      * Gets the CCAction of ActionFrame.
@@ -337,11 +336,11 @@ public:
      *
      * @return CCAction
      */
-	virtual Action* getAction(float fDuration);
+	virtual cocos2d::Action* getAction(float fDuration);
 protected:
-	Color3B _color;
+	cocos2d::Color3B _color;
 };
 
-NS_CC_EXT_END
+}
 
 #endif

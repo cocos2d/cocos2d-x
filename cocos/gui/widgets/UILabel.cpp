@@ -24,7 +24,9 @@
 
 #include "UILabel.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace gui {
 
 UILabel::UILabel():
 _touchScaleChangeEnabled(false),
@@ -228,4 +230,4 @@ const char* UILabel::getDescription() const
     return "Label";
 }
 
-NS_CC_EXT_END
+}

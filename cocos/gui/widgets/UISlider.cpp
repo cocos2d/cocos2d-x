@@ -23,9 +23,12 @@
  ****************************************************************************/
 
 #include "UISlider.h"
-#include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "GUI/CCControlExtension/CCScale9Sprite.h"
 
-NS_CC_EXT_BEGIN
+using namespace cocos2d;
+using namespace cocos2d::extension;
+
+namespace gui {
 
 UISlider::UISlider():
 _barRenderer(NULL),
@@ -541,4 +544,4 @@ const char* UISlider::getDescription() const
     return "Slider";
 }
 
-NS_CC_EXT_END
+}

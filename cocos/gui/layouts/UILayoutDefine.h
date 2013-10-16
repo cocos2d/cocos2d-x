@@ -26,9 +26,8 @@
 #define __UILAYOUTDEFINE_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 class UIMargin
 {
@@ -83,6 +82,6 @@ typedef enum
     RELATIVE_LOCATION_BELOW_RIGHTALIGN
 }UIRelativeAlign;
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__UILayoutDefine__) */
