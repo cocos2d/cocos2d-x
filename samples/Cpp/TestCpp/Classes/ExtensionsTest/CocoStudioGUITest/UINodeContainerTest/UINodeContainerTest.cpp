@@ -1,7 +1,7 @@
 
 
 #include "UINodeContainerTest.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 const char* font_UINodeContainerTest =
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
