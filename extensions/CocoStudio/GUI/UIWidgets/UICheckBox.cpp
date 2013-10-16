@@ -40,6 +40,11 @@ m_eBackGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
 m_eFrontCrossTexType(UI_TEX_TYPE_LOCAL),
 m_eBackGroundDisabledTexType(UI_TEX_TYPE_LOCAL),
 m_eFrontCrossDisabledTexType(UI_TEX_TYPE_LOCAL),
+m_strBackGroundFileName(""),
+m_strBackGroundSelectedFileName(""),
+m_strFrontCrossFileName(""),
+m_strBackGroundDisabledFileName(""),
+m_strFrontCrossDisabledFileName(""),
 /*Compatible*/
 m_pSelectListener(NULL),
 m_pfnSelectSelector(NULL),
@@ -106,6 +111,7 @@ void UICheckBox::loadTextureBackGround(const char *backGround,TextureResType tex
     {
         return;
     }
+    m_strBackGroundFileName = backGround;
     m_eBackGroundTexType = texType;
     switch (m_eBackGroundTexType)
     {
@@ -129,6 +135,7 @@ void UICheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Te
     {
         return;
     }
+    m_strBackGroundSelectedFileName = backGroundSelected;
     m_eBackGroundSelectedTexType = texType;
     switch (m_eBackGroundSelectedTexType)
     {
@@ -152,6 +159,7 @@ void UICheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
     {
         return;
     }
+    m_strFrontCrossFileName = cross;
     m_eFrontCrossTexType = texType;
     switch (m_eFrontCrossTexType)
     {
@@ -175,6 +183,7 @@ void UICheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Te
     {
         return;
     }
+    m_strBackGroundDisabledFileName = backGroundDisabled;
     m_eBackGroundDisabledTexType = texType;
     switch (m_eBackGroundDisabledTexType)
     {
@@ -198,6 +207,7 @@ void UICheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Te
     {
         return;
     }
+    m_strFrontCrossDisabledFileName = frontCrossDisabled;
     m_eFrontCrossDisabledTexType = texType;
     switch (m_eFrontCrossDisabledTexType)
     {
@@ -477,6 +487,20 @@ void UICheckBox::frontCrossDisabledTextureScaleChangedWithSize()
 const char* UICheckBox::getDescription() const
 {
     return "CheckBox";
+}
+
+void UICheckBox::copySpecialProperties(UIWidget *widget)
+{
+    UICheckBox* checkBox = dynamic_cast<UICheckBox*>(widget);
+    if (checkBox)
+    {
+        loadTextureBackGround(checkBox->m_strBackGroundFileName.c_str(), checkBox->m_eBackGroundTexType);
+        loadTextureBackGroundSelected(checkBox->m_strBackGroundSelectedFileName.c_str(), checkBox->m_eBackGroundSelectedTexType);
+        loadTextureFrontCross(checkBox->m_strFrontCrossFileName.c_str(), checkBox->m_eFrontCrossTexType);
+        loadTextureBackGroundDisabled(checkBox->m_strBackGroundDisabledFileName.c_str(), checkBox->m_eBackGroundDisabledTexType);
+        loadTextureFrontCrossDisabled(checkBox->m_strFrontCrossDisabledFileName.c_str(), checkBox->m_eFrontCrossDisabledTexType);
+        setSelectedState(checkBox->m_bIsSelected);
+    }
 }
 
 NS_CC_EXT_END

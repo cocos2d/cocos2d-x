@@ -271,12 +271,7 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      */
     virtual void removeAllChildren();
-    
-    /**
-     * Unschedules the "update" method.
-     */
-    void disableUpdate();
-    
+        
     /**
      * Reorders a child according to a new z value.
      *
@@ -892,6 +887,9 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+    
+    void copyProperties(UIWidget* widget);
+    virtual void copySpecialProperties(UIWidget* widget);
     
     virtual void onEnter();
     virtual void onExit();

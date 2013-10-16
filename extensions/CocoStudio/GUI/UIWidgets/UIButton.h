@@ -170,6 +170,8 @@ public:
      */
     virtual const char* getDescription() const;
     
+    virtual void copySpecialProperties(UIWidget* widget);
+    
     void setTitleText(const char* text);
     const char* getTitleText() const;
     void setTitleColor(const ccColor3B& color);

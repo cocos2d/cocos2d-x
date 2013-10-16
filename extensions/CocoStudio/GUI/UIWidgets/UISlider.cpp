@@ -553,4 +553,20 @@ const char* UISlider::getDescription() const
     return "Slider";
 }
 
+void UISlider::copySpecialProperties(UIWidget *widget)
+{
+    UISlider* slider = dynamic_cast<UISlider*>(widget);
+    if (slider)
+    {
+        m_bPrevIgnoreSize = slider->m_bPrevIgnoreSize;
+        setScale9Enabled(slider->m_bScale9Enabled);
+        loadBarTexture(slider->m_strTextureFile.c_str(), slider->m_eBarTexType);
+        loadProgressBarTexture(slider->m_strProgressBarTextureFile.c_str(), slider->m_eProgressBarTexType);
+        loadSlidBallTextureNormal(slider->m_strSlidBallNormalTextureFile.c_str(), slider->m_eBallNTexType);
+        loadSlidBallTexturePressed(slider->m_strSlidBallPressedTextureFile.c_str(), slider->m_eBallPTexType);
+        loadSlidBallTextureDisabled(slider->m_strSlidBallDisabledTextureFile.c_str(), slider->m_eBallDTexType);
+        setPercent(slider->getPercent());
+    }
+}
+
 NS_CC_EXT_END

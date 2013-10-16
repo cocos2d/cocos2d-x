@@ -125,6 +125,8 @@ public:
      */
     virtual const char* getDescription() const;
     
+    virtual void copySpecialProperties(UIWidget* widget);
+    
     void setTextAreaSize(const CCSize &size);
     void setTextHorizontalAlignment(CCTextAlignment alignment);
     void setTextVerticalAlignment(CCVerticalTextAlignment alignment);

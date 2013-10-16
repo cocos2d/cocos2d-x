@@ -136,27 +136,6 @@ void UIDragPanel::initRenderer()
 
 }
 
-void UIDragPanel::releaseResoures()
-{
-    m_pPushListener = NULL;
-    m_pfnPushSelector = NULL;
-    m_pMoveListener = NULL;
-    m_pfnMoveSelector = NULL;
-    m_pReleaseListener = NULL;
-    m_pfnReleaseSelector = NULL;
-    m_pCancelListener = NULL;
-    m_pfnCancelSelector = NULL;
-    setUpdateEnabled(false);
-    removeAllChildren();
-    m_pRenderer->removeAllChildrenWithCleanup(true);
-    m_pRenderer->removeFromParentAndCleanup(true);
-    m_pRenderer->release();
-    
-    Layout::removeChild(m_pInnerContainer);
-    
-    m_children->release();
-}
-
 bool UIDragPanel::onTouchBegan(const CCPoint &touchPoint)
 {
     bool pass = Layout::onTouchBegan(touchPoint);

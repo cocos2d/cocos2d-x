@@ -33,7 +33,7 @@ NS_CC_EXT_BEGIN
 
 Layout::Layout():
 m_bClippingEnabled(false),
-m_bBackGroundScale9Enable(false),
+m_bBackGroundScale9Enabled(false),
 m_pBackGroundImage(NULL),
 m_strBackGroundImageFileName(""),
 m_backGroundImageCapInsets(CCRectZero),
@@ -132,7 +132,7 @@ void Layout::onSizeChanged()
     if (m_pBackGroundImage)
     {
         m_pBackGroundImage->setPosition(ccp(m_size.width/2.0f, m_size.height/2.0f));
-        if (m_bBackGroundScale9Enable)
+        if (m_bBackGroundScale9Enabled)
         {
             dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setPreferredSize(m_size);
         }
@@ -149,14 +149,14 @@ void Layout::onSizeChanged()
 
 void Layout::setBackGroundImageScale9Enabled(bool able)
 {
-    if (m_bBackGroundScale9Enable == able)
+    if (m_bBackGroundScale9Enabled == able)
     {
         return;
     }
     m_pRenderer->removeChild(m_pBackGroundImage, true);
     m_pBackGroundImage = NULL;
-    m_bBackGroundScale9Enable = able;
-    if (m_bBackGroundScale9Enable)
+    m_bBackGroundScale9Enabled = able;
+    if (m_bBackGroundScale9Enabled)
     {
         m_pBackGroundImage = CCScale9Sprite::create();
         m_pRenderer->addChild(m_pBackGroundImage);
@@ -183,7 +183,7 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
     }
     m_strBackGroundImageFileName = fileName;
     m_eBGImageTexType = texType;
-    if (m_bBackGroundScale9Enable)
+    if (m_bBackGroundScale9Enabled)
     {
         switch (m_eBGImageTexType)
         {
@@ -212,7 +212,7 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
                 break;
         }
     }
-    if (m_bBackGroundScale9Enable)
+    if (m_bBackGroundScale9Enabled)
     {
         dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setColor(getColor());
         dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setOpacity(getOpacity());
@@ -229,7 +229,7 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
 void Layout::setBackGroundImageCapInsets(const CCRect &capInsets)
 {
     m_backGroundImageCapInsets = capInsets;
-    if (m_bBackGroundScale9Enable)
+    if (m_bBackGroundScale9Enabled)
     {
         dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setCapInsets(capInsets);
     }
@@ -271,7 +271,7 @@ void Layout::supplyTheLayoutParameterLackToChild(UIWidget *child)
 
 void Layout::addBackGroundImage()
 {
-    if (m_bBackGroundScale9Enable)
+    if (m_bBackGroundScale9Enabled)
     {
         m_pBackGroundImage = CCScale9Sprite::create();
         m_pBackGroundImage->setZOrder(-1);
@@ -884,6 +884,23 @@ void Layout::doLayout()
 const char* Layout::getDescription() const
 {
     return "Layout";
+}
+
+void Layout::copySpecialProperties(UIWidget *widget)
+{
+    Layout* layout = dynamic_cast<Layout*>(widget);
+    if (layout)
+    {
+        setBackGroundImageScale9Enabled(layout->m_bBackGroundScale9Enabled);
+        setBackGroundImage(layout->m_strBackGroundImageFileName.c_str(),layout->m_eBGImageTexType);
+        setBackGroundImageCapInsets(layout->m_backGroundImageCapInsets);
+        setBackGroundColorType(layout->m_colorType);
+        setBackGroundColor(layout->m_cColor);
+        setBackGroundColor(layout->m_gStartColor, layout->m_gEndColor);
+        setBackGroundColorOpacity(layout->m_nCOpacity);
+        setBackGroundColorVector(layout->m_AlongVector);
+        setLayoutType(layout->m_eLayoutType);
+    }
 }
 
 RectClippingNode::RectClippingNode():

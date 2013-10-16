@@ -222,6 +222,8 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+    
+    virtual void copySpecialProperties(UIWidget* widget);
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -240,7 +242,6 @@ protected:
     virtual void checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint);
     void recordSlidTime(float dt);
     //override "releaseResoures" method of widget.
-    virtual void releaseResoures();
     
     void scrollToTopEvent();
     void scrollToBottomEvent();

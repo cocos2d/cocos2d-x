@@ -65,6 +65,8 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+    
+    virtual void copySpecialProperties(UIWidget* widget);
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
@@ -72,6 +74,8 @@ protected:
 protected:
     CCLabelBMFont* m_pLabelBMFontRenderer;
     bool m_bFntFileHasInit;
+    std::string m_strFntFileName;
+    std::string m_strStringValue;
 };
     
 NS_CC_EXT_END

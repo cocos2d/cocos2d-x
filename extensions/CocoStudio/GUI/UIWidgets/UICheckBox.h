@@ -172,6 +172,8 @@ public:
      */
     virtual const char* getDescription() const;
     
+    virtual void copySpecialProperties(UIWidget* widget);
+    
     /*Compatible*/
     /**
      * These methods will be removed
@@ -224,6 +226,12 @@ protected:
     TextureResType m_eFrontCrossTexType;
     TextureResType m_eBackGroundDisabledTexType;
     TextureResType m_eFrontCrossDisabledTexType;
+    
+    std::string m_strBackGroundFileName;
+    std::string m_strBackGroundSelectedFileName;
+    std::string m_strFrontCrossFileName;
+    std::string m_strBackGroundDisabledFileName;
+    std::string m_strFrontCrossDisabledFileName;
     
     /*Compatible*/
     CCObject*       m_pSelectListener;

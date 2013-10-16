@@ -77,7 +77,7 @@ public:
     static UILabelAtlas* create();
     
     /** initializes the UILabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    void setProperty(const char* stringValue,const char* charMapFile, int itemWidth, int itemHeight, const char* startCharMap,bool useSpriteFrame = false);
+    void setProperty(const char* stringValue,const char* charMapFile, int itemWidth, int itemHeight, const char* startCharMap);
     
     //set string value for labelatlas.
     void setStringValue(const char* value);
@@ -98,12 +98,19 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+    
+    virtual void copySpecialProperties(UIWidget* widget);
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void labelAtlasScaleChangedWithSize();
 protected:
     UICCLabelAtlas* m_pLaberAtlasRenderer;
+    std::string m_strStringValue;
+    std::string m_strCharMapFileName;
+    int m_nItemWidth;
+    int m_nItemHeight;
+    std::string m_strStartCharMap;
 };
 
 NS_CC_EXT_END

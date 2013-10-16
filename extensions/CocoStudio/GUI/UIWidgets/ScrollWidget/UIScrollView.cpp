@@ -66,7 +66,7 @@ m_pfnScrollToRightSelector(NULL)
 
 UIScrollView::~UIScrollView()
 {
-    
+    CCLOG("aaaaaaaaddsdsadasdasdadasda");
 }
 
 UIScrollView* UIScrollView::create()
@@ -79,27 +79,6 @@ UIScrollView* UIScrollView::create()
     }
     CC_SAFE_DELETE(widget);
     return NULL;
-}
-
-void UIScrollView::releaseResoures()
-{
-    m_pPushListener = NULL;
-    m_pfnPushSelector = NULL;
-    m_pMoveListener = NULL;
-    m_pfnMoveSelector = NULL;
-    m_pReleaseListener = NULL;
-    m_pfnReleaseSelector = NULL;
-    m_pCancelListener = NULL;
-    m_pfnCancelSelector = NULL;
-    setUpdateEnabled(false);
-    removeAllChildren();
-    m_pRenderer->removeAllChildrenWithCleanup(true);
-    m_pRenderer->removeFromParentAndCleanup(true);
-    m_pRenderer->release();
-    
-    Layout::removeChild(m_pInnerContainer);
-
-    m_children->release();
 }
 
 bool UIScrollView::init()
@@ -750,6 +729,17 @@ void UIScrollView::doLayout()
 const char* UIScrollView::getDescription() const
 {
     return "ScrollView";
+}
+
+void UIScrollView::copySpecialProperties(UIWidget *widget)
+{
+    UIScrollView* scrollView = dynamic_cast<UIScrollView*>(widget);
+    if (scrollView)
+    {
+        Layout::copySpecialProperties(widget);
+        setInnerContainerSize(scrollView->getInnerContainerSize());
+        setDirection(scrollView->m_eDirection);
+    }
 }
 
 NS_CC_EXT_END

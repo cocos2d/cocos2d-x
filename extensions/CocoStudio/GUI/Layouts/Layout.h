@@ -178,6 +178,8 @@ public:
      */
     virtual const char* getDescription() const;
     
+    virtual void copySpecialProperties(UIWidget* widget);
+    
     /**
      * Sets LayoutType.
      *
@@ -231,7 +233,7 @@ protected:
     bool m_bClippingEnabled;
     
     //background
-    bool m_bBackGroundScale9Enable;
+    bool m_bBackGroundScale9Enabled;
     CCNode* m_pBackGroundImage;
     std::string m_strBackGroundImageFileName;
     CCRect m_backGroundImageCapInsets;
