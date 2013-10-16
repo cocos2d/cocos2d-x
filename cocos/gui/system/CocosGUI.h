@@ -43,7 +43,7 @@
 #include "widgets/UILabelBMFont.h"
 #include "widgets/scroll-widget/UIPageView.h"
 #include "UIHelper.h"
-#include "reader/CCSGUIReader.h"
+#include "cocostudio/reader/CCSGUIReader.h"
 #include "UILayer.h"
 namespace gui {
 

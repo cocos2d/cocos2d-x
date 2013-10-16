@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCCOLLIDERDETECTOR_H__
 #define __CCCOLLIDERDETECTOR_H__
 
-#include "armature/utils/CCArmatureDefine.h"
-#include "armature/datas/CCDatas.h"
+#include "cocostudio/armature/utils/CCArmatureDefine.h"
+#include "cocostudio/armature/datas/CCDatas.h"
 
 #ifndef PT_RATIO
 #define PT_RATIO 32

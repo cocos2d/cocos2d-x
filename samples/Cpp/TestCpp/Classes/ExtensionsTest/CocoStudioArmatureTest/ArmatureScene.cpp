@@ -1,6 +1,6 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
-#include "armature/display/CCSkin.h"
+#include "cocostudio/CocoStudio.h"
 
 
 using namespace cocos2d;

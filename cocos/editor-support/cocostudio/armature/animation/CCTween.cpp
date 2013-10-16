@@ -25,11 +25,11 @@ THE SOFTWARE.
 
 #include "CCTween.h"
 #include "CCArmatureAnimation.h"
-#include "armature/CCBone.h"
-#include "armature/CCArmature.h"
-#include "armature/utils/CCUtilMath.h"
-#include "armature/utils/CCTweenFunction.h"
-#include "armature/utils/CCTransformHelp.h"
+#include "cocostudio/armature/CCBone.h"
+#include "cocostudio/armature/CCArmature.h"
+#include "cocostudio/armature/utils/CCUtilMath.h"
+#include "cocostudio/armature/utils/CCTweenFunction.h"
+#include "cocostudio/armature/utils/CCTransformHelp.h"
 
 
 namespace cocostudio {

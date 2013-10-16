@@ -26,7 +26,7 @@
 #define __UIHELPER_H__
 
 #include "UIInputManager.h"
-#include "json/CSContentJsonDictionary.h"
+#include "cocostudio/json/CSContentJsonDictionary.h"
 
 
 #define CCUIHELPER gui::UIHelper::instance()

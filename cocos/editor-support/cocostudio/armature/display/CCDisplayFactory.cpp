@@ -23,12 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDisplayFactory.h"
-#include "armature/CCBone.h"
-#include "armature/CCArmature.h"
-#include "armature/display/CCSkin.h"
-#include "armature/utils/CCSpriteFrameCacheHelper.h"
-#include "armature/utils/CCArmatureDataManager.h"
-#include "armature/utils/CCTransformHelp.h"
+#include "cocostudio/armature/CCBone.h"
+#include "cocostudio/armature/CCArmature.h"
+#include "cocostudio/armature/display/CCSkin.h"
+#include "cocostudio/armature/utils/CCSpriteFrameCacheHelper.h"
+#include "cocostudio/armature/utils/CCArmatureDataManager.h"
+#include "cocostudio/armature/utils/CCTransformHelp.h"
 
 using namespace cocos2d;
 
