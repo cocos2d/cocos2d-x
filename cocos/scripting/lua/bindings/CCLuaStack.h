@@ -30,7 +30,7 @@ extern "C" {
 }
 
 #include "ccTypes.h"
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 #include "CCLuaValue.h"
 
 NS_CC_BEGIN

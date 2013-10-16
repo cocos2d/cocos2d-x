@@ -9,7 +9,8 @@ extern "C" {
 }
 #endif
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
+
 class GLNode:public cocos2d::Node
 {
     virtual void draw();
