@@ -5,34 +5,33 @@ LOCAL_MODULE := gui_static
 
 LOCAL_MODULE_FILENAME := libgui
 
-LOCAL_SRC_FILES := base-classes/UIRootWidget.cpp \
-base-classes/UIWidget.cpp \
-layouts/Layout.cpp \
-layouts/LayoutParameter.cpp \
-layouts/UILayoutDefine.cpp \
-system/CocosGUI.cpp \
-system/UIHelper.cpp \
-system/UIInputManager.cpp \
-system/UILayer.cpp \
-widgets/scroll-widget/UIDragPanel.cpp \
-widgets/scroll-widget/UIListView.cpp \
-widgets/scroll-widget/UIPageView.cpp \
-widgets/scroll-widget/UIScrollView.cpp \
-widgets/UIButton.cpp \
-widgets/UICheckBox.cpp \
-widgets/UIImageView.cpp \
-widgets/UILabel.cpp \
-widgets/UILabelAtlas.cpp \
-widgets/UILabelBMFont.cpp \
-widgets/UILoadingBar.cpp \
-widgets/UISlider.cpp \
-widgets/UITextField.cpp
+LOCAL_SRC_FILES := UIRootWidget.cpp \
+UIWidget.cpp \
+Layout.cpp \
+LayoutParameter.cpp \
+UILayoutDefine.cpp \
+CocosGUI.cpp \
+UIHelper.cpp \
+UIInputManager.cpp \
+UILayer.cpp \
+UIDragPanel.cpp \
+UIListView.cpp \
+UIPageView.cpp \
+UIScrollView.cpp \
+UIButton.cpp \
+UICheckBox.cpp \
+UIImageView.cpp \
+UILabel.cpp \
+UILabelAtlas.cpp \
+UILabelBMFont.cpp \
+UILoadingBar.cpp \
+UISlider.cpp \
+UITextField.cpp
 
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../2d \
-$(LOCAL_PATH) \
 $(LOCAL_PATH)/..
 
 LOCAL_CFLAGS += -Wno-psabi
