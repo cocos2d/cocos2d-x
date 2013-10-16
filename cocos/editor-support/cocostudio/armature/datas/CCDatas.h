@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCARMATURE_DATAS_H__
 #define __CCARMATURE_DATAS_H__
 
-#include "armature/utils/CCArmatureDefine.h"
-#include "armature/utils/CCTweenFunction.h"
+#include "cocostudio/armature/utils/CCArmatureDefine.h"
+#include "cocostudio/armature/utils/CCTweenFunction.h"
 
 
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\

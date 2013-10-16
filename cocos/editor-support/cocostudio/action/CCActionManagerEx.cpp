@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCActionManagerEx.h"
-#include "json/DictionaryHelper.h"
+#include "cocostudio/json/DictionaryHelper.h"
 
  using namespace cocos2d;
 

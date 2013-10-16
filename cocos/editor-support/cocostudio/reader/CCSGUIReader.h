@@ -26,7 +26,7 @@
 #define __CCSGUIREADER_H__
 
 #include "base-classes/UIWidget.h"
-#include "json/CSContentJsonDictionary.h"
+#include "cocostudio/json/CSContentJsonDictionary.h"
 
 namespace cocostudio {
 

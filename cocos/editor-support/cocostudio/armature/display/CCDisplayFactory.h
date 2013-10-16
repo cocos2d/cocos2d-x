@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCDISPLAYFACTORY_H__
 #define __CCDISPLAYFACTORY_H__
 
-#include "armature/utils/CCArmatureDefine.h"
-#include "armature/datas/CCDatas.h"
+#include "cocostudio/armature/utils/CCArmatureDefine.h"
+#include "cocostudio/armature/datas/CCDatas.h"
 
 namespace cocostudio {
 

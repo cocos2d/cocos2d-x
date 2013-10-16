@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __CCDISPLAYMANAGER_H__
 #define __CCDISPLAYMANAGER_H__
 
-#include "armature/utils/CCArmatureDefine.h"
-#include "armature/display/CCDecorativeDisplay.h"
-#include "armature/datas/CCDatas.h"
+#include "cocostudio/armature/utils/CCArmatureDefine.h"
+#include "cocostudio/armature/display/CCDecorativeDisplay.h"
+#include "cocostudio/armature/datas/CCDatas.h"
 
 namespace cocostudio {
 

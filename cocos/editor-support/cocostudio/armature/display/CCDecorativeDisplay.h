@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __CCDECORATIVEDISPLAY_H__
 #define __CCDECORATIVEDISPLAY_H__
 
-#include "armature/utils/CCArmatureDefine.h"
+#include "cocostudio/armature/utils/CCArmatureDefine.h"
 #include "CCDisplayFactory.h"
-#include "armature/datas/CCDatas.h"
+#include "cocostudio/armature/datas/CCDatas.h"
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT

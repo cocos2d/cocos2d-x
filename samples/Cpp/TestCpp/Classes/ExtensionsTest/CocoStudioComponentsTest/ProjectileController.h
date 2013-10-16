@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
-#include "CocoStudio.h"
+#include "cocostudio/CocoStudio.h"
 
 class ProjectileController : public cocostudio::ComController
 {

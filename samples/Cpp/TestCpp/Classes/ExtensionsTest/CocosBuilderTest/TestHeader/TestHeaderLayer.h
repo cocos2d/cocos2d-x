@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
-#include "CocosBuilder.h"
+#include "cocosbuilder/CocosBuilder.h"
 
 class TestHeaderLayer
     : public cocos2d::Layer

@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDatas.h"
-#include "armature/utils/CCUtilMath.h"
-#include "armature/utils/CCTransformHelp.h"
+#include "cocostudio/armature/utils/CCUtilMath.h"
+#include "cocostudio/armature/utils/CCTransformHelp.h"
 
 using namespace cocos2d;
 
