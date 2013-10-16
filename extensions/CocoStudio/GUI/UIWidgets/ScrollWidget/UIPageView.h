@@ -120,6 +120,8 @@ public:
      */
     int getCurPageIndex() const;
     
+    CCArray* getPages();
+    
     // event
     void addEventListener(CCObject *target, SEL_PageViewEvent selector);
     /*******Compatible*******/
@@ -155,6 +157,7 @@ public:
      */
     virtual const char* getDescription() const;
     
+    virtual void copySpecialProperties(UIWidget* widget);
     /*compatible*/
     /**
      * These methods will be removed

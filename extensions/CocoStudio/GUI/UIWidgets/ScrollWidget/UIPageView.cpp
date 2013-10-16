@@ -54,7 +54,8 @@ m_pfnPageTurningSelector(NULL)
 
 UIPageView::~UIPageView()
 {
-    m_pages->release();
+    m_pages->removeAllObjects();
+    CC_SAFE_RELEASE(m_pages);
 }
 
 UIPageView* UIPageView::create()
@@ -584,9 +585,24 @@ int UIPageView::getCurPageIndex() const
     return m_nCurPageIdx;
 }
 
+CCArray* UIPageView::getPages()
+{
+    return m_pages;
+}
+
 const char* UIPageView::getDescription() const
 {
     return "PageView";
+}
+
+void UIPageView::copySpecialProperties(UIWidget *widget)
+{
+    UIPageView* pageView = dynamic_cast<UIPageView*>(widget);
+    if (pageView)
+    {
+        Layout::copySpecialProperties(widget);
+//        scrollToPage(pageView->getCurPageIndex());
+    }
 }
 
 NS_CC_EXT_END

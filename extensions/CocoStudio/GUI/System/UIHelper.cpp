@@ -191,6 +191,113 @@ UIWidget* UIHelper::seekWidgetByRelativeName(UIWidget *root, const char *name)
     return NULL;
 }
 
+UIWidget* UIHelper::cloneWidget(UIWidget *widget)
+{
+    if (!widget)
+    {
+        return NULL;
+    }
+    UIWidget* clonedWidget = NULL;
+    const char* classType = widget->getDescription();
+    if (strcmp(classType, "Widget") == 0)
+    {
+        clonedWidget = UIWidget::create();
+    }
+    else if (strcmp(classType, "Button") == 0)
+    {
+        clonedWidget = UIButton::create();
+    }
+    else if (strcmp(classType, "CheckBox") == 0)
+    {
+        clonedWidget = UICheckBox::create();
+    }
+    else if (strcmp(classType, "ImageView") == 0)
+    {
+        clonedWidget = UIImageView::create();
+    }
+    else if (strcmp(classType, "Label") == 0)
+    {
+        clonedWidget = UILabel::create();
+    }
+    else if (strcmp(classType, "LabelAtlas") == 0)
+    {
+        clonedWidget = UILabelAtlas::create();
+    }
+    else if (strcmp(classType, "LabelBMFont") == 0)
+    {
+        clonedWidget = UILabelBMFont::create();
+    }
+    else if (strcmp(classType, "LoadingBar") == 0)
+    {
+        clonedWidget = UILoadingBar::create();
+    }
+    else if (strcmp(classType, "Slider") == 0)
+    {
+        clonedWidget = UISlider::create();
+    }
+    else if (strcmp(classType, "Layout") == 0)
+    {
+        clonedWidget = Layout::create();
+    }
+    else if (strcmp(classType, "ScrollView") == 0)
+    {
+        clonedWidget = UIScrollView::create();
+    }
+    else if (strcmp(classType, "PageView") == 0)
+    {
+        clonedWidget = UIPageView::create();
+    }
+
+    clonedWidget->copyProperties(widget);
+    
+    switch (clonedWidget->getWidgetType())
+    {
+        case WidgetTypeWidget:
+        {
+            ccArray* arrayWidgetChildren = widget->getChildren()->data;
+            int length = arrayWidgetChildren->num;
+            for (int i=0; i<length; i++)
+            {
+                UIWidget* child = (UIWidget*)(arrayWidgetChildren->arr[i]);
+                clonedWidget->addChild(cloneWidget(child));
+            }
+            break;
+        }
+        case WidgetTypeContainer:
+        {
+            if (strcmp(classType, "Layout") == 0
+                || strcmp(classType, "ScrollView") == 0)
+            {
+                Layout* layout = dynamic_cast<Layout*>(clonedWidget);
+                ccArray* arrayWidgetChildren = widget->getChildren()->data;
+                int length = arrayWidgetChildren->num;
+                for (int i=0; i<length; i++)
+                {
+                    UIWidget* child = (UIWidget*)(arrayWidgetChildren->arr[i]);
+                    layout->addChild(cloneWidget(child));
+                }
+                layout->doLayout();
+            }
+            else if (strcmp(classType, "PageView") == 0)
+            {
+                UIPageView* pageView = dynamic_cast<UIPageView*>(clonedWidget);
+                ccArray* arrayPages = dynamic_cast<UIPageView*>(widget)->getPages()->data;
+                int length = arrayPages->num;
+                for (int i=0; i<length; i++)
+                {
+                    Layout* page = (Layout*)(arrayPages->arr[i]);
+                    pageView->addPage(dynamic_cast<Layout*>(cloneWidget(page)));
+                }
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
+    return clonedWidget;
+}
+
 void UIHelper::setFileDesignWidth(float width)
 {
     m_fFileDesignWidth = width;

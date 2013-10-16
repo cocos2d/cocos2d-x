@@ -108,6 +108,8 @@ public:
      */
     virtual const char* getDescription() const;
     
+    virtual void copySpecialProperties(UIWidget* widget);
+    
     void setDoubleClickEnabled(bool able);
     void doubleClickEvent();
     void checkDoubleClick(float dt);

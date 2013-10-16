@@ -125,6 +125,7 @@ public:
      */
     virtual const char* getDescription() const;
     
+    virtual void copySpecialProperties(UIWidget* widget);
     /*Compatible*/
     /**
      * These methods will be removed

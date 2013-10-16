@@ -293,7 +293,6 @@ public:
 protected:
     virtual bool init();
     virtual void initRenderer();
-    virtual void releaseResoures();
     
     virtual void handlePressLogic(const CCPoint &touchPoint);
     virtual void handleMoveLogic(const CCPoint &touchPoint);

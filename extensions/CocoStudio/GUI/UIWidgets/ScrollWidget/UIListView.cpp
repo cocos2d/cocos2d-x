@@ -70,6 +70,8 @@ UIListView::UIListView()
 
 UIListView::~UIListView()
 {
+    m_pUpdatePool->removeAllObjects();
+    m_pChildPool->removeAllObjects();
     CC_SAFE_RELEASE_NULL(m_pChildPool);
     CC_SAFE_RELEASE_NULL(m_pUpdatePool);
     CC_SAFE_RELEASE_NULL(m_overTopArray);
