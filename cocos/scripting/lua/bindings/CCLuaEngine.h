@@ -30,11 +30,11 @@ extern "C" {
 }
 
 #include "ccTypes.h"
-#include "cocoa/CCObject.h"
-#include "event_dispatcher/CCTouch.h"
-#include "cocoa/CCSet.h"
-#include "base_nodes/CCNode.h"
-#include "script_support/CCScriptSupport.h"
+#include "CCObject.h"
+#include "CCTouch.h"
+#include "CCSet.h"
+#include "CCNode.h"
+#include "CCScriptSupport.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 

@@ -19,7 +19,6 @@ extern "C" {
 #include "LuaScriptHandlerMgr.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
 
 
 static int SendBinaryMessageToLua(int nHandler,const unsigned char* pTable,int nLength)
