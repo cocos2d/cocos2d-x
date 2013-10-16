@@ -9,13 +9,12 @@
 #define __JS_BINDINGS_CCBREADER_H__
 
 #include "jsapi.h"
-#include "cocos-ext.h"
 #include "cocos2d_specifics.hpp"
-
+#include "cocosbuilder/CocosBuilder.h"
 
 class CCBScriptCallbackProxy:  public cocos2d::Layer
-, public cocos2d::extension::CCBSelectorResolver
-, public cocos2d::extension::CCBMemberVariableAssigner {
+, public cocosbuilder::CCBSelectorResolver
+, public cocosbuilder::CCBMemberVariableAssigner {
     
     std::string callBackProp;
     jsval owner;
@@ -35,7 +34,7 @@ public:
     virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName,
                                            cocos2d::Node * pNode);
     virtual void onNodeLoaded(cocos2d::Node * pNode,
-                              cocos2d::extension::NodeLoader * pNodeLoader);
+                              cocosbuilder::NodeLoader * pNodeLoader);
         
     virtual CCBSelectorResolver * createNew();
     void menuItemCallback(Object *pSender);
@@ -46,7 +45,7 @@ public:
 };
 
 
-class JSLayerLoader : public cocos2d::extension::LayerLoader {
+class JSLayerLoader : public cocosbuilder::LayerLoader {
 public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(JSLayerLoader, loader);
     

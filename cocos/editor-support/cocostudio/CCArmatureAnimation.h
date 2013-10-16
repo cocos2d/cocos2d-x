@@ -45,8 +45,8 @@ class Bone;
 typedef void (cocos2d::Object::*SEL_MovementEventCallFunc)(Armature *, MovementEventType, const char *);
 typedef void (cocos2d::Object::*SEL_FrameEventCallFunc)(Bone *, const char *, int, int);
 
-#define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
-#define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
+#define movementEvent_selector(_SELECTOR) (cocostudio::SEL_MovementEventCallFunc)(&_SELECTOR)
+#define frameEvent_selector(_SELECTOR) (cocostudio::SEL_FrameEventCallFunc)(&_SELECTOR)
 
 
 class  ArmatureAnimation : public ProcessBase

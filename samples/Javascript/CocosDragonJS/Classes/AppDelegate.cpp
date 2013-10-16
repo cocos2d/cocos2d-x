@@ -36,6 +36,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setProjection(Director::Projection::_2D);
 
 
+    FileUtils::getInstance()->addSearchPath("script");
+    
     auto screenSize = EGLView::getInstance()->getFrameSize();
 
     auto designSize = Size(320, 480);
