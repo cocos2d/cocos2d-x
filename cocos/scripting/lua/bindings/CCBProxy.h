@@ -5,9 +5,12 @@
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
 #include "cocos-ext.h"
+#include "cocosbuilder/CocosBuilder.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace cocosbuilder;
+
 
 class CCBProxy : public Layer{
 public:

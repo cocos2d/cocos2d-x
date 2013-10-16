@@ -24,10 +24,10 @@
 
 #include "CCLuaEngine.h"
 #include "cocos2d.h"
-#include "cocoa/CCArray.h"
+#include "CCArray.h"
 #include "CCScheduler.h"
 #include "LuaScriptHandlerMgr.h"
-#include "GUI/CCControlExtension/CCControl.h"
+#include "extensions/GUI/CCControlExtension/CCControl.h"
 #include "LuaOpengl.h"
 #include "lua_cocos2dx_extension_manual.h"
 

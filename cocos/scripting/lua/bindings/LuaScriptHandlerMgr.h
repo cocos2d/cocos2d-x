@@ -7,9 +7,9 @@ extern "C" {
 }
 
 
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 #include "ccMacros.h"
-#include "actions/CCActionInstant.h"
+#include "CCActionInstant.h"
 #include <vector>
 #include <map>
 
