@@ -9,10 +9,11 @@
 #include "cocos-ext.h"
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
+#include "cocostudio/CocoStudio.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace extension::armature;
+
 
 class JSB_ScrollViewDelegate
 : public Object
@@ -787,8 +788,8 @@ public:
 
     virtual void setJSCallbackThis(jsval thisObj);
 
-    void movementCallbackFunc(cocos2d::extension::armature::Armature * pArmature, cocos2d::extension::armature::MovementEventType pMovementEventType, const char *pMovementId);
-    void frameCallbackFunc(cocos2d::extension::Bone *pBone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
+    void movementCallbackFunc(cocostudio::Armature * pArmature, cocostudio::MovementEventType pMovementEventType, const char *pMovementId);
+    void frameCallbackFunc(cocostudio::Bone *pBone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
     void addArmatureFileInfoAsyncCallbackFunc(float percent);
 
 private:
@@ -825,7 +826,7 @@ void JSArmatureWrapper::setJSCallbackThis(jsval _jsThisObj)
     }
 }
 
-void JSArmatureWrapper::movementCallbackFunc(cocos2d::extension::armature::Armature *pArmature, cocos2d::extension::armature::MovementEventType pMovementEventType, const char *pMovementId)
+void JSArmatureWrapper::movementCallbackFunc(cocostudio::Armature *pArmature, cocostudio::MovementEventType pMovementEventType, const char *pMovementId)
 {
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JSObject *thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);
@@ -865,7 +866,7 @@ void JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc(float percent)
 }
 
 
-void JSArmatureWrapper::frameCallbackFunc(cocos2d::extension::Bone *pBone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)
+void JSArmatureWrapper::frameCallbackFunc(cocostudio::Bone *pBone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)
 {
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JSObject *thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);
@@ -893,7 +894,7 @@ static JSBool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::armature::ArmatureAnimation* cobj = (cocos2d::extension::armature::ArmatureAnimation *)(proxy ? proxy->ptr : NULL);
+    cocostudio::ArmatureAnimation* cobj = (cocostudio::ArmatureAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 2) {
@@ -917,7 +918,7 @@ static JSBool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx,
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::armature::ArmatureAnimation* cobj = (cocos2d::extension::armature::ArmatureAnimation *)(proxy ? proxy->ptr : NULL);
+    cocostudio::ArmatureAnimation* cobj = (cocostudio::ArmatureAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 2) {
@@ -941,7 +942,7 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::armature::ArmatureDataManager* cobj = (cocos2d::extension::armature::ArmatureDataManager *)(proxy ? proxy->ptr : NULL);
+    cocostudio::ArmatureDataManager* cobj = (cocostudio::ArmatureDataManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 3) {
