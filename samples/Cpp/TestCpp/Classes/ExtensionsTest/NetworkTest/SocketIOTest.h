@@ -9,8 +9,8 @@
 #define __TestCpp__SocketIOTest__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
-#include "SocketIO.h"
+#include "extensions/cocos-ext.h"
+#include "network/SocketIO.h"
 
 class SocketIOTestLayer
 	: public cocos2d::Layer

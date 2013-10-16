@@ -2,8 +2,8 @@
 #define __HTTP_CLIENT_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
-#include "HttpClient.h"
+#include "extensions/cocos-ext.h"
+#include "network/HttpClient.h"
 
 class HttpClientTest : public cocos2d::Layer
 {

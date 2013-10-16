@@ -2,7 +2,7 @@
 #define __CC_PLAYERCONTROLLER_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "cocostudio/CocoStudio.h"
 
 

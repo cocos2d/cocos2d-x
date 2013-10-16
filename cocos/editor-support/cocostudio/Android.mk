@@ -5,50 +5,50 @@ LOCAL_MODULE := cocostudio_static
 
 LOCAL_MODULE_FILENAME := libcocostudio
 
-LOCAL_SRC_FILES := action/CCActionFrame.cpp \
-action/CCActionFrameEasing.cpp \
-action/CCActionManagerEx.cpp \
-action/CCActionNode.cpp \
-action/CCActionObject.cpp \
-armature/CCArmature.cpp \
-armature/CCBone.cpp \
-armature/animation/CCArmatureAnimation.cpp \
-armature/animation/CCProcessBase.cpp \
-armature/animation/CCTween.cpp \
-armature/datas/CCDatas.cpp \
-armature/display/CCBatchNode.cpp \
-armature/display/CCDecorativeDisplay.cpp \
-armature/display/CCDisplayFactory.cpp \
-armature/display/CCDisplayManager.cpp \
-armature/display/CCSkin.cpp \
-armature/physics/CCColliderDetector.cpp \
-armature/utils/CCArmatureDataManager.cpp \
-armature/utils/CCArmatureDefine.cpp \
-armature/utils/CCDataReaderHelper.cpp \
-armature/utils/CCSpriteFrameCacheHelper.cpp \
-armature/utils/CCTransformHelp.cpp \
-armature/utils/CCTweenFunction.cpp \
-armature/utils/CCUtilMath.cpp \
-components/CCComAttribute.cpp \
-components/CCComAudio.cpp \
-components/CCComController.cpp \
-components/CCComRender.cpp \
-components/CCInputDelegate.cpp \
-json/CSContentJsonDictionary.cpp \
-json/DictionaryHelper.cpp \
-reader/CCSGUIReader.cpp \
-reader/CCSSceneReader.cpp \
+LOCAL_SRC_FILES := CCActionFrame.cpp \
+CCActionFrameEasing.cpp \
+CCActionManagerEx.cpp \
+CCActionNode.cpp \
+CCActionObject.cpp \
+CCArmature.cpp \
+CCBone.cpp \
+CCArmatureAnimation.cpp \
+CCProcessBase.cpp \
+CCTween.cpp \
+CCDatas.cpp \
+CCBatchNode.cpp \
+CCDecorativeDisplay.cpp \
+CCDisplayFactory.cpp \
+CCDisplayManager.cpp \
+CCSkin.cpp \
+CCColliderDetector.cpp \
+CCArmatureDataManager.cpp \
+CCArmatureDefine.cpp \
+CCDataReaderHelper.cpp \
+CCSpriteFrameCacheHelper.cpp \
+CCTransformHelp.cpp \
+CCTweenFunction.cpp \
+CCUtilMath.cpp \
+CCComAttribute.cpp \
+CCComAudio.cpp \
+CCComController.cpp \
+CCComRender.cpp \
+CCInputDelegate.cpp \
+CSContentJsonDictionary.cpp \
+DictionaryHelper.cpp \
+CCSGUIReader.cpp \
+CCSSceneReader.cpp \
 ../../../external/json/json_reader.cpp \
 ../../../external/json/json_value.cpp \
 ../../../external/json/json_writer.cpp
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external/json
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../2d \
 $(LOCAL_PATH)/../../../external/json \
-$(LOCAL_PATH) \
-$(LOCAL_PATH)/../../gui \
+$(LOCAL_PATH)/.. \
+$(LOCAL_PATH)/../.. \
 $(LOCAL_PATH)/../../../external
 
 LOCAL_CFLAGS += -Wno-psabi -fexceptions
