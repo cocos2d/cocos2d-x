@@ -2,7 +2,7 @@
 #define __SPIDERMONKEY_SPECIFICS_H__
 
 #include "jsapi.h"
-#include "support/data_support/uthash.h"
+#include "uthash.h"
 
 typedef struct js_proxy {
 	void *ptr;

@@ -42,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     FileUtils::getInstance()->addSearchPath("res");
-    FileUtils::getInstance()->addSearchPath("js");
+    FileUtils::getInstance()->addSearchPath("script");
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
