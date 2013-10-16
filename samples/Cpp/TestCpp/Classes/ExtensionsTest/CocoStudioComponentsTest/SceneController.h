@@ -2,7 +2,7 @@
 #define __CC_SceneController_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "cocostudio/CocoStudio.h"
 
 class SceneController : public cocostudio::ComController

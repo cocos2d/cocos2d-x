@@ -10,9 +10,10 @@ SocketIO.cpp \
 WebSocket.cpp
 
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../2d
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../2d \
+$(LOCAL_PATH)/..
 
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi

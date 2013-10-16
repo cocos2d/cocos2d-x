@@ -28,9 +28,9 @@
 
 #include "cocos2d.h"
 
-#include "HttpRequest.h"
-#include "HttpResponse.h"
- #include "HttpClient.h"
+#include "network/HttpRequest.h"
+#include "network/HttpResponse.h"
+#include "network/HttpClient.h"
 
 namespace network {
 

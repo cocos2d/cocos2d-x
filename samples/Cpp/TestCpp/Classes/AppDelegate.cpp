@@ -4,7 +4,7 @@
 #include "controller.h"
 #include "SimpleAudioEngine.h"
 #include "cocostudio/CocoStudio.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;

@@ -26,7 +26,7 @@
 #define __HTTP_RESPONSE__
 
 #include "cocos2d.h"
-#include "HttpRequest.h"
+#include "network/HttpRequest.h"
 
 namespace network {
 

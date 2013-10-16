@@ -2,7 +2,7 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../../VisibleRect.h"
 #include "../../testBasic.h"
 #include "cocostudio/CocoStudio.h"
