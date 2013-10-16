@@ -80,7 +80,7 @@ public:
     JS_BINDED_FUNC(MinXmlHttpRequest, setRequestHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, overrideMimeType);
 
-    void handle_requestResponse(cocos2d::extension::HttpClient *sender, cocos2d::extension::HttpResponse *response);
+    void handle_requestResponse(network::HttpClient *sender, network::HttpResponse *response);
 
 
 private:
@@ -102,7 +102,7 @@ private:
     ResponseType                      _responseType;
     unsigned                          _timeout;
     bool                              _isAsync;
-    cocos2d::extension::HttpRequest*  _httpRequest;
+    network::HttpRequest*             _httpRequest;
     bool                              _isNetwork;
     bool                              _withCredentialsValue;
     std::map<string, string>          _httpHeader;
