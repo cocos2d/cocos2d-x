@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCColliderDetector.h"
-#include "armature/CCBone.h"
-#include "armature/utils/CCTransformHelp.h"
+#include "cocostudio/armature/CCBone.h"
+#include "cocostudio/armature/utils/CCTransformHelp.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"

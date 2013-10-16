@@ -1,7 +1,7 @@
 #include "testBasic.h"
 #include "controller.h"
 #include "cocos-ext.h"
-#include "cocostudio/armature/utils/CCArmatureDataManager.h"
+#include "cocostudio/CocoStudio.h"
 
 TestScene::TestScene(bool bPortrait)
 {

@@ -27,7 +27,7 @@
 
 #include "cocos2d.h"
 #include "CCActionNode.h"
-#include "json/CSContentJsonDictionary.h"
+#include "cocostudio/json/CSContentJsonDictionary.h"
 
 namespace cocostudio {
 

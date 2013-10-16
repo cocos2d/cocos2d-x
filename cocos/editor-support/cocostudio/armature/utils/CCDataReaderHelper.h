@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __CCDATAREADERHELPER_H__
 
 #include "CCArmatureDefine.h"
-#include "armature/datas/CCDatas.h"
-#include "armature/CCArmature.h"
-#include "json/CSContentJsonDictionary.h"
+#include "cocostudio/armature/datas/CCDatas.h"
+#include "cocostudio/armature/CCArmature.h"
+#include "cocostudio/json/CSContentJsonDictionary.h"
 
 #include <string>
 #include <queue>
