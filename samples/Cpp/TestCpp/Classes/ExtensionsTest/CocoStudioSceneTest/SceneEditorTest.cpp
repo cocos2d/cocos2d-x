@@ -2,7 +2,7 @@
 #include "cocos-ext.h"
 #include "../ExtensionsTest.h"
 #include "SceneEditorTest.h"
-#include "CocoStudio.h"
+#include "cocostudio/CocoStudio.h"
 #include "system/CocosGUI.h"
 
 using namespace cocos2d;

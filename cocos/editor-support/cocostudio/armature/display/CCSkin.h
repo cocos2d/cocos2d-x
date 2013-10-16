@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCSKIN_H__
 #define __CCSKIN_H__
 
-#include "armature/utils/CCArmatureDefine.h"
-#include "armature/CCBone.h"
+#include "cocostudio/armature/utils/CCArmatureDefine.h"
+#include "cocostudio/armature/CCBone.h"
 
 namespace cocostudio {
 

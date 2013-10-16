@@ -23,10 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDisplayManager.h"
-#include "armature/CCBone.h"
-#include "armature/CCArmature.h"
-#include "armature/utils/CCUtilMath.h"
-#include "armature/display/CCSkin.h"
+#include "cocostudio/armature/CCBone.h"
+#include "cocostudio/armature/CCArmature.h"
+#include "cocostudio/armature/utils/CCUtilMath.h"
+#include "cocostudio/armature/display/CCSkin.h"
 
 using namespace cocos2d;
 

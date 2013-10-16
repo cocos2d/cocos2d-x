@@ -3,7 +3,7 @@
 #include "cocos2d.h"
 #include "controller.h"
 #include "SimpleAudioEngine.h"
-#include "cocostudio/armature/utils/CCArmatureDataManager.h"
+#include "cocostudio/CocoStudio.h"
 #include "cocos-ext.h"
 
 USING_NS_CC;
@@ -51,6 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	{
 		searchPaths.push_back("scenetest");
 	}
+    
 	pFileUtils->setSearchPaths(searchPaths);
 
     EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);

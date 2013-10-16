@@ -26,7 +26,7 @@
 #define __ActionFrameEasing_H__
 
 #include "cocos2d.h"
-#include "json/CSContentJsonDictionary.h"
+#include "cocostudio/json/CSContentJsonDictionary.h"
 
 namespace cocostudio {
 

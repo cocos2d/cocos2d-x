@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCActionFrameEasing.h"
 #include "base-classes/UIWidget.h"
 #include "system/UIHelper.h"
-#include "json/DictionaryHelper.h"
+#include "cocostudio/json/DictionaryHelper.h"
 
 using namespace cocos2d;
 using namespace gui;

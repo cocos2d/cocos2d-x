@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 #include "system/CocosGUI.h"
-#include "json/DictionaryHelper.h"
-#include "action/CCActionManagerEx.h"
+#include "cocostudio/json/DictionaryHelper.h"
+#include "cocostudio/action/CCActionManagerEx.h"
 #include <fstream>
 #include <iostream>
 

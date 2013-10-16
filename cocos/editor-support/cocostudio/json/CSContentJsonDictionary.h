@@ -28,7 +28,7 @@
 #define COCOSTUDIO_CSCONTENTJSONDICTIONARY_H
 
 
-#include "json.h"
+#include "json/json.h"
 #include <vector>
 #include <string>
 
