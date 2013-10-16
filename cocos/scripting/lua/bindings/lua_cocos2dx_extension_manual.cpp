@@ -13,9 +13,11 @@ extern "C" {
 #include "CCLuaValue.h"
 #include "cocos-ext.h"
 #include "CCBProxy.h"
+#include "cocostudio/CocoStudio.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace cocostudio;
 
 class LuaScrollViewDelegate:public Object, public ScrollViewDelegate
 {
@@ -1334,14 +1336,14 @@ static int lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData(lua_State* L)
         return 0;
     
     int argc = 0;
-    armature::Bone* self = nullptr;
+    cocostudio::Bone* self = nullptr;
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 	if (!tolua_isusertype(L,1,"Bone",0,&tolua_err)) goto tolua_lerror;
 #endif
     
-    self = static_cast<armature::Bone*>(tolua_tousertype(L,1,0));
+    self = static_cast<cocostudio::Bone*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
 	if (nullptr == self) {
@@ -1379,14 +1381,14 @@ static int lua_cocos2dx_extension_Bone_getIgnoreMovementBoneData(lua_State* L)
         return 0;
     
     int argc = 0;
-    armature::Bone* self = nullptr;
+    cocostudio::Bone* self = nullptr;
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 	if (!tolua_isusertype(L,1,"Bone",0,&tolua_err)) goto tolua_lerror;
 #endif
     
-    self = static_cast<armature::Bone*>(tolua_tousertype(L,1,0));
+    self = static_cast<cocostudio::Bone*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
 	if (nullptr == self) {
