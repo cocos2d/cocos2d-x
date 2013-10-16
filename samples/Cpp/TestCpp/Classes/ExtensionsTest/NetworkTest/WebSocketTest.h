@@ -10,8 +10,8 @@
 #define __TestCpp__WebSocketTest__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
-#include "WebSocket.h"
+#include "extensions/cocos-ext.h"
+#include "network/WebSocket.h"
 
 class WebSocketTestLayer
 : public cocos2d::Layer

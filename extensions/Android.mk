@@ -43,8 +43,9 @@ LOCAL_CXXFLAGS += -fexceptions
 LOCAL_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
-                           $(LOCAL_PATH)/CCBReader \
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/..
+
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
                            $(LOCAL_PATH)/GUI/CCControlExtension \
                            $(LOCAL_PATH)/GUI/CCScrollView 
                     

@@ -23,7 +23,7 @@
 #define __PHYSICSNODES_CCPHYSICSSPRITE_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "extensions/ExtensionMacros.h"
 
 struct cpBody;
 class b2Body;
