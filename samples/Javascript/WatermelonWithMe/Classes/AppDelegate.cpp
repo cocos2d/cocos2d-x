@@ -38,6 +38,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     EGLView::getInstance()->setDesignResolutionSize(480, 320, ResolutionPolicy::FIXED_HEIGHT);
     
+    FileUtils::getInstance()->addSearchPath("script");
+    
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
