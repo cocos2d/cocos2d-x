@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCTRANSFORMHELP_H__
 
 #include "CCArmatureDefine.h"
-#include "armature/datas/CCDatas.h"
+#include "cocostudio/armature/datas/CCDatas.h"
 
 namespace cocostudio {
 

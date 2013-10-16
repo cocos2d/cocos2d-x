@@ -24,7 +24,7 @@
 
 #include <math.h>
 #include "CCActionFrameEasing.h"
-#include "json/DictionaryHelper.h"
+#include "cocostudio/json/DictionaryHelper.h"
 namespace cocostudio {
 
 #ifndef M_PI_X_2

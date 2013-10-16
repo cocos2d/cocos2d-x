@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCBatchNode.h"
-#include "armature/utils/CCArmatureDefine.h"
-#include "armature/CCArmature.h"
+#include "cocostudio/armature/utils/CCArmatureDefine.h"
+#include "cocostudio/armature/CCArmature.h"
 
 using namespace cocos2d;
 

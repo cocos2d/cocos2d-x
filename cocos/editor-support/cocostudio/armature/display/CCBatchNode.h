@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCBATCHNODE_H__
 #define __CCBATCHNODE_H__
 
-#include "armature/utils/CCArmatureDefine.h"
+#include "cocostudio/armature/utils/CCArmatureDefine.h"
 
 namespace cocostudio {
 
