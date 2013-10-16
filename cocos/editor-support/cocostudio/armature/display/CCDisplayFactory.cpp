@@ -23,14 +23,16 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDisplayFactory.h"
-#include "../CCBone.h"
-#include "../CCArmature.h"
-#include "../display/CCSkin.h"
-#include "../utils/CCSpriteFrameCacheHelper.h"
-#include "../utils/CCArmatureDataManager.h"
-#include "../utils/CCTransformHelp.h"
+#include "armature/CCBone.h"
+#include "armature/CCArmature.h"
+#include "armature/display/CCSkin.h"
+#include "armature/utils/CCSpriteFrameCacheHelper.h"
+#include "armature/utils/CCArmatureDataManager.h"
+#include "armature/utils/CCTransformHelp.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+using namespace cocos2d;
+
+namespace cocostudio {
 
 void DisplayFactory::addDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
 {
@@ -272,4 +274,4 @@ void DisplayFactory::updateParticleDisplay(Bone *bone, Node *display, float dt, 
 }
 
 
-NS_CC_EXT_ARMATURE_END
+}

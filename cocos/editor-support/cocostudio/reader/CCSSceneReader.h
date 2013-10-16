@@ -26,10 +26,9 @@
 #define __CCSSCENEREADER_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
-#include "ExtensionMacros.h"
+ #include "json/CSContentJsonDictionary.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 class SceneReader
 {
@@ -51,14 +50,14 @@ public:
     cocos2d::Node* createNodeWithSceneFile(const char *pszFileName);
 
 private:
-    cocos2d::Node* createObject(cs::JsonDictionary * inputFiles, cocos2d::Node* parent);
-    void setPropertyFromJsonDict(cocos2d::Node *node, cs::JsonDictionary* dict);
+    cocos2d::Node* createObject(JsonDictionary * inputFiles, cocos2d::Node* parent);
+    void setPropertyFromJsonDict(cocos2d::Node *node, JsonDictionary* dict);
 
 private:
     static SceneReader* s_sharedReader;
 };
 
 
-NS_CC_EXT_END
+}
 
 #endif

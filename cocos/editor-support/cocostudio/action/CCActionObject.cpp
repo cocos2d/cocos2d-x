@@ -23,9 +23,11 @@
  ****************************************************************************/
 
 #include "CCActionObject.h"
-#include "../Json/DictionaryHelper.h"
+#include "json/DictionaryHelper.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace cocostudio {
 
 ActionObject::ActionObject()
 : _actionNodeList(NULL)
@@ -94,7 +96,7 @@ bool ActionObject::isPlaying()
 	return _bPlaying;
 }
 
-void ActionObject::initWithDictionary(cs::JsonDictionary *dic,Object* root)
+void ActionObject::initWithDictionary(JsonDictionary *dic,Object* root)
 {
     setName(DICTOOL->getStringValue_json(dic, "name"));
     setLoop(DICTOOL->getBooleanValue_json(dic, "loop"));
@@ -103,7 +105,7 @@ void ActionObject::initWithDictionary(cs::JsonDictionary *dic,Object* root)
     for (int i=0; i<actionNodeCount; i++) {
         ActionNode* actionNode = new ActionNode();
 		actionNode->autorelease();
-        cs::JsonDictionary* actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
+        JsonDictionary* actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
         actionNode->initWithDictionary(actionNodeDic,root);
 		actionNode->setUnitTime(getUnitTime());
         _actionNodeList->addObject(actionNode);
@@ -172,4 +174,4 @@ void ActionObject::updateToFrameByTime(float fTime)
 	}
 }
 
-NS_CC_EXT_END
+}

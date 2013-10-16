@@ -25,7 +25,7 @@
 #include "LayoutParameter.h"
 #include "Layout.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
 
 LayoutParameter* LayoutParameter::create()
 {
@@ -118,4 +118,4 @@ const char* RelativeLayoutParameter::getRelativeName() const
     return _relativeLayoutName.c_str();
 }
 
-NS_CC_EXT_END
+}

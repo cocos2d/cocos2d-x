@@ -26,11 +26,10 @@ THE SOFTWARE.
 #define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 #include <string>
-#include "../Json/CSContentJsonDictionary.h"
+#include "json/CSContentJsonDictionary.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 class ComAttribute : public cocos2d::Component
 {
@@ -61,15 +60,15 @@ public:
    float  getFloat(const char *key) const;
    bool   getBool(const char *key) const;
    const char* getCString(const char *key) const;
-   Object* getObject(const char *key) const;
+   cocos2d::Object* getObject(const char *key) const;
    
-   cs::JsonDictionary* getDict() const;
+   JsonDictionary* getDict() const;
 private:
-   Dictionary *_attributes;  
-   cs::JsonDictionary *_jsonDict;
+   cocos2d::Dictionary *_attributes;  
+   JsonDictionary *_jsonDict;
    
 };
 
-NS_CC_EXT_END
+}
 
 #endif  // __FUNDATION__CCCOMPONENT_H__

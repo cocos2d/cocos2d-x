@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "HttpClient.h"
 
 class HttpClientTest : public cocos2d::Layer
 {
@@ -19,7 +20,7 @@ public:
     void onMenuDeleteTestClicked(cocos2d::Object *sender);
     
     //Http Response Callback
-    void onHttpRequestCompleted(cocos2d::extension::HttpClient *sender, cocos2d::extension::HttpResponse *response);
+    void onHttpRequestCompleted(network::HttpClient *sender, network::HttpResponse *response);
 
 private:
     cocos2d::LabelTTF* _labelStatusCode;

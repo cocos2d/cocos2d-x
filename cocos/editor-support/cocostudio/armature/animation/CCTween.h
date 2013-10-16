@@ -27,9 +27,9 @@ THE SOFTWARE.
 #define __CCTWEEN_H__
 
 #include "CCProcessBase.h"
-#include "../utils/CCTweenFunction.h"
+#include "armature/utils/CCTweenFunction.h"
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 class Bone;
 class ArmatureAnimation;
@@ -147,6 +147,6 @@ protected:
 
 };
 
-NS_CC_EXT_ARMATURE_END
+}
 
 #endif /*__CCTWEEN_H__*/

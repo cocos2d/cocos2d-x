@@ -25,9 +25,9 @@
 #ifndef __UILABELBMFONT_H__
 #define __UILABELBMFONT_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "base-classes/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+namespace gui {
     
 class UILabelBMFont : public UIWidget
 {
@@ -55,9 +55,9 @@ public:
     
     /** get string value for labelbmfont*/
     const char* getStringValue();
-    virtual void setAnchorPoint(const Point &pt);
-    virtual const Size& getContentSize() const;
-    virtual Node* getVirtualRenderer();
+    virtual void setAnchorPoint(const cocos2d::Point &pt);
+    virtual const cocos2d::Size& getContentSize() const;
+    virtual cocos2d::Node* getVirtualRenderer();
     
     /**
      * Returns the "class name" of widget.
@@ -68,10 +68,10 @@ protected:
     virtual void onSizeChanged();
     void labelBMFontScaleChangedWithSize();
 protected:
-    LabelBMFont* _labelBMFontRenderer;
+    cocos2d::LabelBMFont* _labelBMFontRenderer;
     bool _fntFileHasInit;
 };
     
-NS_CC_EXT_END
+}
 
 #endif /* defined(__UILabelBMFont__) */

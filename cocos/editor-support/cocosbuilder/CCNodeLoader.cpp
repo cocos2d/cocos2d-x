@@ -5,8 +5,10 @@
 #include "CCNode+CCBRelativePositioning.h"
 
 using namespace std;
+using namespace cocos2d;
+using namespace cocos2d::extension;
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 NodeLoader::NodeLoader()
 {
@@ -1156,4 +1158,4 @@ void NodeLoader::onHandlePropTypeCCBFile(Node * pNode, Node * pParent, const cha
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
-NS_CC_EXT_END
+}

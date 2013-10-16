@@ -26,10 +26,9 @@
 #define __UIWIDGET_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
-#include "../Layouts/UILayoutDefine.h"
-#include "../Layouts/LayoutParameter.h"
-NS_CC_EXT_BEGIN
+#include "layouts/UILayoutDefine.h"
+#include "layouts/LayoutParameter.h"
+namespace gui {
 
 
 typedef enum
@@ -71,14 +70,14 @@ typedef enum
     POSITION_PERCENT
 }PositionType;
 
-typedef void (Object::*SEL_TouchEvent)(Object*,TouchEventType);
-#define toucheventselector(_SELECTOR) (cocos2d::extension::SEL_TouchEvent)(&_SELECTOR)
+typedef void (cocos2d::Object::*SEL_TouchEvent)(cocos2d::Object*,TouchEventType);
+#define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
 
 //class UILayer;
 /*temp action*/
 class UIActionNode;
 
-class UIWidget : public Object
+class UIWidget : public cocos2d::Object
 {
 public:    
     /**
@@ -300,7 +299,7 @@ public:
      *
      * @return An array of children
      */
-    virtual Array* getChildren();
+    virtual cocos2d::Array* getChildren();
     
     /**
      * Gets the renderer of widget
@@ -309,7 +308,7 @@ public:
      *
      * @return a CCNode object
      */
-    Node* getRenderer();
+    cocos2d::Node* getRenderer();
     
     /**
      * Add a CCNode for rendering.
@@ -320,7 +319,7 @@ public:
      *
      * @param zOrder    Z order for drawing priority. Please refer to CCNode::setZOrder(int)
      */
-    void addRenderer(Node* renderer, int zOrder);
+    void addRenderer(cocos2d::Node* renderer, int zOrder);
     
     /**
      * Remove a CCNode from widget.
@@ -331,7 +330,7 @@ public:
      *
      * @param cleanup   true if all running actions and callbacks on the render node will be cleanup, false otherwise.
      */
-    void removeRenderer(Node* renderer, bool cleanup);
+    void removeRenderer(cocos2d::Node* renderer, bool cleanup);
     
     /**
      * Sets the parent widget
@@ -352,7 +351,7 @@ public:
     /**
      * Sets the touch event target/selector of the menu item
      */
-    void addTouchEventListener(Object* target,SEL_TouchEvent selector);
+    void addTouchEventListener(cocos2d::Object* target,SEL_TouchEvent selector);
     
     
     //cocos2d property
@@ -365,7 +364,7 @@ public:
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
      */
-    void setPosition(const Point &pos);
+    void setPosition(const cocos2d::Point &pos);
     
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -375,7 +374,7 @@ public:
      *
      * @param percent  The percent (x,y) of the widget in OpenGL coordinates
      */
-    void setPositionPercent(const Point &percent);
+    void setPositionPercent(const cocos2d::Point &percent);
     
     /**
      * Gets the position (x,y) of the widget in OpenGL coordinates
@@ -384,7 +383,7 @@ public:
      *
      * @return The position (x,y) of the widget in OpenGL coordinates
      */
-    const Point& getPosition();
+    const cocos2d::Point& getPosition();
     
     /**
      * Gets the percent (x,y) of the widget in OpenGL coordinates
@@ -393,7 +392,7 @@ public:
      *
      * @return The percent (x,y) of the widget in OpenGL coordinates
      */
-    const Point& getPositionPercent();
+    const cocos2d::Point& getPositionPercent();
     
     /**
      * Changes the position type of the widget
@@ -424,7 +423,7 @@ public:
      *
      * @param anchorPoint   The anchor point of widget.
      */
-    virtual void setAnchorPoint(const Point &pt);
+    virtual void setAnchorPoint(const cocos2d::Point &pt);
     
     /**
      * Returns the anchor point in percent.
@@ -433,7 +432,7 @@ public:
      *
      * @return The anchor point of widget.
      */
-    const Point& getAnchorPoint();
+    const cocos2d::Point& getAnchorPoint();
     
     /**
      * Changes both X and Y scale factor of the widget.
@@ -592,14 +591,14 @@ public:
      *
      * @param color
      */
-    virtual void setColor(const Color3B &color);
+    virtual void setColor(const cocos2d::Color3B &color);
     
     /**
      * Gets color of widget
      *
      * @return color
      */
-    virtual const Color3B& getColor();
+    virtual const cocos2d::Color3B& getColor();
     
     /**
      * Sets opacity to widget
@@ -620,16 +619,16 @@ public:
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     virtual bool isCascadeColorEnabled();
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    void setBlendFunc(BlendFunc blendFunc);
+    void setBlendFunc(cocos2d::BlendFunc blendFunc);
     
     //cocos action
-    virtual void setActionManager(ActionManager* actionManager);
-    virtual ActionManager* getActionManager();
-    Action* runAction(Action* action);
+    virtual void setActionManager(cocos2d::ActionManager* actionManager);
+    virtual cocos2d::ActionManager* getActionManager();
+    cocos2d::Action* runAction(cocos2d::Action* action);
     void stopAllActions(void);
-    void stopAction(Action* action);
+    void stopAction(cocos2d::Action* action);
     void stopActionByTag(int tag);
-    Action* getActionByTag(int tag);
+    cocos2d::Action* getActionByTag(int tag);
     
     /**
      * A call back function when widget lost of focus.
@@ -643,33 +642,33 @@ public:
      *
      * @return true if the point is in parent's area, flase otherwise.
      */
-    bool clippingParentAreaContainPoint(const Point &pt);
+    bool clippingParentAreaContainPoint(const cocos2d::Point &pt);
     
     /*
      * Sends the touch event to widget's parent
      */
-    virtual void checkChildInfo(int handleState,UIWidget* sender,const Point &touchPoint);
+    virtual void checkChildInfo(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint);
     
     /*
      * Gets the touch began point of widget when widget is selected.
      *
      * @return the touch began point.
      */
-    const Point& getTouchStartPos();
+    const cocos2d::Point& getTouchStartPos();
     
     /*
      * Gets the touch move point of widget when widget is selected.
      *
      * @return the touch move point.
      */
-    const Point& getTouchMovePos();
+    const cocos2d::Point& getTouchMovePos();
     
     /*
      * Gets the touch end point of widget when widget is selected.
      *
      * @return the touch end point.
      */
-    const Point& getTouchEndPos();
+    const cocos2d::Point& getTouchEndPos();
     
     /**
      * Changes the tag that is used to identify the widget easily.
@@ -717,14 +716,14 @@ public:
      *
      * @param size that is widget's size
      */
-    virtual void setSize(const Size &size);
+    virtual void setSize(const cocos2d::Size &size);
     
     /**
      * Changes the percent that is widget's percent size
      *
      * @param percent that is widget's percent size
      */
-    virtual void setSizePercent(const Point &percent);
+    virtual void setSizePercent(const cocos2d::Point &percent);
     
     /**
      * Changes the size type of widget.
@@ -749,14 +748,14 @@ public:
      *
      * @return size
      */
-    const Size& getSize() const;
+    const cocos2d::Size& getSize() const;
     
     /**
      * Returns size percent of widget
      *
      * @return size percent
      */
-    const Point& getSizePercent() const;
+    const cocos2d::Point& getSizePercent() const;
     
     /**
      * Checks a point if is in widget's space
@@ -765,7 +764,7 @@ public:
      *
      * @return true if the point is in widget's space, flase otherwise.
      */
-    virtual bool hitTest(const Point &pt);
+    virtual bool hitTest(const cocos2d::Point &pt);
     
     /**
      * A call back function called when widget is selected, and on touch began.
@@ -774,35 +773,35 @@ public:
      *
      * @return true if the event should be pass to parent, flase otherwise.
      */
-    virtual bool onTouchBegan(const Point &touchPoint);
+    virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
     
     /**
      * A call back function called when widget is selected, and on touch moved.
      *
      * @param touch point
      */
-    virtual void onTouchMoved(const Point &touchPoint);
+    virtual void onTouchMoved(const cocos2d::Point &touchPoint);
     
     /**
      * A call back function called when widget is selected, and on touch ended.
      *
      * @param touch point
      */
-    virtual void onTouchEnded(const Point &touchPoint);
+    virtual void onTouchEnded(const cocos2d::Point &touchPoint);
     
     /**
      * A call back function called when widget is selected, and on touch canceled.
      *
      * @param touch point
      */
-    virtual void onTouchCancelled(const Point &touchPoint);
+    virtual void onTouchCancelled(const cocos2d::Point &touchPoint);
     
     /**
      * A call back function called when widget is selected, and on touch long clicked.
      *
      * @param touch point
      */
-    virtual void onTouchLongClicked(const Point &touchPoint);
+    virtual void onTouchLongClicked(const cocos2d::Point &touchPoint);
     
     /**
      * Sets a LayoutParameter to widget. 
@@ -839,12 +838,12 @@ public:
      *
      * @return world position of widget.
      */
-    Point getWorldPosition();
+    cocos2d::Point getWorldPosition();
     
     /**
      * Converts a Point to world space coordinates. The result is in Points.
      */
-    Point convertToWorldSpace(const Point& pt);
+    cocos2d::Point convertToWorldSpace(const cocos2d::Point& pt);
     
     /**
      * Gets the Virtual Renderer of widget.
@@ -853,7 +852,7 @@ public:
      *
      * @return CCNode pointer.
      */
-    virtual Node* getVirtualRenderer();
+    virtual cocos2d::Node* getVirtualRenderer();
     
     /**
      * Schedules the "update" method.
@@ -870,7 +869,7 @@ public:
      *
      * Content size is widget's texture size.
      */
-    virtual const Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const;
     
     virtual void onEnter();
     virtual void onExit();
@@ -922,16 +921,16 @@ protected:
     bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _focus;              ///< is the widget on focus
     int _widgetZOrder;        ///< z-order value that affects the draw order and touch order
-    Point _anchorPoint;      ///< anchor point normalized
+    cocos2d::Point _anchorPoint;      ///< anchor point normalized
     UIWidget* _widgetParent;  ///< parent of widget
     BrightStyle _brightStyle; ///< bright style
     bool _updateEnabled;      ///< is "update" method scheduled
-    Node* _renderer;        ///< base renderer
-    Point _touchStartPos;    ///< touch began point
-    Point _touchMovePos;     ///< touch moved point
-    Point _touchEndPos;      ///< touch ended point
+    cocos2d::Node* _renderer;        ///< base renderer
+    cocos2d::Point _touchStartPos;    ///< touch began point
+    cocos2d::Point _touchMovePos;     ///< touch moved point
+    cocos2d::Point _touchEndPos;      ///< touch ended point
     
-    Object*       _touchEventListener;
+    cocos2d::Object*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
     
 
@@ -940,23 +939,23 @@ protected:
     std::string _name;
     WidgetType _widgetType;
 	int _actionTag;
-    Size _size;
-    Size _customSize;
+    cocos2d::Size _size;
+    cocos2d::Size _customSize;
     LayoutParameter* _layoutParameter;
     bool _ignoreSize;
-    Array* _children;
+    cocos2d::Array* _children;
     bool _affectByClipping;
     
-    Scheduler* _scheduler;
+    cocos2d::Scheduler* _scheduler;
     
     SizeType _sizeType;
-    Point _sizePercent;
+    cocos2d::Point _sizePercent;
     PositionType _positionType;
-    Point _positionPercent;
+    cocos2d::Point _positionPercent;
     bool _isRunning;
 };
 
-class GUIRenderer : public NodeRGBA
+class GUIRenderer : public cocos2d::NodeRGBA
 {
 public:
     GUIRenderer();
@@ -969,6 +968,6 @@ protected:
     bool _enabled;
 };
 
-NS_CC_EXT_END
+}
 
 #endif /* defined(__UIWidget__) */

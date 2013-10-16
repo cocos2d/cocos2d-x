@@ -1,8 +1,8 @@
 #include "CCLayerColorLoader.h"
 
+using namespace cocos2d;
 
-
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 #define PROPERTY_COLOR "color"
 #define PROPERTY_OPACITY "opacity"
@@ -32,4 +32,4 @@ void LayerColorLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, c
     }
 }
 
-NS_CC_EXT_END
+}

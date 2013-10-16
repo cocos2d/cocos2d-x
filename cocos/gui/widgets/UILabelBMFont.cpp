@@ -24,7 +24,9 @@
 
 #include "UILabelBMFont.h"
 
-NS_CC_EXT_BEGIN
+ using namespace cocos2d;
+
+namespace gui {
     
 UILabelBMFont::UILabelBMFont():
 _labelBMFontRenderer(NULL),
@@ -58,7 +60,7 @@ void UILabelBMFont::initRenderer()
 
 void UILabelBMFont::setFntFile(const char *fileName)
 {
-    if (!fileName || std::strcmp(fileName, "") == 0)
+    if (!fileName || strcmp(fileName, "") == 0)
     {
         return;
     }
@@ -132,4 +134,4 @@ const char* UILabelBMFont::getDescription() const
 }
 
 
-NS_CC_EXT_END
+}

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCComAudio.h"
 #include "SimpleAudioEngine.h"
 
-NS_CC_EXT_BEGIN
+namespace cocostudio {
 
 ComAudio::ComAudio(void)
 : _filePath("")
@@ -223,4 +223,4 @@ bool ComAudio::isLoop()
 	return _loop;
 }
 
-NS_CC_EXT_END
+}

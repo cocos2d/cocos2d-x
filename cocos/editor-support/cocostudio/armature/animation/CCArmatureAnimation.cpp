@@ -23,14 +23,16 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCArmatureAnimation.h"
-#include "../CCArmature.h"
-#include "../CCBone.h"
-#include "../utils/CCArmatureDefine.h"
-#include "../utils/CCUtilMath.h"
-#include "../datas/CCDatas.h"
+#include "armature/CCArmature.h"
+#include "armature/CCBone.h"
+#include "armature/utils/CCArmatureDefine.h"
+#include "armature/utils/CCUtilMath.h"
+#include "armature/datas/CCDatas.h"
+
+using namespace cocos2d;
 
 
-NS_CC_EXT_ARMATURE_BEGIN
+namespace cocostudio {
 
 ArmatureAnimation *ArmatureAnimation::create(Armature *armature)
 {
@@ -403,4 +405,4 @@ void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int o
         (_frameEventTarget->*_frameEventCallFunc)(bone, frameEventName, originFrameIndex, currentFrameIndex);
     }
 }
-NS_CC_EXT_ARMATURE_END
+}

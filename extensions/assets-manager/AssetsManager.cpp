@@ -38,7 +38,7 @@
 #endif
 
 
-#include "support/zip_support/unzip.h"
+#include "unzip.h"
 
 using namespace cocos2d;
 using namespace std;
