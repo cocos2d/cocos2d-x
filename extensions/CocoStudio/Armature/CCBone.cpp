@@ -206,6 +206,11 @@ void CCBone::update(float delta)
         }
 
         CCTransformHelp::nodeToMatrix(*m_tWorldInfo, m_tWorldTransform);
+
+        if (armatureParentBone)
+        {
+            m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pArmature->nodeToParentTransform());
+        }
     }
 
     CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty || m_pArmature->getArmatureTransformDirty());
@@ -345,6 +350,11 @@ void CCBone::setChildArmature(CCArmature *armature)
 {
     if (m_pChildArmature != armature)
     {
+        if (armature == NULL && m_pChildArmature)
+        {
+            m_pChildArmature->setParentBone(NULL);
+        }
+
         CC_SAFE_RETAIN(armature);
         CC_SAFE_RELEASE(m_pChildArmature);
         m_pChildArmature = armature;
@@ -400,6 +410,11 @@ void CCBone::addDisplay(CCDisplayData *displayData, int index)
 void CCBone::addDisplay(CCNode *display, int index)
 {
     m_pDisplayManager->addDisplay(display, index);
+}
+
+void CCBone::removeDisplay(int index)
+{
+    m_pDisplayManager->removeDisplay(index);
 }
 
 void CCBone::changeDisplayByIndex(int index, bool force)
