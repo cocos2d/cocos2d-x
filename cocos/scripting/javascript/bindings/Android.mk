@@ -36,7 +36,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../../CocosDenshion/include \
                     $(LOCAL_PATH)/../../auto-generated/js-bindings \
                     $(LOCAL_PATH)/../../../../extensions \
-                    $(LOCAL_PATH)/../../../editor-support/cocostudio
+                    $(LOCAL_PATH)/../../../editor-support/cocostudio \
+                    $(LOCAL_PATH)/../../../editor-support/cocosbuilder
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/../../auto-generated/js-bindings 
