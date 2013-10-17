@@ -900,6 +900,7 @@ void Layout::copySpecialProperties(UIWidget *widget)
         setBackGroundColorOpacity(layout->m_nCOpacity);
         setBackGroundColorVector(layout->m_AlongVector);
         setLayoutType(layout->m_eLayoutType);
+        setClippingEnabled(layout->m_bClippingEnabled);
     }
 }
 

@@ -78,6 +78,7 @@ bool UIPageView::init()
         m_pages->retain();
         setClippingEnabled(true);
         setUpdateEnabled(true);
+        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -111,7 +112,6 @@ void UIPageView::addWidgetToPage(UIWidget *widget, int pageIdx, bool forceCreate
             page->addChild(widget);
         }
     }
-    
 }
 
 Layout* UIPageView::createPage()
@@ -483,6 +483,10 @@ void UIPageView::handleMoveLogic(const CCPoint &touchPoint)
 
 void UIPageView::handleReleaseLogic(const CCPoint &touchPoint)
 {
+    if (m_pages->count() <= 0)
+    {
+        return;
+    }
     UIWidget* curPage = dynamic_cast<UIWidget*>(m_pages->objectAtIndex(m_nCurPageIdx));
     if (curPage)
     {
