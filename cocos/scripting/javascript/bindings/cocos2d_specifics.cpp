@@ -1,5 +1,5 @@
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "cocos2d_specifics.hpp"
 #include <typeinfo>
 #include "js_bindings_config.h"

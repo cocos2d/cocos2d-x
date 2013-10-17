@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #include "jsb_websocket.h"
 #include "cocos2d.h"
-#include "WebSocket.h"
+#include "network/WebSocket.h"
 #include "spidermonkey_specifics.h"
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
