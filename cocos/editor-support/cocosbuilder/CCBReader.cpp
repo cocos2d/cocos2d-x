@@ -15,8 +15,10 @@
 #include <ctype.h>
 
 using namespace std;
+using namespace cocos2d;
+using namespace cocos2d::extension;
 
-NS_CC_EXT_BEGIN;
+namespace cocosbuilder {;
 
 /*************************************************************************
  Implementation of CCBFile
@@ -1108,4 +1110,4 @@ void CCBReader::setResolutionScale(float scale)
     __ccbResolutionScale = scale;
 }
 
-NS_CC_EXT_END;
+};

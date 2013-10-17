@@ -1,11 +1,11 @@
 #include "CCMenuItemLoader.h"
 
-
+using namespace cocos2d;
 
 #define PROPERTY_BLOCK "block"
 #define PROPERTY_ISENABLED "isEnabled"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 void MenuItemLoader::onHandlePropTypeBlock(Node * pNode, Node * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_BLOCK) == 0) {
@@ -27,4 +27,4 @@ void MenuItemLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const c
     }
 }
 
-NS_CC_EXT_END
+}

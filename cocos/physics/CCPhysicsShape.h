@@ -28,8 +28,8 @@
 #ifndef __CCPHYSICS_SHAPE_H__
 #define __CCPHYSICS_SHAPE_H__
 
-#include "cocoa/CCObject.h"
-#include "cocoa/CCGeometry.h"
+#include "CCObject.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN
 

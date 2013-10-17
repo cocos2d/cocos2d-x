@@ -33,7 +33,7 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 
-#include "ExtensionMacros.h"
+#include "extensions/ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
 @interface CCCustomNSTextField : NSTextField

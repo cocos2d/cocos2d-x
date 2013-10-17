@@ -23,14 +23,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCEGLView.h"
-#include "cocoa/CCSet.h"
+#include "CCSet.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
-#include "text_input_node/CCIMEDispatcher.h"
+#include "/CCIMEDispatcher.h"
 #include "CCApplication.h"
-#include "event_dispatcher/CCTouch.h"
-#include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCEventKeyboard.h"
+#include "CCTouch.h"
+#include "CCEventDispatcher.h"
+#include "CCEventKeyboard.h"
 
 
 NS_CC_BEGIN

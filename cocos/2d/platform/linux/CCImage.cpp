@@ -7,7 +7,7 @@
 #include <fontconfig/fontconfig.h>
 
 #include "platform/CCFileUtils.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #define __CC_PLATFORM_IMAGE_CPP__
 #include "platform/CCImageCommon_cpp.h"
 #include "platform/CCImage.h"

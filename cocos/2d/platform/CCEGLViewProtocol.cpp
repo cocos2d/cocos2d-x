@@ -1,8 +1,8 @@
 #include "CCEGLViewProtocol.h"
-#include "event_dispatcher/CCTouch.h"
+#include "CCTouch.h"
 #include "CCDirector.h"
-#include "cocoa/CCSet.h"
-#include "event_dispatcher/CCEventDispatcher.h"
+#include "CCSet.h"
+#include "CCEventDispatcher.h"
 
 
 NS_CC_BEGIN

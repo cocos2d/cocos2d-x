@@ -67,10 +67,10 @@ bool UICheckBoxTest::init()
 void UICheckBoxTest::selectedEvent(Object* pSender,CheckBoxEventType type)
 {
     switch (type) {
-        case cocos2d::extension::CHECKBOX_STATE_EVENT_SELECTED:
+        case gui::CHECKBOX_STATE_EVENT_SELECTED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Selected")->getCString());
             break;
-        case cocos2d::extension::CHECKBOX_STATE_EVENT_UNSELECTED:
+        case gui::CHECKBOX_STATE_EVENT_UNSELECTED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Unselected")->getCString());
             break;
         default:
