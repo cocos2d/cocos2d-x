@@ -94,7 +94,7 @@ fi
 done
 
 #copy comment script
-for file in "$APP_ROOT"/../../../scripting/lua/script/*
+for file in "$APP_ROOT"/../../../cocos/scripting/lua/script/*
 do
 if [ -d "$file" ]; then
     cp -rf "$file" "$APP_ANDROID_ROOT"/assets
