@@ -6,7 +6,7 @@
 //
 
 #include "jsb_cocos2dx_extension_manual.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
 #include "cocostudio/CocoStudio.h"

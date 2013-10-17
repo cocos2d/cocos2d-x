@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "js_bindings_config.h"
 #ifdef JSB_INCLUDE_CHIPMUNK
 

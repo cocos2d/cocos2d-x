@@ -10,7 +10,7 @@ extern "C" {
 #include <string>
 #include "LuaScriptHandlerMgr.h"
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
