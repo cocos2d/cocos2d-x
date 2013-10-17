@@ -10,7 +10,7 @@ extern "C" {
 #include <string>
 #include "LuaOpengl.h"
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
@@ -144,9 +144,9 @@ static int tolua_Cocos2d_glGetSupportedExtensions00(lua_State* tolua_S)
 #endif
     {
         const GLubyte* extensions = glGetString(GL_EXTENSIONS);
-        size_t len  = std::strlen((const char*)extensions);
+        size_t len  = strlen((const char*)extensions);
         GLubyte* copy = new GLubyte[len+1];
-        std::strncpy((char*)copy, (const char*)extensions, len );
+        strncpy((char*)copy, (const char*)extensions, len );
         
         int start_extension=0;
         LuaValueArray array;
