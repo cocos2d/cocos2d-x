@@ -7553,6 +7553,7 @@
 					"$(SRCROOT)/../cocos/gui",
 					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../external",
+					"$(SRCROOT)/../cocos/storage",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -7592,6 +7593,7 @@
 					"$(SRCROOT)/../cocos/gui",
 					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../external",
+					"$(SRCROOT)/../cocos/storage",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";

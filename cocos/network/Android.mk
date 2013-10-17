@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := network_static
+LOCAL_MODULE := cocos_network_static
 
 LOCAL_MODULE_FILENAME := libnetwork
 
