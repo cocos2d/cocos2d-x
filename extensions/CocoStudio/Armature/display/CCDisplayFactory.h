@@ -48,7 +48,6 @@ public:
     static void addSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
     static void createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
     static void initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, const char *displayName, CCSkin *skin);
-    static void updateSpriteDisplay(CCBone *bone, CCNode *display);
 
 
     static void addArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
