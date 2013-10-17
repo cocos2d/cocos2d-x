@@ -381,7 +381,7 @@ static CCEAGLView *view = 0;
     
     for(UIView* view in subviews)
     {
-        if([view isKindOfClass:NSClassFromString(@"CustomUITextField")])
+        if([view isKindOfClass:NSClassFromString(@"CCCustomUITextField")])
         {
             if ([view isFirstResponder])
             {
