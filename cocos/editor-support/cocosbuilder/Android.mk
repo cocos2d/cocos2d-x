@@ -29,7 +29,7 @@ CCScale9SpriteLoader.cpp \
 CCScrollViewLoader.cpp \
 CCSpriteLoader.cpp
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/ \
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../..
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../2d \

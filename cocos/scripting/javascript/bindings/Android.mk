@@ -52,7 +52,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_localstorage_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
 LOCAL_WHOLE_STATIC_LIBRARIES += websockets_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_gui_static
 
 LOCAL_LDLIBS := -landroid
 LOCAL_LDLIBS += -llog
@@ -70,4 +69,3 @@ $(call import-module,chipmunk)
 $(call import-module,storage/local-storage)
 $(call import-module,editor-support/cocostudio)
 $(call import-module,websockets/prebuilt/android)
-$(call import-module,gui)

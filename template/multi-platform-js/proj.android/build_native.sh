@@ -62,7 +62,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR/../../.."
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
-BINDINGS_JS_ROOT="$APP_ROOT/../../scripting/javascript/bindings/js"
+BINDINGS_JS_ROOT="$APP_ROOT/../../cocos/scripting/javascript/script"
 
 echo
 echo "Paths"
@@ -88,7 +88,7 @@ cp -rf "$APP_ROOT"/Resources/* "$APP_ANDROID_ROOT"/assets
 
 
 # copy bindings/*.js into assets' root
-cp -f "$BINDINGS_JS_ROOT"/* "$APP_ANDROID_ROOT"/assets
+cp -rf "$BINDINGS_JS_ROOT"/* "$APP_ANDROID_ROOT"/assets
 
 echo "Using prebuilt externals"
 echo
@@ -96,5 +96,5 @@ echo
 set -x
 
 "$NDK_ROOT"/ndk-build $PARALLEL_BUILD_FLAG -C "$APP_ANDROID_ROOT" $* \
-    "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt" \
+    "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos:${COCOS2DX_ROOT}/external" \
     NDK_LOG=0 V=0
