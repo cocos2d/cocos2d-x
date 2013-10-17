@@ -150,6 +150,7 @@ public:
     virtual CCAffineTransform nodeToWorldTransform();
 
     CCNode *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
 
     /*
      * Get the ColliderBody list in this bone. The object in the CCArray is ColliderBody.
@@ -196,6 +197,12 @@ protected:
 
     //! World Point, Scale, Rotation in armature space
     CC_SYNTHESIZE_READONLY(CCBaseData *, m_tWorldInfo, WorldInfo);
+
+    //! Armature's parent bone
+    CCBone *m_pArmatureParentBone;
+
+    //! Data version
+    float m_fDataVersion;
 };
 
 NS_CC_EXT_END

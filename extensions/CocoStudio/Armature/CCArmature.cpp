@@ -464,13 +464,12 @@ void CCArmature::draw()
     {
         if (CCBone *bone = dynamic_cast<CCBone *>(object))
         {
-            CCDisplayManager *displayManager = bone->getDisplayManager();
-            CCNode *node = displayManager->getDisplayRenderNode();
+            CCNode *node = bone->getDisplayRenderNode();
 
             if (NULL == node)
                 continue;
 
-            switch (displayManager->getCurrentDecorativeDisplay()->getDisplayData()->displayType)
+            switch (bone->getDisplayRenderNodeType())
             {
             case CS_DISPLAY_SPRITE:
             {
@@ -679,6 +678,23 @@ CCBone *CCArmature::getBoneAtPoint(float x, float y)
         }
     }
     return NULL;
+}
+
+void CCArmature::setParentBone(CCBone *parentBone)
+{
+    m_pParentBone = parentBone;
+
+    CCDictElement *element = NULL;
+    CCDICT_FOREACH(m_pBoneDic, element)
+    {
+        CCBone *bone = (CCBone*)element->getObject();
+        bone->setArmature(this);
+    }
+}
+
+CCBone *CCArmature::getParentBone()
+{
+    return m_pParentBone;
 }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT

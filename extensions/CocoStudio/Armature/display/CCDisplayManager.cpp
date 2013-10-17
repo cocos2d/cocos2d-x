@@ -46,6 +46,7 @@ CCDisplayManager *CCDisplayManager::create(CCBone *bone)
 CCDisplayManager::CCDisplayManager()
     : m_pDecoDisplayList(NULL)
     , m_pDisplayRenderNode(NULL)
+    , m_eDisplayType(CS_DISPLAY_MAX)
     , m_pCurrentDecoDisplay(NULL)
     , m_iDisplayIndex(-1)
     , m_bForceChangeDisplay(false)
@@ -73,7 +74,6 @@ bool CCDisplayManager::init(CCBone *bone)
 
     do
     {
-
         m_pBone = bone;
 
         initDisplayList(bone->getBoneData());
@@ -264,6 +264,12 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
         m_pDisplayRenderNode->retain();
         m_pDisplayRenderNode->setVisible(m_bVisible);
+
+        m_eDisplayType = m_pCurrentDecoDisplay->getDisplayData()->displayType;
+    }
+    else
+    {
+        m_eDisplayType =  CS_DISPLAY_MAX;
     }
 }
 
@@ -271,6 +277,12 @@ CCNode *CCDisplayManager::getDisplayRenderNode()
 {
     return m_pDisplayRenderNode;
 }
+
+DisplayType CCDisplayManager::getDisplayRenderNodeType()
+{
+    return m_eDisplayType;
+}
+
 
 int CCDisplayManager::getCurrentDisplayIndex()
 {
