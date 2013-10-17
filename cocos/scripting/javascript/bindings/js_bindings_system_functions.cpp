@@ -7,7 +7,7 @@
 #include "js_bindings_config.h"
 //#ifdef JSB_INCLUDE_SYSTEM
 
-#include "LocalStorage.h"
+#include "local-storage/LocalStorage.h"
 
 #include "jsfriendapi.h"
 #include "js_bindings_config.h"
