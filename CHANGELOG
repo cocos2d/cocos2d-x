@@ -12,6 +12,8 @@ cocos2d-x-3.0alpha1 @??? 2013
      [FIX]          Fixed application will crash when pause and resume.
 [Mac]
      [FIX]          Removed unused CCLOG() from GL initialization
+[iOS]
+     [FIX]          Can't click the area that outside of keyboard to close keyboard when using EditBox.
 [Javascript binding]
      [FIX]          Fixed a memory leak in ScriptingCore::runScript()
      [FIX]          sys.localStorage.getItem() does not support non-ascii string.
