@@ -256,6 +256,32 @@ Point PhysicsShape::getPolyonCenter(Point* points, int count)
     return PhysicsHelper::cpv2point(center);
 }
 
+void PhysicsShape::setBody(PhysicsBody *body)
+{
+    // already added
+    if (_body == body)
+    {
+        return;
+    }
+    
+    if (_body != nullptr)
+    {
+        _body->removeShape(this);
+    }
+    
+    if (body == nullptr)
+    {
+        _info->setBody(nullptr);
+        _info->setGroup(CP_NO_GROUP);
+        _body = nullptr;
+    }else
+    {
+        _info->setBody(body->_info->body);
+        _info->setGroup(body->_info->group);
+        _body = body;
+    }
+}
+
 // PhysicsShapeCircle
 PhysicsShapeCircle* PhysicsShapeCircle::create(float radius, PhysicsMaterial material/* = MaterialDefault*/, Point offset/* = Point(0, 0)*/)
 {
