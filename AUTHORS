@@ -617,6 +617,9 @@ Developers:
     jimmystar
         Fixed a bug that cc.Scheduler.schedule(target, func) without repeat argument couldn't repeat schedule forever on device.
         
+    XiaoLongHan (kpkhxlgy0)
+        Fixed a bug that outside of keyboard can't be responded to close keyboard when using EditBox。
+    
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "cocosbuilder/CocosBuilder.h"
 
 USING_NS_CC;
