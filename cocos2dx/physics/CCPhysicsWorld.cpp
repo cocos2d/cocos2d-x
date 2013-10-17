@@ -125,9 +125,12 @@ void PhysicsWorld::addJoint(PhysicsJoint* joint)
     {
         _joints.push_back(joint);
         
-        if (!cpSpaceContainsConstraint(_info->space, joint->_info->joint))
+        for (auto subjoint : joint->_info->joints)
         {
-            cpSpaceAddConstraint(_info->space, joint->_info->joint);
+            if (!cpSpaceContainsConstraint(_info->space, subjoint))
+            {
+                cpSpaceAddConstraint(_info->space, subjoint);
+            }
         }
     }
     

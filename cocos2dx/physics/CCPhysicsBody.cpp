@@ -57,6 +57,7 @@ namespace
 {
     static const float MASS_DEFAULT = 1.0;
     static const float MOMENT_DEFAULT = 200;
+    static float GROUP_INDEX = 0;
 }
 
 PhysicsBody::PhysicsBody()
@@ -226,6 +227,8 @@ bool PhysicsBody::init()
         CC_BREAK_IF(_info == nullptr);
         
         _info->body = cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment));
+        _info->group = ++GROUP_INDEX;
+        
         CC_BREAK_IF(_info->body == nullptr);
         
         return true;
@@ -305,26 +308,6 @@ float PhysicsBody::getRotation() const
 void PhysicsBody::addShape(PhysicsShape* shape)
 {
     if (shape == nullptr) return;
-    
-    // already added
-    if (shape->getBody() == this)
-    {
-        return;
-    }
-    else if (shape->getBody() != nullptr)
-    {
-        shape->getBody()->removeShape(shape);
-    }
-    
-    // reset the body
-    if (shape->_info->body != _info->body)
-    {
-        for (cpShape* subShape : shape->_info->shapes)
-        {
-            cpShapeSetBody(subShape, _info->body);
-        }
-        shape->_info->body = _info->body;
-    }
     
     // add shape to body
     if (std::find(_shapes.begin(), _shapes.end(), shape) == _shapes.end())
@@ -567,20 +550,19 @@ void PhysicsBody::removeShape(PhysicsShape* shape)
     
     if (it != _shapes.end())
     {
-        if (_world)
-        {
-            _world->removeShape(shape);
-        }
-        
-        _shapes.erase(it);
-        
-        
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
         _area -= shape->getArea();
         addMass(-shape->getMass());
         addMoment(-shape->getMoment());
         
+        //remove
+        if (_world)
+        {
+            _world->removeShape(shape);
+        }
+        _shapes.erase(it);
+        shape->setBody(nullptr);
         shape->release();
     }
 }

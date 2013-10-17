@@ -108,7 +108,7 @@ protected:
      */
     PhysicsBodyInfo* bodyInfo() const;
     
-    inline void setBody(PhysicsBody* body) { _body = body; }
+    void setBody(PhysicsBody* body);
     
 protected:
     PhysicsShape();
@@ -126,6 +126,7 @@ protected:
     
     friend class PhysicsWorld;
     friend class PhysicsBody;
+    friend class PhysicsJoint;
 };
 
 /** A circle shape */

@@ -42,12 +42,15 @@ class PhysicsShapeInfo
 public:
     void add(cpShape* shape);
     void remove(cpShape* shape);
-    void removeall();
+    void removeAll();
+    void setGroup(cpGroup group);
+    void setBody(cpBody* body);
     
 public:
     std::vector<cpShape*> shapes;
     PhysicsShape* shape;
     cpBody* body;
+    cpGroup group;
     static std::map<cpShape*, PhysicsShapeInfo*> map;
     static cpBody* shareBody;
     

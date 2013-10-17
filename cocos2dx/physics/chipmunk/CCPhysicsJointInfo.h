@@ -29,15 +29,26 @@
 #define __CCPHYSICS_JOINT_INFO_H__
 #include "chipmunk.h"
 #include "platform/CCPlatformMacros.h"
+#include <vector>
+#include <map>
 NS_CC_BEGIN
+
+class PhysicsJoint;
 
 class PhysicsJointInfo
 {
 public:
-    cpConstraint* joint;
+    void add(cpConstraint* shape);
+    void remove(cpConstraint* shape);
+    void removeAll();
+    
+public:
+    std::vector<cpConstraint*> joints;
+    PhysicsJoint* joint;
+    static std::map<cpConstraint*, PhysicsJointInfo*> map;
     
 private:
-    PhysicsJointInfo();
+    PhysicsJointInfo(PhysicsJoint* joint);
     ~PhysicsJointInfo();
     
     friend class PhysicsJoint;

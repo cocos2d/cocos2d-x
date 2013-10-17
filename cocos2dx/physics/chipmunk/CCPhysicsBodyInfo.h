@@ -37,6 +37,7 @@ class PhysicsBodyInfo : public Clonable
 {
 public:
     cpBody* body;
+    cpGroup group;
     
 private:
     PhysicsBodyInfo();
