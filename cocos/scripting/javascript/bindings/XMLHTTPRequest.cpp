@@ -67,7 +67,7 @@ void MinXmlHttpRequest::_gotHeader(string header)
     {
         // Seems like we have the response Code! Parse it and check for it.
         char * pch;
-        std::strcpy(cstr, header.c_str());
+        strcpy(cstr, header.c_str());
         
         pch = strtok(cstr," ");
         while (pch != NULL)

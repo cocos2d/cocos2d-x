@@ -201,8 +201,10 @@ LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
 
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS   := -Wno-psabi -DUSE_FILE32API
+LOCAL_CFLAGS   := -Wno-psabi  -DUSE_FILE32API
+LOCAL_CPPFLAGS := -Wno-literal-suffix
 LOCAL_EXPORT_CFLAGS   := -Wno-psabi -DUSE_FILE32API
+LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix
 
 include $(BUILD_STATIC_LIBRARY)
 
