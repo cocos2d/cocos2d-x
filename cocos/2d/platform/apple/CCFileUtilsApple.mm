@@ -26,12 +26,12 @@ THE SOFTWARE.
 
 #include <string>
 #include <stack>
-#include "cocoa/CCString.h"
+#include "CCString.h"
 #include "CCFileUtils.h"
 #include "CCDirector.h"
 #include "CCSAXParser.h"
 #include "CCDictionary.h"
-#include "support/zip_support/unzip.h"
+#include "unzip.h"
 
 #include "CCFileUtilsApple.h"
 

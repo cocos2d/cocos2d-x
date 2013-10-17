@@ -2,7 +2,7 @@
 
 using namespace cocos2d;
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 CCBKeyframe::CCBKeyframe()
 : _value(NULL)
@@ -58,4 +58,4 @@ void CCBKeyframe::setEasingOpt(float fEasingOpt)
     _easingOpt = fEasingOpt;
 }
 
-NS_CC_EXT_END
+}

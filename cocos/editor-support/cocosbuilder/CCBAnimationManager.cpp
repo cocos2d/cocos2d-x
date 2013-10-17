@@ -11,8 +11,9 @@
 
 using namespace cocos2d;
 using namespace std;
+using namespace cocos2d::extension;
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 // Implementation of CCBAinmationManager
 
@@ -1292,4 +1293,4 @@ void CCBEaseInstant::update(float dt)
 }
 
 
-NS_CC_EXT_END
+}

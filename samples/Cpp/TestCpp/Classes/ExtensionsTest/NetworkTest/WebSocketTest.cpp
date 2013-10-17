@@ -11,6 +11,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace network;
 
 WebSocketTestLayer::WebSocketTestLayer()
 : _wsiSendText(NULL)
@@ -107,7 +108,7 @@ WebSocketTestLayer::~WebSocketTestLayer()
 }
 
 // Delegate methods
-void WebSocketTestLayer::onOpen(cocos2d::extension::WebSocket* ws)
+void WebSocketTestLayer::onOpen(network::WebSocket* ws)
 {
     log("Websocket (%p) opened", ws);
     if (ws == _wsiSendText)
@@ -124,7 +125,7 @@ void WebSocketTestLayer::onOpen(cocos2d::extension::WebSocket* ws)
     }
 }
 
-void WebSocketTestLayer::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data)
+void WebSocketTestLayer::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)
 {
     if (!data.isBinary)
     {
@@ -161,7 +162,7 @@ void WebSocketTestLayer::onMessage(cocos2d::extension::WebSocket* ws, const coco
     }
 }
 
-void WebSocketTestLayer::onClose(cocos2d::extension::WebSocket* ws)
+void WebSocketTestLayer::onClose(network::WebSocket* ws)
 {
     log("websocket instance (%p) closed.", ws);
     if (ws == _wsiSendText)
@@ -180,7 +181,7 @@ void WebSocketTestLayer::onClose(cocos2d::extension::WebSocket* ws)
     CC_SAFE_DELETE(ws);
 }
 
-void WebSocketTestLayer::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error)
+void WebSocketTestLayer::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
 {
     log("Error was fired, error code: %d", error);
     if (ws == _wsiError)

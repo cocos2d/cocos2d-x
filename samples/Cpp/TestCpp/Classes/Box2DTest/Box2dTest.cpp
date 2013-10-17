@@ -1,6 +1,6 @@
 #include "Box2dTest.h"
 #include "../testResource.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 USING_NS_CC_EXT;
 
 #define PTM_RATIO 32

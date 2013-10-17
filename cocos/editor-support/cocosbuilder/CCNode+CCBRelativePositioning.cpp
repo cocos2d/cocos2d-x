@@ -1,7 +1,9 @@
 #include "CCNode+CCBRelativePositioning.h"
 #include "CCBReader.h"
 
-NS_CC_EXT_BEGIN
+using namespace cocos2d;
+
+namespace cocosbuilder {
 
 Point getAbsolutePosition(const Point &pt, CCBReader::PositionType type, const Size &containerSize, const char *propName)
 {
@@ -57,4 +59,4 @@ void setRelativeScale(Node *pNode, float scaleX, float scaleY, CCBReader::ScaleT
     pNode->setScaleY(scaleY);
 }
 
-NS_CC_EXT_END
+}

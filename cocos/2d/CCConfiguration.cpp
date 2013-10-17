@@ -27,9 +27,9 @@ THE SOFTWARE.
 #include <string.h>
 #include "ccMacros.h"
 #include "ccConfig.h"
-#include "cocoa/CCDictionary.h"
-#include "cocoa/CCInteger.h"
-#include "cocoa/CCBool.h"
+#include "CCDictionary.h"
+#include "CCInteger.h"
+#include "CCBool.h"
 #include "cocos2d.h"
 #include "platform/CCFileUtils.h"
 

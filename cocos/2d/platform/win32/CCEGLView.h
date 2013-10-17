@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 #include "platform/CCCommon.h"
-#include "cocoa/CCGeometry.h"
+#include "CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
 
 #include "platform/third_party/win32/GLFW/glfw3.h"

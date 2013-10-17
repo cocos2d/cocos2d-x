@@ -9,10 +9,10 @@
 #include "CCGL.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
-#include "event_dispatcher/CCTouch.h"
-#include "text_input_node/CCIMEDispatcher.h"
-#include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCEventKeyboard.h"
+#include "CCTouch.h"
+#include "/CCIMEDispatcher.h"
+#include "CCEventDispatcher.h"
+#include "CCEventKeyboard.h"
 #include <unistd.h>
 
 NS_CC_BEGIN

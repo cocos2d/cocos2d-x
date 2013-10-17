@@ -26,10 +26,12 @@
 #define __TestCpp__UIScene__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
+#include "gui/CocosGUI.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace gui;
 
 #define UI_SCENE_CREATE_FUNC(UIScene) \
 public: \

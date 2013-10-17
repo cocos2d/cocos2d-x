@@ -3,7 +3,7 @@
 
 #include "CCMenuItemLoader.h"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
@@ -26,14 +26,14 @@ protected:
      * @js NA
      * @lua NA
      */
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(MenuItemImage);
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::MenuItemImage);
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * ccbReader);
+    virtual void onHandlePropTypeSpriteFrame(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::SpriteFrame * pSpriteFrame, CCBReader * ccbReader);
 };
 
-NS_CC_EXT_END
+}
 
 #endif

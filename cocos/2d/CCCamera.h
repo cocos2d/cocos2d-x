@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include <string>
 
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 #include "ccMacros.h"
 #include "kazmath/mat4.h"
 

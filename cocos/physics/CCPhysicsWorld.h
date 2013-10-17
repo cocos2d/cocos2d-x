@@ -30,8 +30,8 @@
 
 #include <list>
 
-#include "cocoa/CCObject.h"
-#include "cocoa/CCGeometry.h"
+#include "CCObject.h"
+#include "CCGeometry.h"
 
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)

@@ -26,7 +26,7 @@
 #ifndef __CCTABLEVIEWCELL_H__
 #define __CCTABLEVIEWCELL_H__
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCSorting.h"
 
 NS_CC_EXT_BEGIN

@@ -27,7 +27,7 @@
 
 #include "platform/CCCommon.h"
 #include "platform/CCEGLViewProtocol.h"
-#include "platform/third_party/mac/glfw/glfw3.h"
+#include "glfw3.h"
 
 NS_CC_BEGIN
 
