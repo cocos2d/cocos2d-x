@@ -29,13 +29,19 @@
 
 NS_CC_EXT_BEGIN
 
+#define LINEAR_LAYOUT_PARAMETER "LinearLayoutParameter"
+#define RELATIVE_LAYOUT_PARAMETER "RelativeLayoutParameter"
+
 typedef enum
 {
     LAYOUT_PARAMETER_NONE,
     LAYOUT_PARAMETER_LINEAR,
     LAYOUT_PARAMETER_RELATIVE
 }LayoutParameterType;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class LayoutParameter : public CCObject
 {
 public:
@@ -85,7 +91,10 @@ protected:
     UIMargin m_margin;
     LayoutParameterType m_eLayoutParameterType;
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class LinearLayoutParameter : public LayoutParameter
 {
 public:
@@ -125,6 +134,12 @@ public:
 protected:
     UILinearGravity m_eLinearGravity;
 };
+/**
+*   @js NA
+*   @lua NA
+*/
+
+class Layout;
 
 class RelativeLayoutParameter : public LayoutParameter
 {
@@ -132,7 +147,7 @@ public:
     /**
      * Default constructor
      */
-    RelativeLayoutParameter() : m_eRelativeAlign(RELATIVE_ALIGN_NONE),m_strRelativeWidgetName(""),m_strRelativeLayoutName(""){m_eLayoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
+    RelativeLayoutParameter() : m_eRelativeAlign(RELATIVE_ALIGN_NONE),m_strRelativeWidgetName(""),m_strRelativeLayoutName(""),m_bPut(false){m_eLayoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
     
     /**
      * Default destructor
@@ -194,6 +209,8 @@ protected:
     UIRelativeAlign m_eRelativeAlign;
     std::string m_strRelativeWidgetName;
     std::string m_strRelativeLayoutName;
+    bool m_bPut;
+    friend class Layout;
 };
 
 NS_CC_EXT_END

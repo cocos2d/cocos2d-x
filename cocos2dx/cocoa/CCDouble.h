@@ -32,6 +32,8 @@ NS_CC_BEGIN
 /**
  * @addtogroup data_structures
  * @{
+ * @js NA
+ * @lua NA
  */
 
 class CC_DLL CCDouble : public CCObject

@@ -34,7 +34,10 @@ extern "C" {
 #include "CCLuaValue.h"
 
 NS_CC_BEGIN
-
+/** Lua support for cocos2d-x
+ *  @js NA
+ *  @lua NA
+ */
 class CCLuaStack : public CCObject
 {
 public:
@@ -113,7 +116,9 @@ public:
     virtual int executeFunction(int numArgs);
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
-
+    
+    virtual int executeFunctionReturnArray(int nHandler,int nNumArgs,int nNummResults,CCArray* pResultArray);
+    
     virtual bool handleAssert(const char *msg);
     
 protected:

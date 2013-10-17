@@ -31,6 +31,10 @@
 NS_CC_EXT_BEGIN
 
 #define kCCSVersion 1.0
+/**
+*   @js NA
+*   @lua NA
+*/
 class CCSGUIReader : CCObject
 {
 public:

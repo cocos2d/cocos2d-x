@@ -207,8 +207,7 @@ void UIDragPanel::update(float dt)
 
 bool UIDragPanel::addChild(UIWidget *widget)
 {
-    m_pInnerContainer->addChild(widget);
-    return true;
+    return m_pInnerContainer->addChild(widget);
 }
 
 bool UIDragPanel::removeChild(UIWidget *child)
@@ -1473,6 +1472,21 @@ void UIDragPanel::moveToUpdate(float t)
 Layout* UIDragPanel::getInnerContainer()
 {
     return m_pInnerContainer;
+}
+
+void UIDragPanel::setLayoutType(LayoutType type)
+{
+    m_pInnerContainer->setLayoutType(type);
+}
+
+LayoutType UIDragPanel::getLayoutType() const
+{
+    return m_pInnerContainer->getLayoutType();
+}
+
+void UIDragPanel::doLayout()
+{
+    m_pInnerContainer->doLayout();
 }
 
 const char* UIDragPanel::getDescription() const

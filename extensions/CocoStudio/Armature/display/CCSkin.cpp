@@ -35,6 +35,10 @@ NS_CC_EXT_BEGIN
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
+
+#define SET_VERTEX3F(_v_, _x_, _y_, _z_) (_v_).x = (_x_); (_v_).y = (_y_); (_v_).z = (_z_);
+
+
 CCSkin *CCSkin::create()
 {
     CCSkin *skin = new CCSkin();
@@ -81,9 +85,22 @@ CCSkin::CCSkin()
 
 bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
+    CCAssert(pszSpriteFrameName != NULL, "");
 
-    m_strDisplayName = pszSpriteFrameName;
+    CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
+    bool ret = true;
+
+    if (pFrame != NULL)
+    {
+        ret = initWithSpriteFrame(pFrame);
+
+        m_strDisplayName = pszSpriteFrameName;
+    }
+    else
+    {
+        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", pszSpriteFrameName);
+        ret = init();
+    }
 
     return ret;
 }
@@ -103,7 +120,8 @@ void CCSkin::setSkinData(const CCBaseData &var)
 
     setScaleX(m_sSkinData.scaleX);
     setScaleY(m_sSkinData.scaleY);
-    setRotation(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setRotationX(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setRotationY(CC_RADIANS_TO_DEGREES(-m_sSkinData.skewY));
     setPosition(ccp(m_sSkinData.x, m_sSkinData.y));
 
     m_tSkinTransform = nodeToParentTransform();
@@ -163,11 +181,11 @@ void CCSkin::updateTransform()
 
         float dx = x1 * cr - y2 * sr2 + x;
         float dy = x1 * sr + y2 * cr2 + y;
-
-        m_sQuad.bl.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
-        m_sQuad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
-        m_sQuad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
-        m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+        
+        SET_VERTEX3F( m_sQuad.bl.vertices, RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
+        SET_VERTEX3F( m_sQuad.br.vertices, RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
+        SET_VERTEX3F( m_sQuad.tl.vertices, RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
+        SET_VERTEX3F( m_sQuad.tr.vertices, RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
     }
 
     // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS

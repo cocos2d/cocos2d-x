@@ -503,20 +503,10 @@ files
 	ParticleTest.cpp
 	ParticleTest.h
 
-	[Test/PerformanceTest]
-	(../Classes/PerformanceTest)
-	PerformanceNodeChildrenTest.cpp
-	PerformanceNodeChildrenTest.h
-	PerformanceParticleTest.cpp
-	PerformanceParticleTest.h
-	PerformanceSpriteTest.cpp
-	PerformanceSpriteTest.h
-	PerformanceTest.cpp
-	PerformanceTest.h
-	PerformanceTextureTest.cpp
-	PerformanceTextureTest.h
-	PerformanceTouchesTest.cpp
-	PerformanceTouchesTest.h
+	["Test/PerformanceTest"]
+	("../Classes/PerformanceTest")
+	"*.cpp"
+	"*.h"
 
 	[Test/RenderTextureTest]
 	(../Classes/RenderTextureTest)

@@ -40,12 +40,24 @@ typedef std::set<CCObject *>::iterator CCSetIterator;
 class CC_DLL CCSet : public CCObject
 {
 public:
+    /**
+     * @js  ctor
+     * @lua NA
+     */
     CCSet(void);
+    /**
+     * @lua NA
+     */
     CCSet(const CCSet &rSetObject);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCSet(void);
 
     /**
     * @brief Create and return a new empty set.
+    * @lua NA
     */
     static CCSet * create();
 
@@ -55,6 +67,7 @@ public:
     CCSet* copy();
     /**
     *@brief It is the same as copy().
+    *@lua NA
     */
     CCSet* mutableCopy();
     /**
@@ -79,17 +92,24 @@ public:
     bool containsObject(CCObject *pObject);
     /**
     *@brief Return the iterator that points to the first element.
+    *@js NA
+    *@lua NA
     */
     CCSetIterator begin();
     /**
     *@brief Return the iterator that points to the position after the last element.
+    *@js NA
+    *@lua NA
     */
     CCSetIterator end();
     /**
     *@brief Return the first element if it contains elements, or null if it doesn't contain any element.
     */
     CCObject* anyObject();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void acceptVisitor(CCDataVisitor &visitor);
 
 private:

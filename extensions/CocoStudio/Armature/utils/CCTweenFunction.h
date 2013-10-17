@@ -80,7 +80,10 @@ enum CCTweenType
 
     TWEEN_EASING_MAX = 10000
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class  CCTweenFunction
 {
 public:

@@ -34,7 +34,9 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 class CCArmature;
-
+/**
+*   @lua NA
+*/
 class CCBone : public CCNodeRGBA
 {
 public:
@@ -81,6 +83,8 @@ public:
 
     void addDisplay(CCNode *display, int index);
 
+    void removeDisplay(int index);
+
     void changeDisplayByIndex(int index, bool force);
 
     /**
@@ -122,8 +126,8 @@ public:
     void updateDisplayedColor(const ccColor3B &parentColor);
     void updateDisplayedOpacity(GLubyte parentOpacity);
 
-	void setColor(const ccColor3B& color);
-	void setOpacity(GLubyte opacity);
+    void setColor(const ccColor3B &color);
+    void setOpacity(GLubyte opacity);
 
     //! Update color to render display
     void updateColor();
@@ -146,6 +150,7 @@ public:
     virtual CCAffineTransform nodeToWorldTransform();
 
     CCNode *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
 
     /*
      * Get the ColliderBody list in this bone. The object in the CCArray is ColliderBody.
@@ -175,6 +180,8 @@ public:
 
     CC_SYNTHESIZE(CCBlendType, m_eBlendType, BlendType)
 protected:
+    virtual void applyParentTransform(CCBone *parent);
+
     CCTween *m_pTween;				//! Calculate tween effect
 
     //! Used for making tween effect in every frame
@@ -185,8 +192,17 @@ protected:
     CCBone *m_pParentBone;	             //! A weak reference to its parent
     bool m_bBoneTransformDirty;          //! Whether or not transform dirty
 
-    //! self Transform, use this to change display's state
+    //! Transform in armature space, use this to change display's state
     CCAffineTransform m_tWorldTransform;
+
+    //! World Point, Scale, Rotation in armature space
+    CC_SYNTHESIZE_READONLY(CCBaseData *, m_tWorldInfo, WorldInfo);
+
+    //! Armature's parent bone
+    CCBone *m_pArmatureParentBone;
+
+    //! Data version
+    float m_fDataVersion;
 };
 
 NS_CC_EXT_END
