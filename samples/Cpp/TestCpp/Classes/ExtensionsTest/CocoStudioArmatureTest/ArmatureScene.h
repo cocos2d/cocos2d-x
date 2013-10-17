@@ -2,9 +2,10 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../../VisibleRect.h"
 #include "../../testBasic.h"
+#include "cocostudio/CocoStudio.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "../../Box2DTestBed/GLES-Render.h"
@@ -96,7 +97,7 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void addArmature(cocos2d::extension::armature::Armature *armature);
+	virtual void addArmature(cocostudio::Armature *armature);
 	void update(float delta);
 
 	int armatureCount;
@@ -124,11 +125,11 @@ public:
 
 	virtual void onEnter();
 	virtual std::string title();
-	void animationEvent(cocos2d::extension::armature::Armature *armature, cocos2d::extension::armature::MovementEventType movementType, const char *movementID);
+	void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const char *movementID);
 	void callback1();
 	void callback2();
 
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 };
 
 class TestUseMutiplePicture : public ArmatureTestLayer
@@ -140,7 +141,7 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 
 	int displayIndex;
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 };
 
 class TestParticleDisplay : public ArmatureTestLayer
@@ -152,7 +153,7 @@ class TestParticleDisplay : public ArmatureTestLayer
 	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	int animationID;
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 };
 
 
@@ -173,13 +174,13 @@ public:
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocos2d::extension::armature::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+	void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
 
 	void initWorld();
 
 
-	cocos2d::extension::armature::Armature *armature;
-	cocos2d::extension::armature::Armature *armature2;
+	cocostudio::Armature *armature;
+	cocostudio::Armature *armature2;
 
 	cocos2d::extension::PhysicsSprite *bullet;
 
@@ -202,13 +203,13 @@ public:
 	virtual std::string title();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocos2d::extension::armature::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+	void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
 
 	void initWorld();
 
 
-	cocos2d::extension::armature::Armature *armature;
-	cocos2d::extension::armature::Armature *armature2;
+	cocostudio::Armature *armature;
+	cocostudio::Armature *armature2;
 
 	cocos2d::extension::PhysicsSprite *bullet;
 
@@ -233,7 +234,7 @@ public:
 	virtual std::string title();
 	virtual void draw();
 
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 	Rect rect;
 };
 
@@ -252,7 +253,7 @@ public:
 	virtual std::string title();
 	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 	int weaponIndex;
 };
 #endif  // __HELLOWORLD_SCENE_H__

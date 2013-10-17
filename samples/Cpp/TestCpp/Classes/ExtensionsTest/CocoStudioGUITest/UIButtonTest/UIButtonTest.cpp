@@ -61,19 +61,19 @@ void UIButtonTest::touchEvent(Object *pSender, TouchEventType type)
 {
     switch (type)
     {
-        case cocos2d::extension::TOUCH_EVENT_BEGAN:
+        case gui::TOUCH_EVENT_BEGAN:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Down")->getCString());
             break;
             
-        case cocos2d::extension::TOUCH_EVENT_MOVED:
+        case gui::TOUCH_EVENT_MOVED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Move")->getCString());
             break;
             
-        case cocos2d::extension::TOUCH_EVENT_ENDED:
+        case gui::TOUCH_EVENT_ENDED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Up")->getCString());
             break;
             
-        case cocos2d::extension::TOUCH_EVENT_CANCELED:
+        case gui::TOUCH_EVENT_CANCELED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Cancelled")->getCString());
             break;
             
@@ -139,19 +139,19 @@ void UIButtonTest_Scale9::touchEvent(Object *pSender, TouchEventType type)
 {
     switch (type)
     {
-        case cocos2d::extension::TOUCH_EVENT_BEGAN:
+        case gui::TOUCH_EVENT_BEGAN:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Down")->getCString());
             break;
             
-        case cocos2d::extension::TOUCH_EVENT_MOVED:
+        case gui::TOUCH_EVENT_MOVED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Move")->getCString());
             break;
             
-        case cocos2d::extension::TOUCH_EVENT_ENDED:
+        case gui::TOUCH_EVENT_ENDED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Up")->getCString());
             break;
             
-        case cocos2d::extension::TOUCH_EVENT_CANCELED:
+        case gui::TOUCH_EVENT_CANCELED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Cancelled")->getCString());
             break;
             
@@ -213,19 +213,19 @@ void UIButtonTest_PressedAction::touchEvent(Object *pSender, TouchEventType type
 {
     switch (type)
     {
-        case cocos2d::extension::TOUCH_EVENT_BEGAN:
+        case gui::TOUCH_EVENT_BEGAN:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Down")->getCString());
             break;
             
-        case cocos2d::extension::TOUCH_EVENT_MOVED:
+        case gui::TOUCH_EVENT_MOVED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Move")->getCString());
             break;
             
-        case cocos2d::extension::TOUCH_EVENT_ENDED:
+        case gui::TOUCH_EVENT_ENDED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Up")->getCString());
             break;
             
-        case cocos2d::extension::TOUCH_EVENT_CANCELED:
+        case gui::TOUCH_EVENT_CANCELED:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("Touch Cancelled")->getCString());
             break;
             

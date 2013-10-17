@@ -1,9 +1,10 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
+#include "cocostudio/CocoStudio.h"
 
 
 using namespace cocos2d;
-using namespace cocos2d::extension::armature;
+using namespace cocostudio;
 
 Layer *NextTest();
 Layer *BackTest();

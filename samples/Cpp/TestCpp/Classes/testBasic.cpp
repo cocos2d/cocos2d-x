@@ -1,6 +1,7 @@
 #include "testBasic.h"
 #include "controller.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
+#include "cocostudio/CocoStudio.h"
 
 TestScene::TestScene(bool bPortrait)
 {
@@ -50,7 +51,7 @@ void TestScene::onEnter()
             scene->release();
         }
         
-        cocos2d::extension::armature::ArmatureDataManager::destoryInstance();
+        cocostudio::ArmatureDataManager::destoryInstance();
 	});
 
     auto menu =Menu::create(menuItem, NULL);

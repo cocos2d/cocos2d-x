@@ -6,7 +6,7 @@
 /* Forward declaration. */
 class CCBReader;
 
-class TestHeaderLayerLoader : public cocos2d::extension::LayerLoader {
+class TestHeaderLayerLoader : public cocosbuilder::LayerLoader {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(TestHeaderLayerLoader, loader);
 
