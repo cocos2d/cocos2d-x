@@ -339,7 +339,7 @@ CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
     node = node == NULL ? m_pTweenData : node;
     if (!m_pFrom->isTween)
     {
-        return m_pFrom;
+        percent = 0;
     }
 
 
