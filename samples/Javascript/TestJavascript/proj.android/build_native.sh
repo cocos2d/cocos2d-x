@@ -102,7 +102,7 @@ cp -rf "$APP_ROOT"/../Shared/tests/* "$APP_ANDROID_ROOT"/assets
 
 
 # copy bindings/*.js into assets' root
-cp -f "$BINDINGS_JS_ROOT"/* "$APP_ANDROID_ROOT"/assets
+cp -rf "$BINDINGS_JS_ROOT"/* "$APP_ANDROID_ROOT"/assets
 
 echo "Using prebuilt externals"
 echo

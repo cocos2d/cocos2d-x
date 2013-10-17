@@ -41,6 +41,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
+    FileUtils::getInstance()->addSearchPath("res");
+    FileUtils::getInstance()->addSearchPath("script");
+    
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
@@ -54,8 +57,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_CCBuilderReader);
     
     sc->start();
-
-    FileUtils::getInstance()->addSearchPath("res");
+    
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    sc->enableDebugger();
+#endif
     
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);

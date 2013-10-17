@@ -26,8 +26,8 @@
 #ifndef __CCSORTING_H__
 #define __CCSORTING_H__
 
-#include "cocoa/CCArray.h"
-#include "ExtensionMacros.h"
+#include "CCArray.h"
+#include "extensions/ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
