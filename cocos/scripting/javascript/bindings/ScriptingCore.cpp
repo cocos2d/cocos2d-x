@@ -16,7 +16,7 @@
 #include "ScriptingCore.h"
 #include "jsdbgapi.h"
 #include "cocos2d.h"
-#include "LocalStorage.h"
+#include "local-storage/LocalStorage.h"
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_config.h"
 // for debug socket
