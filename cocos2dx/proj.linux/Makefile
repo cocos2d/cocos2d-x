@@ -46,6 +46,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../event_dispatcher/CCEventListener.cpp \
 ../event_dispatcher/CCEventKeyboard.cpp \
 ../event_dispatcher/CCEventListenerKeyboard.cpp \
+../event_dispatcher/CCEventMouse.cpp \
+../event_dispatcher/CCEventListenerMouse.cpp \
 ../event_dispatcher/CCTouch.cpp \
 ../event_dispatcher/CCEventTouch.cpp \
 ../event_dispatcher/CCEventListenerTouch.cpp \

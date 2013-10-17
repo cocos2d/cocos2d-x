@@ -13,6 +13,7 @@
 #include "text_input_node/CCIMEDispatcher.h"
 #include "event_dispatcher/CCEventDispatcher.h"
 #include "event_dispatcher/CCEventKeyboard.h"
+#include "event_dispatcher/CCEventMouse.h"
 #include <unistd.h>
 
 NS_CC_BEGIN
@@ -159,6 +160,7 @@ public:
     static void OnGLFWError(int errorID, const char* errorDesc);
     static void OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
     static void OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
+    static void OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y);
     static void OnGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void OnGLFWCharCallback(GLFWwindow* window, unsigned int character);
     static void OnGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
@@ -198,6 +200,21 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             }
         }
     }
+
+    if(GLFW_PRESS == action)
+    {
+        EventMouse event(EventMouse::MouseEventType::MOUSE_DOWN);
+        event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+        event.setMouseButton(button);
+        EventDispatcher::getInstance()->dispatchEvent(&event);
+    }
+    else if(GLFW_RELEASE == action)
+    {
+        EventMouse event(EventMouse::MouseEventType::MOUSE_UP);
+        event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+        event.setMouseButton(button);
+        EventDispatcher::getInstance()->dispatchEvent(&event);
+    }
 }
 
 void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
@@ -218,6 +235,23 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
             eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
         }
     }
+
+    EventMouse event(EventMouse::MouseEventType::MOUSE_MOVE);
+    //Because OpenGL use upper left as origin point, we need to revert the mouse y coordinate here
+    event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+    EventDispatcher::getInstance()->dispatchEvent(&event);
+}
+
+void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+{
+    EGLView* eglView = EGLView::getInstance();
+    if(nullptr == eglView) return;
+
+    EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
+    //Because OpenGL use upper left as origin point, we need to revert the mouse y coordinate here
+    event.setScrollData((float)x, -(float)y);
+    event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+    EventDispatcher::getInstance()->dispatchEvent(&event);
 }
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -282,6 +316,7 @@ bool EGLView::init(const char* viewName, float width, float height, float frameZ
     
     glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseCallBack);
     glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseMoveCallBack);
+    glfwSetScrollCallback(_mainWindow, EGLViewEventHandler::OnGLFWMouseScrollCallback);
     glfwSetCharCallback(_mainWindow, EGLViewEventHandler::OnGLFWCharCallback);
     glfwSetKeyCallback(_mainWindow, EGLViewEventHandler::OnGLFWKeyCallback);
     glfwSetWindowPosCallback(_mainWindow, EGLViewEventHandler::OnGLFWWindowPosCallback);
