@@ -60,6 +60,7 @@ public:
     virtual void setValue(double value);
     virtual double getValue();
     virtual void setStepValue(double stepValue);
+    /** Set the numeric value of the stepper. If send is true, the CCControlEventValueChanged is sent. */
     virtual void setValueWithSendingEvent(double value, bool send);
     virtual bool isContinuous();
     void update(float dt);
@@ -78,9 +79,6 @@ protected:
     
     /** Update the layout of the stepper with the given touch location. */
     void updateLayoutUsingTouchLocation(CCPoint location);
-
-    /** Set the numeric value of the stepper. If send is true, the CCControlEventValueChanged is sent. */
-    void setValue(double value, bool send);
 
     /** Start the autorepeat increment/decrement. */
     void startAutorepeat();

@@ -170,16 +170,28 @@ public:
     CC_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
     /// properties
     CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
-public:    
+public:
+    /**
+     * @js  ctor
+     * @lua NA
+     */
     CCTMXMapInfo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCTMXMapInfo();
     /** creates a TMX Format with a tmx file */
     static CCTMXMapInfo * formatWithTMXFile(const char *tmxFile);
     /** creates a TMX Format with an XML string and a TMX resource path */
     static CCTMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath);
-    /** initializes a TMX format with a  tmx file */
+    /** initializes a TMX format with a  tmx file 
+     * @lua NA
+     */
     bool initWithTMXFile(const char *tmxFile);
-    /** initializes a TMX format with an XML string and a TMX resource path */
+    /** initializes a TMX format with an XML string and a TMX resource path 
+     * @lua NA
+     */
     bool initWithXML(const char* tmxString, const char* resourcePath);
     /** initializes parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
     bool parseXMLFile(const char *xmlFilename);
@@ -189,9 +201,17 @@ public:
     CCDictionary* getTileProperties();
     void setTileProperties(CCDictionary* tileProperties);
 
-    // implement pure virtual methods of CCSAXDelegator
+    /** implement pure virtual methods of CCSAXDelegator
+     *  @js NA
+     */
     void startElement(void *ctx, const char *name, const char **atts);
+    /**
+     *  @js NA
+     */
     void endElement(void *ctx, const char *name);
+    /**
+     * @js NA
+     */
     void textHandler(void *ctx, const char *ch, int len);
     
     inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }

@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
- 
+ Copyright (c) Microsoft Open Technologies, Inc.
+
  http://www.cocos2d-x.org
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,12 +26,13 @@
 #ifndef __AssetsManager__
 #define __AssetsManager__
 
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <string>
 #include <curl/curl.h>
 #include <pthread.h>
-
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -40,6 +42,8 @@ class AssetsManagerDelegateProtocol;
  *  This class is used to auto update resources, such as pictures or scripts.
  *  The updated package should be a zip file. And there should be a file named
  *  version in the server, which contains version code.
+ *  @js NA
+ *  @lua NA
  */
 class AssetsManager
 {
@@ -213,5 +217,5 @@ public:
 };
 
 NS_CC_EXT_END;
-
+#endif // CC_TARGET_PLATFORM != CC_PLATFORM_WINRT
 #endif /* defined(__AssetsManager__) */

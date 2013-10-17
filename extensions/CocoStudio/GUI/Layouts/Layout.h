@@ -26,7 +26,6 @@
 #define __LAYOUT_H__
 
 #include "../BaseClasses/UIWidget.h"
-#include "LayoutExecutant.h"
 
 NS_CC_EXT_BEGIN
 
@@ -37,6 +36,19 @@ typedef enum
     LAYOUT_COLOR_GRADIENT
 }LayoutBackGroundColorType;
 
+typedef enum
+{
+    LAYOUT_ABSOLUTE,
+    LAYOUT_LINEAR_VERTICAL,
+    LAYOUT_LINEAR_HORIZONTAL,
+    LAYOUT_RELATIVE
+}LayoutType;
+
+
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class Layout : public UIWidget
 {
 public:
@@ -54,24 +66,6 @@ public:
      * Allocates and initializes a layout.
      */
     static Layout* create();
-    
-    /**
-     * Sets a LayoutExecutant for doing layout.
-     *
-     * @see LayoutExecutant
-     *
-     * @param LayoutExecutant pointer.
-     */
-    virtual void setLayoutExecutant(LayoutExecutant* exe);
-    
-    /**
-     * Gets the LayoutExecutant of Layout
-     *
-     * @see LayoutExecutant
-     *
-     * @return LayoutExecutant pointer.
-     */
-    virtual LayoutExecutant* getLayoutExecutant() const;
     
     //override "hitTest" method of widget.
     virtual bool hitTest(const CCPoint &pt);
@@ -184,6 +178,33 @@ public:
      */
     virtual const char* getDescription() const;
     
+    /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    virtual void setLayoutType(LayoutType type);
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    virtual LayoutType getLayoutType() const;
+    
+    virtual void doLayout();
+    
+    /**
+     * Adds a child to the container.
+     *
+     * @param child A child widget
+     */
+    virtual bool addChild(UIWidget* child);
+    
     /*Compatible*/
     /**
      * These methods will be removed
@@ -204,9 +225,10 @@ protected:
     
     //init background image renderer.
     void addBackGroundImage();
+    
+    void supplyTheLayoutParameterLackToChild(UIWidget* child);
 protected:
     bool m_bClippingEnabled;
-    LayoutExecutant* m_pLayoutExecutant;
     
     //background
     bool m_bBackGroundScale9Enable;
@@ -223,8 +245,12 @@ protected:
     CCPoint m_AlongVector;
     int m_nCOpacity;
     CCSize m_backGroundImageTextureSize;
+    LayoutType m_eLayoutType;
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class RectClippingNode : public CCClippingNode
 {
 public:

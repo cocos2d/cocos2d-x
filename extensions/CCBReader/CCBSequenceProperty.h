@@ -6,7 +6,10 @@
 #include "CCBKeyframe.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBSequenceProperty : public CCObject
 {
 private:

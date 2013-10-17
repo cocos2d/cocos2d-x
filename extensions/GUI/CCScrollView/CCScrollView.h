@@ -44,7 +44,10 @@ typedef enum {
 } CCScrollViewDirection;
 
 class CCScrollView;
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCScrollViewDelegate
 {
 public:
@@ -57,11 +60,19 @@ public:
 /**
  * ScrollView support for cocos2d for iphone.
  * It provides scroll view functionalities to cocos2d projects natively.
+ * @lua NA
  */
 class CCScrollView : public CCLayer
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCScrollView();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCScrollView();
 
     bool init();
@@ -195,7 +206,9 @@ public:
      */
     bool isClippingToBounds() { return m_bClippingToBounds; }
     void setClippingToBounds(bool bClippingToBounds) { m_bClippingToBounds = bClippingToBounds; }
-
+    /**
+     *  @js NA
+     */
     virtual void visit();
     virtual void addChild(CCNode * child, int zOrder, int tag);
     virtual void addChild(CCNode * child, int zOrder);
@@ -322,6 +335,17 @@ protected:
      */
     CCRect m_tParentScissorRect;
     bool m_bScissorRestored;
+public:
+    enum ScrollViewScriptEventType
+    {
+        kScrollViewScroll   = 0,
+        kScrollViewZoom,
+    };
+    void registerScriptHandler(int nFunID,int nScriptEventType);
+    void unregisterScriptHandler(int nScriptEventType);
+    int  getScriptHandler(int nScriptEventType);
+private:
+    std::map<int,int> m_mapScriptHandler;
 };
 
 // end of GUI group

@@ -28,7 +28,10 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBatchNode : public CCNode
 {
 public:

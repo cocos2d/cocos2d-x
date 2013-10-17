@@ -45,10 +45,18 @@ class CCGLProgram;
 class CC_DLL CCShaderCache : public CCObject 
 {
 public:
+    /**
+     * @js ctor
+     */
     CCShaderCache();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCShaderCache();
-    /** returns the shared instance */
+    /** returns the shared instance 
+     *  @js getInstance
+     */
     static CCShaderCache* sharedShaderCache();
 
     /** purges the cache. It releases the retained instance. */
@@ -60,7 +68,17 @@ public:
     /** reload the default shaders */
     void reloadDefaultShaders();
 
-    /** returns a GL program for a given key */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+     /** loads the default precompiled shaders */
+    void loadDefaultPrecompiledShaders();
+
+     /** reload the default precompiled shaders */
+    void reloadDefaultPrecompiledShaders();
+#endif
+
+    /** returns a GL program for a given key 
+     *  @js getProgram
+     */
     CCGLProgram * programForKey(const char* key);
 
     /** adds a CCGLProgram to the cache for a given name */
@@ -69,7 +87,9 @@ public:
 private:
     bool init();
     void loadDefaultShader(CCGLProgram *program, int type);
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    void loadDefaultPrecompiledShader(CCGLProgram *program, int type);
+#endif
     CCDictionary* m_pPrograms;
 
 };

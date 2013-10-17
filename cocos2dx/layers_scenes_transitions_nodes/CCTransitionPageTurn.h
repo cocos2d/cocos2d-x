@@ -52,7 +52,14 @@ protected:
     bool    m_bBack;
     
 public:
+    /**
+     *  @js ctor
+     */
     CCTransitionPageTurn();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCTransitionPageTurn();
 
     /**
@@ -70,7 +77,10 @@ public:
     virtual bool initWithDuration(float t,CCScene* scene,bool backwards);
 
     CCActionInterval* actionWithSize(const CCSize& vector);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
 
 protected:

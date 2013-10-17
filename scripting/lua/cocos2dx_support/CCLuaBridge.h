@@ -49,7 +49,10 @@ typedef enum {
 
 #define LUA_BRIDGE_REGISTRY_FUNCTION    "lua_bridge_function_id"        // table[function] = id
 #define LUA_BRIDGE_REGISTRY_RETAIN      "lua_bridge_function_id_retain" // table[id] = retain count
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCLuaBridge
 {
 public:

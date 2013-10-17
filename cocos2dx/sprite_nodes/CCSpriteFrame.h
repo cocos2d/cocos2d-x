@@ -92,7 +92,15 @@ public:
     void setOffset(const CCPoint& offsets);
 
 public:
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~CCSpriteFrame(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone *pZone);
 
     /** Create a CCSpriteFrame with a texture filename, rect in points.

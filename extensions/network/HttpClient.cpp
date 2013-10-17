@@ -26,6 +26,8 @@
 #include "HttpClient.h"
 // #include "platform/CCThread.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+
 #include <queue>
 #include <pthread.h>
 #include <errno.h>
@@ -503,5 +505,8 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
 }
 
 NS_CC_EXT_END
+
+#endif // CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+
 
 

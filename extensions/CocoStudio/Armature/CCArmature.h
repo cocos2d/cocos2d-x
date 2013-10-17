@@ -34,7 +34,9 @@ class b2Body;
 struct cpBody;
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @lua NA
+ */
 class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
 {
 
@@ -57,7 +59,13 @@ public:
     static CCArmature *create(const char *name, CCBone *parentBone);
 
 public:
+    /**
+     *  @js ctor
+     */
     CCArmature();
+    /**
+     *  @js NA
+     */
     ~CCArmature(void);
 
     /**
@@ -139,8 +147,14 @@ public:
     virtual CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
+    /**
+     *  @js NA
+     */
     virtual b2Fixture *getShapeList();
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+    /**
+     *  @js NA
+     */
     virtual cpShape *getShapeList();
 #endif
 
@@ -148,10 +162,13 @@ protected:
 
     /*
      * Used to create CCBone internal
+     * @js NA
      */
     CCBone *createBone(const char *boneName );
 
-    //! Update blend function
+    /**! Update blend function
+     * @js NA
+     */
     void updateBlendType(CCBlendType blendType);
 
     CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, ArmatureData);
@@ -162,7 +179,7 @@ protected:
 
     CC_SYNTHESIZE(CCTextureAtlas *, m_pAtlas, TextureAtlas);
 
-    CC_SYNTHESIZE(CCBone *, m_pParentBone, ParentBone);
+    CC_PROPERTY(CCBone *, m_pParentBone, ParentBone);
 
     CC_SYNTHESIZE(float, m_fVersion, Version);
 
