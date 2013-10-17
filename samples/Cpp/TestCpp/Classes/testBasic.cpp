@@ -1,10 +1,15 @@
 #include "testBasic.h"
 #include "controller.h"
+#include "extensions/cocos-ext.h"
+#include "cocostudio/CocoStudio.h"
 
 TestScene::TestScene(bool bPortrait)
 {
-    
-    Scene::init();
+}
+
+bool TestScene::initTest()
+{
+    return Scene::init();
 }
 
 void TestScene::onEnter()
@@ -45,6 +50,8 @@ void TestScene::onEnter()
             Director::getInstance()->replaceScene(scene);
             scene->release();
         }
+        
+        cocostudio::ArmatureDataManager::destoryInstance();
 	});
 
     auto menu =Menu::create(menuItem, NULL);

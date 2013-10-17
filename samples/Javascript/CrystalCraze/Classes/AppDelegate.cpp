@@ -31,13 +31,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(EGLView::getInstance());
     pDirector->setProjection(Director::Projection::_2D);
 
+    FileUtils::getInstance()->addSearchPath("script");
 
     auto screenSize = EGLView::getInstance()->getFrameSize();
 
     auto designSize = Size(320, 480);
     auto resourceSize = Size(320, 480);
     
-    std::vector<std::string> searchPaths;
+    std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
     std::vector<std::string> resDirOrders;
     
     Application::Platform platform = Application::getInstance()->getTargetPlatform();
@@ -111,6 +112,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->start();
 
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    sc->enableDebugger();
+#endif
+    
     js_log("RUNNING Main");
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);

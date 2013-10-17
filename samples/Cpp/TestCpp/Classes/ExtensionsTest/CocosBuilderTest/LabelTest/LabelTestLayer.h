@@ -2,7 +2,7 @@
 #define _LABELTESTLAYER_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 class LabelTestLayer : public cocos2d::Layer {
     public:

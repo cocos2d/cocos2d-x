@@ -20,8 +20,10 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *director = Director::getInstance();
+    auto director = Director::getInstance();
     director->setOpenGLView(EGLView::getInstance());
+
+    EGLView::getInstance()->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
 
     // turn on display FPS
     director->setDisplayStats(true);
@@ -30,7 +32,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0 / 60);
 
     // register lua engine
-    LuaEngine* engine = LuaEngine::getInstance();
+    auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     
     std::string path = FileUtils::getInstance()->fullPathForFilename("hello.lua");

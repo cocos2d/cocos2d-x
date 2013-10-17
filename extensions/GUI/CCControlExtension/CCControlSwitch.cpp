@@ -270,7 +270,7 @@ void ControlSwitchSprite::needsLayout()
     rt->end();
 
     setTexture(rt->getSprite()->getTexture());
-    setFlipY(true);
+    setFlippedY(true);
 }
 
 void ControlSwitchSprite::setSliderXPosition(float sliderXPosition)

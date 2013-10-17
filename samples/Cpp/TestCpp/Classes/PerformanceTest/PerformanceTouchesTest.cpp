@@ -243,15 +243,15 @@ void TouchesPerformTest3::onEnter()
         CC_PROFILER_PURGE_ALL();
         
         std::vector<Touch*> touches;
-        for (int i = 0; i < TouchEvent::MAX_TOUCHES; ++i)
+        for (int i = 0; i < EventTouch::MAX_TOUCHES; ++i)
         {
             Touch* touch = new Touch();
             touch->setTouchInfo(i, 10, (i+1) * 10);
             touches.push_back(touch);
         }
         
-        TouchEvent event;
-        event.setEventCode(TouchEvent::EventCode::BEGAN);
+        EventTouch event;
+        event.setEventCode(EventTouch::EventCode::BEGAN);
         event.setTouches(touches);
         
         auto dispatcher = EventDispatcher::getInstance();
@@ -260,7 +260,7 @@ void TouchesPerformTest3::onEnter()
         {
             CC_PROFILER_START(TOUCH_PROFILER_NAME);
             
-            dispatcher->dispatchEvent(&event, true);
+            dispatcher->dispatchEvent(&event, false);
             
             CC_PROFILER_STOP(TOUCH_PROFILER_NAME);
         }

@@ -605,8 +605,8 @@ CameraZoomTest::CameraZoomTest()
     addChild( sprite, 0);        
     sprite->setPosition( Point(s.width/4*1, s.height/2) );
     cam = sprite->getCamera();
-    cam->setEyeXYZ(0, 0, 415/2);
-    cam->setCenterXYZ(0, 0, 0);
+    cam->setEye(0, 0, 415/2);
+    cam->setCenter(0, 0, 0);
     
     // CENTER
     sprite = Sprite::create(s_pathGrossini);
@@ -631,11 +631,11 @@ void CameraZoomTest::update(float dt)
     
     sprite = getChildByTag(20);
     cam = sprite->getCamera();
-    cam->setEyeXYZ(0, 0, _z);
+    cam->setEye(0, 0, _z);
     
     sprite = getChildByTag(40);
     cam = sprite->getCamera();
-    cam->setEyeXYZ(0, 0, -_z);    
+    cam->setEye(0, 0, -_z);    
 }
 
 std::string CameraZoomTest::title()

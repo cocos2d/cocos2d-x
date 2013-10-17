@@ -31,9 +31,7 @@
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
-#ifdef CC_KEYBOARD_SUPPORT
 #include "KeyboardTest/KeyboardTest.h"
-#endif
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
@@ -65,5 +63,6 @@
 #include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
 #include "DataVisitorTest/DataVisitorTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
+#include "PhysicsTest/PhysicsTest.h"
 
 #endif

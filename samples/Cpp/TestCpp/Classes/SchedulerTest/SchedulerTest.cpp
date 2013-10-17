@@ -257,6 +257,7 @@ void SchedulerPauseResumeAll::onExit()
     {
         Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
     }
+    SchedulerTestLayer::onExit();
 }
 
 void SchedulerPauseResumeAll::tick1(float dt)
@@ -343,6 +344,7 @@ void SchedulerPauseResumeAllUser::onExit()
     {
         Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
     }
+    SchedulerTestLayer::onExit();
 }
 
 void SchedulerPauseResumeAllUser::tick1(float dt)
@@ -465,6 +467,8 @@ void SchedulerUnscheduleAllHard::onExit()
         auto director = Director::getInstance();
         director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
+    
+    SchedulerTestLayer::onExit();
 }
 
 void SchedulerUnscheduleAllHard::tick1(float dt)

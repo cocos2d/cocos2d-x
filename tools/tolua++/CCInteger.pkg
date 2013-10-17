@@ -1,7 +1,0 @@
-class CCInteger : public CCObject
-{
-    CCInteger(int v);
-    int getValue() const;
-
-    static CCInteger* create(int v);
-};

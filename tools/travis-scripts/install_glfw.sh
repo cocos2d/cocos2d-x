@@ -31,14 +31,24 @@ make_and_install()
   cd ..
 }
 
-echo glw_version ${GLFW_VERSION}
-echo glfw_download_size ${GLFW_SOURCE}
-echo glfw_zip_file ${GLFW_ZIP}
-install_glfw_dep
-mkdir $GLFW_INSTALL
-cd $GLFW_INSTALL
-curl -o $GLFW_ZIP $GLFW_SOURCE
-tar xzf ${GLFW_ZIP}
-make_and_install
-cd ..
-clean_tmp_file
+install_glfw()
+{
+  echo glw_version ${GLFW_VERSION}
+  echo glfw_download_size ${GLFW_SOURCE}
+  echo glfw_zip_file ${GLFW_ZIP}
+  install_glfw_dep
+  mkdir $GLFW_INSTALL
+  cd $GLFW_INSTALL
+  curl -o $GLFW_ZIP $GLFW_SOURCE
+  tar xzf ${GLFW_ZIP}
+  make_and_install
+  cd ..
+  clean_tmp_file
+}
+
+GLFW_INSTALLED=$(whereis libglfw |grep libglfw.so)
+if [ "$GLFW_INSTALLED"x = ""x ]; then
+  install_glfw
+else
+  echo "libglfw has been installed, skip..."
+fi

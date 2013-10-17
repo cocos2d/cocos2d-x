@@ -59,6 +59,26 @@ Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest/UIDragPanelTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest/UILabelAtlasTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest/UILabelBMFontTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest/UILabelTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest/UINodeContainerTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest/UIPanelTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest/UITextAreaTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest/UITextButtonTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
 Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
@@ -98,6 +118,7 @@ Classes/PerformanceTest/PerformanceSpriteTest.cpp \
 Classes/PerformanceTest/PerformanceTest.cpp \
 Classes/PerformanceTest/PerformanceTextureTest.cpp \
 Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+Classes/PhysicsTest/PhysicsTest.cpp \
 Classes/RenderTextureTest/RenderTextureTest.cpp \
 Classes/RotateWorldTest/RotateWorldTest.cpp \
 Classes/SceneTest/SceneTest.cpp \
@@ -125,13 +146,25 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
+LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
+LOCAL_WHOLE_STATIC_LIBRARIES += gui_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+LOCAL_WHOLE_STATIC_LIBRARIES += network_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Classes
             
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,CocosDenshion/android)
-$(call import-module,external/Box2D)
-$(call import-module,external/chipmunk)
-$(call import-module,cocos2dx)
+$(call import-module,audio/android)
+$(call import-module,Box2D)
+$(call import-module,chipmunk)
+$(call import-module,2d)
 $(call import-module,extensions)
+$(call import-module,editor-support/cocosbuilder)
+$(call import-module,editor-support/spine)
+$(call import-module,gui)
+$(call import-module,editor-support/cocostudio)
+$(call import-module,network)
+$(call import-module,curl/prebuilt/android)

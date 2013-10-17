@@ -112,7 +112,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         setTouchEnabled(true);
         setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
         
-        _touches.reserve(TouchEvent::MAX_TOUCHES);
+        _touches.reserve(EventTouch::MAX_TOUCHES);
         
         _delegate = NULL;
         _bounceable = true;

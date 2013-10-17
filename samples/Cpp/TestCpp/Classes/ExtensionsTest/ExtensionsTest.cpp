@@ -11,6 +11,7 @@
 #include "CocoStudioArmatureTest/ArmatureScene.h"
 #include "CocoStudioComponentsTest/ComponentsTestScene.h"
 #include "CocoStudioSceneTest/SceneEditorTest.h"
+#include "CocoStudioGUITest/CocosGUIScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NetworkTest/WebSocketTest.h"
@@ -81,7 +82,14 @@ static struct {
     { "CocoStudioComponentsTest", [](Object *sender) { runComponentsTestLayerTest(); }
     },
 	{ "CocoStudioSceneTest", [](Object *sender) { runSceneEditorTestLayer(); }
-	}
+	},
+    { "CocoStudioGUITest", [](Object *sender)
+        {
+            CocosGUITestScene* pScene = new CocosGUITestScene();
+            pScene->runThisTest();
+            pScene->release();
+        }
+	},
 };
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);

@@ -423,7 +423,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
     sprite->setPosition(Point(256, 256));
     sprite->setOpacity(182);
-    sprite->setFlipY(1);
+    sprite->setFlippedY(1);
     this->addChild(sprite, 999999);
     sprite->setColor(Color3B::GREEN);
 

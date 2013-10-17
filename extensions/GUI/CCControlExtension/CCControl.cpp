@@ -29,11 +29,11 @@
 
 #include "CCControl.h"
 #include "CCDirector.h"
-#include "menu_nodes/CCMenu.h"
-#include "event_dispatcher/CCTouch.h"
+#include "CCMenu.h"
+#include "CCTouch.h"
 #include "CCInvocation.h"
-#include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCTouchEventListener.h"
+#include "CCEventDispatcher.h"
+#include "CCEventListenerTouch.h"
 
 NS_CC_EXT_BEGIN
 

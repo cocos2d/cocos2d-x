@@ -1,7 +1,7 @@
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include "GUI/CCControlExtension/CCControlSlider.h"
+#include "extensions/GUI/CCControlExtension/CCControlSlider.h"
 
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFOR_ANDROID)
@@ -65,7 +65,7 @@ private:
 //        Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
         
         // Register Touch Event
-        auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+        auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
         listener->setSwallowTouches(true);
         
         listener->onTouchBegan = CC_CALLBACK_2(Button::onTouchBegan, this);

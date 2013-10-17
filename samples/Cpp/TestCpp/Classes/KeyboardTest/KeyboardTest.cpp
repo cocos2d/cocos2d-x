@@ -1,7 +1,5 @@
 #include "KeyboardTest.h"
 
-#ifdef CC_KEYBOARD_SUPPORT
-
 KeyboardTest::KeyboardTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -24,12 +22,12 @@ KeyboardTest::~KeyboardTest()
     _label->release();
 }
 
-void KeyboardTest::onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event)
+void KeyboardTest::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
     log("Key with keycode %d pressed", keyCode);
 }
 
-void KeyboardTest::onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event)
+void KeyboardTest::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     log("Key with keycode %d released", keyCode);
 }
@@ -43,4 +41,3 @@ void KeyboardTestScene::runThisTest()
     layer->release();
 }
 
-#endif

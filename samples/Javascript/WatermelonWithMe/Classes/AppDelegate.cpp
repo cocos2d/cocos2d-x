@@ -38,6 +38,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     EGLView::getInstance()->setDesignResolutionSize(480, 320, ResolutionPolicy::FIXED_HEIGHT);
     
+    FileUtils::getInstance()->addSearchPath("script");
+    
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
@@ -49,6 +51,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
 
     sc->start();
+    
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    sc->enableDebugger();
+#endif
     
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
