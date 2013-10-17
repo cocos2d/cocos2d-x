@@ -56,6 +56,8 @@ public:
 
     static void purge();
     static void clear();
+
+    static void lockGetFileMutex(bool lock);
 public:
     ~CCDataReaderHelper();
 

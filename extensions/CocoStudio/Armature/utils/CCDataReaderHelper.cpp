@@ -194,6 +194,8 @@ static pthread_mutex_t      s_DataInfoMutex;
 static pthread_mutex_t      s_addDataMutex;
 static pthread_mutex_t      s_ReadFileMutex;
 
+static pthread_mutex_t      s_GetFileDataMutex;
+
 #ifdef EMSCRIPTEN
 // Hack to get ASM.JS validation (no undefined symbols allowed).
 #define pthread_cond_signal(_)
@@ -209,10 +211,11 @@ static std::queue<DataInfo *>   *s_pDataQueue = NULL;
 
 static void addData(AsyncStruct *pAsyncStruct)
 {
-
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAsyncStruct->filename.c_str());
     unsigned long size;
+    pthread_mutex_lock(&s_GetFileDataMutex);
     pAsyncStruct->fileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+    pthread_mutex_unlock(&s_GetFileDataMutex);
 
     // generate image info
     DataInfo *pDataInfo = new DataInfo();
@@ -277,6 +280,7 @@ static void *loadData(void *)
         pthread_mutex_destroy(&s_SleepMutex);
         pthread_mutex_destroy(&s_addDataMutex);
         pthread_mutex_destroy(&s_ReadFileMutex);
+        pthread_mutex_destroy(&s_GetFileDataMutex);
         pthread_cond_destroy(&s_SleepCondition);
     }
 
@@ -315,6 +319,19 @@ void CCDataReaderHelper::clear()
 {
     s_arrConfigFileList.clear();
 }
+
+void CCDataReaderHelper::lockGetFileMutex(bool lock)
+{
+    if (lock)
+    {
+        pthread_mutex_lock(&s_GetFileDataMutex);
+    }
+    else
+    {
+        pthread_mutex_unlock(&s_GetFileDataMutex);
+    }
+}
+
 
 CCDataReaderHelper::~CCDataReaderHelper()
 {
@@ -422,6 +439,7 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *filePath, CCObject *ta
         pthread_mutex_init(&s_SleepMutex, NULL);
         pthread_mutex_init(&s_addDataMutex, NULL);
         pthread_mutex_init(&s_ReadFileMutex, NULL);
+        pthread_mutex_init(&s_GetFileDataMutex, NULL);
         pthread_cond_init(&s_SleepCondition, NULL);
  #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
         pthread_create(&s_loadingThread, NULL, loadData, NULL);

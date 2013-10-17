@@ -177,7 +177,7 @@ protected:
 
     CC_SYNTHESIZE(CCTextureAtlas *, m_pAtlas, TextureAtlas);
 
-    CC_SYNTHESIZE(CCBone *, m_pParentBone, ParentBone);
+    CC_PROPERTY(CCBone *, m_pParentBone, ParentBone);
 
     CC_SYNTHESIZE(float, m_fVersion, Version);
 
