@@ -611,8 +611,6 @@
 		1A570547180BD9C40088DEC7 /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570544180BD9C40088DEC7 /* CCTouch.cpp */; };
 		1A570548180BD9C40088DEC7 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570545180BD9C40088DEC7 /* CCTouch.h */; };
 		1A570549180BD9C40088DEC7 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570545180BD9C40088DEC7 /* CCTouch.h */; };
-		1A8C563A180E8C9400EF57C3 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8C5639180E8C9400EF57C3 /* libluajit.a */; };
-		1A8C563D180E8CB100EF57C3 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8C563C180E8CB100EF57C3 /* libluajit.a */; };
 		1A8C5646180E8D0D00EF57C3 /* tolua++.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C563F180E8D0D00EF57C3 /* tolua++.h */; };
 		1A8C5647180E8D0D00EF57C3 /* tolua++.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C563F180E8D0D00EF57C3 /* tolua++.h */; };
 		1A8C5648180E8D0D00EF57C3 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5640180E8D0D00EF57C3 /* tolua_event.c */; };
@@ -1860,6 +1858,8 @@
 		46A1743F1807D37B005B8026 /* cpSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169571807AFD6005B8026 /* cpSpace.h */; };
 		46A174401807D37B005B8026 /* cpSpatialIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169581807AFD6005B8026 /* cpSpatialIndex.h */; };
 		46A174411807D37B005B8026 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169591807AFD6005B8026 /* cpVect.h */; };
+		46E8EAA818111C47002826F8 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E8EAA718111C47002826F8 /* libluajit.a */; };
+		46E8EAAA18111C6A002826F8 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E8EAA918111C6A002826F8 /* libluajit.a */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
@@ -2275,8 +2275,6 @@
 		1A570545180BD9C40088DEC7 /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
 		1A57FFF7180BC5160088DEC7 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CHANGELOG; path = ../CHANGELOG; sourceTree = "<group>"; };
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A8C5639180E8C9400EF57C3 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/ios/libluajit.a; sourceTree = "<group>"; };
-		1A8C563C180E8CB100EF57C3 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/mac/libluajit.a; sourceTree = "<group>"; };
 		1A8C563F180E8D0D00EF57C3 /* tolua++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "tolua++.h"; sourceTree = "<group>"; };
 		1A8C5640180E8D0D00EF57C3 /* tolua_event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_event.c; sourceTree = "<group>"; };
 		1A8C5641180E8D0D00EF57C3 /* tolua_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_event.h; sourceTree = "<group>"; };
@@ -2960,6 +2958,8 @@
 		46A170A61807CE87005B8026 /* vec2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
 		46A170A71807CE87005B8026 /* vec3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		46A170A81807CE87005B8026 /* vec4.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
+		46E8EAA718111C47002826F8 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/mac/libluajit.a; sourceTree = "<group>"; };
+		46E8EAA918111C6A002826F8 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/ios/libluajit.a; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2994,7 +2994,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A8C563A180E8C9400EF57C3 /* libluajit.a in Frameworks */,
+				46E8EAAA18111C6A002826F8 /* libluajit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3002,7 +3002,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A8C563D180E8CB100EF57C3 /* libluajit.a in Frameworks */,
+				46E8EAA818111C47002826F8 /* libluajit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3878,7 +3878,7 @@
 		1A8C5638180E8C8700EF57C3 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				1A8C5639180E8C9400EF57C3 /* libluajit.a */,
+				46E8EAA918111C6A002826F8 /* libluajit.a */,
 			);
 			name = ios;
 			sourceTree = "<group>";
@@ -3886,7 +3886,7 @@
 		1A8C563B180E8CA700EF57C3 /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				1A8C563C180E8CB100EF57C3 /* libluajit.a */,
+				46E8EAA718111C47002826F8 /* libluajit.a */,
 			);
 			name = mac;
 			sourceTree = "<group>";
@@ -7696,6 +7696,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/lua/luajit/ios",
+					"/Users/minggo/SourceCode/cocos2d-x/external/lua/luajit/prebuilt/ios",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7724,6 +7725,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/lua/luajit/ios",
+					"/Users/minggo/SourceCode/cocos2d-x/external/lua/luajit/prebuilt/ios",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7753,6 +7755,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/lua/luajit/mac",
+					"/Users/minggo/SourceCode/cocos2d-x/external/lua/luajit/prebuilt/mac",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
@@ -7781,6 +7784,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/lua/luajit/mac",
+					"/Users/minggo/SourceCode/cocos2d-x/external/lua/luajit/prebuilt/mac",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
