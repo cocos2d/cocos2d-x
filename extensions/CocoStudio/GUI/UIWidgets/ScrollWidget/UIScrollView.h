@@ -94,7 +94,7 @@ public:
      *
      * @param SCROLLVIEW_DIR
      */
-    void setDirection(SCROLLVIEW_DIR dir);
+    virtual void setDirection(SCROLLVIEW_DIR dir);
     
     /**
      * Gets scroll direction of scrollview.
