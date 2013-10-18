@@ -76,17 +76,17 @@ public:
     };
     
 public:
-    inline PhysicsBody* getBody(){ return _body; }
-    inline Type getType() { return _type; }
-    inline float getArea() { return _area; }
-    inline float getMoment() { return _moment; }
+    inline PhysicsBody* getBody() const { return _body; }
+    inline Type getType() const { return _type; }
+    inline float getArea() const { return _area; }
+    inline float getMoment() const { return _moment; }
     void setMoment(float moment);
     inline void setTag(int tag) { _tag = tag; }
-    inline int getTag() { return _tag; }
+    inline int getTag() const { return _tag; }
     
-    inline float getMass() { return _mass; }
+    inline float getMass() const { return _mass; }
     void setMass(float mass);
-    inline float getDensity() { return _material.density; }
+    inline float getDensity() const { return _material.density; }
     void setDensity(float density);
     void setRestitution(float restitution);
     void setFriction(float friction);

@@ -106,10 +106,10 @@ protected:
     virtual void drawWithShape(DrawNode* node, PhysicsShape* shape);
     
     
-    virtual int collisionBeginCallback(const PhysicsContact& contact);
-    virtual int collisionPreSolveCallback(const PhysicsContact& contact, const PhysicsContactPreSolve& solve);
-    virtual void collisionPostSolveCallback(const PhysicsContact& contact, const PhysicsContactPostSolve& solve);
-    virtual void collisionSeparateCallback(const PhysicsContact& contact);
+    virtual int collisionBeginCallback(PhysicsContact& contact);
+    virtual int collisionPreSolveCallback(PhysicsContact& contact, const PhysicsContactPreSolve& solve);
+    virtual void collisionPostSolveCallback(PhysicsContact& contact, const PhysicsContactPostSolve& solve);
+    virtual void collisionSeparateCallback(PhysicsContact& contact);
     
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
     static int collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data);
