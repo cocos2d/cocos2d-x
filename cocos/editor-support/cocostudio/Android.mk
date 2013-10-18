@@ -43,10 +43,10 @@ CCSSceneReader.cpp \
 ../../../external/json/json_writer.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../../../external/json
+$(LOCAL_PATH)/../../../external
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../2d \
-$(LOCAL_PATH)/../../../external/json \
+$(LOCAL_PATH)/../../../external \
 $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../.. \
 $(LOCAL_PATH)/../../../external
