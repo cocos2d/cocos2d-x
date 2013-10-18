@@ -29,6 +29,9 @@ CCLayer *CreateLayer(int index)
     case TEST_PERFORMANCE:
         pLayer = new TestPerformance();
         break;
+    case TEST_PERFORMANCE_BATCHNODE:
+        pLayer = new TestPerformanceBatchNode();
+        break;
     case TEST_CHANGE_ZORDER:
         pLayer = new TestChangeZorder();
         break;
@@ -316,6 +319,9 @@ std::string TestDragonBones20::title()
 
 
 
+#define ArmaturePerformanceTag 20000
+
+
 TestPerformance::~TestPerformance()
 {
 }
@@ -323,13 +329,23 @@ void TestPerformance::onEnter()
 {
     ArmatureTestLayer::onEnter();
 
+    CCMenuItemFont::setFontSize(65);
+    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(TestPerformance::onDecrease));
+    decrease->setColor(ccc3(0,200,20));
+    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(TestPerformance::onIncrease));
+    increase->setColor(ccc3(0,200,20));
+
+    CCMenu *menu = CCMenu::create(decrease, increase, NULL);
+    menu->alignItemsHorizontally();
+    menu->setPosition(ccp(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
+    addChild(menu, 10000);
+
     armatureCount = frames = times = lastTimes = 0;
     generated = false;
 
-    batchNode = cocos2d::extension::CCBatchNode::create();
-    addChild(batchNode);
-
     scheduleUpdate();
+
+    addArmature(100);
 }
 
 std::string TestPerformance::title()
@@ -340,35 +356,78 @@ std::string TestPerformance::subtitle()
 {
     return "Current CCArmature Count : ";
 }
-void TestPerformance::addArmature(cocos2d::extension::CCArmature *armature)
+void TestPerformance::onIncrease(CCObject* pSender)
 {
-    armatureCount++;
-    batchNode->addChild(armature, armatureCount);
+    addArmature(20);
 }
-void TestPerformance::update(float delta)
+void TestPerformance::onDecrease(CCObject* pSender)
 {
-    frames ++;
-    times += delta;
+    if (armatureCount == 0)
+        return;
 
-    if (frames / times > 58)
+    for (int i = 0; i<20; i++)
     {
+        removeChildByTag(ArmaturePerformanceTag + armatureCount);
+        armatureCount --;
+        refreshTitile();
+    }
+}
+void TestPerformance::addArmature(int number)
+{
+    for (int i = 0; i<number; i++)
+    {
+        armatureCount++;
+
         cocos2d::extension::CCArmature *armature = NULL;
         armature = new cocos2d::extension::CCArmature();
         armature->init("Knight_f/Knight");
         armature->getAnimation()->playByIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
         armature->setScale(0.6f);
-        addArmature(armature);
+        addChild(armature, 0, ArmaturePerformanceTag + armatureCount);
         armature->release();
-
-        char pszCount[255];
-        sprintf(pszCount, "%s %i", subtitle().c_str(), armatureCount);
-        CCLabelTTF *label = (CCLabelTTF *)getChildByTag(10001);
-        label->setString(pszCount);
     }
+
+    refreshTitile();
+}
+void TestPerformance::refreshTitile()
+{
+    char pszCount[255];
+    sprintf(pszCount, "%s %i", subtitle().c_str(), armatureCount);
+    CCLabelTTF *label = (CCLabelTTF *)getChildByTag(10001);
+    label->setString(pszCount);
 }
 
 
+void TestPerformanceBatchNode::onEnter()
+{
+    batchNode = CCBatchNode::create();
+    addChild(batchNode);
+
+    TestPerformance::onEnter();
+}
+std::string TestPerformanceBatchNode::title()
+{
+    return "Test Performance of using CCBatchNode";
+}
+void TestPerformanceBatchNode::addArmature(int number)
+{
+    for (int i = 0; i<number; i++)
+    {
+        armatureCount++;
+
+        cocos2d::extension::CCArmature *armature = NULL;
+        armature = new cocos2d::extension::CCArmature();
+        armature->init("Knight_f/Knight");
+        armature->getAnimation()->playByIndex(0);
+        armature->setPosition(50 + armatureCount * 2, 150);
+        armature->setScale(0.6f);
+        batchNode->addChild(armature, armatureCount, ArmaturePerformanceTag + armatureCount);
+        armature->release();
+    }
+
+    refreshTitile();
+}
 
 
 

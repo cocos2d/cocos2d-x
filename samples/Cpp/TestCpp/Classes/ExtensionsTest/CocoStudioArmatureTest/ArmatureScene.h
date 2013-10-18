@@ -29,6 +29,7 @@ enum {
 	TEST_COCOSTUDIO_WITH_SKELETON,
 	TEST_DRAGON_BONES_2_0,
 	TEST_PERFORMANCE,
+    TEST_PERFORMANCE_BATCHNODE,
 	TEST_CHANGE_ZORDER,
 	TEST_ANIMATION_EVENT,
 	TEST_PARTICLE_DISPLAY,
@@ -97,8 +98,10 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void addArmature(cocos2d::extension::CCArmature *armature);
-	void update(float delta);
+    virtual void onIncrease(CCObject* pSender);
+    virtual void onDecrease(CCObject* pSender);
+	virtual void addArmature(int number);
+    virtual void refreshTitile();
 
 	int armatureCount;
 
@@ -106,6 +109,13 @@ public:
 	float times;
 	float lastTimes;
 	bool generated;
+};
+
+class TestPerformanceBatchNode : public TestPerformance
+{
+    virtual void onEnter();
+    virtual std::string title();
+    virtual void addArmature(int number);
 
     cocos2d::extension::CCBatchNode *batchNode;
 };
