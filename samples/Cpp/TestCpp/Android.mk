@@ -146,13 +146,23 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
+LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Classes
             
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,audio/android)
-$(call import-module,external/Box2D)
-$(call import-module,external/chipmunk)
-$(call import-module,cocos2dx)
+$(call import-module,Box2D)
+$(call import-module,chipmunk)
+$(call import-module,2d)
 $(call import-module,extensions)
+$(call import-module,editor-support/cocosbuilder)
+$(call import-module,editor-support/spine)
+$(call import-module,editor-support/cocostudio)
+$(call import-module,network)
+$(call import-module,curl/prebuilt/android)

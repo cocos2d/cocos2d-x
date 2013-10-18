@@ -2,7 +2,7 @@
 #define _SCHEDULER_TEST_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
