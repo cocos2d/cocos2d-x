@@ -191,12 +191,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lz \
                        -landroid
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
 
