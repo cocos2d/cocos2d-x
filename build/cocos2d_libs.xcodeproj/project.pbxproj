@@ -44,6 +44,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1599607B1811329600C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607A1811329600C7D42C /* libluajit.a */; };
+		15996080181132DE00C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607F181132DE00C7D42C /* libluajit.a */; };
 		1A3B1F78180E88C300497A22 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */; };
 		1A3B1F79180E88C300497A22 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */; };
 		1A3B1F7A180E88C300497A22 /* CCBProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F4F180E88C200497A22 /* CCBProxy.h */; };
@@ -1858,8 +1860,6 @@
 		46A1743F1807D37B005B8026 /* cpSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169571807AFD6005B8026 /* cpSpace.h */; };
 		46A174401807D37B005B8026 /* cpSpatialIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169581807AFD6005B8026 /* cpSpatialIndex.h */; };
 		46A174411807D37B005B8026 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169591807AFD6005B8026 /* cpVect.h */; };
-		46E8EAA818111C47002826F8 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E8EAA718111C47002826F8 /* libluajit.a */; };
-		46E8EAAA18111C6A002826F8 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E8EAA918111C6A002826F8 /* libluajit.a */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
@@ -1983,6 +1983,8 @@
 /* Begin PBXFileReference section */
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1599607A1811329600C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/mac/libluajit.a; sourceTree = "<group>"; };
+		1599607F181132DE00C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/ios/libluajit.a; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBProxy.cpp; sourceTree = "<group>"; };
 		1A3B1F4F180E88C200497A22 /* CCBProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProxy.h; sourceTree = "<group>"; };
@@ -2958,8 +2960,6 @@
 		46A170A61807CE87005B8026 /* vec2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
 		46A170A71807CE87005B8026 /* vec3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		46A170A81807CE87005B8026 /* vec4.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
-		46E8EAA718111C47002826F8 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/mac/libluajit.a; sourceTree = "<group>"; };
-		46E8EAA918111C6A002826F8 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/ios/libluajit.a; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2994,7 +2994,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46E8EAAA18111C6A002826F8 /* libluajit.a in Frameworks */,
+				15996080181132DE00C7D42C /* libluajit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3002,7 +3002,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46E8EAA818111C47002826F8 /* libluajit.a in Frameworks */,
+				1599607B1811329600C7D42C /* libluajit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3878,7 +3878,7 @@
 		1A8C5638180E8C8700EF57C3 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				46E8EAA918111C6A002826F8 /* libluajit.a */,
+				1599607F181132DE00C7D42C /* libluajit.a */,
 			);
 			name = ios;
 			sourceTree = "<group>";
@@ -3886,7 +3886,7 @@
 		1A8C563B180E8CA700EF57C3 /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				46E8EAA718111C47002826F8 /* libluajit.a */,
+				1599607A1811329600C7D42C /* libluajit.a */,
 			);
 			name = mac;
 			sourceTree = "<group>";
@@ -7695,8 +7695,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/ios",
-					"/Users/minggo/SourceCode/cocos2d-x/external/lua/luajit/prebuilt/ios",
+					"\"$(SRCROOT)/../external/lua/luajit/prebuilt/ios\"",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7724,8 +7723,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/ios",
-					"/Users/minggo/SourceCode/cocos2d-x/external/lua/luajit/prebuilt/ios",
+					"\"$(SRCROOT)/../external/lua/luajit/prebuilt/ios\"",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7754,8 +7752,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/mac",
-					"/Users/minggo/SourceCode/cocos2d-x/external/lua/luajit/prebuilt/mac",
+					"\"$(SRCROOT)/../external/lua/luajit/prebuilt/mac\"",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
@@ -7783,8 +7780,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/mac",
-					"/Users/minggo/SourceCode/cocos2d-x/external/lua/luajit/prebuilt/mac",
+					"\"$(SRCROOT)/../external/lua/luajit/prebuilt/mac\"",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
