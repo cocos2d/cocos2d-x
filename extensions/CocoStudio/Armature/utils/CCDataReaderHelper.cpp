@@ -174,6 +174,9 @@ typedef struct _AsyncStruct
     CCObject       *target;
     SEL_SCHEDULE   selector;
     bool           autoLoadSpriteFile;
+    
+    std::string    imagePath;
+    std::string    plistPath;
 } AsyncStruct;
 
 typedef struct _DataInfo
@@ -320,18 +323,6 @@ void CCDataReaderHelper::clear()
     s_arrConfigFileList.clear();
 }
 
-void CCDataReaderHelper::lockGetFileMutex(bool lock)
-{
-    if (lock)
-    {
-        pthread_mutex_lock(&s_GetFileDataMutex);
-    }
-    else
-    {
-        pthread_mutex_unlock(&s_GetFileDataMutex);
-    }
-}
-
 
 CCDataReaderHelper::~CCDataReaderHelper()
 {
@@ -385,7 +376,7 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     }
 }
 
-void CCDataReaderHelper::addDataFromFileAsync(const char *filePath, CCObject *target, SEL_SCHEDULE selector)
+void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, CCObject *target, SEL_SCHEDULE selector)
 {
 #ifdef EMSCRIPTEN
     CCLOGWARN("Cannot load data %s asynchronously in Emscripten builds.", filePath);
@@ -468,6 +459,8 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *filePath, CCObject *ta
     data->selector = selector;
     data->autoLoadSpriteFile = CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile();
 
+    data->imagePath = imagePath;
+    data->plistPath = plistPath;
 
     std::string filePathStr =  filePath;
     size_t startPos = filePathStr.find_last_of(".");
@@ -517,10 +510,19 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
 
         AsyncStruct *pAsyncStruct = pDataInfo->asyncStruct;
 
+        if (pAsyncStruct->imagePath != "" && pAsyncStruct->plistPath != "")
+        {
+            pthread_mutex_lock(&s_GetFileDataMutex);
+            CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile(pAsyncStruct->plistPath.c_str(), pAsyncStruct->imagePath.c_str());
+            pthread_mutex_unlock(&s_GetFileDataMutex);
+        }
+
         while (!pDataInfo->configFileQueue.empty())
         {
             std::string configPath = pDataInfo->configFileQueue.front();
+            pthread_mutex_lock(&s_GetFileDataMutex);
             CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str());
+            pthread_mutex_unlock(&s_GetFileDataMutex);
             pDataInfo->configFileQueue.pop();
         }
 

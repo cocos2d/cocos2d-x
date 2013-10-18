@@ -104,7 +104,6 @@ void CCBatchNode::addChild(CCNode *child, int zOrder, int tag)
 
 void CCBatchNode::removeChild(CCNode* child, bool cleanup)
 {
-    CCNode::removeChild(child, cleanup);
     CCArmature *armature = dynamic_cast<CCArmature *>(child);
     if (armature != NULL)
     {
@@ -129,6 +128,8 @@ void CCBatchNode::removeChild(CCNode* child, bool cleanup)
             }
         }
     }
+
+    CCNode::removeChild(child, cleanup);
 }
 
 void CCBatchNode::visit()

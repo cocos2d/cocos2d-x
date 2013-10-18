@@ -185,7 +185,7 @@ void CCArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 void CCArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, CCObject *target, SEL_SCHEDULE selector)
 {
     m_bAutoLoadSpriteFile = true;
-    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
+    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync("", "", configFilePath, target, selector);
 }
 
 void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
@@ -193,19 +193,14 @@ void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const cha
     m_bAutoLoadSpriteFile = false;
     CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
 
-    CCDataReaderHelper::lockGetFileMutex(true);
     addSpriteFrameFromFile(plistPath, imagePath);
-    CCDataReaderHelper::lockGetFileMutex(false);
 }
 
 void CCArmatureDataManager::addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, CCObject *target, SEL_SCHEDULE selector)
 {
     m_bAutoLoadSpriteFile = false;
-    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
-
-    CCDataReaderHelper::lockGetFileMutex(true);
-    addSpriteFrameFromFile(plistPath, imagePath);
-    CCDataReaderHelper::lockGetFileMutex(false);
+    
+    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(imagePath, plistPath, configFilePath, target, selector);
 }
 
 void CCArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)

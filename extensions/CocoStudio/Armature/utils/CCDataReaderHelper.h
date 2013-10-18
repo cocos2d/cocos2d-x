@@ -57,12 +57,11 @@ public:
     static void purge();
     static void clear();
 
-    static void lockGetFileMutex(bool lock);
 public:
     ~CCDataReaderHelper();
 
     void addDataFromFile(const char *filePath);
-    void addDataFromFileAsync(const char *filePath, CCObject *target, SEL_SCHEDULE selector);
+    void addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, CCObject *target, SEL_SCHEDULE selector);
 
     void addDataAsyncCallBack(float dt);
 
