@@ -66,7 +66,7 @@ m_pfnScrollToRightSelector(NULL)
 
 UIScrollView::~UIScrollView()
 {
-    CCLOG("aaaaaaaaddsdsadasdasdadasda");
+    
 }
 
 UIScrollView* UIScrollView::create()
@@ -119,6 +119,7 @@ void UIScrollView::setInnerContainerSize(const cocos2d::CCSize &size)
 {
     float innerSizeWidth = m_size.width;
     float innerSizeHeight = m_size.height;
+    CCSize originalInnerSize = m_pInnerContainer->getSize();
     if (size.width < m_size.width)
     {
         CCLOG("Inner width <= scrollview width, it will be force sized!");
@@ -136,7 +137,34 @@ void UIScrollView::setInnerContainerSize(const cocos2d::CCSize &size)
         innerSizeHeight = size.height;
     }
     m_pInnerContainer->setSize(CCSizeMake(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(ccp(0, m_size.height - m_pInnerContainer->getSize().height));
+
+    switch (m_eDirection)
+    {
+        case SCROLLVIEW_DIR_VERTICAL:
+        {
+            if (m_pInnerContainer->getTopInParent() <= m_size.height)
+            {
+                CCSize newInnerSize = m_pInnerContainer->getSize();
+                float offset = originalInnerSize.height - newInnerSize.height;
+                m_eMoveDirection = offset > 0 ? SCROLLVIEW_MOVE_DIR_UP : SCROLLVIEW_MOVE_DIR_DOWN;
+                scrollChildren(offset);
+            }
+            break;
+        }
+        case SCROLLVIEW_DIR_HORIZONTAL:
+        {
+            if (m_pInnerContainer->getRightInParent() <= m_size.width)
+            {
+                CCSize newInnerSize = m_pInnerContainer->getSize();
+                float offset = originalInnerSize.width - newInnerSize.width;
+                m_eMoveDirection = offset > 0 ? SCROLLVIEW_MOVE_DIR_RIGHT : SCROLLVIEW_MOVE_DIR_LEFT;
+                scrollChildren(offset);
+            }
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 const CCSize& UIScrollView::getInnerContainerSize() const
@@ -292,7 +320,6 @@ float UIScrollView::getCurAutoScrollDistance(float time)
 bool UIScrollView::scrollChildren(float touchOffset)
 {    
     float realOffset = touchOffset;
-    
     switch (m_eDirection)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
