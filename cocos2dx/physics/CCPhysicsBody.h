@@ -149,11 +149,11 @@ public:
      */
     inline Sprite* getOwner() const { return _owner; }
     
-    void setCategoryBitmask(int bitmask);
+    inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
     inline int getCategoryBitmask() const { return _categoryBitmask; }
-    void setContactTestBitmask(int bitmask);
+    inline void setContactTestBitmask(int bitmask) { _contactTestBitmask = bitmask; }
     inline int getContactTestBitmask() const { return _contactTestBitmask; }
-    void setCollisionBitmask(int bitmask);
+    inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
     inline int getCollisionBitmask() const { return _collisionBitmask; }
     
     /*
