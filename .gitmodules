@@ -3,7 +3,7 @@
 	url = git://github.com/cocos2d/bindings-generator.git
 [submodule "cocos/scripting/auto-generated"]
 	path = cocos/scripting/auto-generated
-	url = git://github.com/folecr/cocos2dx-autogen-bindings.git
+	url = git://github.com/cocos2d-x/bindings-auto-generated.git
 [submodule "samples/Javascript/Shared"]
 	path = samples/Javascript/Shared
 	url = git://github.com/cocos2d/cocos2d-js-tests.git
