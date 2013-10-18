@@ -31,7 +31,7 @@
 #include <vector>
 #include <map>
 #include "chipmunk.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
