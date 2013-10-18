@@ -5,15 +5,20 @@ cocos2d-x-3.0alpha1 @??? 2013
      [FIX]          Spine: fix memory leaks
      [FIX]          fixed a memory leak in XMLHTTPRequest.cpp
      [FIX]          removeSpriteFramesFromFile() crashes if file doesn't exist.
+     [FIX]          Avoid unnecessary object duplication for Scale9Sprite.
+     [FIX]          create_project.py does not rename/replace template projects completely.
 [Android]
      [FIX]          Added EGL_RENDERABLE_TYPE to OpenGL attributes
      [NEW]          Added Cocos2dxHelper.runOnGLThread(Runnable) again
      [FIX]          Fixed application will crash when pause and resume.
 [Mac]
      [FIX]          Removed unused CCLOG() from GL initialization
+[iOS]
+     [FIX]          Can't click the area that outside of keyboard to close keyboard when using EditBox.
 [Javascript binding]
      [FIX]          Fixed a memory leak in ScriptingCore::runScript()
      [FIX]          sys.localStorage.getItem() does not support non-ascii string.
+     [FIX]          cc.Scheduler.schedule(target, func) without repeat argument couldn't repeat schedule forever on device.
 [Lua Binding]
      [NEW]          Added Armature lua binding and added test samples.
 

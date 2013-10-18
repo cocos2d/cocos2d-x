@@ -2,7 +2,7 @@
 #define _SHADER_TEST_H_
 
 #include "../testBasic.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
 
 USING_NS_CC_EXT;

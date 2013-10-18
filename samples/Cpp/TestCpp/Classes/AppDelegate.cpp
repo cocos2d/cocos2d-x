@@ -3,7 +3,8 @@
 #include "cocos2d.h"
 #include "controller.h"
 #include "SimpleAudioEngine.h"
-#include "cocos-ext.h"
+#include "cocostudio/CocoStudio.h"
+#include "extensions/cocos-ext.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -15,7 +16,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
-	cocos2d::extension::armature::ArmatureDataManager::destoryInstance();
+	cocostudio::ArmatureDataManager::destoryInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -50,6 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	{
 		searchPaths.push_back("scenetest");
 	}
+    
 	pFileUtils->setSearchPaths(searchPaths);
 
     EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);

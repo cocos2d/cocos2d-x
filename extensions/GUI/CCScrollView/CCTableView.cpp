@@ -26,9 +26,9 @@
 #include "cocos2d.h"
 #include "CCTableView.h"
 #include "CCTableViewCell.h"
-#include "menu_nodes/CCMenu.h"
+#include "CCMenu.h"
 #include "CCSorting.h"
-#include "layers_scenes_transitions_nodes/CCLayer.h"
+#include "CCLayer.h"
 
 NS_CC_EXT_BEGIN
 
