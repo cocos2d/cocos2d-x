@@ -101,6 +101,8 @@ public:
     virtual void onIncrease(CCObject* pSender);
     virtual void onDecrease(CCObject* pSender);
 	virtual void addArmature(int number);
+    virtual void addArmatureToParent(cocos2d::extension::CCArmature *armature);
+    virtual void removeArmatureFromParent(int tag);
     virtual void refreshTitile();
 
 	int armatureCount;
@@ -115,7 +117,8 @@ class TestPerformanceBatchNode : public TestPerformance
 {
     virtual void onEnter();
     virtual std::string title();
-    virtual void addArmature(int number);
+    virtual void addArmatureToParent(cocos2d::extension::CCArmature *armature);
+    virtual void removeArmatureFromParent(int tag);
 
     cocos2d::extension::CCBatchNode *batchNode;
 };

@@ -73,33 +73,33 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, float dt, bool dirty)
     CCNode *display = bone->getDisplayRenderNode();
     CS_RETURN_IF(!display);
 
-// #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-//     if (dirty)
-//     {
-//         CCDecorativeDisplay *decoDisplay = bone->getDisplayManager()->getCurrentDecorativeDisplay();
-//         CCColliderDetector *detector = decoDisplay->getColliderDetector();
-//         if (detector)
-//         {
-//             do
-//             {
-// #if ENABLE_PHYSICS_BOX2D_DETECT
-//                 CC_BREAK_IF(!detector->getBody());
-// #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-//                 CC_BREAK_IF(!detector->getBody());
-// #endif
-// 
-//                 CCAffineTransform displayTransform = display->nodeToParentTransform();
-//                 CCPoint anchorPoint =  display->getAnchorPointInPoints();
-//                 anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
-//                 displayTransform.tx = anchorPoint.x;
-//                 displayTransform.ty = anchorPoint.y;
-//                 CCAffineTransform t = CCAffineTransformConcat(displayTransform, bone->getArmature()->nodeToParentTransform());
-//                 detector->updateTransform(t);
-//             }
-//             while (0);
-//         }
-//     }
-// #endif
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    if (dirty)
+    {
+        CCDecorativeDisplay *decoDisplay = bone->getDisplayManager()->getCurrentDecorativeDisplay();
+        CCColliderDetector *detector = decoDisplay->getColliderDetector();
+        if (detector)
+        {
+            do
+            {
+#if ENABLE_PHYSICS_BOX2D_DETECT
+                CC_BREAK_IF(!detector->getBody());
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+                CC_BREAK_IF(!detector->getBody());
+#endif
+
+                CCAffineTransform displayTransform = display->nodeToParentTransform();
+                CCPoint anchorPoint =  display->getAnchorPointInPoints();
+                anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
+                displayTransform.tx = anchorPoint.x;
+                displayTransform.ty = anchorPoint.y;
+                CCAffineTransform t = CCAffineTransformConcat(displayTransform, bone->getArmature()->nodeToParentTransform());
+                detector->updateTransform(t);
+            }
+            while (0);
+        }
+    }
+#endif
 
     switch(bone->getDisplayRenderNodeType())
     {
@@ -155,6 +155,13 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
         skin = CCSkin::createWithSpriteFrameName((textureName + ".png").c_str());
     }
 
+    decoDisplay->setDisplay(skin);
+
+    if (skin == NULL)
+    {
+        return;
+    }
+
     skin->setBone(bone);
 
     initSpriteDisplay(bone, decoDisplay, displayData->displayName.c_str(), skin);
@@ -171,9 +178,6 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
             skin->setSkinData(*bone->getBoneData());
         }
     }
-
-    decoDisplay->setDisplay(skin);
-
 }
 
 void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, const char *displayName, CCSkin *skin)

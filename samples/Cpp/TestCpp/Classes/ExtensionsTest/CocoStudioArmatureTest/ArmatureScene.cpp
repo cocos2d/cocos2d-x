@@ -367,7 +367,7 @@ void TestPerformance::onDecrease(CCObject* pSender)
 
     for (int i = 0; i<20; i++)
     {
-        removeChildByTag(ArmaturePerformanceTag + armatureCount);
+        removeArmatureFromParent(ArmaturePerformanceTag + armatureCount);
         armatureCount --;
         refreshTitile();
     }
@@ -384,11 +384,19 @@ void TestPerformance::addArmature(int number)
         armature->getAnimation()->playByIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
         armature->setScale(0.6f);
-        addChild(armature, 0, ArmaturePerformanceTag + armatureCount);
+        addArmatureToParent(armature);
         armature->release();
     }
 
     refreshTitile();
+}
+void TestPerformance::addArmatureToParent(cocos2d::extension::CCArmature *armature)
+{
+    addChild(armature, 0, ArmaturePerformanceTag + armatureCount);
+}
+void TestPerformance::removeArmatureFromParent(int tag)
+{
+    removeChildByTag(ArmaturePerformanceTag + armatureCount);
 }
 void TestPerformance::refreshTitile()
 {
@@ -410,23 +418,13 @@ std::string TestPerformanceBatchNode::title()
 {
     return "Test Performance of using CCBatchNode";
 }
-void TestPerformanceBatchNode::addArmature(int number)
+void TestPerformanceBatchNode::addArmatureToParent(cocos2d::extension::CCArmature *armature)
 {
-    for (int i = 0; i<number; i++)
-    {
-        armatureCount++;
-
-        cocos2d::extension::CCArmature *armature = NULL;
-        armature = new cocos2d::extension::CCArmature();
-        armature->init("Knight_f/Knight");
-        armature->getAnimation()->playByIndex(0);
-        armature->setPosition(50 + armatureCount * 2, 150);
-        armature->setScale(0.6f);
-        batchNode->addChild(armature, armatureCount, ArmaturePerformanceTag + armatureCount);
-        armature->release();
-    }
-
-    refreshTitile();
+    batchNode->addChild(armature, 0, ArmaturePerformanceTag + armatureCount);
+}
+void TestPerformanceBatchNode::removeArmatureFromParent(int tag)
+{
+    batchNode->removeChildByTag(ArmaturePerformanceTag + armatureCount);
 }
 
 
