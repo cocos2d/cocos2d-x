@@ -142,9 +142,9 @@ public:
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
      */
-    virtual void setTransformDirty(bool dirty);
+    virtual inline void setTransformDirty(bool dirty) { m_bBoneTransformDirty = dirty; }
 
-    virtual bool isTransformDirty();
+    virtual inline bool isTransformDirty() { return m_bBoneTransformDirty; }
 
     virtual CCAffineTransform nodeToArmatureTransform();
     virtual CCAffineTransform nodeToWorldTransform();

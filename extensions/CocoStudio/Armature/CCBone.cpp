@@ -382,15 +382,6 @@ void CCBone::setZOrder(int zOrder)
         CCNode::setZOrder(zOrder);
 }
 
-void CCBone::setTransformDirty(bool dirty)
-{
-    m_bBoneTransformDirty = dirty;
-}
-
-bool CCBone::isTransformDirty()
-{
-    return m_bBoneTransformDirty;
-}
 
 CCAffineTransform CCBone::nodeToArmatureTransform()
 {
