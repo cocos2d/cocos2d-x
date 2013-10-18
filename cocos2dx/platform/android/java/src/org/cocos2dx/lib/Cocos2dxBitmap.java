@@ -158,7 +158,7 @@ public class Cocos2dxBitmap {
 			
 			final Paint paintStroke = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
 			paintStroke.setStyle(Paint.Style.STROKE);
-			paintStroke.setStrokeWidth(strokeSize);
+			paintStroke.setStrokeWidth(strokeSize*2.0f);
 			paintStroke.setARGB(255, (int) (strokeR * 255), (int) (strokeG * 255), (int) (strokeB * 255));
 			
 			int x = 0;
