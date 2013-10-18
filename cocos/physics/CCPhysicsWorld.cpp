@@ -49,9 +49,9 @@
 #include "Box2D/CCPhysicsJointInfo.h"
 #include "chipmunk/CCPhysicsHelper.h"
 
-#include "draw_nodes/CCDrawNode.h"
-#include "cocoa/CCArray.h"
-#include "layers_scenes_transitions_nodes/CCScene.h"
+#include "CCDrawNode.h"
+#include "CCArray.h"
+#include "CCScene.h"
 #include "CCDirector.h"
 
 #include <algorithm>

@@ -30,7 +30,7 @@
 
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
-#include "cocoa/CCGeometry.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN
 

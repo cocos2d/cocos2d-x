@@ -43,7 +43,7 @@ class PhysicsJoint;
 class PhysicsBodyInfo;
 
 
-const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT = {0.0f, 1.0f, 1.0f};
+const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT = {1.0f, 1.0f, 1.0f};
 
 /**
  * A body affect by physics.
