@@ -7695,11 +7695,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../external/lua/luajit/prebuilt/ios\"",
+					"$(SRCROOT)/../external/lua/luajit/prebuilt/ios",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/external/\" \"$(SRCROOT)/external/libwebsockets/ios/include\" \"$(SRCROOT)/extensions/network\" \"$(SRCROOT)/extensions/LocalStorage\" \"$(SRCROOT)/extensions/\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/cocos2dx/platform/ios $(SRCROOT)/cocos2dx/include $(SRCROOT)/cocos2dx $(SRCROOT)/cocos2dx/kazmath/include $(SRCROOT)/external/ $(SRCROOT)/external/libwebsockets/ios/include $(SRCROOT)/extensions/network $(SRCROOT)/extensions/LocalStorage $(SRCROOT)/extensions/";
 			};
 			name = Debug;
 		};
@@ -7723,11 +7723,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../external/lua/luajit/prebuilt/ios\"",
+					"$(SRCROOT)/../external/lua/luajit/prebuilt/ios",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/external/\" \"$(SRCROOT)/external/libwebsockets/ios/include\" \"$(SRCROOT)/extensions/network\" \"$(SRCROOT)/extensions/LocalStorage\" \"$(SRCROOT)/extensions/\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/cocos2dx/platform/ios $(SRCROOT)/cocos2dx/include $(SRCROOT)/cocos2dx $(SRCROOT)/cocos2dx/kazmath/include $(SRCROOT)/external/ $(SRCROOT)/external/libwebsockets/ios/include $(SRCROOT)/extensions/network $(SRCROOT)/extensions/LocalStorage $(SRCROOT)/extensions/";
 			};
 			name = Release;
 		};
@@ -7752,7 +7752,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../external/lua/luajit/prebuilt/mac\"",
+					"$(SRCROOT)/../external/lua/luajit/prebuilt/mac",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
@@ -7780,7 +7780,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../external/lua/luajit/prebuilt/mac\"",
+					"$(SRCROOT)/../external/lua/luajit/prebuilt/mac",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
