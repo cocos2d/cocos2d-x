@@ -29,7 +29,7 @@
 #define __CCPHYSICS_HELPER_H__
 
 #include "chipmunk.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include "cocoa/CCGeometry.h"
 
 NS_CC_BEGIN
