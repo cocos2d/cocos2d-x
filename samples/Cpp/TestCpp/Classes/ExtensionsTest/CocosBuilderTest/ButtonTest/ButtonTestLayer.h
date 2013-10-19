@@ -2,12 +2,13 @@
 #define _BUTTONTESTLAYER_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
+#include "cocosbuilder/CocosBuilder.h"
 
 class ButtonTestLayer 
     : public cocos2d::Layer
-    , public cocos2d::extension::CCBMemberVariableAssigner
-    , public cocos2d::extension::CCBSelectorResolver
+    , public cocosbuilder::CCBMemberVariableAssigner
+    , public cocosbuilder::CCBSelectorResolver
 {
 public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(ButtonTestLayer, create);

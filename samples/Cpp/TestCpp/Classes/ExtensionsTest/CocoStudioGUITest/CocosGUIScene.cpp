@@ -1,7 +1,7 @@
 #include "CocosGUIScene.h"
 #include "UISceneManager.h"
-//#include "CocosGUIExamplesRegisterScene.h"
 #include "../ExtensionsTest.h"
+#include "cocostudio/CocoStudio.h"
 
 const char* gui_scene_names[2] =
 {
@@ -17,9 +17,9 @@ CocosGUITestScene::CocosGUITestScene(bool bPortrait)
 
 CocosGUITestScene::~CocosGUITestScene()
 {
-	cocos2d::extension::SceneReader::getInstance()->purgeSceneReader();
-	cocos2d::extension::ActionManagerEx::purgeActionManager();
-	cocos2d::extension::UIHelper::purgeUIHelper();
+	cocostudio::SceneReader::getInstance()->purgeSceneReader();
+	cocostudio::ActionManagerEx::purgeActionManager();
+	gui::UIHelper::purgeUIHelper();
 }
 
 void CocosGUITestScene::runThisTest()

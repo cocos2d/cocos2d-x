@@ -94,7 +94,7 @@ fi
 done
 
 #copy comment script
-for file in "$APP_ROOT"/../../../scripting/lua/script/*
+for file in "$APP_ROOT"/../../../cocos/scripting/lua/script/*
 do
 if [ -d "$file" ]; then
     cp -rf "$file" "$APP_ANDROID_ROOT"/assets
@@ -108,9 +108,9 @@ done
 if [[ "$buildexternalsfromsource" ]]; then
     echo "Building external dependencies from source"
     "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/source"
+        "NDK_MODULE_PATH=${COCOS2DX_ROOT}/external:${COCOS2DX_ROOT}/cocos:${COCOS2DX_ROOT}"
 else
     echo "Using prebuilt externals"
     "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
+        "NDK_MODULE_PATH=${COCOS2DX_ROOT}/external:${COCOS2DX_ROOT}/cocos:${COCOS2DX_ROOT}"
 fi

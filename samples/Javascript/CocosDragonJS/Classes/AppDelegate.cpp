@@ -36,6 +36,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setProjection(Director::Projection::_2D);
 
 
+    FileUtils::getInstance()->addSearchPath("script");
+    
     auto screenSize = EGLView::getInstance()->getFrameSize();
 
     auto designSize = Size(320, 480);
@@ -129,6 +131,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->start();
 
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    sc->enableDebugger();
+#endif
+    
     js_log("RUNNING Main");
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);

@@ -1,8 +1,10 @@
 
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "UIScene.h"
 #include "UISceneManager.h"
 #include "../ExtensionsTest.h"
+
+using namespace gui;
 
 UIScene::UIScene()
 : m_pSceneTitle(NULL)
