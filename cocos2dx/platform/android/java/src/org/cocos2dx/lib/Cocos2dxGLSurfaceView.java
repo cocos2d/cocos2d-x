@@ -45,7 +45,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	// Fields
 	// ===========================================================
 
-	// TODO Static handler -> Potential leak!
 	private static Handler sHandler;
 
 	private static Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
@@ -77,9 +76,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView = this;
 		Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper = new Cocos2dxTextInputWraper(this);
 
-		Cocos2dxGLSurfaceView.sHandler = new Handler() {
+		Cocos2dxGLSurfaceView.sHandler = new Handler(new Handler.Callback() {
 			@Override
-			public void handleMessage(final Message msg) {
+			public boolean handleMessage(final Message msg) {
 				switch (msg.what) {
 					case HANDLER_OPEN_IME_KEYBOARD:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
@@ -105,8 +104,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 						}
 						break;
 				}
+				
+				return true;
 			}
-		};
+		});
 	}
 
 	// ===========================================================
