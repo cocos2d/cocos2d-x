@@ -87,7 +87,7 @@ void CCActionManager::actionAllocWithHashElement(tHashElement *pElement)
 
 }
 
-void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pElement)
+void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *&pElement)
 {
     CCAction *pAction = (CCAction*)pElement->actions->arr[uIndex];
 
