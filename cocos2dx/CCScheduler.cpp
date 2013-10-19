@@ -255,14 +255,14 @@ CCScheduler::~CCScheduler(void)
     CC_SAFE_RELEASE(m_pScriptHandlerEntries);
 }
 
-void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
+void CCScheduler::removeHashElement(_hashSelectorEntry *&pElement)
 {
 
 	cocos2d::CCObject *target = pElement->target;
 
     ccArrayFree(pElement->timers);
     HASH_DEL(m_pHashForTimers, pElement);
-    free(pElement);
+    CC_SAFE_FREE(pElement);
 
     // make sure the target is released after we have removed the hash element
     // otherwise we access invalid memory when the release call deletes the target
