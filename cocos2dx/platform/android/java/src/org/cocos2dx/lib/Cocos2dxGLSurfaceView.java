@@ -65,7 +65,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 	public Cocos2dxGLSurfaceView(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
-		
+
 		this.initView();
 	}
 
@@ -93,7 +93,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							Log.d("GLSurfaceView", "showSoftInput");
 						}
 						break;
-
+	
 					case HANDLER_CLOSE_IME_KEYBOARD:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText) {
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
@@ -104,7 +104,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 						}
 						break;
 				}
-				
+
 				return true;
 			}
 		});
@@ -115,17 +115,17 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	// ===========================================================
 
 
-       public static Cocos2dxGLSurfaceView getInstance() {
-	   return mCocos2dxGLSurfaceView;
-       }
+	public static Cocos2dxGLSurfaceView getInstance() {
+		return mCocos2dxGLSurfaceView;
+	}
 
-       public static void queueAccelerometer(final float x, final float y, final float z, final long timestamp) {	
-	   mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
-		@Override
-		    public void run() {
-			    Cocos2dxAccelerometer.onSensorChanged(x, y, z, timestamp);
-		}
-	    });
+	public static void queueAccelerometer(final float x, final float y, final float z, final long timestamp) {	
+		mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
+			@Override
+			public void run() {
+				Cocos2dxAccelerometer.onSensorChanged(x, y, z, timestamp);
+			}
+		});
 	}
 
 	public void setCocos2dxRenderer(final Cocos2dxRenderer renderer) {
@@ -198,7 +198,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				final int idPointerDown = pMotionEvent.getPointerId(indexPointerDown);
 				final float xPointerDown = pMotionEvent.getX(indexPointerDown);
 				final float yPointerDown = pMotionEvent.getY(indexPointerDown);
-
+		
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
@@ -206,13 +206,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					}
 				});
 				break;
-
+	
 			case MotionEvent.ACTION_DOWN:
 				// there are only one finger on the screen
 				final int idDown = pMotionEvent.getPointerId(0);
 				final float xDown = xs[0];
 				final float yDown = ys[0];
-
+	
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
@@ -220,7 +220,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					}
 				});
 				break;
-
+	
 			case MotionEvent.ACTION_MOVE:
 				this.queueEvent(new Runnable() {
 					@Override
@@ -229,13 +229,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					}
 				});
 				break;
-
+	
 			case MotionEvent.ACTION_POINTER_UP:
 				final int indexPointUp = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
 				final int idPointerUp = pMotionEvent.getPointerId(indexPointUp);
 				final float xPointerUp = pMotionEvent.getX(indexPointUp);
 				final float yPointerUp = pMotionEvent.getY(indexPointUp);
-
+	
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
@@ -243,13 +243,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					}
 				});
 				break;
-
+	
 			case MotionEvent.ACTION_UP:
 				// there are only one finger on the screen
 				final int idUp = pMotionEvent.getPointerId(0);
 				final float xUp = xs[0];
 				final float yUp = ys[0];
-
+	
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
@@ -257,7 +257,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					}
 				});
 				break;
-
+	
 			case MotionEvent.ACTION_CANCEL:
 				this.queueEvent(new Runnable() {
 					@Override
@@ -268,11 +268,11 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				break;
 		}
 
-        /*
+		/*
 		if (BuildConfig.DEBUG) {
 			Cocos2dxGLSurfaceView.dumpMotionEvent(pMotionEvent);
 		}
-		*/
+		 */
 		return true;
 	}
 
