@@ -221,6 +221,9 @@ WebSocket::WebSocket()
 , _delegate(nullptr)
 , _SSLConnection(0)
 , _wsProtocols(nullptr)
+,_pending_frame_data_len(0)
+,_current_data_len(0)
+,_current_data(NULL)
 {
 }
 
@@ -577,32 +580,66 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
             {
                 if (in && len > 0)
                 {
-                    WsMessage* msg = new WsMessage();
-                    msg->what = WS_MSG_TO_UITHREAD_MESSAGE;
+                    // Data can arrive in chunks of 4096 (by default).  Check for any pending chunks,
+                    // and if there is more to come, save the data and wait for the remaining
                     
-                    char* bytes = NULL;
-                    Data* data = new Data();
-                    
-                    if (lws_frame_is_binary(wsi))
+                    // Accumulate the data (increasing the buffer as we go)
+                    if (_current_data_len == 0)
                     {
-                        
-                        bytes = new char[len];
-                        data->isBinary = true;
+                        _current_data = new char[len];
+                        memcpy (_current_data, in, len);
+                        _current_data_len = len;
                     }
                     else
                     {
-                        bytes = new char[len+1];
-                        bytes[len] = '\0';
-                        data->isBinary = false;
+                        char *new_data = new char [_current_data_len + len];
+                        memcpy (new_data, _current_data, _current_data_len);
+                        memcpy (new_data + _current_data_len, in, len);
+                        CC_SAFE_DELETE_ARRAY(_current_data);
+                        _current_data = new_data;
+                        _current_data_len = _current_data_len + len;
                     }
-
-                    memcpy(bytes, in, len);
                     
-                    data->bytes = bytes;
-                    data->len = len;
-                    msg->obj = (void*)data;
+                    _pending_frame_data_len = libwebsockets_remaining_packet_payload (wsi);
                     
-                    _wsHelper->sendMessageToUIThread(msg);
+                    if (_pending_frame_data_len > 0)
+                    {
+                        //CCLOG("%ld bytes of pending data to receive, consider increasing the libwebsocket rx_buffer_size value.", _pending_frame_data_len);
+                    }
+                    
+                    // If no more data pending, send it to the client thread
+                    if (_pending_frame_data_len == 0)
+                    {
+                        WsMessage* msg = new WsMessage();
+                        msg->what = WS_MSG_TO_UITHREAD_MESSAGE;
+                        
+                        char* bytes = NULL;
+                        Data* data = new Data();
+                        
+                        if (lws_frame_is_binary(wsi))
+                        {
+                            bytes = new char[_current_data_len];
+                            data->isBinary = true;
+                        }
+                        else
+                        {
+                            bytes = new char[_current_data_len+1];
+                            bytes[_current_data_len] = '\0';
+                            data->isBinary = false;
+                        }
+                        
+                        memcpy(bytes, _current_data, _current_data_len);
+                        
+                        data->bytes = bytes;
+                        data->len = _current_data_len;
+                        msg->obj = (void*)data;
+                        
+                        CC_SAFE_DELETE_ARRAY (_current_data);
+                        _current_data = NULL;
+                        _current_data_len = 0;
+                        
+                        _wsHelper->sendMessageToUIThread(msg);
+                    }
                 }
             }
             break;
