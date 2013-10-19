@@ -141,7 +141,7 @@ typedef struct _ccCArray {
 ccCArray* ccCArrayNew(unsigned int capacity);
 
 /** Frees C array after removing all remaining values. Silently ignores nil arr. */
-void ccCArrayFree(ccCArray *arr);
+void ccCArrayFree(ccCArray *&arr);
 
 /** Doubles C array capacity */
 void ccCArrayDoubleCapacity(ccCArray *arr);

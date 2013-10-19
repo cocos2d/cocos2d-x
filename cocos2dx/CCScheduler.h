@@ -283,7 +283,7 @@ public:
     void resumeTargets(CCSet* targetsToResume);
 
 private:
-    void removeHashElement(struct _hashSelectorEntry *pElement);
+    void removeHashElement(struct _hashSelectorEntry *&pElement);
     void removeUpdateFromHash(struct _listEntry *entry);
 
     // update specific

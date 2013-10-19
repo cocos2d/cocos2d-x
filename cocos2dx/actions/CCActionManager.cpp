@@ -65,12 +65,12 @@ CCActionManager::~CCActionManager(void)
 
 // private
 
-void CCActionManager::deleteHashElement(tHashElement *pElement)
+void CCActionManager::deleteHashElement(tHashElement *&pElement)
 {
     ccArrayFree(pElement->actions);
     HASH_DEL(m_pTargets, pElement);
     pElement->target->release();
-    free(pElement);
+    CC_SAFE_FREE(pElement);
 }
 
 void CCActionManager::actionAllocWithHashElement(tHashElement *pElement)
