@@ -29,11 +29,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
-import android.os.Build.*;
 
 public class Cocos2dxAccelerometer implements SensorEventListener {
 	// ===========================================================
@@ -62,7 +60,7 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 		this.mAccelerometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
 		final Display display = ((WindowManager) this.mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		this.mNaturalOrientation = display.getOrientation();
+		this.mNaturalOrientation = display.getRotation();
 	}
 
 	// ===========================================================

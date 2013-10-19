@@ -120,14 +120,14 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		
     	// FrameLayout
         ViewGroup.LayoutParams framelayout_params =
-            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-                                       ViewGroup.LayoutParams.FILL_PARENT);
+            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                       ViewGroup.LayoutParams.MATCH_PARENT);
         FrameLayout framelayout = new FrameLayout(this);
         framelayout.setLayoutParams(framelayout_params);
 
         // Cocos2dxEditText layout
         ViewGroup.LayoutParams edittext_layout_params =
-            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                        ViewGroup.LayoutParams.WRAP_CONTENT);
         Cocos2dxEditText edittext = new Cocos2dxEditText(this);
         edittext.setLayoutParams(edittext_layout_params);
