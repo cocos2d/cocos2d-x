@@ -96,7 +96,7 @@ int CCSGUIReader::getVersionInteger(const char *str)
 
 UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
 {
-    DictionaryHelper* dicHelper = dicHelper;
+    DictionaryHelper* dicHelper = DICTOOL;
     UIWidget* widget = NULL;
     const char* classname = dicHelper->getStringValue_json(data, "classname");
     cs::CSJsonDictionary* uiOptions = dicHelper->getSubDictionary_json(data, "options");
@@ -197,7 +197,7 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
 
 UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
 {
-    DictionaryHelper* dicHelper = dicHelper;
+    DictionaryHelper* dicHelper = DICTOOL;
     UIHelper* uiHelper = CCUIHELPER;
     m_bOlderVersion = false;
     const char *des = NULL;
