@@ -229,8 +229,6 @@ void Director::setGLDefaultValues()
 // Draw the Scene
 void Director::drawScene()
 {
-    Node::resetEventPriorityIndex();
-    
     // calculate "global" dt
     calculateDeltaTime();
 

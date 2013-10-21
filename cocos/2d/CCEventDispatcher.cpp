@@ -59,10 +59,156 @@ private:
 NS_CC_BEGIN
 
 static EventDispatcher* g_instance = nullptr;
+static int s_eventPriorityIndex = 0;
+
+void EventDispatcher::visitNode(Node* node)
+{
+    int i = 0;
+    int childrenCount = node->_children ? node->_children->count() : 0;
+    
+    if(childrenCount > 0)
+    {
+        Node* child = nullptr;
+        // visit children zOrder < 0
+        for( ; i < childrenCount; i++ )
+        {
+            child = static_cast<Node*>( node->_children->getObjectAtIndex(i) );
+            
+            if ( child && child->_ZOrder < 0 )
+                visitNode(child);
+            else
+                break;
+        }
+
+        node->_eventPriority = ++s_eventPriorityIndex;
+        
+        for( ; i < childrenCount; i++ )
+        {
+            child = static_cast<Node*>( node->_children->getObjectAtIndex(i) );
+            if (child)
+                visitNode(child);
+        }
+    }
+    else
+    {
+        node->_eventPriority = ++s_eventPriorityIndex;
+    }
+}
+
+EventDispatcher::EventListenerItem::EventListenerItem()
+: fixedPriority(0)
+, listener(nullptr)
+, node(nullptr)
+{
+    
+}
 
 EventDispatcher::EventListenerItem::~EventListenerItem()
 {
-    CC_SAFE_RELEASE(this->node);
+}
+
+EventDispatcher::EventListenerItemVector::EventListenerItemVector()
+: _sceneGraphItems(nullptr)
+, _fixedItems(nullptr)
+{
+}
+
+EventDispatcher::EventListenerItemVector::~EventListenerItemVector()
+{
+    CC_SAFE_DELETE(_sceneGraphItems);
+    CC_SAFE_DELETE(_fixedItems);
+}
+
+size_t EventDispatcher::EventListenerItemVector::size() const
+{
+    size_t ret = 0;
+    if (_sceneGraphItems)
+        ret += _sceneGraphItems->size();
+    if (_fixedItems)
+        ret += _fixedItems->size();
+    
+    return ret;
+}
+
+bool EventDispatcher::EventListenerItemVector::empty() const
+{
+    return (_sceneGraphItems == nullptr || _sceneGraphItems->empty())
+        && (_fixedItems == nullptr || _fixedItems->empty());
+}
+
+void EventDispatcher::EventListenerItemVector::iterate(IterateCallback cb, EventDispatcher::EventListenerItemVector::IterateMode mode/* = IterateMode::ALL*/)
+{
+    auto loop = [&cb](std::vector<EventListenerItem*>* items) -> bool {
+        for (auto iter = items->begin(); iter != items->end(); ++iter)
+        {
+            if (cb(iter, items))
+                return false;
+        }
+        return true;
+    };
+    
+    switch (mode)
+    {
+        case IterateMode::FIXED_PRIORITY_LESS_THAN_0:
+            loop(_lt0);
+            break;
+        case IterateMode::SCENE_GRAPH_PRIORITY:
+            loop(_eq0);
+            break;
+        case IterateMode::FIXED_PRIORITY_GREATER_THAN_0:
+            loop(_gt0);
+            break;
+        case IterateMode::ALL:
+            {
+                if (!loop(_lt0)) return;
+                if (!loop(_eq0)) return;
+                if (!loop(_gt0)) return;
+            }
+        default:
+            break;
+    }
+}
+
+void EventDispatcher::EventListenerItemVector::push_back(EventDispatcher::EventListenerItem* item)
+{
+    if (item->fixedPriority == 0)
+    {
+        if (_sceneGraphItems == nullptr)
+        {
+            _sceneGraphItems = new std::vector<EventListenerItem*>();
+            _sceneGraphItems->reserve(100);
+        }
+        
+        _sceneGraphItems->push_back(item);
+    }
+    else
+    {
+        if (_fixedItems == nullptr)
+        {
+            _fixedItems = new std::vector<EventListenerItem*>();
+            _fixedItems->reserve(100);
+        }
+        
+        _fixedItems->push_back(item);
+    }
+}
+
+void EventDispatcher::EventListenerItemVector::remove(EventDispatcher::EventListenerItem* item)
+{
+    if (item->fixedPriority < 0)
+    {
+        CCASSERT(_lt0, "vector invaild");
+        
+    }
+    else if (item->fixedPriority == 0)
+    {
+        CCASSERT(_eq0, "vector invaild");
+        
+    }
+    else
+    {
+        CCASSERT(_gt0, "vector invalid");
+    }
 }
 
 EventDispatcher::EventDispatcher()
@@ -96,13 +242,13 @@ void EventDispatcher::addEventListenerWithItem(EventListenerItem* item)
 {
     if (_inDispatch == 0)
     {
-        std::vector<EventListenerItem*>* listenerList = nullptr;
+        EventListenerItemVector* listenerList = nullptr;
         
         auto iter = _listeners.find(item->listener->_type);
         if (iter == _listeners.end())
         {
-            listenerList = new std::vector<EventListenerItem*>();
-            listenerList->reserve(100);
+            listenerList = new EventListenerItemVector();
+//            listenerList->reserve(100);
             _listeners.insert(std::make_pair(item->listener->_type, listenerList));
         }
         else
@@ -110,7 +256,7 @@ void EventDispatcher::addEventListenerWithItem(EventListenerItem* item)
             listenerList = iter->second;
         }
 
-        listenerList->insert(listenerList->begin(), item);
+        listenerList->push_back(item);
 
         setDirtyForEventType(item->listener->_type, true);
     }
@@ -169,32 +315,35 @@ void EventDispatcher::removeEventListener(EventListener* listener)
 
     for (auto iter = _listeners.begin(); iter != _listeners.end();)
     {
-        for (auto itemIter = iter->second->begin(); itemIter != iter->second->end(); ++itemIter)
-        {
-            if ((*itemIter)->listener == listener)
+        iter->second->iterate([&](std::vector<EventListenerItem*>::iterator itemIt, std::vector<EventListenerItem*>* current) -> bool {
+        
+            auto item = *itemIt;
+            if (item->listener == listener)
             {
                 CC_SAFE_RETAIN(listener);
-                (*itemIter)->listener->_isRegistered = false;
-                if ((*itemIter)->node != nullptr)
+                item->listener->_isRegistered = false;
+                if (item->node != nullptr)
                 {
-                    (*itemIter)->node->dissociateEventListener(listener);
+                    item->node->dissociateEventListener(listener);
                 }
                 
-                (*itemIter)->listener->release();
+                item->listener->release();
                 if (_inDispatch == 0)
                 {
-                    delete (*itemIter);
-                    iter->second->erase(itemIter);
+                    current->erase(itemIt);
+                    delete item;
                 }
                 else
                 {
-                    (*itemIter)->listener = nullptr;
+                    item->listener = nullptr;
                 }
-
+                
                 isFound = true;
-                break;
+                return false;
             }
-        }
+            
+            return true;
+        });
 
         if (iter->second->empty())
         {

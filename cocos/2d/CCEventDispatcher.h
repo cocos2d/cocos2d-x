@@ -100,23 +100,58 @@ public:
      */
     void dispatchEvent(Event* event, bool forceSortListeners = false);
 
+    void sortSceneGraphListeners(const std::string& eventType);
+    
     void setDirtyForEventType(const std::string& eventType, bool isDirty);
     
     bool isDirtyForEventType(const std::string& eventType);
+    
+    void visitNode(Node* node);
     
 public:
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
 
 private:
+    
     struct EventListenerItem
     {
-        int            fixedPriority;   // The higher the number, the higher the priority
-        Node*          node;            // Weak reference.
+        int fixedPriority;   // The higher the number, the higher the priority, 0 is for scene graph base priority.
+        Node* node;            // Weak reference.
         EventListener* listener;
+        
+        EventListenerItem();
         ~EventListenerItem();
     };
     
+    
+    class EventListenerItemVector
+    {
+    public:
+        EventListenerItemVector();
+        ~EventListenerItemVector();
+        size_t size() const;
+        bool empty() const;
+        
+        enum class IterateMode
+        {
+            FIXED_PRIORITY_LESS_THAN_0,
+            SCENE_GRAPH_PRIORITY,
+            FIXED_PRIORITY_GREATER_THAN_0,
+            ALL
+        };
+        
+        typedef std::function<bool(std::vector<EventListenerItem*>::iterator, std::vector<EventListenerItem*>*)> IterateCallback;
+        
+        void iterate(IterateCallback cb, IterateMode mode = IterateMode::ALL);
+        void push_back(EventListenerItem* item);
+        void remove(EventListenerItem* item);
+        
+    private:
+        std::vector<EventListenerItem*>* _fixedItems;
+        std::vector<EventListenerItem*>* _sceneGraphItems;
+    };
+
     /** Constructor of EventDispatcher */
     EventDispatcher();
     
@@ -127,7 +162,7 @@ private:
     void dispatchTouchEvent(EventTouch* event);
     
     /** Gets event the listener list for the event type. */
-    std::vector<EventListenerItem*>* getListenerItemsForType(const std::string& eventType);
+    EventListenerItemVector* getListenerItemsForType(const std::string& eventType);
     
     /** Sorts the listeners of specified type by priority */
     void sortAllEventListenerItemsForType(const std::string& eventType);
@@ -142,7 +177,7 @@ private:
     /**
      * Listeners map.
      */
-    std::map<std::string, std::vector<EventListenerItem*>*> _listeners;
+    std::map<std::string, EventListenerItemVector*> _listeners;
     
     /// Priority dirty flag
     std::map<std::string, bool> _priorityDirtyFlagMap;

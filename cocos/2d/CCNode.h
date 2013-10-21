@@ -1407,31 +1407,16 @@ private:
     friend class Director;
     friend class EventDispatcher;
     
-    int getEventPriority() const { return _eventPriority; };
-    
     void associateEventListener(EventListener* listener);
     void dissociateEventListener(EventListener* listener);
     
-    static void resetEventPriorityIndex();
     std::set<EventListener*> _eventlisteners;
+    int _eventPriority;
     
 protected:
     
-    /// Upates event priority for this node.
-    inline void updateEventPriorityIndex() {
-        _oldEventPriority = _eventPriority;
-        _eventPriority = ++_globalEventPriorityIndex;
-        if (_oldEventPriority != _eventPriority)
-        {
-            setDirtyForAllEventListeners();
-        }
-    };
-    
     /// Removes all event listeners that associated with this node.
     void removeAllEventListeners();
-    
-    /// Sets dirty for event listener.
-    void setDirtyForAllEventListeners();
     
     /// lazy allocs
     void childrenAlloc(void);
@@ -1509,10 +1494,6 @@ protected:
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
-
-    int _eventPriority;           ///< The scene graph based priority of event listener.
-    int _oldEventPriority;        ///< The old scene graph based priority of event listener.
-    static int _globalEventPriorityIndex;    ///< The index of global event priority.
     
 #ifdef CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
