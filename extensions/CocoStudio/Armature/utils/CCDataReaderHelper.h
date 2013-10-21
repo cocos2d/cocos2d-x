@@ -107,9 +107,9 @@ public:
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
 
-    static CCArmatureData *decodeArmature(cs::CSJsonDictionary &json);
-    static CCBoneData *decodeBone(cs::CSJsonDictionary &json);
-    static CCDisplayData *decodeBoneDisplay(cs::CSJsonDictionary &json);
+    static CCArmatureData *decodeArmature(cs::CSJsonDictionary &json, DataInfo *dataInfo);
+    static CCBoneData *decodeBone(cs::CSJsonDictionary &json, DataInfo *dataInfo);
+    static CCDisplayData *decodeBoneDisplay(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 
     static CCAnimationData *decodeAnimation(cs::CSJsonDictionary &json);
     static CCMovementData *decodeMovement(cs::CSJsonDictionary &json);

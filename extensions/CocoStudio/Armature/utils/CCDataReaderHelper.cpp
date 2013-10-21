@@ -407,15 +407,15 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char 
     s_arrConfigFileList.push_back(filePath);
 
     //! find the base file path
-    s_BasefilePath = filePath;
-    size_t pos = s_BasefilePath.find_last_of("/");
+    std::string basefilePath = filePath;
+    size_t pos = basefilePath.find_last_of("/");
     if (pos != std::string::npos)
     {
-        s_BasefilePath = s_BasefilePath.substr(0, pos + 1);
+        basefilePath = basefilePath.substr(0, pos + 1);
     }
     else
     {
-        s_BasefilePath = "";
+        basefilePath = "";
     }
 
 
@@ -454,7 +454,7 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char 
     // generate async struct
     AsyncStruct *data = new AsyncStruct();
     data->filename = filePath;
-    data->baseFilePath = s_BasefilePath;
+    data->baseFilePath = basefilePath;
     data->target = target;
     data->selector = selector;
     data->autoLoadSpriteFile = CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile();
@@ -1219,7 +1219,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *armatureDic = json.getSubItemFromArray(ARMATURE_DATA, i);
-        CCArmatureData *armatureData = decodeArmature(*armatureDic);
+        CCArmatureData *armatureData = decodeArmature(*armatureDic, dataInfo);
 
         if (dataInfo)
         {
@@ -1306,7 +1306,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 }
 
-CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
+CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json, DataInfo *dataInfo)
 {
     CCArmatureData *armatureData = new CCArmatureData();
     armatureData->init();
@@ -1323,7 +1323,7 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(BONE_DATA, i);
-        CCBoneData *boneData = decodeBone(*dic);
+        CCBoneData *boneData = decodeBone(*dic, dataInfo);
         armatureData->addBoneData(boneData);
         boneData->release();
 
@@ -1333,7 +1333,7 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
     return armatureData;
 }
 
-CCBoneData *CCDataReaderHelper::decodeBone(cs::CSJsonDictionary &json)
+CCBoneData *CCDataReaderHelper::decodeBone(cs::CSJsonDictionary &json, DataInfo *dataInfo)
 {
     CCBoneData *boneData = new CCBoneData();
     boneData->init();
@@ -1357,7 +1357,7 @@ CCBoneData *CCDataReaderHelper::decodeBone(cs::CSJsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(DISPLAY_DATA, i);
-        CCDisplayData *displayData = decodeBoneDisplay(*dic);
+        CCDisplayData *displayData = decodeBoneDisplay(*dic, dataInfo);
         boneData->addDisplayData(displayData);
         displayData->release();
 
@@ -1367,7 +1367,7 @@ CCBoneData *CCDataReaderHelper::decodeBone(cs::CSJsonDictionary &json)
     return boneData;
 }
 
-CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
+CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json, DataInfo *dataInfo)
 {
     DisplayType displayType = (DisplayType)json.getItemIntValue(A_DISPLAY_TYPE, CS_DISPLAY_SPRITE);
 
@@ -1418,7 +1418,14 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
         const char *plist = json.getItemStringValue(A_PLIST);
         if(plist != NULL)
         {
-            ((CCParticleDisplayData *)displayData)->plist = s_BasefilePath + plist;
+            if (dataInfo != NULL)
+            {
+                ((CCParticleDisplayData *)displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
+            }
+            else
+            {
+                ((CCParticleDisplayData *)displayData)->plist = s_BasefilePath + plist;
+            }
         }
     }
     break;
