@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "EAGLView.h"
+#include "cc2dEAGLView.h"
 #include "CCDirectorCaller.h"
 #include "CCEGLView.h"
 #include "CCSet.h"
@@ -32,8 +32,8 @@ NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
 {
-    m_obScreenSize.width = m_obDesignResolutionSize.width = [[EAGLView sharedEGLView] getWidth];
-    m_obScreenSize.height = m_obDesignResolutionSize.height = [[EAGLView sharedEGLView] getHeight];
+    m_obScreenSize.width = m_obDesignResolutionSize.width = [[cc2dEAGLView sharedEGLView] getWidth];
+    m_obScreenSize.height = m_obDesignResolutionSize.height = [[cc2dEAGLView sharedEGLView] getHeight];
 }
 
 CCEGLView::~CCEGLView()
@@ -43,7 +43,7 @@ CCEGLView::~CCEGLView()
 
 bool CCEGLView::isOpenGLReady()
 {
-    return [EAGLView sharedEGLView] != NULL;
+    return [cc2dEAGLView sharedEGLView] != NULL;
 }
     
 bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
@@ -51,7 +51,7 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
     assert(m_eResolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
 	
 	m_fScaleX = m_fScaleY = contentScaleFactor;
-	[[EAGLView sharedEGLView] setNeedsLayout];
+	[[cc2dEAGLView sharedEGLView] setNeedsLayout];
         
 	return true;
 }
@@ -61,24 +61,24 @@ void CCEGLView::end()
     [CCDirectorCaller destroy];
     
     // destroy EAGLView
-    [[EAGLView sharedEGLView] removeFromSuperview];
+    [[cc2dEAGLView sharedEGLView] removeFromSuperview];
 }
 
 
 void CCEGLView::swapBuffers()
 {
-    [[EAGLView sharedEGLView] swapBuffers];
+    [[cc2dEAGLView sharedEGLView] swapBuffers];
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
     if (bOpen)
     {
-        [[EAGLView sharedEGLView] becomeFirstResponder];
+        [[cc2dEAGLView sharedEGLView] becomeFirstResponder];
     }
     else
     {
-        [[EAGLView sharedEGLView] resignFirstResponder];
+        [[cc2dEAGLView sharedEGLView] resignFirstResponder];
     }
 }
 
