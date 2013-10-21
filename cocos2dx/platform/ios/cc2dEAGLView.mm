@@ -15,7 +15,7 @@ seeds.
 
 =====================
 
-File: EAGLView.m
+File: cc2dEAGLView.m
 Abstract: Convenience class that wraps the CAEAGLLayer from CoreAnimation into a
 UIView subclass.
 
@@ -63,7 +63,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <QuartzCore/QuartzCore.h>
 #import "CCEGLView.h"
-#import "EAGLView.h"
+#import "cc2dEAGLView.h"
 #import "CCES2Renderer.h"
 #import "CCDirector.h"
 #import "CCSet.h"
@@ -75,14 +75,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #define IOS_MAX_TOUCHES_COUNT     10
 
-static EAGLView *view = 0;
+static cc2dEAGLView *view = 0;
 
-@interface EAGLView (Private)
+@interface cc2dEAGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
 @end
 
-@implementation EAGLView
+@implementation cc2dEAGLView
 
 @synthesize surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
@@ -345,7 +345,7 @@ static EAGLView *view = 0;
     return pFormat;
 }
 
-#pragma mark EAGLView - Point conversion
+#pragma mark cc2dEAGLView - Point conversion
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point
 {
@@ -390,7 +390,7 @@ static EAGLView *view = 0;
 }
 
 // Pass the touches to the superview
-#pragma mark EAGLView - Touch Delegate
+#pragma mark cc2dEAGLView - Touch Delegate
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (isKeyboardShown_)

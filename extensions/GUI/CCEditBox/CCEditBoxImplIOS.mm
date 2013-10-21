@@ -29,7 +29,7 @@
 #define kLabelZOrder  9999
 
 #include "CCEditBox.h"
-#import "EAGLView.h"
+#import "cc2dEAGLView.h"
 
 #define getEditBoxImplIOS() ((cocos2d::extension::CCEditBoxImplIOS*)editBox_)
 
@@ -37,7 +37,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 @implementation CustomUITextField
 - (CGRect)textRectForBounds:(CGRect)bounds {
-    float padding = CC_EDIT_BOX_PADDING * cocos2d::CCEGLView::sharedOpenGLView()->getScaleX() / [[EAGLView sharedEGLView] contentScaleFactor ];
+    float padding = CC_EDIT_BOX_PADDING * cocos2d::CCEGLView::sharedOpenGLView()->getScaleX() / [[cc2dEAGLView sharedEGLView] contentScaleFactor ];
     return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
                       bounds.size.width - padding*2, bounds.size.height - padding*2);
 }
@@ -92,7 +92,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
 {
-    id eglView = [EAGLView sharedEGLView];
+    id eglView = [cc2dEAGLView sharedEGLView];
     [eglView doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
@@ -117,7 +117,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void) openKeyboard
 {
-    [[EAGLView sharedEGLView] addSubview:textField_];
+    [[cc2dEAGLView sharedEGLView] addSubview:textField_];
     [textField_ becomeFirstResponder];
 }
 
@@ -137,7 +137,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void)animationSelector
 {
-    id eglView = [EAGLView sharedEGLView];
+    id eglView = [cc2dEAGLView sharedEGLView];
     [eglView doAnimationWhenAnotherEditBeClicked];
 }
 
@@ -145,7 +145,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     CCLOG("textFieldShouldBeginEditing...");
     editState_ = YES;
-    id eglView = [EAGLView sharedEGLView];
+    id eglView = [cc2dEAGLView sharedEGLView];
     if ([eglView isKeyboardShown])
     {
         [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
@@ -255,6 +255,7 @@ CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
 , m_obAnchorPoint(ccp(0.5f, 0.5f))
 , m_nMaxTextLength(-1)
 {
+    m_bInRetinaMode = [[cc2dEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
 }
 
 CCEditBoxImplIOS::~CCEditBoxImplIOS()
@@ -278,7 +279,7 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
 
         CGRect rect = CGRectMake(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
-        float factor = [[EAGLView sharedEGLView] contentScaleFactor];
+        float factor = [[cc2dEAGLView sharedEGLView] contentScaleFactor];
         rect.size.width /= factor;
         rect.size.height /= factor;
         
@@ -347,7 +348,7 @@ void CCEditBoxImplIOS::setFont(const char* pFontName, int fontSize)
         isValidFontName = false;
     }
 
-    float retinaFactor = [[EAGLView sharedEGLView] contentScaleFactor];
+    float retinaFactor = [[cc2dEAGLView sharedEGLView] contentScaleFactor];
 	NSString * fntName = [NSString stringWithUTF8String:pFontName];
     float scaleFactor = CCEGLView::sharedOpenGLView()->getScaleX();
     UIFont *textFont = nil;
@@ -508,14 +509,14 @@ void CCEditBoxImplIOS::setPlaceHolder(const char* pText)
 static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord)
 {
     CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
-    float viewH = (float)[[EAGLView sharedEGLView] getHeight];
+    float viewH = (float)[[cc2dEAGLView sharedEGLView] getHeight];
     
     CCPoint visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
     CCPoint screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
     
     CGPoint screenPos = CGPointMake(screenGLPos.x, viewH - screenGLPos.y);
     
-    float scaleFactor = [[EAGLView sharedEGLView] contentScaleFactor];
+    float scaleFactor = [[cc2dEAGLView sharedEGLView] contentScaleFactor];
     screenPos.x = screenPos.x / scaleFactor;
     screenPos.y = screenPos.y / scaleFactor;
     
@@ -542,7 +543,7 @@ void CCEditBoxImplIOS::setContentSize(const CCSize& size)
     CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
     CGSize controlSize = CGSizeMake(size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
     
-    float scaleFactor = [[EAGLView sharedEGLView] contentScaleFactor];
+    float scaleFactor = [[cc2dEAGLView sharedEGLView] contentScaleFactor];
     
     controlSize.width /= scaleFactor;
     controlSize.height /= scaleFactor;

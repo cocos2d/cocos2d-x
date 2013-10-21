@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		D3190B641808A7F900E1069E /* UniversalLib */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D3190B671808A7F900E1069E /* Build configuration list for PBXAggregateTarget "UniversalLib" */;
+			buildPhases = (
+				D3190B681808A80600E1069E /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UniversalLib;
+			productName = UniversalLib;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		154269DC15B5653000712A7F /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154269DA15B5653000712A7F /* CCNotificationCenter.cpp */; };
 		154269DD15B5653000712A7F /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 154269DB15B5653000712A7F /* CCNotificationCenter.h */; };
@@ -178,8 +192,8 @@
 		1551A73B158F2ADE00E66CFE /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A48F158F2ADE00E66CFE /* CCPlatformDefine.h */; };
 		1551A73C158F2ADE00E66CFE /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A490158F2ADE00E66CFE /* CCStdC.h */; };
 		1551A73D158F2ADE00E66CFE /* CCThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A491158F2ADE00E66CFE /* CCThread.mm */; };
-		1551A73E158F2ADE00E66CFE /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A492158F2ADE00E66CFE /* EAGLView.h */; };
-		1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A493158F2ADE00E66CFE /* EAGLView.mm */; };
+		1551A73E158F2ADE00E66CFE /* cc2dEAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A492158F2ADE00E66CFE /* cc2dEAGLView.h */; };
+		1551A73F158F2ADE00E66CFE /* cc2dEAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A493158F2ADE00E66CFE /* cc2dEAGLView.mm */; };
 		1551A74B158F2ADE00E66CFE /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A4A0158F2ADE00E66CFE /* OpenGL_Internal.h */; };
 		1551A74C158F2ADE00E66CFE /* AccelerometerSimulation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A4A2158F2ADE00E66CFE /* AccelerometerSimulation.h */; };
 		1551A74D158F2ADE00E66CFE /* AccelerometerSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1551A4A3158F2ADE00E66CFE /* AccelerometerSimulation.m */; };
@@ -493,8 +507,8 @@
 		1551A48F158F2ADE00E66CFE /* CCPlatformDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		1551A490158F2ADE00E66CFE /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		1551A491158F2ADE00E66CFE /* CCThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread.mm; sourceTree = "<group>"; };
-		1551A492158F2ADE00E66CFE /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
-		1551A493158F2ADE00E66CFE /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
+		1551A492158F2ADE00E66CFE /* cc2dEAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cc2dEAGLView.h; sourceTree = "<group>"; };
+		1551A493158F2ADE00E66CFE /* cc2dEAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cc2dEAGLView.mm; sourceTree = "<group>"; };
 		1551A4A0158F2ADE00E66CFE /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		1551A4A2158F2ADE00E66CFE /* AccelerometerSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerSimulation.h; sourceTree = "<group>"; };
 		1551A4A3158F2ADE00E66CFE /* AccelerometerSimulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccelerometerSimulation.m; sourceTree = "<group>"; };
@@ -1027,8 +1041,8 @@
 				1551A48F158F2ADE00E66CFE /* CCPlatformDefine.h */,
 				1551A490158F2ADE00E66CFE /* CCStdC.h */,
 				1551A491158F2ADE00E66CFE /* CCThread.mm */,
-				1551A492158F2ADE00E66CFE /* EAGLView.h */,
-				1551A493158F2ADE00E66CFE /* EAGLView.mm */,
+				1551A492158F2ADE00E66CFE /* cc2dEAGLView.h */,
+				1551A493158F2ADE00E66CFE /* cc2dEAGLView.mm */,
 				1551A4A0158F2ADE00E66CFE /* OpenGL_Internal.h */,
 				1551A4A1158F2ADE00E66CFE /* Simulation */,
 			);
@@ -1391,7 +1405,7 @@
 				1551A73A158F2ADE00E66CFE /* CCLock.h in Headers */,
 				1551A73B158F2ADE00E66CFE /* CCPlatformDefine.h in Headers */,
 				1551A73C158F2ADE00E66CFE /* CCStdC.h in Headers */,
-				1551A73E158F2ADE00E66CFE /* EAGLView.h in Headers */,
+				1551A73E158F2ADE00E66CFE /* cc2dEAGLView.h in Headers */,
 				1551A74B158F2ADE00E66CFE /* OpenGL_Internal.h in Headers */,
 				1551A74C158F2ADE00E66CFE /* AccelerometerSimulation.h in Headers */,
 				1551A74F158F2ADE00E66CFE /* platform.h in Headers */,
@@ -1518,9 +1532,26 @@
 			projectRoot = "";
 			targets = (
 				1551A33E158F2AB200E66CFE /* cocos2dx */,
+				D3190B641808A7F900E1069E /* UniversalLib */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D3190B681808A80600E1069E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\n# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target cocos2dx ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target cocos2dx -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n\n# Last touch. copy the header files. Just for convenience\nif [ -d ${BUILD_DIR}/${CONFIGURATION}-iphoneos/include ]; then\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1551A33B158F2AB200E66CFE /* Sources */ = {
@@ -1604,7 +1635,7 @@
 				1551A738158F2ADE00E66CFE /* CCImage.mm in Sources */,
 				1551A739158F2ADE00E66CFE /* CCLock.cpp in Sources */,
 				1551A73D158F2ADE00E66CFE /* CCThread.mm in Sources */,
-				1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */,
+				1551A73F158F2ADE00E66CFE /* cc2dEAGLView.mm in Sources */,
 				1551A74D158F2ADE00E66CFE /* AccelerometerSimulation.m in Sources */,
 				1551A74E158F2ADE00E66CFE /* platform.cpp in Sources */,
 				1551A816158F2ADF00E66CFE /* CCScriptSupport.cpp in Sources */,
@@ -1761,6 +1792,7 @@
 					COCOS2D_JAVASCRIPT,
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
+					"COCOS2D_DEBUG=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
@@ -1775,6 +1807,20 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		D3190B651808A7F900E1069E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D3190B661808A7F900E1069E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -1795,6 +1841,15 @@
 			buildConfigurations = (
 				1551A34D158F2AB200E66CFE /* Debug */,
 				1551A34E158F2AB200E66CFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D3190B671808A7F900E1069E /* Build configuration list for PBXAggregateTarget "UniversalLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3190B651808A7F900E1069E /* Debug */,
+				D3190B661808A7F900E1069E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

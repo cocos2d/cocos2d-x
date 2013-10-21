@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		D3190B5A18087FCA00E1069E /* UniversalLib */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D3190B5D18087FCA00E1069E /* Build configuration list for PBXAggregateTarget "UniversalLib" */;
+			buildPhases = (
+				D3190B5E1808803500E1069E /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UniversalLib;
+			productName = UniversalLib;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		41E01E4E16D5D5E600ED686C /* Export.h in Headers */ = {isa = PBXBuildFile; fileRef = 41E01E4116D5D5E600ED686C /* Export.h */; };
 		41E01E4F16D5D5E600ED686C /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 41E01E4216D5D5E600ED686C /* SimpleAudioEngine.h */; };
@@ -172,6 +186,7 @@
 			projectRoot = "";
 			targets = (
 				D87CC2E4154FC6C500AAFE11 /* CocosDenshion */,
+				D3190B5A18087FCA00E1069E /* UniversalLib */,
 			);
 		};
 /* End PBXProject section */
@@ -189,6 +204,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "";
+		};
+		D3190B5E1808803500E1069E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\n# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target CocosDenshion ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target CocosDenshion -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n\n# Last touch. copy the header files. Just for convenience\nif [ -d ${BUILD_DIR}/${CONFIGURATION}-iphoneos/include ]; then\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -208,6 +236,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		D3190B5B18087FCA00E1069E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D3190B5C18087FCA00E1069E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		D87CC2DC154FC66100AAFE11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -230,7 +272,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "$(inherited)";
 			};
 			name = Debug;
 		};
@@ -255,7 +297,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "$(inherited)";
 			};
 			name = Release;
 		};
@@ -285,7 +327,6 @@
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../../cocos2dx/platform/ios ../../cocos2dx/include ../../cocos2dx/kazmath/include ../../cocos2dx/";
-				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -311,13 +352,20 @@
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../../cocos2dx/platform/ios ../../cocos2dx/include ../../cocos2dx/kazmath/include ../../cocos2dx/";
-				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D3190B5D18087FCA00E1069E /* Build configuration list for PBXAggregateTarget "UniversalLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3190B5B18087FCA00E1069E /* Debug */,
+				D3190B5C18087FCA00E1069E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D87CC2C0154FC66100AAFE11 /* Build configuration list for PBXProject "CocosDenshion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
