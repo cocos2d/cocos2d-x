@@ -89,10 +89,10 @@ bool nodeComparisonLess(Object* p1, Object* p2)
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
-int Node::_globalEventPriorityIndex = 0;
 
 Node::Node(void)
-: _rotationX(0.0f)
+: _eventPriority(0)
+, _rotationX(0.0f)
 , _rotationY(0.0f)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
@@ -130,8 +130,6 @@ Node::Node(void)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
-, _eventPriority(0)
-, _oldEventPriority(0)
 #ifdef CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
@@ -864,7 +862,6 @@ void Node::visit()
         }
         // self draw
         this->draw();
-        updateEventPriorityIndex();
 
         for( ; i < _children->count(); i++ )
         {
@@ -876,7 +873,6 @@ void Node::visit()
     else
     {
         this->draw();
-        updateEventPriorityIndex();
     }
 
     // reset for next frame
@@ -1367,11 +1363,6 @@ void Node::removeAllComponents()
         _componentContainer->removeAll();
 }
 
-void Node::resetEventPriorityIndex()
-{
-    _globalEventPriorityIndex = 0;
-}
-
 void Node::associateEventListener(EventListener* listener)
 {
     _eventlisteners.insert(listener);
@@ -1391,16 +1382,6 @@ void Node::removeAllEventListeners()
     for (auto& listener : eventListenersCopy)
     {
         dispatcher->removeEventListener(listener);
-    }
-}
-
-void Node::setDirtyForAllEventListeners()
-{
-    auto dispatcher = EventDispatcher::getInstance();
-    
-    for (auto& listener : _eventlisteners)
-    {
-        dispatcher->setDirtyForEventType(listener->_type, true);
     }
 }
 

@@ -39,7 +39,7 @@ class Event;
 /**
  *  The base class of event listener.
  *  If you need custom listener which with different callback, you need to inherit this class.
- *  For instance, you could refer to AccelerationEventListener, KeyboardEventListener or TouchEventListener, CustomEventListener.
+ *  For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard, EventListenerTouchOneByOne, EventListenerCustom.
  */
 class EventListener : public Object
 {    
