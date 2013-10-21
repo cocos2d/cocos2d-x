@@ -362,6 +362,7 @@ void Layer::onExit()
     // remove this layer from the delegates who concern the keypad msg
     dispatcher->removeEventListener(_keyboardListener);
     _keyboardListener = nullptr;
+    _keyboardEnabled = false;
 
     Node::onExit();
 }
