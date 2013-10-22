@@ -45,28 +45,30 @@ THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 ifndef COCOS_ROOT
 COCOS_ROOT := $(realpath $(dir $(THIS_MAKEFILE))/../..)
 endif
-COCOS_SRC = $(COCOS_ROOT)/cocos2dx
+COCOS_SRC = $(COCOS_ROOT)/cocos/2d
 OBJ_DIR ?= obj
 
 LIB_DIR = $(COCOS_ROOT)/lib/linux
 BIN_DIR = bin
 
 INCLUDES +=  \
-    -I$(COCOS_SRC) \
-    -I$(COCOS_SRC)/cocoa \
-    -I$(COCOS_SRC)/include \
-    -I$(COCOS_SRC)/kazmath/include \
+    -I$(COCOS_SRC)/ \
+    -I$(COCOS_SRC)/../math/kazmath/include \
     -I$(COCOS_SRC)/platform/linux \
-    -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
-    -I$(COCOS_SRC)/platform/third_party/linux/libtiff \
-    -I$(COCOS_SRC)/platform/third_party/linux/libwebp
+    -I$(COCOS_SRC)/../../external/jpeg/include/linux \
+    -I$(COCOS_SRC)/../../external/tiff/include/linux \
+    -I$(COCOS_SRC)/../../external/webp/include/linux \
+    -I$(COCOS_SRC)/../../external/tinyxml2 \
+    -I$(COCOS_SRC)/../../external/unzip \
+    -I$(COCOS_SRC)/../../external/glfw3/include/linux \
+    -I$(COCOS_SRC)/../physics \
+    -I$(COCOS_SRC)/../base \
+    -I$(COCOS_SRC)/../../external/chipmunk/include/chipmunk \
+    -I$(COCOS_SRC)/../../external/freetype2/include/linux \
+    -I$(COCOS_SRC)/../.. \
+    -I$(COCOS_SRC)/../audio/include
 
 LBITS := $(shell getconf LONG_BIT)
-ifeq ($(LBITS),64)
-INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux/include64
-else
-INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux
-endif
 
 ifeq ($(DEBUG), 1)
 CCFLAGS += -g3 -O0
@@ -100,22 +102,23 @@ DEPS = $(OBJECTS:.o=.d)
 CORE_MAKEFILE_LIST := $(MAKEFILE_LIST)
 -include $(DEPS)
 
+STATICLIBS_DIR = $(COCOS_ROOT)/external
 ifeq ($(LBITS),64)
-STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/linux/libraries/lib64
+POSTFIX = 64-bit
 else
-STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/linux/libraries
+POSTFIX = 32-bit
 endif
-STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-    $(STATICLIBS_DIR)/libjpeg.a \
-    $(STATICLIBS_DIR)/libtiff.a \
-    $(STATICLIBS_DIR)/libwebp.a
+STATICLIBS = $(STATICLIBS_DIR)/freetype2/prebuilt/linux/$(POSTFIX)/libfreetype.a \
+    $(STATICLIBS_DIR)/jpeg/prebuilt/linux/$(POSTFIX)/libjpeg.a \
+    $(STATICLIBS_DIR)/tiff/prebuilt/linux/$(POSTFIX)/libtiff.a \
+    $(STATICLIBS_DIR)/webp/prebuilt/linux/$(POSTFIX)/libwebp.a
 
 ifneq ($(OPENAL),1)
 ifeq ($(LBITS),64)
-FMOD_LIBDIR = $(COCOS_ROOT)/audio/third_party/fmod/lib64/api/lib
+FMOD_LIBDIR = $(COCOS_ROOT)/cocos/audio/third-party/fmod/lib64/api/lib
 SHAREDLIBS += -lfmodex64
 else
-FMOD_LIBDIR = $(COCOS_ROOT)/audio/third_party/fmod/api/lib
+FMOD_LIBDIR = $(COCOS_ROOT)/cocos/audio/third-party/fmod/api/lib
 SHAREDLIBS += -lfmodex
 endif
 endif
