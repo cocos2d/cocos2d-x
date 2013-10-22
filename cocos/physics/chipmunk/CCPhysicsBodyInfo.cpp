@@ -28,6 +28,7 @@ NS_CC_BEGIN
 
 PhysicsBodyInfo::PhysicsBodyInfo()
 : body(nullptr)
+, group(CP_NO_GROUP)
 {
 }
 

@@ -84,3 +84,9 @@ LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py
 
 echo "Generating bindings for cocos2dx_extension..."
 LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_extension.ini -s cocos2dx_extension -t spidermonkey -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings -n jsb_cocos2dx_extension_auto
+
+echo "Generating bindings for cocos2dx_builder..."
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_builder.ini -s cocos2dx_builder -t spidermonkey -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings -n jsb_cocos2dx_builder_auto
+
+echo "Generating bindings for cocos2dx_studio..."
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_studio.ini -s cocos2dx_studio -t spidermonkey -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings -n jsb_cocos2dx_studio_auto
