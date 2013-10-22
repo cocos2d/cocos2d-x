@@ -32,5 +32,5 @@ if [ -n "$MISSING" ]; then
 fi
 
 # install glfw
-tools/travis-scripts/install_glfw.sh
+../tools/travis-scripts/install_glfw.sh
 

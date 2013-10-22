@@ -1,6 +1,6 @@
 TARGET = libcocosdenshion.so
 
-INCLUDES += -I.. -I../include
+INCLUDES = -I.. -I../include
 
 ##Using OpenAL
 ifeq ($(OPENAL),1)
@@ -26,15 +26,15 @@ SOURCES = \
   ../linux/FmodAudioPlayer.cpp   
   
 ifeq ($(LBITS),64)
-INCLUDES += -I../third_party/fmod/lib64/api/inc
+INCLUDES += -I../third-party/fmod/lib64/api/inc
 else
-INCLUDES += -I../third_party/fmod/api/inc
+INCLUDES += -I../third-party/fmod/api/inc
 endif
     
 endif
 
-COCOS_ROOT = ../..
-include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
+COCOS_ROOT = ../../..
+include $(COCOS_ROOT)/cocos/2d/cocos2dx.mk
 
 TARGET := $(LIB_DIR)/$(TARGET)
 

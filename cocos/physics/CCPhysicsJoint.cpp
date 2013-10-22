@@ -34,11 +34,11 @@
 #include "CCPhysicsBody.h"
 
 #include "chipmunk/CCPhysicsJointInfo.h"
-#include "Box2D/CCPhysicsJointInfo.h"
+#include "box2d/CCPhysicsJointInfo.h"
 #include "chipmunk/CCPhysicsBodyInfo.h"
-#include "Box2D/CCPhysicsBodyInfo.h"
+#include "box2d/CCPhysicsBodyInfo.h"
 #include "chipmunk/CCPhysicsHelper.h"
-#include "Box2D/CCPhysicsHelper.h"
+#include "box2d/CCPhysicsHelper.h"
 
 NS_CC_BEGIN
 
