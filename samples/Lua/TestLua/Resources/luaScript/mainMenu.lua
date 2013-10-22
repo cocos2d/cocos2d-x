@@ -13,6 +13,7 @@ require "luaScript/ActionManagerTest/ActionManagerTest"
 require "luaScript/ActionsEaseTest/ActionsEaseTest"
 require "luaScript/ActionsProgressTest/ActionsProgressTest"
 require "luaScript/ActionsTest/ActionsTest"
+require "luaScript/AssetsManagerTest/AssetsManagerTest"
 require "luaScript/BugsTest/BugsTest"
 require "luaScript/ClickAndMoveTest/ClickAndMoveTest"
 require "luaScript/CocosDenshionTest/CocosDenshionTest"
@@ -58,6 +59,7 @@ local _allTests = {
     { isSupported = true,  name = "ActionsEaseTest"        , create_func   =           EaseActionsTest      },
     { isSupported = true,  name = "ActionsProgressTest"    , create_func   =       ProgressActionsTest      },
     { isSupported = true,  name = "ActionsTest"            , create_func   =               ActionsTest      },
+    { isSupported = true,  name = "AssetsManagerTest"      , create_func   =         AssetsManagerTestMain      },
     { isSupported = false,  name = "Box2dTest"              , create_func=                 Box2dTestMain  },
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
