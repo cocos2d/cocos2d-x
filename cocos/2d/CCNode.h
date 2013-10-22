@@ -1384,12 +1384,18 @@ public:
     /**
      *   set the PhysicsBody that let the sprite effect with physics
      */
-    virtual void setPhysicsBody(PhysicsBody* body);
+    void setPhysicsBody(PhysicsBody* body);
     
     /**
      *   get the PhysicsBody the sprite have
      */
     PhysicsBody* getPhysicsBody() const;
+    
+    /**
+     *   update rotation and position from physics body
+     */
+    virtual void updatePhysicsTransform();
+
 #endif
 
 
@@ -1506,8 +1512,6 @@ protected:
     
 #ifdef CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
-    bool _physicsPositionMark;        ///< set this mark to false will skip the setRotation to physicsBody one time
-    bool _physicsRotationMark;        ///< set this mark to false will skip the setPosition to physicsBody one time
 #endif
 };
 

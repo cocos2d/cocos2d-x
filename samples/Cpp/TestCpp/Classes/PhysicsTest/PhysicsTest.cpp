@@ -311,9 +311,8 @@ Node* PhysicsDemoLogoSmash::makeBall(float x, float y)
     
     auto body = PhysicsBody::createCircle(0.95, PhysicsMaterial(1, 0, 0));
     body->setMass(1.0);
-    body->setAngularDamping(PHYSICS_INFINITY);
+    body->setMoment(PHYSICS_INFINITY);
     
-    //body->setDynamic(false);
     ball->setPhysicsBody(body);
     
     ball->setPosition(Point(x, y));

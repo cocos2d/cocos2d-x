@@ -47,11 +47,11 @@ public:
     /*
      * @brief get contact shape A.
      */
-    inline PhysicsShape* getShapeA() { return _shapeA; }
+    inline PhysicsShape* getShapeA() const { return _shapeA; }
     /*
      * @brief get contact shape B.
      */
-    inline PhysicsShape* getShapeB() { return _shapeB; }
+    inline PhysicsShape* getShapeB() const { return _shapeB; }
     /*
      * @brief get data.
      */
@@ -65,6 +65,9 @@ private:
     static PhysicsContact* create(PhysicsShape* a, PhysicsShape* b);
     bool init(PhysicsShape* a, PhysicsShape* b);
     
+    inline bool getNotify() { return _notify; }
+    inline void setNotify(bool notify) { _notify = notify; }
+    
 private:
     PhysicsContact();
     ~PhysicsContact();
@@ -74,6 +77,7 @@ private:
     PhysicsShape* _shapeB;
     PhysicsContactInfo* _info;
     void* _data;
+    bool _notify;
     
     friend class PhysicsWorld;
 };
