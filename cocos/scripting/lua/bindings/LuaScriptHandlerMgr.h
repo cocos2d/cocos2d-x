@@ -95,6 +95,10 @@ public:
         TABLECELL_SIZE_FOR_INDEX,
         TABLECELL_AT_INDEX,
         TABLEVIEW_NUMS_OF_CELLS,
+        
+        ASSETSMANAGER_PROGRESS,
+        ASSETSMANAGER_SUCCESS,
+        ASSETSMANAGER_ERROR,
     };
     
     typedef int Handler;
