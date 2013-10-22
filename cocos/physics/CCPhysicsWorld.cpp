@@ -89,7 +89,7 @@ public:
     static void rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info);
     static void rectQueryCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info);
     
-private:
+public:
     static bool continues;
 };
 
@@ -391,12 +391,16 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
                 Point centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(shape)))
                 + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(shape));
                 
-                Point seg[4] = {};
-                seg[0] = Point(centre.x - radius, centre.y - radius);
-                seg[1] = Point(centre.x - radius, centre.y + radius);
-                seg[2] = Point(centre.x + radius, centre.y + radius);
-                seg[3] = Point(centre.x + radius, centre.y - radius);
-                node->drawPolygon(seg, 4, Color4F(), 1, Color4F(1, 0, 0, 1));
+                static const int CIRCLE_SEG_NUM = 12;
+                Point seg[CIRCLE_SEG_NUM] = {};
+                
+                for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
+                {
+                    float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
+                    Point d(radius * cosf(angle), radius * sinf(angle));
+                    seg[i] = centre + d;
+                }
+                node->drawPolygon(seg, CIRCLE_SEG_NUM, Color4F(1.0f, 0.0f, 0.0f, 0.3f), 1, Color4F(1, 0, 0, 1));
                 break;
             }
             case CP_SEGMENT_SHAPE:
@@ -525,26 +529,36 @@ void PhysicsWorld::setGravity(Point gravity)
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallback& callback, Point point1, Point point2, void* data)
 {
-    RayCastCallbackInfo info = {this, &callback, point1, point2, data};
-    cpSpaceSegmentQuery(this->_info->space,
-                        PhysicsHelper::point2cpv(point1),
-                        PhysicsHelper::point2cpv(point2),
-                        CP_ALL_LAYERS,
-                        CP_NO_GROUP,
-                        (cpSpaceSegmentQueryFunc)PhysicsWorldCallback::rayCastCallbackFunc,
-                        &info);
+    if (callback.report != nullptr)
+    {
+        RayCastCallbackInfo info = {this, &callback, point1, point2, data};
+        
+        PhysicsWorldCallback::continues = true;
+        cpSpaceSegmentQuery(this->_info->space,
+                            PhysicsHelper::point2cpv(point1),
+                            PhysicsHelper::point2cpv(point2),
+                            CP_ALL_LAYERS,
+                            CP_NO_GROUP,
+                            (cpSpaceSegmentQueryFunc)PhysicsWorldCallback::rayCastCallbackFunc,
+                            &info);
+    }
 }
 
 
 void PhysicsWorld::rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data)
 {
-    RectQueryCallbackInfo info = {this, &callback, data};
-    cpSpaceBBQuery(this->_info->space,
-                   PhysicsHelper::rect2cpbb(rect),
-                   CP_ALL_LAYERS,
-                   CP_NO_GROUP,
-                   (cpSpaceBBQueryFunc)PhysicsWorldCallback::rectQueryCallbackFunc,
-                   &info);
+    if (callback.report != nullptr)
+    {
+        RectQueryCallbackInfo info = {this, &callback, data};
+        
+        PhysicsWorldCallback::continues = true;
+        cpSpaceBBQuery(this->_info->space,
+                       PhysicsHelper::rect2cpbb(rect),
+                       CP_ALL_LAYERS,
+                       CP_NO_GROUP,
+                       (cpSpaceBBQueryFunc)PhysicsWorldCallback::rectQueryCallbackFunc,
+                       &info);
+    }
 }
 
 Array* PhysicsWorld::getAllBody() const

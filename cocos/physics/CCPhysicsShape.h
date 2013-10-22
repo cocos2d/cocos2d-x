@@ -97,7 +97,7 @@ public:
     virtual Point getOffset() { return Point::ZERO; }
     virtual Point getCenter() { return getOffset(); }
     
-    static Point* recenterPoints(Point* points, int count, Point center);
+    static Point* recenterPoints(Point* points, int count, Point center = Point::ZERO);
     static Point getPolyonCenter(Point* points, int count);
     
 protected:
