@@ -134,8 +134,6 @@ Node::Node(void)
 , _oldEventPriority(0)
 #ifdef CC_USE_PHYSICS
 , _physicsBody(nullptr)
-, _physicsPositionMark(true)
-, _physicsRotationMark(true)
 #endif
 {
     // set default scheduler and actionManager
@@ -272,12 +270,10 @@ void Node::setRotation(float newRotation)
     _transformDirty = _inverseDirty = true;
     
 #ifdef CC_USE_PHYSICS
-    if (_physicsBody && _physicsRotationMark)
+    if (_physicsBody)
     {
         _physicsBody->setRotation(newRotation);
     }
-    
-    _physicsRotationMark = true;
 #endif
 }
 
@@ -364,12 +360,10 @@ void Node::setPosition(const Point& newPosition)
     _transformDirty = _inverseDirty = true;
     
 #ifdef CC_USE_PHYSICS
-    if (_physicsBody && _physicsPositionMark)
+    if (_physicsBody)
     {
         _physicsBody->setPosition(newPosition);
     }
-    
-    _physicsPositionMark = true;
 #endif
 }
 
@@ -901,7 +895,11 @@ void Node::transformAncestors()
 }
 
 void Node::transform()
-{    
+{
+#ifdef CC_USE_PHYSICS
+    updatePhysicsTransform();
+#endif
+
     kmMat4 transfrom4x4;
 
     // Convert 3x3 into 4x4 matrix
@@ -1298,18 +1296,20 @@ Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
     return this->convertToNodeSpaceAR(point);
 }
 
-void Node::updateTransform()
-{
 #ifdef CC_USE_PHYSICS
+void Node::updatePhysicsTransform()
+{
     if (_physicsBody)
     {
-        _physicsPositionMark = false;
-        _physicsRotationMark = false;
-        setPosition(_physicsBody->getPosition());
-        setRotation(_physicsBody->getRotation());
+        _position = _physicsBody->getPosition();
+        _rotationX = _rotationY = _physicsBody->getRotation();
+        _transformDirty = _inverseDirty = true;
     }
+}
 #endif
-    
+
+void Node::updateTransform()
+{
     // Recursively iterate over children
     arrayMakeObjectsPerformSelector(_children, updateTransform, Node*);
 }

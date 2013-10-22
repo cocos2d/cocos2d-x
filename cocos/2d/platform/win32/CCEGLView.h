@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
 
-#include "platform/third_party/win32/GLFW/glfw3.h"
+#include "glfw3.h"
 
 NS_CC_BEGIN
 

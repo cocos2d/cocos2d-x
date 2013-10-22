@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="generated">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="manual">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="js_bindings_chipmunk_auto_classes_registration.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="js_bindings_chipmunk_functions.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="js_bindings_chipmunk_functions_registration.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="js_bindings_chipmunk_manual.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="js_bindings_chipmunk_registration.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="js_bindings_chipmunk_auto_classes.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="js_bindings_chipmunk_functions.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="js_bindings_chipmunk_manual.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="js_bindings_chipmunk_registration.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="js_bindings_chipmunk_auto_classes.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
