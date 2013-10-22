@@ -26,17 +26,53 @@
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 NS_CC_BEGIN
 
-PhysicsJointInfo::PhysicsJointInfo()
-: joint(nullptr)
+PhysicsJointInfo::PhysicsJointInfo(PhysicsJoint* joint)
+: joint(joint)
 {
 }
 
 PhysicsJointInfo::~PhysicsJointInfo()
 {
-    if (joint)
+    for (cpConstraint* joint : joints)
     {
         cpConstraintFree(joint);
     }
+}
+
+void PhysicsJointInfo::add(cpConstraint* joint)
+{
+    if (joint == nullptr) return;
+
+    joints.push_back(joint);
+    map.insert(std::pair<cpConstraint*, PhysicsJointInfo*>(joint, this));
+}
+
+void PhysicsJointInfo::remove(cpConstraint* joint)
+{
+    if (joint == nullptr) return;
+    
+    auto it = std::find(joints.begin(), joints.end(), joint);
+    if (it != joints.end())
+    {
+        joints.erase(it);
+        
+        auto mit = map.find(joint);
+        if (mit != map.end()) map.erase(mit);
+        
+        cpConstraintFree(joint);
+    }
+}
+
+void PhysicsJointInfo::removeAll()
+{
+    for (cpConstraint* joint : joints)
+    {
+        auto mit = map.find(joint);
+        if (mit != map.end()) map.erase(mit);
+        cpConstraintFree(joint);
+    }
+    
+    joints.clear();
 }
 
 NS_CC_END
