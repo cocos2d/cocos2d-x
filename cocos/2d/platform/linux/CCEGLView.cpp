@@ -10,7 +10,7 @@
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCTouch.h"
-#include "/CCIMEDispatcher.h"
+#include "CCIMEDispatcher.h"
 #include "CCEventDispatcher.h"
 #include "CCEventKeyboard.h"
 #include <unistd.h>

@@ -35,9 +35,9 @@
 #include "CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsBodyInfo.h"
-#include "Box2D/CCPhysicsBodyInfo.h"
+#include "box2d/CCPhysicsBodyInfo.h"
 #include "chipmunk/CCPhysicsShapeInfo.h"
-#include "Box2D/CCPhysicsShapeInfo.h"
+#include "box2d/CCPhysicsShapeInfo.h"
 #include "chipmunk/CCPhysicsHelper.h"
 
 NS_CC_BEGIN
