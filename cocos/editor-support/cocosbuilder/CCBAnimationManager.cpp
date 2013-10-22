@@ -910,6 +910,11 @@ void CCBAnimationManager::sequenceCompleted()
         _lastCompletedSequenceName = runningSequenceName;
     }
     
+    if (nextSeqId != -1)
+    {
+        runAnimationsForSequenceIdTweenDuration(nextSeqId, 0);
+    }
+    
     if (_delegate)
     {
         // There may be another runAnimation() call in this delegate method
@@ -919,11 +924,6 @@ void CCBAnimationManager::sequenceCompleted()
     
     if (_target && _animationCompleteCallbackFunc) {
         (_target->*_animationCompleteCallbackFunc)();
-    }
-    
-    if (nextSeqId != -1)
-    {
-        runAnimationsForSequenceIdTweenDuration(nextSeqId, 0);
     }
 }
 
