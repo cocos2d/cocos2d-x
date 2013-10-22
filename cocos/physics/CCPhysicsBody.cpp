@@ -56,8 +56,8 @@ NS_CC_BEGIN
 namespace
 {
     static const float MASS_DEFAULT = 1.0;
-    static const float DENSITY_DEFAULT = 1.0;
-    static const float ANGULARDAMPING_DEFAULT = 200;
+    static const float MOMENT_DEFAULT = 200;
+    static float GROUP_INDEX = 0;
 }
 
 PhysicsBody::PhysicsBody()
@@ -66,12 +66,16 @@ PhysicsBody::PhysicsBody()
 , _info(nullptr)
 , _dynamic(true)
 , _enable(true)
+, _rotationEnable(true)
+, _gravityEnable(true)
 , _massDefault(true)
-, _angularDampingDefault(true)
+, _momentDefault(true)
 , _mass(MASS_DEFAULT)
-, _area(0.0)
-, _density(DENSITY_DEFAULT)
-, _angularDamping(ANGULARDAMPING_DEFAULT)
+, _area(0.0f)
+, _density(0.0f)
+, _moment(MOMENT_DEFAULT)
+, _linearDamping(0.0f)
+, _angularDamping(0.0f)
 , _tag(0)
 {
 }
@@ -103,6 +107,11 @@ PhysicsBody* PhysicsBody::create()
     
     CC_SAFE_DELETE(body);
     return nullptr;
+}
+
+void update(float delta)
+{
+    
 }
 
 PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
@@ -217,7 +226,9 @@ bool PhysicsBody::init()
         _info = new PhysicsBodyInfo();
         CC_BREAK_IF(_info == nullptr);
         
-        _info->body = cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_angularDamping));
+        _info->body = cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment));
+        _info->group = ++GROUP_INDEX;
+        
         CC_BREAK_IF(_info->body == nullptr);
         
         return true;
@@ -230,17 +241,46 @@ void PhysicsBody::setDynamic(bool dynamic)
 {
     if (dynamic != _dynamic)
     {
-        if (dynamic)
+        _dynamic = dynamic;
+        if (_world != nullptr)
         {
-            cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
-            cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_angularDamping));
-        }else
-        {
-            cpBodySetMass(_info->body, PHYSICS_INFINITY);
-            cpBodySetMoment(_info->body, PHYSICS_INFINITY);
+            if (dynamic)
+            {
+                cpSpaceAddBody(_world->_info->space, _info->body);
+            }else
+            {
+                cpSpaceRemoveBody(_world->_info->space, _info->body);
+            }
         }
         
-        _dynamic = dynamic;
+    }
+}
+
+void PhysicsBody::setRotationEnable(bool enable)
+{
+    if (_rotationEnable != enable)
+    {
+        cpBodySetMoment(_info->body, enable ? _moment : PHYSICS_INFINITY);
+        _rotationEnable = enable;
+    }
+}
+
+void PhysicsBody::setGravityEnable(bool enable)
+{
+    if (_gravityEnable != enable)
+    {
+        _gravityEnable = enable;
+        
+        if (_world != nullptr)
+        {
+            if (enable)
+            {
+                applyForce(_world->getGravity());
+            }else
+            {
+                applyForce(-_world->getGravity());
+            }
+        }
     }
 }
 
@@ -269,76 +309,22 @@ void PhysicsBody::addShape(PhysicsShape* shape)
 {
     if (shape == nullptr) return;
     
-    // already added
-    if (shape->getBody() == this)
-    {
-        return;
-    }
-    else if (shape->getBody() != nullptr)
-    {
-        shape->getBody()->removeShape(shape);
-    }
-    
-    // reset the body
-    if (shape->_info->body != _info->body)
-    {
-        for (cpShape* subShape : shape->_info->shapes)
-        {
-            cpShapeSetBody(subShape, _info->body);
-        }
-        shape->_info->body = _info->body;
-    }
-    
     // add shape to body
     if (std::find(_shapes.begin(), _shapes.end(), shape) == _shapes.end())
     {
         shape->setBody(this);
         _shapes.push_back(shape);
         
-        // calculate the mass, area and desity
+        // calculate the area, mass, and desity
+        // area must update before mass, because the density changes depend on it.
         _area += shape->getArea();
-        if (_mass == PHYSICS_INFINITY || shape->getMass() == PHYSICS_INFINITY)
-        {
-            _mass = PHYSICS_INFINITY;
-            _massDefault = false;
-        }else
-        {
-            if (shape->getMass() > 0)
-            {
-                _mass = (_massDefault ? 0 : _mass) + shape->getMass();
-                _massDefault = false;
-            }
-        }
-        cpBodySetMass(_info->body, _mass);
+        addMass(shape->getMass());
+        addMoment(shape->getMoment());
         
-        if (!_massDefault)
+        if (_world != nullptr)
         {
-            if (_mass == PHYSICS_INFINITY)
-            {
-                _density = PHYSICS_INFINITY;
-            }else
-            {
-                _density = _mass / _area;
-            }
+            _world->addShape(shape);
         }
-        
-        if (shape->getAngularDumping() > 0)
-        {
-            if (shape->getAngularDumping() == INFINITY)
-            {
-                _angularDamping = INFINITY;
-                _angularDampingDefault = false;
-                cpBodySetMoment(_info->body, _angularDamping);
-            }
-            else if (_angularDamping != INFINITY)
-            {
-                _angularDamping = (_angularDampingDefault ? 0 : _angularDamping) + shape->getAngularDumping();
-                _angularDampingDefault = false;
-                cpBodySetMoment(_info->body, _angularDamping);
-            }
-        }
-        
-        if (_world != nullptr) _world->addShape(shape);
         
         shape->retain();
     }
@@ -346,7 +332,7 @@ void PhysicsBody::addShape(PhysicsShape* shape)
 
 void PhysicsBody::applyForce(Point force)
 {
-    applyForce(force, Point());
+    applyForce(force, Point::ZERO);
 }
 
 void PhysicsBody::applyForce(Point force, Point offset)
@@ -371,10 +357,115 @@ void PhysicsBody::applyTorque(float torque)
 
 void PhysicsBody::setMass(float mass)
 {
+    if (mass <= 0)
+    {
+        return;
+    }
+    
     _mass = mass;
     _massDefault = false;
     
+    // update density
+    if (_mass == PHYSICS_INFINITY)
+    {
+        _density = PHYSICS_INFINITY;
+    }
+    else
+    {
+        if (_area > 0)
+        {
+            _density = _mass / _area;
+        }else
+        {
+            _density = 0;
+        }
+    }
+    
     cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
+}
+
+void PhysicsBody::addMass(float mass)
+{
+    if (mass == PHYSICS_INFINITY)
+    {
+        _mass = PHYSICS_INFINITY;
+        _massDefault = false;
+        _density = PHYSICS_INFINITY;
+    }
+    else if (mass == -PHYSICS_INFINITY)
+    {
+        return;
+    }
+    else if (_mass != PHYSICS_INFINITY)
+    {
+        if (_massDefault)
+        {
+            _mass = 0;
+            _massDefault = false;
+        }
+        
+        if (_mass + mass > 0)
+        {
+            _mass +=  mass;
+        }else
+        {
+            _mass = MASS_DEFAULT;
+            _massDefault = true;
+        }
+        
+        if (_area > 0)
+        {
+            _density = _mass / _area;
+        }
+        else
+        {
+            _density = 0;
+        }
+    }
+    
+    cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
+}
+
+void PhysicsBody::addMoment(float moment)
+{
+    if (moment == PHYSICS_INFINITY)
+    {
+        // if moment is INFINITY, the moment of the body will become INFINITY
+        _moment = PHYSICS_INFINITY;
+        _momentDefault = false;
+    }
+    else if (moment == -PHYSICS_INFINITY)
+    {
+        // if moment is -INFINITY, it won't change
+        return;
+    }
+    else
+    {
+        // if moment of the body is INFINITY is has no effect
+        if (_moment != PHYSICS_INFINITY)
+        {
+            if (_momentDefault)
+            {
+                _moment = 0;
+                _momentDefault = false;
+            }
+            
+            if (_moment + moment > 0)
+            {
+                _moment += moment;
+            }
+            else
+            {
+                _moment = MOMENT_DEFAULT;
+                _momentDefault = true;
+            }
+        }
+    }
+    
+    if (_rotationEnable)
+    {
+        cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
+    }
 }
 
 void PhysicsBody::setVelocity(Point velocity)
@@ -387,12 +478,45 @@ Point PhysicsBody::getVelocity()
     return PhysicsHelper::cpv2point(cpBodyGetVel(_info->body));
 }
 
-void PhysicsBody::setAngularDamping(float angularDamping)
+void PhysicsBody::setAngularVelocity(float velocity)
 {
-    _angularDamping = angularDamping;
-    _angularDampingDefault = false;
+    cpBodySetAngVel(_info->body, PhysicsHelper::float2cpfloat(velocity));
+}
+
+float PhysicsBody::getAngularVelocity()
+{
+    return PhysicsHelper::cpfloat2float(cpBodyGetAngVel(_info->body));
+}
+
+void PhysicsBody::setVelocityLimit(float limit)
+{
+    cpBodySetVelLimit(_info->body, PhysicsHelper::float2cpfloat(limit));
+}
+
+float PhysicsBody::getVelocityLimit()
+{
+    return PhysicsHelper::cpfloat2float(cpBodyGetVelLimit(_info->body));
+}
+
+void PhysicsBody::setAngularVelocityLimit(float limit)
+{
+    cpBodySetVelLimit(_info->body, PhysicsHelper::float2cpfloat(limit));
+}
+
+float PhysicsBody::getAngularVelocityLimit()
+{
+    return PhysicsHelper::cpfloat2float(cpBodyGetAngVelLimit(_info->body));
+}
+
+void PhysicsBody::setMoment(float moment)
+{
+    _moment = moment;
+    _momentDefault = false;
     
-    cpBodySetMoment(_info->body, _angularDamping);
+    if (_rotationEnable)
+    {
+        cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
+    }
 }
 
 PhysicsShape* PhysicsBody::getShapeByTag(int tag)
@@ -426,51 +550,19 @@ void PhysicsBody::removeShape(PhysicsShape* shape)
     
     if (it != _shapes.end())
     {
+        // deduce the area, mass and moment
+        // area must update before mass, because the density changes depend on it.
+        _area -= shape->getArea();
+        addMass(-shape->getMass());
+        addMoment(-shape->getMoment());
+        
+        //remove
         if (_world)
         {
             _world->removeShape(shape);
         }
-        
         _shapes.erase(it);
-        
-        
-        // deduce the mass, area and angularDamping
-        if (_mass != PHYSICS_INFINITY && shape->getMass() != PHYSICS_INFINITY)
-        {
-            if (_mass - shape->getMass() <= 0)
-            {
-                _mass = MASS_DEFAULT;
-                _massDefault = true;
-            }else
-            {
-                _mass = _mass = shape->getMass();
-            }
-            
-            _area -= shape->getArea();
-            
-            if (_mass == PHYSICS_INFINITY)
-            {
-                _density = PHYSICS_INFINITY;
-            }
-            else if (_area > 0)
-            {
-                _density = _mass / _area;
-            }
-            else
-            {
-                _density = DENSITY_DEFAULT;
-            }
-            
-            if (_angularDamping - shape->getAngularDumping() > 0)
-            {
-                _angularDamping -= shape->getAngularDumping();
-            }else
-            {
-                _angularDamping = ANGULARDAMPING_DEFAULT;
-                _angularDampingDefault = true;
-            }
-        }
-        
+        shape->setBody(nullptr);
         shape->release();
     }
 }
@@ -506,6 +598,22 @@ void PhysicsBody::setEnable(bool enable)
                 _world->removeBody(this);
             }
         }
+    }
+}
+
+bool PhysicsBody::isResting()
+{
+    return cpBodyIsSleeping(_info->body) == cpTrue;
+}
+
+void PhysicsBody::update(float delta)
+{
+    // damping compute
+    if (_dynamic)
+    {
+        _info->body->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+        _info->body->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+        _info->body->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
     }
 }
 
