@@ -1,11 +1,9 @@
 #include "cocos2d.h"
-#include "extensions/cocos-ext.h"
 #include "cocos2d_specifics.hpp"
 #include <typeinfo>
 #include "js_bindings_config.h"
 #include "jsb_cocos2dx_auto.hpp"
 
-USING_NS_CC_EXT;
 
 schedFunc_proxy_t *_schedFunc_target_ht = NULL;
 schedTarget_proxy_t *_schedObj_target_ht = NULL;

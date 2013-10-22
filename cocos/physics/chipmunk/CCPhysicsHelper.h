@@ -44,12 +44,14 @@ public:
     static float cpfloat2float(cpFloat f) { return f; }
     static cpFloat float2cpfloat(float f) { return f; }
     
-    static void cpvs2points(const cpVect* cpvs, Point* points, int count)
+    static Point* cpvs2points(const cpVect* cpvs, Point* points, int count)
     {
         for (int i = 0; i < count; ++i)
         {
             points[i] = cpv2point(cpvs[i]);
         }
+        
+        return points;
     }
     
     static cpVect* points2cpvs(const Point* points, cpVect* cpvs, int count)

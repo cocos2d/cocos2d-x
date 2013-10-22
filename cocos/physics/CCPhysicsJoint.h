@@ -53,6 +53,8 @@ public:
     inline void setTag(int tag) { _tag = tag; }
     inline bool isEnable() { return _enable; }
     void setEnable(bool enable);
+    inline bool isCollisionEnable() { return _collisionEnable; }
+    void setCollisionEnable(bool enable);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b);
@@ -67,6 +69,7 @@ protected:
     PhysicsBody* _bodyB;
     PhysicsJointInfo* _info;
     bool _enable;
+    bool _collisionEnable;
     int _tag;
     
     friend class PhysicsBody;
@@ -127,10 +130,15 @@ protected:
 class PhysicsJointLimit : public PhysicsJoint
 {
 public:
-    PhysicsJointLimit* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
+    PhysicsJointLimit* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    
+    float getMin();
+    void setMin(float min);
+    float getMax();
+    void setMax(float max);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
 protected:
     PhysicsJointLimit();
@@ -143,10 +151,10 @@ protected:
 class PhysicsJointPin : public PhysicsJoint
 {
 public:
-    static PhysicsJointPin* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    static PhysicsJointPin* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
     PhysicsJointPin();

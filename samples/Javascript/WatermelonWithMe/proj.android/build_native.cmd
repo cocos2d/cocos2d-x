@@ -57,7 +57,7 @@ set COCOS2DX_ROOT=%~dp0..\..\..\..
 set APP_ROOT=%~dp0..
 set APP_ANDROID_ROOT=%~dp0
 set RESROUCE_ROOT="%APP_ROOT%\..\Shared\games\WatermelonWithMe"
-set BINDINGS_JS_ROOT=%APP_ROOT%\..\..\..\scripting\javascript\bindings\js
+set BINDINGS_JS_ROOT=%COCOS2DX_ROOT%\cocos\scripting\javascript\script
 
 if "%buildexternalsfromsource%"=="1" (goto :MODULE1) else (goto :MODULE2)
 :MODULE1
@@ -66,7 +66,7 @@ if "%buildexternalsfromsource%"=="1" (goto :MODULE1) else (goto :MODULE2)
 	goto :COPY_RES
 :MODULE2
 	echo "Using prebuilt externals"
-	set NDK_MODULE_PATH=%COCOS2DX_ROOT%;%COCOS2DX_ROOT%\cocos2dx\platform\third_party\android\prebuilt
+	set NDK_MODULE_PATH=%COCOS2DX_ROOT%;%COCOS2DX_ROOT%\cocos;%COCOS2DX_ROOT%\external
 
 :COPY_RES
 echo NDK_ROOT = %NDK_ROOT%
@@ -79,7 +79,6 @@ rem make sure assets is exist
 if exist %APP_ANDROID_ROOT%\assets rd /q /s %APP_ANDROID_ROOT%\assets
 
 mkdir %APP_ANDROID_ROOT%\assets
-mkdir %APP_ANDROID_ROOT%\assets\res
 
 rem copy Resources/* into assets' root
 xcopy /e /q /r /y %RESROUCE_ROOT%\* %APP_ANDROID_ROOT%\assets
@@ -87,5 +86,5 @@ xcopy /e /q /r /y %RESROUCE_ROOT%\* %APP_ANDROID_ROOT%\assets
 rem copy bindings/*.js into assets' root
 xcopy /e /q /r /y %BINDINGS_JS_ROOT%\* %APP_ANDROID_ROOT%\assets
 
-call %NDK_ROOT%\ndk-build.cmd %PARALLEL_BUILD_FLAG% NDK_LOG=0 V=0
+call %NDK_ROOT%\ndk-build.cmd %PARALLEL_BUILD_FLAG% NDK_LOG=0 V=0 %*
 pause
