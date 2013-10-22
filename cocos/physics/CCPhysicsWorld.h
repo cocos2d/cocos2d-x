@@ -53,6 +53,10 @@ class PhysicsWorld;
 class PhysicsRayCastCallback
 {
 public:
+    PhysicsRayCastCallback()
+    : report(nullptr)
+    {}
+    virtual ~PhysicsRayCastCallback(){}
 	/**
      * @brief Called for each fixture found in the query. You control how the ray cast
 	 * proceeds by returning a float:
@@ -63,13 +67,19 @@ public:
 	 * @param normal the normal vector at the point of intersection
 	 * @return true to continue, false to terminate
      */
-    std::function<bool(PhysicsWorld&, PhysicsShape&, Point point, Point normal, float fraction, void* data)> report;
+    std::function<bool(PhysicsWorld&, PhysicsShape&, Point, Point, float, void*)> report;
 };
 
 class PhysicsRectQueryCallback
 {
 public:
-    std::function<bool(PhysicsWorld&, PhysicsShape&, void* data)> report;
+    PhysicsRectQueryCallback()
+    : report(nullptr)
+    {}
+    virtual ~PhysicsRectQueryCallback(){}
+    
+public:
+    std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> report;
 };
 
 /**
