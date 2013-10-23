@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCSet.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
-#include "/CCIMEDispatcher.h"
+#include "CCIMEDispatcher.h"
 #include "CCApplication.h"
 #include "CCTouch.h"
 #include "CCEventDispatcher.h"

@@ -622,7 +622,11 @@ Developers:
         
     lettas
         A fix for multi-platform template.
-    
+        
+    HoGarfield (garfield_ho)
+        Fixed a bug that CCBReader can't play sequence automatically in JSB.
+        Could not set next animation in CCBAnimationCompleted callback.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
