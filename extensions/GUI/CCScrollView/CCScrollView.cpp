@@ -471,8 +471,6 @@ void CCScrollView::updateInset()
  */
 void CCScrollView::addChild(CCNode * child, int zOrder, int tag)
 {
-    child->ignoreAnchorPointForPosition(false);
-    child->setAnchorPoint(ccp(0.0f, 0.0f));
     if (m_pContainer != child) {
         m_pContainer->addChild(child, zOrder, tag);
     } else {
