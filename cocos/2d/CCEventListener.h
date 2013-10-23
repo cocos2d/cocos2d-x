@@ -31,10 +31,12 @@
 #include <functional>
 #include <string>
 #include <memory>
+#include <set>
 
 NS_CC_BEGIN
 
 class Event;
+class Node;
 
 /**
  *  The base class of event listener.
@@ -58,13 +60,21 @@ public:
     
     /** Clones the listener, its subclasses have to override this method. */
     virtual EventListener* clone() = 0;
+    
+    inline bool isPaused() const { return _paused; };
+    
 protected:
     std::function<void(Event*)> _onEvent;   /// Event callback function
     std::string _type;                      /// Event type
     bool _isRegistered;                    /// Whether the listener has been added to dispatcher.
     
+    // The priority of event listener
+    int   _fixedPriority;   // The higher the number, the higher the priority, 0 is for scene graph base priority.
+    Node* _node; // scene graph based priority
+    bool _paused;
+    
+private:
     friend class EventDispatcher;
-    friend class Node;
 };
 
 NS_CC_END

@@ -723,7 +723,7 @@ std::string CameraCenterTest::subtitle()
 //------------------------------------------------------------------
 ConvertToNode::ConvertToNode()
 {
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
     auto s = Director::getInstance()->getWinSize();
 
     auto rotate = RotateBy::create(10, 360);

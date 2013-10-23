@@ -204,7 +204,7 @@ void SpriteTestDemo::backCallback(Object* sender)
 
 Sprite1::Sprite1()
 {
-    setTouchEnabled( true );
+//cjh    setTouchEnabled( true );
 
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Point(s.width/2, s.height/2) );
@@ -264,7 +264,7 @@ std::string Sprite1::title()
 
 SpriteBatchNode1::SpriteBatchNode1()
 {
-    setTouchEnabled( true );
+//cjh    setTouchEnabled( true );
 
     auto BatchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
     addChild(BatchNode, 0, kTagSpriteBatchNode);
@@ -1378,7 +1378,7 @@ std::string SpriteBatchNodeAliased::title()
 
 SpriteNewTexture::SpriteNewTexture()
 {
-    setTouchEnabled( true );
+//cjh    setTouchEnabled( true );
     
     auto node = Node::create();
     addChild(node, 0, kTagSpriteBatchNode);
@@ -1487,7 +1487,7 @@ std::string SpriteNewTexture::title()
 
 SpriteBatchNodeNewTexture::SpriteBatchNodeNewTexture()
 {
-    setTouchEnabled( true );
+//cjh    setTouchEnabled( true );
     
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
     addChild(batch, 0, kTagSpriteBatchNode);

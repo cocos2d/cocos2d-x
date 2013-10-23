@@ -120,12 +120,12 @@ TestController::TestController()
     _itemMenu->setPosition(s_tCurPos);
     addChild(_itemMenu);
 
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
 
     addChild(menu, 1);
 
     // Register Touch Event
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     
     listener->onTouchBegan = CC_CALLBACK_2(TestController::onTouchBegan, this);

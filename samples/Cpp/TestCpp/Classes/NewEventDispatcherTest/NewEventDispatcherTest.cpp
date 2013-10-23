@@ -141,7 +141,7 @@ void TouchableSpriteTest::onEnter()
     sprite2->addChild(sprite3, 1);
     
     // Make sprite1 touchable
-    auto listener1 = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener1 = EventListenerTouchOneByOne::create();
     listener1->setSwallowTouches(true);
     
     listener1->onTouchBegan = [](Touch* touch, Event* event){
@@ -243,7 +243,7 @@ public:
         
         auto dispatcher = EventDispatcher::getInstance();
         
-        auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+        auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
         
         listener->onTouchBegan = [=](Touch* touch, Event* event){
@@ -348,7 +348,7 @@ void RemoveListenerWhenDispatching::onEnter()
     addChild(sprite1, 10);
     
     // Make sprite1 touchable
-    auto listener1 = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener1 = EventListenerTouchOneByOne::create();
     listener1->setSwallowTouches(true);
     setUserObject(listener1);
     

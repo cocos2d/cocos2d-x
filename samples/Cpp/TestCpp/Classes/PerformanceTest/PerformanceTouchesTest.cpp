@@ -119,9 +119,9 @@ std::string TouchesMainScene::title()
 void TouchesPerformTest1::onEnter()
 {
     TouchesMainScene::onEnter();
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-    setSwallowsTouches(true);
+//cjh    setTouchEnabled(true);
+//    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+//    setSwallowsTouches(true);
 }
 
 std::string TouchesPerformTest1::title()
@@ -158,7 +158,7 @@ void TouchesPerformTest1::onTouchCancelled(Touch* touch, Event* event)
 void TouchesPerformTest2::onEnter()
 {
     TouchesMainScene::onEnter();
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
 }
 
 std::string TouchesPerformTest2::title()
@@ -231,8 +231,8 @@ void TouchesPerformTest3::onEnter()
     {
         int zorder = rand() % TOUCHABLE_NODE_NUM;
         auto layer = new TouchableLayer();
-        layer->setTouchEnabled(true);
-        layer->setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+//cjh        layer->setTouchEnabled(true);
+//        layer->setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
         addChild(layer, zorder);
         layer->release();
     }
@@ -260,7 +260,7 @@ void TouchesPerformTest3::onEnter()
         {
             CC_PROFILER_START(TOUCH_PROFILER_NAME);
             
-            dispatcher->dispatchEvent(&event, false);
+            dispatcher->dispatchEvent(&event);
             
             CC_PROFILER_STOP(TOUCH_PROFILER_NAME);
         }

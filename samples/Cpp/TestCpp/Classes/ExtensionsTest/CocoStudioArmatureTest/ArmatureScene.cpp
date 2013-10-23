@@ -477,7 +477,7 @@ void TestAnimationEvent::callback2()
 void TestParticleDisplay::onEnter()
 {
     ArmatureTestLayer::onEnter();
-    setTouchEnabled(true);
+//FIXME cjh:    setTouchEnabled(true);
 
     animationID = 0;
 
@@ -534,7 +534,7 @@ void TestParticleDisplay::onTouchesEnded(const std::vector<Touch*>& touches, Eve
 void TestUseMutiplePicture::onEnter()
 {
     ArmatureTestLayer::onEnter();
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
 
     displayIndex = 0;
 
@@ -935,7 +935,7 @@ std::string TestAnchorPoint::title()
 void TestArmatureNesting::onEnter()
 {
     ArmatureTestLayer::onEnter();
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
 
     armature = Armature::create("cyborg");
     armature->getAnimation()->playByIndex(1);

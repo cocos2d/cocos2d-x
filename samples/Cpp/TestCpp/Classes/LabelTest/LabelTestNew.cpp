@@ -650,7 +650,7 @@ static float menuItemPaddingCenter = 50;
 
 LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
 {
-    this->setTouchEnabled(true);
+//cjh    this->setTouchEnabled(true);
 
     // ask director the the window size
     auto size = Director::getInstance()->getWinSize();

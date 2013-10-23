@@ -138,7 +138,7 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void onExit();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	int displayIndex;
 	cocostudio::Armature *armature;

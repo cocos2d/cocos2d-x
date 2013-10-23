@@ -21,8 +21,8 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION      
     // enable events
-    setTouchEnabled(true);
-    setAccelerometerEnabled(true);
+//FIXME:    setTouchEnabled(true);
+//    setAccelerometerEnabled(true);
 
     // title
     auto label = LabelTTF::create("Multi touch the screen", "Marker Felt", 36);

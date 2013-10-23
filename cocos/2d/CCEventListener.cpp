@@ -40,6 +40,7 @@ bool EventListener::init(const std::string& t, std::function<void(Event*)> callb
     _onEvent = callback;
     _type = t;
     _isRegistered = false;
+    _paused = true;
     
     return true;
 }

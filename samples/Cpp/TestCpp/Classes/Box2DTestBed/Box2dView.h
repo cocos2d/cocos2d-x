@@ -7,7 +7,7 @@
 class MenuLayer : public Layer
 {
     int        m_entryID;
-
+    EventListenerTouchOneByOne* _touchListener;
 public:
     MenuLayer(void);
     virtual ~MenuLayer(void);
@@ -30,6 +30,7 @@ struct TestEntry;
 class Test;
 class Box2DView : public Layer
 {
+    EventListenerTouchOneByOne* _touchListener;
     TestEntry*    m_entry;
     Test*        m_test;
     int            m_entryID;

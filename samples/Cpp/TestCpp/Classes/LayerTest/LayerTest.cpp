@@ -449,7 +449,7 @@ void LayerTest1::onEnter()
 {
     LayerTest::onEnter();
 
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
     
     auto s = Director::getInstance()->getWinSize();
     auto layer = LayerColor::create( Color4B(0xFF, 0x00, 0x00, 0x80), 200, 200); 
@@ -590,7 +590,7 @@ LayerGradientTest::LayerGradientTest()
     auto layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(0,255,0,255), Point(0.9f, 0.9f));
     addChild(layer1, 0, kTagLayer);
 
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
 
     auto label1 = LabelTTF::create("Compressed Interpolation: Enabled", "Marker Felt", 26);
     auto label2 = LabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);

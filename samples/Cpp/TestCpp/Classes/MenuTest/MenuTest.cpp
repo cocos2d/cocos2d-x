@@ -25,8 +25,8 @@ enum {
 //------------------------------------------------------------------
 MenuLayerMainMenu::MenuLayerMainMenu()
 {
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+//cjh    setTouchEnabled(true);
+//    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
 
     // Font Item    
     auto spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
@@ -532,8 +532,8 @@ BugsTest::BugsTest()
 void BugsTest::issue1410MenuCallback(Object *sender)
 {
     auto menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
-    menu->setTouchEnabled(false);
-    menu->setTouchEnabled(true);
+//cjh    menu->setTouchEnabled(false);
+//    menu->setTouchEnabled(true);
     
     log("NO CRASHES");
 }
@@ -541,8 +541,8 @@ void BugsTest::issue1410MenuCallback(Object *sender)
 void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
 {
     auto menu = static_cast<Menu*>( static_cast<MenuItem*>(pSender)->getParent() );
-    menu->setTouchEnabled(true);
-    menu->setTouchEnabled(false);
+//cjh    menu->setTouchEnabled(true);
+//    menu->setTouchEnabled(false);
     
     log("NO CRASHES. AND MENU SHOULD STOP WORKING");
 }
@@ -571,11 +571,11 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     
     menu->setPosition(Point(s.width/2, s.height/2));
     
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+//cjh    setTouchEnabled(true);
+//    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
     // Register Touch Event
-    _touchListener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    _touchListener = EventListenerTouchOneByOne::create();
     _touchListener->setSwallowTouches(false);
     
     _touchListener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);

@@ -109,16 +109,14 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
 
         this->setViewSize(size);
 
-        this->onEnterHook = [this]() {
-            auto dispatcher = EventDispatcher::getInstance();
-            auto listener = EventListenerTouchOneByOne::create();
-            listener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
-            listener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
-            listener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
-            listener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
-            
-            dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-        };
+        auto dispatcher = EventDispatcher::getInstance();
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
+        listener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
+        listener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
+        listener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
+        
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         
         _touches.reserve(EventTouch::MAX_TOUCHES);
         
@@ -578,7 +576,6 @@ void ScrollView::visit()
 		
 		// this draw
 		this->draw();
-		updateEventPriorityIndex();
         
 		// draw children zOrder >= 0
 		for( ; i < _children->count(); i++ )
@@ -591,7 +588,6 @@ void ScrollView::visit()
     else
     {
 		this->draw();
-        updateEventPriorityIndex();
     }
 
     this->afterDraw();

@@ -1068,7 +1068,7 @@ void ParticleDemo::onEnter(void)
     
     _emitter = NULL;
     
-    setTouchEnabled( true );
+//cjh    setTouchEnabled( true );
     
     auto s = Director::getInstance()->getWinSize();
     

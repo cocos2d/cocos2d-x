@@ -118,7 +118,7 @@ void ExtensionsMainLayer::onEnter()
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
 
-	setTouchEnabled(true);
+//cjh	setTouchEnabled(true);
     
     addChild(_itemMenu);
 }
