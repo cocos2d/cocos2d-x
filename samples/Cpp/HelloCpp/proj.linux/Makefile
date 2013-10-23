@@ -7,7 +7,7 @@ SOURCES = main.cpp \
         ../Classes/HelloWorldScene.cpp
 
 COCOS_ROOT = ../../../..
-include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
+include $(COCOS_ROOT)/cocos/2d/cocos2dx.mk
 
 SHAREDLIBS += -lcocos2d
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so
