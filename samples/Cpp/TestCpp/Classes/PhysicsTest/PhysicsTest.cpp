@@ -50,7 +50,7 @@ namespace
         return layer;
     }
     
-    static const Color4F STATIC_COLOR = {1.0f, 0.0f, 0.0f, 1.0f};
+    static const Color4F STATIC_COLOR(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
 
@@ -411,7 +411,7 @@ void PhysicsDemoLogoSmash::onEnter()
                 
                 Node* ball = makeBall(2*(x - logo_width/2 + x_jitter) + VisibleRect::getVisibleRect().size.width/2,
                                       2*(logo_height-y + y_jitter) + VisibleRect::getVisibleRect().size.height/2 - logo_height/2,
-                                      0.95f, PhysicsMaterial::make(1.0f, 0.0f, 0.0f));
+                                      0.95f, PhysicsMaterial(1.0f, 0.0f, 0.0f));
                 
                 ball->getPhysicsBody()->setMass(1.0);
                 ball->getPhysicsBody()->setMoment(PHYSICS_INFINITY);
@@ -423,7 +423,7 @@ void PhysicsDemoLogoSmash::onEnter()
     }
     
     
-    auto bullet = makeBall(400, 0, 10, PhysicsMaterial::make(PHYSICS_INFINITY, 0, 0));
+    auto bullet = makeBall(400, 0, 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
     bullet->getPhysicsBody()->setVelocity(Point(400, 0));
     
     bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));
@@ -454,7 +454,7 @@ void PhysicsDemoPyramidStack::onEnter()
     {
 		for(int j=0; j<=i; j++)
         {
-			addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2);
+			addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
 		}
 	}
 }
@@ -671,7 +671,7 @@ void PhysicsDemoRayCast::update(float delta)
             break;
     }
     
-    _angle += 0.25f * M_PI / 180.0f;
+    _angle += 0.25f * (float)M_PI / 180.0f;
 }
 
 void PhysicsDemoRayCast::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
