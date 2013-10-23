@@ -9,7 +9,7 @@
 #define __JS_BINDINGS_CCBREADER_H__
 
 #include "jsapi.h"
-#include "cocos2d_specifics.hpp"
+#include "cocosbuilder_specifics.hpp"
 #include "cocosbuilder/CocosBuilder.h"
 
 class CCBScriptCallbackProxy:  public cocos2d::Layer
