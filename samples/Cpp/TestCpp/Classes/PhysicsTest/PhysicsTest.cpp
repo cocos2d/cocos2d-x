@@ -674,3 +674,32 @@ std::string PhysicsDemoRayCast::title()
 {
     return "Ray Cast";
 }
+
+
+void PhysicsDemoJoints::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    setTouchEnabled(true);
+    
+    _scene->getPhysicsWorld()->setGravity(Point::ZERO);
+    
+    
+}
+
+void PhysicsDemoJoints::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    //Add a new body/atlas sprite at the touched location
+    
+    for( auto &touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        
+    }
+}
+
+std::string PhysicsDemoJoints::title()
+{
+    return "Joints";
+}
