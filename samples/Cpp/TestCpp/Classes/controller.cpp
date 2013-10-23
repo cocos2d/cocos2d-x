@@ -120,8 +120,6 @@ TestController::TestController()
     _itemMenu->setPosition(s_tCurPos);
     addChild(_itemMenu);
 
-//cjh    setTouchEnabled(true);
-
     addChild(menu, 1);
 
     // Register Touch Event

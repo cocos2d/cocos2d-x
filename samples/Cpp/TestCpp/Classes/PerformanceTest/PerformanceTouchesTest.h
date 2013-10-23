@@ -36,10 +36,10 @@ public:
     virtual void onEnter() override;
     virtual std::string title() override;
 
-    virtual bool onTouchBegan(Touch* touch, Event* event) ;
-    virtual void onTouchMoved(Touch* touch, Event* event) ;
-    virtual void onTouchEnded(Touch* touch, Event* event) ;
-    virtual void onTouchCancelled(Touch* touch, Event* event) ;
+    bool onTouchBegan(Touch* touch, Event* event) ;
+    void onTouchMoved(Touch* touch, Event* event) ;
+    void onTouchEnded(Touch* touch, Event* event) ;
+    void onTouchCancelled(Touch* touch, Event* event) ;
 };
 
 class TouchesPerformTest2 : public TouchesMainScene

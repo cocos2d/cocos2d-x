@@ -449,7 +449,12 @@ void LayerTest1::onEnter()
 {
     LayerTest::onEnter();
 
-//cjh    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(LayerTest1::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(LayerTest1::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(LayerTest1::onTouchesEnded, this);
+    
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     auto layer = LayerColor::create( Color4B(0xFF, 0x00, 0x00, 0x80), 200, 200); 
@@ -590,7 +595,9 @@ LayerGradientTest::LayerGradientTest()
     auto layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(0,255,0,255), Point(0.9f, 0.9f));
     addChild(layer1, 0, kTagLayer);
 
-//cjh    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(LayerGradientTest::onTouchesMoved, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
 
     auto label1 = LabelTTF::create("Compressed Interpolation: Enabled", "Marker Felt", 26);
     auto label2 = LabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);

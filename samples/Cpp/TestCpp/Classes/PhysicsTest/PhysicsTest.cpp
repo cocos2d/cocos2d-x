@@ -197,8 +197,13 @@ void PhysicsDemoClickAdd::onEnter()
     PhysicsDemo::onEnter();
     
 #ifdef CC_USE_PHYSICS
-//cjh    setTouchEnabled(true);
-//    setAccelerometerEnabled(true);
+    
+    auto touchListener = EventListenerTouchAllAtOnce::create();
+    touchListener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(PhysicsDemoClickAdd::onAcceleration, this));
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(accListener, this);
     
     auto node = Node::create();
     node->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size));

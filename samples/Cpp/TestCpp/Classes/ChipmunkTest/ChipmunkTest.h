@@ -24,7 +24,7 @@ public:
     void addNewSpriteAtPosition(Point p);
     void update(float dt);
     void toggleDebugCallback(Object* sender);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     virtual void onAcceleration(Acceleration* acc, Event* event);
 
 private:

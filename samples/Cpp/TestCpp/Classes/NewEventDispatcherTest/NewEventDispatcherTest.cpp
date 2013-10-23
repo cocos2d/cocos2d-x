@@ -18,7 +18,8 @@ std::function<Layer*()> createFunctions[] =
     CL(RemoveListenerWhenDispatching),
     CL(CustomEventTest),
     CL(LabelKeyboardEventTest),
-    CL(SpriteAccelerationEventTest)
+    CL(SpriteAccelerationEventTest),
+    CL(RemoveAndRetainNodeTest)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -565,4 +566,88 @@ std::string SpriteAccelerationEventTest::title()
 std::string SpriteAccelerationEventTest::subtitle()
 {
     return "Please move your device\n(Only available on mobile)";
+}
+
+// RemoveAndRetainNodeTest
+void RemoveAndRetainNodeTest::onEnter()
+{
+    _spriteSaved = false;
+    
+    EventDispatcherTestDemo::onEnter();
+    
+    auto dispatcher = EventDispatcher::getInstance();
+ 
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    _sprite = Sprite::create("Images/CyanSquare.png");
+    _sprite->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(_sprite, 10);
+    
+    // Make sprite1 touchable
+    auto listener1 = EventListenerTouchOneByOne::create();
+    listener1->setSwallowTouches(true);
+    
+    listener1->onTouchBegan = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        
+        Point locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        
+        if (rect.containsPoint(locationInNode))
+        {
+            log("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            target->setOpacity(180);
+            return true;
+        }
+        return false;
+    };
+    
+    listener1->onTouchMoved = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        target->setPosition(target->getPosition() + touch->getDelta());
+    };
+    
+    listener1->onTouchEnded = [=](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        log("sprite onTouchesEnded.. ");
+        target->setOpacity(255);
+    };
+    
+    dispatcher->addEventListenerWithSceneGraphPriority(listener1, _sprite);
+    
+    this->runAction(Sequence::create(DelayTime::create(5.0f),
+                                     CallFunc::create([this](){
+                                        _spriteSaved = true;
+                                        _sprite->retain();
+                                        _sprite->removeFromParent();
+                                     }),
+                                     DelayTime::create(5.0f),
+                                     CallFunc::create([this](){
+                                        _spriteSaved = false;
+                                        this->addChild(_sprite);
+                                        _sprite->release();
+                                     }),
+                                     nullptr
+                                     ));
+}
+
+void RemoveAndRetainNodeTest::onExit()
+{
+    EventDispatcherTestDemo::onExit();
+    if (_spriteSaved)
+    {
+        _sprite->release();
+    }
+}
+
+std::string RemoveAndRetainNodeTest::title()
+{
+    return "RemoveAndRetainNodeTest";
+}
+
+std::string RemoveAndRetainNodeTest::subtitle()
+{
+    return "";
 }

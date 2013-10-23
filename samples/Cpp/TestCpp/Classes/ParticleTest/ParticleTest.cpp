@@ -1068,7 +1068,11 @@ void ParticleDemo::onEnter(void)
     
     _emitter = NULL;
     
-//cjh    setTouchEnabled( true );
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(ParticleDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(ParticleDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(ParticleDemo::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     

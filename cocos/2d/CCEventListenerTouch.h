@@ -33,7 +33,6 @@
 
 NS_CC_BEGIN
 
-
 class EventListenerTouchOneByOne : public EventListener
 {
 public:

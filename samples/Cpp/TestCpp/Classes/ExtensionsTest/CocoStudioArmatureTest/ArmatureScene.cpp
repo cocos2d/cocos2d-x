@@ -477,7 +477,10 @@ void TestAnimationEvent::callback2()
 void TestParticleDisplay::onEnter()
 {
     ArmatureTestLayer::onEnter();
-//FIXME cjh:    setTouchEnabled(true);
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestParticleDisplay::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
 
     animationID = 0;
 
@@ -534,8 +537,11 @@ void TestParticleDisplay::onTouchesEnded(const std::vector<Touch*>& touches, Eve
 void TestUseMutiplePicture::onEnter()
 {
     ArmatureTestLayer::onEnter();
-//cjh    setTouchEnabled(true);
 
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestUseMutiplePicture::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    
     displayIndex = 0;
 
     armature = Armature::create("Knight_f/Knight");
@@ -935,7 +941,10 @@ std::string TestAnchorPoint::title()
 void TestArmatureNesting::onEnter()
 {
     ArmatureTestLayer::onEnter();
-//cjh    setTouchEnabled(true);
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestArmatureNesting::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
 
     armature = Armature::create("cyborg");
     armature->getAnimation()->playByIndex(1);

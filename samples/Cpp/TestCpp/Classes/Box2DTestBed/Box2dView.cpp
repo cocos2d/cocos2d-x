@@ -176,9 +176,6 @@ Box2DView* Box2DView::viewWithEntryID(int entryId)
 
 bool Box2DView::initWithEntryID(int entryId)
 {    
-//    setIsAccelerometerEnabled( true );
-// FIXME cjh:    setTouchEnabled( true );
-    
     schedule( schedule_selector(Box2DView::tick) );
 
     m_entry = g_testEntries + entryId;

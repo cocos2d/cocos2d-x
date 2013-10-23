@@ -61,85 +61,6 @@ NS_CC_BEGIN
 static EventDispatcher* g_instance = nullptr;
 static int s_eventPriorityIndex = 0;
 
-void EventDispatcher::visitTarget(Node* node)
-{
-    // Reset priority index
-    s_eventPriorityIndex = 0;
-    _nodePriorityMap.clear();
-    
-    int i = 0;
-    Array* children = node->getChildren();
-    int childrenCount = children ? children->count() : 0;
-    
-    if(childrenCount > 0)
-    {
-        
-        Node* child = nullptr;
-        // visit children zOrder < 0
-        for( ; i < childrenCount; i++ )
-        {
-            child = static_cast<Node*>( children->getObjectAtIndex(i) );
-            
-            if ( child && child->getZOrder() < 0 )
-                visitTarget(child);
-            else
-                break;
-        }
-
-        _nodePriorityMap.insert(std::make_pair(node, ++s_eventPriorityIndex));
-        
-        for( ; i < childrenCount; i++ )
-        {
-            child = static_cast<Node*>( children->getObjectAtIndex(i) );
-            if (child)
-                visitTarget(child);
-        }
-    }
-    else
-    {
-        _nodePriorityMap.insert(std::make_pair(node, ++s_eventPriorityIndex));
-    }
-}
-
-void EventDispatcher::pauseTarget(Node* node)
-{
-    auto listenerIter = _nodeListenersMap.find(node);
-    if (listenerIter != _nodeListenersMap.end())
-    {
-        auto listeners = listenerIter->second;
-        for (auto& l : *listeners)
-        {
-            l->_paused = true;
-        }
-    }
-}
-
-void EventDispatcher::resumeTarget(Node* node)
-{
-    auto listenerIter = _nodeListenersMap.find(node);
-    if (listenerIter != _nodeListenersMap.end())
-    {
-        auto listeners = listenerIter->second;
-        for (auto& l : *listeners)
-        {
-            l->_paused = false;
-        }
-    }
-}
-
-void EventDispatcher::cleanTarget(Node* node)
-{
-    auto listenerIter = _nodeListenersMap.find(node);
-    if (listenerIter != _nodeListenersMap.end())
-    {
-        auto listeners = listenerIter->second;
-        for (auto& l : *listeners)
-        {
-            removeEventListener(l);
-        }
-    }
-}
-
 EventDispatcher::EventListenerVector::EventListenerVector()
 : _sceneGraphListeners(nullptr)
 , _fixedListeners(nullptr)
@@ -237,6 +158,85 @@ EventDispatcher* EventDispatcher::getInstance()
 void EventDispatcher::destroyInstance()
 {
     CC_SAFE_DELETE(g_instance);
+}
+
+void EventDispatcher::visitTarget(Node* node)
+{
+    // Reset priority index
+    s_eventPriorityIndex = 0;
+    _nodePriorityMap.clear();
+    
+    int i = 0;
+    Array* children = node->getChildren();
+    int childrenCount = children ? children->count() : 0;
+    
+    if(childrenCount > 0)
+    {
+        
+        Node* child = nullptr;
+        // visit children zOrder < 0
+        for( ; i < childrenCount; i++ )
+        {
+            child = static_cast<Node*>( children->getObjectAtIndex(i) );
+            
+            if ( child && child->getZOrder() < 0 )
+                visitTarget(child);
+            else
+                break;
+        }
+        
+        _nodePriorityMap.insert(std::make_pair(node, ++s_eventPriorityIndex));
+        
+        for( ; i < childrenCount; i++ )
+        {
+            child = static_cast<Node*>( children->getObjectAtIndex(i) );
+            if (child)
+                visitTarget(child);
+        }
+    }
+    else
+    {
+        _nodePriorityMap.insert(std::make_pair(node, ++s_eventPriorityIndex));
+    }
+}
+
+void EventDispatcher::pauseTarget(Node* node)
+{
+    auto listenerIter = _nodeListenersMap.find(node);
+    if (listenerIter != _nodeListenersMap.end())
+    {
+        auto listeners = listenerIter->second;
+        for (auto& l : *listeners)
+        {
+            l->_paused = true;
+        }
+    }
+}
+
+void EventDispatcher::resumeTarget(Node* node)
+{
+    auto listenerIter = _nodeListenersMap.find(node);
+    if (listenerIter != _nodeListenersMap.end())
+    {
+        auto listeners = listenerIter->second;
+        for (auto& l : *listeners)
+        {
+            l->_paused = false;
+        }
+    }
+}
+
+void EventDispatcher::cleanTarget(Node* node)
+{
+    auto listenerIter = _nodeListenersMap.find(node);
+    if (listenerIter != _nodeListenersMap.end())
+    {
+        auto listeners = listenerIter->second;
+        for (auto& l : *listeners)
+        {
+            removeEventListener(l);
+        }
+    }
 }
 
 void EventDispatcher::associateNodeAndEventListener(Node* node, EventListener* listener)
@@ -635,7 +635,6 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 {
                     if (listener->onTouchBegan)
                     {
-                        CCLOG("onTouchBegan...");
                         isClaimed = listener->onTouchBegan(*touchesIter, event);
                         if (isClaimed && listener->_isRegistered)
                         {

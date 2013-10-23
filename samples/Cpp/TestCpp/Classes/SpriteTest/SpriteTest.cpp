@@ -204,8 +204,10 @@ void SpriteTestDemo::backCallback(Object* sender)
 
 Sprite1::Sprite1()
 {
-//cjh    setTouchEnabled( true );
-
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite1::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Point(s.width/2, s.height/2) );
 }
@@ -264,7 +266,9 @@ std::string Sprite1::title()
 
 SpriteBatchNode1::SpriteBatchNode1()
 {
-//cjh    setTouchEnabled( true );
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(SpriteBatchNode1::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
 
     auto BatchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
     addChild(BatchNode, 0, kTagSpriteBatchNode);
@@ -1378,7 +1382,9 @@ std::string SpriteBatchNodeAliased::title()
 
 SpriteNewTexture::SpriteNewTexture()
 {
-//cjh    setTouchEnabled( true );
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(SpriteNewTexture::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto node = Node::create();
     addChild(node, 0, kTagSpriteBatchNode);
@@ -1487,7 +1493,9 @@ std::string SpriteNewTexture::title()
 
 SpriteBatchNodeNewTexture::SpriteBatchNodeNewTexture()
 {
-//cjh    setTouchEnabled( true );
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(SpriteBatchNodeNewTexture::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
     addChild(batch, 0, kTagSpriteBatchNode);

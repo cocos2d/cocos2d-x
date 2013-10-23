@@ -21,9 +21,14 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION      
     // enable events
-//FIXME:    setTouchEnabled(true);
-//    setAccelerometerEnabled(true);
 
+    auto touchListener = EventListenerTouchAllAtOnce::create();
+    touchListener->onTouchesEnded = CC_CALLBACK_2(ChipmunkTestLayer::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(ChipmunkTestLayer::onAcceleration, this));
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(accListener, this);
+    
     // title
     auto label = LabelTTF::create("Multi touch the screen", "Marker Felt", 36);
     label->setPosition(Point( VisibleRect::center().x, VisibleRect::top().y - 30));

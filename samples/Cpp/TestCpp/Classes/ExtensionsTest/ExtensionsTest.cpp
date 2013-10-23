@@ -118,7 +118,11 @@ void ExtensionsMainLayer::onEnter()
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
 
-//cjh	setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(ExtensionsMainLayer::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(ExtensionsMainLayer::onTouchesMoved, this);
+    
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
     addChild(_itemMenu);
 }
