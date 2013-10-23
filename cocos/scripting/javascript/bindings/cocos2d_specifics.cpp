@@ -14,7 +14,8 @@ JSTouchDelegate::TouchDelegateMap JSTouchDelegate::sTouchDelegateMap;
 JSTouchDelegate::JSTouchDelegate()
 : _obj(nullptr)
 , _needUnroot(false)
-, _touchListener(nullptr)
+, _touchListenerAllAtOnce(nullptr)
+, _touchListenerOneByOne(nullptr)
 {
 }
 
@@ -63,9 +64,9 @@ void JSTouchDelegate::setJSObject(JSObject *obj)
 void JSTouchDelegate::registerStandardDelegate(int priority)
 {
     auto dispatcher = EventDispatcher::getInstance();
-    dispatcher->removeEventListener(_touchListener);
+    dispatcher->removeEventListener(_touchListenerAllAtOnce);
     
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ALL_AT_ONCE);
+    auto listener = EventListenerTouchAllAtOnce::create();
     
     listener->onTouchesBegan = CC_CALLBACK_2(JSTouchDelegate::onTouchesBegan, this);
     listener->onTouchesMoved = CC_CALLBACK_2(JSTouchDelegate::onTouchesMoved, this);
@@ -74,15 +75,15 @@ void JSTouchDelegate::registerStandardDelegate(int priority)
     
     dispatcher->addEventListenerWithFixedPriority(listener, priority);
     
-    _touchListener = listener;
+    _touchListenerAllAtOnce = listener;
 }
 
 void JSTouchDelegate::registerTargetedDelegate(int priority, bool swallowsTouches)
 {
     auto dispatcher = EventDispatcher::getInstance();
-    dispatcher->removeEventListener(_touchListener);
+    dispatcher->removeEventListener(_touchListenerOneByOne);
     
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(swallowsTouches);
     
     listener->onTouchBegan = CC_CALLBACK_2(JSTouchDelegate::onTouchBegan, this);
@@ -91,7 +92,7 @@ void JSTouchDelegate::registerTargetedDelegate(int priority, bool swallowsTouche
     listener->onTouchCancelled = CC_CALLBACK_2(JSTouchDelegate::onTouchCancelled, this);
     
     dispatcher->addEventListenerWithFixedPriority(listener, priority);
-    _touchListener = listener;
+    _touchListenerOneByOne = listener;
 }
 
 void JSTouchDelegate::unregisterTouchDelegate()
@@ -102,7 +103,8 @@ void JSTouchDelegate::unregisterTouchDelegate()
         JS_RemoveObjectRoot(cx, &_obj);
     }
     
-    EventDispatcher::getInstance()->removeEventListener(_touchListener);
+    EventDispatcher::getInstance()->removeEventListener(_touchListenerAllAtOnce);
+    EventDispatcher::getInstance()->removeEventListener(_touchListenerOneByOne);
     
     this->release();
 }
