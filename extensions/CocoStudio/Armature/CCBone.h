@@ -83,6 +83,8 @@ public:
 
     void addDisplay(CCNode *display, int index);
 
+    void removeDisplay(int index);
+
     void changeDisplayByIndex(int index, bool force);
 
     /**

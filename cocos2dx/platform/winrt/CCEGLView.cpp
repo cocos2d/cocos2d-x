@@ -326,8 +326,8 @@ bool CCEGLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
 	m_bSupportTouch = true;
 	m_directXView = ref new DirectXView(window);
 	m_directXView->Initialize(window, panel);
+    m_initialized = false;
 	UpdateForWindowSizeChange();
-	m_initialized = true;
     return bRet;
 }
 
@@ -408,8 +408,6 @@ void CCEGLView::OnRendering()
 	if(m_running && m_initialized)
 	{
 		CCDirector::sharedDirector()->mainLoop();
-		// TODO: fix audio
-		// CocosDenshion::SimpleAudioEngine::sharedEngine()->render();
 	}
 }
 
@@ -458,7 +456,21 @@ void CCEGLView::ValidateDevice()
 
 void CCEGLView::UpdateForWindowSizeChange()
 {
-	CCEGLViewProtocol::setFrameSize(ConvertDipsToPixels(m_window->Bounds.Width),ConvertDipsToPixels(m_window->Bounds.Height));
+    float width = ConvertDipsToPixels(m_window->Bounds.Width);
+    float height = ConvertDipsToPixels(m_window->Bounds.Height);
+
+	if(!m_initialized)
+    {
+        m_initialized = true;
+        CCEGLViewProtocol::setFrameSize(width, height);
+    }
+    else
+    {
+        m_obScreenSize = CCSizeMake(width, height);
+        CCSize designSize = getDesignResolutionSize();
+        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+        CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
+   }
 }
 
 NS_CC_END
