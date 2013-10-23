@@ -57,6 +57,7 @@ m_textureFiles(NULL)
 
 UIHelper::~UIHelper()
 {
+    CC_SAFE_RELEASE(m_textureFiles);
     cocos2d::extension::CCSGUIReader::purgeCCSGUIReader();
 }
 
@@ -77,6 +78,9 @@ void UIHelper::addSpriteFrame(const char *fileName)
     {
         return;
     }
+
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(fileName);
+
     ccArray* arrayTextures = m_textureFiles->data;
     int length = arrayTextures->num;
     for (int i=0;i<length;i++)
@@ -88,7 +92,6 @@ void UIHelper::addSpriteFrame(const char *fileName)
         }
     }
     m_textureFiles->addObject(CCString::create(fileName));
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(fileName);
 }
 
 void UIHelper::removeSpriteFrame(const char *fileName)
