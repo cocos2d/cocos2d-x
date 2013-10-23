@@ -161,11 +161,7 @@ void EventDispatcher::destroyInstance()
 }
 
 void EventDispatcher::visitTarget(Node* node)
-{
-    // Reset priority index
-    s_eventPriorityIndex = 0;
-    _nodePriorityMap.clear();
-    
+{    
     int i = 0;
     Array* children = node->getChildren();
     int childrenCount = children ? children->count() : 0;
@@ -898,20 +894,23 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const std::string& 
         return;
     
     Node* rootNode = (Node*)Director::getInstance()->getRunningScene();
-    
+    // Reset priority index
+    s_eventPriorityIndex = 0;
+    _nodePriorityMap.clear();
+
     visitTarget(rootNode);
     
     // After sort: priority < 0, > 0
     auto sceneGraphlisteners = listeners->getSceneGraphPriorityListeners();
     std::sort(sceneGraphlisteners->begin(), sceneGraphlisteners->end(), [this](const EventListener* l1, const EventListener* l2) {
-        return _nodePriorityMap[l1->_node] >= _nodePriorityMap[l2->_node];
+        return _nodePriorityMap[l1->_node] > _nodePriorityMap[l2->_node];
     });
     
 #if DUMP_LISTENER_ITEM_PRIORITY_INFO
     log("-----------------------------------");
     for (auto& l : *sceneGraphlisteners)
     {
-        log("listener priority: node ([%s]%p), fixed (%d)", typeid(*l->_node).name(), l->_node, l->_fixedPriority);
+        log("listener priority: node ([%s]%p), priority (%d)", typeid(*l->_node).name(), l->_node, _nodePriorityMap[l->_node]);
     }
 #endif
 }
