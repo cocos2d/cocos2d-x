@@ -25,13 +25,14 @@ enum {
 //------------------------------------------------------------------
 MenuLayerMainMenu::MenuLayerMainMenu()
 {
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = CC_CALLBACK_2(MenuLayerMainMenu::onTouchBegan, this);
-    listener->onTouchMoved = CC_CALLBACK_2(MenuLayerMainMenu::onTouchMoved, this);
-    listener->onTouchEnded = CC_CALLBACK_2(MenuLayerMainMenu::onTouchEnded, this);
-    listener->onTouchCancelled = CC_CALLBACK_2(MenuLayerMainMenu::onTouchCancelled, this);
+    _touchListener = EventListenerTouchOneByOne::create();
+    _touchListener->setSwallowTouches(true);
+    _touchListener->onTouchBegan = CC_CALLBACK_2(MenuLayerMainMenu::onTouchBegan, this);
+    _touchListener->onTouchMoved = CC_CALLBACK_2(MenuLayerMainMenu::onTouchMoved, this);
+    _touchListener->onTouchEnded = CC_CALLBACK_2(MenuLayerMainMenu::onTouchEnded, this);
+    _touchListener->onTouchCancelled = CC_CALLBACK_2(MenuLayerMainMenu::onTouchCancelled, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(_touchListener, 1);
 
     // Font Item    
     auto spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
@@ -152,8 +153,7 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 
 void MenuLayerMainMenu::allowTouches(float dt)
 {
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY+1, this);
+    EventDispatcher::getInstance()->setPriority(_touchListener, 1);
     unscheduleAllSelectors();
     log("TOUCHES ALLOWED AGAIN");
 }
@@ -161,8 +161,7 @@ void MenuLayerMainMenu::allowTouches(float dt)
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
 {
     // hijack all touch events for 5 seconds
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY-1, this);
+    EventDispatcher::getInstance()->setPriority(_touchListener, -1);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     log("TOUCHES DISABLED FOR 5 SECONDS");
 }

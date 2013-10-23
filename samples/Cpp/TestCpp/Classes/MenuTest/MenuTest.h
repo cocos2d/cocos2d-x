@@ -8,6 +8,7 @@ class MenuLayerMainMenu : public Layer
 {
 protected:
     MenuItem*    _disabledItem;
+    EventListenerTouchOneByOne* _touchListener;
 
 public:
     MenuLayerMainMenu(void);
