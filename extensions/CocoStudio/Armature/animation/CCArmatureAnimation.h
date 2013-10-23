@@ -208,7 +208,7 @@ protected:
      */
     void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
-    inline bool isOnFrameEvent() { return m_bOnFrameEvent; }
+    inline bool isIgnoreFrameEvent() { return m_bIgnoreFrameEvent; }
 
     friend class CCTween;
 protected:
@@ -228,7 +228,7 @@ protected:
 
     CCArray *m_pTweenList;
 
-    bool m_bOnFrameEvent;
+    bool m_bIgnoreFrameEvent;
 
     std::queue<CCFrameEvent*> m_sFrameEventQueue;
 protected:

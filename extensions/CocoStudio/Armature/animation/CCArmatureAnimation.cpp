@@ -53,7 +53,7 @@ CCArmatureAnimation::CCArmatureAnimation()
     , m_strMovementID("")
     , m_iToIndex(0)
     , m_pTweenList(NULL)
-    , m_bOnFrameEvent(false)
+    , m_bIgnoreFrameEvent(false)
 
     , m_sMovementEventCallFunc(NULL)
     , m_sFrameEventCallFunc(NULL)
@@ -290,6 +290,9 @@ void CCArmatureAnimation::gotoAndPlay(int frameIndex)
         return;
     }
 
+    bool ignoreFrameEvent = m_bIgnoreFrameEvent;
+    m_bIgnoreFrameEvent = true;
+
     m_bIsPlaying = true;
     m_bIsComplete = m_bIsPause = false;
 
@@ -304,6 +307,8 @@ void CCArmatureAnimation::gotoAndPlay(int frameIndex)
     }
 
     m_pArmature->update(0);
+
+    m_bIgnoreFrameEvent = ignoreFrameEvent;
 }
 
 void CCArmatureAnimation::gotoAndPause(int frameIndex)
@@ -331,9 +336,9 @@ void CCArmatureAnimation::update(float dt)
         CCFrameEvent *frameEvent = m_sFrameEventQueue.front();
         m_sFrameEventQueue.pop();
 
-        m_bOnFrameEvent = true;
+        m_bIgnoreFrameEvent = true;
         (m_sFrameEventTarget->*m_sFrameEventCallFunc)(frameEvent->bone, frameEvent->frameEventName, frameEvent->originFrameIndex, frameEvent->currentFrameIndex);
-        m_bOnFrameEvent = false;
+        m_bIgnoreFrameEvent = false;
 
         CC_SAFE_DELETE(frameEvent);
     }

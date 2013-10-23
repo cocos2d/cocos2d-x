@@ -442,7 +442,7 @@ float CCTween::updateFrameData(float currentPercent)
             to = frames[m_iToIndex];
 
             //! Guaranteed to trigger frame event
-            if(from->strEvent.length() != 0 && !m_pAnimation->isOnFrameEvent())
+            if(from->strEvent.length() != 0 && !m_pAnimation->isIgnoreFrameEvent())
             {
                 m_pAnimation->frameEvent(m_pBone, from->strEvent.c_str(), from->frameID, playedTime);
             }
