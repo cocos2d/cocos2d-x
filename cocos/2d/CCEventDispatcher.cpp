@@ -232,7 +232,8 @@ void EventDispatcher::cleanTarget(Node* node)
     if (listenerIter != _nodeListenersMap.end())
     {
         auto listeners = listenerIter->second;
-        for (auto& l : *listeners)
+        auto listenersCopy = *listeners;
+        for (auto& l : listenersCopy)
         {
             removeEventListener(l);
         }
