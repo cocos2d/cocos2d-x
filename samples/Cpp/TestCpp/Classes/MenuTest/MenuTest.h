@@ -14,10 +14,10 @@ public:
     ~MenuLayerMainMenu();
 
 public:
-    virtual bool onTouchBegan(Touch *touch, Event * event);
-    virtual void onTouchEnded(Touch *touch, Event * event);
-    virtual void onTouchCancelled(Touch *touch, Event * event);
-    virtual void onTouchMoved(Touch *touch, Event * event);
+    bool onTouchBegan(Touch *touch, Event * event);
+    void onTouchEnded(Touch *touch, Event * event);
+    void onTouchCancelled(Touch *touch, Event * event);
+    void onTouchMoved(Touch *touch, Event * event);
 
     void allowTouches(float dt);
     void menuCallback(Object* sender);
@@ -106,8 +106,8 @@ class RemoveMenuItemWhenMove : public Layer
 public:
     RemoveMenuItemWhenMove();
     ~RemoveMenuItemWhenMove();
-    virtual bool onTouchBegan(Touch  *touch, Event  *event);
-    virtual void onTouchMoved(Touch  *touch, Event  *event);
+    bool onTouchBegan(Touch  *touch, Event  *event);
+    void onTouchMoved(Touch  *touch, Event  *event);
     
     void goBack(Object *pSender);
     

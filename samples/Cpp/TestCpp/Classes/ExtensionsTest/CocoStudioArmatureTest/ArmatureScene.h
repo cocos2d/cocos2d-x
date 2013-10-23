@@ -138,7 +138,7 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void onExit();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	int displayIndex;
 	cocostudio::Armature *armature;
@@ -150,7 +150,7 @@ class TestParticleDisplay : public ArmatureTestLayer
 	virtual void onExit();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	int animationID;
 	cocostudio::Armature *armature;
@@ -251,7 +251,7 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
 	virtual std::string title();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	cocostudio::Armature *armature;
 	int weaponIndex;

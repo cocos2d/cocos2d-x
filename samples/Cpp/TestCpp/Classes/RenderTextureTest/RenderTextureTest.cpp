@@ -111,8 +111,11 @@ RenderTextureSave::RenderTextureSave()
     _brush->retain();
     _brush->setColor(Color3B::RED);
     _brush->setOpacity(20);
-//cjh    this->setTouchEnabled(true);
-
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    
     // Save Image menu
     MenuItemFont::setFontSize(16);
     auto item1 = MenuItemFont::create("Save Image", CC_CALLBACK_1(RenderTextureSave::saveImage, this));
@@ -296,7 +299,12 @@ void RenderTextureScene::runThisTest()
 
 RenderTextureZbuffer::RenderTextureZbuffer()
 {
-//cjh    this->setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(RenderTextureZbuffer::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureZbuffer::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(RenderTextureZbuffer::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    
     auto size = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("vertexZ = 50", "Marker Felt", 64);
     label->setPosition(Point(size.width / 2, size.height * 0.25f));
@@ -627,7 +635,9 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()
 {
-//cjh    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(SpriteRenderTextureBug::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords(Point(s.width/2, s.height/2));

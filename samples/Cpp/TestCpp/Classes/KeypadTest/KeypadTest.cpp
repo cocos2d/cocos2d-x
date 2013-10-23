@@ -7,8 +7,11 @@ KeypadTest::KeypadTest()
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
-//cjh    setKeyboardEnabled(true);
-
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyReleased = CC_CALLBACK_2(KeypadTest::onKeyReleased, this);
+    
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    
     // create a label to display the tip string
     _label = LabelTTF::create("Please press any key...", "Arial", 22);
     _label->setPosition(Point(s.width / 2, s.height / 2));

@@ -227,19 +227,6 @@ _sliderMusicVolume(NULL)
     addSliders();
     schedule(schedule_selector(CocosDenshionTest::updateVolumes));
 
-//    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-
-//    std::string testItems[] = {
-//        "unload effect",
-//        "pause effect",
-//        "resume effect",
-//        "pause all effects",
-//        "resume all effects",
-//        "stop all effects"
-//    };
-
-//cjh    setTouchEnabled(true);
-
     // preload background music and effect
     SimpleAudioEngine::getInstance()->preloadBackgroundMusic( MUSIC_FILE );
     SimpleAudioEngine::getInstance()->preloadEffect( EFFECT_FILE );
