@@ -85,7 +85,6 @@ public:
     void onEnter() override;
     std::string title() override;
     void update(float delta) override;
-    
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
     
     void changeModeCallback(Object* sender);
@@ -96,6 +95,14 @@ private:
     float _angle;
     DrawNode* _node;
     int _mode;
+};
+
+class PhysicsDemoJoints : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 };
 
 #endif

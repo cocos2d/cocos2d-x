@@ -561,6 +561,11 @@ void PhysicsWorld::rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void
     }
 }
 
+Array* getShapesAtPoint(Point point)
+{
+    
+}
+
 Array* PhysicsWorld::getAllBody() const
 {
     return _bodys;
