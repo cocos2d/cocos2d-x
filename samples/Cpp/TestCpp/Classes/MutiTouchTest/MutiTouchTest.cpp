@@ -56,7 +56,7 @@ bool MutiTouchTestLayer::init()
 {
     if (Layer::init())
     {
-        setTouchEnabled(true);
+//cjh        setTouchEnabled(true);
         
         auto title = LabelTTF::create("Please touch the screen!", "", 24);
         title->setPosition(VisibleRect::top()+Point(0, -40));

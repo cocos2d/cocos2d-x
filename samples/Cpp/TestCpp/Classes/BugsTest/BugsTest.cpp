@@ -67,7 +67,7 @@ void BugsTestMainLayer::onEnter()
 
     _itmeMenu->setPosition(s_tCurPos);
     addChild(_itmeMenu);
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
 }
 
 void BugsTestMainLayer::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)

@@ -38,7 +38,7 @@ void Paddle::onEnter()
     Sprite::onEnter();
     
     // Register Touch Event
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     
     listener->onTouchBegan = CC_CALLBACK_2(Paddle::onTouchBegan, this);

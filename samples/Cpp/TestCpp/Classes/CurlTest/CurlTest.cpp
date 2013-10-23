@@ -9,7 +9,7 @@ CurlTest::CurlTest()
     addChild(label, 0);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
 
-    setTouchEnabled(true);
+//FIXME cjh:    setTouchEnabled(true);
 
     // create a label to display the tip string
     _label = LabelTTF::create("Touch the screen to connect", "Arial", 22);

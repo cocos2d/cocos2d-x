@@ -121,7 +121,7 @@ void MotionStreakTest2::onEnter()
 {
     MotionStreakTest::onEnter();
 
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
 
     auto s = Director::getInstance()->getWinSize();
         

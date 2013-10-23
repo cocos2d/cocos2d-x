@@ -91,8 +91,7 @@ bool nodeComparisonLess(Object* p1, Object* p2)
 static int s_globalOrderOfArrival = 1;
 
 Node::Node(void)
-: _eventPriority(0)
-, _rotationX(0.0f)
+: _rotationX(0.0f)
 , _rotationY(0.0f)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
@@ -134,11 +133,6 @@ Node::Node(void)
 , _physicsBody(nullptr)
 #endif
 {
-    onEnterHook = nullptr;
-    onEnterTransitionDidFinishHook = nullptr;
-    onExitHook = nullptr;
-    onExitTransitionDidStartHook = nullptr;
-    
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
     _actionManager = director->getActionManager();
@@ -188,7 +182,7 @@ Node::~Node()
     
     CC_SAFE_DELETE(_componentContainer);
     
-    removeAllEventListeners();
+    EventDispatcher::getInstance()->cleanTarget(this);
     
 #ifdef CC_USE_PHYSICS
     CC_SAFE_RELEASE(_physicsBody);
@@ -243,6 +237,8 @@ void Node::setZOrder(int z)
     {
         _parent->reorderChild(this, z);
     }
+    
+    EventDispatcher::getInstance()->setDirtyForNode(this);
 }
 
 /// vertexZ getter
@@ -643,6 +639,8 @@ void Node::addChild(Node *child, int zOrder, int tag)
             child->onEnterTransitionDidFinish();
         }
     }
+    
+    EventDispatcher::getInstance()->setDirtyForNode(this);
 }
 
 void Node::addChild(Node *child, int zOrder)
@@ -936,7 +934,8 @@ void Node::onEnter()
     arrayMakeObjectsPerformSelector(_children, onEnter, Node*);
 
     this->resumeSchedulerAndActions();
-
+    EventDispatcher::getInstance()->resumeTarget(this);
+    
     _running = true;
 
     if (_scriptType != kScriptTypeNone)
@@ -945,11 +944,6 @@ void Node::onEnter()
         BasicScriptData data(this,(void*)&action);
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-    
-    if (onEnterHook)
-    {
-        onEnterHook();
     }
 }
 
@@ -966,20 +960,10 @@ void Node::onEnterTransitionDidFinish()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
-    
-    if (onEnterTransitionDidFinishHook)
-    {
-        onEnterTransitionDidFinishHook();
-    }
 }
 
 void Node::onExitTransitionDidStart()
 {
-    if (onExitTransitionDidStartHook)
-    {
-        onExitTransitionDidStartHook();
-    }
-    
     arrayMakeObjectsPerformSelector(_children, onExitTransitionDidStart, Node*);
     if (_scriptType != kScriptTypeNone)
     {
@@ -992,10 +976,7 @@ void Node::onExitTransitionDidStart()
 
 void Node::onExit()
 {
-    if (onExitHook)
-    {
-        onExitHook();
-    }
+    EventDispatcher::getInstance()->pauseTarget(this);
     
     this->pauseSchedulerAndActions();
 
@@ -1009,8 +990,6 @@ void Node::onExit()
     }
 
     arrayMakeObjectsPerformSelector(_children, onExit, Node*);
-    
-    removeAllEventListeners();
 }
 
 void Node::setActionManager(ActionManager* actionManager)
@@ -1361,28 +1340,6 @@ void Node::removeAllComponents()
 {
     if( _componentContainer )
         _componentContainer->removeAll();
-}
-
-void Node::associateEventListener(EventListener* listener)
-{
-    _eventlisteners.insert(listener);
-}
-
-void Node::dissociateEventListener(EventListener* listener)
-{
-    _eventlisteners.erase(listener);
-}
-
-void Node::removeAllEventListeners()
-{
-    auto dispatcher = EventDispatcher::getInstance();
-    
-    auto eventListenersCopy = _eventlisteners;
-    
-    for (auto& listener : eventListenersCopy)
-    {
-        dispatcher->removeEventListener(listener);
-    }
 }
 
 #ifdef CC_USE_PHYSICS

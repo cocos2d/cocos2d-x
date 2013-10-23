@@ -111,7 +111,7 @@ RenderTextureSave::RenderTextureSave()
     _brush->retain();
     _brush->setColor(Color3B::RED);
     _brush->setOpacity(20);
-    this->setTouchEnabled(true);
+//cjh    this->setTouchEnabled(true);
 
     // Save Image menu
     MenuItemFont::setFontSize(16);
@@ -296,7 +296,7 @@ void RenderTextureScene::runThisTest()
 
 RenderTextureZbuffer::RenderTextureZbuffer()
 {
-    this->setTouchEnabled(true);
+//cjh    this->setTouchEnabled(true);
     auto size = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("vertexZ = 50", "Marker Felt", 64);
     label->setPosition(Point(size.width / 2, size.height * 0.25f));
@@ -627,7 +627,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()
 {
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
     
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords(Point(s.width/2, s.height/2));

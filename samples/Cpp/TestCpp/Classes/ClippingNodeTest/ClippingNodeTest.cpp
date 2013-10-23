@@ -449,12 +449,10 @@ void HoleDemo::setup()
     
     this->addChild(_outerClipper);
     
-    this->onEnterHook = [this](){
-        auto dispatcher = EventDispatcher::getInstance();
-        auto listener = EventListenerTouchAllAtOnce::create();
-        listener->onTouchesBegan = CC_CALLBACK_2(HoleDemo::onTouchesBegan, this);
-        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    };
+    auto dispatcher = EventDispatcher::getInstance();
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(HoleDemo::onTouchesBegan, this);
+    dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void HoleDemo::pokeHoleAtPoint(Point point)
@@ -531,14 +529,12 @@ void ScrollViewDemo::setup()
     
     _scrolling = false;
 
-    this->onEnterHook = [this](){
-        auto dispatcher = EventDispatcher::getInstance();
-        auto listener = EventListenerTouchAllAtOnce::create();
-        listener->onTouchesBegan = CC_CALLBACK_2(ScrollViewDemo::onTouchesBegan, this);
-        listener->onTouchesMoved = CC_CALLBACK_2(ScrollViewDemo::onTouchesMoved, this);
-        listener->onTouchesEnded = CC_CALLBACK_2(ScrollViewDemo::onTouchesEnded, this);
-        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    };
+    auto dispatcher = EventDispatcher::getInstance();
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(ScrollViewDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(ScrollViewDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(ScrollViewDemo::onTouchesEnded, this);
+    dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void ScrollViewDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)

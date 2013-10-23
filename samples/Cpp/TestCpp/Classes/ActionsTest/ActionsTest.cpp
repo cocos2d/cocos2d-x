@@ -1375,7 +1375,7 @@ void ActionStacked::onEnter()
         
     this->centerSprites(0);
     
-    this->setTouchEnabled(true);
+//cjh    this->setTouchEnabled(true);
     
     auto s = Director::getInstance()->getWinSize();
     this->addNewSpriteWithCoords(Point(s.width/2, s.height/2));

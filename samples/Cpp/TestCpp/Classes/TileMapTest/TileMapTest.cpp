@@ -1430,7 +1430,7 @@ Layer* restartTileMapAction()
 TileDemo::TileDemo(void)
 : BaseTest()
 {
-    setTouchEnabled( true );
+//cjh    setTouchEnabled( true );
 }
 
 TileDemo::~TileDemo(void)

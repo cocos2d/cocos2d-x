@@ -197,8 +197,8 @@ void PhysicsDemoClickAdd::onEnter()
     PhysicsDemo::onEnter();
     
 #ifdef CC_USE_PHYSICS
-    setTouchEnabled(true);
-    setAccelerometerEnabled(true);
+//cjh    setTouchEnabled(true);
+//    setAccelerometerEnabled(true);
     
     auto node = Node::create();
     node->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size));

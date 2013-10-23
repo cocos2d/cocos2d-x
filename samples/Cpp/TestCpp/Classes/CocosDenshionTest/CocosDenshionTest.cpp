@@ -65,7 +65,7 @@ private:
 //        Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
         
         // Register Touch Event
-        auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+        auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
         
         listener->onTouchBegan = CC_CALLBACK_2(Button::onTouchBegan, this);
@@ -238,7 +238,7 @@ _sliderMusicVolume(NULL)
 //        "stop all effects"
 //    };
 
-    setTouchEnabled(true);
+//cjh    setTouchEnabled(true);
 
     // preload background music and effect
     SimpleAudioEngine::getInstance()->preloadBackgroundMusic( MUSIC_FILE );

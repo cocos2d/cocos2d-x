@@ -188,6 +188,8 @@ void Menu::onEnter()
     auto eventDispatcher = EventDispatcher::getInstance();
     
     auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->setSwallowTouches(true);
+    
     touchListener->onTouchBegan = CC_CALLBACK_2(Menu::onTouchBegan, this);
     touchListener->onTouchMoved = CC_CALLBACK_2(Menu::onTouchMoved, this);
     touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);

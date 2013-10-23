@@ -113,6 +113,7 @@ public:
     
 private:
     MenuItemFont *item;
+    EventListenerTouchOneByOne* _touchListener;
 };
 
 
