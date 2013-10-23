@@ -46,7 +46,7 @@ SOURCES = ../Collision/Shapes/b2ChainShape.cpp \
 ../Dynamics/b2WorldCallbacks.cpp \
 ../Rope/b2Rope.cpp
 
-include ../../../cocos2dx/proj.linux/cocos2dx.mk
+include ../../../cocos/2d/cocos2dx.mk
 
 INCLUDES = -I../..
 
