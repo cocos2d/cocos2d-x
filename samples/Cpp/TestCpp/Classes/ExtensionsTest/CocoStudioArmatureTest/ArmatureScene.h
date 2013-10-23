@@ -37,6 +37,7 @@ enum {
 	TEST_BOUDINGBOX,
 	TEST_ANCHORPOINT,
 	TEST_ARMATURE_NESTING,
+    TEST_ARMATURE_NESTING_2,
 
 	TEST_LAYER_COUNT
 };
@@ -257,5 +258,41 @@ public:
 
 	cocos2d::extension::CCArmature *armature;
 	int weaponIndex;
+};
+
+class Hero : public cocos2d::extension::CCArmature
+{
+public:
+    static Hero *create(const char *name);
+    Hero();
+
+    virtual void changeMount(cocos2d::extension::CCArmature *armature);
+    virtual void playByIndex(int index);
+
+    CC_SYNTHESIZE(cocos2d::extension::CCArmature*, m_pMount, Mount);
+    CC_SYNTHESIZE(cocos2d::CCLayer*, m_pLayer, Layer);
+};
+
+class TestArmatureNesting2 : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void registerWithTouchDispatcher();
+
+    virtual void ChangeMountCallback(CCObject* pSender);
+    virtual cocos2d::extension::CCArmature *createMount(const char *name, CCPoint position);
+
+    Hero *hero;
+
+    cocos2d::extension::CCArmature *horse;
+    cocos2d::extension::CCArmature *horse2;
+    cocos2d::extension::CCArmature *bear;
+
+
+    bool touchedMenu;
 };
 #endif  // __HELLOWORLD_SCENE_H__

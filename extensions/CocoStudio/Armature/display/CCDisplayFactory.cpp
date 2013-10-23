@@ -229,12 +229,6 @@ void CCDisplayFactory::createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *
 
     CCArmature *armature = CCArmature::create(displayData->displayName.c_str(), bone);
 
-    /*
-     *  because this bone have called this name, so armature should change it's name, or it can't add to
-     *  CCArmature's bone children.
-     */
-    armature->setName((bone->getName() + "_armatureChild").c_str());
-
     decoDisplay->setDisplay(armature);
 }
 void CCDisplayFactory::updateArmatureDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
