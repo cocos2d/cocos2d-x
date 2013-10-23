@@ -60,12 +60,45 @@ NS_CC_BEGIN
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
+namespace
+{
+    typedef struct RayCastCallbackInfo
+    {
+        PhysicsWorld* world;
+        PhysicsRayCastCallback* callback;
+        Point p1;
+        Point p2;
+        void* data;
+    }RayCastCallbackInfo;
+    
+    typedef struct RectQueryCallbackInfo
+    {
+        PhysicsWorld* world;
+        PhysicsRectQueryCallback* callback;
+        void* data;
+    }RectQueryCallbackInfo;
+}
+
+class PhysicsWorldCallback
+{
+public:
+    static int collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, PhysicsWorld *world);
+    static int collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
+    static void collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
+    static void collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
+    static void rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info);
+    static void rectQueryCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info);
+    
+public:
+    static bool continues;
+};
+
+bool PhysicsWorldCallback::continues = true;
+
 const float PHYSICS_INFINITY = INFINITY;
 
-int PhysicsWorld::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data)
+int PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, PhysicsWorld *world)
 {
-    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
-    
     CP_ARBITER_GET_SHAPES(arb, a, b);
     
     auto ita = PhysicsShapeInfo::map.find(a);
@@ -78,28 +111,59 @@ int PhysicsWorld::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *spa
     return world->collisionBeginCallback(*static_cast<PhysicsContact*>(arb->data));
 }
 
-int PhysicsWorld::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
+int PhysicsWorldCallback::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
-    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
     return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(arb->data),
                                             PhysicsContactPreSolve());
 }
 
-void PhysicsWorld::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
+void PhysicsWorldCallback::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
-    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
     world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(arb->data),
                                       PhysicsContactPostSolve());
 }
 
-void PhysicsWorld::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
+void PhysicsWorldCallback::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
-    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
     PhysicsContact* contact = static_cast<PhysicsContact*>(arb->data);
     
     world->collisionSeparateCallback(*contact);
     
     delete contact;
+}
+
+void PhysicsWorldCallback::rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info)
+{
+    if (!PhysicsWorldCallback::continues)
+    {
+        return;
+    }
+    
+    auto it = PhysicsShapeInfo::map.find(shape);
+    CC_ASSERT(it != PhysicsShapeInfo::map.end());
+    
+    PhysicsWorldCallback::continues = info->callback->report(*info->world,
+                   *it->second->shape,
+                   Point(info->p1.x+(info->p2.x-info->p1.x)*t, info->p1.y+(info->p2.y-info->p1.y)*t),
+                   Point(n.x, n.y),
+                   (float)t,
+                   info->data);
+}
+
+void PhysicsWorldCallback::rectQueryCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info)
+{
+    auto it = PhysicsShapeInfo::map.find(shape);
+    
+    CC_ASSERT(it != PhysicsShapeInfo::map.end());
+    
+    if (!PhysicsWorldCallback::continues)
+    {
+        return;
+    }
+    
+    PhysicsWorldCallback::continues = info->callback->report(*info->world,
+                                                             *it->second->shape,
+                                                             info->data);
 }
 
 bool PhysicsWorld::init()
@@ -109,10 +173,10 @@ bool PhysicsWorld::init()
     cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(_gravity));
     
     cpSpaceSetDefaultCollisionHandler(_info->space,
-                                      PhysicsWorld::collisionBeginCallbackFunc,
-                                      PhysicsWorld::collisionPreSolveCallbackFunc,
-                                      PhysicsWorld::collisionPostSolveCallbackFunc,
-                                      PhysicsWorld::collisionSeparateCallbackFunc,
+                                      (cpCollisionBeginFunc)PhysicsWorldCallback::collisionBeginCallbackFunc,
+                                      (cpCollisionPreSolveFunc)PhysicsWorldCallback::collisionPreSolveCallbackFunc,
+                                      (cpCollisionPostSolveFunc)PhysicsWorldCallback::collisionPostSolveCallbackFunc,
+                                      (cpCollisionSeparateFunc)PhysicsWorldCallback::collisionSeparateCallbackFunc,
                                       this);
     
     return true;
@@ -327,12 +391,16 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
                 Point centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(shape)))
                 + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(shape));
                 
-                Point seg[4] = {};
-                seg[0] = Point(centre.x - radius, centre.y - radius);
-                seg[1] = Point(centre.x - radius, centre.y + radius);
-                seg[2] = Point(centre.x + radius, centre.y + radius);
-                seg[3] = Point(centre.x + radius, centre.y - radius);
-                node->drawPolygon(seg, 4, Color4F(), 1, Color4F(1, 0, 0, 1));
+                static const int CIRCLE_SEG_NUM = 12;
+                Point seg[CIRCLE_SEG_NUM] = {};
+                
+                for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
+                {
+                    float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
+                    Point d(radius * cosf(angle), radius * sinf(angle));
+                    seg[i] = centre + d;
+                }
+                node->drawPolygon(seg, CIRCLE_SEG_NUM, Color4F(1.0f, 0.0f, 0.0f, 0.3f), 1, Color4F(1, 0, 0, 1));
                 break;
             }
             case CP_SEGMENT_SHAPE:
@@ -368,12 +436,14 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     PhysicsBody* bodyA = contact.getShapeA()->getBody();
     PhysicsBody* bodyB = contact.getShapeB()->getBody();
     
-    if ((bodyA->getCategoryBitmask() & bodyB->getContactTestBitmask()) == 0)
+    if ((bodyA->getCategoryBitmask() & bodyB->getContactTestBitmask()) == 0
+        || (bodyB->getContactTestBitmask() & bodyA->getCategoryBitmask()) == 0)
     {
         contact.setNotify(false);
     }
     
-    if ((bodyA->getCategoryBitmask() & bodyB->getCollisionBitmask()) == 0)
+    if ((bodyA->getCategoryBitmask() & bodyB->getCollisionBitmask()) == 0
+        || (bodyB->getCategoryBitmask() & bodyA->getCollisionBitmask()) == 0)
     {
         ret = false;
     }
@@ -384,10 +454,10 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
         // so if the mask test is false, the two bodies won't have collision. 
         if (ret)
         {
-            ret = _listener->onContactBegin(contact);
+            ret = _listener->onContactBegin(*this, contact);
         }else
         {
-            _listener->onContactBegin(contact);
+            _listener->onContactBegin(*this, contact);
         }
     }
     
@@ -403,7 +473,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact, const Physi
     
     if (_listener && _listener->onContactPreSolve)
     {
-        return _listener->onContactPreSolve(contact, solve);
+        return _listener->onContactPreSolve(*this, contact, solve);
     }
     
     return true;
@@ -418,7 +488,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact, const Phy
     
     if (_listener && _listener->onContactPreSolve)
     {
-        _listener->onContactPostSolve(contact, solve);
+        _listener->onContactPostSolve(*this, contact, solve);
     }
 }
 
@@ -431,7 +501,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     
     if (_listener && _listener->onContactEnd)
     {
-        _listener->onContactEnd(contact);
+        _listener->onContactEnd(*this, contact);
     }
 }
 
@@ -454,6 +524,51 @@ void PhysicsWorld::setGravity(Point gravity)
     
     _gravity = gravity;
     cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(gravity));
+}
+
+
+void PhysicsWorld::rayCast(PhysicsRayCastCallback& callback, Point point1, Point point2, void* data)
+{
+    if (callback.report != nullptr)
+    {
+        RayCastCallbackInfo info = {this, &callback, point1, point2, data};
+        
+        PhysicsWorldCallback::continues = true;
+        cpSpaceSegmentQuery(this->_info->space,
+                            PhysicsHelper::point2cpv(point1),
+                            PhysicsHelper::point2cpv(point2),
+                            CP_ALL_LAYERS,
+                            CP_NO_GROUP,
+                            (cpSpaceSegmentQueryFunc)PhysicsWorldCallback::rayCastCallbackFunc,
+                            &info);
+    }
+}
+
+
+void PhysicsWorld::rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data)
+{
+    if (callback.report != nullptr)
+    {
+        RectQueryCallbackInfo info = {this, &callback, data};
+        
+        PhysicsWorldCallback::continues = true;
+        cpSpaceBBQuery(this->_info->space,
+                       PhysicsHelper::rect2cpbb(rect),
+                       CP_ALL_LAYERS,
+                       CP_NO_GROUP,
+                       (cpSpaceBBQueryFunc)PhysicsWorldCallback::rectQueryCallbackFunc,
+                       &info);
+    }
+}
+
+Array* getShapesAtPoint(Point point)
+{
+    
+}
+
+Array* PhysicsWorld::getAllBody() const
+{
+    return _bodys;
 }
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)

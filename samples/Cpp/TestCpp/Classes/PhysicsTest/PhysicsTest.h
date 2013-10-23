@@ -37,9 +37,13 @@ public:
     void toggleDebugCallback(Object* sender);
     
     void addGrossiniAtPosition(Point p, float scale = 1.0);
+    Sprite* makeBall(float x, float y, float radius, PhysicsMaterial material = {1.0f, 1.0f, 1.0f});
+    Sprite* makeBox(float x, float y, Size size, PhysicsMaterial material = {1.0f, 1.0f, 1.0f});
+    Sprite* makeTriangle(float x, float y, Size size, PhysicsMaterial material = {1.0f, 1.0f, 1.0f});
     
-private:
+protected:
     Texture2D* _spriteTexture;    // weak ref
+    SpriteBatchNode* _ball;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
@@ -57,11 +61,6 @@ class PhysicsDemoLogoSmash : public PhysicsDemo
 public:
     void onEnter() override;
     std::string title() override;
-    
-    Node* makeBall(float x, float y);
-    
-private:
-    SpriteBatchNode* _ball;
 };
 
 class PhysicsDemoPyramidStack : public PhysicsDemo
@@ -76,6 +75,34 @@ class PhysicsDemoPlink : public PhysicsDemo
 public:
     void onEnter() override;
     std::string title() override;
+};
+
+class PhysicsDemoRayCast : public PhysicsDemo
+{
+public:
+    PhysicsDemoRayCast();
+public:
+    void onEnter() override;
+    std::string title() override;
+    void update(float delta) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    
+    void changeModeCallback(Object* sender);
+    
+    static bool anyRay(PhysicsWorld& world, PhysicsShape& shape, Point point, Point normal, float fraction, void* data);
+    
+private:
+    float _angle;
+    DrawNode* _node;
+    int _mode;
+};
+
+class PhysicsDemoJoints : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 };
 
 #endif

@@ -77,6 +77,9 @@ PhysicsBody::PhysicsBody()
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
+, _categoryBitmask(UINT_MAX)
+, _collisionBitmask(UINT_MAX)
+, _contactTestBitmask(0)
 {
 }
 
@@ -107,11 +110,6 @@ PhysicsBody* PhysicsBody::create()
     
     CC_SAFE_DELETE(body);
     return nullptr;
-}
-
-void update(float delta)
-{
-    
 }
 
 PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
