@@ -436,7 +436,7 @@ void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
             auto found = std::find(fixedPriorityListeners->begin(), fixedPriorityListeners->end(), listener);
             if (found != fixedPriorityListeners->end())
             {
-                CCASSERT(listener->_node, "Can't set fixed priority with scene graph based listener.");
+                CCASSERT(listener->_node == nullptr, "Can't set fixed priority with scene graph based listener.");
                 
                 if (listener->_fixedPriority != fixedPriority)
                 {
