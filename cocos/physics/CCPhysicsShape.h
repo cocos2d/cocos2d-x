@@ -44,15 +44,11 @@ typedef struct PhysicsMaterial
     float restitution;
     float friction;
     
-    PhysicsMaterial()
-    : density(0.0f)
-    , restitution(0.0f)
-    , friction(0.0f){}
-    
-    PhysicsMaterial(float density, float restitution, float friction)
-    : density(density)
-    , restitution(restitution)
-    , friction(friction){}
+    static PhysicsMaterial make(float density, float restitution, float friction)
+    {
+        PhysicsMaterial var = {density, restitution, friction};
+        return var;
+    }
 }PhysicsMaterial;
 
 const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT = {0.0f, 1.0f, 1.0f};
