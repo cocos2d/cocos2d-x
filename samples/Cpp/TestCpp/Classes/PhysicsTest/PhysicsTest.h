@@ -41,9 +41,14 @@ public:
     Sprite* makeBox(float x, float y, Size size, PhysicsMaterial material = {1.0f, 1.0f, 1.0f});
     Sprite* makeTriangle(float x, float y, Size size, PhysicsMaterial material = {1.0f, 1.0f, 1.0f});
     
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    
 protected:
     Texture2D* _spriteTexture;    // weak ref
     SpriteBatchNode* _ball;
+    DrawNode* _mouse;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
@@ -100,9 +105,14 @@ private:
 class PhysicsDemoJoints : public PhysicsDemo
 {
 public:
+    PhysicsDemoJoints();
+    
+public:
     void onEnter() override;
     std::string title() override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    
+private:
+    PhysicsShape* _touchesShape;
 };
 
 #endif

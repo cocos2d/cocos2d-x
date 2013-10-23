@@ -92,6 +92,7 @@ PhysicsDemo::PhysicsDemo()
 : _scene(nullptr)
 , _ball(nullptr)
 , _spriteTexture(nullptr)
+, _mouse(nullptr)
 {
     
 }
@@ -296,7 +297,8 @@ namespace
         -25,-8,0,63,-57,-29,-4,-1,-1,-13,-4,127,-64,31,-2,0,15,103,-1,-1,-57,-8,127,
         -97,-25,-8,0,63,-61,-61,-4,127,-1,-29,-4,127,-64,15,-8,0,0,55,-1,-1,-121,-8,
         127,-97,-25,-8,0,63,-61,-61,-4,127,-1,-29,-4,63,-64,15,-32,0,0,23,-1,-2,3,-16,
-        63,15,-61,-16,0,31,-127,-127,-8,31,-1,-127,-8,31,-128,7,-128,0,0};
+        63,15,-61,-16,0,31,-127,-127,-8,31,-1,-127,-8,31,-128,7,-128,0,0
+    };
     
     static inline int get_pixel(int x, int y)
     {
@@ -363,6 +365,31 @@ Sprite* PhysicsDemo::makeTriangle(float x, float y, Size size, PhysicsMaterial m
     triangle->setPosition(Point(x, y));
     
     return triangle;
+}
+
+void PhysicsDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
+{
+    for( auto &touch: touches)
+    {
+        auto location = touch->getLocation();
+        Array* arr = _scene->getPhysicsWorld()->getShapesAtPoint(location);
+        
+        PhysicsShape* shape = nullptr;
+        for (Object* obj : *arr)
+        {
+            
+        }
+    }
+}
+
+void PhysicsDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+{
+    
+}
+
+void PhysicsDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    
 }
 
 void PhysicsDemoLogoSmash::onEnter()
@@ -685,18 +712,6 @@ void PhysicsDemoJoints::onEnter()
     _scene->getPhysicsWorld()->setGravity(Point::ZERO);
     
     
-}
-
-void PhysicsDemoJoints::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-{
-    //Add a new body/atlas sprite at the touched location
-    
-    for( auto &touch: touches)
-    {
-        auto location = touch->getLocation();
-        
-        
-    }
 }
 
 std::string PhysicsDemoJoints::title()
