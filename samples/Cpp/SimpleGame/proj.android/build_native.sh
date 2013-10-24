@@ -104,4 +104,4 @@ fi
 echo "Building in debug"
 
 "$NDK_ROOT"/ndk-build NDK_DEBUG=1 -C "$APP_ANDROID_ROOT" \
-    "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
+    "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos:${COCOS2DX_ROOT}/external"

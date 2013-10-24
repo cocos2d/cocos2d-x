@@ -44,6 +44,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1599607B1811329600C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607A1811329600C7D42C /* libluajit.a */; };
+		15996080181132DE00C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607F181132DE00C7D42C /* libluajit.a */; };
 		1A3B1F78180E88C300497A22 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */; };
 		1A3B1F79180E88C300497A22 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */; };
 		1A3B1F7A180E88C300497A22 /* CCBProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F4F180E88C200497A22 /* CCBProxy.h */; };
@@ -611,8 +613,6 @@
 		1A570547180BD9C40088DEC7 /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570544180BD9C40088DEC7 /* CCTouch.cpp */; };
 		1A570548180BD9C40088DEC7 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570545180BD9C40088DEC7 /* CCTouch.h */; };
 		1A570549180BD9C40088DEC7 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570545180BD9C40088DEC7 /* CCTouch.h */; };
-		1A8C563A180E8C9400EF57C3 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8C5639180E8C9400EF57C3 /* libluajit.a */; };
-		1A8C563D180E8CB100EF57C3 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8C563C180E8CB100EF57C3 /* libluajit.a */; };
 		1A8C5646180E8D0D00EF57C3 /* tolua++.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C563F180E8D0D00EF57C3 /* tolua++.h */; };
 		1A8C5647180E8D0D00EF57C3 /* tolua++.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C563F180E8D0D00EF57C3 /* tolua++.h */; };
 		1A8C5648180E8D0D00EF57C3 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5640180E8D0D00EF57C3 /* tolua_event.c */; };
@@ -1983,6 +1983,8 @@
 /* Begin PBXFileReference section */
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1599607A1811329600C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/mac/libluajit.a; sourceTree = "<group>"; };
+		1599607F181132DE00C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/ios/libluajit.a; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBProxy.cpp; sourceTree = "<group>"; };
 		1A3B1F4F180E88C200497A22 /* CCBProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProxy.h; sourceTree = "<group>"; };
@@ -2275,8 +2277,6 @@
 		1A570545180BD9C40088DEC7 /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
 		1A57FFF7180BC5160088DEC7 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CHANGELOG; path = ../CHANGELOG; sourceTree = "<group>"; };
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A8C5639180E8C9400EF57C3 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/ios/libluajit.a; sourceTree = "<group>"; };
-		1A8C563C180E8CB100EF57C3 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/mac/libluajit.a; sourceTree = "<group>"; };
 		1A8C563F180E8D0D00EF57C3 /* tolua++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "tolua++.h"; sourceTree = "<group>"; };
 		1A8C5640180E8D0D00EF57C3 /* tolua_event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_event.c; sourceTree = "<group>"; };
 		1A8C5641180E8D0D00EF57C3 /* tolua_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_event.h; sourceTree = "<group>"; };
@@ -2994,7 +2994,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A8C563A180E8C9400EF57C3 /* libluajit.a in Frameworks */,
+				15996080181132DE00C7D42C /* libluajit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3002,7 +3002,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A8C563D180E8CB100EF57C3 /* libluajit.a in Frameworks */,
+				1599607B1811329600C7D42C /* libluajit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3878,7 +3878,7 @@
 		1A8C5638180E8C8700EF57C3 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				1A8C5639180E8C9400EF57C3 /* libluajit.a */,
+				1599607F181132DE00C7D42C /* libluajit.a */,
 			);
 			name = ios;
 			sourceTree = "<group>";
@@ -3886,7 +3886,7 @@
 		1A8C563B180E8CA700EF57C3 /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				1A8C563C180E8CB100EF57C3 /* libluajit.a */,
+				1599607A1811329600C7D42C /* libluajit.a */,
 			);
 			name = mac;
 			sourceTree = "<group>";
@@ -7695,11 +7695,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/ios",
+					"$(SRCROOT)/../external/lua/luajit/prebuilt/ios",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/external/\" \"$(SRCROOT)/external/libwebsockets/ios/include\" \"$(SRCROOT)/extensions/network\" \"$(SRCROOT)/extensions/LocalStorage\" \"$(SRCROOT)/extensions/\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/cocos2dx/platform/ios $(SRCROOT)/cocos2dx/include $(SRCROOT)/cocos2dx $(SRCROOT)/cocos2dx/kazmath/include $(SRCROOT)/external/ $(SRCROOT)/external/libwebsockets/ios/include $(SRCROOT)/extensions/network $(SRCROOT)/extensions/LocalStorage $(SRCROOT)/extensions/";
 			};
 			name = Debug;
 		};
@@ -7723,11 +7723,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/ios",
+					"$(SRCROOT)/../external/lua/luajit/prebuilt/ios",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/external/\" \"$(SRCROOT)/external/libwebsockets/ios/include\" \"$(SRCROOT)/extensions/network\" \"$(SRCROOT)/extensions/LocalStorage\" \"$(SRCROOT)/extensions/\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/cocos2dx/platform/ios $(SRCROOT)/cocos2dx/include $(SRCROOT)/cocos2dx $(SRCROOT)/cocos2dx/kazmath/include $(SRCROOT)/external/ $(SRCROOT)/external/libwebsockets/ios/include $(SRCROOT)/extensions/network $(SRCROOT)/extensions/LocalStorage $(SRCROOT)/extensions/";
 			};
 			name = Release;
 		};
@@ -7752,7 +7752,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/mac",
+					"$(SRCROOT)/../external/lua/luajit/prebuilt/mac",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
@@ -7780,7 +7780,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/mac",
+					"$(SRCROOT)/../external/lua/luajit/prebuilt/mac",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";

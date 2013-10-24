@@ -4,5 +4,7 @@
                              "PROJECT_NAME.xcodeproj/xcuserdata"],
     "replace_package_name": ["Info.plist"],
     "replace_project_name": ["Info.plist",
-		                     "PROJECT_NAME.xcodeproj/project.pbxproj"]
+                             "ios/main.m",
+                             "ios/Prefix.pch",
+                             "PROJECT_NAME.xcodeproj/project.pbxproj"]
 }

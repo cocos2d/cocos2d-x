@@ -618,8 +618,15 @@ Developers:
         Fixed a bug that cc.Scheduler.schedule(target, func) without repeat argument couldn't repeat schedule forever on device.
         
     XiaoLongHan (kpkhxlgy0)
-        Fixed a bug that outside of keyboard can't be responded to close keyboard when using EditBox。
-    
+        Fixed a bug that outside of keyboard can't be responded to close keyboard when using EditBox.
+        
+    lettas
+        A fix for multi-platform template.
+        
+    HoGarfield (garfield_ho)
+        Fixed a bug that CCBReader can't play sequence automatically in JSB.
+        Could not set next animation in CCBAnimationCompleted callback.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

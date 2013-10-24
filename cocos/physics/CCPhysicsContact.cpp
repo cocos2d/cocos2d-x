@@ -31,7 +31,7 @@
 #endif
 
 #include "chipmunk/CCPhysicsContactInfo.h"
-#include "Box2D/CCPhysicsContactInfo.h"
+#include "box2d/CCPhysicsContactInfo.h"
 
 NS_CC_BEGIN
 

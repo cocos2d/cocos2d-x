@@ -11,7 +11,7 @@
 #include "platform/CCCommon.h"
 #include "CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
-#include "platform/third_party/linux/glfw/glfw3.h"
+#include "glfw3.h"
 #include <set>
 
 bool initExtensions();
