@@ -138,6 +138,7 @@ void MenuLayerMainMenu::onTouchMoved(Touch *touch, Event * event)
 
 MenuLayerMainMenu::~MenuLayerMainMenu()
 {
+    EventDispatcher::getInstance()->removeEventListener(_touchListener);
     _disabledItem->release();
 }
 
