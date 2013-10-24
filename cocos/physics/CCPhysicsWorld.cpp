@@ -563,7 +563,7 @@ void PhysicsWorld::rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void
 
 Array* getShapesAtPoint(Point point)
 {
-    
+    return nullptr;
 }
 
 Array* PhysicsWorld::getAllBody() const
