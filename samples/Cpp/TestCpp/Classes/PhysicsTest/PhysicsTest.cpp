@@ -511,7 +511,10 @@ PhysicsDemoRayCast::PhysicsDemoRayCast()
 void PhysicsDemoRayCast::onEnter()
 {
     PhysicsDemo::onEnter();
-    setTouchEnabled(true);
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoRayCast::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
     _scene->getPhysicsWorld()->setGravity(Point::ZERO);
     
@@ -712,7 +715,9 @@ void PhysicsDemoJoints::onEnter()
 {
     PhysicsDemo::onEnter();
     
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoJoints::onTouchesEnded, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
     _scene->getPhysicsWorld()->setGravity(Point::ZERO);
     
