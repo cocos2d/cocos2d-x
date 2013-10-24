@@ -103,15 +103,15 @@ void PhysicsJoint::setEnable(bool enable)
     }
 }
 
-//PhysicsJointPin::PhysicsJointPin()
-//{
-//    
-//}
-//
-//PhysicsJointPin::~PhysicsJointPin()
-//{
-//    
-//}
+PhysicsJointPin::PhysicsJointPin()
+{
+    
+}
+
+PhysicsJointPin::~PhysicsJointPin()
+{
+    
+}
 
 PhysicsJointFixed::PhysicsJointFixed()
 {
