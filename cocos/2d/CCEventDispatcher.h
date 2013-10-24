@@ -30,7 +30,7 @@
 
 #include <functional>
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <list>
 #include <vector>
 
@@ -114,12 +114,6 @@ public:
     
     void setDirtyForNode(Node* node);
     
-    void setDirtyForEventType(const std::string& eventType, DirtyFlag flag);
-    
-    DirtyFlag isDirtyForEventType(const std::string& eventType);
-    
-    void visitTarget(Node* node);
-    
     void pauseTarget(Node* node);
     void resumeTarget(Node* node);
     void cleanTarget(Node* node);
@@ -181,16 +175,21 @@ private:
     
     void dispatchEventToListeners(EventListenerVector* listeners, std::function<bool(EventListener*)> onEvent);
     
+    void setDirtyForEventType(const std::string& eventType, DirtyFlag flag);
+    DirtyFlag isDirtyForEventType(const std::string& eventType);
+    
+    void visitTarget(Node* node);
+    
 private:
     /**
      * Listeners map.
      */
-    std::map<std::string, EventListenerVector*> _listeners;
+    std::unordered_map<std::string, EventListenerVector*> _listeners;
     
-    std::map<std::string, DirtyFlag> _priorityDirtyFlagMap;
+    std::unordered_map<std::string, DirtyFlag> _priorityDirtyFlagMap;
     
-    std::map<Node*, std::vector<EventListener*>*> _nodeListenersMap;
-    std::map<Node*, int> _nodePriorityMap;
+    std::unordered_map<Node*, std::vector<EventListener*>*> _nodeListenersMap;
+    std::unordered_map<Node*, int> _nodePriorityMap;
     
     std::vector<EventListener*> _toAddedListeners;
     std::set<Node*> _dirtyNodes;
