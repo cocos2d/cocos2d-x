@@ -650,7 +650,14 @@ LayerMultiplex::LayerMultiplex()
 }
 LayerMultiplex::~LayerMultiplex()
 {
-    CC_SAFE_RELEASE(_layers);
+    if (_layers)
+    {
+        for (auto& item : *_layers)
+        {
+            static_cast<Layer*>(item)->cleanup();
+        }
+        _layers->release();
+    }
 }
 
 LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
