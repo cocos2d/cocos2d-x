@@ -90,7 +90,7 @@ public:
     void onEnter() override;
     std::string title() override;
     void update(float delta) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     
     void changeModeCallback(Object* sender);
     
@@ -110,9 +110,7 @@ public:
 public:
     void onEnter() override;
     std::string title() override;
-    
-private:
-    PhysicsShape* _touchesShape;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 };
 
 #endif
