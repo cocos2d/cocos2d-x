@@ -96,9 +96,10 @@ int CCSGUIReader::getVersionInteger(const char *str)
 
 UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
 {
+    DictionaryHelper* dicHelper = dicHelper;
     UIWidget* widget = NULL;
-    const char* classname = DICTOOL->getStringValue_json(data, "classname");
-    cs::CSJsonDictionary* uiOptions = DICTOOL->getSubDictionary_json(data, "options");
+    const char* classname = dicHelper->getStringValue_json(data, "classname");
+    cs::CSJsonDictionary* uiOptions = dicHelper->getSubDictionary_json(data, "options");
     if (classname && strcmp(classname, "Button") == 0)
     {
         widget = UIButton::create();
@@ -129,12 +130,12 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
     }
     else if (classname && strcmp(classname, "TextArea") == 0)
     {
-        widget = UITextArea::create();
+        widget = UILabel::create();
         setPropsForTextAreaFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextButton") == 0)
     {
-        widget = UITextButton::create();
+        widget = UIButton::create();
         setPropsForTextButtonFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextField") == 0)
@@ -149,7 +150,7 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
     }
     else if (classname && strcmp(classname, "Panel") == 0)
     {
-        widget = UIPanel::create();
+        widget = Layout::create();
         setPropsForPanelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "Slider") == 0)
@@ -159,8 +160,6 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
     }
     else if (classname && strcmp(classname, "ListView") == 0)
     {
-//        widget = UIListView::create();
-//        setPropsForListViewFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "PageView") == 0)
     {
@@ -178,10 +177,10 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
         setPropsForDragPanelFromJsonDictionary(widget, uiOptions);
     }
 
-    int childrenCount = DICTOOL->getArrayCount_json(data, "children");
+    int childrenCount = dicHelper->getArrayCount_json(data, "children");
     for (int i=0;i<childrenCount;i++)
     {
-        cs::CSJsonDictionary* subData = DICTOOL->getDictionaryFromArray_json(data, "children", i);
+        cs::CSJsonDictionary* subData = dicHelper->getDictionaryFromArray_json(data, "children", i);
         UIWidget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
@@ -198,6 +197,8 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
 
 UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
 {
+    DictionaryHelper* dicHelper = dicHelper;
+    UIHelper* uiHelper = CCUIHELPER;
     m_bOlderVersion = false;
     const char *des = NULL;
     std::string jsonpath;
@@ -215,36 +216,36 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     jsonDict = new cs::CSJsonDictionary();
     jsonDict->initWithDescription(strDes.c_str());
 
-    const char* fileVersion = DICTOOL->getStringValue_json(jsonDict, "version");
+    const char* fileVersion = dicHelper->getStringValue_json(jsonDict, "version");
     if (!fileVersion || getVersionInteger(fileVersion) < 250)
     {
         m_bOlderVersion = true;
     }
     
-    int texturesCount = DICTOOL->getArrayCount_json(jsonDict, "textures");
+    int texturesCount = dicHelper->getArrayCount_json(jsonDict, "textures");
     int pos = jsonpath.find_last_of('/');
 	m_strFilePath = jsonpath.substr(0,pos+1);
     for (int i=0; i<texturesCount; i++)
     {
-        const char* file = DICTOOL->getStringValueFromArray_json(jsonDict, "textures", i);
+        const char* file = dicHelper->getStringValueFromArray_json(jsonDict, "textures", i);
         std::string tp = m_strFilePath;
         tp.append(file);
-        CCUIHELPER->addSpriteFrame(tp.c_str());
+        uiHelper->addSpriteFrame(tp.c_str());
     }
-    float fileDesignWidth = DICTOOL->getFloatValue_json(jsonDict, "designWidth");
-    float fileDesignHeight = DICTOOL->getFloatValue_json(jsonDict, "designHeight");
+    float fileDesignWidth = dicHelper->getFloatValue_json(jsonDict, "designWidth");
+    float fileDesignHeight = dicHelper->getFloatValue_json(jsonDict, "designHeight");
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
         printf("Read design size error!\n");
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        CCUIHELPER->setFileDesignWidth(winSize.width);
-        CCUIHELPER->setFileDesignHeight(winSize.height);
+        uiHelper->setFileDesignWidth(winSize.width);
+        uiHelper->setFileDesignHeight(winSize.height);
     }
     else
     {
-        CCUIHELPER->setFileDesignWidth(fileDesignWidth);
-        CCUIHELPER->setFileDesignHeight(fileDesignHeight);
+        uiHelper->setFileDesignWidth(fileDesignWidth);
+        uiHelper->setFileDesignHeight(fileDesignHeight);
     }
-    cs::CSJsonDictionary* widgetTree = DICTOOL->getSubDictionary_json(jsonDict, "widgetTree");
+    cs::CSJsonDictionary* widgetTree = dicHelper->getSubDictionary_json(jsonDict, "widgetTree");
     UIWidget* widget = widgetFromJsonDictionary(widgetTree);
     
     /* *********temp********* */
@@ -256,7 +257,7 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     /* ********************** */
     
 //    widget->setFileDesignSize(CCSizeMake(fileDesignWidth, fileDesignHeight));
-    cs::CSJsonDictionary* actions = DICTOOL->getSubDictionary_json(jsonDict, "animation");
+    cs::CSJsonDictionary* actions = dicHelper->getSubDictionary_json(jsonDict, "animation");
     /* *********temp********* */
 //    ActionManager::shareManager()->releaseActions();
     /* ********************** */
@@ -273,102 +274,105 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
 
 void CCSGUIReader::setPropsForWidgetFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary *options)
 {
-    bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, "ignoreSize");
+    DictionaryHelper* dicHelper = DICTOOL;
+    bool ignoreSizeExsit = dicHelper->checkObjectExist_json(options, "ignoreSize");
     if (ignoreSizeExsit)
     {
-        widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, "ignoreSize"));
+        widget->ignoreContentAdaptWithSize(dicHelper->getBooleanValue_json(options, "ignoreSize"));
     }
     
-    float w = DICTOOL->getFloatValue_json(options, "width");
-    float h = DICTOOL->getFloatValue_json(options, "height");
+    float w = dicHelper->getFloatValue_json(options, "width");
+    float h = dicHelper->getFloatValue_json(options, "height");
     widget->setSize(CCSizeMake(w, h));
     
-    widget->setTag(DICTOOL->getIntValue_json(options, "tag"));
-	widget->setActionTag(DICTOOL->getIntValue_json(options, "actiontag"));
-    widget->setTouchEnabled(DICTOOL->getBooleanValue_json(options, "touchAble"));
-    const char* name = DICTOOL->getStringValue_json(options, "name");
+    widget->setTag(dicHelper->getIntValue_json(options, "tag"));
+	widget->setActionTag(dicHelper->getIntValue_json(options, "actiontag"));
+    widget->setTouchEnabled(dicHelper->getBooleanValue_json(options, "touchAble"));
+    const char* name = dicHelper->getStringValue_json(options, "name");
     const char* widgetName = name?name:"default";
     widget->setName(widgetName);
-    float x = DICTOOL->getFloatValue_json(options, "x");
-    float y = DICTOOL->getFloatValue_json(options, "y");
+    float x = dicHelper->getFloatValue_json(options, "x");
+    float y = dicHelper->getFloatValue_json(options, "y");
     widget->setPosition(ccp(x,y));
-    bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
+    bool sx = dicHelper->checkObjectExist_json(options, "scaleX");
     if (sx)
     {
-        widget->setScaleX(DICTOOL->getFloatValue_json(options, "scaleX"));
+        widget->setScaleX(dicHelper->getFloatValue_json(options, "scaleX"));
     }
-    bool sy = DICTOOL->checkObjectExist_json(options, "scaleY");
+    bool sy = dicHelper->checkObjectExist_json(options, "scaleY");
     if (sy)
     {
-        widget->setScaleY(DICTOOL->getFloatValue_json(options, "scaleY"));
+        widget->setScaleY(dicHelper->getFloatValue_json(options, "scaleY"));
     }
-    bool rt = DICTOOL->checkObjectExist_json(options, "rotation");
+    bool rt = dicHelper->checkObjectExist_json(options, "rotation");
     if (rt)
     {
-        widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation"));
+        widget->setRotation(dicHelper->getFloatValue_json(options, "rotation"));
     }
-    bool vb = DICTOOL->checkObjectExist_json(options, "visible");
+    bool vb = dicHelper->checkObjectExist_json(options, "visible");
     if (vb)
     {
-        widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
+        widget->setVisible(dicHelper->getBooleanValue_json(options, "visible"));
     }
-//    widget->setUseMergedTexture(DICTOOL->getBooleanValue_json(options, "useMergedTexture"));
-    int z = DICTOOL->getIntValue_json(options, "ZOrder");
+//    widget->setUseMergedTexture(dicHelper->getBooleanValue_json(options, "useMergedTexture"));
+    int z = dicHelper->getIntValue_json(options, "ZOrder");
     widget->setZOrder(z);
 }
 
 void CCSGUIReader::setColorPropsForWidgetFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
-    bool op = DICTOOL->checkObjectExist_json(options, "opacity");
+    DictionaryHelper* dicHelper = DICTOOL;
+    bool op = dicHelper->checkObjectExist_json(options, "opacity");
     if (op)
     {
-        widget->setOpacity(DICTOOL->getIntValue_json(options, "opacity"));
+        widget->setOpacity(dicHelper->getIntValue_json(options, "opacity"));
     }
-    bool cr = DICTOOL->checkObjectExist_json(options, "colorR");
-    bool cg = DICTOOL->checkObjectExist_json(options, "colorG");
-    bool cb = DICTOOL->checkObjectExist_json(options, "colorB");
-    int colorR = cr ? DICTOOL->getIntValue_json(options, "colorR") : 255;
-    int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
-    int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
+    bool cr = dicHelper->checkObjectExist_json(options, "colorR");
+    bool cg = dicHelper->checkObjectExist_json(options, "colorG");
+    bool cb = dicHelper->checkObjectExist_json(options, "colorB");
+    int colorR = cr ? dicHelper->getIntValue_json(options, "colorR") : 255;
+    int colorG = cg ? dicHelper->getIntValue_json(options, "colorG") : 255;
+    int colorB = cb ? dicHelper->getIntValue_json(options, "colorB") : 255;
     widget->setColor(ccc3(colorR, colorG, colorB));
-    bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : 0.5f;
-    bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : 0.5f;
+    bool apx = dicHelper->checkObjectExist_json(options, "anchorPointX");
+    float apxf = apx ? dicHelper->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
+    bool apy = dicHelper->checkObjectExist_json(options, "anchorPointY");
+    float apyf = apy ? dicHelper->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
     widget->setAnchorPoint(ccp(apxf, apyf));
-    bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
-    bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
+    bool flipX = dicHelper->getBooleanValue_json(options, "flipX");
+    bool flipY = dicHelper->getBooleanValue_json(options, "flipY");
     widget->setFlipX(flipX);
     widget->setFlipY(flipY);
 }
 
 void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     if (m_bOlderVersion)
     {
         setPropsForWidgetFromJsonDictionary(widget, options);
         UIButton* button = (UIButton*)widget;
-        bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
+        bool scale9Enable = dicHelper->getBooleanValue_json(options, "scale9Enable");
         button->setScale9Enabled(scale9Enable);
         
         std::string tp_n = m_strFilePath;
         std::string tp_p = m_strFilePath;
         std::string tp_d = m_strFilePath;
         
-        const char* normalFileName = DICTOOL->getStringValue_json(options, "normal");
-        const char* pressedFileName = DICTOOL->getStringValue_json(options, "pressed");
-        const char* disabledFileName = DICTOOL->getStringValue_json(options, "disabled");
+        const char* normalFileName = dicHelper->getStringValue_json(options, "normal");
+        const char* pressedFileName = dicHelper->getStringValue_json(options, "pressed");
+        const char* disabledFileName = dicHelper->getStringValue_json(options, "disabled");
         
         const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
         const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
         const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
-        bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
+        bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
         if (scale9Enable)
         {
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = dicHelper->getFloatValue_json(options, "capInsetsX");
+            float cy = dicHelper->getFloatValue_json(options, "capInsetsY");
+            float cw = dicHelper->getFloatValue_json(options, "capInsetsWidth");
+            float ch = dicHelper->getFloatValue_json(options, "capInsetsHeight");
             
             if (useMergedTexture)
             {
@@ -379,12 +383,12 @@ void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJso
                 button->loadTextures(normalFileName_tp, pressedFileName_tp, disabledFileName_tp);
             }
             button->setCapInsets(CCRectMake(cx, cy, cw, ch));
-            bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
-            bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
+            bool sw = dicHelper->checkObjectExist_json(options, "scale9Width");
+            bool sh = dicHelper->checkObjectExist_json(options, "scale9Height");
             if (sw && sh)
             {
-                float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
-                float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
+                float swf = dicHelper->getFloatValue_json(options, "scale9Width");
+                float shf = dicHelper->getFloatValue_json(options, "scale9Height");
                 button->setSize(CCSizeMake(swf, shf));
             }
         }
@@ -405,24 +409,24 @@ void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJso
     {
         setPropsForWidgetFromJsonDictionary(widget, options);
         UIButton* button = (UIButton*)widget;
-        bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
+        bool scale9Enable = dicHelper->getBooleanValue_json(options, "scale9Enable");
         button->setScale9Enabled(scale9Enable);
         
-        cs::CSJsonDictionary* normalDic = DICTOOL->getSubDictionary_json(options, "normalData");
-        int normalType = DICTOOL->getIntValue_json(normalDic, "resourceType");
+        cs::CSJsonDictionary* normalDic = dicHelper->getSubDictionary_json(options, "normalData");
+        int normalType = dicHelper->getIntValue_json(normalDic, "resourceType");
         switch (normalType)
         {
             case 0:
             {
                 std::string tp_n = m_strFilePath;
-                const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
+                const char* normalFileName = dicHelper->getStringValue_json(normalDic, "path");
                 const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
                 button->loadTextureNormal(normalFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
+                const char* normalFileName = dicHelper->getStringValue_json(normalDic, "path");
                 button->loadTextureNormal(normalFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -430,21 +434,21 @@ void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJso
                 break;
         }
         CC_SAFE_DELETE(normalDic);
-        cs::CSJsonDictionary* pressedDic = DICTOOL->getSubDictionary_json(options, "pressedData");
-        int pressedType = DICTOOL->getIntValue_json(pressedDic, "resourceType");
+        cs::CSJsonDictionary* pressedDic = dicHelper->getSubDictionary_json(options, "pressedData");
+        int pressedType = dicHelper->getIntValue_json(pressedDic, "resourceType");
         switch (pressedType)
         {
             case 0:
             {
                 std::string tp_p = m_strFilePath;
-                const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
+                const char* pressedFileName = dicHelper->getStringValue_json(pressedDic, "path");
                 const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
                 button->loadTexturePressed(pressedFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
+                const char* pressedFileName = dicHelper->getStringValue_json(pressedDic, "path");
                 button->loadTexturePressed(pressedFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -452,21 +456,21 @@ void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJso
                 break;
         }
         CC_SAFE_DELETE(pressedDic);
-        cs::CSJsonDictionary* disabledDic = DICTOOL->getSubDictionary_json(options, "disabledData");
-        int disabledType = DICTOOL->getIntValue_json(disabledDic, "resourceType");
+        cs::CSJsonDictionary* disabledDic = dicHelper->getSubDictionary_json(options, "disabledData");
+        int disabledType = dicHelper->getIntValue_json(disabledDic, "resourceType");
         switch (disabledType)
         {
             case 0:
             {
                 std::string tp_d = m_strFilePath;
-                const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
+                const char* disabledFileName = dicHelper->getStringValue_json(disabledDic, "path");
                 const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
                 button->loadTextureDisabled(disabledFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
+                const char* disabledFileName = dicHelper->getStringValue_json(disabledDic, "path");
                 button->loadTextureDisabled(disabledFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -476,18 +480,18 @@ void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJso
         CC_SAFE_DELETE(disabledDic);
         if (scale9Enable)
         {
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = dicHelper->getFloatValue_json(options, "capInsetsX");
+            float cy = dicHelper->getFloatValue_json(options, "capInsetsY");
+            float cw = dicHelper->getFloatValue_json(options, "capInsetsWidth");
+            float ch = dicHelper->getFloatValue_json(options, "capInsetsHeight");
             
             button->setCapInsets(CCRectMake(cx, cy, cw, ch));
-            bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
-            bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
+            bool sw = dicHelper->checkObjectExist_json(options, "scale9Width");
+            bool sh = dicHelper->checkObjectExist_json(options, "scale9Height");
             if (sw && sh)
             {
-                float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
-                float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
+                float swf = dicHelper->getFloatValue_json(options, "scale9Width");
+                float shf = dicHelper->getFloatValue_json(options, "scale9Height");
                 button->setSize(CCSizeMake(swf, shf));
             }
         }
@@ -497,15 +501,16 @@ void CCSGUIReader::setPropsForButtonFromJsonDictionary(UIWidget*widget,cs::CSJso
 
 void CCSGUIReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     if (m_bOlderVersion)
     {
         setPropsForWidgetFromJsonDictionary(widget, options);
         UICheckBox* checkBox = (UICheckBox*)widget;
-        const char* backGroundFileName = DICTOOL->getStringValue_json(options, "backGroundBox");
-        const char* backGroundSelectedFileName = DICTOOL->getStringValue_json(options, "backGroundBoxSelected");
-        const char* frontCrossFileName = DICTOOL->getStringValue_json(options, "frontCross");
-        const char* backGroundDisabledFileName = DICTOOL->getStringValue_json(options, "backGroundBoxDisabled");
-        const char* frontCrossDisabledFileName = DICTOOL->getStringValue_json(options, "frontCrossDisabled");
+        const char* backGroundFileName = dicHelper->getStringValue_json(options, "backGroundBox");
+        const char* backGroundSelectedFileName = dicHelper->getStringValue_json(options, "backGroundBoxSelected");
+        const char* frontCrossFileName = dicHelper->getStringValue_json(options, "frontCross");
+        const char* backGroundDisabledFileName = dicHelper->getStringValue_json(options, "backGroundBoxDisabled");
+        const char* frontCrossDisabledFileName = dicHelper->getStringValue_json(options, "frontCrossDisabled");
         
         
         std::string tp_b = m_strFilePath;
@@ -519,7 +524,7 @@ void CCSGUIReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJ
         const char* frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))?tp_c.append(frontCrossFileName).c_str():NULL;
         const char* backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))?tp_bd.append(backGroundDisabledFileName).c_str():NULL;
         const char* frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))?tp_cd.append(frontCrossDisabledFileName).c_str():NULL;
-        bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
+        bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
         
         if (useMergedTexture)
         {
@@ -537,21 +542,21 @@ void CCSGUIReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJ
         setPropsForWidgetFromJsonDictionary(widget, options);
         UICheckBox* checkBox = (UICheckBox*)widget;
         
-        cs::CSJsonDictionary* backGroundDic = DICTOOL->getSubDictionary_json(options, "backGroundBoxData");
-        int backGroundType = DICTOOL->getIntValue_json(backGroundDic, "resourceType");
+        cs::CSJsonDictionary* backGroundDic = dicHelper->getSubDictionary_json(options, "backGroundBoxData");
+        int backGroundType = dicHelper->getIntValue_json(backGroundDic, "resourceType");
         switch (backGroundType)
         {
             case 0:
             {
                 std::string tp_b = m_strFilePath;
-                const char* backGroundFileName = DICTOOL->getStringValue_json(backGroundDic, "path");
+                const char* backGroundFileName = dicHelper->getStringValue_json(backGroundDic, "path");
                 const char* backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))?tp_b.append(backGroundFileName).c_str():NULL;
                 checkBox->loadTextureBackGround(backGroundFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* backGroundFileName = DICTOOL->getStringValue_json(backGroundDic, "path");
+                const char* backGroundFileName = dicHelper->getStringValue_json(backGroundDic, "path");
                 checkBox->loadTextureBackGround(backGroundFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -560,21 +565,21 @@ void CCSGUIReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJ
         }
         CC_SAFE_DELETE(backGroundDic);
 
-        cs::CSJsonDictionary* backGroundSelectedDic = DICTOOL->getSubDictionary_json(options, "backGroundBoxSelectedData");
-        int backGroundSelectedType = DICTOOL->getIntValue_json(backGroundSelectedDic, "resourceType");
+        cs::CSJsonDictionary* backGroundSelectedDic = dicHelper->getSubDictionary_json(options, "backGroundBoxSelectedData");
+        int backGroundSelectedType = dicHelper->getIntValue_json(backGroundSelectedDic, "resourceType");
         switch (backGroundSelectedType)
         {
             case 0:
             {
                 std::string tp_bs = m_strFilePath;
-                const char* backGroundSelectedFileName = DICTOOL->getStringValue_json(backGroundSelectedDic, "path");
+                const char* backGroundSelectedFileName = dicHelper->getStringValue_json(backGroundSelectedDic, "path");
                 const char* backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))?tp_bs.append(backGroundSelectedFileName).c_str():NULL;
                 checkBox->loadTextureBackGroundSelected(backGroundSelectedFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* backGroundSelectedFileName = DICTOOL->getStringValue_json(backGroundSelectedDic, "path");
+                const char* backGroundSelectedFileName = dicHelper->getStringValue_json(backGroundSelectedDic, "path");
                 checkBox->loadTextureBackGroundSelected(backGroundSelectedFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -583,21 +588,21 @@ void CCSGUIReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJ
         }
         CC_SAFE_DELETE(backGroundSelectedDic);
 
-        cs::CSJsonDictionary* frontCrossDic = DICTOOL->getSubDictionary_json(options, "frontCrossData");
-        int frontCrossType = DICTOOL->getIntValue_json(frontCrossDic, "resourceType");
+        cs::CSJsonDictionary* frontCrossDic = dicHelper->getSubDictionary_json(options, "frontCrossData");
+        int frontCrossType = dicHelper->getIntValue_json(frontCrossDic, "resourceType");
         switch (frontCrossType)
         {
             case 0:
             {
                 std::string tp_c = m_strFilePath;
-                const char* frontCrossFileName = DICTOOL->getStringValue_json(frontCrossDic, "path");
+                const char* frontCrossFileName = dicHelper->getStringValue_json(frontCrossDic, "path");
                 const char* frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))?tp_c.append(frontCrossFileName).c_str():NULL;
                 checkBox->loadTextureFrontCross(frontCrossFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* frontCrossFileName = DICTOOL->getStringValue_json(frontCrossDic, "path");
+                const char* frontCrossFileName = dicHelper->getStringValue_json(frontCrossDic, "path");
                 checkBox->loadTextureFrontCross(frontCrossFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -606,21 +611,21 @@ void CCSGUIReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJ
         }
 		CC_SAFE_DELETE(frontCrossDic);
         
-        cs::CSJsonDictionary* backGroundDisabledDic = DICTOOL->getSubDictionary_json(options, "backGroundBoxDisabledData");
-        int backGroundDisabledType = DICTOOL->getIntValue_json(backGroundDisabledDic, "resourceType");
+        cs::CSJsonDictionary* backGroundDisabledDic = dicHelper->getSubDictionary_json(options, "backGroundBoxDisabledData");
+        int backGroundDisabledType = dicHelper->getIntValue_json(backGroundDisabledDic, "resourceType");
         switch (backGroundDisabledType)
         {
             case 0:
             {
                 std::string tp_bd = m_strFilePath;
-                const char* backGroundDisabledFileName = DICTOOL->getStringValue_json(backGroundDisabledDic, "path");
+                const char* backGroundDisabledFileName = dicHelper->getStringValue_json(backGroundDisabledDic, "path");
                 const char* backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))?tp_bd.append(backGroundDisabledFileName).c_str():NULL;
                 checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* backGroundDisabledFileName = DICTOOL->getStringValue_json(backGroundDisabledDic, "path");
+                const char* backGroundDisabledFileName = dicHelper->getStringValue_json(backGroundDisabledDic, "path");
                 checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -629,21 +634,21 @@ void CCSGUIReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJ
         }
 		CC_SAFE_DELETE(backGroundDisabledDic);
         
-        cs::CSJsonDictionary* frontCrossDisabledDic = DICTOOL->getSubDictionary_json(options, "frontCrossDisabledData");
-        int frontCrossDisabledType = DICTOOL->getIntValue_json(frontCrossDisabledDic, "resourceType");
+        cs::CSJsonDictionary* frontCrossDisabledDic = dicHelper->getSubDictionary_json(options, "frontCrossDisabledData");
+        int frontCrossDisabledType = dicHelper->getIntValue_json(frontCrossDisabledDic, "resourceType");
         switch (frontCrossDisabledType)
         {
             case 0:
             {
                 std::string tp_cd = m_strFilePath;
-                const char* frontCrossDisabledFileName = DICTOOL->getStringValue_json(options, "path");
+                const char* frontCrossDisabledFileName = dicHelper->getStringValue_json(options, "path");
                 const char* frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))?tp_cd.append(frontCrossDisabledFileName).c_str():NULL;
                 checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* frontCrossDisabledFileName = DICTOOL->getStringValue_json(options, "path");
+                const char* frontCrossDisabledFileName = dicHelper->getStringValue_json(options, "path");
                 checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -658,17 +663,18 @@ void CCSGUIReader::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,cs::CSJ
 
 void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     if (m_bOlderVersion)
     {
         setPropsForWidgetFromJsonDictionary(widget, options);
         
         UIImageView* imageView = (UIImageView*)widget;
-        const char* imageFileName = DICTOOL->getStringValue_json(options, "fileName");
-        bool scale9EnableExist = DICTOOL->checkObjectExist_json(options, "scale9Enable");
+        const char* imageFileName = dicHelper->getStringValue_json(options, "fileName");
+        bool scale9EnableExist = dicHelper->checkObjectExist_json(options, "scale9Enable");
         bool scale9Enable = false;
         if (scale9EnableExist)
         {
-            scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
+            scale9Enable = dicHelper->getBooleanValue_json(options, "scale9Enable");
         }
         imageView->setScale9Enabled(scale9Enable);
         
@@ -679,7 +685,7 @@ void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CS
             imageFileName_tp = tp_i.append(imageFileName).c_str();
         }
         
-        bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
+        bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
         if (scale9Enable)
         {
             if (useMergedTexture)
@@ -691,19 +697,19 @@ void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CS
                 imageView->loadTexture(imageFileName_tp);
             }
             
-            bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
-            bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
+            bool sw = dicHelper->checkObjectExist_json(options, "scale9Width");
+            bool sh = dicHelper->checkObjectExist_json(options, "scale9Height");
             if (sw && sh)
             {
-                float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
-                float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
+                float swf = dicHelper->getFloatValue_json(options, "scale9Width");
+                float shf = dicHelper->getFloatValue_json(options, "scale9Height");
                 imageView->setSize(CCSizeMake(swf, shf));
             }
             
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = dicHelper->getFloatValue_json(options, "capInsetsX");
+            float cy = dicHelper->getFloatValue_json(options, "capInsetsY");
+            float cw = dicHelper->getFloatValue_json(options, "capInsetsWidth");
+            float ch = dicHelper->getFloatValue_json(options, "capInsetsHeight");
             imageView->setCapInsets(CCRectMake(cx, cy, cw, ch));
             
         }
@@ -726,14 +732,14 @@ void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CS
         
         UIImageView* imageView = (UIImageView*)widget;
         
-        cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "fileNameData");
-        int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
+        cs::CSJsonDictionary* imageFileNameDic = dicHelper->getSubDictionary_json(options, "fileNameData");
+        int imageFileNameType = dicHelper->getIntValue_json(imageFileNameDic, "resourceType");
         switch (imageFileNameType)
         {
             case 0:
             {
                 std::string tp_i = m_strFilePath;
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
                 const char* imageFileName_tp = NULL;
                 if (imageFileName && (strcmp(imageFileName, "") != 0))
                 {
@@ -744,7 +750,7 @@ void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CS
             }
             case 1:
             {
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
                 imageView->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -753,30 +759,30 @@ void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CS
         }
         CC_SAFE_DELETE(imageFileNameDic);
 
-        bool scale9EnableExist = DICTOOL->checkObjectExist_json(options, "scale9Enable");
+        bool scale9EnableExist = dicHelper->checkObjectExist_json(options, "scale9Enable");
         bool scale9Enable = false;
         if (scale9EnableExist)
         {
-            scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
+            scale9Enable = dicHelper->getBooleanValue_json(options, "scale9Enable");
         }
         imageView->setScale9Enabled(scale9Enable);
         
         
         if (scale9Enable)
         {            
-            bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
-            bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
+            bool sw = dicHelper->checkObjectExist_json(options, "scale9Width");
+            bool sh = dicHelper->checkObjectExist_json(options, "scale9Height");
             if (sw && sh)
             {
-                float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
-                float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
+                float swf = dicHelper->getFloatValue_json(options, "scale9Width");
+                float shf = dicHelper->getFloatValue_json(options, "scale9Height");
                 imageView->setSize(CCSizeMake(swf, shf));
             }
             
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = dicHelper->getFloatValue_json(options, "capInsetsX");
+            float cy = dicHelper->getFloatValue_json(options, "capInsetsY");
+            float cw = dicHelper->getFloatValue_json(options, "capInsetsWidth");
+            float ch = dicHelper->getFloatValue_json(options, "capInsetsHeight");
             
             imageView->setCapInsets(CCRectMake(cx, cy, cw, ch));
             
@@ -787,28 +793,29 @@ void CCSGUIReader::setPropsForImageViewFromJsonDictionary(UIWidget*widget,cs::CS
 
 void CCSGUIReader::setPropsForLabelFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     setPropsForWidgetFromJsonDictionary(widget, options);
     UILabel* label = (UILabel*)widget;
-    bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
+    bool touchScaleChangeAble = dicHelper->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeAble(touchScaleChangeAble);
-    const char* text = DICTOOL->getStringValue_json(options, "text");
+    const char* text = dicHelper->getStringValue_json(options, "text");
     label->setText(text);
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
+    bool fs = dicHelper->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
-        label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+        label->setFontSize(dicHelper->getIntValue_json(options, "fontSize"));
     }
-    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
+    bool fn = dicHelper->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        label->setFontName(dicHelper->getStringValue_json(options, "fontName"));
     }
-    bool cro = DICTOOL->checkObjectExist_json(options, "colorR");
-    bool cgo = DICTOOL->checkObjectExist_json(options, "colorG");
-    bool cbo = DICTOOL->checkObjectExist_json(options, "colorB");
-    int cr = cro?DICTOOL->getIntValue_json(options, "colorR"):255;
-    int cg = cgo?DICTOOL->getIntValue_json(options, "colorG"):255;
-    int cb = cbo?DICTOOL->getIntValue_json(options, "colorB"):255;
+    bool cro = dicHelper->checkObjectExist_json(options, "colorR");
+    bool cgo = dicHelper->checkObjectExist_json(options, "colorG");
+    bool cbo = dicHelper->checkObjectExist_json(options, "colorB");
+    int cr = cro?dicHelper->getIntValue_json(options, "colorR"):255;
+    int cg = cgo?dicHelper->getIntValue_json(options, "colorG"):255;
+    int cb = cbo?dicHelper->getIntValue_json(options, "colorB"):255;
     ccColor3B tc = ccc3(cr, cg, cb);
     label->setColor(tc);
     setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -816,23 +823,24 @@ void CCSGUIReader::setPropsForLabelFromJsonDictionary(UIWidget*widget,cs::CSJson
 
 void CCSGUIReader::setPropsForLabelAtlasFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     if (m_bOlderVersion)
     {
         setPropsForWidgetFromJsonDictionary(widget, options);
         UILabelAtlas* labelAtlas = (UILabelAtlas*)widget;
-        bool sv = DICTOOL->checkObjectExist_json(options, "stringValue");
-        bool cmf = DICTOOL->checkObjectExist_json(options, "charMapFile");
-        bool iw = DICTOOL->checkObjectExist_json(options, "itemWidth");
-        bool ih = DICTOOL->checkObjectExist_json(options, "itemHeight");
-        bool scm = DICTOOL->checkObjectExist_json(options, "startCharMap");
-        if (sv && cmf && iw && ih && scm && (strcmp(DICTOOL->getStringValue_json(options, "charMapFile"), "") != 0))
+        bool sv = dicHelper->checkObjectExist_json(options, "stringValue");
+        bool cmf = dicHelper->checkObjectExist_json(options, "charMapFile");
+        bool iw = dicHelper->checkObjectExist_json(options, "itemWidth");
+        bool ih = dicHelper->checkObjectExist_json(options, "itemHeight");
+        bool scm = dicHelper->checkObjectExist_json(options, "startCharMap");
+        if (sv && cmf && iw && ih && scm && (strcmp(dicHelper->getStringValue_json(options, "charMapFile"), "") != 0))
         {
             std::string tp_c = m_strFilePath;
             const char* cmf_tp = NULL;
-            const char* cmft = DICTOOL->getStringValue_json(options, "charMapFile");
+            const char* cmft = dicHelper->getStringValue_json(options, "charMapFile");
             cmf_tp = tp_c.append(cmft).c_str();
             
-            labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"),DICTOOL->getIntValue_json(options,"itemHeight"),DICTOOL->getStringValue_json(options, "startCharMap"));
+            labelAtlas->setProperty(dicHelper->getStringValue_json(options, "stringValue"),cmf_tp,dicHelper->getIntValue_json(options, "itemWidth"),dicHelper->getIntValue_json(options,"itemHeight"),dicHelper->getStringValue_json(options, "startCharMap"));
         }
         setColorPropsForWidgetFromJsonDictionary(widget,options);
     }
@@ -840,24 +848,24 @@ void CCSGUIReader::setPropsForLabelAtlasFromJsonDictionary(UIWidget*widget,cs::C
     {
         setPropsForWidgetFromJsonDictionary(widget, options);
         UILabelAtlas* labelAtlas = (UILabelAtlas*)widget;
-        bool sv = DICTOOL->checkObjectExist_json(options, "stringValue");
-        bool cmf = DICTOOL->checkObjectExist_json(options, "charMapFile");
-        bool iw = DICTOOL->checkObjectExist_json(options, "itemWidth");
-        bool ih = DICTOOL->checkObjectExist_json(options, "itemHeight");
-        bool scm = DICTOOL->checkObjectExist_json(options, "startCharMap");
+        bool sv = dicHelper->checkObjectExist_json(options, "stringValue");
+        bool cmf = dicHelper->checkObjectExist_json(options, "charMapFile");
+        bool iw = dicHelper->checkObjectExist_json(options, "itemWidth");
+        bool ih = dicHelper->checkObjectExist_json(options, "itemHeight");
+        bool scm = dicHelper->checkObjectExist_json(options, "startCharMap");
         if (sv && cmf && iw && ih && scm)
         {
             
-            cs::CSJsonDictionary* cmftDic = DICTOOL->getSubDictionary_json(options, "charMapFileData");
-            int cmfType = DICTOOL->getIntValue_json(cmftDic, "resourceType");
+            cs::CSJsonDictionary* cmftDic = dicHelper->getSubDictionary_json(options, "charMapFileData");
+            int cmfType = dicHelper->getIntValue_json(cmftDic, "resourceType");
             switch (cmfType)
             {
                 case 0:
                 {
                     std::string tp_c = m_strFilePath;
-                    const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
+                    const char* cmfPath = dicHelper->getStringValue_json(cmftDic, "path");
                     const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                    labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"),DICTOOL->getIntValue_json(options,"itemHeight"),DICTOOL->getStringValue_json(options, "startCharMap"));       
+                    labelAtlas->setProperty(dicHelper->getStringValue_json(options, "stringValue"),cmf_tp,dicHelper->getIntValue_json(options, "itemWidth"),dicHelper->getIntValue_json(options,"itemHeight"),dicHelper->getStringValue_json(options, "startCharMap"));       
                     break;
                 }
                 case 1:
@@ -874,62 +882,61 @@ void CCSGUIReader::setPropsForLabelAtlasFromJsonDictionary(UIWidget*widget,cs::C
 
 void CCSGUIReader::setPropsForContainerWidgetFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     setPropsForWidgetFromJsonDictionary(widget, options);
     UIContainerWidget* containerWidget = (UIContainerWidget*)widget;
     if (!dynamic_cast<UIScrollView*>(containerWidget)
         && !dynamic_cast<UIListView*>(containerWidget)
         && !dynamic_cast<UIDragPanel*>(containerWidget))
     {
-        containerWidget->setClippingEnable(DICTOOL->getBooleanValue_json(options, "clipAble"));
+        containerWidget->setClippingEnable(dicHelper->getBooleanValue_json(options, "clipAble"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
 void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     if (m_bOlderVersion)
     {
         setPropsForContainerWidgetFromJsonDictionary(widget, options);
         UIPanel* panel = (UIPanel*)widget;
-        bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
+        bool backGroundScale9Enable = dicHelper->getBooleanValue_json(options, "backGroundScale9Enable");
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
-        int cr = DICTOOL->getIntValue_json(options, "bgColorR");
-        int cg = DICTOOL->getIntValue_json(options, "bgColorG");
-        int cb = DICTOOL->getIntValue_json(options, "bgColorB");
+        int cr = dicHelper->getIntValue_json(options, "bgColorR");
+        int cg = dicHelper->getIntValue_json(options, "bgColorG");
+        int cb = dicHelper->getIntValue_json(options, "bgColorB");
         
-        int scr = DICTOOL->getIntValue_json(options, "bgStartColorR");
-        int scg = DICTOOL->getIntValue_json(options, "bgStartColorG");
-        int scb = DICTOOL->getIntValue_json(options, "bgStartColorB");
+        int scr = dicHelper->getIntValue_json(options, "bgStartColorR");
+        int scg = dicHelper->getIntValue_json(options, "bgStartColorG");
+        int scb = dicHelper->getIntValue_json(options, "bgStartColorB");
         
-        int ecr = DICTOOL->getIntValue_json(options, "bgEndColorR");
-        int ecg = DICTOOL->getIntValue_json(options, "bgEndColorG");
-        int ecb = DICTOOL->getIntValue_json(options, "bgEndColorB");
+        int ecr = dicHelper->getIntValue_json(options, "bgEndColorR");
+        int ecg = dicHelper->getIntValue_json(options, "bgEndColorG");
+        int ecb = dicHelper->getIntValue_json(options, "bgEndColorB");
         
-        float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
-        float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
+        float bgcv1 = dicHelper->getFloatValue_json(options, "vectorX");
+        float bgcv2 = dicHelper->getFloatValue_json(options, "vectorY");
         panel->setBackGroundColorVector(ccp(bgcv1, bgcv2));
         
-        int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
+        int co = dicHelper->getIntValue_json(options, "bgColorOpacity");
         
-        int colorType = DICTOOL->getIntValue_json(options, "colorType");
+        int colorType = dicHelper->getIntValue_json(options, "colorType");
         panel->setBackGroundColorType(PanelColorType(colorType));
-//        float w = DICTOOL->getFloatValue_json(options, "width");
-//        float h = DICTOOL->getFloatValue_json(options, "height");
         panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
         panel->setBackGroundColor(ccc3(cr, cg, cb));
         panel->setBackGroundColorOpacity(co);
-//        panel->setSize(CCSizeMake(w, h));
         
         std::string tp_b = m_strFilePath;
-        const char* imageFileName = DICTOOL->getStringValue_json(options, "backGroundImage");
+        const char* imageFileName = dicHelper->getStringValue_json(options, "backGroundImage");
         const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
-        bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
+        bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
         if (backGroundScale9Enable)
         {
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = dicHelper->getFloatValue_json(options, "capInsetsX");
+            float cy = dicHelper->getFloatValue_json(options, "capInsetsY");
+            float cw = dicHelper->getFloatValue_json(options, "capInsetsWidth");
+            float ch = dicHelper->getFloatValue_json(options, "capInsetsHeight");
             if (useMergedTexture)
             {
                 panel->setBackGroundImage(imageFileName,UI_TEX_TYPE_PLIST);
@@ -958,51 +965,48 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::CSJson
     {
         setPropsForContainerWidgetFromJsonDictionary(widget, options);
         UIPanel* panel = (UIPanel*)widget;
-        bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
+        bool backGroundScale9Enable = dicHelper->getBooleanValue_json(options, "backGroundScale9Enable");
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
-        int cr = DICTOOL->getIntValue_json(options, "bgColorR");
-        int cg = DICTOOL->getIntValue_json(options, "bgColorG");
-        int cb = DICTOOL->getIntValue_json(options, "bgColorB");
+        int cr = dicHelper->getIntValue_json(options, "bgColorR");
+        int cg = dicHelper->getIntValue_json(options, "bgColorG");
+        int cb = dicHelper->getIntValue_json(options, "bgColorB");
         
-        int scr = DICTOOL->getIntValue_json(options, "bgStartColorR");
-        int scg = DICTOOL->getIntValue_json(options, "bgStartColorG");
-        int scb = DICTOOL->getIntValue_json(options, "bgStartColorB");
+        int scr = dicHelper->getIntValue_json(options, "bgStartColorR");
+        int scg = dicHelper->getIntValue_json(options, "bgStartColorG");
+        int scb = dicHelper->getIntValue_json(options, "bgStartColorB");
         
-        int ecr = DICTOOL->getIntValue_json(options, "bgEndColorR");
-        int ecg = DICTOOL->getIntValue_json(options, "bgEndColorG");
-        int ecb = DICTOOL->getIntValue_json(options, "bgEndColorB");
+        int ecr = dicHelper->getIntValue_json(options, "bgEndColorR");
+        int ecg = dicHelper->getIntValue_json(options, "bgEndColorG");
+        int ecb = dicHelper->getIntValue_json(options, "bgEndColorB");
         
-        float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
-        float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
+        float bgcv1 = dicHelper->getFloatValue_json(options, "vectorX");
+        float bgcv2 = dicHelper->getFloatValue_json(options, "vectorY");
         panel->setBackGroundColorVector(ccp(bgcv1, bgcv2));
         
-        int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
+        int co = dicHelper->getIntValue_json(options, "bgColorOpacity");
         
-        int colorType = DICTOOL->getIntValue_json(options, "colorType");
+        int colorType = dicHelper->getIntValue_json(options, "colorType");
         panel->setBackGroundColorType(PanelColorType(colorType));
-//        float w = DICTOOL->getFloatValue_json(options, "width");
-//        float h = DICTOOL->getFloatValue_json(options, "height");
         panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
         panel->setBackGroundColor(ccc3(cr, cg, cb));
         panel->setBackGroundColorOpacity(co);
-//        panel->setSize(CCSizeMake(w, h));
         
         
-        cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "backGroundImageData");
-        int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
+        cs::CSJsonDictionary* imageFileNameDic = dicHelper->getSubDictionary_json(options, "backGroundImageData");
+        int imageFileNameType = dicHelper->getIntValue_json(imageFileNameDic, "resourceType");
         switch (imageFileNameType)
         {
             case 0:
             {
                 std::string tp_b = m_strFilePath;
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
                 const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
                 panel->setBackGroundImage(imageFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
                 panel->setBackGroundImage(imageFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -1013,10 +1017,10 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::CSJson
 
         if (backGroundScale9Enable)
         {
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = dicHelper->getFloatValue_json(options, "capInsetsX");
+            float cy = dicHelper->getFloatValue_json(options, "capInsetsY");
+            float cw = dicHelper->getFloatValue_json(options, "capInsetsWidth");
+            float ch = dicHelper->getFloatValue_json(options, "capInsetsHeight");
             panel->setBackGroundImageCapInsets(CCRectMake(cx, cy, cw, ch));
         }
         setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -1025,36 +1029,36 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,cs::CSJson
 
 void CCSGUIReader::setPropsForScrollViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     setPropsForPanelFromJsonDictionary(widget, options);
     UIScrollView* scrollView = (UIScrollView*)widget;
-    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
-    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+    float innerWidth = dicHelper->getFloatValue_json(options, "innerWidth");
+    float innerHeight = dicHelper->getFloatValue_json(options, "innerHeight");
     scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
-    /* gui mark */
-	int direction = DICTOOL->getFloatValue_json(options, "direction");
+	int direction = dicHelper->getFloatValue_json(options, "direction");
 	scrollView->setDirection((SCROLLVIEW_DIR)direction);
-    /**/
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
 void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     if (m_bOlderVersion)
     {
         setPropsForWidgetFromJsonDictionary(widget, options);
         UISlider* slider = (UISlider*)widget;
         
-        bool barTextureScale9Enable = DICTOOL->getBooleanValue_json(options, "barTextureScale9Enable");
+        bool barTextureScale9Enable = dicHelper->getBooleanValue_json(options, "barTextureScale9Enable");
         slider->setScale9Enabled(barTextureScale9Enable);
-        bool bt = DICTOOL->checkObjectExist_json(options, "barFileName");
-        float barLength = DICTOOL->getFloatValue_json(options, "length");
-        bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
+        bool bt = dicHelper->checkObjectExist_json(options, "barFileName");
+        float barLength = dicHelper->getFloatValue_json(options, "length");
+        bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
         if (bt)
         {
             if (barTextureScale9Enable)
             {
                 std::string tp_b = m_strFilePath;
-                const char* imageFileName = DICTOOL->getStringValue_json(options, "barFileName");
+                const char* imageFileName = dicHelper->getStringValue_json(options, "barFileName");
                 const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
                 if (useMergedTexture)
                 {
@@ -1069,7 +1073,7 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
             else
             {
                 std::string tp_b = m_strFilePath;
-                const char* imageFileName = DICTOOL->getStringValue_json(options, "barFileName");
+                const char* imageFileName = dicHelper->getStringValue_json(options, "barFileName");
                 const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
                 if (useMergedTexture)
                 {
@@ -1085,9 +1089,9 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
         std::string tp_p = m_strFilePath;
         std::string tp_d = m_strFilePath;
         
-        const char* normalFileName = DICTOOL->getStringValue_json(options, "ballNormal");
-        const char* pressedFileName = DICTOOL->getStringValue_json(options, "ballPressed");
-        const char* disabledFileName = DICTOOL->getStringValue_json(options, "ballDisabled");
+        const char* normalFileName = dicHelper->getStringValue_json(options, "ballNormal");
+        const char* pressedFileName = dicHelper->getStringValue_json(options, "ballPressed");
+        const char* disabledFileName = dicHelper->getStringValue_json(options, "ballDisabled");
         
         const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
         const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
@@ -1100,10 +1104,10 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
         {
             slider->loadSlidBallTextures(normalFileName_tp,pressedFileName_tp,disabledFileName_tp);
         }
-        slider->setPercent(DICTOOL->getIntValue_json(options, "percent"));
+        slider->setPercent(dicHelper->getIntValue_json(options, "percent"));
 
         std::string tp_b = m_strFilePath;
-        const char* imageFileName = DICTOOL->getStringValue_json(options, "progressBarFileName");
+        const char* imageFileName = dicHelper->getStringValue_json(options, "progressBarFileName");
         const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
         if (useMergedTexture)
         {
@@ -1120,30 +1124,30 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
         setPropsForWidgetFromJsonDictionary(widget, options);
         UISlider* slider = (UISlider*)widget;
         
-        bool barTextureScale9Enable = DICTOOL->getBooleanValue_json(options, "barTextureScale9Enable");
+        bool barTextureScale9Enable = dicHelper->getBooleanValue_json(options, "barTextureScale9Enable");
         slider->setScale9Enabled(barTextureScale9Enable);
-        bool bt = DICTOOL->checkObjectExist_json(options, "barFileName");
-        float barLength = DICTOOL->getFloatValue_json(options, "length");
+        bool bt = dicHelper->checkObjectExist_json(options, "barFileName");
+        float barLength = dicHelper->getFloatValue_json(options, "length");
         if (bt)
         {
             if (barTextureScale9Enable)
             {
                 
-                cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "barFileNameData");
-                int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
+                cs::CSJsonDictionary* imageFileNameDic = dicHelper->getSubDictionary_json(options, "barFileNameData");
+                int imageFileType = dicHelper->getIntValue_json(imageFileNameDic, "resourceType");
                 switch (imageFileType)
                 {
                     case 0:
                     {
                         std::string tp_b = m_strFilePath;
-                        const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                        const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
                         const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
                         slider->loadBarTexture(imageFileName_tp);
                         break;
                     }
                     case 1:
                     {
-                        const char* imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                        const char* imageFileName =  dicHelper->getStringValue_json(imageFileNameDic, "path");
                         slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
                         break;
                     }
@@ -1156,21 +1160,21 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
             }
             else
             {
-                cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "barFileNameData");
-                int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
+                cs::CSJsonDictionary* imageFileNameDic = dicHelper->getSubDictionary_json(options, "barFileNameData");
+                int imageFileType = dicHelper->getIntValue_json(imageFileNameDic, "resourceType");
                 switch (imageFileType)
                 {
                     case 0:
                     {
                         std::string tp_b = m_strFilePath;
-                        const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                        const char*imageFileName =  dicHelper->getStringValue_json(imageFileNameDic, "path");
                         const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
                         slider->loadBarTexture(imageFileName_tp);
                         break;
                     }
                     case 1:
                     {
-                        const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                        const char*imageFileName =  dicHelper->getStringValue_json(imageFileNameDic, "path");
                         slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
                         break;
                     }
@@ -1180,41 +1184,22 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
 				CC_SAFE_DELETE(imageFileNameDic);
             }
         }
-//        std::string tp_n = m_strFilePath;
-//        std::string tp_p = m_strFilePath;
-//        std::string tp_d = m_strFilePath;
-//        
-//        const char* normalFileName = DICTOOL->getStringValue_json(options, "ballNormal");
-//        const char* pressedFileName = DICTOOL->getStringValue_json(options, "ballPressed");
-//        const char* disabledFileName = DICTOOL->getStringValue_json(options, "ballDisabled");
-//        
-//        const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
-//        const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
-//        const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
-//        if (useMergedTexture)
-//        {
-//            slider->setSlidBallTextures(normalFileName,pressedFileName,disabledFileName,UI_TEX_TYPE_PLIST);
-//        }
-//        else
-//        {
-//            slider->setSlidBallTextures(normalFileName_tp,pressedFileName_tp,disabledFileName_tp);
-//        }
         
-        cs::CSJsonDictionary* normalDic = DICTOOL->getSubDictionary_json(options, "ballNormalData");
-        int normalType = DICTOOL->getIntValue_json(normalDic, "resourceType");
+        cs::CSJsonDictionary* normalDic = dicHelper->getSubDictionary_json(options, "ballNormalData");
+        int normalType = dicHelper->getIntValue_json(normalDic, "resourceType");
         switch (normalType)
         {
             case 0:
             {
                 std::string tp_n = m_strFilePath;
-                const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
+                const char* normalFileName = dicHelper->getStringValue_json(normalDic, "path");
                 const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
                 slider->loadSlidBallTextureNormal(normalFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
+                const char* normalFileName = dicHelper->getStringValue_json(normalDic, "path");
                 slider->loadSlidBallTextureNormal(normalFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -1223,21 +1208,21 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
         }
         CC_SAFE_DELETE(normalDic);
 
-        cs::CSJsonDictionary* pressedDic = DICTOOL->getSubDictionary_json(options, "ballPressedData");
-        int pressedType = DICTOOL->getIntValue_json(pressedDic, "resourceType");
+        cs::CSJsonDictionary* pressedDic = dicHelper->getSubDictionary_json(options, "ballPressedData");
+        int pressedType = dicHelper->getIntValue_json(pressedDic, "resourceType");
         switch (pressedType)
         {
             case 0:
             {
                 std::string tp_p = m_strFilePath;
-                const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
+                const char* pressedFileName = dicHelper->getStringValue_json(pressedDic, "path");
                 const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
                 slider->loadSlidBallTexturePressed(pressedFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
+                const char* pressedFileName = dicHelper->getStringValue_json(pressedDic, "path");
                 slider->loadSlidBallTexturePressed(pressedFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -1246,21 +1231,21 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
         }
 		CC_SAFE_DELETE(pressedDic);
         
-        cs::CSJsonDictionary* disabledDic = DICTOOL->getSubDictionary_json(options, "ballDisabledData");
-        int disabledType = DICTOOL->getIntValue_json(disabledDic, "resourceType");
+        cs::CSJsonDictionary* disabledDic = dicHelper->getSubDictionary_json(options, "ballDisabledData");
+        int disabledType = dicHelper->getIntValue_json(disabledDic, "resourceType");
         switch (disabledType)
         {
             case 0:
             {
                 std::string tp_d = m_strFilePath;
-                const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
+                const char* disabledFileName = dicHelper->getStringValue_json(disabledDic, "path");
                 const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
                 slider->loadSlidBallTextureDisabled(disabledFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
+                const char* disabledFileName = dicHelper->getStringValue_json(disabledDic, "path");
                 slider->loadSlidBallTextureDisabled(disabledFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -1269,23 +1254,23 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
         }
 		CC_SAFE_DELETE(disabledDic);
         
-        slider->setPercent(DICTOOL->getIntValue_json(options, "percent"));
+        slider->setPercent(dicHelper->getIntValue_json(options, "percent"));
         
-        cs::CSJsonDictionary* progressBarDic = DICTOOL->getSubDictionary_json(options, "progressBarData");
-        int progressBarType = DICTOOL->getIntValue_json(progressBarDic, "resourceType");
+        cs::CSJsonDictionary* progressBarDic = dicHelper->getSubDictionary_json(options, "progressBarData");
+        int progressBarType = dicHelper->getIntValue_json(progressBarDic, "resourceType");
         switch (progressBarType)
         {
             case 0:
             {
                 std::string tp_b = m_strFilePath;
-                const char* imageFileName = DICTOOL->getStringValue_json(progressBarDic, "path");
+                const char* imageFileName = dicHelper->getStringValue_json(progressBarDic, "path");
                 const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
                 slider->loadProgressBarTexture(imageFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* imageFileName = DICTOOL->getStringValue_json(progressBarDic, "path");
+                const char* imageFileName = dicHelper->getStringValue_json(progressBarDic, "path");
                 slider->loadProgressBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -1298,125 +1283,129 @@ void CCSGUIReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJso
 
 void CCSGUIReader::setPropsForTextAreaFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     setPropsForWidgetFromJsonDictionary(widget, options);
     UITextArea* textArea = (UITextArea*)widget;
-    textArea->setText(DICTOOL->getStringValue_json(options, "text"));
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
+    textArea->setText(dicHelper->getStringValue_json(options, "text"));
+    bool fs = dicHelper->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
-        textArea->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+        textArea->setFontSize(dicHelper->getIntValue_json(options, "fontSize"));
     }
-    int cr = DICTOOL->getIntValue_json(options, "colorR");
-    int cg = DICTOOL->getIntValue_json(options, "colorG");
-    int cb = DICTOOL->getIntValue_json(options, "colorB");
+    int cr = dicHelper->getIntValue_json(options, "colorR");
+    int cg = dicHelper->getIntValue_json(options, "colorG");
+    int cb = dicHelper->getIntValue_json(options, "colorB");
     textArea->setColor(ccc3(cr, cg, cb));
-    textArea->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
-    bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
-    bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
+    textArea->setFontName(dicHelper->getStringValue_json(options, "fontName"));
+    bool aw = dicHelper->checkObjectExist_json(options, "areaWidth");
+    bool ah = dicHelper->checkObjectExist_json(options, "areaHeight");
     if (aw && ah)
     {
-        CCSize size = CCSize(DICTOOL->getFloatValue_json(options, "areaWidth"),DICTOOL->getFloatValue_json(options,"areaHeight"));
+        CCSize size = CCSize(dicHelper->getFloatValue_json(options, "areaWidth"),dicHelper->getFloatValue_json(options,"areaHeight"));
         textArea->setTextAreaSize(size);
     }
-    bool ha = DICTOOL->checkObjectExist_json(options, "hAlignment");
+    bool ha = dicHelper->checkObjectExist_json(options, "hAlignment");
     if (ha)
     {
-        textArea->setTextHorizontalAlignment((CCTextAlignment)DICTOOL->getIntValue_json(options, "hAlignment"));
+        textArea->setTextHorizontalAlignment((CCTextAlignment)dicHelper->getIntValue_json(options, "hAlignment"));
     }
-    bool va = DICTOOL->checkObjectExist_json(options, "vAlignment");
+    bool va = dicHelper->checkObjectExist_json(options, "vAlignment");
     if (va)
     {
-        textArea->setTextVerticalAlignment((CCVerticalTextAlignment)DICTOOL->getIntValue_json(options, "vAlignment"));
+        textArea->setTextVerticalAlignment((CCVerticalTextAlignment)dicHelper->getIntValue_json(options, "vAlignment"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
 void CCSGUIReader::setPropsForTextButtonFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     setPropsForButtonFromJsonDictionary(widget, options);
     
     
     UITextButton* textButton = (UITextButton*)widget;
-    textButton->setTitleText(DICTOOL->getStringValue_json(options, "text"));
-    bool cr = DICTOOL->checkObjectExist_json(options, "textColorR");
-    bool cg = DICTOOL->checkObjectExist_json(options, "textColorG");
-    bool cb = DICTOOL->checkObjectExist_json(options, "textColorB");
-    int cri = cr?DICTOOL->getIntValue_json(options, "textColorR"):255;
-    int cgi = cg?DICTOOL->getIntValue_json(options, "textColorG"):255;
-    int cbi = cb?DICTOOL->getIntValue_json(options, "textColorB"):255;
+    textButton->setTitleText(dicHelper->getStringValue_json(options, "text"));
+    bool cr = dicHelper->checkObjectExist_json(options, "textColorR");
+    bool cg = dicHelper->checkObjectExist_json(options, "textColorG");
+    bool cb = dicHelper->checkObjectExist_json(options, "textColorB");
+    int cri = cr?dicHelper->getIntValue_json(options, "textColorR"):255;
+    int cgi = cg?dicHelper->getIntValue_json(options, "textColorG"):255;
+    int cbi = cb?dicHelper->getIntValue_json(options, "textColorB"):255;
     textButton->setTitleColor(ccc3(cri,cgi,cbi));
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
+    bool fs = dicHelper->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
-        textButton->setTitleFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+        textButton->setTitleFontSize(dicHelper->getIntValue_json(options, "fontSize"));
     }
-    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
+    bool fn = dicHelper->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        textButton->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        textButton->setTitleFontName(dicHelper->getStringValue_json(options, "fontName"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
 void CCSGUIReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     setPropsForWidgetFromJsonDictionary(widget, options);
     UITextField* textField = (UITextField*)widget;
-    bool ph = DICTOOL->checkObjectExist_json(options, "placeHolder");
+    bool ph = dicHelper->checkObjectExist_json(options, "placeHolder");
     if (ph)
     {
-        textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder"));
+        textField->setPlaceHolder(dicHelper->getStringValue_json(options, "placeHolder"));
     }
-    textField->setText(DICTOOL->getStringValue_json(options, "text"));
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
+    textField->setText(dicHelper->getStringValue_json(options, "text"));
+    bool fs = dicHelper->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
-        textField->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+        textField->setFontSize(dicHelper->getIntValue_json(options, "fontSize"));
     }
-    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
+    bool fn = dicHelper->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        textField->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        textField->setFontName(dicHelper->getStringValue_json(options, "fontName"));
     }
-    bool tsw = DICTOOL->checkObjectExist_json(options, "touchSizeWidth");
-    bool tsh = DICTOOL->checkObjectExist_json(options, "touchSizeHeight");
+    bool tsw = dicHelper->checkObjectExist_json(options, "touchSizeWidth");
+    bool tsh = dicHelper->checkObjectExist_json(options, "touchSizeHeight");
     if (tsw && tsh)
     {
-        textField->setTouchSize(CCSizeMake(DICTOOL->getFloatValue_json(options, "touchSizeWidth"), DICTOOL->getFloatValue_json(options,"touchSizeHeight")));
+        textField->setTouchSize(CCSizeMake(dicHelper->getFloatValue_json(options, "touchSizeWidth"), dicHelper->getFloatValue_json(options,"touchSizeHeight")));
     }
     
-    float dw = DICTOOL->getFloatValue_json(options, "width");
-    float dh = DICTOOL->getFloatValue_json(options, "height");
+    float dw = dicHelper->getFloatValue_json(options, "width");
+    float dh = dicHelper->getFloatValue_json(options, "height");
     if (dw > 0.0f || dh > 0.0f)
     {
         //textField->setSize(CCSizeMake(dw, dh));
     }
-	bool maxLengthEnable = DICTOOL->getBooleanValue_json(options, "maxLengthEnable");
+	bool maxLengthEnable = dicHelper->getBooleanValue_json(options, "maxLengthEnable");
 	textField->setMaxLengthEnable(maxLengthEnable);
 
 	if (maxLengthEnable)
 	{
-		int maxLength = DICTOOL->getIntValue_json(options, "maxLength");
+		int maxLength = dicHelper->getIntValue_json(options, "maxLength");
 		textField->setMaxLength(maxLength);
 	}
-    bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
+    bool passwordEnable = dicHelper->getBooleanValue_json(options, "passwordEnable");
     textField->setPasswordEnable(passwordEnable);
     if (passwordEnable)
     {
-        textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, "passwordStyleText"));
+        textField->setPasswordStyleText(dicHelper->getStringValue_json(options, "passwordStyleText"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
 void CCSGUIReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     if (m_bOlderVersion)
     {
         setPropsForWidgetFromJsonDictionary(widget, options);
         UILoadingBar* loadingBar = (UILoadingBar*)widget;
-        bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
+        bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
         std::string tp_b = m_strFilePath;
-        const char*imageFileName =  DICTOOL->getStringValue_json(options, "texture");
+        const char*imageFileName =  dicHelper->getStringValue_json(options, "texture");
         const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
         if (useMergedTexture)
         {
@@ -1426,8 +1415,8 @@ void CCSGUIReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs:
         {
             loadingBar->loadTexture(imageFileName_tp);
         }
-        loadingBar->setDirection(LoadingBarType(DICTOOL->getIntValue_json(options, "direction")));
-        loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
+        loadingBar->setDirection(LoadingBarType(dicHelper->getIntValue_json(options, "direction")));
+        loadingBar->setPercent(dicHelper->getIntValue_json(options, "percent"));
         setColorPropsForWidgetFromJsonDictionary(widget,options);
     }
     else
@@ -1435,14 +1424,14 @@ void CCSGUIReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs:
         setPropsForWidgetFromJsonDictionary(widget, options);
         UILoadingBar* loadingBar = (UILoadingBar*)widget;
         
-        cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "textureData");
-        int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
+        cs::CSJsonDictionary* imageFileNameDic = dicHelper->getSubDictionary_json(options, "textureData");
+        int imageFileNameType = dicHelper->getIntValue_json(imageFileNameDic, "resourceType");
         switch (imageFileNameType)
         {
             case 0:
             {
                 std::string tp_i = m_strFilePath;
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
                 const char* imageFileName_tp = NULL;
                 if (imageFileName && (strcmp(imageFileName, "") != 0))
                 {
@@ -1453,7 +1442,7 @@ void CCSGUIReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs:
             }
             case 1:
             {
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
                 loadingBar->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -1463,26 +1452,26 @@ void CCSGUIReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs:
 		CC_SAFE_DELETE(imageFileNameDic);
         
         /* gui mark add load bar scale9 parse */
-        bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
+        bool scale9Enable = dicHelper->getBooleanValue_json(options, "scale9Enable");
         loadingBar->setScale9Enabled(scale9Enable);
         
         if (scale9Enable)
         {
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = dicHelper->getFloatValue_json(options, "capInsetsX");
+            float cy = dicHelper->getFloatValue_json(options, "capInsetsY");
+            float cw = dicHelper->getFloatValue_json(options, "capInsetsWidth");
+            float ch = dicHelper->getFloatValue_json(options, "capInsetsHeight");
             
             loadingBar->setCapInsets(CCRectMake(cx, cy, cw, ch));
             
-            float width = DICTOOL->getFloatValue_json(options, "width");
-            float height = DICTOOL->getFloatValue_json(options, "height");
+            float width = dicHelper->getFloatValue_json(options, "width");
+            float height = dicHelper->getFloatValue_json(options, "height");
             loadingBar->setSize(CCSizeMake(width, height));
         }
         /**/
 
-        loadingBar->setDirection(LoadingBarType(DICTOOL->getIntValue_json(options, "direction")));
-        loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
+        loadingBar->setDirection(LoadingBarType(dicHelper->getIntValue_json(options, "direction")));
+        loadingBar->setPercent(dicHelper->getIntValue_json(options, "percent"));
         setColorPropsForWidgetFromJsonDictionary(widget,options);
     }
 }
@@ -1500,6 +1489,7 @@ void CCSGUIReader::setPropsForPageViewFromJsonDictionary(UIWidget*widget,cs::CSJ
 
 void CCSGUIReader::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     if (m_bOlderVersion)
     {
         setPropsForWidgetFromJsonDictionary(widget, options);
@@ -1508,12 +1498,12 @@ void CCSGUIReader::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, cs
         
         std::string tp_c = m_strFilePath;
         const char* cmf_tp = NULL;
-        const char* cmft = DICTOOL->getStringValue_json(options, "fileName");
+        const char* cmft = dicHelper->getStringValue_json(options, "fileName");
         cmf_tp = tp_c.append(cmft).c_str();
         
         labelBMFont->setFntFile(cmf_tp);
         
-        const char* text = DICTOOL->getStringValue_json(options, "text");
+        const char* text = dicHelper->getStringValue_json(options, "text");
         labelBMFont->setText(text);
         
         setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -1524,14 +1514,14 @@ void CCSGUIReader::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, cs
         
         UILabelBMFont* labelBMFont = (UILabelBMFont*)widget;
         
-        cs::CSJsonDictionary* cmftDic = DICTOOL->getSubDictionary_json(options, "fileNameData");
-        int cmfType = DICTOOL->getIntValue_json(cmftDic, "resourceType");
+        cs::CSJsonDictionary* cmftDic = dicHelper->getSubDictionary_json(options, "fileNameData");
+        int cmfType = dicHelper->getIntValue_json(cmftDic, "resourceType");
         switch (cmfType)
         {
             case 0:
             {
                 std::string tp_c = m_strFilePath;
-                const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
+                const char* cmfPath = dicHelper->getStringValue_json(cmftDic, "path");
                 const char* cmf_tp = tp_c.append(cmfPath).c_str();
                 labelBMFont->setFntFile(cmf_tp);
                 break;
@@ -1544,7 +1534,7 @@ void CCSGUIReader::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, cs
         }
         CC_SAFE_DELETE(cmftDic);
 
-        const char* text = DICTOOL->getStringValue_json(options, "text");
+        const char* text = dicHelper->getStringValue_json(options, "text");
         labelBMFont->setText(text);
         
         setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -1553,15 +1543,16 @@ void CCSGUIReader::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, cs
 
 void CCSGUIReader::setPropsForDragPanelFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
+    DictionaryHelper* dicHelper = DICTOOL;
     setPropsForPanelFromJsonDictionary(widget, options);
     
     UIDragPanel* dragPanel = (UIDragPanel*)widget;
     
-    bool bounceEnable = DICTOOL->getBooleanValue_json(options, "bounceEnable");
+    bool bounceEnable = dicHelper->getBooleanValue_json(options, "bounceEnable");
     dragPanel->setBounceEnabled(bounceEnable);
     
-    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
-    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+    float innerWidth = dicHelper->getFloatValue_json(options, "innerWidth");
+    float innerHeight = dicHelper->getFloatValue_json(options, "innerHeight");
     dragPanel->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
     
     setColorPropsForWidgetFromJsonDictionary(widget, options);

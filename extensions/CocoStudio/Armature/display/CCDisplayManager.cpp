@@ -170,12 +170,13 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
 
 void CCDisplayManager::removeDisplay(int index)
 {
-    m_pDecoDisplayList->removeObjectAtIndex(index);
-
     if(index == m_iDisplayIndex)
     {
         setCurrentDecorativeDisplay(NULL);
+        m_iDisplayIndex = -1;
     }
+
+    m_pDecoDisplayList->removeObjectAtIndex(index);
 }
 
 CCArray *CCDisplayManager::getDecorativeDisplayList()
