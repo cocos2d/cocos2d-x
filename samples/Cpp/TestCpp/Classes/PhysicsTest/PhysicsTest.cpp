@@ -724,6 +724,11 @@ void PhysicsDemoJoints::onEnter()
     
 }
 
+void PhysicsDemoJoints::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    
+}
+
 std::string PhysicsDemoJoints::title()
 {
     return "Joints";
