@@ -639,8 +639,6 @@ void Node::addChild(Node *child, int zOrder, int tag)
             child->onEnterTransitionDidFinish();
         }
     }
-    
-    EventDispatcher::getInstance()->setDirtyForNode(child);
 }
 
 void Node::addChild(Node *child, int zOrder)

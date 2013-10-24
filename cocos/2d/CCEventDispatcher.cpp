@@ -31,7 +31,7 @@
 #include <algorithm>
 
 
-#define DUMP_LISTENER_ITEM_PRIORITY_INFO 1
+#define DUMP_LISTENER_ITEM_PRIORITY_INFO 0
 
 namespace
 {
@@ -229,6 +229,7 @@ void EventDispatcher::resumeTarget(Node* node)
             l->_paused = false;
         }
     }
+    setDirtyForNode(node);
 }
 
 void EventDispatcher::cleanTarget(Node* node)
