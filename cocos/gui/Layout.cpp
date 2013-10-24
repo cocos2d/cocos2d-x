@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "gui/layout.h"
+#include "gui/Layout.h"
 #include "gui/UILayer.h"
 #include "gui/UIHelper.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"

@@ -62,7 +62,7 @@ if "%buildexternalsfromsource%"=="1" (goto :MODULE1) else (goto :MODULE2)
 	goto :COPY_RES
 :MODULE2
 	echo "Using prebuilt externals"
-	set NDK_MODULE_PATH=%COCOS2DX_ROOT%;%COCOS2DX_ROOT%\cocos2dx\platform\third_party\android\prebuilt
+	set NDK_MODULE_PATH=%COCOS2DX_ROOT%;%COCOS2DX_ROOT%\cocos;%COCOS2DX_ROOT%\external
 
 :COPY_RES
 echo NDK_ROOT = %NDK_ROOT%
@@ -75,13 +75,12 @@ rem make sure assets is exist
 if exist %APP_ANDROID_ROOT%\assets rd /q /s %APP_ANDROID_ROOT%\assets
 
 mkdir %APP_ANDROID_ROOT%\assets
-mkdir %APP_ANDROID_ROOT%\assets\res
 
 rem copy Resources/* into assets' root
 xcopy /e /q /r /y %APP_ROOT%\Resources\* %APP_ANDROID_ROOT%\assets
 
 rem copy common luaScript
-xcopy /e /q /r /y %APP_ROOT%\..\..\scripting\lua\script\* %APP_ANDROID_ROOT%\assets
+xcopy /e /q /r /y %COCOS2DX_ROOT%\cocos\scripting\lua\script\* %APP_ANDROID_ROOT%\assets
 
-call %NDK_ROOT%\ndk-build.cmd NDK_LOG=0 V=0
+call %NDK_ROOT%\ndk-build.cmd NDK_LOG=0 V=0 %*
 pause

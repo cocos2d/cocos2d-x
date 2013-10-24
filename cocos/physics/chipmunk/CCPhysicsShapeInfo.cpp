@@ -32,6 +32,7 @@ cpBody* PhysicsShapeInfo::shareBody = nullptr;
 
 PhysicsShapeInfo::PhysicsShapeInfo(PhysicsShape* shape)
 : shape(shape)
+, group(CP_NO_GROUP)
 {
     if (shareBody == nullptr)
     {
@@ -52,10 +53,33 @@ PhysicsShapeInfo::~PhysicsShapeInfo()
     }
 }
 
+void PhysicsShapeInfo::setGroup(cpGroup group)
+{
+    this->group = group;
+    
+    for (cpShape* shape : shapes)
+    {
+        cpShapeSetGroup(shape, group);
+    }
+}
+
+void PhysicsShapeInfo::setBody(cpBody* body)
+{
+    if (this->body != body)
+    {
+        this->body = body;
+        for (cpShape* shape : shapes)
+        {
+            cpShapeSetBody(shape, body == nullptr ? shareBody : body);
+        }
+    }
+}
+
 void PhysicsShapeInfo::add(cpShape* shape)
 {
     if (shape == nullptr) return;
     
+    cpShapeSetGroup(shape, group);
     shapes.push_back(shape);
     map.insert(std::pair<cpShape*, PhysicsShapeInfo*>(shape, this));
 }
@@ -71,7 +95,21 @@ void PhysicsShapeInfo::remove(cpShape* shape)
         
         auto mit = map.find(shape);
         if (mit != map.end()) map.erase(mit);
+        
+        cpShapeFree(shape);
     }
+}
+
+void PhysicsShapeInfo::removeAll()
+{
+    for (cpShape* shape : shapes)
+    {
+        auto mit = map.find(shape);
+        if (mit != map.end()) map.erase(mit);
+        cpShapeFree(shape);
+    }
+    
+    shapes.clear();
 }
 
 NS_CC_END
