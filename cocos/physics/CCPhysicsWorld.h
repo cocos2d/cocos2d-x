@@ -98,6 +98,7 @@ public:
     void rayCast(PhysicsRayCastCallback& callback, Point point1, Point point2, void* data);
     void rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data);
     Array* getShapesAtPoint(Point point);
+    PhysicsShape* getShapeAtPoint(Point point);
     Array* getAllBody() const;
     
     /** Register a listener to receive contact callbacks*/

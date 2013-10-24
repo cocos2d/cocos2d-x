@@ -88,6 +88,7 @@ public:
     static void collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
     static void rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info);
     static void rectQueryCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info);
+    static void nearestPointQueryFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr);
     
 public:
     static bool continues;
@@ -164,6 +165,15 @@ void PhysicsWorldCallback::rectQueryCallbackFunc(cpShape *shape, RectQueryCallba
     PhysicsWorldCallback::continues = info->callback->report(*info->world,
                                                              *it->second->shape,
                                                              info->data);
+}
+
+void PhysicsWorldCallback::nearestPointQueryFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr)
+{
+    auto it = PhysicsShapeInfo::map.find(shape);
+    
+    CC_ASSERT(it != PhysicsShapeInfo::map.end());
+    
+    arr->addObject(it->second->shape);
 }
 
 bool PhysicsWorld::init()
@@ -561,9 +571,30 @@ void PhysicsWorld::rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void
     }
 }
 
-Array* getShapesAtPoint(Point point)
+Array* PhysicsWorld::getShapesAtPoint(Point point)
 {
+    Array* arr = Array::create();
+    cpSpaceNearestPointQuery(this->_info->space,
+                             PhysicsHelper::point2cpv(point),
+                             0,
+                             CP_ALL_LAYERS,
+                             CP_NO_GROUP,
+                             (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::nearestPointQueryFunc,
+                             arr);
     
+    return arr;
+}
+
+PhysicsShape* PhysicsWorld::getShapeAtPoint(Point point)
+{
+    cpShape* shape = cpSpaceNearestPointQueryNearest(this->_info->space,
+                                    PhysicsHelper::point2cpv(point),
+                                    0,
+                                    CP_ALL_LAYERS,
+                                    CP_NO_GROUP,
+                                    nullptr);
+    
+    return shape == nullptr ? nullptr : PhysicsShapeInfo::map.find(shape)->second->shape;
 }
 
 Array* PhysicsWorld::getAllBody() const
