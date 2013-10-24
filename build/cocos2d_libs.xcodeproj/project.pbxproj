@@ -44,6 +44,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1546514A18177D1300F69506 /* lua_xml_http_request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1546514818177D1300F69506 /* lua_xml_http_request.cpp */; };
+		1546514B18177D1300F69506 /* lua_xml_http_request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1546514818177D1300F69506 /* lua_xml_http_request.cpp */; };
+		1546514C18177D1300F69506 /* lua_xml_http_request.h in Headers */ = {isa = PBXBuildFile; fileRef = 1546514918177D1300F69506 /* lua_xml_http_request.h */; };
+		1546514D18177D1300F69506 /* lua_xml_http_request.h in Headers */ = {isa = PBXBuildFile; fileRef = 1546514918177D1300F69506 /* lua_xml_http_request.h */; };
 		1599607B1811329600C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607A1811329600C7D42C /* libluajit.a */; };
 		15996080181132DE00C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607F181132DE00C7D42C /* libluajit.a */; };
 		1A3B1F78180E88C300497A22 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */; };
@@ -1981,6 +1985,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1546514818177D1300F69506 /* lua_xml_http_request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_xml_http_request.cpp; sourceTree = "<group>"; };
+		1546514918177D1300F69506 /* lua_xml_http_request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_xml_http_request.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1599607A1811329600C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/mac/libluajit.a; sourceTree = "<group>"; };
@@ -3162,6 +3168,8 @@
 		1A3B1F4A180E88C200497A22 /* bindings */ = {
 			isa = PBXGroup;
 			children = (
+				1546514818177D1300F69506 /* lua_xml_http_request.cpp */,
+				1546514918177D1300F69506 /* lua_xml_http_request.h */,
 				1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */,
 				1A3B1F4F180E88C200497A22 /* CCBProxy.h */,
 				1A3B1F50180E88C200497A22 /* CCLuaBridge.cpp */,
@@ -5505,6 +5513,7 @@
 				1A8C564B180E8D0D00EF57C3 /* tolua_event.h in Headers */,
 				1A8C5655180E8D7B00EF57C3 /* lua_cocos2dx_auto.hpp in Headers */,
 				1A8C5657180E8D7B00EF57C3 /* lua_cocos2dx_extension_auto.hpp in Headers */,
+				1546514D18177D1300F69506 /* lua_xml_http_request.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5531,6 +5540,7 @@
 				1A8C564A180E8D0D00EF57C3 /* tolua_event.h in Headers */,
 				1A8C5659180E8D7C00EF57C3 /* lua_cocos2dx_auto.hpp in Headers */,
 				1A8C565B180E8D7C00EF57C3 /* lua_cocos2dx_extension_auto.hpp in Headers */,
+				1546514C18177D1300F69506 /* lua_xml_http_request.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6797,6 +6807,7 @@
 				1A8C5653180E8D0D00EF57C3 /* tolua_to.c in Sources */,
 				1A8C5654180E8D7B00EF57C3 /* lua_cocos2dx_auto.cpp in Sources */,
 				1A8C5656180E8D7B00EF57C3 /* lua_cocos2dx_extension_auto.cpp in Sources */,
+				1546514B18177D1300F69506 /* lua_xml_http_request.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6826,6 +6837,7 @@
 				1A8C5652180E8D0D00EF57C3 /* tolua_to.c in Sources */,
 				1A8C5658180E8D7B00EF57C3 /* lua_cocos2dx_auto.cpp in Sources */,
 				1A8C565A180E8D7C00EF57C3 /* lua_cocos2dx_extension_auto.cpp in Sources */,
+				1546514A18177D1300F69506 /* lua_xml_http_request.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
