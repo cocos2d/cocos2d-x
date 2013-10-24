@@ -640,7 +640,7 @@ void Node::addChild(Node *child, int zOrder, int tag)
         }
     }
     
-    EventDispatcher::getInstance()->setDirtyForNode(this);
+    EventDispatcher::getInstance()->setDirtyForNode(child);
 }
 
 void Node::addChild(Node *child, int zOrder)
