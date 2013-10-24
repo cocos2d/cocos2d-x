@@ -139,6 +139,8 @@ private:
         bool empty() const;
         
         void push_back(EventListener* item);
+        void clearSceneGraphListeners();
+        void clearFixedListeners();
         void clear();
         
         inline std::vector<EventListener*>* getFixedPriorityListeners() const { return _fixedListeners; };

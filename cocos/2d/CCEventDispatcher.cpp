@@ -115,7 +115,7 @@ void EventDispatcher::EventListenerVector::push_back(EventListener* listener)
     }
 }
 
-void EventDispatcher::EventListenerVector::clear()
+void EventDispatcher::EventListenerVector::clearSceneGraphListeners()
 {
     if (_sceneGraphListeners)
     {
@@ -123,13 +123,22 @@ void EventDispatcher::EventListenerVector::clear()
         delete _sceneGraphListeners;
         _sceneGraphListeners = nullptr;
     }
-    
+}
+
+void EventDispatcher::EventListenerVector::clearFixedListeners()
+{
     if (_fixedListeners)
     {
         _fixedListeners->clear();
         delete _fixedListeners;
         _fixedListeners = nullptr;
     }
+}
+
+void EventDispatcher::EventListenerVector::clear()
+{
+    clearSceneGraphListeners();
+    clearFixedListeners();
 }
 
 
@@ -270,6 +279,7 @@ void EventDispatcher::dissociateNodeAndEventListener(Node* node, EventListener* 
         if (listeners->empty())
         {
             _nodeListenersMap.erase(found);
+            delete listeners;
         }
     }
 }
@@ -317,7 +327,6 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
         return;
     
     listener->_node = node;
-//    listener->_node->retain();
     listener->_fixedPriority = 0;
 
     listener->retain();
@@ -377,6 +386,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 if (_inDispatch == 0)
                 {
                     listeners->erase(iter);
+                    CC_SAFE_RELEASE(l);
                 }
                 
                 isFound = true;
@@ -819,6 +829,16 @@ void EventDispatcher::updateListeners()
             }
         }
         
+        if (sceneGraphPriorityListeners && sceneGraphPriorityListeners->empty())
+        {
+            listeners->clearSceneGraphListeners();
+        }
+
+        if (fixedPriorityListeners && fixedPriorityListeners->empty())
+        {
+            listeners->clearFixedListeners();
+        }
+
         if (listenersIter->second->empty())
         {
             _priorityDirtyFlagMap.erase(listenersIter->first);
@@ -1047,7 +1067,11 @@ bool EventDispatcher::isEnabled() const
 
 void EventDispatcher::setDirtyForNode(Node* node)
 {
-    _dirtyNodes.insert(node);
+    // Mark the node dirty only when there was an eventlistener associates with it. 
+    if (_nodeListenersMap.find(node) != _nodeListenersMap.end())
+    {
+        _dirtyNodes.insert(node);
+    }
 }
 
 void EventDispatcher::setDirtyForEventType(const std::string& eventType, DirtyFlag flag)
