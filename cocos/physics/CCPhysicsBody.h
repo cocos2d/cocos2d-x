@@ -276,8 +276,8 @@ protected:
     int                         _tag;
     
     int    _categoryBitmask;
-    int    _contactTestBitmask;
     int    _collisionBitmask;
+    int    _contactTestBitmask;
     
     friend class PhysicsWorld;
     friend class PhysicsShape;

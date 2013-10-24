@@ -33,12 +33,6 @@
 #include "CCObject.h"
 #include "CCGeometry.h"
 
-
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-typedef struct cpArbiter cpArbiter;
-typedef struct cpSpace cpSpace;
-#endif
-
 NS_CC_BEGIN
 
 class PhysicsBody;
@@ -55,6 +49,39 @@ class Sprite;
 class Scene;
 class DrawNode;
 
+class PhysicsWorld;
+class PhysicsRayCastCallback
+{
+public:
+    PhysicsRayCastCallback()
+    : report(nullptr)
+    {}
+    virtual ~PhysicsRayCastCallback(){}
+	/**
+     * @brief Called for each fixture found in the query. You control how the ray cast
+	 * proceeds by returning a float:
+	 * return true: continue
+	 * return false: terminate the ray cast
+	 * @param fixture the fixture hit by the ray
+	 * @param point the point of initial intersection
+	 * @param normal the normal vector at the point of intersection
+	 * @return true to continue, false to terminate
+     */
+    std::function<bool(PhysicsWorld&, PhysicsShape&, Point, Point, float, void*)> report;
+};
+
+class PhysicsRectQueryCallback
+{
+public:
+    PhysicsRectQueryCallback()
+    : report(nullptr)
+    {}
+    virtual ~PhysicsRectQueryCallback(){}
+    
+public:
+    std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> report;
+};
+
 /**
  * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
  */
@@ -68,9 +95,9 @@ public:
     /** Remove all joints from the physics world.*/
     void removeAllJoints();
     
-    Array* getBodysAlongRay(Point start, Point end) const;
-    Array* getBodysAtPoint(Point point) const;
-    Array* getBodysInRect(Rect rect) const;
+    void rayCast(PhysicsRayCastCallback& callback, Point point1, Point point2, void* data);
+    void rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data);
+    Array* getShapesAtPoint(Point point);
     Array* getAllBody() const;
     
     /** Register a listener to receive contact callbacks*/
@@ -111,13 +138,6 @@ protected:
     virtual void collisionPostSolveCallback(PhysicsContact& contact, const PhysicsContactPostSolve& solve);
     virtual void collisionSeparateCallback(PhysicsContact& contact);
     
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-    static int collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data);
-    static int collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    static void collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-    static void collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data);
-#endif
-    
 protected:
     Point _gravity;
     float _speed;
@@ -140,6 +160,7 @@ protected:
     friend class Scene;
     friend class PhysicsBody;
     friend class PhysicsShape;
+    friend class PhysicsWorldCallback;
 };
 
 NS_CC_END
