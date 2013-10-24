@@ -70,16 +70,21 @@ bool PhysicsJoint::init(cocos2d::PhysicsBody *a, cocos2d::PhysicsBody *b)
 {
     do
     {
-        CC_BREAK_IF(a == nullptr || b == nullptr);
-        
         CC_BREAK_IF(!(_info = new PhysicsJointInfo(this)));
         
-        _bodyA = a;
-        _bodyA->retain();
-        _bodyA->_joints.push_back(this);
-        _bodyB = b;
-        _bodyB->retain();
-        _bodyB->_joints.push_back(this);
+        if (a != nullptr)
+        {
+            _bodyA = a;
+            _bodyA->retain();
+            _bodyA->_joints.push_back(this);
+        }
+        
+        if (b != nullptr)
+        {
+            _bodyB = b;
+            _bodyB->retain();
+            _bodyB->_joints.push_back(this);
+        }
         
         return true;
     } while (false);
