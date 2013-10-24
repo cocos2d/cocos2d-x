@@ -367,14 +367,13 @@ void EventDispatcher::removeEventListener(EventListener* listener)
             auto l = *iter;
             if (l == listener)
             {
-                CC_SAFE_RETAIN(listener);
+                CC_SAFE_RETAIN(l);
                 l->_isRegistered = false;
                 if (l->_node != nullptr)
                 {
-                    dissociateNodeAndEventListener(l->_node, listener);
+                    dissociateNodeAndEventListener(l->_node, l);
                 }
                 
-                l->release();
                 if (_inDispatch == 0)
                 {
                     listeners->erase(iter);
@@ -391,7 +390,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         auto listeners = iter->second;
         auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
         auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
-        
+
         removeListenerInVector(sceneGraphPriorityListeners);
         if (!isFound)
         {
@@ -459,7 +458,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
         for (; !fixedPriorityListeners->empty() && i < listeners->getGt0Index(); ++i)
         {
             auto l = fixedPriorityListeners->at(i);
-            if (!l->isPaused() && onEvent(l))
+            if (!l->isPaused() && l->isRegistered() && onEvent(l))
             {
                 shouldStopPropagation = true;
                 break;
@@ -472,9 +471,9 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
         if (!shouldStopPropagation)
         {
             // priority == 0, scene graph priority
-            for (auto& listener : *sceneGraphPriorityListeners)
+            for (auto& l : *sceneGraphPriorityListeners)
             {
-                if (!listener->isPaused() && onEvent(listener))
+                if (!l->isPaused() && l->isRegistered() && onEvent(l))
                 {
                     shouldStopPropagation = true;
                     break;
@@ -492,7 +491,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
             {
                 auto l = fixedPriorityListeners->at(i);
                 
-                if (!l->isPaused() && onEvent(fixedPriorityListeners->at(i)))
+                if (!l->isPaused() && l->isRegistered() && onEvent(fixedPriorityListeners->at(i)))
                 {
                     shouldStopPropagation = true;
                     break;
@@ -794,6 +793,7 @@ void EventDispatcher::updateListeners()
                 if (!l->_isRegistered)
                 {
                     iter = sceneGraphPriorityListeners->erase(iter);
+                    l->release();
                 }
                 else
                 {
@@ -810,6 +810,7 @@ void EventDispatcher::updateListeners()
                 if (!l->_isRegistered)
                 {
                     iter = fixedPriorityListeners->erase(iter);
+                    l->release();
                 }
                 else
                 {

@@ -62,6 +62,7 @@ public:
     virtual EventListener* clone() = 0;
     
     inline bool isPaused() const { return _paused; };
+    inline bool isRegistered() const { return _isRegistered; };
     
 protected:
     std::function<void(Event*)> _onEvent;   /// Event callback function

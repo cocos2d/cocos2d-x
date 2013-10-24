@@ -259,22 +259,26 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
 void Menu::onTouchEnded(Touch* touch, Event* event)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
+    this->retain();
     if (_selectedItem)
     {
         _selectedItem->unselected();
         _selectedItem->activate();
     }
     _state = Menu::State::WAITING;
+    this->release();
 }
 
 void Menu::onTouchCancelled(Touch* touch, Event* event)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
+    this->retain();
     if (_selectedItem)
     {
         _selectedItem->unselected();
     }
     _state = Menu::State::WAITING;
+    this->release();
 }
 
 void Menu::onTouchMoved(Touch* touch, Event* event)
