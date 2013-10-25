@@ -151,7 +151,7 @@ EventDispatcher::EventDispatcher()
 
 EventDispatcher::~EventDispatcher()
 {
-    removeAllListeners();
+    removeAllEventListeners();
 }
 
 EventDispatcher* EventDispatcher::getInstance()
@@ -972,7 +972,7 @@ EventDispatcher::EventListenerVector* EventDispatcher::getListeners(EventListene
     return nullptr;
 }
 
-void EventDispatcher::removeListeners(EventListener::Type eventListenerType)
+void EventDispatcher::removeEventListeners(EventListener::Type eventListenerType)
 {
     auto listenerItemIter = _listeners.find(eventListenerType);
     if (listenerItemIter != _listeners.end())
@@ -1019,7 +1019,7 @@ void EventDispatcher::removeListeners(EventListener::Type eventListenerType)
     }
 }
 
-void EventDispatcher::removeAllListeners()
+void EventDispatcher::removeAllEventListeners()
 {
     std::vector<int> types(_listeners.size());
 
@@ -1030,7 +1030,7 @@ void EventDispatcher::removeAllListeners()
 
     for (auto& type : types)
     {
-        removeListeners(type);
+        removeEventListeners(type);
     }
     
     if (!_inDispatch)

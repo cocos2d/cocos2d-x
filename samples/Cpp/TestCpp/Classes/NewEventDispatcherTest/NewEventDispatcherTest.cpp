@@ -189,7 +189,7 @@ void TouchableSpriteTest::onEnter()
         auto senderItem = static_cast<MenuItemFont*>(sender);
         senderItem->setString("Only Next item could be clicked");
         
-        EventDispatcher::getInstance()->removeListeners(EventListener::TYPE_TOUCH_ONE_BY_ONE);
+        EventDispatcher::getInstance()->removeEventListeners(EventListener::TYPE_TOUCH_ONE_BY_ONE);
         
         auto nextItem = MenuItemFont::create("Next", [=](Object* sender){
             nextCallback(nullptr);

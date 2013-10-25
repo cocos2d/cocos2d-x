@@ -81,10 +81,10 @@ public:
     void removeEventListener(EventListener* listener);
 
     /** Removes all listeners with the same event listener type */
-    void removeListeners(EventListener::Type eventListenerType);
+    void removeEventListeners(EventListener::Type eventListenerType);
     
     /** Removes all listeners */
-    void removeAllListeners();
+    void removeAllEventListeners();
 
     /** Sets listener's priority with fixed value. */
     void setPriority(EventListener* listener, int fixedPriority);
