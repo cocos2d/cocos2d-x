@@ -123,8 +123,8 @@ public:
 protected:
     // declared in CCActionManager.m
 
-    void removeActionAtIndex(unsigned int uIndex, struct _hashElement *pElement);
-    void deleteHashElement(struct _hashElement *pElement);
+    void removeActionAtIndex(unsigned int uIndex, struct _hashElement *&pElement);
+    void deleteHashElement(struct _hashElement *&pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
     void update(float dt);
 

@@ -68,6 +68,7 @@ void km_mat4_stack_pop(km_mat4_stack* stack, kmMat4* pOut)
 
 void km_mat4_stack_release(km_mat4_stack* stack) {
     free(stack->stack);
+	stack->stack = NULL;
     stack->top = NULL;
     stack->item_count = 0;
     stack->capacity = 0;

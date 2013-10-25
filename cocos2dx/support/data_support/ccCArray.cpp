@@ -51,10 +51,8 @@ void ccArrayFree(ccArray*& arr)
     }
 	ccArrayRemoveAllObjects(arr);
 	
-	free(arr->arr);
-	free(arr);
-
-    arr = NULL;
+	CC_SAFE_FREE(arr->arr);
+	CC_SAFE_FREE(arr);
 }
 
 void ccArrayDoubleCapacity(ccArray *arr)
@@ -291,7 +289,7 @@ ccCArray* ccCArrayNew(unsigned int capacity)
 }
 
 /** Frees C array after removing all remaining values. Silently ignores NULL arr. */
-void ccCArrayFree(ccCArray *arr)
+void ccCArrayFree(ccCArray *&arr)
 {
     if( arr == NULL ) 
     {
@@ -299,8 +297,8 @@ void ccCArrayFree(ccCArray *arr)
     }
 	ccCArrayRemoveAllValues(arr);
 	
-	free(arr->arr);
-	free(arr);
+	CC_SAFE_FREE(arr->arr);
+	CC_SAFE_FREE(arr);
 }
 
 /** Doubles C array capacity */
