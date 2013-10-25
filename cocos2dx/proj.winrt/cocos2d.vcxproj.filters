@@ -315,9 +315,6 @@
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\winrt\DirectXBase.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -738,9 +735,6 @@
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\DirectXBase.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\DirectXHelper.h">

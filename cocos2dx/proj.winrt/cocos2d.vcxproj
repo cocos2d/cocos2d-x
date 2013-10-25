@@ -211,7 +211,6 @@
     <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp" />
     <ClCompile Include="..\platform\winrt\CCStdC.cpp" />
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
-    <ClCompile Include="..\platform\winrt\DirectXBase.cpp" />
     <ClCompile Include="..\platform\winrt\sha1.cpp" />
     <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
     <ClCompile Include="..\shaders\CCGLProgram.cpp" />
@@ -366,7 +365,6 @@
     <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="..\platform\winrt\CCStdC.h" />
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
-    <ClInclude Include="..\platform\winrt\DirectXBase.h" />
     <ClInclude Include="..\platform\winrt\DirectXHelper.h" />
     <ClInclude Include="..\platform\winrt\sha1.h" />
     <ClInclude Include="..\script_support\CCScriptSupport.h" />
