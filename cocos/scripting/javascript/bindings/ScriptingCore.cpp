@@ -1799,10 +1799,9 @@ jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v) {
 jsval ccrect_to_jsval(JSContext* cx, const Rect& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
-    JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.origin.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-                JS_DefineProperty(cx, tmp, "y", DOUBLE_TO_JSVAL(v.origin.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-                JS_DefineProperty(cx, tmp, "width", DOUBLE_TO_JSVAL(v.size.width), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-                JS_DefineProperty(cx, tmp, "height", DOUBLE_TO_JSVAL(v.size.height), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JSBool ok = JS_DefineProperty(cx, tmp, "size", ccsize_to_jsval(cx, v.size), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+                JS_DefineProperty(cx, tmp, "origin", ccpoint_to_jsval(cx, v.origin), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
