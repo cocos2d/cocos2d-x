@@ -92,14 +92,14 @@ Select the test you want from Xcode Scheme chooser.
 * For OS X / iOS
 
 ```
-$ cd cocos2d-x/samples
-$ open samples.xcodeproj
+$ cd cocos2d-x/build
+$ open cocos2d_samples.xcodeproj
 ```
 
 * For Linux
 
 ```
-$ cd cocos2d-x
+$ cd cocos2d-x/build
 $ ./make-all-linux-projects.sh
 ```
 
@@ -107,7 +107,7 @@ or open the `cocos2d-x/cocos2dx-qt5.pro` file using QT Creator 5.
 
 * For Windows
 
-Open the `cocos2d-x/cocos2d-win32.vc2012.sln`
+Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
 
 * For Android
 
