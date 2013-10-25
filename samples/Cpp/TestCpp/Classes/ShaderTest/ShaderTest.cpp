@@ -802,13 +802,16 @@ gl_FragColor = colors[z] * texture2D(CC_Texture0, v_texCoord);			\n\
 ShaderFail::ShaderFail()
 {
     CCGLProgram *p = new CCGLProgram();
-    p->initWithVertexShaderByteArray(ccPositionTexture_vert, shader_frag_fail);
+    bool result = p->initWithVertexShaderByteArray(ccPositionTexture_vert, shader_frag_fail);
+    if(result == true)
+	{
+		p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+		p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
     
-    p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
-    p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
-    
-    p->link();
-    p->updateUniforms();
+		p->link();
+		p->updateUniforms();
+	}
+
     p->release();
 }
 
