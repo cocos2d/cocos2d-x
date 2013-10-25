@@ -223,6 +223,8 @@ private:
     
     /** Whether to enable dispatching event */
     bool _isEnabled;
+    
+    int _nodePriorityIndex;
 };
 
 

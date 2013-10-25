@@ -59,7 +59,7 @@ private:
 NS_CC_BEGIN
 
 static EventDispatcher* g_instance = nullptr;
-static int s_eventPriorityIndex = 0;
+
 
 EventDispatcher::EventListenerVector::EventListenerVector()
 : _sceneGraphListeners(nullptr)
@@ -145,6 +145,7 @@ void EventDispatcher::EventListenerVector::clear()
 EventDispatcher::EventDispatcher()
 : _inDispatch(0)
 , _isEnabled(true)
+, _nodePriorityIndex(0)
 {
     _toAddedListeners.reserve(50);
 }
@@ -190,7 +191,7 @@ void EventDispatcher::visitTarget(Node* node)
                 break;
         }
         
-        _nodePriorityMap.insert(std::make_pair(node, ++s_eventPriorityIndex));
+        _nodePriorityMap.insert(std::make_pair(node, ++_nodePriorityIndex));
         
         for( ; i < childrenCount; i++ )
         {
@@ -201,7 +202,7 @@ void EventDispatcher::visitTarget(Node* node)
     }
     else
     {
-        _nodePriorityMap.insert(std::make_pair(node, ++s_eventPriorityIndex));
+        _nodePriorityMap.insert(std::make_pair(node, ++_nodePriorityIndex));
     }
 }
 
@@ -907,7 +908,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(EventListener::Type
     
     Node* rootNode = (Node*)Director::getInstance()->getRunningScene();
     // Reset priority index
-    s_eventPriorityIndex = 0;
+    _nodePriorityIndex = 0;
     _nodePriorityMap.clear();
 
     visitTarget(rootNode);
