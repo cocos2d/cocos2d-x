@@ -200,7 +200,10 @@ void CCColliderDetector::setActive(bool active)
             {
                 ColliderBody *colliderBody = (ColliderBody *)object;
                 cpShape *shape = colliderBody->getShape();
-                cpSpaceAddShape(m_pBody->space_private, shape);
+                if(shape->space_private == NULL)
+                {
+                    cpSpaceAddShape(m_pBody->space_private, shape);
+                }
             }
         }
         else
@@ -209,7 +212,10 @@ void CCColliderDetector::setActive(bool active)
             {
                 ColliderBody *colliderBody = (ColliderBody *)object;
                 cpShape *shape = colliderBody->getShape();
-                cpSpaceRemoveShape(m_pBody->space_private, shape);
+                if (shape->space_private != NULL)
+                {
+                    cpSpaceRemoveShape(m_pBody->space_private, shape);
+                }
             }
         }
     }

@@ -264,10 +264,6 @@ void CCTween::updateHandler()
         default:
         {
             m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
-
-            m_iTotalDuration = 0;
-            m_iBetweenDuration = 0;
-            m_iFromIndex = m_iToIndex = 0;
         }
         break;
         }
@@ -413,6 +409,7 @@ float CCTween::updateFrameData(float currentPercent)
 
         CCFrameData *from = NULL;
         CCFrameData *to = NULL;
+        bool passLastFrame = false;
 
         if (playedTime < frames[0]->frameID)
         {
@@ -422,23 +419,22 @@ float CCTween::updateFrameData(float currentPercent)
         }
         else if(playedTime >= frames[length - 1]->frameID)
         {
-            from = to = frames[length - 1];
-            setBetween(from, to);
-            return currentPercent;
+            passLastFrame = true;
         }
 
 
         do
         {
+            m_iFromIndex = m_iToIndex;
             from = frames[m_iFromIndex];
             m_iTotalDuration  = from->frameID;
 
-            if (++m_iToIndex >= length)
+            m_iToIndex = m_iFromIndex + 1;
+            if (m_iToIndex >= length)
             {
-                m_iToIndex = 0;
+                m_iToIndex= 0;
             }
 
-            m_iFromIndex = m_iToIndex;
             to = frames[m_iToIndex];
 
             //! Guaranteed to trigger frame event
@@ -447,7 +443,7 @@ float CCTween::updateFrameData(float currentPercent)
                 m_pAnimation->frameEvent(m_pBone, from->strEvent.c_str(), from->frameID, playedTime);
             }
 
-            if (playedTime == from->frameID)
+            if (playedTime == from->frameID || (passLastFrame && m_iFromIndex == length-1))
             {
                 break;
             }
