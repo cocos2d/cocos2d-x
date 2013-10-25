@@ -26,9 +26,5 @@
 
 NS_CC_BEGIN
 
-const char* EventTouch::MODE_ONE_BY_ONE  = "TouchEventOneByOne";
-const char* EventTouch::MODE_ALL_AT_ONCE = "TouchEventAllAtOnce";
-
-const char* EventTouch::EVENT_TYPE = "TouchEvent";
 
 NS_CC_END

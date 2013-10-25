@@ -189,7 +189,7 @@ void TouchableSpriteTest::onEnter()
         auto senderItem = static_cast<MenuItemFont*>(sender);
         senderItem->setString("Only Next item could be clicked");
         
-        EventDispatcher::getInstance()->removeListenersForEventType(EventTouch::EVENT_TYPE);
+        EventDispatcher::getInstance()->removeListeners(EventListener::TYPE_TOUCH_ONE_BY_ONE);
         
         auto nextItem = MenuItemFont::create("Next", [=](Object* sender){
             nextCallback(nullptr);
@@ -427,7 +427,8 @@ void CustomEventTest::onEnter()
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
 
-    _listener = EventListenerCustom::create("game_custom_event", [=](EventCustom* event){
+    const int game_custom_event = EventListener::TYPE_CUSTOM + 1;
+    _listener = EventListenerCustom::create(game_custom_event, [=](EventCustom* event){
         std::string str("Custom event received, ");
         char* buf = static_cast<char*>(event->getUserData());
         str += buf;
@@ -443,7 +444,7 @@ void CustomEventTest::onEnter()
         ++count;
         char* buf = new char[10];
         sprintf(buf, "%d", count);
-        EventCustom event("game_custom_event");
+        EventCustom event(game_custom_event);
         event.setUserData(buf);
         dispatcher->dispatchEvent(&event);
     });

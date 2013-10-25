@@ -26,7 +26,7 @@
 
 NS_CC_BEGIN
 
-Event::Event(const std::string& type)
+Event::Event(Type type)
 : _type(type)
 , _isStopped(false)
 , _currentTarget(nullptr)

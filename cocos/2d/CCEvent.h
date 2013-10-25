@@ -40,15 +40,25 @@ class Node;
  */
 class Event
 {
+public:
+    enum EventType
+    {
+        TYPE_TOUCH = 1,
+        TYPE_KEYBOARD = 3,
+        TYPE_ACCELERATION,
+        TYPE_CUSTOM
+    };
+    
+    typedef int Type;
 protected:
     /** Constructor */
-    Event(const std::string& type);
+    Event(Type type);
 public:
     /** Destructor */
     virtual ~Event();
 
     /** Gets the event type */
-	inline const std::string& getType() const { return _type; };
+	inline int getType() const { return _type; };
     
     /** Stops propagation for current event */
     inline void stopPropagation() { _isStopped = true; };
@@ -67,7 +77,7 @@ protected:
     /** Sets current target */
     inline void setCurrentTarget(Node* target) { _currentTarget = target; };
     
-	std::string _type;     ///< Event type
+	Type _type;     ///< Event type
     bool _isStopped;       ///< whether the event has been stopped.
     Node* _currentTarget;  ///< Current target
     

@@ -33,7 +33,7 @@ class EventCustom : public Event
 {
 public:
     /** Constructor */
-    EventCustom(const std::string& eventName);
+    EventCustom(Type type);
     
     /** Set user data */
     inline void setUserData(void* data) { _userData = data; };

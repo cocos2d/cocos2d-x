@@ -199,7 +199,7 @@ public:
     static const char* EVENT_TYPE;
     
     EventKeyboard(KeyCode keyCode, bool isPressed)
-     : Event(EVENT_TYPE)
+     : Event(TYPE_KEYBOARD)
      , _keyCode(keyCode)
      , _isPressed(isPressed)
     {};
