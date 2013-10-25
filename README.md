@@ -92,7 +92,7 @@ Select the test you want from Xcode Scheme chooser.
 * For OS X / iOS
 
 ```
-$ cd cocos2d-x/build/samples
+$ cd cocos2d-x/build
 $ open cocos2d_samples.xcodeproj
 ```
 
