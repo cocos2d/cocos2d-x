@@ -87,31 +87,6 @@ Layer *Layer::create()
     }
 }
 
-int Layer::executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        TouchScriptData data(eventType, this, touch);
-        ScriptEvent event(kTouchEvent, &data);
-        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-
-    //can not reach it
-    return 0;
-}
-
-int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        TouchesScriptData data(eventType, this, touches);
-        ScriptEvent event(kTouchesEvent, &data);
-        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-
-    return 0;
-}
-
 #ifdef CC_USE_PHYSICS
 void Layer::addChild(Node* child)
 {
