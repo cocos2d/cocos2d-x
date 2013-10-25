@@ -47,15 +47,17 @@ typedef struct PhysicsMaterial
     PhysicsMaterial()
     : density(0.0f)
     , restitution(0.0f)
-    , friction(0.0f){}
+    , friction(0.0f)
+    {}
     
     PhysicsMaterial(float density, float restitution, float friction)
     : density(density)
     , restitution(restitution)
-    , friction(friction){}
+    , friction(friction)
+    {}
 }PhysicsMaterial;
 
-const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT = {0.0f, 1.0f, 1.0f};
+const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT(0.0f, 1.0f, 1.0f);
 
 /**
  * @brief A shape for body. You do not create PhysicsWorld objects directly, instead, you can view PhysicsBody to see how to create it.
@@ -97,7 +99,7 @@ public:
     virtual Point getOffset() { return Point::ZERO; }
     virtual Point getCenter() { return getOffset(); }
     
-    static Point* recenterPoints(Point* points, int count, Point center);
+    static Point* recenterPoints(Point* points, int count, Point center = Point::ZERO);
     static Point getPolyonCenter(Point* points, int count);
     
 protected:

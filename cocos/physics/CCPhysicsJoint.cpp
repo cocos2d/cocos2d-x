@@ -34,13 +34,13 @@
 #include "CCPhysicsBody.h"
 
 #include "chipmunk/CCPhysicsJointInfo.h"
-#include "Box2D/CCPhysicsJointInfo.h"
+#include "box2d/CCPhysicsJointInfo.h"
 #include "chipmunk/CCPhysicsBodyInfo.h"
-#include "Box2D/CCPhysicsBodyInfo.h"
+#include "box2d/CCPhysicsBodyInfo.h"
 #include "chipmunk/CCPhysicsShapeInfo.h"
-#include "Box2D/CCPhysicsShapeInfo.h"
+#include "box2d/CCPhysicsShapeInfo.h"
 #include "chipmunk/CCPhysicsHelper.h"
-#include "Box2D/CCPhysicsHelper.h"
+#include "box2d/CCPhysicsHelper.h"
 
 NS_CC_BEGIN
 
@@ -70,16 +70,21 @@ bool PhysicsJoint::init(cocos2d::PhysicsBody *a, cocos2d::PhysicsBody *b)
 {
     do
     {
-        CC_BREAK_IF(a == nullptr || b == nullptr);
-        
         CC_BREAK_IF(!(_info = new PhysicsJointInfo(this)));
         
-        _bodyA = a;
-        _bodyA->retain();
-        _bodyA->_joints.push_back(this);
-        _bodyB = b;
-        _bodyB->retain();
-        _bodyB->_joints.push_back(this);
+        if (a != nullptr)
+        {
+            _bodyA = a;
+            _bodyA->retain();
+            _bodyA->_joints.push_back(this);
+        }
+        
+        if (b != nullptr)
+        {
+            _bodyB = b;
+            _bodyB->retain();
+            _bodyB->_joints.push_back(this);
+        }
         
         return true;
     } while (false);
@@ -103,15 +108,15 @@ void PhysicsJoint::setEnable(bool enable)
     }
 }
 
-//PhysicsJointPin::PhysicsJointPin()
-//{
-//    
-//}
-//
-//PhysicsJointPin::~PhysicsJointPin()
-//{
-//    
-//}
+PhysicsJointPin::PhysicsJointPin()
+{
+    
+}
+
+PhysicsJointPin::~PhysicsJointPin()
+{
+    
+}
 
 PhysicsJointFixed::PhysicsJointFixed()
 {

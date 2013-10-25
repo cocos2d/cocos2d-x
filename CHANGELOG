@@ -8,6 +8,7 @@ cocos2d-x-3.0alpha1 @??? 2013
      [FIX]          Avoid unnecessary object duplication for Scale9Sprite.
      [FIX]          create_project.py does not rename/replace template projects completely.
      [FIX]          Could not set next animation in CCBAnimationCompleted callback.
+     [FIX]          The Node's anchor point was changed after being added to ScrollView.
 [Android]
      [FIX]          Added EGL_RENDERABLE_TYPE to OpenGL attributes
      [NEW]          Added Cocos2dxHelper.runOnGLThread(Runnable) again
