@@ -58,7 +58,7 @@ public:
     virtual ~Event();
 
     /** Gets the event type */
-	inline int getType() const { return _type; };
+	inline Type getType() const { return _type; };
     
     /** Stops propagation for current event */
     inline void stopPropagation() { _isStopped = true; };
