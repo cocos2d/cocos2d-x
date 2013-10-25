@@ -44,13 +44,24 @@ class Node;
  *  For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard, EventListenerTouchOneByOne, EventListenerCustom.
  */
 class EventListener : public Object
-{    
+{
+public:
+    enum EventListenerType
+    {
+        TYPE_TOUCH_ONE_BY_ONE = 1,
+        TYPE_TOUCH_ALL_AT_ONCE,
+        TYPE_KEYBOARD,
+        TYPE_ACCELERATION,
+        TYPE_CUSTOM
+    };
+    
+    typedef int Type;
 protected:
     /** Constructor */
     EventListener();
     
     /** Initializes event with type and callback function */
-    bool init(const std::string& t, std::function<void(Event*)>callback);
+    bool init(Type t, std::function<void(Event*)>callback);
 public:
     /** Destructor */
     virtual ~EventListener();
@@ -66,7 +77,7 @@ public:
     
 protected:
     std::function<void(Event*)> _onEvent;   /// Event callback function
-    std::string _type;                      /// Event type
+    Type _type;                      /// Event type
     bool _isRegistered;                    /// Whether the listener has been added to dispatcher.
     
     // The priority of event listener

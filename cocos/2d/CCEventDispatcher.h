@@ -27,6 +27,7 @@
 
 #include "CCPlatformMacros.h"
 #include "CCEventListener.h"
+#include "CCEvent.h"
 
 #include <functional>
 #include <string>
@@ -80,7 +81,7 @@ public:
     void removeEventListener(EventListener* listener);
 
     /** Removes all listeners with the same event type */
-    void removeListenersForEventType(const std::string& eventType);
+    void removeListeners(EventListener::Type eventListenerType);
     
     /** Removes all listeners */
     void removeAllListeners();
@@ -99,9 +100,6 @@ public:
      *  event dispatcher list.
      */
     void dispatchEvent(Event* event);
-    
-    /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
-    void dispatchTouchEvent(EventTouch* event);
     
     /// Priority dirty flag
     enum class DirtyFlag
@@ -153,30 +151,35 @@ private:
     /** Adds event listener with item */
     void addEventListener(EventListener* listener);
     
-    /** Gets event the listener list for the event type. */
-    EventListenerVector* getListeners(const std::string& eventType);
+    /** Gets event the listener list for the event listener type. */
+    EventListenerVector* getListeners(EventListener::Type eventListenerType);
     
     void updateDirtyFlagForSceneGraph();
     
+    /** Sort event listener */
+    void sortEventListeners(EventListener::Type eventListenerType);
+    
     /** Sorts the listeners of specified type by scene graph priority */
-    void sortEventListenersOfSceneGraphPriority(const std::string& eventType);
+    void sortEventListenersOfSceneGraphPriority(EventListener::Type eventListenerType);
     
     /** Sorts the listeners of specified type by fixed priority */
-    void sortEventListenersOfFixedPriority(const std::string& eventType);
+    void sortEventListenersOfFixedPriority(EventListener::Type eventListenerType);
     
     /** Updates all listeners
      *  1) Removes all listener items that have been marked as 'removed' when dispatching event.
      *  2) Adds all listener items that have been marked as 'added' when dispatching event.
      */
-    void updateListeners();
+    void updateListeners(Event::Type eventType);
 
+    /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
+    void dispatchTouchEvent(EventTouch* event);
+    
     void associateNodeAndEventListener(Node* node, EventListener* listener);
     void dissociateNodeAndEventListener(Node* node, EventListener* listener);
     
     void dispatchEventToListeners(EventListenerVector* listeners, std::function<bool(EventListener*)> onEvent);
     
-    void setDirtyForEventType(const std::string& eventType, DirtyFlag flag);
-    DirtyFlag isDirtyForEventType(const std::string& eventType);
+    void setDirty(EventListener::Type listenerType, DirtyFlag flag);
     
     void visitTarget(Node* node);
     
@@ -184,9 +187,9 @@ private:
     /**
      * Listeners map.
      */
-    std::unordered_map<std::string, EventListenerVector*> _listeners;
+    std::unordered_map<EventListener::Type, EventListenerVector*> _listeners;
     
-    std::unordered_map<std::string, DirtyFlag> _priorityDirtyFlagMap;
+    std::unordered_map<EventListener::Type, DirtyFlag> _priorityDirtyFlagMap;
     
     std::unordered_map<Node*, std::vector<EventListener*>*> _nodeListenersMap;
     std::unordered_map<Node*, int> _nodePriorityMap;

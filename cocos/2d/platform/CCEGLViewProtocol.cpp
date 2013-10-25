@@ -247,7 +247,7 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
     }
     
     touchEvent._eventCode = EventTouch::EventCode::BEGAN;
-    EventDispatcher::getInstance()->dispatchTouchEvent(&touchEvent);
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
 void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
@@ -294,7 +294,7 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
     }
     
     touchEvent._eventCode = EventTouch::EventCode::MOVED;
-    EventDispatcher::getInstance()->dispatchTouchEvent(&touchEvent);
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
 void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[])
@@ -347,7 +347,7 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
     }
     
     touchEvent._eventCode = eventCode;
-    EventDispatcher::getInstance()->dispatchTouchEvent(&touchEvent);
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
     
     for (auto& touch : touchEvent._touches)
     {

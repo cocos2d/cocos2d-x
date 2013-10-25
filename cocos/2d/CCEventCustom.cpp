@@ -23,13 +23,15 @@
  ****************************************************************************/
 
 #include "CCEventCustom.h"
+#include "ccMacros.h"
 
 NS_CC_BEGIN
 
-EventCustom::EventCustom(const std::string& eventName)
-: Event(eventName)
+EventCustom::EventCustom(Type type)
+: Event(type)
 , _userData(nullptr)
 {
+    CCASSERT(type >= TYPE_CUSTOM, "custom type should be greater than TYPE_CUSTOM.");
 }
 
 NS_CC_END

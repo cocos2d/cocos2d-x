@@ -36,6 +36,8 @@ NS_CC_BEGIN
 class EventListenerTouchOneByOne : public EventListener
 {
 public:
+    static const int TYPE = 0x01;
+    
     static EventListenerTouchOneByOne* create();
     
     virtual ~EventListenerTouchOneByOne();
@@ -67,6 +69,8 @@ private:
 class EventListenerTouchAllAtOnce : public EventListener
 {
 public:
+    static const int TYPE = 0x02;
+    
     static EventListenerTouchAllAtOnce* create();
     virtual ~EventListenerTouchAllAtOnce();
     
