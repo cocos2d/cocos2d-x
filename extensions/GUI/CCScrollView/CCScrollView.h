@@ -166,7 +166,7 @@ public:
      */
     void resume(Object* sender);
 
-
+    void setTouchEnabled(bool enabled);
     bool isDragging() const {return _dragging;}
     bool isTouchMoved() const { return _touchMoved; }
     bool isBounceable() const { return _bounceable; }
@@ -347,6 +347,9 @@ protected:
      */
     Rect _parentScissorRect;
     bool _scissorRestored;
+    
+    /** Touch listener */
+    EventListenerTouchOneByOne* _touchListener;
 };
 
 // end of GUI group

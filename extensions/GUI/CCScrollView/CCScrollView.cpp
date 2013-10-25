@@ -56,6 +56,7 @@ ScrollView::ScrollView()
 , _touchLength(0.0f)
 , _minScale(0.0f)
 , _maxScale(0.0f)
+, _touchListener(nullptr)
 {
 
 }
@@ -109,14 +110,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
 
         this->setViewSize(size);
 
-        auto dispatcher = EventDispatcher::getInstance();
-        auto listener = EventListenerTouchOneByOne::create();
-        listener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
-        listener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
-        listener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
-        listener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
-        
-        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        setTouchEnabled(true);
         
         _touches.reserve(EventTouch::MAX_TOUCHES);
         
@@ -183,16 +177,29 @@ void ScrollView::resume(Object* sender)
     _container->resumeSchedulerAndActions();
 }
 
-//void ScrollView::setTouchEnabled(bool e)
-//{
-//    Layer::setTouchEnabled(e);
-//    if (!e)
-//    {
-//        _dragging = false;
-//        _touchMoved = false;
-//        _touches.clear();
-//    }
-//}
+void ScrollView::setTouchEnabled(bool enabled)
+{
+    auto dispatcher = EventDispatcher::getInstance();
+    
+    dispatcher->removeEventListener(_touchListener);
+    
+    if (enabled)
+    {
+        _touchListener = EventListenerTouchOneByOne::create();
+        _touchListener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
+        _touchListener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
+        _touchListener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
+        _touchListener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
+        
+        dispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+    }
+    else
+    {
+        _dragging = false;
+        _touchMoved = false;
+        _touches.clear();
+    }
+}
 
 void ScrollView::setContentOffset(Point offset, bool animated/* = false*/)
 {
