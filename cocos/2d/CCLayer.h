@@ -118,13 +118,6 @@ public:
     virtual void addChild(Node* child, int zOrder) override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
 #endif // CC_USE_PHYSICS
-
-private:
-    Touch::DispatchMode _touchMode;
-    bool _swallowsTouches;
-    
-    int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
-    int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
 };
 
 #ifdef __apple__
