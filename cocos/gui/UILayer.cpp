@@ -89,7 +89,6 @@ void UILayer::onEnter()
 
 void UILayer::onExit()
 {
-//    setTouchEnabled(false);
     CCLayer::onExit();
 }
 
