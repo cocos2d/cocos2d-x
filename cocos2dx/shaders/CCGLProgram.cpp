@@ -107,7 +107,8 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
         if (!compileShader(&m_uVertShader, GL_VERTEX_SHADER, vShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile vertex shader");
-        }
+ 			return false;
+       }
     }
 
     // Create and compile fragment shader
@@ -116,6 +117,7 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
         if (!compileShader(&m_uFragShader, GL_FRAGMENT_SHADER, fShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile fragment shader");
+			return false;
         }
     }
 
@@ -226,7 +228,11 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
         }
         free(src);
 
-        abort();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+        return false;
+#else
+		abort();
+#endif
     }
     return (status == GL_TRUE);
 }
