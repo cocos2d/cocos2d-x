@@ -32,7 +32,7 @@ EventListenerCustom::EventListenerCustom()
 {
 }
 
-EventListenerCustom* EventListenerCustom::create(int type, std::function<void(EventCustom*)> callback)
+EventListenerCustom* EventListenerCustom::create(Type type, std::function<void(EventCustom*)> callback)
 {
     EventListenerCustom* ret = new EventListenerCustom();
     if (ret && ret->init(type, callback))
