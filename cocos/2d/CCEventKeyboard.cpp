@@ -27,6 +27,5 @@
 
 NS_CC_BEGIN
 
-const char* EventKeyboard::EVENT_TYPE = "KeyboardEvent";
 
 NS_CC_END
