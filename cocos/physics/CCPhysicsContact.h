@@ -38,6 +38,18 @@ class PhysicsWorld;
 
 class PhysicsContactInfo;
 
+
+typedef struct PhysicsContactData
+{
+    Point points[PHYSICS_CONTACT_POINT_MAX];
+    int   count;
+    Point normal;
+    
+    PhysicsContactData()
+    : count(0)
+    {}
+}PhysicsContactData;
+
 /**
  * @brief Contact infomation. it will created automatically when two shape contact with each other. and it will destoried automatically when two shape separated.
  */
@@ -52,6 +64,7 @@ public:
      * @brief get contact shape B.
      */
     inline PhysicsShape* getShapeB() const { return _shapeB; }
+    inline const PhysicsContactData* getContactData() const { return _contactData; }
     /*
      * @brief get data.
      */
@@ -68,6 +81,8 @@ private:
     inline bool getNotify() { return _notify; }
     inline void setNotify(bool notify) { _notify = notify; }
     
+    void generateContactData();
+    
 private:
     PhysicsContact();
     ~PhysicsContact();
@@ -76,8 +91,12 @@ private:
     PhysicsShape* _shapeA;
     PhysicsShape* _shapeB;
     PhysicsContactInfo* _info;
-    void* _data;
     bool _notify;
+    bool _begin;
+    
+    void* _data;
+    void* _contactInfo;
+    PhysicsContactData* _contactData;
     
     friend class PhysicsWorld;
     friend class PhysicsWorldCallback;
@@ -88,14 +107,27 @@ private:
  */
 class PhysicsContactPreSolve
 {
+public:
+    // getter/setter
+    float getElasticity();
+    float getFriciton();
+    Point getSurfaceVelocity();
+    void setElasticity(float elasticity);
+    void setFriction(float friction);
+    void setSurfaceVelocity(Point surfaceVelocity);
+    
 private:
-    PhysicsContactPreSolve();
+    PhysicsContactPreSolve(PhysicsContactData* data, void* contactInfo);
     ~PhysicsContactPreSolve();
     
-    static PhysicsContactPreSolve* create();
-    bool init();
+private:
+    float _elasticity;
+    float _friction;
+    Point _surfaceVelocity;
+    PhysicsContactData* _preContactData;
+    void* _contactInfo;
     
-    friend class PhysicsWorldCallback;
+    friend class PhysicsWorld;
 };
 
 /*
@@ -103,14 +135,20 @@ private:
  */
 class PhysicsContactPostSolve
 {
+public:
+    // getter
+    float getElasticity();
+    float getFriciton();
+    Point getSurfaceVelocity();
+    
 private:
-    PhysicsContactPostSolve();
+    PhysicsContactPostSolve(void* contactInfo);
     ~PhysicsContactPostSolve();
     
-    static PhysicsContactPostSolve* create();
-    bool init();
+private:
+    void* _contactInfo;
     
-    friend class PhysicsWorldCallback;
+    friend class PhysicsWorld;
 };
 
 /*

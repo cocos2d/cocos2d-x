@@ -32,6 +32,8 @@
 
 #include "chipmunk/CCPhysicsContactInfo.h"
 #include "box2d/CCPhysicsContactInfo.h"
+#include "chipmunk/CCPhysicsHelper.h"
+#include "box2d/CCPhysicsHelper.h"
 
 NS_CC_BEGIN
 
@@ -39,7 +41,11 @@ PhysicsContact::PhysicsContact()
 : _shapeA(nullptr)
 , _shapeB(nullptr)
 , _info(nullptr)
+, _notify(true)
+, _begin(false)
 , _data(nullptr)
+, _contactInfo(nullptr)
+, _contactData(nullptr)
 {
     
 }
@@ -47,6 +53,7 @@ PhysicsContact::PhysicsContact()
 PhysicsContact::~PhysicsContact()
 {
     CC_SAFE_DELETE(_info);
+    CC_SAFE_DELETE(_contactData);
 }
 
 PhysicsContact* PhysicsContact::create(PhysicsShape* a, PhysicsShape* b)
@@ -78,37 +85,69 @@ bool PhysicsContact::init(PhysicsShape* a, PhysicsShape* b)
     return false;
 }
 
-// PhysicsContactPreSolve implementation
-PhysicsContactPreSolve::PhysicsContactPreSolve()
+void PhysicsContact::generateContactData()
 {
+    if (_contactInfo == nullptr)
+    {
+        return;
+    }
     
+    cpArbiter* arb = (cpArbiter*)_contactInfo;
+    _contactData = new PhysicsContactData();
+    _contactData->count = cpArbiterGetCount(arb);
+    for (int i=0; i<_contactData->count; ++i)
+    {
+        _contactData->points[i] = PhysicsHelper::cpv2point(cpArbiterGetPoint(arb, i));
+    }
+    
+    _contactData->normal = _contactData->count > 0 ? PhysicsHelper::cpv2point(cpArbiterGetNormal(arb, 0)) : Point::ZERO;
+}
+
+// PhysicsContactPreSolve implementation
+PhysicsContactPreSolve::PhysicsContactPreSolve(PhysicsContactData* data, void* contactInfo)
+: _preContactData(data)
+, _contactInfo(contactInfo)
+{
+}
+
+float PhysicsContactPreSolve::getElasticity()
+{
+    return ((cpArbiter*)_contactInfo)->e;
+}
+
+float PhysicsContactPreSolve::getFriciton()
+{
+    return ((cpArbiter*)_contactInfo)->u;
+}
+
+Point PhysicsContactPreSolve::getSurfaceVelocity()
+{
+    return PhysicsHelper::cpv2point(((cpArbiter*)_contactInfo)->surface_vr);
+}
+
+void PhysicsContactPreSolve::setElasticity(float elasticity)
+{
+    ((cpArbiter*)_contactInfo)->e = elasticity;
+}
+
+void PhysicsContactPreSolve::setFriction(float friction)
+{
+    ((cpArbiter*)_contactInfo)->u = friction;
+}
+
+void PhysicsContactPreSolve::setSurfaceVelocity(Point surfaceVelocity)
+{
+    ((cpArbiter*)_contactInfo)->surface_vr = PhysicsHelper::point2cpv(surfaceVelocity);
 }
 
 PhysicsContactPreSolve::~PhysicsContactPreSolve()
 {
-    
+    CC_SAFE_DELETE(_preContactData);
 }
-
-PhysicsContactPreSolve* PhysicsContactPreSolve::create()
-{
-    PhysicsContactPreSolve * solve = new PhysicsContactPreSolve();
-    if(solve && solve->init())
-    {
-        return solve;
-    }
-    
-    CC_SAFE_DELETE(solve);
-    return nullptr;
-}
-
-bool PhysicsContactPreSolve::init()
-{
-    return true;
-}
-
 
 // PhysicsContactPostSolve implementation
-PhysicsContactPostSolve::PhysicsContactPostSolve()
+PhysicsContactPostSolve::PhysicsContactPostSolve(void* contactInfo)
+: _contactInfo(contactInfo)
 {
     
 }
@@ -118,21 +157,19 @@ PhysicsContactPostSolve::~PhysicsContactPostSolve()
     
 }
 
-PhysicsContactPostSolve* PhysicsContactPostSolve::create()
+float PhysicsContactPostSolve::getElasticity()
 {
-    PhysicsContactPostSolve * solve = new PhysicsContactPostSolve();
-    if(solve && solve->init())
-    {
-        return solve;
-    }
-    
-    CC_SAFE_DELETE(solve);
-    return nullptr;
+    return ((cpArbiter*)_contactInfo)->e;
 }
 
-bool PhysicsContactPostSolve::init()
+float PhysicsContactPostSolve::getFriciton()
 {
-    return true;
+    return ((cpArbiter*)_contactInfo)->u;
+}
+
+Point PhysicsContactPostSolve::getSurfaceVelocity()
+{
+    return PhysicsHelper::cpv2point(((cpArbiter*)_contactInfo)->surface_vr);
 }
 
 PhysicsContactListener::PhysicsContactListener()

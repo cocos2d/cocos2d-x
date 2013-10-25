@@ -60,6 +60,8 @@ NS_CC_BEGIN
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
+const float PHYSICS_INFINITY = INFINITY;
+
 namespace
 {
     typedef struct RayCastCallbackInfo
@@ -96,8 +98,6 @@ public:
 
 bool PhysicsWorldCallback::continues = true;
 
-const float PHYSICS_INFINITY = INFINITY;
-
 int PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, PhysicsWorld *world)
 {
     CP_ARBITER_GET_SHAPES(arb, a, b);
@@ -108,20 +108,19 @@ int PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSp
     
     PhysicsContact* contact = PhysicsContact::create(ita->second->shape, itb->second->shape);
     arb->data = contact;
+    contact->_contactInfo = arb;
     
-    return world->collisionBeginCallback(*static_cast<PhysicsContact*>(arb->data));
+    return world->collisionBeginCallback(*contact);
 }
 
 int PhysicsWorldCallback::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
-    return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(arb->data),
-                                            PhysicsContactPreSolve());
+    return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(arb->data));
 }
 
 void PhysicsWorldCallback::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
-    world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(arb->data),
-                                      PhysicsContactPostSolve());
+    world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(arb->data));
 }
 
 void PhysicsWorldCallback::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
@@ -445,7 +444,24 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     bool ret = true;
     PhysicsBody* bodyA = contact.getShapeA()->getBody();
     PhysicsBody* bodyB = contact.getShapeB()->getBody();
+    std::vector<PhysicsJoint*> jointsA = bodyA->getJoints();
     
+    // check the joint is collision enable or not
+    for (PhysicsJoint* joint : jointsA)
+    {
+        if (!joint->isCollisionEnable())
+        {
+            PhysicsBody* body = joint->getBodyA() == bodyA ? bodyB : bodyA;
+            
+            if (body == bodyB)
+            {
+                contact.setNotify(false);
+                return false;
+            }
+        }
+    }
+    
+    // bitmask check
     if ((bodyA->getCategoryBitmask() & bodyB->getContactTestBitmask()) == 0
         || (bodyB->getContactTestBitmask() & bodyA->getCategoryBitmask()) == 0)
     {
@@ -460,6 +476,9 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     
     if (contact.getNotify() && _listener && _listener->onContactBegin)
     {
+        contact._begin = true;
+        contact.generateContactData();
+        
         // the mask has high priority than _listener->onContactBegin.
         // so if the mask test is false, the two bodies won't have collision. 
         if (ret)
@@ -474,7 +493,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     return ret;
 }
 
-int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact, const PhysicsContactPreSolve& solve)
+int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
     if (!contact.getNotify())
     {
@@ -483,13 +502,17 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact, const Physi
     
     if (_listener && _listener->onContactPreSolve)
     {
+        PhysicsContactPreSolve solve(contact._begin ? nullptr : contact._contactData, contact._contactInfo);
+        contact._begin = false;
+        contact.generateContactData();
+        
         return _listener->onContactPreSolve(*this, contact, solve);
     }
     
     return true;
 }
 
-void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact, const PhysicsContactPostSolve& solve)
+void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
 {
     if (!contact.getNotify())
     {
@@ -498,6 +521,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact, const Phy
     
     if (_listener && _listener->onContactPreSolve)
     {
+        PhysicsContactPostSolve solve(contact._contactInfo);
         _listener->onContactPostSolve(*this, contact, solve);
     }
 }
