@@ -142,7 +142,7 @@ public:
     /*
      * @brief get all joints the body have
      */
-    inline const std::vector<PhysicsJoint*>* getJoints() const { return &_joints; }
+    inline const std::vector<PhysicsJoint*>& getJoints() const { return _joints; }
     
     /*
      * @brief get the sprite the body set to.

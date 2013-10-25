@@ -272,12 +272,12 @@ void PhysicsShape::setBody(PhysicsBody *body)
     if (body == nullptr)
     {
         _info->setBody(nullptr);
-        _info->setGroup(CP_NO_GROUP);
+        //_info->setGroup(CP_NO_GROUP);
         _body = nullptr;
     }else
     {
         _info->setBody(body->_info->body);
-        _info->setGroup(body->_info->group);
+        //_info->setGroup(body->_info->group);
         _body = body;
     }
 }

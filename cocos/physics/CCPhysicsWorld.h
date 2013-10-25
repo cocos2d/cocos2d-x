@@ -40,8 +40,6 @@ class PhysicsJoint;
 class PhysicsWorldInfo;
 class PhysicsShape;
 class PhysicsContact;
-class PhysicsContactPreSolve;
-class PhysicsContactPostSolve;
 class PhysicsContactListener;
 class Array;
 
@@ -135,8 +133,8 @@ protected:
     
     
     virtual int collisionBeginCallback(PhysicsContact& contact);
-    virtual int collisionPreSolveCallback(PhysicsContact& contact, const PhysicsContactPreSolve& solve);
-    virtual void collisionPostSolveCallback(PhysicsContact& contact, const PhysicsContactPostSolve& solve);
+    virtual int collisionPreSolveCallback(PhysicsContact& contact);
+    virtual void collisionPostSolveCallback(PhysicsContact& contact);
     virtual void collisionSeparateCallback(PhysicsContact& contact);
     
 protected:

@@ -161,10 +161,10 @@ void PhysicsJoint::setCollisionEnable(bool enable)
     {
         _collisionEnable = enable;
         
-        for (auto shape : _bodyB->_shapes)
-        {
-            shape->_info->setGroup(enable ? _bodyB->_info->group : _bodyA->_info->group);
-        }
+//        for (auto shape : _bodyB->_shapes)
+//        {
+//            shape->_info->setGroup(enable ? _bodyB->_info->group : _bodyA->_info->group);
+//        }
     }
 }
 
