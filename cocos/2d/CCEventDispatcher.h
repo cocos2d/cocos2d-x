@@ -50,15 +50,9 @@ event listeners can be added and removed even
 from within an EventListener, while events are being
 dispatched.
 */
-class EventDispatcher
+class EventDispatcher : public Object
 {
 public:
-    /** Gets the singleton of EventDispatcher */
-    static EventDispatcher* getInstance();
-
-    /** Destroys the singleton of EventDispatcher */
-    static void destroyInstance();
-    
     /** Adds a event listener for a specified event with the priority of scene graph.
      *  @param listener The listener of a specified event.
      *  @param node The priority of the listener is based on the draw order of this node.
@@ -113,7 +107,8 @@ public:
     /** Notifys event dispatcher that the node has been deleted. */
     void cleanTarget(Node* node);
     
-public:
+    /** Constructor of EventDispatcher */
+    EventDispatcher();
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
 
@@ -144,9 +139,6 @@ private:
         std::vector<EventListener*>* _sceneGraphListeners;
         int _gt0Index;
     };
-
-    /** Constructor of EventDispatcher */
-    EventDispatcher();
     
     /** Adds event listener with item */
     void addEventListener(EventListener* listener);

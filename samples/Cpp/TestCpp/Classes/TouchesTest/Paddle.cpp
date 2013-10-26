@@ -45,7 +45,7 @@ void Paddle::onEnter()
     listener->onTouchMoved = CC_CALLBACK_2(Paddle::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(Paddle::onTouchEnded, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void Paddle::onExit()

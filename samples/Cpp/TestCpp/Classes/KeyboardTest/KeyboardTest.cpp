@@ -11,7 +11,7 @@ KeyboardTest::KeyboardTest()
     listener->onKeyPressed = CC_CALLBACK_2(KeyboardTest::onKeyPressed, this);
     listener->onKeyReleased = CC_CALLBACK_2(KeyboardTest::onKeyReleased, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // create a label to display the tip string
     _label = LabelTTF::create("Please press any key and see console log...", "Arial", 22);

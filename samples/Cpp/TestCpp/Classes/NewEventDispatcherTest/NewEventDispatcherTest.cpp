@@ -124,8 +124,6 @@ void TouchableSpriteTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
 
-    auto dispatcher = EventDispatcher::getInstance();
-    
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
@@ -180,16 +178,16 @@ void TouchableSpriteTest::onEnter()
         }
     };
     
-    dispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
-    dispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite2);
-    dispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite3);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite2);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite3);
     
 
     auto removeAllTouchItem = MenuItemFont::create("Remove All Touch Listeners", [this](Object* sender){
         auto senderItem = static_cast<MenuItemFont*>(sender);
         senderItem->setString("Only Next item could be clicked");
         
-        EventDispatcher::getInstance()->removeEventListeners(EventListener::TYPE_TOUCH_ONE_BY_ONE);
+        _eventDispatcher->removeEventListeners(EventListener::TYPE_TOUCH_ONE_BY_ONE);
         
         auto nextItem = MenuItemFont::create("Next", [=](Object* sender){
             nextCallback(nullptr);
@@ -242,8 +240,6 @@ public:
     {
         Sprite::onEnter();
         
-        auto dispatcher = EventDispatcher::getInstance();
-        
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
         
@@ -271,19 +267,18 @@ public:
         
         if (_useNodePriority)
         {
-            dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         }
         else
         {
-            dispatcher->addEventListenerWithFixedPriority(listener, _fixedPriority);
+            _eventDispatcher->addEventListenerWithFixedPriority(listener, _fixedPriority);
         }
         _listener = listener;
     }
     
     void onExit() override
     {
-        auto dispatcher = EventDispatcher::getInstance();
-        dispatcher->removeEventListener(_listener);
+        _eventDispatcher->removeEventListener(_listener);
         
         Sprite::onExit();
     }
@@ -339,8 +334,6 @@ void RemoveListenerWhenDispatching::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
     
-    auto dispatcher = EventDispatcher::getInstance();
-    
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
@@ -372,7 +365,7 @@ void RemoveListenerWhenDispatching::onEnter()
         sprite1->setColor(Color3B::WHITE);
     };
     
-    dispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
     
     auto statusLabel = LabelTTF::create("The sprite could be touched!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
@@ -382,14 +375,14 @@ void RemoveListenerWhenDispatching::onEnter()
     auto toggleItem = MenuItemToggle::createWithCallback([=](Object* sender){
         if (*enable)
         {
-            dispatcher->removeEventListener(listener1);
+            _eventDispatcher->removeEventListener(listener1);
             statusLabel->setString("The sprite could not be touched!");
             
             (*enable) = false;
         }
         else
         {
-            dispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
+            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
             statusLabel->setString("The sprite could be touched!");
 
             (*enable) = true;
@@ -418,8 +411,6 @@ void CustomEventTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
     
-    auto dispatcher = EventDispatcher::getInstance();
-    
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
@@ -437,7 +428,7 @@ void CustomEventTest::onEnter()
         delete[] buf;
     });
     
-    dispatcher->addEventListenerWithFixedPriority(_listener, 1);
+    _eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
     
     auto sendItem = MenuItemFont::create("Send Custom Event", [=](Object* sender){
         static int count = 0;
@@ -446,7 +437,7 @@ void CustomEventTest::onEnter()
         sprintf(buf, "%d", count);
         EventCustom event(game_custom_event);
         event.setUserData(buf);
-        dispatcher->dispatchEvent(&event);
+        _eventDispatcher->dispatchEvent(&event);
     });
     sendItem->setPosition(origin + Point(size.width/2, size.height/2));
     auto menu = Menu::create(sendItem, nullptr);
@@ -457,7 +448,7 @@ void CustomEventTest::onEnter()
 
 void CustomEventTest::onExit()
 {
-    EventDispatcher::getInstance()->removeEventListener(_listener);
+    _eventDispatcher->removeEventListener(_listener);
     EventDispatcherTestDemo::onExit();
 }
 
@@ -475,8 +466,6 @@ std::string CustomEventTest::subtitle()
 void LabelKeyboardEventTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
-    
-    auto dispatcher = EventDispatcher::getInstance();
     
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
@@ -500,7 +489,7 @@ void LabelKeyboardEventTest::onEnter()
         label->setString(buf);
     };
     
-    dispatcher->addEventListenerWithSceneGraphPriority(listener, statusLabel);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, statusLabel);
 }
 
 std::string LabelKeyboardEventTest::title()
@@ -523,8 +512,6 @@ else if (_pos > _max)   \
 _pos = _max;        \
 
     EventDispatcherTestDemo::onEnter();
-    
-    auto dispatcher = EventDispatcher::getInstance();
     
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
@@ -550,7 +537,7 @@ _pos = _max;        \
         sprite->setPosition(ptNow);
     });
     
-    dispatcher->addEventListenerWithSceneGraphPriority(listener, sprite);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, sprite);
 }
 
 void SpriteAccelerationEventTest::onExit()
@@ -576,8 +563,6 @@ void RemoveAndRetainNodeTest::onEnter()
     
     EventDispatcherTestDemo::onEnter();
     
-    auto dispatcher = EventDispatcher::getInstance();
- 
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
@@ -616,7 +601,7 @@ void RemoveAndRetainNodeTest::onEnter()
         target->setOpacity(255);
     };
     
-    dispatcher->addEventListenerWithSceneGraphPriority(listener1, _sprite);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, _sprite);
     
     this->runAction(Sequence::create(DelayTime::create(5.0f),
                                      CallFunc::create([this](){

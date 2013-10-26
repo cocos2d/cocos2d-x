@@ -151,7 +151,7 @@ bool ScrollView::isNodeVisible(Node* node)
 
 void ScrollView::pause(Object* sender)
 {
-    _container->pauseSchedulerAndActions();
+    _container->pause();
 
     Object* pObj = NULL;
     Array* pChildren = _container->getChildren();
@@ -159,7 +159,7 @@ void ScrollView::pause(Object* sender)
     CCARRAY_FOREACH(pChildren, pObj)
     {
         Node* pChild = static_cast<Node*>(pObj);
-        pChild->pauseSchedulerAndActions();
+        pChild->pause();
     }
 }
 
@@ -171,17 +171,15 @@ void ScrollView::resume(Object* sender)
     CCARRAY_FOREACH(pChildren, pObj)
     {
         Node* pChild = static_cast<Node*>(pObj);
-        pChild->resumeSchedulerAndActions();
+        pChild->resume();
     }
 
-    _container->resumeSchedulerAndActions();
+    _container->resume();
 }
 
 void ScrollView::setTouchEnabled(bool enabled)
 {
-    auto dispatcher = EventDispatcher::getInstance();
-    
-    dispatcher->removeEventListener(_touchListener);
+    _eventDispatcher->removeEventListener(_touchListener);
     
     if (enabled)
     {
@@ -191,7 +189,7 @@ void ScrollView::setTouchEnabled(bool enabled)
         _touchListener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
         _touchListener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
         
-        dispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
     }
     else
     {

@@ -185,8 +185,6 @@ void Menu::onEnter()
 {
     Layer::onEnter();
     
-    auto eventDispatcher = EventDispatcher::getInstance();
-    
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->setSwallowTouches(true);
     
@@ -195,7 +193,7 @@ void Menu::onEnter()
     touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);
     touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
     
-    eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
 
 void Menu::onExit()

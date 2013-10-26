@@ -58,9 +58,6 @@ private:
 
 NS_CC_BEGIN
 
-static EventDispatcher* g_instance = nullptr;
-
-
 EventDispatcher::EventListenerVector::EventListenerVector()
 : _sceneGraphListeners(nullptr)
 , _fixedListeners(nullptr)
@@ -153,21 +150,6 @@ EventDispatcher::EventDispatcher()
 EventDispatcher::~EventDispatcher()
 {
     removeAllEventListeners();
-}
-
-EventDispatcher* EventDispatcher::getInstance()
-{
-    if (g_instance == nullptr)
-    {
-        g_instance = new EventDispatcher();
-    }
-    
-    return g_instance;
-}
-
-void EventDispatcher::destroyInstance()
-{
-    CC_SAFE_DELETE(g_instance);
 }
 
 void EventDispatcher::visitTarget(Node* node)

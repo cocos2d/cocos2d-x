@@ -123,7 +123,7 @@ void MotionStreakTest2::onEnter()
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(MotionStreakTest2::onTouchesMoved, this);
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
         

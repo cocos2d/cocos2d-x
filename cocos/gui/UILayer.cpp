@@ -84,7 +84,7 @@ void UILayer::onEnter()
     listener->onTouchEnded = CC_CALLBACK_2(UILayer::onTouchEnded, this);
     listener->onTouchCancelled = CC_CALLBACK_2(UILayer::onTouchCancelled, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void UILayer::onExit()

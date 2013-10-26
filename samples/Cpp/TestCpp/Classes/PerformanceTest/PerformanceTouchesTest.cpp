@@ -125,7 +125,7 @@ void TouchesPerformTest1::onEnter()
     listener->onTouchMoved = CC_CALLBACK_2(TouchesPerformTest1::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(TouchesPerformTest1::onTouchEnded, this);
     listener->onTouchCancelled = CC_CALLBACK_2(TouchesPerformTest1::onTouchCancelled, this);
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 std::string TouchesPerformTest1::title()
@@ -168,7 +168,7 @@ void TouchesPerformTest2::onEnter()
     listener->onTouchesMoved = CC_CALLBACK_2(TouchesPerformTest2::onTouchesMoved, this);
     listener->onTouchesEnded = CC_CALLBACK_2(TouchesPerformTest2::onTouchesEnded, this);
     listener->onTouchesCancelled = CC_CALLBACK_2(TouchesPerformTest2::onTouchesCancelled, this);
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 std::string TouchesPerformTest2::title()
@@ -242,14 +242,14 @@ void TouchesPerformTest3::onEnter()
         listener->onTouchMoved = CC_CALLBACK_2(TouchableLayer::onTouchMoved, layer);
         listener->onTouchEnded = CC_CALLBACK_2(TouchableLayer::onTouchEnded, layer);
         listener->onTouchCancelled = CC_CALLBACK_2(TouchableLayer::onTouchCancelled, layer);
-        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, layer);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
         
         addChild(layer, zorder);
         layer->release();
     }
     
     auto emitEventlabel = LabelTTF::create("Emit Touch Event", "", 24);
-    auto menuItem = MenuItemLabel::create(emitEventlabel, [](Object* sender){
+    auto menuItem = MenuItemLabel::create(emitEventlabel, [this](Object* sender){
         
         CC_PROFILER_PURGE_ALL();
         
@@ -265,13 +265,11 @@ void TouchesPerformTest3::onEnter()
         event.setEventCode(EventTouch::EventCode::BEGAN);
         event.setTouches(touches);
         
-        auto dispatcher = EventDispatcher::getInstance();
-        
         for (int i = 0; i < 100; ++i)
         {
             CC_PROFILER_START(TOUCH_PROFILER_NAME);
             
-            dispatcher->dispatchEvent(&event);
+            _eventDispatcher->dispatchEvent(&event);
             
             CC_PROFILER_STOP(TOUCH_PROFILER_NAME);
         }

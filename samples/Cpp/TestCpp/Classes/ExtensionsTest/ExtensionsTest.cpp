@@ -122,7 +122,7 @@ void ExtensionsMainLayer::onEnter()
     listener->onTouchesBegan = CC_CALLBACK_2(ExtensionsMainLayer::onTouchesBegan, this);
     listener->onTouchesMoved = CC_CALLBACK_2(ExtensionsMainLayer::onTouchesMoved, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     addChild(_itemMenu);
 }

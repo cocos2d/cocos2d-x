@@ -17,11 +17,10 @@ void ClickAndMoveTestScene::runThisTest()
 
 MainLayer::MainLayer()
 {
-    auto dispatcher = EventDispatcher::getInstance();
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(MainLayer::onTouchBegan, this);
     listener->onTouchEnded = CC_CALLBACK_2(MainLayer::onTouchEnded, this);
-    dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto sprite = Sprite::create(s_pathGrossini);
     

@@ -139,7 +139,9 @@ Node::Node(void)
     _actionManager->retain();
     _scheduler = director->getScheduler();
     _scheduler->retain();
-
+    _eventDispatcher = director->getEventDispatcher();
+    _eventDispatcher->retain();
+    
     ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
 }
@@ -155,6 +157,10 @@ Node::~Node()
 
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_scheduler);
+    
+    _eventDispatcher->cleanTarget(this);
+    CC_SAFE_RELEASE(_eventDispatcher);
+    
     // attributes
     CC_SAFE_RELEASE(_camera);
 
@@ -181,8 +187,6 @@ Node::~Node()
     removeAllComponents();
     
     CC_SAFE_DELETE(_componentContainer);
-    
-    EventDispatcher::getInstance()->cleanTarget(this);
     
 #ifdef CC_USE_PHYSICS
     CC_SAFE_RELEASE(_physicsBody);
@@ -238,7 +242,7 @@ void Node::setZOrder(int z)
         _parent->reorderChild(this, z);
     }
     
-    EventDispatcher::getInstance()->setDirtyForNode(this);
+    _eventDispatcher->setDirtyForNode(this);
 }
 
 /// vertexZ getter
@@ -931,8 +935,7 @@ void Node::onEnter()
 
     arrayMakeObjectsPerformSelector(_children, onEnter, Node*);
 
-    this->resumeSchedulerAndActions();
-    EventDispatcher::getInstance()->resumeTarget(this);
+    this->resume();
     
     _running = true;
 
@@ -974,9 +977,7 @@ void Node::onExitTransitionDidStart()
 
 void Node::onExit()
 {
-    EventDispatcher::getInstance()->pauseTarget(this);
-    
-    this->pauseSchedulerAndActions();
+    this->pause();
 
     _running = false;
     if (_scriptType != kScriptTypeNone)
@@ -988,6 +989,17 @@ void Node::onExit()
     }
 
     arrayMakeObjectsPerformSelector(_children, onExit, Node*);
+}
+
+void Node::setEventDispatcher(EventDispatcher* dispatcher)
+{
+    if (dispatcher != _eventDispatcher)
+    {
+        _eventDispatcher->cleanTarget(this);
+        CC_SAFE_RETAIN(dispatcher);
+        CC_SAFE_RELEASE(_eventDispatcher);
+        _eventDispatcher = dispatcher;
+    }
 }
 
 void Node::setActionManager(ActionManager* actionManager)
@@ -1115,16 +1127,28 @@ void Node::unscheduleAllSelectors()
     _scheduler->unscheduleAllForTarget(this);
 }
 
-void Node::resumeSchedulerAndActions()
+void Node::resume()
 {
     _scheduler->resumeTarget(this);
     _actionManager->resumeTarget(this);
+    _eventDispatcher->resumeTarget(this);
+}
+
+void Node::pause()
+{
+    _scheduler->pauseTarget(this);
+    _actionManager->pauseTarget(this);
+    _eventDispatcher->pauseTarget(this);
+}
+
+void Node::resumeSchedulerAndActions()
+{
+    resume();
 }
 
 void Node::pauseSchedulerAndActions()
 {
-    _scheduler->pauseTarget(this);
-    _actionManager->pauseTarget(this);
+    pause();
 }
 
 // override me
