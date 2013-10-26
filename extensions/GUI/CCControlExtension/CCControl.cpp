@@ -97,7 +97,7 @@ void Control::onEnter()
 {
     Layer::onEnter();
 
-    auto dispatcher = EventDispatcher::getInstance();
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(Control::onTouchBegan, this);
     touchListener->onTouchMoved = CC_CALLBACK_2(Control::onTouchMoved, this);

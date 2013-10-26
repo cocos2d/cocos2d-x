@@ -33,7 +33,7 @@ MenuLayer::MenuLayer(void)
 
 MenuLayer::~MenuLayer(void)
 {
-    EventDispatcher::getInstance()->removeEventListener(_touchListener);
+    _eventDispatcher->removeEventListener(_touchListener);
 }
 
 MenuLayer* MenuLayer::menuWithEntryID(int entryId)
@@ -86,7 +86,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     listener->onTouchBegan = CC_CALLBACK_2(MenuLayer::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(MenuLayer::onTouchMoved, this);
 
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 1);
+    _eventDispatcher->addEventListenerWithFixedPriority(listener, 1);
 
     _touchListener = listener;
     
@@ -190,7 +190,7 @@ bool Box2DView::initWithEntryID(int entryId)
     listener->onTouchMoved = CC_CALLBACK_2(Box2DView::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(Box2DView::onTouchEnded, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, -10);
+    _eventDispatcher->addEventListenerWithFixedPriority(listener, -10);
     _touchListener = listener;
     
     return true;
@@ -224,7 +224,7 @@ void Box2DView::draw()
 Box2DView::~Box2DView()
 {
     // Removes Touch Event Listener
-    EventDispatcher::getInstance()->removeEventListener(_touchListener);
+    _eventDispatcher->removeEventListener(_touchListener);
     delete m_test;
 }
 //

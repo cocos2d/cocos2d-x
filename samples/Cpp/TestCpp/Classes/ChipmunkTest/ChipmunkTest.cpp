@@ -24,10 +24,10 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     auto touchListener = EventListenerTouchAllAtOnce::create();
     touchListener->onTouchesEnded = CC_CALLBACK_2(ChipmunkTestLayer::onTouchesEnded, this);
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(touchListener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
     auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(ChipmunkTestLayer::onAcceleration, this));
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(accListener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     
     // title
     auto label = LabelTTF::create("Multi touch the screen", "Marker Felt", 36);

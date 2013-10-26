@@ -63,7 +63,7 @@ void JSTouchDelegate::setJSObject(JSObject *obj)
 
 void JSTouchDelegate::registerStandardDelegate(int priority)
 {
-    auto dispatcher = EventDispatcher::getInstance();
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListenerAllAtOnce);
     
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -80,7 +80,7 @@ void JSTouchDelegate::registerStandardDelegate(int priority)
 
 void JSTouchDelegate::registerTargetedDelegate(int priority, bool swallowsTouches)
 {
-    auto dispatcher = EventDispatcher::getInstance();
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListenerOneByOne);
     
     auto listener = EventListenerTouchOneByOne::create();
@@ -103,8 +103,9 @@ void JSTouchDelegate::unregisterTouchDelegate()
         JS_RemoveObjectRoot(cx, &_obj);
     }
     
-    EventDispatcher::getInstance()->removeEventListener(_touchListenerAllAtOnce);
-    EventDispatcher::getInstance()->removeEventListener(_touchListenerOneByOne);
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    dispatcher->removeEventListener(_touchListenerAllAtOnce);
+    dispatcher->removeEventListener(_touchListenerOneByOne);
     
     this->release();
 }
@@ -3052,7 +3053,7 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
     auto touchMode = static_cast<Integer*>(dict->objectForKey("touchMode"));
     auto swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
     
-    auto dispatcher = EventDispatcher::getInstance();
+    auto dispatcher = layer->getEventDispatcher();
     dispatcher->removeEventListener(touchListenerAllAtOnce);
     dispatcher->removeEventListener(touchListenerOneByOne);
     
@@ -3295,7 +3296,7 @@ JSBool js_cocos2dx_CCLayer_setKeyboardEnabled(JSContext *cx, uint32_t argc, jsva
         
         auto keyboardListener = static_cast<EventListenerKeyboard*>(dict->objectForKey("keyboardListener"));
         
-        auto dispatcher = EventDispatcher::getInstance();
+        auto dispatcher = cobj->getEventDispatcher();
         dispatcher->removeEventListener(keyboardListener);
         
         if (enabled)
@@ -3367,7 +3368,7 @@ JSBool js_cocos2dx_CCLayer_setAccelerometerEnabled(JSContext *cx, uint32_t argc,
         
         auto accListener = static_cast<EventListenerAcceleration*>(dict->objectForKey("accListener"));
         
-        auto dispatcher = EventDispatcher::getInstance();
+        auto dispatcher = cobj->getEventDispatcher();
         dispatcher->removeEventListener(accListener);
         
         Device::setAccelerometerEnabled(enabled);

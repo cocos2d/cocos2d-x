@@ -72,7 +72,7 @@ void BugsTestMainLayer::onEnter()
     listener->onTouchesBegan = CC_CALLBACK_2(BugsTestMainLayer::onTouchesBegan, this);
     listener->onTouchesMoved = CC_CALLBACK_2(BugsTestMainLayer::onTouchesMoved, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void BugsTestMainLayer::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)

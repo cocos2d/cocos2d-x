@@ -32,7 +32,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     _touchListener->onTouchEnded = CC_CALLBACK_2(MenuLayerMainMenu::onTouchEnded, this);
     _touchListener->onTouchCancelled = CC_CALLBACK_2(MenuLayerMainMenu::onTouchCancelled, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(_touchListener, 1);
+    _eventDispatcher->addEventListenerWithFixedPriority(_touchListener, 1);
 
     // Font Item    
     auto spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
@@ -138,7 +138,7 @@ void MenuLayerMainMenu::onTouchMoved(Touch *touch, Event * event)
 
 MenuLayerMainMenu::~MenuLayerMainMenu()
 {
-    EventDispatcher::getInstance()->removeEventListener(_touchListener);
+    _eventDispatcher->removeEventListener(_touchListener);
     _disabledItem->release();
 }
 
@@ -154,7 +154,7 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 
 void MenuLayerMainMenu::allowTouches(float dt)
 {
-    EventDispatcher::getInstance()->setPriority(_touchListener, 1);
+    _eventDispatcher->setPriority(_touchListener, 1);
     unscheduleAllSelectors();
     log("TOUCHES ALLOWED AGAIN");
 }
@@ -162,7 +162,7 @@ void MenuLayerMainMenu::allowTouches(float dt)
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
 {
     // hijack all touch events for 5 seconds
-    EventDispatcher::getInstance()->setPriority(_touchListener, -1);
+    _eventDispatcher->setPriority(_touchListener, -1);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     log("TOUCHES DISABLED FOR 5 SECONDS");
 }
@@ -583,7 +583,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     _touchListener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);
     _touchListener->onTouchMoved = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchMoved, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(_touchListener, -129);
+    _eventDispatcher->addEventListenerWithFixedPriority(_touchListener, -129);
     
 }
 
@@ -594,7 +594,7 @@ void RemoveMenuItemWhenMove::goBack(Object *pSender)
 
 RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()
 {
-    EventDispatcher::getInstance()->removeEventListener(_touchListener);
+    _eventDispatcher->removeEventListener(_touchListener);
     CC_SAFE_RELEASE(item);
 }
 
