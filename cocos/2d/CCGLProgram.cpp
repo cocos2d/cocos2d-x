@@ -515,6 +515,24 @@ void GLProgram::setUniformLocationWith4fv(GLint location, GLfloat* floats, unsig
     }
 }
 
+void GLProgram::setUniformLocationWithMatrix2fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices) {
+    bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*4*numberOfMatrices);
+    
+    if( updated )
+    {
+        glUniformMatrix2fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
+    }
+}
+
+void GLProgram::setUniformLocationWithMatrix3fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices) {
+    bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*9*numberOfMatrices);
+    
+    if( updated )
+    {
+        glUniformMatrix3fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
+    }
+}
+
 
 void GLProgram::setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices)
 {
