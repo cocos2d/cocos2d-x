@@ -46,22 +46,24 @@ class Node;
 class EventListener : public Object
 {
 public:
-    enum EventListenerType
+    enum class Type
     {
-        TYPE_TOUCH_ONE_BY_ONE = 1,
-        TYPE_TOUCH_ALL_AT_ONCE,
-        TYPE_KEYBOARD,
-        TYPE_ACCELERATION,
-        TYPE_CUSTOM
+        UNKNOWN,
+        TOUCH_ONE_BY_ONE,
+        TOUCH_ALL_AT_ONCE,
+        KEYBOARD,
+        ACCELERATION,
+        CUSTOM
     };
     
-    typedef int Type;
+    typedef int ListenerID;
+    
 protected:
     /** Constructor */
     EventListener();
     
     /** Initializes event with type and callback function */
-    bool init(Type t, std::function<void(Event*)>callback);
+    bool init(Type t, ListenerID listenerID, std::function<void(Event*)>callback);
 public:
     /** Destructor */
     virtual ~EventListener();
@@ -72,21 +74,33 @@ public:
     /** Clones the listener, its subclasses have to override this method. */
     virtual EventListener* clone() = 0;
     
+    inline void setPaused(bool paused) { _paused = paused; };
     inline bool isPaused() const { return _paused; };
+    
+    inline void setRegistered(bool registered) { _isRegistered = registered; };
     inline bool isRegistered() const { return _isRegistered; };
     
-protected:
+    inline Type getType() const { return _type; };
+    inline ListenerID getListenerID() const { return _listenerID; };
+    
+    inline void setFixedPriority(int fixedPriority) { _fixedPriority = fixedPriority; };
+    inline int getFixedPriority() const { return _fixedPriority; };
+    
+    inline void setSceneGraphPriority(Node* node) { _node = node; };
+    inline Node* getSceneGraphPriority() const { return _node; };
+    
     std::function<void(Event*)> _onEvent;   /// Event callback function
-    Type _type;                      /// Event type
-    bool _isRegistered;                    /// Whether the listener has been added to dispatcher.
+    
+protected:
+    
+    Type _type;                             /// Event listener type
+    ListenerID _listenerID;                         /// Event listener ID
+    bool _isRegistered;                     /// Whether the listener has been added to dispatcher.
     
     // The priority of event listener
     int   _fixedPriority;   // The higher the number, the higher the priority, 0 is for scene graph base priority.
     Node* _node; // scene graph based priority
     bool _paused;
-    
-private:
-    friend class EventDispatcher;
 };
 
 NS_CC_END

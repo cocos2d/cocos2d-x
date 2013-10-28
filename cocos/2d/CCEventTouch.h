@@ -46,11 +46,7 @@ public:
         CANCELLED
     };
 
-    EventTouch()
-    : Event(TYPE_TOUCH)
-    {
-        _touches.reserve(MAX_TOUCHES);
-    }
+    EventTouch();
 
     EventCode getEventCode() { return _eventCode; };
     std::vector<Touch*> getTouches() { return _touches; };

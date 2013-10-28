@@ -59,7 +59,7 @@ bool EventListenerAcceleration::init(std::function<void(Acceleration*, Event* ev
         this->onAccelerationEvent(&accEvent->_acc, event);
     };
     
-    if (EventListener::init(TYPE_ACCELERATION, listener))
+    if (EventListener::init(Type::ACCELERATION, static_cast<ListenerID>(Type::ACCELERATION), listener))
     {
         onAccelerationEvent = callback;
         return true;

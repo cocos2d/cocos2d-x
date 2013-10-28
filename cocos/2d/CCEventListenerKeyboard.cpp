@@ -88,7 +88,7 @@ bool EventListenerKeyboard::init()
         }
     };
     
-    if (EventListener::init(TYPE_KEYBOARD, listener))
+    if (EventListener::init(Type::KEYBOARD, static_cast<ListenerID>(Type::KEYBOARD), listener))
     {
         return true;
     }
