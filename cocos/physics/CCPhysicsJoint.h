@@ -40,7 +40,7 @@ class PhysicsBodyInfo;
 /*
  * @brief An PhysicsJoint object connects two physics bodies together.
  */
-class PhysicsJoint : public Object
+class PhysicsJoint
 {
 protected:
     PhysicsJoint();

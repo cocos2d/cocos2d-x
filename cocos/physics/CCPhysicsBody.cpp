@@ -62,6 +62,7 @@ namespace
 
 PhysicsBody::PhysicsBody()
 : _owner(nullptr)
+, _shapes(nullptr)
 , _world(nullptr)
 , _info(nullptr)
 , _dynamic(true)
@@ -85,18 +86,23 @@ PhysicsBody::PhysicsBody()
 
 PhysicsBody::~PhysicsBody()
 {
-    CC_SAFE_DELETE(_info);
+    if (_world)
+    {
+        removeFromWorld();
+    }
     
     removeAllShapes();
     
     for (auto it = _joints.begin(); it != _joints.end(); ++it)
     {
         PhysicsJoint* joint = *it;
-        PhysicsBody* other = joint->getBodyA() == this ? joint->getBodyA() : joint->getBodyB();
+        PhysicsBody* other = joint->getBodyA() == this ? joint->getBodyB() : joint->getBodyA();
         
         other->_joints.erase(std::find(other->_joints.begin(), other->_joints.end(), joint));
+        
         delete joint;
     }
+    CC_SAFE_DELETE(_info);
 }
 
 PhysicsBody* PhysicsBody::create()
@@ -110,6 +116,45 @@ PhysicsBody* PhysicsBody::create()
     
     CC_SAFE_DELETE(body);
     return nullptr;
+}
+
+PhysicsBody* PhysicsBody::create(float mass)
+{
+    PhysicsBody* body = new PhysicsBody();
+    if (body)
+    {
+        body->_mass = mass;
+        body->_massDefault = false;
+        if (body->init())
+        {
+            body->autorelease();
+            return body;
+        }
+    }
+    
+    CC_SAFE_DELETE(body);
+    return nullptr;
+}
+
+PhysicsBody* PhysicsBody::create(float mass, float moment)
+{
+    PhysicsBody* body = new PhysicsBody();
+    if (body)
+    {
+        body->_mass = mass;
+        body->_massDefault = false;
+        body->_moment = moment;
+        body->_momentDefault = false;
+        if (body->init())
+        {
+            body->autorelease();
+            return body;
+        }
+    }
+    
+    CC_SAFE_DELETE(body);
+    return nullptr;
+    
 }
 
 PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
@@ -223,6 +268,9 @@ bool PhysicsBody::init()
     {
         _info = new PhysicsBodyInfo();
         CC_BREAK_IF(_info == nullptr);
+        _shapes = Array::create();
+        CC_BREAK_IF(_shapes == nullptr);
+        _shapes->retain();
         
         _info->body = cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment));
         _info->group = ++GROUP_INDEX;
@@ -308,10 +356,9 @@ void PhysicsBody::addShape(PhysicsShape* shape)
     if (shape == nullptr) return;
     
     // add shape to body
-    if (std::find(_shapes.begin(), _shapes.end(), shape) == _shapes.end())
+    if (_shapes->getIndexOfObject(shape) == UINT_MAX)
     {
         shape->setBody(this);
-        _shapes.push_back(shape);
         
         // calculate the area, mass, and desity
         // area must update before mass, because the density changes depend on it.
@@ -324,7 +371,7 @@ void PhysicsBody::addShape(PhysicsShape* shape)
             _world->addShape(shape);
         }
         
-        shape->retain();
+        _shapes->addObject(shape);
     }
 }
 
@@ -519,8 +566,9 @@ void PhysicsBody::setMoment(float moment)
 
 PhysicsShape* PhysicsBody::getShapeByTag(int tag)
 {
-    for (auto shape : _shapes)
+    for (auto child : *_shapes)
     {
+        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
         if (shape->getTag() == tag)
         {
             return shape;
@@ -532,8 +580,9 @@ PhysicsShape* PhysicsBody::getShapeByTag(int tag)
 
 void PhysicsBody::removeShapeByTag(int tag)
 {
-    for (auto shape : _shapes)
+    for (auto child : *_shapes)
     {
+        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
         if (shape->getTag() == tag)
         {
             removeShape(shape);
@@ -544,9 +593,7 @@ void PhysicsBody::removeShapeByTag(int tag)
 
 void PhysicsBody::removeShape(PhysicsShape* shape)
 {
-    auto it = std::find(_shapes.begin(), _shapes.end(), shape);
-    
-    if (it != _shapes.end())
+    if (_shapes->getIndexOfObject(shape) == UINT_MAX)
     {
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
@@ -559,25 +606,39 @@ void PhysicsBody::removeShape(PhysicsShape* shape)
         {
             _world->removeShape(shape);
         }
-        _shapes.erase(it);
         shape->setBody(nullptr);
-        shape->release();
+        _shapes->removeObject(shape);
     }
 }
 
 void PhysicsBody::removeAllShapes()
 {
-    for (auto shape : _shapes)
+    for (auto child : *_shapes)
     {
+        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
+        
+        // deduce the area, mass and moment
+        // area must update before mass, because the density changes depend on it.
+        _area -= shape->getArea();
+        addMass(-shape->getMass());
+        addMoment(-shape->getMoment());
+        
         if (_world)
         {
             _world->removeShape(shape);
         }
-        
-        delete shape;
+        shape->setBody(nullptr);
     }
     
-    _shapes.clear();
+    _shapes->removeAllObjects();
+}
+
+void PhysicsBody::removeFromWorld()
+{
+    if (_world)
+    {
+        _world->removeBody(this);
+    }
 }
 
 void PhysicsBody::setEnable(bool enable)

@@ -92,7 +92,6 @@ PhysicsDemo::PhysicsDemo()
 : _scene(nullptr)
 , _ball(nullptr)
 , _spriteTexture(nullptr)
-, _mouse(nullptr)
 {
     
 }
@@ -160,7 +159,7 @@ void PhysicsDemo::onEnter()
 #endif
 }
 
-void PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
+Sprite* PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
 {
 #ifdef CC_USE_PHYSICS
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
@@ -178,6 +177,8 @@ void PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
     sp->setPhysicsBody(PhysicsBody::createBox(Size(48.0f * scale, 108.0f * scale)));
     this->addChild(sp);
     sp->setPosition(p);
+    
+    return sp;
 #endif
 }
 
@@ -367,28 +368,60 @@ Sprite* PhysicsDemo::makeTriangle(float x, float y, Size size, PhysicsMaterial m
     return triangle;
 }
 
-void PhysicsDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
+bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
 {
-    for( auto &touch: touches)
+    auto location = touch->getLocation();
+    Array* arr = _scene->getPhysicsWorld()->getShapesAtPoint(location);
+    
+    PhysicsShape* shape = nullptr;
+    for (Object* obj : *arr)
     {
-        auto location = touch->getLocation();
-        Array* arr = _scene->getPhysicsWorld()->getShapesAtPoint(location);
+        shape = dynamic_cast<PhysicsShape*>(obj);
         
-        PhysicsShape* shape = nullptr;
-        for (Object* obj : *arr)
+        if (shape->getTag() == 1)
         {
-            
+            break;
         }
+    }
+    
+    if (shape != nullptr)
+    {
+        
+        Node* mouse = Node::create();
+        mouse->setPhysicsBody(PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY));
+        mouse->getPhysicsBody()->setDynamic(false);
+        mouse->setPosition(location);
+        this->addChild(mouse);
+        PhysicsJoint* joint = PhysicsJointPin::create(mouse->getPhysicsBody(), shape->getBody(), location);
+        _scene->getPhysicsWorld()->addJoint(joint);
+        _mouses.insert(std::make_pair(touch->getID(), mouse));
+        
+        return true;
+    }
+    
+    return false;
+}
+
+void PhysicsDemo::onTouchMoved(Touch* touch, Event* event)
+{
+    auto it = _mouses.find(touch->getID());
+    
+    if (it != _mouses.end())
+    {
+        it->second->getPhysicsBody()->setVelocity((touch->getLocation() - it->second->getPosition()) * 60.0f);
+        it->second->setPosition(touch->getLocation());
     }
 }
 
-void PhysicsDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+void PhysicsDemo::onTouchEnded(Touch* touch, Event* event)
 {
+    auto it = _mouses.find(touch->getID());
     
-}
-
-void PhysicsDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-{
+    if (it != _mouses.end())
+    {
+        this->removeChild(it->second);
+        _mouses.erase(it);
+    }
     
 }
 
@@ -440,6 +473,9 @@ void PhysicsDemoPyramidStack::onEnter()
 {
     PhysicsDemo::onEnter();
     
+    setTouchEnabled(true);
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    
     auto node = Node::create();
     node->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
     this->addChild(node);
@@ -454,7 +490,9 @@ void PhysicsDemoPyramidStack::onEnter()
     {
 		for(int j=0; j<=i; j++)
         {
-			addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
+			auto sp = addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
+            
+            sp->getPhysicsBody()->setTag(1);
 		}
 	}
 }

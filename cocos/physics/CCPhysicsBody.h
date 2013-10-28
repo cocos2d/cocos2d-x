@@ -30,6 +30,7 @@
 
 #include "CCObject.h"
 #include "CCGeometry.h"
+#include "CCArray.h"
 
 #include "CCPhysicsShape.h"
 
@@ -53,6 +54,8 @@ class PhysicsBody : public Object//, public Clonable
 {
 public:
     static PhysicsBody* create();
+    static PhysicsBody* create(float mass);
+    static PhysicsBody* create(float mass, float moment);
     /**
      * @brief Create a body contains a circle shape.
      */
@@ -119,11 +122,11 @@ public:
     /*
      * @brief get the body shapes.
      */
-    inline std::vector<PhysicsShape*>& getShapes() { return _shapes; }
+    inline Array* getShapes() { return _shapes; }
     /*
      * @brief get the first body shapes.
      */
-    inline PhysicsShape* getShape() { return _shapes.size() >= 1 ? _shapes.front() : nullptr; }
+    inline PhysicsShape* getShape() { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
     PhysicsShape* getShapeByTag(int tag);
     /*
      * @brief remove a shape from body
@@ -134,6 +137,8 @@ public:
      * @brief remove all shapes
      */
     void removeAllShapes();
+    
+    void removeFromWorld();
     
     /*
      * @brief get the world body added to.
@@ -258,7 +263,7 @@ protected:
 protected:
     Sprite*  _owner;
     std::vector<PhysicsJoint*>  _joints;
-    std::vector<PhysicsShape*>  _shapes;
+    Array*                      _shapes;
     PhysicsWorld*               _world;
     PhysicsBodyInfo*            _info;
     bool                        _dynamic;
