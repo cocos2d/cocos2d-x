@@ -27,7 +27,7 @@
 NS_CC_BEGIN
 
 EventAcceleration::EventAcceleration(Acceleration acc)
-: Event(TYPE_ACCELERATION)
+: Event(Type::ACCELERATION)
 , _acc(acc)
 {
 }

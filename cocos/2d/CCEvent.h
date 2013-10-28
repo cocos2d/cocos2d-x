@@ -41,15 +41,14 @@ class Node;
 class Event
 {
 public:
-    enum EventType
+    enum class Type
     {
-        TYPE_TOUCH = 1,
-        TYPE_KEYBOARD = 3,
-        TYPE_ACCELERATION,
-        TYPE_CUSTOM
+        TOUCH,
+        KEYBOARD,
+        ACCELERATION,
+        CUSTOM
     };
     
-    typedef int Type;
 protected:
     /** Constructor */
     Event(Type type);
@@ -78,6 +77,7 @@ protected:
     inline void setCurrentTarget(Node* target) { _currentTarget = target; };
     
 	Type _type;     ///< Event type
+    
     bool _isStopped;       ///< whether the event has been stopped.
     Node* _currentTarget;  ///< Current target
     

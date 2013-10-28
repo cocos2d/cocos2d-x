@@ -67,7 +67,7 @@ protected:
     EventListenerCustom();
     
     /** Initializes event with type and callback function */
-    bool init(Type type, std::function<void(EventCustom*)> callback);
+    bool init(ListenerID listenerId, std::function<void(EventCustom*)> callback);
     
     std::function<void(EventCustom*)> _onCustomEvent;
 };

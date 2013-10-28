@@ -24,6 +24,7 @@
 #include "CCEventDispatcher.h"
 #include "CCEvent.h"
 #include "CCEventTouch.h"
+#include "CCEventCustom.h"
 #include "CCEventListenerTouch.h"
 #include "CCNode.h"
 #include "CCDirector.h"
@@ -58,6 +59,37 @@ private:
 
 NS_CC_BEGIN
 
+static EventListener::ListenerID getListenerID(Event* event)
+{
+    EventListener::ListenerID ret;
+    switch (event->getType())
+    {
+        case Event::Type::ACCELERATION:
+            ret = static_cast<EventListener::ListenerID>(EventListener::Type::ACCELERATION);
+            break;
+        case Event::Type::CUSTOM:
+            {
+                auto customEvent = static_cast<EventCustom*>(event);
+                auto listenerID = std::hash<std::string>()(customEvent->getEventName());
+                ret = static_cast<EventListener::ListenerID>(listenerID);
+            }
+            break;
+        case Event::Type::KEYBOARD:
+            ret = static_cast<EventListener::ListenerID>(EventListener::Type::KEYBOARD);
+            break;
+        case Event::Type::TOUCH:
+            // Touch listener is very special, it contains two kinds of listeners, EventListenerTouchOneByOne and EventListenerTouchAllAtOnce.
+            // return UNKNOW instead.
+            ret = static_cast<EventListener::ListenerID>(EventListener::Type::UNKNOWN);
+            break;
+        default:
+            CCASSERT(false, "Invalid type!");
+            break;
+    }
+    
+    return ret;
+}
+
 EventDispatcher::EventListenerVector::EventListenerVector()
 : _sceneGraphListeners(nullptr)
 , _fixedListeners(nullptr)
@@ -90,7 +122,7 @@ bool EventDispatcher::EventListenerVector::empty() const
 
 void EventDispatcher::EventListenerVector::push_back(EventListener* listener)
 {
-    if (listener->_fixedPriority == 0)
+    if (listener->getFixedPriority() == 0)
     {
         if (_sceneGraphListeners == nullptr)
         {
@@ -196,7 +228,7 @@ void EventDispatcher::pauseTarget(Node* node)
         auto listeners = listenerIter->second;
         for (auto& l : *listeners)
         {
-            l->_paused = true;
+            l->setPaused(true);
         }
     }
 }
@@ -209,7 +241,7 @@ void EventDispatcher::resumeTarget(Node* node)
         auto listeners = listenerIter->second;
         for (auto& l : *listeners)
         {
-            l->_paused = false;
+            l->setPaused(false);
         }
     }
     setDirtyForNode(node);
@@ -274,11 +306,11 @@ void EventDispatcher::addEventListener(EventListener* listener)
     {
         EventListenerVector* listenerList = nullptr;
         
-        auto iter = _listeners.find(listener->_type);
+        auto iter = _listeners.find(listener->getListenerID());
         if (iter == _listeners.end())
         {
             listenerList = new EventListenerVector();
-            _listeners.insert(std::make_pair(listener->_type, listenerList));
+            _listeners.insert(std::make_pair(listener->getListenerID(), listenerList));
         }
         else
         {
@@ -287,13 +319,13 @@ void EventDispatcher::addEventListener(EventListener* listener)
 
         listenerList->push_back(listener);
         
-        if (listener->_fixedPriority == 0)
+        if (listener->getFixedPriority() == 0)
         {
-            setDirty(listener->_type, DirtyFlag::SCENE_GRAPH_PRIORITY);
+            setDirty(listener->getListenerID(), DirtyFlag::SCENE_GRAPH_PRIORITY);
         }
         else
         {
-            setDirty(listener->_type, DirtyFlag::FIXED_PRITORY);
+            setDirty(listener->getListenerID(), DirtyFlag::FIXED_PRITORY);
         }
     }
     else
@@ -305,17 +337,16 @@ void EventDispatcher::addEventListener(EventListener* listener)
 void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node)
 {
     CCASSERT(listener && node, "Invalid parameters.");
-    CCASSERT(!listener->_isRegistered, "The listener has been registered.");
+    CCASSERT(!listener->isRegistered(), "The listener has been registered.");
     
     if (!listener->checkAvailable())
         return;
     
-    listener->_node = node;
-    listener->_fixedPriority = 0;
-
+    listener->setSceneGraphPriority(node);
+    listener->setFixedPriority(0);
+    listener->setRegistered(true);
+    
     listener->retain();
-    listener->_isRegistered = true;
-
     addEventListener(listener);
 
     associateNodeAndEventListener(node, listener);
@@ -329,17 +360,18 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
 void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority)
 {
     CCASSERT(listener, "Invalid parameters.");
-    CCASSERT(!listener->_isRegistered, "The listener has been registered.");
+    CCASSERT(!listener->isRegistered(), "The listener has been registered.");
     CCASSERT(fixedPriority != 0, "0 priority is forbidden for fixed priority since it's used for scene graph based priority.");
     
     if (!listener->checkAvailable())
         return;
     
-    listener->_node          = nullptr;
-    listener->_fixedPriority = fixedPriority;
+    listener->setSceneGraphPriority(nullptr);
+    listener->setFixedPriority(fixedPriority);
+    listener->setRegistered(true);
+    listener->setPaused(false);
+    
     listener->retain();
-    listener->_isRegistered = true;
-    listener->_paused = false;
 
     addEventListener(listener);
 }
@@ -361,10 +393,10 @@ void EventDispatcher::removeEventListener(EventListener* listener)
             if (l == listener)
             {
                 CC_SAFE_RETAIN(l);
-                l->_isRegistered = false;
-                if (l->_node != nullptr)
+                l->setRegistered(false);
+                if (l->getSceneGraphPriority() != nullptr)
                 {
-                    dissociateNodeAndEventListener(l->_node, l);
+                    dissociateNodeAndEventListener(l->getSceneGraphPriority(), l);
                 }
                 
                 if (_inDispatch == 0)
@@ -393,7 +425,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
 
         if (iter->second->empty())
         {
-            _priorityDirtyFlagMap.erase(listener->_type);
+            _priorityDirtyFlagMap.erase(listener->getListenerID());
             auto list = iter->second;
             iter = _listeners.erase(iter);
             CC_SAFE_DELETE(list);
@@ -426,12 +458,12 @@ void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
             auto found = std::find(fixedPriorityListeners->begin(), fixedPriorityListeners->end(), listener);
             if (found != fixedPriorityListeners->end())
             {
-                CCASSERT(listener->_node == nullptr, "Can't set fixed priority with scene graph based listener.");
+                CCASSERT(listener->getSceneGraphPriority() == nullptr, "Can't set fixed priority with scene graph based listener.");
                 
-                if (listener->_fixedPriority != fixedPriority)
+                if (listener->getFixedPriority() != fixedPriority)
                 {
-                    listener->_fixedPriority = fixedPriority;
-                    setDirty(listener->_type, DirtyFlag::FIXED_PRITORY);
+                    listener->setFixedPriority(fixedPriority);
+                    setDirty(listener->getListenerID(), DirtyFlag::FIXED_PRITORY);
                 }
                 return;
             }
@@ -505,21 +537,23 @@ void EventDispatcher::dispatchEvent(Event* event)
     
     DispatchGuard guard(_inDispatch);
     
-    if (event->getType() == Event::TYPE_TOUCH)
+    if (event->getType() == Event::Type::TOUCH)
     {
         dispatchTouchEvent(static_cast<EventTouch*>(event));
         return;
     }
     
-    sortEventListeners(event->getType());
+    auto listenerID = getListenerID(event);
     
-    auto iter = _listeners.find(event->getType());
+    sortEventListeners(listenerID);
+    
+    auto iter = _listeners.find(listenerID);
     if (iter != _listeners.end())
     {
         auto listeners = iter->second;
         
         auto onEvent = [&event](EventListener* listener) -> bool{
-            event->setCurrentTarget(listener->_node);
+            event->setCurrentTarget(listener->getSceneGraphPriority());
             listener->_onEvent(event);
             return event->isStopped();
         };
@@ -527,16 +561,19 @@ void EventDispatcher::dispatchEvent(Event* event)
         dispatchEventToListeners(listeners, onEvent);
     }
     
-    updateListeners(event->getType());
+    updateListeners(event);
 }
 
 void EventDispatcher::dispatchTouchEvent(EventTouch* event)
 {
-    sortEventListeners(EventListener::TYPE_TOUCH_ONE_BY_ONE);
-    sortEventListeners(EventListener::TYPE_TOUCH_ALL_AT_ONCE);
+    auto touchOneByOneID = static_cast<EventListener::ListenerID>(EventListener::Type::TOUCH_ONE_BY_ONE);
+    auto touchAllAtOnceID = static_cast<EventListener::ListenerID>(EventListener::Type::TOUCH_ALL_AT_ONCE);
     
-    auto oneByOnelisteners = getListeners(EventListener::TYPE_TOUCH_ONE_BY_ONE);
-    auto allAtOncelisteners = getListeners(EventListener::TYPE_TOUCH_ALL_AT_ONCE);
+    sortEventListeners(touchOneByOneID);
+    sortEventListeners(touchAllAtOnceID);
+    
+    auto oneByOnelisteners = getListeners(touchOneByOneID);
+    auto allAtOncelisteners = getListeners(touchAllAtOnceID);
     
     // If there aren't any touch listeners, return directly.
     if (nullptr == oneByOnelisteners && nullptr == allAtOncelisteners)
@@ -627,7 +664,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 // If the event was stopped, return directly.
                 if (event->isStopped())
                 {
-                    updateListeners(event->getType());
+                    updateListeners(event);
                     return true;
                 }
                 
@@ -706,7 +743,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
             // If the event was stopped, return directly.
             if (event->isStopped())
             {
-                updateListeners(event->getType());
+                updateListeners(event);
                 return false;
             }
             
@@ -720,14 +757,14 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
         }
     }
     
-    updateListeners(event->getType());
+    updateListeners(event);
 }
 
-void EventDispatcher::updateListeners(Event::Type eventType)
+void EventDispatcher::updateListeners(Event* event)
 {
-    auto onUpdateListeners = [this](EventListener::Type listenerType)
+    auto onUpdateListeners = [this](EventListener::ListenerID listenerID)
     {
-        auto listenersIter = _listeners.find(listenerType);
+        auto listenersIter = _listeners.find(listenerID);
         if (listenersIter == _listeners.end())
             return;
         
@@ -740,7 +777,7 @@ void EventDispatcher::updateListeners(Event::Type eventType)
             for (auto iter = sceneGraphPriorityListeners->begin(); iter != sceneGraphPriorityListeners->end();)
             {
                 auto l = *iter;
-                if (!l->_isRegistered)
+                if (!l->isRegistered())
                 {
                     iter = sceneGraphPriorityListeners->erase(iter);
                     l->release();
@@ -757,7 +794,7 @@ void EventDispatcher::updateListeners(Event::Type eventType)
             for (auto iter = fixedPriorityListeners->begin(); iter != fixedPriorityListeners->end();)
             {
                 auto l = *iter;
-                if (!l->_isRegistered)
+                if (!l->isRegistered())
                 {
                     iter = fixedPriorityListeners->erase(iter);
                     l->release();
@@ -791,14 +828,14 @@ void EventDispatcher::updateListeners(Event::Type eventType)
         }
     };
     
-    if (eventType == Event::TYPE_TOUCH)
+    if (event->getType() == Event::Type::TOUCH)
     {
-        onUpdateListeners(EventListener::TYPE_TOUCH_ONE_BY_ONE);
-        onUpdateListeners(EventListener::TYPE_TOUCH_ALL_AT_ONCE);
+        onUpdateListeners(static_cast<EventListener::ListenerID>(EventListener::Type::TOUCH_ONE_BY_ONE));
+        onUpdateListeners(static_cast<EventListener::ListenerID>(EventListener::Type::TOUCH_ALL_AT_ONCE));
     }
     else
     {
-        onUpdateListeners(eventType);
+        onUpdateListeners(getListenerID(event));
     }
     
     
@@ -808,12 +845,13 @@ void EventDispatcher::updateListeners(Event::Type eventType)
         
         for (auto& listener : _toAddedListeners)
         {
-            auto itr = _listeners.find(listener->_type);
+            EventListener::ListenerID listenerID = listener->getListenerID();
+            auto itr = _listeners.find(listenerID);
             if (itr == _listeners.end())
             {
                 
                 listeners = new EventListenerVector();
-                _listeners.insert(std::make_pair(listener->_type, listeners));
+                _listeners.insert(std::make_pair(listenerID, listeners));
             }
             else
             {
@@ -822,13 +860,13 @@ void EventDispatcher::updateListeners(Event::Type eventType)
             
             listeners->push_back(listener);
             
-            if (listener->_fixedPriority == 0)
+            if (listener->getFixedPriority() == 0)
             {
-                setDirty(listener->_type, DirtyFlag::SCENE_GRAPH_PRIORITY);
+                setDirty(listenerID, DirtyFlag::SCENE_GRAPH_PRIORITY);
             }
             else
             {
-                setDirty(listener->_type, DirtyFlag::FIXED_PRITORY);
+                setDirty(listenerID, DirtyFlag::FIXED_PRITORY);
             }
         }
         _toAddedListeners.clear();
@@ -846,7 +884,7 @@ void EventDispatcher::updateDirtyFlagForSceneGraph()
             {
                 for (auto& l : *iter->second)
                 {
-                    setDirty(l->_type, DirtyFlag::SCENE_GRAPH_PRIORITY);
+                    setDirty(l->getListenerID(), DirtyFlag::SCENE_GRAPH_PRIORITY);
                 }
             }
         }
@@ -855,11 +893,11 @@ void EventDispatcher::updateDirtyFlagForSceneGraph()
     }
 }
 
-void EventDispatcher::sortEventListeners(EventListener::Type eventListenerType)
+void EventDispatcher::sortEventListeners(EventListener::ListenerID listenerID)
 {
     DirtyFlag dirtyFlag = DirtyFlag::NONE;
     
-    auto dirtyIter = _priorityDirtyFlagMap.find(eventListenerType);
+    auto dirtyIter = _priorityDirtyFlagMap.find(listenerID);
     if (dirtyIter != _priorityDirtyFlagMap.end())
     {
         dirtyFlag = dirtyIter->second;
@@ -869,21 +907,21 @@ void EventDispatcher::sortEventListeners(EventListener::Type eventListenerType)
     {
         if ((int)dirtyFlag & (int)DirtyFlag::FIXED_PRITORY)
         {
-            sortEventListenersOfFixedPriority(eventListenerType);
+            sortEventListenersOfFixedPriority(listenerID);
         }
         
         if ((int)dirtyFlag & (int)DirtyFlag::SCENE_GRAPH_PRIORITY)
         {
-            sortEventListenersOfSceneGraphPriority(eventListenerType);
+            sortEventListenersOfSceneGraphPriority(listenerID);
         }
         
         dirtyIter->second = DirtyFlag::NONE;
     }
 }
 
-void EventDispatcher::sortEventListenersOfSceneGraphPriority(EventListener::Type eventListenerType)
+void EventDispatcher::sortEventListenersOfSceneGraphPriority(EventListener::ListenerID listenerID)
 {
-    auto listeners = getListeners(eventListenerType);
+    auto listeners = getListeners(listenerID);
     
     if (listeners == nullptr)
         return;
@@ -898,7 +936,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(EventListener::Type
     // After sort: priority < 0, > 0
     auto sceneGraphlisteners = listeners->getSceneGraphPriorityListeners();
     std::sort(sceneGraphlisteners->begin(), sceneGraphlisteners->end(), [this](const EventListener* l1, const EventListener* l2) {
-        return _nodePriorityMap[l1->_node] > _nodePriorityMap[l2->_node];
+        return _nodePriorityMap[l1->getSceneGraphPriority()] > _nodePriorityMap[l2->getSceneGraphPriority()];
     });
     
 #if DUMP_LISTENER_ITEM_PRIORITY_INFO
@@ -910,9 +948,9 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(EventListener::Type
 #endif
 }
 
-void EventDispatcher::sortEventListenersOfFixedPriority(EventListener::Type eventListenerType)
+void EventDispatcher::sortEventListenersOfFixedPriority(EventListener::ListenerID listenerID)
 {
-    auto listeners = getListeners(eventListenerType);
+    auto listeners = getListeners(listenerID);
 
     if (listeners == nullptr)
         return;
@@ -920,14 +958,14 @@ void EventDispatcher::sortEventListenersOfFixedPriority(EventListener::Type even
     // After sort: priority < 0, > 0
     auto fixedlisteners = listeners->getFixedPriorityListeners();
     std::sort(fixedlisteners->begin(), fixedlisteners->end(), [](const EventListener* l1, const EventListener* l2) {
-        return l1->_fixedPriority < l2->_fixedPriority;
+        return l1->getFixedPriority() < l2->getFixedPriority();
     });
     
     // FIXME: Should use binary search
     int index = 0;
     for (auto& listener : *fixedlisteners)
     {
-        if (listener->_fixedPriority >= 0)
+        if (listener->getFixedPriority() >= 0)
             break;
         ++index;
     }
@@ -944,9 +982,9 @@ void EventDispatcher::sortEventListenersOfFixedPriority(EventListener::Type even
     
 }
 
-EventDispatcher::EventListenerVector* EventDispatcher::getListeners(EventListener::Type eventListenerType)
+EventDispatcher::EventListenerVector* EventDispatcher::getListeners(EventListener::ListenerID listenerID)
 {
-    auto iter = _listeners.find(eventListenerType);
+    auto iter = _listeners.find(listenerID);
     if (iter != _listeners.end())
     {
         return iter->second;
@@ -955,9 +993,9 @@ EventDispatcher::EventListenerVector* EventDispatcher::getListeners(EventListene
     return nullptr;
 }
 
-void EventDispatcher::removeEventListeners(EventListener::Type eventListenerType)
+void EventDispatcher::removeEventListeners(EventListener::ListenerID listenerID)
 {
-    auto listenerItemIter = _listeners.find(eventListenerType);
+    auto listenerItemIter = _listeners.find(listenerID);
     if (listenerItemIter != _listeners.end())
     {
         auto listeners = listenerItemIter->second;
@@ -971,10 +1009,10 @@ void EventDispatcher::removeEventListeners(EventListener::Type eventListenerType
             for (auto iter = listenerVector->begin(); iter != listenerVector->end();)
             {
                 auto l = *iter;
-                l->_isRegistered = false;
-                if (l->_node != nullptr)
+                l->setRegistered(false);
+                if (l->getSceneGraphPriority() != nullptr)
                 {
-                    dissociateNodeAndEventListener(l->_node, l);
+                    dissociateNodeAndEventListener(l->getSceneGraphPriority(), l);
                 }
                 
                 if (_inDispatch == 0)
@@ -997,7 +1035,7 @@ void EventDispatcher::removeEventListeners(EventListener::Type eventListenerType
             listeners->clear();
             delete listeners;
             _listeners.erase(listenerItemIter);
-            _priorityDirtyFlagMap.erase(eventListenerType);
+            _priorityDirtyFlagMap.erase(listenerID);
         }
     }
 }
@@ -1042,12 +1080,12 @@ void EventDispatcher::setDirtyForNode(Node* node)
     }
 }
 
-void EventDispatcher::setDirty(EventListener::Type eventListenerType, DirtyFlag flag)
+void EventDispatcher::setDirty(EventListener::ListenerID listenerID, DirtyFlag flag)
 {    
-    auto iter = _priorityDirtyFlagMap.find(eventListenerType);
+    auto iter = _priorityDirtyFlagMap.find(listenerID);
     if (iter == _priorityDirtyFlagMap.end())
     {
-        _priorityDirtyFlagMap.insert(std::make_pair(eventListenerType, flag));
+        _priorityDirtyFlagMap.insert(std::make_pair(listenerID, flag));
     }
     else
     {

@@ -29,8 +29,9 @@
 NS_CC_BEGIN
 
 EventCustom::EventCustom(const std::string& eventName)
-: Event(std::hash<std::string>()(eventName))
+: Event(Type::CUSTOM)
 , _userData(nullptr)
+, _eventName(eventName)
 {
 }
 

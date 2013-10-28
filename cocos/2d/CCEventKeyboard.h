@@ -196,13 +196,7 @@ public:
         KEY_SEARCH            = 0xFFAA
     };
     
-    static const char* EVENT_TYPE;
-    
-    EventKeyboard(KeyCode keyCode, bool isPressed)
-     : Event(TYPE_KEYBOARD)
-     , _keyCode(keyCode)
-     , _isPressed(isPressed)
-    {};
+    EventKeyboard(KeyCode keyCode, bool isPressed);
     
 private:
     KeyCode _keyCode;

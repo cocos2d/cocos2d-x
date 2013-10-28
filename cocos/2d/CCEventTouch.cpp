@@ -26,5 +26,10 @@
 
 NS_CC_BEGIN
 
+EventTouch::EventTouch()
+: Event(Type::TOUCH)
+{
+    _touches.reserve(MAX_TOUCHES);
+}
 
 NS_CC_END
