@@ -489,7 +489,7 @@ void UITextField::insertTextEvent()
 {
     if (_eventListener && _eventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_INDERT_TEXT);
+        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
     }
 }
 
