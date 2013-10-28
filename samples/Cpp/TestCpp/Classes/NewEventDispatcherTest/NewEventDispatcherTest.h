@@ -64,6 +64,7 @@ public:
     virtual std::string subtitle() override;
 private:
     EventListenerCustom* _listener;
+    EventListenerCustom* _listener2;
 };
 
 class LabelKeyboardEventTest : public EventDispatcherTestDemo

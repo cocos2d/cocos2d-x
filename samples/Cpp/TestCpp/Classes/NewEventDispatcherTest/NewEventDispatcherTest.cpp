@@ -414,33 +414,61 @@ void CustomEventTest::onEnter()
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
-    auto statusLabel = LabelTTF::create("No custom event received!", "", 20);
+    MenuItemFont::setFontSize(20);
+    
+    auto statusLabel = LabelTTF::create("No custom event 1 received!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
 
-    const int game_custom_event = EventListener::TYPE_CUSTOM + 1;
-    _listener = EventListenerCustom::create(game_custom_event, [=](EventCustom* event){
-        std::string str("Custom event received, ");
+    _listener = EventListenerCustom::create("game_custom_event1", [=](EventCustom* event){
+        std::string str("Custom event 1 received, ");
         char* buf = static_cast<char*>(event->getUserData());
         str += buf;
         str += " times";
         statusLabel->setString(str.c_str());
-        delete[] buf;
     });
     
     _eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
     
-    auto sendItem = MenuItemFont::create("Send Custom Event", [=](Object* sender){
+    auto sendItem = MenuItemFont::create("Send Custom Event 1", [=](Object* sender){
         static int count = 0;
         ++count;
         char* buf = new char[10];
         sprintf(buf, "%d", count);
-        EventCustom event(game_custom_event);
+        EventCustom event("game_custom_event1");
         event.setUserData(buf);
         _eventDispatcher->dispatchEvent(&event);
+        CC_SAFE_DELETE_ARRAY(buf);
     });
     sendItem->setPosition(origin + Point(size.width/2, size.height/2));
-    auto menu = Menu::create(sendItem, nullptr);
+    
+    auto statusLabel2 = LabelTTF::create("No custom event 2 received!", "", 20);
+    statusLabel2->setPosition(origin + Point(size.width/2, size.height-120));
+    addChild(statusLabel2);
+    
+    _listener2 = EventListenerCustom::create("game_custom_event2", [=](EventCustom* event){
+        std::string str("Custom event 2 received, ");
+        char* buf = static_cast<char*>(event->getUserData());
+        str += buf;
+        str += " times";
+        statusLabel2->setString(str.c_str());
+    });
+    
+    _eventDispatcher->addEventListenerWithFixedPriority(_listener2, 1);
+    
+    auto sendItem2 = MenuItemFont::create("Send Custom Event 2", [=](Object* sender){
+        static int count = 0;
+        ++count;
+        char* buf = new char[10];
+        sprintf(buf, "%d", count);
+        EventCustom event("game_custom_event2");
+        event.setUserData(buf);
+        _eventDispatcher->dispatchEvent(&event);
+        CC_SAFE_DELETE_ARRAY(buf);
+    });
+    sendItem2->setPosition(origin + Point(size.width/2, size.height/2 - 40));
+    
+    auto menu = Menu::create(sendItem, sendItem2, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setAnchorPoint(Point(0, 0));
     addChild(menu, -1);
@@ -449,6 +477,7 @@ void CustomEventTest::onEnter()
 void CustomEventTest::onExit()
 {
     _eventDispatcher->removeEventListener(_listener);
+    _eventDispatcher->removeEventListener(_listener2);
     EventDispatcherTestDemo::onExit();
 }
 
