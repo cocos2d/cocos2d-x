@@ -57,7 +57,7 @@ typedef struct PhysicsMaterial
     {}
 }PhysicsMaterial;
 
-const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT(0.0f, 1.0f, 1.0f);
+const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT(0.0f, 0.5f, 0.5f);
 
 /**
  * @brief A shape for body. You do not create PhysicsWorld objects directly, instead, you can view PhysicsBody to see how to create it.

@@ -136,14 +136,8 @@ void Scene::addChildToPhysicsWorld(Node* child)
         std::function<void(Object*)> addToPhysicsWorldFunc = nullptr;
         addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Object* child) -> void
         {
-            if (dynamic_cast<SpriteBatchNode*>(child) != nullptr)
-            {
-                Object* subChild = nullptr;
-                CCARRAY_FOREACH((dynamic_cast<SpriteBatchNode*>(child))->getChildren(), subChild)
-                {
-                    addToPhysicsWorldFunc(subChild);
-                }
-            }else if (dynamic_cast<Node*>(child) != nullptr)
+            
+            if (dynamic_cast<Node*>(child) != nullptr)
             {
                 Node* node = dynamic_cast<Node*>(child);
                 
@@ -151,20 +145,16 @@ void Scene::addChildToPhysicsWorld(Node* child)
                 {
                     _physicsWorld->addBody(node->getPhysicsBody());
                 }
+                
+                Object* subChild = nullptr;
+                CCARRAY_FOREACH(node->getChildren(), subChild)
+                {
+                    addToPhysicsWorldFunc(subChild);
+                }
             }
         };
         
-        if(dynamic_cast<Layer*>(child) != nullptr)
-        {
-            Object* subChild = nullptr;
-            CCARRAY_FOREACH(child->getChildren(), subChild)
-            {
-                addToPhysicsWorldFunc(subChild);
-            }
-        }else
-        {
-            addToPhysicsWorldFunc(child);
-        }
+        addToPhysicsWorldFunc(child);
     }
 }
 

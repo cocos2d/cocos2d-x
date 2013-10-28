@@ -63,6 +63,7 @@ protected:
      * PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
      */
     PhysicsBodyInfo* bodyInfo(PhysicsBody* body) const;
+    Node* bodyOwner(PhysicsBody* body) const;
     
 protected:
     PhysicsBody* _bodyA;
@@ -82,7 +83,7 @@ protected:
 class PhysicsJointFixed : public PhysicsJoint
 {
 public:
-    PhysicsJointFixed* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    static PhysicsJointFixed* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
@@ -98,7 +99,7 @@ protected:
 class PhysicsJointSliding : public PhysicsJoint
 {
 public:
-    PhysicsJointSliding* create(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
+    static PhysicsJointSliding* create(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
@@ -152,6 +153,9 @@ class PhysicsJointPin : public PhysicsJoint
 {
 public:
     static PhysicsJointPin* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    
+    void setMaxForce(float force);
+    float getMaxForce();
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
