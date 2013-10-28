@@ -749,6 +749,14 @@ void Node::detachChild(Node *child, int childIndex, bool doCleanup)
         child->onExitTransitionDidStart();
         child->onExit();
     }
+    
+#ifdef CC_USE_PHYSICS
+    if (child->_physicsBody != nullptr)
+    {
+        child->_physicsBody->removeFromWorld();
+    }
+    
+#endif
 
     // If you don't do cleanup, the child's actions will not get removed and the
     // its scheduledSelectors_ dict will not get released!

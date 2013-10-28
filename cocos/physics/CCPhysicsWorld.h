@@ -116,6 +116,7 @@ public:
     
     virtual void removeBody(PhysicsBody* body);
     virtual void removeBodyByTag(int tag);
+    virtual void removeAllBodys();
     
 protected:
     static PhysicsWorld* create();

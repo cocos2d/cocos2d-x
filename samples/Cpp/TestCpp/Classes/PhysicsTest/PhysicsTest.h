@@ -5,6 +5,8 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
+#include <map>
+
 
 class PhysicsTestScene : public TestScene
 {
@@ -36,19 +38,19 @@ public:
     void backCallback(Object* sender);
     void toggleDebugCallback(Object* sender);
     
-    void addGrossiniAtPosition(Point p, float scale = 1.0);
+    Sprite* addGrossiniAtPosition(Point p, float scale = 1.0);
     Sprite* makeBall(float x, float y, float radius, PhysicsMaterial material = PhysicsMaterial(1.0f, 1.0f, 1.0f));
     Sprite* makeBox(float x, float y, Size size, PhysicsMaterial material = PhysicsMaterial(1.0f, 1.0f, 1.0f));
     Sprite* makeTriangle(float x, float y, Size size, PhysicsMaterial material = PhysicsMaterial(1.0f, 1.0f, 1.0f));
     
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    bool onTouchBegan(Touch* touch, Event* event) override;
+    void onTouchMoved(Touch* touch, Event* event) override;
+    void onTouchEnded(Touch* touch, Event* event) override;
     
 protected:
     Texture2D* _spriteTexture;    // weak ref
     SpriteBatchNode* _ball;
-    DrawNode* _mouse;
+    std::map<int, Node*> _mouses;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo

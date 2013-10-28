@@ -177,18 +177,27 @@ void PhysicsWorldCallback::nearestPointQueryFunc(cpShape *shape, cpFloat distanc
 
 bool PhysicsWorld::init()
 {
-    _info = new PhysicsWorldInfo();
+    do
+    {
+        _info = new PhysicsWorldInfo();
+        CC_BREAK_IF(_info == nullptr);
+        _bodys = Array::create();
+        CC_BREAK_IF(_bodys == nullptr);
+        _bodys->retain();
+        
+        cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(_gravity));
+        
+        cpSpaceSetDefaultCollisionHandler(_info->space,
+                                          (cpCollisionBeginFunc)PhysicsWorldCallback::collisionBeginCallbackFunc,
+                                          (cpCollisionPreSolveFunc)PhysicsWorldCallback::collisionPreSolveCallbackFunc,
+                                          (cpCollisionPostSolveFunc)PhysicsWorldCallback::collisionPostSolveCallbackFunc,
+                                          (cpCollisionSeparateFunc)PhysicsWorldCallback::collisionSeparateCallbackFunc,
+                                          this);
+        
+        return true;
+    } while (false);
     
-    cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(_gravity));
-    
-    cpSpaceSetDefaultCollisionHandler(_info->space,
-                                      (cpCollisionBeginFunc)PhysicsWorldCallback::collisionBeginCallbackFunc,
-                                      (cpCollisionPreSolveFunc)PhysicsWorldCallback::collisionPreSolveCallbackFunc,
-                                      (cpCollisionPostSolveFunc)PhysicsWorldCallback::collisionPostSolveCallbackFunc,
-                                      (cpCollisionSeparateFunc)PhysicsWorldCallback::collisionSeparateCallbackFunc,
-                                      this);
-    
-    return true;
+    return false;
 }
 
 void PhysicsWorld::addJoint(PhysicsJoint* joint)
@@ -197,8 +206,6 @@ void PhysicsWorld::addJoint(PhysicsJoint* joint)
     
     if (it == _joints.end())
     {
-        _joints.push_back(joint);
-        
         for (auto subjoint : joint->_info->joints)
         {
             if (!cpSpaceContainsConstraint(_info->space, subjoint))
@@ -206,18 +213,44 @@ void PhysicsWorld::addJoint(PhysicsJoint* joint)
                 cpSpaceAddConstraint(_info->space, subjoint);
             }
         }
+        
+        _joints.push_back(joint);
     }
     
 }
 
 void PhysicsWorld::removeJoint(PhysicsJoint* joint)
 {
+    auto it = std::find(_joints.begin(), _joints.end(), joint);
     
+    if (it != _joints.end())
+    {
+        for (auto subjoint : joint->_info->joints)
+        {
+            if (cpSpaceContainsConstraint(_info->space, subjoint))
+            {
+                cpSpaceRemoveConstraint(_info->space, subjoint);
+            }
+        }
+        
+        _joints.remove(joint);
+    }
 }
 
 void PhysicsWorld::removeAllJoints()
 {
+    for (auto joint : _joints)
+    {
+        for (auto subjoint : joint->_info->joints)
+        {
+            if (!cpSpaceContainsConstraint(_info->space, subjoint))
+            {
+                cpSpaceRemoveConstraint(_info->space, subjoint);
+            }
+        }
+    }
     
+    _joints.clear();
 }
 
 void PhysicsWorld::addShape(PhysicsShape* shape)
@@ -243,8 +276,15 @@ void PhysicsWorld::addBody(PhysicsBody* body)
 {
     CCASSERT(body != nullptr, "the body can not be nullptr");
     
+    if (body->getWorld() != this && body->getWorld() != nullptr)
+    {
+        body->removeFromWorld();
+    }
+    
     if (body->isEnable())
     {
+        body->_world = this;
+        
         //is gravity enable
         if (!body->isGravityEnable())
         {
@@ -258,45 +298,40 @@ void PhysicsWorld::addBody(PhysicsBody* body)
         }
         
         // add shapes to space
-        for (auto shape : body->getShapes())
+        for (auto shape : *body->getShapes())
         {
-            addShape(shape);
+            addShape(dynamic_cast<PhysicsShape*>(shape));
         }
     }
     
-    if (_bodys == nullptr)
-    {
-        _bodys = Array::create(body, NULL);
-        _bodys->retain();
-    }else
-    {
-        _bodys->addObject(body);
-    }
+    _bodys->addObject(body);
 }
 
 void PhysicsWorld::removeBody(PhysicsBody* body)
 {
     CCASSERT(body != nullptr, "the body can not be nullptr");
     
-    if (body->getWorld() == this)
+    if (body->getWorld() != this)
     {
-        // reset the gravity
-        if (!body->isGravityEnable())
-        {
-            body->applyForce(-_gravity);
-        }
+        return;
+    }
+    
+    // reset the gravity
+    if (!body->isGravityEnable())
+    {
+        body->applyForce(-_gravity);
+    }
+    
+    // remove joints
+    for (auto joint : body->_joints)
+    {
+        removeJoint(joint);
     }
     
     // remove shaps
-    for (auto shape : body->getShapes())
+    for (auto shape : *body->getShapes())
     {
-        for (auto cps : shape->_info->shapes)
-        {
-            if (cpSpaceContainsShape(_info->space, cps))
-            {
-                cpSpaceRemoveShape(_info->space, cps);
-            }
-        }
+        removeShape(dynamic_cast<PhysicsShape*>(shape));
     }
     
     // remove body
@@ -305,10 +340,8 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
         cpSpaceRemoveBody(_info->space, body->_info->body);
     }
     
-    if (_bodys != nullptr)
-    {
-        _bodys->removeObject(body);
-    }
+    body->_world = nullptr;
+    _bodys->removeObject(body);
 }
 
 void PhysicsWorld::removeBodyByTag(int tag)
@@ -322,6 +355,43 @@ void PhysicsWorld::removeBodyByTag(int tag)
             return;
         }
     }
+}
+
+void PhysicsWorld::removeAllBodys()
+{
+    for (Object* obj : *_bodys)
+    {
+        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
+        
+        // reset the gravity
+        if (!body->isGravityEnable())
+        {
+            body->applyForce(-_gravity);
+        }
+        
+        // remove joints
+        for (auto joint : body->_joints)
+        {
+            removeJoint(joint);
+        }
+        
+        // remove shaps
+        for (auto shape : *body->getShapes())
+        {
+            removeShape(dynamic_cast<PhysicsShape*>(shape));
+        }
+        
+        // remove body
+        if (cpSpaceContainsBody(_info->space, body->_info->body))
+        {
+            cpSpaceRemoveBody(_info->space, body->_info->body);
+        }
+        
+        body->_world = nullptr;
+    }
+
+    _bodys->removeAllObjects();
+    CC_SAFE_RELEASE(_bodys);
 }
 
 void PhysicsWorld::removeShape(PhysicsShape* shape)
@@ -366,11 +436,9 @@ void PhysicsWorld::debugDraw()
         {
             PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
             
-            std::vector<PhysicsShape*> shapes = body->getShapes();
-            
-            for (auto shape : shapes)
+            for (auto shape : *body->getShapes())
             {
-                drawWithShape(_drawNode, shape);
+                drawWithShape(_drawNode, dynamic_cast<PhysicsShape*>(shape));
             }
         }
         
@@ -449,6 +517,11 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     // check the joint is collision enable or not
     for (PhysicsJoint* joint : jointsA)
     {
+        if (std::find(_joints.begin(), _joints.end(), joint) == _joints.end())
+        {
+            continue;
+        }
+        
         if (!joint->isCollisionEnable())
         {
             PhysicsBody* body = joint->getBodyA() == bodyA ? bodyB : bodyA;
@@ -657,8 +730,9 @@ PhysicsWorld::PhysicsWorld()
 
 PhysicsWorld::~PhysicsWorld()
 {
+    removeAllBodys();
+    removeAllJoints();
     CC_SAFE_DELETE(_info);
-    CC_SAFE_RELEASE(_bodys);
 }
 
 NS_CC_END
