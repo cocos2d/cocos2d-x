@@ -524,7 +524,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
         
         if (!joint->isCollisionEnable())
         {
-            PhysicsBody* body = joint->getBodyA() == bodyA ? bodyB : bodyA;
+            PhysicsBody* body = joint->getBodyA() == bodyA ? joint->getBodyB() : joint->getBodyA();
             
             if (body == bodyB)
             {

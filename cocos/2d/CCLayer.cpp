@@ -476,30 +476,6 @@ void Layer::onTouchesCancelled(const std::vector<Touch*>& pTouches, Event *pEven
     CC_UNUSED_PARAM(pEvent);
 }
 
-
-#ifdef CC_USE_PHYSICS
-void Layer::addChild(Node* child)
-{
-    Node::addChild(child);
-}
-
-void Layer::addChild(Node* child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
-void Layer::addChild(Node* child, int zOrder, int tag)
-{
-    Node::addChild(child, zOrder, tag);
-    
-    if (this->getParent() &&
-        dynamic_cast<Scene*>(this->getParent()) != nullptr)
-    {
-        dynamic_cast<Scene*>(this->getParent())->addChildToPhysicsWorld(child);
-    }
-}
-#endif
-
 // LayerRGBA
 LayerRGBA::LayerRGBA()
 : _displayedOpacity(255)

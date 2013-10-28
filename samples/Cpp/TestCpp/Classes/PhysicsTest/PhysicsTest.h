@@ -39,9 +39,9 @@ public:
     void toggleDebugCallback(Object* sender);
     
     Sprite* addGrossiniAtPosition(Point p, float scale = 1.0);
-    Sprite* makeBall(float x, float y, float radius, PhysicsMaterial material = PhysicsMaterial(1.0f, 1.0f, 1.0f));
-    Sprite* makeBox(float x, float y, Size size, PhysicsMaterial material = PhysicsMaterial(1.0f, 1.0f, 1.0f));
-    Sprite* makeTriangle(float x, float y, Size size, PhysicsMaterial material = PhysicsMaterial(1.0f, 1.0f, 1.0f));
+    Sprite* makeBall(float x, float y, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeBox(float x, float y, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeTriangle(float x, float y, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
     bool onTouchBegan(Touch* touch, Event* event) override;
     void onTouchMoved(Touch* touch, Event* event) override;

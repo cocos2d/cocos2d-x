@@ -44,7 +44,7 @@ class PhysicsJoint;
 class PhysicsBodyInfo;
 
 
-const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(1.0f, 1.0f, 1.0f);
+const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.01f, 0.5f, 0.5f);
 
 /**
  * A body affect by physics.
@@ -152,7 +152,7 @@ public:
     /*
      * @brief get the sprite the body set to.
      */
-    inline Sprite* getOwner() const { return _owner; }
+    inline Node* getOwner() const { return _owner; }
     
     inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
     inline int getCategoryBitmask() const { return _categoryBitmask; }
@@ -261,7 +261,7 @@ protected:
     virtual ~PhysicsBody();
     
 protected:
-    Sprite*  _owner;
+    Node*  _owner;
     std::vector<PhysicsJoint*>  _joints;
     Array*                      _shapes;
     PhysicsWorld*               _world;

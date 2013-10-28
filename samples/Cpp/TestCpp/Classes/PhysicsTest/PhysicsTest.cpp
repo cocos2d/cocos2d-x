@@ -10,6 +10,7 @@ namespace
         CL(PhysicsDemoPlink),
         CL(PhysicsDemoClickAdd),
         CL(PhysicsDemoRayCast),
+        CL(PhysicsDemoJoints),
     };
     
     static int sceneIdx=-1;
@@ -51,6 +52,7 @@ namespace
     }
     
     static const Color4F STATIC_COLOR(1.0f, 0.0f, 0.0f, 1.0f);
+    static const int DRAG_BODYS_TAG = 100;
 }
 
 
@@ -378,7 +380,7 @@ bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
     {
         shape = dynamic_cast<PhysicsShape*>(obj);
         
-        if (shape->getTag() == 1)
+        if (shape->getTag() == DRAG_BODYS_TAG)
         {
             break;
         }
@@ -392,7 +394,8 @@ bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
         mouse->getPhysicsBody()->setDynamic(false);
         mouse->setPosition(location);
         this->addChild(mouse);
-        PhysicsJoint* joint = PhysicsJointPin::create(mouse->getPhysicsBody(), shape->getBody(), location);
+        PhysicsJointPin* joint = PhysicsJointPin::create(mouse->getPhysicsBody(), shape->getBody(), location);
+        joint->setMaxForce(5000.0f);
         _scene->getPhysicsWorld()->addJoint(joint);
         _mouses.insert(std::make_pair(touch->getID(), mouse));
         
@@ -492,7 +495,7 @@ void PhysicsDemoPyramidStack::onEnter()
         {
 			auto sp = addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
             
-            sp->getPhysicsBody()->setTag(1);
+            sp->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
 		}
 	}
 }
@@ -741,15 +744,74 @@ std::string PhysicsDemoRayCast::title()
 }
 
 
+PhysicsDemoJoints::PhysicsDemoJoints()
+{
+    
+}
+
 void PhysicsDemoJoints::onEnter()
 {
     PhysicsDemo::onEnter();
     
     setTouchEnabled(true);
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
-    _scene->getPhysicsWorld()->setGravity(Point::ZERO);
+    //_scene->getPhysicsWorld()->setGravity(Point::ZERO);
     
+    float width = (VisibleRect::getVisibleRect().size.width - 10) / 4;
+    float height = (VisibleRect::getVisibleRect().size.height - 50) / 4;
     
+    Node* node = Node::create();
+    PhysicsBody* box = PhysicsBody::create();
+    node->setPhysicsBody(box);
+    box->setDynamic(false);
+    node->setPosition(Point::ZERO);
+    
+    this->addChild(node);
+    
+    for (int i = 0; i < 4; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            Point offset(VisibleRect::leftBottom().x + 5 + j * width + width/2, VisibleRect::leftBottom().y + 50 + i * height + height/2);
+            box->addShape(PhysicsShapeEdgeBox::create(Size(width, height), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, offset));
+            
+            switch (i*4 + j)
+            {
+                case 0:
+                {
+                    auto sp1 = makeBall(offset.x - 30, offset.y, 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBall(offset.x + 30, offset.y, 10);
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointPin* joint = PhysicsJointPin::create(sp1->getPhysicsBody(), sp2->getPhysicsBody(), offset);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 1:
+                {
+                    
+                    auto sp1 = makeBall(offset.x - 30, offset.y, 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset.x + 30, offset.y, Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointFixed* joint = PhysicsJointFixed::create(sp1->getPhysicsBody(), sp2->getPhysicsBody(), offset);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
 }
 
 std::string PhysicsDemoJoints::title()

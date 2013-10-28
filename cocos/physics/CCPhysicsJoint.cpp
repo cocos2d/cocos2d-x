@@ -41,6 +41,7 @@
 #include "box2d/CCPhysicsShapeInfo.h"
 #include "chipmunk/CCPhysicsHelper.h"
 #include "box2d/CCPhysicsHelper.h"
+#include "CCNode.h"
 
 NS_CC_BEGIN
 
@@ -149,6 +150,11 @@ PhysicsBodyInfo* PhysicsJoint::bodyInfo(PhysicsBody* body) const
     return body->_info;
 }
 
+Node* PhysicsJoint::bodyOwner(PhysicsBody* body) const
+{
+    return body->_owner;
+}
+
 
 void PhysicsJoint::setCollisionEnable(bool enable)
 {
@@ -181,6 +187,9 @@ bool PhysicsJointFixed::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
     do
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
+        
+        bodyOwner(a)->setPosition(anchr);
+        bodyOwner(b)->setPosition(anchr);
         
         // add a pivot joint to fixed two body together
         cpConstraint* joint = cpPivotJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
@@ -219,7 +228,6 @@ bool PhysicsJointPin::init(PhysicsBody *a, PhysicsBody *b, const Point& anchr)
     do
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
-        
         cpConstraint* joint = cpPivotJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
                                        PhysicsHelper::point2cpv(anchr));
         
@@ -227,12 +235,22 @@ bool PhysicsJointPin::init(PhysicsBody *a, PhysicsBody *b, const Point& anchr)
         
         _info->add(joint);
         
-        setCollisionEnable(false);
+        //setCollisionEnable(false);
         
         return true;
     } while (false);
     
     return false;
+}
+
+void PhysicsJointPin::setMaxForce(float force)
+{
+    _info->joints.front()->maxForce = PhysicsHelper::float2cpfloat(force);
+}
+
+float PhysicsJointPin::getMaxForce()
+{
+    return PhysicsHelper::cpfloat2float(_info->joints.front()->maxForce);
 }
 
 PhysicsJointSliding* PhysicsJointSliding::create(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr)
