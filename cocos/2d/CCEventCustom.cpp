@@ -32,7 +32,6 @@ EventCustom::EventCustom(const std::string& eventName)
 : Event(std::hash<std::string>()(eventName))
 , _userData(nullptr)
 {
-//    CCASSERT(type >= TYPE_CUSTOM, "custom type should be greater than TYPE_CUSTOM.");
 }
 
 NS_CC_END
