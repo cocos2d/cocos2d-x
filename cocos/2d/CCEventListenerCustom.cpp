@@ -32,10 +32,10 @@ EventListenerCustom::EventListenerCustom()
 {
 }
 
-EventListenerCustom* EventListenerCustom::create(Type type, std::function<void(EventCustom*)> callback)
+EventListenerCustom* EventListenerCustom::create(const std::string& eventName, std::function<void(EventCustom*)> callback)
 {
     EventListenerCustom* ret = new EventListenerCustom();
-    if (ret && ret->init(type, callback))
+    if (ret && ret->init(std::hash<std::string>()(eventName), callback))
     {
         ret->autorelease();
     }
@@ -46,7 +46,7 @@ EventListenerCustom* EventListenerCustom::create(Type type, std::function<void(E
     return ret;
 }
 
-bool EventListenerCustom::init(int type, std::function<void(EventCustom*)>callback)
+bool EventListenerCustom::init(Type type, std::function<void(EventCustom*)>callback)
 {
     bool ret = false;
     

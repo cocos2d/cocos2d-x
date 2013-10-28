@@ -56,7 +56,7 @@ public:
      *  @param eventType The type of the event.
      *  @param callback The callback function when the specified event was emitted.
      */
-    static EventListenerCustom* create(int type, std::function<void(EventCustom*)> callback);
+    static EventListenerCustom* create(const std::string& eventName, std::function<void(EventCustom*)> callback);
     
     /// Overrides
     virtual bool checkAvailable() override;
@@ -67,7 +67,7 @@ protected:
     EventListenerCustom();
     
     /** Initializes event with type and callback function */
-    bool init(int type, std::function<void(EventCustom*)> callback);
+    bool init(Type type, std::function<void(EventCustom*)> callback);
     
     std::function<void(EventCustom*)> _onCustomEvent;
 };
