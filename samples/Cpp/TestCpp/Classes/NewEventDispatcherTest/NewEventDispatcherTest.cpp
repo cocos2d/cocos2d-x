@@ -187,7 +187,7 @@ void TouchableSpriteTest::onEnter()
         auto senderItem = static_cast<MenuItemFont*>(sender);
         senderItem->setString("Only Next item could be clicked");
         
-        _eventDispatcher->removeEventListeners(EventListener::TYPE_TOUCH_ONE_BY_ONE);
+        _eventDispatcher->removeEventListeners(EventListenerTouchOneByOne::ID);
         
         auto nextItem = MenuItemFont::create("Next", [=](Object* sender){
             nextCallback(nullptr);
@@ -664,5 +664,5 @@ std::string RemoveAndRetainNodeTest::title()
 
 std::string RemoveAndRetainNodeTest::subtitle()
 {
-    return "";
+    return "Sprite should be removed after 5s, add to scene again after 5s";
 }
