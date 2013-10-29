@@ -33,21 +33,21 @@ class EventCustom;
 
 /**
  *  Usage:
- *        auto dispatcher = EventDispatcher::getInstance();
+ *        auto dispatcher = Director::getInstance()->getEventDispatcher();
  *     Adds a listener:
  *
- *        auto callback = [](CustomEvent* event){ do_some_thing(); };
- *        auto listener = CustomEventListener::create(callback);
+ *        auto callback = [](EventCustom* event){ do_some_thing(); };
+ *        auto listener = EventListenerCustom::create(callback);
  *        dispatcher->addEventListenerWithSceneGraphPriority(listener, one_node);
  *
  *     Dispatchs a custom event:
  *
- *        Event event("your_event_type");
+ *        EventCustom event("your_event_type");
  *        dispatcher->dispatchEvent(&event);
  *
  *     Removes a listener
  *
- *        dispatcher->removeListener(listener);
+ *        dispatcher->removeEventListener(listener);
  */
 class EventListenerCustom : public EventListener
 {
