@@ -45,7 +45,7 @@ protected:
 
 public:
     virtual void onEnter();
-    void ccTouchesMoved(Set* touches, Event* event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
     virtual std::string title();
 };
 

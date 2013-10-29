@@ -449,7 +449,12 @@ void LayerTest1::onEnter()
 {
     LayerTest::onEnter();
 
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(LayerTest1::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(LayerTest1::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(LayerTest1::onTouchesEnded, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     auto layer = LayerColor::create( Color4B(0xFF, 0x00, 0x00, 0x80), 200, 200); 
@@ -470,22 +475,21 @@ void LayerTest1::updateSize(Point &touchLocation)
     l->setContentSize( newSize );
 }
 
-void LayerTest1::ccTouchesBegan(Set  *touches, Event  *event)
+void LayerTest1::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-    ccTouchesMoved(touches, event);
+    onTouchesMoved(touches, event);
 }
 
-void LayerTest1::ccTouchesMoved(Set  *touches, Event  *event)
+void LayerTest1::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
-    auto touchLocation = touch->getLocation();
+    auto touchLocation = touches[0]->getLocation();
 
     updateSize(touchLocation);
 }
 
-void LayerTest1::ccTouchesEnded(Set  *touches, Event  *event)
+void LayerTest1::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
-    ccTouchesMoved(touches, event);
+    onTouchesMoved(touches, event);
 }
 
 std::string LayerTest1::title()
@@ -591,7 +595,9 @@ LayerGradientTest::LayerGradientTest()
     auto layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(0,255,0,255), Point(0.9f, 0.9f));
     addChild(layer1, 0, kTagLayer);
 
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(LayerGradientTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     auto label1 = LabelTTF::create("Compressed Interpolation: Enabled", "Marker Felt", 26);
     auto label2 = LabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);
@@ -611,11 +617,11 @@ void LayerGradientTest::toggleItem(Object *sender)
     gradient->setCompressedInterpolation(! gradient->isCompressedInterpolation());
 }
 
-void LayerGradientTest::ccTouchesMoved(Set * touches, Event *event)
+void LayerGradientTest::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto touch = static_cast<Touch*>( touches->anyObject() );
+    auto touch = touches[0];
     auto start = touch->getLocation();    
 
     auto diff =  Point(s.width/2,s.height/2) - start;

@@ -448,8 +448,10 @@ void HoleDemo::setup()
     _outerClipper->addChild(holesClipper);
     
     this->addChild(_outerClipper);
-        
-    this->setTouchEnabled(true);
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(HoleDemo::onTouchesBegan, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void HoleDemo::pokeHoleAtPoint(Point point)
@@ -476,9 +478,9 @@ void HoleDemo::pokeHoleAtPoint(Point point)
 }
 
 
-void HoleDemo::ccTouchesBegan(Set* touches, Event* event)
+void HoleDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
 {
-	Touch *touch = (Touch *)touches->anyObject();
+	Touch *touch = (Touch *)touches[0];
 	Point point = _outerClipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     auto rect = Rect(0, 0, _outerClipper->getContentSize().width, _outerClipper->getContentSize().height);
     if (!rect.containsPoint(point)) return;
@@ -526,12 +528,16 @@ void ScrollViewDemo::setup()
     
     _scrolling = false;
 
-    this->setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(ScrollViewDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(ScrollViewDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(ScrollViewDemo::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-void ScrollViewDemo::ccTouchesBegan(Set  *touches, Event  *event)
+void ScrollViewDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-	Touch *touch = static_cast<Touch*>(touches->anyObject());
+	Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
 	Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     auto rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
@@ -539,10 +545,10 @@ void ScrollViewDemo::ccTouchesBegan(Set  *touches, Event  *event)
     _lastPoint = point;
 }
 
-void ScrollViewDemo::ccTouchesMoved(Set  *touches, Event  *event)
+void ScrollViewDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
     if (!_scrolling) return;
-	Touch *touch = static_cast<Touch*>(touches->anyObject());
+	Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
     auto point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
 	Point diff = point - _lastPoint;
@@ -551,7 +557,7 @@ void ScrollViewDemo::ccTouchesMoved(Set  *touches, Event  *event)
     _lastPoint = point;
 }
 
-void ScrollViewDemo::ccTouchesEnded(Set  *touches, Event  *event)
+void ScrollViewDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
     if (!_scrolling) return;
     _scrolling = false;
@@ -723,7 +729,7 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    auto program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram(program );
@@ -756,7 +762,7 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    auto program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram( program );
@@ -822,7 +828,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    auto program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram(program);

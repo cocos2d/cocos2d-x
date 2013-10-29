@@ -25,6 +25,8 @@
 
 #include "CCScrollView.h"
 
+#include <algorithm>
+
 NS_CC_EXT_BEGIN
 
 #define SCROLL_DEACCEL_RATE  0.95f
@@ -52,16 +54,16 @@ ScrollView::ScrollView()
 , _bounceable(false)
 , _clippingToBounds(false)
 , _touchLength(0.0f)
-, _touches(NULL)
 , _minScale(0.0f)
 , _maxScale(0.0f)
+, _touchListener(nullptr)
 {
 
 }
 
 ScrollView::~ScrollView()
 {
-    CC_SAFE_RELEASE(_touches);
+
 }
 
 ScrollView* ScrollView::create(Size size, Node* container/* = NULL*/)
@@ -109,8 +111,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         this->setViewSize(size);
 
         setTouchEnabled(true);
-        _touches = new Array();
-        _touches->init();
+        
+        _touches.reserve(EventTouch::MAX_TOUCHES);
         
         _delegate = NULL;
         _bounceable = true;
@@ -122,6 +124,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         
         this->addChild(_container);
         _minScale = _maxScale = 1.0f;
+
+        
         return true;
     }
     return false;
@@ -130,11 +134,6 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
 bool ScrollView::init()
 {
     return this->initWithViewSize(Size(200, 200), NULL);
-}
-
-void ScrollView::registerWithTouchDispatcher()
-{
-    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, Layer::getTouchPriority(), false);
 }
 
 bool ScrollView::isNodeVisible(Node* node)
@@ -152,7 +151,7 @@ bool ScrollView::isNodeVisible(Node* node)
 
 void ScrollView::pause(Object* sender)
 {
-    _container->pauseSchedulerAndActions();
+    _container->pause();
 
     Object* pObj = NULL;
     Array* pChildren = _container->getChildren();
@@ -160,7 +159,7 @@ void ScrollView::pause(Object* sender)
     CCARRAY_FOREACH(pChildren, pObj)
     {
         Node* pChild = static_cast<Node*>(pObj);
-        pChild->pauseSchedulerAndActions();
+        pChild->pause();
     }
 }
 
@@ -172,21 +171,31 @@ void ScrollView::resume(Object* sender)
     CCARRAY_FOREACH(pChildren, pObj)
     {
         Node* pChild = static_cast<Node*>(pObj);
-        pChild->resumeSchedulerAndActions();
+        pChild->resume();
     }
 
-    _container->resumeSchedulerAndActions();
+    _container->resume();
 }
 
-void ScrollView::setTouchEnabled(bool e)
+void ScrollView::setTouchEnabled(bool enabled)
 {
-    Layer::setTouchEnabled(e);
-    if (!e)
+    _eventDispatcher->removeEventListener(_touchListener);
+    
+    if (enabled)
+    {
+        _touchListener = EventListenerTouchOneByOne::create();
+        _touchListener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
+        _touchListener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
+        _touchListener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
+        _touchListener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+    }
+    else
     {
         _dragging = false;
         _touchMoved = false;
-        if(_touches)
-            _touches->removeAllObjects();
+        _touches.clear();
     }
 }
 
@@ -471,8 +480,6 @@ void ScrollView::updateInset()
  */
 void ScrollView::addChild(Node * child, int zOrder, int tag)
 {
-    child->ignoreAnchorPointForPosition(false);
-    child->setAnchorPoint(Point(0.0f, 0.0f));
     if (_container != child) {
         _container->addChild(child, zOrder, tag);
     } else {
@@ -574,7 +581,7 @@ void ScrollView::visit()
 		
 		// this draw
 		this->draw();
-		
+        
 		// draw children zOrder >= 0
 		for( ; i < _children->count(); i++ )
         {
@@ -597,7 +604,7 @@ void ScrollView::visit()
 	kmGLPopMatrix();
 }
 
-bool ScrollView::ccTouchBegan(Touch* touch, Event* event)
+bool ScrollView::onTouchBegan(Touch* touch, Event* event)
 {
     if (!this->isVisible())
     {
@@ -607,19 +614,19 @@ bool ScrollView::ccTouchBegan(Touch* touch, Event* event)
     Rect frame = getViewRect();
 
     //dispatcher does not know about clipping. reject touches outside visible bounds.
-    if (_touches->count() > 2 ||
+    if (_touches.size() > 2 ||
         _touchMoved          ||
         !frame.containsPoint(_container->convertToWorldSpace(_container->convertTouchToNodeSpace(touch))))
     {
         return false;
     }
 
-    if (!_touches->containsObject(touch))
+    if (std::find(_touches.begin(), _touches.end(), touch) == _touches.end())
     {
-        _touches->addObject(touch);
+        _touches.push_back(touch);
     }
 
-    if (_touches->count() == 1)
+    if (_touches.size() == 1)
     { // scrolling
         _touchPoint     = this->convertTouchToNodeSpace(touch);
         _touchMoved     = false;
@@ -627,29 +634,29 @@ bool ScrollView::ccTouchBegan(Touch* touch, Event* event)
         _scrollDistance = Point(0.0f, 0.0f);
         _touchLength    = 0.0f;
     }
-    else if (_touches->count() == 2)
+    else if (_touches.size() == 2)
     {
-        _touchPoint = (this->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0)).getMidpoint(
-                        this->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(1))));
+        _touchPoint = (this->convertTouchToNodeSpace(_touches[0]).getMidpoint(
+                        this->convertTouchToNodeSpace(_touches[1])));
         
-        _touchLength = _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0)).getDistance(
-                       _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(1)));
+        _touchLength = _container->convertTouchToNodeSpace(_touches[0]).getDistance(
+                       _container->convertTouchToNodeSpace(_touches[1]));
         
         _dragging  = false;
     } 
     return true;
 }
 
-void ScrollView::ccTouchMoved(Touch* touch, Event* event)
+void ScrollView::onTouchMoved(Touch* touch, Event* event)
 {
     if (!this->isVisible())
     {
         return;
     }
 
-    if (_touches->containsObject(touch))
+    if (std::find(_touches.begin(), _touches.end(), touch) != _touches.end())
     {
-        if (_touches->count() == 1 && _dragging)
+        if (_touches.size() == 1 && _dragging)
         { // scrolling
             Point moveDistance, newPoint, maxInset, minInset;
             Rect  frame;
@@ -657,7 +664,7 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
             
             frame = getViewRect();
 
-            newPoint     = this->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0));
+            newPoint     = this->convertTouchToNodeSpace(_touches[0]);
             moveDistance = newPoint - _touchPoint;
             
             float dis = 0.0f;
@@ -712,45 +719,51 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
                 this->setContentOffset(Point(newX, newY));
             }
         }
-        else if (_touches->count() == 2 && !_dragging)
+        else if (_touches.size() == 2 && !_dragging)
         {
-            const float len = _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0)).getDistance(
-                                            _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(1)));
+            const float len = _container->convertTouchToNodeSpace(_touches[0]).getDistance(
+                                            _container->convertTouchToNodeSpace(_touches[1]));
             this->setZoomScale(this->getZoomScale()*len/_touchLength);
         }
     }
 }
 
-void ScrollView::ccTouchEnded(Touch* touch, Event* event)
+void ScrollView::onTouchEnded(Touch* touch, Event* event)
 {
     if (!this->isVisible())
     {
         return;
     }
-    if (_touches->containsObject(touch))
+    
+    auto touchIter = std::find(_touches.begin(), _touches.end(), touch);
+    
+    if (touchIter != _touches.end())
     {
-        if (_touches->count() == 1 && _touchMoved)
+        if (_touches.size() == 1 && _touchMoved)
         {
             this->schedule(schedule_selector(ScrollView::deaccelerateScrolling));
         }
-        _touches->removeObject(touch);
+        _touches.erase(touchIter);
     } 
 
-    if (_touches->count() == 0)
+    if (_touches.size() == 0)
     {
         _dragging = false;    
         _touchMoved = false;
     }
 }
 
-void ScrollView::ccTouchCancelled(Touch* touch, Event* event)
+void ScrollView::onTouchCancelled(Touch* touch, Event* event)
 {
     if (!this->isVisible())
     {
         return;
     }
-    _touches->removeObject(touch); 
-    if (_touches->count() == 0)
+    
+    auto touchIter = std::find(_touches.begin(), _touches.end(), touch);
+    _touches.erase(touchIter);
+    
+    if (_touches.size() == 0)
     {
         _dragging = false;    
         _touchMoved = false;

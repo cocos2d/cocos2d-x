@@ -62,7 +62,6 @@ bool ControlHuePicker::initWithTargetAndPos(Node* target, Point pos)
 {
     if (Control::init())
     {
-        setTouchEnabled(true);
         // Add background and slider sprites
         this->setBackground(ControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, Point(0.0f, 0.0f)));
         this->setSlider(ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, Point(0.5f, 0.5f)));
@@ -164,7 +163,7 @@ bool ControlHuePicker::checkSliderPosition(Point location)
     return false;
 }
 
-bool ControlHuePicker::ccTouchBegan(Touch* touch, Event* event)
+bool ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
 {
     if (!isEnabled() || !isVisible())
     {
@@ -179,7 +178,7 @@ bool ControlHuePicker::ccTouchBegan(Touch* touch, Event* event)
 }
 
 
-void ControlHuePicker::ccTouchMoved(Touch* touch, Event* event)
+void ControlHuePicker::onTouchMoved(Touch* touch, Event* event)
 {
     // Get the touch location
     Point touchLocation=getTouchLocation(touch);

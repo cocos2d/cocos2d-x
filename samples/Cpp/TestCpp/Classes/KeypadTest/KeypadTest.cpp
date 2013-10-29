@@ -7,8 +7,11 @@ KeypadTest::KeypadTest()
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
-    setKeypadEnabled(true);
-
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyReleased = CC_CALLBACK_2(KeypadTest::onKeyReleased, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     // create a label to display the tip string
     _label = LabelTTF::create("Please press any key...", "Arial", 22);
     _label->setPosition(Point(s.width / 2, s.height / 2));
@@ -22,14 +25,16 @@ KeypadTest::~KeypadTest()
     _label->release();
 }
 
-void KeypadTest::keyBackClicked()
+void KeypadTest::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event)
 {
-    _label->setString("BACK clicked!");
-}
-
-void KeypadTest::keyMenuClicked()
-{
-    _label->setString("MENU clicked!");
+    if (keycode == EventKeyboard::KeyCode::KEY_BACKSPACE)
+    {
+        _label->setString("BACK clicked!");
+    }
+    else if (keycode == EventKeyboard::KeyCode::KEY_MENU)
+    {
+        _label->setString("MENU clicked!");
+    }
 }
 
 void KeypadTestScene::runThisTest()

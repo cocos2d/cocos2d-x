@@ -8,16 +8,17 @@ class MenuLayerMainMenu : public Layer
 {
 protected:
     MenuItem*    _disabledItem;
+    EventListenerTouchOneByOne* _touchListener;
 
 public:
     MenuLayerMainMenu(void);
     ~MenuLayerMainMenu();
 
 public:
-    virtual bool ccTouchBegan(Touch *touch, Event * event);
-    virtual void ccTouchEnded(Touch *touch, Event * event);
-    virtual void ccTouchCancelled(Touch *touch, Event * event);
-    virtual void ccTouchMoved(Touch *touch, Event * event);
+    bool onTouchBegan(Touch *touch, Event * event);
+    void onTouchEnded(Touch *touch, Event * event);
+    void onTouchCancelled(Touch *touch, Event * event);
+    void onTouchMoved(Touch *touch, Event * event);
 
     void allowTouches(float dt);
     void menuCallback(Object* sender);
@@ -106,15 +107,14 @@ class RemoveMenuItemWhenMove : public Layer
 public:
     RemoveMenuItemWhenMove();
     ~RemoveMenuItemWhenMove();
-    
-    virtual void registerWithTouchDispatcher(void);
-    virtual bool ccTouchBegan(Touch  *touch, Event  *event);
-    virtual void ccTouchMoved(Touch  *touch, Event  *event);
+    bool onTouchBegan(Touch  *touch, Event  *event);
+    void onTouchMoved(Touch  *touch, Event  *event);
     
     void goBack(Object *pSender);
     
 private:
     MenuItemFont *item;
+    EventListenerTouchOneByOne* _touchListener;
 };
 
 

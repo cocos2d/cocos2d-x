@@ -74,8 +74,6 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
         CCASSERT(minusSprite,   "Minus sprite must be not nil");
         CCASSERT(plusSprite,    "Plus sprite must be not nil");
         
-        setTouchEnabled(true);
-
         // Set the default values
         _autorepeat                         = true;
         _continuous                         = true;
@@ -274,7 +272,7 @@ void ControlStepper::updateLayoutUsingTouchLocation(Point location)
 }
 
 
-bool ControlStepper::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool ControlStepper::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
@@ -294,7 +292,7 @@ bool ControlStepper::ccTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void ControlStepper::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void ControlStepper::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     if (this->isTouchInside(pTouch))
     {
@@ -327,7 +325,7 @@ void ControlStepper::ccTouchMoved(Touch *pTouch, Event *pEvent)
     }
 }
 
-void ControlStepper::ccTouchEnded(Touch *pTouch, Event *pEvent)
+void ControlStepper::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     _minusSprite->setColor(Color3B::WHITE);
     _plusSprite->setColor(Color3B::WHITE);

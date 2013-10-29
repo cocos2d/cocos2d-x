@@ -33,6 +33,7 @@ MenuLayer::MenuLayer(void)
 
 MenuLayer::~MenuLayer(void)
 {
+    _eventDispatcher->removeEventListener(_touchListener);
 }
 
 MenuLayer* MenuLayer::menuWithEntryID(int entryId)
@@ -51,8 +52,6 @@ bool MenuLayer::initWithEntryID(int entryId)
 	Size visibleSize = director->getVisibleSize();
 
     m_entryID = entryId;
-    
-    setTouchEnabled( true );
     
     Box2DView* view = Box2DView::viewWithEntryID( entryId );
     addChild(view, 0, kTagBox2DNode);
@@ -78,8 +77,19 @@ bool MenuLayer::initWithEntryID(int entryId)
     item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
     item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     
-    addChild(menu, 1);    
+    addChild(menu, 1);
+    
+    // Adds touch event listener
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
 
+    listener->onTouchBegan = CC_CALLBACK_2(MenuLayer::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(MenuLayer::onTouchMoved, this);
+
+    _eventDispatcher->addEventListenerWithFixedPriority(listener, 1);
+
+    _touchListener = listener;
+    
     return true;
 }
 
@@ -119,13 +129,13 @@ void MenuLayer::backCallback(Object* sender)
     s->release();
 }
 
-void MenuLayer::registerWithTouchDispatcher()
-{
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
-}
+//void MenuLayer::registerWithTouchDispatcher()
+//{
+//    auto director = Director::getInstance();
+//    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
+//}
 
-bool MenuLayer::ccTouchBegan(Touch* touch, Event* event)
+bool MenuLayer::onTouchBegan(Touch* touch, Event* event)
 {
     return true;
 }
@@ -138,7 +148,7 @@ bool MenuLayer::ccTouchBegan(Touch* touch, Event* event)
 //{
 //}
 
-void MenuLayer::ccTouchMoved(Touch* touch, Event* event)
+void MenuLayer::onTouchMoved(Touch* touch, Event* event)
 {
     auto diff = touch->getDelta();    
     auto node = getChildByTag( kTagBox2DNode );
@@ -166,14 +176,23 @@ Box2DView* Box2DView::viewWithEntryID(int entryId)
 
 bool Box2DView::initWithEntryID(int entryId)
 {    
-//    setIsAccelerometerEnabled( true );
-    setTouchEnabled( true );
-
     schedule( schedule_selector(Box2DView::tick) );
 
     m_entry = g_testEntries + entryId;
-    m_test = m_entry->createFcn();        
-        
+    m_test = m_entry->createFcn();
+    
+    
+    // Adds Touch Event Listener
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(Box2DView::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(Box2DView::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(Box2DView::onTouchEnded, this);
+    
+    _eventDispatcher->addEventListenerWithFixedPriority(listener, -10);
+    _touchListener = listener;
+    
     return true;
 }
 
@@ -204,38 +223,44 @@ void Box2DView::draw()
 
 Box2DView::~Box2DView()
 {
+    // Removes Touch Event Listener
+    _eventDispatcher->removeEventListener(_touchListener);
     delete m_test;
 }
+//
+//void Box2DView::registerWithTouchDispatcher()
+//{
+//    // higher priority than dragging
+//    auto director = Director::getInstance();
+//    director->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
+//}
 
-void Box2DView::registerWithTouchDispatcher()
-{
-    // higher priority than dragging
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
-}
-
-bool Box2DView::ccTouchBegan(Touch* touch, Event* event)
+bool Box2DView::onTouchBegan(Touch* touch, Event* event)
 {
     auto touchLocation = touch->getLocation();    
 
     auto nodePosition = convertToNodeSpace( touchLocation );
-//    NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
+    log("Box2DView::onTouchBegan, pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
 
     return m_test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));    
 }
 
-void Box2DView::ccTouchMoved(Touch* touch, Event* event)
+void Box2DView::onTouchMoved(Touch* touch, Event* event)
 {
     auto touchLocation = touch->getLocation();    
     auto nodePosition = convertToNodeSpace( touchLocation );
     
+    log("Box2DView::onTouchMoved, pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
+    
     m_test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));        
 }
 
-void Box2DView::ccTouchEnded(Touch* touch, Event* event)
+void Box2DView::onTouchEnded(Touch* touch, Event* event)
 {
     auto touchLocation = touch->getLocation();    
     auto nodePosition = convertToNodeSpace( touchLocation );
+    
+    log("Box2DView::onTouchEnded, pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
     
     m_test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
 }

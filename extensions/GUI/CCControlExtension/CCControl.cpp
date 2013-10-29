@@ -29,10 +29,11 @@
 
 #include "CCControl.h"
 #include "CCDirector.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
-#include "menu_nodes/CCMenu.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "CCMenu.h"
+#include "CCTouch.h"
 #include "CCInvocation.h"
+#include "CCEventDispatcher.h"
+#include "CCEventListenerTouch.h"
 
 NS_CC_EXT_BEGIN
 
@@ -75,8 +76,6 @@ bool Control::init()
         setSelected(false);
         setHighlighted(false);
 
-        // Set the touch dispatcher priority by default to 1
-        this->setTouchPriority(1);
         // Initialise the tables
         _dispatchTable = new Dictionary();
         _dispatchTable->init();
@@ -94,15 +93,18 @@ Control::~Control()
     CC_SAFE_RELEASE(_dispatchTable);
 }
 
-    //Menu - Events
-void Control::registerWithTouchDispatcher()
-{
-    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
-}
-
 void Control::onEnter()
 {
     Layer::onEnter();
+
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(Control::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(Control::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(Control::onTouchEnded, this);
+    touchListener->onTouchCancelled = CC_CALLBACK_2(Control::onTouchCancelled, this);
+    
+    dispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
 
 void Control::onExit()

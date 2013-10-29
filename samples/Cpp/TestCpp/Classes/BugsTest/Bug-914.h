@@ -9,8 +9,8 @@ public:
     static Scene* scene();
     virtual bool init();
 
-    void ccTouchesMoved(Set *touches, Event * event);
-    void ccTouchesBegan(Set *touches, Event * event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event * event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event * event);
     void restart(Object* sender);
 
     CREATE_FUNC(Bug914Layer);

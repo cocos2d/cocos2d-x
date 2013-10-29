@@ -98,7 +98,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     void pokeHoleAtPoint(Point point);
-    virtual void ccTouchesBegan(Set  *touches, Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
 private:
 	ClippingNode* _outerClipper;
     Node* _holes;
@@ -111,9 +111,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     virtual void setup();
-	virtual void ccTouchesBegan(Set  *touches, Event  *event);
-    virtual void ccTouchesMoved(Set  *touches, Event  *event);
-    virtual void ccTouchesEnded(Set  *touches, Event  *event);
+	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
 private:
 	bool _scrolling;
     Point _lastPoint;

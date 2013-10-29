@@ -17,7 +17,10 @@ void ClickAndMoveTestScene::runThisTest()
 
 MainLayer::MainLayer()
 {
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(MainLayer::onTouchBegan, this);
+    listener->onTouchEnded = CC_CALLBACK_2(MainLayer::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto sprite = Sprite::create(s_pathGrossini);
     
@@ -37,10 +40,13 @@ MainLayer::MainLayer()
                       )); 
 }
 
-void MainLayer::ccTouchesEnded(Set  *touches, Event  *event)
+bool MainLayer::onTouchBegan(Touch* touch, Event  *event)
 {
-    auto touch = static_cast<Touch*>( touches->anyObject() );
-    
+    return true;
+}
+
+void MainLayer::onTouchEnded(Touch* touch, Event  *event)
+{
     auto location = touch->getLocation();
 
     auto s = getChildByTag(kTagSprite);

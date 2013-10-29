@@ -1135,8 +1135,13 @@ static float alignmentItemPadding = 50;
 static float menuItemPaddingCenter = 50;
 BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
 {
-    this->setTouchEnabled(true);
-
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(BitmapFontMultiLineAlignment::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(BitmapFontMultiLineAlignment::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(BitmapFontMultiLineAlignment::onTouchesEnded, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     // ask director the the window size
     auto size = Director::getInstance()->getWinSize();
 
@@ -1266,9 +1271,9 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set  *touches, cocos2d::Event  *event)
+void BitmapFontMultiLineAlignment::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    auto touch = (Touch *)touches->anyObject();
+    auto touch = touches[0];
     auto location = touch->getLocationInView();
 
     if (this->_arrowsShouldRetain->getBoundingBox().containsPoint(location))
@@ -1278,7 +1283,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set  *touches, cocos2
     }
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event)
+void BitmapFontMultiLineAlignment::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
     _drag = false;
     this->snapArrowsToEdge();
@@ -1286,14 +1291,14 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set  *touches, cocos2
     this->_arrowsBarShouldRetain->setVisible(false);
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::Set  *touches, cocos2d::Event  *event)
+void BitmapFontMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
     if (! _drag)
     {
         return;
     }
 
-    auto touch = (Touch *)touches->anyObject();
+    auto touch = touches[0];
     auto location = touch->getLocationInView();
 
     auto winSize = Director::getInstance()->getWinSize();

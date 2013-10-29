@@ -2,7 +2,7 @@
 #define __SCENEEDITORTESTSCENE_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 void runSceneEditorTestLayer();
 
@@ -27,9 +27,6 @@ public:
     
     //back to Extensions Main Layer
     void toExtensionsMainLayer(cocos2d::Object *sender);
-
-	//get Fish based on Tag and name of Compoent
-	cocos2d::extension::armature::CCArmature* getFish(int nTag, const char *pszName);
 
 private:
 	cocos2d::Node *_curNode;

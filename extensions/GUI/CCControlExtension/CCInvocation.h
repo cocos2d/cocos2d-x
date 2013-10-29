@@ -30,7 +30,7 @@
 #ifndef __CCINVOCATION_H__
 #define __CCINVOCATION_H__
 
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 #include "../../ExtensionMacros.h"
 #include "CCControl.h"
 
@@ -48,9 +48,20 @@ NS_CC_EXT_BEGIN
 class Invocation : public Object
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     static Invocation* create(Object* target, Control::Handler action, Control::EventType controlEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Invocation(Object* target, Control::Handler action, Control::EventType controlEvent);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     void invoke(Object* sender);
 
 protected:

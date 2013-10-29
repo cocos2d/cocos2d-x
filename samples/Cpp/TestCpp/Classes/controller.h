@@ -14,8 +14,8 @@ public:
     void menuCallback(Object * sender);
     void closeCallback(Object * sender);
 
-    virtual void ccTouchesBegan(Set  *touches, Event  *event);
-    virtual void ccTouchesMoved(Set  *touches, Event  *event);
+    bool onTouchBegan(Touch* touches, Event  *event);
+    void onTouchMoved(Touch* touches, Event  *event);
 
 private:
     Point _beginPos;

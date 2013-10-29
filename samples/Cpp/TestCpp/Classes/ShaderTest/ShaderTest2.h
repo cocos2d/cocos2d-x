@@ -1,7 +1,7 @@
 #ifndef _SHADER_TEST2_H_
 #define _SHADER_TEST2_H_
 #include "../testBasic.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
 
 USING_NS_CC_EXT;
@@ -23,8 +23,6 @@ class ShaderTestScene2 : public TestScene
 public:
     virtual void runThisTest();
 };
-
-
 
 class NormalSpriteTest : public ShaderTestDemo2
 {
@@ -69,6 +67,13 @@ class BloomSpriteTest : public ShaderTestDemo2
 public:
     BloomSpriteTest();
     virtual std::string subtitle() {return "BloomSpriteTest";}
+};
+
+class LensFlareSpriteTest : public ShaderTestDemo2
+{
+public:
+    LensFlareSpriteTest();
+    virtual std::string subtitle() {return "LensFlareSpriteTest";}
 };
 
 class CelShadingSpriteTest : public ShaderTestDemo2

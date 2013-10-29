@@ -36,11 +36,13 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos2dx\proj.win32\cocos2dx.props" />
+    <Import Project="..\..\..\..\cocos\2d\cocos2dx.props" />
+    <Import Project="..\..\..\..\cocos\2d\cocos2d_headers.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos2dx\proj.win32\cocos2dx.props" />
+    <Import Project="..\..\..\..\cocos\2d\cocos2dx.props" />
+    <Import Project="..\..\..\..\cocos\2d\cocos2d_headers.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -67,7 +69,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\network;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\network;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\win32\include;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -84,7 +86,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>libExtensions.lib;libcocos2d.lib;libCocosDenshion.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl_imp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -92,7 +94,7 @@
     </PostBuildEvent>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
 </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
@@ -100,7 +102,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\network;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\network;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\win32\include;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -112,7 +114,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libExtensions.lib;libcocos2d.lib;libCocosDenshion.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl_imp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -127,7 +129,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     </PostBuildEvent>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
 </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
@@ -146,6 +148,26 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\PlayerController.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIDragPanelTest\UIDragPanelTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPanelTest\UIPanelTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextAreaTest\UITextAreaTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp" />
@@ -157,8 +179,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
+    <ClCompile Include="..\Classes\KeyboardTest\KeyboardTest.cpp" />
     <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp" />
+    <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
+    <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
     <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
@@ -259,6 +284,26 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\PlayerController.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIDragPanelTest\UIDragPanelTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPanelTest\UIPanelTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextAreaTest\UITextAreaTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h" />
@@ -270,7 +315,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h" />
+    <ClInclude Include="..\Classes\KeyboardTest\KeyboardTest.h" />
     <ClInclude Include="..\Classes\LabelTest\LabelTestNew.h" />
+    <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
+    <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />
     <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
@@ -413,13 +461,31 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\cocos2dx\proj.win32\cocos2d.vcxproj">
+    <ProjectReference Include="..\..\..\..\cocos\2d\cocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\CocosDenshion\proj.win32\CocosDenshion.vcxproj">
+    <ProjectReference Include="..\..\..\..\cocos\audio\proj.win32\CocosDenshion.vcxproj">
       <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\cocos\editor-support\cocosbuilder\proj.win32\libCocosBuilder.vcxproj">
+      <Project>{811c0dab-7b96-4bd3-a154-b7572b58e4ab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\cocos\editor-support\cocostudio\proj.win32\libCocosStudio.vcxproj">
+      <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\cocos\editor-support\spine\proj.win32\libSpine.vcxproj">
+      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\cocos\gui\proj.win32\libGUI.vcxproj">
+      <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\cocos\network\proj.win32\libNetwork.vcxproj">
+      <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj">
+      <Project>{632a8f38-d0f0-4d22-86b3-d69f5e6bf63a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\extensions\proj.win32\libExtensions.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>

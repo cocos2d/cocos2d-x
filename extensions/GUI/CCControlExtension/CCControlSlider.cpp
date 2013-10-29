@@ -28,7 +28,7 @@
  */
 
 #include "CCControlSlider.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "CCTouch.h"
 #include "CCDirector.h"
 
 NS_CC_EXT_BEGIN
@@ -84,7 +84,6 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
         CCASSERT(thumbSprite,       "Thumb sprite must be not nil");
 
         ignoreAnchorPointForPosition(false);
-        setTouchEnabled(true);
 
         this->setBackgroundSprite(backgroundSprite);
         this->setProgressSprite(progressSprite);
@@ -203,7 +202,7 @@ Point ControlSlider::locationFromTouch(Touch* touch)
 }
 
 
-bool ControlSlider::ccTouchBegan(Touch* touch, Event* pEvent)
+bool ControlSlider::onTouchBegan(Touch* touch, Event* pEvent)
 {
     if (!isTouchInside(touch) || !isEnabled() || !isVisible())
     {
@@ -215,13 +214,13 @@ bool ControlSlider::ccTouchBegan(Touch* touch, Event* pEvent)
     return true;
 }
 
-void ControlSlider::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void ControlSlider::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     Point location = locationFromTouch(pTouch);
     sliderMoved(location);
 }
 
-void ControlSlider::ccTouchEnded(Touch *pTouch, Event *pEvent)
+void ControlSlider::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     sliderEnded(Point::ZERO);
 }
