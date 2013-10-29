@@ -74,8 +74,11 @@ public:
      */
     void removeEventListener(EventListener* listener);
 
-    /** Removes all listeners with the same event listener ID */
-    void removeEventListeners(EventListener::ListenerID listenerID);
+    /** Removes all listeners with the same event listener type */
+    void removeEventListeners(EventListener::Type listenerType);
+    
+    /** Removes all custom listeners with the same event name */
+    void removeCustomEventListeners(const std::string& customEventName);
     
     /** Removes all listeners */
     void removeAllEventListeners();
@@ -95,6 +98,14 @@ public:
      */
     void dispatchEvent(Event* event);
     
+    /** Constructor of EventDispatcher */
+    EventDispatcher();
+    /** Destructor of EventDispatcher */
+    ~EventDispatcher();
+
+private:
+    friend class Node;
+    
     /** Sets the dirty flag for a node. */
     void setDirtyForNode(Node* node);
     
@@ -106,13 +117,6 @@ public:
     
     /** Notifys event dispatcher that the node has been deleted. */
     void cleanTarget(Node* node);
-    
-    /** Constructor of EventDispatcher */
-    EventDispatcher();
-    /** Destructor of EventDispatcher */
-    ~EventDispatcher();
-
-private:
     
     /**
      *  The vector to store event listeners with scene graph based priority and fixed priority.
@@ -148,6 +152,9 @@ private:
     
     /** Update dirty flag */
     void updateDirtyFlagForSceneGraph();
+    
+    /** Removes all listeners with the same event listener ID */
+    void removeEventListenersForListenerID(EventListener::ListenerID listenerID);
     
     /** Sort event listener */
     void sortEventListeners(EventListener::ListenerID listenerID);

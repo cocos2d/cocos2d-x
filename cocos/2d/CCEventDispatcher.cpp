@@ -993,7 +993,7 @@ EventDispatcher::EventListenerVector* EventDispatcher::getListeners(EventListene
     return nullptr;
 }
 
-void EventDispatcher::removeEventListeners(EventListener::ListenerID listenerID)
+void EventDispatcher::removeEventListenersForListenerID(EventListener::ListenerID listenerID)
 {
     auto listenerItemIter = _listeners.find(listenerID);
     if (listenerItemIter != _listeners.end())
@@ -1040,6 +1040,18 @@ void EventDispatcher::removeEventListeners(EventListener::ListenerID listenerID)
     }
 }
 
+void EventDispatcher::removeEventListeners(EventListener::Type listenerType)
+{
+    CCASSERT(listenerType != EventListener::Type::CUSTOM, "Not support custom event listener type, please use EventDispatcher::removeCustomEventListeners instead.");
+    
+    removeEventListenersForListenerID(static_cast<EventListener::ListenerID>(listenerType));
+}
+
+void EventDispatcher::removeCustomEventListeners(const std::string& customEventName)
+{
+    removeEventListenersForListenerID(std::hash<std::string>()(customEventName));
+}
+
 void EventDispatcher::removeAllEventListeners()
 {
     std::vector<int> types(_listeners.size());
@@ -1051,7 +1063,7 @@ void EventDispatcher::removeAllEventListeners()
 
     for (auto& type : types)
     {
-        removeEventListeners(type);
+        removeEventListenersForListenerID(type);
     }
     
     if (!_inDispatch)
