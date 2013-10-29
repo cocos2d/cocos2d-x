@@ -45,6 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     
+    
     sc->start();
     
     auto scene = Scene::create();

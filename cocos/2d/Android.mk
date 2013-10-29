@@ -203,10 +203,6 @@ LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,jpeg/prebuilt/android)
-$(call import-module,png/prebuilt/android)
-$(call import-module,tiff/prebuilt/android)
-$(call import-module,webp/prebuilt/android)
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,chipmunk)
 $(call import-module,2d/platform/android)

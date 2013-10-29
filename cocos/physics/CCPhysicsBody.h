@@ -43,7 +43,7 @@ class PhysicsJoint;
 class PhysicsBodyInfo;
 
 
-const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.0f, 1.0f, 1.0f);
+const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(1.0f, 1.0f, 1.0f);
 
 /**
  * A body affect by physics.
@@ -109,6 +109,12 @@ public:
     
     virtual void setVelocity(Point velocity);
     virtual Point getVelocity();
+    virtual void setAngularVelocity(float velocity);
+    virtual float getAngularVelocity();
+    virtual void setVelocityLimit(float limit);
+    virtual float getVelocityLimit();
+    virtual void setAngularVelocityLimit(float limit);
+    virtual float getAngularVelocityLimit();
     
     /*
      * @brief get the body shapes.
@@ -143,11 +149,11 @@ public:
      */
     inline Sprite* getOwner() const { return _owner; }
     
-    void setCategoryBitmask(int bitmask);
+    inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
     inline int getCategoryBitmask() const { return _categoryBitmask; }
-    void setContactTestBitmask(int bitmask);
+    inline void setContactTestBitmask(int bitmask) { _contactTestBitmask = bitmask; }
     inline int getContactTestBitmask() const { return _contactTestBitmask; }
-    void setCollisionBitmask(int bitmask);
+    inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
     inline int getCollisionBitmask() const { return _collisionBitmask; }
     
     /*
@@ -172,29 +178,69 @@ public:
     
     /*
      * @brief set the body mass.
+     * @note if you need add/subtract mass to body, don't use setMass(getMass() +/- mass), because the mass of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMass() instead.
      */
     void setMass(float mass);
     /*
      * @brief get the body mass.
      */
     inline float getMass() { return _mass; }
+    /*
+     * @brief add mass to body.
+     * if _mass(mass of the body) == PHYSICS_INFINITY, it remains.
+     * if mass == PHYSICS_INFINITY, _mass will be PHYSICS_INFINITY.
+     * if mass == -PHYSICS_INFINITY, _mass will not change.
+     * if mass + _mass <= 0, _mass will equal to MASS_DEFAULT(1.0)
+     * other wise, mass = mass + _mass;
+     */
+    void addMass(float mass);
     
+    /*
+     * @brief set the body moment of inertia.
+     * @note if you need add/subtract moment to body, don't use setMoment(getMoment() +/- moment), because the moment of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMoment() instead.
+     */
+    void setMoment(float moment);
+    /*
+     * @brief get the body moment of inertia.
+     */
+    inline float getMoment(float moment) { return _moment; }
+    /*
+     * @brief add moment of inertia to body.
+     * if _moment(moment of the body) == PHYSICS_INFINITY, it remains.
+     * if moment == PHYSICS_INFINITY, _moment will be PHYSICS_INFINITY.
+     * if moment == -PHYSICS_INFINITY, _moment will not change.
+     * if moment + _moment <= 0, _moment will equal to MASS_DEFAULT(1.0)
+     * other wise, moment = moment + _moment;
+     */
+    void addMoment(float moment);
     /*
      * @brief set angular damping.
      */
-    void setAngularDamping(float angularDamping);
+    //void setAngularDamping(float angularDamping);
     /*
      * @brief get angular damping.
      */
+    inline float getLinearDamping() { return _linearDamping; }
+    inline void setLinearDamping(float damping) { _linearDamping = damping; }
     inline float getAngularDamping() { return _angularDamping; }
+    inline void setAngularDamping(float damping) { _angularDamping = damping; }
     
     //virtual Clonable* clone() const override;
     
+    bool isResting();
     inline bool isEnable() { return _enable; }
     void setEnable(bool enable);
     
+    inline bool isRotationEnable() { return _rotationEnable; }
+    void setRotationEnable(bool enable);
+    
+    inline bool isGravityEnable() { return _gravityEnable; }
+    void setGravityEnable(bool enable);
+    
+    
     inline int getTag() { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
+    
     
 protected:
     
@@ -202,6 +248,8 @@ protected:
     
     virtual void setPosition(Point position);
     virtual void setRotation(float rotation);
+    
+    virtual void update(float delta) override;
     
 protected:
     PhysicsBody();
@@ -215,17 +263,21 @@ protected:
     PhysicsBodyInfo*            _info;
     bool                        _dynamic;
     bool                        _enable;
+    bool                        _rotationEnable;
+    bool                        _gravityEnable;
     bool                        _massDefault;
-    bool                        _angularDampingDefault;
+    bool                        _momentDefault;
     float                       _mass;
     float                       _area;
     float                       _density;
+    float                       _moment;
+    float                       _linearDamping;
     float                       _angularDamping;
     int                         _tag;
     
     int    _categoryBitmask;
-    int    _contactTestBitmask;
     int    _collisionBitmask;
+    int    _contactTestBitmask;
     
     friend class PhysicsWorld;
     friend class PhysicsShape;

@@ -62,14 +62,38 @@ Point Point::operator+(const Point& right) const
     return Point(this->x + right.x, this->y + right.y);
 }
 
+Point& Point::operator+=(const Point& right)
+{
+    this->x += right.x;
+    this->y += right.y;
+    return *this;
+}
+
 Point Point::operator-(const Point& right) const
 {
     return Point(this->x - right.x, this->y - right.y);
 }
 
+Point& Point::operator-=(const Point& right)
+{
+    this->x -= right.x;
+    this->y -= right.y;
+    return *this;
+}
+
 Point Point::operator-() const
 {
 	return Point(-x, -y);
+}
+
+bool Point::operator==(const Point& right)
+{
+    return this->x == right.x && this->y == right.y;
+}
+
+bool Point::operator!=(const Point& right)
+{
+    return this->x != right.x || this->y != right.y;
 }
 
 Point Point::operator*(float a) const
