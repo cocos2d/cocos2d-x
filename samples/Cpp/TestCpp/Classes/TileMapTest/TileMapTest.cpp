@@ -1430,7 +1430,9 @@ Layer* restartTileMapAction()
 TileDemo::TileDemo(void)
 : BaseTest()
 {
-    setTouchEnabled( true );
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(TileDemo::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 TileDemo::~TileDemo(void)

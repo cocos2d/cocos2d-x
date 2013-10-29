@@ -241,12 +241,12 @@ public:
     /**
      * @js ctor
      */
-    MenuItemFont() : _fontSize(0), _fontName(""){}
+    MenuItemFont();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~MenuItemFont(){}
+    virtual ~MenuItemFont();
 
     /** initializes a menu item from a string with a target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, Object* target, SEL_MenuHandler selector);

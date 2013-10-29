@@ -26,6 +26,10 @@
 
 NS_CC_BEGIN
 
-const char* EventTouch::EVENT_TYPE = "TouchEvent";
+EventTouch::EventTouch()
+: Event(Type::TOUCH)
+{
+    _touches.reserve(MAX_TOUCHES);
+}
 
 NS_CC_END

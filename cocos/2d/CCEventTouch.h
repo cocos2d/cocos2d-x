@@ -36,7 +36,6 @@ NS_CC_BEGIN
 class EventTouch : public Event
 {
 public:
-    static const char* EVENT_TYPE;
     static const int MAX_TOUCHES = 5;
     
     enum class EventCode
@@ -47,11 +46,7 @@ public:
         CANCELLED
     };
 
-    EventTouch()
-    : Event(EVENT_TYPE)
-    {
-        _touches.reserve(MAX_TOUCHES);
-    }
+    EventTouch();
 
     EventCode getEventCode() { return _eventCode; };
     std::vector<Touch*> getTouches() { return _touches; };
