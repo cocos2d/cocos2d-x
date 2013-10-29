@@ -165,6 +165,20 @@ protected:
     virtual ~PhysicsJointPin();
 };
 
+class PhysicsJointDistance : public PhysicsJoint
+{
+    
+public:
+    static PhysicsJointDistance* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    
+protected:
+    PhysicsJointDistance();
+    virtual ~PhysicsJointDistance();
+};
+
 NS_CC_END
 
 #endif // __CCPHYSICS_JOINT_H__

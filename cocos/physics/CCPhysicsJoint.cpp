@@ -144,6 +144,16 @@ PhysicsJointLimit::~PhysicsJointLimit()
     
 }
 
+PhysicsJointDistance::PhysicsJointDistance()
+{
+    
+}
+
+PhysicsJointDistance::~PhysicsJointDistance()
+{
+    
+}
+
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 PhysicsBodyInfo* PhysicsJoint::bodyInfo(PhysicsBody* body) const
 {
@@ -341,6 +351,39 @@ float PhysicsJointLimit::getMax()
 void PhysicsJointLimit::setMax(float max)
 {
     cpSlideJointSetMax(_info->joints.front(), PhysicsHelper::float2cpfloat(max));
+}
+
+PhysicsJointDistance* PhysicsJointDistance::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
+{
+    PhysicsJointDistance* joint = new PhysicsJointDistance();
+    
+    if (joint && joint->init(a, b, anchr1, anchr2))
+    {
+        return joint;
+    }
+    
+    CC_SAFE_DELETE(joint);
+    return nullptr;
+}
+
+bool PhysicsJointDistance::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
+{
+    do
+    {
+        CC_BREAK_IF(!PhysicsJoint::init(a, b));
+        
+        cpConstraint* joint = cpPinJointNew(bodyInfo(a)->body,
+                                            bodyInfo(b)->body,
+                                            PhysicsHelper::point2cpv(anchr1), PhysicsHelper::point2cpv(anchr2));
+        
+        CC_BREAK_IF(joint == nullptr);
+        
+        _info->add(joint);
+        
+        return true;
+    } while (false);
+    
+    return false;
 }
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
