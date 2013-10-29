@@ -57,7 +57,6 @@ namespace
 {
     static const float MASS_DEFAULT = 1.0;
     static const float MOMENT_DEFAULT = 200;
-    static float GROUP_INDEX = 0;
 }
 
 PhysicsBody::PhysicsBody()
@@ -81,6 +80,7 @@ PhysicsBody::PhysicsBody()
 , _categoryBitmask(UINT_MAX)
 , _collisionBitmask(UINT_MAX)
 , _contactTestBitmask(0)
+, _group(0)
 {
 }
 
@@ -273,7 +273,6 @@ bool PhysicsBody::init()
         _shapes->retain();
         
         _info->body = cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment));
-        _info->group = ++GROUP_INDEX;
         
         CC_BREAK_IF(_info->body == nullptr);
         
@@ -321,10 +320,10 @@ void PhysicsBody::setGravityEnable(bool enable)
         {
             if (enable)
             {
-                applyForce(_world->getGravity());
+                applyForce(_world->getGravity() * _mass);
             }else
             {
-                applyForce(-_world->getGravity());
+                applyForce(-_world->getGravity() * _mass);
             }
         }
     }
@@ -351,9 +350,9 @@ float PhysicsBody::getRotation() const
     return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->body) / 3.14f * 180.0f);
 }
 
-void PhysicsBody::addShape(PhysicsShape* shape)
+PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape)
 {
-    if (shape == nullptr) return;
+    if (shape == nullptr) return nullptr;
     
     // add shape to body
     if (_shapes->getIndexOfObject(shape) == UINT_MAX)
@@ -372,7 +371,14 @@ void PhysicsBody::addShape(PhysicsShape* shape)
         }
         
         _shapes->addObject(shape);
+        
+        if (_group != CP_NO_GROUP && shape->getGroup() == CP_NO_GROUP)
+        {
+            shape->setGroup(_group);
+        }
     }
+    
+    return shape;
 }
 
 void PhysicsBody::applyForce(Point force)
@@ -674,6 +680,54 @@ void PhysicsBody::update(float delta)
         _info->body->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
         _info->body->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
     }
+}
+
+void PhysicsBody::setCategoryBitmask(int bitmask)
+{
+    _categoryBitmask = bitmask;
+    
+    for (auto shape : *_shapes)
+    {
+        ((PhysicsShape*)shape)->setCategoryBitmask(bitmask);
+    }
+}
+
+void PhysicsBody::setContactTestBitmask(int bitmask)
+{
+    _contactTestBitmask = bitmask;
+    
+    for (auto shape : *_shapes)
+    {
+        ((PhysicsShape*)shape)->setContactTestBitmask(bitmask);
+    }
+}
+
+void PhysicsBody::setCollisionBitmask(int bitmask)
+{
+    _collisionBitmask = bitmask;
+    
+    for (auto shape : *_shapes)
+    {
+        ((PhysicsShape*)shape)->setCollisionBitmask(bitmask);
+    }
+}
+
+void PhysicsBody::setGroup(int group)
+{
+    for (auto shape : *_shapes)
+    {
+        ((PhysicsShape*)shape)->setGroup(group);
+    }
+}
+
+Point PhysicsBody::world2Local(const Point& point)
+{
+    return PhysicsHelper::cpv2point(cpBodyWorld2Local(_info->body, PhysicsHelper::point2cpv(point)));
+}
+
+Point PhysicsBody::local2World(const Point& point)
+{
+    return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->body, PhysicsHelper::point2cpv(point)));
 }
 
 //Clonable* PhysicsBody::clone() const

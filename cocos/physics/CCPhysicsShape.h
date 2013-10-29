@@ -102,6 +102,16 @@ public:
     static Point* recenterPoints(Point* points, int count, Point center = Point::ZERO);
     static Point getPolyonCenter(Point* points, int count);
     
+    inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
+    inline int getCategoryBitmask() const { return _categoryBitmask; }
+    inline void setContactTestBitmask(int bitmask) { _contactTestBitmask = bitmask; }
+    inline int getContactTestBitmask() const { return _contactTestBitmask; }
+    inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
+    inline int getCollisionBitmask() const { return _collisionBitmask; }
+    
+    void setGroup(int group);
+    inline int getGroup() { return _group; }
+    
 protected:
     bool init(Type type);
     
@@ -125,6 +135,10 @@ protected:
     float _moment;
     PhysicsMaterial _material;
     int _tag;
+    int    _categoryBitmask;
+    int    _collisionBitmask;
+    int    _contactTestBitmask;
+    int    _group;
     
     friend class PhysicsWorld;
     friend class PhysicsBody;

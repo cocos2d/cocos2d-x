@@ -87,7 +87,7 @@ public:
      */
     static PhysicsBody* createEdgeChain(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
-    virtual void addShape(PhysicsShape* shape);
+    virtual PhysicsShape* addShape(PhysicsShape* shape);
     
     /**
      * @brief Applies a immediate force to body.
@@ -154,12 +154,15 @@ public:
      */
     inline Node* getOwner() const { return _owner; }
     
-    inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
+    void setCategoryBitmask(int bitmask);
+    void setContactTestBitmask(int bitmask);
+    void setCollisionBitmask(int bitmask);
     inline int getCategoryBitmask() const { return _categoryBitmask; }
-    inline void setContactTestBitmask(int bitmask) { _contactTestBitmask = bitmask; }
     inline int getContactTestBitmask() const { return _contactTestBitmask; }
-    inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
     inline int getCollisionBitmask() const { return _collisionBitmask; }
+    
+    void setGroup(int group);
+    inline int getGroup() { return _group; }
     
     /*
      * @brief get the body position.
@@ -246,6 +249,8 @@ public:
     inline int getTag() { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
     
+    Point world2Local(const Point& point);
+    Point local2World(const Point& point);
     
 protected:
     
@@ -280,9 +285,10 @@ protected:
     float                       _angularDamping;
     int                         _tag;
     
-    int    _categoryBitmask;
-    int    _collisionBitmask;
-    int    _contactTestBitmask;
+    int                         _categoryBitmask;
+    int                         _collisionBitmask;
+    int                         _contactTestBitmask;
+    int                         _group;
     
     friend class PhysicsWorld;
     friend class PhysicsShape;

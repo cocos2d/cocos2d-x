@@ -39,9 +39,9 @@ public:
     void toggleDebugCallback(Object* sender);
     
     Sprite* addGrossiniAtPosition(Point p, float scale = 1.0);
-    Sprite* makeBall(float x, float y, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeBox(float x, float y, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeTriangle(float x, float y, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeBall(Point point, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeBox(Point point, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeTriangle(Point point, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
     bool onTouchBegan(Touch* touch, Event* event) override;
     void onTouchMoved(Touch* touch, Event* event) override;
@@ -107,14 +107,31 @@ private:
 class PhysicsDemoJoints : public PhysicsDemo
 {
 public:
-    PhysicsDemoJoints();
-    
+    void onEnter() override;
+    std::string title() override;
+};
+
+class PhysicsDemoActions : public PhysicsDemo
+{
 public:
     void onEnter() override;
     std::string title() override;
+};
+
+class PhysicsDemoPump : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
+    void update(float delta) override;
+    
+    bool onTouchBegan(Touch* touch, Event* event) override;
+    void onTouchMoved(Touch* touch, Event* event) override;
+    void onTouchEnded(Touch* touch, Event* event) override;
     
 private:
-    PhysicsShape* _touchesShape;
+    float _distance;
+    float _rotationV;
 };
 
 #endif

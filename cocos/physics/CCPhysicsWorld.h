@@ -97,7 +97,8 @@ public:
     void rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data);
     Array* getShapesAtPoint(Point point);
     PhysicsShape* getShapeAtPoint(Point point);
-    Array* getAllBody() const;
+    Array* getAllBodies() const;
+    PhysicsBody* getBodyByTag(int tag);
     
     /** Register a listener to receive contact callbacks*/
     inline void registerContactListener(PhysicsContactListener* delegate) { _listener = delegate; }
@@ -116,7 +117,7 @@ public:
     
     virtual void removeBody(PhysicsBody* body);
     virtual void removeBodyByTag(int tag);
-    virtual void removeAllBodys();
+    virtual void removeAllBodies();
     
 protected:
     static PhysicsWorld* create();
@@ -124,13 +125,14 @@ protected:
     
     void setScene(Scene* scene);
     
-    virtual void addBody(PhysicsBody* body);
-    virtual void addShape(PhysicsShape* shape);
+    virtual PhysicsBody* addBody(PhysicsBody* body);
+    virtual PhysicsShape* addShape(PhysicsShape* shape);
     virtual void removeShape(PhysicsShape* shape);
     virtual void update(float delta);
     
     virtual void debugDraw();
     virtual void drawWithShape(DrawNode* node, PhysicsShape* shape);
+    virtual void drawWithJoint(DrawNode* node, PhysicsJoint* joint);
     
     
     virtual int collisionBeginCallback(PhysicsContact& contact);
@@ -145,7 +147,7 @@ protected:
     PhysicsContactListener* _listener;
     
     
-    Array* _bodys;
+    Array* _bodies;
     std::list<PhysicsJoint*> _joints;
     Scene* _scene;
     

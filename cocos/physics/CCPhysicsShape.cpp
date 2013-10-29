@@ -50,6 +50,10 @@ PhysicsShape::PhysicsShape()
 , _mass(0)
 , _moment(0)
 , _tag(0)
+, _categoryBitmask(UINT_MAX)
+, _collisionBitmask(UINT_MAX)
+, _contactTestBitmask(0)
+, _group(0)
 {
     
 }
@@ -775,6 +779,17 @@ Point PhysicsShapeEdgeChain::getCenter()
 int PhysicsShapeEdgeChain::getPointsCount()
 {
     return _info->shapes.size() + 1;
+}
+
+void PhysicsShape::setGroup(int group)
+{
+    if (group < 0)
+    {
+        for (auto shape : _info->shapes)
+        {
+            cpShapeSetGroup(shape, (cpGroup)group);
+        }
+    }
 }
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
