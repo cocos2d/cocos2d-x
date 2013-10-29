@@ -74,6 +74,7 @@ public:
     /** Clones the listener, its subclasses have to override this method. */
     virtual EventListener* clone() = 0;
     
+protected:
     inline void setPaused(bool paused) { _paused = paused; };
     inline bool isPaused() const { return _paused; };
     
@@ -91,16 +92,16 @@ public:
     
     std::function<void(Event*)> _onEvent;   /// Event callback function
     
-protected:
-    
     Type _type;                             /// Event listener type
     ListenerID _listenerID;                         /// Event listener ID
     bool _isRegistered;                     /// Whether the listener has been added to dispatcher.
     
     // The priority of event listener
     int   _fixedPriority;   // The higher the number, the higher the priority, 0 is for scene graph base priority.
-    Node* _node; // scene graph based priority
-    bool _paused;
+    Node* _node;            // scene graph based priority
+    bool _paused;           // Whether the listener is paused
+    
+    friend class EventDispatcher;
 };
 
 NS_CC_END
