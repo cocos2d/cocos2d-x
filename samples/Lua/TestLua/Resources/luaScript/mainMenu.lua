@@ -44,6 +44,7 @@ require "luaScript/TransitionsTest/TransitionsTest"
 require "luaScript/UserDefaultTest/UserDefaultTest"
 require "luaScript/ZwoptexTest/ZwoptexTest"
 require "luaScript/LuaBridgeTest/LuaBridgeTest"
+require "luaScript/XMLHttpRequestTest/XMLHttpRequestTest"
 
 
 local LINE_SPACE = 40
@@ -97,7 +98,8 @@ local _allTests = {
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },   
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
-    { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest }
+    { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
+    { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain}
 }
 
 local TESTS_COUNT = table.getn(_allTests)
