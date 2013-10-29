@@ -53,10 +53,7 @@ class DirectorDelegate;
 class Node;
 class Scheduler;
 class ActionManager;
-class TouchDispatcher;
-class KeyboardDispatcher;
-class KeypadDispatcher;
-class Accelerometer;
+class EventDispatcher;
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -351,6 +348,17 @@ public:
      @since v2.0
      */
     void setActionManager(ActionManager* actionManager);
+    
+    /** Gets the EventDispatcher associated with this director 
+     @since v3.0
+     */
+    EventDispatcher* getEventDispatcher() const;
+    
+    /** Sets the EventDispatcher associated with this director 
+     @since v3.0
+     */
+    void setEventDispatcher(EventDispatcher* dispatcher);
+    
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
     
@@ -383,6 +391,11 @@ protected:
      @since v2.0
      */
     ActionManager* _actionManager;
+    
+    /** EventDispatcher associated with this director
+     @since v3.0
+     */
+    EventDispatcher* _eventDispatcher;
         
     /* delta time since last tick to main loop */
 	float _deltaTime;

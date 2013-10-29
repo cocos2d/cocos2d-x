@@ -346,7 +346,6 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
         CCASSERT(offSprite,     "offSprite must not be nil.");
         CCASSERT(thumbSprite,   "thumbSprite must not be nil.");
         
-        setTouchEnabled(true);
         _on = true;
 
         _switchSprite = new ControlSwitchSprite();

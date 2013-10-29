@@ -650,8 +650,12 @@ static float menuItemPaddingCenter = 50;
 
 LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
 {
-    this->setTouchEnabled(true);
-
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(LabelFNTMultiLineAlignment::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(LabelFNTMultiLineAlignment::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(LabelFNTMultiLineAlignment::onTouchesEnded, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     // ask director the the window size
     auto size = Director::getInstance()->getWinSize();
 

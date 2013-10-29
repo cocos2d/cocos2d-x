@@ -410,6 +410,15 @@ MenuItemFont * MenuItemFont::create(const char *value)
     return pRet;
 }
 
+MenuItemFont::MenuItemFont()
+ : _fontSize(0), _fontName("")
+{}
+
+MenuItemFont::~MenuItemFont()
+{
+    CCLOGINFO("In the destructor of MenuItemFont (%p).", this);
+}
+
 // XXX: deprecated
 bool MenuItemFont::initWithString(const char *value, Object* target, SEL_MenuHandler selector)
 {
@@ -925,7 +934,14 @@ void MenuItemToggle::addSubItem(MenuItem *item)
 
 MenuItemToggle::~MenuItemToggle()
 {
-    CC_SAFE_RELEASE(_subItems);
+    if (_subItems)
+    {
+        for (auto& item : *_subItems)
+        {
+            static_cast<MenuItem*>(item)->cleanup();
+        }
+        _subItems->release();
+    }
 }
 
 void MenuItemToggle::setSelectedIndex(unsigned int index)

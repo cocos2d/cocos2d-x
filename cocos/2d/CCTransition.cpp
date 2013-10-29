@@ -160,9 +160,7 @@ void TransitionScene::onEnter()
     Scene::onEnter();
     
     // disable events while transitions
-//    Director::getInstance()->getTouchDispatcher()->setDispatchEvents(false);
-
-    EventDispatcher::getInstance()->setEnabled(false);
+    _eventDispatcher->setEnabled(false);
     
     // outScene should not receive the onEnter callback
     // only the onExitTransitionDidStart
@@ -177,9 +175,7 @@ void TransitionScene::onExit()
     Scene::onExit();
     
     // enable events while transitions
-//    Director::getInstance()->getTouchDispatcher()->setDispatchEvents(true);
-    
-    EventDispatcher::getInstance()->setEnabled(true);
+    _eventDispatcher->setEnabled(true);
     _outScene->onExit();
 
     // _inScene should not receive the onEnter callback
