@@ -91,9 +91,15 @@ public:
     };
     
     static Control* create();
-
+    /**
+     * @js ctor
+     */
     Control();
     virtual bool init(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Control();
 
     /** Tells whether the control is enabled. */
@@ -158,6 +164,11 @@ public:
      */
     virtual Point getTouchLocation(Touch* touch);
 
+    virtual bool onTouchBegan(Touch *touch, Event *event) { return false; };
+    virtual void onTouchMoved(Touch *touch, Event *event) {};
+    virtual void onTouchEnded(Touch *touch, Event *event) {};
+    virtual void onTouchCancelled(Touch *touch, Event *event) {};
+    
     /**
      * Returns a boolean value that indicates whether a touch is inside the bounds
      * of the receiver. The given touch must be relative to the world.
@@ -171,9 +182,17 @@ public:
     // Overrides
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool bOpacityModifyRGB) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit() override;
-    virtual void registerWithTouchDispatcher() override;
+//    virtual void registerWithTouchDispatcher() override;
 
 protected:
     /**

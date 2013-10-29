@@ -30,7 +30,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-#include "ExtensionMacros.h"
+#include "extensions/ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
 NS_CC_EXT_BEGIN
@@ -40,7 +40,14 @@ class EditBox;
 class EditBoxImplAndroid : public EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImplAndroid(EditBox* pEditText);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EditBoxImplAndroid();
     
     virtual bool initWithSize(const Size& size);
@@ -62,7 +69,15 @@ public:
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
 	virtual void setAnchorPoint(const Point& anchorPoint);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual void onEnter(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();

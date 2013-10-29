@@ -30,8 +30,8 @@
  */
 
 #include "CCControlColourPicker.h"
-#include "sprite_nodes/CCSpriteFrameCache.h"
-#include "sprite_nodes/CCSpriteBatchNode.h"
+#include "CCSpriteFrameCache.h"
+#include "CCSpriteBatchNode.h"
 
 NS_CC_EXT_BEGIN
 
@@ -54,7 +54,6 @@ bool ControlColourPicker::init()
 {
     if (Control::init())
     {
-        setTouchEnabled(true);
         // Cache the sprites
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
         
@@ -191,7 +190,7 @@ void ControlColourPicker::colourSliderValueChanged(Object * sender, Control::Eve
 }
 
 //ignore all touches, handled by children
-bool ControlColourPicker::ccTouchBegan(Touch* touch, Event* pEvent)
+bool ControlColourPicker::onTouchBegan(Touch* touch, Event* pEvent)
 {
     return false;
 }

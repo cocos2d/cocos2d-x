@@ -27,10 +27,10 @@
 
 #include "CCControlButton.h"
 #include "CCScale9Sprite.h"
-#include "label_nodes/CCLabelTTF.h"
-#include "label_nodes/CCLabelBMFont.h"
-#include "actions/CCAction.h"
-#include "actions/CCActionInterval.h"
+#include "CCLabelTTF.h"
+#include "CCLabelBMFont.h"
+#include "CCAction.h"
+#include "CCActionInterval.h"
 
 using namespace std;
 
@@ -96,7 +96,6 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         this->setTitleLabelDispatchTable(Dictionary::create());
         this->setBackgroundSpriteDispatchTable(Dictionary::create());
 
-        setTouchEnabled(true);
         _isPushed = false;
         _zoomOnTouchDown = true;
 
@@ -630,7 +629,7 @@ void ControlButton::needsLayout()
 
 
 
-bool ControlButton::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool ControlButton::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible() || !hasVisibleParents() )
     {
@@ -651,7 +650,7 @@ bool ControlButton::ccTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void ControlButton::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void ControlButton::onTouchMoved(Touch *pTouch, Event *pEvent)
 {    
     if (!isEnabled() || !isPushed() || isSelected())
     {
@@ -683,7 +682,7 @@ void ControlButton::ccTouchMoved(Touch *pTouch, Event *pEvent)
         sendActionsForControlEvents(Control::EventType::DRAG_OUTSIDE);        
     }
 }
-void ControlButton::ccTouchEnded(Touch *pTouch, Event *pEvent)
+void ControlButton::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     _isPushed = false;
     setHighlighted(false);
@@ -745,7 +744,7 @@ const Color3B& ControlButton::getColor() const
 	return _realColor;
 }
 
-void ControlButton::ccTouchCancelled(Touch *pTouch, Event *pEvent)
+void ControlButton::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     _isPushed = false;
     setHighlighted(false);

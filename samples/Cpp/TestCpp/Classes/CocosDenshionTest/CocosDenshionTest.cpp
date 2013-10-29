@@ -1,7 +1,7 @@
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include "GUI/CCControlExtension/CCControlSlider.h"
+#include "extensions/GUI/CCControlExtension/CCControlSlider.h"
 
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFOR_ANDROID)
@@ -25,7 +25,7 @@ using namespace CocosDenshion;
 
 #define LINE_SPACE          40
 
-class Button : public Node, public TargetedTouchDelegate
+class Button : public Node//, public TargetedTouchDelegate
 {
 public:
     static Button *createWithSprite(const char *filePath)
@@ -50,7 +50,7 @@ public:
 
     ~Button()
     {
-        Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
+//        Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
     }
 
     void onTriggered(const std::function<void(void)> &onTriggered)
@@ -62,7 +62,18 @@ private:
     Button()
         : _child(NULL)
     {
-        Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
+//        Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
+        
+        // Register Touch Event
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->setSwallowTouches(true);
+        
+        listener->onTouchBegan = CC_CALLBACK_2(Button::onTouchBegan, this);
+        listener->onTouchEnded = CC_CALLBACK_2(Button::onTouchEnded, this);
+        listener->onTouchCancelled = CC_CALLBACK_2(Button::onTouchCancelled, this);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        
     }
 
     bool initSpriteButton(const char *filePath)
@@ -85,7 +96,7 @@ private:
         return area.containsPoint(_child->convertToNodeSpace(touch->getLocation()));
     }
 
-    virtual bool ccTouchBegan(Touch  *touch, Event  *event)
+    bool onTouchBegan(Touch  *touch, Event  *event)
     {
         CC_UNUSED_PARAM(event);
         const bool hits = touchHits(touch);
@@ -94,7 +105,7 @@ private:
         return hits;
     }
 
-    virtual void ccTouchEnded(Touch  *touch, Event  *event)
+    void onTouchEnded(Touch  *touch, Event  *event)
     {
         CC_UNUSED_PARAM(event);
         const bool hits = touchHits(touch);
@@ -103,7 +114,7 @@ private:
         scaleButtonTo(1);
     }
 
-    virtual void ccTouchCancelled(Touch  *touch, Event  *event)
+    void onTouchCancelled(Touch  *touch, Event  *event)
     {
         CC_UNUSED_PARAM(event);
         scaleButtonTo(1);
@@ -215,19 +226,6 @@ _sliderMusicVolume(NULL)
     addButtons();
     addSliders();
     schedule(schedule_selector(CocosDenshionTest::updateVolumes));
-
-//    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-
-//    std::string testItems[] = {
-//        "unload effect",
-//        "pause effect",
-//        "resume effect",
-//        "pause all effects",
-//        "resume all effects",
-//        "stop all effects"
-//    };
-
-    setTouchEnabled(true);
 
     // preload background music and effect
     SimpleAudioEngine::getInstance()->preloadBackgroundMusic( MUSIC_FILE );

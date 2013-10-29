@@ -25,9 +25,14 @@ enum {
 //------------------------------------------------------------------
 MenuLayerMainMenu::MenuLayerMainMenu()
 {
-    setTouchEnabled(true);
-    setTouchPriority(Menu::HANDLER_PRIORITY + 1);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    _touchListener = EventListenerTouchOneByOne::create();
+    _touchListener->setSwallowTouches(true);
+    _touchListener->onTouchBegan = CC_CALLBACK_2(MenuLayerMainMenu::onTouchBegan, this);
+    _touchListener->onTouchMoved = CC_CALLBACK_2(MenuLayerMainMenu::onTouchMoved, this);
+    _touchListener->onTouchEnded = CC_CALLBACK_2(MenuLayerMainMenu::onTouchEnded, this);
+    _touchListener->onTouchCancelled = CC_CALLBACK_2(MenuLayerMainMenu::onTouchCancelled, this);
+    
+    _eventDispatcher->addEventListenerWithFixedPriority(_touchListener, 1);
 
     // Font Item    
     auto spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
@@ -114,25 +119,26 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
-bool MenuLayerMainMenu::ccTouchBegan(Touch *touch, Event * event)
+bool MenuLayerMainMenu::onTouchBegan(Touch *touch, Event * event)
 {
     return true;
 }
 
-void MenuLayerMainMenu::ccTouchEnded(Touch *touch, Event * event)
+void MenuLayerMainMenu::onTouchEnded(Touch *touch, Event * event)
 {
 }
 
-void MenuLayerMainMenu::ccTouchCancelled(Touch *touch, Event * event)
+void MenuLayerMainMenu::onTouchCancelled(Touch *touch, Event * event)
 {
 }
 
-void MenuLayerMainMenu::ccTouchMoved(Touch *touch, Event * event)
+void MenuLayerMainMenu::onTouchMoved(Touch *touch, Event * event)
 {
 }
 
 MenuLayerMainMenu::~MenuLayerMainMenu()
 {
+    _eventDispatcher->removeEventListener(_touchListener);
     _disabledItem->release();
 }
 
@@ -148,8 +154,7 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 
 void MenuLayerMainMenu::allowTouches(float dt)
 {
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY+1, this);
+    _eventDispatcher->setPriority(_touchListener, 1);
     unscheduleAllSelectors();
     log("TOUCHES ALLOWED AGAIN");
 }
@@ -157,8 +162,7 @@ void MenuLayerMainMenu::allowTouches(float dt)
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
 {
     // hijack all touch events for 5 seconds
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY-1, this);
+    _eventDispatcher->setPriority(_touchListener, -1);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     log("TOUCHES DISABLED FOR 5 SECONDS");
 }
@@ -491,10 +495,10 @@ MenuLayerPriorityTest::MenuLayerPriorityTest()
     MenuItemFont::setFontSize(48);
     item1 = MenuItemFont::create("Toggle priority", [&](Object *sender) {
 		if( _priority) {
-			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY + 20);
+//			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY + 20);
 			_priority = false;
 		} else {
-			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY - 20);
+//			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY - 20);
 			_priority = true;
 		}
 	});
@@ -533,8 +537,8 @@ BugsTest::BugsTest()
 void BugsTest::issue1410MenuCallback(Object *sender)
 {
     auto menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
-    menu->setTouchEnabled(false);
-    menu->setTouchEnabled(true);
+    menu->setEnabled(false);
+    menu->setEnabled(true);
     
     log("NO CRASHES");
 }
@@ -542,8 +546,8 @@ void BugsTest::issue1410MenuCallback(Object *sender)
 void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
 {
     auto menu = static_cast<Menu*>( static_cast<MenuItem*>(pSender)->getParent() );
-    menu->setTouchEnabled(true);
-    menu->setTouchEnabled(false);
+    menu->setEnabled(true);
+    menu->setEnabled(false);
     
     log("NO CRASHES. AND MENU SHOULD STOP WORKING");
 }
@@ -572,7 +576,15 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     
     menu->setPosition(Point(s.width/2, s.height/2));
     
-    setTouchEnabled(true);
+    // Register Touch Event
+    _touchListener = EventListenerTouchOneByOne::create();
+    _touchListener->setSwallowTouches(false);
+    
+    _touchListener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);
+    _touchListener->onTouchMoved = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchMoved, this);
+    
+    _eventDispatcher->addEventListenerWithFixedPriority(_touchListener, -129);
+    
 }
 
 void RemoveMenuItemWhenMove::goBack(Object *pSender)
@@ -582,20 +594,16 @@ void RemoveMenuItemWhenMove::goBack(Object *pSender)
 
 RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()
 {
+    _eventDispatcher->removeEventListener(_touchListener);
     CC_SAFE_RELEASE(item);
 }
 
-void RemoveMenuItemWhenMove::registerWithTouchDispatcher(void)
-{
-    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, -129, false);
-}
-
-bool RemoveMenuItemWhenMove::ccTouchBegan(Touch  *touch, Event  *event)
+bool RemoveMenuItemWhenMove::onTouchBegan(Touch  *touch, Event  *event)
 {
     return true;
 }
 
-void RemoveMenuItemWhenMove::ccTouchMoved(Touch  *touch, Event  *event)
+void RemoveMenuItemWhenMove::onTouchMoved(Touch  *touch, Event  *event)
 {
     if (item)
     {
@@ -607,6 +615,8 @@ void RemoveMenuItemWhenMove::ccTouchMoved(Touch  *touch, Event  *event)
 
 void MenuTestScene::runThisTest()
 {
+    MenuItemFont::setFontSize(20);
+    
     auto layer1 = new MenuLayerMainMenu();
     auto layer2 = new MenuLayer2();
     auto layer3 = new MenuLayer3();

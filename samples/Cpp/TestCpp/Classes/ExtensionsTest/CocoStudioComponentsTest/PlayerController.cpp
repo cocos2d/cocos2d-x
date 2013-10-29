@@ -4,7 +4,7 @@
 #include "ProjectileController.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cocostudio;
 
 PlayerController::PlayerController(void)
 {
@@ -35,10 +35,10 @@ void PlayerController::update(float delta)
 
 }
 
-void PlayerController::ccTouchesEnded(Set  *touches, Event  *event)
+void PlayerController::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
     // Choose one of the touches to work with
-	Touch* touch = static_cast<Touch*>( touches->anyObject() );
+	Touch* touch = touches[0];
 	Point location = touch->getLocation();
     
 

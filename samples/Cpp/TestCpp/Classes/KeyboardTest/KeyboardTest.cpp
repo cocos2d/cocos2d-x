@@ -1,7 +1,5 @@
 #include "KeyboardTest.h"
 
-#ifdef CC_KEYBOARD_SUPPORT
-
 KeyboardTest::KeyboardTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -9,8 +7,12 @@ KeyboardTest::KeyboardTest()
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
-    setKeyboardEnabled(true);
-
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyPressed = CC_CALLBACK_2(KeyboardTest::onKeyPressed, this);
+    listener->onKeyReleased = CC_CALLBACK_2(KeyboardTest::onKeyReleased, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     // create a label to display the tip string
     _label = LabelTTF::create("Please press any key and see console log...", "Arial", 22);
     _label->setPosition(Point(s.width / 2, s.height / 2));
@@ -24,12 +26,12 @@ KeyboardTest::~KeyboardTest()
     _label->release();
 }
 
-void KeyboardTest::keyPressed(int keyCode)
+void KeyboardTest::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
     log("Key with keycode %d pressed", keyCode);
 }
 
-void KeyboardTest::keyReleased(int keyCode)
+void KeyboardTest::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     log("Key with keycode %d released", keyCode);
 }
@@ -43,4 +45,3 @@ void KeyboardTestScene::runThisTest()
     layer->release();
 }
 
-#endif

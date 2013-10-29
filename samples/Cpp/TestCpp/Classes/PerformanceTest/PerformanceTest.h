@@ -14,7 +14,7 @@ class PerformBasicLayer : public Layer
 public:
     PerformBasicLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     virtual void restartCallback(Object* sender);
     virtual void nextCallback(Object* sender);

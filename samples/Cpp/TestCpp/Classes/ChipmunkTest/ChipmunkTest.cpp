@@ -21,9 +21,14 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION      
     // enable events
-    setTouchEnabled(true);
-    setAccelerometerEnabled(true);
 
+    auto touchListener = EventListenerTouchAllAtOnce::create();
+    touchListener->onTouchesEnded = CC_CALLBACK_2(ChipmunkTestLayer::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(ChipmunkTestLayer::onAcceleration, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
+    
     // title
     auto label = LabelTTF::create("Multi touch the screen", "Marker Felt", 36);
     label->setPosition(Point( VisibleRect::center().x, VisibleRect::top().y - 30));
@@ -209,28 +214,26 @@ void ChipmunkTestLayer::onEnter()
     Layer::onEnter();
 }
 
-void ChipmunkTestLayer::ccTouchesEnded(Set* touches, Event* event)
+void ChipmunkTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
 
-    for( auto &item: *touches)
+    for( auto &touch: touches)
     {
-        auto touch = static_cast<Touch*>(item);
-
         auto location = touch->getLocation();
 
         addNewSpriteAtPosition( location );
     }
 }
 
-void ChipmunkTestLayer::didAccelerate(Acceleration* pAccelerationValue)
+void ChipmunkTestLayer::onAcceleration(Acceleration* acc, Event* event)
 {
     static float prevX=0, prevY=0;
 
 #define kFilterFactor 0.05f
 
-    float accelX = (float) pAccelerationValue->x * kFilterFactor + (1- kFilterFactor)*prevX;
-    float accelY = (float) pAccelerationValue->y * kFilterFactor + (1- kFilterFactor)*prevY;
+    float accelX = (float) acc->x * kFilterFactor + (1- kFilterFactor)*prevX;
+    float accelY = (float) acc->y * kFilterFactor + (1- kFilterFactor)*prevY;
 
     prevX = accelX;
     prevY = accelY;

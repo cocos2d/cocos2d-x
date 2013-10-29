@@ -13,7 +13,8 @@ class MainLayer : public Layer
 {
 public:
     MainLayer();
-    virtual void ccTouchesEnded(Set  *touches, Event  *event);
+    bool onTouchBegan(Touch* touch, Event  *event);
+    void onTouchEnded(Touch* touch, Event  *event);
 };
 
 #endif

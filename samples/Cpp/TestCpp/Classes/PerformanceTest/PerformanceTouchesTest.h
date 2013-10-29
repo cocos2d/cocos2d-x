@@ -11,10 +11,10 @@ public:
     {
     }
 
-    virtual void showCurrentTest();
-    virtual void onEnter();
+    virtual void showCurrentTest() override;
+    virtual void onEnter() override;
     virtual std::string title();
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
 protected:
     LabelBMFont * _plabel;
@@ -33,14 +33,13 @@ public:
     {
     }
 
-    virtual void onEnter();
-    virtual std::string title();
-    virtual void registerWithTouchDispatcher();
+    virtual void onEnter() override;
+    virtual std::string title() override;
 
-    virtual bool ccTouchBegan(Touch* touch, Event* event);
-    virtual void ccTouchMoved(Touch* touch, Event* event);
-    virtual void ccTouchEnded(Touch* touch, Event* event);
-    virtual void ccTouchCancelled(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event) ;
+    void onTouchMoved(Touch* touch, Event* event) ;
+    void onTouchEnded(Touch* touch, Event* event) ;
+    void onTouchCancelled(Touch* touch, Event* event) ;
 };
 
 class TouchesPerformTest2 : public TouchesMainScene
@@ -51,14 +50,26 @@ public:
     {
     }
 
-    virtual void onEnter();
-    virtual std::string title();
-    virtual void registerWithTouchDispatcher();
+    virtual void onEnter() override;
+    virtual std::string title() override;
 
-    virtual void ccTouchesBegan(Set* touches, Event* event);
-    virtual void ccTouchesMoved(Set* touches, Event* event);
-    virtual void ccTouchesEnded(Set* touches, Event* event);
-    virtual void ccTouchesCancelled(Set* touches, Event* event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event) ;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) ;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) ;
+    void onTouchesCancelled(const std::vector<Touch*>& touches, Event* event) ;
+};
+
+class TouchesPerformTest3 : public PerformBasicLayer
+{
+public:
+    TouchesPerformTest3(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
+    : PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
+    {
+    }
+    
+    virtual void onEnter() override;
+    virtual std::string title();
+    virtual void showCurrentTest() override;
 };
 
 void runTouchesTest();

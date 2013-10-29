@@ -1,121 +1,36 @@
 TARGET = libextension.a
 
-COCOS_ROOT=../..
+INCLUDES = -I..
 
-INCLUDES = -I$(COCOS_ROOT)/external \
-	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
-	-I$(COCOS_ROOT)/CocosDenshion/include \
-	-I.. \
-	-I../CCBReader \
-	-I../GUI/CCControlExtension \
-	-I../GUI/CCEditBox \
-	-I../network \
-	-I../Components \
-	-I../CCArmature
+SOURCES = \
+assets-manager/AssetsManager.cpp \
+GUI/CCControlExtension/CCControl.cpp \
+GUI/CCControlExtension/CCControlButton.cpp \
+GUI/CCControlExtension/CCControlColourPicker.cpp \
+GUI/CCControlExtension/CCControlHuePicker.cpp \
+GUI/CCControlExtension/CCControlPotentiometer.cpp \
+GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp \
+GUI/CCControlExtension/CCControlSlider.cpp \
+GUI/CCControlExtension/CCControlStepper.cpp \
+GUI/CCControlExtension/CCControlSwitch.cpp \
+GUI/CCControlExtension/CCControlUtils.cpp \
+GUI/CCControlExtension/CCInvocation.cpp \
+GUI/CCControlExtension/CCScale9Sprite.cpp \
+GUI/CCEditBox/CCEditBox.cpp \
+GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
+GUI/CCEditBox/CCEditBoxImplNone.cpp \
+GUI/CCEditBox/CCEditBoxImplTizen.cpp \
+GUI/CCEditBox/CCEditBoxImplWin.cpp \
+GUI/CCScrollView/CCScrollView.cpp \
+GUI/CCScrollView/CCSorting.cpp \
+GUI/CCScrollView/CCTableView.cpp \
+GUI/CCScrollView/CCTableViewCell.cpp \
+physics-nodes/CCPhysicsDebugNode.cpp \
+physics-nodes/CCPhysicsSprite.cpp
 
-SOURCES = ../CCBReader/CCBFileLoader.cpp \
-../CCBReader/CCMenuItemImageLoader.cpp \
-../CCBReader/CCBReader.cpp \
-../CCBReader/CCMenuItemLoader.cpp \
-../CCBReader/CCControlButtonLoader.cpp \
-../CCBReader/CCNodeLoader.cpp \
-../CCBReader/CCControlLoader.cpp \
-../CCBReader/CCNodeLoaderLibrary.cpp \
-../CCBReader/CCLabelBMFontLoader.cpp \
-../CCBReader/CCParticleSystemQuadLoader.cpp \
-../CCBReader/CCLabelTTFLoader.cpp \
-../CCBReader/CCScale9SpriteLoader.cpp \
-../CCBReader/CCLayerColorLoader.cpp \
-../CCBReader/CCScrollViewLoader.cpp \
-../CCBReader/CCLayerGradientLoader.cpp \
-../CCBReader/CCSpriteLoader.cpp \
-../CCBReader/CCLayerLoader.cpp \
-../CCBReader/CCBAnimationManager.cpp \
-../CCBReader/CCBKeyframe.cpp \
-../CCBReader/CCBSequence.cpp \
-../CCBReader/CCBSequenceProperty.cpp \
-../CCBReader/CCBValue.cpp \
-../CCBReader/CCNode+CCBRelativePositioning.cpp \
-../GUI/CCScrollView/CCScrollView.cpp \
-../GUI/CCScrollView/CCSorting.cpp \
-../GUI/CCScrollView/CCTableView.cpp \
-../GUI/CCScrollView/CCTableViewCell.cpp \
-../GUI/CCControlExtension/CCControlButton.cpp \
-../GUI/CCControlExtension/CCControlColourPicker.cpp \
-../GUI/CCControlExtension/CCControl.cpp \
-../GUI/CCControlExtension/CCControlHuePicker.cpp \
-../GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp \
-../GUI/CCControlExtension/CCControlSlider.cpp \
-../GUI/CCControlExtension/CCControlSwitch.cpp \
-../GUI/CCControlExtension/CCControlUtils.cpp \
-../GUI/CCControlExtension/CCInvocation.cpp \
-../GUI/CCControlExtension/CCScale9Sprite.cpp \
-../GUI/CCControlExtension/CCControlPotentiometer.cpp \
-../GUI/CCControlExtension/CCControlStepper.cpp \
-../GUI/CCEditBox/CCEditBox.cpp \
-../GUI/CCEditBox/CCEditBoxImplNone.cpp \
-../network/HttpClient.cpp \
-../physics_nodes/CCPhysicsDebugNode.cpp \
-../physics_nodes/CCPhysicsSprite.cpp \
-../CocoStudio/Armature/CCArmature.cpp \
-../CocoStudio/Armature/CCBone.cpp \
-../CocoStudio/Armature/animation/CCArmatureAnimation.cpp \
-../CocoStudio/Armature/animation/CCProcessBase.cpp \
-../CocoStudio/Armature/animation/CCTween.cpp \
-../CocoStudio/Armature/datas/CCDatas.cpp \
-../CocoStudio/Armature/display/CCBatchNode.cpp \
-../CocoStudio/Armature/display/CCDecorativeDisplay.cpp \
-../CocoStudio/Armature/display/CCDisplayFactory.cpp \
-../CocoStudio/Armature/display/CCDisplayManager.cpp \
-../CocoStudio/Armature/display/CCShaderNode.cpp \
-../CocoStudio/Armature/display/CCSkin.cpp \
-../CocoStudio/Armature/external_tool/CCTexture2DMutable.cpp \
-../CocoStudio/Armature/external_tool/GLES-Render.cpp \
-../CocoStudio/Armature/physics/CCColliderDetector.cpp \
-../CocoStudio/Armature/physics/CCPhysicsWorld.cpp \
-../CocoStudio/Armature/utils/CCArmatureDataManager.cpp \
-../CocoStudio/Armature/utils/CCDataReaderHelper.cpp \
-../CocoStudio/Armature/utils/CCSpriteFrameCacheHelper.cpp \
-../CocoStudio/Armature/utils/CCTransformHelp.cpp \
-../CocoStudio/Armature/utils/CCTweenFunction.cpp \
-../CocoStudio/Armature/utils/CCUtilMath.cpp \
-../CocoStudio/Components/CCComAttribute.cpp \
-../CocoStudio/Components/CCComAudio.cpp \
-../CocoStudio/Components/CCComController.cpp \
-../CocoStudio/Components/CCComRender.cpp \
-../CocoStudio/Components/CCInputDelegate.cpp \
-../CocoStudio/Json/CSContentJsonDictionary.cpp \
-../CocoStudio/Json/DictionaryHelper.cpp \
-../CocoStudio/Json/lib_json/json_value.cpp \
-../CocoStudio/Json/lib_json/json_reader.cpp \
-../CocoStudio/Json/lib_json/json_writer.cpp \
-../CocoStudio/Reader/CCSSceneReader.cpp \
-../spine/Animation.cpp \
-../spine/AnimationState.cpp \
-../spine/AnimationStateData.cpp \
-../spine/Atlas.cpp \
-../spine/AtlasAttachmentLoader.cpp \
-../spine/Attachment.cpp \
-../spine/AttachmentLoader.cpp \
-../spine/Bone.cpp \
-../spine/BoneData.cpp \
-../spine/Json.cpp \
-../spine/RegionAttachment.cpp \
-../spine/Skeleton.cpp \
-../spine/SkeletonData.cpp \
-../spine/SkeletonJson.cpp \
-../spine/Skin.cpp \
-../spine/Slot.cpp \
-../spine/SlotData.cpp \
-../spine/extension.cpp \
-../spine/spine-cocos2dx.cpp \
-../spine/CCSkeleton.cpp \
-../spine/CCSkeletonAnimation.cpp \
-../CCDeprecated-ext.cpp
+include ../../cocos/2d/cocos2dx.mk
 
-include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
-
-CXXFLAGS += -Wno-multichar
+CXXFLAGS += -Wno-multichar -Wno-unused-result
 
 TARGET := $(LIB_DIR)/$(TARGET)
 

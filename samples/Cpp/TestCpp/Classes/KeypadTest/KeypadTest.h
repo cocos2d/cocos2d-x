@@ -10,8 +10,7 @@ public:
     KeypadTest();
     ~KeypadTest();
 
-    virtual void keyBackClicked();
-    virtual void keyMenuClicked();
+    virtual void onKeyReleased(EventKeyboard::KeyCode keycode, Event* event);
 
 private:
     LabelTTF*            _label;

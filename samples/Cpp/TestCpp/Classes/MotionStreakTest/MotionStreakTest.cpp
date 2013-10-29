@@ -121,8 +121,10 @@ void MotionStreakTest2::onEnter()
 {
     MotionStreakTest::onEnter();
 
-    setTouchEnabled(true);
-
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(MotionStreakTest2::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     auto s = Director::getInstance()->getWinSize();
         
     // create the streak object and add it to the scene
@@ -132,11 +134,9 @@ void MotionStreakTest2::onEnter()
     streak->setPosition( Point(s.width/2, s.height/2) ); 
 }
 
-void MotionStreakTest2::ccTouchesMoved(Set* touches, Event* event)
+void MotionStreakTest2::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    auto touch = static_cast<Touch*>( touches->anyObject() );
-
-    auto touchLocation = touch->getLocation();    
+    auto touchLocation = touches[0]->getLocation();
     
     streak->setPosition( touchLocation );
 }

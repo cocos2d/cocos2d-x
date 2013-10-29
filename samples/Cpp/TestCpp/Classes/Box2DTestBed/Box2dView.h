@@ -7,7 +7,7 @@
 class MenuLayer : public Layer
 {
     int        m_entryID;
-
+    EventListenerTouchOneByOne* _touchListener;
 public:
     MenuLayer(void);
     virtual ~MenuLayer(void);
@@ -18,10 +18,9 @@ public:
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
 
-    virtual void registerWithTouchDispatcher();
 
-    virtual bool ccTouchBegan(Touch* touch, Event* event);
-    virtual void ccTouchMoved(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
 
 public:
     static MenuLayer* menuWithEntryID(int entryId);
@@ -31,6 +30,7 @@ struct TestEntry;
 class Test;
 class Box2DView : public Layer
 {
+    EventListenerTouchOneByOne* _touchListener;
     TestEntry*    m_entry;
     Test*        m_test;
     int            m_entryID;
@@ -43,10 +43,10 @@ public:
     void tick(float dt);
     void draw();
 
-    virtual void registerWithTouchDispatcher();
-    virtual bool ccTouchBegan(Touch* touch, Event* event);
-    virtual void ccTouchMoved(Touch* touch, Event* event);
-    virtual void ccTouchEnded(Touch* touch, Event* event);
+//    virtual void registerWithTouchDispatcher();
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
     //virtual void accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration);
 
     static Box2DView* viewWithEntryID(int entryId);

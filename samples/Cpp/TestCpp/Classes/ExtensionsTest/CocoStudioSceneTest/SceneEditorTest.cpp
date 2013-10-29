@@ -1,14 +1,20 @@
 
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../ExtensionsTest.h"
 #include "SceneEditorTest.h"
+#include "cocostudio/CocoStudio.h"
+#include "gui/CocosGUI.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cocostudio;
+using namespace gui;
 
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
-	
+    ArmatureDataManager::getInstance()->destoryInstance();
+	SceneReader::getInstance()->purgeSceneReader();
+	ActionManagerEx::shareManager()->purgeActionManager();
+	UIHelper::instance()->purgeUIHelper();
 }
 
 SceneEditorTestLayer::SceneEditorTestLayer()
@@ -63,12 +69,6 @@ cocos2d::Node* SceneEditorTestLayer::createGameScene()
 		return NULL;
 	}
 	_curNode = pNode;
-
-	//fishes
-	/*cocos2d::extension::armature::Armature *pBlowFish = getFish(10008, "blowFish");
-	cocos2d::extension::armature::Armature *pButterFlyFish = getFish(10009, "butterFlyFish");
-	pBlowFish->getAnimation()->playByIndex(0);
-	pButterFlyFish->getAnimation()->playByIndex(0);*/
    
     MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(SceneEditorTestLayer::toExtensionsMainLayer, this));
         itemBack->setColor(Color3B(255, 255, 255));
@@ -79,9 +79,8 @@ cocos2d::Node* SceneEditorTestLayer::createGameScene()
 
     pNode->addChild(menuBack);
     
-	//ui action
-	//cocos2d::extension::UIActionManager::shareManager()->PlayActionByName("startMenu_1.json","Animation1");
-
+    //ui action
+	ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 
@@ -94,16 +93,6 @@ void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 	pScene->release();
 }  
 
-
-cocos2d::extension::armature::CCArmature* SceneEditorTestLayer::getFish(int nTag, const char *pszName)
-{
-	if (_curNode == NULL)
-	{
-		return NULL;
-	}
-	ComRender *pFishRender = (ComRender*)(_curNode->getChildByTag(nTag)->getComponent(pszName));
-	return (cocos2d::extension::armature::CCArmature *)(pFishRender->getNode());
-}
 
 void runSceneEditorTestLayer()
 {

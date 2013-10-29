@@ -111,8 +111,11 @@ RenderTextureSave::RenderTextureSave()
     _brush->retain();
     _brush->setColor(Color3B::RED);
     _brush->setOpacity(20);
-    this->setTouchEnabled(true);
-
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     // Save Image menu
     MenuItemFont::setFontSize(16);
     auto item1 = MenuItemFont::create("Save Image", CC_CALLBACK_1(RenderTextureSave::saveImage, this));
@@ -176,9 +179,9 @@ RenderTextureSave::~RenderTextureSave()
     TextureCache::getInstance()->removeUnusedTextures();
 }
 
-void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
+void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    auto touch = static_cast<Touch*>( touches->anyObject() );
+    auto touch = touches[0];
     auto start = touch->getLocation();
     auto end = touch->getPreviousLocation();
 
@@ -296,7 +299,12 @@ void RenderTextureScene::runThisTest()
 
 RenderTextureZbuffer::RenderTextureZbuffer()
 {
-    this->setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(RenderTextureZbuffer::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureZbuffer::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(RenderTextureZbuffer::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     auto size = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("vertexZ = 50", "Marker Felt", 64);
     label->setPosition(Point(size.width / 2, size.height * 0.25f));
@@ -361,10 +369,10 @@ string RenderTextureZbuffer::subtitle()
     return "Touch screen. It should be green";
 }
 
-void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event *event)
+void RenderTextureZbuffer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
 
-    for (auto &item: *touches)
+    for (auto &item: touches)
     {
         auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
@@ -381,9 +389,9 @@ void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event 
     }
 }
 
-void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
+void RenderTextureZbuffer::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto &item: *touches)
+    for (auto &item: touches)
     {
         auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
@@ -400,7 +408,7 @@ void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
     }
 }
 
-void RenderTextureZbuffer::ccTouchesEnded(Set* touches, Event* event)
+void RenderTextureZbuffer::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     this->renderScreenShot();
 }
@@ -423,7 +431,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
     sprite->setPosition(Point(256, 256));
     sprite->setOpacity(182);
-    sprite->setFlipY(1);
+    sprite->setFlippedY(1);
     this->addChild(sprite, 999999);
     sprite->setColor(Color3B::GREEN);
 
@@ -627,7 +635,9 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()
 {
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(SpriteRenderTextureBug::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords(Point(s.width/2, s.height/2));
@@ -668,11 +678,10 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
     return NULL;
 }
 
-void SpriteRenderTextureBug::ccTouchesEnded(Set* touches, Event* event)
+void SpriteRenderTextureBug::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto &item: *touches)
+    for (auto &touch: touches)
     {
-        auto touch = static_cast<Touch*>(item);
         auto location = touch->getLocation();
         addNewSpriteWithCoords(location);
     }

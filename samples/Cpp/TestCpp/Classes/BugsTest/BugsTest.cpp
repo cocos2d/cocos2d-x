@@ -67,21 +67,22 @@ void BugsTestMainLayer::onEnter()
 
     _itmeMenu->setPosition(s_tCurPos);
     addChild(_itmeMenu);
-    setTouchEnabled(true);
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(BugsTestMainLayer::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(BugsTestMainLayer::onTouchesMoved, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-void BugsTestMainLayer::ccTouchesBegan(Set  *touches, Event  *event)
+void BugsTestMainLayer::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>( touches->anyObject() );
-
-    _beginPos = touch->getLocation();    
+    _beginPos = touches[0]->getLocation();
 }
 
-void BugsTestMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
+void BugsTestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>( touches->anyObject() );
-
-    auto touchLocation = touch->getLocation();    
+    auto touchLocation = touches[0]->getLocation();
     float nMoveY = touchLocation.y - _beginPos.y;
 
     auto curPos  = _itmeMenu->getPosition();

@@ -2,6 +2,11 @@ EXECUTABLE = TestCpp
 
 DEFINES += -DCC_KEYBOARD_SUPPORT
 
+INCLUDES = -I../../../../external \
+           -I../../../../cocos/editor-support \
+           -I../../../../cocos \
+           -I../Classes
+
 SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ActionManagerTest/ActionManagerTest.cpp \
 	../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
@@ -60,7 +65,28 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
 	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest/UIDragPanelTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest/UILabelAtlasTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest/UILabelBMFontTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest/UILabelTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest/UINodeContainerTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest/UIPanelTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest/UITextAreaTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest/UITextButtonTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp \
 	../Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
+	../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
 	../Classes/KeyboardTest/KeyboardTest.cpp \
@@ -81,6 +107,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/PerformanceTest/PerformanceTest.cpp \
 	../Classes/PerformanceTest/PerformanceTextureTest.cpp \
 	../Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+	../Classes/PhysicsTest/PhysicsTest.cpp \
 	../Classes/RenderTextureTest/RenderTextureTest.cpp \
 	../Classes/RotateWorldTest/RotateWorldTest.cpp \
 	../Classes/SceneTest/SceneTest.cpp \
@@ -113,22 +140,19 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl -lpng
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
-include ../../../../cocos2dx/proj.linux/cocos2dx.mk
 
-
-INCLUDES +=	 -I../ \
-	-I../../ \
-	-I../Classes \
-	-I$(COCOS_ROOT)/CocosDenshion/include \
-	-I$(COCOS_ROOT)/extensions/ \
-	-I$(COCOS_ROOT)/external/ \
-	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
+include ../../../../cocos/2d/cocos2dx.mk
 
 STATICLIBS += \
-	$(STATICLIBS_DIR)/libcurl.a \
+	$(STATICLIBS_DIR)/curl/prebuilt/linux/$(POSTFIX)/libcurl.a \
 	$(LIB_DIR)/libextension.a \
 	$(LIB_DIR)/libbox2d.a \
-	$(LIB_DIR)/libchipmunk.a
+	$(LIB_DIR)/libchipmunk.a \
+        $(LIB_DIR)/libgui.a \
+        $(LIB_DIR)/libcocosbuilder.a \
+        $(LIB_DIR)/libspine.a \
+        $(LIB_DIR)/libcocostudio.a \
+        $(LIB_DIR)/libnetwork.a
 
 ####### Build rules
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)

@@ -87,7 +87,9 @@ std::string Parallax1::title()
 
 Parallax2::Parallax2()
 {
-    setTouchEnabled( true );
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(Parallax2::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // Top Layer, a simple image
     auto cocosImage = Sprite::create(s_Power);
@@ -132,10 +134,9 @@ Parallax2::Parallax2()
     addChild(voidNode, 0, kTagNode);
 }
 
-void Parallax2::ccTouchesMoved(Set  *touches, Event  *event)
+void Parallax2::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
-    auto diff = touch->getDelta();
+    auto diff = touches[0]->getDelta();
     
     auto node = getChildByTag(kTagNode);
     auto currentPos = node->getPosition();

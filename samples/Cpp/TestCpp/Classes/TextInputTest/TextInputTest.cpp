@@ -126,14 +126,18 @@ void TextInputTest::onEnter()
 KeyboardNotificationLayer::KeyboardNotificationLayer()
 : _trackNode(0)
 {
-    setTouchEnabled(true);
+    // Register Touch Event
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchBegan, this);
+    listener->onTouchEnded = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-void KeyboardNotificationLayer::registerWithTouchDispatcher()
-{
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
-}
+//void KeyboardNotificationLayer::registerWithTouchDispatcher()
+//{
+//    auto director = Director::getInstance();
+//    director->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
+//}
 
 void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& info)
 {
@@ -175,14 +179,14 @@ void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& in
 
 // Layer function
 
-bool KeyboardNotificationLayer::ccTouchBegan(Touch  *touch, Event  *event)
+bool KeyboardNotificationLayer::onTouchBegan(Touch  *touch, Event  *event)
 {
     CCLOG("++++++++++++++++++++++++++++++++++++++++++++");
     _beginPos = touch->getLocation();    
     return true;
 }
 
-void KeyboardNotificationLayer::ccTouchEnded(Touch  *touch, Event  *event)
+void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
 {
     if (! _trackNode)
     {

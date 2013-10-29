@@ -60,7 +60,6 @@ bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Point
 {
     if (Control::init())
     {
-        setTouchEnabled(true);
         // Add background and slider sprites
         _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, Point(0.0f, 0.0f));
         _overlay=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, Point(0.0f, 0.0f));
@@ -181,7 +180,7 @@ bool ControlSaturationBrightnessPicker::checkSliderPosition(Point location)
 }
 
 
-bool ControlSaturationBrightnessPicker::ccTouchBegan(Touch* touch, Event* event)
+bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* event)
 {
     if (!isEnabled() || !isVisible())
     {
@@ -196,7 +195,7 @@ bool ControlSaturationBrightnessPicker::ccTouchBegan(Touch* touch, Event* event)
 }
 
 
-void ControlSaturationBrightnessPicker::ccTouchMoved(Touch* touch, Event* event)
+void ControlSaturationBrightnessPicker::onTouchMoved(Touch* touch, Event* event)
 {
     // Get the touch location
     Point touchLocation=getTouchLocation(touch);

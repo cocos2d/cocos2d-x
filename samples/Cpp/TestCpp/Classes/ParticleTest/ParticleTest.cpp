@@ -1068,7 +1068,11 @@ void ParticleDemo::onEnter(void)
     
     _emitter = NULL;
     
-    setTouchEnabled( true );
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(ParticleDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(ParticleDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(ParticleDemo::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     
@@ -1114,19 +1118,19 @@ std::string ParticleDemo::subtitle()
     return "No titile";
 }
 
-void ParticleDemo::ccTouchesBegan(Set  *touches, Event  *event)
+void ParticleDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-    ccTouchesEnded(touches, event);
+    onTouchesEnded(touches, event);
 }
 
-void ParticleDemo::ccTouchesMoved(Set  *touches, Event  *event)
+void ParticleDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    return ccTouchesEnded(touches, event);
+    return onTouchesEnded(touches, event);
 }
 
-void ParticleDemo::ccTouchesEnded(Set  *touches, Event  *event)
+void ParticleDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = touches[0];
     
     auto location = touch->getLocation();
 

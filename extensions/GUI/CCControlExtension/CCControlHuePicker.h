@@ -49,16 +49,22 @@ class ControlHuePicker : public Control
 {
 public:
     static ControlHuePicker* create(Node* target, Point pos);
-
+    /**
+     * @js ctor
+     */
     ControlHuePicker();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlHuePicker();
     virtual bool initWithTargetAndPos(Node* target, Point pos);
 
     virtual void setEnabled(bool enabled);
 
     // overrides
-    virtual bool ccTouchBegan(Touch* touch, Event* pEvent) override;
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual bool onTouchBegan(Touch* touch, Event* pEvent) override;
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
 
 protected:
     void updateSliderPosition(Point location);
