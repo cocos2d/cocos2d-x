@@ -36,8 +36,6 @@ class Event;
 class EventListenerKeyboard : public EventListener
 {
 public:
-    static const ListenerID ID = static_cast<ListenerID>(Type::KEYBOARD);
-                                                         
     static EventListenerKeyboard* create();
     
     /// Overrides

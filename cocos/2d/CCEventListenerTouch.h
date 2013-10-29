@@ -36,8 +36,6 @@ NS_CC_BEGIN
 class EventListenerTouchOneByOne : public EventListener
 {
 public:
-    static const ListenerID ID = static_cast<ListenerID>(Type::TOUCH_ONE_BY_ONE);
-
     static EventListenerTouchOneByOne* create();
     
     virtual ~EventListenerTouchOneByOne();
