@@ -209,10 +209,6 @@ void LuaMinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, n
 
     /** get the response data **/
     std::vector<char> *buffer = response->getResponseData();
-//    for (unsigned int i = 0; i < buffer->size(); i++)
-//    {
-//        printf("%c", (*buffer)[i]);
-//    }
     char* concatenated = (char*) malloc(buffer->size() + 1);
     std::string s2(buffer->begin(), buffer->end());
     strcpy(concatenated, s2.c_str());
