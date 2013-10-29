@@ -265,18 +265,12 @@ void Armature::addBone(Bone *bone, const char *parentName)
         }
         else
         {
-            if (_parentBone)
-                _parentBone->addChildBone(bone);
-            else
-                _topBoneList->addObject(bone);
+            _topBoneList->addObject(bone);
         }
     }
     else
     {
-        if (_parentBone)
-            _parentBone->addChildBone(bone);
-        else
-            _topBoneList->addObject(bone);
+        _topBoneList->addObject(bone);
     }
 
     bone->setArmature(this);
@@ -527,6 +521,7 @@ void Armature::draw()
                     }
                 }
                 armature->draw();
+                _atlas = armature->getTextureAtlas();
             }
             break;
             default:

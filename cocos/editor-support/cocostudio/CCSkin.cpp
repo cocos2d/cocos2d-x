@@ -120,6 +120,7 @@ void Skin::setSkinData(const BaseData &var)
     setPosition(Point(_skinData.x, _skinData.y));
 
     _skinTransform = getNodeToParentTransform();
+    updateArmatureTransform();
 }
 
 const BaseData &Skin::getSkinData() const
