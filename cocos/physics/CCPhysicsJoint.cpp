@@ -34,11 +34,13 @@
 #include "CCPhysicsBody.h"
 
 #include "chipmunk/CCPhysicsJointInfo.h"
-#include "Box2D/CCPhysicsJointInfo.h"
+#include "box2d/CCPhysicsJointInfo.h"
 #include "chipmunk/CCPhysicsBodyInfo.h"
-#include "Box2D/CCPhysicsBodyInfo.h"
+#include "box2d/CCPhysicsBodyInfo.h"
+#include "chipmunk/CCPhysicsShapeInfo.h"
+#include "box2d/CCPhysicsShapeInfo.h"
 #include "chipmunk/CCPhysicsHelper.h"
-#include "Box2D/CCPhysicsHelper.h"
+#include "box2d/CCPhysicsHelper.h"
 
 NS_CC_BEGIN
 
@@ -47,6 +49,7 @@ PhysicsJoint::PhysicsJoint()
 , _bodyB(nullptr)
 , _info(nullptr)
 , _enable(false)
+, _collisionEnable(true)
 , _tag(0)
 {
     
@@ -54,6 +57,9 @@ PhysicsJoint::PhysicsJoint()
 
 PhysicsJoint::~PhysicsJoint()
 {
+    // reset the shapes collision group
+    setCollisionEnable(true);
+    
     CC_SAFE_DELETE(_info);
     
     CC_SAFE_RELEASE(_bodyA);
@@ -64,16 +70,21 @@ bool PhysicsJoint::init(cocos2d::PhysicsBody *a, cocos2d::PhysicsBody *b)
 {
     do
     {
-        CC_BREAK_IF(a == nullptr || b == nullptr);
+        CC_BREAK_IF(!(_info = new PhysicsJointInfo(this)));
         
-        CC_BREAK_IF(!(_info = new PhysicsJointInfo()));
+        if (a != nullptr)
+        {
+            _bodyA = a;
+            _bodyA->retain();
+            _bodyA->_joints.push_back(this);
+        }
         
-        _bodyA = a;
-        _bodyA->retain();
-        _bodyA->_joints.push_back(this);
-        _bodyB = b;
-        _bodyB->retain();
-        _bodyB->_joints.push_back(this);
+        if (b != nullptr)
+        {
+            _bodyB = b;
+            _bodyB->retain();
+            _bodyB->_joints.push_back(this);
+        }
         
         return true;
     } while (false);
@@ -144,6 +155,18 @@ PhysicsBodyInfo* PhysicsJoint::bodyInfo(PhysicsBody* body) const
 }
 
 
+void PhysicsJoint::setCollisionEnable(bool enable)
+{
+    if (_collisionEnable != enable)
+    {
+        _collisionEnable = enable;
+        
+        for (auto shape : _bodyB->_shapes)
+        {
+            shape->_info->setGroup(enable ? _bodyB->_info->group : _bodyA->_info->group);
+        }
+    }
+}
 
 PhysicsJointFixed* PhysicsJointFixed::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
 {
@@ -165,8 +188,18 @@ bool PhysicsJointFixed::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
         
-        _info->joint = cpPivotJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
+        // add a pivot joint to fixed two body together
+        cpConstraint* joint = cpPivotJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
                                         PhysicsHelper::point2cpv(anchr));
+        CC_BREAK_IF(joint);
+        _info->add(joint);
+        
+        // add a gear joint to make two body have the same rotation.
+        joint = cpGearJointNew(bodyInfo(a)->body, bodyInfo(b)->body, 0, 1);
+        CC_BREAK_IF(joint);
+        _info->add(joint);
+        
+        setCollisionEnable(false);
         
         return true;
     } while (false);
@@ -174,11 +207,11 @@ bool PhysicsJointFixed::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
     return false;
 }
 
-PhysicsJointPin* PhysicsJointPin::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
+PhysicsJointPin* PhysicsJointPin::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
 {
     PhysicsJointPin* joint = new PhysicsJointPin();
     
-    if (joint && joint->init(a, b, anchr1, anchr2))
+    if (joint && joint->init(a, b, anchr))
     {
         joint->autorelease();
         return joint;
@@ -188,13 +221,20 @@ PhysicsJointPin* PhysicsJointPin::create(PhysicsBody* a, PhysicsBody* b, const P
     return nullptr;
 }
 
-bool PhysicsJointPin::init(PhysicsBody *a, PhysicsBody *b, const Point& anchr1, const Point& anchr2)
+bool PhysicsJointPin::init(PhysicsBody *a, PhysicsBody *b, const Point& anchr)
 {
     do
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
         
-        _info->joint = cpPinJointNew(bodyInfo(a)->body, bodyInfo(b)->body, PhysicsHelper::point2cpv(anchr1), PhysicsHelper::point2cpv(anchr2));
+        cpConstraint* joint = cpPivotJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
+                                       PhysicsHelper::point2cpv(anchr));
+        
+        CC_BREAK_IF(joint);
+        
+        _info->add(joint);
+        
+        setCollisionEnable(false);
         
         return true;
     } while (false);
@@ -221,10 +261,14 @@ bool PhysicsJointSliding::init(PhysicsBody* a, PhysicsBody* b, const Point& groo
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
         
-        _info->joint = cpGrooveJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
+        cpConstraint* joint = cpGrooveJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
                                        PhysicsHelper::point2cpv(grooveA),
                                        PhysicsHelper::point2cpv(grooveB),
                                        PhysicsHelper::point2cpv(anchr));
+        
+        CC_BREAK_IF(joint);
+        
+        _info->add(joint);
         
         return true;
     } while (false);
@@ -233,11 +277,11 @@ bool PhysicsJointSliding::init(PhysicsBody* a, PhysicsBody* b, const Point& groo
 }
 
 
-PhysicsJointLimit* PhysicsJointLimit::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max)
+PhysicsJointLimit* PhysicsJointLimit::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
 {
     PhysicsJointLimit* joint = new PhysicsJointLimit();
     
-    if (joint && joint->init(a, b, anchr1, anchr2, min, max))
+    if (joint && joint->init(a, b, anchr1, anchr2))
     {
         return joint;
     }
@@ -246,22 +290,46 @@ PhysicsJointLimit* PhysicsJointLimit::create(PhysicsBody* a, PhysicsBody* b, con
     return nullptr;
 }
 
-bool PhysicsJointLimit::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max)
+bool PhysicsJointLimit::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
 {
     do
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
         
-        _info->joint = cpSlideJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
+        cpConstraint* joint = cpSlideJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
                                        PhysicsHelper::point2cpv(anchr1),
                                        PhysicsHelper::point2cpv(anchr2),
-                                       PhysicsHelper::float2cpfloat(min),
-                                       PhysicsHelper::float2cpfloat(max));
+                                       0,
+                                       PhysicsHelper::float2cpfloat(anchr1.getDistance(anchr2)));
+        
+        CC_BREAK_IF(joint);
+        
+        _info->add(joint);
         
         return true;
     } while (false);
     
     return false;
+}
+
+float PhysicsJointLimit::getMin()
+{
+    return PhysicsHelper::cpfloat2float(cpSlideJointGetMin(_info->joints.front()));
+}
+
+void PhysicsJointLimit::setMin(float min)
+{
+    cpSlideJointSetMin(_info->joints.front(), PhysicsHelper::float2cpfloat(min));
+}
+
+float PhysicsJointLimit::getMax()
+{
+    return PhysicsHelper::cpfloat2float(cpSlideJointGetMax(_info->joints.front()));
+}
+
+void PhysicsJointLimit::setMax(float max)
+{
+    cpSlideJointSetMax(_info->joints.front(), PhysicsHelper::float2cpfloat(max));
 }
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
