@@ -111,16 +111,16 @@ public:
     static CCBoneData *decodeBone(cs::CSJsonDictionary &json, DataInfo *dataInfo);
     static CCDisplayData *decodeBoneDisplay(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 
-    static CCAnimationData *decodeAnimation(cs::CSJsonDictionary &json);
-    static CCMovementData *decodeMovement(cs::CSJsonDictionary &json);
-    static CCMovementBoneData *decodeMovementBone(cs::CSJsonDictionary &json);
-    static CCFrameData *decodeFrame(cs::CSJsonDictionary &json);
+    static CCAnimationData *decodeAnimation(cs::CSJsonDictionary &json, DataInfo *dataInfo);
+    static CCMovementData *decodeMovement(cs::CSJsonDictionary &json, DataInfo *dataInfo);
+    static CCMovementBoneData *decodeMovementBone(cs::CSJsonDictionary &json, DataInfo *dataInfo);
+    static CCFrameData *decodeFrame(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 
     static CCTextureData *decodeTexture(cs::CSJsonDictionary &json);
 
     static CCContourData *decodeContour(cs::CSJsonDictionary &json);
 
-    static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json);
+    static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json, DataInfo *dataInfo);
 
 private:
     static CCDataReaderHelper *s_DataReaderHelper;

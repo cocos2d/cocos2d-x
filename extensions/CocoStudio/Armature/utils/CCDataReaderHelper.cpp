@@ -142,13 +142,14 @@ static const char *VERTEX_POINT = "vertex";
 static const char *COLOR_INFO = "color";
 
 static const char *CONFIG_FILE_PATH = "config_file_path";
-
+static const char *CONTENT_SCALE = "content_scale";
 
 NS_CC_EXT_BEGIN
 
 
 std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
+float s_ContentScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
 static float s_CocoStudioVersion = VERSION_COMBINED;
 
@@ -183,6 +184,7 @@ typedef struct _DataInfo
 {
     AsyncStruct *asyncStruct;
     std::queue<std::string>      configFileQueue;
+    float contentScale;
 } DataInfo;
 
 
@@ -1214,6 +1216,15 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     cs::CSJsonDictionary json;
     json.initWithDescription(fileContent);
 
+    if (dataInfo)
+    {
+        dataInfo->contentScale = json.getItemFloatValue(CONTENT_SCALE, 1);
+    }
+    else
+    {
+        s_ContentScale = json.getItemFloatValue(CONTENT_SCALE, 1);
+    }
+
     // Decode armatures
     int length = json.getArrayItemCount(ARMATURE_DATA);
     for (int i = 0; i < length; i++)
@@ -1239,7 +1250,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *animationDic = json.getSubItemFromArray(ANIMATION_DATA, i);
-        CCAnimationData *animationData = decodeAnimation(*animationDic);
+        CCAnimationData *animationData = decodeAnimation(*animationDic, dataInfo);
 
         if (dataInfo)
         {
@@ -1338,7 +1349,7 @@ CCBoneData *CCDataReaderHelper::decodeBone(cs::CSJsonDictionary &json, DataInfo 
     CCBoneData *boneData = new CCBoneData();
     boneData->init();
 
-    decodeNode(boneData, json);
+    decodeNode(boneData, json, dataInfo);
 
     const char *str = json.getItemStringValue(A_NAME);
     if(str != NULL)
@@ -1395,6 +1406,17 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json,
             sdd->skinData.scaleY = dic->getItemFloatValue(A_SCALE_Y, 1);
             sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);
             sdd->skinData.skewY = dic->getItemFloatValue(A_SKEW_Y, 0);
+
+            if (dataInfo)
+            {
+                sdd->skinData.x *= dataInfo->contentScale;
+                sdd->skinData.y *= dataInfo->contentScale;
+            }
+            else
+            {
+                sdd->skinData.x *= s_ContentScale;
+                sdd->skinData.y *= s_ContentScale;
+            }
             delete dic;
         }
     }
@@ -1441,7 +1463,7 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json,
     return displayData;
 }
 
-CCAnimationData *CCDataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json)
+CCAnimationData *CCDataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json, DataInfo *dataInfo)
 {
     CCAnimationData *aniData = new CCAnimationData();
 
@@ -1456,7 +1478,7 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_DATA, i);
-        CCMovementData *movementData = decodeMovement(*dic);
+        CCMovementData *movementData = decodeMovement(*dic, dataInfo);
         aniData->addMovement(movementData);
         movementData->release();
 
@@ -1466,7 +1488,7 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json)
     return aniData;
 }
 
-CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
+CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json, DataInfo *dataInfo)
 {
     CCMovementData *movementData = new CCMovementData();
 
@@ -1487,7 +1509,7 @@ CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_BONE_DATA, i);
-        CCMovementBoneData *movementBoneData = decodeMovementBone(*dic);
+        CCMovementBoneData *movementBoneData = decodeMovementBone(*dic, dataInfo);
         movementData->addMovementBoneData(movementBoneData);
         movementBoneData->release();
 
@@ -1497,7 +1519,7 @@ CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
     return movementData;
 }
 
-CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary &json)
+CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary &json, DataInfo *dataInfo)
 {
     CCMovementBoneData *movementBoneData = new CCMovementBoneData();
     movementBoneData->init();
@@ -1514,7 +1536,7 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(FRAME_DATA, i);
-        CCFrameData *frameData = decodeFrame(*dic);
+        CCFrameData *frameData = decodeFrame(*dic, dataInfo);
 
         movementBoneData->addFrameData(frameData);
         frameData->release();
@@ -1569,11 +1591,11 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
     return movementBoneData;
 }
 
-CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json)
+CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json, DataInfo *dataInfo)
 {
     CCFrameData *frameData = new CCFrameData();
 
-    decodeNode(frameData, json);
+    decodeNode(frameData, json, dataInfo);
 
     frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
     frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
@@ -1652,10 +1674,22 @@ CCContourData *CCDataReaderHelper::decodeContour(cs::CSJsonDictionary &json)
     return contourData;
 }
 
-void CCDataReaderHelper::decodeNode(CCBaseData *node, cs::CSJsonDictionary &json)
+void CCDataReaderHelper::decodeNode(CCBaseData *node, cs::CSJsonDictionary &json, DataInfo *dataInfo)
 {
     node->x = json.getItemFloatValue(A_X, 0) * s_PositionReadScale;
     node->y = json.getItemFloatValue(A_Y, 0) * s_PositionReadScale;
+
+    if (dataInfo)
+    {
+        node->x *= dataInfo->contentScale;
+        node->y *= dataInfo->contentScale;
+    }
+    else
+    {
+        node->x *= s_ContentScale;
+        node->y *= s_ContentScale;
+    }
+
     node->zOrder = json.getItemIntValue(A_Z, 0);
 
     node->skewX = json.getItemFloatValue(A_SKEW_X, 0);
