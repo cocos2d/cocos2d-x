@@ -592,6 +592,7 @@ Developers:
         Prevent nullptr access in AssetsManager
         [Android] re-introduce Cocos2dxHelper.runOnGLThread(Runnable)
         [Android] added EGL_RENDERABLE_TYPE to OpenGL attributes
+        Android: add xlargeScreens="true" to supports-screens
         
     bmanGH
         Use gl caching functions in TexturePVR::createGLTexture()
