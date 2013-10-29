@@ -422,18 +422,20 @@ static int32_t handle_key_input(AInputEvent *event)
 {
     if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
     {
+        auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+
         switch (AKeyEvent_getKeyCode(event))
         {
         case AKEYCODE_BACK:	
             {
                 cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, false);
-                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+                dispatcher->dispatchEvent(&event);
             }
             return 1;
         case AKEYCODE_MENU:
             {
                 cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
-                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+                dispatcher->dispatchEvent(&event);
             }
             return 1;
         default:
@@ -629,8 +631,8 @@ void android_main(struct android_app* state) {
                             acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
                             cocos2d::EventAcceleration accEvent(acc);
-
-                            cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
+                            auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+                            dispatcher->dispatchEvent(&accEvent);
                         } else {
                             // ACONFIGURATION_ORIENTATION_LAND
                             // swap x and y parameters
@@ -640,8 +642,8 @@ void android_main(struct android_app* state) {
                             acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
                             cocos2d::EventAcceleration accEvent(acc);
-
-                            cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
+                            auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+                            dispatcher->dispatchEvent(&accEvent);
                         }
                     }
                 }
