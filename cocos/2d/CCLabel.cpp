@@ -46,8 +46,6 @@ Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fo
     }
     
     return nullptr;
-     
-    return 0;
 }
 
 Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, TextHAlignment alignment, int lineSize)
@@ -95,8 +93,8 @@ Label* Label::createWithAtlas(FontAtlas *atlas, TextHAlignment alignment, int li
 }
 
 Label::Label(FontAtlas *atlas, TextHAlignment alignment)
-: _currentUTF8String(0)
-, _originalUTF8String(0)
+: _currentUTF16String(0)
+, _originalUTF16String(0)
 , _fontAtlas(atlas)
 , _alignment(alignment)
 , _lineBreakWithoutSpaces(false)
@@ -107,32 +105,35 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment)
 , _cascadeOpacityEnabled(true)
 , _displayedOpacity(255)
 , _realOpacity(255)
-, _isOpacityModifyRGB(false)
+, _isOpacityModifyRGB(true)
+,_reusedLetter(nullptr)
 {
 }
 
 Label::~Label()
-{
-    CC_SAFE_RELEASE(_spriteArray);
-    CC_SAFE_RELEASE(_spriteArrayCache);
-
-    if (_currentUTF8String)
-        delete [] _currentUTF8String;
-    
+{   
+    if (_currentUTF16String)
+        delete [] _currentUTF16String;
+    if (_originalUTF16String)
+        delete [] _originalUTF16String;
     if (_advances)
         delete [] _advances;
     
     if (_fontAtlas)
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
+
+    delete _reusedLetter;
 }
 
 bool Label::init()
-{
-    _spriteArray = Array::createWithCapacity(30);
-    _spriteArrayCache = Array::createWithCapacity(30);
-
-    _spriteArray->retain();
-    _spriteArrayCache->retain();
+{ 
+    if(_fontAtlas)
+    {
+        _reusedLetter = new Sprite;
+        _reusedLetter->initWithTexture(&_fontAtlas->getTexture(0));
+        _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);
+        return SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), 30);
+    }
 
     return true;
 }
@@ -151,13 +152,9 @@ bool Label::setText(const char *stringToRender, float lineWidth, TextHAlignment 
     // reset the string
     resetCurrentString();
     
-    
     _width                  = lineWidth;
     _alignment              = alignment;
     _lineBreakWithoutSpaces = lineBreakWithoutSpaces;
-    
-    // release all the sprites
-    moveAllSpritesToCache();
     
     // store locally common line height
     _commonLineHeight = _fontAtlas->getCommonLineHeight();
@@ -169,11 +166,8 @@ bool Label::setText(const char *stringToRender, float lineWidth, TextHAlignment 
     if(!utf16String)
         return false;
     
-    numLetter = cc_wcslen(utf16String);
-    SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), numLetter);
     _cascadeColorEnabled = true;
     
-    //
     setCurrentString(utf16String);
     setOriginalString(utf16String);
     
@@ -247,30 +241,56 @@ void Label::setScaleY(float scaleY)
 }
 
 void Label::alignText()
-{
-    hideAllLetters();
-    LabelTextFormatter::createStringSprites(this);
-    
-    if( LabelTextFormatter::multilineText(this) )
-    {
-        hideAllLetters();
+{      
+    if(_textureAtlas)
+        _textureAtlas->removeAllQuads();  
+    _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
+    LabelTextFormatter::createStringSprites(this);    
+    if( LabelTextFormatter::multilineText(this) )      
         LabelTextFormatter::createStringSprites(this);
-    }
     
     LabelTextFormatter::alignText(this);
-}
-
-void Label::hideAllLetters()
-{
-    Object* Obj = NULL;
-    CCARRAY_FOREACH(_spriteArray, Obj)
+  
+    int strLen = cc_wcslen(_currentUTF16String);  
+    if (_children && _children->count() != 0)
     {
-        ((Sprite *)Obj)->setVisible(false);
+        Object* child;
+        CCARRAY_FOREACH(_children, child)
+        {
+            Node* pNode = static_cast<Node*>( child );
+            if (pNode)
+            {
+                int tag = pNode->getTag();
+                if(tag < 0 || tag >= strLen)
+                    SpriteBatchNode::removeChild(pNode, true);
+            }
+        }
     }
-    
-    CCARRAY_FOREACH(_spriteArrayCache, Obj)
-    {
-        ((Sprite *)Obj)->setVisible(false);
+    _reusedLetter->setBatchNode(nullptr);
+   
+    int vaildIndex = 0;
+    Sprite* child = nullptr;
+    Rect uvRect;
+    for (int ctr = 0; ctr < strLen; ++ctr)
+    {        
+        if (_lettersInfo[ctr].def.validDefinition)
+        {
+            child = (Sprite*)this->getChildByTag(ctr);
+            if (child)
+            {
+                uvRect.size.height = _lettersInfo[ctr].def.height;
+                uvRect.size.width  = _lettersInfo[ctr].def.width;
+                uvRect.origin.x    = _lettersInfo[ctr].def.U;
+                uvRect.origin.y    = _lettersInfo[ctr].def.V;
+
+                child->setTexture(&_fontAtlas->getTexture(_lettersInfo[ctr].def.textureID));
+                child->setTextureRect(uvRect);              
+            }
+           
+            updateSpriteWithLetterDefinition(_reusedLetter,_lettersInfo[ctr].def,&_fontAtlas->getTexture(_lettersInfo[ctr].def.textureID));
+            _reusedLetter->setPosition(_lettersInfo[ctr].position);
+            insertQuadFromSprite(_reusedLetter,vaildIndex++);
+        }     
     }
 }
 
@@ -295,17 +315,17 @@ bool Label::computeAdvancesForString(unsigned short int *stringToRender)
 
 bool Label::setOriginalString(unsigned short *stringToSet)
 {
-    if (_originalUTF8String)
+    if (_originalUTF16String)
     {
-        delete [] _originalUTF8String;
-        _originalUTF8String = 0;
+        delete [] _originalUTF16String;
+        _originalUTF16String = 0;
     }
     
     int newStringLenght = cc_wcslen(stringToSet);
-    _originalUTF8String = new unsigned short int [newStringLenght + 1];
-    memset(_originalUTF8String, 0, (newStringLenght + 1) * 2);
-    memcpy(_originalUTF8String, stringToSet, (newStringLenght * 2));
-    _originalUTF8String[newStringLenght] = 0;
+    _originalUTF16String = new unsigned short int [newStringLenght + 1];
+    memset(_originalUTF16String, 0, (newStringLenght + 1) * 2);
+    memcpy(_originalUTF16String, stringToSet, (newStringLenght * 2));
+    _originalUTF16String[newStringLenght] = 0;
     
     return true;
 }
@@ -313,63 +333,34 @@ bool Label::setOriginalString(unsigned short *stringToSet)
 bool Label::setCurrentString(unsigned short *stringToSet)
 {
     // set the new string
-    if (_currentUTF8String)
+    if (_currentUTF16String)
     {
-        delete [] _currentUTF8String;
-        _currentUTF8String = 0;
+        delete [] _currentUTF16String;
+        _currentUTF16String = 0;
     }
     //
-    _currentUTF8String  = stringToSet;
+    _currentUTF16String  = stringToSet;
     // compute the advances
     return computeAdvancesForString(stringToSet);
 }
 
 void Label::resetCurrentString()
 {
-    if ((!_currentUTF8String) && (!_originalUTF8String))
+    if ((!_currentUTF16String) && (!_originalUTF16String))
         return;
     
     // set the new string
-    if (_currentUTF8String)
+    if (_currentUTF16String)
     {
-        delete [] _currentUTF8String;
-        _currentUTF8String = 0;
+        delete [] _currentUTF16String;
+        _currentUTF16String = 0;
     }
     
-    int stringLenght = cc_wcslen(_originalUTF8String);
-    _currentUTF8String = new unsigned short int [stringLenght + 1];
-    memcpy(_currentUTF8String, _originalUTF8String, stringLenght * 2);
-    _currentUTF8String[stringLenght] = 0;
+    int stringLenght = cc_wcslen(_originalUTF16String);
+    _currentUTF16String = new unsigned short int [stringLenght + 1];
+    memcpy(_currentUTF16String, _originalUTF16String, stringLenght * 2);
+    _currentUTF16String[stringLenght] = 0;
     
-}
-
-Sprite * Label::createNewSpriteFromLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture)
-{
-    Rect uvRect;
-    uvRect.size.height = theDefinition.height;
-    uvRect.size.width  = theDefinition.width;
-    uvRect.origin.x    = theDefinition.U;
-    uvRect.origin.y    = theDefinition.V;
-    
-    SpriteFrame *pFrame = SpriteFrame::createWithTexture(theTexture, uvRect);
-    Sprite *tempSprite  = getSprite();
-    
-    if (!tempSprite)
-        return 0;
-    
-    tempSprite->initWithSpriteFrame(pFrame);
-    tempSprite->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));
-    tempSprite->setBatchNode(this);
-    
-    // Apply label properties
-    tempSprite->setOpacityModifyRGB(_isOpacityModifyRGB);
-    
-    // Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-    tempSprite->updateDisplayedColor(_displayedColor);
-    tempSprite->updateDisplayedOpacity(_displayedOpacity);
-    
-    
-    return tempSprite;
 }
 
 Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture)
@@ -389,143 +380,93 @@ Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const F
         SpriteFrame *frame = SpriteFrame::createWithTexture(theTexture, uvRect);
         if (frame)
         {
+            spriteToUpdate->setBatchNode(this); 
             spriteToUpdate->setTexture(theTexture);
             spriteToUpdate->setDisplayFrame(frame);
-            spriteToUpdate->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));
-            spriteToUpdate->setBatchNode(this);
-        }
+            spriteToUpdate->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));                                        
+        }     
         
         return spriteToUpdate;
     }
 }
 
-Sprite * Label::getSpriteForLetter(unsigned short int newLetter)
+bool Label::recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex)
 {
-    if (!_fontAtlas)
-        return 0;
+    if (spriteIndex >= _lettersInfo.size())
+    {
+        LetterInfo tmpInfo;
+        _lettersInfo.push_back(tmpInfo);
+    }    
+       
+    _fontAtlas->getLetterDefinitionForChar(theChar, _lettersInfo[spriteIndex].def);
+    _lettersInfo[spriteIndex].position = point;
+    _lettersInfo[spriteIndex].contentSize.width = _lettersInfo[spriteIndex].def.width;
+    _lettersInfo[spriteIndex].contentSize.height = _lettersInfo[spriteIndex].def.height;
+
+    return _lettersInfo[spriteIndex].def.validDefinition;
+}
+
+bool Label::recordPlaceholderInfo(int spriteIndex)
+{
+   if (spriteIndex >= _lettersInfo.size())
+    {
+        LetterInfo tmpInfo;
+        _lettersInfo.push_back(tmpInfo);
+    }
+
+    _lettersInfo[spriteIndex].def.validDefinition = false;
     
-    FontLetterDefinition tempDefinition;
-    bool validDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter, tempDefinition);
-    if (validDefinition)
-    {
-        Sprite *newSprite = createNewSpriteFromLetterDefinition(tempDefinition, &_fontAtlas->getTexture(tempDefinition.textureID) );
-        this->addChild(newSprite);
-        return    newSprite;
-    }
-    else
-    {
-        return 0;
-    }
+    return false;
 }
 
-Sprite * Label::updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short int newLetter)
+void Label::addChild(Node * child, int zOrder/* =0 */, int tag/* =0 */)
 {
-    if (!spriteToUpdate || !_fontAtlas)
-        return 0;
-    else
-    {
-        FontLetterDefinition tempDefinition;
-        bool validDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter, tempDefinition);
-        if (validDefinition)
-        {
-            Sprite *pNewSprite = updateSpriteWithLetterDefinition(spriteToUpdate, tempDefinition, &_fontAtlas->getTexture(tempDefinition.textureID) );
-            return  pNewSprite;
-        }
-        else
-        {
-            return 0;
-        }
-    }
-}
-
-void Label::moveAllSpritesToCache()
-{
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_spriteArray, pObj)
-    {
-        ((Sprite *)pObj)->removeFromParent();
-        _spriteArrayCache->addObject(pObj);
-    }
-    
-    _spriteArray->removeAllObjects();
-}
-
-Sprite * Label::getSprite()
-{
-    if (_spriteArrayCache->count())
-    {
-        Sprite *retSprite = static_cast<Sprite *>(_spriteArrayCache->getLastObject());
-        _spriteArrayCache->removeLastObject();
-        return retSprite;
-    }
-    else
-    {
-        Sprite *retSprite = new Sprite;
-        return retSprite;
-    }
+    CCASSERT(0, "addChild: is not supported on Label.");
 }
 
 ///// PROTOCOL STUFF
 
-Sprite * Label::getSpriteChild(int ID) const
+Sprite * Label::getLetterAt(int ID)
 {
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_spriteArray, pObj)
-    {
-        Sprite *pSprite = (Sprite *)pObj;
-        if ( pSprite->getTag() == ID)
+    if (ID < getStringLenght())
+    {       
+        if(_lettersInfo[ID].def.validDefinition == false)
+            return nullptr;
+       
+        Sprite* sp = static_cast<Sprite*>(this->getChildByTag(ID));
+
+        if (!sp)
         {
-            return pSprite;
+            Rect uvRect;
+            uvRect.size.height = _lettersInfo[ID].def.height;
+            uvRect.size.width  = _lettersInfo[ID].def.width;
+            uvRect.origin.x    = _lettersInfo[ID].def.U;
+            uvRect.origin.y    = _lettersInfo[ID].def.V;
+
+            sp = new Sprite();
+            sp->initWithTexture(&_fontAtlas->getTexture(_lettersInfo[ID].def.textureID),uvRect);
+            sp->setBatchNode(this);
+            sp->setAnchorPoint(Point(_lettersInfo[ID].def.anchorX, _lettersInfo[ID].def.anchorY));                    
+            sp->setPosition(_lettersInfo[ID].position);
+            sp->setOpacity(_realOpacity);
+         
+            this->addSpriteWithoutQuad(sp, ID, ID);
+            sp->release();
         }
-    }
-    return 0;
-}
-
-Array* Label::getChildrenLetters() const
-{
-    return _spriteArray;
-}
-
-Sprite * Label::getSpriteForChar(unsigned short int theChar, int spriteIndexHint)
-{
-    // ret sprite
-    Sprite *retSprite =  0;
-    
-    // look for already existing sprites
-    retSprite = getSpriteChild(spriteIndexHint);
-    
-    if (!retSprite)
-    {
-        retSprite = getSpriteForLetter(theChar);
-        if (!retSprite)
-            return 0;
-        
-        if (retSprite)
-            retSprite->setTag(spriteIndexHint);
-        
-        _spriteArray->addObject(retSprite);
+        return sp;
     }
     
-    // the sprite is now visible
-    retSprite->setVisible(true);
-    
-    // set the right texture letter to the sprite
-    updateSpriteForLetter(retSprite, theChar);
-    
-    // we are done here
-    return retSprite;
+    return nullptr;
 }
 
-float Label::getLetterPosXLeft( Sprite* sp ) const
+float Label::getLetterPosXLeft( int index ) const
 {
-    float scaleX = _scaleX;
-    return sp->getPosition().x * scaleX - (sp->getContentSize().width * scaleX * sp->getAnchorPoint().x);
+    return _lettersInfo[index].position.x * _scaleX - (_lettersInfo[index].contentSize.width * _scaleX * _lettersInfo[index].def.anchorX);
 }
 
-float Label::getLetterPosXRight( Sprite* sp ) const
+float Label::getLetterPosXRight( int index ) const
 {
-    float scaleX = _scaleX;
-    return sp->getPosition().x * scaleX + (sp->getContentSize().width * scaleX * sp->getAnchorPoint().x);
+    return _lettersInfo[index].position.x * _scaleX + (_lettersInfo[index].contentSize.width * _scaleX * _lettersInfo[index].def.anchorX);
 }
 
 int Label::getCommonLineHeight() const
@@ -586,14 +527,14 @@ int Label::getStringNumLines() const
 {
     int quantityOfLines = 1;
     
-    unsigned int stringLen = _currentUTF8String ? cc_wcslen(_currentUTF8String) : 0;
+    unsigned int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
     if (stringLen == 0)
         return (-1);
     
     // count number of lines
     for (unsigned int i = 0; i < stringLen - 1; ++i)
     {
-        unsigned short c = _currentUTF8String[i];
+        unsigned short c = _currentUTF16String[i];
         if (c == '\n')
         {
             quantityOfLines++;
@@ -605,17 +546,17 @@ int Label::getStringNumLines() const
 
 int Label::getStringLenght() const
 {
-    return _currentUTF8String ? cc_wcslen(_currentUTF8String) : 0;
+    return _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
 }
 
 unsigned short Label::getCharAtStringPosition(int position) const
 {
-    return _currentUTF8String[position];
+    return _currentUTF16String[position];
 }
 
 unsigned short * Label::getUTF8String() const
 {
-    return _currentUTF8String;
+    return _currentUTF16String;
 }
 
 void Label::assignNewUTF8String(unsigned short *newString)
@@ -677,6 +618,7 @@ void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
             }
         }
     }
+    _reusedLetter->setOpacityModifyRGB(true);
 }
 
 unsigned char Label::getOpacity() const
@@ -692,7 +634,7 @@ unsigned char Label::getDisplayedOpacity() const
 void Label::setOpacity(GLubyte opacity)
 {
     _displayedOpacity = _realOpacity = opacity;
-    
+    _reusedLetter->setOpacity(opacity);
 	if( _cascadeOpacityEnabled ) {
 		GLubyte parentOpacity = 255;
         RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
@@ -713,6 +655,26 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
         Sprite *item = static_cast<Sprite*>( pObj );
 		item->updateDisplayedOpacity(_displayedOpacity);
 	}
+    //if (_cascadeOpacityEnabled)
+    {
+        V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
+        int count = _textureAtlas->getTotalQuads();
+        Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
+        if (_isOpacityModifyRGB)
+        {
+            color4.r *= _displayedOpacity/255.0f;
+            color4.g *= _displayedOpacity/255.0f;
+            color4.b *= _displayedOpacity/255.0f;
+        }
+        for (int index=0; index<count; ++index)
+        {    
+            quads[index].bl.colors = color4;
+            quads[index].br.colors = color4;
+            quads[index].tl.colors = color4;
+            quads[index].tr.colors = color4;
+            _textureAtlas->updateQuad(&quads[index], index);           
+        }  
+    }
 }
 
 bool Label::isCascadeOpacityEnabled() const
@@ -738,7 +700,7 @@ const Color3B& Label::getDisplayedColor() const
 void Label::setColor(const Color3B& color)
 {
     _displayedColor = _realColor = color;
-	
+	_reusedLetter->setColor(color);
 	if( _cascadeColorEnabled )
     {
 		Color3B parentColor = Color3B::WHITE;
@@ -763,6 +725,26 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
         Sprite *item = static_cast<Sprite*>( pObj );
 		item->updateDisplayedColor(_displayedColor);
 	}
+
+    V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
+    int count = _textureAtlas->getTotalQuads();
+    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
+
+    // special opacity for premultiplied textures
+    if (_isOpacityModifyRGB)
+    {
+        color4.r *= _displayedOpacity/255.0f;
+        color4.g *= _displayedOpacity/255.0f;
+        color4.b *= _displayedOpacity/255.0f;
+    }
+    for (int index=0; index<count; ++index)
+    {    
+        quads[index].bl.colors = color4;
+        quads[index].br.colors = color4;
+        quads[index].tl.colors = color4;
+        quads[index].tr.colors = color4;
+        _textureAtlas->updateQuad(&quads[index], index);
+    }  
 }
 
 bool Label::isCascadeColorEnabled() const
