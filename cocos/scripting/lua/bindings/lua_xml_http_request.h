@@ -66,10 +66,16 @@ public:
     void setRequestHeader(const char* field, const char* value);
 
     std::map<std::string, std::string> getHttpHeader() { return _httpHeader ;}
+    
+    void getByteData(unsigned char* byteData);
+    
+    inline std::string getDataStr() { return _data.str(); }
+    
+    inline size_t getDataSize() {   return _dataSize; }
+    
 private:
     void _gotHeader(std::string header);
     
-
 
     std::string                          _url;
     std::string                          _meth;
@@ -89,6 +95,6 @@ private:
     std::map<std::string, std::string>   _requestHeader;
 };
 
-TOLUA_API int lua_xml_http_request_open(lua_State* L);
+TOLUA_API int register_xml_http_request(lua_State* L);
 
 #endif //#ifndef __COCOS_SCRIPTING_LUA_BINDINGS_LUA_XML_HTTP_REQUEST_H__
