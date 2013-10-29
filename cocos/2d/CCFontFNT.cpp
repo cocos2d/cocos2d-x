@@ -38,8 +38,11 @@ FontFNT * FontFNT::create(const char* fntFilePath)
 
 FontFNT::~FontFNT()
 {
-    if (_configuration)
+    //_configuration release when execute LabelBMFont::purgeCachedData();
+    /*if (_configuration)
+    {
         _configuration->release();
+    }*/
 }
 
 Size * FontFNT::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const
@@ -176,7 +179,7 @@ FontAtlas * FontFNT::createFontAtlas()
         
         tempDefinition.anchorX = 0.5f;
         tempDefinition.anchorY = 0.5f;
-        
+        tempDefinition.validDefinition = true;
         // add the new definition
         tempAtlas->addLetterDefinition(tempDefinition);
     }

@@ -24,19 +24,31 @@
 
 #ifndef _CCLabelTextFormatProtocol_h_
 #define _CCLabelTextFormatProtocol_h_
+#include "CCFontAtlas.h"
+#include <vector>
 
 NS_CC_BEGIN
+
+
+struct LetterInfo
+{
+    FontLetterDefinition def;
+
+    Point position;
+    Size  contentSize;
+    bool  visible;
+};
 
 class CC_DLL LabelTextFormatProtocol
 {
 public:
-    
+    virtual bool             recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) = 0; 
+    virtual bool             recordPlaceholderInfo(int spriteIndex) = 0; 
+    virtual std::vector<LetterInfo>  *getLettersInfo()                                                 = 0;
+    virtual float            getLetterPosXLeft(int index)  const                                       = 0;
+    virtual float            getLetterPosXRight(int index) const                                       = 0;
     // sprite related stuff
-    virtual cocos2d::Sprite *getSpriteChild(int ID) const                                            = 0;
-    virtual cocos2d::Array  *getChildrenLetters() const                                              = 0;
-    virtual cocos2d::Sprite *getSpriteForChar(unsigned short int theChar, int spriteIndexHint)       = 0;
-    virtual float            getLetterPosXLeft(cocos2d::Sprite* sp)  const                           = 0;
-    virtual float            getLetterPosXRight(cocos2d::Sprite* sp) const                           = 0;
+    virtual cocos2d::Sprite *getLetterAt(int ID)                                                    = 0;   
     
     // font related stuff
     virtual int              getCommonLineHeight()  const                                              = 0;
