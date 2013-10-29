@@ -125,7 +125,7 @@ class ConvertToNode : public TestCocosNodeDemo
 {
 public:
     ConvertToNode();
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
     virtual std::string title();
     virtual std::string subtitle();
 };

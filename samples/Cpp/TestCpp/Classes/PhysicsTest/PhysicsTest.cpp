@@ -197,8 +197,13 @@ void PhysicsDemoClickAdd::onEnter()
     PhysicsDemo::onEnter();
     
 #ifdef CC_USE_PHYSICS
-    setTouchEnabled(true);
-    setAccelerometerEnabled(true);
+    
+    auto touchListener = EventListenerTouchAllAtOnce::create();
+    touchListener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(PhysicsDemoClickAdd::onAcceleration, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     
     auto node = Node::create();
     node->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size));
@@ -506,7 +511,10 @@ PhysicsDemoRayCast::PhysicsDemoRayCast()
 void PhysicsDemoRayCast::onEnter()
 {
     PhysicsDemo::onEnter();
-    setTouchEnabled(true);
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoRayCast::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     _scene->getPhysicsWorld()->setGravity(Point::ZERO);
     
@@ -707,10 +715,17 @@ void PhysicsDemoJoints::onEnter()
 {
     PhysicsDemo::onEnter();
     
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoJoints::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     _scene->getPhysicsWorld()->setGravity(Point::ZERO);
     
+    
+}
+
+void PhysicsDemoJoints::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
     
 }
 

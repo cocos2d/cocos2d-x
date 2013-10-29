@@ -158,7 +158,6 @@ void SpriteBatchNode::visit(void)
     transform();
 
     draw();
-    updateEventPriorityIndex();
     
     if (_grid && _grid->isActive())
     {
