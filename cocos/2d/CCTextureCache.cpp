@@ -102,7 +102,7 @@ void TextureCache::destroyInstance()
 
 const char* TextureCache::description() const
 {
-    return String::createWithFormat("<TextureCache | Number of textures = %lu>", _textures.size() )->getCString();
+    return String::createWithFormat("<TextureCache | Number of textures = %zu>", _textures.size() )->getCString();
 }
 
 //Dictionary* TextureCache::snapshotTextures()
