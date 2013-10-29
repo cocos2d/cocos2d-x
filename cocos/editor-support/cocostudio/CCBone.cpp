@@ -167,6 +167,12 @@ void Bone::update(float delta)
     if (_parentBone)
         _boneTransformDirty = _boneTransformDirty || _parentBone->isTransformDirty();
 
+    CCBone *armatureParentBone = _armature->getParentBone();
+    if (armatureParentBone && !_boneTransformDirty)
+    {
+        _boneTransformDirty = armatureParentBone->isTransformDirty();
+    }
+
     if (_boneTransformDirty)
     {
         if (_armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
@@ -183,6 +189,13 @@ void Bone::update(float delta)
         if(_parentBone)
         {
             _worldTransform = AffineTransformConcat(_worldTransform, _parentBone->_worldTransform);
+        }
+        else
+        {
+            if (armatureParentBone)
+            {
+                _worldTransform = CCAffineTransformConcat(_worldTransform, armatureParentBone->getNodeToArmatureTransform());
+            }
         }
     }
 

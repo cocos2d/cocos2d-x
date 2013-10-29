@@ -137,6 +137,7 @@ void DisplayManager::addDisplay(Node *display, int index)
         if (SpriteDisplayData *spriteDisplayData = (SpriteDisplayData *)decoDisplay->getDisplayData())
         {
             skin->setSkinData(spriteDisplayData->skinData);
+            ((CCSpriteDisplayData *)displayData)->skinData = spriteDisplayData->skinData;
         }
         else
         {
