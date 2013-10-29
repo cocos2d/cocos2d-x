@@ -56,6 +56,7 @@ ScrollView::ScrollView()
 , _touchLength(0.0f)
 , _minScale(0.0f)
 , _maxScale(0.0f)
+, _touchListener(nullptr)
 {
 
 }
@@ -110,7 +111,6 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         this->setViewSize(size);
 
         setTouchEnabled(true);
-        setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
         
         _touches.reserve(EventTouch::MAX_TOUCHES);
         
@@ -151,7 +151,7 @@ bool ScrollView::isNodeVisible(Node* node)
 
 void ScrollView::pause(Object* sender)
 {
-    _container->pauseSchedulerAndActions();
+    _container->pause();
 
     Object* pObj = NULL;
     Array* pChildren = _container->getChildren();
@@ -159,7 +159,7 @@ void ScrollView::pause(Object* sender)
     CCARRAY_FOREACH(pChildren, pObj)
     {
         Node* pChild = static_cast<Node*>(pObj);
-        pChild->pauseSchedulerAndActions();
+        pChild->pause();
     }
 }
 
@@ -171,16 +171,27 @@ void ScrollView::resume(Object* sender)
     CCARRAY_FOREACH(pChildren, pObj)
     {
         Node* pChild = static_cast<Node*>(pObj);
-        pChild->resumeSchedulerAndActions();
+        pChild->resume();
     }
 
-    _container->resumeSchedulerAndActions();
+    _container->resume();
 }
 
-void ScrollView::setTouchEnabled(bool e)
+void ScrollView::setTouchEnabled(bool enabled)
 {
-    Layer::setTouchEnabled(e);
-    if (!e)
+    _eventDispatcher->removeEventListener(_touchListener);
+    
+    if (enabled)
+    {
+        _touchListener = EventListenerTouchOneByOne::create();
+        _touchListener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
+        _touchListener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
+        _touchListener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
+        _touchListener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+    }
+    else
     {
         _dragging = false;
         _touchMoved = false;
@@ -570,7 +581,6 @@ void ScrollView::visit()
 		
 		// this draw
 		this->draw();
-		updateEventPriorityIndex();
         
 		// draw children zOrder >= 0
 		for( ; i < _children->count(); i++ )
@@ -583,7 +593,6 @@ void ScrollView::visit()
     else
     {
 		this->draw();
-        updateEventPriorityIndex();
     }
 
     this->afterDraw();

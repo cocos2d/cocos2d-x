@@ -199,7 +199,8 @@ private:
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
     bool _needUnroot;
-    EventListenerTouch* _touchListener;
+    EventListenerTouchOneByOne*  _touchListenerOneByOne;
+    EventListenerTouchAllAtOnce* _touchListenerAllAtOnce;
 };
 
 
