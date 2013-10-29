@@ -123,7 +123,10 @@ public:
     /** Get the request data pointer back */
     inline char* getRequestData()
     {
-        return &(_requestData.front());
+		if(_requestData.size() != 0)
+			return &(_requestData.front());
+
+        return nullptr;
     }
     /** Get the size of request data back */
     inline int getRequestDataSize()
