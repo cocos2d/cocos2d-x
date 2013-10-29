@@ -22,11 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIHelper.h"
-#include "../../Json/DictionaryHelper.h"
-#include "cocos2d.h"
-#include "../../Reader/CCSGUIReader.h"
-
+#include "CocosGUI.h"
 
 NS_CC_EXT_BEGIN
     
@@ -247,6 +243,18 @@ UIWidget* UIHelper::cloneWidget(UIWidget *widget)
     {
         clonedWidget = UIPageView::create();
     }
+    else if (strcmp(classType, "TextField") == 0)
+    {
+        clonedWidget = UITextField::create();
+    }
+    else if (strcmp(classType, "ListView") == 0)
+    {
+        clonedWidget = UIListView::create();
+    }
+    else if (strcmp(classType, "ListViewEx") == 0)
+    {
+        clonedWidget = UIListViewEx::create();
+    }
 
     clonedWidget->copyProperties(widget);
     
@@ -287,6 +295,28 @@ UIWidget* UIHelper::cloneWidget(UIWidget *widget)
                 {
                     Layout* page = (Layout*)(arrayPages->arr[i]);
                     pageView->addPage(dynamic_cast<Layout*>(cloneWidget(page)));
+                }
+            }
+            else if (strcmp(classType, "ListView") == 0)
+            {
+                UIListView* listView = dynamic_cast<UIListView*>(clonedWidget);
+                ccArray* arrayChildren = dynamic_cast<UIListView*>(widget)->getChildren()->data;
+                int length = arrayChildren->num;
+                for (int i=0; i<length; i++)
+                {
+                    UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
+                    listView->addChild(cloneWidget(child));
+                }
+            }
+            else if (strcmp(classType, "ListViewEx") == 0)
+            {
+                UIListViewEx* listViewEx = dynamic_cast<UIListViewEx*>(clonedWidget);
+                ccArray* arrayItems = dynamic_cast<UIListViewEx*>(widget)->getItems()->data;
+                int length = arrayItems->num;
+                for (int i=0; i<length; i++)
+                {
+                    UIWidget* item = (UIWidget*)(arrayItems->arr[i]);
+                    listViewEx->pushBackCustomItem(cloneWidget(item));
                 }
             }
             break;

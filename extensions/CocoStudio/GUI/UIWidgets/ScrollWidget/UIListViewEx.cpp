@@ -231,7 +231,7 @@ void UIListViewEx::remedyLayoutParameter(UIWidget *item)
     
 }
 
-void UIListViewEx::pushBackItem()
+void UIListViewEx::pushBackDefaultItem()
 {
     if (!m_pModel)
     {
@@ -243,12 +243,30 @@ void UIListViewEx::pushBackItem()
     addChild(newItem);
 }
 
-void UIListViewEx::insetItem(int index)
+void UIListViewEx::insetDefaultItem(int index)
 {
+    if (!m_pItems)
+    {
+        return;
+    }
     UIWidget* newItem = CCUIHELPER->cloneWidget(m_pModel);
     m_pItems->insertObject(newItem, index);
     remedyLayoutParameter(newItem);
     addChild(newItem);
+}
+
+void UIListViewEx::pushBackCustomItem(UIWidget* item)
+{
+    m_pItems->addObject(item);
+    remedyLayoutParameter(item);
+    addChild(item);
+}
+
+void UIListViewEx::insetCustomItem(UIWidget* item, int index)
+{
+    m_pItems->insertObject(item, index);
+    remedyLayoutParameter(item);
+    addChild(item);
 }
 
 void UIListViewEx::removeItemAtIndex(int index)
@@ -279,6 +297,11 @@ UIWidget* UIListViewEx::getItemByIndex(int index)
         return NULL;
     }
     return (UIWidget*)(m_pItems->data->arr[index]);
+}
+
+CCArray* UIListViewEx::getItems()
+{
+    return m_pItems;
 }
 
 int UIListViewEx::indexOfItem(UIWidget *item)
@@ -316,8 +339,22 @@ void UIListViewEx::setItemsMargin(float margin)
 
 void UIListViewEx::setDirection(SCROLLVIEW_DIR dir)
 {
+    switch (dir)
+    {
+        case SCROLLVIEW_DIR_VERTICAL:
+            setLayoutType(LAYOUT_LINEAR_VERTICAL);
+            break;
+        case SCROLLVIEW_DIR_HORIZONTAL:
+            setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
+            break;
+        case SCROLLVIEW_DIR_BOTH:
+            return;
+        default:
+            return;
+            break;
+    }
     UIScrollView::setDirection(dir);
-    setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
+    
 }
 
 void UIListViewEx::refreshView()
@@ -340,33 +377,24 @@ void UIListViewEx::refreshView()
 
 void UIListViewEx::onSizeChanged()
 {
-    dynamic_cast<RectClippingNode*>(m_pRenderer)->setClippingSize(m_size);
-    if (m_pBackGroundImage)
-    {
-        m_pBackGroundImage->setPosition(ccp(m_size.width/2.0f, m_size.height/2.0f));
-        if (m_bBackGroundScale9Enabled)
-        {
-            dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setPreferredSize(m_size);
-        }
-    }
-    if (m_pColorRender)
-    {
-        m_pColorRender->setContentSize(m_size);
-    }
-    if (m_pGradientRender)
-    {
-        m_pGradientRender->setContentSize(m_size);
-    }
-    m_fTopBoundary = m_size.height;
-    m_fRightBoundary = m_size.width;
-    CCSize innerSize = m_pInnerContainer->getSize();
-    float orginInnerSizeWidth = innerSize.width;
-    float orginInnerSizeHeight = innerSize.height;
-    float innerSizeWidth = MAX(orginInnerSizeWidth, m_size.width);
-    float innerSizeHeight = MAX(orginInnerSizeHeight, m_size.height);
-    m_pInnerContainer->setSize(CCSizeMake(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(ccp(0, m_size.height - m_pInnerContainer->getSize().height));
+    UIScrollView::onSizeChanged();
     refreshView();
+}
+
+const char* UIListViewEx::getDescription() const
+{
+    return "ListViewEx";
+}
+
+void UIListViewEx::copySpecialProperties(UIWidget *widget)
+{
+    UIListViewEx* listViewEx = dynamic_cast<UIListViewEx*>(widget);
+    if (listViewEx)
+    {
+        UIScrollView::copySpecialProperties(widget);
+        setItemsMargin(listViewEx->m_fItemsMargin);
+        setGravity(listViewEx->m_eGravity);
+    }
 }
 
 NS_CC_EXT_END

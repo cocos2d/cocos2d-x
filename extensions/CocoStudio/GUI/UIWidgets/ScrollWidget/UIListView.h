@@ -161,6 +161,8 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+    
+    virtual void copySpecialProperties(UIWidget* widget);
 protected:
     virtual bool init();
     

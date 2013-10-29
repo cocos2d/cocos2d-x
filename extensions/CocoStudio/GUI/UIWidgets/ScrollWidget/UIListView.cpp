@@ -1488,4 +1488,20 @@ const char* UIListView::getDescription() const
     return "ListView";
 }
 
+void UIListView::copySpecialProperties(UIWidget *widget)
+{
+    UIListView* listView = static_cast<UIListView*>(widget);
+    
+    if (listView)
+    {
+        Layout::copySpecialProperties(widget);
+        
+        setDirection(listView->m_eDirection);
+        initChildWithDataLength(listView->m_nDataLength);
+        setUpdateChild(listView->getUpdateChild());
+        setUpdateDataIndex(listView->getUpdateDataIndex());
+        setUpdateSuccess(listView->getUpdateSuccess());
+    }
+}
+
 NS_CC_EXT_END

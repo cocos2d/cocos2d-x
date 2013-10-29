@@ -88,7 +88,7 @@ typedef enum
 {
     TEXTFIELD_EVENT_ATTACH_WITH_IME,
     TEXTFIELD_EVENT_DETACH_WITH_IME,
-    TEXTFIELD_EVENT_INDERT_TEXT,
+    TEXTFIELD_EVENT_INSERT_TEXT,
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
@@ -159,6 +159,7 @@ public:
      */
     virtual const char* getDescription() const;
     
+    virtual void copySpecialProperties(UIWidget* widget);
     /*compatibel*/
     /**
      * These methods will be removed
@@ -168,6 +169,7 @@ public:
     /************/
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
+    void attachWithIME();
 protected:
     // event
     void attachWithIMEEvent();
@@ -185,6 +187,8 @@ protected:
     
     CCObject* m_pEventListener;
     SEL_TextFieldEvent m_pfnEventSelector;
+    
+    std::string m_strPasswordStyleText;
 
     /*******Compatible*******/
     CCObject* m_pAttachWithIMEListener;

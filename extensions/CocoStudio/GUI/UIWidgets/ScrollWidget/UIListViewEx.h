@@ -63,11 +63,14 @@ public:
 
     void setItemModel(UIWidget* model);
 
-    void pushBackItem();
-    void insetItem(int index);
+    void pushBackDefaultItem();
+    void insetDefaultItem(int index);
+    void pushBackCustomItem(UIWidget* item);
+    void insetCustomItem(UIWidget* item, int index);
     void removeLastItem();
     void removeItemAtIndex(int index);
     UIWidget* getItemByIndex(int index);
+    CCArray* getItems();
     int indexOfItem(UIWidget* item);
     void setGravity(ListViewGravity gravity);
     void setItemsMargin(float margin);
@@ -82,6 +85,9 @@ public:
      * @param SCROLLVIEW_DIR
      */
     virtual void setDirection(SCROLLVIEW_DIR dir);
+    
+    virtual const char* getDescription() const;
+    virtual void copySpecialProperties(UIWidget* widget);
 protected:
     virtual bool init();
     void updateInnerContainerSize();

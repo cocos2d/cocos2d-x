@@ -34,16 +34,8 @@ enum SCROLLVIEW_DIR
 {
     SCROLLVIEW_DIR_NONE,
     SCROLLVIEW_DIR_VERTICAL,
-    SCROLLVIEW_DIR_HORIZONTAL
-};
-
-enum SCROLLVIEW_MOVE_DIR
-{
-    SCROLLVIEW_MOVE_DIR_NONE,
-    SCROLLVIEW_MOVE_DIR_UP,
-    SCROLLVIEW_MOVE_DIR_DOWN,
-    SCROLLVIEW_MOVE_DIR_LEFT,
-    SCROLLVIEW_MOVE_DIR_RIGHT,
+    SCROLLVIEW_DIR_HORIZONTAL,
+    SCROLLVIEW_DIR_BOTH
 };
 
 typedef enum
@@ -117,12 +109,31 @@ public:
     /**
      * Scroll inner container to bottom boundary of scrollview.
      */
-    void scrollToBottom();
+    void scrollToBottom(float time, bool attenuated);
     
     /**
      * Scroll inner container to top boundary of scrollview.
      */
-    void scrollToTop();
+    void scrollToTop(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to left boundary of scrollview.
+     */
+    void scrollToLeft(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to right boundary of scrollview.
+     */
+    void scrollToRight(float time, bool attenuated);
+    
+    void scrollToTopLeft(float time, bool attenuated);
+    void scrollToTopRight(float time, bool attenuated);
+    void scrollToBottomLeft(float time, bool attenuated);
+    void scrollToBottomRight(float time, bool attenuated);
+    
+    void scrollToPercentVertical(float percent, float time, bool attenuated);
+    void scrollToPercentHorizontal(float percent, float time, bool attenuated);
+    void scrollToPercentBothDirection(const CCPoint& percent, float time, bool attenuated);
     
     /**
      * Changes inner container size of scrollview.
@@ -198,6 +209,14 @@ public:
     
     virtual void update(float dt);
     
+    void setBounceEnabled(bool enabled);
+    
+    bool isBounceEnabled();
+    
+    void setInertiaScrollEnabled(bool enabled);
+    
+    bool isInertiaScrollEnabled() const;
+    
     /**
      * Sets LayoutType.
      *
@@ -227,12 +246,19 @@ public:
 protected:
     virtual bool init();
     virtual void initRenderer();
-    void moveChildren(float offset);
+    void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
-    void startAutoScrollChildren(float v);
+    void bounceChildren(float dt);
+    void checkBounceBoundary();
+    bool checkNeedBounce();
+    void startAutoScrollChildrenWithOriginalSpeed(const CCPoint& dir, float v, bool attenuated, float acceleration);
+    void startAutoScrollChildrenWithDestination(const CCPoint& des, float time, bool attenuated);
     void stopAutoScrollChildren();
-    float getCurAutoScrollDistance(float time);
-    virtual bool scrollChildren(float touchOffset);
+    void startBounceChildren(float v);
+    void stopBounceChildren();
+    bool checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY);
+    virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
+    bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
     virtual void handlePressLogic(const CCPoint &touchPoint);
@@ -241,14 +267,10 @@ protected:
     virtual void interceptTouchEvent(int handleState,UIWidget* sender,const CCPoint &touchPoint);
     virtual void checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint);
     void recordSlidTime(float dt);
-    //override "releaseResoures" method of widget.
-    
     void scrollToTopEvent();
     void scrollToBottomEvent();
     void scrollToLeftEvent();
     void scrollToRightEvent();
-    void setMoveDirection(SCROLLVIEW_MOVE_DIR dir);
-    SCROLLVIEW_MOVE_DIR getMoveDirection();
     virtual void onSizeChanged();
 //    virtual bool isInScrollDegreeRange(UIWidget* widget);
     /*compatible*/
@@ -262,32 +284,56 @@ protected:
     Layout* m_pInnerContainer;
     
     SCROLLVIEW_DIR m_eDirection;
-    SCROLLVIEW_MOVE_DIR m_eMoveDirection;
-    float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
-    float m_fTouchMoveStartLocation;
-    float m_fTopBoundary;//test
-    float m_fBottomBoundary;//test
+
+    CCPoint m_touchBeganPoint;
+    CCPoint m_touchMovedPoint;
+    CCPoint m_touchEndedPoint;
+    CCPoint m_touchMovingPoint;
+    CCPoint m_autoScrollDir;
+    
+    float m_fTopBoundary;
+    float m_fBottomBoundary;
     float m_fLeftBoundary;
     float m_fRightBoundary;
     
-    bool m_bTopEnd;
-    bool m_bBottomEnd;
-    bool m_bLeftEnd;
-    bool m_bRightEnd;
+    float m_fBounceTopBoundary;
+    float m_fBounceBottomBoundary;
+    float m_fBounceLeftBoundary;
+    float m_fBounceRightBoundary;
+
     
     bool m_bAutoScroll;
+    float m_fAutoScrollAddUpTime;
     
     float m_fAutoScrollOriginalSpeed;
     float m_fAutoScrollAcceleration;
+    bool m_bIsAutoScrollSpeedAttenuated;
+    bool m_bNeedCheckAutoScrollDestination;
+    CCPoint m_autoScrollDestination;
     
     bool m_bBePressed;
     float m_fSlidTime;
     CCPoint moveChildPoint;
     float m_fChildFocusCancelOffset;
     
+    bool m_bLeftBounceNeeded;
+    bool m_bTopBounceNeeded;
+    bool m_bRightBounceNeeded;
+    bool m_bBottomBounceNeeded;
+    
+    bool m_bBounceEnabled;
+    bool m_bBouncing;
+    CCPoint m_bounceDir;
+    float m_fBounceOriginalSpeed;
+    bool m_bInertiaScrollEnabled;
+
+
+    
     CCObject* m_pEventListener;
     SEL_ScrollViewEvent m_pfnEventSelector;
+    
+
+    
     /*compatible*/
     CCObject* m_pScrollToTopListener;
     SEL_ScrollToTopEvent m_pfnScrollToTopSelector;

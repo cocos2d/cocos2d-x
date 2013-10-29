@@ -14,6 +14,7 @@ typedef UILabel UITextArea;
 typedef Layout UIContainerWidget;
 typedef UIButton UITextButton;
 typedef UIWidget UINodeContainer;
+typedef UIScrollView UIDragPanel;
 /**
 *   @js NA
 *   @lua NA
