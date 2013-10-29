@@ -2,7 +2,7 @@
 #include "ccTypes.h"
 #include "CCEventDispatcher.h"
 #include "CCEventAcceleration.h"
-
+#include "CCDirector.h"
 #import <UIKit/UIKit.h>
 
 // Accelerometer
