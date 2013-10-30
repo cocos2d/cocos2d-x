@@ -633,6 +633,11 @@ void UITextField::attachWithIME()
     m_pTextFieldRenderer->attachWithIME();
 }
 
+UIWidget* UITextField::createCloneInstance()
+{
+    return UITextField::create();
+}
+
 void UITextField::copySpecialProperties(UIWidget *widget)
 {
     UITextField* textField = dynamic_cast<UITextField*>(widget);

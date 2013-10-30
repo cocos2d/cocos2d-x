@@ -125,8 +125,6 @@ public:
      */
     virtual const char* getDescription() const;
     
-    virtual void copySpecialProperties(UIWidget* widget);
-    
     void setTextAreaSize(const CCSize &size);
     void setTextHorizontalAlignment(CCTextAlignment alignment);
     void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
@@ -143,6 +141,8 @@ protected:
     virtual void onSizeChanged();
     void clickScale(float scale);
     void labelScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     bool m_bTouchScaleChangeEnabled;
     float m_fNormalScaleValue;

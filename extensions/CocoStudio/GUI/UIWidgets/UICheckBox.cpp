@@ -489,6 +489,11 @@ const char* UICheckBox::getDescription() const
     return "CheckBox";
 }
 
+UIWidget* UICheckBox::createCloneInstance()
+{
+    return UICheckBox::create();
+}
+
 void UICheckBox::copySpecialProperties(UIWidget *widget)
 {
     UICheckBox* checkBox = dynamic_cast<UICheckBox*>(widget);

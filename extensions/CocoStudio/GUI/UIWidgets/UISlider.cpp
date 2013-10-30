@@ -553,6 +553,11 @@ const char* UISlider::getDescription() const
     return "Slider";
 }
 
+UIWidget* UISlider::createCloneInstance()
+{
+    return UISlider::create();
+}
+
 void UISlider::copySpecialProperties(UIWidget *widget)
 {
     UISlider* slider = dynamic_cast<UISlider*>(widget);

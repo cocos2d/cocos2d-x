@@ -172,8 +172,6 @@ public:
      */
     virtual const char* getDescription() const;
     
-    virtual void copySpecialProperties(UIWidget* widget);
-    
     /*Compatible*/
     /**
      * These methods will be removed
@@ -210,6 +208,8 @@ protected:
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     CCSprite* m_pBackGroundBoxRenderer;
     CCSprite* m_pBackGroundSelectedBoxRenderer;

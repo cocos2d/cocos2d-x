@@ -237,7 +237,7 @@ void UIListViewEx::pushBackDefaultItem()
     {
         return;
     }
-    UIWidget* newItem = CCUIHELPER->cloneWidget(m_pModel);
+    UIWidget* newItem = m_pModel->clone();
     m_pItems->addObject(newItem);
     remedyLayoutParameter(newItem);
     addChild(newItem);
@@ -249,7 +249,7 @@ void UIListViewEx::insetDefaultItem(int index)
     {
         return;
     }
-    UIWidget* newItem = CCUIHELPER->cloneWidget(m_pModel);
+    UIWidget* newItem = m_pModel->clone();
     m_pItems->insertObject(newItem, index);
     remedyLayoutParameter(newItem);
     addChild(newItem);
@@ -386,12 +386,29 @@ const char* UIListViewEx::getDescription() const
     return "ListViewEx";
 }
 
+UIWidget* UIListViewEx::createCloneInstance()
+{
+    return UIListViewEx::create();
+}
+
+void UIListViewEx::copyClonedWidgetChildren(UIWidget* model)
+{
+    ccArray* arrayItems = dynamic_cast<UIListViewEx*>(model)->getItems()->data;
+    int length = arrayItems->num;
+    for (int i=0; i<length; i++)
+    {
+        UIWidget* item = (UIWidget*)(arrayItems->arr[i]);
+        pushBackCustomItem(item->clone());
+    }
+}
+
 void UIListViewEx::copySpecialProperties(UIWidget *widget)
 {
     UIListViewEx* listViewEx = dynamic_cast<UIListViewEx*>(widget);
     if (listViewEx)
     {
         UIScrollView::copySpecialProperties(widget);
+        setItemModel(listViewEx->m_pModel);
         setItemsMargin(listViewEx->m_fItemsMargin);
         setGravity(listViewEx->m_eGravity);
     }

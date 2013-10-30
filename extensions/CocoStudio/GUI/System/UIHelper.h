@@ -105,9 +105,6 @@ public:
      */
     UIWidget* seekWidgetByRelativeName(UIWidget* root, const char* name);
     
-    
-    UIWidget* cloneWidget(UIWidget* widget);
-    
     void setFileDesignWidth(float width);
     float getFileDesignWidth();
     void setFileDesignHeight(float height);

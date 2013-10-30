@@ -1504,6 +1504,16 @@ const char* UIScrollView::getDescription() const
     return "ScrollView";
 }
 
+UIWidget* UIScrollView::createCloneInstance()
+{
+    return UIScrollView::create();
+}
+
+void UIScrollView::copyClonedWidgetChildren(UIWidget* model)
+{
+    Layout::copyClonedWidgetChildren(model);
+}
+
 void UIScrollView::copySpecialProperties(UIWidget *widget)
 {
     UIScrollView* scrollView = dynamic_cast<UIScrollView*>(widget);

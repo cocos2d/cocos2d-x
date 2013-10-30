@@ -1488,6 +1488,16 @@ const char* UIListView::getDescription() const
     return "ListView";
 }
 
+UIWidget* UIListView::createCloneInstance()
+{
+    return UIListView::create();
+}
+
+void UIListView::copyClonedWidgetChildren(UIWidget* model)
+{
+    UIWidget::copyClonedWidgetChildren(model);
+}
+
 void UIListView::copySpecialProperties(UIWidget *widget)
 {
     UIListView* listView = static_cast<UIListView*>(widget);

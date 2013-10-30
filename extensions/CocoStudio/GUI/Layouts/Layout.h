@@ -178,8 +178,6 @@ public:
      */
     virtual const char* getDescription() const;
     
-    virtual void copySpecialProperties(UIWidget* widget);
-    
     /**
      * Sets LayoutType.
      *
@@ -229,6 +227,9 @@ protected:
     void addBackGroundImage();
     
     void supplyTheLayoutParameterLackToChild(UIWidget* child);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
 protected:
     bool m_bClippingEnabled;
     

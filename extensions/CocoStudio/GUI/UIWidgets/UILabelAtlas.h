@@ -99,11 +99,12 @@ public:
      */
     virtual const char* getDescription() const;
     
-    virtual void copySpecialProperties(UIWidget* widget);
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void labelAtlasScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     UICCLabelAtlas* m_pLaberAtlasRenderer;
     std::string m_strStringValue;

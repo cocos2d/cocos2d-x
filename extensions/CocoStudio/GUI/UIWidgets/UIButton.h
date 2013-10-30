@@ -170,8 +170,6 @@ public:
      */
     virtual const char* getDescription() const;
     
-    virtual void copySpecialProperties(UIWidget* widget);
-    
     void setTitleText(const char* text);
     const char* getTitleText() const;
     void setTitleColor(const ccColor3B& color);
@@ -207,6 +205,8 @@ protected:
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     CCNode* m_pButtonNormalRenderer;
     CCNode* m_pButtonClickedRenderer;

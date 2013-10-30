@@ -108,8 +108,6 @@ public:
      */
     virtual const char* getDescription() const;
     
-    virtual void copySpecialProperties(UIWidget* widget);
-    
     void setDoubleClickEnabled(bool able);
     void doubleClickEvent();
     void checkDoubleClick(float dt);
@@ -127,6 +125,8 @@ protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void imageTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     int m_nClickCount;
     float m_fClickTimeInterval;

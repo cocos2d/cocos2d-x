@@ -241,8 +241,6 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
-    
-    virtual void copySpecialProperties(UIWidget* widget);
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -272,7 +270,9 @@ protected:
     void scrollToLeftEvent();
     void scrollToRightEvent();
     virtual void onSizeChanged();
-//    virtual bool isInScrollDegreeRange(UIWidget* widget);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
     /*compatible*/
     /**
      * These methods will be removed

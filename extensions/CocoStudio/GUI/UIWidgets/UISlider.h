@@ -196,7 +196,7 @@ public:
      */
     virtual const char* getDescription() const;
     
-    virtual void copySpecialProperties(UIWidget* widget);
+
     
     /*Compatible*/
     /**
@@ -227,6 +227,8 @@ protected:
     virtual void onSizeChanged();
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     CCNode*  m_pBarRenderer;
     CCNode* m_pProgressBarRenderer;
