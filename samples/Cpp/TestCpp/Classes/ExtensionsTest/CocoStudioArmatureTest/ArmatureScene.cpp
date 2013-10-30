@@ -334,14 +334,14 @@ void TestPerformance::onEnter()
 
 
     MenuItemFont::setFontSize(65);
-    MenuItemFont *decrease = MenuItemFont::create(" - ", this, menu_selector(TestPerformance::onDecrease));
-    decrease->setColor(ccc3(0,200,20));
-    MenuItemFont *increase = MenuItemFont::create(" + ", this, menu_selector(TestPerformance::onIncrease));
-    increase->setColor(ccc3(0,200,20));
+    MenuItemFont *decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(TestPerformance::onDecrease, this));
+    decrease->setColor(Color3B(0,200,20));
+    MenuItemFont *increase = MenuItemFont::create(" + ", CC_CALLBACK_1(TestPerformance::onIncrease, this));
+    increase->setColor(Color3B(0,200,20));
     
     Menu *menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
-    menu->setPosition(ccp(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
+    menu->setPosition(Point(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
     addChild(menu, 10000);
 
     armatureCount = frames = times = lastTimes = 0;
@@ -1097,7 +1097,7 @@ void Hero::changeMount(Armature *armature)
         bone->changeDisplayByIndex(0, true);
         bone->setIgnoreMovementBoneData(true);
 
-        setPosition(ccp(0,0));
+        setPosition(Point(0,0));
         //Change animation
         playByIndex(1);
 
@@ -1125,16 +1125,15 @@ void TestArmatureNesting2::onEnter()
     listener->onTouchesEnded = CC_CALLBACK_2(TestArmatureNesting2::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-
     touchedMenu = false;
 
     LabelTTF* label = CCLabelTTF::create("Change Mount", "Arial", 20);
-    MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestArmatureNesting2::ChangeMountCallback));
+    MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::ChangeMountCallback, this));
 
     Menu* pMenu =Menu::create(pMenuItem, NULL);
 
-    pMenu->setPosition( CCPointZero );
-    pMenuItem->setPosition( ccp( VisibleRect::right().x - 67, VisibleRect::bottom().y + 50) );
+    pMenu->setPosition( Point() );
+    pMenuItem->setPosition( Point( VisibleRect::right().x - 67, VisibleRect::bottom().y + 50) );
 
     addChild(pMenu, 2);
 
@@ -1142,16 +1141,16 @@ void TestArmatureNesting2::onEnter()
     hero = Hero::create("hero");
     hero->setLayer(this);
     hero->playByIndex(0);
-    hero->setPosition(ccp(VisibleRect::left().x + 20, VisibleRect::left().y));
+    hero->setPosition(Point(VisibleRect::left().x + 20, VisibleRect::left().y));
     addChild(hero);
 
     //Create 3 mount
     horse = createMount("horse", VisibleRect::center());
 
-    horse2 = createMount("horse", ccp(120, 200));
+    horse2 = createMount("horse", Point(120, 200));
     horse2->setOpacity(200);
 
-    bear = createMount("bear", ccp(300,70));
+    bear = createMount("bear", Point(300,70));
 }
 void TestArmatureNesting2::onExit()
 {
@@ -1183,7 +1182,7 @@ void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 
     ActionInterval *move = CCMoveTo::create(2, point);
     armature->stopAllActions();
-    armature->runAction(Sequence::create(move,  CallFunc::create(this, NULL), NULL));
+    armature->runAction(Sequence::create(move, NULL));
 }
 
 void TestArmatureNesting2::ChangeMountCallback(Object* pSender)
@@ -1196,15 +1195,15 @@ void TestArmatureNesting2::ChangeMountCallback(Object* pSender)
     }
     else
     {
-        if (ccpDistance(hero->getPosition(), horse->getPosition()) < 20)
+        if (hero->getPosition().getDistance(horse->getPosition()) < 20)
         {
             hero->changeMount(horse);
         }
-        else if (ccpDistance(hero->getPosition(), horse2->getPosition()) < 20)
+        else if (hero->getPosition().getDistance(horse2->getPosition()) < 20)
         {
             hero->changeMount(horse2);
         }
-        else if (ccpDistance(hero->getPosition(), bear->getPosition()) < 30)
+        else if (hero->getPosition().getDistance(bear->getPosition()) < 30)
         {
             hero->changeMount(bear);
         }
