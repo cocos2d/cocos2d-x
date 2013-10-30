@@ -52,26 +52,12 @@ void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const
     CCSpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath, imagePath);
 }
 
-TextureAtlas *SpriteFrameCacheHelper::getTexureAtlasWithTexture(Texture2D *texture)
-{
-    int key = texture->getName();
-    TextureAtlas *atlas = (TextureAtlas *)_textureAtlasDic->objectForKey(key);
-    if (atlas == NULL)
-    {
-        atlas = TextureAtlas::createWithTexture(texture, 4);
-        _textureAtlasDic->setObject(atlas, key);
-    }
-    return atlas;
-}
-
 SpriteFrameCacheHelper::SpriteFrameCacheHelper()
 {
-    _textureAtlasDic = new Dictionary();
 }
 
 SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
 {
-    CC_SAFE_RELEASE_NULL(_textureAtlasDic);
 }
 
 }

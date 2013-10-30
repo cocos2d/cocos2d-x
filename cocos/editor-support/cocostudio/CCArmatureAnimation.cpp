@@ -54,6 +54,8 @@ ArmatureAnimation::ArmatureAnimation()
     , _armature(NULL)
     , _movementID("")
     , _toIndex(0)
+    , _tweenList(NULL)
+    , _ignoreFrameEvent(false)
 
     , _movementEventCallFunc(NULL)
     , _frameEventCallFunc(NULL)
@@ -268,6 +270,8 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
 
         }
     }
+
+    _armature->update(0);
 }
 
 
@@ -280,7 +284,40 @@ void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int dura
     play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);
 }
 
+void ArmatureAnimation::gotoAndPlay(int frameIndex)
+{
+    if (!_movementData || frameIndex < 0 || frameIndex >= _movementData->duration)
+    {
+        CCLOG("Please ensure you have played a movement, and the frameIndex is in the range.");
+        return;
+    }
 
+    bool ignoreFrameEvent = _ignoreFrameEvent;
+    _ignoreFrameEvent = true;
+
+    _isPlaying = true;
+    _isComplete = _isPause = false;
+
+    ProcessBase::gotoFrame(frameIndex);
+    _currentPercent = (float)_curFrameIndex / (float)_movementData->duration;
+    _currentFrame = _nextFrameIndex * _currentPercent;
+
+    Object *object = NULL;
+    CCARRAY_FOREACH(_tweenList, object)
+    {
+        static_cast<Tween *>(object)->gotoAndPlay(frameIndex);
+    }
+
+    _armature->update(0);
+
+    _ignoreFrameEvent = ignoreFrameEvent;
+}
+
+void ArmatureAnimation::gotoAndPause(int frameIndex)
+{
+    gotoAndPlay(frameIndex);
+    pause();
+}
 
 int ArmatureAnimation::getMovementCount()
 {
@@ -294,6 +331,18 @@ void ArmatureAnimation::update(float dt)
     CCARRAY_FOREACH(_tweenList, object)
     {
 		static_cast<Tween *>(object)->update(dt);
+    }
+
+    while (_frameEventQueue.size() > 0)
+    {
+        FrameEvent *frameEvent = _frameEventQueue.front();
+        _frameEventQueue.pop();
+
+        _ignoreFrameEvent = true;
+        (_frameEventTarget->*_frameEventCallFunc)(frameEvent->bone, frameEvent->frameEventName, frameEvent->originFrameIndex, frameEvent->currentFrameIndex);
+        _ignoreFrameEvent = false;
+
+        CC_SAFE_DELETE(frameEvent);
     }
 }
 
@@ -402,7 +451,13 @@ void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int o
 {
     if (_frameEventTarget && _frameEventCallFunc)
     {
-        (_frameEventTarget->*_frameEventCallFunc)(bone, frameEventName, originFrameIndex, currentFrameIndex);
+        FrameEvent *frameEvent = new FrameEvent();
+        frameEvent->bone = bone;
+        frameEvent->frameEventName = frameEventName;
+        frameEvent->originFrameIndex = originFrameIndex;
+        frameEvent->currentFrameIndex = currentFrameIndex;
+
+        _frameEventQueue.push(frameEvent);
     }
 }
 }

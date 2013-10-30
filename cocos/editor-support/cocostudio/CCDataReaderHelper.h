@@ -63,12 +63,16 @@ protected:
 		cocos2d::Object       *target;
 		cocos2d::SEL_SCHEDULE   selector;
 		bool           autoLoadSpriteFile;
+
+        std::string    imagePath;
+        std::string    plistPath;
 	} AsyncStruct;
 
 	typedef struct _DataInfo
 	{
 		AsyncStruct *asyncStruct;
 		std::queue<std::string>      configFileQueue;
+        float contentScale;
 	} DataInfo;
 
 public:
@@ -99,7 +103,7 @@ public:
     ~DataReaderHelper();
 
     void addDataFromFile(const char *filePath);
-    void addDataFromFileAsync(const char *filePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
+    void addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
 
     void addDataAsyncCallBack(float dt);
 
@@ -145,20 +149,20 @@ public:
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
 
-    static ArmatureData *decodeArmature(JsonDictionary &json);
-    static BoneData *decodeBone(JsonDictionary &json);
-    static DisplayData *decodeBoneDisplay(JsonDictionary &json);
+    static ArmatureData *decodeArmature(JsonDictionary &json, DataInfo *dataInfo);
+    static BoneData *decodeBone(JsonDictionary &json, DataInfo *dataInfo);
+    static DisplayData *decodeBoneDisplay(JsonDictionary &json, DataInfo *dataInfo);
 
-    static AnimationData *decodeAnimation(JsonDictionary &json);
-    static MovementData *decodeMovement(JsonDictionary &json);
-    static MovementBoneData *decodeMovementBone(JsonDictionary &json);
-    static FrameData *decodeFrame(JsonDictionary &json);
+    static AnimationData *decodeAnimation(JsonDictionary &json, DataInfo *dataInfo);
+    static MovementData *decodeMovement(JsonDictionary &json, DataInfo *dataInfo);
+    static MovementBoneData *decodeMovementBone(JsonDictionary &json, DataInfo *dataInfo);
+    static FrameData *decodeFrame(JsonDictionary &json, DataInfo *dataInfo);
 
     static TextureData *decodeTexture(JsonDictionary &json);
 
     static ContourData *decodeContour(JsonDictionary &json);
 
-    static void decodeNode(BaseData *node, JsonDictionary &json);
+    static void decodeNode(BaseData *node, JsonDictionary &json, DataInfo *dataInfo);
 
 protected:
 	void loadData();
@@ -176,6 +180,8 @@ protected:
 	std::mutex      _dataInfoMutex;
 
 	std::mutex      _addDataMutex;
+
+    std::mutex      _getFileMutex;
 
 	  
 	unsigned long _asyncRefCount;

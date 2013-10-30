@@ -86,6 +86,7 @@ Armature::Armature()
     , _boneDic(NULL)
     , _topBoneList(NULL)
     , _animation(NULL)
+    , _textureAtlasDic(NULL)
 {
 }
 
@@ -103,6 +104,7 @@ Armature::~Armature(void)
         CC_SAFE_DELETE(_topBoneList);
     }
     CC_SAFE_DELETE(_animation);
+    CC_SAFE_RELEASE_NULL(_textureAtlasDic);
 }
 
 
@@ -130,6 +132,8 @@ bool Armature::init(const char *name)
         _topBoneList = new Array();
         _topBoneList->init();
 
+        CC_SAFE_DELETE(_textureAtlasDic);
+        _textureAtlasDic = new Dictionary();
 
         _blendFunc.src = CC_BLEND_SRC;
         _blendFunc.dst = CC_BLEND_DST;
@@ -458,7 +462,7 @@ void Armature::update(float dt)
 
 void Armature::draw()
 {
-    if (_parentBone == NULL)
+    if (_parentBone == NULL && _batchNode == NULL)
     {
         CC_NODE_DRAW_SETUP();
         GL::blendFunc(_blendFunc.src, _blendFunc.dst);
@@ -469,13 +473,12 @@ void Armature::draw()
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
-            DisplayManager *displayManager = bone->getDisplayManager();
-            Node *node = displayManager->getDisplayRenderNode();
+            Node *node = bone->getDisplayRenderNode();
 
             if (NULL == node)
                 continue;
 
-            switch (displayManager->getCurrentDecorativeDisplay()->getDisplayData()->displayType)
+            switch (bone->getDisplayRenderNodeType())
             {
             case CS_DISPLAY_SPRITE:
             {
@@ -667,7 +670,7 @@ Rect Armature::getBoundingBox() const
         }
     }
 
-    return boundingBox;
+    return RectApplyAffineTransform(boundingBox, getNodeToParentTransform());
 }
 
 Bone *Armature::getBoneAtPoint(float x, float y)
@@ -684,6 +687,45 @@ Bone *Armature::getBoneAtPoint(float x, float y)
         }
     }
     return NULL;
+}
+
+TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture)
+{
+    int key = texture->getName();
+    
+    if (_parentBone && _parentBone->getArmature())
+    {
+        return _parentBone->getArmature()->getTexureAtlasWithTexture(texture);
+    }
+    else if (_batchNode)
+    {
+        _batchNode->getTexureAtlasWithTexture(texture);
+    }
+    
+    TextureAtlas *atlas = static_cast<TextureAtlas *>(_textureAtlasDic->objectForKey(key));
+    if (atlas == NULL)
+    {
+        atlas = TextureAtlas::createWithTexture(texture, 4);
+        _textureAtlasDic->setObject(atlas, key);
+    }
+    return atlas;
+}
+
+void Armature::setParentBone(Bone *parentBone)
+{
+    _parentBone = parentBone;
+    
+    DictElement *element = NULL;
+    CCDICT_FOREACH(_boneDic, element)
+    {
+        Bone *bone = static_cast<Bone*>(element->getObject());
+        bone->setArmature(this);
+    }
+}
+
+Bone *Armature::getParentBone()
+{
+    return _parentBone;
 }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT

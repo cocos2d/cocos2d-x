@@ -30,6 +30,9 @@ Layer *CreateLayer(int index)
     case TEST_PERFORMANCE:
         pLayer = new TestPerformance();
         break;
+    case TEST_PERFORMANCE_BATCHNODE:
+        pLayer = new TestPerformanceBatchNode();
+        break;
     case TEST_CHANGE_ZORDER:
         pLayer = new TestChangeZorder();
         break;
@@ -53,6 +56,9 @@ Layer *CreateLayer(int index)
         break;
     case TEST_ARMATURE_NESTING:
         pLayer = new TestArmatureNesting();
+        break;
+    case TEST_ARMATURE_NESTING_2:
+        pLayer = new TestArmatureNesting2();
         break;
     default:
         break;
@@ -235,6 +241,9 @@ void TestAsynchronousLoading::onEnter()
     ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Cowboy.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
 
     //! load data directly
     // 	ArmatureDataManager::getInstance()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
@@ -314,6 +323,8 @@ std::string TestDragonBones20::title()
 
 
 
+#define ArmaturePerformanceTag 20000
+
 TestPerformance::~TestPerformance()
 {
 }
@@ -321,10 +332,22 @@ void TestPerformance::onEnter()
 {
     ArmatureTestLayer::onEnter();
 
+
+    MenuItemFont::setFontSize(65);
+    MenuItemFont *decrease = MenuItemFont::create(" - ", this, menu_selector(TestPerformance::onDecrease));
+    decrease->setColor(ccc3(0,200,20));
+    MenuItemFont *increase = MenuItemFont::create(" + ", this, menu_selector(TestPerformance::onIncrease));
+    increase->setColor(ccc3(0,200,20));
+    
+    Menu *menu = Menu::create(decrease, increase, NULL);
+    menu->alignItemsHorizontally();
+    menu->setPosition(ccp(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
+    addChild(menu, 10000);
+
     armatureCount = frames = times = lastTimes = 0;
     generated = false;
 
-    scheduleUpdate();
+    addArmature(100);
 }
 
 std::string TestPerformance::title()
@@ -335,37 +358,76 @@ std::string TestPerformance::subtitle()
 {
     return "Current Armature Count : ";
 }
-void TestPerformance::addArmature(Armature *armature)
+void TestPerformance::onIncrease(Object* pSender)
 {
-    armatureCount++;
-    addChild(armature, armatureCount);
+    addArmature(20);
 }
-void TestPerformance::update(float delta)
+void TestPerformance::onDecrease(Object* pSender)
 {
-    frames ++;
-    times += delta;
+    if (armatureCount == 0)
+        return;
 
-    if (frames / times > 58)
+    for (int i = 0; i<20; i++)
     {
+        removeArmatureFromParent(ArmaturePerformanceTag + armatureCount);
+        armatureCount --;
+        refreshTitile();
+    }
+}
+void TestPerformance::addArmature(int number)
+{
+    for (int i = 0; i<number; i++)
+    {
+        armatureCount++;
+
         Armature *armature = NULL;
         armature = new Armature();
         armature->init("Knight_f/Knight");
         armature->getAnimation()->playByIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
         armature->setScale(0.6f);
-        addArmature(armature);
+        addArmatureToParent(armature);
         armature->release();
-
-        char pszCount[255];
-        sprintf(pszCount, "%s %i", subtitle().c_str(), armatureCount);
-        LabelTTF *label = (LabelTTF *)getChildByTag(10001);
-        label->setString(pszCount);
     }
+
+    refreshTitile();
+}
+void TestPerformance::addArmatureToParent(cocostudio::Armature *armature)
+{
+    addChild(armature, 0, ArmaturePerformanceTag + armatureCount);
+}
+void TestPerformance::removeArmatureFromParent(int tag)
+{
+    removeChildByTag(ArmaturePerformanceTag + armatureCount);
+}
+void TestPerformance::refreshTitile()
+{
+    char pszCount[255];
+    sprintf(pszCount, "%s %i", subtitle().c_str(), armatureCount);
+    LabelTTF *label = (LabelTTF *)getChildByTag(10001);
+    label->setString(pszCount);
 }
 
 
+void TestPerformanceBatchNode::onEnter()
+{
+    batchNode = BatchNode::create();
+    addChild(batchNode);
 
-
+    TestPerformance::onEnter();
+}
+std::string TestPerformanceBatchNode::title()
+{
+    return "Test Performance of using BatchNode";
+}
+void TestPerformanceBatchNode::addArmatureToParent(cocostudio::Armature *armature)
+{
+    batchNode->addChild(armature, 0, ArmaturePerformanceTag + armatureCount);
+}
+void TestPerformanceBatchNode::removeArmatureFromParent(int tag)
+{
+    batchNode->removeChildByTag(ArmaturePerformanceTag + armatureCount);
+}
 
 
 void TestChangeZorder::onEnter()
@@ -905,7 +967,7 @@ void TestBoundingBox::draw()
 {
     CC_NODE_DRAW_SETUP();
 
-    rect = RectApplyAffineTransform(armature->getBoundingBox(), armature->getNodeToParentTransform());
+    rect = armature->getBoundingBox();
 
     DrawPrimitives::setDrawColor4B(100, 100, 100, 255);
     DrawPrimitives::drawRect(rect.origin, Point(rect.getMaxX(), rect.getMaxY()));
@@ -977,3 +1039,185 @@ void TestArmatureNesting::onTouchesEnded(const std::vector<Touch*>& touches, Eve
         armature->getBone("armOutside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
     }
 }
+
+
+
+
+Hero *Hero::create(const char *name)
+{
+    Hero *hero = new Hero();
+    if (hero && hero->init(name))
+    {
+        hero->autorelease();
+        return hero;
+    }
+    CC_SAFE_DELETE(hero);
+    return NULL;
+}
+
+Hero::Hero()
+    : m_pMount(NULL)
+    , m_pLayer(NULL)
+{
+}
+
+void Hero::changeMount(Armature *armature)
+{
+    if (armature == NULL)
+    {
+        retain();
+
+        playByIndex(0);
+        //Remove hero from display list
+        m_pMount->getBone("hero")->removeDisplay(0);
+        m_pMount->stopAllActions();
+
+        //Set position to current position
+        setPosition(m_pMount->getPosition());
+        //Add to layer
+        m_pLayer->addChild(this);
+
+        release();
+
+        setMount(armature);
+    }
+    else
+    {
+        setMount(armature);
+
+        retain();
+        //Remove from layer
+        removeFromParentAndCleanup(false);
+
+        //Get the hero bone
+        Bone *bone = armature->getBone("hero");
+        //Add hero as a display to this bone
+        bone->addDisplay(this, 0);
+        //Change this bone's display
+        bone->changeDisplayByIndex(0, true);
+        bone->setIgnoreMovementBoneData(true);
+
+        setPosition(ccp(0,0));
+        //Change animation
+        playByIndex(1);
+
+        setScale(1);
+
+        release();
+    }
+
+}
+
+void Hero::playByIndex(int index)
+{
+    _animation->playByIndex(index);
+    if (m_pMount)
+    {
+        m_pMount->getAnimation()->playByIndex(index);
+    }
+}
+
+void TestArmatureNesting2::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestArmatureNesting2::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+
+    touchedMenu = false;
+
+    LabelTTF* label = CCLabelTTF::create("Change Mount", "Arial", 20);
+    MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestArmatureNesting2::ChangeMountCallback));
+
+    Menu* pMenu =Menu::create(pMenuItem, NULL);
+
+    pMenu->setPosition( CCPointZero );
+    pMenuItem->setPosition( ccp( VisibleRect::right().x - 67, VisibleRect::bottom().y + 50) );
+
+    addChild(pMenu, 2);
+
+    //Create a hero
+    hero = Hero::create("hero");
+    hero->setLayer(this);
+    hero->playByIndex(0);
+    hero->setPosition(ccp(VisibleRect::left().x + 20, VisibleRect::left().y));
+    addChild(hero);
+
+    //Create 3 mount
+    horse = createMount("horse", VisibleRect::center());
+
+    horse2 = createMount("horse", ccp(120, 200));
+    horse2->setOpacity(200);
+
+    bear = createMount("bear", ccp(300,70));
+}
+void TestArmatureNesting2::onExit()
+{
+    ArmatureTestLayer::onExit();
+}
+std::string TestArmatureNesting2::title()
+{
+    return "Test CCArmature Nesting 2";
+}
+std::string TestArmatureNesting2::subtitle()
+{
+    return "Move to a mount and press the ChangeMount Button.";
+}
+void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    Point point = touches[0]->getLocation();
+
+    Armature *armature = hero->getMount() == NULL ? hero : hero->getMount(); 
+
+    //Set armature direction
+    if (point.x < armature->getPositionX())
+    {
+        armature->setScaleX(-1);
+    }
+    else
+    {
+        armature->setScaleX(1);
+    }
+
+    ActionInterval *move = CCMoveTo::create(2, point);
+    armature->stopAllActions();
+    armature->runAction(Sequence::create(move,  CallFunc::create(this, NULL), NULL));
+}
+
+void TestArmatureNesting2::ChangeMountCallback(Object* pSender)
+{
+    hero->stopAllActions();
+
+    if (hero->getMount())
+    {
+        hero->changeMount(NULL);
+    }
+    else
+    {
+        if (ccpDistance(hero->getPosition(), horse->getPosition()) < 20)
+        {
+            hero->changeMount(horse);
+        }
+        else if (ccpDistance(hero->getPosition(), horse2->getPosition()) < 20)
+        {
+            hero->changeMount(horse2);
+        }
+        else if (ccpDistance(hero->getPosition(), bear->getPosition()) < 30)
+        {
+            hero->changeMount(bear);
+        }
+    }
+}
+
+Armature * TestArmatureNesting2::createMount(const char *name, Point position)
+{
+    Armature *armature = Armature::create(name);
+    armature->getAnimation()->playByIndex(0);
+    armature->setPosition(position);
+    addChild(armature);
+
+    return armature;
+}
+

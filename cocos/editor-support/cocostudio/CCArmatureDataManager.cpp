@@ -186,7 +186,7 @@ void ArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 void ArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, Object *target, SEL_SCHEDULE selector)
 {
     _autoLoadSpriteFile = true;
-    DataReaderHelper::getInstance()->addDataFromFileAsync(configFilePath, target, selector);
+    DataReaderHelper::getInstance()->addDataFromFileAsync("", "", configFilePath, target, selector);
 }
 
 void ArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
@@ -199,7 +199,7 @@ void ArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char 
 void ArmatureDataManager::addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, Object *target, SEL_SCHEDULE selector)
 {
     _autoLoadSpriteFile = false;
-    DataReaderHelper::getInstance()->addDataFromFileAsync(configFilePath, target, selector);
+    DataReaderHelper::getInstance()->addDataFromFileAsync(imagePath, plistPath, configFilePath, target, selector);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
 

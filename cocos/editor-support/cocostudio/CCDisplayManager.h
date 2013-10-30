@@ -91,6 +91,7 @@ public:
 
 
     cocos2d::Node *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
 
     int getCurrentDisplayIndex();
 
@@ -133,6 +134,8 @@ protected:
     cocos2d::Array *_decoDisplayList;
     //! Display render node.
     cocos2d::Node *_displayRenderNode;
+    //! Display render node type
+    DisplayType _displayType;
     //! Include current display information, like contour sprite, etc.
     DecorativeDisplay *_currentDecoDisplay;
     //! Current display index

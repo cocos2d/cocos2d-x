@@ -38,14 +38,20 @@ public:
      * @js ctor
      */
     BatchNode();
+    ~BatchNode();
 
     virtual bool init();
-    virtual void addChild(cocos2d::Node *child, int zOrder, int tag);
+    virtual void addChild(cocos2d::Node *pChild);
+    virtual void addChild(cocos2d::Node *pChild, int zOrder);
+    virtual void addChild(cocos2d::Node *pChild, int zOrder, int tag);
+    virtual void removeChild(cocos2d::Node* child, bool cleanup);
     virtual void visit();
     void draw();
 
+    virtual cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture);
 protected:
     cocos2d::TextureAtlas *_atlas;
+    cocos2d::Dictionary *_textureAtlasDic;
 };
 
 }

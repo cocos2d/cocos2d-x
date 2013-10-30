@@ -141,8 +141,18 @@ void ProcessBase::update(float dt)
 
 void ProcessBase::gotoFrame(int frameIndex)
 {
+    if (_loopType == ANIMATION_NO_LOOP)
+    {
+        _loopType = ANIMATION_MAX;
+    }
+    else if (_loopType == ANIMATION_TO_LOOP_FRONT)
+    {
+        _loopType = ANIMATION_LOOP_FRONT;
+    }
+
     _curFrameIndex = frameIndex;
-    pause();
+    
+    _nextFrameIndex = _durationTween;
 }
 
 int ProcessBase::getCurrentFrameIndex()

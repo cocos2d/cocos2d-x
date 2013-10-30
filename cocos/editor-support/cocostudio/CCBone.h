@@ -86,6 +86,8 @@ public:
 
     void addDisplay(cocos2d::Node *display, int index);
 
+    void removeDisplay(int index);
+
     void changeDisplayByIndex(int index, bool force);
 
     /**
@@ -127,6 +129,9 @@ public:
     void updateDisplayedColor(const cocos2d::Color3B &parentColor);
     void updateDisplayedOpacity(GLubyte parentOpacity);
 
+    virtual void setColor(const cocos2d::Color3B& color) override;
+    virtual void setOpacity(GLubyte opacity) override;
+
     //! Update color to render display
     void updateColor();
 
@@ -140,14 +145,14 @@ public:
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
      */
-    virtual void setTransformDirty(bool dirty);
-
-    virtual bool isTransformDirty();
+    virtual inline void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
+    virtual inline bool isTransformDirty() { return _boneTransformDirty; }
 
     virtual cocos2d::AffineTransform getNodeToArmatureTransform() const;
     virtual cocos2d::AffineTransform getNodeToWorldTransform() const override;
 
     Node *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
 
     /*
      * Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
@@ -177,6 +182,8 @@ public:
 
     CC_SYNTHESIZE(BlendType, _blendType, BlendType)
 protected:
+    void applyParentTransform(Bone *parent);
+
     Tween *_tween;				//! Calculate tween effect
 
     //! Used for making tween effect in every frame
@@ -189,6 +196,14 @@ protected:
 
     //! self Transform, use this to change display's state
     cocos2d::AffineTransform _worldTransform;
+
+    CC_SYNTHESIZE_READONLY(BaseData*, _worldInfo, WorldInfo);
+    
+    //! Armature's parent bone
+    Bone *_armatureParentBone;
+    
+    //! Data version
+    float _dataVersion;
 };
 
 }

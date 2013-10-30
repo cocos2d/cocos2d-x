@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __CCANIMATION_H__
 
 #include "cocostudio/CCProcessBase.h"
+#include <queue>
 
 namespace cocostudio {
 
@@ -48,6 +49,13 @@ typedef void (cocos2d::Object::*SEL_FrameEventCallFunc)(Bone *, const char *, in
 #define movementEvent_selector(_SELECTOR) (cocostudio::SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (cocostudio::SEL_FrameEventCallFunc)(&_SELECTOR)
 
+struct FrameEvent
+{
+    Bone *bone;
+    const char *frameEventName;
+    int originFrameIndex;
+    int currentFrameIndex;
+};
 
 class  ArmatureAnimation : public ProcessBase
 {
@@ -76,10 +84,11 @@ public:
 
     /**
      * Scale animation play speed.
+     * This method is deprecated, please use setSpeedScale.
      * @param animationScale Scale value
      */
-    virtual void setAnimationScale(float animationScale);
-    virtual float getAnimationScale() const;
+    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationScale(float animationScale);
+    CC_DEPRECATED_ATTRIBUTE virtual float getAnimationScale() const;
 
     /**
      * Scale animation play speed.
@@ -123,9 +132,26 @@ public:
 
     /**
      * Play animation by index, the other param is the same to play.
-     * @param  _animationIndex  the animation index you want to play
+     * @param  animationIndex  the animation index you want to play
      */
     void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+
+    /**
+     * Go to specified frame and play current movement.
+     * You need first switch to the movement you want to play, then call this function.
+     * 
+     * example : playByIndex(0);
+     *           gotoAndPlay(0);
+     *           playByIndex(1);
+     *           gotoAndPlay(0);
+     *           gotoAndPlay(15);
+     */
+    virtual void gotoAndPlay(int frameIndex);
+
+    /**
+     * Go to specified frame and pause current movement.
+     */
+    virtual void gotoAndPause(int frameIndex);
 
     /**
      * Pause the Process
@@ -183,6 +209,8 @@ protected:
      */
     void frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
+    inline bool isIgnoreFrameEvent() { return _ignoreFrameEvent; }
+
     friend class Tween;
 protected:
     //! AnimationData save all MovementDatas this animation used.
@@ -201,6 +229,9 @@ protected:
 
     cocos2d::Array *_tweenList;
 
+    bool _ignoreFrameEvent;
+    
+    std::queue<FrameEvent*> _frameEventQueue;
 protected:
     /**
      * MovementEvent CallFunc.
