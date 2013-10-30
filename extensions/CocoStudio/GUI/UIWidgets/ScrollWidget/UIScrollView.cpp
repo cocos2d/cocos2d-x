@@ -479,12 +479,14 @@ bool UIScrollView::bounceScrollChildren(float touchOffsetX, float touchOffsetY)
         if (icRightPos + realOffsetX >= m_fRightBoundary)
         {
             realOffsetX = m_fRightBoundary - icRightPos;
+            bounceRightEvent();
             scrollenabled = false;
         }
         float icTopPos = m_pInnerContainer->getTopInParent();
         if (icTopPos + touchOffsetY >= m_fTopBoundary)
         {
             realOffsetY = m_fTopBoundary - icTopPos;
+            bounceTopEvent();
             scrollenabled = false;
         }
         moveChildren(realOffsetX, realOffsetY);
@@ -497,12 +499,14 @@ bool UIScrollView::bounceScrollChildren(float touchOffsetX, float touchOffsetY)
         if (icLefrPos + realOffsetX <= m_fLeftBoundary)
         {
             realOffsetX = m_fLeftBoundary - icLefrPos;
+            bounceLeftEvent();
             scrollenabled = false;
         }
         float icTopPos = m_pInnerContainer->getTopInParent();
         if (icTopPos + touchOffsetY >= m_fTopBoundary)
         {
             realOffsetY = m_fTopBoundary - icTopPos;
+            bounceTopEvent();
             scrollenabled = false;
         }
         moveChildren(realOffsetX, realOffsetY);
@@ -515,12 +519,14 @@ bool UIScrollView::bounceScrollChildren(float touchOffsetX, float touchOffsetY)
         if (icLefrPos + realOffsetX <= m_fLeftBoundary)
         {
             realOffsetX = m_fLeftBoundary - icLefrPos;
+            bounceLeftEvent();
             scrollenabled = false;
         }
         float icBottomPos = m_pInnerContainer->getBottomInParent();
         if (icBottomPos + touchOffsetY <= m_fBottomBoundary)
         {
             realOffsetY = m_fBottomBoundary - icBottomPos;
+            bounceBottomEvent();
             scrollenabled = false;
         }
         moveChildren(realOffsetX, realOffsetY);
@@ -533,12 +539,14 @@ bool UIScrollView::bounceScrollChildren(float touchOffsetX, float touchOffsetY)
         if (icRightPos + realOffsetX >= m_fRightBoundary)
         {
             realOffsetX = m_fRightBoundary - icRightPos;
+            bounceRightEvent();
             scrollenabled = false;
         }
         float icBottomPos = m_pInnerContainer->getBottomInParent();
         if (icBottomPos + touchOffsetY <= m_fBottomBoundary)
         {
             realOffsetY = m_fBottomBoundary - icBottomPos;
+            bounceBottomEvent();
             scrollenabled = false;
         }
         moveChildren(realOffsetX, realOffsetY);
@@ -550,6 +558,7 @@ bool UIScrollView::bounceScrollChildren(float touchOffsetX, float touchOffsetY)
         if (icTopPos + touchOffsetY >= m_fTopBoundary)
         {
             realOffsetY = m_fTopBoundary - icTopPos;
+            bounceTopEvent();
             scrollenabled = false;
         }
         moveChildren(0.0f, realOffsetY);
@@ -561,6 +570,7 @@ bool UIScrollView::bounceScrollChildren(float touchOffsetX, float touchOffsetY)
         if (icBottomPos + touchOffsetY <= m_fBottomBoundary)
         {
             realOffsetY = m_fBottomBoundary - icBottomPos;
+            bounceBottomEvent();
             scrollenabled = false;
         }
         moveChildren(0.0f, realOffsetY);
@@ -572,6 +582,7 @@ bool UIScrollView::bounceScrollChildren(float touchOffsetX, float touchOffsetY)
         if (icRightPos + realOffsetX >= m_fRightBoundary)
         {
             realOffsetX = m_fRightBoundary - icRightPos;
+            bounceRightEvent();
             scrollenabled = false;
         }
         moveChildren(realOffsetX, 0.0f);
@@ -579,10 +590,11 @@ bool UIScrollView::bounceScrollChildren(float touchOffsetX, float touchOffsetY)
     else if (touchOffsetX < 0.0f && touchOffsetY == 0.0f) //bounce to left
     {
         float realOffsetX = touchOffsetX;
-        float icLefrPos = m_pInnerContainer->getLeftInParent();
-        if (icLefrPos + realOffsetX <= m_fLeftBoundary)
+        float icLeftPos = m_pInnerContainer->getLeftInParent();
+        if (icLeftPos + realOffsetX <= m_fLeftBoundary)
         {
-            realOffsetX = m_fLeftBoundary - icLefrPos;
+            realOffsetX = m_fLeftBoundary - icLeftPos;
+            bounceLeftEvent();
             scrollenabled = false;
         }
         moveChildren(realOffsetX, 0.0f);
@@ -748,6 +760,7 @@ bool UIScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touc
 bool UIScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
 {
     bool scrollenabled = true;
+    scrollingEvent();
     switch (m_eDirection)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
@@ -1401,6 +1414,46 @@ void UIScrollView::scrollToRightEvent()
     if (m_pEventListener && m_pfnEventSelector)
     {
         (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
+    }
+}
+
+void UIScrollView::scrollingEvent()
+{
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLLING);
+    }
+}
+
+void UIScrollView::bounceTopEvent()
+{
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_TOP);
+    }
+}
+
+void UIScrollView::bounceBottomEvent()
+{
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_BOTTOM);
+    }
+}
+
+void UIScrollView::bounceLeftEvent()
+{
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_LEFT);
+    }
+}
+
+void UIScrollView::bounceRightEvent()
+{
+    if (m_pEventListener && m_pfnEventSelector)
+    {
+        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
     }
 }
 

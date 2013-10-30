@@ -44,6 +44,11 @@ typedef enum
     SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
     SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
     SCROLLVIEW_EVENT_SCROLL_TO_RIGHT,
+    SCROLLVIEW_EVENT_SCROLLING,
+    SCROLLVIEW_EVENT_BOUNCE_TOP,
+    SCROLLVIEW_EVENT_BOUNCE_BOTTOM,
+    SCROLLVIEW_EVENT_BOUNCE_LEFT,
+    SCROLLVIEW_EVENT_BOUNCE_RIGHT
 }ScrollviewEventType;
 
 typedef void (CCObject::*SEL_ScrollViewEvent)(CCObject*, ScrollviewEventType);
@@ -269,6 +274,11 @@ protected:
     void scrollToBottomEvent();
     void scrollToLeftEvent();
     void scrollToRightEvent();
+    void scrollingEvent();
+    void bounceTopEvent();
+    void bounceBottomEvent();
+    void bounceLeftEvent();
+    void bounceRightEvent();
     virtual void onSizeChanged();
     virtual UIWidget* createCloneInstance();
     virtual void copySpecialProperties(UIWidget* model);
