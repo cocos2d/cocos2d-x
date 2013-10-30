@@ -75,6 +75,10 @@ Bone::Bone()
     _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     _boneTransformDirty = true;
     _blendType = BLEND_NORMAL;
+    _worldInfo = NULL;
+
+    _armatureParentBone = NULL;
+    _dataVersion = 0;
 }
 
 
@@ -84,6 +88,7 @@ Bone::~Bone(void)
     CC_SAFE_DELETE(_children);
     CC_SAFE_DELETE(_tween);
     CC_SAFE_DELETE(_displayManager);
+    CC_SAFE_DELETE(_worldInfo);
 
     if(_boneData)
     {
@@ -121,6 +126,8 @@ bool Bone::init(const char *name)
         _displayManager = new DisplayManager();
         _displayManager->init(this);
 
+        CC_SAFE_DELETE(_worldInfo);
+        _worldInfo = new BaseData();
 
         bRet = true;
     }
@@ -153,6 +160,12 @@ void Bone::setArmature(Armature *armature)
     if (_armature)
     {
         _tween->setAnimation(_armature->getAnimation());
+        _dataVersion = _armature->getArmatureData()->dataVersion;
+        _armatureParentBone = _armature->getParentBone();
+    }
+    else
+    {
+        _armatureParentBone = NULL;
     }
 }
 
@@ -167,39 +180,50 @@ void Bone::update(float delta)
     if (_parentBone)
         _boneTransformDirty = _boneTransformDirty || _parentBone->isTransformDirty();
 
-    CCBone *armatureParentBone = _armature->getParentBone();
-    if (armatureParentBone && !_boneTransformDirty)
+    if (_armatureParentBone && !_boneTransformDirty)
     {
-        _boneTransformDirty = armatureParentBone->isTransformDirty();
+        _boneTransformDirty = _armatureParentBone->isTransformDirty();
     }
 
     if (_boneTransformDirty)
     {
-        if (_armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
+        if (_dataVersion >= VERSION_COMBINED)
         {
             TransformHelp::nodeConcat(*_tweenData, *_boneData);
             _tweenData->scaleX -= 1;
             _tweenData->scaleY -= 1;
         }
 
-        TransformHelp::nodeToMatrix(*_tweenData, _worldTransform);
+        _worldInfo->copy(_tweenData);
 
-        _worldTransform = AffineTransformConcat(getNodeToParentTransform(), _worldTransform);
+        _worldInfo->x = _tweenData->x + _position.x;
+        _worldInfo->y = _tweenData->y + _position.y;
+        _worldInfo->scaleX = _tweenData->scaleX * _scaleX;
+        _worldInfo->scaleY = _tweenData->scaleY * _scaleY;
+        _worldInfo->skewX = _tweenData->skewX + _skewX + _rotationX;
+        _worldInfo->skewY = _tweenData->skewY + _skewY - _rotationY;
 
         if(_parentBone)
         {
-            _worldTransform = AffineTransformConcat(_worldTransform, _parentBone->_worldTransform);
+            applyParentTransform(_parentBone);
         }
         else
         {
-            if (armatureParentBone)
+            if (_armatureParentBone)
             {
-                _worldTransform = CCAffineTransformConcat(_worldTransform, armatureParentBone->getNodeToArmatureTransform());
+                applyParentTransform(_armatureParentBone);
             }
+        }
+
+        TransformHelp::nodeToMatrix(*_worldInfo, _worldTransform);
+
+        if (_armatureParentBone)
+        {
+            _worldTransform = AffineTransformConcat(_worldTransform, _armature->getNodeToParentTransform());
         }
     }
 
-    DisplayFactory::updateDisplay(this, _displayManager->getCurrentDecorativeDisplay(), delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
+    DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
@@ -209,6 +233,18 @@ void Bone::update(float delta)
     }
 
     _boneTransformDirty = false;
+}
+
+void Bone::applyParentTransform(Bone *parent) 
+{
+    float x = _worldInfo->x;
+    float y = _worldInfo->y;
+    _worldInfo->x = x * parent->_worldTransform.a + y * parent->_worldTransform.c + parent->_worldInfo->x;
+    _worldInfo->y = x * parent->_worldTransform.b + y * parent->_worldTransform.d + parent->_worldInfo->y;
+    _worldInfo->scaleX = _worldInfo->scaleX * parent->_worldInfo->scaleX;
+    _worldInfo->scaleY = _worldInfo->scaleY * parent->_worldInfo->scaleY;
+    _worldInfo->skewX = _worldInfo->skewX + parent->_worldInfo->skewX;
+    _worldInfo->skewY = _worldInfo->skewY + parent->_worldInfo->skewY;
 }
 
 
@@ -226,6 +262,18 @@ void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
     updateColor();
 }
 
+void Bone::setColor(const Color3B& color)
+{
+    NodeRGBA::setColor(color);
+    updateColor();
+}
+
+void Bone::setOpacity(GLubyte opacity)
+{
+    NodeRGBA::setOpacity(opacity);
+    updateColor();
+}
+
 void Bone::updateColor()
 {
     Node *display = _displayManager->getDisplayRenderNode();
@@ -239,7 +287,7 @@ void Bone::updateColor()
 
 void Bone::updateZOrder()
 {
-    if (_armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
+    if (_dataVersion >= VERSION_COMBINED)
     {
         int zorder = _tweenData->zOrder + _boneData->zOrder;
         setZOrder(zorder);
@@ -313,6 +361,11 @@ void Bone::setChildArmature(Armature *armature)
 {
     if (_childArmature != armature)
     {
+        if (armature == NULL && _childArmature)
+        {
+            _childArmature->setParentBone(NULL);
+        }
+
         CC_SAFE_RETAIN(armature);
         CC_SAFE_RELEASE(_childArmature);
         _childArmature = armature;
@@ -335,16 +388,6 @@ void Bone::setZOrder(int zOrder)
         Node::setZOrder(zOrder);
 }
 
-void Bone::setTransformDirty(bool dirty)
-{
-    _boneTransformDirty = dirty;
-}
-
-bool Bone::isTransformDirty()
-{
-    return _boneTransformDirty;
-}
-
 AffineTransform Bone::getNodeToArmatureTransform() const
 {
     return _worldTransform;
@@ -360,6 +403,11 @@ Node *Bone::getDisplayRenderNode()
     return _displayManager->getDisplayRenderNode();
 }
 
+DisplayType Bone::getDisplayRenderNodeType()
+{
+    return _displayManager->getDisplayRenderNodeType();
+}
+
 void Bone::addDisplay(DisplayData *displayData, int index)
 {
     _displayManager->addDisplay(displayData, index);
@@ -368,6 +416,11 @@ void Bone::addDisplay(DisplayData *displayData, int index)
 void Bone::addDisplay(Node *display, int index)
 {
     _displayManager->addDisplay(display, index);
+}
+
+void Bone::removeDisplay(int index)
+{
+    _displayManager->removeDisplay(index);
 }
 
 void Bone::changeDisplayByIndex(int index, bool force)

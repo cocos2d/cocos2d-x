@@ -30,6 +30,7 @@ enum {
 	TEST_COCOSTUDIO_WITH_SKELETON,
 	TEST_DRAGON_BONES_2_0,
 	TEST_PERFORMANCE,
+    TEST_PERFORMANCE_BATCHNODE,
 	TEST_CHANGE_ZORDER,
 	TEST_ANIMATION_EVENT,
 	TEST_PARTICLE_DISPLAY,
@@ -38,6 +39,7 @@ enum {
 	TEST_BOUDINGBOX,
 	TEST_ANCHORPOINT,
 	TEST_ARMATURE_NESTING,
+    TEST_ARMATURE_NESTING_2,
 
 	TEST_LAYER_COUNT
 };
@@ -97,8 +99,12 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void addArmature(cocostudio::Armature *armature);
-	void update(float delta);
+    virtual void onIncrease(Object* pSender);
+    virtual void onDecrease(Object* pSender);
+    virtual void addArmature(int number);
+    virtual void addArmatureToParent(cocostudio::Armature *armature);
+    virtual void removeArmatureFromParent(int tag);
+    virtual void refreshTitile();
 
 	int armatureCount;
 
@@ -108,6 +114,15 @@ public:
 	bool generated;
 };
 
+class TestPerformanceBatchNode : public TestPerformance
+{
+    virtual void onEnter();
+    virtual std::string title();
+    virtual void addArmatureToParent(cocostudio::Armature *armature);
+    virtual void removeArmatureFromParent(int tag);
+
+    cocostudio::BatchNode *batchNode;
+};
 
 class TestChangeZorder : public ArmatureTestLayer
 {
@@ -255,5 +270,40 @@ public:
 
 	cocostudio::Armature *armature;
 	int weaponIndex;
+};
+
+class Hero : public cocostudio::Armature
+{
+public:
+    static Hero *create(const char *name);
+    Hero();
+
+    virtual void changeMount(cocostudio::Armature *armature);
+    virtual void playByIndex(int index);
+
+    CC_SYNTHESIZE(cocostudio::Armature*, m_pMount, Mount);
+    CC_SYNTHESIZE(cocos2d::Layer*, m_pLayer, Layer);
+};
+
+class TestArmatureNesting2 : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+
+    virtual void ChangeMountCallback(Object* pSender);
+    virtual cocostudio::Armature *createMount(const char *name, Point position);
+
+    Hero *hero;
+
+    cocostudio::Armature *horse;
+    cocostudio::Armature *horse2;
+    cocostudio::Armature *bear;
+
+
+    bool touchedMenu;
 };
 #endif  // __HELLOWORLD_SCENE_H__

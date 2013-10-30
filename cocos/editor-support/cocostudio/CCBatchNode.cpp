@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "cocostudio/CCBatchNode.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCArmature.h"
+#include "cocostudio/CCSkin.h"
 
 using namespace cocos2d;
 
@@ -44,14 +45,34 @@ BatchNode *BatchNode::create()
 
 BatchNode::BatchNode()
     : _atlas(NULL)
+    , _textureAtlasDic(NULL)
 {
+}
+
+BatchNode::~BatchNode()
+{
+    CC_SAFE_RELEASE_NULL(_textureAtlasDic);
 }
 
 bool BatchNode::init()
 {
     bool ret = Node::init();
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+
+    CC_SAFE_DELETE(_textureAtlasDic);
+    _textureAtlasDic = new Dictionary();
+
     return ret;
+}
+
+void BatchNode::addChild(Node *pChild)
+{
+    Node::addChild(pChild);
+}
+
+void BatchNode::addChild(Node *child, int zOrder)
+{
+    Node::addChild(child, zOrder);
 }
 
 void BatchNode::addChild(Node *child, int zOrder, int tag)
@@ -61,7 +82,56 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
     if (armature != NULL)
     {
         armature->setBatchNode(this);
+
+        Dictionary *dict = armature->getBoneDic();
+        DictElement *element = NULL;
+        CCDICT_FOREACH(dict, element)
+        {
+            Bone *bone = static_cast<Bone*>(element->getObject());
+
+            Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+            Object *object = NULL;
+            CCARRAY_FOREACH(displayList, object)
+            {
+                DecorativeDisplay *display = static_cast<DecorativeDisplay*>(object);
+                                
+                if (Skin *skin = dynamic_cast<Skin*>(display->getDisplay()))
+                {
+                    skin->setTextureAtlas(getTexureAtlasWithTexture(skin->getTexture()));
+                }
+            }
+        }
     }
+}
+
+void BatchNode::removeChild(Node* child, bool cleanup)
+{
+    Armature *armature = dynamic_cast<Armature *>(child);
+    if (armature != NULL)
+    {
+        armature->setBatchNode(NULL);
+        
+        Dictionary *dict = armature->getBoneDic();
+        DictElement *element = NULL;
+        CCDICT_FOREACH(dict, element)
+        {
+            Bone *bone = static_cast<Bone*>(element->getObject());
+            
+            Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+            Object *object = NULL;
+            CCARRAY_FOREACH(displayList, object)
+            {
+                DecorativeDisplay *display = static_cast<DecorativeDisplay*>(object);
+                
+                if (Skin *skin = dynamic_cast<Skin*>(display->getDisplay()))
+                {
+                    skin->setTextureAtlas(armature->getTexureAtlasWithTexture(skin->getTexture()));
+                }
+            }
+        }
+    }
+
+    Node::removeChild(child, cleanup);
 }
 
 void BatchNode::visit()
@@ -116,6 +186,19 @@ void BatchNode::draw()
         _atlas->drawQuads();
         _atlas->removeAllQuads();
     }
+}
+
+TextureAtlas *BatchNode::getTexureAtlasWithTexture(Texture2D *texture)
+{
+    int key = texture->getName();
+    
+    TextureAtlas *atlas = static_cast<TextureAtlas *>(_textureAtlasDic->objectForKey(key));
+    if (atlas == NULL)
+    {
+        atlas = CCTextureAtlas::createWithTexture(texture, 4);
+        _textureAtlasDic->setObject(atlas, key);
+    }
+    return atlas;
 }
 
 }

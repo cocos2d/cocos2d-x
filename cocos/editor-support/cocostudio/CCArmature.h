@@ -173,6 +173,8 @@ public:
     
     virtual bool getArmatureTransformDirty();
 
+    virtual cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture);
+
 #if ENABLE_PHYSICS_BOX2D_DETECT
     virtual b2Fixture *getShapeList();
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
@@ -197,7 +199,7 @@ protected:
 
     CC_SYNTHESIZE(cocos2d::TextureAtlas *, _atlas, TextureAtlas);
 
-    CC_SYNTHESIZE(Bone *, _parentBone, ParentBone);
+    CC_PROPERTY(Bone *, _parentBone, ParentBone);
 
     CC_SYNTHESIZE(float, _version, Version);
 
@@ -213,6 +215,8 @@ protected:
     cocos2d::Point _offsetPoint;
 
     ArmatureAnimation *_animation;
+
+    cocos2d::Dictionary *_textureAtlasDic;
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     CC_PROPERTY(b2Body *, _body, Body);

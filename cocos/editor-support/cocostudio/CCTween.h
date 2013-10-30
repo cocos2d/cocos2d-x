@@ -83,14 +83,11 @@ public:
      */
     virtual void play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
-    inline void setAnimation(ArmatureAnimation *animation)
-    {
-        _animation = animation;
-    }
-    inline ArmatureAnimation *getAnimation() const
-    {
-        return _animation;
-    }
+    inline void setAnimation(ArmatureAnimation *animation) { _animation = animation; }
+    inline ArmatureAnimation *getAnimation() const { return _animation; }
+
+    virtual void gotoAndPlay(int frameIndex);
+    virtual void gotoAndPause(int frameIndex);
 protected:
 
     /**

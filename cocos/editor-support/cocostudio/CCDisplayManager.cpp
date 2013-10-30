@@ -48,6 +48,7 @@ DisplayManager *DisplayManager::create(Bone *bone)
 DisplayManager::DisplayManager()
     : _decoDisplayList(NULL)
     , _displayRenderNode(NULL)
+    , _displayType(CS_DISPLAY_MAX)
     , _currentDecoDisplay(NULL)
     , _displayIndex(-1)
     , _forceChangeDisplay(false)
@@ -137,7 +138,7 @@ void DisplayManager::addDisplay(Node *display, int index)
         if (SpriteDisplayData *spriteDisplayData = (SpriteDisplayData *)decoDisplay->getDisplayData())
         {
             skin->setSkinData(spriteDisplayData->skinData);
-            ((CCSpriteDisplayData *)displayData)->skinData = spriteDisplayData->skinData;
+            ((SpriteDisplayData *)displayData)->skinData = spriteDisplayData->skinData;
         }
         else
         {
@@ -172,12 +173,13 @@ void DisplayManager::addDisplay(Node *display, int index)
 
 void DisplayManager::removeDisplay(int index)
 {
-    _decoDisplayList->removeObjectAtIndex(index);
-
     if(index == _displayIndex)
     {
         setCurrentDecorativeDisplay(NULL);
+        _displayIndex = -1;
     }
+
+    _decoDisplayList->removeObjectAtIndex(index);
 }
 
 Array *DisplayManager::getDecorativeDisplayList()
@@ -265,12 +267,24 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 
         _displayRenderNode->retain();
         _displayRenderNode->setVisible(_visible);
+
+        _displayType = _currentDecoDisplay->getDisplayData()->displayType;
+    }
+    else
+    {
+        _displayType =  CS_DISPLAY_MAX;
     }
 }
 
 Node *DisplayManager::getDisplayRenderNode()
 {
     return _displayRenderNode;
+}
+
+
+DisplayType DisplayManager::getDisplayRenderNodeType()
+{
+    return _displayType;
 }
 
 int DisplayManager::getCurrentDisplayIndex()

@@ -49,9 +49,10 @@ public:
     cocos2d::AffineTransform getNodeToWorldTransformAR() const;
 
     CC_PROPERTY_PASS_BY_REF(BaseData, _skinData, SkinData);
-    CC_SYNTHESIZE(Bone *, _bone, Bone);
+    CC_PROPERTY(Bone *, _bone, Bone);
 
 protected:
+    Armature *_armature;
     cocos2d::AffineTransform _skinTransform;
     CC_SYNTHESIZE_READONLY(std::string, _displayName, DisplayName)
 };

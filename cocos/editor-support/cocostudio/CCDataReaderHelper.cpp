@@ -133,13 +133,14 @@ static const char *VERTEX_POINT = "vertex";
 static const char *COLOR_INFO = "color";
 
 static const char *CONFIG_FILE_PATH = "config_file_path";
-
+static const char *CONTENT_SCALE = "content_scale";
 
 namespace cocostudio {
 
 
-	std::vector<std::string> s_arrConfigFileList;
+std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
+float s_ContentScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
 static float s_CocoStudioVersion = VERSION_COMBINED;
 
@@ -312,7 +313,7 @@ void DataReaderHelper::addDataFromFile(const char *filePath)
     }
 }
 
-void DataReaderHelper::addDataFromFileAsync(const char *filePath, Object *target, SEL_SCHEDULE selector)
+void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, Object *target, SEL_SCHEDULE selector)
 {
     /*
     * Check if file is already added to ArmatureDataManager, if then return.
@@ -338,15 +339,16 @@ void DataReaderHelper::addDataFromFileAsync(const char *filePath, Object *target
     s_arrConfigFileList.push_back(filePath);
 
     //! find the base file path
-    s_BasefilePath = filePath;
-    size_t pos = s_BasefilePath.find_last_of("/");
+    std::string basefilePath = filePath;
+    size_t pos = basefilePath.find_last_of("/");
+
     if (pos != std::string::npos)
     {
-        s_BasefilePath = s_BasefilePath.substr(0, pos + 1);
+        basefilePath = s_BasefilePath.substr(0, pos + 1);
     }
     else
     {
-        s_BasefilePath = "";
+        basefilePath = "";
     }
 
 
@@ -378,11 +380,13 @@ void DataReaderHelper::addDataFromFileAsync(const char *filePath, Object *target
     // generate async struct
     AsyncStruct *data = new AsyncStruct();
     data->filename = filePath;
-    data->baseFilePath = s_BasefilePath;
+    data->baseFilePath = basefilePath;
     data->target = target;
     data->selector = selector;
     data->autoLoadSpriteFile = ArmatureDataManager::getInstance()->isAutoLoadSpriteFile();
 
+    data->imagePath = imagePath;
+    data->plistPath = plistPath;
 
     std::string filePathStr =  filePath;
     size_t startPos = filePathStr.find_last_of(".");
@@ -428,10 +432,20 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
 
         AsyncStruct *pAsyncStruct = pDataInfo->asyncStruct;
 
+
+        if (pAsyncStruct->imagePath != "" && pAsyncStruct->plistPath != "")
+        {
+            _getFileMutex.lock();
+            ArmatureDataManager::getInstance()->addSpriteFrameFromFile(pAsyncStruct->plistPath.c_str(), pAsyncStruct->imagePath.c_str());
+            _getFileMutex.unlock();
+        }
+
         while (!pDataInfo->configFileQueue.empty())
         {
             std::string configPath = pDataInfo->configFileQueue.front();
+            _getFileMutex.lock();
             ArmatureDataManager::getInstance()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str());
+            _getFileMutex.unlock();
             pDataInfo->configFileQueue.pop();
         }
 
@@ -1123,12 +1137,21 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
     JsonDictionary json;
     json.initWithDescription(fileContent);
 
+    if (dataInfo)
+    {
+        dataInfo->contentScale = json.getItemFloatValue(CONTENT_SCALE, 1);
+    }
+    else
+    {
+        s_ContentScale = json.getItemFloatValue(CONTENT_SCALE, 1);
+    }
+
     // Decode armatures
     int length = json.getArrayItemCount(ARMATURE_DATA);
     for (int i = 0; i < length; i++)
     {
         JsonDictionary *armatureDic = json.getSubItemFromArray(ARMATURE_DATA, i);
-        ArmatureData *armatureData = decodeArmature(*armatureDic);
+        ArmatureData *armatureData = decodeArmature(*armatureDic, dataInfo);
 
         if (dataInfo)
         {
@@ -1148,7 +1171,7 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
     for (int i = 0; i < length; i++)
     {
         JsonDictionary *animationDic = json.getSubItemFromArray(ANIMATION_DATA, i);
-        AnimationData *animationData = decodeAnimation(*animationDic);
+        AnimationData *animationData = decodeAnimation(*animationDic, dataInfo);
 
         if (dataInfo)
         {
@@ -1215,7 +1238,7 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
     }
 }
 
-ArmatureData *DataReaderHelper::decodeArmature(JsonDictionary &json)
+ArmatureData *DataReaderHelper::decodeArmature(JsonDictionary &json, DataInfo *dataInfo)
 {
     ArmatureData *armatureData = new ArmatureData();
     armatureData->init();
@@ -1232,7 +1255,7 @@ ArmatureData *DataReaderHelper::decodeArmature(JsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         JsonDictionary *dic = json.getSubItemFromArray(BONE_DATA, i);
-        BoneData *boneData = decodeBone(*dic);
+        BoneData *boneData = decodeBone(*dic, dataInfo);
         armatureData->addBoneData(boneData);
         boneData->release();
 
@@ -1242,12 +1265,12 @@ ArmatureData *DataReaderHelper::decodeArmature(JsonDictionary &json)
     return armatureData;
 }
 
-BoneData *DataReaderHelper::decodeBone(JsonDictionary &json)
+BoneData *DataReaderHelper::decodeBone(JsonDictionary &json, DataInfo *dataInfo)
 {
     BoneData *boneData = new BoneData();
     boneData->init();
 
-    decodeNode(boneData, json);
+    decodeNode(boneData, json, dataInfo);
 
     const char *str = json.getItemStringValue(A_NAME);
     if(str != NULL)
@@ -1266,7 +1289,7 @@ BoneData *DataReaderHelper::decodeBone(JsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         JsonDictionary *dic = json.getSubItemFromArray(DISPLAY_DATA, i);
-        DisplayData *displayData = decodeBoneDisplay(*dic);
+        DisplayData *displayData = decodeBoneDisplay(*dic, dataInfo);
         boneData->addDisplayData(displayData);
         displayData->release();
 
@@ -1276,7 +1299,7 @@ BoneData *DataReaderHelper::decodeBone(JsonDictionary &json)
     return boneData;
 }
 
-DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json)
+DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json, DataInfo *dataInfo)
 {
     DisplayType displayType = (DisplayType)json.getItemIntValue(A_DISPLAY_TYPE, CS_DISPLAY_SPRITE);
 
@@ -1304,6 +1327,18 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json)
             sdd->skinData.scaleY = dic->getItemFloatValue(A_SCALE_Y, 1);
             sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);
             sdd->skinData.skewY = dic->getItemFloatValue(A_SKEW_Y, 0);
+
+            if (dataInfo)
+            {
+                sdd->skinData.x *= dataInfo->contentScale;
+                sdd->skinData.y *= dataInfo->contentScale;
+            }
+            else
+            {
+                sdd->skinData.x *= s_ContentScale;
+                sdd->skinData.y *= s_ContentScale;
+            }
+
             delete dic;
         }
     }
@@ -1327,7 +1362,14 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json)
         const char *plist = json.getItemStringValue(A_PLIST);
         if(plist != NULL)
         {
-            ((ParticleDisplayData *)displayData)->plist = s_BasefilePath + plist;
+            if (dataInfo != NULL)
+            {
+                static_cast<ParticleDisplayData *>(displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
+            }
+            else
+            {
+                static_cast<ParticleDisplayData *>(displayData)->plist = s_BasefilePath + plist;
+            }
         }
     }
     break;
@@ -1343,7 +1385,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json)
     return displayData;
 }
 
-AnimationData *DataReaderHelper::decodeAnimation(JsonDictionary &json)
+AnimationData *DataReaderHelper::decodeAnimation(JsonDictionary &json, DataInfo *dataInfo)
 {
     AnimationData *aniData = new AnimationData();
 
@@ -1358,7 +1400,7 @@ AnimationData *DataReaderHelper::decodeAnimation(JsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         JsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_DATA, i);
-        MovementData *movementData = decodeMovement(*dic);
+        MovementData *movementData = decodeMovement(*dic, dataInfo);
         aniData->addMovement(movementData);
         movementData->release();
 
@@ -1368,7 +1410,7 @@ AnimationData *DataReaderHelper::decodeAnimation(JsonDictionary &json)
     return aniData;
 }
 
-MovementData *DataReaderHelper::decodeMovement(JsonDictionary &json)
+MovementData *DataReaderHelper::decodeMovement(JsonDictionary &json, DataInfo *dataInfo)
 {
     MovementData *movementData = new MovementData();
 
@@ -1389,7 +1431,7 @@ MovementData *DataReaderHelper::decodeMovement(JsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         JsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_BONE_DATA, i);
-        MovementBoneData *movementBoneData = decodeMovementBone(*dic);
+        MovementBoneData *movementBoneData = decodeMovementBone(*dic, dataInfo);
         movementData->addMovementBoneData(movementBoneData);
         movementBoneData->release();
 
@@ -1399,7 +1441,7 @@ MovementData *DataReaderHelper::decodeMovement(JsonDictionary &json)
     return movementData;
 }
 
-MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json)
+MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json, DataInfo *dataInfo)
 {
     MovementBoneData *movementBoneData = new MovementBoneData();
     movementBoneData->init();
@@ -1416,7 +1458,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         JsonDictionary *dic = json.getSubItemFromArray(FRAME_DATA, i);
-        FrameData *frameData = decodeFrame(*dic);
+        FrameData *frameData = decodeFrame(*dic, dataInfo);
 
         movementBoneData->addFrameData(frameData);
         frameData->release();
@@ -1471,11 +1513,11 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json)
     return movementBoneData;
 }
 
-FrameData *DataReaderHelper::decodeFrame(JsonDictionary &json)
+FrameData *DataReaderHelper::decodeFrame(JsonDictionary &json, DataInfo *dataInfo)
 {
     FrameData *frameData = new FrameData();
 
-    decodeNode(frameData, json);
+    decodeNode(frameData, json, dataInfo);
 
     frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
     frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
@@ -1554,10 +1596,23 @@ ContourData *DataReaderHelper::decodeContour(JsonDictionary &json)
     return contourData;
 }
 
-void DataReaderHelper::decodeNode(BaseData *node, JsonDictionary &json)
+void DataReaderHelper::decodeNode(BaseData *node, JsonDictionary &json, DataInfo *dataInfo)
 {
     node->x = json.getItemFloatValue(A_X, 0) * s_PositionReadScale;
     node->y = json.getItemFloatValue(A_Y, 0) * s_PositionReadScale;
+
+    if (dataInfo)
+    {
+        node->x *= dataInfo->contentScale;
+        node->y *= dataInfo->contentScale;
+    }
+    else
+    {
+        node->x *= s_ContentScale;
+        node->y *= s_ContentScale;
+    }
+
+
     node->zOrder = json.getItemIntValue(A_Z, 0);
 
     node->skewX = json.getItemFloatValue(A_SKEW_X, 0);
