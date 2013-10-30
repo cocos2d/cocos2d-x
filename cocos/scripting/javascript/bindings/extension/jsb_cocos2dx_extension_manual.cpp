@@ -322,12 +322,14 @@ private:
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
         
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+        
         JSBool hasAction;
-        jsval temp_retval;
+        JS::RootedValue temp_retval(cx);
         jsval dataVal = OBJECT_TO_JSVAL(p->obj);
         
-        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JSObject* obj = _JSTableViewDataSource;
+        JSAutoCompartment ac(cx, obj);
         
         if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction)
         {
@@ -340,7 +342,6 @@ private:
                 return false;
             }
 
-            JSAutoCompartment ac(cx, obj);
             JS_CallFunctionName(cx, obj, jsFunctionName.c_str(),
                                 1, &dataVal, &retVal);
             return true;
@@ -353,15 +354,15 @@ private:
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
         
-        
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JSBool hasAction;
-        jsval temp_retval;
+        JS::RootedValue temp_retval(cx);
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(p->obj);
         dataVal[1] = INT_TO_JSVAL(idx);
         
-        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JSObject* obj = _JSTableViewDataSource;
+        JSAutoCompartment ac(cx, obj);
         
         if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction)
         {
@@ -375,7 +376,6 @@ private:
                 return false;
             }
 
-            JSAutoCompartment ac(cx, obj);
             JS_CallFunctionName(cx, obj, jsFunctionName.c_str(),
                                 2, dataVal, &retVal);
             return true;

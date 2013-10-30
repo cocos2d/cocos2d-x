@@ -327,8 +327,9 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, onreadystatechange)
     if (_onreadystateCallback)
     {
         JSString *tmpstr = JS_NewStringCopyZ(cx, "1");
-        jsval tmpval = STRING_TO_JSVAL(tmpstr);
-        JS_SetProperty(cx, _onreadystateCallback, "readyState", &tmpval);
+        JS::RootedValue tmpval(cx);
+        tmpval = STRING_TO_JSVAL(tmpstr);
+        JS_SetProperty(cx, _onreadystateCallback, "readyState", tmpval);
         
         jsval out = OBJECT_TO_JSVAL(_onreadystateCallback);
         vp.set(out);
@@ -563,7 +564,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
     
     if (_responseType == ResponseType::JSON)
     {
-        jsval outVal;
+        JS::RootedValue outVal(cx);
         
         jsval strVal = std_string_to_jsval(cx, _data.str());
         if (JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(strVal)), _dataSize, &outVal))
