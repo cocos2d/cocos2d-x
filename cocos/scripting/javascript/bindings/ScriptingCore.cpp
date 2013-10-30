@@ -300,13 +300,13 @@ JSBool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
     // first, try to get the ns
-    jsval nsval;
+    JS::RootedValue nsval(cx);
     JSObject *ns;
     JS_GetProperty(cx, global, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
         ns = JS_NewObject(cx, NULL, NULL, NULL);
         nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, global, "cc", &nsval);
+        JS_SetProperty(cx, global, "cc", nsval);
     } else {
         JS_ValueToObject(cx, nsval, &ns);
     }
@@ -315,8 +315,9 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     // Javascript controller (__jsc__)
     //
     JSObject *jsc = JS_NewObject(cx, NULL, NULL, NULL);
-    jsval jscVal = OBJECT_TO_JSVAL(jsc);
-    JS_SetProperty(cx, global, "__jsc__", &jscVal);
+    JS::RootedValue jscVal(cx);
+    jscVal = OBJECT_TO_JSVAL(jsc);
+    JS_SetProperty(cx, global, "__jsc__", jscVal);
 
     JS_DefineFunction(cx, jsc, "garbageCollect", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, jsc, "dumpRoot", ScriptingCore::dumpRoot, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
@@ -451,6 +452,11 @@ void ScriptingCore::createGlobalContext() {
         this->_cx = NULL;
         this->_rt = NULL;
     }
+    
+    // Start the engine. Added in SpiderMonkey v25
+    if (!JS_Init())
+        return;
+    
     // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
     this->_rt = JS_NewRuntime(8L * 1024L * 1024L, JS_USE_HELPER_THREADS);
@@ -461,13 +467,15 @@ void ScriptingCore::createGlobalContext() {
 	JS_SetNativeStackQuota(_rt, JSB_MAX_STACK_QUOTA);
     
     this->_cx = JS_NewContext(_rt, 8192);
+    
     JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
-    JS_SetVersion(this->_cx, JSVERSION_LATEST);
+    
+//    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
     // Only disable METHODJIT on iOS.
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    JS_SetOptions(this->_cx, JS_GetOptions(this->_cx) & ~JSOPTION_METHODJIT);
-    JS_SetOptions(this->_cx, JS_GetOptions(this->_cx) & ~JSOPTION_METHODJIT_ALWAYS);
+//    JS_SetOptions(this->_cx, JS_GetOptions(this->_cx) & ~JSOPTION_METHODJIT);
+//    JS_SetOptions(this->_cx, JS_GetOptions(this->_cx) & ~JSOPTION_METHODJIT_ALWAYS);
 #endif
     
     JS_SetErrorReporter(this->_cx, ScriptingCore::reportError);
@@ -475,7 +483,10 @@ void ScriptingCore::createGlobalContext() {
     //JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
     this->_global = NewGlobalObject(_cx);
-
+    JS_AddObjectRoot(_cx, &_global);
+    JSAutoCompartment ac(_cx, _global);
+    js::SetDefaultObjectForContext(_cx, _global);
+    
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
         callback(this->_cx, this->_global);
@@ -507,8 +518,12 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (cx == NULL) {
         cx = _cx;
     }
-    JSScript *script = NULL;    
+    
+    JSAutoCompartment ac(cx, global);
+    
+    js::RootedScript script(cx);
     js::RootedObject obj(cx, global);
+    
 	JS::CompileOptions options(cx);
 	options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
     
@@ -659,7 +674,7 @@ JSBool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
                 return JS_FALSE;
             }
         } else {
-            JSObject* glob = JS_GetGlobalForScopeChain(cx);
+            JSObject* glob = JS::CurrentGlobalOrNull(cx);
             res = ScriptingCore::getInstance()->runScript(path, glob);
         }
         return res;
@@ -925,8 +940,8 @@ JSBool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, ui
 {
     JSBool bRet = JS_FALSE;
     JSBool hasAction;
-    jsval temp_retval;
     JSContext* cx = this->_cx;
+    JS::RootedValue temp_retval(cx);
     JSObject* obj = JSVAL_TO_OBJECT(owner);
     
     do
@@ -1213,7 +1228,8 @@ JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
 
 JSBool jsval_to_ccpoint(JSContext *cx, jsval v, Point* ret) {
     JSObject *tmp;
-    jsval jsx, jsy;
+    JS::RootedValue jsx(cx);
+    JS::RootedValue jsy(cx);
     double x, y;
     JSBool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
@@ -1231,7 +1247,11 @@ JSBool jsval_to_ccpoint(JSContext *cx, jsval v, Point* ret) {
 
 JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, Acceleration* ret) {
     JSObject *tmp;
-    jsval jsx, jsy, jsz, jstimestamp;
+    JS::RootedValue jsx(cx);
+    JS::RootedValue jsy(cx);
+    JS::RootedValue jsz(cx);
+    JS::RootedValue jstimestamp(cx);
+    
     double x, y, timestamp, z;
     JSBool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
@@ -1292,7 +1312,11 @@ JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** r
 
 JSBool jsval_to_ccrect(JSContext *cx, jsval v, Rect* ret) {
     JSObject *tmp;
-    jsval jsx, jsy, jswidth, jsheight;
+    JS::RootedValue jsx(cx);
+    JS::RootedValue jsy(cx);
+    JS::RootedValue jswidth(cx);
+    JS::RootedValue jsheight(cx);
+    
     double x, y, width, height;
     JSBool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
@@ -1316,7 +1340,8 @@ JSBool jsval_to_ccrect(JSContext *cx, jsval v, Rect* ret) {
 
 JSBool jsval_to_ccsize(JSContext *cx, jsval v, Size* ret) {
     JSObject *tmp;
-    jsval jsw, jsh;
+    JS::RootedValue jsw(cx);
+    JS::RootedValue jsh(cx);
     double w, h;
     JSBool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
@@ -1333,7 +1358,11 @@ JSBool jsval_to_ccsize(JSContext *cx, jsval v, Size* ret) {
 
 JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret) {
     JSObject *tmp;
-    jsval jsr, jsg, jsb, jsa;
+    JS::RootedValue jsr(cx);
+    JS::RootedValue jsg(cx);
+    JS::RootedValue jsb(cx);
+    JS::RootedValue jsa(cx);
+    
     double r, g, b, a;
     JSBool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
@@ -1357,7 +1386,10 @@ JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret) {
 
 JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret) {
     JSObject *tmp;
-    jsval jsr, jsg, jsb, jsa;
+    JS::RootedValue jsr(cx);
+    JS::RootedValue jsg(cx);
+    JS::RootedValue jsb(cx);
+    JS::RootedValue jsa(cx);
     double r, g, b, a;
     JSBool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
@@ -1380,7 +1412,9 @@ JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret) {
 
 JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret) {
     JSObject *tmp;
-    jsval jsr, jsg, jsb;
+    JS::RootedValue jsr(cx);
+    JS::RootedValue jsg(cx);
+    JS::RootedValue jsb(cx);
     double r, g, b;
     JSBool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
@@ -1554,7 +1588,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
     DictElement* pElement = NULL;
     CCDICT_FOREACH(dict, pElement)
     {
-        jsval dictElement;
+        JS::RootedValue dictElement(cx);
         Object* obj = pElement->getObject();
         //First, check whether object is associated with js object.
         js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Object>(cx, obj);
@@ -1591,7 +1625,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
         const char* key = pElement->getStrKey();
         if (key && strlen(key) > 0)
         {
-            JS_SetProperty(cx, jsRet, key, &dictElement);
+            JS_SetProperty(cx, jsRet, key, dictElement);
         }
     }
     return OBJECT_TO_JSVAL(jsRet);
@@ -1635,7 +1669,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret) {
             dict = Dictionary::create();
         }
         
-        jsval value;
+        JS::RootedValue value(cx);
         JS_GetPropertyById(cx, tmp, idp, &value);
         if (value.isObject())
         {
@@ -1699,7 +1733,12 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret) {
 JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, AffineTransform* ret)
 {
     JSObject *tmp;
-    jsval jsa, jsb, jsc, jsd, jstx, jsty;
+    JS::RootedValue jsa(cx);
+    JS::RootedValue jsb(cx);
+    JS::RootedValue jsc(cx);
+    JS::RootedValue jsd(cx);
+    JS::RootedValue jstx(cx);
+    JS::RootedValue jsty(cx);
     double a, b, c, d, tx, ty;
     JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
     JS_GetProperty(cx, tmp, "a", &jsa) &&
@@ -2145,11 +2184,12 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 
 void ScriptingCore::enableDebugger()
 {
-    JS_SetDebugMode(_cx, JS_TRUE);
-    
     if (_debugGlobal == NULL)
     {
         JSAutoCompartment ac0(_cx, _global);
+        
+        JS_SetDebugMode(_cx, JS_TRUE);
+        
         _debugGlobal = NewGlobalObject(_cx, true);
         JS_WrapObject(_cx, &_debugGlobal);
         JSAutoCompartment ac(_cx, _debugGlobal);
@@ -2182,7 +2222,10 @@ void ScriptingCore::enableDebugger()
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug)
 {
-    JSObject* glob = JS_NewGlobalObject(cx, &global_class, NULL);
+    JS::CompartmentOptions options;
+    options.setVersion(JSVERSION_LATEST);
+    
+    JS::RootedObject glob(cx, JS_NewGlobalObject(cx, &global_class, NULL, JS::DontFireOnNewGlobalHook, options));
     if (!glob) {
         return NULL;
     }
@@ -2196,6 +2239,8 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug)
     if (!ok)
         return NULL;
 
+    JS_FireOnNewGlobalObject(cx, glob);
+    
     return glob;
 }
 
@@ -2251,7 +2296,7 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
 
 static Color3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)
 {
-    jsval jsr;
+    JS::RootedValue jsr(cx);
     Color3B out;
     JS_GetProperty(cx, colorObject, "r", &jsr);
     double fontR = 0.0;
@@ -2275,7 +2320,7 @@ static Color3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)
 
 Size getSizeFromJSObject(JSContext *cx, JSObject *sizeObject)
 {
-    jsval jsr;
+    JS::RootedValue jsr(cx);
     Size out;
     JS_GetProperty(cx, sizeObject, "width", &jsr);
     double width = 0.0;
@@ -2316,7 +2361,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     out->_fontFillColor = Color3B::WHITE;
     
     // font name
-    jsval jsr;
+    JS::RootedValue jsr(cx);
     JS_GetProperty(cx, jsobj, "fontName", &jsr);
     JS_ValueToString(cx, jsr);
     JSStringWrapper wrapper(jsr);

@@ -13,11 +13,12 @@ void GLNode::draw() {
       JSB_ENSURE_AUTOCOMPARTMENT(cx, jsObj);
       JS_HasProperty(cx, jsObj, "draw", &found);
       if (found == JS_TRUE) {
-	jsval rval, fval;
-	jsval *argv = NULL; unsigned argc=0;
-                    
-	JS_GetProperty(cx, jsObj, "draw", &fval);
-	JS_CallFunctionValue(cx, jsObj, fval, argc, argv, &rval);
+          JS::RootedValue rval(cx);
+          JS::RootedValue fval(cx);
+          jsval *argv = NULL; unsigned argc=0;
+                        
+          JS_GetProperty(cx, jsObj, "draw", &fval);
+          JS_CallFunctionValue(cx, jsObj, fval, argc, argv, rval.address());
       }
     }
   }
