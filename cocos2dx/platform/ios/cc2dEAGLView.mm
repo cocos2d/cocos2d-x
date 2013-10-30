@@ -75,7 +75,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #define IOS_MAX_TOUCHES_COUNT     10
 
-static cc2dEAGLView *view = 0;
+static cc2dEAGLView *view = nil;
 
 @interface cc2dEAGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
@@ -249,6 +249,8 @@ static cc2dEAGLView *view = 0;
 {
     [renderer_ release];
     self.keyboardShowNotification = NULL; // implicit release
+    view = nil;
+    
     [super dealloc];
 }
 
