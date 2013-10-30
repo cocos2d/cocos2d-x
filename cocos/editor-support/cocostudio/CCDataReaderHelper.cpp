@@ -344,7 +344,7 @@ void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *p
 
     if (pos != std::string::npos)
     {
-        basefilePath = s_BasefilePath.substr(0, pos + 1);
+        basefilePath = basefilePath.substr(0, pos + 1);
     }
     else
     {
