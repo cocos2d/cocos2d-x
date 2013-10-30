@@ -8,6 +8,7 @@
 # begin
 import sys
 import os, os.path
+import shutil
 from optparse import OptionParser
 
 CPP_SAMPLES = ['hellocpp', 'testcpp', 'simplegame', 'assetsmanager']
@@ -62,7 +63,7 @@ def caculate_built_samples(args):
     'jsb' for short of all javascript samples
     '''
 
-    if 'all' == args:
+    if 'all' in args:
         return ALL_SAMPLES
 
     targets = []
@@ -99,6 +100,63 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param):
     else:
         command = '%s -C %s %s %s' % (ndk_path, app_android_root, ndk_build_param, ndk_module_path)
     os.system(command)
+
+def copy_files(src, dst):
+
+    for item in os.listdir(src):
+        path = os.path.join(src, item)
+        # Android can not package the file that ends with ".gz"
+        if not item.startswith('.') and not item.endswith('.gz') and os.path.isfile(path):
+            shutil.copy(path, dst)
+        if os.path.isdir(path):
+            new_dst = os.path.join(dst, item)
+            os.mkdir(new_dst)
+            copy_files(path, new_dst)
+
+def copy_resources(target, app_android_root):
+
+    # remove app_android_root/assets if it exists
+    assets_dir = os.path.join(app_android_root, "assets")
+    if os.path.isdir(assets_dir):
+        shutil.rmtree(assets_dir)
+
+    # copy resources(cpp samples and lua samples)
+    os.mkdir(assets_dir)
+    resources_dir = os.path.join(app_android_root, "../Resources")
+    if os.path.isdir(resources_dir):
+        copy_files(resources_dir, assets_dir)
+
+    # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
+    if target in JSB_SAMPLES or target == "assetsmanager":
+        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
+        copy_files(resources_dir, assets_dir)
+
+        if target == "cocosdragon":
+            resources_dir = os.path.join(app_android_root, "../../Shared/games/CocosDragonJS/Published files Android")
+        if target == "crystalcraze":
+            resources_dir = os.path.join(app_android_root, "../../Shared/games/CrystalCraze/Published-Android")
+        if target == "moonwarriors":
+            resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors/res")
+        if target == "testjavascript":
+            resources_dir = os.path.join(app_android_root, "../../Shared/tests/")
+        if target == "watermelonwithme":
+            resources_dir = os.path.join(app_android_root, "../../Shared/games/WatermelonWithMe")
+        copy_files(resources_dir, assets_dir)
+
+    # AssetsManager test should also copy javascript files
+    if target == "assetsmanager":
+        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
+        copy_files(resources_dir, assets_dir)
+
+    # lua samples should copy lua script
+    if target in LUA_SAMPLES:
+        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua/script")
+        copy_files(resources_dir, assets_dir)
+
+        # TestLua shared resources with TestCpp
+        if target == "testlua":
+            resources_dir = os.path.join(app_android_root, "../../../Cpp/TestCpp/Resources")
+            copy_files(resources_dir, assets_dir)
 
 def build_samples(target,ndk_build_param):
 
@@ -137,6 +195,7 @@ def build_samples(target,ndk_build_param):
             print 'unknown target %s, pass it', target
             continue
 
+        copy_resources(target, app_android_root)
         do_build(cocos_root, ndk_root, app_android_root, ndk_build_param)
 
 # -------------- main --------------
