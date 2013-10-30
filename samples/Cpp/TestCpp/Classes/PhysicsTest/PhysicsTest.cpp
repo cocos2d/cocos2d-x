@@ -1003,3 +1003,28 @@ std::string PhysicsDemoPump::title()
 {
     return "Pump";
 }
+
+
+void PhysicsDemoOneWayPlatform::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    setTouchEnabled(true);
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    
+    auto ground = Node::create();
+    ground->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
+    this->addChild(ground);
+    
+    auto platform = Node::create();
+    platform->setPhysicsBody(PhysicsBody::createEdgeBox(Size(200, 50)));
+    platform->setPosition(VisibleRect::center());
+    this->addChild(platform);
+    
+    this->addChild(makeBall(VisibleRect::center() + Point(0, 50), 5));
+}
+
+std::string PhysicsDemoOneWayPlatform::title()
+{
+    return "One Way Platform";
+}

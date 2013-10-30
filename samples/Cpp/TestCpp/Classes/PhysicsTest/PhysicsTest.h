@@ -134,4 +134,11 @@ private:
     float _rotationV;
 };
 
+class PhysicsDemoOneWayPlatform : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
+};
+
 #endif

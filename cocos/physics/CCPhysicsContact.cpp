@@ -186,5 +186,104 @@ PhysicsContactListener::~PhysicsContactListener()
     
 }
 
+PhysicsContactListener* PhysicsContactListener::create()
+{
+    PhysicsContactListener* obj = new PhysicsContactListener();
+    
+    if (obj != nullptr)
+    {
+        obj->autorelease();
+        return obj;
+    }
+    
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
+bool PhysicsContactListener::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+{
+    CC_UNUSED_PARAM(shapeA);
+    CC_UNUSED_PARAM(shapeB);
+    return true;
+}
+
+bool PhysicsContactListener::checkAvaiable()
+{
+    if (onContactBegin == nullptr && onContactPreSolve == nullptr
+        && onContactPostSolve == nullptr && onContactEnd == nullptr)
+    {
+        CCASSERT(false, "Invalid PhysicsContactListener.");
+        return false;
+    }
+    
+    return true;
+}
+
+EventListener* PhysicsContactListener::clone()
+{
+    PhysicsContactListener* obj = PhysicsContactListener::create();
+    
+    if (obj != nullptr)
+    {
+        obj->onContactBegin = onContactBegin;
+        obj->onContactPreSolve = onContactPreSolve;
+        obj->onContactPostSolve = onContactPostSolve;
+        obj->onContactEnd = onContactEnd;
+        
+        return obj;
+    }
+    
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
+
+
+
+PhysicsContactWithBodysListener* PhysicsContactWithBodysListener::create(PhysicsShape* shapeA, PhysicsShape* shapeB)
+{
+    PhysicsContactWithBodysListener* obj = new PhysicsContactWithBodysListener();
+    
+    if (obj != nullptr)
+    {
+        obj->_a = shapeA;
+        obj->_b = shapeB;
+        obj->autorelease();
+        return obj;
+    }
+    
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
+bool PhysicsContactWithBodysListener::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+{
+    if ((shapeA == _a && shapeB == _b)
+        || (shapeA == _b && shapeB == _a))
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+EventListener* PhysicsContactWithBodysListener::clone()
+{
+    PhysicsContactWithBodysListener* obj = PhysicsContactWithBodysListener::create(_a, _b);
+    
+    if (obj != nullptr)
+    {
+        obj->onContactBegin = onContactBegin;
+        obj->onContactPreSolve = onContactPreSolve;
+        obj->onContactPostSolve = onContactPostSolve;
+        obj->onContactEnd = onContactEnd;
+        
+        return obj;
+    }
+    
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
 NS_CC_END
 #endif // CC_USE_PHYSICS
