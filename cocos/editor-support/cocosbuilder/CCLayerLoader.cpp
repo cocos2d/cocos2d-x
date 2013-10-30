@@ -14,9 +14,9 @@ namespace cocosbuilder {
 
 void LayerLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_TOUCH_ENABLED) == 0) {
-        ((Layer *)pNode)->setTouchEnabled(pCheck);
+// FIXME:         ((Layer *)pNode)->setTouchEnabled(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_ACCELEROMETER_ENABLED) == 0) {
-        ((Layer *)pNode)->setAccelerometerEnabled(pCheck);
+// FIXME:        ((Layer *)pNode)->setAccelerometerEnabled(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_MOUSE_ENABLED) == 0) {
         // TODO XXX
         CCLOG("The property '%s' is not supported!", PROPERTY_MOUSE_ENABLED);

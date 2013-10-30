@@ -207,7 +207,7 @@ bool PhysicsContactListener::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
     return true;
 }
 
-bool PhysicsContactListener::checkAvaiable()
+bool PhysicsContactListener::checkAvailable()
 {
     if (onContactBegin == nullptr && onContactPreSolve == nullptr
         && onContactPostSolve == nullptr && onContactEnd == nullptr)
@@ -254,6 +254,16 @@ PhysicsContactWithBodysListener* PhysicsContactWithBodysListener::create(Physics
     
     CC_SAFE_DELETE(obj);
     return nullptr;
+}
+
+PhysicsContactWithBodysListener::PhysicsContactWithBodysListener()
+{
+    
+}
+
+PhysicsContactWithBodysListener::~PhysicsContactWithBodysListener()
+{
+    
 }
 
 bool PhysicsContactWithBodysListener::test(PhysicsShape* shapeA, PhysicsShape* shapeB)

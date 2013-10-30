@@ -465,7 +465,6 @@ void RenderTexture::visit()
     transform();
     _sprite->visit();
     draw();
-	updateEventPriorityIndex();
     
     if (_grid && _grid->isActive())
     {
