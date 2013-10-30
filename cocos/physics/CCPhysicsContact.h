@@ -30,6 +30,7 @@
 
 #include "CCObject.h"
 #include "CCGeometry.h"
+#include "CCEventListener.h"
 
 NS_CC_BEGIN
 
@@ -154,11 +155,14 @@ private:
 /*
  * @brief contact listener.
  */
-class PhysicsContactListener
+class PhysicsContactListener : public EventListener
 {
 public:
-    PhysicsContactListener();
-    virtual ~PhysicsContactListener();
+    static PhysicsContactListener* create();
+    
+    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB);
+    virtual bool checkAvaiable();
+    virtual EventListener* clone();
     
 public:
     /*
@@ -178,6 +182,27 @@ public:
      * onContactBegin and onContactEnd will called in pairs.
      */
     std::function<void(PhysicsWorld& world, const PhysicsContact& contact)> onContactEnd;
+    
+protected:
+    PhysicsContactListener();
+    virtual ~PhysicsContactListener();
+};
+
+class PhysicsContactWithBodysListener : public PhysicsContactListener
+{
+public:
+    static PhysicsContactWithBodysListener* create(PhysicsShape* shapeA, PhysicsShape* shapeB);
+    
+    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB);
+    virtual EventListener* clone();
+    
+protected:
+    PhysicsShape* _a;
+    PhysicsShape* _b;
+    
+protected:
+    PhysicsContactWithBodysListener();
+    virtual ~PhysicsContactWithBodysListener();
 };
 
 NS_CC_END
