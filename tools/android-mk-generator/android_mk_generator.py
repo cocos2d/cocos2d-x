@@ -16,9 +16,8 @@ def get_cur_dir():
 CUR_DIR = get_cur_dir()
 COCOS_ROOT = os.path.abspath(os.path.join(CUR_DIR, "../../"))
 CONFIG = os.path.abspath(os.path.join(CUR_DIR, "./config.py"))
-print 'CONFIG:' + CONFIG
-print 'COCOS_ROOT:' + COCOS_ROOT
-
+# print 'CONFIG:' + CONFIG
+# print 'COCOS_ROOT:' + COCOS_ROOT
 
 try:
     import PathUtils
@@ -85,4 +84,39 @@ def main():
         gen_android_mk(**param)
 
 if __name__ == "__main__":
+    from optparse import OptionParser
+
+    parser = OptionParser()
+
+    parser.add_option('-c', '--config',
+                      type='string',
+                      dest='config',
+                      help="config file path.")
+
+    parser.add_option('-r', '--rootpath',
+                      action='store',
+                      dest='rootpath',
+                      help='class root path for mkfile, pathes, exclude.')
+
+    options, args = parser.parse_args()
+
+    if options.config:
+        CONFIG = os.path.abspath(os.path.join(os.curdir, options.config))
+
+    if options.rootpath:
+        COCOS_ROOT = os.path.abspath(os.path.join(os.curdir, options.rootpath))
+
+    # print 'CONFIG:', CONFIG
+    # print 'COCOS_ROOT:', COCOS_ROOT
+
+    error = ''
+    if not os.path.isfile(CONFIG):
+        error+='config must be file.\n'
+
+    if not os.path.isdir(COCOS_ROOT):
+        error+='rootpath must be directory.\n'
+
+    if error != '':
+        parser.exit(2, "{exception}".format(exception=error))
+    
     sys.exit(main())
