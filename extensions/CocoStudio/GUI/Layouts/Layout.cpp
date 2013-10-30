@@ -886,6 +886,17 @@ const char* Layout::getDescription() const
     return "Layout";
 }
 
+UIWidget* Layout::createCloneInstance()
+{
+    return Layout::create();
+}
+
+void Layout::copyClonedWidgetChildren(UIWidget* model)
+{
+    UIWidget::copyClonedWidgetChildren(model);
+    doLayout();
+}
+
 void Layout::copySpecialProperties(UIWidget *widget)
 {
     Layout* layout = dynamic_cast<Layout*>(widget);

@@ -158,8 +158,6 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
-    
-    virtual void copySpecialProperties(UIWidget* widget);
     /*compatibel*/
     /**
      * These methods will be removed
@@ -178,6 +176,8 @@ protected:
     void deleteBackwardEvent();
     virtual void onSizeChanged();
     void textfieldRendererScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     UICCTextField* m_pTextFieldRenderer;
 

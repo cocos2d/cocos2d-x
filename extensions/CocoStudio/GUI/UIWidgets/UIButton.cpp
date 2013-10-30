@@ -617,6 +617,11 @@ const char* UIButton::getDescription() const
     return "Button";
 }
 
+UIWidget* UIButton::createCloneInstance()
+{
+    return UIButton::create();
+}
+
 void UIButton::copySpecialProperties(UIWidget *widget)
 {
     UIButton* button = dynamic_cast<UIButton*>(widget);
@@ -634,6 +639,7 @@ void UIButton::copySpecialProperties(UIWidget *widget)
         setTitleFontName(button->getTitleFontName());
         setTitleFontSize(button->getTitleFontSize());
         setTitleColor(button->getTitleColor());
+        setPressedActionEnabled(button->m_bPressedActionEnabled);
     }
 }
 

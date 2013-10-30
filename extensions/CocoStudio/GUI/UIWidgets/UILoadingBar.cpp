@@ -338,6 +338,11 @@ const char* UILoadingBar::getDescription() const
     return "LoadingBar";
 }
 
+UIWidget* UILoadingBar::createCloneInstance()
+{
+    return UILoadingBar::create();
+}
+
 void UILoadingBar::copySpecialProperties(UIWidget *widget)
 {
     UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(widget);

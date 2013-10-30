@@ -1169,6 +1169,35 @@ const char* UIWidget::getDescription() const
     return "Widget";
 }
 
+UIWidget* UIWidget::clone()
+{
+    UIWidget* clonedWidget = createCloneInstance();
+    clonedWidget->copyProperties(this);
+    clonedWidget->copyClonedWidgetChildren(this);
+    return clonedWidget;
+}
+
+UIWidget* UIWidget::createCloneInstance()
+{
+    return UIWidget::create();
+}
+
+void UIWidget::copyClonedWidgetChildren(UIWidget* model)
+{
+    ccArray* arrayWidgetChildren = model->getChildren()->data;
+    int length = arrayWidgetChildren->num;
+    for (int i=0; i<length; i++)
+    {
+        UIWidget* child = (UIWidget*)(arrayWidgetChildren->arr[i]);
+        addChild(child->clone());
+    }
+}
+
+void UIWidget::copySpecialProperties(UIWidget* model)
+{
+    
+}
+
 void UIWidget::copyProperties(UIWidget *widget)
 {
     setEnabled(widget->isEnabled());
@@ -1203,11 +1232,6 @@ void UIWidget::copyProperties(UIWidget *widget)
     setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
     setCascadeColorEnabled(widget->isCascadeColorEnabled());
     onSizeChanged();
-}
-
-void UIWidget::copySpecialProperties(UIWidget *widget)
-{
-    
 }
 
 /*temp action*/

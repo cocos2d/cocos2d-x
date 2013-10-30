@@ -184,6 +184,11 @@ const char* UILabelAtlas::getDescription() const
     return "LabelAtlas";
 }
 
+UIWidget* UILabelAtlas::createCloneInstance()
+{
+    return UILabelAtlas::create();
+}
+
 void UILabelAtlas::copySpecialProperties(UIWidget *widget)
 {
     UILabelAtlas* labelAtlas = dynamic_cast<UILabelAtlas*>(widget);

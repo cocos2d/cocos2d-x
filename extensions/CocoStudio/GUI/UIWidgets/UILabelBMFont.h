@@ -65,12 +65,12 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
-    
-    virtual void copySpecialProperties(UIWidget* widget);
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void labelBMFontScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     CCLabelBMFont* m_pLabelBMFontRenderer;
     bool m_bFntFileHasInit;

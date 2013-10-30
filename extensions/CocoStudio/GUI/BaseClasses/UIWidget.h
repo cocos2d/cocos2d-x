@@ -888,9 +888,8 @@ public:
      */
     virtual const char* getDescription() const;
     
-    void copyProperties(UIWidget* widget);
-    virtual void copySpecialProperties(UIWidget* widget);
-    
+    UIWidget* clone();
+
     virtual void onEnter();
     virtual void onExit();
     
@@ -1022,6 +1021,10 @@ protected:
      */
     virtual void releaseResoures();
     void updateSizeAndPosition();
+    void copyProperties(UIWidget* model);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
 protected:
     bool m_bEnabled;            ///< Highest control of widget
     bool m_bVisible;            ///< is this widget visible

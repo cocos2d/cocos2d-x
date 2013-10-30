@@ -140,6 +140,11 @@ const char* UILabelBMFont::getDescription() const
     return "LabelBMFont";
 }
 
+UIWidget* UILabelBMFont::createCloneInstance()
+{
+    return UILabelBMFont::create();
+}
+
 void UILabelBMFont::copySpecialProperties(UIWidget *widget)
 {
     UILabelBMFont* labelBMFont = dynamic_cast<UILabelBMFont*>(widget);

@@ -231,6 +231,11 @@ const char* UILabel::getDescription() const
     return "Label";
 }
 
+UIWidget* UILabel::createCloneInstance()
+{
+    return UILabel::create();
+}
+
 void UILabel::copySpecialProperties(UIWidget *widget)
 {
     UILabel* label = dynamic_cast<UILabel*>(widget);

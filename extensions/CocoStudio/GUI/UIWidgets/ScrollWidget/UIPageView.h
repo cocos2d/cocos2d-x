@@ -157,7 +157,6 @@ public:
      */
     virtual const char* getDescription() const;
     
-    virtual void copySpecialProperties(UIWidget* widget);
     /*compatible*/
     /**
      * These methods will be removed
@@ -183,7 +182,9 @@ protected:
     void updateChildrenSize();
     void updateChildrenPosition();
     virtual void onSizeChanged();
-//    virtual bool isInScrollDegreeRange(UIWidget* widget);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
     /*compatible*/
     /**
      * These methods will be removed

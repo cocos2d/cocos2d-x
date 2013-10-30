@@ -87,11 +87,14 @@ public:
     virtual void setDirection(SCROLLVIEW_DIR dir);
     
     virtual const char* getDescription() const;
-    virtual void copySpecialProperties(UIWidget* widget);
+
 protected:
     virtual bool init();
     void updateInnerContainerSize();
     void remedyLayoutParameter(UIWidget* item);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
 protected:
 
     UIWidget* m_pModel;

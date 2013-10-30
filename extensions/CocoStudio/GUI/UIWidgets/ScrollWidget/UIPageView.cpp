@@ -599,13 +599,28 @@ const char* UIPageView::getDescription() const
     return "PageView";
 }
 
+UIWidget* UIPageView::createCloneInstance()
+{
+    return UIPageView::create();
+}
+
+void UIPageView::copyClonedWidgetChildren(UIWidget* model)
+{
+    ccArray* arrayPages = dynamic_cast<UIPageView*>(model)->getPages()->data;
+    int length = arrayPages->num;
+    for (int i=0; i<length; i++)
+    {
+        Layout* page = (Layout*)(arrayPages->arr[i]);
+        addPage(dynamic_cast<Layout*>(page->clone()));
+    }
+}
+
 void UIPageView::copySpecialProperties(UIWidget *widget)
 {
     UIPageView* pageView = dynamic_cast<UIPageView*>(widget);
     if (pageView)
     {
         Layout::copySpecialProperties(widget);
-//        scrollToPage(pageView->getCurPageIndex());
     }
 }
 

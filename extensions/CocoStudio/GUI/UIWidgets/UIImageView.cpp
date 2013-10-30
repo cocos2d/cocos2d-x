@@ -375,6 +375,11 @@ const char* UIImageView::getDescription() const
     return "ImageView";
 }
 
+UIWidget* UIImageView::createCloneInstance()
+{
+    return UIImageView::create();
+}
+
 void UIImageView::copySpecialProperties(UIWidget *widget)
 {
     UIImageView* imageView = dynamic_cast<UIImageView*>(widget);

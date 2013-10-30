@@ -161,8 +161,6 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
-    
-    virtual void copySpecialProperties(UIWidget* widget);
 protected:
     virtual bool init();
     
@@ -208,7 +206,10 @@ protected:
     void updateChild();
     
     void initChildEvent();
-    void updateChildEvent();        
+    void updateChildEvent();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
     
     /*compatible*/
     /**
