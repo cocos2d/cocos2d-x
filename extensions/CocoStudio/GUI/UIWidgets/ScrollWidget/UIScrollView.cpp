@@ -1324,20 +1324,7 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
             
         case 1:
         {
-            float offset = 0;
-            switch (m_eDirection)
-            {
-                case SCROLLVIEW_DIR_VERTICAL: // vertical
-                    offset = fabs(sender->getTouchStartPos().y - touchPoint.y);
-                    break;
-                    
-                case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-                    offset = fabs(sender->getTouchStartPos().x - touchPoint.x);
-                    break;
-                    
-                default:
-                    break;
-            }
+            float offset = ccpSub(sender->getTouchStartPos(), touchPoint).getLength();
             if (offset > m_fChildFocusCancelOffset)
             {
                 sender->setFocused(false);
