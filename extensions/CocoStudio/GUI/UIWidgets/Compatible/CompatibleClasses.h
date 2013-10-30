@@ -14,7 +14,6 @@ typedef UILabel UITextArea;
 typedef Layout UIContainerWidget;
 typedef UIButton UITextButton;
 typedef UIWidget UINodeContainer;
-typedef UIScrollView UIDragPanel;
 /**
 *   @js NA
 *   @lua NA
@@ -40,6 +39,32 @@ protected:
         {
             setScale9Enabled(true);
             setPressedActionEnabled(true);
+            return true;
+        }
+        return false;
+    };
+};
+
+class UIDragPanel : public UIScrollView
+{
+public:
+    static UIDragPanel* create()
+    {
+        UIDragPanel* widget = new UIDragPanel();
+        if (widget && widget->init())
+        {
+            widget->autorelease();
+            return widget;
+        }
+        CC_SAFE_DELETE(widget);
+        return NULL;
+    };
+protected:
+    virtual bool init()
+    {
+        if (UIScrollView::init())
+        {
+            setDirection(SCROLLVIEW_DIR_BOTH);
             return true;
         }
         return false;
