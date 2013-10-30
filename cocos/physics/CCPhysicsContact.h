@@ -161,7 +161,7 @@ public:
     static PhysicsContactListener* create();
     
     virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB);
-    virtual bool checkAvaiable();
+    virtual bool checkAvailable();
     virtual EventListener* clone();
     
 public:

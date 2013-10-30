@@ -19,7 +19,10 @@ bool Bug624Layer::init()
 
         label->setPosition(Point(size.width/2, size.height/2));
         addChild(label);
-        setAccelerometerEnabled(true);
+        
+        auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Bug624Layer::onAcceleration,  this));
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
         schedule(schedule_selector(Bug624Layer::switchLayer), 5.0f);
 
         return true;
@@ -56,7 +59,11 @@ bool Bug624Layer2::init()
 
         label->setPosition(Point(size.width/2, size.height/2));
         addChild(label);
-        setAccelerometerEnabled(true);
+        
+        auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Bug624Layer2::onAcceleration, this));
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        
+        
         schedule(schedule_selector(Bug624Layer2::switchLayer), 5.0f);
 
         return true;

@@ -36,10 +36,10 @@ public:
     virtual void onEnter() override;
     virtual std::string title() override;
 
-    virtual bool onTouchBegan(Touch* touch, Event* event) override;
-    virtual void onTouchMoved(Touch* touch, Event* event) override;
-    virtual void onTouchEnded(Touch* touch, Event* event) override;
-    virtual void onTouchCancelled(Touch* touch, Event* event) override;
+    bool onTouchBegan(Touch* touch, Event* event) ;
+    void onTouchMoved(Touch* touch, Event* event) ;
+    void onTouchEnded(Touch* touch, Event* event) ;
+    void onTouchCancelled(Touch* touch, Event* event) ;
 };
 
 class TouchesPerformTest2 : public TouchesMainScene
@@ -53,10 +53,10 @@ public:
     virtual void onEnter() override;
     virtual std::string title() override;
 
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
-    void onTouchesCancelled(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event) ;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) ;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) ;
+    void onTouchesCancelled(const std::vector<Touch*>& touches, Event* event) ;
 };
 
 class TouchesPerformTest3 : public PerformBasicLayer

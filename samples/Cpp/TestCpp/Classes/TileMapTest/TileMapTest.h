@@ -18,7 +18,7 @@ public:
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
 
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
 };
 
 class TileMapTest : public TileDemo

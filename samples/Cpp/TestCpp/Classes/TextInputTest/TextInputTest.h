@@ -37,7 +37,6 @@ public:
     virtual std::string subtitle() = 0;
     virtual void onClickTrackNode(bool bClicked) = 0;
 
-//    virtual void registerWithTouchDispatcher();
     virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
 
     // Layer

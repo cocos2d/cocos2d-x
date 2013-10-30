@@ -43,9 +43,9 @@ public:
     Sprite* makeBox(Point point, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     Sprite* makeTriangle(Point point, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
-    bool onTouchBegan(Touch* touch, Event* event) override;
-    void onTouchMoved(Touch* touch, Event* event) override;
-    void onTouchEnded(Touch* touch, Event* event) override;
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
     
 protected:
     Texture2D* _spriteTexture;    // weak ref
@@ -59,8 +59,8 @@ public:
     void onEnter() override;
     std::string subtitle() override;
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
-    void onAcceleration(Acceleration* acc, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onAcceleration(Acceleration* acc, Event* event);
 };
 
 class PhysicsDemoLogoSmash : public PhysicsDemo
@@ -92,7 +92,7 @@ public:
     void onEnter() override;
     std::string title() override;
     void update(float delta) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     
     void changeModeCallback(Object* sender);
     
@@ -125,9 +125,9 @@ public:
     std::string title() override;
     void update(float delta) override;
     
-    bool onTouchBegan(Touch* touch, Event* event) override;
-    void onTouchMoved(Touch* touch, Event* event) override;
-    void onTouchEnded(Touch* touch, Event* event) override;
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
     
 private:
     float _distance;
