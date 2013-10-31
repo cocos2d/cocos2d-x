@@ -258,6 +258,7 @@ public:
         }
         if (ok) 
         {
+            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
             Size size;
             JSBool isSucceed = jsval_to_ccsize(cx, ret, &size);

@@ -5,12 +5,11 @@ void GLNode::draw() {
   JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
   proxy = js_get_or_create_proxy<cocos2d::Node>(cx, this);
         
-  //JSB_CCNode *proxy = objc_getAssociatedObject(self, &JSB_association_proxy_key);
   if( proxy ) {
     JSObject *jsObj = proxy->obj;
     if (jsObj) {
       JSBool found;
-      JSB_ENSURE_AUTOCOMPARTMENT(cx, jsObj);
+      JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
       JS_HasProperty(cx, jsObj, "draw", &found);
       if (found == JS_TRUE) {
           JS::RootedValue rval(cx);
