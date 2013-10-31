@@ -75,6 +75,7 @@ local _allTests = {
     { isSupported = true,  name = "KeypadTest"             , create_func=                KeypadTestMain  }, 
     { isSupported = true,  name = "LabelTest"              , create_func   =                 LabelTest      },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
+    { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
     { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     },
@@ -96,8 +97,7 @@ local _allTests = {
     { isSupported = true,  name = "TouchesTest"            , create_func   =               TouchesTest      },
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },   
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
-    { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
-    { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest }
+    { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
 
 local TESTS_COUNT = table.getn(_allTests)
