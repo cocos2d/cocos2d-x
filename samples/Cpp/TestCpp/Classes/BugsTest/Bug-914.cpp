@@ -30,7 +30,11 @@ bool Bug914Layer::init()
     // Apple recommends to re-assign "self" with the "super" return value
     if (BugsTestBaseLayer::init())
     {
-        setTouchEnabled(true);
+        auto listener = EventListenerTouchAllAtOnce::create();
+        listener->onTouchesBegan = CC_CALLBACK_2(Bug914Layer::onTouchesBegan, this);
+        listener->onTouchesMoved = CC_CALLBACK_2(Bug914Layer::onTouchesMoved, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        
         // ask director the the window size
         auto size = Director::getInstance()->getWinSize();
         LayerColor *layer;

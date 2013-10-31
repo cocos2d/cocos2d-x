@@ -33,8 +33,7 @@ NS_CC_BEGIN
 class EventAcceleration : public Event
 {
 public:
-    static const char* EVENT_TYPE;
-    
+
     EventAcceleration(Acceleration acc);
     
 private:

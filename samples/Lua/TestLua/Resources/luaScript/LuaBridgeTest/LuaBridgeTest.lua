@@ -66,7 +66,7 @@ local function LuaBridgeLayer()
             if not ok then
                 print("luaj error:", ret)
             else
-                print("luaj ret:", ret)
+                print("The ret is:", ret)
             end
 
             local function callbackLua(param)
@@ -86,6 +86,34 @@ local function LuaBridgeLayer()
 
     local function newLuaObjectCBridge()
         local newScene = cc.Scene:create()
+        local titleLabel = cc.LabelTTF:create("", "Arial", 28)
+        newScene:addChild(titleLabel, 1)
+        titleLabel:setPosition(s.width / 2, s.height - 50)
+        titleLabel:setString("LuaObjectCBridge Test")
+
+        subtitleLabel = cc.LabelTTF:create("", "Thonburi", 16)
+        newScene:addChild(subtitleLabel, 1)
+        subtitleLabel:setPosition(s.width / 2, s.height - 80)
+        subtitleLabel:setString("See the console.")
+        if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_MAC == targetPlatform) then
+            local args = { num1 = 2 , num2 = 3 }
+            local luaoc = require "luaoc"
+            local className = "LuaObjectCBridgeTest"
+            local ok,ret  = luaoc.callStaticMethod(className,"addTwoNumbers",args)
+            if not ok then
+                Director:getInstance():resume()
+            else
+                print("The ret is:", ret)
+            end
+
+            local function callback(param)
+                if "success" == param then
+                    print("object c call back success")
+                end
+            end
+            luaoc.callStaticMethod(className,"registerScriptHandler", {scriptHandler = callback } )
+            luaoc.callStaticMethod(className,"callbackScriptHandler")
+        end
         return newScene
     end
 
