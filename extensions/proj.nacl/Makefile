@@ -91,7 +91,7 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/GUI/System/UIHelper.cpp \
 ../CocoStudio/GUI/System/UIInputManager.cpp \
 ../CocoStudio/GUI/System/UILayer.cpp \
-../CocoStudio/GUI/UIWidgets/ScrollWidget/UIDragPanel.cpp \
+../CocoStudio/GUI/UIWidgets/ScrollWidget/UIListViewEx.cpp \
 ../CocoStudio/GUI/UIWidgets/ScrollWidget/UIListView.cpp \
 ../CocoStudio/GUI/UIWidgets/ScrollWidget/UIPageView.cpp \
 ../CocoStudio/GUI/UIWidgets/ScrollWidget/UIScrollView.cpp \
