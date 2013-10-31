@@ -147,14 +147,14 @@ static const char *CONTENT_SCALE = "content_scale";
 NS_CC_EXT_BEGIN
 
 
-std::vector<std::string> s_arrConfigFileList;
+
 float s_PositionReadScale = 1;
 float s_ContentScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
 static float s_CocoStudioVersion = VERSION_COMBINED;
 
-static std::string s_BasefilePath = "";
-
+std::string CCDataReaderHelper::s_BasefilePath = "";
+std::vector<std::string> CCDataReaderHelper::s_arrConfigFileList;
 CCDataReaderHelper *CCDataReaderHelper::s_DataReaderHelper = NULL;
 
 enum ConfigType
@@ -185,6 +185,7 @@ typedef struct _DataInfo
     AsyncStruct *asyncStruct;
     std::queue<std::string>      configFileQueue;
     float contentScale;
+    std::string    filename;
 } DataInfo;
 
 
@@ -222,7 +223,7 @@ static void addData(AsyncStruct *pAsyncStruct)
     pAsyncStruct->fileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
     pthread_mutex_unlock(&s_GetFileDataMutex);
 
-    // generate image info
+    // generate data info
     DataInfo *pDataInfo = new DataInfo();
     pDataInfo->asyncStruct = pAsyncStruct;
 
@@ -316,13 +317,8 @@ float CCDataReaderHelper::getPositionReadScale()
 
 void CCDataReaderHelper::purge()
 {
-    CCDataReaderHelper::clear();
-    CC_SAFE_RELEASE_NULL(s_DataReaderHelper);
-}
-
-void CCDataReaderHelper::clear()
-{
     s_arrConfigFileList.clear();
+    CC_SAFE_RELEASE_NULL(s_DataReaderHelper);
 }
 
 
@@ -368,13 +364,17 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
     const char *pFileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
 
+    DataInfo dataInfo;
+    dataInfo.filename = filePathStr;
+    dataInfo.asyncStruct = NULL;
+
     if (str.compare(".xml") == 0)
     {
-        CCDataReaderHelper::addDataFromCache(pFileContent);
+        CCDataReaderHelper::addDataFromCache(pFileContent, &dataInfo);
     }
     else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
     {
-        CCDataReaderHelper::addDataFromJsonCache(pFileContent);
+        CCDataReaderHelper::addDataFromJsonCache(pFileContent, &dataInfo);
     }
 }
 
@@ -552,7 +552,22 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
     }
 }
 
+void CCDataReaderHelper::removeConfigFile(const char *configFile)
+{
+    std::vector<std::string>::iterator it = s_arrConfigFileList.end();
+    for (std::vector<std::string>::iterator i = s_arrConfigFileList.begin(); i != s_arrConfigFileList.end(); i++)
+    {
+        if (*i == configFile)
+        {
+            it = i;
+        }
+    }
 
+    if (it != s_arrConfigFileList.end())
+    {
+        s_arrConfigFileList.erase(it);
+    }
+}
 
 
 
@@ -577,13 +592,13 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *da
     {
         CCArmatureData *armatureData = CCDataReaderHelper::decodeArmature(armatureXML);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData);
+        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
         armatureData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
@@ -600,13 +615,13 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *da
     while(animationXML)
     {
         CCAnimationData *animationData = CCDataReaderHelper::decodeAnimation(animationXML);
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData);
+        CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
         animationData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
@@ -623,13 +638,13 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *da
     {
         CCTextureData *textureData = CCDataReaderHelper::decodeTexture(textureXML);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData);
+        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
         textureData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
@@ -1216,7 +1231,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     cs::CSJsonDictionary json;
     json.initWithDescription(fileContent);
 
-    if (dataInfo)
+    if (dataInfo->asyncStruct)
     {
         dataInfo->contentScale = json.getItemFloatValue(CONTENT_SCALE, 1);
     }
@@ -1232,13 +1247,13 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         cs::CSJsonDictionary *armatureDic = json.getSubItemFromArray(ARMATURE_DATA, i);
         CCArmatureData *armatureData = decodeArmature(*armatureDic, dataInfo);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData);
+        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
         armatureData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
@@ -1252,13 +1267,13 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         cs::CSJsonDictionary *animationDic = json.getSubItemFromArray(ANIMATION_DATA, i);
         CCAnimationData *animationData = decodeAnimation(*animationDic, dataInfo);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData);
+        CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
         animationData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
@@ -1272,13 +1287,13 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         cs::CSJsonDictionary *textureDic = json.getSubItemFromArray(TEXTURE_DATA, i);
         CCTextureData *textureData = decodeTexture(*textureDic);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData);
+        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
         textureData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
@@ -1286,7 +1301,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 
     // Auto load sprite file
-    bool autoLoad = dataInfo == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
+    bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
     if (autoLoad)
     {
         length = json.getArrayItemCount(CONFIG_FILE_PATH);
@@ -1302,7 +1317,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
             std::string filePath = path;
             filePath = filePath.erase(filePath.find_last_of("."));
 
-            if (dataInfo != NULL)
+            if (dataInfo->asyncStruct)
             {
                 dataInfo->configFileQueue.push(filePath);
             }
@@ -1311,7 +1326,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
                 std::string plistPath = filePath + ".plist";
                 std::string pngPath =  filePath + ".png";
 
-                CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((s_BasefilePath + plistPath).c_str(), (s_BasefilePath + pngPath).c_str());
+                CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((s_BasefilePath + plistPath).c_str(), (s_BasefilePath + pngPath).c_str(), dataInfo->filename.c_str());
             }
         }
     }
@@ -1407,7 +1422,7 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json,
             sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);
             sdd->skinData.skewY = dic->getItemFloatValue(A_SKEW_Y, 0);
 
-            if (dataInfo)
+            if (dataInfo->asyncStruct)
             {
                 sdd->skinData.x *= dataInfo->contentScale;
                 sdd->skinData.y *= dataInfo->contentScale;
@@ -1440,7 +1455,7 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json,
         const char *plist = json.getItemStringValue(A_PLIST);
         if(plist != NULL)
         {
-            if (dataInfo != NULL)
+            if (dataInfo->asyncStruct)
             {
                 ((CCParticleDisplayData *)displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
             }
@@ -1679,7 +1694,7 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, cs::CSJsonDictionary &json
     node->x = json.getItemFloatValue(A_X, 0) * s_PositionReadScale;
     node->y = json.getItemFloatValue(A_Y, 0) * s_PositionReadScale;
 
-    if (dataInfo)
+    if (dataInfo->asyncStruct)
     {
         node->x *= dataInfo->contentScale;
         node->y *= dataInfo->contentScale;

@@ -55,8 +55,7 @@ public:
     static float getPositionReadScale();
 
     static void purge();
-    static void clear();
-
+    
 public:
     ~CCDataReaderHelper();
 
@@ -65,6 +64,7 @@ public:
 
     void addDataAsyncCallBack(float dt);
 
+    void removeConfigFile(const char *configFile);
 public:
 
     /**
@@ -123,6 +123,9 @@ public:
     static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json, DataInfo *dataInfo);
 
 private:
+    static std::string s_BasefilePath;
+    static std::vector<std::string> s_arrConfigFileList;
+
     static CCDataReaderHelper *s_DataReaderHelper;
 };
 

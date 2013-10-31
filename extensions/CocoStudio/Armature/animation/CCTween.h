@@ -138,6 +138,7 @@ protected:
 
     CCArmatureAnimation *m_pAnimation;
 
+    bool m_bPassLastFrame;
 };
 
 NS_CC_EXT_END

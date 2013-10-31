@@ -43,6 +43,11 @@ ColliderBody::ColliderBody(CCContourData *contourData)
     , m_pContourData(contourData)
 {
     CC_SAFE_RETAIN(m_pContourData);
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    m_pCalculatedVertexList = CCArray::create();
+    CC_SAFE_RETAIN(m_pCalculatedVertexList);
+#endif
 }
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 
@@ -51,12 +56,21 @@ ColliderBody::ColliderBody(CCContourData *contourData)
     , m_pContourData(contourData)
 {
     CC_SAFE_RETAIN(m_pContourData);
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    m_pCalculatedVertexList = CCArray::create();
+    CC_SAFE_RETAIN(m_pCalculatedVertexList);
+#endif
 }
 #endif
 
 ColliderBody::~ColliderBody()
 {
     CC_SAFE_RELEASE(m_pContourData);
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    CC_SAFE_RELEASE(m_pCalculatedVertexList);
+#endif
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     CC_SAFE_DELETE(m_pFilter);
@@ -128,6 +142,18 @@ void CCColliderDetector::addContourData(CCContourData *contourData)
     ColliderBody *colliderBody = new ColliderBody(contourData);
     m_pColliderBodyList->addObject(colliderBody);
     colliderBody->release();
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    CCArray *calculatedVertexList = colliderBody->getCalculatedVertexList();
+
+    int num = contourData->vertexList.count();
+    for (int i = 0; i < num; i++)
+    {
+        CCContourVertex2 *newVertex = new CCContourVertex2(0, 0);
+        calculatedVertexList->addObject(newVertex);
+        newVertex->release();
+    }
+#endif
 }
 
 void CCColliderDetector::addContourDataList(CCArray *contourDataList)
@@ -265,11 +291,19 @@ void CCColliderDetector::updateTransform(CCAffineTransform &t)
         int num = contourData->vertexList.count();
         CCContourVertex2 **vs = (CCContourVertex2 **)contourData->vertexList.data->arr;
 
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+        CCContourVertex2 **cvs = (CCContourVertex2 **)colliderBody->getCalculatedVertexList()->data->arr;
+#endif
+
         for (int i = 0; i < num; i++)
         {
             helpPoint.setPoint( vs[i]->x,  vs[i]->y);
             helpPoint = CCPointApplyAffineTransform(helpPoint, t);
 
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+            cvs[i]->x = helpPoint.x;
+            cvs[i]->y = helpPoint.y;
+#endif
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
             if (shape != NULL)
@@ -387,6 +421,7 @@ void CCColliderDetector::setBody(cpBody *pBody)
 
         shape->sensor = true;
         shape->data = m_pBone;
+
         cpSpaceAddShape(m_pBody->space_private, shape);
 
         colliderBody->setShape(shape);
