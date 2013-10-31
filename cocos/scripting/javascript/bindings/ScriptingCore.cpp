@@ -493,7 +493,7 @@ void ScriptingCore::createGlobalContext() {
     //JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
     this->_global = NewGlobalObject(_cx);
-    JS_AddObjectRoot(_cx, &_global);
+
     JSAutoCompartment ac(_cx, _global);
     js::SetDefaultObjectForContext(_cx, _global);
     
@@ -521,7 +521,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     
     cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
-    std::string fullPath = futil->fullPathForFilename(path);
+
     if (global == NULL) {
         global = _global;
     }
@@ -533,9 +533,6 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     js::RootedScript script(cx);
     js::RootedObject obj(cx, global);
-    
-	JS::CompileOptions options(cx);
-	options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
     
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
@@ -553,6 +550,10 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (!script) {
         /* Clear any pending exception from previous failed decoding.  */
         ReportException(cx);
+        
+        std::string fullPath = futil->fullPathForFilename(path);
+        JS::CompileOptions options(cx);
+        options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         String* content = String::createWithContentsOfFile(path);
