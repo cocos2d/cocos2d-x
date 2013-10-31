@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsShapeInfo.h"
+#include "CCPhysicsShapeInfo_chipmunk.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include <algorithm>
 NS_CC_BEGIN

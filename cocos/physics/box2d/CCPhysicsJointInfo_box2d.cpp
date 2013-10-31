@@ -22,28 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_WORLD_INFO_H__
-#define __CCPHYSICS_WORLD_INFO_H__
+#include "CCPhysicsJointInfo_box2d.h"
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#include "chipmunk.h"
-#include "CCPlatformMacros.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 NS_CC_BEGIN
 
-class PhysicsWorldInfo
+PhysicsJointInfo::PhysicsJointInfo()
 {
-public:
-    cpSpace* space;
-    
-private:
-    PhysicsWorldInfo();
-    ~PhysicsWorldInfo();
-    
-    friend class PhysicsWorld;
-};
+}
+
+PhysicsJointInfo::~PhysicsJointInfo()
+{
+}
 
 NS_CC_END
-#endif // __CCPHYSICS_WORLD_INFO_H__
-
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_HELPER_H__
-#define __CCPHYSICS_HELPER_H__
-
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+
+#ifndef __CCPHYSICS_HELPER_H__
+#define __CCPHYSICS_HELPER_H__
 
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"

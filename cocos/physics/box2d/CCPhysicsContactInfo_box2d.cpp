@@ -22,22 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+#include "CCPhysicsContactInfo_box2d.h"
 
-#ifndef __CCPHYSICS_BODY_INFO_H__
-#define __CCPHYSICS_BODY_INFO_H__
-#include "CCPlatformMacros.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 NS_CC_BEGIN
 
-class PhysicsBodyInfo
+PhysicsContactInfo::PhysicsContactInfo()
 {
-public:
-    PhysicsBodyInfo();
-    ~PhysicsBodyInfo();
-};
+}
+
+PhysicsContactInfo::~PhysicsContactInfo()
+{
+}
 
 NS_CC_END
-#endif // __CCPHYSICS_BODY_INFO_H__
-
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

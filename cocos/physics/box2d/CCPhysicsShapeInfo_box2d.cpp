@@ -22,29 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_CONTACT_INFO_H__
-#define __CCPHYSICS_CONTACT_INFO_H__
+#include "CCPhysicsShapeInfo_box2d.h"
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#include "chipmunk.h"
-#include "CCPlatformMacros.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 NS_CC_BEGIN
 
-class PhysicsContact;
-class PhysicsContactInfo
+PhysicsShapeInfo::PhysicsShapeInfo()
 {
-public:
-    PhysicsContact* contact;
-    
-private:
-    PhysicsContactInfo(PhysicsContact* contact);
-    ~PhysicsContactInfo();
-    
-    friend class PhysicsContact;
-};
+}
+
+PhysicsShapeInfo::~PhysicsShapeInfo()
+{
+}
 
 NS_CC_END
-#endif // __CCPHYSICS_WORLD_INFO_H__
-
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D
