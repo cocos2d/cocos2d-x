@@ -87,7 +87,9 @@ std::string Parallax1::title()
 
 Parallax2::Parallax2()
 {
-    setTouchEnabled( true );
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(Parallax2::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // Top Layer, a simple image
     auto cocosImage = Sprite::create(s_Power);

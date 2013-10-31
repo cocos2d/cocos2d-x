@@ -28,7 +28,7 @@ SOURCES = ../src/chipmunk.c \
 	../src/constraints/cpSlideJoint.c \
 	../src/constraints/cpPinJoint.c \
 
-include ../../../cocos2dx/proj.linux/cocos2dx.mk
+include ../../../cocos/2d/cocos2dx.mk
 
 TARGET = $(LIB_DIR)/libchipmunk.a
 INCLUDES = -I../include/chipmunk

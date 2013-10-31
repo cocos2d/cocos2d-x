@@ -1375,7 +1375,9 @@ void ActionStacked::onEnter()
         
     this->centerSprites(0);
     
-    this->setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(ActionStacked::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     this->addNewSpriteWithCoords(Point(s.width/2, s.height/2));
