@@ -54,9 +54,9 @@
 
 #define BYTE_CODE_FILE_EXT ".jsc"
 
-static string inData;
-static string outData;
-static vector<string> g_queue;
+static std::string inData;
+static std::string outData;
+static std::vector<std::string> g_queue;
 static std::mutex g_qMutex;
 static std::mutex g_rwMutex;
 static int clientSocket = -1;
@@ -1964,8 +1964,8 @@ void SimpleRunLoop::update(float dt)
     while (size > 0)
     {
         g_qMutex.lock();
-        vector<string>::iterator first = g_queue.begin();
-        string str = *first;
+        auto first = g_queue.begin();
+        std::string str = *first;
         g_queue.erase(first);
         size = g_queue.size();
         g_qMutex.unlock();
@@ -1974,7 +1974,7 @@ void SimpleRunLoop::update(float dt)
     }
 }
 
-void ScriptingCore::debugProcessInput(string str)
+void ScriptingCore::debugProcessInput(const std::string& str)
 {
     JSAutoCompartment ac(_cx, _debugGlobal);
     
@@ -1994,8 +1994,8 @@ static bool NS_ProcessNextEvent()
     while (size > 0)
     {
         g_qMutex.lock();
-        vector<string>::iterator first = g_queue.begin();
-        string str = *first;
+        auto first = g_queue.begin();
+        std::string str = *first;
         g_queue.erase(first);
         size = g_queue.size();
         g_qMutex.unlock();
@@ -2060,7 +2060,7 @@ static void _clientSocketWriteAndClearString(std::string& s)
     s.clear();
 }
 
-static void processInput(string data) {
+static void processInput(const std::string& data) {
     std::lock_guard<std::mutex> lk(g_qMutex);
     g_queue.push_back(data);
 }
@@ -2087,7 +2087,7 @@ static void serverEntryPoint(void)
     hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
     hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
     
-    stringstream portstr;
+    std::stringstream portstr;
     portstr << JSB_DEBUGGER_PORT;
     
     int err = 0;
