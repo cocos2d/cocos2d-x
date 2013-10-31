@@ -140,6 +140,26 @@ public:
     void scrollToPercentHorizontal(float percent, float time, bool attenuated);
     void scrollToPercentBothDirection(const CCPoint& percent, float time, bool attenuated);
     
+ 
+    void jumpToBottom();
+    
+
+    void jumpToTop();
+    
+
+    void jumpToLeft();
+    
+    void jumpToRight();
+    
+    void jumpToTopLeft();
+    void jumpToTopRight();
+    void jumpToBottomLeft();
+    void jumpToBottomRight();
+    
+    void jumpToPercentVertical(float percent);
+    void jumpToPercentHorizontal(float percent);
+    void jumpToPercentBothDirection(const CCPoint& percent);
+    
     /**
      * Changes inner container size of scrollview.
      *
@@ -256,6 +276,7 @@ protected:
     bool checkNeedBounce();
     void startAutoScrollChildrenWithOriginalSpeed(const CCPoint& dir, float v, bool attenuated, float acceleration);
     void startAutoScrollChildrenWithDestination(const CCPoint& des, float time, bool attenuated);
+    void jumpToDestination(const CCPoint& des);
     void stopAutoScrollChildren();
     void startBounceChildren(float v);
     void stopBounceChildren();

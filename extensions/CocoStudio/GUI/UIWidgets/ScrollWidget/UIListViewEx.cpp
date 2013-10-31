@@ -249,6 +249,10 @@ void UIListViewEx::insetDefaultItem(int index)
     {
         return;
     }
+    if (!m_pModel)
+    {
+        return;
+    }
     UIWidget* newItem = m_pModel->clone();
     m_pItems->insertObject(newItem, index);
     remedyLayoutParameter(newItem);

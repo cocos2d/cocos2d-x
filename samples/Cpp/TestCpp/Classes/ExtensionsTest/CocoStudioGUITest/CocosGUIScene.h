@@ -49,16 +49,9 @@ public:
     
     void menuCallback(CCObject* pSender);
     
-    UILayer* ul;
-    UIScrollView* sc;
-    
     CCLabelTTF* m_pLabel;
     
     CCMenu* m_pItemMenu;
-    UIListViewEx* l;
-    
-    void toTop(CCObject* sender,TouchEventType type);
-    void toBottom(CCObject* sender,TouchEventType type);
 };
 
 #endif /* defined(__TestCpp__CocosGUIScene__) */

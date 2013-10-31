@@ -461,6 +461,40 @@ void UIScrollView::startAutoScrollChildrenWithDestination(const CCPoint& des, fl
     startAutoScrollChildrenWithOriginalSpeed(dir, orSpeed, attenuated, acceleration);
 }
 
+void UIScrollView::jumpToDestination(const cocos2d::CCPoint &des)
+{
+    float finalOffsetX = des.x;
+    float finalOffsetY = des.y;
+    switch (m_eDirection)
+    {
+        case SCROLLVIEW_DIR_VERTICAL:
+            if (des.y <= 0)
+            {
+                finalOffsetY = MAX(des.y, m_size.height - m_pInnerContainer->getSize().height);
+            }
+            break;
+        case SCROLLVIEW_DIR_HORIZONTAL:
+            if (des.x <= 0)
+            {
+                finalOffsetX = MAX(des.x, m_size.width - m_pInnerContainer->getSize().width);
+            }
+            break;
+        case SCROLLVIEW_DIR_BOTH:
+            if (des.y <= 0)
+            {
+                finalOffsetY = MAX(des.y, m_size.height - m_pInnerContainer->getSize().height);
+            }
+            if (des.x <= 0)
+            {
+                finalOffsetX = MAX(des.x, m_size.width - m_pInnerContainer->getSize().width);
+            }
+            break;
+        default:
+            break;
+    }
+    m_pInnerContainer->setPosition(ccp(finalOffsetX, finalOffsetY));
+}
+
 void UIScrollView::stopAutoScrollChildren()
 {
     m_bAutoScroll = false;
@@ -1161,6 +1195,91 @@ void UIScrollView::scrollToPercentBothDirection(const CCPoint& percent, float ti
     float h = - minY;
     float w = m_pInnerContainer->getSize().width - m_size.width;
     startAutoScrollChildrenWithDestination(ccp(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f), time, attenuated);
+}
+
+void UIScrollView::jumpToBottom()
+{
+    jumpToDestination(ccp(m_pInnerContainer->getPosition().x, 0.0f));
+}
+
+void UIScrollView::jumpToTop()
+{
+    jumpToDestination(ccp(m_pInnerContainer->getPosition().x, m_size.height - m_pInnerContainer->getSize().height));
+}
+
+void UIScrollView::jumpToLeft()
+{
+    jumpToDestination(ccp(0.0f, m_pInnerContainer->getPosition().y));
+}
+
+void UIScrollView::jumpToRight()
+{
+    jumpToDestination(ccp(m_size.width - m_pInnerContainer->getSize().width, m_pInnerContainer->getPosition().y));
+}
+
+void UIScrollView::jumpToTopLeft()
+{
+    if (m_eDirection != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    jumpToDestination(ccp(0.0f, m_size.height - m_pInnerContainer->getSize().height));
+}
+
+void UIScrollView::jumpToTopRight()
+{
+    if (m_eDirection != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    jumpToDestination(ccp(m_size.width - m_pInnerContainer->getSize().width, m_size.height - m_pInnerContainer->getSize().height));
+}
+
+void UIScrollView::jumpToBottomLeft()
+{
+    if (m_eDirection != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    jumpToDestination(CCPointZero);
+}
+
+void UIScrollView::jumpToBottomRight()
+{
+    if (m_eDirection != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    jumpToDestination(ccp(m_size.width - m_pInnerContainer->getSize().width, 0.0f));
+}
+
+void UIScrollView::jumpToPercentVertical(float percent)
+{
+    float minY = m_size.height - m_pInnerContainer->getSize().height;
+    float h = - minY;
+    jumpToDestination(ccp(m_pInnerContainer->getPosition().x, minY + percent * h / 100.0f));
+}
+
+void UIScrollView::jumpToPercentHorizontal(float percent)
+{
+    float w = m_pInnerContainer->getSize().width - m_size.width;
+    jumpToDestination(ccp(-(percent * w / 100.0f), m_pInnerContainer->getPosition().y));
+}
+
+void UIScrollView::jumpToPercentBothDirection(const CCPoint& percent)
+{
+    if (m_eDirection != SCROLLVIEW_DIR_BOTH)
+    {
+        return;
+    }
+    float minY = m_size.height - m_pInnerContainer->getSize().height;
+    float h = - minY;
+    float w = m_pInnerContainer->getSize().width - m_size.width;
+    jumpToDestination(ccp(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f));
 }
 
 void UIScrollView::startRecordSlidAction()
