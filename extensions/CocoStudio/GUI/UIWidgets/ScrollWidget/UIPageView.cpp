@@ -90,6 +90,10 @@ void UIPageView::addWidgetToPage(UIWidget *widget, int pageIdx, bool forceCreate
     {
         return;
     }
+    if (pageIdx < 0)
+    {
+        return;
+    }
     int pageCount = m_pages->count();
     if (pageIdx < 0 || pageIdx >= pageCount)
     {
