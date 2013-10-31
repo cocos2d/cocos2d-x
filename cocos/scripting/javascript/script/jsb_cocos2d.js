@@ -230,9 +230,14 @@ cc.sizeEqualToSize = function (size1, size2)
     return ((size1.width == size2.width) && (size1.height == size2.height));
 };
 
-//
-// Rect
-//
+/**
+ * create a rect object
+ * @param {Number|cc.Point|cc.Rect} [x1] a Number value as x or a cc.Point object as origin or a cc.Rect clone object
+ * @param {Number|cc.Size} [y1] x1 a Number value as y or a cc.Size object as size
+ * @param {Number} [width1]
+ * @param {Number} [height1]
+ * @return {Object} a Rect object
+ */
 cc.rect = function(x,y,w,h)
 {
     if (arguments.length === 0)
