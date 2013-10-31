@@ -131,33 +131,94 @@ public:
      */
     void scrollToRight(float time, bool attenuated);
     
+    /**
+     * Scroll inner container to top and left boundary of scrollview.
+     */
     void scrollToTopLeft(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to top and right boundary of scrollview.
+     */
     void scrollToTopRight(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to bottom and left boundary of scrollview.
+     */
     void scrollToBottomLeft(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to bottom and right boundary of scrollview.
+     */
     void scrollToBottomRight(float time, bool attenuated);
     
+    /**
+     * Scroll inner container to vertical percent position of scrollview.
+     */
     void scrollToPercentVertical(float percent, float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to horizontal percent position of scrollview.
+     */
     void scrollToPercentHorizontal(float percent, float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to both direction percent position of scrollview.
+     */
     void scrollToPercentBothDirection(const CCPoint& percent, float time, bool attenuated);
     
- 
+    /**
+     * Move inner container to bottom boundary of scrollview.
+     */
     void jumpToBottom();
     
-
+    /**
+     * Move inner container to top boundary of scrollview.
+     */
     void jumpToTop();
     
-
+    /**
+     * Move inner container to left boundary of scrollview.
+     */
     void jumpToLeft();
     
+    /**
+     * Move inner container to right boundary of scrollview.
+     */
     void jumpToRight();
     
+    /**
+     * Move inner container to top and left boundary of scrollview.
+     */
     void jumpToTopLeft();
+    
+    /**
+     * Move inner container to top and right boundary of scrollview.
+     */
     void jumpToTopRight();
+    
+    /**
+     * Move inner container to bottom and left boundary of scrollview.
+     */
     void jumpToBottomLeft();
+    
+    /**
+     * Move inner container to bottom and right boundary of scrollview.
+     */
     void jumpToBottomRight();
     
+    /**
+     * Move inner container to vertical percent position of scrollview.
+     */
     void jumpToPercentVertical(float percent);
+    
+    /**
+     * Move inner container to horizontal percent position of scrollview.
+     */
     void jumpToPercentHorizontal(float percent);
+    
+    /**
+     * Move inner container to both direction percent position of scrollview.
+     */
     void jumpToPercentBothDirection(const CCPoint& percent);
     
     /**

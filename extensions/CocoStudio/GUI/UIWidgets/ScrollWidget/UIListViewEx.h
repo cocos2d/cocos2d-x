@@ -61,21 +61,89 @@ public:
      */
     static UIListViewEx* create();
 
+    /**
+     * Sets a item model for listview
+     *
+     * A model will be cloned for adding default item.
+     *
+     * @param model  item model for listview
+     */
     void setItemModel(UIWidget* model);
 
+    /**
+     * Push back a default item(create by a cloned model) into listview.
+     */
     void pushBackDefaultItem();
+    
+    /**
+     * Insert a default item(create by a cloned model) into listview.
+     */
     void insetDefaultItem(int index);
+    
+    /**
+     * Push back custom item into listview.
+     */
     void pushBackCustomItem(UIWidget* item);
+    
+    /**
+     * Insert custom item into listview.
+     */
     void insetCustomItem(UIWidget* item, int index);
+    
+    /**
+     *  Removes the last item of listview.
+     */
     void removeLastItem();
+    
+    /**
+     * Removes a item whose index is same as the parameter.
+     *
+     * @param index of item.
+     */
     void removeItemAtIndex(int index);
+    
+    /**
+     * Returns a item whose index is same as the parameter.
+     *
+     * @param index of item.
+     *
+     * @return the item widget.
+     */
     UIWidget* getItemByIndex(int index);
+    
+    /**
+     * Returns the item container.
+     */
     CCArray* getItems();
+    
+    /**
+     * Returns the index of item.
+     *
+     * @param item  the item which need to be checked.
+     *
+     * @return the index of item.
+     */
     int indexOfItem(UIWidget* item);
+    
+    /**
+     * Changes the gravity of listview.
+     * @see ListViewGravity
+     */
     void setGravity(ListViewGravity gravity);
+    
+    /**
+     * Changes the margin between each item.
+     *
+     * @param margin
+     */
     void setItemsMargin(float margin);
+    
+    /**
+     * Refresh the view of list.
+     *
+     * If you change the data, you need to call this mathod.
+     */
     void refreshView();
-    virtual void onSizeChanged();
 
     /**
      * Changes scroll direction of scrollview.
@@ -92,6 +160,7 @@ protected:
     virtual bool init();
     void updateInnerContainerSize();
     void remedyLayoutParameter(UIWidget* item);
+    virtual void onSizeChanged();
     virtual UIWidget* createCloneInstance();
     virtual void copySpecialProperties(UIWidget* model);
     virtual void copyClonedWidgetChildren(UIWidget* model);
