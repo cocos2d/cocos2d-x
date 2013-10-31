@@ -16,7 +16,7 @@
 #include "jsprototypes.h"
 #include "jstypes.h"
 
-#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING) || defined(DEBUG)
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING) || (defined(DEBUG) && !defined(_WIN32))
 # define JSGC_TRACK_EXACT_ROOTS
 #endif
 
