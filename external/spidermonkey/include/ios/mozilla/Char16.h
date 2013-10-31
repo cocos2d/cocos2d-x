@@ -1,12 +1,13 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* Implements a UTF-16 character type. */
 
-#ifndef mozilla_Char16_h_
-#define mozilla_Char16_h_
+#ifndef mozilla_Char16_h
+#define mozilla_Char16_h
 
 #include "mozilla/Assertions.h"
 
@@ -49,8 +50,8 @@
  */
 #define MOZ_UTF16(s) MOZ_UTF16_HELPER(s)
 
-MOZ_STATIC_ASSERT(sizeof(char16_t) == 2, "Is char16_t type 16 bits?");
-MOZ_STATIC_ASSERT(sizeof(MOZ_UTF16('A')) == 2, "Is char literal 16 bits?");
-MOZ_STATIC_ASSERT(sizeof(MOZ_UTF16("")[0]) == 2, "Is string char 16 bits?");
+static_assert(sizeof(char16_t) == 2, "Is char16_t type 16 bits?");
+static_assert(sizeof(MOZ_UTF16('A')) == 2, "Is char literal 16 bits?");
+static_assert(sizeof(MOZ_UTF16("")[0]) == 2, "Is string char 16 bits?");
 
-#endif /* mozilla_Char16_h_ */
+#endif /* mozilla_Char16_h */
