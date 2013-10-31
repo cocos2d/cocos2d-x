@@ -82,9 +82,9 @@ public:
     virtual unsigned char  getDisplayedOpacity() const override;
     
      // CCLabelTextFormat protocol implementation
-    virtual std::vector<LetterInfo>  *getLettersInfo(){ return &_lettersInfo; };
-    virtual bool                        recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex);
-    virtual bool                        recordPlaceholderInfo(int spriteIndex);
+    virtual std::vector<LetterInfo>     *getLettersInfo() override { return &_lettersInfo; };
+    virtual bool                        recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) override;
+    virtual bool                        recordPlaceholderInfo(int spriteIndex) override;
     virtual float                       getLetterPosXLeft( int index ) const override;
     virtual float                       getLetterPosXRight( int index ) const override;
 

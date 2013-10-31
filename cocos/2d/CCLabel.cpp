@@ -112,12 +112,9 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment)
 
 Label::~Label()
 {   
-    if (_currentUTF16String)
-        delete [] _currentUTF16String;
-    if (_originalUTF16String)
-        delete [] _originalUTF16String;
-    if (_advances)
-        delete [] _advances;
+    delete [] _currentUTF16String;
+    delete [] _originalUTF16String;
+    delete [] _advances;
     
     if (_fontAtlas)
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
@@ -254,8 +251,7 @@ void Label::alignText()
     int strLen = cc_wcslen(_currentUTF16String);  
     if (_children && _children->count() != 0)
     {
-        Object* child;
-        CCARRAY_FOREACH(_children, child)
+        for (auto child: *_children)
         {
             Node* pNode = static_cast<Node*>( child );
             if (pNode)
@@ -275,7 +271,7 @@ void Label::alignText()
     {        
         if (_lettersInfo[ctr].def.validDefinition)
         {
-            child = (Sprite*)this->getChildByTag(ctr);
+            child = static_cast<Sprite*>( this->getChildByTag(ctr) );
             if (child)
             {
                 uvRect.size.height = _lettersInfo[ctr].def.height;
@@ -302,10 +298,8 @@ bool Label::computeAdvancesForString(unsigned short int *stringToRender)
         _advances = 0;
     }
     
-    Font &theFont = _fontAtlas->getFont();
-    
     int letterCount = 0;
-    _advances = theFont.getAdvancesForTextUTF16(stringToRender, letterCount);
+    _advances = _fontAtlas->getFont()->getAdvancesForTextUTF16(stringToRender, letterCount);
     
     if(!_advances)
         return false;
@@ -519,7 +513,7 @@ int Label::getAdvanceForChar(unsigned short c, int hintPositionInString) const
 
 Rect Label::getRectForChar(unsigned short c) const
 {
-    return _fontAtlas->getFont().getRectForChar(c);
+    return _fontAtlas->getFont()->getRectForChar(c);
 }
 
 // string related stuff
@@ -649,31 +643,27 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _displayedOpacity = _realOpacity * parentOpacity/255.0;
     
-	Object* pObj;
-	CCARRAY_FOREACH(_children, pObj)
+    for (auto child: *_children)
     {
-        Sprite *item = static_cast<Sprite*>( pObj );
+        Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedOpacity(_displayedOpacity);
 	}
-    //if (_cascadeOpacityEnabled)
+    V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
+    int count = _textureAtlas->getTotalQuads();
+    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
+    if (_isOpacityModifyRGB)
     {
-        V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-        int count = _textureAtlas->getTotalQuads();
-        Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-        if (_isOpacityModifyRGB)
-        {
-            color4.r *= _displayedOpacity/255.0f;
-            color4.g *= _displayedOpacity/255.0f;
-            color4.b *= _displayedOpacity/255.0f;
-        }
-        for (int index=0; index<count; ++index)
-        {    
-            quads[index].bl.colors = color4;
-            quads[index].br.colors = color4;
-            quads[index].tl.colors = color4;
-            quads[index].tr.colors = color4;
-            _textureAtlas->updateQuad(&quads[index], index);           
-        }  
+        color4.r *= _displayedOpacity/255.0f;
+        color4.g *= _displayedOpacity/255.0f;
+        color4.b *= _displayedOpacity/255.0f;
+    }
+    for (int index = 0; index < count; ++index)
+    {    
+        quads[index].bl.colors = color4;
+        quads[index].br.colors = color4;
+        quads[index].tl.colors = color4;
+        quads[index].tr.colors = color4;
+        _textureAtlas->updateQuad(&quads[index], index);           
     }
 }
 

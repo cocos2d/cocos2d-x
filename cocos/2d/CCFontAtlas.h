@@ -70,7 +70,7 @@ public:
     void  setCommonLineHeight(float newHeight);
     
     Texture2D                 & getTexture(int slot);
-    Font                      & getFont() const;
+    const Font                * getFont() const;
     
 private:
     bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
@@ -79,7 +79,7 @@ private:
     std::map<int, Texture2D *>                      _atlasTextures;
     std::map<unsigned short, FontLetterDefinition>  _fontLetterDefinitions;
     float                                           _commonLineHeight;
-    Font &                                          _font;
+    Font *                                          _font;
 
     // Dynamic GlyphCollection related stuff
     int                                             _currentPage;

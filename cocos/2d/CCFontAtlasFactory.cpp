@@ -35,7 +35,9 @@ FontAtlas * FontAtlasFactory::createAtlasFromFNT(const char* fntFilePath)
         return atlas;
     }
     else
+    {
         return nullptr;
+    }
 }
 
 NS_CC_END

@@ -88,8 +88,8 @@ FT_Library FontFreeType::getFTLibrary()
 }
 
 FontFreeType::FontFreeType(bool dynamicGlyphCollection) 
-    : _letterPadding(5)
-    ,_ttfData(nullptr),
+    : _letterPadding(5),
+    _ttfData(nullptr),
     _dynamicGlyphCollection(dynamicGlyphCollection),
     _fontRef(nullptr)
 {
@@ -130,8 +130,6 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 
 FontFreeType::~FontFreeType()
 {
-    // release the font
-    // TO DO 
     if (_fontRef)
     {
         FT_Done_Face(_fontRef);
@@ -160,8 +158,6 @@ FontAtlas * FontFreeType::createFontAtlas()
 
         FontAtlas *atlas = def->createFontAtlas();
 
-        // release the font definition, we don't need it anymore
-        def->release();
         return atlas;
     }   
 }
