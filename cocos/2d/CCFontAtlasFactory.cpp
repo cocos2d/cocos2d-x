@@ -31,7 +31,6 @@ FontAtlas * FontAtlasFactory::createAtlasFromFNT(const char* fntFilePath)
     if(font)
     {
         FontAtlas * atlas = font->createFontAtlas();
-        font->release();
         return atlas;
     }
     else

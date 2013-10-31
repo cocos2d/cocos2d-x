@@ -48,7 +48,7 @@ public:
     virtual float            getLetterPosXLeft(int index)  const                                       = 0;
     virtual float            getLetterPosXRight(int index) const                                       = 0;
     // sprite related stuff
-    virtual cocos2d::Sprite *getLetterAt(int ID)                                                    = 0;   
+    virtual cocos2d::Sprite *getLetter(int ID)                                                    = 0;   
     
     // font related stuff
     virtual int              getCommonLineHeight()  const                                              = 0;
