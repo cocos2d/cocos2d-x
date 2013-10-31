@@ -17,13 +17,12 @@
  *         Indeed, if you use this header and third-party code defining these
  *         types, *expect* to encounter either compile errors or link errors,
  *         depending how these types are used and on the order of inclusion.
- *         It is safest to use only the JSAPI <stdint.h>-style types,
- *         customizing those types using MOZ_CUSTOM_STDINT_H if necessary.
+ *         It is safest to use only the <stdint.h> types.
  */
-#ifndef PROTYPES_H
-#define PROTYPES_H
+#ifndef js_LegacyIntTypes_h
+#define js_LegacyIntTypes_h
 
-#include "mozilla/StandardInteger.h"
+#include <stdint.h>
 
 #include "js-config.h"
 
@@ -57,4 +56,4 @@ typedef int16_t JSInt16;
 typedef int32_t JSInt32;
 typedef int64_t JSInt64;
 
-#endif /* !defined(PROTYPES_H) */
+#endif /* js_LegacyIntTypes_h */

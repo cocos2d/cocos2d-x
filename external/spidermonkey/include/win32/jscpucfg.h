@@ -4,8 +4,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#ifndef js_cpucfg___
-#define js_cpucfg___
+#ifndef jscpucfg_h
+#define jscpucfg_h
 
 #define JS_HAVE_LONG_LONG
 
@@ -114,4 +114,4 @@
 # endif
 #endif
 
-#endif /* js_cpucfg___ */
+#endif /* jscpucfg_h */
