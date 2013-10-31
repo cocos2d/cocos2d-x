@@ -156,9 +156,9 @@ public:
     virtual std::string subtitle();
     void stringChanged(Object *sender);
     void alignmentChanged(Object *sender);
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
 
 public:
     Label *_labelShouldRetain;

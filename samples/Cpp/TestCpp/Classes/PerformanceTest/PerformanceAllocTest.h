@@ -5,7 +5,7 @@
 #define __PERFORMANCE_ALLOC_TEST_H__
 
 #include "PerformanceTest.h"
-#include "support/CCProfiling.h"
+#include "CCProfiling.h"
 
 class AllocBasicLayer : public PerformBasicLayer
 {

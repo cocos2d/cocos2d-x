@@ -24,17 +24,15 @@ MouseTest::MouseTest()
     _mouseListener->onMouseDown = CC_CALLBACK_1(MouseTest::onMouseDown, this);
     _mouseListener->onMouseScroll = CC_CALLBACK_1(MouseTest::onMouseScroll, this);
 
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(_mouseListener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(_mouseListener, this);
 
     _labelAction->retain();
     _labelPosition->retain();
-
-    this->setTouchEnabled(true);
 }
 
 MouseTest::~MouseTest()
 {
-    EventDispatcher::getInstance()->removeEventListener(_mouseListener);
+    _eventDispatcher->removeEventListener(_mouseListener);
 
     _labelAction->release();
     _labelPosition->release();

@@ -21,11 +21,11 @@ Thumbs.db
 *.ilk
 *.log
 [Bb]in
-[Dd]ebug*/
+[Dd]ebug/
 *.sbr
 *.sdf
 obj/
-[Rr]elease*/
+[Rr]elease/
 _ReSharper*/
 [Tt]est[Rr]esult*
 ipch/
@@ -63,7 +63,6 @@ build_*_vc10/
 *.xcuserstate
 *.xccheckout
 xcschememanagement.plist
-build/
 .DS_Store
 ._.*
 xcuserdata/

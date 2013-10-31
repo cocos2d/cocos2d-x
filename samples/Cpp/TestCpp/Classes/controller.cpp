@@ -121,22 +121,20 @@ TestController::TestController()
     _itemMenu->setPosition(s_tCurPos);
     addChild(_itemMenu);
 
-    setTouchEnabled(true);
-
     addChild(menu, 1);
 
     // Register Touch Event
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     
     listener->onTouchBegan = CC_CALLBACK_2(TestController::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(TestController::onTouchMoved, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     auto mouseListener = EventListenerMouse::create();
     mouseListener->onMouseScroll = CC_CALLBACK_1(TestController::onMouseScroll, this);
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(mouseListener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 }
 
 TestController::~TestController()
