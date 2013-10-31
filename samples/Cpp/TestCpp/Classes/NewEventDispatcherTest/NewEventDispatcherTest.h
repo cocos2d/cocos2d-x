@@ -64,6 +64,7 @@ public:
     virtual std::string subtitle() override;
 private:
     EventListenerCustom* _listener;
+    EventListenerCustom* _listener2;
 };
 
 class LabelKeyboardEventTest : public EventDispatcherTestDemo
@@ -81,6 +82,18 @@ public:
     virtual void onExit() override;
     virtual std::string title() override;
     virtual std::string subtitle() override;
+};
+
+class RemoveAndRetainNodeTest : public EventDispatcherTestDemo
+{
+public:
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() override;
+    virtual std::string subtitle() override;
+private:
+    Sprite* _sprite;
+    bool _spriteSaved;
 };
 
 #endif /* defined(__samples__NewEventDispatcherTest__) */

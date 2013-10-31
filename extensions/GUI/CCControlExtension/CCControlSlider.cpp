@@ -84,7 +84,6 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
         CCASSERT(thumbSprite,       "Thumb sprite must be not nil");
 
         ignoreAnchorPointForPosition(false);
-        setTouchEnabled(true);
 
         this->setBackgroundSprite(backgroundSprite);
         this->setProgressSprite(progressSprite);
