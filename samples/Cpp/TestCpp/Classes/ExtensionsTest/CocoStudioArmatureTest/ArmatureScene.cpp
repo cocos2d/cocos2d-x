@@ -21,6 +21,9 @@ Layer *CreateLayer(int index)
     case TEST_ASYNCHRONOUS_LOADING:
         pLayer = new TestAsynchronousLoading();
         break;
+    case TEST_DIRECT_LOADING:
+        pLayer = new TestDirectLoading();
+        break;
     case TEST_DRAGON_BONES_2_0:
         pLayer = new TestDragonBones20();
         break;
@@ -38,6 +41,9 @@ Layer *CreateLayer(int index)
         break;
     case TEST_ANIMATION_EVENT:
         pLayer = new TestAnimationEvent();
+        break;
+    case TEST_FRAME_EVENT:
+        pLayer = new TestFrameEvent();
         break;
     case  TEST_PARTICLE_DISPLAY:
         pLayer = new TestParticleDisplay();
@@ -244,6 +250,7 @@ void TestAsynchronousLoading::onEnter()
     ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
 
     //! load data directly
     // 	ArmatureDataManager::getInstance()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
@@ -263,6 +270,12 @@ std::string TestAsynchronousLoading::subtitle()
 {
     return "current percent : ";
 }
+
+void TestAsynchronousLoading::restartCallback(CCObject* pSender)
+{
+    ArmatureDataManager::getInstance()->purge();
+    ArmatureTestLayer::restartCallback(pSender);
+}
 void TestAsynchronousLoading::dataLoaded(float percent)
 {
     LabelTTF *label = (LabelTTF *)getChildByTag(10001);
@@ -281,6 +294,26 @@ void TestAsynchronousLoading::dataLoaded(float percent)
     }
 }
 
+
+void TestDirectLoading::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+
+    // remove sigle resource
+    ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/bear.ExportJson");
+
+    // load resource directly
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("armature/bear.ExportJson");
+
+    Armature *armature = Armature::create("bear");
+    armature->getAnimation()->playByIndex(0);
+    armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+    addChild(armature);
+}
+std::string TestDirectLoading::title()
+{
+    return "Test Direct Loading";
+}
 
 
 void TestCSWithSkeleton::onEnter()
@@ -533,6 +566,51 @@ void TestAnimationEvent::callback2()
     armature->getAnimation()->play("Fire", 10);
 }
 
+
+
+#define  FRAME_EVENT_ACTION_TAG 10000
+
+void TestFrameEvent::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+    Armature *armature = Armature::create("HeroAnimation");
+    armature->getAnimation()->play("attack");
+    armature->getAnimation()->setSpeedScale(0.5);
+    armature->setPosition(Point(VisibleRect::center().x - 50, VisibleRect::center().y -100));
+
+    /*
+     * Set armature's frame event callback function
+     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+     */
+    armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestFrameEvent::onFrameEvent));
+
+    addChild(armature);
+
+    schedule( schedule_selector(TestFrameEvent::checkAction) );
+}
+std::string TestFrameEvent::title()
+{
+    return "Test Frame Event";
+}
+void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
+{
+    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
+
+
+    if (!this->getActionByTag(FRAME_EVENT_ACTION_TAG) || this->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
+    {
+        this->stopAllActions();
+
+        ActionInterval *action =  ShatteredTiles3D::create(0.2f, Size(16,12), 5, false); 
+        action->setTag(FRAME_EVENT_ACTION_TAG);
+        this->runAction(action);
+    }
+}
+void TestFrameEvent::checkAction(float dt)
+{
+    if ( this->numberOfRunningActions() == 0 && this->getGrid() != NULL)
+        this->setGrid(NULL);
+}
 
 
 
@@ -926,7 +1004,7 @@ void TestColliderDetector::initWorld()
 
     bullet->setCPBody(body);
 
-    body = cpBodyNew(INFINITY, INFINITY);
+    body = cpBodyNew(1.0f, INFINITY);
     cpSpaceAddBody(space, body);
     armature2->setBody(body);
 

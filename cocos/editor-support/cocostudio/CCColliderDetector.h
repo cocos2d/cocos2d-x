@@ -65,6 +65,10 @@ public:
     }
 private:
     ContourData *_contourData;
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    CC_SYNTHESIZE_READONLY(CCArray *, _calculatedVertexList, CalculatedVertexList);
+#endif
 };
 
 /*

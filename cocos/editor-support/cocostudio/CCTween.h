@@ -123,25 +123,26 @@ protected:
     //! A weak reference to the current MovementBoneData. The data is in the data pool
     CC_SYNTHESIZE(MovementBoneData *, _movementBoneData, MovementBoneData)
 
-    FrameData *_tweenData;		//! The computational tween frame data, //! A weak reference to the Bone's tweenData
-    FrameData *_from;				//! From frame data, used for calculate between value
-    FrameData *_to;				//! To frame data, used for calculate between value
-    FrameData *_between;			//! Between frame data, used for calculate current FrameData(m_pNode) value
+    FrameData *_tweenData;          //! The computational tween frame data, //! A weak reference to the Bone's tweenData
+    FrameData *_from;               //! From frame data, used for calculate between value
+    FrameData *_to;                 //! To frame data, used for calculate between value
+    FrameData *_between;            //! Between frame data, used for calculate current FrameData(m_pNode) value
 
 
-    Bone *_bone;					//! A weak reference to the Bone
+    Bone *_bone;                    //! A weak reference to the Bone
 
-    CCTweenType _frameTweenEasing;	//! Dedermine which tween effect current frame use
+    CCTweenType _frameTweenEasing;  //! Dedermine which tween effect current frame use
 
-    int _betweenDuration;			//! Current key frame will last _betweenDuration frames
+    int _betweenDuration;           //! Current key frame will last _betweenDuration frames
     int _totalDuration;
 
 
-    int _fromIndex;				//! The current frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
-    int _toIndex;					//! The next frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
+    int _fromIndex;				    //! The current frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
+    int _toIndex;                   //! The next frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
 
     ArmatureAnimation *_animation;
 
+    bool _passLastFrame;            //! If current frame index is more than the last frame's index
 };
 
 }
