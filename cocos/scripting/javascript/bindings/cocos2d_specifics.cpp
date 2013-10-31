@@ -894,6 +894,9 @@ void JSCallFuncWrapper::callbackFunc(Node *node) {
     bool hasExtraData = !JSVAL_IS_VOID(_extraData);
     JSObject* thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
     js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, node);
 
     jsval retval;

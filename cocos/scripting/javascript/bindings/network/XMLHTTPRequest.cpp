@@ -231,6 +231,7 @@ void MinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, netw
        
         if (_onreadystateCallback)
         {
+            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             //JS_IsExceptionPending(cx) && JS_ReportPendingException(cx);
             jsval fval = OBJECT_TO_JSVAL(_onreadystateCallback);
             jsval out;

@@ -67,6 +67,8 @@ public:
         js_proxy_t * p = jsb_get_native_proxy(ws);
         if (!p) return;
         
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);
         JS::RootedValue vp(cx);
@@ -82,6 +84,8 @@ public:
     {
         js_proxy_t * p = jsb_get_native_proxy(ws);
         if (!p) return;
+        
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);
@@ -115,6 +119,8 @@ public:
         js_proxy_t * p = jsb_get_native_proxy(ws);
         if (!p) return;
         
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);
         JS::RootedValue vp(cx);
@@ -134,6 +140,8 @@ public:
     {
         js_proxy_t * p = jsb_get_native_proxy(ws);
         if (!p) return;
+        
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);

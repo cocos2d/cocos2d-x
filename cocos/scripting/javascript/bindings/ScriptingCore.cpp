@@ -176,6 +176,8 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj,
 {
     if (callback != JSVAL_VOID || thisObj != JSVAL_VOID)
     {
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        
         // Very important: The last parameter 'retVal' passed to 'JS_CallFunctionValue' should not be a NULL pointer.
         // If it's a NULL pointer, crash will be triggered in 'JS_CallFunctionValue'. To find out the reason of this crash is very difficult.
         // So we have to check the availability of 'retVal'.
@@ -1076,6 +1078,8 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
 int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
                                            Touch *pTouch, JSObject *obj)
 {
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
     jsval retval;
     std::string funcName;
     getTouchFuncName(eventType, funcName);
@@ -1096,7 +1100,8 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
                                            Touch *pTouch, JSObject *obj,
                                            jsval &retval)
 {
-
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
     std::string funcName;
     getTouchFuncName(eventType, funcName);
 
@@ -1790,6 +1795,8 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
     {
         return JSVAL_NULL;
     }
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     if (0 == length)
     {
