@@ -61,6 +61,7 @@ CCTween::CCTween()
     , m_iFromIndex(0)
     , m_iToIndex(0)
     , m_pAnimation(NULL)
+    , m_bPassLastFrame(false)
 {
 
 }
@@ -409,7 +410,6 @@ float CCTween::updateFrameData(float currentPercent)
 
         CCFrameData *from = NULL;
         CCFrameData *to = NULL;
-        bool passLastFrame = false;
 
         if (playedTime < frames[0]->frameID)
         {
@@ -417,9 +417,18 @@ float CCTween::updateFrameData(float currentPercent)
             setBetween(from, to);
             return currentPercent;
         }
-        else if(playedTime >= frames[length - 1]->frameID)
+        
+        if(playedTime >= frames[length - 1]->frameID)
         {
-            passLastFrame = true;
+            if (m_bPassLastFrame)
+            {
+                return m_fCurrentPercent;
+            }
+            m_bPassLastFrame = true;
+        }
+        else
+        {
+            m_bPassLastFrame = false;
         }
 
 
@@ -443,7 +452,7 @@ float CCTween::updateFrameData(float currentPercent)
                 m_pAnimation->frameEvent(m_pBone, from->strEvent.c_str(), from->frameID, playedTime);
             }
 
-            if (playedTime == from->frameID || (passLastFrame && m_iFromIndex == length-1))
+            if (playedTime == from->frameID || (m_bPassLastFrame && m_iFromIndex == length-1))
             {
                 break;
             }

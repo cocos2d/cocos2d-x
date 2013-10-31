@@ -31,6 +31,14 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
+struct CCRelativeData
+{
+    std::vector<std::string> plistFiles;
+    std::vector<std::string> armatures;
+    std::vector<std::string> animations;
+    std::vector<std::string> textures;
+};
+
 /**
  *	@brief	format and manage armature configuration and armature animation
  *  @lua NA
@@ -55,12 +63,14 @@ public:
      */
     virtual bool init();
 
+
+
     /**
      * Add armature data
      * @param id The id of the armature data
      * @param armatureData CCArmatureData *
      */
-    void addArmatureData(const char *id, CCArmatureData *armatureData);
+    void addArmatureData(const char *id, CCArmatureData *armatureData, const char *configFilePath = "");
 
     /**
      *	@brief	get armature data
@@ -80,7 +90,7 @@ public:
      *	@param 	id the id of the animation data
      *  @return CCAnimationData *
      */
-    void addAnimationData(const char *id, CCAnimationData *animationData);
+    void addAnimationData(const char *id, CCAnimationData *animationData, const char *configFilePath = "");
 
     /**
      *	@brief	get animation data from m_pAnimationDatas(CCDictionary)
@@ -100,7 +110,7 @@ public:
      *	@param 	id the id of the texture data
      *  @return CCTextureData *
      */
-    void addTextureData(const char *id, CCTextureData *textureData);
+    void addTextureData(const char *id, CCTextureData *textureData, const char *configFilePath = "");
 
     /**
      *	@brief	get texture data
@@ -137,16 +147,15 @@ public:
      */
     void addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, CCObject *target, SEL_SCHEDULE selector);
 
+
+    virtual void removeArmatureFileInfo(const char *configFilePath);
+
+
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
-    void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
+    void addSpriteFrameFromFile(const char *plistPath, const char *imagePath, const char *configFilePath = "");
 
-
-    /**
-     *	@brief	Clear the data in the m_pArmarureDatas and m_pAnimationDatas, and set m_pArmarureDatas and m_pAnimationDatas to NULL
-     */
-    void removeAll();
 
     /**
      *	@brief	Juge whether or not need auto load sprite file
@@ -157,6 +166,10 @@ public:
     CCDictionary *getArmatureDatas() const;
     CCDictionary *getAnimationDatas() const;
     CCDictionary *getTextureDatas() const;
+
+protected:
+    void addRelativeData(const char* configFilePath);
+    CCRelativeData *getRelativeData(const char* configFilePath);
 private:
     /**
      *	@brief	save amature datas
@@ -180,6 +193,8 @@ private:
     CCDictionary *m_pTextureDatas;
 
     bool m_bAutoLoadSpriteFile;
+
+    std::map<std::string, CCRelativeData> m_sRelativeDatas;
 };
 
 

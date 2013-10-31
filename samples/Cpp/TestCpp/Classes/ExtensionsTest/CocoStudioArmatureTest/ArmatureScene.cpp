@@ -1,7 +1,6 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
 
-
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
@@ -20,6 +19,9 @@ CCLayer *CreateLayer(int index)
     case TEST_ASYNCHRONOUS_LOADING:
         pLayer = new TestAsynchronousLoading();
         break;
+    case TEST_DIRECT_LOADING:
+        pLayer = new TestDirectLoading();
+        break;
     case TEST_DRAGON_BONES_2_0:
         pLayer = new TestDragonBones20();
         break;
@@ -37,6 +39,9 @@ CCLayer *CreateLayer(int index)
         break;
     case TEST_ANIMATION_EVENT:
         pLayer = new TestAnimationEvent();
+        break;
+    case TEST_FRAME_EVENT:
+        pLayer = new TestFrameEvent();
         break;
     case  TEST_PARTICLE_DISPLAY:
         pLayer = new TestParticleDisplay();
@@ -239,7 +244,7 @@ void TestAsynchronousLoading::onEnter()
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
 
     //! load data directly
     // 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
@@ -259,6 +264,11 @@ std::string TestAsynchronousLoading::subtitle()
 {
     return "current percent : ";
 }
+void TestAsynchronousLoading::restartCallback(CCObject* pSender)
+{
+    CCArmatureDataManager::sharedArmatureDataManager()->purge();
+    ArmatureTestLayer::restartCallback(pSender);
+}
 void TestAsynchronousLoading::dataLoaded(float percent)
 {
     CCLabelTTF *label = (CCLabelTTF *)getChildByTag(10001);
@@ -275,6 +285,27 @@ void TestAsynchronousLoading::dataLoaded(float percent)
         restartItem->setEnabled(true);
         nextItem->setEnabled(true);
     }
+}
+
+
+void TestDirectLoading::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+
+    // remove sigle resource
+    CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/bear.ExportJson");
+
+    // load resource directly
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/bear.ExportJson");
+
+    CCArmature *armature = CCArmature::create("bear");
+    armature->getAnimation()->playByIndex(0);
+    armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+    addChild(armature);
+}
+std::string TestDirectLoading::title()
+{
+    return "Test Direct Loading";
 }
 
 
@@ -534,6 +565,50 @@ void TestAnimationEvent::callback2()
 }
 
 
+
+#define  FRAME_EVENT_ACTION_TAG 10000
+
+void TestFrameEvent::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+    cocos2d::extension::CCArmature *armature = cocos2d::extension::CCArmature::create("HeroAnimation");
+    armature->getAnimation()->play("attack");
+    armature->getAnimation()->setSpeedScale(0.5);
+    armature->setPosition(ccp(VisibleRect::center().x - 50, VisibleRect::center().y -100));
+
+    /*
+     * Set armature's frame event callback function
+     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+     */
+    armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestFrameEvent::onFrameEvent));
+
+    addChild(armature);
+
+    schedule( schedule_selector(TestFrameEvent::checkAction) );
+}
+std::string TestFrameEvent::title()
+{
+    return "Test Frame Event";
+}
+void TestFrameEvent::onFrameEvent(cocos2d::extension::CCBone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
+{
+    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
+
+
+    if (!this->getActionByTag(FRAME_EVENT_ACTION_TAG) || this->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
+    {
+        this->stopAllActions();
+
+        CCActionInterval *action =  CCShatteredTiles3D::create(0.2f, CCSizeMake(16,12), 5, false); 
+        action->setTag(FRAME_EVENT_ACTION_TAG);
+        this->runAction(action);
+    }
+}
+void TestFrameEvent::checkAction(float dt)
+{
+    if ( this->numberOfRunningActions() == 0 && this->getGrid() != NULL)
+        this->setGrid(NULL);
+}
 
 
 void TestParticleDisplay::onEnter()
@@ -930,7 +1005,7 @@ void TestColliderDetector::initWorld()
 
     bullet->setCPBody(body);
 
-    body = cpBodyNew(INFINITY, INFINITY);
+    body = cpBodyNew(1.0f, INFINITY);
     cpSpaceAddBody(space, body);
     armature2->setBody(body);
 
