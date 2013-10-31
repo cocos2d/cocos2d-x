@@ -22,61 +22,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsJointInfo.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-#include <algorithm>
+#include "../CCPhysicsSetting.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+
+#ifndef __CCPHYSICS_BODY_INFO_H__
+#define __CCPHYSICS_BODY_INFO_H__
+
+#include "CCPlatformMacros.h"
+
 NS_CC_BEGIN
 
-std::map<cpConstraint*, PhysicsJointInfo*> PhysicsJointInfo::map;
-
-PhysicsJointInfo::PhysicsJointInfo(PhysicsJoint* joint)
-: joint(joint)
+class PhysicsBodyInfo
 {
-}
-
-PhysicsJointInfo::~PhysicsJointInfo()
-{
-    for (cpConstraint* joint : joints)
-    {
-        cpConstraintFree(joint);
-    }
-}
-
-void PhysicsJointInfo::add(cpConstraint* joint)
-{
-    if (joint == nullptr) return;
-
-    joints.push_back(joint);
-    map.insert(std::pair<cpConstraint*, PhysicsJointInfo*>(joint, this));
-}
-
-void PhysicsJointInfo::remove(cpConstraint* joint)
-{
-    if (joint == nullptr) return;
-    
-    auto it = std::find(joints.begin(), joints.end(), joint);
-    if (it != joints.end())
-    {
-        joints.erase(it);
-        
-        auto mit = map.find(joint);
-        if (mit != map.end()) map.erase(mit);
-        
-        cpConstraintFree(joint);
-    }
-}
-
-void PhysicsJointInfo::removeAll()
-{
-    for (cpConstraint* joint : joints)
-    {
-        auto mit = map.find(joint);
-        if (mit != map.end()) map.erase(mit);
-        cpConstraintFree(joint);
-    }
-    
-    joints.clear();
-}
+public:
+    PhysicsBodyInfo();
+    ~PhysicsBodyInfo();
+};
 
 NS_CC_END
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // __CCPHYSICS_BODY_INFO_H__
+
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

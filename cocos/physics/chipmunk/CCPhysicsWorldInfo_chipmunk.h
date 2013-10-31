@@ -22,39 +22,29 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_JOINT_INFO_H__
-#define __CCPHYSICS_JOINT_INFO_H__
-
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+
+#ifndef __CCPHYSICS_WORLD_INFO_H__
+#define __CCPHYSICS_WORLD_INFO_H__
+
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
-#include <vector>
-#include <map>
 NS_CC_BEGIN
 
-class PhysicsJoint;
-
-class PhysicsJointInfo
+class PhysicsWorldInfo
 {
 public:
-    void add(cpConstraint* shape);
-    void remove(cpConstraint* shape);
-    void removeAll();
-    
-public:
-    std::vector<cpConstraint*> joints;
-    PhysicsJoint* joint;
-    static std::map<cpConstraint*, PhysicsJointInfo*> map;
+    cpSpace* space;
     
 private:
-    PhysicsJointInfo(PhysicsJoint* joint);
-    ~PhysicsJointInfo();
+    PhysicsWorldInfo();
+    ~PhysicsWorldInfo();
     
-    friend class PhysicsJoint;
+    friend class PhysicsWorld;
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_SHAPE_INFO_H__
+#endif // __CCPHYSICS_WORLD_INFO_H__
 
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK

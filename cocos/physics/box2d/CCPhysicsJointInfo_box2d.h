@@ -22,46 +22,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_SHAPE_INFO_H__
-#define __CCPHYSICS_SHAPE_INFO_H__
-
 #include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 
-#include <vector>
-#include <map>
-#include "chipmunk.h"
+#ifndef __CCPHYSICS_JOINT_INFO_H__
+#define __CCPHYSICS_JOINT_INFO_H__
+
 #include "CCPlatformMacros.h"
-
 NS_CC_BEGIN
 
-class PhysicsShape;
-
-class PhysicsShapeInfo
+class PhysicsJointInfo
 {
 public:
-    void add(cpShape* shape);
-    void remove(cpShape* shape);
-    void removeAll();
-    void setGroup(cpGroup group);
-    void setBody(cpBody* body);
-    
-public:
-    std::vector<cpShape*> shapes;
-    PhysicsShape* shape;
-    cpBody* body;
-    cpGroup group;
-    static std::map<cpShape*, PhysicsShapeInfo*> map;
-    static cpBody* shareBody;
-    
-private:
-    PhysicsShapeInfo(PhysicsShape* shape);
-    ~PhysicsShapeInfo();
-    
-    friend class PhysicsShape;
+    PhysicsJointInfo();
+    ~PhysicsJointInfo();
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_SHAPE_INFO_H__
+#endif // __CCPHYSICS_JOINT_INFO_H__
 
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

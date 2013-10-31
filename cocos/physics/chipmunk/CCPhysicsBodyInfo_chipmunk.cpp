@@ -22,18 +22,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsWorldInfo.h"
+#include "CCPhysicsBodyInfo_chipmunk.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 NS_CC_BEGIN
 
-PhysicsWorldInfo::PhysicsWorldInfo()
+PhysicsBodyInfo::PhysicsBodyInfo()
+: body(nullptr)
 {
-    space = cpSpaceNew();
 }
 
-PhysicsWorldInfo::~PhysicsWorldInfo()
+PhysicsBodyInfo::~PhysicsBodyInfo()
 {
-    cpSpaceFree(space);
+    if (body) cpBodyFree(body);
+}
+
+Clonable* PhysicsBodyInfo::clone() const
+{
+    return nullptr;
 }
 
 NS_CC_END

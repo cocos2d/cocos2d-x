@@ -22,16 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsContactInfo.h"
+#include "CCPhysicsBodyInfo_box2d.h"
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 NS_CC_BEGIN
 
-PhysicsContactInfo::PhysicsContactInfo()
+PhysicsBodyInfo::PhysicsBodyInfo()
 {
 }
 
-PhysicsContactInfo::~PhysicsContactInfo()
+PhysicsBodyInfo::~PhysicsBodyInfo()
 {
 }
 

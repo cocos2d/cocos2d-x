@@ -30,10 +30,10 @@
 #include "Box2D.h"
 #endif
 
-#include "chipmunk/CCPhysicsContactInfo.h"
-#include "box2d/CCPhysicsContactInfo.h"
-#include "chipmunk/CCPhysicsHelper.h"
-#include "box2d/CCPhysicsHelper.h"
+#include "chipmunk/CCPhysicsContactInfo_chipmunk.h"
+#include "box2d/CCPhysicsContactInfo_box2d.h"
+#include "chipmunk/CCPhysicsHelper_chipmunk.h"
+#include "box2d/CCPhysicsHelper_box2d.h"
 
 NS_CC_BEGIN
 

@@ -22,18 +22,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsContactInfo.h"
+#include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+
+#ifndef __CCPHYSICS_BODY_INFO_H__
+#define __CCPHYSICS_BODY_INFO_H__
+
+#include "chipmunk.h"
+#include "CCPlatformMacros.h"
+#include "CCObject.h"
+
 NS_CC_BEGIN
 
-PhysicsContactInfo::PhysicsContactInfo(PhysicsContact* contact)
-: contact(contact)
+class PhysicsBodyInfo : public Clonable
 {
-}
-
-PhysicsContactInfo::~PhysicsContactInfo()
-{
-}
+public:
+    cpBody* body;
+    
+private:
+    PhysicsBodyInfo();
+    ~PhysicsBodyInfo();
+    
+    Clonable* clone() const override;
+    
+    friend class PhysicsBody;
+};
 
 NS_CC_END
+#endif // __CCPHYSICS_BODY_INFO_H__
+
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK

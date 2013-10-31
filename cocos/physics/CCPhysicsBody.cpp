@@ -25,6 +25,7 @@
 #ifdef CC_USE_PHYSICS
 
 #include <algorithm>
+#include <limits.h>
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
@@ -36,17 +37,16 @@
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
 
-#include "chipmunk/CCPhysicsBodyInfo.h"
-#include "box2d/CCPhysicsBodyInfo.h"
-#include "chipmunk/CCPhysicsJointInfo.h"
-#include "box2d/CCPhysicsJointInfo.h"
-#include "chipmunk/CCPhysicsWorldInfo.h"
-#include "box2d/CCPhysicsWorldInfo.h"
-#include "chipmunk/CCPhysicsShapeInfo.h"
-#include "box2d/CCPhysicsShapeInfo.h"
-
-#include "chipmunk/CCPhysicsHelper.h"
-#include "box2d/CCPhysicsHelper.h"
+#include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
+#include "box2d/CCPhysicsBodyInfo_box2d.h"
+#include "chipmunk/CCPhysicsJointInfo_chipmunk.h"
+#include "box2d/CCPhysicsJointInfo_box2d.h"
+#include "chipmunk/CCPhysicsWorldInfo_chipmunk.h"
+#include "box2d/CCPhysicsWorldInfo_box2d.h"
+#include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
+#include "box2d/CCPhysicsShapeInfo_box2d.h"
+#include "chipmunk/CCPhysicsHelper_chipmunk.h"
+#include "box2d/CCPhysicsHelper_box2d.h"
 
 NS_CC_BEGIN
 

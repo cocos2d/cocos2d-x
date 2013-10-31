@@ -22,18 +22,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsShapeInfo.h"
-
+#include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+
+#ifndef __CCPHYSICS_SHAPE_INFO_H__
+#define __CCPHYSICS_SHAPE_INFO_H__
+
+#include "CCPlatformMacros.h"
 NS_CC_BEGIN
 
-PhysicsShapeInfo::PhysicsShapeInfo()
+class PhysicsShapeInfo
 {
-}
-
-PhysicsShapeInfo::~PhysicsShapeInfo()
-{
-}
+public:
+    PhysicsShapeInfo();
+    ~PhysicsShapeInfo();
+};
 
 NS_CC_END
+#endif // __CCPHYSICS_SHAPE_INFO_H__
+
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D
