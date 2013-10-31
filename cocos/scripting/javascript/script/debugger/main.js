@@ -902,8 +902,6 @@ DebuggerServerConnection.prototype = {
     // forwarding is needed: in DebuggerServerConnection instances in child
     // processes, every actor has a prefixed name.
 
-    log("aPacket: " + aPacket);
-
     if (this._forwardingPrefixes.size > 0) {
       let colon = aPacket.to.indexOf(':');
       if (colon >= 0) {
