@@ -3313,7 +3313,7 @@ JSBool js_cocos2dx_CCLayer_setKeyboardEnabled(JSContext *cx, uint32_t argc, jsva
             
             dispatcher->addEventListenerWithSceneGraphPriority(listener, cobj);
             
-            dict->setObject(keyboardListener, "keyboardListener");
+            dict->setObject(listener, "keyboardListener");
         }
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3383,7 +3383,7 @@ JSBool js_cocos2dx_CCLayer_setAccelerometerEnabled(JSContext *cx, uint32_t argc,
             
             dispatcher->addEventListenerWithSceneGraphPriority(listener, cobj);
             
-            dict->setObject(accListener, "accListener");
+            dict->setObject(listener, "accListener");
         }
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
