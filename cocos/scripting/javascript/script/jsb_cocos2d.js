@@ -235,7 +235,19 @@ cc.sizeEqualToSize = function (size1, size2)
 //
 cc.rect = function(x,y,w,h)
 {
-    return {x:x, y:y, width:w, height:h};
+    if (arguments.length === 0)
+        return { x: 0, y: 0, width: 0, height: 0 };
+
+    if (arguments.length === 1)
+        return { x: x.x, y: x.y, width: x.width, height: x.height };
+
+    if (arguments.length === 2)
+        return { x: x.x, y: x.y, width: y.width, height: y.height };
+
+    if (arguments.length === 4)
+        return { x: x, y: y, width: w, height: h };
+
+    throw "unknown argument type";
 };
 cc._rect = function(x,y,w,h)
 {
