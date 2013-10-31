@@ -231,25 +231,26 @@ cc.sizeEqualToSize = function (size1, size2)
 };
 
 /**
- * create a rect object
- * @param {Number|cc.Point|cc.Rect} [x1] a Number value as x or a cc.Point object as origin or a cc.Rect clone object
- * @param {Number|cc.Size} [y1] x1 a Number value as y or a cc.Size object as size
- * @param {Number} [width1]
- * @param {Number} [height1]
- * @return {Object} a Rect object
+ * create a cc.rect object
+ * @param {Number|cc.point|cc.rect} [x] a Number value as x or a cc.point object as origin or a cc.rect clone object
+ * @param {Number|cc.size} [y] x1 a Number value as y or a cc.size object as size
+ * @param {Number} [w]
+ * @param {Number} [h]
+ * @return {Object} a cc.rect object
  */
 cc.rect = function(x,y,w,h)
 {
-    if (arguments.length === 0)
+    var argLen = arguments.length;
+    if (argLen === 0)
         return { x: 0, y: 0, width: 0, height: 0 };
 
-    if (arguments.length === 1)
+    if (argLen === 1)
         return { x: x.x, y: x.y, width: x.width, height: x.height };
 
-    if (arguments.length === 2)
+    if (argLen === 2)
         return { x: x.x, y: x.y, width: y.width, height: y.height };
 
-    if (arguments.length === 4)
+    if (argLen === 4)
         return { x: x, y: y, width: w, height: h };
 
     throw "unknown argument type";
