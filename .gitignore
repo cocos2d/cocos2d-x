@@ -68,6 +68,9 @@ xcschememanagement.plist
 xcuserdata/
 DerivedData/
 
+# Ignore files build by AppCode
+.idea
+
 # Ignore files built by bada
 .Simulator-Debug/
 .Target-Debug/
