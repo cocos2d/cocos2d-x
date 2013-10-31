@@ -10,7 +10,7 @@ void LuaObjcBridge::luaopen_luaoc(lua_State *L)
     lua_pushstring(L, "callStaticMethod");
     lua_pushcfunction(L, LuaObjcBridge::callObjcStaticMethod);
     lua_rawset(L, -3);
-    lua_setglobal(L, "CCLuaObjcBridge");
+    lua_setglobal(L, "LuaObjcBridge");
 }
 
 /**
