@@ -61,6 +61,7 @@ Tween::Tween()
     , _fromIndex(0)
     , _toIndex(0)
     , _animation(NULL)
+    , _passLastFrame(false)
 {
 
 }
@@ -408,7 +409,6 @@ float Tween::updateFrameData(float currentPercent)
 
         FrameData *from = NULL;
         FrameData *to = NULL;
-        bool passLastFrame = false;
 
         if (playedTime < frames[0]->frameID)
         {
@@ -416,9 +416,19 @@ float Tween::updateFrameData(float currentPercent)
             setBetween(from, to);
             return currentPercent;
         }
-        else if(playedTime >= frames[length - 1]->frameID)
+        
+        if(playedTime >= frames[length - 1]->frameID)
         {
-            passLastFrame = true;
+            // If _passLastFrame is true and playedTime >= frames[length - 1]->frameID, then do not need to go on. 
+            if (_passLastFrame)
+            {
+                return _currentPercent;
+            }
+            _passLastFrame = true;
+        }
+        else
+        {
+            _passLastFrame = false;
         }
 
 
@@ -442,7 +452,7 @@ float Tween::updateFrameData(float currentPercent)
                 _animation->frameEvent(_bone, from->strEvent.c_str(), from->frameID, playedTime);
             }
 
-            if (playedTime == from->frameID || (passLastFrame && _fromIndex == length-1))
+            if (playedTime == from->frameID || (_passLastFrame && _fromIndex == length-1))
             {
                 break;
             }

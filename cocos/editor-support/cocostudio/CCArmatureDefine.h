@@ -44,6 +44,10 @@ THE SOFTWARE.
 #define ENABLE_PHYSICS_CHIPMUNK_DETECT 1
 #endif
 
+#ifndef ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX 
+#define ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX 0
+#endif
+
 #define CS_RETURN_IF(cond) if (cond) return
 #define CS_RETURN_NULL_IF(cond) if (cond) return NULL;
 

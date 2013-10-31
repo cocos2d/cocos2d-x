@@ -138,13 +138,14 @@ static const char *CONTENT_SCALE = "content_scale";
 namespace cocostudio {
 
 
-std::vector<std::string> s_arrConfigFileList;
+
 float s_PositionReadScale = 1;
 float s_ContentScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
 static float s_CocoStudioVersion = VERSION_COMBINED;
 
-static std::string s_BasefilePath = "";
+std::vector<std::string> DataReaderHelper::_configFileList;
+std::string DataReaderHelper::_basefilePath = "";
 
 DataReaderHelper *DataReaderHelper::_dataReaderHelper = NULL;
 
@@ -184,7 +185,7 @@ void DataReaderHelper::loadData()
             _asyncStructQueueMutex.unlock();
         }
 
-        // generate image info
+        // generate data info
         DataInfo *pDataInfo = new DataInfo();
         pDataInfo->asyncStruct = pAsyncStruct;
 
@@ -236,14 +237,10 @@ float DataReaderHelper::getPositionReadScale()
 
 void DataReaderHelper::purge()
 {
-    DataReaderHelper::clear();
+    _configFileList.clear();
     CC_SAFE_RELEASE_NULL(_dataReaderHelper);
 }
 
-void DataReaderHelper::clear()
-{
-    s_arrConfigFileList.clear();
-}
 
 DataReaderHelper::DataReaderHelper()
 	: _loadingThread(nullptr)
@@ -272,26 +269,26 @@ void DataReaderHelper::addDataFromFile(const char *filePath)
     /*
     * Check if file is already added to ArmatureDataManager, if then return.
     */
-    for(unsigned int i = 0; i < s_arrConfigFileList.size(); i++)
+    for(unsigned int i = 0; i < _configFileList.size(); i++)
     {
-        if (s_arrConfigFileList[i].compare(filePath) == 0)
+        if (_configFileList[i].compare(filePath) == 0)
         {
             return;
         }
     }
-    s_arrConfigFileList.push_back(filePath);
+    _configFileList.push_back(filePath);
 
 
     //! find the base file path
-    s_BasefilePath = filePath;
-    size_t pos = s_BasefilePath.find_last_of("/");
+    _basefilePath = filePath;
+    size_t pos = _basefilePath.find_last_of("/");
     if (pos != std::string::npos)
     {
-        s_BasefilePath = s_BasefilePath.substr(0, pos + 1);
+        _basefilePath = _basefilePath.substr(0, pos + 1);
     }
     else
     {
-        s_BasefilePath = "";
+        _basefilePath = "";
     }
 
 
@@ -303,13 +300,17 @@ void DataReaderHelper::addDataFromFile(const char *filePath)
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
     const char *pFileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
 
+    DataInfo dataInfo;
+    dataInfo.filename = filePathStr;
+    dataInfo.asyncStruct = NULL;
+
     if (str.compare(".xml") == 0)
     {
-        DataReaderHelper::addDataFromCache(pFileContent);
+        DataReaderHelper::addDataFromCache(pFileContent, &dataInfo);
     }
     else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
     {
-        DataReaderHelper::addDataFromJsonCache(pFileContent);
+        DataReaderHelper::addDataFromJsonCache(pFileContent, &dataInfo);
     }
 }
 
@@ -318,9 +319,9 @@ void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *p
     /*
     * Check if file is already added to ArmatureDataManager, if then return.
     */
-    for(unsigned int i = 0; i < s_arrConfigFileList.size(); i++)
+    for(unsigned int i = 0; i < _configFileList.size(); i++)
     {
-        if (s_arrConfigFileList[i].compare(filePath) == 0)
+        if (_configFileList[i].compare(filePath) == 0)
         {
             if (target && selector)
             {
@@ -336,7 +337,7 @@ void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *p
             return;
         }
     }
-    s_arrConfigFileList.push_back(filePath);
+    _configFileList.push_back(filePath);
 
     //! find the base file path
     std::string basefilePath = filePath;
@@ -474,7 +475,22 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
 }
 
 
+void DataReaderHelper::removeConfigFile(const char *configFile)
+{
+    std::vector<std::string>::iterator it = _configFileList.end();
+    for (std::vector<std::string>::iterator i = _configFileList.begin(); i != _configFileList.end(); i++)
+    {
+        if (*i == configFile)
+        {
+            it = i;
+        }
+    }
 
+    if (it != _configFileList.end())
+    {
+        _configFileList.erase(it);
+    }
+}
 
 
 
@@ -498,13 +514,13 @@ void DataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *data
     {
         ArmatureData *armatureData = DataReaderHelper::decodeArmature(armatureXML);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData);
+        ArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
         armatureData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.unlock();
         }
@@ -521,13 +537,13 @@ void DataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *data
     while(animationXML)
     {
         AnimationData *animationData = DataReaderHelper::decodeAnimation(animationXML);
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData);
+        ArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
         animationData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.unlock();
         }
@@ -544,13 +560,13 @@ void DataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *data
     {
         TextureData *textureData = DataReaderHelper::decodeTexture(textureXML);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData);
+        ArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
         textureData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.unlock();
         }
@@ -1137,7 +1153,7 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
     JsonDictionary json;
     json.initWithDescription(fileContent);
 
-    if (dataInfo)
+    if (dataInfo->asyncStruct)
     {
         dataInfo->contentScale = json.getItemFloatValue(CONTENT_SCALE, 1);
     }
@@ -1153,13 +1169,13 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
         JsonDictionary *armatureDic = json.getSubItemFromArray(ARMATURE_DATA, i);
         ArmatureData *armatureData = decodeArmature(*armatureDic, dataInfo);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
         ArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData);
         armatureData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.unlock();
         }
@@ -1173,13 +1189,13 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
         JsonDictionary *animationDic = json.getSubItemFromArray(ANIMATION_DATA, i);
         AnimationData *animationData = decodeAnimation(*animationDic, dataInfo);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
         ArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData);
         animationData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.unlock();
         }
@@ -1193,13 +1209,13 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
         JsonDictionary *textureDic = json.getSubItemFromArray(TEXTURE_DATA, i);
         TextureData *textureData = decodeTexture(*textureDic);
 
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
         ArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData);
         textureData->release();
-        if (dataInfo)
+        if (dataInfo->asyncStruct)
         {
             _dataReaderHelper->_addDataMutex.unlock();
         }
@@ -1207,7 +1223,7 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
     }
 
     // Auto load sprite file
-    bool autoLoad = dataInfo == NULL ? ArmatureDataManager::getInstance()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
+    bool autoLoad = dataInfo->asyncStruct == NULL ? ArmatureDataManager::getInstance()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
     if (autoLoad)
     {
         length = json.getArrayItemCount(CONFIG_FILE_PATH);
@@ -1223,7 +1239,7 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
             std::string filePath = path;
             filePath = filePath.erase(filePath.find_last_of("."));
 
-            if (dataInfo != NULL)
+            if (dataInfo->asyncStruct)
             {
                 dataInfo->configFileQueue.push(filePath);
             }
@@ -1232,7 +1248,7 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
                 std::string plistPath = filePath + ".plist";
                 std::string pngPath =  filePath + ".png";
 
-                ArmatureDataManager::getInstance()->addSpriteFrameFromFile((s_BasefilePath + plistPath).c_str(), (s_BasefilePath + pngPath).c_str());
+                ArmatureDataManager::getInstance()->addSpriteFrameFromFile((_basefilePath + plistPath).c_str(), (_basefilePath + pngPath).c_str());
             }
         }
     }
@@ -1328,7 +1344,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json, DataInfo 
             sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);
             sdd->skinData.skewY = dic->getItemFloatValue(A_SKEW_Y, 0);
 
-            if (dataInfo)
+            if (dataInfo->asyncStruct)
             {
                 sdd->skinData.x *= dataInfo->contentScale;
                 sdd->skinData.y *= dataInfo->contentScale;
@@ -1362,13 +1378,13 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json, DataInfo 
         const char *plist = json.getItemStringValue(A_PLIST);
         if(plist != NULL)
         {
-            if (dataInfo != NULL)
+            if (dataInfo->asyncStruct)
             {
                 static_cast<ParticleDisplayData *>(displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
             }
             else
             {
-                static_cast<ParticleDisplayData *>(displayData)->plist = s_BasefilePath + plist;
+                static_cast<ParticleDisplayData *>(displayData)->plist = _basefilePath + plist;
             }
         }
     }
@@ -1601,7 +1617,7 @@ void DataReaderHelper::decodeNode(BaseData *node, JsonDictionary &json, DataInfo
     node->x = json.getItemFloatValue(A_X, 0) * s_PositionReadScale;
     node->y = json.getItemFloatValue(A_Y, 0) * s_PositionReadScale;
 
-    if (dataInfo)
+    if (dataInfo->asyncStruct)
     {
         node->x *= dataInfo->contentScale;
         node->y *= dataInfo->contentScale;

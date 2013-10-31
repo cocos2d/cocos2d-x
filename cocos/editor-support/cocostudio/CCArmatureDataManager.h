@@ -31,6 +31,14 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+struct RelativeData
+{
+    std::vector<std::string> plistFiles;
+    std::vector<std::string> armatures;
+    std::vector<std::string> animations;
+    std::vector<std::string> textures;
+};
+
 /**
  *	@brief	format and manage armature configuration and armature animation
  */
@@ -69,7 +77,7 @@ public:
      * @param id The id of the armature data
      * @param armatureData ArmatureData *
      */
-    void addArmatureData(const char *id, ArmatureData *armatureData);
+    void addArmatureData(const char *id, ArmatureData *armatureData, const char *configFilePath = "");
 
     /**
      *	@brief	get armature data
@@ -89,7 +97,7 @@ public:
      *	@param 	id the id of the animation data
      *  @return AnimationData *
      */
-    void addAnimationData(const char *id, AnimationData *animationData);
+    void addAnimationData(const char *id, AnimationData *animationData, const char *configFilePath = "");
 
     /**
      *	@brief	get animation data from _animationDatas(Dictionary)
@@ -109,7 +117,7 @@ public:
      *	@param 	id the id of the texture data
      *  @return TextureData *
      */
-    void addTextureData(const char *id, TextureData *textureData);
+    void addTextureData(const char *id, TextureData *textureData, const char *configFilePath = "");
 
     /**
      *	@brief	get texture data
@@ -149,13 +157,10 @@ public:
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
-    void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
+    void addSpriteFrameFromFile(const char *plistPath, const char *imagePath, const char *configFilePath = "");
 
+    virtual void removeArmatureFileInfo(const char *configFilePath);
 
-    /**
-     *	@brief	Clear the data in the _armarureDatas and _animationDatas, and set _armarureDatas and _animationDatas to NULL
-     */
-    void removeAll();
 
     /**
      *	@brief	Juge whether or not need auto load sprite file
@@ -166,6 +171,10 @@ public:
     cocos2d::Dictionary *getArmatureDatas() const;
     cocos2d::Dictionary *getAnimationDatas() const;
     cocos2d::Dictionary *getTextureDatas() const;
+
+protected:
+    void addRelativeData(const char* configFilePath);
+    RelativeData *getRelativeData(const char* configFilePath);
 private:
     /**
      *	@brief	save amature datas
@@ -189,6 +198,8 @@ private:
     cocos2d::Dictionary *_textureDatas;
 
     bool _autoLoadSpriteFile;
+
+    std::map<std::string, RelativeData> _relativeDatas;
 };
 
 

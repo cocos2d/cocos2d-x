@@ -73,6 +73,7 @@ protected:
 		AsyncStruct *asyncStruct;
 		std::queue<std::string>      configFileQueue;
         float contentScale;
+        std::string    filename;
 	} DataInfo;
 
 public:
@@ -90,7 +91,6 @@ public:
     static float getPositionReadScale();
 
     static void purge();
-    static void clear();
 public:
 	/**
      * @js ctor
@@ -107,6 +107,7 @@ public:
 
     void addDataAsyncCallBack(float dt);
 
+    void removeConfigFile(const char *configFile);
 public:
 
     /**
@@ -192,6 +193,8 @@ protected:
 	std::queue<AsyncStruct *> *_asyncStructQueue;
 	std::queue<DataInfo *>   *_dataQueue;
 
+    static std::string _basefilePath;
+    static std::vector<std::string> _configFileList;
 
     static DataReaderHelper *_dataReaderHelper;
 };
