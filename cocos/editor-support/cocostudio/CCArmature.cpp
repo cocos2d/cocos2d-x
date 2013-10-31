@@ -624,7 +624,6 @@ void Armature::visit()
     transform();
     sortAllChildren();
     draw();
-    updateEventPriorityIndex();
 
     // reset for next frame
     _orderOfArrival = 0;

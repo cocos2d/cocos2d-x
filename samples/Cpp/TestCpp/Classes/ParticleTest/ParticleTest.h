@@ -33,9 +33,9 @@ public:
     void backCallback(Object* sender);
     void toggleCallback(Object* sender);
 
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
 
     virtual void update(float dt);
     void setEmitterPosition();
