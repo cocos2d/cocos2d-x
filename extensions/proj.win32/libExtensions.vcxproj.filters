@@ -402,9 +402,6 @@
     <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
@@ -479,6 +476,9 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
       <Filter>CocoStudio\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -760,9 +760,6 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\Compatible\CompatibleClasses.h">
       <Filter>CocoStudio\GUI\UIWidgets\Compatible</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.h">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
@@ -858,6 +855,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h">
       <Filter>CocoStudio\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
