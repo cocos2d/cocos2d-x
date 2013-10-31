@@ -264,9 +264,9 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     label->setAnchorPoint( Point(0.5f, 0.5f) );
     
     
-    auto BChar = (Sprite*) label->getLetterAt(0);
-    auto FChar = (Sprite*) label->getLetterAt(7);
-    auto AChar = (Sprite*) label->getLetterAt(12);
+    auto BChar = (Sprite*) label->getLetter(0);
+    auto FChar = (Sprite*) label->getLetter(7);
+    auto AChar = (Sprite*) label->getLetter(12);
     
     
     auto rotate = RotateBy::create(2, 360);
@@ -296,7 +296,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setPosition( Point(s.width/2.0f, 80) );
     
-    auto lastChar = (Sprite*) label2->getLetterAt(3);
+    auto lastChar = (Sprite*) label2->getLetter(3);
     lastChar->runAction( rot_4ever->clone() );
     
     schedule( schedule_selector(LabelFNTSpriteActions::step), 0.1f);

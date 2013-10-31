@@ -88,7 +88,7 @@ public:
     virtual float                       getLetterPosXLeft( int index ) const override;
     virtual float                       getLetterPosXRight( int index ) const override;
 
-    virtual Sprite *                    getLetterAt(int ID) override;  
+    virtual Sprite *                    getLetter(int ID) override;  
     
     // font related stuff
     virtual int                         getCommonLineHeight() const override;

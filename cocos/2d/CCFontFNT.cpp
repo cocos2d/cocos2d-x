@@ -32,7 +32,7 @@ FontFNT * FontFNT::create(const char* fntFilePath)
         delete newConf;
         return nullptr;
     }
-    
+    tempFont->autorelease();
     return tempFont;
 }
 

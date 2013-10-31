@@ -420,7 +420,7 @@ void Label::addChild(Node * child, int zOrder/* =0 */, int tag/* =0 */)
 
 ///// PROTOCOL STUFF
 
-Sprite * Label::getLetterAt(int ID)
+Sprite * Label::getLetter(int ID)
 {
     if (ID < getStringLenght())
     {       
@@ -598,8 +598,7 @@ void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
     _isOpacityModifyRGB = isOpacityModifyRGB;
     if (_children && _children->count() != 0)
     {
-        Object* child;
-        CCARRAY_FOREACH(_children, child)
+        for (auto child: *_children)
         {
             Node* pNode = static_cast<Node*>( child );
             if (pNode)
@@ -709,10 +708,9 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
     
-    Object* pObj;
-	CCARRAY_FOREACH(_children, pObj)
+	for (auto child: *_children)
     {
-        Sprite *item = static_cast<Sprite*>( pObj );
+        Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedColor(_displayedColor);
 	}
 
