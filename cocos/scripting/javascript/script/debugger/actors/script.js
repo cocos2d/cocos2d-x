@@ -281,7 +281,7 @@ EventLoopStack.prototype = {
    * The number of nested event loops on the stack.
    */
   get size() {
-    return this._inspector.eventLoopNestLevel;
+    return this._inspector.eventLoopNestLevel();
   },
 
   /**
@@ -353,12 +353,13 @@ EventLoop.prototype = {
     this._inspector.enterNestedEventLoop(this);
 
     // Keep exiting nested event loops while the last requestor is resolved.
-    if (this._inspector.eventLoopNestLevel > 0) {
-      const { resolved } = this._inspector.lastNestRequestor;
-      if (resolved) {
-        this._inspector.exitNestedEventLoop();
-      }
-    }
+    // James commented.
+    //  if (this._inspector.eventLoopNestLevel() > 0) {
+    //   const { resolved } = this._inspector.lastNestRequestor;
+    //   if (resolved) {
+    //     this._inspector.exitNestedEventLoop();
+    //   }
+    // }
 
     dbg_assert(this._thread.state === "running",
                "Should be in the running state");
@@ -384,7 +385,8 @@ EventLoop.prototype = {
       throw new Error("Already resolved this nested event loop!");
     }
     this.resolved = true;
-    if (this === this._inspector.lastNestRequestor) {
+    // James commented. if (this === this._inspector.lastNestRequestor) 
+    {
       this._inspector.exitNestedEventLoop();
       return true;
     }
@@ -739,14 +741,15 @@ ThreadActor.prototype = {
     // In case of multiple nested event loops (due to multiple debuggers open in
     // different tabs or multiple debugger clients connected to the same tab)
     // only allow resumption in a LIFO order.
-    if (this._nestedEventLoops.size && this._nestedEventLoops.lastPausedUrl
-        && this._nestedEventLoops.lastPausedUrl !== this._hooks.url) {
-      return {
-        error: "wrongOrder",
-        message: "trying to resume in the wrong order.",
-        lastPausedUrl: this._nestedEventLoops.lastPausedUrl
-      };
-    }
+    // James commented
+    // if (this._nestedEventLoops.size && this._nestedEventLoops.lastPausedUrl
+    //     && this._nestedEventLoops.lastPausedUrl !== this._hooks.url) {
+    //   return {
+    //     error: "wrongOrder",
+    //     message: "trying to resume in the wrong order.",
+    //     lastPausedUrl: this._nestedEventLoops.lastPausedUrl
+    //   };
+    // }
 
     if (aRequest && aRequest.forceCompletion) {
       // TODO: remove this when Debugger.Frame.prototype.pop is implemented in
