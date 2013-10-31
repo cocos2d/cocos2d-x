@@ -1,4 +1,5 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -8,8 +9,8 @@
  * new headers, or to other appropriate existing headers, not here.
  */
 
-#ifndef mozilla_Util_h_
-#define mozilla_Util_h_
+#ifndef mozilla_Util_h
+#define mozilla_Util_h
 
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
@@ -196,6 +197,58 @@ class Maybe
       constructed = true;
     }
 
+    template<class T1, class T2, class T3, class T4, class T5>
+    void construct(const T1& t1, const T2& t2, const T3& t3, const T4& t4, const T5& t5) {
+      MOZ_ASSERT(!constructed);
+      ::new (storage.addr()) T(t1, t2, t3, t4, t5);
+      constructed = true;
+    }
+
+    template<class T1, class T2, class T3, class T4, class T5,
+             class T6>
+    void construct(const T1& t1, const T2& t2, const T3& t3, const T4& t4, const T5& t5,
+                   const T6& t6) {
+      MOZ_ASSERT(!constructed);
+      ::new (storage.addr()) T(t1, t2, t3, t4, t5, t6);
+      constructed = true;
+    }
+
+    template<class T1, class T2, class T3, class T4, class T5,
+             class T6, class T7>
+    void construct(const T1& t1, const T2& t2, const T3& t3, const T4& t4, const T5& t5,
+                   const T6& t6, const T7& t7) {
+      MOZ_ASSERT(!constructed);
+      ::new (storage.addr()) T(t1, t2, t3, t4, t5, t6, t7);
+      constructed = true;
+    }
+
+    template<class T1, class T2, class T3, class T4, class T5,
+             class T6, class T7, class T8>
+    void construct(const T1& t1, const T2& t2, const T3& t3, const T4& t4, const T5& t5,
+                   const T6& t6, const T7& t7, const T8& t8) {
+      MOZ_ASSERT(!constructed);
+      ::new (storage.addr()) T(t1, t2, t3, t4, t5, t6, t7, t8);
+      constructed = true;
+    }
+
+    template<class T1, class T2, class T3, class T4, class T5,
+             class T6, class T7, class T8, class T9>
+    void construct(const T1& t1, const T2& t2, const T3& t3, const T4& t4, const T5& t5,
+                   const T6& t6, const T7& t7, const T8& t8, const T9& t9) {
+      MOZ_ASSERT(!constructed);
+      ::new (storage.addr()) T(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+      constructed = true;
+    }
+
+    template<class T1, class T2, class T3, class T4, class T5,
+             class T6, class T7, class T8, class T9, class T10>
+    void construct(const T1& t1, const T2& t2, const T3& t3, const T4& t4, const T5& t5,
+                   const T6& t6, const T7& t7, const T8& t8, const T9& t9, const T10& t10) {
+      MOZ_ASSERT(!constructed);
+      ::new (storage.addr()) T(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+      constructed = true;
+    }
+
     T* addr() {
       MOZ_ASSERT(constructed);
       return &asT();
@@ -271,7 +324,7 @@ ArrayEnd(T (&arr)[N])
 
 /*
  * MOZ_ARRAY_LENGTH() is an alternative to mozilla::ArrayLength() for C files
- * that can't use C++ template functions and for MOZ_STATIC_ASSERT() calls that
+ * that can't use C++ template functions and for static_assert() calls that
  * can't call ArrayLength() when it is not a C++11 constexpr function.
  */
 #ifdef MOZ_HAVE_CXX11_CONSTEXPR
@@ -280,4 +333,4 @@ ArrayEnd(T (&arr)[N])
 #  define MOZ_ARRAY_LENGTH(array)   (sizeof(array)/sizeof((array)[0]))
 #endif
 
-#endif  /* mozilla_Util_h_ */
+#endif /* mozilla_Util_h */

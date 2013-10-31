@@ -6,8 +6,8 @@
 
 /* A higher-order macro for enumerating all JSProtoKey values. */
 
-#ifndef jsprototypes_h___
-#define jsprototypes_h___
+#ifndef jsprototypes_h
+#define jsprototypes_h
 
 #include "jsversion.h"
 
@@ -56,5 +56,20 @@
     macro(DataView,              35,     js_InitTypedArrayClasses) \
     macro(ParallelArray,         36,     js_InitParallelArrayClass) \
     macro(Intl,                  37,     js_InitIntlClass) \
+    macro(Type,                  38,     js_InitBinaryDataClasses) \
+    macro(Data,                  39,     js_InitBinaryDataClasses) \
+    macro(uint8,                 40,     js_InitBinaryDataClasses) \
+    macro(uint16,                41,     js_InitBinaryDataClasses) \
+    macro(uint32,                42,     js_InitBinaryDataClasses) \
+    macro(uint64,                43,     js_InitBinaryDataClasses) \
+    macro(int8,                  44,     js_InitBinaryDataClasses) \
+    macro(int16,                 45,     js_InitBinaryDataClasses) \
+    macro(int32,                 46,     js_InitBinaryDataClasses) \
+    macro(int64,                 47,     js_InitBinaryDataClasses) \
+    macro(float32,               48,     js_InitBinaryDataClasses) \
+    macro(float64,               49,     js_InitBinaryDataClasses) \
+    macro(ArrayType,             50,     js_InitBinaryDataClasses) \
+    macro(StructType,            51,     js_InitBinaryDataClasses) \
+    macro(ArrayTypeObject,       52,     js_InitBinaryDataClasses) \
 
-#endif /* jsprototypes_h___ */
+#endif /* jsprototypes_h */
