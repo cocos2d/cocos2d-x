@@ -14,15 +14,15 @@
 NS_CC_BEGIN
 
 FontAtlas::FontAtlas(Font &theFont) : 
-_font(theFont),
+_font(&theFont),
 _currentPageData(nullptr)
 {
-    _font.retain();
+    _font->retain();
    
-    FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(&_font);
+    FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
     if (fontTTf && fontTTf->isDynamicGlyphCollection())
     {
-        _currentPageLineHeight = _font.getFontMaxHeight();
+        _currentPageLineHeight = _font->getFontMaxHeight();
         _commonLineHeight = _currentPageLineHeight * 0.8f;
         Texture2D * tex = new Texture2D;
         _currentPage = 0;
@@ -34,16 +34,16 @@ _currentPageData(nullptr)
         _currentPageData = new unsigned char[_currentPageDataSize];       
         memset(_currentPageData, 0, _currentPageDataSize);  
         addTexture(*tex,0);
+        tex->release();
     }
 }
 
 FontAtlas::~FontAtlas()
 {
-    _font.release();
+    _font->release();
     relaseTextures();
 
-    if(_currentPageData)
-        delete []_currentPageData;
+    delete []_currentPageData;
 }
 
 void FontAtlas::relaseTextures()
@@ -79,7 +79,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     if(_currentPageData == nullptr)
         return false;
 
-    FontFreeType* fontTTf = (FontFreeType*)&_font;
+    FontFreeType* fontTTf = (FontFreeType*)_font;
 
     std::vector<FontLetterDefinition> fontDefs;
     int length = cc_wcslen(utf16String);
@@ -100,7 +100,6 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 
             if (!fontTTf->getBBOXFotChar(utf16String[i], tempRect))
             {
-                //log("Warning: Cannot find definition for glyph: %c in font:%s", utf16String[i], _fontName.c_str());              
                 tempDef.validDefinition = false;
                 tempDef.letteCharUTF16   = utf16String[i];
                 tempDef.commonLineHeight = 0;
@@ -150,7 +149,9 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                         return false;
                     memset(_currentPageData, 0, _currentPageDataSize);
                     _currentPage++;
-                    addTexture(*(new Texture2D),_currentPage);
+                    Texture2D* tex = new Texture2D;
+                    addTexture(*tex,_currentPage);
+                    tex->release();
                 }
             }
             renderCharAt(fontDefs[i].letteCharUTF16,_currentPageOrigX,_currentPageOrigY,_currentPageData,1024);
@@ -182,7 +183,7 @@ bool FontAtlas::renderCharAt(unsigned short int charToRender, int posX, int posY
     int sourceHeight = 0;
 
     // get the glyph's bitmap
-    sourceBitmap = _font.getGlyphBitmap(charToRender, sourceWidth, sourceHeight);
+    sourceBitmap = _font->getGlyphBitmap(charToRender, sourceWidth, sourceHeight);
 
     if (!sourceBitmap)
         return false;
@@ -234,7 +235,7 @@ void  FontAtlas::setCommonLineHeight(float newHeight)
     _commonLineHeight = newHeight;
 }
 
-Font & FontAtlas::getFont() const
+const Font * FontAtlas::getFont() const
 {
     return _font;
 }

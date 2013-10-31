@@ -71,8 +71,6 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
             }
             skip += justSkipped;
             tIndex = j + skip;
-            //if (!info->visible)
-             //   continue;            
             
             if (i >= stringLength)
                 break;
