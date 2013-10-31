@@ -56,6 +56,10 @@
 		1585AB131821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
 		1585AB141821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
 		1585AB181821FF4C00000FB5 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB171821FF4C00000FB5 /* LuaObjectCBridgeTest.mm */; };
+		1585AB35182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1585AB36182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1585AB37182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1585AB38182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -2057,6 +2061,7 @@
 		1585AB101821FA1A00000FB5 /* luaoc.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaoc.lua; path = ../cocos/scripting/lua/script/luaoc.lua; sourceTree = "<group>"; };
 		1585AB161821FF4C00000FB5 /* LuaObjectCBridgeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaObjectCBridgeTest.h; sourceTree = "<group>"; };
 		1585AB171821FF4C00000FB5 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
+		1585AB34182299FA00000FB5 /* json.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json.lua; path = ../cocos/scripting/lua/script/json.lua; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		15C64826165F394E007D4F18 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -3719,6 +3724,7 @@
 		1A8C5595180E8B6500EF57C3 /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				1585AB34182299FA00000FB5 /* json.lua */,
 				1585AB101821FA1A00000FB5 /* luaoc.lua */,
 				1A8C5596180E8B8400EF57C3 /* AudioEngine.lua */,
 				1A8C5597180E8B8400EF57C3 /* CCBReaderLoad.lua */,
@@ -6041,6 +6047,7 @@
 				1A8C55B3180E8B8400EF57C3 /* DrawPrimitives.lua in Resources */,
 				1A8C55B5180E8B8400EF57C3 /* luaj.lua in Resources */,
 				1A8C55B7180E8B8400EF57C3 /* Opengl.lua in Resources */,
+				1585AB37182299FA00000FB5 /* json.lua in Resources */,
 				1A8C55B9180E8B8400EF57C3 /* OpenglConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6067,6 +6074,7 @@
 				1A8C582F180E8ED400EF57C3 /* fileLookup.plist in Resources */,
 				1A8C5831180E8ED400EF57C3 /* fonts in Resources */,
 				1A8C5833180E8ED400EF57C3 /* fps_images.png in Resources */,
+				1585AB38182299FA00000FB5 /* json.lua in Resources */,
 				1A8C5835180E8ED400EF57C3 /* hd in Resources */,
 				1A8C5837180E8ED400EF57C3 /* Hello.png in Resources */,
 				1A8C5839180E8ED400EF57C3 /* Images in Resources */,
@@ -6123,6 +6131,7 @@
 				1A8C5583180E8B5100EF57C3 /* dog.png in Resources */,
 				1A8C5585180E8B5100EF57C3 /* effect1.wav in Resources */,
 				1A8C5587180E8B5100EF57C3 /* farm.jpg in Resources */,
+				1585AB35182299FA00000FB5 /* json.lua in Resources */,
 				1A8C5589180E8B5100EF57C3 /* Marker Felt.ttf in Resources */,
 				1A8C558B180E8B5100EF57C3 /* hello.lua in Resources */,
 				1A8C558D180E8B5100EF57C3 /* hello2.lua in Resources */,
@@ -6180,6 +6189,7 @@
 				1A8C5846180E8ED400EF57C3 /* scenetest in Resources */,
 				1A8C5848180E8ED400EF57C3 /* Shaders in Resources */,
 				1A8C584A180E8ED400EF57C3 /* spine in Resources */,
+				1585AB36182299FA00000FB5 /* json.lua in Resources */,
 				1A8C584C180E8ED400EF57C3 /* TileMaps in Resources */,
 				1A8C584E180E8ED400EF57C3 /* zwoptex in Resources */,
 				1A8C587B180E8F0C00EF57C3 /* InfoPlist.strings in Resources */,
