@@ -123,7 +123,7 @@ public:
      *
      * @return the index of item.
      */
-    int indexOfItem(UIWidget* item);
+    const int getIndex(UIWidget* item) const;
     
     /**
      * Changes the gravity of listview.

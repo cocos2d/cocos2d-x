@@ -253,7 +253,6 @@ void UIScrollView::autoScrollChildren(float dt)
         {
             float timeParam = lastTime * 2 + dt;
             float offset = (m_fAutoScrollOriginalSpeed + m_fAutoScrollAcceleration * timeParam * 0.5f) * dt;
-//            float offset = m_fAutoScrollOriginalSpeed * dt + (m_fAutoScrollAddUpTime * m_fAutoScrollAddUpTime - lastTime * lastTime) * 0.5f;
             float offsetX = offset * m_autoScrollDir.x;
             float offsetY = offset * m_autoScrollDir.y;
             if (!scrollChildren(offsetX, offsetY))
