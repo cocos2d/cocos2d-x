@@ -134,7 +134,7 @@ void UIListViewEx::remedyLayoutParameter(UIWidget *item)
                     default:
                         break;
                 }
-                if (indexOfItem(item) == 0)
+                if (getIndex(item) == 0)
                 {
                     defaultLp->setMargin(UIMarginZero);
                 }
@@ -146,7 +146,7 @@ void UIListViewEx::remedyLayoutParameter(UIWidget *item)
             }
             else
             {
-                if (indexOfItem(item) == 0)
+                if (getIndex(item) == 0)
                 {
                     llp->setMargin(UIMarginZero);
                 }
@@ -189,7 +189,7 @@ void UIListViewEx::remedyLayoutParameter(UIWidget *item)
                     default:
                         break;
                 }
-                if (indexOfItem(item) == 0)
+                if (getIndex(item) == 0)
                 {
                     defaultLp->setMargin(UIMarginZero);
                 }
@@ -201,7 +201,7 @@ void UIListViewEx::remedyLayoutParameter(UIWidget *item)
             }
             else
             {
-                if (indexOfItem(item) == 0)
+                if (getIndex(item) == 0)
                 {
                     llp->setMargin(UIMarginZero);
                 }
@@ -308,7 +308,7 @@ CCArray* UIListViewEx::getItems()
     return m_pItems;
 }
 
-int UIListViewEx::indexOfItem(UIWidget *item)
+const int UIListViewEx::getIndex(UIWidget *item) const
 {
     if (!m_pItems)
     {
