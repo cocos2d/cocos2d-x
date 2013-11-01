@@ -127,7 +127,7 @@ def copy_resources(target, app_android_root):
         copy_files(resources_dir, assets_dir)
 
     # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
-    if target in JSB_SAMPLES or target == "assetsmanager":
+    if target in JSB_SAMPLES:
         resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
         copy_files(resources_dir, assets_dir)
 
@@ -164,7 +164,7 @@ def build_samples(target,ndk_build_param):
     select_toolchain_version()
     build_targets = caculate_built_samples(target)
 
-    current_dir = os.getcwd()
+    current_dir = os.path.dirname(os.path.realpath(__file__))
     cocos_root = os.path.join(current_dir, "..")
 
     app_android_root = ''
@@ -176,7 +176,7 @@ def build_samples(target,ndk_build_param):
         elif target == 'simplegame':
             app_android_root = os.path.join(cocos_root, 'samples/Cpp/SimpleGame/proj.android')
         elif target == 'assetsmanager':
-            app_android_root = os.path.join(cocos_root, 'samples/Cpp/AssetsManager/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Cpp/AssetsManagerTest/proj.android')
         elif target == 'hellolua':
             app_android_root = os.path.join(cocos_root, 'samples/Lua/HelloLua/proj.android')
         elif target == 'testlua':

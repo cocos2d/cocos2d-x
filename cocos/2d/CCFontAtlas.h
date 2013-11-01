@@ -63,21 +63,32 @@ public:
     void addLetterDefinition(const FontLetterDefinition &letterDefinition);
     bool getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition);
     
+    bool prepareLetterDefinitions(unsigned short  *utf16String);
+
     void  addTexture(Texture2D &texture, int slot);
     float getCommonLineHeight() const;
     void  setCommonLineHeight(float newHeight);
     
     Texture2D                 & getTexture(int slot);
-    Font                      & getFont() const;
+    const Font                * getFont() const;
     
 private:
-    
+    bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
+
     void relaseTextures();
     std::map<int, Texture2D *>                      _atlasTextures;
     std::map<unsigned short, FontLetterDefinition>  _fontLetterDefinitions;
     float                                           _commonLineHeight;
-    Font &                                          _font;
+    Font *                                          _font;
 
+    // Dynamic GlyphCollection related stuff
+    int                                             _currentPage;
+    unsigned char                                  *_currentPageData;    
+    int                                             _currentPageDataSize;
+    float                                           _currentPageOrigX;
+    float                                           _currentPageOrigY;
+    float                                           _currentPageLineHeight;
+    float                                           _letterPadding;
 };
 
 

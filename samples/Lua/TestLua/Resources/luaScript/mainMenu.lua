@@ -44,6 +44,7 @@ require "luaScript/TransitionsTest/TransitionsTest"
 require "luaScript/UserDefaultTest/UserDefaultTest"
 require "luaScript/ZwoptexTest/ZwoptexTest"
 require "luaScript/LuaBridgeTest/LuaBridgeTest"
+require "luaScript/XMLHttpRequestTest/XMLHttpRequestTest"
 
 
 local LINE_SPACE = 40
@@ -97,6 +98,7 @@ local _allTests = {
     { isSupported = true,  name = "TouchesTest"            , create_func   =               TouchesTest      },
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },   
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
+    { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
 

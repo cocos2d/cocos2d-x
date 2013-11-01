@@ -44,8 +44,17 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		158E06DE181F6796008E01F6 /* lua_xml_http_request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 158E06DC181F6796008E01F6 /* lua_xml_http_request.cpp */; };
+		158E06DF181F6796008E01F6 /* lua_xml_http_request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 158E06DC181F6796008E01F6 /* lua_xml_http_request.cpp */; };
+		158E06E0181F6796008E01F6 /* lua_xml_http_request.h in Headers */ = {isa = PBXBuildFile; fileRef = 158E06DD181F6796008E01F6 /* lua_xml_http_request.h */; };
+		158E06E1181F6796008E01F6 /* lua_xml_http_request.h in Headers */ = {isa = PBXBuildFile; fileRef = 158E06DD181F6796008E01F6 /* lua_xml_http_request.h */; };
 		1599607B1811329600C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607A1811329600C7D42C /* libluajit.a */; };
 		15996080181132DE00C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607F181132DE00C7D42C /* libluajit.a */; };
+		1A0DB7321823827C0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7301823827C0025743D /* CCGL.h */; };
+		1A0DB7331823827C0025743D /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7311823827C0025743D /* EAGLView.h */; };
+		1A0DB7371823828F0025743D /* CCEGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7341823828F0025743D /* CCEGLView.h */; };
+		1A0DB7381823828F0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7351823828F0025743D /* CCGL.h */; };
+		1A0DB7391823828F0025743D /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7361823828F0025743D /* EAGLView.h */; };
 		1A2C7872181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */; };
 		1A2C7874181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */; };
 		1A2C7876181A11EC004E5527 /* jsb_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C785F181A11EC004E5527 /* jsb_cocos2dx_auto.hpp */; };
@@ -1640,8 +1649,8 @@
 		46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16ACC1807B038005B8026 /* CCDirectorCaller.h */; };
 		46A170541807CC1C005B8026 /* CCDirectorCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */; };
 		46A170561807CC1C005B8026 /* CCEGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACF1807B038005B8026 /* CCEGLView.mm */; };
-		46A170571807CC1C005B8026 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD01807B038005B8026 /* CCEventDispatcher.h */; };
-		46A170581807CC1C005B8026 /* CCEventDispatcher.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD11807B038005B8026 /* CCEventDispatcher.mm */; };
+		46A170571807CC1C005B8026 /* CCEventDispatcherMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD01807B038005B8026 /* CCEventDispatcherMac.h */; };
+		46A170581807CC1C005B8026 /* CCEventDispatcherMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD11807B038005B8026 /* CCEventDispatcherMac.mm */; };
 		46A1705A1807CC1C005B8026 /* CCImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD31807B038005B8026 /* CCImage.mm */; };
 		46A1705B1807CC1C005B8026 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD41807B038005B8026 /* CCPlatformDefine.h */; };
 		46A1705C1807CC1C005B8026 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD51807B038005B8026 /* CCStdC.h */; };
@@ -1831,52 +1840,52 @@
 		46A174401807D37B005B8026 /* cpSpatialIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169581807AFD6005B8026 /* cpSpatialIndex.h */; };
 		46A174411807D37B005B8026 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169591807AFD6005B8026 /* cpVect.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
-		B326CA591822367C006B5EFE /* CCPhysicsBodyInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA4E1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.cpp */; };
-		B326CA5A1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA4F1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.h */; };
-		B326CA5B1822367C006B5EFE /* CCPhysicsContactInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA501822367C006B5EFE /* CCPhysicsContactInfo_box2d.cpp */; };
-		B326CA5C1822367C006B5EFE /* CCPhysicsContactInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA511822367C006B5EFE /* CCPhysicsContactInfo_box2d.h */; };
-		B326CA5D1822367C006B5EFE /* CCPhysicsHelper_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA521822367C006B5EFE /* CCPhysicsHelper_box2d.h */; };
-		B326CA5E1822367C006B5EFE /* CCPhysicsJointInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA531822367C006B5EFE /* CCPhysicsJointInfo_box2d.cpp */; };
-		B326CA5F1822367C006B5EFE /* CCPhysicsJointInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA541822367C006B5EFE /* CCPhysicsJointInfo_box2d.h */; };
-		B326CA601822367C006B5EFE /* CCPhysicsShapeInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA551822367C006B5EFE /* CCPhysicsShapeInfo_box2d.cpp */; };
-		B326CA611822367C006B5EFE /* CCPhysicsShapeInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA561822367C006B5EFE /* CCPhysicsShapeInfo_box2d.h */; };
-		B326CA621822367C006B5EFE /* CCPhysicsWorldInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA571822367C006B5EFE /* CCPhysicsWorldInfo_box2d.cpp */; };
-		B326CA631822367C006B5EFE /* CCPhysicsWorldInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA581822367C006B5EFE /* CCPhysicsWorldInfo_box2d.h */; };
-		B326CA6418223688006B5EFE /* CCPhysicsBodyInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA4E1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.cpp */; };
-		B326CA6518223688006B5EFE /* CCPhysicsBodyInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA4F1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.h */; };
-		B326CA6618223688006B5EFE /* CCPhysicsContactInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA501822367C006B5EFE /* CCPhysicsContactInfo_box2d.cpp */; };
-		B326CA6718223688006B5EFE /* CCPhysicsContactInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA511822367C006B5EFE /* CCPhysicsContactInfo_box2d.h */; };
-		B326CA6818223688006B5EFE /* CCPhysicsHelper_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA521822367C006B5EFE /* CCPhysicsHelper_box2d.h */; };
-		B326CA6918223688006B5EFE /* CCPhysicsJointInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA531822367C006B5EFE /* CCPhysicsJointInfo_box2d.cpp */; };
-		B326CA6A18223688006B5EFE /* CCPhysicsJointInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA541822367C006B5EFE /* CCPhysicsJointInfo_box2d.h */; };
-		B326CA6B18223688006B5EFE /* CCPhysicsShapeInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA551822367C006B5EFE /* CCPhysicsShapeInfo_box2d.cpp */; };
-		B326CA6C18223688006B5EFE /* CCPhysicsShapeInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA561822367C006B5EFE /* CCPhysicsShapeInfo_box2d.h */; };
-		B326CA6D18223688006B5EFE /* CCPhysicsWorldInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA571822367C006B5EFE /* CCPhysicsWorldInfo_box2d.cpp */; };
-		B326CA6E18223688006B5EFE /* CCPhysicsWorldInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA581822367C006B5EFE /* CCPhysicsWorldInfo_box2d.h */; };
-		B326CA7A182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA6F182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.cpp */; };
-		B326CA7B182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA70182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.h */; };
-		B326CA7C182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA71182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.cpp */; };
-		B326CA7D182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA72182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.h */; };
-		B326CA7E182236C3006B5EFE /* CCPhysicsHelper_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA73182236C3006B5EFE /* CCPhysicsHelper_chipmunk.h */; };
-		B326CA7F182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA74182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.cpp */; };
-		B326CA80182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA75182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.h */; };
-		B326CA81182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA76182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.cpp */; };
-		B326CA82182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA77182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.h */; };
-		B326CA83182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA78182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.cpp */; };
-		B326CA84182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA79182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.h */; };
+		B375105B1823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510501823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp */; };
+		B375105C1823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510511823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h */; };
+		B375105D1823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510521823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.cpp */; };
+		B375105E1823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510531823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.h */; };
+		B375105F1823AC9200B3BA6A /* CCPhysicsHelper_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510541823AC9200B3BA6A /* CCPhysicsHelper_box2d.h */; };
+		B37510601823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510551823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.cpp */; };
+		B37510611823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510561823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.h */; };
+		B37510621823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510571823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.cpp */; };
+		B37510631823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510581823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.h */; };
+		B37510641823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510591823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.cpp */; };
+		B37510651823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B375105A1823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.h */; };
+		B37510661823AC9900B3BA6A /* CCPhysicsBodyInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510501823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp */; };
+		B37510671823AC9900B3BA6A /* CCPhysicsBodyInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510511823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h */; };
+		B37510681823AC9900B3BA6A /* CCPhysicsContactInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510521823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.cpp */; };
+		B37510691823AC9900B3BA6A /* CCPhysicsContactInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510531823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.h */; };
+		B375106A1823AC9900B3BA6A /* CCPhysicsHelper_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510541823AC9200B3BA6A /* CCPhysicsHelper_box2d.h */; };
+		B375106B1823AC9900B3BA6A /* CCPhysicsJointInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510551823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.cpp */; };
+		B375106C1823AC9900B3BA6A /* CCPhysicsJointInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510561823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.h */; };
+		B375106D1823AC9900B3BA6A /* CCPhysicsShapeInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510571823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.cpp */; };
+		B375106E1823AC9900B3BA6A /* CCPhysicsShapeInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510581823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.h */; };
+		B375106F1823AC9900B3BA6A /* CCPhysicsWorldInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510591823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.cpp */; };
+		B37510701823AC9900B3BA6A /* CCPhysicsWorldInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B375105A1823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.h */; };
+		B37510711823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */; };
+		B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */; };
+		B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */; };
+		B37510741823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510481823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.h */; };
+		B37510751823AC9F00B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510491823AC7B00B3BA6A /* CCPhysicsHelper_chipmunk.h */; };
+		B37510761823AC9F00B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B375104A1823AC7B00B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp */; };
+		B37510771823AC9F00B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104B1823AC7B00B3BA6A /* CCPhysicsJointInfo_chipmunk.h */; };
+		B37510781823AC9F00B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B375104C1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp */; };
+		B37510791823AC9F00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104D1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h */; };
+		B375107A1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B375104E1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp */; };
+		B375107B1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */; };
+		B375107C1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */; };
+		B375107D1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */; };
+		B375107E1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */; };
+		B375107F1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510481823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.h */; };
+		B37510801823ACA100B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510491823AC7B00B3BA6A /* CCPhysicsHelper_chipmunk.h */; };
+		B37510811823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B375104A1823AC7B00B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp */; };
+		B37510821823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104B1823AC7B00B3BA6A /* CCPhysicsJointInfo_chipmunk.h */; };
+		B37510831823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B375104C1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp */; };
+		B37510841823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104D1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h */; };
+		B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B375104E1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp */; };
+		B37510861823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
-		B3E5B6DF182243FC001487E5 /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA6F182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.cpp */; };
-		B3E5B6E0182243FC001487E5 /* CCPhysicsBodyInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA70182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.h */; };
-		B3E5B6E1182243FC001487E5 /* CCPhysicsContactInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA71182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.cpp */; };
-		B3E5B6E2182243FC001487E5 /* CCPhysicsContactInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA72182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.h */; };
-		B3E5B6E3182243FC001487E5 /* CCPhysicsHelper_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA73182236C3006B5EFE /* CCPhysicsHelper_chipmunk.h */; };
-		B3E5B6E4182243FC001487E5 /* CCPhysicsJointInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA74182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.cpp */; };
-		B3E5B6E5182243FC001487E5 /* CCPhysicsJointInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA75182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.h */; };
-		B3E5B6E6182243FC001487E5 /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA76182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.cpp */; };
-		B3E5B6E7182243FC001487E5 /* CCPhysicsShapeInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA77182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.h */; };
-		B3E5B6E8182243FD001487E5 /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B326CA78182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.cpp */; };
-		B3E5B6E9182243FD001487E5 /* CCPhysicsWorldInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B326CA79182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1997,8 +2006,15 @@
 /* Begin PBXFileReference section */
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		158E06DC181F6796008E01F6 /* lua_xml_http_request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_xml_http_request.cpp; sourceTree = "<group>"; };
+		158E06DD181F6796008E01F6 /* lua_xml_http_request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_xml_http_request.h; sourceTree = "<group>"; };
 		1599607A1811329600C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/mac/libluajit.a; sourceTree = "<group>"; };
 		1599607F181132DE00C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/ios/libluajit.a; sourceTree = "<group>"; };
+		1A0DB7301823827C0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
+		1A0DB7311823827C0025743D /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		1A0DB7341823828F0025743D /* CCEGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLView.h; sourceTree = "<group>"; };
+		1A0DB7351823828F0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
+		1A0DB7361823828F0025743D /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_auto.cpp; sourceTree = "<group>"; };
 		1A2C785F181A11EC004E5527 /* jsb_cocos2dx_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_auto.hpp; sourceTree = "<group>"; };
@@ -2893,8 +2909,8 @@
 		46A16ACC1807B038005B8026 /* CCDirectorCaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCDirectorCaller.h; sourceTree = "<group>"; };
 		46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDirectorCaller.mm; sourceTree = "<group>"; };
 		46A16ACF1807B038005B8026 /* CCEGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEGLView.mm; sourceTree = "<group>"; };
-		46A16AD01807B038005B8026 /* CCEventDispatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
-		46A16AD11807B038005B8026 /* CCEventDispatcher.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEventDispatcher.mm; sourceTree = "<group>"; };
+		46A16AD01807B038005B8026 /* CCEventDispatcherMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcherMac.h; sourceTree = "<group>"; };
+		46A16AD11807B038005B8026 /* CCEventDispatcherMac.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEventDispatcherMac.mm; sourceTree = "<group>"; };
 		46A16AD31807B038005B8026 /* CCImage.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImage.mm; sourceTree = "<group>"; };
 		46A16AD41807B038005B8026 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		46A16AD51807B038005B8026 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
@@ -2966,28 +2982,28 @@
 		A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A5030178387750073F6A7 /* libjsbindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libjsbindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B326CA4E1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsBodyInfo_box2d.cpp; path = ../box2d/CCPhysicsBodyInfo_box2d.cpp; sourceTree = "<group>"; };
-		B326CA4F1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsBodyInfo_box2d.h; path = ../box2d/CCPhysicsBodyInfo_box2d.h; sourceTree = "<group>"; };
-		B326CA501822367C006B5EFE /* CCPhysicsContactInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsContactInfo_box2d.cpp; path = ../box2d/CCPhysicsContactInfo_box2d.cpp; sourceTree = "<group>"; };
-		B326CA511822367C006B5EFE /* CCPhysicsContactInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsContactInfo_box2d.h; path = ../box2d/CCPhysicsContactInfo_box2d.h; sourceTree = "<group>"; };
-		B326CA521822367C006B5EFE /* CCPhysicsHelper_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsHelper_box2d.h; path = ../box2d/CCPhysicsHelper_box2d.h; sourceTree = "<group>"; };
-		B326CA531822367C006B5EFE /* CCPhysicsJointInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsJointInfo_box2d.cpp; path = ../box2d/CCPhysicsJointInfo_box2d.cpp; sourceTree = "<group>"; };
-		B326CA541822367C006B5EFE /* CCPhysicsJointInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsJointInfo_box2d.h; path = ../box2d/CCPhysicsJointInfo_box2d.h; sourceTree = "<group>"; };
-		B326CA551822367C006B5EFE /* CCPhysicsShapeInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsShapeInfo_box2d.cpp; path = ../box2d/CCPhysicsShapeInfo_box2d.cpp; sourceTree = "<group>"; };
-		B326CA561822367C006B5EFE /* CCPhysicsShapeInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsShapeInfo_box2d.h; path = ../box2d/CCPhysicsShapeInfo_box2d.h; sourceTree = "<group>"; };
-		B326CA571822367C006B5EFE /* CCPhysicsWorldInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsWorldInfo_box2d.cpp; path = ../box2d/CCPhysicsWorldInfo_box2d.cpp; sourceTree = "<group>"; };
-		B326CA581822367C006B5EFE /* CCPhysicsWorldInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsWorldInfo_box2d.h; path = ../box2d/CCPhysicsWorldInfo_box2d.h; sourceTree = "<group>"; };
-		B326CA6F182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBodyInfo_chipmunk.cpp; sourceTree = "<group>"; };
-		B326CA70182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBodyInfo_chipmunk.h; sourceTree = "<group>"; };
-		B326CA71182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContactInfo_chipmunk.cpp; sourceTree = "<group>"; };
-		B326CA72182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsContactInfo_chipmunk.h; sourceTree = "<group>"; };
-		B326CA73182236C3006B5EFE /* CCPhysicsHelper_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsHelper_chipmunk.h; sourceTree = "<group>"; };
-		B326CA74182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsJointInfo_chipmunk.cpp; sourceTree = "<group>"; };
-		B326CA75182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJointInfo_chipmunk.h; sourceTree = "<group>"; };
-		B326CA76182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsShapeInfo_chipmunk.cpp; sourceTree = "<group>"; };
-		B326CA77182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShapeInfo_chipmunk.h; sourceTree = "<group>"; };
-		B326CA78182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsWorldInfo_chipmunk.cpp; sourceTree = "<group>"; };
-		B326CA79182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
+		B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBodyInfo_chipmunk.cpp; sourceTree = "<group>"; };
+		B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBodyInfo_chipmunk.h; sourceTree = "<group>"; };
+		B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContactInfo_chipmunk.cpp; sourceTree = "<group>"; };
+		B37510481823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsContactInfo_chipmunk.h; sourceTree = "<group>"; };
+		B37510491823AC7B00B3BA6A /* CCPhysicsHelper_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsHelper_chipmunk.h; sourceTree = "<group>"; };
+		B375104A1823AC7B00B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsJointInfo_chipmunk.cpp; sourceTree = "<group>"; };
+		B375104B1823AC7B00B3BA6A /* CCPhysicsJointInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJointInfo_chipmunk.h; sourceTree = "<group>"; };
+		B375104C1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsShapeInfo_chipmunk.cpp; sourceTree = "<group>"; };
+		B375104D1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShapeInfo_chipmunk.h; sourceTree = "<group>"; };
+		B375104E1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsWorldInfo_chipmunk.cpp; sourceTree = "<group>"; };
+		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
+		B37510501823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsBodyInfo_box2d.cpp; path = ../box2d/CCPhysicsBodyInfo_box2d.cpp; sourceTree = "<group>"; };
+		B37510511823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsBodyInfo_box2d.h; path = ../box2d/CCPhysicsBodyInfo_box2d.h; sourceTree = "<group>"; };
+		B37510521823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsContactInfo_box2d.cpp; path = ../box2d/CCPhysicsContactInfo_box2d.cpp; sourceTree = "<group>"; };
+		B37510531823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsContactInfo_box2d.h; path = ../box2d/CCPhysicsContactInfo_box2d.h; sourceTree = "<group>"; };
+		B37510541823AC9200B3BA6A /* CCPhysicsHelper_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsHelper_box2d.h; path = ../box2d/CCPhysicsHelper_box2d.h; sourceTree = "<group>"; };
+		B37510551823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsJointInfo_box2d.cpp; path = ../box2d/CCPhysicsJointInfo_box2d.cpp; sourceTree = "<group>"; };
+		B37510561823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsJointInfo_box2d.h; path = ../box2d/CCPhysicsJointInfo_box2d.h; sourceTree = "<group>"; };
+		B37510571823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsShapeInfo_box2d.cpp; path = ../box2d/CCPhysicsShapeInfo_box2d.cpp; sourceTree = "<group>"; };
+		B37510581823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsShapeInfo_box2d.h; path = ../box2d/CCPhysicsShapeInfo_box2d.h; sourceTree = "<group>"; };
+		B37510591823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsWorldInfo_box2d.cpp; path = ../box2d/CCPhysicsWorldInfo_box2d.cpp; sourceTree = "<group>"; };
+		B375105A1823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsWorldInfo_box2d.h; path = ../box2d/CCPhysicsWorldInfo_box2d.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3317,6 +3333,8 @@
 		1A3B1F4A180E88C200497A22 /* bindings */ = {
 			isa = PBXGroup;
 			children = (
+				158E06DC181F6796008E01F6 /* lua_xml_http_request.cpp */,
+				158E06DD181F6796008E01F6 /* lua_xml_http_request.h */,
 				1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */,
 				1A3B1F4F180E88C200497A22 /* CCBProxy.h */,
 				1A3B1F50180E88C200497A22 /* CCLuaBridge.cpp */,
@@ -5007,9 +5025,11 @@
 				46A16AAC1807B038005B8026 /* CCES2Renderer.h */,
 				46A16AAD1807B038005B8026 /* CCES2Renderer.m */,
 				46A16AAE1807B038005B8026 /* CCESRenderer.h */,
+				1A0DB7301823827C0025743D /* CCGL.h */,
 				46A16AB01807B038005B8026 /* CCImage.mm */,
 				46A16AB11807B038005B8026 /* CCPlatformDefine.h */,
 				46A16AB21807B038005B8026 /* CCStdC.h */,
+				1A0DB7311823827C0025743D /* EAGLView.h */,
 				46A16AB41807B038005B8026 /* EAGLView.mm */,
 				46A16AB51807B038005B8026 /* OpenGL_Internal.h */,
 				46A16AB61807B038005B8026 /* Simulation */,
@@ -5035,14 +5055,17 @@
 				46A16ACB1807B038005B8026 /* CCDevice.mm */,
 				46A16ACC1807B038005B8026 /* CCDirectorCaller.h */,
 				46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */,
+				1A0DB7341823828F0025743D /* CCEGLView.h */,
 				46A16ACF1807B038005B8026 /* CCEGLView.mm */,
-				46A16AD01807B038005B8026 /* CCEventDispatcher.h */,
-				46A16AD11807B038005B8026 /* CCEventDispatcher.mm */,
+				46A16AD01807B038005B8026 /* CCEventDispatcherMac.h */,
+				46A16AD11807B038005B8026 /* CCEventDispatcherMac.mm */,
+				1A0DB7351823828F0025743D /* CCGL.h */,
 				46A16AD31807B038005B8026 /* CCImage.mm */,
 				46A16AD41807B038005B8026 /* CCPlatformDefine.h */,
 				46A16AD51807B038005B8026 /* CCStdC.h */,
 				46A16AD61807B038005B8026 /* CCWindow.h */,
 				46A16AD71807B038005B8026 /* CCWindow.m */,
+				1A0DB7361823828F0025743D /* EAGLView.h */,
 				46A16AD91807B038005B8026 /* EAGLView.mm */,
 			);
 			path = mac;
@@ -5072,17 +5095,17 @@
 		46A170621807CE7A005B8026 /* box2d */ = {
 			isa = PBXGroup;
 			children = (
-				B326CA4E1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.cpp */,
-				B326CA4F1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.h */,
-				B326CA501822367C006B5EFE /* CCPhysicsContactInfo_box2d.cpp */,
-				B326CA511822367C006B5EFE /* CCPhysicsContactInfo_box2d.h */,
-				B326CA521822367C006B5EFE /* CCPhysicsHelper_box2d.h */,
-				B326CA531822367C006B5EFE /* CCPhysicsJointInfo_box2d.cpp */,
-				B326CA541822367C006B5EFE /* CCPhysicsJointInfo_box2d.h */,
-				B326CA551822367C006B5EFE /* CCPhysicsShapeInfo_box2d.cpp */,
-				B326CA561822367C006B5EFE /* CCPhysicsShapeInfo_box2d.h */,
-				B326CA571822367C006B5EFE /* CCPhysicsWorldInfo_box2d.cpp */,
-				B326CA581822367C006B5EFE /* CCPhysicsWorldInfo_box2d.h */,
+				B37510501823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp */,
+				B37510511823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h */,
+				B37510521823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.cpp */,
+				B37510531823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.h */,
+				B37510541823AC9200B3BA6A /* CCPhysicsHelper_box2d.h */,
+				B37510551823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.cpp */,
+				B37510561823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.h */,
+				B37510571823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.cpp */,
+				B37510581823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.h */,
+				B37510591823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.cpp */,
+				B375105A1823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.h */,
 			);
 			name = box2d;
 			path = Box2D;
@@ -5091,17 +5114,17 @@
 		46A170791807CE7A005B8026 /* chipmunk */ = {
 			isa = PBXGroup;
 			children = (
-				B326CA6F182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.cpp */,
-				B326CA70182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.h */,
-				B326CA71182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.cpp */,
-				B326CA72182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.h */,
-				B326CA73182236C3006B5EFE /* CCPhysicsHelper_chipmunk.h */,
-				B326CA74182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.cpp */,
-				B326CA75182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.h */,
-				B326CA76182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.cpp */,
-				B326CA77182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.h */,
-				B326CA78182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.cpp */,
-				B326CA79182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.h */,
+				B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */,
+				B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */,
+				B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */,
+				B37510481823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.h */,
+				B37510491823AC7B00B3BA6A /* CCPhysicsHelper_chipmunk.h */,
+				B375104A1823AC7B00B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp */,
+				B375104B1823AC7B00B3BA6A /* CCPhysicsJointInfo_chipmunk.h */,
+				B375104C1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp */,
+				B375104D1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h */,
+				B375104E1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp */,
+				B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */,
 			);
 			path = chipmunk;
 			sourceTree = "<group>";
@@ -5228,7 +5251,7 @@
 			files = (
 				46A170B01807CEA3005B8026 /* neon_matrix_impl.h in Headers */,
 				46A170191807CBFC005B8026 /* CCCommon.h in Headers */,
-				46A170571807CC1C005B8026 /* CCEventDispatcher.h in Headers */,
+				46A170571807CC1C005B8026 /* CCEventDispatcherMac.h in Headers */,
 				46A170E71807CECA005B8026 /* CCPhysicsBody.h in Headers */,
 				46A170EB1807CECA005B8026 /* CCPhysicsJoint.h in Headers */,
 				46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */,
@@ -5244,9 +5267,11 @@
 				46A1701C1807CBFC005B8026 /* CCEGLViewProtocol.h in Headers */,
 				46A1701E1807CBFC005B8026 /* CCFileUtils.h in Headers */,
 				46A170B11807CEA3005B8026 /* plane.h in Headers */,
+				B37510771823AC9F00B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				46A170EC1807CECA005B8026 /* CCPhysicsSetting.h in Headers */,
 				46A1705B1807CC1C005B8026 /* CCPlatformDefine.h in Headers */,
 				46A170EE1807CECA005B8026 /* CCPhysicsShape.h in Headers */,
+				B375105C1823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h in Headers */,
 				46A170AD1807CEA3005B8026 /* kazmath.h in Headers */,
 				46A170261807CBFC005B8026 /* CCThread.h in Headers */,
 				46A170AE1807CEA3005B8026 /* mat3.h in Headers */,
@@ -5254,6 +5279,7 @@
 				46A170AB1807CEA3005B8026 /* mat4stack.h in Headers */,
 				46A170E91807CECA005B8026 /* CCPhysicsContact.h in Headers */,
 				46A170B41807CEA3005B8026 /* utility.h in Headers */,
+				B375107B1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				46A170F01807CECA005B8026 /* CCPhysicsWorld.h in Headers */,
 				46A170A91807CE9D005B8026 /* aabb.h in Headers */,
 				46A1705C1807CC1C005B8026 /* CCStdC.h in Headers */,
@@ -5262,9 +5288,7 @@
 				46A1701F1807CBFC005B8026 /* CCImage.h in Headers */,
 				46A170AC1807CEA3005B8026 /* matrix.h in Headers */,
 				46A170181807CBFC005B8026 /* CCApplicationProtocol.h in Headers */,
-				B326CA7D182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.h in Headers */,
 				1A570063180BC5A10088DEC7 /* CCAction.h in Headers */,
-				B326CA5F1822367C006B5EFE /* CCPhysicsJointInfo_box2d.h in Headers */,
 				1A570067180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
 				1A57006B180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				1A57006F180BC5A10088DEC7 /* CCActionEase.h in Headers */,
@@ -5275,13 +5299,13 @@
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				1A570087180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
 				1A57008B180BC5A10088DEC7 /* CCActionProgressTimer.h in Headers */,
+				1A0DB7381823828F0025743D /* CCGL.h in Headers */,
 				1A57008F180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
 				1A570093180BC5A10088DEC7 /* CCActionTween.h in Headers */,
 				1A57009A180BC5C10088DEC7 /* CCAtlasNode.h in Headers */,
 				1A5700A0180BC5D20088DEC7 /* CCNode.h in Headers */,
 				1A5700C7180BC6060088DEC7 /* atitc.h in Headers */,
 				1A5700CB180BC6060088DEC7 /* CCAffineTransform.h in Headers */,
-				B326CA7E182236C3006B5EFE /* CCPhysicsHelper_chipmunk.h in Headers */,
 				1A5700CF180BC6060088DEC7 /* CCArray.h in Headers */,
 				1A5700D3180BC6060088DEC7 /* CCAutoreleasePool.h in Headers */,
 				1A5700D5180BC6060088DEC7 /* CCBool.h in Headers */,
@@ -5293,6 +5317,7 @@
 				1A5700E9180BC6060088DEC7 /* CCGeometry.h in Headers */,
 				1A5700EB180BC6060088DEC7 /* CCInteger.h in Headers */,
 				1A5700EF180BC6060088DEC7 /* CCNS.h in Headers */,
+				1A0DB7371823828F0025743D /* CCEGLView.h in Headers */,
 				1A5700F3180BC6060088DEC7 /* CCObject.h in Headers */,
 				1A5700F5180BC6060088DEC7 /* CCPlatformConfig.h in Headers */,
 				1A5700F7180BC6060088DEC7 /* CCPlatformMacros.h in Headers */,
@@ -5301,13 +5326,14 @@
 				1A570103180BC6060088DEC7 /* etc1.h in Headers */,
 				1A570107180BC6060088DEC7 /* s3tc.h in Headers */,
 				1A570110180BC8EE0088DEC7 /* CCDrawingPrimitives.h in Headers */,
+				B37510791823AC9F00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */,
 				1A570114180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
 				1A57011D180BC90D0088DEC7 /* CCGrabber.h in Headers */,
 				1A570121180BC90D0088DEC7 /* CCGrid.h in Headers */,
 				1A57013C180BC9460088DEC7 /* CCEvent.h in Headers */,
 				1A570140180BC9460088DEC7 /* CCEventAcceleration.h in Headers */,
-				B326CA611822367C006B5EFE /* CCPhysicsShapeInfo_box2d.h in Headers */,
 				1A570144180BC9460088DEC7 /* CCEventCustom.h in Headers */,
+				1A0DB7391823828F0025743D /* EAGLView.h in Headers */,
 				1A570148180BC9460088DEC7 /* CCEventDispatcher.h in Headers */,
 				1A57014C180BC9460088DEC7 /* CCEventKeyboard.h in Headers */,
 				1A570150180BC9460088DEC7 /* CCEventListener.h in Headers */,
@@ -5347,6 +5373,7 @@
 				1A57022F180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
 				1A570236180BCC4D0088DEC7 /* CCScriptSupport.h in Headers */,
 				1A57024D180BCC6F0088DEC7 /* ccShader_Position_uColor_frag.h in Headers */,
+				B375105E1823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.h in Headers */,
 				1A57024F180BCC6F0088DEC7 /* ccShader_Position_uColor_vert.h in Headers */,
 				1A570251180BCC6F0088DEC7 /* ccShader_PositionColor_frag.h in Headers */,
 				1A570253180BCC6F0088DEC7 /* ccShader_PositionColor_vert.h in Headers */,
@@ -5372,8 +5399,8 @@
 				1A570298180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
 				1A57029F180BCD890088DEC7 /* base64.h in Headers */,
 				1A5702A5180BCD980088DEC7 /* CCNotificationCenter.h in Headers */,
+				B37510651823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.h in Headers */,
 				1A5702AB180BCDAA0088DEC7 /* CCProfiling.h in Headers */,
-				B326CA84182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				1A5702B1180BCDBC0088DEC7 /* ccUTF8.h in Headers */,
 				1A5702B7180BCDF40088DEC7 /* CCVertex.h in Headers */,
 				1A5702BA180BCDFC0088DEC7 /* ccUtils.h in Headers */,
@@ -5388,12 +5415,10 @@
 				1A5702F4180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F8180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
 				1A5702FC180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
-				B326CA7B182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
 				1A570302180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
-				B326CA5A1822367C006B5EFE /* CCPhysicsBodyInfo_box2d.h in Headers */,
 				1A57030E180BCF190088DEC7 /* CCComponent.h in Headers */,
 				1A570312180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
-				B326CA5C1822367C006B5EFE /* CCPhysicsContactInfo_box2d.h in Headers */,
+				B37510751823AC9F00B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
 				1A57031B180BCF430088DEC7 /* ccCArray.h in Headers */,
 				1A57031D180BCF430088DEC7 /* uthash.h in Headers */,
 				1A57031F180BCF430088DEC7 /* utlist.h in Headers */,
@@ -5408,15 +5433,16 @@
 				1A570548180BD9C40088DEC7 /* CCTouch.h in Headers */,
 				1AD71DAB180E26E600808F54 /* CCBAnimationManager.h in Headers */,
 				1AD71DAF180E26E600808F54 /* CCBFileLoader.h in Headers */,
+				B37510741823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.h in Headers */,
 				1AD71DB3180E26E600808F54 /* CCBKeyframe.h in Headers */,
 				1AD71DB5180E26E600808F54 /* CCBMemberVariableAssigner.h in Headers */,
-				B326CA80182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				1AD71DB9180E26E600808F54 /* CCBReader.h in Headers */,
 				1AD71DBB180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
 				1AD71DBF180E26E600808F54 /* CCBSequence.h in Headers */,
 				1AD71DC3180E26E600808F54 /* CCBSequenceProperty.h in Headers */,
 				1AD71DC7180E26E600808F54 /* CCBValue.h in Headers */,
 				1AD71DCB180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
+				B37510631823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.h in Headers */,
 				1AD71DCF180E26E600808F54 /* CCControlLoader.h in Headers */,
 				1AD71DD3180E26E600808F54 /* CCLabelBMFontLoader.h in Headers */,
 				1AD71DD7180E26E600808F54 /* CCLabelTTFLoader.h in Headers */,
@@ -5442,7 +5468,6 @@
 				1AD71EA7180E26E600808F54 /* AtlasAttachmentLoader.h in Headers */,
 				1AD71EAB180E26E600808F54 /* Attachment.h in Headers */,
 				1AD71EAF180E26E600808F54 /* AttachmentLoader.h in Headers */,
-				B326CA82182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.h in Headers */,
 				1AD71EB3180E26E600808F54 /* Bone.h in Headers */,
 				1AD71EB7180E26E600808F54 /* BoneData.h in Headers */,
 				1AD71EBB180E26E600808F54 /* CCSkeleton.h in Headers */,
@@ -5472,7 +5497,6 @@
 				1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */,
 				1AAF5374180E3374000584C8 /* SocketIO.h in Headers */,
 				1AAF5378180E3374000584C8 /* WebSocket.h in Headers */,
-				B326CA631822367C006B5EFE /* CCPhysicsWorldInfo_box2d.h in Headers */,
 				1AAF5851180E40B9000584C8 /* LocalStorage.h in Headers */,
 				1A9DCA11180E6955007A3AD4 /* CCCamera.h in Headers */,
 				1A9DCA13180E6955007A3AD4 /* ccConfig.h in Headers */,
@@ -5481,13 +5505,14 @@
 				1A9DCA21180E6955007A3AD4 /* CCEventType.h in Headers */,
 				1A9DCA25180E6955007A3AD4 /* ccFPSImages.h in Headers */,
 				1A9DCA29180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */,
-				B326CA5D1822367C006B5EFE /* CCPhysicsHelper_box2d.h in Headers */,
+				B375105F1823AC9200B3BA6A /* CCPhysicsHelper_box2d.h in Headers */,
 				1A9DCA2B180E6955007A3AD4 /* ccMacros.h in Headers */,
 				1A9DCA2D180E6955007A3AD4 /* CCProtocols.h in Headers */,
 				1A9DCA31180E6955007A3AD4 /* CCScheduler.h in Headers */,
 				1A9DCA39180E6955007A3AD4 /* cocos2d.h in Headers */,
 				1A9DCA3B180E6955007A3AD4 /* firePngData.h in Headers */,
 				1A9DCA3F180E6955007A3AD4 /* TransformUtils.h in Headers */,
+				B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
 				1A9DCA45180E6D90007A3AD4 /* CCDeprecated.h in Headers */,
 				1A9DCA4B180E6DE3007A3AD4 /* ccTypes.h in Headers */,
 				1A8C58EE180E92CC00EF57C3 /* CocosGUI.h in Headers */,
@@ -5527,6 +5552,7 @@
 				1A8C59B9180E930E00EF57C3 /* CCColliderDetector.h in Headers */,
 				1A8C59BD180E930E00EF57C3 /* CCComAttribute.h in Headers */,
 				1A8C59C1180E930E00EF57C3 /* CCComAudio.h in Headers */,
+				B37510611823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.h in Headers */,
 				1A8C59C5180E930E00EF57C3 /* CCComController.h in Headers */,
 				1A8C59C9180E930E00EF57C3 /* CCComRender.h in Headers */,
 				1A8C59CD180E930E00EF57C3 /* CCDataReaderHelper.h in Headers */,
@@ -5571,6 +5597,7 @@
 				1A3B1FB7180E88C300497A22 /* CCLuaObjcBridge.h in Headers */,
 				1A3B1FBD180E88C300497A22 /* tolua_fix.h in Headers */,
 				1A8C5647180E8D0D00EF57C3 /* tolua++.h in Headers */,
+				158E06E1181F6796008E01F6 /* lua_xml_http_request.h in Headers */,
 				1A2C78B5181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp in Headers */,
 				1A8C564B180E8D0D00EF57C3 /* tolua_event.h in Headers */,
 			);
@@ -5597,6 +5624,7 @@
 				1A3B1FB6180E88C300497A22 /* CCLuaObjcBridge.h in Headers */,
 				1A3B1FBC180E88C300497A22 /* tolua_fix.h in Headers */,
 				1A8C5646180E8D0D00EF57C3 /* tolua++.h in Headers */,
+				158E06E0181F6796008E01F6 /* lua_xml_http_request.h in Headers */,
 				1A2C78B3181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp in Headers */,
 				1A8C564A180E8D0D00EF57C3 /* tolua_event.h in Headers */,
 			);
@@ -5784,6 +5812,7 @@
 				46A1702D1807CBFE005B8026 /* CCCommon.h in Headers */,
 				46A170FF1807CECB005B8026 /* CCPhysicsContact.h in Headers */,
 				46A171041807CECB005B8026 /* CCPhysicsShape.h in Headers */,
+				B375106A1823AC9900B3BA6A /* CCPhysicsHelper_box2d.h in Headers */,
 				46A1703F1807CC07005B8026 /* CCDirectorCaller.h in Headers */,
 				46A170B81807CEA4005B8026 /* mat4stack.h in Headers */,
 				46A170BF1807CEA4005B8026 /* quaternion.h in Headers */,
@@ -5799,7 +5828,6 @@
 				46A170BC1807CEA4005B8026 /* mat4.h in Headers */,
 				46A170411807CC07005B8026 /* CCEGLView.h in Headers */,
 				46A170C21807CEA4005B8026 /* vec2.h in Headers */,
-				B3E5B6E5182243FC001487E5 /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				46A170301807CBFE005B8026 /* CCEGLViewProtocol.h in Headers */,
 				46A170321807CBFE005B8026 /* CCFileUtils.h in Headers */,
 				46A170BB1807CEA4005B8026 /* mat3.h in Headers */,
@@ -5810,8 +5838,6 @@
 				46A171061807CECB005B8026 /* CCPhysicsWorld.h in Headers */,
 				46A171021807CECB005B8026 /* CCPhysicsSetting.h in Headers */,
 				46A170491807CC07005B8026 /* CCStdC.h in Headers */,
-				B326CA6818223688006B5EFE /* CCPhysicsHelper_box2d.h in Headers */,
-				B3E5B6E9182243FD001487E5 /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				46A1703B1807CC07005B8026 /* CCApplication.h in Headers */,
 				46A170271807CBFE005B8026 /* CCFileUtilsApple.h in Headers */,
 				46A170431807CC07005B8026 /* CCES2Renderer.h in Headers */,
@@ -5827,16 +5853,19 @@
 				1A570068180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
 				1A57006C180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
-				B326CA6718223688006B5EFE /* CCPhysicsContactInfo_box2d.h in Headers */,
 				1A570074180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
+				B37510841823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */,
 				1A570078180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A57007C180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
+				B37510861823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				1A570080180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				1A570084180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				1A570088180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
+				B37510691823AC9900B3BA6A /* CCPhysicsContactInfo_box2d.h in Headers */,
 				1A57008C180BC5A10088DEC7 /* CCActionProgressTimer.h in Headers */,
 				1A570090180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
 				1A570094180BC5A10088DEC7 /* CCActionTween.h in Headers */,
+				1A0DB7331823827C0025743D /* EAGLView.h in Headers */,
 				1A57009B180BC5C10088DEC7 /* CCAtlasNode.h in Headers */,
 				1A5700A1180BC5D20088DEC7 /* CCNode.h in Headers */,
 				1A5700C8180BC6060088DEC7 /* atitc.h in Headers */,
@@ -5850,6 +5879,7 @@
 				1A5700E4180BC6060088DEC7 /* CCDouble.h in Headers */,
 				1A5700E6180BC6060088DEC7 /* CCFloat.h in Headers */,
 				1A5700EA180BC6060088DEC7 /* CCGeometry.h in Headers */,
+				B37510671823AC9900B3BA6A /* CCPhysicsBodyInfo_box2d.h in Headers */,
 				1A5700EC180BC6060088DEC7 /* CCInteger.h in Headers */,
 				1A5700F0180BC6060088DEC7 /* CCNS.h in Headers */,
 				1A5700F4180BC6060088DEC7 /* CCObject.h in Headers */,
@@ -5858,7 +5888,6 @@
 				1A5700FC180BC6060088DEC7 /* CCSet.h in Headers */,
 				1A570100180BC6060088DEC7 /* CCString.h in Headers */,
 				1A570104180BC6060088DEC7 /* etc1.h in Headers */,
-				B3E5B6E7182243FC001487E5 /* CCPhysicsShapeInfo_chipmunk.h in Headers */,
 				1A570108180BC6060088DEC7 /* s3tc.h in Headers */,
 				1A570111180BC8EE0088DEC7 /* CCDrawingPrimitives.h in Headers */,
 				1A570115180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
@@ -5889,6 +5918,7 @@
 				1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
 				1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
 				1A5701D2180BCB5A0088DEC7 /* CCTextImage.h in Headers */,
+				B37510701823AC9900B3BA6A /* CCPhysicsWorldInfo_box2d.h in Headers */,
 				1A5701E1180BCB8C0088DEC7 /* CCLayer.h in Headers */,
 				1A5701E5180BCB8C0088DEC7 /* CCScene.h in Headers */,
 				1A5701E9180BCB8C0088DEC7 /* CCTransition.h in Headers */,
@@ -5899,6 +5929,7 @@
 				1A570205180BCBD40088DEC7 /* CCClippingNode.h in Headers */,
 				1A57020B180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
 				1A570213180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
+				B37510821823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				1A570217180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
 				1A570224180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
 				1A570228180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
@@ -5913,7 +5944,6 @@
 				1A570258180BCC6F0088DEC7 /* ccShader_PositionColorLengthTexture_vert.h in Headers */,
 				1A57025A180BCC6F0088DEC7 /* ccShader_PositionTexture_frag.h in Headers */,
 				1A57025C180BCC6F0088DEC7 /* ccShader_PositionTexture_uColor_frag.h in Headers */,
-				B326CA6E18223688006B5EFE /* CCPhysicsWorldInfo_box2d.h in Headers */,
 				1A57025E180BCC6F0088DEC7 /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				1A570260180BCC6F0088DEC7 /* ccShader_PositionTexture_vert.h in Headers */,
 				1A570262180BCC6F0088DEC7 /* ccShader_PositionTextureA8Color_frag.h in Headers */,
@@ -5939,23 +5969,22 @@
 				1A5702C1180BCE2A0088DEC7 /* CCIMEDelegate.h in Headers */,
 				1A5702C5180BCE2A0088DEC7 /* CCIMEDispatcher.h in Headers */,
 				1A5702CB180BCE370088DEC7 /* CCTextFieldTTF.h in Headers */,
-				B326CA6518223688006B5EFE /* CCPhysicsBodyInfo_box2d.h in Headers */,
 				1A5702D6180BCE570088DEC7 /* CCTexture2D.h in Headers */,
 				1A5702DA180BCE570088DEC7 /* CCTextureAtlas.h in Headers */,
-				B326CA6C18223688006B5EFE /* CCPhysicsShapeInfo_box2d.h in Headers */,
 				1A5702DE180BCE570088DEC7 /* CCTextureCache.h in Headers */,
 				1A5702ED180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
+				B375106E1823AC9900B3BA6A /* CCPhysicsShapeInfo_box2d.h in Headers */,
 				1A5702F5180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F9180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
 				1A5702FD180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
 				1A570303180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
-				B3E5B6E3182243FC001487E5 /* CCPhysicsHelper_chipmunk.h in Headers */,
 				1A57030F180BCF190088DEC7 /* CCComponent.h in Headers */,
 				1A570313180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
 				1A57031C180BCF430088DEC7 /* ccCArray.h in Headers */,
 				1A57031E180BCF430088DEC7 /* uthash.h in Headers */,
 				1A570320180BCF430088DEC7 /* utlist.h in Headers */,
+				B375107F1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.h in Headers */,
 				1A570327180BCF660088DEC7 /* TGAlib.h in Headers */,
 				1A570332180BCFD50088DEC7 /* CCUserDefault.h in Headers */,
 				1A57033D180BCFFA0088DEC7 /* ZipUtils.h in Headers */,
@@ -5965,7 +5994,6 @@
 				1A570536180BD9500088DEC7 /* CCGLProgram.h in Headers */,
 				1A57053A180BD9500088DEC7 /* ccGLStateCache.h in Headers */,
 				1A570549180BD9C40088DEC7 /* CCTouch.h in Headers */,
-				B3E5B6E2182243FC001487E5 /* CCPhysicsContactInfo_chipmunk.h in Headers */,
 				1AD71DAC180E26E600808F54 /* CCBAnimationManager.h in Headers */,
 				1AD71DB0180E26E600808F54 /* CCBFileLoader.h in Headers */,
 				1AD71DB4180E26E600808F54 /* CCBKeyframe.h in Headers */,
@@ -6005,7 +6033,6 @@
 				1AD71EB8180E26E600808F54 /* BoneData.h in Headers */,
 				1AD71EBC180E26E600808F54 /* CCSkeleton.h in Headers */,
 				1AD71EC0180E26E600808F54 /* CCSkeletonAnimation.h in Headers */,
-				B326CA6A18223688006B5EFE /* CCPhysicsJointInfo_box2d.h in Headers */,
 				1AD71EC4180E26E600808F54 /* extension.h in Headers */,
 				1AD71EC8180E26E600808F54 /* Json.h in Headers */,
 				1AD71ECC180E26E600808F54 /* RegionAttachment.h in Headers */,
@@ -6031,6 +6058,7 @@
 				1AAF5371180E3374000584C8 /* HttpResponse.h in Headers */,
 				1AAF5375180E3374000584C8 /* SocketIO.h in Headers */,
 				1AAF5379180E3374000584C8 /* WebSocket.h in Headers */,
+				B375106C1823AC9900B3BA6A /* CCPhysicsJointInfo_box2d.h in Headers */,
 				1AAF5852180E40B9000584C8 /* LocalStorage.h in Headers */,
 				1A9DCA12180E6955007A3AD4 /* CCCamera.h in Headers */,
 				1A9DCA14180E6955007A3AD4 /* ccConfig.h in Headers */,
@@ -6040,11 +6068,11 @@
 				1A9DCA26180E6955007A3AD4 /* ccFPSImages.h in Headers */,
 				1A9DCA2A180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */,
 				1A9DCA2C180E6955007A3AD4 /* ccMacros.h in Headers */,
+				1A0DB7321823827C0025743D /* CCGL.h in Headers */,
 				1A9DCA2E180E6955007A3AD4 /* CCProtocols.h in Headers */,
 				1A9DCA32180E6955007A3AD4 /* CCScheduler.h in Headers */,
 				1A9DCA3A180E6955007A3AD4 /* cocos2d.h in Headers */,
 				1A9DCA3C180E6955007A3AD4 /* firePngData.h in Headers */,
-				B3E5B6E0182243FC001487E5 /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
 				1A9DCA40180E6955007A3AD4 /* TransformUtils.h in Headers */,
 				1A9DCA46180E6D90007A3AD4 /* CCDeprecated.h in Headers */,
 				1A9DCA4C180E6DE3007A3AD4 /* ccTypes.h in Headers */,
@@ -6094,8 +6122,10 @@
 				1A8C59DE180E930E00EF57C3 /* CCDisplayManager.h in Headers */,
 				1A8C59E2180E930E00EF57C3 /* CCInputDelegate.h in Headers */,
 				1A8C59E6180E930E00EF57C3 /* CCProcessBase.h in Headers */,
+				B375107D1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
 				1A8C59EA180E930E00EF57C3 /* CCSGUIReader.h in Headers */,
 				1A8C59EE180E930E00EF57C3 /* CCSkin.h in Headers */,
+				B37510801823ACA100B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
 				1A8C59F2180E930E00EF57C3 /* CCSpriteFrameCacheHelper.h in Headers */,
 				1A8C59F6180E930E00EF57C3 /* CCSSceneReader.h in Headers */,
 				1A8C59FA180E930E00EF57C3 /* CCTransformHelp.h in Headers */,
@@ -6575,7 +6605,7 @@
 				46A1705A1807CC1C005B8026 /* CCImage.mm in Sources */,
 				46A170CC1807CEBB005B8026 /* ray2.c in Sources */,
 				460E44EF1807DED6000CDD6D /* mat4stack.c in Sources */,
-				46A170581807CC1C005B8026 /* CCEventDispatcher.mm in Sources */,
+				46A170581807CC1C005B8026 /* CCEventDispatcherMac.mm in Sources */,
 				46A170CA1807CEBB005B8026 /* plane.c in Sources */,
 				46A170EA1807CECA005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170141807CBFC005B8026 /* CCFileUtilsApple.mm in Sources */,
@@ -6610,9 +6640,10 @@
 				1A570069180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
 				1A57006D180BC5A10088DEC7 /* CCActionEase.cpp in Sources */,
 				1A570071180BC5A10088DEC7 /* CCActionGrid.cpp in Sources */,
-				B326CA7F182236C3006B5EFE /* CCPhysicsJointInfo_chipmunk.cpp in Sources */,
+				B37510761823AC9F00B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp in Sources */,
 				1A570075180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
-				B326CA83182236C3006B5EFE /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
+				B375107A1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
+				B37510601823AC9200B3BA6A /* CCPhysicsJointInfo_box2d.cpp in Sources */,
 				1A570079180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				1A57007D180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
 				1A570081180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
@@ -6623,8 +6654,8 @@
 				1A570098180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
 				1A57009E180BC5D20088DEC7 /* CCNode.cpp in Sources */,
 				1A5700C5180BC6060088DEC7 /* atitc.cpp in Sources */,
+				B37510781823AC9F00B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */,
 				1A5700C9180BC6060088DEC7 /* CCAffineTransform.cpp in Sources */,
-				B326CA81182236C3006B5EFE /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */,
 				1A5700CD180BC6060088DEC7 /* CCArray.cpp in Sources */,
 				1A5700D1180BC6060088DEC7 /* CCAutoreleasePool.cpp in Sources */,
 				1A5700D7180BC6060088DEC7 /* CCData.cpp in Sources */,
@@ -6662,8 +6693,8 @@
 				1A5701B9180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
 				1A5701BD180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				1A5701C1180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
+				B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
 				1A5701C7180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
-				B326CA7C182236C3006B5EFE /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
 				1A5701CB180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
 				1A5701CF180BCB5A0088DEC7 /* CCTextImage.cpp in Sources */,
 				1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
@@ -6682,7 +6713,6 @@
 				1A570229180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
 				1A57022D180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
 				1A570234180BCC4D0088DEC7 /* CCScriptSupport.cpp in Sources */,
-				B326CA5B1822367C006B5EFE /* CCPhysicsContactInfo_box2d.cpp in Sources */,
 				1A57026B180BCC6F0088DEC7 /* CCShaderCache.cpp in Sources */,
 				1A570271180BCC6F0088DEC7 /* ccShaders.cpp in Sources */,
 				1A57027E180BCC900088DEC7 /* CCSprite.cpp in Sources */,
@@ -6703,6 +6733,7 @@
 				1A5702DB180BCE570088DEC7 /* CCTextureCache.cpp in Sources */,
 				1A5702EA180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
 				1A5702EE180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
+				B375105D1823AC9200B3BA6A /* CCPhysicsContactInfo_box2d.cpp in Sources */,
 				1A5702F2180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
 				1A5702F6180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
 				1A5702FA180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
@@ -6711,8 +6742,8 @@
 				1A57030C180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				1A570310180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				1A570319180BCF430088DEC7 /* ccCArray.cpp in Sources */,
+				B37510711823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */,
 				1A570324180BCF660088DEC7 /* TGAlib.cpp in Sources */,
-				B326CA7A182236C3006B5EFE /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */,
 				1A57032F180BCFD50088DEC7 /* CCUserDefault.cpp in Sources */,
 				1A570333180BCFD50088DEC7 /* CCUserDefault.mm in Sources */,
 				1A570335180BCFD50088DEC7 /* CCUserDefaultAndroid.cpp in Sources */,
@@ -6725,15 +6756,11 @@
 				1A570546180BD9C40088DEC7 /* CCTouch.cpp in Sources */,
 				1AD71DA9180E26E600808F54 /* CCBAnimationManager.cpp in Sources */,
 				1AD71DAD180E26E600808F54 /* CCBFileLoader.cpp in Sources */,
-				B326CA621822367C006B5EFE /* CCPhysicsWorldInfo_box2d.cpp in Sources */,
 				1AD71DB1180E26E600808F54 /* CCBKeyframe.cpp in Sources */,
-				B326CA5E1822367C006B5EFE /* CCPhysicsJointInfo_box2d.cpp in Sources */,
 				1AD71DB7180E26E600808F54 /* CCBReader.cpp in Sources */,
 				1AD71DBD180E26E600808F54 /* CCBSequence.cpp in Sources */,
 				1AD71DC1180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */,
-				B326CA591822367C006B5EFE /* CCPhysicsBodyInfo_box2d.cpp in Sources */,
 				1AD71DC5180E26E600808F54 /* CCBValue.cpp in Sources */,
-				B326CA601822367C006B5EFE /* CCPhysicsShapeInfo_box2d.cpp in Sources */,
 				1AD71DC9180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCD180E26E600808F54 /* CCControlLoader.cpp in Sources */,
 				1AD71DD1180E26E600808F54 /* CCLabelBMFontLoader.cpp in Sources */,
@@ -6783,6 +6810,7 @@
 				1A9DCA15180E6955007A3AD4 /* CCConfiguration.cpp in Sources */,
 				1A9DCA1D180E6955007A3AD4 /* CCDirector.cpp in Sources */,
 				1A9DCA23180E6955007A3AD4 /* ccFPSImages.c in Sources */,
+				B37510641823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.cpp in Sources */,
 				1A9DCA27180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
 				1A9DCA2F180E6955007A3AD4 /* CCScheduler.cpp in Sources */,
 				1A9DCA37180E6955007A3AD4 /* cocos2d.cpp in Sources */,
@@ -6792,6 +6820,7 @@
 				1A8C58EC180E92CC00EF57C3 /* CocosGUI.cpp in Sources */,
 				1A8C58F0180E92CC00EF57C3 /* Layout.cpp in Sources */,
 				1A8C58F4180E92CC00EF57C3 /* LayoutParameter.cpp in Sources */,
+				B37510621823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.cpp in Sources */,
 				1A8C58F8180E92CC00EF57C3 /* UIButton.cpp in Sources */,
 				1A8C58FC180E92CC00EF57C3 /* UICheckBox.cpp in Sources */,
 				1A8C5900180E92CC00EF57C3 /* UIDragPanel.cpp in Sources */,
@@ -6842,6 +6871,7 @@
 				1A8C59FB180E930E00EF57C3 /* CCTween.cpp in Sources */,
 				1A8C59FF180E930E00EF57C3 /* CCTweenFunction.cpp in Sources */,
 				1A8C5A03180E930E00EF57C3 /* CCUtilMath.cpp in Sources */,
+				B375105B1823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp in Sources */,
 				1A8C5A09180E930E00EF57C3 /* CSContentJsonDictionary.cpp in Sources */,
 				1A8C5A0D180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 			);
@@ -6855,6 +6885,7 @@
 				1A3B1F7D180E88C300497A22 /* CCLuaBridge.cpp in Sources */,
 				1A3B1F81180E88C300497A22 /* CCLuaEngine.cpp in Sources */,
 				1A3B1F85180E88C300497A22 /* CCLuaStack.cpp in Sources */,
+				158E06DF181F6796008E01F6 /* lua_xml_http_request.cpp in Sources */,
 				1A3B1F89180E88C300497A22 /* CCLuaValue.cpp in Sources */,
 				1A3B1F8D180E88C300497A22 /* Cocos2dxLuaLoader.cpp in Sources */,
 				1A3B1F91180E88C300497A22 /* lua_cocos2dx_deprecated.cpp in Sources */,
@@ -6884,6 +6915,7 @@
 				1A3B1F7C180E88C300497A22 /* CCLuaBridge.cpp in Sources */,
 				1A3B1F80180E88C300497A22 /* CCLuaEngine.cpp in Sources */,
 				1A3B1F84180E88C300497A22 /* CCLuaStack.cpp in Sources */,
+				158E06DE181F6796008E01F6 /* lua_xml_http_request.cpp in Sources */,
 				1A3B1F88180E88C300497A22 /* CCLuaValue.cpp in Sources */,
 				1A3B1F8C180E88C300497A22 /* Cocos2dxLuaLoader.cpp in Sources */,
 				1A3B1F90180E88C300497A22 /* lua_cocos2dx_deprecated.cpp in Sources */,
@@ -7113,9 +7145,10 @@
 				1A57006A180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
 				1A57006E180BC5A10088DEC7 /* CCActionEase.cpp in Sources */,
 				1A570072180BC5A10088DEC7 /* CCActionGrid.cpp in Sources */,
-				B3E5B6E4182243FC001487E5 /* CCPhysicsJointInfo_chipmunk.cpp in Sources */,
+				B37510811823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp in Sources */,
 				1A570076180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
-				B3E5B6E8182243FD001487E5 /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
+				B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
+				B375106B1823AC9900B3BA6A /* CCPhysicsJointInfo_box2d.cpp in Sources */,
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				1A57007E180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
 				1A570082180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
@@ -7126,8 +7159,8 @@
 				1A570099180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
 				1A57009F180BC5D20088DEC7 /* CCNode.cpp in Sources */,
 				1A5700C6180BC6060088DEC7 /* atitc.cpp in Sources */,
+				B37510831823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */,
 				1A5700CA180BC6060088DEC7 /* CCAffineTransform.cpp in Sources */,
-				B3E5B6E6182243FC001487E5 /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */,
 				1A5700CE180BC6060088DEC7 /* CCArray.cpp in Sources */,
 				1A5700D2180BC6060088DEC7 /* CCAutoreleasePool.cpp in Sources */,
 				1A5700D8180BC6060088DEC7 /* CCData.cpp in Sources */,
@@ -7165,8 +7198,8 @@
 				1A5701BA180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
+				B375107E1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
 				1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
-				B3E5B6E1182243FC001487E5 /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
 				1A5701CC180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
 				1A5701D0180BCB5A0088DEC7 /* CCTextImage.cpp in Sources */,
 				1A5701DF180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
@@ -7185,7 +7218,6 @@
 				1A57022A180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
 				1A57022E180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
 				1A570235180BCC4D0088DEC7 /* CCScriptSupport.cpp in Sources */,
-				B326CA6618223688006B5EFE /* CCPhysicsContactInfo_box2d.cpp in Sources */,
 				1A57026C180BCC6F0088DEC7 /* CCShaderCache.cpp in Sources */,
 				1A570272180BCC6F0088DEC7 /* ccShaders.cpp in Sources */,
 				1A57027F180BCC900088DEC7 /* CCSprite.cpp in Sources */,
@@ -7206,6 +7238,7 @@
 				1A5702DC180BCE570088DEC7 /* CCTextureCache.cpp in Sources */,
 				1A5702EB180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
 				1A5702EF180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
+				B37510681823AC9900B3BA6A /* CCPhysicsContactInfo_box2d.cpp in Sources */,
 				1A5702F3180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
 				1A5702F7180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
 				1A5702FB180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
@@ -7214,8 +7247,8 @@
 				1A57030D180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				1A570311180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				1A57031A180BCF430088DEC7 /* ccCArray.cpp in Sources */,
+				B375107C1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */,
 				1A570325180BCF660088DEC7 /* TGAlib.cpp in Sources */,
-				B3E5B6DF182243FC001487E5 /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */,
 				1A570330180BCFD50088DEC7 /* CCUserDefault.cpp in Sources */,
 				1A570334180BCFD50088DEC7 /* CCUserDefault.mm in Sources */,
 				1A570336180BCFD50088DEC7 /* CCUserDefaultAndroid.cpp in Sources */,
@@ -7228,15 +7261,11 @@
 				1A570547180BD9C40088DEC7 /* CCTouch.cpp in Sources */,
 				1AD71DAA180E26E600808F54 /* CCBAnimationManager.cpp in Sources */,
 				1AD71DAE180E26E600808F54 /* CCBFileLoader.cpp in Sources */,
-				B326CA6D18223688006B5EFE /* CCPhysicsWorldInfo_box2d.cpp in Sources */,
 				1AD71DB2180E26E600808F54 /* CCBKeyframe.cpp in Sources */,
-				B326CA6918223688006B5EFE /* CCPhysicsJointInfo_box2d.cpp in Sources */,
 				1AD71DB8180E26E600808F54 /* CCBReader.cpp in Sources */,
 				1AD71DBE180E26E600808F54 /* CCBSequence.cpp in Sources */,
 				1AD71DC2180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */,
-				B326CA6418223688006B5EFE /* CCPhysicsBodyInfo_box2d.cpp in Sources */,
 				1AD71DC6180E26E600808F54 /* CCBValue.cpp in Sources */,
-				B326CA6B18223688006B5EFE /* CCPhysicsShapeInfo_box2d.cpp in Sources */,
 				1AD71DCA180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCE180E26E600808F54 /* CCControlLoader.cpp in Sources */,
 				1AD71DD2180E26E600808F54 /* CCLabelBMFontLoader.cpp in Sources */,
@@ -7286,6 +7315,7 @@
 				1A9DCA16180E6955007A3AD4 /* CCConfiguration.cpp in Sources */,
 				1A9DCA1E180E6955007A3AD4 /* CCDirector.cpp in Sources */,
 				1A9DCA24180E6955007A3AD4 /* ccFPSImages.c in Sources */,
+				B375106F1823AC9900B3BA6A /* CCPhysicsWorldInfo_box2d.cpp in Sources */,
 				1A9DCA28180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
 				1A9DCA30180E6955007A3AD4 /* CCScheduler.cpp in Sources */,
 				1A9DCA38180E6955007A3AD4 /* cocos2d.cpp in Sources */,
@@ -7295,6 +7325,7 @@
 				1A8C58ED180E92CC00EF57C3 /* CocosGUI.cpp in Sources */,
 				1A8C58F1180E92CC00EF57C3 /* Layout.cpp in Sources */,
 				1A8C58F5180E92CC00EF57C3 /* LayoutParameter.cpp in Sources */,
+				B375106D1823AC9900B3BA6A /* CCPhysicsShapeInfo_box2d.cpp in Sources */,
 				1A8C58F9180E92CC00EF57C3 /* UIButton.cpp in Sources */,
 				1A8C58FD180E92CC00EF57C3 /* UICheckBox.cpp in Sources */,
 				1A8C5901180E92CC00EF57C3 /* UIDragPanel.cpp in Sources */,
@@ -7345,6 +7376,7 @@
 				1A8C59FC180E930E00EF57C3 /* CCTween.cpp in Sources */,
 				1A8C5A00180E930E00EF57C3 /* CCTweenFunction.cpp in Sources */,
 				1A8C5A04180E930E00EF57C3 /* CCUtilMath.cpp in Sources */,
+				B37510661823AC9900B3BA6A /* CCPhysicsBodyInfo_box2d.cpp in Sources */,
 				1A8C5A0A180E930E00EF57C3 /* CSContentJsonDictionary.cpp in Sources */,
 				1A8C5A0E180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 			);
@@ -7603,7 +7635,7 @@
 		1551A34A158F2AB200E66CFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -7622,33 +7654,20 @@
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/..",
-					"$(SRCROOT)/../cocos",
-					"$(SRCROOT)/../cocos/base",
-					"$(SRCROOT)/../cocos/2d",
-					"$(SRCROOT)/../cocos/physics",
-					"$(SRCROOT)/../cocos/math/kazmath/include",
-					"$(SRCROOT)/../cocos/2d/platform",
-					"$(SRCROOT)/../cocos/audio/include",
-					"$(SRCROOT)/../cocos/editor-support",
-					"$(SRCROOT)/../cocos/gui",
-					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
-					"$(SRCROOT)/../external",
-					"$(SRCROOT)/../cocos/storage",
-				);
+				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/gui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage";
 			};
 			name = Debug;
 		};
 		1551A34B158F2AB200E66CFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -7662,25 +7681,12 @@
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/..",
-					"$(SRCROOT)/../cocos",
-					"$(SRCROOT)/../cocos/base",
-					"$(SRCROOT)/../cocos/2d",
-					"$(SRCROOT)/../cocos/physics",
-					"$(SRCROOT)/../cocos/math/kazmath/include",
-					"$(SRCROOT)/../cocos/2d/platform",
-					"$(SRCROOT)/../cocos/audio/include",
-					"$(SRCROOT)/../cocos/editor-support",
-					"$(SRCROOT)/../cocos/gui",
-					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
-					"$(SRCROOT)/../external",
-					"$(SRCROOT)/../cocos/storage",
-				);
+				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/gui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7688,7 +7694,7 @@
 		1551A34D158F2AB200E66CFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/2d/cocos2dx-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7696,17 +7702,7 @@
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/png/include/mac",
-					"$(SRCROOT)/../external/tiff/include/mac",
-					"$(SRCROOT)/../external/webp/include/mac",
-					"$(SRCROOT)/../external/jpeg/include/mac",
-					"$(SRCROOT)/../external/freetype2/include/mac",
-					"$(SRCROOT)/../external/websockets/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../external/glfw3/prebuilt/mac\"",
@@ -7717,14 +7713,14 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/2d/platform/mac";
 			};
 			name = Debug;
 		};
 		1551A34E158F2AB200E66CFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/2d/cocos2dx-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7732,17 +7728,7 @@
 					CC_KEYBOARD_SUPPORT,
 					CC_TARGET_OS_MAC,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/png/include/mac",
-					"$(SRCROOT)/../external/tiff/include/mac",
-					"$(SRCROOT)/../external/webp/include/mac",
-					"$(SRCROOT)/../external/jpeg/include/mac",
-					"$(SRCROOT)/../external/freetype2/include/mac",
-					"$(SRCROOT)/../external/websockets/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../external/glfw3/prebuilt/mac\"",
@@ -7753,7 +7739,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/2d/platform/mac";
 			};
 			name = Release;
 		};
@@ -7768,12 +7754,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7781,7 +7762,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/cocos2dx/platform/ios $(SRCROOT)/cocos2dx/include $(SRCROOT)/cocos2dx $(SRCROOT)/cocos2dx/kazmath/include $(SRCROOT)/external/ $(SRCROOT)/external/libwebsockets/ios/include $(SRCROOT)/extensions/network $(SRCROOT)/extensions/LocalStorage $(SRCROOT)/extensions/";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
@@ -7796,12 +7777,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7809,7 +7785,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/cocos2dx/platform/ios $(SRCROOT)/cocos2dx/include $(SRCROOT)/cocos2dx $(SRCROOT)/cocos2dx/kazmath/include $(SRCROOT)/external/ $(SRCROOT)/external/libwebsockets/ios/include $(SRCROOT)/extensions/network $(SRCROOT)/extensions/LocalStorage $(SRCROOT)/extensions/";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Release;
 		};
@@ -7825,20 +7801,14 @@
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/lua/luajit/prebuilt/mac",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
@@ -7854,34 +7824,30 @@
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/lua/luajit/prebuilt/mac",
 				);
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Release;
 		};
 		A03F2CB61780BD04006731B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
+				HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
 			};
 			name = Debug;
 		};
 		A03F2CB71780BD04006731B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
+				HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
 			};
 			name = Release;
 		};
@@ -7891,6 +7857,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -7900,6 +7867,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -7926,62 +7894,50 @@
 		A03F2ED417814268006731B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_MAC;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac";
 			};
 			name = Debug;
 		};
 		A03F2ED517814268006731B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_MAC;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac";
 			};
 			name = Release;
 		};
 		A03F2FD417814595006731B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
 		A03F2FD517814595006731B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Release;
 		};
@@ -7995,17 +7951,12 @@
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../external/spidermonkey/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8019,17 +7970,12 @@
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../external/spidermonkey/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Release;
 		};
@@ -8044,17 +7990,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../external/websockets/include/ios",
-					"$(SRCROOT)/../external/freetype2/include/ios",
-					"$(SRCROOT)/../external/curl/include/ios",
-					"$(SRCROOT)/../external/webp/include/ios",
-					"$(SRCROOT)/../external/tiff/include/ios",
-					"$(SRCROOT)/../external/jpeg/include/ios",
-					"$(SRCROOT)/../external/png/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../external/png/prebuilt/ios\"",
@@ -8067,7 +8003,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
 			};
 			name = Debug;
 		};
@@ -8082,17 +8018,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../external/websockets/include/ios",
-					"$(SRCROOT)/../external/freetype2/include/ios",
-					"$(SRCROOT)/../external/curl/include/ios",
-					"$(SRCROOT)/../external/webp/include/ios",
-					"$(SRCROOT)/../external/tiff/include/ios",
-					"$(SRCROOT)/../external/jpeg/include/ios",
-					"$(SRCROOT)/../external/png/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../external/png/prebuilt/ios\"",
@@ -8105,7 +8031,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
 			};
 			name = Release;
 		};
@@ -8134,16 +8060,12 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../external/curl/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external/curl/include/ios";
 			};
 			name = Debug;
 		};
@@ -8156,16 +8078,12 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../external/curl/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external/curl/include/ios";
 			};
 			name = Release;
 		};
@@ -8173,15 +8091,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
-					"$(SRCROOT)/../external/chipmunk/include/chipmunk/",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
 			};
 			name = Debug;
 		};
@@ -8189,15 +8103,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
-					"$(SRCROOT)/../external/chipmunk/include/chipmunk/",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
 			};
 			name = Release;
 		};
@@ -8211,6 +8121,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -8224,6 +8135,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -8236,14 +8148,11 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 			};
 			name = Debug;
 		};
@@ -8256,14 +8165,11 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 			};
 			name = Release;
 		};
@@ -8277,11 +8183,7 @@
 					COCOS2D_JAVASCRIPT,
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8289,7 +8191,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../cocos/2d/platform/ios";
 			};
 			name = Debug;
 		};
@@ -8303,11 +8205,7 @@
 					COCOS2D_JAVASCRIPT,
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8315,7 +8213,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../cocos/2d/platform/ios";
 			};
 			name = Release;
 		};
