@@ -243,7 +243,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCEventListenerAcceleration.cpp" />
     <ClCompile Include="CCEventListenerCustom.cpp" />
     <ClCompile Include="CCEventListenerKeyboard.cpp" />
+    <ClCompile Include="CCEventListenerMouse.cpp" />
     <ClCompile Include="CCEventListenerTouch.cpp" />
+    <ClCompile Include="CCEventMouse.cpp" />
     <ClCompile Include="CCEventTouch.cpp" />
     <ClCompile Include="CCFont.cpp" />
     <ClCompile Include="CCFontAtlas.cpp" />
@@ -414,7 +416,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCEventListenerAcceleration.h" />
     <ClInclude Include="CCEventListenerCustom.h" />
     <ClInclude Include="CCEventListenerKeyboard.h" />
+    <ClInclude Include="CCEventListenerMouse.h" />
     <ClInclude Include="CCEventListenerTouch.h" />
+    <ClInclude Include="CCEventMouse.h" />
     <ClInclude Include="CCEventTouch.h" />
     <ClInclude Include="CCEventType.h" />
     <ClInclude Include="CCFont.h" />

@@ -39,6 +39,8 @@ CCEventAcceleration.cpp \
 CCEventCustom.cpp \
 CCEventDispatcher.cpp \
 CCEventKeyboard.cpp \
+CCEventMouse.cpp \
+CCEventListenerMouse.cpp \
 CCEventListener.cpp \
 CCEventListenerAcceleration.cpp \
 CCEventListenerCustom.cpp \

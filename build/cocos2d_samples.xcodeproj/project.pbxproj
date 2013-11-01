@@ -60,6 +60,8 @@
 		1585AB36182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
 		1585AB37182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
 		1585AB38182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1585AB4B1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */; };
+		1585AB4C1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -1044,6 +1046,8 @@
 		46A175031807D9E2005B8026 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A174BF1807D934005B8026 /* RootViewController.mm */; };
 		5010FC91180F0F8300B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174AD1807D934005B8026 /* Default-568h@2x.png */; };
 		5010FC92180F105C00B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 460E452F1807E712000CDD6D /* Default-568h@2x.png */; };
+		59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
+		59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
 		A01E16881784BDA100B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A01E16891784BDA100B0CA4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		A01E168A1784BDA100B0CA4A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
@@ -2062,6 +2066,8 @@
 		1585AB161821FF4C00000FB5 /* LuaObjectCBridgeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaObjectCBridgeTest.h; sourceTree = "<group>"; };
 		1585AB171821FF4C00000FB5 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
 		1585AB34182299FA00000FB5 /* json.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json.lua; path = ../cocos/scripting/lua/script/json.lua; sourceTree = "<group>"; };
+		1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
+		1585AB4A1823A55400000FB5 /* lua_assetsmanager_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanager_test_sample.h; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		15C64826165F394E007D4F18 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -2844,6 +2850,8 @@
 		46A174EF1807D9C4005B8026 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		46A174F01807D9C4005B8026 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		46A174F11807D9C4005B8026 /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
+		59A79D5B1821E95C00F19697 /* MouseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MouseTest.cpp; sourceTree = "<group>"; };
+		59A79D5C1821E95C00F19697 /* MouseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTest.h; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E17721784C06E00B0CA4A /* Test JavaScript iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E18571784C45500B0CA4A /* JS Watermelon With Me iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon With Me iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3756,6 +3764,8 @@
 		1A8C566C180E8E9600EF57C3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */,
+				1585AB4A1823A55400000FB5 /* lua_assetsmanager_test_sample.h */,
 				1A8C566D180E8E9600EF57C3 /* AppDelegate.cpp */,
 				1A8C566E180E8E9600EF57C3 /* AppDelegate.h */,
 			);
@@ -4042,6 +4052,7 @@
 				1AAF50D0180E2C19000584C8 /* FileUtilsTest */,
 				1AAF50D3180E2C19000584C8 /* FontTest */,
 				1AAF50D6180E2C19000584C8 /* IntervalTest */,
+				59A79D5A1821E95C00F19697 /* InputTest */,
 				1AAF50D9180E2C19000584C8 /* KeyboardTest */,
 				1AAF50DC180E2C19000584C8 /* KeypadTest */,
 				1AAF50DF180E2C19000584C8 /* LabelTest */,
@@ -5423,6 +5434,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		59A79D5A1821E95C00F19697 /* InputTest */ = {
+			isa = PBXGroup;
+			children = (
+				59A79D5B1821E95C00F19697 /* MouseTest.cpp */,
+				59A79D5C1821E95C00F19697 /* MouseTest.h */,
+			);
+			path = InputTest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -6701,6 +6721,7 @@
 				1A8C5870180E8F0100EF57C3 /* main.m in Sources */,
 				1A8C5871180E8F0100EF57C3 /* RootViewController.mm in Sources */,
 				1585AAC81821F8D900000FB5 /* LuaObjectCBridgeTest.mm in Sources */,
+				1585AB4C1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6720,6 +6741,7 @@
 				1A8C566F180E8E9600EF57C3 /* AppDelegate.cpp in Sources */,
 				1585AB181821FF4C00000FB5 /* LuaObjectCBridgeTest.mm in Sources */,
 				1A8C587F180E8F0C00EF57C3 /* main.cpp in Sources */,
+				1585AB4B1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6773,6 +6795,7 @@
 				1AAF51A0180E2C1A000584C8 /* ComponentsTestScene.cpp in Sources */,
 				1AAF51A2180E2C1A000584C8 /* EnemyController.cpp in Sources */,
 				1AAF51A4180E2C1A000584C8 /* GameOverScene.cpp in Sources */,
+				59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */,
 				1AAF51A6180E2C1A000584C8 /* PlayerController.cpp in Sources */,
 				1AAF51A8180E2C1A000584C8 /* ProjectileController.cpp in Sources */,
 				1AAF51AA180E2C1A000584C8 /* SceneController.cpp in Sources */,
@@ -7113,6 +7136,7 @@
 				1AAF5219180E2C1A000584C8 /* PerformanceNodeChildrenTest.cpp in Sources */,
 				1AAF521B180E2C1A000584C8 /* PerformanceParticleTest.cpp in Sources */,
 				1AAF521D180E2C1A000584C8 /* PerformanceSpriteTest.cpp in Sources */,
+				59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */,
 				1AAF521F180E2C1A000584C8 /* PerformanceTest.cpp in Sources */,
 				1AAF5221180E2C1A000584C8 /* PerformanceTextureTest.cpp in Sources */,
 				1AAF5223180E2C1A000584C8 /* PerformanceTouchesTest.cpp in Sources */,

@@ -634,6 +634,9 @@ Developers:
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
         
+    Nite Luo (darkdukey)
+        Added Mouse Support For Desktop Platforms.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
