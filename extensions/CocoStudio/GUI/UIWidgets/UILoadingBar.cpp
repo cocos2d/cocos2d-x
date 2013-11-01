@@ -116,6 +116,7 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
             if (m_bScale9Enabled)
             {
                 dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->initWithFile(texture);
+                dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setCapInsets(m_capInsets);
             }
             else
             {
@@ -126,6 +127,7 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
             if (m_bScale9Enabled)
             {
                 dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->initWithSpriteFrameName(texture);
+                dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setCapInsets(m_capInsets);
             }
             else
             {
@@ -139,14 +141,14 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
     {
         dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setColor(getColor());
         dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setOpacity(getOpacity());
+        
     }
     else
     {
         dynamic_cast<CCSprite*>(m_pBarRenderer)->setColor(getColor());
         dynamic_cast<CCSprite*>(m_pBarRenderer)->setOpacity(getOpacity());
     }
-    m_barRendererTextureSize.width = m_pBarRenderer->getContentSize().width;
-    m_barRendererTextureSize.height = m_pBarRenderer->getContentSize().height;
+    m_barRendererTextureSize = m_pBarRenderer->getContentSize();
     
     switch (m_nBarType)
     {
@@ -300,7 +302,7 @@ void UILoadingBar::barRendererScaleChangedWithSize()
         else
         {
             
-            CCSize textureSize = m_pBarRenderer->getContentSize();
+            CCSize textureSize = m_barRendererTextureSize;
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 m_pBarRenderer->setScale(1.0f);
@@ -328,12 +330,30 @@ void UILoadingBar::barRendererScaleChangedWithSize()
 void UILoadingBar::setScale9Scale()
 {
     float width = (float)(m_nPercent) / 100 * m_fTotalLength;
-    dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setPreferredSize(CCSizeMake(width, m_barRendererTextureSize.height));
+    dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setPreferredSize(CCSizeMake(width, m_size.height));
 }
 
 const char* UILoadingBar::getDescription() const
 {
     return "LoadingBar";
+}
+
+UIWidget* UILoadingBar::createCloneInstance()
+{
+    return UILoadingBar::create();
+}
+
+void UILoadingBar::copySpecialProperties(UIWidget *widget)
+{
+    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(widget);
+    if (loadingBar)
+    {
+        m_bPrevIgnoreSize = loadingBar->m_bPrevIgnoreSize;
+        setScale9Enabled(loadingBar->m_bScale9Enabled);
+        loadTexture(loadingBar->m_strTextureFile.c_str(), loadingBar->m_eRenderBarTexType);
+        setCapInsets(loadingBar->m_capInsets);
+        setPercent(loadingBar->m_nPercent);
+    }
 }
 
 NS_CC_EXT_END

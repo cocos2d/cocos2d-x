@@ -120,6 +120,8 @@ public:
      */
     int getCurPageIndex() const;
     
+    CCArray* getPages();
+    
     // event
     void addEventListener(CCObject *target, SEL_PageViewEvent selector);
     /*******Compatible*******/
@@ -180,7 +182,9 @@ protected:
     void updateChildrenSize();
     void updateChildrenPosition();
     virtual void onSizeChanged();
-//    virtual bool isInScrollDegreeRange(UIWidget* widget);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
     /*compatible*/
     /**
      * These methods will be removed

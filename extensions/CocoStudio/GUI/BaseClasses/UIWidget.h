@@ -271,12 +271,7 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      */
     virtual void removeAllChildren();
-    
-    /**
-     * Unschedules the "update" method.
-     */
-    void disableUpdate();
-    
+        
     /**
      * Reorders a child according to a new z value.
      *
@@ -893,6 +888,8 @@ public:
      */
     virtual const char* getDescription() const;
     
+    UIWidget* clone();
+
     virtual void onEnter();
     virtual void onExit();
     
@@ -1024,6 +1021,10 @@ protected:
      */
     virtual void releaseResoures();
     void updateSizeAndPosition();
+    void copyProperties(UIWidget* model);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
 protected:
     bool m_bEnabled;            ///< Highest control of widget
     bool m_bVisible;            ///< is this widget visible

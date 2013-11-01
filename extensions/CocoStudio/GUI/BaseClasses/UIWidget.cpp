@@ -137,7 +137,6 @@ void UIWidget::releaseResoures()
     m_pfnReleaseSelector = NULL;
     m_pCancelListener = NULL;
     m_pfnCancelSelector = NULL;
-    setUpdateEnabled(false);
     removeAllChildren();
     m_children->release();
     m_pRenderer->removeAllChildrenWithCleanup(true);
@@ -223,7 +222,7 @@ bool UIWidget::removeChild(UIWidget *child)
         {
             child->onExit();    
         }
-        child->disableUpdate();
+        child->setUpdateEnabled(false);
         child->setParent(NULL);
         m_pRenderer->removeChild(child->getRenderer());
         m_children->removeObject(child);
@@ -292,21 +291,6 @@ void UIWidget::reorderChild(UIWidget* child)
         }
     }
     CC_SAFE_RELEASE(child);
-}
-
-void UIWidget::disableUpdate()
-{
-    if (m_pScheduler)
-    {
-        m_pScheduler->unscheduleUpdateForTarget(this);
-    }
-    int childrenCount = m_children->data->num;
-    ccArray* arrayChildren = m_children->data;
-    for (int i=0; i<childrenCount; i++)
-    {
-        UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
-        child->disableUpdate();
-    }
 }
 
 void UIWidget::setEnabled(bool enabled)
@@ -531,6 +515,10 @@ bool UIWidget::isTouchEnabled() const
 
 void UIWidget::setUpdateEnabled(bool enable)
 {
+    if (enable == m_bUpdateEnabled)
+    {
+        return;
+    }
     m_bUpdateEnabled = enable;
     if (enable)
     {
@@ -1179,6 +1167,71 @@ LayoutParameter* UIWidget::getLayoutParameter(LayoutParameterType type)
 const char* UIWidget::getDescription() const
 {
     return "Widget";
+}
+
+UIWidget* UIWidget::clone()
+{
+    UIWidget* clonedWidget = createCloneInstance();
+    clonedWidget->copyProperties(this);
+    clonedWidget->copyClonedWidgetChildren(this);
+    return clonedWidget;
+}
+
+UIWidget* UIWidget::createCloneInstance()
+{
+    return UIWidget::create();
+}
+
+void UIWidget::copyClonedWidgetChildren(UIWidget* model)
+{
+    ccArray* arrayWidgetChildren = model->getChildren()->data;
+    int length = arrayWidgetChildren->num;
+    for (int i=0; i<length; i++)
+    {
+        UIWidget* child = (UIWidget*)(arrayWidgetChildren->arr[i]);
+        addChild(child->clone());
+    }
+}
+
+void UIWidget::copySpecialProperties(UIWidget* model)
+{
+    
+}
+
+void UIWidget::copyProperties(UIWidget *widget)
+{
+    setEnabled(widget->isEnabled());
+    setVisible(widget->isVisible());
+    setBright(widget->isBright());
+    setTouchEnabled(widget->isTouchEnabled());
+    m_bTouchPassedEnabled = false;
+    setZOrder(widget->getZOrder());
+    setUpdateEnabled(widget->isUpdateEnabled());
+    setTag(widget->getTag());
+    setName(widget->getName());
+    setActionTag(widget->getActionTag());
+    m_bIgnoreSize = widget->m_bIgnoreSize;
+    m_size = widget->m_size;
+    m_customSize = widget->m_customSize;
+    copySpecialProperties(widget);
+    m_eSizeType = widget->getSizeType();
+    m_sizePercent = widget->m_sizePercent;
+    m_ePositionType = widget->m_ePositionType;
+    m_positionPercent = widget->m_positionPercent;
+    setPosition(widget->getPosition());
+    setAnchorPoint(widget->getAnchorPoint());
+    setScaleX(widget->getScaleX());
+    setScaleY(widget->getScaleY());
+    setRotation(widget->getRotation());
+    setRotationX(widget->getRotationX());
+    setRotationY(widget->getRotationY());
+    setFlipX(widget->isFlipX());
+    setFlipY(widget->isFlipY());
+    setColor(widget->getColor());
+    setOpacity(widget->getOpacity());
+    setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
+    setCascadeColorEnabled(widget->isCascadeColorEnabled());
+    onSizeChanged();
 }
 
 /*temp action*/

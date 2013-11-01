@@ -22,11 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIHelper.h"
-#include "../../Json/DictionaryHelper.h"
-#include "cocos2d.h"
-#include "../../Reader/CCSGUIReader.h"
-
+#include "CocosGUI.h"
 
 NS_CC_EXT_BEGIN
     

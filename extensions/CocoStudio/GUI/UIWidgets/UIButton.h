@@ -205,6 +205,8 @@ protected:
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     CCNode* m_pButtonNormalRenderer;
     CCNode* m_pButtonClickedRenderer;
