@@ -728,6 +728,16 @@ Bone *Armature::getParentBone()
     return _parentBone;
 }
 
+void CCArmature::setColliderFilter(ColliderFilter *filter)
+{
+    DictElement *element = NULL;
+    CCDICT_FOREACH(_boneDic, element)
+    {
+        Bone *bone = static_cast<Bone*>(element->getObject());
+        bone->setColliderFilter(filter);
+    }
+}
+
 #if ENABLE_PHYSICS_BOX2D_DETECT
 b2Body *Armature::getBody()
 {

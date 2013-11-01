@@ -159,6 +159,8 @@ public:
      */
     virtual cocos2d::Array *getColliderBodyList();
 
+    virtual void setColliderFilter(ColliderFilter *filter);
+    virtual ColliderFilter *getColliderFilter();
 public:
     /*
      *  The origin state of the Bone. Display's state is effected by _boneData, m_pNode, _tweenData

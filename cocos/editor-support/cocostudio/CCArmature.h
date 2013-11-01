@@ -175,6 +175,8 @@ public:
 
     virtual cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture);
 
+    virtual void setColliderFilter(ColliderFilter *filter);
+
 #if ENABLE_PHYSICS_BOX2D_DETECT
     virtual b2Fixture *getShapeList();
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
