@@ -296,7 +296,7 @@ void UIListViewEx::removeLastItem()
 
 UIWidget* UIListViewEx::getItem(int index)
 {
-    if (index < 0 || index >= m_pItems->count())
+    if (index < 0 || (unsigned int)index >= m_pItems->count())
     {
         return NULL;
     }
