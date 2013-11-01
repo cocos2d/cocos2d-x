@@ -182,17 +182,6 @@ public:
     // Overrides
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool bOpacityModifyRGB) override;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void onEnter() override;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void onExit() override;
-//    virtual void registerWithTouchDispatcher() override;
 
 protected:
     /**
