@@ -435,5 +435,30 @@ CCArray *CCBone::getColliderBodyList()
     return NULL;
 }
 
+void CCBone::setColliderFilter(CCColliderFilter *filter)
+{
+    CCArray *array = m_pDisplayManager->getDecorativeDisplayList();
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(array, object)
+    {
+        CCDecorativeDisplay *decoDisplay = static_cast<CCDecorativeDisplay *>(object);
+        if (CCColliderDetector *detector = decoDisplay->getColliderDetector())
+        {
+            detector->setColliderFilter(filter);
+        }
+    }
+}
+consCCColliderFilter *CCBone::getColliderFilter()
+{
+    if (CCDecorativeDisplay *decoDisplay = m_pDisplayManager->getCurrentDecorativeDisplay())
+    {
+        if (CCColliderDetector *detector = decoDisplay->getColliderDetector())
+        {
+            return detector->getColliderFilter();
+        }
+    }
+    return NULL;
+}
+
 
 NS_CC_EXT_END
