@@ -176,7 +176,7 @@ def build_samples(target,ndk_build_param):
         elif target == 'simplegame':
             app_android_root = os.path.join(cocos_root, 'samples/Cpp/SimpleGame/proj.android')
         elif target == 'assetsmanager':
-            app_android_root = os.path.join(cocos_root, 'samples/Cpp/AssetsManager/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Cpp/AssetsManagerTest/proj.android')
         elif target == 'hellolua':
             app_android_root = os.path.join(cocos_root, 'samples/Lua/HelloLua/proj.android')
         elif target == 'testlua':
