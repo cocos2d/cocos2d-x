@@ -97,6 +97,10 @@ public:
         TABLEVIEW_NUMS_OF_CELLS,
         
         XMLHTTPREQUEST_READY_STATE_CHANGE,
+        
+        ASSETSMANAGER_PROGRESS,
+        ASSETSMANAGER_SUCCESS,
+        ASSETSMANAGER_ERROR,
     };
     
     typedef int Handler;
