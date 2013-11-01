@@ -273,13 +273,13 @@ void UIListViewEx::insetCustomItem(UIWidget* item, int index)
     addChild(item);
 }
 
-void UIListViewEx::removeItemAtIndex(int index)
+void UIListViewEx::removeItem(int index)
 {
     if (!m_pItems)
     {
         return;
     }
-    UIWidget* item = getItemByIndex(index);
+    UIWidget* item = getItem(index);
     if (!item)
     {
         return;
@@ -291,10 +291,10 @@ void UIListViewEx::removeItemAtIndex(int index)
 
 void UIListViewEx::removeLastItem()
 {
-    removeItemAtIndex(m_pItems->count() -1);
+    removeItem(m_pItems->count() -1);
 }
 
-UIWidget* UIListViewEx::getItemByIndex(int index)
+UIWidget* UIListViewEx::getItem(int index)
 {
     if (index < 0 || index >= m_pItems->count())
     {
@@ -308,7 +308,7 @@ CCArray* UIListViewEx::getItems()
     return m_pItems;
 }
 
-const int UIListViewEx::getIndex(UIWidget *item) const
+int UIListViewEx::getIndex(UIWidget *item) const
 {
     if (!m_pItems)
     {

@@ -297,7 +297,7 @@ public:
     
     void setBounceEnabled(bool enabled);
     
-    bool isBounceEnabled();
+    bool isBounceEnabled() const;
     
     void setInertiaScrollEnabled(bool enabled);
     

@@ -1622,7 +1622,7 @@ void UIScrollView::setBounceEnabled(bool enabled)
     m_bBounceEnabled = enabled;
 }
 
-bool UIScrollView::isBounceEnabled()
+bool UIScrollView::isBounceEnabled() const
 {
     return m_bBounceEnabled;
 }

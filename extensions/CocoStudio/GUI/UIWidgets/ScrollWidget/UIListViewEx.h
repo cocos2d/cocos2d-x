@@ -100,7 +100,7 @@ public:
      *
      * @param index of item.
      */
-    void removeItemAtIndex(int index);
+    void removeItem(int index);
     
     /**
      * Returns a item whose index is same as the parameter.
@@ -109,7 +109,7 @@ public:
      *
      * @return the item widget.
      */
-    UIWidget* getItemByIndex(int index);
+    UIWidget* getItem(int index);
     
     /**
      * Returns the item container.
@@ -123,7 +123,7 @@ public:
      *
      * @return the index of item.
      */
-    const int getIndex(UIWidget* item) const;
+    int getIndex(UIWidget* item) const;
     
     /**
      * Changes the gravity of listview.
