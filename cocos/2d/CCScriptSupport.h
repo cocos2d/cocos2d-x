@@ -211,6 +211,7 @@ enum ScriptEventType
     kControlEvent,
     kCommonEvent,
     kTableViewEvent,//Now it's only used in LuaBinding
+    kAssetsManagerEvent,//Now it's only used in Lua Binding
 };
 
 struct BasicScriptData

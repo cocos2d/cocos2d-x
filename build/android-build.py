@@ -192,7 +192,7 @@ def build_samples(target,ndk_build_param):
         elif target == 'watermelonwithme':
             app_android_root = os.path.join(cocos_root, 'samples/JavaScript/WatermelonWithMe/proj.android')
         else:
-            print 'unknown target %s, pass it', target
+            print 'unknown target: %s' % target
             continue
 
         copy_resources(target, app_android_root)

@@ -17,6 +17,8 @@ public:
     bool onTouchBegan(Touch* touches, Event  *event);
     void onTouchMoved(Touch* touches, Event  *event);
 
+    void onMouseScroll(Event *event);
+
 private:
     Point _beginPos;
     Menu* _itemMenu;

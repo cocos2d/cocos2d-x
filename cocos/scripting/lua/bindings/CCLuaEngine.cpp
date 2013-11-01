@@ -252,6 +252,11 @@ int LuaEngine::sendEvent(ScriptEvent* evt)
                 return handleTableViewEvent(evt->data);
             }
             break;
+        case kAssetsManagerEvent:
+            {
+                return handleAssetsManagerEvent(evt->data);
+            }
+            break;
         default:
             break;
     }
@@ -770,4 +775,47 @@ int LuaEngine::handleTableViewEventReturnArray(void* data,int numResults,Array& 
     
     return ret;
 }
+
+int LuaEngine::handleAssetsManagerEvent(void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
+    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+        return 0;
+    
+    LuaAssetsManagerEventData* assetsManagerEventData = static_cast<LuaAssetsManagerEventData*>(eventData->value);
+    if (assetsManagerEventData->handlerType < ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS || assetsManagerEventData->handlerType > ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR )
+        return 0;
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, assetsManagerEventData->handlerType);
+    
+    if (0 == handler)
+        return 0;
+    
+    int ret = 0;
+    switch (assetsManagerEventData->handlerType)
+    {
+        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS:
+        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR:
+        {
+            _stack->pushInt(assetsManagerEventData->value);
+            ret = _stack->executeFunctionByHandler(handler, 1);
+        }
+            break;
+            
+        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS:
+        {
+            ret = _stack->executeFunctionByHandler(handler, 0);
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return ret;
+}
+
 NS_CC_END
