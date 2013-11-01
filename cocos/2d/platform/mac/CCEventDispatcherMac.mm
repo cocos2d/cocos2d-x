@@ -27,12 +27,11 @@
 // But in case they are included, it won't be compiled.
 #import <Availability.h>
 
-#import "CCEventDispatcher.h"
+#import "CCEventDispatcherMac.h"
 #import "ccConfig.h"
 #include "utlist.h"
 
 #include "CCDirector.h"
-#include "platform/mac/CCEventDispatcher.h"
 
 //NS_CC_BEGIN;
 static CCEventDispatcher *sharedDispatcher = nil;
