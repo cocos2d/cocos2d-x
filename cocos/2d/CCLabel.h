@@ -82,12 +82,13 @@ public:
     virtual unsigned char  getDisplayedOpacity() const override;
     
      // CCLabelTextFormat protocol implementation
-    virtual Sprite *                    getSpriteChild(int ID) const override;
-    virtual Array  *                    getChildrenLetters() const override;
-    virtual Sprite *                    getSpriteForChar(unsigned short int theChar, int spriteIndexHint) override;
-    virtual float                       getLetterPosXLeft( Sprite* sp ) const override;
-    virtual float                       getLetterPosXRight( Sprite* sp ) const override;
+    virtual std::vector<LetterInfo>     *getLettersInfo() override { return &_lettersInfo; };
+    virtual bool                        recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) override;
+    virtual bool                        recordPlaceholderInfo(int spriteIndex) override;
+    virtual float                       getLetterPosXLeft( int index ) const override;
+    virtual float                       getLetterPosXRight( int index ) const override;
 
+    virtual Sprite *                    getLetter(int ID) override;  
     
     // font related stuff
     virtual int                         getCommonLineHeight() const override;
@@ -113,7 +114,8 @@ public:
     
     // carloX
     const char * getString() const { return "not implemented"; }
-    
+    void addChild(Node * child, int zOrder=0, int tag=0);
+
 private:
     /**
      * @js NA
@@ -129,29 +131,26 @@ private:
     
     bool init();
     
-    void alignText();
-    void hideAllLetters();
-    void moveAllSpritesToCache();
+    void alignText();   
     
     bool computeAdvancesForString(unsigned short int *stringToRender);
     bool setCurrentString(unsigned short *stringToSet);
     bool setOriginalString(unsigned short *stringToSet);
     void resetCurrentString();
+         
+    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);        
     
-    Sprite * getSprite();
-    Sprite * createNewSpriteFromLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture);
-    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);
-    Sprite * getSpriteForLetter(unsigned short int newLetter);
-    Sprite * updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short int newLetter);
     
-    Array               *       _spriteArray;
-    Array               *       _spriteArrayCache;
+    //! used for optimization
+    Sprite              *_reusedLetter;
+    std::vector<LetterInfo>     _lettersInfo;       
+   
     float                       _commonLineHeight;
     bool                        _lineBreakWithoutSpaces;
     float                       _width;
     TextHAlignment              _alignment;
-    unsigned short int *        _currentUTF8String;
-    unsigned short int *        _originalUTF8String;
+    unsigned short int *        _currentUTF16String;
+    unsigned short int *        _originalUTF16String;
     Size               *        _advances;
     FontAtlas          *        _fontAtlas;
     Color3B                     _displayedColor;

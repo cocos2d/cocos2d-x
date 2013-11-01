@@ -39,7 +39,9 @@ class CC_DLL FontFreeType : public Font
 public:
     
     static FontFreeType * create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
-    
+
+    static void shutdownFreeType();
+
     virtual FontAtlas   * createFontAtlas() override;
     virtual Size        * getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
     virtual GlyphDef    * getGlyphDefintionsForText(const char *text, int &outNumGlyphs,    bool UTF16text = false) const override;
@@ -47,20 +49,21 @@ public:
     virtual int           getFontMaxHeight() const override;
     virtual int           getLetterPadding() const override;
     
-    
+    bool getBBOXFotChar(unsigned short theChar, Rect &outRect) const;
+
+    inline bool isDynamicGlyphCollection() { return _dynamicGlyphCollection;}  
+
 protected:
     
-    FontFreeType();
+    FontFreeType(bool dynamicGlyphCollection = false);
     virtual ~FontFreeType();
     bool   createFontObject(const std::string &fontName, int fontSize);
     
 private:
 
     bool initFreeType();
-    void shutdownFreeType();
     FT_Library getFTLibrary();
     
-    bool getBBOXFotChar(unsigned short theChar, Rect &outRect) const;
     int  getAdvanceForChar(unsigned short theChar) const;
     int  getBearingXForChar(unsigned short theChar) const;
     int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
@@ -70,7 +73,8 @@ private:
     FT_Face           _fontRef;
     const int         _letterPadding;
     std::string       _fontName;
-    
+    unsigned char*    _ttfData;
+    bool              _dynamicGlyphCollection;
 };
 
 NS_CC_END
