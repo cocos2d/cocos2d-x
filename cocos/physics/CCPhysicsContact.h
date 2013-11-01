@@ -81,22 +81,22 @@ public:
     /*
      * @brief get data.
      */
-    inline void* getData() { return _data; }
+    inline void* getData() const { return _data; }
     /*
      * @brief set data to contact. you must manage the memory yourself, Generally you can set data at contact begin, and distory it at contact end.
      */
     inline void setData(void* data) { _data = data; }
     
-    EventCode getEventCode() { return _eventCode; };
+    EventCode getEventCode() const { return _eventCode; };
     
 private:
     static PhysicsContact* create(PhysicsShape* a, PhysicsShape* b);
     bool init(PhysicsShape* a, PhysicsShape* b);
     
     void setEventCode(EventCode eventCode) { _eventCode = eventCode; };
-    inline bool getNotify() { return _notify; }
+    inline bool getNotify() const { return _notify; }
     inline void setNotify(bool notify) { _notify = notify; }
-    inline PhysicsWorld* getWorld() { return _world; }
+    inline PhysicsWorld* getWorld() const { return _world; }
     inline void setWorld(PhysicsWorld* world) { _world = world; }
     inline void setResult(bool result) { _result = result; }
     inline bool resetResult() { bool ret = _result; _result = true; return ret; }
@@ -133,9 +133,9 @@ class PhysicsContactPreSolve
 {
 public:
     // getter/setter
-    float getElasticity();
-    float getFriciton();
-    Point getSurfaceVelocity();
+    float getElasticity() const;
+    float getFriciton() const;
+    Point getSurfaceVelocity() const;
     void setElasticity(float elasticity);
     void setFriction(float friction);
     void setSurfaceVelocity(Point surfaceVelocity);
@@ -161,9 +161,9 @@ class PhysicsContactPostSolve
 {
 public:
     // getter
-    float getElasticity();
-    float getFriciton();
-    Point getSurfaceVelocity();
+    float getElasticity() const;
+    float getFriciton() const;
+    Point getSurfaceVelocity() const;
     
 private:
     PhysicsContactPostSolve(void* contactInfo);
@@ -174,8 +174,6 @@ private:
     
     friend class EventListenerPhysicsContact;
 };
-
-static const char* PHYSICSCONTACT_EVENT_NAME = "PhysicsContactEvent";
 
 /*
  * @brief contact listener.
@@ -222,7 +220,7 @@ class EventListenerPhysicsContactWithBodies : public EventListenerPhysicsContact
 public:
     static EventListenerPhysicsContactWithBodies* create(PhysicsBody* bodyA, PhysicsBody* bodyB);
     
-    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB);
+    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
     virtual EventListenerPhysicsContactWithBodies* clone() override;
     
 protected:
@@ -239,7 +237,7 @@ class EventListenerPhysicsContactWithShapes : public EventListenerPhysicsContact
 public:
     static EventListenerPhysicsContactWithShapes* create(PhysicsShape* shapeA, PhysicsShape* shapeB);
     
-    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB);
+    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
     virtual EventListenerPhysicsContactWithShapes* clone() override;
     
 protected:
@@ -256,7 +254,7 @@ class EventListenerPhysicsContactWithGroup : public EventListenerPhysicsContact
 public:
     static EventListenerPhysicsContactWithGroup* create(int group);
     
-    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB);
+    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
     virtual EventListenerPhysicsContactWithGroup* clone() override;
     
 protected:

@@ -353,7 +353,7 @@ float PhysicsShapeCircle::calculateDefaultMoment()
                                                      cpCircleShapeGetOffset(shape)));
 }
 
-float PhysicsShapeCircle::getRadius()
+float PhysicsShapeCircle::getRadius() const
 {
     return PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(_info->shapes.front()));
 }
@@ -405,12 +405,12 @@ bool PhysicsShapeEdgeSegment::init(Point a, Point b, PhysicsMaterial material/* 
     return false;
 }
 
-Point PhysicsShapeEdgeSegment::getPointA()
+Point PhysicsShapeEdgeSegment::getPointA() const
 {
     return PhysicsHelper::cpv2point(((cpSegmentShape*)(_info->shapes.front()))->ta);
 }
 
-Point PhysicsShapeEdgeSegment::getPointB()
+Point PhysicsShapeEdgeSegment::getPointB() const
 {
     return PhysicsHelper::cpv2point(((cpSegmentShape*)(_info->shapes.front()))->tb);
 }
@@ -503,7 +503,7 @@ float PhysicsShapeBox::calculateDefaultMoment()
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, cpvzero));
 }
 
-Point* PhysicsShapeBox::getPoints(Point* points)
+Point* PhysicsShapeBox::getPoints(Point* points) const
 {
     cpShape* shape = _info->shapes.front();
     return PhysicsHelper::cpvs2points(((cpPolyShape*)shape)->verts, points, ((cpPolyShape*)shape)->numVerts);
@@ -511,7 +511,7 @@ Point* PhysicsShapeBox::getPoints(Point* points)
     return points;
 }
 
-Size PhysicsShapeBox::getSize()
+Size PhysicsShapeBox::getSize() const
 {
     cpShape* shape = _info->shapes.front();
     return PhysicsHelper::cpv2size(cpv(cpvdist(cpPolyShapeGetVert(shape, 0), cpPolyShapeGetVert(shape, 1)),
@@ -594,13 +594,13 @@ float PhysicsShapePolygon::calculateDefaultMoment()
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, cpvzero));
 }
 
-Point* PhysicsShapePolygon::getPoints(Point* points)
+Point* PhysicsShapePolygon::getPoints(Point* points) const
 {
     cpShape* shape = _info->shapes.front();
     return PhysicsHelper::cpvs2points(((cpPolyShape*)shape)->verts, points, ((cpPolyShape*)shape)->numVerts);
 }
 
-int PhysicsShapePolygon::getPointsCount()
+int PhysicsShapePolygon::getPointsCount() const
 {
     return ((cpPolyShape*)_info->shapes.front())->numVerts;
 }
@@ -715,7 +715,7 @@ Point PhysicsShapeEdgePolygon::getCenter()
     return _center;
 }
 
-int PhysicsShapeEdgePolygon::getPointsCount()
+int PhysicsShapeEdgePolygon::getPointsCount() const
 {
     return _info->shapes.size() + 1;
 }
@@ -776,7 +776,7 @@ Point PhysicsShapeEdgeChain::getCenter()
     return _center;
 }
 
-int PhysicsShapeEdgeChain::getPointsCount()
+int PhysicsShapeEdgeChain::getPointsCount() const
 {
     return _info->shapes.size() + 1;
 }

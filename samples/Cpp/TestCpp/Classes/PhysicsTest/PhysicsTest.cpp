@@ -13,6 +13,7 @@ namespace
         CL(PhysicsDemoJoints),
         CL(PhysicsDemoActions),
         CL(PhysicsDemoPump),
+        CL(PhysicsDemoOneWayPlatform),
     };
     
     static int sceneIdx=-1;
@@ -974,7 +975,7 @@ void PhysicsDemoPump::update(float delta)
         PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
         if (body->getTag() == DRAG_BODYS_TAG && body->getPosition().y < 0.0f)
         {
-            body->getOwner()->setPosition(VisibleRect::leftTop() + Point(75 + CCRANDOM_0_1() * 90, 0));
+            body->getNode()->setPosition(VisibleRect::leftTop() + Point(75 + CCRANDOM_0_1() * 90, 0));
             body->setVelocity(Point(0, 0));
         }
     }
@@ -992,7 +993,7 @@ void PhysicsDemoPump::update(float delta)
         }
         
         gear->setAngularVelocity(_rotationV);
-        _rotationV *= 0.995;
+        _rotationV *= 0.995f;
     }
 }
 
@@ -1039,11 +1040,13 @@ void PhysicsDemoOneWayPlatform::onEnter()
     this->addChild(ground);
     
     auto platform = Node::create();
-    platform->setPhysicsBody(PhysicsBody::createEdgeBox(Size(200, 50)));
+    platform->setPhysicsBody(PhysicsBody::createBox(Size(200, 50)));
+    platform->getPhysicsBody()->setDynamic(false);
     platform->setPosition(VisibleRect::center());
     this->addChild(platform);
     
-    auto ball = makeBall(VisibleRect::center() + Point(0, 50), 5);
+    auto ball = makeBall(VisibleRect::center() - Point(0, 50), 5);
+    ball->getPhysicsBody()->setVelocity(Point(0, 200));
     this->addChild(ball);
     
     auto contactListener = EventListenerPhysicsContactWithBodies::create(platform->getPhysicsBody(), ball->getPhysicsBody());
