@@ -78,7 +78,7 @@ public:
     /**
      * Insert a default item(create by a cloned model) into listview.
      */
-    void insetDefaultItem(int index);
+    void insertDefaultItem(int index);
     
     /**
      * Push back custom item into listview.
@@ -88,7 +88,7 @@ public:
     /**
      * Insert custom item into listview.
      */
-    void insetCustomItem(UIWidget* item, int index);
+    void insertCustomItem(UIWidget* item, int index);
     
     /**
      *  Removes the last item of listview.

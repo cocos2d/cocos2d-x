@@ -243,7 +243,7 @@ void UIListViewEx::pushBackDefaultItem()
     addChild(newItem);
 }
 
-void UIListViewEx::insetDefaultItem(int index)
+void UIListViewEx::insertDefaultItem(int index)
 {
     if (!m_pItems)
     {
@@ -266,7 +266,7 @@ void UIListViewEx::pushBackCustomItem(UIWidget* item)
     addChild(item);
 }
 
-void UIListViewEx::insetCustomItem(UIWidget* item, int index)
+void UIListViewEx::insertCustomItem(UIWidget* item, int index)
 {
     m_pItems->insertObject(item, index);
     remedyLayoutParameter(item);
