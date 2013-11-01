@@ -36,6 +36,8 @@ CCEventDispatcher.cpp \
 CCEventListener.cpp \
 CCEventKeyboard.cpp \
 CCEventListenerKeyboard.cpp \
+CCEventMouse.cpp \
+CCEventListenerMouse.cpp \
 CCTouch.cpp \
 CCEventTouch.cpp \
 CCEventListenerTouch.cpp \

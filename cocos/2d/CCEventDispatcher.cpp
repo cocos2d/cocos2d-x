@@ -77,6 +77,9 @@ static EventListener::ListenerID getListenerID(Event* event)
         case Event::Type::KEYBOARD:
             ret = static_cast<EventListener::ListenerID>(EventListener::Type::KEYBOARD);
             break;
+        case Event::Type::MOUSE:
+            ret = static_cast<EventListener::ListenerID>(EventListener::Type::MOUSE);
+            break;
         case Event::Type::TOUCH:
             // Touch listener is very special, it contains two kinds of listeners, EventListenerTouchOneByOne and EventListenerTouchAllAtOnce.
             // return UNKNOW instead.

@@ -572,6 +572,12 @@
     <ClCompile Include="ccUtils.cpp">
       <Filter>support</Filter>
     </ClCompile>
+    <ClCompile Include="CCEventListenerMouse.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventMouse.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1151,6 +1157,12 @@
     </ClInclude>
     <ClInclude Include="..\base\CCString.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventListenerMouse.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventMouse.h">
+      <Filter>event_dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

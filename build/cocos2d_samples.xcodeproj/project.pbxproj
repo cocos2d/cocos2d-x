@@ -1044,6 +1044,8 @@
 		46A175031807D9E2005B8026 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A174BF1807D934005B8026 /* RootViewController.mm */; };
 		5010FC91180F0F8300B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174AD1807D934005B8026 /* Default-568h@2x.png */; };
 		5010FC92180F105C00B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 460E452F1807E712000CDD6D /* Default-568h@2x.png */; };
+		59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
+		59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
 		A01E16881784BDA100B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A01E16891784BDA100B0CA4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		A01E168A1784BDA100B0CA4A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
@@ -2844,6 +2846,8 @@
 		46A174EF1807D9C4005B8026 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		46A174F01807D9C4005B8026 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		46A174F11807D9C4005B8026 /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
+		59A79D5B1821E95C00F19697 /* MouseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MouseTest.cpp; sourceTree = "<group>"; };
+		59A79D5C1821E95C00F19697 /* MouseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTest.h; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E17721784C06E00B0CA4A /* Test JavaScript iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E18571784C45500B0CA4A /* JS Watermelon With Me iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon With Me iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4042,6 +4046,7 @@
 				1AAF50D0180E2C19000584C8 /* FileUtilsTest */,
 				1AAF50D3180E2C19000584C8 /* FontTest */,
 				1AAF50D6180E2C19000584C8 /* IntervalTest */,
+				59A79D5A1821E95C00F19697 /* InputTest */,
 				1AAF50D9180E2C19000584C8 /* KeyboardTest */,
 				1AAF50DC180E2C19000584C8 /* KeypadTest */,
 				1AAF50DF180E2C19000584C8 /* LabelTest */,
@@ -5423,6 +5428,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		59A79D5A1821E95C00F19697 /* InputTest */ = {
+			isa = PBXGroup;
+			children = (
+				59A79D5B1821E95C00F19697 /* MouseTest.cpp */,
+				59A79D5C1821E95C00F19697 /* MouseTest.h */,
+			);
+			path = InputTest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -6773,6 +6787,7 @@
 				1AAF51A0180E2C1A000584C8 /* ComponentsTestScene.cpp in Sources */,
 				1AAF51A2180E2C1A000584C8 /* EnemyController.cpp in Sources */,
 				1AAF51A4180E2C1A000584C8 /* GameOverScene.cpp in Sources */,
+				59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */,
 				1AAF51A6180E2C1A000584C8 /* PlayerController.cpp in Sources */,
 				1AAF51A8180E2C1A000584C8 /* ProjectileController.cpp in Sources */,
 				1AAF51AA180E2C1A000584C8 /* SceneController.cpp in Sources */,
@@ -7113,6 +7128,7 @@
 				1AAF5219180E2C1A000584C8 /* PerformanceNodeChildrenTest.cpp in Sources */,
 				1AAF521B180E2C1A000584C8 /* PerformanceParticleTest.cpp in Sources */,
 				1AAF521D180E2C1A000584C8 /* PerformanceSpriteTest.cpp in Sources */,
+				59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */,
 				1AAF521F180E2C1A000584C8 /* PerformanceTest.cpp in Sources */,
 				1AAF5221180E2C1A000584C8 /* PerformanceTextureTest.cpp in Sources */,
 				1AAF5223180E2C1A000584C8 /* PerformanceTouchesTest.cpp in Sources */,
