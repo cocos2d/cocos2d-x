@@ -79,15 +79,6 @@ static std::map<int,int> ports_sockets;
 // name ~> globals
 static std::map<std::string, js::RootedObject*> globals;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-namespace js {
-bool IsInRequest(JSContext* cx)
-{
-    return true;
-}
-}
-#endif
-
 static void ReportException(JSContext *cx)
 {
     if (JS_IsExceptionPending(cx)) {
