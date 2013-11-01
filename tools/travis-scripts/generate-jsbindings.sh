@@ -78,7 +78,7 @@ git config user.name ${GH_USER}
 git remote add upstream https://${GH_USER}:${GH_PASSWORD}@github.com/cocos2d-x/bindings-auto-generated.git 2> /dev/null > /dev/null
 
 echo "Delete all directories and files except '.git' and 'README.md'."
-ls -a | grep -E -v ^\[.\]\{1,2\}$ | grep -E -v ^\.git$ | grep -E -v ^README.md$ | xargs -I{} rm -rf {}
+ls -a | grep -E -v ^\[.\]\{1,2\}$ | grep -E -v ^\.git$ | grep -E -v ^README\.md$ | xargs -I{} rm -rf {}
 echo "Show files in ${GENERATED_WORKTREE} folder."
 ls -a
 popd
