@@ -790,7 +790,7 @@ JSBool js_cocos2dx_clone(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 JSObject* getObjectFromNamespace(JSContext* cx, JSObject *ns, const char *name) {
-	jsval out;
+	JS::RootedValue out(cx);
     JSBool ok = JS_TRUE;
 	if (JS_GetProperty(cx, ns, name, &out) == JS_TRUE) {
 		JSObject *obj;
@@ -894,6 +894,9 @@ void JSCallFuncWrapper::callbackFunc(Node *node) {
     bool hasExtraData = !JSVAL_IS_VOID(_extraData);
     JSObject* thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
     js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, node);
 
     jsval retval;
@@ -1578,7 +1581,7 @@ JSBool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t arg
         
         JSBool isFoundUpdate = JS_FALSE;
         ok = JS_HasProperty(cx, obj, "update", &isFoundUpdate);
-        jsval jsUpdateFunc;
+        JS::RootedValue jsUpdateFunc(cx);
         if (ok && isFoundUpdate) {
             ok = JS_GetProperty(cx, obj, "update", &jsUpdateFunc);
         }
@@ -1678,7 +1681,7 @@ JSBool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp
         
         JSBool isFoundUpdate = JS_FALSE;
         ok = JS_HasProperty(cx, obj, "update", &isFoundUpdate);
-        jsval jsUpdateFunc;
+        JS::RootedValue jsUpdateFunc(cx);
         if (ok && isFoundUpdate) {
             ok = JS_GetProperty(cx, obj, "update", &jsUpdateFunc);
         }
@@ -1782,7 +1785,7 @@ JSBool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsva
         
         JSBool isFoundUpdate = JS_FALSE;
         ok = JS_HasProperty(cx, tmpObj, "update", &isFoundUpdate);
-        jsval jsUpdateFunc;
+        JS::RootedValue jsUpdateFunc(cx);
         if (ok && isFoundUpdate) {
             ok = JS_GetProperty(cx, tmpObj, "update", &jsUpdateFunc);
         }
@@ -3950,13 +3953,13 @@ JSBool js_cocos2dx_SpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, 
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
 	// first, try to get the ns
-	jsval nsval;
+    JS::RootedValue nsval(cx);
 	JSObject *ns;
 	JS_GetProperty(cx, global, "cc", &nsval);
 	if (nsval == JSVAL_VOID) {
 		ns = JS_NewObject(cx, NULL, NULL, NULL);
 		nsval = OBJECT_TO_JSVAL(ns);
-		JS_SetProperty(cx, global, "cc", &nsval);
+		JS_SetProperty(cx, global, "cc", nsval);
 	} else {
 		JS_ValueToObject(cx, nsval, &ns);
 	}
