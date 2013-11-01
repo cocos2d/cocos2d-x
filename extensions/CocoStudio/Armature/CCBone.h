@@ -157,6 +157,8 @@ public:
      */
     virtual CCArray *getColliderBodyList();
 
+    virtual void setColliderFilter(CCColliderFilter *filter);
+    virtual CCColliderFilter *getColliderFilter();
 public:
     /*
      *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData

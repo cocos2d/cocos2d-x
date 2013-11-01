@@ -723,6 +723,17 @@ CCBone *CCArmature::getParentBone()
     return m_pParentBone;
 }
 
+void CCArmature::setColliderFilter(CCColliderFilter *filter)
+{
+    CCDictElement *element = NULL;
+    CCDICT_FOREACH(m_pBoneDic, element)
+    {
+        CCBone *bone = static_cast<CCBone*>(element->getObject());
+        bone->setColliderFilter(filter);
+    }
+}
+
+
 #if ENABLE_PHYSICS_BOX2D_DETECT
 b2Body *CCArmature::getBody()
 {

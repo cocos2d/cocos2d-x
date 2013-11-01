@@ -1,3 +1,4 @@
+
 /****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
 
@@ -145,6 +146,9 @@ public:
     virtual CCArmatureAnimation *getAnimation();
 
     virtual CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
+
+
+    virtual void setColliderFilter(CCColliderFilter *filter);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     /**
