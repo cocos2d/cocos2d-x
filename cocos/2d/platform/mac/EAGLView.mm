@@ -37,7 +37,7 @@ THE SOFTWARE.
 #import "CCTouch.h"
 #import "CCIMEDispatcher.h"
 #import "CCWindow.h"
-#import "CCEventDispatcher.h"
+#import "CCEventDispatcherMac.h"
 #import "CCEGLView.h"
 
 

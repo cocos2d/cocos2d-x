@@ -7858,6 +7858,7 @@
 		1A1197D51785363400D62A44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -7870,25 +7871,20 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
 		1A1197D61785363400D62A44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -7900,19 +7896,13 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7920,6 +7910,7 @@
 		1A11986E178538E400D62A44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -7932,25 +7923,20 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
 		1A11986F178538E400D62A44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -7962,19 +7948,13 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7982,6 +7962,7 @@
 		1A6FB56917854FE400CDF010 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7991,14 +7972,7 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.mac/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -8011,13 +7985,14 @@
 				);
 				SDKROOT = macosx10.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
 		1A6FB56A17854FE400CDF010 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8026,14 +8001,7 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.mac/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -8046,7 +8014,7 @@
 				);
 				SDKROOT = macosx10.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8054,6 +8022,7 @@
 		1A6FB7B11785614200CDF010 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8064,14 +8033,7 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.mac/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -8084,13 +8046,14 @@
 				);
 				SDKROOT = macosx10.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
 		1A6FB7B21785614200CDF010 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8100,14 +8063,7 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.mac/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -8120,7 +8076,7 @@
 				);
 				SDKROOT = macosx10.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8138,13 +8094,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/TestCpp/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8160,13 +8112,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/TestCpp/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8174,6 +8122,7 @@
 		A01E16911784BDA100B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8186,22 +8135,20 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 			};
 			name = Debug;
 		};
 		A01E16921784BDA100B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8213,16 +8160,13 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8230,6 +8174,7 @@
 		A01E17701784C06E00B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8243,25 +8188,20 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E17711784C06E00B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8274,19 +8214,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8294,6 +8228,7 @@
 		A01E18551784C45400B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8307,25 +8242,20 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E18561784C45400B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8338,19 +8268,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8358,6 +8282,7 @@
 		A01E188A1784C4D600B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8371,25 +8296,20 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E188B1784C4D600B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8402,19 +8322,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8422,6 +8336,7 @@
 		A01E18BF1784C4DC00B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8435,25 +8350,20 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E18C01784C4DC00B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8466,19 +8376,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8486,6 +8390,7 @@
 		A01E18F41784C4E000B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8499,25 +8404,20 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E18F51784C4E000B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8530,19 +8430,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8561,16 +8455,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8587,16 +8474,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8615,16 +8495,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8641,16 +8514,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8669,16 +8535,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8695,16 +8554,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8723,16 +8575,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8749,16 +8594,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8777,16 +8615,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8803,16 +8634,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8844,13 +8668,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/SimpleGame/proj.mac/SampleGame_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8866,13 +8686,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/SimpleGame/proj.mac/SampleGame_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8890,13 +8706,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/HelloCpp/proj.mac/HelloCpp_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8912,13 +8724,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/HelloCpp/proj.mac/HelloCpp_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8944,6 +8752,7 @@
 		A07A52271783A1D20073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8956,25 +8765,21 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/2d/platform/ios/Simulation",
-					"$(SRCROOT)/../external/curl/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/TestCpp/proj.ios/Test-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/2d/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
 			};
 			name = Debug;
 		};
 		A07A52281783A1D20073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8986,19 +8791,14 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/2d/platform/ios/Simulation",
-					"$(SRCROOT)/../external/curl/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/TestCpp/proj.ios/Test-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/2d/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -9006,6 +8806,7 @@
 		A07A537F1784AC9B0073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -9018,22 +8819,20 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 			};
 			name = Debug;
 		};
 		A07A53801784AC9B0073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -9045,16 +8844,13 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -9062,6 +8858,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -9078,31 +8875,18 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/..",
-					"$(SRCROOT)/../cocos",
-					"$(SRCROOT)/../cocos/base",
-					"$(SRCROOT)/../cocos/physics",
-					"$(SRCROOT)/../cocos/math/kazmath/include",
-					"$(SRCROOT)/../cocos/2d",
-					"$(SRCROOT)/../cocos/gui",
-					"$(SRCROOT)/../cocos/network",
-					"$(SRCROOT)/../cocos/audio/include",
-					"$(SRCROOT)/../cocos/editor-support",
-					"$(SRCROOT)/../extensions",
-					"$(SRCROOT)/../external",
-					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
-				);
+				HEADER_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -9116,24 +8900,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/..",
-					"$(SRCROOT)/../cocos",
-					"$(SRCROOT)/../cocos/base",
-					"$(SRCROOT)/../cocos/physics",
-					"$(SRCROOT)/../cocos/math/kazmath/include",
-					"$(SRCROOT)/../cocos/2d",
-					"$(SRCROOT)/../cocos/gui",
-					"$(SRCROOT)/../cocos/network",
-					"$(SRCROOT)/../cocos/audio/include",
-					"$(SRCROOT)/../cocos/editor-support",
-					"$(SRCROOT)/../extensions",
-					"$(SRCROOT)/../external",
-					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
-				);
+				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Release;
 		};
