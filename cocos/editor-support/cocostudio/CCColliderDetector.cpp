@@ -38,12 +38,43 @@ namespace cocostudio {
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
+ColliderFilter::ColliderFilter(unsigned short categoryBits, unsigned short maskBits, signed short groupIndex)
+    : _categoryBits(categoryBits)
+    , _maskBits(maskBits)
+    , _groupIndex(groupIndex)
+{
+}
+
+void ColliderFilter::updateShape(b2Fixture *fixture)
+{
+        b2Filter filter;
+        filter.categoryBits = _categoryBits;
+        filter.groupIndex = _groupIndex;
+        filter.maskBits = _maskBits;
+        
+        fixture->SetFilterData(filter);
+}
+
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+ColliderFilter::ColliderFilter(cpCollisionType collisionType, cpGroup group)
+    : _collisionType(collisionType)
+    , _group(group)
+{
+}
+void ColliderFilter::updateShape(cpShape *shape)
+{
+        shape->collision_type = _collisionType;
+        shape->group = _group;
+}
+#endif
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
 ColliderBody::ColliderBody(ContourData *contourData)
     : _fixture(NULL)
-    , _filter(NULL)
     , _contourData(contourData)
 {
     CC_SAFE_RETAIN(_contourData);
+    _filter = new ColliderFilter();
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     _calculatedVertexList = Array::create();
@@ -57,6 +88,7 @@ ColliderBody::ColliderBody(ContourData *contourData)
     , _contourData(contourData)
 {
     CC_SAFE_RETAIN(_contourData);
+    _filter = new ColliderFilter();
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     _calculatedVertexList = Array::create();
@@ -68,14 +100,20 @@ ColliderBody::ColliderBody(ContourData *contourData)
 ColliderBody::~ColliderBody()
 {
     CC_SAFE_RELEASE(_contourData);
+    CC_SAFE_DELETE(_filter);
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     CC_SAFE_RELEASE(_calculatedVertexList);
 #endif
+}
 
-#if ENABLE_PHYSICS_BOX2D_DETECT
-    CC_SAFE_DELETE(_filter);
-#endif
+void ColliderBody::setColliderFilter(ColliderFilter *filter)
+{
+    *_filter = *filter;
+}
+ColliderFilter *ColliderBody::getColliderFilter()
+{
+    return _filter;
 }
 
 
@@ -106,6 +144,7 @@ ColliderDetector *ColliderDetector::create(Bone *bone)
 
 ColliderDetector::ColliderDetector()
     : _colliderBodyList(NULL)
+    , _filter(NULL)
     , _active(false)
 {
     _body = NULL;
@@ -115,6 +154,7 @@ ColliderDetector::~ColliderDetector()
 {
     _colliderBodyList->removeAllObjects();
     CC_SAFE_DELETE(_colliderBodyList);
+    CC_SAFE_DELETE(_filter);
 }
 
 bool ColliderDetector::init()
@@ -122,6 +162,8 @@ bool ColliderDetector::init()
     _colliderBodyList = Array::create();
     CCASSERT(_colliderBodyList, "create _colliderBodyList failed!");
     _colliderBodyList->retain();
+
+    _filter = new ColliderFilter();
 
     return true;
 }
@@ -206,9 +248,6 @@ void ColliderDetector::setActive(bool active)
                 ColliderBody *colliderBody = (ColliderBody *)object;
                 b2Fixture *fixture = colliderBody->getB2Fixture();
 
-                b2Filter *filter = colliderBody->getB2Filter();
-                *filter = fixture->GetFilterData();
-
                 _body->DestroyFixture(fixture);
                 colliderBody->setB2Fixture(NULL);
             }
@@ -254,6 +293,34 @@ bool ColliderDetector::getActive()
 Array *ColliderDetector::getColliderBodyList()
 {
     return _colliderBodyList;
+}
+
+void ColliderDetector::setColliderFilter(ColliderFilter *filter)
+{
+    *_filter = *filter;
+    
+    Object *object = NULL;
+    CCARRAY_FOREACH(_colliderBodyList, object)
+    {
+        ColliderBody *colliderBody = (ColliderBody *)object;
+        colliderBody->setColliderFilter(filter);
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+        if (colliderBody->getB2Fixture())
+        {
+            colliderBody->getColliderFilter()->updateShape(colliderBody->getB2Fixture());
+        }
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+        if (colliderBody->getShape())
+        {
+            colliderBody->getColliderFilter()->updateShape(colliderBody->getShape());
+        }
+#endif
+    }
+}
+ColliderFilter *ColliderDetector::getColliderFilter()
+{
+    return _filter;
 }
 
 
@@ -378,15 +445,7 @@ void ColliderDetector::setBody(b2Body *pBody)
         }
         colliderBody->setB2Fixture(fixture);
 
-        if (colliderBody->getB2Filter() == NULL)
-        {
-            b2Filter *filter = new b2Filter;
-            colliderBody->setB2Filter(filter);
-        }
-        else
-        {
-            fixture->SetFilterData(*colliderBody->getB2Filter());
-        }
+        colliderBody->getColliderFilter()->updateShape(fixture);
     }
 }
 
@@ -420,9 +479,14 @@ void ColliderDetector::setBody(cpBody *pBody)
 
         shape->sensor = true;
         shape->data = _bone;
-        cpSpaceAddShape(_body->space_private, shape);
+
+        if (_active)
+        {
+            cpSpaceAddShape(_body->space_private, shape);
+        }
 
         colliderBody->setShape(shape);
+        colliderBody->getColliderFilter()->updateShape(shape);
 
         delete []verts;
     }

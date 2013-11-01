@@ -441,4 +441,31 @@ Array *Bone::getColliderBodyList()
 }
 
 
+
+void Bone::setColliderFilter(ColliderFilter *filter)
+{
+    Array *array = _displayManager->getDecorativeDisplayList();
+    Object *object = NULL;
+    CCARRAY_FOREACH(array, object)
+    {
+        DecorativeDisplay *decoDisplay = static_cast<DecorativeDisplay *>(object);
+        if (ColliderDetector *detector = decoDisplay->getColliderDetector())
+        {
+            detector->setColliderFilter(filter);
+        }
+    }
+}
+ColliderFilter *Bone::getColliderFilter()
+{
+    if (DecorativeDisplay *decoDisplay = _displayManager->getCurrentDecorativeDisplay())
+    {
+        if (ColliderDetector *detector = decoDisplay->getColliderDetector())
+        {
+            return detector->getColliderFilter();
+        }
+    }
+    return NULL;
+}
+
+
 }
