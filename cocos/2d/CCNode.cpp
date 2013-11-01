@@ -1389,12 +1389,12 @@ void Node::setPhysicsBody(PhysicsBody* body)
 {
     if (_physicsBody != nullptr)
     {
-        _physicsBody->_owner = nullptr;
+        _physicsBody->_node = nullptr;
         _physicsBody->release();
     }
     
     _physicsBody = body;
-    _physicsBody->_owner = this;
+    _physicsBody->_node = this;
     _physicsBody->retain();
     _physicsBody->setPosition(getPosition());
     _physicsBody->setRotation(getRotation());

@@ -60,6 +60,8 @@
 
 NS_CC_BEGIN
 
+extern const char* PHYSICSCONTACT_EVENT_NAME;
+
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
 const float PHYSICS_INFINITY = INFINITY;
@@ -269,7 +271,8 @@ PhysicsShape* PhysicsWorld::addShape(PhysicsShape* shape)
         if (cpBodyIsStatic(shape->getBody()->_info->body))
         {
             cpSpaceAddStaticShape(_info->space, cps);
-        }else
+        }
+        else
         {
             cpSpaceAddShape(_info->space, cps);
         }
@@ -473,7 +476,8 @@ void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
         cpBody *body_b = constraint->b;
         
         const cpConstraintClass *klass = constraint->klass_private;
-        if(klass == cpPinJointGetClass()){
+        if(klass == cpPinJointGetClass())
+        {
             cpPinJoint *joint = (cpPinJoint *)constraint;
             
             cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
@@ -482,7 +486,9 @@ void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
             node->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, Color4F(0.0f, 0.0f, 1.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(a), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(b), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
-        } else if(klass == cpSlideJointGetClass()){
+        }
+        else if(klass == cpSlideJointGetClass())
+        {
             cpSlideJoint *joint = (cpSlideJoint *)constraint;
             
             cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
@@ -491,7 +497,9 @@ void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
             node->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, Color4F(0.0f, 0.0f, 1.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(a), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(b), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
-        } else if(klass == cpPivotJointGetClass()){
+        }
+        else if(klass == cpPivotJointGetClass())
+        {
             cpPivotJoint *joint = (cpPivotJoint *)constraint;
             
             cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
@@ -499,7 +507,9 @@ void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
             
             node->drawDot(PhysicsHelper::cpv2point(a), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(b), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
-        } else if(klass == cpGrooveJointGetClass()){
+        }
+        else if(klass == cpGrooveJointGetClass())
+        {
             cpGrooveJoint *joint = (cpGrooveJoint *)constraint;
             
             cpVect a = cpvadd(body_a->p, cpvrotate(joint->grv_a, body_a->rot));
@@ -508,7 +518,9 @@ void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
             
             node->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, Color4F(0.0f, 0.0f, 1.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(c), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
-        } else if(klass == cpDampedSpringGetClass()){
+        }
+        else if(klass == cpDampedSpringGetClass())
+        {
             
         }
     }
@@ -607,7 +619,8 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     if (shapeA->getGroup() != 0 && shapeA->getGroup() == shapeB->getGroup())
     {
         ret = shapeA->getGroup() > 0;
-    }else
+    }
+    else
     {
         if ((shapeA->getCategoryBitmask() & shapeB->getCollisionBitmask()) == 0
             || (shapeB->getCategoryBitmask() & shapeA->getCollisionBitmask()) == 0)
@@ -627,6 +640,11 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
 
 int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
+    if (!contact.getNotify())
+    {
+        return true;
+    }
+    
     contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
     contact.setWorld(this);
     EventCustom event(PHYSICSCONTACT_EVENT_NAME);
@@ -638,6 +656,11 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 
 void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
 {
+    if (!contact.getNotify())
+    {
+        return;
+    }
+    
     contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
     contact.setWorld(this);
     EventCustom event(PHYSICSCONTACT_EVENT_NAME);
@@ -647,6 +670,11 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
 {
+    if (!contact.getNotify())
+    {
+        return;
+    }
+    
     contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
     contact.setWorld(this);
     EventCustom event(PHYSICSCONTACT_EVENT_NAME);
@@ -680,7 +708,7 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallback& callback, Point point1, Point
 {
     if (callback.report != nullptr)
     {
-        RayCastCallbackInfo info = {this, &callback, point1, point2, data};
+        RayCastCallbackInfo info = { this, &callback, point1, point2, data };
         
         PhysicsWorldCallback::continues = true;
         cpSpaceSegmentQuery(this->_info->space,
@@ -710,7 +738,7 @@ void PhysicsWorld::rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void
     }
 }
 
-Array* PhysicsWorld::getShapesAtPoint(Point point)
+Array* PhysicsWorld::getShapesAtPoint(Point point) const
 {
     Array* arr = Array::create();
     cpSpaceNearestPointQuery(this->_info->space,
@@ -724,7 +752,7 @@ Array* PhysicsWorld::getShapesAtPoint(Point point)
     return arr;
 }
 
-PhysicsShape* PhysicsWorld::getShapeAtPoint(Point point)
+PhysicsShape* PhysicsWorld::getShapeAtPoint(Point point) const
 {
     cpShape* shape = cpSpaceNearestPointQueryNearest(this->_info->space,
                                     PhysicsHelper::point2cpv(point),
@@ -741,7 +769,7 @@ Array* PhysicsWorld::getAllBodies() const
     return _bodies;
 }
 
-PhysicsBody* PhysicsWorld::getBodyByTag(int tag)
+PhysicsBody* PhysicsWorld::getBodyByTag(int tag) const
 {
     for (auto body : *_bodies)
     {

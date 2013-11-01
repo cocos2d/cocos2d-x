@@ -41,6 +41,8 @@
 
 NS_CC_BEGIN
 
+const char* PHYSICSCONTACT_EVENT_NAME = "PhysicsContactEvent";
+
 PhysicsContact::PhysicsContact()
 : Event(Event::Type::CUSTOM)
 , _world(nullptr)
@@ -100,7 +102,7 @@ void PhysicsContact::generateContactData()
         return;
     }
     
-    cpArbiter* arb = (cpArbiter*)_contactInfo;
+    cpArbiter* arb = static_cast<cpArbiter*>(_contactInfo);
     _contactData = new PhysicsContactData();
     _contactData->count = cpArbiterGetCount(arb);
     for (int i=0; i<_contactData->count; ++i)
@@ -118,34 +120,34 @@ PhysicsContactPreSolve::PhysicsContactPreSolve(PhysicsContactData* data, void* c
 {
 }
 
-float PhysicsContactPreSolve::getElasticity()
+float PhysicsContactPreSolve::getElasticity() const
 {
-    return ((cpArbiter*)_contactInfo)->e;
+    return static_cast<cpArbiter*>(_contactInfo)->e;
 }
 
-float PhysicsContactPreSolve::getFriciton()
+float PhysicsContactPreSolve::getFriciton() const
 {
-    return ((cpArbiter*)_contactInfo)->u;
+    return static_cast<cpArbiter*>(_contactInfo)->u;
 }
 
-Point PhysicsContactPreSolve::getSurfaceVelocity()
+Point PhysicsContactPreSolve::getSurfaceVelocity() const
 {
-    return PhysicsHelper::cpv2point(((cpArbiter*)_contactInfo)->surface_vr);
+    return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
 }
 
 void PhysicsContactPreSolve::setElasticity(float elasticity)
 {
-    ((cpArbiter*)_contactInfo)->e = elasticity;
+    static_cast<cpArbiter*>(_contactInfo)->e = elasticity;
 }
 
 void PhysicsContactPreSolve::setFriction(float friction)
 {
-    ((cpArbiter*)_contactInfo)->u = friction;
+    static_cast<cpArbiter*>(_contactInfo)->u = friction;
 }
 
 void PhysicsContactPreSolve::setSurfaceVelocity(Point surfaceVelocity)
 {
-    ((cpArbiter*)_contactInfo)->surface_vr = PhysicsHelper::point2cpv(surfaceVelocity);
+    static_cast<cpArbiter*>(_contactInfo)->surface_vr = PhysicsHelper::point2cpv(surfaceVelocity);
 }
 
 PhysicsContactPreSolve::~PhysicsContactPreSolve()
@@ -165,19 +167,19 @@ PhysicsContactPostSolve::~PhysicsContactPostSolve()
     
 }
 
-float PhysicsContactPostSolve::getElasticity()
+float PhysicsContactPostSolve::getElasticity() const
 {
-    return ((cpArbiter*)_contactInfo)->e;
+    return static_cast<cpArbiter*>(_contactInfo)->e;
 }
 
-float PhysicsContactPostSolve::getFriciton()
+float PhysicsContactPostSolve::getFriciton() const
 {
-    return ((cpArbiter*)_contactInfo)->u;
+    return static_cast<cpArbiter*>(_contactInfo)->u;
 }
 
-Point PhysicsContactPostSolve::getSurfaceVelocity()
+Point PhysicsContactPostSolve::getSurfaceVelocity() const
 {
-    return PhysicsHelper::cpv2point(((cpArbiter*)_contactInfo)->surface_vr);
+    return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
 }
 
 EventListenerPhysicsContact::EventListenerPhysicsContact()

@@ -60,7 +60,7 @@ namespace
 }
 
 PhysicsBody::PhysicsBody()
-: _owner(nullptr)
+: _node(nullptr)
 , _shapes(nullptr)
 , _world(nullptr)
 , _info(nullptr)
@@ -570,7 +570,7 @@ void PhysicsBody::setMoment(float moment)
     }
 }
 
-PhysicsShape* PhysicsBody::getShapeByTag(int tag)
+PhysicsShape* PhysicsBody::getShapeByTag(int tag) const
 {
     for (auto child : *_shapes)
     {
@@ -666,7 +666,7 @@ void PhysicsBody::setEnable(bool enable)
     }
 }
 
-bool PhysicsBody::isResting()
+bool PhysicsBody::isResting() const
 {
     return cpBodyIsSleeping(_info->body) == cpTrue;
 }

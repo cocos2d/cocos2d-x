@@ -94,24 +94,24 @@ public:
     
     void rayCast(PhysicsRayCastCallback& callback, Point point1, Point point2, void* data);
     void rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data);
-    Array* getShapesAtPoint(Point point);
-    PhysicsShape* getShapeAtPoint(Point point);
+    Array* getShapesAtPoint(Point point) const;
+    PhysicsShape* getShapeAtPoint(Point point) const;
     Array* getAllBodies() const;
-    PhysicsBody* getBodyByTag(int tag);
+    PhysicsBody* getBodyByTag(int tag) const;
     
     /** Register a listener to receive contact callbacks*/
     //inline void registerContactListener(EventListenerPhysicsContact* delegate) { _listener = delegate; }
     /** Unregister a listener. */
     //inline void unregisterContactListener() { _listener = nullptr; }
     
-    inline Scene& getScene() { return *_scene; }
+    inline Scene& getScene() const { return *_scene; }
     /** get the gravity value */
-    inline Point getGravity() { return _gravity; }
+    inline Point getGravity() const { return _gravity; }
     /** set the gravity value */
     void setGravity(Point gravity);
     
     /** test the debug draw is enabled */
-    inline bool isDebugDraw() { return _debugDraw; }
+    inline bool isDebugDraw() const { return _debugDraw; }
     /** set the debug draw */
     inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
     

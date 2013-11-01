@@ -155,14 +155,14 @@ PhysicsJointDistance::~PhysicsJointDistance()
 }
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-PhysicsBodyInfo* PhysicsJoint::bodyInfo(PhysicsBody* body) const
+PhysicsBodyInfo* PhysicsJoint::getBodyInfo(PhysicsBody* body) const
 {
     return body->_info;
 }
 
-Node* PhysicsJoint::bodyOwner(PhysicsBody* body) const
+Node* PhysicsJoint::getBodyNode(PhysicsBody* body) const
 {
-    return body->_owner;
+    return body->_node;
 }
 
 
@@ -198,17 +198,17 @@ bool PhysicsJointFixed::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
         
-        bodyOwner(a)->setPosition(anchr);
-        bodyOwner(b)->setPosition(anchr);
+        getBodyNode(a)->setPosition(anchr);
+        getBodyNode(b)->setPosition(anchr);
         
         // add a pivot joint to fixed two body together
-        cpConstraint* joint = cpPivotJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
+        cpConstraint* joint = cpPivotJointNew(getBodyInfo(a)->body, getBodyInfo(b)->body,
                                         PhysicsHelper::point2cpv(anchr));
         CC_BREAK_IF(joint == nullptr);
         _info->add(joint);
         
         // add a gear joint to make two body have the same rotation.
-        joint = cpGearJointNew(bodyInfo(a)->body, bodyInfo(b)->body, 0, 1);
+        joint = cpGearJointNew(getBodyInfo(a)->body, getBodyInfo(b)->body, 0, 1);
         CC_BREAK_IF(joint == nullptr);
         _info->add(joint);
         
@@ -238,7 +238,7 @@ bool PhysicsJointPin::init(PhysicsBody *a, PhysicsBody *b, const Point& anchr)
     do
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
-        cpConstraint* joint = cpPivotJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
+        cpConstraint* joint = cpPivotJointNew(getBodyInfo(a)->body, getBodyInfo(b)->body,
                                        PhysicsHelper::point2cpv(anchr));
         
         CC_BREAK_IF(joint == nullptr);
@@ -258,7 +258,7 @@ void PhysicsJointPin::setMaxForce(float force)
     _info->joints.front()->maxForce = PhysicsHelper::float2cpfloat(force);
 }
 
-float PhysicsJointPin::getMaxForce()
+float PhysicsJointPin::getMaxForce() const
 {
     return PhysicsHelper::cpfloat2float(_info->joints.front()->maxForce);
 }
@@ -282,7 +282,7 @@ bool PhysicsJointSliding::init(PhysicsBody* a, PhysicsBody* b, const Point& groo
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
         
-        cpConstraint* joint = cpGrooveJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
+        cpConstraint* joint = cpGrooveJointNew(getBodyInfo(a)->body, getBodyInfo(b)->body,
                                        PhysicsHelper::point2cpv(grooveA),
                                        PhysicsHelper::point2cpv(grooveB),
                                        PhysicsHelper::point2cpv(anchr));
@@ -317,7 +317,7 @@ bool PhysicsJointLimit::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
         
-        cpConstraint* joint = cpSlideJointNew(bodyInfo(a)->body, bodyInfo(b)->body,
+        cpConstraint* joint = cpSlideJointNew(getBodyInfo(a)->body, getBodyInfo(b)->body,
                                        PhysicsHelper::point2cpv(anchr1),
                                        PhysicsHelper::point2cpv(anchr2),
                                        0,
@@ -333,7 +333,7 @@ bool PhysicsJointLimit::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1
     return false;
 }
 
-float PhysicsJointLimit::getMin()
+float PhysicsJointLimit::getMin() const
 {
     return PhysicsHelper::cpfloat2float(cpSlideJointGetMin(_info->joints.front()));
 }
@@ -343,7 +343,7 @@ void PhysicsJointLimit::setMin(float min)
     cpSlideJointSetMin(_info->joints.front(), PhysicsHelper::float2cpfloat(min));
 }
 
-float PhysicsJointLimit::getMax()
+float PhysicsJointLimit::getMax() const
 {
     return PhysicsHelper::cpfloat2float(cpSlideJointGetMax(_info->joints.front()));
 }
@@ -372,8 +372,8 @@ bool PhysicsJointDistance::init(PhysicsBody* a, PhysicsBody* b, const Point& anc
     {
         CC_BREAK_IF(!PhysicsJoint::init(a, b));
         
-        cpConstraint* joint = cpPinJointNew(bodyInfo(a)->body,
-                                            bodyInfo(b)->body,
+        cpConstraint* joint = cpPinJointNew(getBodyInfo(a)->body,
+                                            getBodyInfo(b)->body,
                                             PhysicsHelper::point2cpv(anchr1), PhysicsHelper::point2cpv(anchr2));
         
         CC_BREAK_IF(joint == nullptr);

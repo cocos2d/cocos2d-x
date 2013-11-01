@@ -122,12 +122,12 @@ public:
     /*
      * @brief get the body shapes.
      */
-    inline Array* getShapes() { return _shapes; }
+    inline Array* getShapes() const { return _shapes; }
     /*
      * @brief get the first body shapes.
      */
-    inline PhysicsShape* getShape() { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
-    PhysicsShape* getShapeByTag(int tag);
+    inline PhysicsShape* getShape() const { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
+    PhysicsShape* getShapeByTag(int tag) const;
     /*
      * @brief remove a shape from body
      */
@@ -152,7 +152,7 @@ public:
     /*
      * @brief get the sprite the body set to.
      */
-    inline Node* getOwner() const { return _owner; }
+    inline Node* getNode() const { return _node; }
     
     void setCategoryBitmask(int bitmask);
     void setContactTestBitmask(int bitmask);
@@ -162,7 +162,7 @@ public:
     inline int getCollisionBitmask() const { return _collisionBitmask; }
     
     void setGroup(int group);
-    inline int getGroup() { return _group; }
+    inline int getGroup() const { return _group; }
     
     /*
      * @brief get the body position.
@@ -177,7 +177,7 @@ public:
      * @brief test the body is dynamic or not.
      * a dynamic body will effect with gravity.
      */
-    inline bool isDynamic() { return _dynamic; }
+    inline bool isDynamic() const { return _dynamic; }
     /*
      * @brief set dynamic to body.
      * a dynamic body will effect with gravity.
@@ -192,7 +192,7 @@ public:
     /*
      * @brief get the body mass.
      */
-    inline float getMass() { return _mass; }
+    inline float getMass() const { return _mass; }
     /*
      * @brief add mass to body.
      * if _mass(mass of the body) == PHYSICS_INFINITY, it remains.
@@ -211,7 +211,7 @@ public:
     /*
      * @brief get the body moment of inertia.
      */
-    inline float getMoment(float moment) { return _moment; }
+    inline float getMoment(float moment) const { return _moment; }
     /*
      * @brief add moment of inertia to body.
      * if _moment(moment of the body) == PHYSICS_INFINITY, it remains.
@@ -228,25 +228,25 @@ public:
     /*
      * @brief get angular damping.
      */
-    inline float getLinearDamping() { return _linearDamping; }
+    inline float getLinearDamping() const { return _linearDamping; }
     inline void setLinearDamping(float damping) { _linearDamping = damping; }
-    inline float getAngularDamping() { return _angularDamping; }
+    inline float getAngularDamping() const { return _angularDamping; }
     inline void setAngularDamping(float damping) { _angularDamping = damping; }
     
     //virtual Clonable* clone() const override;
     
-    bool isResting();
-    inline bool isEnable() { return _enable; }
+    bool isResting() const;
+    inline bool isEnable() const { return _enable; }
     void setEnable(bool enable);
     
-    inline bool isRotationEnable() { return _rotationEnable; }
+    inline bool isRotationEnable() const { return _rotationEnable; }
     void setRotationEnable(bool enable);
     
-    inline bool isGravityEnable() { return _gravityEnable; }
+    inline bool isGravityEnable() const { return _gravityEnable; }
     void setGravityEnable(bool enable);
     
     
-    inline int getTag() { return _tag; }
+    inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
     
     Point world2Local(const Point& point);
@@ -266,7 +266,7 @@ protected:
     virtual ~PhysicsBody();
     
 protected:
-    Node*  _owner;
+    Node*                       _node;
     std::vector<PhysicsJoint*>  _joints;
     Array*                      _shapes;
     PhysicsWorld*               _world;

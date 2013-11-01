@@ -47,13 +47,13 @@ protected:
     virtual ~PhysicsJoint() = 0;
 
 public:
-    PhysicsBody* getBodyA() { return _bodyA; }
-    PhysicsBody* getBodyB() { return _bodyB; }
-    inline int getTag() { return _tag; }
+    PhysicsBody* getBodyA() const { return _bodyA; }
+    PhysicsBody* getBodyB() const { return _bodyB; }
+    inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
-    inline bool isEnable() { return _enable; }
+    inline bool isEnable() const { return _enable; }
     void setEnable(bool enable);
-    inline bool isCollisionEnable() { return _collisionEnable; }
+    inline bool isCollisionEnable() const { return _collisionEnable; }
     void setCollisionEnable(bool enable);
     
 protected:
@@ -62,8 +62,8 @@ protected:
     /**
      * PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
      */
-    PhysicsBodyInfo* bodyInfo(PhysicsBody* body) const;
-    Node* bodyOwner(PhysicsBody* body) const;
+    PhysicsBodyInfo* getBodyInfo(PhysicsBody* body) const;
+    Node* getBodyNode(PhysicsBody* body) const;
     
 protected:
     PhysicsBody* _bodyA;
@@ -133,9 +133,9 @@ class PhysicsJointLimit : public PhysicsJoint
 public:
     PhysicsJointLimit* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
-    float getMin();
+    float getMin() const;
     void setMin(float min);
-    float getMax();
+    float getMax() const;
     void setMax(float max);
     
 protected:
@@ -155,7 +155,7 @@ public:
     static PhysicsJointPin* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
     void setMaxForce(float force);
-    float getMaxForce();
+    float getMaxForce() const;
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
