@@ -95,6 +95,8 @@ public:
         TABLECELL_SIZE_FOR_INDEX,
         TABLECELL_AT_INDEX,
         TABLEVIEW_NUMS_OF_CELLS,
+        
+        XMLHTTPREQUEST_READY_STATE_CHANGE,
     };
     
     typedef int Handler;
