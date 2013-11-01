@@ -739,7 +739,7 @@ void Layout::doLayout()
                                     }
                                     CCSize rbs = relativeWidget->getSize();
                                     float locationLeft = relativeWidget->getRightInParent();
-                                    finalPosX = finalPosX = locationLeft + ap.x * cs.width;
+                                    finalPosX = locationLeft + ap.x * cs.width;
                                     
                                     finalPosY = relativeWidget->getBottomInParent() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
                                 }
