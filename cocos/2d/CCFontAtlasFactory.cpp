@@ -16,11 +16,6 @@ NS_CC_BEGIN
 
 FontAtlas * FontAtlasFactory::createAtlasFromTTF(const char* fntFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
-    if( glyphs == GlyphCollection::DYNAMIC )
-    {
-        log("ERROR: GlyphCollection::DYNAMIC is not supported yet!");
-        return nullptr;
-    }
     
     Font *font = Font::createWithTTF(fntFilePath, fontSize, glyphs, customGlyphs);
     if (font)
@@ -34,9 +29,14 @@ FontAtlas * FontAtlasFactory::createAtlasFromFNT(const char* fntFilePath)
     Font *font = Font::createWithFNT(fntFilePath);
     
     if(font)
-        return font->createFontAtlas();
+    {
+        FontAtlas * atlas = font->createFontAtlas();
+        return atlas;
+    }
     else
+    {
         return nullptr;
+    }
 }
 
 NS_CC_END

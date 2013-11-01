@@ -49,6 +49,7 @@ FontDefinitionTTF* FontDefinitionTTF::create(Font *font, int textureSize)
     
     if (ret->initDefinition(font, glyph, textureSize))
     {
+        ret->autorelease();
         return ret;
     }
     else
