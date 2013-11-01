@@ -628,11 +628,12 @@ struct GCMethods<T *>
 #endif
 };
 
-#if defined(DEBUG)
+// XXX: Needed for cocos2d JS Bindings
+//#if defined(DEBUG)
 /* This helper allows us to assert that Rooted<T> is scoped within a request. */
 extern JS_PUBLIC_API(bool)
 IsInRequest(JSContext *cx);
-#endif
+//#endif
 
 } /* namespace js */
 
