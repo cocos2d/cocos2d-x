@@ -269,6 +269,9 @@ protected:
     //CCRGBAProtocol
     bool _isOpacityModifyRGB;
 
+    /** Touch listener */
+    EventListenerTouchOneByOne* _touchListener;
+    
     /** The current control state constant. */
     CC_SYNTHESIZE_READONLY(State, _state, State);
 };

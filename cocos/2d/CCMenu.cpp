@@ -58,7 +58,12 @@ enum
 //
 //CCMenu
 //
+Menu::Menu()
+:_selectedItem(NULL)
+,_touchListener(NULL)
+{
 
+}
 Menu::~Menu()
 {
     CCLOGINFO("In the destructor of Menu. %p", this);
@@ -184,16 +189,18 @@ void Menu::addChild(Node * child, int zOrder, int tag)
 void Menu::onEnter()
 {
     Layer::onEnter();
-    
-    auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->setSwallowTouches(true);
-    
-    touchListener->onTouchBegan = CC_CALLBACK_2(Menu::onTouchBegan, this);
-    touchListener->onTouchMoved = CC_CALLBACK_2(Menu::onTouchMoved, this);
-    touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);
-    touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
-    
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    if(!_touchListener)
+    {
+        _touchListener = EventListenerTouchOneByOne::create();
+        _touchListener->setSwallowTouches(true);
+        
+        _touchListener->onTouchBegan = CC_CALLBACK_2(Menu::onTouchBegan, this);
+        _touchListener->onTouchMoved = CC_CALLBACK_2(Menu::onTouchMoved, this);
+        _touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);
+        _touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+    }
 }
 
 void Menu::onExit()
@@ -208,7 +215,10 @@ void Menu::onExit()
         
         _state = Menu::State::WAITING;
     }
-
+    if(_touchListener)
+    {
+        _eventDispatcher->removeEventListener(_touchListener);
+    }
     Layer::onExit();
 }
 

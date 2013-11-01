@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCLayer.h"
 
 #include "CCEventTouch.h"
+#include "CCEventListenerTouch.h"
 
 NS_CC_BEGIN
 
@@ -76,7 +77,7 @@ public:
     /**
      * @js ctor
      */
-    Menu() : _selectedItem(NULL) {}
+    Menu();
     virtual ~Menu();
 
     /** initializes an empty Menu */
@@ -136,6 +137,10 @@ protected:
     MenuItem* itemForTouch(Touch * touch);
     State _state;
     MenuItem *_selectedItem;
+
+    /** Touch listener */
+    EventListenerTouchOneByOne* _touchListener;
+
 };
 
 // end of GUI group

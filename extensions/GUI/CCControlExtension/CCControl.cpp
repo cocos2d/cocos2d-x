@@ -45,6 +45,7 @@ Control::Control()
 , _dispatchTable(NULL)
 , _isOpacityModifyRGB(false)
 , _state(State::NORMAL)
+, _touchListener(NULL)
 {
 
 }
@@ -96,19 +97,28 @@ Control::~Control()
 void Control::onEnter()
 {
     Layer::onEnter();
-
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
-    auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->onTouchBegan = CC_CALLBACK_2(Control::onTouchBegan, this);
-    touchListener->onTouchMoved = CC_CALLBACK_2(Control::onTouchMoved, this);
-    touchListener->onTouchEnded = CC_CALLBACK_2(Control::onTouchEnded, this);
-    touchListener->onTouchCancelled = CC_CALLBACK_2(Control::onTouchCancelled, this);
+    // we don't need every time to add listener
+    if(!_touchListener)
+    {
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        _touchListener = EventListenerTouchOneByOne::create();
+        _touchListener->onTouchBegan = CC_CALLBACK_2(Control::onTouchBegan, this);
+        _touchListener->onTouchMoved = CC_CALLBACK_2(Control::onTouchMoved, this);
+        _touchListener->onTouchEnded = CC_CALLBACK_2(Control::onTouchEnded, this);
+        _touchListener->onTouchCancelled = CC_CALLBACK_2(Control::onTouchCancelled, this);
     
-    dispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+    }
 }
 
 void Control::onExit()
 {
+    if(_touchListener)
+    {
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->removeEventListener(_touchListener);
+        _touchListener = NULL;
+    }
     Layer::onExit();
 }
 
