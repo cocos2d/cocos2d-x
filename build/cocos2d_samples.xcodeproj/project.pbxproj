@@ -8080,7 +8080,7 @@
 					"-image_base",
 					100000000,
 				);
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
 			};
@@ -8116,7 +8116,7 @@
 					"-image_base",
 					100000000,
 				);
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
 				VALIDATE_PRODUCT = YES;
