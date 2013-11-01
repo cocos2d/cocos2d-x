@@ -448,7 +448,7 @@ void CCBone::setColliderFilter(CCColliderFilter *filter)
         }
     }
 }
-consCCColliderFilter *CCBone::getColliderFilter()
+CCColliderFilter *CCBone::getColliderFilter()
 {
     if (CCDecorativeDisplay *decoDisplay = m_pDisplayManager->getCurrentDecorativeDisplay())
     {
