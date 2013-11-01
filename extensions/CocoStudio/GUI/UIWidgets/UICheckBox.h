@@ -208,6 +208,8 @@ protected:
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     CCSprite* m_pBackGroundBoxRenderer;
     CCSprite* m_pBackGroundSelectedBoxRenderer;
@@ -224,6 +226,12 @@ protected:
     TextureResType m_eFrontCrossTexType;
     TextureResType m_eBackGroundDisabledTexType;
     TextureResType m_eFrontCrossDisabledTexType;
+    
+    std::string m_strBackGroundFileName;
+    std::string m_strBackGroundSelectedFileName;
+    std::string m_strFrontCrossFileName;
+    std::string m_strBackGroundDisabledFileName;
+    std::string m_strFrontCrossDisabledFileName;
     
     /*Compatible*/
     CCObject*       m_pSelectListener;

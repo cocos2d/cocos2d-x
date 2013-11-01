@@ -206,7 +206,10 @@ protected:
     void updateChild();
     
     void initChildEvent();
-    void updateChildEvent();        
+    void updateChildEvent();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
     
     /*compatible*/
     /**

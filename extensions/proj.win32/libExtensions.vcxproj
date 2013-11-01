@@ -154,8 +154,8 @@
     <ClCompile Include="..\CocoStudio\GUI\System\UIHelper.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\UIInputManager.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIButton.cpp" />
@@ -291,8 +291,8 @@
     <ClInclude Include="..\CocoStudio\GUI\System\UIInputManager.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\Compatible\CompatibleClasses.h" />
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollInterface.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.h" />

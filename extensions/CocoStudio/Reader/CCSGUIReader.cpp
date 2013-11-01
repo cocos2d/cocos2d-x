@@ -96,7 +96,7 @@ int CCSGUIReader::getVersionInteger(const char *str)
 
 UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
 {
-    DictionaryHelper* dicHelper = dicHelper;
+    DictionaryHelper* dicHelper = DICTOOL;
     UIWidget* widget = NULL;
     const char* classname = dicHelper->getStringValue_json(data, "classname");
     cs::CSJsonDictionary* uiOptions = dicHelper->getSubDictionary_json(data, "options");
@@ -197,7 +197,7 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
 
 UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
 {
-    DictionaryHelper* dicHelper = dicHelper;
+    DictionaryHelper* dicHelper = DICTOOL;
     UIHelper* uiHelper = CCUIHELPER;
     m_bOlderVersion = false;
     const char *des = NULL;
@@ -886,8 +886,7 @@ void CCSGUIReader::setPropsForContainerWidgetFromJsonDictionary(UIWidget *widget
     setPropsForWidgetFromJsonDictionary(widget, options);
     UIContainerWidget* containerWidget = (UIContainerWidget*)widget;
     if (!dynamic_cast<UIScrollView*>(containerWidget)
-        && !dynamic_cast<UIListView*>(containerWidget)
-        && !dynamic_cast<UIDragPanel*>(containerWidget))
+        && !dynamic_cast<UIListView*>(containerWidget))
     {
         containerWidget->setClippingEnable(dicHelper->getBooleanValue_json(options, "clipAble"));
     }
@@ -1544,7 +1543,7 @@ void CCSGUIReader::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, cs
 void CCSGUIReader::setPropsForDragPanelFromJsonDictionary(UIWidget *widget, cs::CSJsonDictionary *options)
 {
     DictionaryHelper* dicHelper = DICTOOL;
-    setPropsForPanelFromJsonDictionary(widget, options);
+    setPropsForScrollViewFromJsonDictionary(widget, options);
     
     UIDragPanel* dragPanel = (UIDragPanel*)widget;
     

@@ -93,12 +93,14 @@ int UILabel::getStringLength()
 
 void UILabel::setFontSize(int size)
 {
+    m_nFontSize = size;
     m_pLabelRenderer->setFontSize(size);
     labelScaleChangedWithSize();
 }
 
 void UILabel::setFontName(const char* name)
 {
+    m_sFontName = name;
     m_pLabelRenderer->setFontName(name);
     labelScaleChangedWithSize();
 }
@@ -227,6 +229,23 @@ void UILabel::labelScaleChangedWithSize()
 const char* UILabel::getDescription() const
 {
     return "Label";
+}
+
+UIWidget* UILabel::createCloneInstance()
+{
+    return UILabel::create();
+}
+
+void UILabel::copySpecialProperties(UIWidget *widget)
+{
+    UILabel* label = dynamic_cast<UILabel*>(widget);
+    if (label)
+    {
+        setFontName(label->m_sFontName.c_str());
+        setFontSize(label->m_pLabelRenderer->getFontSize());
+        setText(label->getStringValue());
+        setTouchScaleChangeEnabled(label->m_bTouchScaleChangeEnabled);
+    }
 }
 
 NS_CC_EXT_END

@@ -125,6 +125,8 @@ protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void imageTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     int m_nClickCount;
     float m_fClickTimeInterval;

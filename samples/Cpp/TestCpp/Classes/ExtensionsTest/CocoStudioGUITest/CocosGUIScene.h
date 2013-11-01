@@ -49,8 +49,6 @@ public:
     
     void menuCallback(CCObject* pSender);
     
-    UILayer* ul;
-    
     CCLabelTTF* m_pLabel;
     
     CCMenu* m_pItemMenu;
