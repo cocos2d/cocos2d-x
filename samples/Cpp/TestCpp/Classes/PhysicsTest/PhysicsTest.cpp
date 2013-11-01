@@ -898,7 +898,7 @@ void PhysicsDemoPump::onEnter()
     // balls
     for (int i = 0; i < 6; ++i)
     {
-        auto ball = makeBall(VisibleRect::leftTop() + Point(75 + CCRANDOM_0_1() * 90, 0), 22, PhysicsMaterial(0.5f, 0.0f, 0.1f));
+        auto ball = makeBall(VisibleRect::leftTop() + Point(75 + CCRANDOM_0_1() * 90, 0), 22, PhysicsMaterial(0.05f, 0.0f, 0.1f));
         ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
         addChild(ball);
     }
@@ -908,8 +908,8 @@ void PhysicsDemoPump::onEnter()
     
     Point vec[4] =
     {
-        VisibleRect::leftTop() + Point(102, -146),
-        VisibleRect::leftTop() + Point(148, -159),
+        VisibleRect::leftTop() + Point(102, -148),
+        VisibleRect::leftTop() + Point(148, -161),
         VisibleRect::leftBottom() + Point(148, 20),
         VisibleRect::leftBottom() + Point(102, 20)
     };
@@ -918,7 +918,7 @@ void PhysicsDemoPump::onEnter()
     
     // small gear
     auto sgear = Node::create();
-    auto sgearB = PhysicsBody::createCircle(50);
+    auto sgearB = PhysicsBody::createCircle(44);
     sgear->setPhysicsBody(sgearB);
     sgear->setPosition(VisibleRect::leftBottom() + Point(125, 0));
     this->addChild(sgear);
@@ -946,7 +946,7 @@ void PhysicsDemoPump::onEnter()
     this->addChild(pump);
     pumpB->setCategoryBitmask(0x02);
     pumpB->setGravityEnable(false);
-    _world->addJoint(PhysicsJointDistance::create(pumpB, sgearB, Point(0, 0), Point(0, -50)));
+    _world->addJoint(PhysicsJointDistance::create(pumpB, sgearB, Point(0, 0), Point(0, -44)));
     
     // plugger
     Point seg[] = {VisibleRect::leftTop() + Point(75, -120), VisibleRect::leftBottom() + Point(75, -100)};
@@ -964,7 +964,7 @@ void PhysicsDemoPump::onEnter()
     pluggerB->setCategoryBitmask(0x02);
     sgearB->setCollisionBitmask(0x04 | 0x01);
     _world->addJoint(PhysicsJointPin::create(body, pluggerB, VisibleRect::leftBottom() + Point(75, -90)));
-    _world->addJoint(PhysicsJointDistance::create(pluggerB, sgearB, pluggerB->world2Local(VisibleRect::leftBottom() + Point(75, 0)), Point(50, 0)));
+    _world->addJoint(PhysicsJointDistance::create(pluggerB, sgearB, pluggerB->world2Local(VisibleRect::leftBottom() + Point(75, 0)), Point(44, 0)));
 }
 
 void PhysicsDemoPump::update(float delta)
@@ -1024,7 +1024,6 @@ std::string PhysicsDemoPump::title()
     return "Pump";
 }
 
-
 void PhysicsDemoOneWayPlatform::onEnter()
 {
     PhysicsDemo::onEnter();
@@ -1044,7 +1043,17 @@ void PhysicsDemoOneWayPlatform::onEnter()
     platform->setPosition(VisibleRect::center());
     this->addChild(platform);
     
-    this->addChild(makeBall(VisibleRect::center() + Point(0, 50), 5));
+    auto ball = makeBall(VisibleRect::center() + Point(0, 50), 5);
+    this->addChild(ball);
+    
+    auto contactListener = EventListenerPhysicsContactWithBodies::create(platform->getPhysicsBody(), ball->getPhysicsBody());
+    contactListener->onContactPreSolve = CC_CALLBACK_3(PhysicsDemoOneWayPlatform::onPreSolve, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+}
+
+bool PhysicsDemoOneWayPlatform::onPreSolve(EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve)
+{
+    return true;
 }
 
 std::string PhysicsDemoOneWayPlatform::title()

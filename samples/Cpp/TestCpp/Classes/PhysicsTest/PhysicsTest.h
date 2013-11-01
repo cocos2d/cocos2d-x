@@ -139,6 +139,8 @@ class PhysicsDemoOneWayPlatform : public PhysicsDemo
 public:
     void onEnter() override;
     std::string title() override;
+    
+    bool onPreSolve(EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve);
 };
 
 #endif

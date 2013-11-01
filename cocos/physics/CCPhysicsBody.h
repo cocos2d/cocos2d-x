@@ -44,7 +44,7 @@ class PhysicsJoint;
 class PhysicsBodyInfo;
 
 
-const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.01f, 0.5f, 0.5f);
+const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
 
 /**
  * A body affect by physics.

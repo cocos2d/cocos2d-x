@@ -102,8 +102,7 @@ bool Scene::initWithPhysics()
         Director * pDirector;
         CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
         this->setContentSize(pDirector->getWinSize());
-        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::create()));
-        _physicsWorld->setScene(this);
+        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::create(*this)));
         
         this->scheduleUpdate();
         // success

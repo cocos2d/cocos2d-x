@@ -40,7 +40,6 @@ class PhysicsJoint;
 class PhysicsWorldInfo;
 class PhysicsShape;
 class PhysicsContact;
-class PhysicsContactListener;
 class Array;
 
 class Sprite;
@@ -101,10 +100,11 @@ public:
     PhysicsBody* getBodyByTag(int tag);
     
     /** Register a listener to receive contact callbacks*/
-    inline void registerContactListener(PhysicsContactListener* delegate) { _listener = delegate; }
+    //inline void registerContactListener(EventListenerPhysicsContact* delegate) { _listener = delegate; }
     /** Unregister a listener. */
-    inline void unregisterContactListener() { _listener = nullptr; }
+    //inline void unregisterContactListener() { _listener = nullptr; }
     
+    inline Scene& getScene() { return *_scene; }
     /** get the gravity value */
     inline Point getGravity() { return _gravity; }
     /** set the gravity value */
@@ -120,10 +120,8 @@ public:
     virtual void removeAllBodies();
     
 protected:
-    static PhysicsWorld* create();
-    bool init();
-    
-    void setScene(Scene* scene);
+    static PhysicsWorld* create(Scene& scene);
+    bool init(Scene& scene);
     
     virtual PhysicsBody* addBody(PhysicsBody* body);
     virtual PhysicsShape* addShape(PhysicsShape* shape);
@@ -144,8 +142,7 @@ protected:
     Point _gravity;
     float _speed;
     PhysicsWorldInfo* _info;
-    PhysicsContactListener* _listener;
-    
+    //EventListenerPhysicsContact* _listener;
     
     Array* _bodies;
     std::list<PhysicsJoint*> _joints;
