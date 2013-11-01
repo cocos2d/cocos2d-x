@@ -127,7 +127,7 @@ def copy_resources(target, app_android_root):
         copy_files(resources_dir, assets_dir)
 
     # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
-    if target in JSB_SAMPLES or target == "assetsmanager":
+    if target in JSB_SAMPLES:
         resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
         copy_files(resources_dir, assets_dir)
 
