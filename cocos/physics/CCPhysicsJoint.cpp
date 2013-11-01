@@ -171,11 +171,6 @@ void PhysicsJoint::setCollisionEnable(bool enable)
     if (_collisionEnable != enable)
     {
         _collisionEnable = enable;
-        
-//        for (auto shape : _bodyB->_shapes)
-//        {
-//            shape->_info->setGroup(enable ? _bodyB->_info->group : _bodyA->_info->group);
-//        }
     }
 }
 
@@ -244,8 +239,6 @@ bool PhysicsJointPin::init(PhysicsBody *a, PhysicsBody *b, const Point& anchr)
         CC_BREAK_IF(joint == nullptr);
         
         _info->add(joint);
-        
-        //setCollisionEnable(false);
         
         return true;
     } while (false);

@@ -730,15 +730,6 @@ Point PhysicsBody::local2World(const Point& point)
     return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->body, PhysicsHelper::point2cpv(point)));
 }
 
-//Clonable* PhysicsBody::clone() const
-//{
-//    PhysicsBody* body = new PhysicsBody();
-//    
-//    body->autorelease();
-//    
-//    return body;
-//}
-
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 
 
