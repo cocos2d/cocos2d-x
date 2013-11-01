@@ -149,13 +149,23 @@ bool Menu::initWithArray(Array* pArrayOfItems)
             }
         }
     
-        //    [self alignItemsVertically];
         _selectedItem = NULL;
         _state = Menu::State::WAITING;
         
         // enable cascade color and opacity on menus
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);
+        
+        
+        auto touchListener = EventListenerTouchOneByOne::create();
+        touchListener->setSwallowTouches(true);
+        
+        touchListener->onTouchBegan = CC_CALLBACK_2(Menu::onTouchBegan, this);
+        touchListener->onTouchMoved = CC_CALLBACK_2(Menu::onTouchMoved, this);
+        touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);
+        touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
         
         return true;
     }
@@ -184,16 +194,6 @@ void Menu::addChild(Node * child, int zOrder, int tag)
 void Menu::onEnter()
 {
     Layer::onEnter();
-    
-    auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->setSwallowTouches(true);
-    
-    touchListener->onTouchBegan = CC_CALLBACK_2(Menu::onTouchBegan, this);
-    touchListener->onTouchMoved = CC_CALLBACK_2(Menu::onTouchMoved, this);
-    touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);
-    touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
-    
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
 
 void Menu::onExit()
