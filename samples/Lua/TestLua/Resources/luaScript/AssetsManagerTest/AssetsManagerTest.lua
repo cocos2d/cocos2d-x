@@ -12,23 +12,24 @@ local menuItemNames =
 local winSize = cc.Director:getInstance():getWinSize()
 
 local function updateLayer()
+    local layer = cc.Layer:create()
 
     local support  = false
     if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) 
         or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or (cc.PLATFORM_OS_ANDROID == targetPlatform) 
-        or (cc.PLATFORM_OS_IPHONE  == targetPlatform) then
+        or (cc.PLATFORM_OS_MAC  == targetPlatform) then
         support = true
     end
 
     if not support then
-        return nil
+        print("Platform is not supported!")
+        return layer
     end
 
     local isUpdateItemClicked = false
     local assetsManager       = nil
     local pathToSave          = ""
 
-    local layer = cc.Layer:create()
     local menu = cc.Menu:create()
     menu:setPosition(cc.p(0, 0))
     cc.MenuItemFont:setFontName("Arial")
