@@ -60,6 +60,7 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
 #include "CCEventDispatcher.h"
+#include "CCFontFreeType.h"
 
 /**
  Position of the FPS
@@ -685,6 +686,8 @@ void Director::purgeDirector()
 
     // purge bitmap cache
     LabelBMFont::purgeCachedData();
+
+    FontFreeType::shutdownFreeType();
 
     // purge all managed caches
     DrawPrimitives::free();

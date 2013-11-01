@@ -20,6 +20,7 @@ LOCAL_SRC_FILES := CCLuaBridge.cpp \
           lua_cocos2dx_manual.cpp \
           lua_cocos2dx_extension_manual.cpp \
           lua_cocos2dx_deprecated.cpp \
+          lua_xml_http_request.cpp \
           platform/android/CCLuaJavaBridge.cpp \
           platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp \
           ../../../../external/lua/tolua/tolua_event.c \
