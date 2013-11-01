@@ -53,6 +53,8 @@
 #include "CCArray.h"
 #include "CCScene.h"
 #include "CCDirector.h"
+#include "CCEventDispatcher.h"
+#include "CCEventCustom.h"
 
 #include <algorithm>
 
@@ -175,7 +177,7 @@ void PhysicsWorldCallback::nearestPointQueryFunc(cpShape *shape, cpFloat distanc
     arr->addObject(it->second->shape);
 }
 
-bool PhysicsWorld::init()
+bool PhysicsWorld::init(Scene& scene)
 {
     do
     {
@@ -184,6 +186,8 @@ bool PhysicsWorld::init()
         _bodies = Array::create();
         CC_BREAK_IF(_bodies == nullptr);
         _bodies->retain();
+
+        _scene = &scene;
         
         cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(_gravity));
         
@@ -458,11 +462,6 @@ void PhysicsWorld::debugDraw()
     }
 }
 
-void PhysicsWorld::setScene(Scene *scene)
-{
-    _scene = scene;
-}
-
 void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
 {
     for (auto it = joint->_info->joints.begin(); it != joint->_info->joints.end(); ++it)
@@ -571,6 +570,7 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
 int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
 {
     bool ret = true;
+    
     PhysicsShape* shapeA = contact.getShapeA();
     PhysicsShape* shapeB = contact.getShapeB();
     PhysicsBody* bodyA = shapeA->getBody();
@@ -597,7 +597,6 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
         }
     }
     
-    
     // bitmask check
     if ((shapeA->getCategoryBitmask() & shapeB->getContactTestBitmask()) == 0
         || (shapeB->getContactTestBitmask() & shapeA->getCategoryBitmask()) == 0)
@@ -617,69 +616,42 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
         }
     }
     
-    if (contact.getNotify() && _listener && _listener->onContactBegin)
-    {
-        contact._begin = true;
-        contact.generateContactData();
-        
-        // the mask has high priority than _listener->onContactBegin.
-        // so if the mask test is false, the two bodies won't have collision. 
-        if (ret)
-        {
-            ret = _listener->onContactBegin(*this, contact);
-        }else
-        {
-            _listener->onContactBegin(*this, contact);
-        }
-    }
+    contact.setEventCode(PhysicsContact::EventCode::BEGIN);
+    contact.setWorld(this);
+    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
+    event.setUserData(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&event);
     
-    return ret;
+    return ret ? contact.resetResult() : false;
 }
 
 int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
-    if (!contact.getNotify())
-    {
-        return true;
-    }
+    contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
+    contact.setWorld(this);
+    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
+    event.setUserData(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&event);
     
-    if (_listener && _listener->onContactPreSolve)
-    {
-        PhysicsContactPreSolve solve(contact._begin ? nullptr : contact._contactData, contact._contactInfo);
-        contact._begin = false;
-        contact.generateContactData();
-        
-        return _listener->onContactPreSolve(*this, contact, solve);
-    }
-    
-    return true;
+    return contact.resetResult();
 }
 
 void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
 {
-    if (!contact.getNotify())
-    {
-        return;
-    }
-    
-    if (_listener && _listener->onContactPreSolve)
-    {
-        PhysicsContactPostSolve solve(contact._contactInfo);
-        _listener->onContactPostSolve(*this, contact, solve);
-    }
+    contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
+    contact.setWorld(this);
+    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
+    event.setUserData(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
 {
-    if (!contact.getNotify())
-    {
-        return;
-    }
-    
-    if (_listener && _listener->onContactEnd)
-    {
-        _listener->onContactEnd(*this, contact);
-    }
+    contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
+    contact.setWorld(this);
+    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
+    event.setUserData(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void PhysicsWorld::setGravity(Point gravity)
@@ -786,10 +758,10 @@ PhysicsBody* PhysicsWorld::getBodyByTag(int tag)
 
 #endif
 
-PhysicsWorld* PhysicsWorld::create()
+PhysicsWorld* PhysicsWorld::create(Scene& scene)
 {
     PhysicsWorld * world = new PhysicsWorld();
-    if(world && world->init())
+    if(world && world->init(scene))
     {
         return world;
     }
@@ -802,7 +774,6 @@ PhysicsWorld::PhysicsWorld()
 : _gravity(Point(0.0f, -98.0f))
 , _speed(1.0f)
 , _info(nullptr)
-, _listener(nullptr)
 , _bodies(nullptr)
 , _scene(nullptr)
 , _debugDraw(false)

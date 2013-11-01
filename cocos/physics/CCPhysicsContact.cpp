@@ -30,22 +30,30 @@
 #include "Box2D.h"
 #endif
 
+#include "CCPhysicsBody.h"
+
 #include "chipmunk/CCPhysicsContactInfo_chipmunk.h"
 #include "box2d/CCPhysicsContactInfo_box2d.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 #include "box2d/CCPhysicsHelper_box2d.h"
 
+#include "CCEventCustom.h"
+
 NS_CC_BEGIN
 
 PhysicsContact::PhysicsContact()
-: _shapeA(nullptr)
+: Event(Event::Type::CUSTOM)
+, _world(nullptr)
+, _shapeA(nullptr)
 , _shapeB(nullptr)
+, _eventCode(EventCode::NONE)
 , _info(nullptr)
 , _notify(true)
 , _begin(false)
 , _data(nullptr)
 , _contactInfo(nullptr)
 , _contactData(nullptr)
+, _result(true)
 {
     
 }
@@ -172,25 +180,106 @@ Point PhysicsContactPostSolve::getSurfaceVelocity()
     return PhysicsHelper::cpv2point(((cpArbiter*)_contactInfo)->surface_vr);
 }
 
-PhysicsContactListener::PhysicsContactListener()
+EventListenerPhysicsContact::EventListenerPhysicsContact()
 : onContactBegin(nullptr)
 , onContactPreSolve(nullptr)
 , onContactPostSolve(nullptr)
-, onContactEnd(nullptr)
+, onContactSeperate(nullptr)
+{
+}
+
+bool EventListenerPhysicsContact::init()
+{
+    auto func = [this](EventCustom* event) -> void
+    {
+        return onEvent(event);
+    };
+    
+    return EventListenerCustom::init(std::hash<std::string>()(PHYSICSCONTACT_EVENT_NAME), func);
+}
+
+void EventListenerPhysicsContact::onEvent(EventCustom* event)
+{
+    PhysicsContact& contact = *(PhysicsContact*)(event->getUserData());
+    
+    switch (contact.getEventCode())
+    {
+        case PhysicsContact::EventCode::BEGIN:
+        {
+            bool ret = true;
+            
+            if (onContactBegin != nullptr
+                && contact.getNotify()
+                && test(contact.getShapeA(), contact.getShapeB()))
+            {
+                contact._begin = true;
+                contact.generateContactData();
+                
+                // the mask has high priority than _listener->onContactBegin.
+                // so if the mask test is false, the two bodies won't have collision.
+                if (ret)
+                {
+                    ret = onContactBegin(event, contact);
+                }else
+                {
+                    onContactBegin(event, contact);
+                }
+            }
+            
+            contact.setResult(ret);
+            break;
+        }
+        case PhysicsContact::EventCode::PRESOLVE:
+        {
+            bool ret = true;
+            
+            if (onContactPreSolve != nullptr
+                && test(contact.getShapeA(), contact.getShapeB()))
+            {
+                PhysicsContactPreSolve solve(contact._begin ? nullptr : contact._contactData, contact._contactInfo);
+                contact._begin = false;
+                contact.generateContactData();
+                
+                ret = onContactPreSolve(event, contact, solve);
+            }
+            
+            contact.setResult(ret);
+            break;
+        }
+        case PhysicsContact::EventCode::POSTSOLVE:
+        {
+            if (onContactPreSolve != nullptr
+                && test(contact.getShapeA(), contact.getShapeB()))
+            {
+                PhysicsContactPostSolve solve(contact._contactInfo);
+                onContactPostSolve(event, contact, solve);
+            }
+            break;
+        }
+        case PhysicsContact::EventCode::SEPERATE:
+        {
+            if (onContactSeperate != nullptr
+                && test(contact.getShapeA(), contact.getShapeB()))
+            {
+                onContactSeperate(event, contact);
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+EventListenerPhysicsContact::~EventListenerPhysicsContact()
 {
     
 }
 
-PhysicsContactListener::~PhysicsContactListener()
+EventListenerPhysicsContact* EventListenerPhysicsContact::create()
 {
+    EventListenerPhysicsContact* obj = new EventListenerPhysicsContact();
     
-}
-
-PhysicsContactListener* PhysicsContactListener::create()
-{
-    PhysicsContactListener* obj = new PhysicsContactListener();
-    
-    if (obj != nullptr)
+    if (obj != nullptr && obj->init())
     {
         obj->autorelease();
         return obj;
@@ -200,17 +289,17 @@ PhysicsContactListener* PhysicsContactListener::create()
     return nullptr;
 }
 
-bool PhysicsContactListener::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+bool EventListenerPhysicsContact::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
 {
     CC_UNUSED_PARAM(shapeA);
     CC_UNUSED_PARAM(shapeB);
     return true;
 }
 
-bool PhysicsContactListener::checkAvailable()
+bool EventListenerPhysicsContact::checkAvailable()
 {
     if (onContactBegin == nullptr && onContactPreSolve == nullptr
-        && onContactPostSolve == nullptr && onContactEnd == nullptr)
+        && onContactPostSolve == nullptr && onContactSeperate == nullptr)
     {
         CCASSERT(false, "Invalid PhysicsContactListener.");
         return false;
@@ -219,16 +308,16 @@ bool PhysicsContactListener::checkAvailable()
     return true;
 }
 
-EventListener* PhysicsContactListener::clone()
+EventListenerPhysicsContact* EventListenerPhysicsContact::clone()
 {
-    PhysicsContactListener* obj = PhysicsContactListener::create();
+    EventListenerPhysicsContact* obj = EventListenerPhysicsContact::create();
     
     if (obj != nullptr)
     {
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactEnd = onContactEnd;
+        obj->onContactSeperate = onContactSeperate;
         
         return obj;
     }
@@ -237,14 +326,79 @@ EventListener* PhysicsContactListener::clone()
     return nullptr;
 }
 
-
-
-
-PhysicsContactWithBodysListener* PhysicsContactWithBodysListener::create(PhysicsShape* shapeA, PhysicsShape* shapeB)
+EventListenerPhysicsContactWithBodies* EventListenerPhysicsContactWithBodies::create(PhysicsBody* bodyA, PhysicsBody* bodyB)
 {
-    PhysicsContactWithBodysListener* obj = new PhysicsContactWithBodysListener();
+    EventListenerPhysicsContactWithBodies* obj = new EventListenerPhysicsContactWithBodies();
+    
+    if (obj != nullptr && obj->init())
+    {
+        obj->_a = bodyA;
+        obj->_b = bodyB;
+        obj->autorelease();
+        return obj;
+    }
+    
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
+EventListenerPhysicsContactWithBodies::EventListenerPhysicsContactWithBodies()
+: _a(nullptr)
+, _b(nullptr)
+{
+    
+}
+
+EventListenerPhysicsContactWithBodies::~EventListenerPhysicsContactWithBodies()
+{
+    
+}
+
+
+bool EventListenerPhysicsContactWithBodies::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+{
+    if ((shapeA->getBody() == _a && shapeB->getBody() == _b)
+        || (shapeA->getBody() == _b && shapeB->getBody() == _a))
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+EventListenerPhysicsContactWithBodies* EventListenerPhysicsContactWithBodies::clone()
+{
+    EventListenerPhysicsContactWithBodies* obj = EventListenerPhysicsContactWithBodies::create(_a, _b);
     
     if (obj != nullptr)
+    {
+        obj->onContactBegin = onContactBegin;
+        obj->onContactPreSolve = onContactPreSolve;
+        obj->onContactPostSolve = onContactPostSolve;
+        obj->onContactSeperate = onContactSeperate;
+        
+        return obj;
+    }
+    
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
+EventListenerPhysicsContactWithShapes::EventListenerPhysicsContactWithShapes()
+: _a(nullptr)
+, _b(nullptr)
+{
+}
+
+EventListenerPhysicsContactWithShapes::~EventListenerPhysicsContactWithShapes()
+{
+}
+
+EventListenerPhysicsContactWithShapes* EventListenerPhysicsContactWithShapes::create(PhysicsShape* shapeA, PhysicsShape* shapeB)
+{
+    EventListenerPhysicsContactWithShapes* obj = new EventListenerPhysicsContactWithShapes();
+    
+    if (obj != nullptr && obj->init())
     {
         obj->_a = shapeA;
         obj->_b = shapeB;
@@ -256,17 +410,7 @@ PhysicsContactWithBodysListener* PhysicsContactWithBodysListener::create(Physics
     return nullptr;
 }
 
-PhysicsContactWithBodysListener::PhysicsContactWithBodysListener()
-{
-    
-}
-
-PhysicsContactWithBodysListener::~PhysicsContactWithBodysListener()
-{
-    
-}
-
-bool PhysicsContactWithBodysListener::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+bool EventListenerPhysicsContactWithShapes::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
 {
     if ((shapeA == _a && shapeB == _b)
         || (shapeA == _b && shapeB == _a))
@@ -277,16 +421,68 @@ bool PhysicsContactWithBodysListener::test(PhysicsShape* shapeA, PhysicsShape* s
     return false;
 }
 
-EventListener* PhysicsContactWithBodysListener::clone()
+EventListenerPhysicsContactWithShapes* EventListenerPhysicsContactWithShapes::clone()
 {
-    PhysicsContactWithBodysListener* obj = PhysicsContactWithBodysListener::create(_a, _b);
+    EventListenerPhysicsContactWithShapes* obj = EventListenerPhysicsContactWithShapes::create(_a, _b);
     
     if (obj != nullptr)
     {
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactEnd = onContactEnd;
+        obj->onContactSeperate = onContactSeperate;
+        
+        return obj;
+    }
+    
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
+EventListenerPhysicsContactWithGroup::EventListenerPhysicsContactWithGroup()
+: _group(CP_NO_GROUP)
+{
+}
+
+EventListenerPhysicsContactWithGroup::~EventListenerPhysicsContactWithGroup()
+{
+}
+
+EventListenerPhysicsContactWithGroup* EventListenerPhysicsContactWithGroup::create(int group)
+{
+    EventListenerPhysicsContactWithGroup* obj = new EventListenerPhysicsContactWithGroup();
+    
+    if (obj != nullptr && obj->init())
+    {
+        obj->_group = group;
+        obj->autorelease();
+        return obj;
+    }
+    
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
+bool EventListenerPhysicsContactWithGroup::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+{
+    if (shapeA->getGroup() == _group || shapeB->getGroup() == _group)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+EventListenerPhysicsContactWithGroup* EventListenerPhysicsContactWithGroup::clone()
+{
+    EventListenerPhysicsContactWithGroup* obj = EventListenerPhysicsContactWithGroup::create(_group);
+    
+    if (obj != nullptr)
+    {
+        obj->onContactBegin = onContactBegin;
+        obj->onContactPreSolve = onContactPreSolve;
+        obj->onContactPostSolve = onContactPostSolve;
+        obj->onContactSeperate = onContactSeperate;
         
         return obj;
     }
