@@ -25,7 +25,7 @@
 #import "CCDirectorCaller.h"
 #import "CCDirector.h"
 #import "EAGLView.h"
-#import "CCEventDispatcher.h"
+#import "CCEventDispatcherMac.h"
 #include "CCAutoreleasePool.h"
 
 static id s_sharedDirectorCaller;

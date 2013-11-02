@@ -53,10 +53,10 @@ out = OBJECT_TO_JSVAL(obj); \
 JS_FN(#name, klass##_func_##name, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT)
 
 #define JS_BINDED_PROP_GET(klass, propName) \
-JSBool _js_get_##propName(JSContext *cx, JSHandleId id, JSMutableHandleValue vp)
+JSBool _js_get_##propName(JSContext *cx, JS::HandleId id, JS::MutableHandleValue vp)
 
 #define JS_BINDED_PROP_GET_IMPL(klass, propName) \
-static JSBool _js_get_##klass##_##propName(JSContext *cx, JSHandleObject obj, JSHandleId id, JSMutableHandleValue vp) { \
+static JSBool _js_get_##klass##_##propName(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp) { \
 klass* cobj = (klass*)JS_GetPrivate(obj); \
 if (cobj) { \
 return cobj->_js_get_##propName(cx, id, vp); \
@@ -64,13 +64,13 @@ return cobj->_js_get_##propName(cx, id, vp); \
 JS_ReportError(cx, "Invalid getter call for property %s", #propName); \
 return JS_FALSE; \
 } \
-JSBool klass::_js_get_##propName(JSContext *cx, JSHandleId id, JSMutableHandleValue vp)
+JSBool klass::_js_get_##propName(JSContext *cx, JS::HandleId id, JS::MutableHandleValue vp)
 
 #define JS_BINDED_PROP_SET(klass, propName) \
-JSBool _js_set_##propName(JSContext *cx, JSHandleId id, JSBool strict, JSMutableHandleValue vp)
+JSBool _js_set_##propName(JSContext *cx, JS::HandleId id, JSBool strict, JS::MutableHandleValue vp)
 
 #define JS_BINDED_PROP_SET_IMPL(klass, propName) \
-static JSBool _js_set_##klass##_##propName(JSContext *cx, JSHandleObject obj, JSHandleId id, JSBool strict, JSMutableHandleValue vp) { \
+static JSBool _js_set_##klass##_##propName(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JSBool strict, JS::MutableHandleValue vp) { \
 klass* cobj = (klass*)JS_GetPrivate(obj); \
 if (cobj) { \
 return cobj->_js_set_##propName(cx, id, strict, vp); \
@@ -78,7 +78,7 @@ return cobj->_js_set_##propName(cx, id, strict, vp); \
 JS_ReportError(cx, "Invalid setter call for property %s", #propName); \
 return JS_FALSE; \
 } \
-JSBool klass::_js_set_##propName(JSContext *cx, JSHandleId id, JSBool strict, JSMutableHandleValue vp)
+JSBool klass::_js_set_##propName(JSContext *cx, JS::HandleId id, JSBool strict, JS::MutableHandleValue vp)
 
 #define JS_BINDED_PROP_ACCESSOR(klass, propName) \
 JS_BINDED_PROP_GET(klass, propName); \

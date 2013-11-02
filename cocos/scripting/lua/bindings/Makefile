@@ -60,7 +60,8 @@ SOURCES = ../../../../external/lua/lua/lapi.c \
           LuaBasicConversions.cpp \
           lua_cocos2dx_manual.cpp \
           lua_cocos2dx_extension_manual.cpp \
-          lua_cocos2dx_deprecated.cpp
+          lua_cocos2dx_deprecated.cpp \
+          lua_xml_http_request.cpp
 
 
 include ../../../2d/cocos2dx.mk

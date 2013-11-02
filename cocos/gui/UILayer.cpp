@@ -74,15 +74,21 @@ UILayer* UILayer::create(void)
 
 void UILayer::onEnter()
 {
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-    setTouchEnabled(true);
     CCLayer::onEnter();
     
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(UILayer::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(UILayer::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(UILayer::onTouchEnded, this);
+    listener->onTouchCancelled = CC_CALLBACK_2(UILayer::onTouchCancelled, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void UILayer::onExit()
 {
-    setTouchEnabled(false);
     CCLayer::onExit();
 }
 
