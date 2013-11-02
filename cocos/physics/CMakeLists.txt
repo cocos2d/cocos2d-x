@@ -1,0 +1,17 @@
+set(COCOS_PHYSICS_SRC
+  ${CMAKE_SOURCE_DIR}/cocos/physics/box2d/CCPhysicsContactInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/box2d/CCPhysicsJointInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/box2d/CCPhysicsShapeInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/box2d/CCPhysicsBodyInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/box2d/CCPhysicsWorldInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/chipmunk/CCPhysicsContactInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/chipmunk/CCPhysicsJointInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/chipmunk/CCPhysicsShapeInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/chipmunk/CCPhysicsBodyInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/chipmunk/CCPhysicsWorldInfo.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/CCPhysicsBody.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/CCPhysicsContact.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/CCPhysicsShape.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/CCPhysicsJoint.cpp
+  ${CMAKE_SOURCE_DIR}/cocos/physics/CCPhysicsWorld.cpp
+)
