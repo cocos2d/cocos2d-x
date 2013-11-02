@@ -12,6 +12,7 @@
 #include "platform/CCImageCommon_cpp.h"
 #include "platform/CCImage.h"
 #include "platform/linux/CCApplication.h"
+#include "support/ccUTF8.h"
 
 #include "ft2build.h"
 #include "CCStdC.h"
@@ -160,7 +161,7 @@ public:
 				return false;
 			}
 
-			if (isspace(unicode)) {
+			if (isspace_unicode(unicode)) {
 				currentPaintPosition += face->glyph->metrics.horiAdvance >> 6;
 				prevGlyphIndex = glyphIndex;
 				prevCharacter = unicode;
