@@ -212,9 +212,16 @@ void EventDispatcher::removeEventListener(EventListener* listener)
             break;
     }
 
-    if (isFound)
-    {
+    if (isFound) {
         CC_SAFE_RELEASE(listener);
+    } else {
+        for(auto iter=_toAddedListeners.begin(); iter != _toAddedListeners.end(); ++iter) {
+            if ((*iter)->listener == listener)
+            {
+                _toAddedListeners.erase(iter);
+                break;
+            }
+        }
     }
 }
 
