@@ -34,6 +34,7 @@ include_directories(
   cocos/physics
   cocos/editor-support
   cocos/math/kazmath/include
+  extensions
   external
   external/jpeg/include/linux
   external/tiff/include/linux
@@ -113,6 +114,11 @@ add_subdirectory(cocos/editor-support/cocostudio)
 add_subdirectory(extensions)
 
 add_subdirectory(external/json)
+
+add_subdirectory(external/lua/lua)
+add_subdirectory(external/lua/tolua)
+
+add_subdirectory(cocos/scripting)
 
 # build samples
 add_subdirectory(samples)
