@@ -250,7 +250,16 @@ private:
     GLuint            _fragShader;
     GLint             _uniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
-    bool              _usesTime;
+
+	struct flag_struct {
+        unsigned int usesTime:1;
+        unsigned int usesMVP:1;
+        unsigned int usesMV:1;
+		unsigned int usesRandom:1;
+
+        // handy way to initialize the bitfield
+        flag_struct() { memset(this, 0, sizeof(*this)); }
+    } _flags;
 };
 
 // end of shaders group

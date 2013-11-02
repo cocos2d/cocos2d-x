@@ -50,7 +50,7 @@ namespace
         return layer;
     }
     
-    static const Color4F STATIC_COLOR = {1.0f, 0.0f, 0.0f, 1.0f};
+    static const Color4F STATIC_COLOR(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
 
@@ -92,6 +92,7 @@ PhysicsDemo::PhysicsDemo()
 : _scene(nullptr)
 , _ball(nullptr)
 , _spriteTexture(nullptr)
+, _mouse(nullptr)
 {
     
 }
@@ -196,8 +197,13 @@ void PhysicsDemoClickAdd::onEnter()
     PhysicsDemo::onEnter();
     
 #ifdef CC_USE_PHYSICS
-    setTouchEnabled(true);
-    setAccelerometerEnabled(true);
+    
+    auto touchListener = EventListenerTouchAllAtOnce::create();
+    touchListener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(PhysicsDemoClickAdd::onAcceleration, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     
     auto node = Node::create();
     node->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size));
@@ -296,7 +302,8 @@ namespace
         -25,-8,0,63,-57,-29,-4,-1,-1,-13,-4,127,-64,31,-2,0,15,103,-1,-1,-57,-8,127,
         -97,-25,-8,0,63,-61,-61,-4,127,-1,-29,-4,127,-64,15,-8,0,0,55,-1,-1,-121,-8,
         127,-97,-25,-8,0,63,-61,-61,-4,127,-1,-29,-4,63,-64,15,-32,0,0,23,-1,-2,3,-16,
-        63,15,-61,-16,0,31,-127,-127,-8,31,-1,-127,-8,31,-128,7,-128,0,0};
+        63,15,-61,-16,0,31,-127,-127,-8,31,-1,-127,-8,31,-128,7,-128,0,0
+    };
     
     static inline int get_pixel(int x, int y)
     {
@@ -365,6 +372,31 @@ Sprite* PhysicsDemo::makeTriangle(float x, float y, Size size, PhysicsMaterial m
     return triangle;
 }
 
+void PhysicsDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
+{
+    for( auto &touch: touches)
+    {
+        auto location = touch->getLocation();
+        Array* arr = _scene->getPhysicsWorld()->getShapesAtPoint(location);
+        
+        PhysicsShape* shape = nullptr;
+        for (Object* obj : *arr)
+        {
+            
+        }
+    }
+}
+
+void PhysicsDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+{
+    
+}
+
+void PhysicsDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    
+}
+
 void PhysicsDemoLogoSmash::onEnter()
 {
     PhysicsDemo::onEnter();
@@ -384,7 +416,7 @@ void PhysicsDemoLogoSmash::onEnter()
                 
                 Node* ball = makeBall(2*(x - logo_width/2 + x_jitter) + VisibleRect::getVisibleRect().size.width/2,
                                       2*(logo_height-y + y_jitter) + VisibleRect::getVisibleRect().size.height/2 - logo_height/2,
-                                      0.95f, PhysicsMaterial::make(1.0f, 0.0f, 0.0f));
+                                      0.95f, PhysicsMaterial(1.0f, 0.0f, 0.0f));
                 
                 ball->getPhysicsBody()->setMass(1.0);
                 ball->getPhysicsBody()->setMoment(PHYSICS_INFINITY);
@@ -396,7 +428,7 @@ void PhysicsDemoLogoSmash::onEnter()
     }
     
     
-    auto bullet = makeBall(400, 0, 10, PhysicsMaterial::make(PHYSICS_INFINITY, 0, 0));
+    auto bullet = makeBall(400, 0, 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
     bullet->getPhysicsBody()->setVelocity(Point(400, 0));
     
     bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));
@@ -427,7 +459,7 @@ void PhysicsDemoPyramidStack::onEnter()
     {
 		for(int j=0; j<=i; j++)
         {
-			addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2);
+			addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
 		}
 	}
 }
@@ -479,7 +511,10 @@ PhysicsDemoRayCast::PhysicsDemoRayCast()
 void PhysicsDemoRayCast::onEnter()
 {
     PhysicsDemo::onEnter();
-    setTouchEnabled(true);
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoRayCast::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     _scene->getPhysicsWorld()->setGravity(Point::ZERO);
     
@@ -644,7 +679,7 @@ void PhysicsDemoRayCast::update(float delta)
             break;
     }
     
-    _angle += 0.25f * M_PI / 180.0f;
+    _angle += 0.25f * (float)M_PI / 180.0f;
 }
 
 void PhysicsDemoRayCast::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
@@ -680,7 +715,9 @@ void PhysicsDemoJoints::onEnter()
 {
     PhysicsDemo::onEnter();
     
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoJoints::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     _scene->getPhysicsWorld()->setGravity(Point::ZERO);
     
@@ -689,14 +726,7 @@ void PhysicsDemoJoints::onEnter()
 
 void PhysicsDemoJoints::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    //Add a new body/atlas sprite at the touched location
     
-    for( auto &touch: touches)
-    {
-        auto location = touch->getLocation();
-        
-        
-    }
 }
 
 std::string PhysicsDemoJoints::title()

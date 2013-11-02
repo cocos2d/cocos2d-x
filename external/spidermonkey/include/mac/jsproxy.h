@@ -4,8 +4,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#ifndef jsproxy_h___
-#define jsproxy_h___
+#ifndef jsproxy_h
+#define jsproxy_h
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
@@ -129,7 +129,7 @@ class JS_FRIEND_API(BaseProxyHandler)
                          MutableHandleValue vp);
 
     /* Spidermonkey extensions. */
-    virtual bool isExtensible(JSObject *proxy) = 0;
+    virtual bool isExtensible(JSContext *cx, HandleObject proxy, bool *extensible) = 0;
     virtual bool call(JSContext *cx, HandleObject proxy, const CallArgs &args);
     virtual bool construct(JSContext *cx, HandleObject proxy, const CallArgs &args);
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl, CallArgs args);
@@ -190,7 +190,7 @@ class JS_PUBLIC_API(DirectProxyHandler) : public BaseProxyHandler
                          MutableHandleValue vp) MOZ_OVERRIDE;
 
     /* Spidermonkey extensions. */
-    virtual bool isExtensible(JSObject *proxy) MOZ_OVERRIDE;
+    virtual bool isExtensible(JSContext *cx, HandleObject proxy, bool *extensible) MOZ_OVERRIDE;
     virtual bool call(JSContext *cx, HandleObject proxy, const CallArgs &args) MOZ_OVERRIDE;
     virtual bool construct(JSContext *cx, HandleObject proxy, const CallArgs &args) MOZ_OVERRIDE;
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl,
@@ -242,7 +242,7 @@ class Proxy
     static bool iterate(JSContext *cx, HandleObject proxy, unsigned flags, MutableHandleValue vp);
 
     /* Spidermonkey extensions. */
-    static bool isExtensible(JSObject *proxy);
+    static bool isExtensible(JSContext *cx, HandleObject proxy, bool *extensible);
     static bool call(JSContext *cx, HandleObject proxy, const CallArgs &args);
     static bool construct(JSContext *cx, HandleObject proxy, const CallArgs &args);
     static bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl, CallArgs args);
@@ -259,12 +259,17 @@ class Proxy
 
 inline bool IsObjectProxyClass(const Class *clasp)
 {
-    return clasp == &js::ObjectProxyClass || clasp == &js::OuterWindowProxyClass;
+    return clasp == js::ObjectProxyClassPtr || clasp == js::OuterWindowProxyClassPtr;
 }
 
 inline bool IsFunctionProxyClass(const Class *clasp)
 {
-    return clasp == &js::FunctionProxyClass;
+    return clasp == js::FunctionProxyClassPtr;
+}
+
+inline bool IsProxyClass(const Class *clasp)
+{
+    return IsObjectProxyClass(clasp) || IsFunctionProxyClass(clasp);
 }
 
 inline bool IsObjectProxy(JSObject *obj)
@@ -279,36 +284,33 @@ inline bool IsFunctionProxy(JSObject *obj)
 
 inline bool IsProxy(JSObject *obj)
 {
-    Class *clasp = GetObjectClass(obj);
-    return IsObjectProxyClass(clasp) || IsFunctionProxyClass(clasp);
+    return IsProxyClass(GetObjectClass(obj));
 }
 
-/* Shared between object and function proxies. */
 /*
- * NOTE: JSSLOT_PROXY_PRIVATE is 0, because that way slot 0 is usable by API
+ * These are part of the API.
+ *
+ * NOTE: PROXY_PRIVATE_SLOT is 0 because that way slot 0 is usable by API
  * clients for both proxy and non-proxy objects.  So an API client that only
  * needs to store one slot's worth of data doesn't need to branch on what sort
  * of object it has.
  */
-const uint32_t JSSLOT_PROXY_PRIVATE = 0;
-const uint32_t JSSLOT_PROXY_HANDLER = 1;
-const uint32_t JSSLOT_PROXY_EXTRA   = 2;
-/* Function proxies only. */
-const uint32_t JSSLOT_PROXY_CALL = 4;
-const uint32_t JSSLOT_PROXY_CONSTRUCT = 5;
+const uint32_t PROXY_PRIVATE_SLOT = 0;
+const uint32_t PROXY_HANDLER_SLOT = 1;
+const uint32_t PROXY_EXTRA_SLOT   = 2;
 
 inline BaseProxyHandler *
 GetProxyHandler(JSObject *obj)
 {
     JS_ASSERT(IsProxy(obj));
-    return (BaseProxyHandler *) GetReservedSlot(obj, JSSLOT_PROXY_HANDLER).toPrivate();
+    return (BaseProxyHandler *) GetReservedSlot(obj, PROXY_HANDLER_SLOT).toPrivate();
 }
 
 inline const Value &
 GetProxyPrivate(JSObject *obj)
 {
     JS_ASSERT(IsProxy(obj));
-    return GetReservedSlot(obj, JSSLOT_PROXY_PRIVATE);
+    return GetReservedSlot(obj, PROXY_PRIVATE_SLOT);
 }
 
 inline JSObject *
@@ -322,14 +324,14 @@ inline const Value &
 GetProxyExtra(JSObject *obj, size_t n)
 {
     JS_ASSERT(IsProxy(obj));
-    return GetReservedSlot(obj, JSSLOT_PROXY_EXTRA + n);
+    return GetReservedSlot(obj, PROXY_EXTRA_SLOT + n);
 }
 
 inline void
 SetProxyHandler(JSObject *obj, BaseProxyHandler *handler)
 {
     JS_ASSERT(IsProxy(obj));
-    SetReservedSlot(obj, JSSLOT_PROXY_HANDLER, PrivateValue(handler));
+    SetReservedSlot(obj, PROXY_HANDLER_SLOT, PrivateValue(handler));
 }
 
 inline void
@@ -337,7 +339,7 @@ SetProxyExtra(JSObject *obj, size_t n, const Value &extra)
 {
     JS_ASSERT(IsProxy(obj));
     JS_ASSERT(n <= 1);
-    SetReservedSlot(obj, JSSLOT_PROXY_EXTRA + n, extra);
+    SetReservedSlot(obj, PROXY_EXTRA_SLOT + n, extra);
 }
 
 enum ProxyCallable {
@@ -346,7 +348,7 @@ enum ProxyCallable {
 };
 
 JS_FRIEND_API(JSObject *)
-NewProxyObject(JSContext *cx, BaseProxyHandler *handler, const Value &priv,
+NewProxyObject(JSContext *cx, BaseProxyHandler *handler, HandleValue priv,
                JSObject *proto, JSObject *parent, ProxyCallable callable = ProxyNotCallable);
 
 JSObject *
@@ -426,6 +428,6 @@ class JS_FRIEND_API(AutoWaivePolicy) {
 } /* namespace js */
 
 extern JS_FRIEND_API(JSObject *)
-js_InitProxyClass(JSContext *cx, JSHandleObject obj);
+js_InitProxyClass(JSContext *cx, JS::HandleObject obj);
 
-#endif
+#endif /* jsproxy_h */

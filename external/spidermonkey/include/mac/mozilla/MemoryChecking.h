@@ -1,4 +1,5 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -19,8 +20,8 @@
  * With no memory checker available, all macros expand to the empty statement.
  */
 
-#ifndef mozilla_MemoryChecking_h_
-#define mozilla_MemoryChecking_h_
+#ifndef mozilla_MemoryChecking_h
+#define mozilla_MemoryChecking_h
 
 #if defined(MOZ_VALGRIND)
 #include "valgrind/memcheck.h"
@@ -68,4 +69,4 @@ extern "C" {
 
 #endif
 
-#endif  /* mozilla_MemoryChecking_h_ */
+#endif /* mozilla_MemoryChecking_h */

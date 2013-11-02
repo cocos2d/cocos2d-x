@@ -121,8 +121,10 @@ void MotionStreakTest2::onEnter()
 {
     MotionStreakTest::onEnter();
 
-    setTouchEnabled(true);
-
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(MotionStreakTest2::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     auto s = Director::getInstance()->getWinSize();
         
     // create the streak object and add it to the scene

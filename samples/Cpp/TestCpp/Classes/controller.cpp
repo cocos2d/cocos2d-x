@@ -50,6 +50,7 @@ struct {
 	{ "FontTest", []() { return new FontTestScene(); } },
 	{ "IntervalTest", [](){return new IntervalTestScene(); } },
 	{ "KeyboardTest", []() { return new KeyboardTestScene(); } },
+    { "MouseTest", []() { return new MouseTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "KeypadTest", []() { return new KeypadTestScene(); } },
 #endif
@@ -120,18 +121,20 @@ TestController::TestController()
     _itemMenu->setPosition(s_tCurPos);
     addChild(_itemMenu);
 
-    setTouchEnabled(true);
-
     addChild(menu, 1);
 
     // Register Touch Event
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     
     listener->onTouchBegan = CC_CALLBACK_2(TestController::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(TestController::onTouchMoved, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    auto mouseListener = EventListenerMouse::create();
+    mouseListener->onMouseScroll = CC_CALLBACK_1(TestController::onMouseScroll, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 }
 
 TestController::~TestController()
@@ -193,5 +196,29 @@ void TestController::onTouchMoved(Touch* touch, Event  *event)
 
     _itemMenu->setPosition(nextPos);
     _beginPos = touchLocation;
+    s_tCurPos   = nextPos;
+}
+
+void TestController::onMouseScroll(Event *event)
+{
+    auto mouseEvent = static_cast<EventMouse*>(event);
+    float nMoveY = mouseEvent->getScrollY() * 6;
+
+    auto curPos  = _itemMenu->getPosition();
+    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+
+    if (nextPos.y < 0.0f)
+    {
+        _itemMenu->setPosition(Point::ZERO);
+        return;
+    }
+
+    if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    {
+        _itemMenu->setPosition(Point(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        return;
+    }
+
+    _itemMenu->setPosition(nextPos);
     s_tCurPos   = nextPos;
 }

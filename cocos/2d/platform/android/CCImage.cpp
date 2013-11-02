@@ -81,7 +81,7 @@ public:
     {
            JniMethodInfo methodInfo;
            if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmapShadowStroke",
-               "(Ljava/lang/String;Ljava/lang/String;IFFFIIIZFFFFZFFFF)V"))
+               "(Ljava/lang/String;Ljava/lang/String;IFFFIIIZFFFFZFFFF)Z"))
            {
                CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
                return false;
@@ -109,8 +109,12 @@ public:
            jstring jstrText = methodInfo.env->NewStringUTF(text);
            jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
 
-           methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, jstrText,
-               jstrFont, (int)fontSize, textTintR, textTintG, textTintB, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, shadowOpacity, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize);
+           if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID, jstrText,
+               jstrFont, (int)fontSize, textTintR, textTintG, textTintB, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, shadowOpacity, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize))
+           {
+                return false;
+           }
+
 
            methodInfo.env->DeleteLocalRef(jstrText);
            methodInfo.env->DeleteLocalRef(jstrFont);

@@ -20,7 +20,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 TOJS_ROOT=$COCOS2DX_ROOT/tools/tojs
 TOLUA_ROOT=$COCOS2DX_ROOT/tools/tolua
-GENERATED_WORKTREE="$COCOS2DX_ROOT"/scripting/auto-generated
+GENERATED_WORKTREE="$COCOS2DX_ROOT"/cocos/scripting/auto-generated
 COMMITTAG="[AUTO]"
 
 # Exit on error
@@ -75,10 +75,10 @@ echo "Set git user for the submodule of ${GENERATED_WORKTREE}"
 git config user.email ${GH_EMAIL}
 git config user.name ${GH_USER}
 #Set remotes
-git remote add upstream https://${GH_USER}:${GH_PASSWORD}@github.com/folecr/cocos2dx-autogen-bindings.git 2> /dev/null > /dev/null
+git remote add upstream https://${GH_USER}:${GH_PASSWORD}@github.com/cocos2d-x/bindings-auto-generated.git 2> /dev/null > /dev/null
 
-echo "Delete all directories and files except '.git' and 'README'."
-ls -a | grep -E -v ^\[.\]\{1,2\}$ | grep -E -v ^\.git$ | grep -E -v ^README$ | xargs -I{} rm -rf {}
+echo "Delete all directories and files except '.git' and 'README.md'."
+ls -a | grep -E -v ^\[.\]\{1,2\}$ | grep -E -v ^\.git$ | grep -E -v ^README\.md$ | xargs -I{} rm -rf {}
 echo "Show files in ${GENERATED_WORKTREE} folder."
 ls -a
 popd

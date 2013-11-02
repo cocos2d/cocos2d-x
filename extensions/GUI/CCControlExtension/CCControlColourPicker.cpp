@@ -54,7 +54,6 @@ bool ControlColourPicker::init()
 {
     if (Control::init())
     {
-        setTouchEnabled(true);
         // Cache the sprites
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
         

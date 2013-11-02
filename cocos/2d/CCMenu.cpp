@@ -127,9 +127,6 @@ bool Menu::initWithArray(Array* pArrayOfItems)
 {
     if (Layer::init())
     {
-        setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-        setTouchEnabled(true);
-
         _enabled = true;
         // menu in the center of the screen
         Size s = Director::getInstance()->getWinSize();
@@ -152,13 +149,23 @@ bool Menu::initWithArray(Array* pArrayOfItems)
             }
         }
     
-        //    [self alignItemsVertically];
         _selectedItem = NULL;
         _state = Menu::State::WAITING;
         
         // enable cascade color and opacity on menus
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);
+        
+        
+        auto touchListener = EventListenerTouchOneByOne::create();
+        touchListener->setSwallowTouches(true);
+        
+        touchListener->onTouchBegan = CC_CALLBACK_2(Menu::onTouchBegan, this);
+        touchListener->onTouchMoved = CC_CALLBACK_2(Menu::onTouchMoved, this);
+        touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);
+        touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
         
         return true;
     }
@@ -187,9 +194,6 @@ void Menu::addChild(Node * child, int zOrder, int tag)
 void Menu::onEnter()
 {
     Layer::onEnter();
-    
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
 }
 
 void Menu::onExit()
@@ -253,22 +257,26 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
 void Menu::onTouchEnded(Touch* touch, Event* event)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
+    this->retain();
     if (_selectedItem)
     {
         _selectedItem->unselected();
         _selectedItem->activate();
     }
     _state = Menu::State::WAITING;
+    this->release();
 }
 
 void Menu::onTouchCancelled(Touch* touch, Event* event)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
+    this->retain();
     if (_selectedItem)
     {
         _selectedItem->unselected();
     }
     _state = Menu::State::WAITING;
+    this->release();
 }
 
 void Menu::onTouchMoved(Touch* touch, Event* event)
