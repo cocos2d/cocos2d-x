@@ -637,6 +637,9 @@ Developers:
     Nite Luo (darkdukey)
         Added Mouse Support For Desktop Platforms.
         
+    ledyba
+        Fixed a bug that EventListeners can't be removed sometimes.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
