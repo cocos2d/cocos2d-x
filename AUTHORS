@@ -593,6 +593,7 @@ Developers:
         [Android] re-introduce Cocos2dxHelper.runOnGLThread(Runnable)
         [Android] added EGL_RENDERABLE_TYPE to OpenGL attributes
         Android: add xlargeScreens="true" to supports-screens
+        Trigger onKeyReleased only after the key has been released.
         
     bmanGH
         Use gl caching functions in TexturePVR::createGLTexture()
