@@ -687,7 +687,9 @@ void RemoveListenerAfterAddingTest::onEnter()
     item1->setPosition(VisibleRect::center() + Point(0, 80));
     
     auto addNextButton = [this](){
-        auto next = MenuItemFont::create("Please Click Me To Reset!");
+        auto next = MenuItemFont::create("Please Click Me To Reset!", [this](Object* sender){
+            this->restartCallback(nullptr);
+        });
         next->setPosition(VisibleRect::center() + Point(0, -40));
         
         auto menu = Menu::create(next, nullptr);
