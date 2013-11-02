@@ -1,0 +1,37 @@
+
+# Copies files for the given game into the target res directory
+#   GAME_NAME name of the game
+#   REL_DIR to which directory these files are relative
+#   SRC_FILES which files from the REL_DIR to copy (GLOB)
+macro(COPY_RES_FILES GAME_NAME GAME_RES_TARGET REL_DIR SRC_FILES DST)
+    file( GLOB_RECURSE RES_FILES RELATIVE ${REL_DIR} ${SRC_FILES} )
+    
+    set(ALL_FILES)
+    foreach(SRC_FILE ${RES_FILES})
+        add_custom_command(
+            OUTPUT "${DST}/${SRC_FILE}"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${REL_DIR}/${SRC_FILE}"
+                "${DST}/${SRC_FILE}"
+            COMMENT "Copy ${SRC_FILE}"
+            )
+        list(APPEND ALL_FILES "${DST}/${SRC_FILE}" )
+    endforeach()
+    # create target for copying these files
+    add_custom_target( ${GAME_RES_TARGET} DEPENDS ${ALL_FILES} )
+endmacro()
+
+# convenience to call above with current directory and everything in "res"
+macro(COPY_RES GAME_NAME CRG_PATTERN DST)
+    # a target for all addition asserts (will be done in default compile, but if you target the executable
+    # it won't be done -- good for testing)
+    add_custom_target( ${GAME_NAME}_ASSETS ALL )
+    
+    COPY_RES_FILES( ${GAME_NAME} ${GAME_NAME}_CORE_RES 
+        ${CMAKE_CURRENT_SOURCE_DIR} 
+        "${CRG_PATTERN}"
+        ${DST}
+        )
+    add_dependencies( ${GAME_NAME}_ASSETS ${GAME_NAME}_CORE_RES )
+endmacro()
+
