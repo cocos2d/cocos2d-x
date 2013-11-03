@@ -96,7 +96,7 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
 }
 
 ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite,
-		Sprite* selectedThumbSprite)
+        Sprite* selectedThumbSprite)
 {
     ControlSlider *pRet = new ControlSlider();
     pRet->initWithSprites(backgroundSprite, pogressSprite, thumbSprite, selectedThumbSprite);
@@ -106,14 +106,14 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
 
 bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite)
 {
-	Sprite* selectedThumbSprite = Sprite::createWithTexture(thumbSprite->getTexture(),
-			thumbSprite->getTextureRect());
-	selectedThumbSprite->setColor(Color3B::GRAY);
-	this->initWithSprites(backgroundSprite, progressSprite, thumbSprite, selectedThumbSprite);
+    Sprite* selectedThumbSprite = Sprite::createWithTexture(thumbSprite->getTexture(),
+        thumbSprite->getTextureRect());
+    selectedThumbSprite->setColor(Color3B::GRAY);
+    this->initWithSprites(backgroundSprite, progressSprite, thumbSprite, selectedThumbSprite);
 }
 
  bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
-		 Sprite* selectedThumbSprite)
+        Sprite* selectedThumbSprite)
  {
      if (Control::init())
      {
