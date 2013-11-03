@@ -12,6 +12,8 @@
 using namespace cocos2d;
 using namespace std;
 
+static int ccbAnimationManagerID = 3000;
+
 NS_CC_EXT_BEGIN
 
 // Implementation of CCBAinmationManager
@@ -27,6 +29,7 @@ CCBAnimationManager::CCBAnimationManager()
 , mRunningSequence(NULL)
 , jsControlled(false)
 , mOwner(NULL)
+, mAnimationManagerId(ccbAnimationManagerID++)
 {
     init();
 }
@@ -590,6 +593,13 @@ CCActionInterval* CCBAnimationManager::getEaseAction(CCActionInterval *pAction, 
     }
 }
 
+void CCBAnimationManager::stopActionsByTag(CCNode *node, int tag)
+{
+    while (node->getActionByTag(tag)) {
+        node->stopActionByTag(tag);
+    }
+}
+
 CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* channel) {
   
     float lastKeyframeTime = 0;
@@ -748,14 +758,14 @@ void CCBAnimationManager::runAnimations(int nSeqId, float fTweenDuraiton)
 void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuration)
 {
     CCAssert(nSeqId != -1, "Sequence id couldn't be found");
-    
-    mRootNode->stopAllActions();
-    
+
+    this->stopActionsByTag(mRootNode, mAnimationManagerId);
+
     CCDictElement* pElement = NULL;
     CCDICT_FOREACH(mNodeSequences, pElement)
     {
         CCNode *node = (CCNode*)pElement->getIntKey();
-        node->stopAllActions();
+        this->stopActionsByTag(node, mAnimationManagerId);
         
         // Refer to CCBReader::readKeyframe() for the real type of value
         CCDictionary *seqs = (CCDictionary*)pElement->getObject();
@@ -802,6 +812,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     CCBSequence *seq = getSequence(nSeqId);
     CCAction *completeAction = CCSequence::createWithTwoActions(CCDelayTime::create(seq->getDuration() + fTweenDuration),
                                                                 CCCallFunc::create(this, callfunc_selector(CCBAnimationManager::sequenceCompleted)));
+    completeAction->setTag(mAnimationManagerId);
     mRootNode->runAction(completeAction);
     
     // Set the running scene
@@ -809,6 +820,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     if(seq->getCallbackChannel() != NULL) {
         CCAction* action = (CCAction *)actionForCallbackChannel(seq->getCallbackChannel());
         if(action != NULL) {
+            action->setTag(mAnimationManagerId);
             mRootNode->runAction(action);
         }
     } 
@@ -816,6 +828,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     if(seq->getSoundChannel() != NULL) {
         CCAction* action = (CCAction *)actionForSoundChannel(seq->getSoundChannel());
         if(action != NULL) {
+            action->setTag(mAnimationManagerId);
             mRootNode->runAction(action);
         }
     }
