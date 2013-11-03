@@ -64,7 +64,7 @@ public:
      * and a selected thumb image filename.
      */
     static ControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile,
-    		const char* selectedThumbSpriteFile);
+            const char* selectedThumbSpriteFile);
 
     /**
      * Creates a slider with a given background sprite and a progress bar, a thumb
@@ -73,7 +73,7 @@ public:
      * @see initWithSprites
      */
     static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite,
-    		Sprite* selectedThumbSprite);
+            Sprite* selectedThumbSprite);
     /**
      * @js ctor
      */
@@ -104,7 +104,7 @@ public:
     * @param selectedThumbSprite       Sprite, that is used as a selected thumb.
     */
     virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
-    		Sprite* selectedThumbSprite);
+            Sprite* selectedThumbSprite);
 
     virtual void needsLayout();
 
