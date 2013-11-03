@@ -640,6 +640,7 @@ Developers:
         
     ledyba
         Fixed a bug that EventListeners can't be removed sometimes.
+        Fixed a bug that the data size has to be specified when parsing XML using TinyXML.
         
 Retired Core Developers:
     WenSheng Yang
