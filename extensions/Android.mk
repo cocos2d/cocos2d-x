@@ -63,7 +63,6 @@ CocoStudio/Components/CCInputDelegate.cpp \
 CocoStudio/GUI/BaseClasses/UIRootWidget.cpp \
 CocoStudio/GUI/BaseClasses/UIWidget.cpp \
 CocoStudio/GUI/Layouts/Layout.cpp \
-CocoStudio/GUI/Layouts/LayoutExecutant.cpp \
 CocoStudio/GUI/Layouts/LayoutParameter.cpp \
 CocoStudio/GUI/Layouts/UILayoutDefine.cpp \
 CocoStudio/GUI/System/CocosGUI.cpp \

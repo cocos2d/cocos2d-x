@@ -409,7 +409,7 @@ bool Image::initWithImageFile(const char * strPath)
     SDL_Surface *iSurf = IMG_Load(fullPath.c_str());
 
     int size = 4 * (iSurf->w * iSurf->h);
-    bRet = initWithRawData((void*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
+    bRet = initWithRawData((const unsigned char*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
 
     unsigned int *tmp = (unsigned int *)_data;
     int nrPixels = iSurf->w * iSurf->h;
@@ -1443,6 +1443,8 @@ bool Image::initWithETCData(const unsigned char * data, int dataLen)
     }
     else
     {
+        CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
+
          //if it is not gles or device do not support ETC, decode texture by software
         int bytePerPixel = 3;
         unsigned int stride = _width * bytePerPixel;
@@ -1533,8 +1535,6 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
         if (Configuration::getInstance()->supportsS3TC())
         {   //decode texture throught hardware
             
-            CCLOG("this is s3tc H decode");
-            
             if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
                 _renderFormat = Texture2D::PixelFormat::S3TC_DXT1;
@@ -1553,6 +1553,9 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
         }
         else
         {   //if it is not gles or device do not support S3TC, decode texture by software
+            
+            CCLOG("cocos2d: Hardware S3TC decoder not present. Using software decoder");
+
             int bytePerPixel = 4;
             unsigned int stride = width * bytePerPixel;
             _renderFormat = Texture2D::PixelFormat::RGBA8888;
@@ -1681,6 +1684,8 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
         else
         {
             /* if it is not gles or device do not support ATITC, decode texture by software */
+            
+            CCLOG("cocos2d: Hardware ATITC decoder not present. Using software decoder");
             
             int bytePerPixel = 4;
             unsigned int stride = width * bytePerPixel;

@@ -196,7 +196,6 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
-    #include "platform/emscripten/CCAccelerometer.h"
     #include "platform/emscripten/CCApplication.h"
     #include "platform/emscripten/CCEGLView.h"
     #include "platform/emscripten/CCGL.h"
