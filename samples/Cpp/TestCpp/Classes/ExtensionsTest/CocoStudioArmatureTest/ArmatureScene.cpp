@@ -831,9 +831,11 @@ void TestColliderDetector::initWorld()
     space = cpSpaceNew();
     space->gravity = cpv(0, 0);
 
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
     // Physics debug layer
     cocos2d::extension::PhysicsDebugNode *debugLayer = cocos2d::extension::PhysicsDebugNode::create(space);
     this->addChild(debugLayer, INT_MAX);
+#endif
 
     Size size = bullet->getContentSize();
 

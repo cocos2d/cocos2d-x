@@ -81,7 +81,8 @@ NS_CC_BEGIN
 //
 
 ParticleSystem::ParticleSystem()
-: _isBlendAdditive(false)
+: _configName("")
+, _isBlendAdditive(false)
 , _isAutoRemoveOnFinish(false)
 , _plistFile("")
 , _elapsed(0)
@@ -116,6 +117,7 @@ ParticleSystem::ParticleSystem()
 , _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 , _opacityModifyRGB(false)
 , _positionType(PositionType::FREE)
+, _yCoordFlipped(0)
 {
     modeA.gravity = Point::ZERO;
     modeA.speed = 0;
@@ -205,6 +207,10 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
         // self, not super
         if(this->initWithTotalParticles(maxParticles))
         {
+            // Emitter name in particle designer 2.0
+            const String * configNameConstStr = dictionary->valueForKey("configName");
+            _configName = configNameConstStr->getCString();
+
             // angle
             _angle = dictionary->valueForKey("angle")->floatValue();
             _angleVar = dictionary->valueForKey("angleVariance")->floatValue();
@@ -213,7 +219,14 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             _duration = dictionary->valueForKey("duration")->floatValue();
 
             // blend function 
-            _blendFunc.src = dictionary->valueForKey("blendFuncSource")->intValue();
+            if (_configName.length()>0)
+            {
+                _blendFunc.src = dictionary->valueForKey("blendFuncSource")->floatValue();
+            }
+            else
+            {
+                _blendFunc.src = dictionary->valueForKey("blendFuncSource")->intValue();
+            }
             _blendFunc.dst = dictionary->valueForKey("blendFuncDestination")->intValue();
 
             // color
@@ -284,11 +297,32 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             // or Mode B: radius movement
             else if (_emitterMode == Mode::RADIUS)
             {
-                modeB.startRadius = dictionary->valueForKey("maxRadius")->floatValue();
+                if (_configName.length()>0)
+                {
+                    modeB.startRadius = dictionary->valueForKey("maxRadius")->intValue();
+                }
+                else
+                {
+                    modeB.startRadius = dictionary->valueForKey("maxRadius")->floatValue();
+                }
                 modeB.startRadiusVar = dictionary->valueForKey("maxRadiusVariance")->floatValue();
-                modeB.endRadius = dictionary->valueForKey("minRadius")->floatValue();
+                if (_configName.length()>0)
+                {
+                    modeB.endRadius = dictionary->valueForKey("minRadius")->intValue();
+                }
+                else
+                {
+                    modeB.endRadius = dictionary->valueForKey("minRadius")->floatValue();
+                }
                 modeB.endRadiusVar = 0.0f;
-                modeB.rotatePerSecond = dictionary->valueForKey("rotatePerSecond")->floatValue();
+               if (_configName.length()>0)
+                {
+                    modeB.rotatePerSecond = dictionary->valueForKey("rotatePerSecond")->intValue();
+                }
+                else
+                {
+                    modeB.rotatePerSecond = dictionary->valueForKey("rotatePerSecond")->floatValue();
+                }
                 modeB.rotatePerSecondVar = dictionary->valueForKey("rotatePerSecondVariance")->floatValue();
 
             } else {
@@ -376,6 +410,10 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
 
                         image->release();
                     }
+                }
+                if (_configName.length()>0)
+                {
+                  _yCoordFlipped = dictionary->valueForKey("yCoordFlipped")->intValue();
                 }
                 CCASSERT( this->_texture != NULL, "CCParticleSystem: error loading the texture");
             }
@@ -670,7 +708,21 @@ void ParticleSystem::update(float dt)
                     tmp = radial + tangential + modeA.gravity;
                     tmp = tmp * dt;
                     p->modeA.dir = p->modeA.dir + tmp;
-                    tmp = p->modeA.dir * dt;
+					if (_configName.length()>0)
+					{
+						if (_yCoordFlipped == -1)
+						{
+							 tmp = p->modeA.dir * dt;
+						}
+						else
+						{
+							 tmp = p->modeA.dir * -dt;
+						}
+					}
+					else
+					{
+						 tmp = p->modeA.dir * dt;
+					}
                     p->pos = p->pos + tmp;
                 }
 
@@ -683,7 +735,11 @@ void ParticleSystem::update(float dt)
 
                     p->pos.x = - cosf(p->modeB.angle) * p->modeB.radius;
                     p->pos.y = - sinf(p->modeB.angle) * p->modeB.radius;
-                }
+                    if (_yCoordFlipped == 1)
+                    {
+                      p->pos.y = -p->pos.y;
+                    }
+				}
 
                 // color
                 p->color.r += (p->deltaColor.r * dt);

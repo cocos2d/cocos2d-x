@@ -82,7 +82,7 @@ ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* 
 	{
 		return NULL;
 	}
-	for (unsigned int i=0; i<actionList->count(); i++)
+	for (int i = 0; i < actionList->count(); i++)
 	{
 		ActionObject* action = dynamic_cast<ActionObject*>(actionList->getObjectAtIndex(i));
 		if (strcmp(actionName, action->getName()) == 0)

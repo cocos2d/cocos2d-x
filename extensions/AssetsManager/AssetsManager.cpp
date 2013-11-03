@@ -564,7 +564,22 @@ void AssetsManager::Helper::update(float dt)
         _messageQueueMutex.unlock();
         return;
     }
-    
+    //remove unnecessary message
+    std::list<Message*>::iterator it;
+    Message *proMsg = nullptr;  
+    for (it = _messageQueue->begin(); it != _messageQueue->end(); ++it)
+    {          
+        if((*it)->what == ASSETSMANAGER_MESSAGE_PROGRESS)
+        {
+            if (proMsg)
+            {
+                _messageQueue->remove(proMsg); 
+                delete (ProgressMessage*)proMsg->obj;
+                delete proMsg;
+            }
+            proMsg = *it;        
+        }       
+    }
     // Gets message
     msg = *(_messageQueue->begin());
     _messageQueue->pop_front();
@@ -628,7 +643,7 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
         CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
     }
     
-    if (manager) manager->_delegate->onSuccess();
+    if (manager->_delegate) manager->_delegate->onSuccess();
 }
 
 AssetsManager* AssetsManager::create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback )

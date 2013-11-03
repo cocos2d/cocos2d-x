@@ -306,7 +306,6 @@ bool EGLView::init(const char *viewName, float width, float height, float frameZ
     
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
-    CCLOG("OpenGL version = %s", glVersion);
     
     if ( atof((const char*)glVersion) < 1.5 )
     {

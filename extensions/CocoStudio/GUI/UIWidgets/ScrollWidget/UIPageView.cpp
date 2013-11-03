@@ -261,7 +261,7 @@ void UIPageView::updateChildrenSize()
     }
     
     Size selfSize = getSize();
-    for (unsigned int i=0; i<_pages->count(); i++)
+    for (int i = 0; i < _pages->count(); i++)
     {
         Layout* page = dynamic_cast<Layout*>(_pages->getObjectAtIndex(i));
         page->setSize(selfSize);
