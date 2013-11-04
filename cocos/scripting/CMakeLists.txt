@@ -30,3 +30,8 @@ include_directories(
 add_library(luabinding STATIC
   ${LUABINDING_SRC}
 )
+
+target_link_libraries(luabinding
+  tolua
+  lua
+)

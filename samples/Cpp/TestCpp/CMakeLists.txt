@@ -149,11 +149,9 @@ target_link_libraries(${SAMPLE_NAME}
   cocostudio
   cocosbuilder
   extensions
-  ${COCOS_LIBRARIES}
+  audio
+  cocos2d
   box2d
-  jsoncpp
-  curl
-  rt
 )
 
 set(SAMPLE_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${SAMPLE_NAME}")

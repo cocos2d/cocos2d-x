@@ -122,4 +122,21 @@ add_library(cocos2d STATIC
   ${COCOS2D_SRC}
   ${COCOS_PHYSICS_SRC}
 )
-
+target_link_libraries(cocos2d
+  cocosbase
+  chipmunk_static
+  tinyxml2
+  kazmath
+  unzip
+  jpeg
+  webp
+  tiff
+  freetype
+  fontconfig
+  png
+  glfw
+  GLEW
+  GL
+  rt
+  z
+)

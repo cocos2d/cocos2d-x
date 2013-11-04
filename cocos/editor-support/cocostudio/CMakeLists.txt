@@ -41,3 +41,7 @@ include_directories(
 add_library(cocostudio STATIC
   ${CS_SRC}
 )
+
+target_link_libraries(cocostudio
+  jsoncpp
+)

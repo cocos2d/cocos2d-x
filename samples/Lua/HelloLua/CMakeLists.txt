@@ -24,12 +24,8 @@ target_link_libraries(${SAMPLE_NAME}
   cocostudio
   cocosbuilder
   extensions
-  ${COCOS_LIBRARIES}
-  jsoncpp
-  curl
-  tolua
-  lua
-  rt
+  audio
+  cocos2d
 )
 
 set(SAMPLE_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${SAMPLE_NAME}")

@@ -11,7 +11,7 @@ add_executable(${SAMPLE_NAME}
   ${SAMPLE_SRC}
 )
 
-target_link_libraries(${SAMPLE_NAME} ${COCOS_LIBRARIES})
+target_link_libraries(${SAMPLE_NAME} audio cocos2d)
 
 set(SAMPLE_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${SAMPLE_NAME}")
 
