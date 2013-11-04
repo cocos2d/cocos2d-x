@@ -62,7 +62,6 @@ link_directories(
 add_subdirectory(cocos/math/kazmath)
 
 # chipmunk library
-set(BUILD_STATIC 1)
 add_subdirectory(external/chipmunk/src)
 
 # box2d library

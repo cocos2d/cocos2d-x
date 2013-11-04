@@ -32,3 +32,10 @@ include_directories(
 add_library(extensions STATIC
   ${EXTENSIONS_SRC}
 )
+
+set_target_properties(extensions
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+)
+

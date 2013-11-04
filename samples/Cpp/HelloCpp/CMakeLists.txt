@@ -13,9 +13,9 @@ add_executable(${SAMPLE_NAME}
 
 target_link_libraries(${SAMPLE_NAME} audio cocos2d)
 
-set(SAMPLE_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${SAMPLE_NAME}")
+set(SAMPLE_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${SAMPLE_NAME}")
 
-SET_TARGET_PROPERTIES(${SAMPLE_NAME} PROPERTIES
+set_target_properties(${SAMPLE_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${SAMPLE_BIN_DIR}")
 
 COPY_RES( ${SAMPLE_NAME} "Resources/*" "${SAMPLE_BIN_DIR}")

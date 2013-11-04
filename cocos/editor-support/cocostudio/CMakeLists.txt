@@ -45,3 +45,10 @@ add_library(cocostudio STATIC
 target_link_libraries(cocostudio
   jsoncpp
 )
+
+set_target_properties(cocostudio
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+)
+
