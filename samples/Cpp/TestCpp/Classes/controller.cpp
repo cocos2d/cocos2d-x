@@ -134,11 +134,7 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ExtensionsTestScene();
         break;
     case TEST_SHADER:
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
        pScene = new ShaderTestScene();
-#else
-		CCMessageBox("ShaderTest not yet implemented.","Alert");
-#endif          
     break;
 
     case TEST_MUTITOUCH:
@@ -203,7 +199,11 @@ TestController::TestController()
     setTouchEnabled(true);
 
     addChild(pMenu, 1);
-
+//#define CC_PLATFORM_WINRT_SAVE_SHADERS
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) && defined(CC_PLATFORM_WINRT_SAVE_SHADERS)
+    ShaderTestDemo::precompileShaders();
+    CCPrecompiledShaders::sharedPrecompiledShaders()->savePrecompiledShaders();
+#endif
 }
 
 TestController::~TestController()

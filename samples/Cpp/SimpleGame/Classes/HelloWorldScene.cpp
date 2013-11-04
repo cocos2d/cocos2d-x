@@ -121,7 +121,11 @@ bool HelloWorld::init()
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
 	// "close" menu item clicked
-	CCDirector::sharedDirector()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
+#else
+    CCDirector::sharedDirector()->end();
+#endif
 }
 
 // cpp with cocos2d-x
