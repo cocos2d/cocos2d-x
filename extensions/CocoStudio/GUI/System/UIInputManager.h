@@ -26,7 +26,7 @@
 #define __UIINPUTMANAGER_H__
 
 #include "cocos2d.h"
-#include "../Layouts/Layout.h"
+#include "../Layouts/UILayout.h"
 
 NS_CC_EXT_BEGIN
 /**

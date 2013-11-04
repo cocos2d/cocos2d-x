@@ -53,7 +53,7 @@ m_textureFiles(NULL)
 
 UIHelper::~UIHelper()
 {
-    cocos2d::extension::CCSGUIReader::purgeCCSGUIReader();
+    cocos2d::extension::GUIReader::purgeGUIReader();
 }
 
 void UIHelper::init()
@@ -64,7 +64,7 @@ void UIHelper::init()
 
 UIWidget* UIHelper::createWidgetFromJsonFile(const char *fileName)
 {
-    return CCSGUIReader::shareReader()->widgetFromJsonFile(fileName);
+    return GUIReader::shareReader()->widgetFromJsonFile(fileName);
 }
 
 void UIHelper::addSpriteFrame(const char *fileName)
@@ -178,7 +178,7 @@ UIWidget* UIHelper::seekWidgetByRelativeName(UIWidget *root, const char *name)
     for (int i=0;i<length;i++)
     {
         UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
-        RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+        UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
         if (layoutParameter && strcmp(layoutParameter->getRelativeName(), name) == 0)
         {
             return child;
