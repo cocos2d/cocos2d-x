@@ -76,9 +76,6 @@ float getScaledDPIValue(float v);
 
 Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-void savePrecompiledShaders(CCDictionary* programs);
-#endif
 
 NS_CC_END
 

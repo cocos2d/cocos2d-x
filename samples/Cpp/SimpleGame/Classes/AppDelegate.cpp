@@ -36,7 +36,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
     
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+#else
+	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+#endif
 
     // turn on display FPS
     pDirector->setDisplayStats(true);

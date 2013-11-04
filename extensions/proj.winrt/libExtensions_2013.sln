@@ -1,0 +1,32 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libExtensions", "libExtensions_2013.vcxproj", "{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|ARM = Release|ARM
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Debug|ARM.Build.0 = Debug|ARM
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Debug|Win32.Build.0 = Debug|Win32
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Debug|x64.ActiveCfg = Debug|x64
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Debug|x64.Build.0 = Debug|x64
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Release|ARM.ActiveCfg = Release|ARM
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Release|ARM.Build.0 = Release|ARM
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Release|Win32.ActiveCfg = Release|Win32
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Release|Win32.Build.0 = Release|Win32
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Release|x64.ActiveCfg = Release|x64
+		{F8A69A16-14EB-4E5C-8F99-4CBFC5A6E089}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
