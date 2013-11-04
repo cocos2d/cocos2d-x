@@ -363,6 +363,8 @@
 		50EF628B17ECD2AB001EB2F8 /* Icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF628717ECD2AB001EB2F8 /* Icon-58.png */; };
 		50EF628C17ECD2AB001EB2F8 /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF628817ECD2AB001EB2F8 /* Icon-80.png */; };
 		50EF628D17ECD2AB001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF628917ECD2AB001EB2F8 /* Icon-100.png */; };
+		74AC8396BF791E4F9B552D36 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC839EDDD2EE8537E09189 /* MouseTest.cpp */; };
+		74AC89355094A9492FFF062A /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC839EDDD2EE8537E09189 /* MouseTest.cpp */; };
 		A01E166C1784BDA100B0CA4A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEA178254FF00987F6C /* .gitignore */; };
 		A01E166D1784BDA100B0CA4A /* app.config.txt in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEB178254FF00987F6C /* app.config.txt */; };
 		A01E166E1784BDA100B0CA4A /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEC178254FF00987F6C /* app.icf */; };
@@ -2543,6 +2545,8 @@
 		50EF628717ECD2AB001EB2F8 /* Icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-58.png"; sourceTree = "<group>"; };
 		50EF628817ECD2AB001EB2F8 /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80.png"; sourceTree = "<group>"; };
 		50EF628917ECD2AB001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
+		74AC839EDDD2EE8537E09189 /* MouseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MouseTest.cpp; sourceTree = "<group>"; };
+		74AC88E7F58F5680F29937B3 /* MouseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTest.h; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E16A11784BF3000B0CA4A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		A01E16A21784BF3000B0CA4A /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -4127,6 +4131,15 @@
 			path = UITextFieldTest;
 			sourceTree = "<group>";
 		};
+		74AC80878B5EB105FD3B78B3 /* InputTest */ = {
+			isa = PBXGroup;
+			children = (
+				74AC839EDDD2EE8537E09189 /* MouseTest.cpp */,
+				74AC88E7F58F5680F29937B3 /* MouseTest.h */,
+			);
+			path = InputTest;
+			sourceTree = "<group>";
+		};
 		A01E16A01784BF3000B0CA4A /* proj.ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -4327,6 +4340,7 @@
 				A0359A9F17821D9C00987F6C /* VisibleRect.cpp */,
 				A0359AA017821D9C00987F6C /* VisibleRect.h */,
 				A0359AA117821D9C00987F6C /* ZwoptexTest */,
+				74AC80878B5EB105FD3B78B3 /* InputTest */,
 			);
 			name = Classes;
 			path = Cpp/TestCpp/Classes;
@@ -7338,6 +7352,7 @@
 				50891D6717E72F7D005AE68C /* UITextAreaTest.cpp in Sources */,
 				50891D6917E72F7D005AE68C /* UITextButtonTest.cpp in Sources */,
 				50891D6B17E72F7D005AE68C /* UITextFieldTest.cpp in Sources */,
+				74AC8396BF791E4F9B552D36 /* MouseTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7635,6 +7650,7 @@
 				50891D6C17E72F7D005AE68C /* UITextFieldTest.cpp in Sources */,
 				1A219E2617E8A2CD00EE4980 /* KeyboardTest.cpp in Sources */,
 				46E1949B17E9514B00357A8F /* PhysicsTest.cpp in Sources */,
+				74AC89355094A9492FFF062A /* MouseTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

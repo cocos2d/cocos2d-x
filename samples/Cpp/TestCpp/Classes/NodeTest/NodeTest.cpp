@@ -723,7 +723,10 @@ std::string CameraCenterTest::subtitle()
 //------------------------------------------------------------------
 ConvertToNode::ConvertToNode()
 {
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(ConvertToNode::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     auto s = Director::getInstance()->getWinSize();
 
     auto rotate = RotateBy::create(10, 360);

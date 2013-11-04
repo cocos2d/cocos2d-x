@@ -126,15 +126,11 @@ void TextInputTest::onEnter()
 KeyboardNotificationLayer::KeyboardNotificationLayer()
 : _trackNode(0)
 {
-    setTouchEnabled(true);
-    
     // Register Touch Event
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
-    
+    auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchBegan, this);
     listener->onTouchEnded = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchEnded, this);
-    
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 //void KeyboardNotificationLayer::registerWithTouchDispatcher()

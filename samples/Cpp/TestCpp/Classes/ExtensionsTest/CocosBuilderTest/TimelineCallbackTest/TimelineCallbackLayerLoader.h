@@ -3,7 +3,7 @@
 
 #include "TimelineCallbackTestLayer.h"
 
-class TimelineCallbackTestLayerLoader : public cocos2d::extension::LayerLoader {
+class TimelineCallbackTestLayerLoader : public cocosbuilder::LayerLoader {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(TimelineCallbackTestLayerLoader, loader);
 

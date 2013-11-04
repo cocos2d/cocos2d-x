@@ -119,9 +119,13 @@ std::string TouchesMainScene::title()
 void TouchesPerformTest1::onEnter()
 {
     TouchesMainScene::onEnter();
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-    setSwallowsTouches(true);
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    listener->onTouchBegan = CC_CALLBACK_2(TouchesPerformTest1::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(TouchesPerformTest1::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(TouchesPerformTest1::onTouchEnded, this);
+    listener->onTouchCancelled = CC_CALLBACK_2(TouchesPerformTest1::onTouchCancelled, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 std::string TouchesPerformTest1::title()
@@ -158,7 +162,13 @@ void TouchesPerformTest1::onTouchCancelled(Touch* touch, Event* event)
 void TouchesPerformTest2::onEnter()
 {
     TouchesMainScene::onEnter();
-    setTouchEnabled(true);
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(TouchesPerformTest2::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(TouchesPerformTest2::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(TouchesPerformTest2::onTouchesEnded, this);
+    listener->onTouchesCancelled = CC_CALLBACK_2(TouchesPerformTest2::onTouchesCancelled, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 std::string TouchesPerformTest2::title()
@@ -194,18 +204,13 @@ void TouchesPerformTest2::onTouchesCancelled(const std::vector<Touch*>& touches,
 class TouchableLayer : public Layer
 {
 public:
-    virtual bool onTouchBegan(Touch *touch, Event *event)
+    bool onTouchBegan(Touch *touch, Event *event)
     {
         return false;
     }
-    virtual void onTouchMoved(Touch *touch, Event *event) {}
-    virtual void onTouchEnded(Touch *touch, Event *event) {}
-    virtual void onTouchCancelled(Touch *touch, Event *event) {}
-    
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *event) {}
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *event) {}
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *event) {}
-    virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *event) {}
+    void onTouchMoved(Touch *touch, Event *event) {}
+    void onTouchEnded(Touch *touch, Event *event) {}
+    void onTouchCancelled(Touch *touch, Event *event) {}
 };
 
 
@@ -231,14 +236,20 @@ void TouchesPerformTest3::onEnter()
     {
         int zorder = rand() % TOUCHABLE_NODE_NUM;
         auto layer = new TouchableLayer();
-        layer->setTouchEnabled(true);
-        layer->setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+        
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = CC_CALLBACK_2(TouchableLayer::onTouchBegan, layer);
+        listener->onTouchMoved = CC_CALLBACK_2(TouchableLayer::onTouchMoved, layer);
+        listener->onTouchEnded = CC_CALLBACK_2(TouchableLayer::onTouchEnded, layer);
+        listener->onTouchCancelled = CC_CALLBACK_2(TouchableLayer::onTouchCancelled, layer);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+        
         addChild(layer, zorder);
         layer->release();
     }
     
     auto emitEventlabel = LabelTTF::create("Emit Touch Event", "", 24);
-    auto menuItem = MenuItemLabel::create(emitEventlabel, [](Object* sender){
+    auto menuItem = MenuItemLabel::create(emitEventlabel, [this](Object* sender){
         
         CC_PROFILER_PURGE_ALL();
         
@@ -254,13 +265,11 @@ void TouchesPerformTest3::onEnter()
         event.setEventCode(EventTouch::EventCode::BEGAN);
         event.setTouches(touches);
         
-        auto dispatcher = EventDispatcher::getInstance();
-        
         for (int i = 0; i < 100; ++i)
         {
             CC_PROFILER_START(TOUCH_PROFILER_NAME);
             
-            dispatcher->dispatchEvent(&event, false);
+            _eventDispatcher->dispatchEvent(&event);
             
             CC_PROFILER_STOP(TOUCH_PROFILER_NAME);
         }
