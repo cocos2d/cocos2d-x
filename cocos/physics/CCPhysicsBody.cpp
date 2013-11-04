@@ -79,7 +79,7 @@ PhysicsBody::PhysicsBody()
 , _tag(0)
 , _categoryBitmask(UINT_MAX)
 , _collisionBitmask(UINT_MAX)
-, _contactTestBitmask(0)
+, _contactTestBitmask(UINT_MAX)
 , _group(0)
 {
 }
@@ -287,12 +287,19 @@ void PhysicsBody::setDynamic(bool dynamic)
     if (dynamic != _dynamic)
     {
         _dynamic = dynamic;
-        if (_world != nullptr)
+        if (dynamic)
         {
-            if (dynamic)
+            cpBodySetMass(_info->body, _mass);
+            
+            if (_world != nullptr)
             {
                 cpSpaceAddBody(_world->_info->space, _info->body);
-            }else
+            }
+        }else
+        {
+            cpBodySetMass(_info->body, PHYSICS_INFINITY);
+            
+            if (_world != nullptr)
             {
                 cpSpaceRemoveBody(_world->_info->space, _info->body);
             }

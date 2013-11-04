@@ -204,10 +204,8 @@ void PhysicsDemoClickAdd::onEnter()
     
 #ifdef CC_USE_PHYSICS
     
-    auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchBegan, this);
-    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchMoved, this);
-    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchEnded, this);
+    auto touchListener = EventListenerTouchAllAtOnce::create();
+    touchListener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
     auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(PhysicsDemoClickAdd::onAcceleration, this));
@@ -764,6 +762,8 @@ void PhysicsDemoJoints::onEnter()
     PhysicsDemo::onEnter();
     
     auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoJoints::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoJoints::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoJoints::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
@@ -1039,24 +1039,24 @@ void PhysicsDemoOneWayPlatform::onEnter()
     ground->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
     this->addChild(ground);
     
-    auto platform = Node::create();
-    platform->setPhysicsBody(PhysicsBody::createBox(Size(200, 50)));
+    auto platform = makeBox(VisibleRect::center(), Size(200, 50));
     platform->getPhysicsBody()->setDynamic(false);
-    platform->setPosition(VisibleRect::center());
     this->addChild(platform);
     
-    auto ball = makeBall(VisibleRect::center() - Point(0, 50), 5);
-    ball->getPhysicsBody()->setVelocity(Point(0, 200));
+    auto ball = makeBall(VisibleRect::center() - Point(0, 50), 20);
+    ball->getPhysicsBody()->setVelocity(Point(0, 150));
+    ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    ball->getPhysicsBody()->setMass(1.0f);
     this->addChild(ball);
     
     auto contactListener = EventListenerPhysicsContactWithBodies::create(platform->getPhysicsBody(), ball->getPhysicsBody());
-    contactListener->onContactPreSolve = CC_CALLBACK_3(PhysicsDemoOneWayPlatform::onPreSolve, this);
+    contactListener->onContactBegin = CC_CALLBACK_2(PhysicsDemoOneWayPlatform::onContactBegin, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
-bool PhysicsDemoOneWayPlatform::onPreSolve(EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve)
+bool PhysicsDemoOneWayPlatform::onContactBegin(EventCustom* event, const PhysicsContact& contact)
 {
-    return true;
+    return contact.getContactData()->normal.y < 0;
 }
 
 std::string PhysicsDemoOneWayPlatform::title()

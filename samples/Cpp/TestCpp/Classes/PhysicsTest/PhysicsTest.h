@@ -140,7 +140,7 @@ public:
     void onEnter() override;
     std::string title() override;
     
-    bool onPreSolve(EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve);
+    bool onContactBegin(EventCustom* event, const PhysicsContact& contact);
 };
 
 #endif
