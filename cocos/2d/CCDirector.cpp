@@ -60,6 +60,7 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
 #include "CCEventDispatcher.h"
+#include "Renderer.h"
 
 /**
  Position of the FPS
@@ -273,6 +274,8 @@ void Director::drawScene()
     {
         showStats();
     }
+
+    Renderer::getInstance()->render();
 
     kmGLPopMatrix();
 

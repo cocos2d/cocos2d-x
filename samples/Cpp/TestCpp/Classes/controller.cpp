@@ -14,6 +14,7 @@ struct {
 	const char *test_name;
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
+    { "NewRenderTest", []() { return new NewRendererTestScene(); } },
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },

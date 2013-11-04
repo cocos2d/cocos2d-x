@@ -499,6 +499,7 @@ public:
     * @lua NA
     */
     virtual void setPosition(const Point& pos) override;
+    virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
     virtual void setRotationX(float rotationX) override;
     virtual void setRotationY(float rotationY) override;
