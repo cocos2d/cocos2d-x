@@ -294,9 +294,9 @@ void UIListViewEx::removeLastItem()
     removeItem(m_pItems->count() -1);
 }
 
-UIWidget* UIListViewEx::getItem(int index)
+UIWidget* UIListViewEx::getItem(unsigned int index)
 {
-    if (index < 0 || (unsigned int)index >= m_pItems->count())
+    if ((int)index < 0 || index >= m_pItems->count())
     {
         return NULL;
     }
@@ -308,7 +308,7 @@ CCArray* UIListViewEx::getItems()
     return m_pItems;
 }
 
-int UIListViewEx::getIndex(UIWidget *item) const
+unsigned int UIListViewEx::getIndex(UIWidget *item) const
 {
     if (!m_pItems)
     {
