@@ -149,16 +149,16 @@ platform/CCThread.cpp \
 ../physics/CCPhysicsJoint.cpp \
 ../physics/CCPhysicsShape.cpp \
 ../physics/CCPhysicsWorld.cpp \
-../physics/box2d/CCPhysicsBodyInfo.cpp \
-../physics/box2d/CCPhysicsContactInfo.cpp \
-../physics/box2d/CCPhysicsJointInfo.cpp \
-../physics/box2d/CCPhysicsShapeInfo.cpp \
-../physics/box2d/CCPhysicsWorldInfo.cpp \
-../physics/chipmunk/CCPhysicsBodyInfo.cpp \
-../physics/chipmunk/CCPhysicsContactInfo.cpp \
-../physics/chipmunk/CCPhysicsJointInfo.cpp \
-../physics/chipmunk/CCPhysicsShapeInfo.cpp \
-../physics/chipmunk/CCPhysicsWorldInfo.cpp \
+../physics/box2d/CCPhysicsBodyInfo_box2d.cpp \
+../physics/box2d/CCPhysicsContactInfo_box2d.cpp \
+../physics/box2d/CCPhysicsJointInfo_box2d.cpp \
+../physics/box2d/CCPhysicsShapeInfo_box2d.cpp \
+../physics/box2d/CCPhysicsWorldInfo_box2d.cpp \
+../physics/chipmunk/CCPhysicsBodyInfo_chipmunk.cpp \
+../physics/chipmunk/CCPhysicsContactInfo_chipmunk.cpp \
+../physics/chipmunk/CCPhysicsJointInfo_chipmunk.cpp \
+../physics/chipmunk/CCPhysicsShapeInfo_chipmunk.cpp \
+../physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 ../../external/tinyxml2/tinyxml2.cpp \
 ../../external/unzip/ioapi.cpp \
 ../../external/unzip/unzip.cpp

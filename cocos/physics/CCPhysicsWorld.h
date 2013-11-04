@@ -40,9 +40,6 @@ class PhysicsJoint;
 class PhysicsWorldInfo;
 class PhysicsShape;
 class PhysicsContact;
-class PhysicsContactPreSolve;
-class PhysicsContactPostSolve;
-class PhysicsContactListener;
 class Array;
 
 class Sprite;
@@ -97,56 +94,57 @@ public:
     
     void rayCast(PhysicsRayCastCallback& callback, Point point1, Point point2, void* data);
     void rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data);
-    Array* getShapesAtPoint(Point point);
-    PhysicsShape* getShapeAtPoint(Point point);
-    Array* getAllBody() const;
+    Array* getShapesAtPoint(Point point) const;
+    PhysicsShape* getShapeAtPoint(Point point) const;
+    Array* getAllBodies() const;
+    PhysicsBody* getBodyByTag(int tag) const;
     
     /** Register a listener to receive contact callbacks*/
-    inline void registerContactListener(PhysicsContactListener* delegate) { _listener = delegate; }
+    //inline void registerContactListener(EventListenerPhysicsContact* delegate) { _listener = delegate; }
     /** Unregister a listener. */
-    inline void unregisterContactListener() { _listener = nullptr; }
+    //inline void unregisterContactListener() { _listener = nullptr; }
     
+    inline Scene& getScene() const { return *_scene; }
     /** get the gravity value */
-    inline Point getGravity() { return _gravity; }
+    inline Point getGravity() const { return _gravity; }
     /** set the gravity value */
     void setGravity(Point gravity);
     
     /** test the debug draw is enabled */
-    inline bool isDebugDraw() { return _debugDraw; }
+    inline bool isDebugDraw() const { return _debugDraw; }
     /** set the debug draw */
     inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
     
     virtual void removeBody(PhysicsBody* body);
     virtual void removeBodyByTag(int tag);
+    virtual void removeAllBodies();
     
 protected:
-    static PhysicsWorld* create();
-    bool init();
+    static PhysicsWorld* create(Scene& scene);
+    bool init(Scene& scene);
     
-    void setScene(Scene* scene);
-    
-    virtual void addBody(PhysicsBody* body);
-    virtual void addShape(PhysicsShape* shape);
+    virtual PhysicsBody* addBody(PhysicsBody* body);
+    virtual PhysicsShape* addShape(PhysicsShape* shape);
     virtual void removeShape(PhysicsShape* shape);
     virtual void update(float delta);
     
     virtual void debugDraw();
     virtual void drawWithShape(DrawNode* node, PhysicsShape* shape);
+    virtual void drawWithJoint(DrawNode* node, PhysicsJoint* joint);
     
     
     virtual int collisionBeginCallback(PhysicsContact& contact);
-    virtual int collisionPreSolveCallback(PhysicsContact& contact, const PhysicsContactPreSolve& solve);
-    virtual void collisionPostSolveCallback(PhysicsContact& contact, const PhysicsContactPostSolve& solve);
+    virtual int collisionPreSolveCallback(PhysicsContact& contact);
+    virtual void collisionPostSolveCallback(PhysicsContact& contact);
     virtual void collisionSeparateCallback(PhysicsContact& contact);
     
 protected:
     Point _gravity;
     float _speed;
     PhysicsWorldInfo* _info;
-    PhysicsContactListener* _listener;
+    //EventListenerPhysicsContact* _listener;
     
-    
-    Array* _bodys;
+    Array* _bodies;
     std::list<PhysicsJoint*> _joints;
     Scene* _scene;
     

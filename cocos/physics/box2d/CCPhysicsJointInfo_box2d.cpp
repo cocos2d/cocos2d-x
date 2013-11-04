@@ -22,25 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsBodyInfo.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#include "CCPhysicsJointInfo_box2d.h"
+
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 NS_CC_BEGIN
 
-PhysicsBodyInfo::PhysicsBodyInfo()
-: body(nullptr)
-, group(CP_NO_GROUP)
+PhysicsJointInfo::PhysicsJointInfo()
 {
 }
 
-PhysicsBodyInfo::~PhysicsBodyInfo()
+PhysicsJointInfo::~PhysicsJointInfo()
 {
-    if (body) cpBodyFree(body);
-}
-
-Clonable* PhysicsBodyInfo::clone() const
-{
-    return nullptr;
 }
 
 NS_CC_END
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

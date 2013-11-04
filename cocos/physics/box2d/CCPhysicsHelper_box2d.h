@@ -23,38 +23,20 @@
  ****************************************************************************/
 
 #include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 
-#ifndef __CCPHYSICS_JOINT_INFO_H__
-#define __CCPHYSICS_JOINT_INFO_H__
-#include "chipmunk.h"
+#ifndef __CCPHYSICS_HELPER_H__
+#define __CCPHYSICS_HELPER_H__
 #include "CCPlatformMacros.h"
-#include <vector>
-#include <map>
+#include "CCGeometry.h"
+
 NS_CC_BEGIN
 
-class PhysicsJoint;
-
-class PhysicsJointInfo
+class PhysicsHelper
 {
-public:
-    void add(cpConstraint* shape);
-    void remove(cpConstraint* shape);
-    void removeAll();
-    
-public:
-    std::vector<cpConstraint*> joints;
-    PhysicsJoint* joint;
-    static std::map<cpConstraint*, PhysicsJointInfo*> map;
-    
-private:
-    PhysicsJointInfo(PhysicsJoint* joint);
-    ~PhysicsJointInfo();
-    
-    friend class PhysicsJoint;
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_SHAPE_INFO_H__
+#endif // __CCPHYSICS_HELPER_H__
 
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

@@ -22,18 +22,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsWorldInfo.h"
+#include "CCPhysicsContactInfo_chipmunk.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 NS_CC_BEGIN
 
-PhysicsWorldInfo::PhysicsWorldInfo()
+PhysicsContactInfo::PhysicsContactInfo(PhysicsContact* contact)
+: contact(contact)
 {
-    space = cpSpaceNew();
 }
 
-PhysicsWorldInfo::~PhysicsWorldInfo()
+PhysicsContactInfo::~PhysicsContactInfo()
 {
-    cpSpaceFree(space);
 }
 
 NS_CC_END

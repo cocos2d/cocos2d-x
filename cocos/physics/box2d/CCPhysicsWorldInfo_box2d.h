@@ -22,18 +22,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsJointInfo.h"
-
+#include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+
+#ifndef __CCPHYSICS_WORLD_INFO_H__
+#define __CCPHYSICS_WORLD_INFO_H__
+
+#include "CCPlatformMacros.h"
 NS_CC_BEGIN
 
-PhysicsJointInfo::PhysicsJointInfo()
+class PhysicsWorldInfo
 {
-}
-
-PhysicsJointInfo::~PhysicsJointInfo()
-{
-}
+public:
+    PhysicsWorldInfo();
+    ~PhysicsWorldInfo();
+};
 
 NS_CC_END
+#endif // __CCPHYSICS_WORLD_INFO_H__
+
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

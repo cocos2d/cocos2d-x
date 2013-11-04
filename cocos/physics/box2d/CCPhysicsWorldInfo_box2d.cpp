@@ -22,33 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#include "CCPhysicsWorldInfo_box2d.h"
 
-#ifndef __CCPHYSICS_BODY_INFO_H__
-#define __CCPHYSICS_BODY_INFO_H__
-#include "chipmunk.h"
-#include "CCPlatformMacros.h"
-#include "CCObject.h"
-
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 NS_CC_BEGIN
 
-class PhysicsBodyInfo : public Clonable
+PhysicsWorldInfo::PhysicsWorldInfo()
 {
-public:
-    cpBody* body;
-    cpGroup group;
-    
-private:
-    PhysicsBodyInfo();
-    ~PhysicsBodyInfo();
-    
-    Clonable* clone() const override;
-    
-    friend class PhysicsBody;
-};
+}
+
+PhysicsWorldInfo::~PhysicsWorldInfo()
+{
+}
 
 NS_CC_END
-#endif // __CCPHYSICS_BODY_INFO_H__
-
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D

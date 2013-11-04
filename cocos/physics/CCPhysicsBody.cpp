@@ -37,17 +37,16 @@
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
 
-#include "chipmunk/CCPhysicsBodyInfo.h"
-#include "box2d/CCPhysicsBodyInfo.h"
-#include "chipmunk/CCPhysicsJointInfo.h"
-#include "box2d/CCPhysicsJointInfo.h"
-#include "chipmunk/CCPhysicsWorldInfo.h"
-#include "box2d/CCPhysicsWorldInfo.h"
-#include "chipmunk/CCPhysicsShapeInfo.h"
-#include "box2d/CCPhysicsShapeInfo.h"
-
-#include "chipmunk/CCPhysicsHelper.h"
-#include "box2d/CCPhysicsHelper.h"
+#include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
+#include "box2d/CCPhysicsBodyInfo_box2d.h"
+#include "chipmunk/CCPhysicsJointInfo_chipmunk.h"
+#include "box2d/CCPhysicsJointInfo_box2d.h"
+#include "chipmunk/CCPhysicsWorldInfo_chipmunk.h"
+#include "box2d/CCPhysicsWorldInfo_box2d.h"
+#include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
+#include "box2d/CCPhysicsShapeInfo_box2d.h"
+#include "chipmunk/CCPhysicsHelper_chipmunk.h"
+#include "box2d/CCPhysicsHelper_box2d.h"
 
 NS_CC_BEGIN
 
@@ -58,11 +57,11 @@ namespace
 {
     static const float MASS_DEFAULT = 1.0;
     static const float MOMENT_DEFAULT = 200;
-    static float GROUP_INDEX = 0;
 }
 
 PhysicsBody::PhysicsBody()
-: _owner(nullptr)
+: _node(nullptr)
+, _shapes(nullptr)
 , _world(nullptr)
 , _info(nullptr)
 , _dynamic(true)
@@ -81,23 +80,29 @@ PhysicsBody::PhysicsBody()
 , _categoryBitmask(UINT_MAX)
 , _collisionBitmask(UINT_MAX)
 , _contactTestBitmask(0)
+, _group(0)
 {
 }
 
 PhysicsBody::~PhysicsBody()
 {
-    CC_SAFE_DELETE(_info);
+    if (_world)
+    {
+        removeFromWorld();
+    }
     
     removeAllShapes();
     
     for (auto it = _joints.begin(); it != _joints.end(); ++it)
     {
         PhysicsJoint* joint = *it;
-        PhysicsBody* other = joint->getBodyA() == this ? joint->getBodyA() : joint->getBodyB();
+        PhysicsBody* other = joint->getBodyA() == this ? joint->getBodyB() : joint->getBodyA();
         
         other->_joints.erase(std::find(other->_joints.begin(), other->_joints.end(), joint));
+        
         delete joint;
     }
+    CC_SAFE_DELETE(_info);
 }
 
 PhysicsBody* PhysicsBody::create()
@@ -111,6 +116,45 @@ PhysicsBody* PhysicsBody::create()
     
     CC_SAFE_DELETE(body);
     return nullptr;
+}
+
+PhysicsBody* PhysicsBody::create(float mass)
+{
+    PhysicsBody* body = new PhysicsBody();
+    if (body)
+    {
+        body->_mass = mass;
+        body->_massDefault = false;
+        if (body->init())
+        {
+            body->autorelease();
+            return body;
+        }
+    }
+    
+    CC_SAFE_DELETE(body);
+    return nullptr;
+}
+
+PhysicsBody* PhysicsBody::create(float mass, float moment)
+{
+    PhysicsBody* body = new PhysicsBody();
+    if (body)
+    {
+        body->_mass = mass;
+        body->_massDefault = false;
+        body->_moment = moment;
+        body->_momentDefault = false;
+        if (body->init())
+        {
+            body->autorelease();
+            return body;
+        }
+    }
+    
+    CC_SAFE_DELETE(body);
+    return nullptr;
+    
 }
 
 PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
@@ -224,9 +268,11 @@ bool PhysicsBody::init()
     {
         _info = new PhysicsBodyInfo();
         CC_BREAK_IF(_info == nullptr);
+        _shapes = Array::create();
+        CC_BREAK_IF(_shapes == nullptr);
+        _shapes->retain();
         
         _info->body = cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment));
-        _info->group = ++GROUP_INDEX;
         
         CC_BREAK_IF(_info->body == nullptr);
         
@@ -274,10 +320,10 @@ void PhysicsBody::setGravityEnable(bool enable)
         {
             if (enable)
             {
-                applyForce(_world->getGravity());
+                applyForce(_world->getGravity() * _mass);
             }else
             {
-                applyForce(-_world->getGravity());
+                applyForce(-_world->getGravity() * _mass);
             }
         }
     }
@@ -304,15 +350,14 @@ float PhysicsBody::getRotation() const
     return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->body) / 3.14f * 180.0f);
 }
 
-void PhysicsBody::addShape(PhysicsShape* shape)
+PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape)
 {
-    if (shape == nullptr) return;
+    if (shape == nullptr) return nullptr;
     
     // add shape to body
-    if (std::find(_shapes.begin(), _shapes.end(), shape) == _shapes.end())
+    if (_shapes->getIndexOfObject(shape) == UINT_MAX)
     {
         shape->setBody(this);
-        _shapes.push_back(shape);
         
         // calculate the area, mass, and desity
         // area must update before mass, because the density changes depend on it.
@@ -325,8 +370,15 @@ void PhysicsBody::addShape(PhysicsShape* shape)
             _world->addShape(shape);
         }
         
-        shape->retain();
+        _shapes->addObject(shape);
+        
+        if (_group != CP_NO_GROUP && shape->getGroup() == CP_NO_GROUP)
+        {
+            shape->setGroup(_group);
+        }
     }
+    
+    return shape;
 }
 
 void PhysicsBody::applyForce(Point force)
@@ -518,10 +570,11 @@ void PhysicsBody::setMoment(float moment)
     }
 }
 
-PhysicsShape* PhysicsBody::getShapeByTag(int tag)
+PhysicsShape* PhysicsBody::getShapeByTag(int tag) const
 {
-    for (auto shape : _shapes)
+    for (auto child : *_shapes)
     {
+        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
         if (shape->getTag() == tag)
         {
             return shape;
@@ -533,8 +586,9 @@ PhysicsShape* PhysicsBody::getShapeByTag(int tag)
 
 void PhysicsBody::removeShapeByTag(int tag)
 {
-    for (auto shape : _shapes)
+    for (auto child : *_shapes)
     {
+        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
         if (shape->getTag() == tag)
         {
             removeShape(shape);
@@ -545,9 +599,7 @@ void PhysicsBody::removeShapeByTag(int tag)
 
 void PhysicsBody::removeShape(PhysicsShape* shape)
 {
-    auto it = std::find(_shapes.begin(), _shapes.end(), shape);
-    
-    if (it != _shapes.end())
+    if (_shapes->getIndexOfObject(shape) == UINT_MAX)
     {
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
@@ -560,25 +612,39 @@ void PhysicsBody::removeShape(PhysicsShape* shape)
         {
             _world->removeShape(shape);
         }
-        _shapes.erase(it);
         shape->setBody(nullptr);
-        shape->release();
+        _shapes->removeObject(shape);
     }
 }
 
 void PhysicsBody::removeAllShapes()
 {
-    for (auto shape : _shapes)
+    for (auto child : *_shapes)
     {
+        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
+        
+        // deduce the area, mass and moment
+        // area must update before mass, because the density changes depend on it.
+        _area -= shape->getArea();
+        addMass(-shape->getMass());
+        addMoment(-shape->getMoment());
+        
         if (_world)
         {
             _world->removeShape(shape);
         }
-        
-        delete shape;
+        shape->setBody(nullptr);
     }
     
-    _shapes.clear();
+    _shapes->removeAllObjects();
+}
+
+void PhysicsBody::removeFromWorld()
+{
+    if (_world)
+    {
+        _world->removeBody(this);
+    }
 }
 
 void PhysicsBody::setEnable(bool enable)
@@ -600,7 +666,7 @@ void PhysicsBody::setEnable(bool enable)
     }
 }
 
-bool PhysicsBody::isResting()
+bool PhysicsBody::isResting() const
 {
     return cpBodyIsSleeping(_info->body) == cpTrue;
 }
@@ -616,14 +682,53 @@ void PhysicsBody::update(float delta)
     }
 }
 
-//Clonable* PhysicsBody::clone() const
-//{
-//    PhysicsBody* body = new PhysicsBody();
-//    
-//    body->autorelease();
-//    
-//    return body;
-//}
+void PhysicsBody::setCategoryBitmask(int bitmask)
+{
+    _categoryBitmask = bitmask;
+    
+    for (auto shape : *_shapes)
+    {
+        ((PhysicsShape*)shape)->setCategoryBitmask(bitmask);
+    }
+}
+
+void PhysicsBody::setContactTestBitmask(int bitmask)
+{
+    _contactTestBitmask = bitmask;
+    
+    for (auto shape : *_shapes)
+    {
+        ((PhysicsShape*)shape)->setContactTestBitmask(bitmask);
+    }
+}
+
+void PhysicsBody::setCollisionBitmask(int bitmask)
+{
+    _collisionBitmask = bitmask;
+    
+    for (auto shape : *_shapes)
+    {
+        ((PhysicsShape*)shape)->setCollisionBitmask(bitmask);
+    }
+}
+
+void PhysicsBody::setGroup(int group)
+{
+    for (auto shape : *_shapes)
+    {
+        ((PhysicsShape*)shape)->setGroup(group);
+    }
+}
+
+Point PhysicsBody::world2Local(const Point& point)
+{
+    return PhysicsHelper::cpv2point(cpBodyWorld2Local(_info->body, PhysicsHelper::point2cpv(point)));
+}
+
+Point PhysicsBody::local2World(const Point& point)
+{
+    return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->body, PhysicsHelper::point2cpv(point)));
+}
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 

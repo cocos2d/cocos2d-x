@@ -22,22 +22,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
-#ifndef __CCPHYSICS_BODY_INFO_H__
-#define __CCPHYSICS_BODY_INFO_H__
-#include "CCPlatformMacros.h"
+#include "CCPhysicsBodyInfo_chipmunk.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 NS_CC_BEGIN
 
-class PhysicsBodyInfo
+PhysicsBodyInfo::PhysicsBodyInfo()
+: body(nullptr)
 {
-public:
-    PhysicsBodyInfo();
-    ~PhysicsBodyInfo();
-};
+}
+
+PhysicsBodyInfo::~PhysicsBodyInfo()
+{
+    if (body) cpBodyFree(body);
+}
+
+Clonable* PhysicsBodyInfo::clone() const
+{
+    return nullptr;
+}
 
 NS_CC_END
-#endif // __CCPHYSICS_BODY_INFO_H__
-
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
