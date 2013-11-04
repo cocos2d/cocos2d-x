@@ -2,11 +2,38 @@ cocos2d-x-3.0alpha1 @??? 2013
 [all platforms]
      [DOC]          Added RELEASE_NOTES and CODING_STYLE.md files
      [FIX]          Texture: use CCLOG to log when a texture is being decoded in software
+     [FIX]          Spine: fix memory leaks
+     [FIX]          fixed a memory leak in XMLHTTPRequest.cpp
+     [FIX]          removeSpriteFramesFromFile() crashes if file doesn't exist.
+     [FIX]          Avoid unnecessary object duplication for Scale9Sprite.
+     [FIX]          create_project.py does not rename/replace template projects completely.
+     [FIX]          Could not set next animation in CCBAnimationCompleted callback.
+     [FIX]          The Node's anchor point was changed after being added to ScrollView.
+     [FIX]          Refactored and improved EventDispatcher.
+     [NEW]          Added Mouse Support For Desktop Platforms.
+     [FIX]          EventListeners can't be removed sometimes.
+     [FIX]          When parsing XML using TinyXML, the data size has to be specified.
 [Android]
      [FIX]          Added EGL_RENDERABLE_TYPE to OpenGL attributes
      [NEW]          Added Cocos2dxHelper.runOnGLThread(Runnable) again
+     [FIX]          Fixed application will crash when pause and resume.
+     [FIX]          Clear NoSuchMethodError Exception when JniHelper fails to find method id
+     [NEW]          Added xlargeScreens="true" to supports-screens
+     [NEW]          Added build/android-build.py to build all Android samples, and remove all build_native.sh/cmd
+     [NEW]          Added build_native.py to build template projects, and remove build_native.sh/cmd
 [Mac]
      [FIX]          Removed unused CCLOG() from GL initialization
+[iOS]
+     [FIX]          Can't click the area that outside of keyboard to close keyboard when using EditBox.
+[Desktop]
+     [FIX]          Trigger onKeyReleased only after the key has been released.
+[Javascript binding]
+     [FIX]          Fixed a memory leak in ScriptingCore::runScript()
+     [FIX]          sys.localStorage.getItem() does not support non-ascii string.
+     [FIX]          cc.Scheduler.schedule(target, func) without repeat argument couldn't repeat schedule forever on device.
+     [FIX]          CCBReader can't play sequence automatically in JSB.
+[Lua Binding]
+     [NEW]          Added Armature lua binding and added test samples.
 
 cocos2d-x-3.0alpha0 @Sep.19 2013
 [all platforms]

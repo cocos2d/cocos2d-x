@@ -2,6 +2,7 @@
 #include "SceneController.h"
 
 using namespace cocos2d;
+using namespace cocostudio;
 
 EnemyController::EnemyController(void)
 {
