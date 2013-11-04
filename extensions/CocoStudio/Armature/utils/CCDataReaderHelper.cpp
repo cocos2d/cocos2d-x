@@ -825,12 +825,12 @@ CCMovementData *CCDataReaderHelper::decodeMovement(tinyxml2::XMLElement *movemen
         {
             if( movementXML->QueryIntAttribute(A_TWEEN_EASING, &(tweenEasing)) == tinyxml2::XML_SUCCESS)
             {
-                movementData->tweenEasing = (CCTweenType)tweenEasing;
+                movementData->tweenEasing = tweenEasing == 2 ? Sine_EaseInOut : (CCTweenType)tweenEasing;
             }
         }
         else
         {
-            movementData->tweenEasing  = TWEEN_EASING_MAX;
+            movementData->tweenEasing  = Linear;
         }
     }
 
@@ -1115,12 +1115,12 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
         {
             if( frameXML->QueryIntAttribute(A_TWEEN_EASING, &(tweenEasing)) == tinyxml2::XML_SUCCESS)
             {
-                frameData->tweenEasing = (CCTweenType)tweenEasing;
+                frameData->tweenEasing = tweenEasing == 2 ? Sine_EaseInOut : (CCTweenType)tweenEasing;
             }
         }
         else
         {
-            frameData->tweenEasing  = TWEEN_EASING_MAX;
+            frameData->tweenEasing  = Linear;
         }
     }
 
