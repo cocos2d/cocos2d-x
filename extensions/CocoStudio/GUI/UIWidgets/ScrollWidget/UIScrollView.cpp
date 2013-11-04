@@ -29,11 +29,6 @@ NS_CC_EXT_BEGIN
 
 #define AUTOSCROLLMAXSPEED 1000.0f
 
-static float calculateInstantaneousSpeed(float time, float originalSpeed, float acceleration)
-{
-    return originalSpeed - acceleration*time;
-}
-
 const CCPoint SCROLLDIR_UP = CCPointMake(0.0f, 1.0f);
 const CCPoint SCROLLDIR_DOWN = CCPointMake(0.0f, -1.0f);
 const CCPoint SCROLLDIR_LEFT = CCPointMake(-1.0f, 0.0f);
