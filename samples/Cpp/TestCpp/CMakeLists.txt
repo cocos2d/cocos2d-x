@@ -1,4 +1,4 @@
-set(SAMPLE_NAME testcpp)
+set(APP_NAME testcpp)
 
 set(SAMPLE_SRC
   Classes/AccelerometerTest/AccelerometerTest.cpp
@@ -138,11 +138,11 @@ include_directories(
 )
 
 # add the executable
-add_executable(${SAMPLE_NAME}
+add_executable(${APP_NAME}
   ${SAMPLE_SRC}
 )
 
-target_link_libraries(${SAMPLE_NAME}
+target_link_libraries(${APP_NAME}
   gui
   network
   spine
@@ -154,10 +154,10 @@ target_link_libraries(${SAMPLE_NAME}
   box2d
 )
 
-set(SAMPLE_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${SAMPLE_NAME}")
+set(APP_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${APP_NAME}")
 
-set_target_properties(${SAMPLE_NAME} PROPERTIES
-     RUNTIME_OUTPUT_DIRECTORY  "${SAMPLE_BIN_DIR}")
+set_target_properties(${APP_NAME} PROPERTIES
+     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
-COPY_RES( ${SAMPLE_NAME} "Resources/*" "${SAMPLE_BIN_DIR}")
+COPY_RES( ${APP_NAME} )
 
