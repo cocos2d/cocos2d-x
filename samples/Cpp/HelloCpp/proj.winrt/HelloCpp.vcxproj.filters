@@ -25,21 +25,6 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{97c3b83c-49c5-4c12-b313-2ad896c789fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\Resources">
-      <UniqueIdentifier>{37c28dd7-c865-4574-ac83-fb26da23dce7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Resources\fonts">
-      <UniqueIdentifier>{41666224-8882-4745-ab9e-4e7719df2e31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Resources\ipad">
-      <UniqueIdentifier>{0e6684ad-1c56-4ccf-9776-b3c82a37033b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Resources\ipadhd">
-      <UniqueIdentifier>{327dfddb-d2cc-40f4-8dd1-d140511770da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Resources\iphone">
-      <UniqueIdentifier>{0b0c3f63-2268-4af1-894e-cd4e1972da79}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -84,37 +69,5 @@
     <Image Include="Assets\WideLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\Resources\ipad\CloseNormal.png">
-      <Filter>Assets\Resources\ipad</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipad\CloseSelected.png">
-      <Filter>Assets\Resources\ipad</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipad\HelloWorld.png">
-      <Filter>Assets\Resources\ipad</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipadhd\CloseNormal.png">
-      <Filter>Assets\Resources\ipadhd</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipadhd\CloseSelected.png">
-      <Filter>Assets\Resources\ipadhd</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipadhd\HelloWorld.png">
-      <Filter>Assets\Resources\ipadhd</Filter>
-    </Image>
-    <Image Include="Assets\Resources\iphone\CloseNormal.png">
-      <Filter>Assets\Resources\iphone</Filter>
-    </Image>
-    <Image Include="Assets\Resources\iphone\CloseSelected.png">
-      <Filter>Assets\Resources\iphone</Filter>
-    </Image>
-    <Image Include="Assets\Resources\iphone\HelloWorld.png">
-      <Filter>Assets\Resources\iphone</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="Assets\Resources\fonts\Marker Felt.ttf">
-      <Filter>Assets\Resources\fonts</Filter>
-    </Font>
   </ItemGroup>
 </Project>
