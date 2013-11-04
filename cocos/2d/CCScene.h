@@ -87,7 +87,7 @@ protected:
     PhysicsWorld* _physicsWorld;
 #endif // CC_USE_PHYSICS
     
-    friend class Layer;
+    friend class Node;
     friend class SpriteBatchNode;
 };
 
