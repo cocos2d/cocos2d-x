@@ -80,29 +80,29 @@ public:
     /**
      * Decode CCArmature Datas from xml export from Dragon CCBone flash tool
      */
-    static CCArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML);
-    static CCBoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML);
-    static CCDisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML);
+    static CCArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML, DataInfo *dataInfo);
+    static CCBoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML, DataInfo *dataInfo);
+    static CCDisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML, DataInfo *dataInfo);
 
 
     /**
      * Decode CCArmatureAnimation Datas from xml export from Dragon CCBone flash tool
      */
-    static CCAnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML);
-    static CCMovementData *decodeMovement(tinyxml2::XMLElement *movementXML, CCArmatureData *armatureData);
-    static CCMovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, CCBoneData *boneData);
-    static CCFrameData *decodeFrame(tinyxml2::XMLElement *frameXML, tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData);
+    static CCAnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML, DataInfo *dataInfo);
+    static CCMovementData *decodeMovement(tinyxml2::XMLElement *movementXML, CCArmatureData *armatureData, DataInfo *dataInfo);
+    static CCMovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, CCBoneData *boneData, DataInfo *dataInfo);
+    static CCFrameData *decodeFrame(tinyxml2::XMLElement *frameXML, tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData, DataInfo *dataInfo);
 
 
     /**
      * Decode Texture Datas from xml export from Dragon CCBone flash tool
      */
-    static CCTextureData *decodeTexture(tinyxml2::XMLElement *textureXML);
+    static CCTextureData *decodeTexture(tinyxml2::XMLElement *textureXML, DataInfo *dataInfo);
 
     /**
      * Decode Contour Datas from xml export from Dragon CCBone flash tool
      */
-    static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML);
+    static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo);
 
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
@@ -123,7 +123,6 @@ public:
     static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json, DataInfo *dataInfo);
 
 private:
-    static std::string s_BasefilePath;
     static std::vector<std::string> s_arrConfigFileList;
 
     static CCDataReaderHelper *s_DataReaderHelper;
