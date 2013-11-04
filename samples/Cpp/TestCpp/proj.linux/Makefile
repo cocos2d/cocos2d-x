@@ -2,6 +2,11 @@ EXECUTABLE = TestCpp
 
 DEFINES += -DCC_KEYBOARD_SUPPORT
 
+INCLUDES = -I../../../../external \
+           -I../../../../cocos/editor-support \
+           -I../../../../cocos \
+           -I../Classes
+
 SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ActionManagerTest/ActionManagerTest.cpp \
 	../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
@@ -85,6 +90,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
 	../Classes/KeyboardTest/KeyboardTest.cpp \
+	../Classes/InputTest/MouseTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \
 	../Classes/LabelTest/LabelTest.cpp \
 	../Classes/LabelTest/LabelTestNew.cpp \
@@ -135,22 +141,19 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl -lpng
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
-include ../../../../cocos2dx/proj.linux/cocos2dx.mk
 
-
-INCLUDES +=	 -I../ \
-	-I../../ \
-	-I../Classes \
-	-I$(COCOS_ROOT)/CocosDenshion/include \
-	-I$(COCOS_ROOT)/extensions/ \
-	-I$(COCOS_ROOT)/external/ \
-	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
+include ../../../../cocos/2d/cocos2dx.mk
 
 STATICLIBS += \
-	$(STATICLIBS_DIR)/libcurl.a \
+	$(STATICLIBS_DIR)/curl/prebuilt/linux/$(POSTFIX)/libcurl.a \
 	$(LIB_DIR)/libextension.a \
 	$(LIB_DIR)/libbox2d.a \
-	$(LIB_DIR)/libchipmunk.a
+	$(LIB_DIR)/libchipmunk.a \
+        $(LIB_DIR)/libgui.a \
+        $(LIB_DIR)/libcocosbuilder.a \
+        $(LIB_DIR)/libspine.a \
+        $(LIB_DIR)/libcocostudio.a \
+        $(LIB_DIR)/libnetwork.a
 
 ####### Build rules
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)

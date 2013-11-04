@@ -27,10 +27,10 @@
 
 #include "CCControlButton.h"
 #include "CCScale9Sprite.h"
-#include "label_nodes/CCLabelTTF.h"
-#include "label_nodes/CCLabelBMFont.h"
-#include "actions/CCAction.h"
-#include "actions/CCActionInterval.h"
+#include "CCLabelTTF.h"
+#include "CCLabelBMFont.h"
+#include "CCAction.h"
+#include "CCActionInterval.h"
 
 using namespace std;
 
@@ -96,7 +96,6 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         this->setTitleLabelDispatchTable(Dictionary::create());
         this->setBackgroundSpriteDispatchTable(Dictionary::create());
 
-        setTouchEnabled(true);
         _isPushed = false;
         _zoomOnTouchDown = true;
 
