@@ -2,10 +2,6 @@
 # android-build.py
 # Build android samples
 
-# You can use
-
-
-# begin
 import sys
 import os, os.path
 import shutil

@@ -19,7 +19,8 @@ cocos2d-x-3.0alpha1 @??? 2013
      [FIX]          Fixed application will crash when pause and resume.
      [FIX]          Clear NoSuchMethodError Exception when JniHelper fails to find method id
      [NEW]          Added xlargeScreens="true" to supports-screens
-     [NEW]          Added build/android-build.py to build all Android samples
+     [NEW]          Added build/android-build.py to build all Android samples, and remove all build_native.sh/cmd
+     [NEW]          Added build_native.py to build template projects, and remove build_native.sh/cmd
 [Mac]
      [FIX]          Removed unused CCLOG() from GL initialization
 [iOS]
