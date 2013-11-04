@@ -1,4 +1,4 @@
-set(SAMPLE_NAME hellocpp)
+set(APP_NAME hellocpp)
 
 set(SAMPLE_SRC
   proj.linux/main.cpp
@@ -7,16 +7,16 @@ set(SAMPLE_SRC
 )
 
 # add the executable
-add_executable(${SAMPLE_NAME}
+add_executable(${APP_NAME}
   ${SAMPLE_SRC}
 )
 
-target_link_libraries(${SAMPLE_NAME} audio cocos2d)
+target_link_libraries(${APP_NAME} audio cocos2d)
 
-set(SAMPLE_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${SAMPLE_NAME}")
+set(APP_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${APP_NAME}")
 
-set_target_properties(${SAMPLE_NAME} PROPERTIES
-     RUNTIME_OUTPUT_DIRECTORY  "${SAMPLE_BIN_DIR}")
+set_target_properties(${APP_NAME} PROPERTIES
+     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
-COPY_RES( ${SAMPLE_NAME} "Resources/*" "${SAMPLE_BIN_DIR}")
+COPY_RES( ${APP_NAME} )
 

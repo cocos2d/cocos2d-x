@@ -1,4 +1,4 @@
-set(SAMPLE_NAME hellolua)
+set(APP_NAME hellolua)
 
 set(SAMPLE_SRC
   proj.linux/main.cpp
@@ -13,11 +13,11 @@ include_directories(
 )
 
 # add the executable
-add_executable(${SAMPLE_NAME}
+add_executable(${APP_NAME}
   ${SAMPLE_SRC}
 )
 
-target_link_libraries(${SAMPLE_NAME}
+target_link_libraries(${APP_NAME}
   luabinding
   gui
   network
@@ -28,10 +28,13 @@ target_link_libraries(${SAMPLE_NAME}
   cocos2d
 )
 
-set(SAMPLE_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${SAMPLE_NAME}")
+set(APP_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${APP_NAME}")
 
-set_target_properties(${SAMPLE_NAME} PROPERTIES
-     RUNTIME_OUTPUT_DIRECTORY  "${SAMPLE_BIN_DIR}")
+set_target_properties(${APP_NAME} PROPERTIES
+     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
-COPY_RES( ${SAMPLE_NAME} "Resources/*" "${SAMPLE_BIN_DIR}")
+COPY_RES( ${APP_NAME} )
 
+COPY_RES_EXTRA(${APP_NAME} copy_core_scripts ${CMAKE_SOURCE_DIR}/cocos/scripting/lua
+  script/*
+  )
