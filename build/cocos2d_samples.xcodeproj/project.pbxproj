@@ -1040,6 +1040,8 @@
 		46A175031807D9E2005B8026 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A174BF1807D934005B8026 /* RootViewController.mm */; };
 		5010FC91180F0F8300B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174AD1807D934005B8026 /* Default-568h@2x.png */; };
 		5010FC92180F105C00B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 460E452F1807E712000CDD6D /* Default-568h@2x.png */; };
+		74AC885C758C25BBEE27C693 /* NewRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8931464FB86E3B561D59 /* NewRendererTest.cpp */; };
+		74AC8AAAFDDCF9DF8E88F067 /* NewRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8931464FB86E3B561D59 /* NewRendererTest.cpp */; };
 		A01E16881784BDA100B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A01E16891784BDA100B0CA4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		A01E168A1784BDA100B0CA4A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
@@ -2839,6 +2841,8 @@
 		46A174EF1807D9C4005B8026 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		46A174F01807D9C4005B8026 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		46A174F11807D9C4005B8026 /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
+		74AC82AF702AB78309566973 /* NewRendererTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRendererTest.h; sourceTree = "<group>"; };
+		74AC8931464FB86E3B561D59 /* NewRendererTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewRendererTest.cpp; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E17721784C06E00B0CA4A /* Test JavaScript iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E18571784C45500B0CA4A /* JS Watermelon With Me iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon With Me iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4071,6 +4075,7 @@
 				1AAF5145180E2C1A000584C8 /* VisibleRect.cpp */,
 				1AAF5146180E2C1A000584C8 /* VisibleRect.h */,
 				1AAF5147180E2C1A000584C8 /* ZwoptexTest */,
+				74AC88C3E14657C89EA587D2 /* NewRendererTest */,
 			);
 			name = Classes;
 			path = ../samples/Cpp/TestCpp/Classes;
@@ -5415,6 +5420,15 @@
 				46A174F11807D9C4005B8026 /* iphone */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		74AC88C3E14657C89EA587D2 /* NewRendererTest */ = {
+			isa = PBXGroup;
+			children = (
+				74AC8931464FB86E3B561D59 /* NewRendererTest.cpp */,
+				74AC82AF702AB78309566973 /* NewRendererTest.h */,
+			);
+			path = NewRendererTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -6849,6 +6863,7 @@
 				1AAF524C180E2C1A000584C8 /* VisibleRect.cpp in Sources */,
 				1AAF524E180E2C1A000584C8 /* ZwoptexTest.cpp in Sources */,
 				1AAF5289180E2C31000584C8 /* main.cpp in Sources */,
+				74AC8AAAFDDCF9DF8E88F067 /* NewRendererTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7131,6 +7146,7 @@
 				1AAF5269180E2C26000584C8 /* RootViewController.mm in Sources */,
 				1AAF526A180E2C26000584C8 /* testsAppDelegate.mm in Sources */,
 				1AAF527B180E2C26000584C8 /* main.m in Sources */,
+				74AC885C758C25BBEE27C693 /* NewRendererTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

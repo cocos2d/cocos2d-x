@@ -791,6 +791,12 @@ void Sprite::setPosition(const Point& pos)
     SET_DIRTY_RECURSIVELY();
 }
 
+void Sprite::setPosition(float x, float y)
+{
+    Node::setPosition(x, y);
+    SET_DIRTY_RECURSIVELY();
+}
+
 void Sprite::setRotation(float rotation)
 {
     Node::setRotation(rotation);
