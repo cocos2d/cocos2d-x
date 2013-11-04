@@ -57,27 +57,6 @@ link_directories(
   ${CMAKE_SOURCE_DIR}/cocos/audio/third-party/fmod/lib64/api/lib
 )
 
-set(COCOS_LIBRARIES
-  audio
-  cocos2d
-  cocosbase
-  chipmunk_static
-  tinyxml2
-  kazmath
-  unzip
-  jpeg
-  webp
-  tiff
-  freetype
-  fontconfig
-  png
-  glfw
-  GLEW
-  GL
-  rt
-  z
-)
-
 # kazmath
 add_subdirectory(cocos/math/kazmath)
 
@@ -94,6 +73,8 @@ add_subdirectory(external/unzip)
 # tinyxml2 library
 add_subdirectory(external/tinyxml2)
 
+add_subdirectory(external/json)
+
 # audio
 add_subdirectory(cocos/audio)
 
@@ -107,13 +88,12 @@ add_subdirectory(cocos/gui)
 
 add_subdirectory(cocos/network)
 
+add_subdirectory(extensions)
+
 add_subdirectory(cocos/editor-support/spine)
 add_subdirectory(cocos/editor-support/cocosbuilder)
 add_subdirectory(cocos/editor-support/cocostudio)
 
-add_subdirectory(extensions)
-
-add_subdirectory(external/json)
 
 add_subdirectory(external/lua/lua)
 add_subdirectory(external/lua/tolua)
