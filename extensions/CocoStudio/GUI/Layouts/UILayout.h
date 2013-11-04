@@ -49,23 +49,23 @@ typedef enum
  *  @js NA
  *  @lua NA
  */
-class Layout : public UIWidget
+class UILayout : public UIWidget
 {
 public:
     /**
      * Default constructor
      */
-    Layout();
+    UILayout();
     
     /**
      * Default destructor
      */
-    virtual ~Layout();
+    virtual ~UILayout();
     
     /**
      * Allocates and initializes a layout.
      */
-    static Layout* create();
+    static UILayout* create();
     
     //override "hitTest" method of widget.
     virtual bool hitTest(const CCPoint &pt);
@@ -254,12 +254,12 @@ protected:
  *  @js NA
  *  @lua NA
  */
-class RectClippingNode : public CCClippingNode
+class UIRectClippingNode : public CCClippingNode
 {
 public:
-    virtual ~RectClippingNode();
+    virtual ~UIRectClippingNode();
     virtual bool init();
-    static RectClippingNode* create();
+    static UIRectClippingNode* create();
     void setClippingSize(const CCSize& size);
     void setClippingEnabled(bool enabled);
     virtual void visit();
@@ -269,7 +269,7 @@ protected:
     CCDrawNode* m_pInnerStencil;
     bool m_bEnabled;
 private:
-    RectClippingNode();
+    UIRectClippingNode();
     CCPoint rect[4];
     CCSize m_clippingSize;
     bool m_bClippingEnabled;

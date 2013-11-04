@@ -104,7 +104,7 @@ UIScrollView* UIScrollView::create()
 
 bool UIScrollView::init()
 {
-    if (Layout::init())
+    if (UILayout::init())
     {
         setUpdateEnabled(true);
         setTouchEnabled(true);
@@ -117,14 +117,14 @@ bool UIScrollView::init()
 
 void UIScrollView::initRenderer()
 {
-    Layout::initRenderer();
-    m_pInnerContainer = Layout::create();
-    Layout::addChild(m_pInnerContainer);
+    UILayout::initRenderer();
+    m_pInnerContainer = UILayout::create();
+    UILayout::addChild(m_pInnerContainer);
 }
 
 void UIScrollView::onSizeChanged()
 {
-    Layout::onSizeChanged();
+    UILayout::onSizeChanged();
     m_fTopBoundary = m_size.height;
     m_fRightBoundary = m_size.width;
     float bounceBoundaryParameterX = m_size.width / 3.0f;
@@ -1391,26 +1391,26 @@ void UIScrollView::handleReleaseLogic(const CCPoint &touchPoint)
 
 bool UIScrollView::onTouchBegan(const CCPoint &touchPoint)
 {
-    bool pass = Layout::onTouchBegan(touchPoint);
+    bool pass = UILayout::onTouchBegan(touchPoint);
     handlePressLogic(touchPoint);
     return pass;
 }
 
 void UIScrollView::onTouchMoved(const CCPoint &touchPoint)
 {
-    Layout::onTouchMoved(touchPoint);
+    UILayout::onTouchMoved(touchPoint);
     handleMoveLogic(touchPoint);
 }
 
 void UIScrollView::onTouchEnded(const CCPoint &touchPoint)
 {
-    Layout::onTouchEnded(touchPoint);
+    UILayout::onTouchEnded(touchPoint);
     handleReleaseLogic(touchPoint);
 }
 
 void UIScrollView::onTouchCancelled(const CCPoint &touchPoint)
 {
-    Layout::onTouchCancelled(touchPoint);
+    UILayout::onTouchCancelled(touchPoint);
     handleReleaseLogic(touchPoint);
 }
 
@@ -1632,7 +1632,7 @@ bool UIScrollView::isInertiaScrollEnabled() const
     return m_bInertiaScrollEnabled;
 }
 
-Layout* UIScrollView::getInnerContainer()
+UILayout* UIScrollView::getInnerContainer()
 {
     return m_pInnerContainer;
 }
@@ -1664,7 +1664,7 @@ UIWidget* UIScrollView::createCloneInstance()
 
 void UIScrollView::copyClonedWidgetChildren(UIWidget* model)
 {
-    Layout::copyClonedWidgetChildren(model);
+    UILayout::copyClonedWidgetChildren(model);
 }
 
 void UIScrollView::copySpecialProperties(UIWidget *widget)
@@ -1672,7 +1672,7 @@ void UIScrollView::copySpecialProperties(UIWidget *widget)
     UIScrollView* scrollView = dynamic_cast<UIScrollView*>(widget);
     if (scrollView)
     {
-        Layout::copySpecialProperties(widget);
+        UILayout::copySpecialProperties(widget);
         setInnerContainerSize(scrollView->getInnerContainerSize());
         setDirection(scrollView->m_eDirection);
         setBounceEnabled(scrollView->m_bBounceEnabled);
