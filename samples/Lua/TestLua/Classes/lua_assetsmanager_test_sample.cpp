@@ -116,7 +116,7 @@ static int lua_cocos2dx_addSearchPath(lua_State* L)
             goto tolua_lerror;
 #endif
         std::string pathToSave = tolua_tostring(L, 1, "");
-        bool before            = (bool)tolua_toboolean(L, 2, 0);
+        bool before           = tolua_toboolean(L, 2, 0);
         std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
         if (before)
         {
