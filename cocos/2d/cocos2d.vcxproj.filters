@@ -129,36 +129,6 @@
     <ClCompile Include="..\physics\CCPhysicsWorld.cpp">
       <Filter>physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsContactInfo.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsJointInfo.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\Box2D\CCPhysicsBodyInfo.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\Box2D\CCPhysicsContactInfo.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\Box2D\CCPhysicsJointInfo.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\Box2D\CCPhysicsShapeInfo.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\Box2D\CCPhysicsWorldInfo.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
     <ClCompile Include="CCNode.cpp">
       <Filter>base_nodes</Filter>
     </ClCompile>
@@ -578,6 +548,36 @@
     <ClCompile Include="CCEventMouse.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
+    <ClCompile Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.cpp">
+      <Filter>physics\Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\box2d\CCPhysicsContactInfo_box2d.cpp">
+      <Filter>physics\Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\box2d\CCPhysicsJointInfo_box2d.cpp">
+      <Filter>physics\Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.cpp">
+      <Filter>physics\Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.cpp">
+      <Filter>physics\Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -597,42 +597,6 @@
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsWorld.h">
       <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsContactInfo.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsHelper.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsJointInfo.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsShapeInfo.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\Box2D\CCPhysicsBodyInfo.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\Box2D\CCPhysicsContactInfo.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\Box2D\CCPhysicsHelper.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\Box2D\CCPhysicsJointInfo.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\Box2D\CCPhysicsShapeInfo.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\Box2D\CCPhysicsWorldInfo.h">
-      <Filter>physics\Box2D</Filter>
     </ClInclude>
     <ClInclude Include="CCNode.h">
       <Filter>base_nodes</Filter>
@@ -1163,6 +1127,42 @@
     </ClInclude>
     <ClInclude Include="CCEventMouse.h">
       <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.h">
+      <Filter>physics\Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\box2d\CCPhysicsContactInfo_box2d.h">
+      <Filter>physics\Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\box2d\CCPhysicsHelper_box2d.h">
+      <Filter>physics\Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\box2d\CCPhysicsJointInfo_box2d.h">
+      <Filter>physics\Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.h">
+      <Filter>physics\Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.h">
+      <Filter>physics\Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsHelper_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
