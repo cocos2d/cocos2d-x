@@ -45,6 +45,7 @@ include_directories(
   external/unzip
   external/chipmunk/include/chipmunk
   external/freetype2/include/linux
+  external/linux-specific/fmod/include/${ARCH_DIR}
 )
 
 link_directories(
@@ -54,7 +55,7 @@ link_directories(
   ${CMAKE_SOURCE_DIR}/external/webp/prebuilt/linux/${ARCH_DIR}
   ${CMAKE_SOURCE_DIR}/external/freetype2/prebuilt/linux/${ARCH_DIR}
   ${CMAKE_SOURCE_DIR}/external/curl/prebuilt/linux/${ARCH_DIR}
-  ${CMAKE_SOURCE_DIR}/cocos/audio/third-party/fmod/lib64/api/lib
+  ${CMAKE_SOURCE_DIR}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
 
 # kazmath
