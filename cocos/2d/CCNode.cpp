@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "CCEventDispatcher.h"
 #include "CCEvent.h"
 #include "CCEventTouch.h"
+#include "CCScene.h"
 
 #ifdef CC_USE_PHYSICS
 #include "CCPhysicsBody.h"
@@ -629,6 +630,17 @@ void Node::addChild(Node *child, int zOrder, int tag)
     }
 
     this->insertChild(child, zOrder);
+    
+#ifdef CC_USE_PHYSICS
+    for (Node* node = this->getParent(); node != nullptr; node = node->getParent())
+    {
+        if (dynamic_cast<Scene*>(node) != nullptr)
+        {
+            (dynamic_cast<Scene*>(node))->addChildToPhysicsWorld(child);
+            break;
+        }
+    }
+#endif
 
     child->_tag = tag;
 
@@ -752,6 +764,14 @@ void Node::detachChild(Node *child, int childIndex, bool doCleanup)
         child->onExitTransitionDidStart();
         child->onExit();
     }
+    
+#ifdef CC_USE_PHYSICS
+    if (child->_physicsBody != nullptr)
+    {
+        child->_physicsBody->removeFromWorld();
+    }
+    
+#endif
 
     // If you don't do cleanup, the child's actions will not get removed and the
     // its scheduledSelectors_ dict will not get released!
@@ -1369,10 +1389,12 @@ void Node::setPhysicsBody(PhysicsBody* body)
 {
     if (_physicsBody != nullptr)
     {
+        _physicsBody->_node = nullptr;
         _physicsBody->release();
     }
     
     _physicsBody = body;
+    _physicsBody->_node = this;
     _physicsBody->retain();
     _physicsBody->setPosition(getPosition());
     _physicsBody->setRotation(getRotation());

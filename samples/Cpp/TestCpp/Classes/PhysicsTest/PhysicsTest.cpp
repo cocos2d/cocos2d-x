@@ -10,6 +10,10 @@ namespace
         CL(PhysicsDemoPlink),
         CL(PhysicsDemoClickAdd),
         CL(PhysicsDemoRayCast),
+        CL(PhysicsDemoJoints),
+        CL(PhysicsDemoActions),
+        CL(PhysicsDemoPump),
+        CL(PhysicsDemoOneWayPlatform),
     };
     
     static int sceneIdx=-1;
@@ -51,6 +55,7 @@ namespace
     }
     
     static const Color4F STATIC_COLOR(1.0f, 0.0f, 0.0f, 1.0f);
+    static const int DRAG_BODYS_TAG = 0x80;
 }
 
 
@@ -92,7 +97,6 @@ PhysicsDemo::PhysicsDemo()
 : _scene(nullptr)
 , _ball(nullptr)
 , _spriteTexture(nullptr)
-, _mouse(nullptr)
 {
     
 }
@@ -160,7 +164,7 @@ void PhysicsDemo::onEnter()
 #endif
 }
 
-void PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
+Sprite* PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
 {
 #ifdef CC_USE_PHYSICS
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
@@ -178,6 +182,8 @@ void PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
     sp->setPhysicsBody(PhysicsBody::createBox(Size(48.0f * scale, 108.0f * scale)));
     this->addChild(sp);
     sp->setPosition(p);
+    
+    return sp;
 #endif
 }
 
@@ -198,8 +204,10 @@ void PhysicsDemoClickAdd::onEnter()
     
 #ifdef CC_USE_PHYSICS
     
-    auto touchListener = EventListenerTouchAllAtOnce::create();
-    touchListener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchesEnded, this);
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
     auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(PhysicsDemoClickAdd::onAcceleration, this));
@@ -316,7 +324,7 @@ namespace
     }
 }
 
-Sprite* PhysicsDemo::makeBall(float x, float y, float radius, PhysicsMaterial material)
+Sprite* PhysicsDemo::makeBall(Point point, float radius, PhysicsMaterial material)
 {
     Sprite* ball = nullptr;
     if (_ball != nullptr)
@@ -331,12 +339,12 @@ Sprite* PhysicsDemo::makeBall(float x, float y, float radius, PhysicsMaterial ma
     
     auto body = PhysicsBody::createCircle(radius, material);
     ball->setPhysicsBody(body);
-    ball->setPosition(Point(x, y));
+    ball->setPosition(Point(point.x, point.y));
     
     return ball;
 }
 
-Sprite* PhysicsDemo::makeBox(float x, float y, Size size, PhysicsMaterial material)
+Sprite* PhysicsDemo::makeBox(Point point, Size size, PhysicsMaterial material)
 {
     auto box = CCRANDOM_0_1() > 0.5f ? Sprite::create("Images/YellowSquare.png") : Sprite::create("Images/CyanSquare.png");
     
@@ -345,12 +353,12 @@ Sprite* PhysicsDemo::makeBox(float x, float y, Size size, PhysicsMaterial materi
     
     auto body = PhysicsBody::createBox(size);
     box->setPhysicsBody(body);
-    box->setPosition(Point(x, y));
+    box->setPosition(Point(point.x, point.y));
     
     return box;
 }
 
-Sprite* PhysicsDemo::makeTriangle(float x, float y, Size size, PhysicsMaterial material)
+Sprite* PhysicsDemo::makeTriangle(Point point, Size size, PhysicsMaterial material)
 {
     auto triangle = CCRANDOM_0_1() > 0.5f ? Sprite::create("Images/YellowTriangle.png") : Sprite::create("Images/CyanTriangle.png");
     
@@ -367,33 +375,66 @@ Sprite* PhysicsDemo::makeTriangle(float x, float y, Size size, PhysicsMaterial m
     
     auto body = PhysicsBody::createPolygon(vers, 3);
     triangle->setPhysicsBody(body);
-    triangle->setPosition(Point(x, y));
+    triangle->setPosition(Point(point.x, point.y));
     
     return triangle;
 }
 
-void PhysicsDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
+bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
 {
-    for( auto &touch: touches)
+    auto location = touch->getLocation();
+    Array* arr = _scene->getPhysicsWorld()->getShapesAtPoint(location);
+    
+    PhysicsShape* shape = nullptr;
+    for (Object* obj : *arr)
     {
-        auto location = touch->getLocation();
-        Array* arr = _scene->getPhysicsWorld()->getShapesAtPoint(location);
+        shape = dynamic_cast<PhysicsShape*>(obj);
         
-        PhysicsShape* shape = nullptr;
-        for (Object* obj : *arr)
+        if ((shape->getTag() & DRAG_BODYS_TAG) != 0)
         {
-            
+            break;
         }
+    }
+    
+    if (shape != nullptr)
+    {
+        
+        Node* mouse = Node::create();
+        mouse->setPhysicsBody(PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY));
+        mouse->getPhysicsBody()->setDynamic(false);
+        mouse->setPosition(location);
+        this->addChild(mouse);
+        PhysicsJointPin* joint = PhysicsJointPin::create(mouse->getPhysicsBody(), shape->getBody(), location);
+        joint->setMaxForce(5000.0f * shape->getBody()->getMass());
+        _scene->getPhysicsWorld()->addJoint(joint);
+        _mouses.insert(std::make_pair(touch->getID(), mouse));
+        
+        return true;
+    }
+    
+    return false;
+}
+
+void PhysicsDemo::onTouchMoved(Touch* touch, Event* event)
+{
+    auto it = _mouses.find(touch->getID());
+    
+    if (it != _mouses.end())
+    {
+        it->second->getPhysicsBody()->setVelocity((touch->getLocation() - it->second->getPosition()) * 60.0f);
+        it->second->setPosition(touch->getLocation());
     }
 }
 
-void PhysicsDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+void PhysicsDemo::onTouchEnded(Touch* touch, Event* event)
 {
+    auto it = _mouses.find(touch->getID());
     
-}
-
-void PhysicsDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-{
+    if (it != _mouses.end())
+    {
+        this->removeChild(it->second);
+        _mouses.erase(it);
+    }
     
 }
 
@@ -414,9 +455,9 @@ void PhysicsDemoLogoSmash::onEnter()
                 float x_jitter = 0.05*frand();
                 float y_jitter = 0.05*frand();
                 
-                Node* ball = makeBall(2*(x - logo_width/2 + x_jitter) + VisibleRect::getVisibleRect().size.width/2,
-                                      2*(logo_height-y + y_jitter) + VisibleRect::getVisibleRect().size.height/2 - logo_height/2,
-                                      0.95f, PhysicsMaterial(1.0f, 0.0f, 0.0f));
+                Node* ball = makeBall(Point(2*(x - logo_width/2 + x_jitter) + VisibleRect::getVisibleRect().size.width/2,
+                                      2*(logo_height-y + y_jitter) + VisibleRect::getVisibleRect().size.height/2 - logo_height/2),
+                                      0.95f, PhysicsMaterial(0.01f, 0.0f, 0.0f));
                 
                 ball->getPhysicsBody()->setMass(1.0);
                 ball->getPhysicsBody()->setMoment(PHYSICS_INFINITY);
@@ -428,7 +469,7 @@ void PhysicsDemoLogoSmash::onEnter()
     }
     
     
-    auto bullet = makeBall(400, 0, 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
+    auto bullet = makeBall(Point(400, 0), 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
     bullet->getPhysicsBody()->setVelocity(Point(400, 0));
     
     bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));
@@ -445,6 +486,12 @@ void PhysicsDemoPyramidStack::onEnter()
 {
     PhysicsDemo::onEnter();
     
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
     auto node = Node::create();
     node->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
     this->addChild(node);
@@ -459,7 +506,9 @@ void PhysicsDemoPyramidStack::onEnter()
     {
 		for(int j=0; j<=i; j++)
         {
-			addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
+			auto sp = addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
+            
+            sp->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
 		}
 	}
 }
@@ -694,13 +743,13 @@ void PhysicsDemoRayCast::onTouchesEnded(const std::vector<Touch*>& touches, Even
         
         if (r < 1.0f/3.0f)
         {
-            addChild(makeBall(location.x, location.y, 5 + CCRANDOM_0_1()*10));
+            addChild(makeBall(location, 5 + CCRANDOM_0_1()*10));
         }else if(r < 2.0f/3.0f)
         {
-            addChild(makeBox(location.x, location.y, Size(10 + CCRANDOM_0_1()*15, 10 + CCRANDOM_0_1()*15)));
+            addChild(makeBox(location, Size(10 + CCRANDOM_0_1()*15, 10 + CCRANDOM_0_1()*15)));
         }else
         {
-            addChild(makeTriangle(location.x, location.y, Size(10 + CCRANDOM_0_1()*20, 10 + CCRANDOM_0_1()*20)));
+            addChild(makeTriangle(location, Size(10 + CCRANDOM_0_1()*20, 10 + CCRANDOM_0_1()*20)));
         }
     }
 }
@@ -710,26 +759,307 @@ std::string PhysicsDemoRayCast::title()
     return "Ray Cast";
 }
 
-
 void PhysicsDemoJoints::onEnter()
 {
     PhysicsDemo::onEnter();
     
-    auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoJoints::onTouchesEnded, this);
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoJoints::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    _scene->getPhysicsWorld()->setGravity(Point::ZERO);
+    //_scene->getPhysicsWorld()->setGravity(Point::ZERO);
     
+    float width = (VisibleRect::getVisibleRect().size.width - 10) / 4;
+    float height = (VisibleRect::getVisibleRect().size.height - 50) / 4;
     
-}
-
-void PhysicsDemoJoints::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-{
+    Node* node = Node::create();
+    PhysicsBody* box = PhysicsBody::create();
+    node->setPhysicsBody(box);
+    box->setDynamic(false);
+    node->setPosition(Point::ZERO);
     
+    this->addChild(node);
+    
+    for (int i = 0; i < 4; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            Point offset(VisibleRect::leftBottom().x + 5 + j * width + width/2, VisibleRect::leftBottom().y + 50 + i * height + height/2);
+            box->addShape(PhysicsShapeEdgeBox::create(Size(width, height), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, offset));
+            
+            switch (i*4 + j)
+            {
+                case 0:
+                {
+                    auto sp1 = makeBall(offset - Point(30, 0), 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBall(offset + Point(30, 0), 10);
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointPin* joint = PhysicsJointPin::create(sp1->getPhysicsBody(), sp2->getPhysicsBody(), offset);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 1:
+                {
+                    
+                    auto sp1 = makeBall(offset - Point(30, 0), 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointFixed* joint = PhysicsJointFixed::create(sp1->getPhysicsBody(), sp2->getPhysicsBody(), offset);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
 }
 
 std::string PhysicsDemoJoints::title()
 {
     return "Joints";
+}
+
+void PhysicsDemoActions::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoActions::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoActions::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoActions::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto node = Node::create();
+    node->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size));
+    node->setPosition(VisibleRect::center());
+    this->addChild(node);
+    
+    Sprite* sp1 = addGrossiniAtPosition(VisibleRect::center());
+    Sprite* sp2 = addGrossiniAtPosition(VisibleRect::left() + Point(50, 0));
+    Sprite* sp3 = addGrossiniAtPosition(VisibleRect::right() - Point(20, 0));
+    Sprite* sp4 = addGrossiniAtPosition(VisibleRect::leftTop() + Point(50, -50));
+    sp4->getPhysicsBody()->setGravityEnable(false);
+    
+    
+    auto actionTo = JumpTo::create(2, Point(100,100), 50, 4);
+    auto actionBy = JumpBy::create(2, Point(300,0), 50, 4);
+    auto actionUp = JumpBy::create(2, Point(0,50), 80, 4);
+    auto actionByBack = actionBy->reverse();
+    
+    sp1->runAction(RepeatForever::create(actionUp));
+    sp2->runAction(RepeatForever::create(Sequence::create(actionBy, actionByBack, NULL)));
+    sp3->runAction(actionTo);
+    sp4->runAction(RepeatForever::create(Sequence::create(actionBy->clone(), actionByBack->clone(), NULL)));
+}
+
+std::string PhysicsDemoActions::title()
+{
+    return "Actions";
+}
+
+void PhysicsDemoPump::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    _distance = 0.0f;
+    _rotationV = 0.0f;
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoPump::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoPump::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoPump::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    scheduleUpdate();
+    
+    auto node = Node::create();
+    auto body = PhysicsBody::create();
+    body->setDynamic(false);
+    
+    PhysicsMaterial staticMaterial(PHYSICS_INFINITY, 0, 0.5f);
+    body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(50, 0), VisibleRect::leftTop() + Point(50, -130), staticMaterial, 2.0f));
+    body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(190, 0), VisibleRect::leftTop() + Point(100, -50), staticMaterial, 2.0f));
+    body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(100, -50), VisibleRect::leftTop() + Point(100, -90), staticMaterial, 2.0f));
+    body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(50, -130), VisibleRect::leftTop() + Point(100, -145), staticMaterial, 2.0f));
+    body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(100, -145), VisibleRect::leftBottom() + Point(100, 80), staticMaterial, 2.0f));
+    body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(150, -80), VisibleRect::leftBottom() + Point(150, 80), staticMaterial, 2.0f));
+    body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(150, -80), VisibleRect::rightTop() + Point(-100, -150), staticMaterial, 2.0f));
+    
+    body->setCategoryBitmask(0x01);
+    
+    // balls
+    for (int i = 0; i < 6; ++i)
+    {
+        auto ball = makeBall(VisibleRect::leftTop() + Point(75 + CCRANDOM_0_1() * 90, 0), 22, PhysicsMaterial(0.05f, 0.0f, 0.1f));
+        ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+        addChild(ball);
+    }
+    
+    node->setPhysicsBody(body);
+    this->addChild(node);
+    
+    Point vec[4] =
+    {
+        VisibleRect::leftTop() + Point(102, -148),
+        VisibleRect::leftTop() + Point(148, -161),
+        VisibleRect::leftBottom() + Point(148, 20),
+        VisibleRect::leftBottom() + Point(102, 20)
+    };
+    
+    auto _world = _scene->getPhysicsWorld();
+    
+    // small gear
+    auto sgear = Node::create();
+    auto sgearB = PhysicsBody::createCircle(44);
+    sgear->setPhysicsBody(sgearB);
+    sgear->setPosition(VisibleRect::leftBottom() + Point(125, 0));
+    this->addChild(sgear);
+    sgearB->setCategoryBitmask(0x04);
+    sgearB->setCollisionBitmask(0x04);
+    sgearB->setTag(1);
+    _world->addJoint(PhysicsJointPin::create(body, sgearB, sgearB->getPosition()));
+    
+    
+    // big gear
+    auto bgear = Node::create();
+    auto bgearB = PhysicsBody::createCircle(100);
+    bgear->setPhysicsBody(bgearB);
+    bgear->setPosition(VisibleRect::leftBottom() + Point(275, 0));
+    this->addChild(bgear);
+    bgearB->setCategoryBitmask(0x04);
+    _world->addJoint(PhysicsJointPin::create(body, bgearB, bgearB->getPosition()));
+    
+    
+    // pump
+    auto pump = Node::create();
+    pump->setPosition(PhysicsShape::getPolyonCenter(vec, 4));
+    auto pumpB = PhysicsBody::createPolygon(PhysicsShape::recenterPoints(vec, 4), 4);
+    pump->setPhysicsBody(pumpB);
+    this->addChild(pump);
+    pumpB->setCategoryBitmask(0x02);
+    pumpB->setGravityEnable(false);
+    _world->addJoint(PhysicsJointDistance::create(pumpB, sgearB, Point(0, 0), Point(0, -44)));
+    
+    // plugger
+    Point seg[] = {VisibleRect::leftTop() + Point(75, -120), VisibleRect::leftBottom() + Point(75, -100)};
+    Point segCenter = (seg[1] + seg[0])/2;
+    seg[1] -= segCenter;
+    seg[0] -= segCenter;
+    auto plugger = Node::create();
+    auto pluggerB = PhysicsBody::createEdgeSegment(seg[0], seg[1], PhysicsMaterial(0.01f, 0.0f, 0.5f), 20);
+    pluggerB->setDynamic(true);
+    pluggerB->setMass(30);
+    pluggerB->setMoment(100000);
+    plugger->setPhysicsBody(pluggerB);
+    plugger->setPosition(segCenter);
+    this->addChild(plugger);
+    pluggerB->setCategoryBitmask(0x02);
+    sgearB->setCollisionBitmask(0x04 | 0x01);
+    _world->addJoint(PhysicsJointPin::create(body, pluggerB, VisibleRect::leftBottom() + Point(75, -90)));
+    _world->addJoint(PhysicsJointDistance::create(pluggerB, sgearB, pluggerB->world2Local(VisibleRect::leftBottom() + Point(75, 0)), Point(44, 0)));
+}
+
+void PhysicsDemoPump::update(float delta)
+{
+    for (auto obj : *_scene->getPhysicsWorld()->getAllBodies())
+    {
+        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
+        if (body->getTag() == DRAG_BODYS_TAG && body->getPosition().y < 0.0f)
+        {
+            body->getNode()->setPosition(VisibleRect::leftTop() + Point(75 + CCRANDOM_0_1() * 90, 0));
+            body->setVelocity(Point(0, 0));
+        }
+    }
+    
+    PhysicsBody* gear = _scene->getPhysicsWorld()->getBodyByTag(1);
+    
+    if (gear != nullptr)
+    {
+        if (_distance != 0.0f)
+        {
+            _rotationV += _distance/2500.0f;
+            
+            if (_rotationV > 30) _rotationV = 30.0f;
+            if (_rotationV < -30) _rotationV = -30.0f;
+        }
+        
+        gear->setAngularVelocity(_rotationV);
+        _rotationV *= 0.995f;
+    }
+}
+
+bool PhysicsDemoPump::onTouchBegan(Touch* touch, Event* event)
+{
+    PhysicsDemo::onTouchBegan(touch, event);
+    
+    _distance = touch->getLocation().x - VisibleRect::center().x;
+    
+    return true;
+}
+
+void PhysicsDemoPump::onTouchMoved(Touch* touch, Event* event)
+{
+    PhysicsDemo::onTouchMoved(touch, event);
+    
+    _distance = touch->getLocation().x - VisibleRect::center().x;
+}
+
+void PhysicsDemoPump::onTouchEnded(Touch* touch, Event* event)
+{
+    PhysicsDemo::onTouchEnded(touch, event);
+    
+    _distance = 0;
+}
+
+std::string PhysicsDemoPump::title()
+{
+    return "Pump";
+}
+
+void PhysicsDemoOneWayPlatform::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoOneWayPlatform::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoOneWayPlatform::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoOneWayPlatform::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto ground = Node::create();
+    ground->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
+    this->addChild(ground);
+    
+    auto platform = Node::create();
+    platform->setPhysicsBody(PhysicsBody::createBox(Size(200, 50)));
+    platform->getPhysicsBody()->setDynamic(false);
+    platform->setPosition(VisibleRect::center());
+    this->addChild(platform);
+    
+    auto ball = makeBall(VisibleRect::center() - Point(0, 50), 5);
+    ball->getPhysicsBody()->setVelocity(Point(0, 200));
+    this->addChild(ball);
+    
+    auto contactListener = EventListenerPhysicsContactWithBodies::create(platform->getPhysicsBody(), ball->getPhysicsBody());
+    contactListener->onContactPreSolve = CC_CALLBACK_3(PhysicsDemoOneWayPlatform::onPreSolve, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+}
+
+bool PhysicsDemoOneWayPlatform::onPreSolve(EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve)
+{
+    return true;
+}
+
+std::string PhysicsDemoOneWayPlatform::title()
+{
+    return "One Way Platform";
 }

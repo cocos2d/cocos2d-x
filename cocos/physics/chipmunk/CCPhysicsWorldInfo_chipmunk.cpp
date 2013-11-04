@@ -22,18 +22,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsBodyInfo.h"
-
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+#include "CCPhysicsWorldInfo_chipmunk.h"
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 NS_CC_BEGIN
 
-PhysicsBodyInfo::PhysicsBodyInfo()
+PhysicsWorldInfo::PhysicsWorldInfo()
 {
+    space = cpSpaceNew();
 }
 
-PhysicsBodyInfo::~PhysicsBodyInfo()
+PhysicsWorldInfo::~PhysicsWorldInfo()
 {
+    cpSpaceFree(space);
 }
 
 NS_CC_END
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK

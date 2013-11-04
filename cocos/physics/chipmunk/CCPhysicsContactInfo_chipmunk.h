@@ -23,21 +23,29 @@
  ****************************************************************************/
 
 #include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
-#ifndef __CCPHYSICS_WORLD_INFO_H__
-#define __CCPHYSICS_WORLD_INFO_H__
+#ifndef __CCPHYSICS_CONTACT_INFO_H__
+#define __CCPHYSICS_CONTACT_INFO_H__
+
+#include "chipmunk.h"
 #include "CCPlatformMacros.h"
 NS_CC_BEGIN
 
-class PhysicsWorldInfo
+class PhysicsContact;
+class PhysicsContactInfo
 {
 public:
-    PhysicsWorldInfo();
-    ~PhysicsWorldInfo();
+    PhysicsContact* contact;
+    
+private:
+    PhysicsContactInfo(PhysicsContact* contact);
+    ~PhysicsContactInfo();
+    
+    friend class PhysicsContact;
 };
 
 NS_CC_END
 #endif // __CCPHYSICS_WORLD_INFO_H__
 
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D
+#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK

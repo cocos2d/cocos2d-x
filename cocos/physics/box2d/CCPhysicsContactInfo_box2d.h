@@ -25,19 +25,20 @@
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 
-#ifndef __CCPHYSICS_JOINT_INFO_H__
-#define __CCPHYSICS_JOINT_INFO_H__
+#ifndef __CCPHYSICS_CONTACT_INFO_H__
+#define __CCPHYSICS_CONTACT_INFO_H__
+
 #include "CCPlatformMacros.h"
 NS_CC_BEGIN
 
-class PhysicsJointInfo
+class PhysicsContactInfo
 {
 public:
-    PhysicsJointInfo();
-    ~PhysicsJointInfo();
+    PhysicsContactInfo();
+    ~PhysicsContactInfo();
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_JOINT_INFO_H__
+#endif // __CCPHYSICS_CONTACT_INFO_H__
 
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D
