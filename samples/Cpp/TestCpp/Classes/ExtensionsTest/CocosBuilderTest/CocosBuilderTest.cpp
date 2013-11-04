@@ -28,6 +28,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace cocosbuilder;
 
 void CocosBuilderTestScene::runThisTest() {
     /* Create an autorelease NodeLoaderLibrary. */
@@ -36,7 +37,7 @@ void CocosBuilderTestScene::runThisTest() {
     ccNodeLoaderLibrary->registerNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
 
     /* Create an autorelease CCBReader. */
-    cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
+    cocosbuilder::CCBReader * ccbReader = new cocosbuilder::CCBReader(ccNodeLoaderLibrary);
     
     /* Read a ccbi file. */
     auto node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);

@@ -5,14 +5,18 @@
 #include "ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
-#include "jsb_cocos2dx_extension_manual.h"
+#include "jsb_cocos2dx_builder_auto.hpp"
+#include "jsb_cocos2dx_studio_auto.hpp"
+#include "extension/jsb_cocos2dx_extension_manual.h"
+#include "cocostudio/jsb_cocos2dx_studio_manual.h"
 #include "cocos2d_specifics.hpp"
-#include "js_bindings_chipmunk_registration.h"
-#include "js_bindings_system_registration.h"
+#include "cocosbuilder/cocosbuilder_specifics.hpp"
+#include "chipmunk/js_bindings_chipmunk_registration.h"
+#include "localstorage/js_bindings_system_registration.h"
 #include "jsb_opengl_registration.h"
-#include "XMLHTTPRequest.h"
-#include "jsb_websocket.h"
-#include "js_bindings_ccbreader.h"
+#include "network/XMLHTTPRequest.h"
+#include "network/jsb_websocket.h"
+#include "cocosbuilder/js_bindings_ccbreader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -41,6 +45,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
+    FileUtils::getInstance()->addSearchPath("res");
+    FileUtils::getInstance()->addSearchPath("script");
+    
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
@@ -51,11 +58,18 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     sc->addRegisterCallback(register_jsb_websocket);
+
+    sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
+
+    sc->addRegisterCallback(register_all_cocos2dx_studio);
+    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     
     sc->start();
-
-    FileUtils::getInstance()->addSearchPath("res");
+    
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    sc->enableDebugger();
+#endif
     
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);

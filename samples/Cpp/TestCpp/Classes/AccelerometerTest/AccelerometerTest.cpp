@@ -32,8 +32,8 @@ void AccelerometerTest::onEnter()
 {
     Layer::onEnter();
 
-    setAccelerometerEnabled(true);
-
+    auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(AccelerometerTest::onAcceleration, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     auto label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);

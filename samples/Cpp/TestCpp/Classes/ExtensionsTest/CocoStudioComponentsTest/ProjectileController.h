@@ -2,10 +2,10 @@
 #define __CC_PROJECTILECONTROLLER_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
+#include "cocostudio/CocoStudio.h"
 
-
-class ProjectileController : public cocos2d::extension::ComController
+class ProjectileController : public cocostudio::ComController
 {
 protected:
     ProjectileController(void);

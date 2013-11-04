@@ -43,7 +43,7 @@ protected:
 public:
     Parallax2();
     
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
 
     virtual std::string title();
 };
