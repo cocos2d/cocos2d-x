@@ -194,7 +194,7 @@ bool EventListenerPhysicsContact::init()
 {
     auto func = [this](EventCustom* event) -> void
     {
-        return onEvent(event);
+        onEvent(event);
     };
     
     return EventListenerCustom::init(std::hash<std::string>()(PHYSICSCONTACT_EVENT_NAME), func);
@@ -250,7 +250,7 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
         }
         case PhysicsContact::EventCode::POSTSOLVE:
         {
-            if (onContactPreSolve != nullptr
+            if (onContactPostSolve != nullptr
                 && test(contact.getShapeA(), contact.getShapeB()))
             {
                 PhysicsContactPostSolve solve(contact._contactInfo);
