@@ -50,7 +50,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Build all samples
     echo "Building all samples ..."
     cd $COCOS2DX_ROOT/build
-    ./android-build.py -n NDK_DEBUG=0 -j10 all
+    ./android-build.py -n "NDK_BUG=0 -j10" all
 
     # Build template
     # echo "Building template ..."
@@ -72,7 +72,10 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     ./generate-jsbindings.sh
 
     cd $COCOS2DX_ROOT/build
-    make -j4
+    mkdir -p linux-build
+    cd linux-build
+    cmake ../..
+    make -j10
 elif [ "$PLATFORM"x = "emscripten"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
