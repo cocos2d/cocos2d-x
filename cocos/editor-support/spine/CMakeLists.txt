@@ -29,3 +29,10 @@ include_directories(
 add_library(spine STATIC
   ${SPINE_SRC}
 )
+
+set_target_properties(spine
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+)
+

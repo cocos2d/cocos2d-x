@@ -31,3 +31,10 @@ include_directories(
 add_library(cocosbuilder STATIC
   ${CCB_SRC}
 )
+
+set_target_properties(cocosbuilder
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+)
+

@@ -27,3 +27,8 @@ add_library(gui STATIC
   ${GUI_SRC}
 )
 
+set_target_properties(gui
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+)
