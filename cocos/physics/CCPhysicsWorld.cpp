@@ -183,6 +183,12 @@ bool PhysicsWorld::init(Scene& scene)
 {
     do
     {
+        _delayAddBodies = Array::create();
+        _delayRemoveBodies = Array::create();
+        CC_BREAK_IF(_delayAddBodies == nullptr || _delayRemoveBodies == nullptr);
+        _delayAddBodies->retain();
+        _delayRemoveBodies->retain();
+        
         _info = new PhysicsWorldInfo();
         CC_BREAK_IF(_info == nullptr);
         _bodies = Array::create();
@@ -206,20 +212,99 @@ bool PhysicsWorld::init(Scene& scene)
     return false;
 }
 
+void PhysicsWorld::delayTestAddBody(PhysicsBody* body)
+{
+    if (_delayRemoveBodies->getIndexOfObject(body) != UINT_MAX)
+    {
+        _delayRemoveBodies->removeObject(body);
+        return;
+    }
+    
+    if (_info->space->locked_private)
+    {
+        if (_delayAddBodies->getIndexOfObject(body) == UINT_MAX)
+        {
+            _delayAddBodies->addObject(body);
+            _delayDirty = true;
+        }
+    }else
+    {
+        realAddBody(body);
+    }
+}
+
+void PhysicsWorld::delayTestRemoveBody(PhysicsBody* body)
+{
+    if (_delayAddBodies->getIndexOfObject(body) != UINT_MAX)
+    {
+        _delayAddBodies->removeObject(body);
+        return;
+    }
+    
+    if (_info->space->locked_private)
+    {
+        if (_delayRemoveBodies->getIndexOfObject(body) == UINT_MAX)
+        {
+            _delayRemoveBodies->addObject(body);
+            _delayDirty = true;
+        }
+    }else
+    {
+        realRemoveBody(body);
+    }
+}
+
+void PhysicsWorld::delayTestAddJoint(PhysicsJoint* joint)
+{
+    auto it = std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint);
+    if (it != _delayRemoveJoints.end())
+    {
+        _delayRemoveJoints.erase(it);
+        return;
+    }
+    
+    if (_info->space->locked_private)
+    {
+        if (std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint) == _delayAddJoints.end())
+        {
+            _delayAddJoints.push_back(joint);
+            _delayDirty = true;
+        }
+    }else
+    {
+        realAddJoint(joint);
+    }
+}
+
+void PhysicsWorld::delayTestRemoveJoint(PhysicsJoint* joint)
+{
+    auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
+    if (it != _delayAddJoints.end())
+    {
+        _delayAddJoints.erase(it);
+        return;
+    }
+    
+    if (_info->space->locked_private)
+    {
+        if (std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint) == _delayRemoveJoints.end())
+        {
+            _delayRemoveJoints.push_back(joint);
+            _delayDirty = true;
+        }
+    }else
+    {
+        realRemoveJoint(joint);
+    }
+}
+
 void PhysicsWorld::addJoint(PhysicsJoint* joint)
 {
     auto it = std::find(_joints.begin(), _joints.end(), joint);
     
     if (it == _joints.end())
     {
-        for (auto subjoint : joint->_info->joints)
-        {
-            if (!cpSpaceContainsConstraint(_info->space, subjoint))
-            {
-                cpSpaceAddConstraint(_info->space, subjoint);
-            }
-        }
-        
+        delayTestAddJoint(joint);
         _joints.push_back(joint);
     }
     
@@ -231,14 +316,7 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint)
     
     if (it != _joints.end())
     {
-        for (auto subjoint : joint->_info->joints)
-        {
-            if (cpSpaceContainsConstraint(_info->space, subjoint))
-            {
-                cpSpaceRemoveConstraint(_info->space, subjoint);
-            }
-        }
-        
+        delayTestRemoveJoint(*it);
         _joints.remove(joint);
     }
 }
@@ -247,13 +325,7 @@ void PhysicsWorld::removeAllJoints()
 {
     for (auto joint : _joints)
     {
-        for (auto subjoint : joint->_info->joints)
-        {
-            if (!cpSpaceContainsConstraint(_info->space, subjoint))
-            {
-                cpSpaceRemoveConstraint(_info->space, subjoint);
-            }
-        }
+        delayTestRemoveJoint(joint);
     }
     
     _joints.clear();
@@ -263,28 +335,22 @@ PhysicsShape* PhysicsWorld::addShape(PhysicsShape* shape)
 {
     for (auto cps : shape->_info->shapes)
     {
-        if (cpSpaceContainsShape(_info->space, cps))
-        {
-            continue;
-        }
-        
-        if (cpBodyIsStatic(shape->getBody()->_info->body))
-        {
-            cpSpaceAddStaticShape(_info->space, cps);
-        }
-        else
-        {
-            cpSpaceAddShape(_info->space, cps);
-        }
+        _info->addShape(cps);
     }
     
     return shape;
 }
 
-PhysicsBody* PhysicsWorld::addBody(PhysicsBody* body)
+void PhysicsWorld::realAddJoint(PhysicsJoint *joint)
 {
-    CCASSERT(body != nullptr, "the body can not be nullptr");
-    
+    for (auto subjoint : joint->_info->joints)
+    {
+        _info->addJoint(subjoint);
+    }
+}
+
+void PhysicsWorld::realAddBody(PhysicsBody* body)
+{
     if (body->getWorld() != this && body->getWorld() != nullptr)
     {
         body->removeFromWorld();
@@ -303,7 +369,7 @@ PhysicsBody* PhysicsWorld::addBody(PhysicsBody* body)
         // add body to space
         if (body->isDynamic())
         {
-            cpSpaceAddBody(_info->space, body->_info->body);
+            _info->addBody(body->_info->body);
         }
         
         // add shapes to space
@@ -312,13 +378,38 @@ PhysicsBody* PhysicsWorld::addBody(PhysicsBody* body)
             addShape(dynamic_cast<PhysicsShape*>(shape));
         }
     }
+}
+
+PhysicsBody* PhysicsWorld::addBody(PhysicsBody* body)
+{
+    CCASSERT(body != nullptr, "the body can not be nullptr");
     
+    delayTestAddBody(body);
     _bodies->addObject(body);
     
     return body;
 }
 
 void PhysicsWorld::removeBody(PhysicsBody* body)
+{
+    delayTestRemoveBody(body);
+    _bodies->removeObject(body);
+}
+
+void PhysicsWorld::removeBodyByTag(int tag)
+{
+    for (Object* obj : *_bodies)
+    {
+        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
+        if (body->getTag() == tag)
+        {
+            removeBody(body);
+            return;
+        }
+    }
+}
+
+void PhysicsWorld::realRemoveBody(PhysicsBody* body)
 {
     CCASSERT(body != nullptr, "the body can not be nullptr");
     
@@ -346,25 +437,16 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     }
     
     // remove body
-    if (cpSpaceContainsBody(_info->space, body->_info->body))
-    {
-        cpSpaceRemoveBody(_info->space, body->_info->body);
-    }
+    _info->removeBody(body->_info->body);
     
     body->_world = nullptr;
-    _bodies->removeObject(body);
 }
 
-void PhysicsWorld::removeBodyByTag(int tag)
+void PhysicsWorld::realRemoveJoint(PhysicsJoint* joint)
 {
-    for (Object* obj : *_bodies)
+    for (auto subjoint : joint->_info->joints)
     {
-        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
-        if (body->getTag() == tag)
-        {
-            removeBody(body);
-            return;
-        }
+        _info->removeJoint(subjoint);
     }
 }
 
@@ -372,33 +454,7 @@ void PhysicsWorld::removeAllBodies()
 {
     for (Object* obj : *_bodies)
     {
-        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
-        
-        // reset the gravity
-        if (!body->isGravityEnable())
-        {
-            body->applyForce(-_gravity);
-        }
-        
-        // remove joints
-        for (auto joint : body->_joints)
-        {
-            removeJoint(joint);
-        }
-        
-        // remove shaps
-        for (auto shape : *body->getShapes())
-        {
-            removeShape(dynamic_cast<PhysicsShape*>(shape));
-        }
-        
-        // remove body
-        if (cpSpaceContainsBody(_info->space, body->_info->body))
-        {
-            cpSpaceRemoveBody(_info->space, body->_info->body);
-        }
-        
-        body->_world = nullptr;
+        delayTestRemoveBody(dynamic_cast<PhysicsBody*>(obj));
     }
 
     _bodies->removeAllObjects();
@@ -416,8 +472,57 @@ void PhysicsWorld::removeShape(PhysicsShape* shape)
     }
 }
 
+void PhysicsWorld::updateBodies()
+{
+    if (_info->space->locked_private)
+    {
+        return;
+    }
+    
+    for (auto body : *_delayAddBodies)
+    {
+        realAddBody(dynamic_cast<PhysicsBody*>(body));
+    }
+    
+    for (auto body : *_delayRemoveBodies)
+    {
+        realRemoveBody(dynamic_cast<PhysicsBody*>(body));
+    }
+    
+    _delayAddBodies->removeAllObjects();
+    _delayRemoveBodies->removeAllObjects();
+}
+
+void PhysicsWorld::updateJoints()
+{
+    if (_info->space->locked_private)
+    {
+        return;
+    }
+    
+    for (auto joint : _delayAddJoints)
+    {
+        realAddJoint(joint);
+    }
+    
+    for (auto joint : _delayRemoveJoints)
+    {
+        realRemoveJoint(joint);
+    }
+    
+    _delayAddJoints.clear();
+    _delayRemoveJoints.clear();
+}
+
 void PhysicsWorld::update(float delta)
 {
+    if (_delayDirty)
+    {
+        updateBodies();
+        updateJoints();
+        _delayDirty = !(_delayAddBodies->count() == 0 && _delayRemoveBodies->count() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
+    }
+    
     for (auto body : *_bodies)
     {
         body->update(delta);
@@ -804,8 +909,11 @@ PhysicsWorld::PhysicsWorld()
 , _info(nullptr)
 , _bodies(nullptr)
 , _scene(nullptr)
+, _delayDirty(false)
 , _debugDraw(false)
 , _drawNode(nullptr)
+, _delayAddBodies(nullptr)
+, _delayRemoveBodies(nullptr)
 {
     
 }
@@ -814,6 +922,8 @@ PhysicsWorld::~PhysicsWorld()
 {
     removeAllBodies();
     removeAllJoints();
+    CC_SAFE_RELEASE(_delayRemoveBodies);
+    CC_SAFE_RELEASE(_delayAddBodies);
     CC_SAFE_DELETE(_info);
 }
 
