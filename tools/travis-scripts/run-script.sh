@@ -72,7 +72,10 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     ./generate-jsbindings.sh
 
     cd $COCOS2DX_ROOT/build
-    make -j4
+    mkdir -p linux-build
+    cd linux-build
+    cmake ../..
+    make -j10
 elif [ "$PLATFORM"x = "emscripten"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
