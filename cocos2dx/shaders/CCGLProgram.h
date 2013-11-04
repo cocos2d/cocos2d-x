@@ -69,6 +69,7 @@ enum {
 #define kCCShader_PositionTextureA8Color            "ShaderPositionTextureA8Color"
 #define kCCShader_Position_uColor                   "ShaderPosition_uColor"
 #define kCCShader_PositionLengthTexureColor         "ShaderPositionLengthTextureColor"
+#define kCCShader_ControlSwitch                     "Shader_ControlSwitch"
 
 // uniform names
 #define kCCUniformPMatrix_s				"CC_PMatrix"
@@ -118,7 +119,7 @@ public:
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     /** Initializes the CCGLProgram with precompiled shader program */
-    bool initWithPrecompiledProgramByteArray(const GLchar* shaderByteArray, GLint length);
+    bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
 #endif
     /** Initializes the CCGLProgram with a vertex and fragment with contents of filenames 
      * @js  init
@@ -282,6 +283,11 @@ private:
     GLint             m_uUniforms[kCCUniform_MAX];
     struct _hashUniformEntry* m_pHashForUniforms;
     bool              m_bUsesTime;
+    bool              m_hasShaderCompiler;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    std::string       m_shaderId;
+#endif
 };
 
 // end of shaders group
