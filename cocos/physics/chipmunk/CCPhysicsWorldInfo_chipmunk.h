@@ -30,12 +30,20 @@
 
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
+#include <vector>
 NS_CC_BEGIN
 
 class PhysicsWorldInfo
 {
 public:
     cpSpace* space;
+    
+    void addShape(cpShape* shape);
+    void removeShape(cpShape* shape);
+    void addBody(cpBody* body);
+    void removeBody(cpBody* body);
+    void addJoint(cpConstraint* joint);
+    void removeJoint(cpConstraint* joint);
     
 private:
     PhysicsWorldInfo();

@@ -26,6 +26,21 @@
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 NS_CC_BEGIN
 
+#define PHYSICS_WORLD_INFO_FUNCTION_IMPLEMENTS(name, type) \
+void PhysicsWorldInfo::add##name(cp##type* data) \
+{ \
+    if (!cpSpaceContains##type(space, data)) cpSpaceAdd##type(space, data); \
+} \
+\
+void PhysicsWorldInfo::remove##name(cp##type* data) \
+{ \
+    if (cpSpaceContains##type(space, data)) cpSpaceRemove##type(space, data); \
+} \
+
+PHYSICS_WORLD_INFO_FUNCTION_IMPLEMENTS(Shape, Shape)
+PHYSICS_WORLD_INFO_FUNCTION_IMPLEMENTS(Body, Body)
+PHYSICS_WORLD_INFO_FUNCTION_IMPLEMENTS(Joint, Constraint)
+
 PhysicsWorldInfo::PhysicsWorldInfo()
 {
     space = cpSpaceNew();

@@ -29,6 +29,7 @@
 #define __CCPHYSICS_WORLD_H__
 
 #include <list>
+#include <vector>
 
 #include "CCObject.h"
 #include "CCGeometry.h"
@@ -86,11 +87,15 @@ class PhysicsWorld
 {
 public:
     /** Adds a joint to the physics world.*/
-    void addJoint(PhysicsJoint* joint);
+    virtual void addJoint(PhysicsJoint* joint);
     /** Removes a joint from the physics world.*/
-    void removeJoint(PhysicsJoint* joint);
+    virtual void removeJoint(PhysicsJoint* joint);
     /** Remove all joints from the physics world.*/
-    void removeAllJoints();
+    virtual void removeAllJoints();
+    
+    virtual void removeBody(PhysicsBody* body);
+    virtual void removeBodyByTag(int tag);
+    virtual void removeAllBodies();
     
     void rayCast(PhysicsRayCastCallback& callback, Point point1, Point point2, void* data);
     void rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data);
@@ -115,10 +120,6 @@ public:
     /** set the debug draw */
     inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
     
-    virtual void removeBody(PhysicsBody* body);
-    virtual void removeBodyByTag(int tag);
-    virtual void removeAllBodies();
-    
 protected:
     static PhysicsWorld* create(Scene& scene);
     bool init(Scene& scene);
@@ -132,24 +133,39 @@ protected:
     virtual void drawWithShape(DrawNode* node, PhysicsShape* shape);
     virtual void drawWithJoint(DrawNode* node, PhysicsJoint* joint);
     
-    
     virtual int collisionBeginCallback(PhysicsContact& contact);
     virtual int collisionPreSolveCallback(PhysicsContact& contact);
     virtual void collisionPostSolveCallback(PhysicsContact& contact);
     virtual void collisionSeparateCallback(PhysicsContact& contact);
     
+    virtual void realAddBody(PhysicsBody* body);
+    virtual void realRemoveBody(PhysicsBody* body);
+    virtual void realAddJoint(PhysicsJoint* joint);
+    virtual void realRemoveJoint(PhysicsJoint* joint);
+    virtual void delayTestAddBody(PhysicsBody* body);
+    virtual void delayTestRemoveBody(PhysicsBody* body);
+    virtual void delayTestAddJoint(PhysicsJoint* joint);
+    virtual void delayTestRemoveJoint(PhysicsJoint* joint);
+    virtual void updateBodies();
+    virtual void updateJoints();
+    
 protected:
     Point _gravity;
     float _speed;
     PhysicsWorldInfo* _info;
-    //EventListenerPhysicsContact* _listener;
     
     Array* _bodies;
     std::list<PhysicsJoint*> _joints;
     Scene* _scene;
     
+    bool _delayDirty;
     bool _debugDraw;
     DrawNode* _drawNode;
+    
+    Array* _delayAddBodies;
+    Array* _delayRemoveBodies;
+    std::vector<PhysicsJoint*> _delayAddJoints;
+    std::vector<PhysicsJoint*> _delayRemoveJoints;
     
 protected:
     PhysicsWorld();
