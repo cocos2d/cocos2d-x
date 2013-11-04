@@ -109,7 +109,7 @@ public:
      *
      * @return the item widget.
      */
-    UIWidget* getItem(int index);
+    UIWidget* getItem(unsigned int index);
     
     /**
      * Returns the item container.
@@ -123,7 +123,7 @@ public:
      *
      * @return the index of item.
      */
-    int getIndex(UIWidget* item) const;
+    unsigned int getIndex(UIWidget* item) const;
     
     /**
      * Changes the gravity of listview.
