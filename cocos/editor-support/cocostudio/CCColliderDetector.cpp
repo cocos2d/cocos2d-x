@@ -56,7 +56,7 @@ void ColliderFilter::updateShape(b2Fixture *fixture)
 }
 
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-ColliderFilter::ColliderFilter(cpCollisionType collisionType, cpGroup group)
+ColliderFilter::ColliderFilter(uintptr_t collisionType, uintptr_t group)
     : _collisionType(collisionType)
     , _group(group)
 {

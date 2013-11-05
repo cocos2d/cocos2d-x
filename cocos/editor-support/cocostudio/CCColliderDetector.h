@@ -34,7 +34,6 @@ THE SOFTWARE.
 
 
 #if ENABLE_PHYSICS_CHIPMUNK_DETECT
-#include "chipmunk.h"
 struct cpBody;
 struct cpShape;
 #elif ENABLE_PHYSICS_BOX2D_DETECT
@@ -62,11 +61,11 @@ protected:
     CC_SYNTHESIZE(signed short, _groupIndex, GroupIndex);
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 public:
-    ColliderFilter(cpCollisionType collisionType = 0, cpGroup group = 0);
+    ColliderFilter(uintptr_t collisionType = 0, uintptr_t group = 0);
     void updateShape(cpShape *shape);
 protected:
-    CC_SYNTHESIZE(cpCollisionType, _collisionType, CollisionType);
-    CC_SYNTHESIZE(cpGroup, _group, Group);
+    CC_SYNTHESIZE(uintptr_t, _collisionType, CollisionType);
+    CC_SYNTHESIZE(uintptr_t, _group, Group);
 #endif
 };
 
