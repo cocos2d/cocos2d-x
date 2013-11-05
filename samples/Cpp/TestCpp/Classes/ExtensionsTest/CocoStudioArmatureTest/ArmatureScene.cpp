@@ -1008,7 +1008,8 @@ void TestColliderDetector::initWorld()
     cpSpaceAddBody(space, body);
     armature2->setBody(body);
 
-    armature2->setColliderFilter(&ColliderFilter(eEnemyTag));
+    ColliderFilter filter = ColliderFilter(eEnemyTag);
+    armature2->setColliderFilter(&filter);
 
     cpSpaceAddCollisionHandler(space, eEnemyTag, eBulletTag, beginHit, NULL, NULL, endHit, NULL);
 }
