@@ -115,24 +115,24 @@ void ArmatureDataManager::removeArmatureFileInfo(const char *configFilePath)
 {
     if (RelativeData *data = getRelativeData(configFilePath))
     {
-        for (std::vector<std::string>::iterator i = data->armatures.begin(); i != data->armatures.end(); i++)
+        for (std::string str : data->armatures)
         {
-            removeArmatureData(i->c_str());
+            removeArmatureData(str.c_str());
         }
 
-        for (std::vector<std::string>::iterator i = data->animations.begin(); i != data->animations.end(); i++)
+        for (std::string str : data->animations)
         {
-            removeAnimationData(i->c_str());
+            removeAnimationData(str.c_str());
         }
 
-        for (std::vector<std::string>::iterator i = data->textures.begin(); i != data->textures.end(); i++)
+        for (std::string str : data->textures)
         {
-            removeTextureData(i->c_str());
+            removeTextureData(str.c_str());
         }
 
-        for (std::vector<std::string>::iterator i = data->plistFiles.begin(); i != data->plistFiles.end(); i++)
+        for (std::string str : data->plistFiles)
         {
-            SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(i->c_str());
+            SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(str.c_str());
         }
 
         _relativeDatas.erase(configFilePath);
