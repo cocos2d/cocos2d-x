@@ -87,10 +87,7 @@ CCBone::~CCBone(void)
     CC_SAFE_DELETE(m_pDisplayManager);
     CC_SAFE_DELETE(m_tWorldInfo);
 
-    if(m_pBoneData)
-    {
-        m_pBoneData->release();
-    }
+    CC_SAFE_RELEASE_NULL(m_pBoneData);
 
     CC_SAFE_RELEASE(m_pChildArmature);
 }
@@ -126,6 +123,9 @@ bool CCBone::init(const char *name)
         CC_SAFE_DELETE(m_tWorldInfo);
         m_tWorldInfo = new CCBaseData();
 
+        CC_SAFE_DELETE(m_pBoneData);
+        m_pBoneData  = new CCBoneData();
+
         bRet = true;
     }
     while (0);
@@ -137,8 +137,12 @@ void CCBone::setBoneData(CCBoneData *boneData)
 {
     CCAssert(NULL != boneData, "_boneData must not be NULL");
 
-    m_pBoneData = boneData;
-    m_pBoneData->retain();
+    if (m_pBoneData != boneData)
+    {
+        CC_SAFE_RETAIN(boneData);
+        CC_SAFE_RELEASE(m_pBoneData);
+        m_pBoneData = boneData;
+    }
 
     m_strName = m_pBoneData->name;
     m_nZOrder = m_pBoneData->zOrder;
