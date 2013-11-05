@@ -138,7 +138,7 @@ public:
     Point getSurfaceVelocity() const;
     void setElasticity(float elasticity);
     void setFriction(float friction);
-    void setSurfaceVelocity(Point surfaceVelocity);
+    void setSurfaceVelocity(const Vect& velocity);
     void ignore();
     
 private:

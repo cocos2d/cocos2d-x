@@ -92,16 +92,16 @@ public:
     void setDensity(float density);
     void setRestitution(float restitution);
     void setFriction(float friction);
-    void setMaterial(PhysicsMaterial material);
+    void setMaterial(const PhysicsMaterial& material);
     
     virtual float calculateDefaultMoment() { return 0; }
     virtual float calculateDefaultArea() { return 0; }
     virtual Point getOffset() { return Point::ZERO; }
     virtual Point getCenter() { return getOffset(); }
-    bool containsPoint(Point point) const;
+    bool containsPoint(const Point& point) const;
     
-    static Point* recenterPoints(Point* points, int count, Point center = Point::ZERO);
-    static Point getPolyonCenter(Point* points, int count);
+    static Point* recenterPoints(Point* points, int count, const Point& center = Point::ZERO);
+    static Point getPolyonCenter(const Point* points, int count);
     
     inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
     inline int getCategoryBitmask() const { return _categoryBitmask; }
@@ -150,9 +150,9 @@ protected:
 class PhysicsShapeCircle : public PhysicsShape
 {
 public:
-    static PhysicsShapeCircle* create(float radius, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
+    static PhysicsShapeCircle* create(float radius, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Point& offset = Point(0, 0));
     static float calculateArea(float radius);
-    static float calculateMoment(float mass, float radius, Point offset = Point(0, 0));
+    static float calculateMoment(float mass, float radius, const Point& offset = Point::ZERO);
     
     float calculateDefaultArea() override;
     float calculateDefaultMoment() override;
@@ -160,7 +160,7 @@ public:
     float getRadius() const;
     Point getOffset() override;
 protected:
-    bool init(float radius, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
+    bool init(float radius, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Point& offset = Point::ZERO);
     
 protected:
     PhysicsShapeCircle();
@@ -171,9 +171,9 @@ protected:
 class PhysicsShapeBox : public PhysicsShape
 {
 public:
-    static PhysicsShapeBox* create(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
-    static float calculateArea(Size size);
-    static float calculateMoment(float mass, Size size, Point offset = Point(0, 0));
+    static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Point& offset = Point::ZERO);
+    static float calculateArea(const Size& size);
+    static float calculateMoment(float mass, const Size& size, const Point& offset = Point::ZERO);
     
     float calculateDefaultArea() override;
     float calculateDefaultMoment() override;
@@ -183,7 +183,7 @@ public:
     Point getOffset() override { return _offset; }
     
 protected:
-    bool init(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
+    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Point& offset = Point::ZERO);
     
 protected:
     PhysicsShapeBox();
@@ -197,9 +197,9 @@ protected:
 class PhysicsShapePolygon : public PhysicsShape
 {
 public:
-    static PhysicsShapePolygon* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
-    static float calculateArea(Point* points, int count);
-    static float calculateMoment(float mass, Point* points, int count, Point offset = Point(0, 0));
+    static PhysicsShapePolygon* create(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Point& offset = Point::ZERO);
+    static float calculateArea(const Point* points, int count);
+    static float calculateMoment(float mass, const Point* points, int count, const Point& offset = Point::ZERO);
     
     float calculateDefaultArea() override;
     float calculateDefaultMoment() override;
@@ -209,7 +209,7 @@ public:
     int getPointsCount() const;
     Point getCenter() override;
 protected:
-    bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
+    bool init(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Point& offset = Point::ZERO);
     
 protected:
     PhysicsShapePolygon();
@@ -223,14 +223,14 @@ protected:
 class PhysicsShapeEdgeSegment : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeSegment* create(Point a, Point b, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsShapeEdgeSegment* create(const Point& a, const Point& b, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
     Point getPointA() const;
     Point getPointB() const;
     Point getCenter() override;
     
 protected:
-    bool init(Point a, Point b, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    bool init(const Point& a, const Point& b, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgeSegment();
@@ -246,13 +246,13 @@ protected:
 class PhysicsShapeEdgeBox : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeBox* create(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, Point offset = Point(0, 0));
+    static PhysicsShapeEdgeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, const Point& offset = Point::ZERO);
     Point getOffset() override { return _offset; }
-    Point* getPoints(Point* points) const;
+    Point* getPoints(const Point* points) const;
     int getPointsCount() const;
     
 protected:
-    bool init(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, Point offset = Point(0, 0));
+    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, const Point& offset = Point::ZERO);
     
 protected:
     PhysicsShapeEdgeBox();
@@ -268,13 +268,13 @@ protected:
 class PhysicsShapeEdgePolygon : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgePolygon* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsShapeEdgePolygon* create(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     Point getCenter() override;
     Point* getPoints(Point* points) const;
     int getPointsCount() const;
     
 protected:
-    bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    bool init(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgePolygon();
@@ -290,13 +290,13 @@ protected:
 class PhysicsShapeEdgeChain : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeChain* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsShapeEdgeChain* create(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     Point getCenter() override;
     Point* getPoints(Point* points) const;
     int getPointsCount() const;
     
 protected:
-    bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    bool init(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgeChain();

@@ -36,8 +36,7 @@ NS_CC_BEGIN
 class PhysicsWorldInfo
 {
 public:
-    cpSpace* space;
-    
+    cpSpace* getSpace() const { return _space; }
     void addShape(cpShape* shape);
     void removeShape(cpShape* shape);
     void addBody(cpBody* body);
@@ -48,6 +47,9 @@ public:
 private:
     PhysicsWorldInfo();
     ~PhysicsWorldInfo();
+    
+private:
+    cpSpace* _space;
     
     friend class PhysicsWorld;
 };

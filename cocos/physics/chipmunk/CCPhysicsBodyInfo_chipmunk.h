@@ -34,16 +34,18 @@
 
 NS_CC_BEGIN
 
-class PhysicsBodyInfo : public Clonable
+class PhysicsBodyInfo
 {
 public:
-    cpBody* body;
+    inline cpBody* getBody() const { return _body; }
+    inline void setBody(cpBody* body) { _body = body; }
     
 private:
     PhysicsBodyInfo();
     ~PhysicsBodyInfo();
     
-    Clonable* clone() const override;
+private:
+    cpBody* _body;
     
     friend class PhysicsBody;
 };

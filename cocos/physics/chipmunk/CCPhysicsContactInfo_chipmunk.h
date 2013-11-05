@@ -36,11 +36,14 @@ class PhysicsContact;
 class PhysicsContactInfo
 {
 public:
-    PhysicsContact* contact;
+    inline PhysicsContact* getContact() const { return _contact; }
     
 private:
     PhysicsContactInfo(PhysicsContact* contact);
     ~PhysicsContactInfo();
+    
+private:
+    PhysicsContact* _contact;
     
     friend class PhysicsContact;
 };

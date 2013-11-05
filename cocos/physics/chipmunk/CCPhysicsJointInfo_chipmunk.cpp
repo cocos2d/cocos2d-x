@@ -27,16 +27,16 @@
 #include <algorithm>
 NS_CC_BEGIN
 
-std::map<cpConstraint*, PhysicsJointInfo*> PhysicsJointInfo::map;
+std::map<cpConstraint*, PhysicsJointInfo*> PhysicsJointInfo::_map;
 
 PhysicsJointInfo::PhysicsJointInfo(PhysicsJoint* joint)
-: joint(joint)
+: _joint(joint)
 {
 }
 
 PhysicsJointInfo::~PhysicsJointInfo()
 {
-    for (cpConstraint* joint : joints)
+    for (cpConstraint* joint : _joints)
     {
         cpConstraintFree(joint);
     }
@@ -46,21 +46,21 @@ void PhysicsJointInfo::add(cpConstraint* joint)
 {
     if (joint == nullptr) return;
 
-    joints.push_back(joint);
-    map.insert(std::pair<cpConstraint*, PhysicsJointInfo*>(joint, this));
+    _joints.push_back(joint);
+    _map.insert(std::pair<cpConstraint*, PhysicsJointInfo*>(joint, this));
 }
 
 void PhysicsJointInfo::remove(cpConstraint* joint)
 {
     if (joint == nullptr) return;
     
-    auto it = std::find(joints.begin(), joints.end(), joint);
-    if (it != joints.end())
+    auto it = std::find(_joints.begin(), _joints.end(), joint);
+    if (it != _joints.end())
     {
-        joints.erase(it);
+        _joints.erase(it);
         
-        auto mit = map.find(joint);
-        if (mit != map.end()) map.erase(mit);
+        auto mit = _map.find(joint);
+        if (mit != _map.end()) _map.erase(mit);
         
         cpConstraintFree(joint);
     }
@@ -68,14 +68,14 @@ void PhysicsJointInfo::remove(cpConstraint* joint)
 
 void PhysicsJointInfo::removeAll()
 {
-    for (cpConstraint* joint : joints)
+    for (cpConstraint* joint : _joints)
     {
-        auto mit = map.find(joint);
-        if (mit != map.end()) map.erase(mit);
+        auto mit = _map.find(joint);
+        if (mit != _map.end()) _map.erase(mit);
         cpConstraintFree(joint);
     }
     
-    joints.clear();
+    _joints.clear();
 }
 
 NS_CC_END

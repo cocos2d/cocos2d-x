@@ -47,16 +47,24 @@ public:
     void setBody(cpBody* body);
     
 public:
-    std::vector<cpShape*> shapes;
-    PhysicsShape* shape;
-    cpBody* body;
-    cpGroup group;
-    static std::map<cpShape*, PhysicsShapeInfo*> map;
-    static cpBody* shareBody;
+    PhysicsShape* getShape() const { return _shape; }
+    std::vector<cpShape*>& getShapes() { return _shapes; }
+    cpBody* getBody() const { return _body; }
+    cpGroup getGourp() const { return _group; }
+    static std::map<cpShape*, PhysicsShapeInfo*>& getMap() { return _map; }
+    static cpBody* getSharedBody() { return _sharedBody; }
     
 private:
     PhysicsShapeInfo(PhysicsShape* shape);
     ~PhysicsShapeInfo();
+    
+private:
+    std::vector<cpShape*> _shapes;
+    PhysicsShape* _shape;
+    cpBody* _body;
+    cpGroup _group;
+    static std::map<cpShape*, PhysicsShapeInfo*> _map;
+    static cpBody* _sharedBody;
     
     friend class PhysicsShape;
 };
