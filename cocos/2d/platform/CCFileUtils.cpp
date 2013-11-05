@@ -451,7 +451,7 @@ NS_CC_BEGIN
 
 /* The subclass FileUtilsApple should override these two method. */
 Dictionary* FileUtils::createDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
-bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPath) {return NULL;}
+bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPath) {return false;}
 Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename) {return NULL;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
