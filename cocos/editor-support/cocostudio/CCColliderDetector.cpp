@@ -449,7 +449,7 @@ void ColliderDetector::setBody(b2Body *pBody)
     }
 }
 
-b2Body *ColliderDetector::getBody()
+b2Body *ColliderDetector::getBody() const
 {
     return _body;
 }
@@ -492,7 +492,7 @@ void ColliderDetector::setBody(cpBody *pBody)
     }
 }
 
-cpBody *ColliderDetector::getBody()
+cpBody *ColliderDetector::getBody() const
 {
     return _body;
 }

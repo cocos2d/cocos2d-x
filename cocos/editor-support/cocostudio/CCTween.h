@@ -88,6 +88,9 @@ public:
 
     virtual void gotoAndPlay(int frameIndex);
     virtual void gotoAndPause(int frameIndex);
+
+    virtual void setMovementBoneData(MovementBoneData *data) { _movementBoneData = data; }
+    virtual const MovementBoneData *getMovementBoneData() const { return _movementBoneData; }
 protected:
 
     /**
@@ -121,7 +124,7 @@ protected:
     virtual void arriveKeyFrame(FrameData *keyFrameData);
 protected:
     //! A weak reference to the current MovementBoneData. The data is in the data pool
-    CC_SYNTHESIZE(MovementBoneData *, _movementBoneData, MovementBoneData)
+    MovementBoneData *_movementBoneData;
 
     FrameData *_tweenData;          //! The computational tween frame data, //! A weak reference to the Bone's tweenData
     FrameData *_from;               //! From frame data, used for calculate between value

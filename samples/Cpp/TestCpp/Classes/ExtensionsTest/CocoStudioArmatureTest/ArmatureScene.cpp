@@ -271,9 +271,9 @@ std::string TestAsynchronousLoading::subtitle()
     return "current percent : ";
 }
 
-void TestAsynchronousLoading::restartCallback(CCObject* pSender)
+void TestAsynchronousLoading::restartCallback(Object* pSender)
 {
-    ArmatureDataManager::getInstance()->purge();
+    ArmatureDataManager::getInstance()->destoryInstance();
     ArmatureTestLayer::restartCallback(pSender);
 }
 void TestAsynchronousLoading::dataLoaded(float percent)
@@ -307,7 +307,7 @@ void TestDirectLoading::onEnter()
 
     Armature *armature = Armature::create("bear");
     armature->getAnimation()->playByIndex(0);
-    armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+    armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y));
     addChild(armature);
 }
 std::string TestDirectLoading::title()
@@ -608,7 +608,7 @@ void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIn
 }
 void TestFrameEvent::checkAction(float dt)
 {
-    if ( this->numberOfRunningActions() == 0 && this->getGrid() != nullptr)
+    if ( this->getNumberOfRunningActions() == 0 && this->getGrid() != nullptr)
         this->setGrid(nullptr);
 }
 

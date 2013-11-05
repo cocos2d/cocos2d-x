@@ -74,7 +74,7 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-    virtual void restartCallback(CCObject* pSender);
+    virtual void restartCallback(Object* pSender);
 
 	void dataLoaded(float percent);
 };

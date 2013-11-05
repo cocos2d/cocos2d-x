@@ -182,7 +182,7 @@ void DisplayManager::removeDisplay(int index)
     _decoDisplayList->removeObjectAtIndex(index);
 }
 
-Array *DisplayManager::getDecorativeDisplayList()
+Array *DisplayManager::getDecorativeDisplayList() const
 {
     return _decoDisplayList;
 }
@@ -276,28 +276,28 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
     }
 }
 
-Node *DisplayManager::getDisplayRenderNode()
+Node *DisplayManager::getDisplayRenderNode() const
 {
     return _displayRenderNode;
 }
 
 
-DisplayType DisplayManager::getDisplayRenderNodeType()
+DisplayType DisplayManager::getDisplayRenderNodeType() const
 {
     return _displayType;
 }
 
-int DisplayManager::getCurrentDisplayIndex()
+int DisplayManager::getCurrentDisplayIndex() const
 {
     return _displayIndex;
 }
 
-DecorativeDisplay *DisplayManager::getCurrentDecorativeDisplay()
+DecorativeDisplay *DisplayManager::getCurrentDecorativeDisplay() const
 {
     return _currentDecoDisplay;
 }
 
-DecorativeDisplay *DisplayManager::getDecorativeDisplayByIndex( int index)
+DecorativeDisplay *DisplayManager::getDecorativeDisplayByIndex( int index) const
 {
     return (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
 }
@@ -377,32 +377,32 @@ void DisplayManager::setVisible(bool visible)
     _displayRenderNode->setVisible(visible);
 }
 
-bool DisplayManager::isVisible()
+bool DisplayManager::isVisible() const
 {
     return _visible;
 }
 
 
-Size DisplayManager::getContentSize()
+Size DisplayManager::getContentSize() const
 {
     CS_RETURN_IF(!_displayRenderNode) Size(0, 0);
     return _displayRenderNode->getContentSize();
 }
 
-Rect DisplayManager::getBoundingBox()
+Rect DisplayManager::getBoundingBox() const
 {
     CS_RETURN_IF(!_displayRenderNode) Rect(0, 0, 0, 0);
     return _displayRenderNode->getBoundingBox();
 }
 
 
-Point DisplayManager::getAnchorPoint()
+Point DisplayManager::getAnchorPoint() const
 {
     CS_RETURN_IF(!_displayRenderNode) Point(0, 0);
     return _displayRenderNode->getAnchorPoint();
 }
 
-Point DisplayManager::getAnchorPointInPoints()
+Point DisplayManager::getAnchorPointInPoints() const
 {
     CS_RETURN_IF(!_displayRenderNode) Point(0, 0);
     return _displayRenderNode->getAnchorPointInPoints();

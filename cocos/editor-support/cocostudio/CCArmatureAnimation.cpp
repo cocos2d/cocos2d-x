@@ -146,7 +146,7 @@ void ArmatureAnimation::setSpeedScale(float speedScale)
     _processScale = !_movementData ? _speedScale : _speedScale * _movementData->scale;
 
     DictElement *element = nullptr;
-    Dictionary *dict = _armature->getBoneDic();
+    const Dictionary *dict = _armature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
         Bone *bone = static_cast<Bone*>(element->getObject());
@@ -174,7 +174,7 @@ void ArmatureAnimation::setAnimationInternal(float animationInternal)
     _animationInternal = animationInternal;
 
     DictElement *element = nullptr;
-    Dictionary *dict = _armature->getBoneDic();
+    const Dictionary *dict = _armature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
         Bone *bone = static_cast<Bone*>(element->getObject());
@@ -236,7 +236,7 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     _tweenList->removeAllObjects();
 
     DictElement *element = nullptr;
-    Dictionary *dict = _armature->getBoneDic();
+    const Dictionary *dict = _armature->getBoneDic();
 
     CCDICT_FOREACH(dict, element)
     {
@@ -261,7 +261,7 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
         }
         else
         {
-            if(!bone->getIgnoreMovementBoneData())
+            if(!bone->isIgnoreMovementBoneData())
             {
                 //! this bone is not include in this movement, so hide it
                 bone->getDisplayManager()->changeDisplayByIndex(-1, false);
@@ -319,7 +319,7 @@ void ArmatureAnimation::gotoAndPause(int frameIndex)
     pause();
 }
 
-int ArmatureAnimation::getMovementCount()
+int ArmatureAnimation::getMovementCount() const
 {
     return _animationData->getMovementCount();
 }
@@ -416,7 +416,7 @@ void ArmatureAnimation::updateHandler()
     }
 }
 
-std::string ArmatureAnimation::getCurrentMovementID()
+std::string ArmatureAnimation::getCurrentMovementID() const
 {
     if (_isComplete)
     {

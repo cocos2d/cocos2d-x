@@ -63,7 +63,7 @@ public:
     /**
      * Initializes an empty Bone with nothing init.
      */
-    virtual bool init();
+    virtual bool init() override;
 
     /**
      * Initializes a Bone with the specified name
@@ -124,10 +124,10 @@ public:
      */
     void removeChildBone(Bone *bone, bool recursion);
 
-    void update(float delta);
+    void update(float delta) override;
 
-    void updateDisplayedColor(const cocos2d::Color3B &parentColor);
-    void updateDisplayedOpacity(GLubyte parentOpacity);
+    void updateDisplayedColor(const cocos2d::Color3B &parentColor) override;
+    void updateDisplayedOpacity(GLubyte parentOpacity) override;
 
     virtual void setColor(const cocos2d::Color3B& color) override;
     virtual void setOpacity(GLubyte opacity) override;
@@ -138,15 +138,15 @@ public:
     //! Update zorder
     void updateZOrder();
 
-    virtual void setZOrder(int zOrder);
+    virtual void setZOrder(int zOrder) override;
 
     Tween *getTween();
 
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
      */
-    virtual inline void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
-    virtual inline bool isTransformDirty() { return _boneTransformDirty; }
+    virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
+    virtual bool isTransformDirty() { return _boneTransformDirty; }
 
     virtual cocos2d::AffineTransform getNodeToArmatureTransform() const;
     virtual cocos2d::AffineTransform getNodeToWorldTransform() const override;
@@ -161,45 +161,69 @@ public:
 
     virtual void setColliderFilter(ColliderFilter *filter);
     virtual ColliderFilter *getColliderFilter();
-public:
+
+    virtual void setBoneData(BoneData *boneData);
+    virtual BoneData *getBoneData() const;
+
+    virtual void setArmature(Armature *armature);
+    virtual Armature *getArmature() const;
+
+    virtual void setChildArmature(Armature *childArmature);
+    virtual Armature *getChildArmature() const;
+
+    virtual DisplayManager *getDisplayManager() const { return _displayManager; }
+
+    virtual void setIgnoreMovementBoneData(bool ignore) { _ignoreMovementBoneData = ignore; }
+    virtual bool isIgnoreMovementBoneData() const { return _ignoreMovementBoneData; }
+
+    virtual void setBlendType(BlendType type) { _blendType = type; }
+    virtual BlendType getBlendType() const { return _blendType; }
+
+    virtual FrameData *getTweenData() const { return _tweenData; }
+
+    virtual void setName(const std::string &name) { _name = name; }
+    virtual const std::string getName() const { return _name; }
+
+    virtual const BaseData *getWorldInfo() const { return _worldInfo; }
+protected:
+    void applyParentTransform(Bone *parent);
+
     /*
      *  The origin state of the Bone. Display's state is effected by _boneData, m_pNode, _tweenData
      *  when call setData function, it will copy from the BoneData.
      */
-    CC_PROPERTY(BoneData *, _boneData, BoneData);
+    BoneData *_boneData;
 
     //! A weak reference to the Armature
-    CC_PROPERTY(Armature *, _armature, Armature);
+    Armature *_armature;
 
     //! A weak reference to the child Armature
-    CC_PROPERTY(Armature *, _childArmature, ChildArmature);
+    Armature *_childArmature;
 
-    CC_SYNTHESIZE(DisplayManager *, _displayManager, DisplayManager)
+    DisplayManager *_displayManager;
 
     /*
      *	When Armature play an animation, if there is not a MovementBoneData of this bone in this MovementData, this bone will be hidden.
      *	Set IgnoreMovementBoneData to true, then this bone will also be shown.
      */
-    CC_SYNTHESIZE(bool, _ignoreMovementBoneData, IgnoreMovementBoneData)
+    bool _ignoreMovementBoneData;
 
-    CC_SYNTHESIZE(BlendType, _blendType, BlendType)
-protected:
-    void applyParentTransform(Bone *parent);
+    BlendType _blendType;
 
     Tween *_tween;				//! Calculate tween effect
 
     //! Used for making tween effect in every frame
-    CC_SYNTHESIZE_READONLY(FrameData *, _tweenData, TweenData);
+    FrameData *_tweenData;
 
-    CC_SYNTHESIZE(std::string, _name, Name);
+    std::string _name;
 
-    Bone *_parentBone;	             //! A weak reference to its parent
+    Bone *_parentBone;	               //! A weak reference to its parent
     bool _boneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
     cocos2d::AffineTransform _worldTransform;
 
-    CC_SYNTHESIZE_READONLY(BaseData*, _worldInfo, WorldInfo);
+    BaseData *_worldInfo;
     
     //! Armature's parent bone
     Bone *_armatureParentBone;

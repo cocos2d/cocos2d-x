@@ -224,7 +224,7 @@ void Skin::setBone(Bone *bone)
     }
 }
 
-Bone *Skin::getBone()
+Bone *Skin::getBone() const
 {
     return _bone;
 }

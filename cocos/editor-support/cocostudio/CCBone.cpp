@@ -127,7 +127,7 @@ bool Bone::init(const char *name)
         _worldInfo = new BaseData();
 
         CC_SAFE_DELETE(_boneData);
-        _boneData  = new CCBoneData();
+        _boneData  = new BoneData();
 
         bRet = true;
     }
@@ -153,7 +153,7 @@ void Bone::setBoneData(BoneData *boneData)
     _displayManager->initDisplayList(boneData);
 }
 
-BoneData *Bone::getBoneData()
+BoneData *Bone::getBoneData() const
 {
     return _boneData;
 }
@@ -174,7 +174,7 @@ void Bone::setArmature(Armature *armature)
 }
 
 
-Armature *Bone::getArmature()
+Armature *Bone::getArmature() const
 {
     return _armature;
 }
@@ -376,7 +376,7 @@ void Bone::setChildArmature(Armature *armature)
     }
 }
 
-Armature *Bone::getChildArmature()
+Armature *Bone::getChildArmature() const
 {
     return _childArmature;
 }

@@ -55,29 +55,37 @@ public:
 public:
     ColliderFilter(unsigned short categoryBits = 0x0001, unsigned short maskBits = 0xFFFF, signed short groupIndex = 0);
     void updateShape(b2Fixture *fixture);
+
+    virtual void setCategoryBits(unsigned short categoryBits) { _categoryBits = categoryBits; }
+    virtual unsigned short getCategoryBits() const { return _categoryBits; }
+
+    virtual void setMaskBits(unsigned short maskBits) { _maskBits = maskBits; }
+    virtual unsigned short getMaskBits() const { return _maskBits; }
+
+    virtual void setGroupIndex(signed short groupIndex) { _groupIndex = groupIndex; }
+    virtual signed short getGroupIndex() const { return _groupIndex; }
 protected:
-    CC_SYNTHESIZE(unsigned short, _categoryBits, CategoryBits);
-    CC_SYNTHESIZE(unsigned short, _maskBits, MaskBits);
-    CC_SYNTHESIZE(signed short, _groupIndex, GroupIndex);
+    unsigned short _categoryBits;
+    unsigned short _maskBits;
+    signed short _groupIndex;
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 public:
     ColliderFilter(uintptr_t collisionType = 0, uintptr_t group = 0);
     void updateShape(cpShape *shape);
+
+    virtual void setCollisionType(uintptr_t collisionType) { _collisionType = collisionType; }
+    virtual uintptr_t getCollisionType() const { return _collisionType; }
+
+    virtual void setGroup(uintptr_t group) { _group = group; }
+    virtual uintptr_t getGroup() const { return _group; }
 protected:
-    CC_SYNTHESIZE(uintptr_t, _collisionType, CollisionType);
-    CC_SYNTHESIZE(uintptr_t, _group, Group);
+    uintptr_t _collisionType;
+    uintptr_t _group;
 #endif
 };
 
 class ColliderBody : public cocos2d::Object
 {
-public:
-#if ENABLE_PHYSICS_BOX2D_DETECT
-    CC_SYNTHESIZE(b2Fixture *, _fixture, B2Fixture)
-#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_SYNTHESIZE(cpShape *, _shape, Shape)
-#endif
-
 public:
     ColliderBody(ContourData *contourData);
     ~ColliderBody();
@@ -86,12 +94,31 @@ public:
 
     void setColliderFilter(ColliderFilter *filter);
     ColliderFilter *getColliderFilter();
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+    virtual void setB2Fixture(b2Fixture *fixture) { _fixture = fixture; }
+    virtual b2Fixture *getB2Fixture() const { return _fixture; }
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+    virtual void setShape(cpShape *shape) { _shape = shape; }
+    virtual cpShape *getShape() const { return _shape; }
+#endif
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    virtual const cocos2d::Array *getCalculatedVertexList() const { return _calculatedVertexList; }
+#endif
 private:
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+    b2Fixture *_fixture;
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+    cpShape *_shape;
+#endif
+
     ContourData *_contourData;
     ColliderFilter *_filter;
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    CC_SYNTHESIZE_READONLY(CCArray *, _calculatedVertexList, CalculatedVertexList);
+    cocos2d::Array *_calculatedVertexList;
 #endif
 };
 
@@ -132,16 +159,27 @@ public:
 
     virtual void setColliderFilter(ColliderFilter *filter);
     virtual ColliderFilter *getColliderFilter();
-protected:
+
+    virtual void setBone(Bone *bone) { _bone = bone; }
+    virtual Bone *getBone() const { return _bone; }
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+    virtual void setBody(b2Body *body);
+    virtual b2Body *getBody() const;
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+    virtual void setBody(cpBody *body);
+    virtual cpBody *getBody() const;
+#endif
+ protected:
     cocos2d::Array *_colliderBodyList;
     ColliderFilter *_filter;
 
-    CC_SYNTHESIZE(Bone *, _bone, Bone);
+    Bone *_bone;
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-    CC_PROPERTY(b2Body *, _body, Body);
+    b2Body *_body;
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_PROPERTY(cpBody *, _body, Body);
+    cpBody *_body;
 #endif
 
 protected:

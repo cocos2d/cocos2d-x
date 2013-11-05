@@ -335,7 +335,7 @@ void Armature::changeBoneParent(Bone *bone, const char *parentName)
     }
 }
 
-Dictionary *Armature::getBoneDic()
+const Dictionary *Armature::getBoneDic() const
 {
     return _boneDic;
 }
@@ -437,12 +437,12 @@ void Armature::setAnimation(ArmatureAnimation *animation)
     _animation = animation;
 }
 
-ArmatureAnimation *Armature::getAnimation()
+ArmatureAnimation *Armature::getAnimation() const 
 {
     return _animation;
 }
 
-bool Armature::getArmatureTransformDirty()
+bool Armature::getArmatureTransformDirty() const 
 {
     return _armatureTransformDirty;
 }
@@ -673,7 +673,7 @@ Rect Armature::getBoundingBox() const
     return RectApplyAffineTransform(boundingBox, getNodeToParentTransform());
 }
 
-Bone *Armature::getBoneAtPoint(float x, float y)
+Bone *Armature::getBoneAtPoint(float x, float y) const 
 {
     int length = _children->count();
     Bone *bs;
@@ -689,7 +689,7 @@ Bone *Armature::getBoneAtPoint(float x, float y)
     return nullptr;
 }
 
-TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture)
+TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture) const
 {
     int key = texture->getName();
     
@@ -723,7 +723,7 @@ void Armature::setParentBone(Bone *parentBone)
     }
 }
 
-Bone *Armature::getParentBone()
+Bone *Armature::getParentBone() const
 {
     return _parentBone;
 }
@@ -739,7 +739,7 @@ void CCArmature::setColliderFilter(ColliderFilter *filter)
 }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-b2Body *Armature::getBody()
+b2Body *Armature::getBody() const
 {
     return _body;
 }
@@ -787,7 +787,7 @@ b2Fixture *Armature::getShapeList()
 }
 
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-cpBody *Armature::getBody()
+cpBody *Armature::getBody() const
 {
     return _body;
 }
