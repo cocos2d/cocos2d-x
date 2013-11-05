@@ -59,13 +59,13 @@ public:
     /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
      * The TextureAtlas capacity can be increased in runtime.
      */
-    static TextureAtlas* create(const char* file , int capacity);
+    static TextureAtlas* create(const char* file , long capacity);
 
     /** creates a TextureAtlas with a previously initialized Texture2D object, and
      * with an initial capacity for n Quads.
      * The TextureAtlas capacity can be increased in runtime.
      */
-    static TextureAtlas* createWithTexture(Texture2D *texture, int capacity);
+    static TextureAtlas* createWithTexture(Texture2D *texture, long capacity);
     /**
      * @js ctor
      */
@@ -81,7 +81,7 @@ public:
     *
     * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
     */
-    bool initWithFile(const char* file, int capacity);
+    bool initWithFile(const char* file, long capacity);
 
     /** initializes a TextureAtlas with a previously initialized Texture2D object, and
     * with an initial capacity for Quads. 
@@ -89,43 +89,43 @@ public:
     *
     * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
     */
-    bool initWithTexture(Texture2D *texture, int capacity);
+    bool initWithTexture(Texture2D *texture, long capacity);
 
     /** updates a Quad (texture, vertex and color) at a certain index
     * index must be between 0 and the atlas capacity - 1
     @since v0.8
     */
-    void updateQuad(V3F_C4B_T2F_Quad* quad, int index);
+    void updateQuad(V3F_C4B_T2F_Quad* quad, long index);
 
     /** Inserts a Quad (texture, vertex and color) at a certain index
     index must be between 0 and the atlas capacity - 1
     @since v0.8
     */
-    void insertQuad(V3F_C4B_T2F_Quad* quad, int index);
+    void insertQuad(V3F_C4B_T2F_Quad* quad, long index);
 
     /** Inserts a c array of quads at a given index
      index must be between 0 and the atlas capacity - 1
      this method doesn't enlarge the array when amount + index > totalQuads
      @since v1.1
     */
-    void insertQuads(V3F_C4B_T2F_Quad* quads, int index, int amount);
+    void insertQuads(V3F_C4B_T2F_Quad* quads, long index, long amount);
 
     /** Removes the quad that is located at a certain index and inserts it at a new index
     This operation is faster than removing and inserting in a quad in 2 different steps
     @since v0.7.2
     */
-    void insertQuadFromIndex(int fromIndex, int newIndex);
+    void insertQuadFromIndex(long fromIndex, long newIndex);
 
     /** removes a quad at a given index number.
     The capacity remains the same, but the total number of quads to be drawn is reduced in 1
     @since v0.7.2
     */
-    void removeQuadAtIndex(int index);
+    void removeQuadAtIndex(long index);
 
     /** removes a amount of quads starting from index
         @since 1.1
      */
-    void removeQuadsAtIndex(int index, int amount);
+    void removeQuadsAtIndex(long index, long amount);
     /** removes all Quads.
     The TextureAtlas capacity remains untouched. No memory is freed.
     The total number of quads to be drawn will be 0
@@ -138,19 +138,19 @@ public:
     * It returns true if the resize was successful.
     * If it fails to resize the capacity it will return false with a new capacity of 0.
     */
-    bool resizeCapacity(int capacity);
+    bool resizeCapacity(long capacity);
 
     /**
      Used internally by ParticleBatchNode
      don't use this unless you know what you're doing
      @since 1.1
     */
-    void increaseTotalQuadsWith(int amount);
+    void increaseTotalQuadsWith(long amount);
 
     /** Moves an amount of quads from oldIndex at newIndex
      @since v1.1
      */
-    void moveQuadsFromIndex(int oldIndex, int amount, int newIndex);
+    void moveQuadsFromIndex(long oldIndex, long amount, long newIndex);
 
     /**
      Moves quads from index till totalQuads to the newIndex
@@ -158,26 +158,26 @@ public:
      This method doesn't enlarge the array if newIndex + quads to be moved > capacity
      @since 1.1
     */
-    void moveQuadsFromIndex(int index, int newIndex);
+    void moveQuadsFromIndex(long index, long newIndex);
 
     /**
      Ensures that after a realloc quads are still empty
      Used internally by ParticleBatchNode
      @since 1.1
     */
-    void fillWithEmptyQuadsFromIndex(int index, int amount);
+    void fillWithEmptyQuadsFromIndex(long index, long amount);
 
     /** draws n quads
     * n can't be greater than the capacity of the Atlas
     */
-    void drawNumberOfQuads(int n);
+    void drawNumberOfQuads(long n);
 
     /** draws n quads from an index (offset).
     n + start can't be greater than the capacity of the atlas
 
     @since v1.0
     */
-    void drawNumberOfQuads(int numberOfQuads, int start);
+    void drawNumberOfQuads(long numberOfQuads, long start);
 
     /** draws all the Atlas's Quads
     */

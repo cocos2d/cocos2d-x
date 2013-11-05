@@ -388,7 +388,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                     const char *textureData = dictionary->valueForKey("textureImageData")->getCString();
                     CCASSERT(textureData, "");
                     
-                    int dataLen = strlen(textureData);
+                    long dataLen = strlen(textureData);
                     if(dataLen != 0)
                     {
                         // if it fails, try to get it from the base64-gzipped data    

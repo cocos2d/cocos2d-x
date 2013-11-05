@@ -327,7 +327,7 @@ static CCEAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 	
-    int ids[1] = {0};
+    NSInteger ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -335,7 +335,7 @@ static CCEAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, ids, xs, ys);
+	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, (long*)ids, xs, ys);
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
@@ -351,7 +351,7 @@ static CCEAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 
-    int ids[1] = {0};
+    NSInteger ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -359,7 +359,7 @@ static CCEAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(1, ids, xs, ys);
+	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(1, (long*)ids, xs, ys);
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
@@ -370,7 +370,7 @@ static CCEAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 
-    int ids[1] = {0};
+    NSInteger ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -378,7 +378,7 @@ static CCEAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, ids, xs, ys);
+	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, (long*)ids, xs, ys);
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
