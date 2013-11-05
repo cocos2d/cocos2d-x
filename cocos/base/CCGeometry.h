@@ -127,6 +127,16 @@ public:
      * @js NA
      * @lua NA
      */
+    bool operator==(const Point& right) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
+    bool operator!=(const Point& right) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point operator*(float a) const;
     /**
      * @js NA

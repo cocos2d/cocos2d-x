@@ -602,7 +602,7 @@ void PhysicsDemoRayCast::changeModeCallback(Object* sender)
     }
 }
 
-bool PhysicsDemoRayCast::anyRay(PhysicsWorld& world, PhysicsRayCastCallback::Info& info, void* data)
+bool PhysicsDemoRayCast::anyRay(PhysicsWorld& world, const PhysicsRayCastCallback::Info& info, void* data)
 {
     *((Point*)data) = info.contact;
     return false;
@@ -620,7 +620,7 @@ private:
 PhysicsDemoNearestRayCastCallback::PhysicsDemoNearestRayCastCallback()
 : _friction(1.0f)
 {
-    report = [this](PhysicsWorld& world, PhysicsRayCastCallback::Info& info, void* data)->bool
+    report = [this](PhysicsWorld& world, const PhysicsRayCastCallback::Info& info, void* data)->bool
     {
         if (_friction > info.fraction)
         {
@@ -650,7 +650,7 @@ public:
 PhysicsDemoMultiRayCastCallback::PhysicsDemoMultiRayCastCallback()
 : num(0)
 {
-    report = [this](PhysicsWorld& world, PhysicsRayCastCallback::Info& info, void* data)->bool
+    report = [this](PhysicsWorld& world, const PhysicsRayCastCallback::Info& info, void* data)->bool
     {
         if (num < MAX_MULTI_RAYCAST_NUM)
         {
@@ -1089,7 +1089,7 @@ void PhysicsDemoSlice::onEnter()
     addChild(box);
 }
 
-bool PhysicsDemoSlice::slice(PhysicsWorld &world, PhysicsRayCastCallback::Info &info, void *data)
+bool PhysicsDemoSlice::slice(PhysicsWorld &world, const PhysicsRayCastCallback::Info &info, void *data)
 {
     if (info.shape->getBody()->getTag() != _sliceTag)
     {
@@ -1150,6 +1150,8 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Point normal, float 
     polyon->setAngularVelocity(body->getAngularVelocity());
     polyon->setTag(_sliceTag);
     addChild(node);
+    
+    delete[] points;
 }
 
 void PhysicsDemoSlice::onTouchEnded(Touch *touch, Event *event)
@@ -1171,7 +1173,7 @@ std::string PhysicsDemoSlice::subtitle()
 
 void PhysicsDemoWater::onEnter()
 {
-    
+    PhysicsDemo::onEnter();
 }
 
 std::string PhysicsDemoWater::title()

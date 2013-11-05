@@ -77,7 +77,7 @@ public:
 	 * @param normal the normal vector at the point of intersection
 	 * @return true to continue, false to terminate
      */
-    std::function<bool(PhysicsWorld& world, Info& info, void* data)> report;
+    std::function<bool(PhysicsWorld& world, const Info& info, void* data)> report;
 };
 
 class PhysicsRectQueryCallback
@@ -106,15 +106,15 @@ public:
     virtual void removeAllJoints();
     
     virtual void removeBody(PhysicsBody* body);
-    virtual void removeBodyByTag(int tag);
+    virtual void removeBody(int tag);
     virtual void removeAllBodies();
     
-    void rayCast(PhysicsRayCastCallback& callback, Point point1, Point point2, void* data);
-    void rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data);
-    Array* getShapesAtPoint(Point point) const;
-    PhysicsShape* getShapeAtPoint(Point point) const;
+    void rayCast(PhysicsRayCastCallback& callback, const Point& point1, const Point& point2, void* data);
+    void rectQuery(PhysicsRectQueryCallback& callback, const Rect& rect, void* data);
+    Array* getShapes(const Point& point) const;
+    PhysicsShape* getShape(const Point& point) const;
     Array* getAllBodies() const;
-    PhysicsBody* getBodyByTag(int tag) const;
+    PhysicsBody* getBody(int tag) const;
     
     /** Register a listener to receive contact callbacks*/
     //inline void registerContactListener(EventListenerPhysicsContact* delegate) { _listener = delegate; }

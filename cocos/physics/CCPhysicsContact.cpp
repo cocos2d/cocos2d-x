@@ -150,9 +150,9 @@ void PhysicsContactPreSolve::setFriction(float friction)
     static_cast<cpArbiter*>(_contactInfo)->u = friction;
 }
 
-void PhysicsContactPreSolve::setSurfaceVelocity(Point surfaceVelocity)
+void PhysicsContactPreSolve::setSurfaceVelocity(const Vect& velocity)
 {
-    static_cast<cpArbiter*>(_contactInfo)->surface_vr = PhysicsHelper::point2cpv(surfaceVelocity);
+    static_cast<cpArbiter*>(_contactInfo)->surface_vr = PhysicsHelper::point2cpv(velocity);
 }
 
 void PhysicsContactPreSolve::ignore()

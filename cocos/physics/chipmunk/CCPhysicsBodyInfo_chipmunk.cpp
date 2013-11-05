@@ -27,18 +27,13 @@
 NS_CC_BEGIN
 
 PhysicsBodyInfo::PhysicsBodyInfo()
-: body(nullptr)
+: _body(nullptr)
 {
 }
 
 PhysicsBodyInfo::~PhysicsBodyInfo()
 {
-    if (body) cpBodyFree(body);
-}
-
-Clonable* PhysicsBodyInfo::clone() const
-{
-    return nullptr;
+    if (_body) cpBodyFree(_body);
 }
 
 NS_CC_END
