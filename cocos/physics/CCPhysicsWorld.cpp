@@ -146,12 +146,17 @@ void PhysicsWorldCallback::rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect
     auto it = PhysicsShapeInfo::map.find(shape);
     CC_ASSERT(it != PhysicsShapeInfo::map.end());
     
-    PhysicsWorldCallback::continues = info->callback->report(*info->world,
-                   *it->second->shape,
-                   Point(info->p1.x+(info->p2.x-info->p1.x)*t, info->p1.y+(info->p2.y-info->p1.y)*t),
-                   Point(n.x, n.y),
-                   (float)t,
-                   info->data);
+    PhysicsRayCastCallback::Info callbackInfo =
+    {
+        it->second->shape,
+        info->p1,
+        info->p2,
+        Point(info->p1.x+(info->p2.x-info->p1.x)*t, info->p1.y+(info->p2.y-info->p1.y)*t),
+        Point(n.x, n.y),
+        (float)t,
+    };
+    
+    PhysicsWorldCallback::continues = info->callback->report(*info->world, callbackInfo, info->data);
 }
 
 void PhysicsWorldCallback::rectQueryCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info)
@@ -747,6 +752,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
     if (!contact.getNotify())
     {
+        cpArbiterIgnore(static_cast<cpArbiter*>(contact._contactInfo));
         return true;
     }
     
@@ -811,6 +817,8 @@ void PhysicsWorld::setGravity(Point gravity)
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallback& callback, Point point1, Point point2, void* data)
 {
+    CCASSERT(callback.report != nullptr, "callback.report shouldn't be nullptr");
+    
     if (callback.report != nullptr)
     {
         RayCastCallbackInfo info = { this, &callback, point1, point2, data };
@@ -829,6 +837,8 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallback& callback, Point point1, Point
 
 void PhysicsWorld::rectQuery(PhysicsRectQueryCallback& callback, Rect rect, void* data)
 {
+    CCASSERT(callback.report != nullptr, "callback.report shouldn't be nullptr");
+    
     if (callback.report != nullptr)
     {
         RectQueryCallbackInfo info = {this, &callback, data};

@@ -51,6 +51,18 @@ class PhysicsWorld;
 class PhysicsRayCastCallback
 {
 public:
+    typedef struct Info
+    {
+        PhysicsShape* shape;
+        Point start;
+        Point end;
+        Point contact;
+        Point normal;
+        float fraction;
+        void* data;
+    }Info;
+    
+public:
     PhysicsRayCastCallback()
     : report(nullptr)
     {}
@@ -65,7 +77,7 @@ public:
 	 * @param normal the normal vector at the point of intersection
 	 * @return true to continue, false to terminate
      */
-    std::function<bool(PhysicsWorld&, PhysicsShape&, Point, Point, float, void*)> report;
+    std::function<bool(PhysicsWorld& world, Info& info, void* data)> report;
 };
 
 class PhysicsRectQueryCallback

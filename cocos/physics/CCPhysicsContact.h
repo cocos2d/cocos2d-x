@@ -139,6 +139,7 @@ public:
     void setElasticity(float elasticity);
     void setFriction(float friction);
     void setSurfaceVelocity(Point surfaceVelocity);
+    void ignore();
     
 private:
     PhysicsContactPreSolve(PhysicsContactData* data, void* contactInfo);

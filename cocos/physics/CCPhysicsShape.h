@@ -98,6 +98,7 @@ public:
     virtual float calculateDefaultArea() { return 0; }
     virtual Point getOffset() { return Point::ZERO; }
     virtual Point getCenter() { return getOffset(); }
+    bool containsPoint(Point point) const;
     
     static Point* recenterPoints(Point* points, int count, Point center = Point::ZERO);
     static Point getPolyonCenter(Point* points, int count);
@@ -203,6 +204,7 @@ public:
     float calculateDefaultArea() override;
     float calculateDefaultMoment() override;
     
+    Point getPoint(int i) const;
     Point* getPoints(Point* points) const;
     int getPointsCount() const;
     Point getCenter() override;

@@ -59,16 +59,16 @@ public:
     /**
      * @brief Create a body contains a circle shape.
      */
-    static PhysicsBody* createCircle(float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    static PhysicsBody* createCircle(float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, Point offset = Point::ZERO);
     /**
      * @brief Create a body contains a box shape.
      */
-    static PhysicsBody* createBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    static PhysicsBody* createBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, Point offset = Point::ZERO);
     /**
      * @brief Create a body contains a polygon shape.
      * points is an array of Point structs defining a convex hull with a clockwise winding.
      */
-    static PhysicsBody* createPolygon(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    static PhysicsBody* createPolygon(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, Point offset = Point::ZERO);
     
     /**
      * @brief Create a body contains a EdgeSegment shape.
@@ -77,7 +77,7 @@ public:
     /**
      * @brief Create a body contains a EdgeBox shape.
      */
-    static PhysicsBody* createEdgeBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsBody* createEdgeBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1, Point offset = Point::ZERO);
     /**
      * @brief Create a body contains a EdgePolygon shape.
      */
@@ -113,6 +113,8 @@ public:
     virtual void setVelocity(Point velocity);
     virtual Point getVelocity();
     virtual void setAngularVelocity(float velocity);
+    virtual Point getVelocityAtLocalPoint(Point point);
+    virtual Point getVelocityAtWorldPoint(Point point);
     virtual float getAngularVelocity();
     virtual void setVelocityLimit(float limit);
     virtual float getVelocityLimit();

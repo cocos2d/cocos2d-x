@@ -120,6 +120,11 @@ PhysicsContactPreSolve::PhysicsContactPreSolve(PhysicsContactData* data, void* c
 {
 }
 
+PhysicsContactPreSolve::~PhysicsContactPreSolve()
+{
+    CC_SAFE_DELETE(_preContactData);
+}
+
 float PhysicsContactPreSolve::getElasticity() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->e;
@@ -150,9 +155,9 @@ void PhysicsContactPreSolve::setSurfaceVelocity(Point surfaceVelocity)
     static_cast<cpArbiter*>(_contactInfo)->surface_vr = PhysicsHelper::point2cpv(surfaceVelocity);
 }
 
-PhysicsContactPreSolve::~PhysicsContactPreSolve()
+void PhysicsContactPreSolve::ignore()
 {
-    CC_SAFE_DELETE(_preContactData);
+    cpArbiterIgnore(static_cast<cpArbiter*>(_contactInfo));
 }
 
 // PhysicsContactPostSolve implementation

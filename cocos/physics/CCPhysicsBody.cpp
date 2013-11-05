@@ -157,12 +157,12 @@ PhysicsBody* PhysicsBody::create(float mass, float moment)
     
 }
 
-PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
+PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material, Point offset)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeCircle::create(radius, material));
+        body->addShape(PhysicsShapeCircle::create(radius, material, offset));
         body->autorelease();
         return body;
     }
@@ -171,12 +171,12 @@ PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createBox(Size size, PhysicsMaterial material)
+PhysicsBody* PhysicsBody::createBox(Size size, PhysicsMaterial material, Point offset)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeBox::create(size, material));
+        body->addShape(PhysicsShapeBox::create(size, material, offset));
         body->autorelease();
         return body;
     }
@@ -185,12 +185,12 @@ PhysicsBody* PhysicsBody::createBox(Size size, PhysicsMaterial material)
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createPolygon(Point* points, int count, PhysicsMaterial material)
+PhysicsBody* PhysicsBody::createPolygon(Point* points, int count, PhysicsMaterial material, Point offset)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapePolygon::create(points, count, material));
+        body->addShape(PhysicsShapePolygon::create(points, count, material, offset));
         body->autorelease();
         return body;
     }
@@ -214,12 +214,12 @@ PhysicsBody* PhysicsBody::createEdgeSegment(Point a, Point b, PhysicsMaterial ma
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createEdgeBox(Size size, PhysicsMaterial material, float border/* = 1*/)
+PhysicsBody* PhysicsBody::createEdgeBox(Size size, PhysicsMaterial material, float border/* = 1*/, Point offset)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeEdgeBox::create(size, material, border));
+        body->addShape(PhysicsShapeEdgeBox::create(size, material, border, offset));
         body->_dynamic = false;
         body->autorelease();
         return body;
@@ -534,6 +534,16 @@ void PhysicsBody::setVelocity(Point velocity)
 Point PhysicsBody::getVelocity()
 {
     return PhysicsHelper::cpv2point(cpBodyGetVel(_info->body));
+}
+
+Point PhysicsBody::getVelocityAtLocalPoint(Point point)
+{
+    return PhysicsHelper::cpv2point(cpBodyGetVelAtLocalPoint(_info->body, PhysicsHelper::point2cpv(point)));
+}
+
+Point PhysicsBody::getVelocityAtWorldPoint(Point point)
+{
+    return PhysicsHelper::cpv2point(cpBodyGetVelAtWorldPoint(_info->body, PhysicsHelper::point2cpv(point)));
 }
 
 void PhysicsBody::setAngularVelocity(float velocity)

@@ -96,7 +96,7 @@ public:
     
     void changeModeCallback(Object* sender);
     
-    static bool anyRay(PhysicsWorld& world, PhysicsShape& shape, Point point, Point normal, float fraction, void* data);
+    bool anyRay(PhysicsWorld& world, PhysicsRayCastCallback::Info& info, void* data);
     
 private:
     float _angle;
@@ -141,6 +141,31 @@ public:
     std::string title() override;
     
     bool onContactBegin(EventCustom* event, const PhysicsContact& contact);
+};
+
+class PhysicsDemoSlice : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
+    std::string subtitle() override;
+    
+    bool slice(PhysicsWorld& world, PhysicsRayCastCallback::Info& info, void* data);
+    void clipPoly(PhysicsShapePolygon* shape, Point normal, float distance);
+    
+    bool onTouchBegan(Touch *touch, Event *event);
+    void onTouchMoved(Touch *touch, Event *event);
+    void onTouchEnded(Touch *touch, Event *event);
+    
+private:
+    int _sliceTag;
+};
+
+class PhysicsDemoWater : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
 };
 
 #endif
