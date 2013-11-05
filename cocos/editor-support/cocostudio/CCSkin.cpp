@@ -48,7 +48,7 @@ Skin *Skin::create()
         return skin;
     }
     CC_SAFE_DELETE(skin);
-    return NULL;
+    return nullptr;
 }
 
 Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
@@ -60,7 +60,7 @@ Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
         return skin;
     }
     CC_SAFE_DELETE(skin);
-    return NULL;
+    return nullptr;
 }
 
 Skin *Skin::create(const char *pszFileName)
@@ -72,12 +72,12 @@ Skin *Skin::create(const char *pszFileName)
         return skin;
     }
     CC_SAFE_DELETE(skin);
-    return NULL;
+    return nullptr;
 }
 
 Skin::Skin()
-    : _bone(NULL)
-    , _armature(NULL)
+    : _bone(nullptr)
+    , _armature(nullptr)
     , _displayName("")
 {
     _skinTransform = AffineTransformIdentity;
@@ -85,12 +85,12 @@ Skin::Skin()
 
 bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    CCAssert(pszSpriteFrameName != NULL, "");
+    CCAssert(pszSpriteFrameName != nullptr, "");
 
     SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
     bool ret = true;
 
-    if (pFrame != NULL)
+    if (pFrame != nullptr)
     {
         ret = initWithSpriteFrame(pFrame);
     }
@@ -188,7 +188,7 @@ void Skin::updateTransform()
         SET_VERTEX3F( _quad.tr.vertices, RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
     }
 
-    // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+    // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
     if (_textureAtlas)
     {
         _textureAtlas->updateQuad(&_quad, _textureAtlas->getTotalQuads());

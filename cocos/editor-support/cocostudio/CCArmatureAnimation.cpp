@@ -43,24 +43,24 @@ ArmatureAnimation *ArmatureAnimation::create(Armature *armature)
         return pArmatureAnimation;
     }
     CC_SAFE_DELETE(pArmatureAnimation);
-    return NULL;
+    return nullptr;
 }
 
 
 ArmatureAnimation::ArmatureAnimation()
-    : _animationData(NULL)
+    : _animationData(nullptr)
     , _speedScale(1)
-    , _movementData(NULL)
-    , _armature(NULL)
+    , _movementData(nullptr)
+    , _armature(nullptr)
     , _movementID("")
     , _toIndex(0)
-    , _tweenList(NULL)
+    , _tweenList(nullptr)
     , _ignoreFrameEvent(false)
 
-    , _movementEventCallFunc(NULL)
-    , _frameEventCallFunc(NULL)
-    , _movementEventTarget(NULL)
-    , _frameEventTarget(NULL)
+    , _movementEventCallFunc(nullptr)
+    , _frameEventCallFunc(nullptr)
+    , _movementEventTarget(nullptr)
+    , _frameEventTarget(nullptr)
 {
 
 }
@@ -94,7 +94,7 @@ bool ArmatureAnimation::init(Armature *armature)
 
 void ArmatureAnimation:: pause()
 {
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_tweenList, object)
     {
 		static_cast<Tween*>(object)->pause();
@@ -104,7 +104,7 @@ void ArmatureAnimation:: pause()
 
 void ArmatureAnimation::resume()
 {
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_tweenList, object)
     {
         static_cast<Tween*>(object)->resume();
@@ -114,7 +114,7 @@ void ArmatureAnimation::resume()
 
 void ArmatureAnimation::stop()
 {
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_tweenList, object)
     {
         static_cast<Tween*>(object)->stop();
@@ -145,7 +145,7 @@ void ArmatureAnimation::setSpeedScale(float speedScale)
 
     _processScale = !_movementData ? _speedScale : _speedScale * _movementData->scale;
 
-    DictElement *element = NULL;
+    DictElement *element = nullptr;
     Dictionary *dict = _armature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
@@ -173,7 +173,7 @@ void ArmatureAnimation::setAnimationInternal(float animationInternal)
 
     _animationInternal = animationInternal;
 
-    DictElement *element = NULL;
+    DictElement *element = nullptr;
     Dictionary *dict = _armature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
@@ -232,10 +232,10 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
         _durationTween = durationTween;
     }
 
-    MovementBoneData *movementBoneData = NULL;
+    MovementBoneData *movementBoneData = nullptr;
     _tweenList->removeAllObjects();
 
-    DictElement *element = NULL;
+    DictElement *element = nullptr;
     Dictionary *dict = _armature->getBoneDic();
 
     CCDICT_FOREACH(dict, element)
@@ -302,7 +302,7 @@ void ArmatureAnimation::gotoAndPlay(int frameIndex)
     _currentPercent = (float)_curFrameIndex / (float)_movementData->duration;
     _currentFrame = _nextFrameIndex * _currentPercent;
 
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_tweenList, object)
     {
         static_cast<Tween *>(object)->gotoAndPlay(frameIndex);
@@ -327,7 +327,7 @@ int ArmatureAnimation::getMovementCount()
 void ArmatureAnimation::update(float dt)
 {
     ProcessBase::update(dt);
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_tweenList, object)
     {
 		static_cast<Tween *>(object)->update(dt);

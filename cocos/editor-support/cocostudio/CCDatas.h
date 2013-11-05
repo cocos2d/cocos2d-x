@@ -39,7 +39,7 @@ public: \
 	return var;\
 }\
 	CC_SAFE_DELETE(var);\
-	return NULL;\
+	return nullptr;\
 }
 
 #define CC_CREATE_NO_PARAM(varType)\
@@ -52,7 +52,7 @@ public: \
 	return var;\
 }\
 	CC_SAFE_DELETE(var);\
-	return NULL;\
+	return nullptr;\
 }
 
 namespace cocostudio {

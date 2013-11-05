@@ -43,24 +43,24 @@ Tween *Tween::create(Bone *bone)
         return pTween;
     }
     CC_SAFE_DELETE(pTween);
-    return NULL;
+    return nullptr;
 
 }
 
 
 
 Tween::Tween()
-    : _movementBoneData(NULL)
-    , _tweenData(NULL)
-    , _from(NULL)
-    , _to(NULL)
-    , _between(NULL)
-    , _bone(NULL)
+    : _movementBoneData(nullptr)
+    , _tweenData(nullptr)
+    , _from(nullptr)
+    , _to(nullptr)
+    , _between(nullptr)
+    , _bone(nullptr)
 
     , _frameTweenEasing(Linear)
     , _fromIndex(0)
     , _toIndex(0)
-    , _animation(NULL)
+    , _animation(nullptr)
     , _passLastFrame(false)
 {
 
@@ -86,7 +86,7 @@ bool Tween::init(Bone *bone)
         _tweenData = _bone->getTweenData();
         _tweenData->displayIndex = -1;
 
-        _animation = _bone->getArmature() != NULL ? _bone->getArmature()->getAnimation() : NULL;
+        _animation = _bone->getArmature() != nullptr ? _bone->getArmature()->getAnimation() : nullptr;
 
         bRet = true;
     }
@@ -98,7 +98,7 @@ bool Tween::init(Bone *bone)
 
 void Tween::play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    ProcessBase::play(NULL, durationTo, durationTween, loop, tweenEasing);
+    ProcessBase::play(nullptr, durationTo, durationTween, loop, tweenEasing);
 
     if (loop)
     {
@@ -354,7 +354,7 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
 
 FrameData *Tween::tweenNodeTo(float percent, FrameData *node)
 {
-    node = node == NULL ? _tweenData : node;
+    node = node == nullptr ? _tweenData : node;
 
     if (!_from->isTween)
     {
@@ -407,8 +407,8 @@ float Tween::updateFrameData(float currentPercent)
         int length = _movementBoneData->frameList.count();
         FrameData **frames = (FrameData **)_movementBoneData->frameList.data->arr;
 
-        FrameData *from = NULL;
-        FrameData *to = NULL;
+        FrameData *from = nullptr;
+        FrameData *to = nullptr;
 
         if (playedTime < frames[0]->frameID)
         {

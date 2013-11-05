@@ -143,14 +143,14 @@ float s_PositionReadScale = 1;
 
 std::vector<std::string> DataReaderHelper::_configFileList;
 
-DataReaderHelper *DataReaderHelper::_dataReaderHelper = NULL;
+DataReaderHelper *DataReaderHelper::_dataReaderHelper = nullptr;
 
 
 
 //! Async load
 void DataReaderHelper::loadData()
 {
-    AsyncStruct *pAsyncStruct = NULL;
+    AsyncStruct *pAsyncStruct = nullptr;
 
     while (true)
     {
@@ -202,12 +202,12 @@ void DataReaderHelper::loadData()
         _dataInfoMutex.unlock();
     }
 
-    if( _asyncStructQueue != NULL )
+    if( _asyncStructQueue != nullptr )
     {
         delete _asyncStructQueue;
-        _asyncStructQueue = NULL;
+        _asyncStructQueue = nullptr;
         delete _dataQueue;
-        _dataQueue = NULL;
+        _dataQueue = nullptr;
     }
 }
 
@@ -259,7 +259,7 @@ DataReaderHelper::~DataReaderHelper()
 	if (_loadingThread) _loadingThread->join();
 
 	CC_SAFE_DELETE(_loadingThread);
-	_dataReaderHelper = NULL;
+	_dataReaderHelper = nullptr;
 }
 
 void DataReaderHelper::addDataFromFile(const char *filePath)
@@ -301,7 +301,7 @@ void DataReaderHelper::addDataFromFile(const char *filePath)
 
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
-    dataInfo.asyncStruct = NULL;
+    dataInfo.asyncStruct = nullptr;
     dataInfo.baseFilePath = basefilePath;
 
     if (str.compare(".xml") == 0)
@@ -354,7 +354,7 @@ void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *p
 
 
     // lazy init
-    if (_asyncStructQueue == NULL)
+    if (_asyncStructQueue == nullptr)
     {
         _asyncStructQueue = new std::queue<AsyncStruct *>();
         _dataQueue = new std::queue<DataInfo *>();
@@ -591,7 +591,7 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
         *  If this bone have parent, then get the parent bone xml
         */
         const char *parentName = boneXML->Attribute(A_PARENT);
-        tinyxml2::XMLElement *parentXML = NULL;
+        tinyxml2::XMLElement *parentXML = nullptr;
         if (parentName)
         {
             parentXML = armatureXML->FirstChildElement(BONE);
@@ -624,7 +624,7 @@ BoneData *DataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::
     std::string name = boneXML->Attribute(A_NAME);
     boneData->name = name;
 
-    if( boneXML->Attribute(A_PARENT) != NULL )
+    if( boneXML->Attribute(A_PARENT) != nullptr )
     {
         boneData->parentName = boneXML->Attribute(A_PARENT);
     }
@@ -671,7 +671,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(tinyxml2::XMLElement *displayXM
     }
 
 
-    if(displayXML->Attribute(A_NAME) != NULL )
+    if(displayXML->Attribute(A_NAME) != nullptr )
     {
         if(!_isArmature)
         {
@@ -740,7 +740,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
     }
 
     const char *_easing = movementXML->Attribute(A_TWEEN_EASING);
-    if(_easing != NULL)
+    if(_easing != nullptr)
     {
         std::string str = _easing;
         if(str.compare(FL_NAN) != 0)
@@ -773,7 +773,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
         std::string parentName = boneData->parentName;
 
 
-        tinyxml2::XMLElement *parentXml = NULL;
+        tinyxml2::XMLElement *parentXml = nullptr;
         if (parentName.length() != 0)
         {
             parentXml = movementXML->FirstChildElement(BONE);
@@ -827,14 +827,14 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
     int parentTotalDuration = 0;
     int currentDuration = 0;
 
-    tinyxml2::XMLElement *parentFrameXML = NULL;
+    tinyxml2::XMLElement *parentFrameXML = nullptr;
 
     std::vector<tinyxml2::XMLElement *> parentXmlList;
 
     /*
     *  get the parent frame xml list, we need get the origin data
     */
-    if( parentXml != NULL )
+    if( parentXml != nullptr )
     {
         parentFrameXML = parentXml->FirstChildElement(FRAME);
         while (parentFrameXML)
@@ -843,7 +843,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
             parentFrameXML = parentFrameXML->NextSiblingElement(FRAME);
         }
 
-        parentFrameXML = NULL;
+        parentFrameXML = nullptr;
 
         length = parentXmlList.size();
     }
@@ -925,19 +925,19 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
 
     FrameData *frameData = new FrameData();
 
-    if(frameXML->Attribute(A_MOVEMENT) != NULL)
+    if(frameXML->Attribute(A_MOVEMENT) != nullptr)
     {
         frameData->strMovement = frameXML->Attribute(A_MOVEMENT);
     }
-    if(frameXML->Attribute(A_EVENT) != NULL)
+    if(frameXML->Attribute(A_EVENT) != nullptr)
     {
         frameData->strEvent = frameXML->Attribute(A_EVENT);
     }
-    if(frameXML->Attribute(A_SOUND) != NULL)
+    if(frameXML->Attribute(A_SOUND) != nullptr)
     {
         frameData->strSound = frameXML->Attribute(A_SOUND);
     }
-    if(frameXML->Attribute(A_SOUND_EFFECT) != NULL)
+    if(frameXML->Attribute(A_SOUND_EFFECT) != nullptr)
     {
         frameData->strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
     }
@@ -1030,7 +1030,7 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
 
 
     const char *_easing = frameXML->Attribute(A_TWEEN_EASING);
-    if(_easing != NULL)
+    if(_easing != nullptr)
     {
         std::string str = _easing;
         if(str.compare(FL_NAN) != 0)
@@ -1081,7 +1081,7 @@ TextureData *DataReaderHelper::decodeTexture(tinyxml2::XMLElement *textureXML, D
     TextureData *textureData = new TextureData();
     textureData->init();
 
-    if( textureXML->Attribute(A_NAME) != NULL)
+    if( textureXML->Attribute(A_NAME) != nullptr)
     {
         textureData->name = textureXML->Attribute(A_NAME);
     }
@@ -1216,14 +1216,14 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *d
     }
 
     // Auto load sprite file
-    bool autoLoad = dataInfo->asyncStruct == NULL ? ArmatureDataManager::getInstance()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
+    bool autoLoad = dataInfo->asyncStruct == nullptr ? ArmatureDataManager::getInstance()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
     if (autoLoad)
     {
         length = json.getArrayItemCount(CONFIG_FILE_PATH);
         for (int i = 0; i < length; i++)
         {
             const char *path = json.getStringValueFromArray(CONFIG_FILE_PATH, i);
-            if (path == NULL)
+            if (path == nullptr)
             {
                 CCLOG("load CONFIG_FILE_PATH error.");
                 return;
@@ -1253,7 +1253,7 @@ ArmatureData *DataReaderHelper::decodeArmature(JsonDictionary &json, DataInfo *d
     armatureData->init();
 
     const char *name = json.getItemStringValue(A_NAME);
-    if(name != NULL)
+    if(name != nullptr)
     {
         armatureData->name = name;
     }
@@ -1282,13 +1282,13 @@ BoneData *DataReaderHelper::decodeBone(JsonDictionary &json, DataInfo *dataInfo)
     decodeNode(boneData, json, dataInfo);
 
     const char *str = json.getItemStringValue(A_NAME);
-    if(str != NULL)
+    if(str != nullptr)
     {
         boneData->name = str;
     }
 
     str = json.getItemStringValue(A_PARENT);
-    if(str != NULL)
+    if(str != nullptr)
     {
         boneData->parentName = str;
     }
@@ -1312,7 +1312,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json, DataInfo 
 {
     DisplayType displayType = (DisplayType)json.getItemIntValue(A_DISPLAY_TYPE, CS_DISPLAY_SPRITE);
 
-    DisplayData *displayData = NULL;
+    DisplayData *displayData = nullptr;
 
     switch (displayType)
     {
@@ -1321,13 +1321,13 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json, DataInfo 
         displayData = new SpriteDisplayData();
 
         const char *name = json.getItemStringValue(A_NAME);
-        if(name != NULL)
+        if(name != nullptr)
         {
             ((SpriteDisplayData *)displayData)->displayName = name;
         }
 
         JsonDictionary *dic = json.getSubItemFromArray(SKIN_DATA, 0);
-        if (dic != NULL)
+        if (dic != nullptr)
         {
             SpriteDisplayData *sdd = (SpriteDisplayData *)displayData;
             sdd->skinData.x = dic->getItemFloatValue(A_X, 0) * s_PositionReadScale;
@@ -1350,7 +1350,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json, DataInfo 
         displayData = new ArmatureDisplayData();
 
         const char *name = json.getItemStringValue(A_NAME);
-        if(name != NULL)
+        if(name != nullptr)
         {
             ((ArmatureDisplayData *)displayData)->displayName = name;
         }
@@ -1361,7 +1361,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json, DataInfo 
         displayData = new ParticleDisplayData();
 
         const char *plist = json.getItemStringValue(A_PLIST);
-        if(plist != NULL)
+        if(plist != nullptr)
         {
             if (dataInfo->asyncStruct)
             {
@@ -1391,7 +1391,7 @@ AnimationData *DataReaderHelper::decodeAnimation(JsonDictionary &json, DataInfo 
     AnimationData *aniData = new AnimationData();
 
     const char *name = json.getItemStringValue(A_NAME);
-    if(name != NULL)
+    if(name != nullptr)
     {
         aniData->name = name;
     }
@@ -1423,7 +1423,7 @@ MovementData *DataReaderHelper::decodeMovement(JsonDictionary &json, DataInfo *d
     movementData->tweenEasing = (TweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
 
     const char *name = json.getItemStringValue(A_NAME);
-    if(name != NULL)
+    if(name != nullptr)
     {
         movementData->name = name;
     }
@@ -1450,7 +1450,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json, Dat
     movementBoneData->delay = json.getItemFloatValue(A_MOVEMENT_DELAY, 0);
 
     const char *name = json.getItemStringValue(A_NAME);
-    if(name != NULL)
+    if(name != nullptr)
     {
         movementBoneData->name = name;
     }
@@ -1526,7 +1526,7 @@ FrameData *DataReaderHelper::decodeFrame(JsonDictionary &json, DataInfo *dataInf
 	frameData->isTween = (bool)json.getItemBoolvalue(A_TWEEN_FRAME, true);
 
     const char *event = json.getItemStringValue(A_EVENT);
-    if (event != NULL)
+    if (event != nullptr)
     {
         frameData->strEvent = event;
     }
@@ -1549,7 +1549,7 @@ TextureData *DataReaderHelper::decodeTexture(JsonDictionary &json)
     textureData->init();
 
     const char *name = json.getItemStringValue(A_NAME);
-    if(name != NULL)
+    if(name != nullptr)
     {
         textureData->name = name;
     }
@@ -1612,7 +1612,7 @@ void DataReaderHelper::decodeNode(BaseData *node, JsonDictionary &json, DataInfo
     node->scaleX = json.getItemFloatValue(A_SCALE_X, 1);
     node->scaleY = json.getItemFloatValue(A_SCALE_Y, 1);
 
-    JsonDictionary *colorDic = NULL;
+    JsonDictionary *colorDic = nullptr;
     if (dataInfo->cocoStudioVersion < VERSION_COLOR_READING)
     {
         colorDic = json.getSubItemFromArray(COLOR_INFO, 0);

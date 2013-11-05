@@ -43,7 +43,7 @@ Bone *Bone::create()
         return pBone;
     }
     CC_SAFE_DELETE(pBone);
-    return NULL;
+    return nullptr;
 
 }
 
@@ -57,27 +57,27 @@ Bone *Bone::create(const char *name)
         return pBone;
     }
     CC_SAFE_DELETE(pBone);
-    return NULL;
+    return nullptr;
 }
 
 Bone::Bone()
 {
-    _tweenData = NULL;
-    _parentBone = NULL;
-    _armature = NULL;
-    _childArmature = NULL;
-    _boneData = NULL;
-    _tween = NULL;
-    _tween = NULL;
-    _children = NULL;
-    _displayManager = NULL;
+    _tweenData = nullptr;
+    _parentBone = nullptr;
+    _armature = nullptr;
+    _childArmature = nullptr;
+    _boneData = nullptr;
+    _tween = nullptr;
+    _tween = nullptr;
+    _children = nullptr;
+    _displayManager = nullptr;
     _ignoreMovementBoneData = false;
     _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     _boneTransformDirty = true;
     _blendType = BLEND_NORMAL;
-    _worldInfo = NULL;
+    _worldInfo = nullptr;
 
-    _armatureParentBone = NULL;
+    _armatureParentBone = nullptr;
     _dataVersion = 0;
 }
 
@@ -97,7 +97,7 @@ Bone::~Bone(void)
 
 bool Bone::init()
 {
-    return Bone::init(NULL);
+    return Bone::init(nullptr);
 }
 
 
@@ -107,7 +107,7 @@ bool Bone::init(const char *name)
     do
     {
 
-        if(NULL != name)
+        if(nullptr != name)
         {
             _name = name;
         }
@@ -138,7 +138,7 @@ bool Bone::init(const char *name)
 
 void Bone::setBoneData(BoneData *boneData)
 {
-    CCASSERT(NULL != boneData, "_boneData must not be NULL");
+    CCASSERT(nullptr != boneData, "_boneData must not be nullptr");
 
     if (_boneData != boneData)
     {
@@ -169,7 +169,7 @@ void Bone::setArmature(Armature *armature)
     }
     else
     {
-        _armatureParentBone = NULL;
+        _armatureParentBone = nullptr;
     }
 }
 
@@ -229,7 +229,7 @@ void Bone::update(float delta)
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_children, object)
     {
         Bone *childBone = (Bone *)object;
@@ -282,7 +282,7 @@ void Bone::updateColor()
 {
     Node *display = _displayManager->getDisplayRenderNode();
     RGBAProtocol *protocol = dynamic_cast<RGBAProtocol *>(display);
-    if(protocol != NULL)
+    if(protocol != nullptr)
     {
         protocol->setColor(Color3B(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
         protocol->setOpacity(_displayedOpacity * _tweenData->a / 255);
@@ -304,8 +304,8 @@ void Bone::updateZOrder()
 
 void Bone::addChildBone(Bone *child)
 {
-    CCASSERT( NULL != child, "Argument must be non-nil");
-    CCASSERT( NULL == child->_parentBone, "child already added. It can't be added again");
+    CCASSERT( nullptr != child, "Argument must be non-nil");
+    CCASSERT( nullptr == child->_parentBone, "child already added. It can't be added again");
 
     if(!_children)
     {
@@ -327,7 +327,7 @@ void Bone::removeChildBone(Bone *bone, bool recursion)
         if(recursion)
         {
             Array *_ccbones = bone->_children;
-            Object *_object = NULL;
+            Object *_object = nullptr;
             CCARRAY_FOREACH(_ccbones, _object)
             {
                 Bone *_ccBone = (Bone *)_object;
@@ -335,9 +335,9 @@ void Bone::removeChildBone(Bone *bone, bool recursion)
             }
         }
 
-        bone->setParentBone(NULL);
+        bone->setParentBone(nullptr);
 
-        bone->getDisplayManager()->setCurrentDecorativeDisplay(NULL);
+        bone->getDisplayManager()->setCurrentDecorativeDisplay(nullptr);
 
         _children->removeObject(bone);
     }
@@ -345,7 +345,7 @@ void Bone::removeChildBone(Bone *bone, bool recursion)
 
 void Bone::removeFromParent(bool recursion)
 {
-    if (NULL != _parentBone)
+    if (nullptr != _parentBone)
     {
         _parentBone->removeChildBone(this, recursion);
     }
@@ -365,9 +365,9 @@ void Bone::setChildArmature(Armature *armature)
 {
     if (_childArmature != armature)
     {
-        if (armature == NULL && _childArmature)
+        if (armature == nullptr && _childArmature)
         {
-            _childArmature->setParentBone(NULL);
+            _childArmature->setParentBone(nullptr);
         }
 
         CC_SAFE_RETAIN(armature);
@@ -441,7 +441,7 @@ Array *Bone::getColliderBodyList()
             return detector->getColliderBodyList();
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 
@@ -449,7 +449,7 @@ Array *Bone::getColliderBodyList()
 void Bone::setColliderFilter(ColliderFilter *filter)
 {
     Array *array = _displayManager->getDecorativeDisplayList();
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(array, object)
     {
         DecorativeDisplay *decoDisplay = static_cast<DecorativeDisplay *>(object);
@@ -468,7 +468,7 @@ ColliderFilter *Bone::getColliderFilter()
             return detector->getColliderFilter();
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 

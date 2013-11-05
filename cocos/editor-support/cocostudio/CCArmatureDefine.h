@@ -50,7 +50,7 @@ THE SOFTWARE.
 #endif
 
 #define CS_RETURN_IF(cond) if (cond) return
-#define CS_RETURN_NULL_IF(cond) if (cond) return NULL;
+#define CS_RETURN_NULL_IF(cond) if (cond) return nullptr;
 
 namespace cocostudio {
 
