@@ -415,13 +415,15 @@ float CCTween::updateFrameData(float currentPercent)
         {
             from = to = frames[0];
             setBetween(from, to);
-            return currentPercent;
+            return m_fCurrentPercent;
         }
         
         if(playedTime >= frames[length - 1]->frameID)
         {
             if (m_bPassLastFrame)
             {
+                from = to = frames[length - 1];
+                setBetween(from, to);
                 return m_fCurrentPercent;
             }
             m_bPassLastFrame = true;
@@ -473,15 +475,10 @@ float CCTween::updateFrameData(float currentPercent)
      *  If frame tween easing equal to TWEEN_EASING_MAX, then it will not do tween.
      */
 
-    CCTweenType tweenType;
-
-    if ( m_eFrameTweenEasing != TWEEN_EASING_MAX)
+    CCTweenType tweenType = (m_eFrameTweenEasing != Linear) ? m_eFrameTweenEasing : m_eTweenEasing;
+    if (tweenType != TWEEN_EASING_MAX && tweenType != Linear)
     {
-        tweenType = (m_eTweenEasing == TWEEN_EASING_MAX) ? m_eFrameTweenEasing : m_eTweenEasing;
-        if (tweenType != TWEEN_EASING_MAX && tweenType != Linear)
-        {
-            currentPercent = CCTweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
-        }
+        currentPercent = CCTweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
     }
 
     return currentPercent;
