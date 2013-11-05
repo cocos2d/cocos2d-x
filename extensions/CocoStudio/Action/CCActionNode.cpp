@@ -357,10 +357,7 @@ void ActionNode::stopAction()
 		cNode->stopAction(m_action);
 	}
 }
-void ActionNode::actionCallBack()
-{
-	this->stopAction();
-}
+
 int ActionNode::getFirstFrameIndex()
 {
 	int frameindex = 99999;
