@@ -12,7 +12,7 @@ namespace {
     static Touch* g_touches[EventTouch::MAX_TOUCHES] = { NULL };
     static unsigned int g_indexBitsUsed = 0;
     // System touch pointer ID (It may not be ascending order number) <-> Ascending order number from 0
-    static std::map<int, int> g_touchIdReorderMap;
+    static std::map<long, int> g_touchIdReorderMap;
     
     static int getUnUsedIndex()
     {
@@ -201,9 +201,9 @@ const char* EGLViewProtocol::getViewName()
     return _viewName;
 }
 
-void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesBegin(int num, long ids[], float xs[], float ys[])
 {
-    int id = 0;
+    long id = 0;
     float x = 0.0f;
     float y = 0.0f;
     int nUnusedIndex = 0;
@@ -251,9 +251,9 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesMove(int num, long ids[], float xs[], float ys[])
 {
-    int id = 0;
+    long id = 0;
     float x = 0.0f;
     float y = 0.0f;
     EventTouch touchEvent;
@@ -283,7 +283,7 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
         else
         {
             // It is error, should return.
-            CCLOG("Moving touches with id: %d error", id);
+            CCLOG("Moving touches with id: %ld error", id);
             return;
         }
     }
@@ -299,9 +299,9 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, long ids[], float xs[], float ys[])
 {
-    int id = 0;
+    long id = 0;
     float x = 0.0f;
     float y = 0.0f;
     EventTouch touchEvent;
@@ -336,7 +336,7 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
         } 
         else
         {
-            CCLOG("Ending touches with id: %d error", id);
+            CCLOG("Ending touches with id: %ld error", id);
             return;
         } 
 
@@ -359,12 +359,12 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
     }
 }
 
-void EGLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesEnd(int num, long ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::ENDED, num, ids, xs, ys);
 }
 
-void EGLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesCancel(int num, long ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::CANCELLED, num, ids, xs, ys);
 }
