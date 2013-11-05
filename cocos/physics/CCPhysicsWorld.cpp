@@ -465,9 +465,9 @@ void PhysicsWorld::debugDraw()
     }
 }
 
-void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
+void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joints)
 {
-    for (auto it = joint->_info->joints.begin(); it != joint->_info->joints.end(); ++it)
+    for (auto it = joints->_info->joints.begin(); it != joints->_info->joints.end(); ++it)
     {
         cpConstraint *constraint = *it;
         
@@ -526,9 +526,9 @@ void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
     }
 }
 
-void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
+void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shapes)
 {
-    for (auto it = shape->_info->shapes.begin(); it != shape->_info->shapes.end(); ++it)
+    for (auto it = shapes->_info->shapes.begin(); it != shapes->_info->shapes.end(); ++it)
     {
         cpShape *shape = *it;
         

@@ -158,7 +158,7 @@ bool Label::setText(const char *stringToRender, float lineWidth, TextHAlignment 
     if (_commonLineHeight <= 0)
         return false;
     
-    int numLetter = 0;
+//    int numLetter = 0;
     unsigned short* utf16String = cc_utf8_to_utf16(stringToRender);
     if(!utf16String)
         return false;
