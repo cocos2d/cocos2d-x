@@ -91,6 +91,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		Cocos2dxHelper.onPause();
 		this.mGLSurfaceView.onPause();
 	}
+	
+	public void onWindowFocusChanged(boolean hasFocus) 
+	{
+		super.onWindowFocusChanged(hasFocus);
+		this.mGLSurfaceView.onWindowFocusChanged(hasFocus);
+	}
 
 	@Override
 	public void showDialog(final String pTitle, final String pMessage) {
