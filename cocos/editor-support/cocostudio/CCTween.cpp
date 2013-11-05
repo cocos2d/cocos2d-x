@@ -328,7 +328,7 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
         //! Change bone's display
         int displayIndex = keyFrameData->displayIndex;
 
-        if (!displayManager->getForceChangeDisplay())
+        if (!displayManager->isForceChangeDisplay())
         {
             displayManager->changeDisplayByIndex(displayIndex, false);
         }

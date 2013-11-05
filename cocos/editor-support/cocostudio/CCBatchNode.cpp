@@ -83,7 +83,7 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
     {
         armature->setBatchNode(this);
 
-        Dictionary *dict = armature->getBoneDic();
+        const Dictionary *dict = armature->getBoneDic();
         DictElement *element = nullptr;
         CCDICT_FOREACH(dict, element)
         {
@@ -111,7 +111,7 @@ void BatchNode::removeChild(Node* child, bool cleanup)
     {
         armature->setBatchNode(nullptr);
         
-        Dictionary *dict = armature->getBoneDic();
+        const Dictionary *dict = armature->getBoneDic();
         DictElement *element = nullptr;
         CCDICT_FOREACH(dict, element)
         {
@@ -188,7 +188,7 @@ void BatchNode::draw()
     }
 }
 
-TextureAtlas *BatchNode::getTexureAtlasWithTexture(Texture2D *texture)
+TextureAtlas *BatchNode::getTexureAtlasWithTexture(Texture2D *texture) const
 {
     int key = texture->getName();
     

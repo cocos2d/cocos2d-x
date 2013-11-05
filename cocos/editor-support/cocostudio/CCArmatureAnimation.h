@@ -170,7 +170,7 @@ public:
     /**
      * Get movement count
      */
-    int getMovementCount();
+    int getMovementCount() const;
 
     void update(float dt);
 
@@ -178,7 +178,7 @@ public:
      * Get current movementID
      * @return The name of current movement
      */
-    std::string getCurrentMovementID();
+    std::string getCurrentMovementID() const;
 
     /**
      * Set armature's movement event callback function
@@ -192,6 +192,16 @@ public:
      */
     void setFrameEventCallFunc(cocos2d::Object *target, SEL_FrameEventCallFunc callFunc);
 
+    virtual void setAnimationData(AnimationData *data) 
+    {
+        if (_animationData != data)
+        {
+            CC_SAFE_RETAIN(data);
+            CC_SAFE_RELEASE(_animationData);
+            _animationData = data; 
+        }
+    }
+    virtual AnimationData *getAnimationData() const { return _animationData; }
 protected:
 
     /**
@@ -209,12 +219,12 @@ protected:
      */
     void frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
-    inline bool isIgnoreFrameEvent() { return _ignoreFrameEvent; }
+    bool isIgnoreFrameEvent() const { return _ignoreFrameEvent; }
 
     friend class Tween;
 protected:
     //! AnimationData save all MovementDatas this animation used.
-    CC_SYNTHESIZE_RETAIN(AnimationData *, _animationData, AnimationData);
+    AnimationData *_animationData;
 
     //! Scale the animation speed
     float _speedScale;
