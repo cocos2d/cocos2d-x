@@ -139,6 +139,7 @@ target_link_libraries(cocos2d
   GL
   rt
   z
+  pthread
 )
 
 set_target_properties(cocos2d
