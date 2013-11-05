@@ -2,7 +2,7 @@
 #include "ccTypes.h"
 #include "CCEventDispatcher.h"
 #include "CCEventAcceleration.h"
-
+#include "CCDirector.h"
 #import <UIKit/UIKit.h>
 
 // Accelerometer
@@ -100,7 +100,8 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     }
 
     cocos2d::EventAcceleration event(*_acceleration);
-    cocos2d::_eventDispatcherdispatchEvent(&event);
+    auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+    dispatcher->dispatchEvent(&event);
 }
 
 @end

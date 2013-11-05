@@ -105,8 +105,8 @@ private:
     network::HttpRequest*             _httpRequest;
     bool                              _isNetwork;
     bool                              _withCredentialsValue;
-    std::map<string, string>          _httpHeader;
-    std::map<string, string>          _requestHeader;
+    std::map<std::string, std::string>          _httpHeader;
+    std::map<std::string, std::string>          _requestHeader;
 };
 
 #endif

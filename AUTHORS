@@ -593,6 +593,7 @@ Developers:
         [Android] re-introduce Cocos2dxHelper.runOnGLThread(Runnable)
         [Android] added EGL_RENDERABLE_TYPE to OpenGL attributes
         Android: add xlargeScreens="true" to supports-screens
+        Trigger onKeyReleased only after the key has been released.
         
     bmanGH
         Use gl caching functions in TexturePVR::createGLTexture()
@@ -633,6 +634,13 @@ Developers:
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
+        
+    Nite Luo (darkdukey)
+        Added Mouse Support For Desktop Platforms.
+        
+    ledyba
+        Fixed a bug that EventListeners can't be removed sometimes.
+        Fixed a bug that the data size has to be specified when parsing XML using TinyXML.
         
 Retired Core Developers:
     WenSheng Yang

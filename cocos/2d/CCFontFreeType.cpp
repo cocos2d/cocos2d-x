@@ -1,28 +1,29 @@
 /****************************************************************************
- Copyright (c) 2013      Zynga Inc.
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013      Zynga Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include <stdio.h>
+#include <algorithm>
 
 #include "ccUTF8.h"
 #include "CCFontFreeType.h"
@@ -38,14 +39,12 @@ bool       FontFreeType::_FTInitialized = false;
 
 FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
-    if( glyphs == GlyphCollection::DYNAMIC )
-    {
-        log("ERROR: GlyphCollection::DYNAMIC is not supported yet!");
-        return nullptr;
-    }
+    bool  dynamicGlyphCollection = false;
+    if(glyphs == GlyphCollection::DYNAMIC)
+        dynamicGlyphCollection = true;
     
-    FontFreeType *tempFont =  new FontFreeType();
-    
+    FontFreeType *tempFont =  new FontFreeType(dynamicGlyphCollection);
+
     if (!tempFont)
         return nullptr;
     
@@ -56,7 +55,6 @@ FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, G
         delete tempFont;
         return nullptr;
     }
-    
     return tempFont;
 }
 
@@ -79,6 +77,7 @@ void FontFreeType::shutdownFreeType()
     if (_FTInitialized == true)
     {
         FT_Done_FreeType(_FTlibrary);
+        _FTInitialized = false;
     }
 }
 
@@ -88,34 +87,35 @@ FT_Library FontFreeType::getFTLibrary()
     return _FTlibrary;
 }
 
-FontFreeType::FontFreeType() : _letterPadding(5)
+FontFreeType::FontFreeType(bool dynamicGlyphCollection) 
+    : _letterPadding(5),
+    _ttfData(nullptr),
+    _dynamicGlyphCollection(dynamicGlyphCollection),
+    _fontRef(nullptr)
 {
 }
 
 bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
-    int dpi = 72;
-    
-    int len = 0;
-    unsigned char* data = FileUtils::getInstance()->getFileData(fontName.c_str(), "rb", (unsigned long *)(&len));
-    
-    if (!data)
-        return false;
-    
-    // create the new face
     FT_Face face;
-    
-    // create the face from the data
-    if (FT_New_Memory_Face(getFTLibrary(), data, len, 0, &face ))
+
+    int len = 0;
+    _ttfData = FileUtils::getInstance()->getFileData(fontName.c_str(), "rb", (unsigned long *)(&len));
+    if (!_ttfData)
         return false;
-    
+
+    // create the face from the data
+    if (FT_New_Memory_Face(getFTLibrary(), _ttfData, len, 0, &face ))          
+        return false;
+
     //we want to use unicode
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
         return false;
-    
+
     // set the requested font size
-	int fontSizePoints = (int)(64.f * fontSize);
-	if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi))
+    int dpi = 72;
+    int fontSizePoints = (int)(64.f * fontSize);
+    if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi))
         return false;
     
     // store the face globally
@@ -130,22 +130,36 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 
 FontFreeType::~FontFreeType()
 {
-    // release the font
-    // TO DO 
+    if (_fontRef)
+    {
+        FT_Done_Face(_fontRef);
+    }
+    if (_ttfData)
+    {
+        delete _ttfData;
+        _ttfData = nullptr;
+    }
 }
 
 FontAtlas * FontFreeType::createFontAtlas()
 {
-    FontDefinitionTTF *def = FontDefinitionTTF::create(this);
-    
-    if (!def)
-        return nullptr;
-    
-    FontAtlas *atlas = def->createFontAtlas();
-    
-    // release the font definition, we don't need it anymore
-    def->release();
-    return atlas;
+    if (_dynamicGlyphCollection)
+    {
+        FontAtlas *atlas = new FontAtlas(*this);
+        this->release();
+        return atlas;
+    } 
+    else
+    {
+        FontDefinitionTTF *def = FontDefinitionTTF::create(this);
+
+        if (!def)
+            return nullptr;
+
+        FontAtlas *atlas = def->createFontAtlas();
+
+        return atlas;
+    }   
 }
 
 bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect) const
