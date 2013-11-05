@@ -146,7 +146,7 @@ protected:
     CC_SYNTHESIZE(AnimationType, _loopType, LoopType);
 
     //! The tween easing effect
-    CC_SYNTHESIZE(CCTweenType, _tweenEasing, TweenEasing);
+    CC_SYNTHESIZE(TweenType, _tweenEasing, TweenEasing);
 
     //! The animation update speed
     CC_SYNTHESIZE(float, _animationInternal, AnimationInternal);

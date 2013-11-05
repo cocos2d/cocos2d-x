@@ -89,7 +89,7 @@ void ProcessBase::play(void *animation, int durationTo, int durationTween,  int 
      *  When changing end, m_iTotalFrames will be setted to _durationTween
      */
     _nextFrameIndex = durationTo;
-    _tweenEasing = (CCTweenType)tweenEasing;
+    _tweenEasing = (TweenType)tweenEasing;
 
 }
 
