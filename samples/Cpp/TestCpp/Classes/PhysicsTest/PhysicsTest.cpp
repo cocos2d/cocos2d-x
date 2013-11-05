@@ -14,6 +14,7 @@ namespace
         CL(PhysicsDemoActions),
         CL(PhysicsDemoPump),
         CL(PhysicsDemoOneWayPlatform),
+        CL(PhysicsDemoSlice),
     };
     
     static int sceneIdx=-1;
@@ -601,9 +602,9 @@ void PhysicsDemoRayCast::changeModeCallback(Object* sender)
     }
 }
 
-bool PhysicsDemoRayCast::anyRay(PhysicsWorld& world, PhysicsShape& shape, Point point, Point normal, float fraction, void* data)
+bool PhysicsDemoRayCast::anyRay(PhysicsWorld& world, PhysicsRayCastCallback::Info& info, void* data)
 {
-    *((Point*)data) = point;
+    *((Point*)data) = info.contact;
     return false;
 }
 
@@ -619,12 +620,12 @@ private:
 PhysicsDemoNearestRayCastCallback::PhysicsDemoNearestRayCastCallback()
 : _friction(1.0f)
 {
-    report = [this](PhysicsWorld& world, PhysicsShape& shape, Point point, Point normal, float fraction, void* data)->bool
+    report = [this](PhysicsWorld& world, PhysicsRayCastCallback::Info& info, void* data)->bool
     {
-        if (_friction > fraction)
+        if (_friction > info.fraction)
         {
-            *((Point*)data) = point;
-            _friction = fraction;
+            *((Point*)data) = info.contact;
+            _friction = info.fraction;
         }
         
         return true;
@@ -649,11 +650,11 @@ public:
 PhysicsDemoMultiRayCastCallback::PhysicsDemoMultiRayCastCallback()
 : num(0)
 {
-    report = [this](PhysicsWorld& world, PhysicsShape& shape, Point point, Point normal, float fraction, void* data)->bool
+    report = [this](PhysicsWorld& world, PhysicsRayCastCallback::Info& info, void* data)->bool
     {
         if (num < MAX_MULTI_RAYCAST_NUM)
         {
-            points[num++] = point;
+            points[num++] = info.contact;
         }
         
         return true;
@@ -675,7 +676,7 @@ void PhysicsDemoRayCast::update(float delta)
         {
             PhysicsRayCastCallback callback;
             Point point3 = point2;
-            callback.report = anyRay;
+            callback.report = CC_CALLBACK_3(PhysicsDemoRayCast::anyRay, this);
             
             _scene->getPhysicsWorld()->rayCast(callback, point1, point2, &point3);
             _node->drawSegment(point1, point3, 1, STATIC_COLOR);
@@ -941,8 +942,9 @@ void PhysicsDemoPump::onEnter()
     
     // pump
     auto pump = Node::create();
-    pump->setPosition(PhysicsShape::getPolyonCenter(vec, 4));
-    auto pumpB = PhysicsBody::createPolygon(PhysicsShape::recenterPoints(vec, 4), 4);
+    auto center = PhysicsShape::getPolyonCenter(vec, 4);
+    pump->setPosition(center);
+    auto pumpB = PhysicsBody::createPolygon(vec, 4, PHYSICSBODY_MATERIAL_DEFAULT, -center);
     pump->setPhysicsBody(pumpB);
     this->addChild(pump);
     pumpB->setCategoryBitmask(0x02);
@@ -1062,4 +1064,117 @@ bool PhysicsDemoOneWayPlatform::onContactBegin(EventCustom* event, const Physics
 std::string PhysicsDemoOneWayPlatform::title()
 {
     return "One Way Platform";
+}
+
+void PhysicsDemoSlice::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    _sliceTag = 1;
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = [](Touch* touch, Event* event)->bool{ return true; };
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoSlice::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto ground = Node::create();
+    ground->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
+    this->addChild(ground);
+    
+    auto box = Node::create();
+    Point points[4] = {Point(-100, -100), Point(-100, 100), Point(100, 100), Point(100, -100)};
+    box->setPhysicsBody(PhysicsBody::createPolygon(points, 4));
+    box->setPosition(VisibleRect::center());
+    box->getPhysicsBody()->setTag(_sliceTag);
+    addChild(box);
+}
+
+bool PhysicsDemoSlice::slice(PhysicsWorld &world, PhysicsRayCastCallback::Info &info, void *data)
+{
+    if (info.shape->getBody()->getTag() != _sliceTag)
+    {
+        return true;
+    }
+    
+    if (!info.shape->containsPoint(info.start) && !info.shape->containsPoint(info.end))
+    {
+        Point normal = info.end - info.start;
+        normal = normal.getPerp().normalize();
+        float dist = info.start.dot(normal);
+        dist = dist;
+        
+        clipPoly(dynamic_cast<PhysicsShapePolygon*>(info.shape), normal, dist);
+        clipPoly(dynamic_cast<PhysicsShapePolygon*>(info.shape), -normal, -dist);
+        
+        info.shape->getBody()->removeFromWorld();
+    }
+    
+    return true;
+}
+
+void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Point normal, float distance)
+{
+    PhysicsBody* body = shape->getBody();
+    int count = shape->getPointsCount();
+    int pointsCount = 0;
+    Point* points = new Point[count + 1];
+    
+    for (int i=0, j=count-1; i<count; j=i, ++i)
+    {
+        Point a = body->local2World(shape->getPoint(j));
+        float aDist = a.dot(normal) - distance;
+        
+        if (aDist < 0.0f)
+        {
+            points[pointsCount] = a;
+            ++pointsCount;
+        }
+        
+        Point b = body->local2World(shape->getPoint(i));
+        float bDist = b.dot(normal) - distance;
+        
+        if (aDist*bDist < 0.0f)
+        {
+            float t = abs(aDist)/(abs(aDist) + abs(bDist));
+            points[pointsCount] = a.lerp(b, t);
+            ++pointsCount;
+        }
+    }
+    
+    Point center = PhysicsShape::getPolyonCenter(points, pointsCount);
+    Node* node = Node::create();
+    PhysicsBody* polyon = PhysicsBody::createPolygon(points, pointsCount, PHYSICSBODY_MATERIAL_DEFAULT, -center);
+    node->setPosition(center);
+    node->setPhysicsBody(polyon);
+    polyon->setVelocity(body->getVelocityAtWorldPoint(center));
+    polyon->setAngularVelocity(body->getAngularVelocity());
+    polyon->setTag(_sliceTag);
+    addChild(node);
+}
+
+void PhysicsDemoSlice::onTouchEnded(Touch *touch, Event *event)
+{
+    PhysicsRayCastCallback callback;
+    callback.report = CC_CALLBACK_3(PhysicsDemoSlice::slice, this);
+    _scene->getPhysicsWorld()->rayCast(callback, touch->getStartLocation(), touch->getLocation(), nullptr);
+}
+
+std::string PhysicsDemoSlice::title()
+{
+    return "Slice";
+}
+
+std::string PhysicsDemoSlice::subtitle()
+{
+    return "click and drag to slice up the block";
+}
+
+void PhysicsDemoWater::onEnter()
+{
+    
+}
+
+std::string PhysicsDemoWater::title()
+{
+    return "Water";
 }

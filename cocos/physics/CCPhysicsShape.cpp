@@ -594,6 +594,11 @@ float PhysicsShapePolygon::calculateDefaultMoment()
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, cpvzero));
 }
 
+Point PhysicsShapePolygon::getPoint(int i) const
+{
+    return PhysicsHelper::cpv2point(cpPolyShapeGetVert(_info->shapes.front(), i));
+}
+
 Point* PhysicsShapePolygon::getPoints(Point* points) const
 {
     cpShape* shape = _info->shapes.front();
@@ -790,6 +795,19 @@ void PhysicsShape::setGroup(int group)
             cpShapeSetGroup(shape, (cpGroup)group);
         }
     }
+}
+
+bool PhysicsShape::containsPoint(Point point) const
+{
+    for (auto shape : _info->shapes)
+    {
+        if (cpShapePointQuery(shape, PhysicsHelper::point2cpv(point)))
+        {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
