@@ -108,7 +108,7 @@ protected:
     /**
      * According to the percent to calculate current FrameData with tween effect
      */
-    virtual FrameData *tweenNodeTo(float percent, FrameData *node = NULL);
+    virtual FrameData *tweenNodeTo(float percent, FrameData *node = nullptr);
 
     /**
      * According to the percent to calculate current color with tween effect

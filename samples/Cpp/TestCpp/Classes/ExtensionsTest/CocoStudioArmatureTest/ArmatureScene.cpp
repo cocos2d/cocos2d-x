@@ -15,7 +15,7 @@ static int s_nActionIdx = -1;
 
 Layer *CreateLayer(int index)
 {
-    Layer *pLayer = NULL;
+    Layer *pLayer = nullptr;
     switch(index)
     {
     case TEST_ASYNCHRONOUS_LOADING:
@@ -167,7 +167,7 @@ void ArmatureTestLayer::onEnter()
     restartItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(ArmatureTestLayer::restartCallback, this) );
     nextItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(ArmatureTestLayer::nextCallback, this) );
 
-    Menu *menu = Menu::create(backItem, restartItem, nextItem, NULL);
+    Menu *menu = Menu::create(backItem, restartItem, nextItem, nullptr);
 
     menu->setPosition(Point::ZERO);
     backItem->setPosition(Point(VisibleRect::center().x - restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
@@ -183,7 +183,7 @@ void ArmatureTestLayer::onExit()
 {
     removeAllChildren();
 
-    backItem = restartItem = nextItem = NULL;
+    backItem = restartItem = nextItem = nullptr;
     
     Layer::onExit();
 }
@@ -319,7 +319,7 @@ std::string TestDirectLoading::title()
 void TestCSWithSkeleton::onEnter()
 {
     ArmatureTestLayer::onEnter();
-    Armature *armature = NULL;
+    Armature *armature = nullptr;
     armature = Armature::create("Cowboy");
     armature->getAnimation()->playByIndex(0);
     armature->setScale(0.2f);
@@ -340,7 +340,7 @@ void TestDragonBones20::onEnter()
 {
     ArmatureTestLayer::onEnter();
 
-    Armature *armature = NULL;
+    Armature *armature = nullptr;
     armature = Armature::create("Dragon");
     armature->getAnimation()->playByIndex(1);
     armature->getAnimation()->setSpeedScale(0.4f);
@@ -372,7 +372,7 @@ void TestPerformance::onEnter()
     MenuItemFont *increase = MenuItemFont::create(" + ", CC_CALLBACK_1(TestPerformance::onIncrease, this));
     increase->setColor(Color3B(0,200,20));
     
-    Menu *menu = Menu::create(decrease, increase, NULL);
+    Menu *menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Point(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
     addChild(menu, 10000);
@@ -413,7 +413,7 @@ void TestPerformance::addArmature(int number)
     {
         armatureCount++;
 
-        Armature *armature = NULL;
+        Armature *armature = nullptr;
         armature = new Armature();
         armature->init("Knight_f/Knight");
         armature->getAnimation()->playByIndex(0);
@@ -467,7 +467,7 @@ void TestChangeZorder::onEnter()
 {
     ArmatureTestLayer::onEnter();
 
-    Armature *armature = NULL;
+    Armature *armature = nullptr;
     currentTag = -1;
 
     armature = Armature::create("Knight_f/Knight");
@@ -524,7 +524,7 @@ void TestAnimationEvent::onEnter()
 
     /*
     * Set armature's movement event callback function
-    * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+    * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
     */
     armature->getAnimation()->setMovementEventCallFunc(this, movementEvent_selector(TestAnimationEvent::animationEvent));
     addChild(armature);
@@ -543,14 +543,14 @@ void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType mo
         {
             ActionInterval *actionToRight = MoveTo::create(2, Point(VisibleRect::right().x - 50, VisibleRect::right().y));
             armature->stopAllActions();
-            armature->runAction(Sequence::create(actionToRight,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback1, this)), NULL));
+            armature->runAction(Sequence::create(actionToRight,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback1, this)), nullptr));
             armature->getAnimation()->play("Walk");
         }
         else if (id.compare("FireMax") == 0)
         {
             ActionInterval *actionToLeft = MoveTo::create(2, Point(VisibleRect::left().x + 50, VisibleRect::left().y));
             armature->stopAllActions();
-            armature->runAction(Sequence::create(actionToLeft,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback2, this)), NULL));
+            armature->runAction(Sequence::create(actionToLeft,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback2, this)), nullptr));
             armature->getAnimation()->play("Walk");
         }
     }
@@ -580,7 +580,7 @@ void TestFrameEvent::onEnter()
 
     /*
      * Set armature's frame event callback function
-     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+     * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
      */
     armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestFrameEvent::onFrameEvent));
 
@@ -608,8 +608,8 @@ void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIn
 }
 void TestFrameEvent::checkAction(float dt)
 {
-    if ( this->numberOfRunningActions() == 0 && this->getGrid() != NULL)
-        this->setGrid(NULL);
+    if ( this->numberOfRunningActions() == 0 && this->getGrid() != nullptr)
+        this->setGrid(nullptr);
 }
 
 
@@ -750,7 +750,7 @@ void TestColliderDetector::onEnter()
 
     /*
     * Set armature's frame event callback function
-    * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+    * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
     */
     armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestColliderDetector::onFrameEvent));
 
@@ -1011,7 +1011,7 @@ void TestColliderDetector::initWorld()
     ColliderFilter filter = ColliderFilter(eEnemyTag);
     armature2->setColliderFilter(&filter);
 
-    cpSpaceAddCollisionHandler(space, eEnemyTag, eBulletTag, beginHit, NULL, NULL, endHit, NULL);
+    cpSpaceAddCollisionHandler(space, eEnemyTag, eBulletTag, beginHit, nullptr, nullptr, endHit, nullptr);
 }
 #endif
 
@@ -1106,7 +1106,7 @@ void TestArmatureNesting::onTouchesEnded(const std::vector<Touch*>& touches, Eve
     ++weaponIndex;
     weaponIndex = weaponIndex % 4;
 
-    if(armature != NULL)
+    if(armature != nullptr)
     {
         armature->getBone("armInside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
         armature->getBone("armOutside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
@@ -1125,18 +1125,18 @@ Hero *Hero::create(const char *name)
         return hero;
     }
     CC_SAFE_DELETE(hero);
-    return NULL;
+    return nullptr;
 }
 
 Hero::Hero()
-    : m_pMount(NULL)
-    , m_pLayer(NULL)
+    : m_pMount(nullptr)
+    , m_pLayer(nullptr)
 {
 }
 
 void Hero::changeMount(Armature *armature)
 {
-    if (armature == NULL)
+    if (armature == nullptr)
     {
         retain();
 
@@ -1203,7 +1203,7 @@ void TestArmatureNesting2::onEnter()
     LabelTTF* label = CCLabelTTF::create("Change Mount", "Arial", 20);
     MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::ChangeMountCallback, this));
 
-    Menu* pMenu =Menu::create(pMenuItem, NULL);
+    Menu* pMenu =Menu::create(pMenuItem, nullptr);
 
     pMenu->setPosition( Point() );
     pMenuItem->setPosition( Point( VisibleRect::right().x - 67, VisibleRect::bottom().y + 50) );
@@ -1241,7 +1241,7 @@ void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 {
     Point point = touches[0]->getLocation();
 
-    Armature *armature = hero->getMount() == NULL ? hero : hero->getMount(); 
+    Armature *armature = hero->getMount() == nullptr ? hero : hero->getMount(); 
 
     //Set armature direction
     if (point.x < armature->getPositionX())
@@ -1255,7 +1255,7 @@ void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 
     ActionInterval *move = CCMoveTo::create(2, point);
     armature->stopAllActions();
-    armature->runAction(Sequence::create(move, NULL));
+    armature->runAction(Sequence::create(move, nullptr));
 }
 
 void TestArmatureNesting2::ChangeMountCallback(Object* pSender)
@@ -1264,7 +1264,7 @@ void TestArmatureNesting2::ChangeMountCallback(Object* pSender)
 
     if (hero->getMount())
     {
-        hero->changeMount(NULL);
+        hero->changeMount(nullptr);
     }
     else
     {

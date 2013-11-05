@@ -133,7 +133,7 @@ void DisplayFactory::addSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay
 
 void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
 {
-    Skin *skin = NULL;
+    Skin *skin = nullptr;
 
     SpriteDisplayData *displayData = (SpriteDisplayData *)decoDisplay->getDisplayData();
 
@@ -157,7 +157,7 @@ void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisp
 
     decoDisplay->setDisplay(skin);
 
-    if (skin == NULL)
+    if (skin == nullptr)
     {
         return;
     }

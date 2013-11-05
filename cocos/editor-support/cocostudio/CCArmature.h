@@ -112,7 +112,7 @@ public:
      * Add a Bone to this Armature,
      *
      * @param bone  The Bone you want to add to Armature
-     * @param parentName   The parent Bone's name you want to add to . If it's  NULL, then set Armature to its parent
+     * @param parentName   The parent Bone's name you want to add to . If it's  nullptr, then set Armature to its parent
      */
     virtual void addBone(Bone *bone, const char *parentName);
     /**

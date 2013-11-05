@@ -182,13 +182,13 @@ public:
 
     /**
      * Set armature's movement event callback function
-     * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+     * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
      */
     void setMovementEventCallFunc(cocos2d::Object *target, SEL_MovementEventCallFunc callFunc);
 
     /**
      * Set armature's frame event callback function
-     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+     * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
      */
     void setFrameEventCallFunc(cocos2d::Object *target, SEL_FrameEventCallFunc callFunc);
 

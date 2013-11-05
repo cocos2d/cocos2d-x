@@ -32,11 +32,11 @@ using namespace cocos2d;
 
 namespace cocostudio {
 
-static ArmatureDataManager *s_sharedArmatureDataManager = NULL;
+static ArmatureDataManager *s_sharedArmatureDataManager = nullptr;
 
 ArmatureDataManager *ArmatureDataManager::getInstance()
 {
-    if (s_sharedArmatureDataManager == NULL)
+    if (s_sharedArmatureDataManager == nullptr)
     {
         s_sharedArmatureDataManager = new ArmatureDataManager();
         if (!s_sharedArmatureDataManager || !s_sharedArmatureDataManager->init())
@@ -56,9 +56,9 @@ void ArmatureDataManager::destoryInstance()
 
 ArmatureDataManager::ArmatureDataManager(void)
 {
-    _armarureDatas = NULL;
-    _animationDatas = NULL;
-    _textureDatas = NULL;
+    _armarureDatas = nullptr;
+    _animationDatas = nullptr;
+    _textureDatas = nullptr;
     _autoLoadSpriteFile = false;
 }
 
@@ -156,7 +156,7 @@ void ArmatureDataManager::addArmatureData(const char *id, ArmatureData *armature
 
 ArmatureData *ArmatureDataManager::getArmatureData(const char *id)
 {
-    ArmatureData *armatureData = NULL;
+    ArmatureData *armatureData = nullptr;
     if (_armarureDatas)
     {
         armatureData = (ArmatureData *)_armarureDatas->objectForKey(id);
@@ -187,7 +187,7 @@ void ArmatureDataManager::addAnimationData(const char *id, AnimationData *animat
 
 AnimationData *ArmatureDataManager::getAnimationData(const char *id)
 {
-    AnimationData *animationData = NULL;
+    AnimationData *animationData = nullptr;
     if (_animationDatas)
     {
         animationData = (AnimationData *)_animationDatas->objectForKey(id);
@@ -219,7 +219,7 @@ void ArmatureDataManager::addTextureData(const char *id, TextureData *textureDat
 
 TextureData *ArmatureDataManager::getTextureData(const char *id)
 {
-    TextureData *textureData = NULL;
+    TextureData *textureData = nullptr;
     if (_textureDatas)
     {
         textureData = (TextureData *)_textureDatas->objectForKey(id);

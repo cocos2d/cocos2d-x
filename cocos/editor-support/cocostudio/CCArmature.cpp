@@ -49,7 +49,7 @@ Armature *Armature::create()
         return armature;
     }
     CC_SAFE_DELETE(armature);
-    return NULL;
+    return nullptr;
 }
 
 
@@ -62,7 +62,7 @@ Armature *Armature::create(const char *name)
         return armature;
     }
     CC_SAFE_DELETE(armature);
-    return NULL;
+    return nullptr;
 }
 
 Armature *Armature::create(const char *name, Bone *parentBone)
@@ -74,31 +74,31 @@ Armature *Armature::create(const char *name, Bone *parentBone)
         return armature;
     }
     CC_SAFE_DELETE(armature);
-    return NULL;
+    return nullptr;
 }
 
 Armature::Armature()
-    : _armatureData(NULL)
-    , _batchNode(NULL)
-    , _atlas(NULL)
-    , _parentBone(NULL)
+    : _armatureData(nullptr)
+    , _batchNode(nullptr)
+    , _atlas(nullptr)
+    , _parentBone(nullptr)
     , _armatureTransformDirty(true)
-    , _boneDic(NULL)
-    , _topBoneList(NULL)
-    , _animation(NULL)
-    , _textureAtlasDic(NULL)
+    , _boneDic(nullptr)
+    , _topBoneList(nullptr)
+    , _animation(nullptr)
+    , _textureAtlasDic(nullptr)
 {
 }
 
 
 Armature::~Armature(void)
 {
-    if(NULL != _boneDic)
+    if(nullptr != _boneDic)
     {
         _boneDic->removeAllObjects();
         CC_SAFE_DELETE(_boneDic);
     }
-    if (NULL != _topBoneList)
+    if (nullptr != _topBoneList)
     {
         _topBoneList->removeAllObjects();
         CC_SAFE_DELETE(_topBoneList);
@@ -110,7 +110,7 @@ Armature::~Armature(void)
 
 bool Armature::init()
 {
-    return init(NULL);
+    return init(nullptr);
 }
 
 
@@ -139,7 +139,7 @@ bool Armature::init(const char *name)
         _blendFunc.dst = CC_BLEND_DST;
 
 
-        _name = name == NULL ? "" : name;
+        _name = name == nullptr ? "" : name;
 
         ArmatureDataManager *armatureDataManager = ArmatureDataManager::getInstance();
 
@@ -159,7 +159,7 @@ bool Armature::init(const char *name)
             _armatureData = armatureData;
 
 
-            DictElement *_element = NULL;
+            DictElement *_element = nullptr;
             Dictionary *boneDataDic = &armatureData->boneDataDic;
             CCDICT_FOREACH(boneDataDic, _element)
             {
@@ -228,13 +228,13 @@ bool Armature::init(const char *name, Bone *parentBone)
 Bone *Armature::createBone(const char *boneName)
 {
     Bone *existedBone = getBone(boneName);
-    if(existedBone != NULL)
+    if(existedBone != nullptr)
         return existedBone;
 
     BoneData *boneData = (BoneData *)_armatureData->getBoneData(boneName);
     std::string parentName = boneData->parentName;
 
-    Bone *bone = NULL;
+    Bone *bone = nullptr;
 
     if( parentName.length() != 0 )
     {
@@ -257,10 +257,10 @@ Bone *Armature::createBone(const char *boneName)
 
 void Armature::addBone(Bone *bone, const char *parentName)
 {
-    CCASSERT( bone != NULL, "Argument must be non-nil");
-    CCASSERT(_boneDic->objectForKey(bone->getName()) == NULL, "bone already added. It can't be added again");
+    CCASSERT( bone != nullptr, "Argument must be non-nil");
+    CCASSERT(_boneDic->objectForKey(bone->getName()) == nullptr, "bone already added. It can't be added again");
 
-    if (NULL != parentName)
+    if (nullptr != parentName)
     {
         Bone *boneParent = (Bone *)_boneDic->objectForKey(parentName);
         if (boneParent)
@@ -286,9 +286,9 @@ void Armature::addBone(Bone *bone, const char *parentName)
 
 void Armature::removeBone(Bone *bone, bool recursion)
 {
-    CCASSERT(bone != NULL, "bone must be added to the bone dictionary!");
+    CCASSERT(bone != nullptr, "bone must be added to the bone dictionary!");
 
-    bone->setArmature(NULL);
+    bone->setArmature(nullptr);
     bone->removeFromParent(recursion);
 
     if (_topBoneList->containsObject(bone))
@@ -308,15 +308,15 @@ Bone *Armature::getBone(const char *name) const
 
 void Armature::changeBoneParent(Bone *bone, const char *parentName)
 {
-    CCASSERT(bone != NULL, "bone must be added to the bone dictionary!");
+    CCASSERT(bone != nullptr, "bone must be added to the bone dictionary!");
 
     if(bone->getParentBone())
     {
         bone->getParentBone()->getChildren()->removeObject(bone);
-        bone->setParentBone(NULL);
+        bone->setParentBone(nullptr);
     }
 
-    if (parentName != NULL)
+    if (parentName != nullptr)
     {
         Bone *boneParent = (Bone *)_boneDic->objectForKey(parentName);
 
@@ -451,7 +451,7 @@ void Armature::update(float dt)
 {
     _animation->update(dt);
 
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_topBoneList, object)
     {
         static_cast<Bone*>(object)->update(dt);
@@ -462,20 +462,20 @@ void Armature::update(float dt)
 
 void Armature::draw()
 {
-    if (_parentBone == NULL && _batchNode == NULL)
+    if (_parentBone == nullptr && _batchNode == nullptr)
     {
         CC_NODE_DRAW_SETUP();
         GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     }
 
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_children, object)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
             Node *node = bone->getDisplayRenderNode();
 
-            if (NULL == node)
+            if (nullptr == node)
                 continue;
 
             switch (bone->getDisplayRenderNodeType())
@@ -556,7 +556,7 @@ void Armature::draw()
         }
     }
 
-    if(_atlas && !_batchNode && _parentBone == NULL)
+    if(_atlas && !_batchNode && _parentBone == nullptr)
     {
         _atlas->drawQuads();
         _atlas->removeAllQuads();
@@ -642,7 +642,7 @@ Rect Armature::getBoundingBox() const
 
     Rect boundingBox = Rect(0, 0, 0, 0);
 
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_children, object)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
@@ -686,7 +686,7 @@ Bone *Armature::getBoneAtPoint(float x, float y)
             return bs;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture)
@@ -703,7 +703,7 @@ TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture)
     }
     
     TextureAtlas *atlas = static_cast<TextureAtlas *>(_textureAtlasDic->objectForKey(key));
-    if (atlas == NULL)
+    if (atlas == nullptr)
     {
         atlas = TextureAtlas::createWithTexture(texture, 4);
         _textureAtlasDic->setObject(atlas, key);
@@ -715,7 +715,7 @@ void Armature::setParentBone(Bone *parentBone)
 {
     _parentBone = parentBone;
     
-    DictElement *element = NULL;
+    DictElement *element = nullptr;
     CCDICT_FOREACH(_boneDic, element)
     {
         Bone *bone = static_cast<Bone*>(element->getObject());
@@ -730,7 +730,7 @@ Bone *Armature::getParentBone()
 
 void CCArmature::setColliderFilter(ColliderFilter *filter)
 {
-    DictElement *element = NULL;
+    DictElement *element = nullptr;
     CCDICT_FOREACH(_boneDic, element)
     {
         Bone *bone = static_cast<Bone*>(element->getObject());
@@ -754,18 +754,18 @@ void Armature::setBody(b2Body *body)
     _body = body;
     _body->SetUserData(this);
 
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_children, object)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
 
-            Object *displayObject = NULL;
+            Object *displayObject = nullptr;
             CCARRAY_FOREACH(displayList, displayObject)
             {
                 ColliderDetector *detector = ((DecorativeDisplay *)displayObject)->getColliderDetector();
-                if (detector != NULL)
+                if (detector != nullptr)
                 {
                     detector->setBody(_body);
                 }
@@ -782,7 +782,7 @@ b2Fixture *Armature::getShapeList()
     }
     else
     {
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -802,18 +802,18 @@ void Armature::setBody(cpBody *body)
     _body = body;
     _body->data = this;
 
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_children, object)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
 
-            Object *displayObject = NULL;
+            Object *displayObject = nullptr;
             CCARRAY_FOREACH(displayList, displayObject)
             {
                 ColliderDetector *detector = ((DecorativeDisplay *)displayObject)->getColliderDetector();
-                if (detector != NULL)
+                if (detector != nullptr)
                 {
                     detector->setBody(_body);
                 }
@@ -830,7 +830,7 @@ cpShape *Armature::getShapeList()
     }
     else
     {
-        return NULL;
+        return nullptr;
     }
 }
 #endif

@@ -40,12 +40,12 @@ BatchNode *BatchNode::create()
         return batchNode;
     }
     CC_SAFE_DELETE(batchNode);
-    return NULL;
+    return nullptr;
 }
 
 BatchNode::BatchNode()
-    : _atlas(NULL)
-    , _textureAtlasDic(NULL)
+    : _atlas(nullptr)
+    , _textureAtlasDic(nullptr)
 {
 }
 
@@ -79,18 +79,18 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
     Armature *armature = dynamic_cast<Armature *>(child);
-    if (armature != NULL)
+    if (armature != nullptr)
     {
         armature->setBatchNode(this);
 
         Dictionary *dict = armature->getBoneDic();
-        DictElement *element = NULL;
+        DictElement *element = nullptr;
         CCDICT_FOREACH(dict, element)
         {
             Bone *bone = static_cast<Bone*>(element->getObject());
 
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
-            Object *object = NULL;
+            Object *object = nullptr;
             CCARRAY_FOREACH(displayList, object)
             {
                 DecorativeDisplay *display = static_cast<DecorativeDisplay*>(object);
@@ -107,18 +107,18 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
 void BatchNode::removeChild(Node* child, bool cleanup)
 {
     Armature *armature = dynamic_cast<Armature *>(child);
-    if (armature != NULL)
+    if (armature != nullptr)
     {
-        armature->setBatchNode(NULL);
+        armature->setBatchNode(nullptr);
         
         Dictionary *dict = armature->getBoneDic();
-        DictElement *element = NULL;
+        DictElement *element = nullptr;
         CCDICT_FOREACH(dict, element)
         {
             Bone *bone = static_cast<Bone*>(element->getObject());
             
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
-            Object *object = NULL;
+            Object *object = nullptr;
             CCARRAY_FOREACH(displayList, object)
             {
                 DecorativeDisplay *display = static_cast<DecorativeDisplay*>(object);
@@ -166,7 +166,7 @@ void BatchNode::visit()
 void BatchNode::draw()
 {
     CC_NODE_DRAW_SETUP();
-    Object *object = NULL;
+    Object *object = nullptr;
     CCARRAY_FOREACH(_children, object)
     {
         Armature *armature = dynamic_cast<Armature *>(object);
@@ -193,7 +193,7 @@ TextureAtlas *BatchNode::getTexureAtlasWithTexture(Texture2D *texture)
     int key = texture->getName();
     
     TextureAtlas *atlas = static_cast<TextureAtlas *>(_textureAtlasDic->objectForKey(key));
-    if (atlas == NULL)
+    if (atlas == nullptr)
     {
         atlas = CCTextureAtlas::createWithTexture(texture, 4);
         _textureAtlasDic->setObject(atlas, key);

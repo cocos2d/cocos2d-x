@@ -29,7 +29,7 @@ using namespace cocos2d;
 
 namespace cocostudio {
 
-SpriteFrameCacheHelper *SpriteFrameCacheHelper::_spriteFrameCacheHelper = NULL;
+SpriteFrameCacheHelper *SpriteFrameCacheHelper::_spriteFrameCacheHelper = nullptr;
 
 SpriteFrameCacheHelper *SpriteFrameCacheHelper::getInstance()
 {
@@ -44,7 +44,7 @@ SpriteFrameCacheHelper *SpriteFrameCacheHelper::getInstance()
 void SpriteFrameCacheHelper::purge()
 {
     delete _spriteFrameCacheHelper;
-    _spriteFrameCacheHelper = NULL;
+    _spriteFrameCacheHelper = nullptr;
 }
 
 void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
