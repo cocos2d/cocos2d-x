@@ -253,6 +253,15 @@ void CCDisplayFactory::createParticleDisplay(CCBone *bone, CCDecorativeDisplay *
 {
     CCParticleDisplayData *displayData = (CCParticleDisplayData *)decoDisplay->getDisplayData();
     CCParticleSystem *system = CCParticleSystemQuad::create(displayData->plist.c_str());
+    
+    system->removeFromParent();
+    
+    CCArmature *armature = bone->getArmature();
+    if (armature)
+    {
+        system->setParent(bone->getArmature());
+    }
+
     decoDisplay->setDisplay(system);
 }
 void CCDisplayFactory::updateParticleDisplay(CCBone *bone, CCNode *display, float dt)

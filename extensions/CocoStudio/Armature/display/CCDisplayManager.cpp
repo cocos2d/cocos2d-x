@@ -146,6 +146,14 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
     else if (dynamic_cast<CCParticleSystemQuad *>(display))
     {
         displayData = CCParticleDisplayData::create();
+
+        display->removeFromParent();
+
+        CCArmature *armature = m_pBone->getArmature();
+        if (armature)
+        {
+            display->setParent(armature);
+        }
     }
     else if(CCArmature *armature = dynamic_cast<CCArmature *>(display))
     {
