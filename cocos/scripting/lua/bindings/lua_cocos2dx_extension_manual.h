@@ -26,4 +26,15 @@ struct LuaTableViewEventData
     }
 };
 
+struct LuaAssetsManagerEventData
+{
+    cocos2d::ScriptHandlerMgr::HandlerType handlerType;
+    int value;
+    
+    LuaAssetsManagerEventData(cocos2d::ScriptHandlerMgr::HandlerType _handleType, int _value = 0):handlerType(_handleType),value(_value)
+    {
+    }
+};
+
+
 #endif // #ifndef COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_LUA_COCOS2DX_EXTENSION_MANUAL_H

@@ -166,7 +166,7 @@ void ProfilingEndTimingBlock(const char *timerName)
     CCASSERT(timer, "CCProfilingTimer  not found");
 
 
-    int duration = chrono::duration_cast<chrono::microseconds>(now - timer->_startTime).count();
+    long duration = chrono::duration_cast<chrono::microseconds>(now - timer->_startTime).count();
 
     timer->totalTime += duration;
     timer->_averageTime1 = (timer->_averageTime1 + duration) / 2.0f;

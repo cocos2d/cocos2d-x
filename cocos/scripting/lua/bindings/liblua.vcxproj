@@ -144,6 +144,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <ClCompile Include="lua_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="lua_cocos2dx_manual.cpp" />
     <ClCompile Include="Lua_web_socket.cpp" />
+    <ClCompile Include="lua_xml_http_request.cpp" />
     <ClCompile Include="tolua_fix.c" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +169,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <ClInclude Include="lua_cocos2dx_extension_manual.h" />
     <ClInclude Include="lua_cocos2dx_manual.hpp" />
     <ClInclude Include="Lua_web_socket.h" />
+    <ClInclude Include="lua_xml_http_request.h" />
     <ClInclude Include="tolua_fix.h" />
   </ItemGroup>
   <ItemGroup>

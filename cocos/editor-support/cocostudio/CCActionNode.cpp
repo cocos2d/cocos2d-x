@@ -424,7 +424,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 	bool bFindFrame = false;
 
 	ActionFrame* srcFrame = NULL;
-	ActionFrame* destFrame = NULL;
+//	ActionFrame* destFrame = NULL;
 
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
