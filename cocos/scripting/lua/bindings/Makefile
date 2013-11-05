@@ -49,6 +49,7 @@ SOURCES = ../../../../external/lua/lua/lapi.c \
           tolua_fix.c \
           ../../auto-generated/lua-bindings/lua_cocos2dx_auto.cpp \
           ../../auto-generated/lua-bindings/lua_cocos2dx_extension_auto.cpp \
+          ../../auto-generated/lua-bindings/lua_cocos2dx_studio_auto.cpp \
           CCLuaBridge.cpp \
           CCLuaEngine.cpp \
           CCLuaStack.cpp \
