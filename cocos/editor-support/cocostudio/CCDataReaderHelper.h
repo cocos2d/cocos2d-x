@@ -74,6 +74,9 @@ protected:
 		std::queue<std::string>      configFileQueue;
         float contentScale;
         std::string    filename;
+        std::string    baseFilePath;
+        float flashToolVersion;
+        float cocoStudioVersion;
 	} DataInfo;
 
 public:
@@ -123,29 +126,29 @@ public:
     /**
      * Decode Armature Datas from xml export from Dragon Bone flash tool
      */
-    static ArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML);
-    static BoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML);
-    static DisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML);
+    static ArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML, DataInfo *dataInfo);
+    static BoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML, DataInfo *dataInfo);
+    static DisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML, DataInfo *dataInfo);
 
 
     /**
      * Decode ArmatureAnimation Datas from xml export from Dragon Bone flash tool
      */
-    static AnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML);
-    static MovementData *decodeMovement(tinyxml2::XMLElement *movementXML, ArmatureData *armatureData);
-    static MovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, BoneData *boneData);
-    static FrameData *decodeFrame(tinyxml2::XMLElement *frameXML, tinyxml2::XMLElement *parentFrameXml, BoneData *boneData);
+    static AnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML, DataInfo *dataInfo);
+    static MovementData *decodeMovement(tinyxml2::XMLElement *movementXML, ArmatureData *armatureData, DataInfo *dataInfo);
+    static MovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, BoneData *boneData, DataInfo *dataInfo);
+    static FrameData *decodeFrame(tinyxml2::XMLElement *frameXML, tinyxml2::XMLElement *parentFrameXml, BoneData *boneData, DataInfo *dataInfo);
 
 
     /**
      * Decode Texture Datas from xml export from Dragon Bone flash tool
      */
-    static TextureData *decodeTexture(tinyxml2::XMLElement *textureXML);
+    static TextureData *decodeTexture(tinyxml2::XMLElement *textureXML, DataInfo *dataInfo);
 
     /**
      * Decode Contour Datas from xml export from Dragon Bone flash tool
      */
-    static ContourData *decodeContour(tinyxml2::XMLElement *contourXML);
+    static ContourData *decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo);
 
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
@@ -193,7 +196,6 @@ protected:
 	std::queue<AsyncStruct *> *_asyncStructQueue;
 	std::queue<DataInfo *>   *_dataQueue;
 
-    static std::string _basefilePath;
     static std::vector<std::string> _configFileList;
 
     static DataReaderHelper *_dataReaderHelper;

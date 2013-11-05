@@ -131,7 +131,7 @@ protected:
 
     Bone *_bone;                    //! A weak reference to the Bone
 
-    CCTweenType _frameTweenEasing;  //! Dedermine which tween effect current frame use
+    TweenType _frameTweenEasing;  //! Dedermine which tween effect current frame use
 
     int _betweenDuration;           //! Current key frame will last _betweenDuration frames
     int _totalDuration;

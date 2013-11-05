@@ -90,10 +90,7 @@ Bone::~Bone(void)
     CC_SAFE_DELETE(_displayManager);
     CC_SAFE_DELETE(_worldInfo);
 
-    if(_boneData)
-    {
-        _boneData->release();
-    }
+    CC_SAFE_RELEASE_NULL(_boneData);
 
     CC_SAFE_RELEASE(_childArmature);
 }
@@ -129,6 +126,9 @@ bool Bone::init(const char *name)
         CC_SAFE_DELETE(_worldInfo);
         _worldInfo = new BaseData();
 
+        CC_SAFE_DELETE(_boneData);
+        _boneData  = new CCBoneData();
+
         bRet = true;
     }
     while (0);
@@ -140,8 +140,12 @@ void Bone::setBoneData(BoneData *boneData)
 {
     CCASSERT(NULL != boneData, "_boneData must not be NULL");
 
-    _boneData = boneData;
-    _boneData->retain();
+    if (_boneData != boneData)
+    {
+        CC_SAFE_RETAIN(boneData);
+        CC_SAFE_RELEASE(_boneData);
+        _boneData = boneData;
+    }
 
     _name = _boneData->name;
     _ZOrder = _boneData->zOrder;
