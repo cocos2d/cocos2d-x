@@ -75,7 +75,7 @@ void Font::setCurrentGlyphCollection(GlyphCollection glyphs, const char *customG
         default:
             if (customGlyphs)
             {
-                int lenght = strlen(customGlyphs);
+                size_t lenght = strlen(customGlyphs);
                 _customGlyphs = new char [lenght + 2];
                 memcpy(_customGlyphs, customGlyphs, lenght);
 

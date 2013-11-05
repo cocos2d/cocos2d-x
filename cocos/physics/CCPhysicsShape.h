@@ -50,10 +50,10 @@ typedef struct PhysicsMaterial
     , friction(0.0f)
     {}
     
-    PhysicsMaterial(float density, float restitution, float friction)
-    : density(density)
-    , restitution(restitution)
-    , friction(friction)
+    PhysicsMaterial(float aDensity, float aRestitution, float aFriction)
+    : density(aDensity)
+    , restitution(aRestitution)
+    , friction(aFriction)
     {}
 }PhysicsMaterial;
 
@@ -204,7 +204,7 @@ public:
     float calculateDefaultMoment() override;
     
     Point* getPoints(Point* points) const;
-    int getPointsCount() const;
+    long getPointsCount() const;
     Point getCenter() override;
 protected:
     bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, Point offset = Point(0, 0));
@@ -247,7 +247,7 @@ public:
     static PhysicsShapeEdgeBox* create(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, Point offset = Point(0, 0));
     Point getOffset() override { return _offset; }
     Point* getPoints(Point* points) const;
-    int getPointsCount() const;
+    long getPointsCount() const;
     
 protected:
     bool init(Size size, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, Point offset = Point(0, 0));
@@ -269,7 +269,7 @@ public:
     static PhysicsShapeEdgePolygon* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     Point getCenter() override;
     Point* getPoints(Point* points) const;
-    int getPointsCount() const;
+    long getPointsCount() const;
     
 protected:
     bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
@@ -291,7 +291,7 @@ public:
     static PhysicsShapeEdgeChain* create(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     Point getCenter() override;
     Point* getPoints(Point* points) const;
-    int getPointsCount() const;
+    long getPointsCount() const;
     
 protected:
     bool init(Point* points, int count, PhysicsMaterial material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
