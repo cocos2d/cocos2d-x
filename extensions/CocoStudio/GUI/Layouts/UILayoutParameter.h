@@ -29,9 +29,6 @@
 
 NS_CC_EXT_BEGIN
 
-#define LINEAR_LAYOUT_PARAMETER "LinearLayoutParameter"
-#define RELATIVE_LAYOUT_PARAMETER "RelativeLayoutParameter"
-
 typedef enum
 {
     LAYOUT_PARAMETER_NONE,

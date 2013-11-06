@@ -29,7 +29,6 @@ NS_CC_EXT_BEGIN
 
 UIInputManager::UIInputManager():
 m_manageredWidget(NULL),
-m_bWidgetBeSorted(false),
 m_bTouchDown(false),
 m_fLongClickTime(0.0),
 m_fLongClickRecordTime(0.0),
@@ -65,11 +64,6 @@ void UIInputManager::registWidget(UIWidget* widget)
         return;
     }
     m_manageredWidget->addObject(widget);
-}
-
-void UIInputManager::uiSceneHasChanged()
-{
-    m_bWidgetBeSorted = false;
 }
 
 bool UIInputManager::checkTouchEvent(UIWidget *root, const CCPoint &touchPoint)

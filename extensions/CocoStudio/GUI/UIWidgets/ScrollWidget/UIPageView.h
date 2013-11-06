@@ -197,7 +197,6 @@ protected:
     CCArray* m_pages;
     PVTouchDir m_touchMoveDir;
     float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
     float m_fTouchMoveStartLocation;
     CCPoint movePagePoint;
     UIWidget* m_pLeftChild;
