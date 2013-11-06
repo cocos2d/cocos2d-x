@@ -50,7 +50,7 @@ PhysicsContact::PhysicsContact()
 , _shapeB(nullptr)
 , _eventCode(EventCode::NONE)
 , _info(nullptr)
-, _notify(true)
+, _notificationEnable(true)
 , _begin(false)
 , _data(nullptr)
 , _contactInfo(nullptr)
@@ -216,7 +216,6 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             bool ret = true;
             
             if (onContactBegin != nullptr
-                && contact.getNotify()
                 && test(contact.getShapeA(), contact.getShapeB()))
             {
                 contact._begin = true;

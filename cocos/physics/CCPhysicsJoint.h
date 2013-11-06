@@ -51,9 +51,9 @@ public:
     PhysicsBody* getBodyB() const { return _bodyB; }
     inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
-    inline bool isEnable() const { return _enable; }
+    inline bool isEnabled() const { return _enable; }
     void setEnable(bool enable);
-    inline bool isCollisionEnable() const { return _collisionEnable; }
+    inline bool isCollisionEnabled() const { return _collisionEnable; }
     void setCollisionEnable(bool enable);
     
 protected:
