@@ -94,7 +94,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~Armature(void);
+    virtual ~Armature(void);
 
     /**
      * Init the empty armature

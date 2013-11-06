@@ -58,7 +58,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~ProcessBase(void);
+    virtual ~ProcessBase(void);
 
     /**
      * Play animation by animation name.
