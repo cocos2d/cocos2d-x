@@ -229,11 +229,13 @@ void Bone::update(float delta)
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_children, object)
+    if (_children)
     {
-        Bone *childBone = (Bone *)object;
-        childBone->update(delta);
+        for(auto object : *_children)
+        {
+            Bone *childBone = (Bone *)object;
+            childBone->update(delta);
+        }
     }
 
     _boneTransformDirty = false;
@@ -322,16 +324,16 @@ void Bone::addChildBone(Bone *child)
 
 void Bone::removeChildBone(Bone *bone, bool recursion)
 {
-    if ( _children->getIndexOfObject(bone) != UINT_MAX )
+    if (_children && _children->getIndexOfObject(bone) != UINT_MAX )
     {
         if(recursion)
         {
-            Array *_ccbones = bone->_children;
-            Object *_object = nullptr;
-            CCARRAY_FOREACH(_ccbones, _object)
+            Array *ccbones = bone->_children;
+            
+            for(auto object : *ccbones)
             {
-                Bone *_ccBone = (Bone *)_object;
-                bone->removeChildBone(_ccBone, recursion);
+                Bone *ccBone = (Bone *)object;
+                bone->removeChildBone(ccBone, recursion);
             }
         }
 
@@ -412,6 +414,7 @@ DisplayType Bone::getDisplayRenderNodeType()
     return _displayManager->getDisplayRenderNodeType();
 }
 
+
 void Bone::addDisplay(DisplayData *displayData, int index)
 {
     _displayManager->addDisplay(displayData, index);
@@ -449,8 +452,8 @@ Array *Bone::getColliderBodyList()
 void Bone::setColliderFilter(ColliderFilter *filter)
 {
     Array *array = _displayManager->getDecorativeDisplayList();
-    Object *object = nullptr;
-    CCARRAY_FOREACH(array, object)
+
+    for(auto object : *array)
     {
         DecorativeDisplay *decoDisplay = static_cast<DecorativeDisplay *>(object);
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())

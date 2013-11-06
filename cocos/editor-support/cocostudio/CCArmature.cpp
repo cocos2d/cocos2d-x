@@ -335,7 +335,7 @@ void Armature::changeBoneParent(Bone *bone, const char *parentName)
     }
 }
 
-const Dictionary *Armature::getBoneDic() const
+Dictionary *Armature::getBoneDic() const
 {
     return _boneDic;
 }
@@ -451,8 +451,7 @@ void Armature::update(float dt)
 {
     _animation->update(dt);
 
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_topBoneList, object)
+    for (auto object : *_topBoneList)
     {
         static_cast<Bone*>(object)->update(dt);
     }
@@ -468,8 +467,7 @@ void Armature::draw()
         GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     }
 
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_children, object)
+    for (auto object : *_children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
@@ -642,8 +640,7 @@ Rect Armature::getBoundingBox() const
 
     Rect boundingBox = Rect(0, 0, 0, 0);
 
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_children, object)
+    for(auto object : *_children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
@@ -754,17 +751,15 @@ void Armature::setBody(b2Body *body)
     _body = body;
     _body->SetUserData(this);
 
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_children, object)
+    for(auto object : *_children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
 
-            Object *displayObject = nullptr;
-            CCARRAY_FOREACH(displayList, displayObject)
+            for(auto displayObject : displayList)
             {
-                ColliderDetector *detector = ((DecorativeDisplay *)displayObject)->getColliderDetector();
+                ColliderDetector *detector = static_cast<DecorativeDisplay *>(displayObject)->getColliderDetector();
                 if (detector != nullptr)
                 {
                     detector->setBody(_body);
@@ -802,17 +797,15 @@ void Armature::setBody(cpBody *body)
     _body = body;
     _body->data = this;
 
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_children, object)
+    for(auto object: *_children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
 
-            Object *displayObject = nullptr;
-            CCARRAY_FOREACH(displayList, displayObject)
+            for(auto displayObject: *displayList)
             {
-                ColliderDetector *detector = ((DecorativeDisplay *)displayObject)->getColliderDetector();
+                ColliderDetector *detector = static_cast<DecorativeDisplay *>(displayObject)->getColliderDetector();
                 if (detector != nullptr)
                 {
                     detector->setBody(_body);

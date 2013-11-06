@@ -136,7 +136,7 @@ void ArmatureDataManager::removeArmatureFileInfo(const char *configFilePath)
         }
 
         _relativeDatas.erase(configFilePath);
-        DataReaderHelper::sharedDataReaderHelper()->removeConfigFile(configFilePath);
+        DataReaderHelper::getInstance()->removeConfigFile(configFilePath);
     }
 }
 

@@ -90,8 +90,7 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
             Bone *bone = static_cast<Bone*>(element->getObject());
 
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
-            Object *object = nullptr;
-            CCARRAY_FOREACH(displayList, object)
+            for(auto object : *displayList)
             {
                 DecorativeDisplay *display = static_cast<DecorativeDisplay*>(object);
                                 
@@ -118,8 +117,7 @@ void BatchNode::removeChild(Node* child, bool cleanup)
             Bone *bone = static_cast<Bone*>(element->getObject());
             
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
-            Object *object = nullptr;
-            CCARRAY_FOREACH(displayList, object)
+            for(auto object : *displayList)
             {
                 DecorativeDisplay *display = static_cast<DecorativeDisplay*>(object);
                 
@@ -166,8 +164,8 @@ void BatchNode::visit()
 void BatchNode::draw()
 {
     CC_NODE_DRAW_SETUP();
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_children, object)
+
+    for(auto object : *_children)
     {
         Armature *armature = dynamic_cast<Armature *>(object);
         if (armature)
