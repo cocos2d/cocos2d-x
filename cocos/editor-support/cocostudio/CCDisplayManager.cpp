@@ -318,11 +318,9 @@ void DisplayManager::initDisplayList(BoneData *boneData)
 
     CS_RETURN_IF(!boneData);
 
-    Object *object = nullptr;
-    Array *displayDataList = &boneData->displayDataList;
-    CCARRAY_FOREACH(displayDataList, object)
+    for(auto object : boneData->displayDataList)
     {
-        DisplayData *displayData = (DisplayData *)object;
+        DisplayData *displayData = static_cast<DisplayData *>(object);
 
         DecorativeDisplay *decoDisplay = DecorativeDisplay::create();
         decoDisplay->setDisplayData(displayData);

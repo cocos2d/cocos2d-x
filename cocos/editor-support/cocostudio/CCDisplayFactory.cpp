@@ -245,7 +245,7 @@ void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt)
 
 void DisplayFactory::addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
 {
-    ParticleDisplayData *adp = ParticleDisplayData::create(); ;
+    ParticleDisplayData *adp = ParticleDisplayData::create();
     adp->copy((ParticleDisplayData *)displayData);
     decoDisplay->setDisplayData(adp);
 
