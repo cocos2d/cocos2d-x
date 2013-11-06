@@ -33,11 +33,10 @@ set(APP_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${APP_NAME}")
 set_target_properties(${APP_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
-COPY_RES(${APP_NAME})
-COPY_RES_EXTRA(${APP_NAME} copy_core_scripts ${CMAKE_SOURCE_DIR}/cocos/scripting/lua
-  script/*
-  )
-COPY_RES_EXTRA(${APP_NAME} copy_cpp_res ${CMAKE_SOURCE_DIR}/samples/Cpp/TestCpp/Resources
-  *
+pre_build(${APP_NAME}
+  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua/script ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/samples/Cpp/TestCpp/Resources ${APP_BIN_DIR}/Resources
   )
 
