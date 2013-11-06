@@ -239,7 +239,6 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
         printf("Read design size error!\n");
         Size winSize = Director::getInstance()->getWinSize();
-//        UIHelper::
 //        CCUIHELPER->setFileDesignWidth(winSize.width);
 //        CCUIHELPER->setFileDesignHeight(winSize.height);
     }
