@@ -39,8 +39,13 @@ void Renderer::setOpenGLView(EGLView *newOpenGLView)
 
 void Renderer::addRenderCommand(RenderCommand *command)
 {
-    command.generateID();
+    command->generateID();
     _renderQueue.push_back(command);
+}
+
+bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
+{
+    return a->getID() < b->getID();
 }
 
 void Renderer::render()
@@ -49,7 +54,7 @@ void Renderer::render()
 
     //Process render commands
     //1. Sort render commands based on ID
-//    stable_sort(_renderQueue.begin(), _renderQueue.end());
+    stable_sort(_renderQueue.begin(), _renderQueue.end(), compareRenderCommand);
 //    sort(_renderQueue.begin(), _renderQueue.end());
 
     //2. Process commands
