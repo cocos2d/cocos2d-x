@@ -134,9 +134,11 @@ target_link_libraries(cocos2d
   freetype
   fontconfig
   png
+  pthread
   glfw
   GLEW
   GL
+  X11
   rt
   z
 )

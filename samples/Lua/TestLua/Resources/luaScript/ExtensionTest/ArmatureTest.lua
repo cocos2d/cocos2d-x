@@ -4,16 +4,15 @@ local scheduler = cc.Director:getInstance():getScheduler()
 local ArmatureTestIndex = 
 {
     TEST_COCOSTUDIO_WITH_SKELETON = 1,
-    TEST_COCOSTUDIO_WITHOUT_SKELETON = 2,
-    TEST_DRAGON_BONES_2_0 = 3,
-    TEST_PERFORMANCE = 4,
-    TEST_CHANGE_ZORDER = 5,
-    TEST_ANIMATION_EVENT = 6,
-    TEST_PARTICLE_DISPLAY = 7,
-    TEST_USE_DIFFERENT_PICTURE = 8,
-    TEST_BOUDINGBOX = 9,
-    TEST_ANCHORPOINT = 10,
-    TEST_ARMATURE_NESTING = 11,
+    TEST_DRAGON_BONES_2_0 = 2,
+    TEST_PERFORMANCE = 3,
+    TEST_CHANGE_ZORDER = 4,
+    TEST_ANIMATION_EVENT = 5,
+    TEST_PARTICLE_DISPLAY = 6,
+    TEST_USE_DIFFERENT_PICTURE = 7,
+    TEST_BOUDINGBOX = 8,
+    TEST_ANCHORPOINT = 9,
+    TEST_ARMATURE_NESTING = 10,
 }
 local armatureSceneIdx   = ArmatureTestIndex.TEST_COCOSTUDIO_WITH_SKELETON
 
@@ -31,13 +30,13 @@ function ArmatureTestScene.extend(target)
 end
 
 function ArmatureTestScene:runThisTest()
-    cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/TestBone0.png", "armature/TestBone0.plist", "armature/TestBone.json")
-    cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.ExportJson")
-    cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml")
-    cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml")
-    cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml")
-    cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml")
-    cc.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml")
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/TestBone0.png", "armature/TestBone0.plist", "armature/TestBone.json")
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.ExportJson")
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml")
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml")
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml")
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml")
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml")
 
     armatureSceneIdx   = ArmatureTestIndex.TEST_COCOSTUDIO_WITH_SKELETON
     self:addChild(restartArmatureTest())
@@ -59,7 +58,7 @@ function ArmatureTestScene.create()
 end
 
 function ArmatureTestScene.toMainMenuCallback()
-    cc.ArmatureDataManager:purgeArmatureSystem()
+    ccs.ArmatureDataManager:purgeArmatureSystem()
 end
 
 local ArmatureTestLayer = class("ArmatureTestLayer")
@@ -72,8 +71,6 @@ end
 function ArmatureTestLayer.title(idx)
     if ArmatureTestIndex.TEST_COCOSTUDIO_WITH_SKELETON == idx then
         return "Test Export From CocoStudio With Skeleton Effect"
-    elseif ArmatureTestIndex.TEST_COCOSTUDIO_WITHOUT_SKELETON == idx then
-        return "Test Export From CocoStudio Without Skeleton Effect"
     elseif ArmatureTestIndex.TEST_DRAGON_BONES_2_0 == idx then
         return "Test Export From DragonBones version 2.0"
     elseif ArmatureTestIndex.TEST_PERFORMANCE == idx then
@@ -209,7 +206,7 @@ function TestCSWithSkeleton.extend(target)
 end
 
 function TestCSWithSkeleton:onEnter()
-    local armature = cc.Armature:create("Cowboy")
+    local armature = ccs.Armature:create("Cowboy")
     armature:getAnimation():playByIndex(0)
     armature:setScale(0.2)
     armature:setAnchorPoint(cc.p(0.5, 0.5))
@@ -230,40 +227,6 @@ function TestCSWithSkeleton.create()
     return layer
 end
 
-local TestCSWithoutSkeleton = class("TestCSWithoutSkeleton",ArmatureTestLayer)
-TestCSWithoutSkeleton.__index = TestCSWithoutSkeleton
-
-function TestCSWithoutSkeleton.extend(target)
-    local t = tolua.getpeer(target)
-    if not t then
-        t = {}
-        tolua.setpeer(target, t)
-    end
-    setmetatable(t, TestCSWithoutSkeleton)
-    return target
-end
-
-function TestCSWithoutSkeleton:onEnter()    
-    local armature = cc.Armature:create("TestBone")
-    armature:getAnimation():playByIndex(0)
-    armature:setScale(0.2)
-    armature:setAnchorPoint(cc.p(0.5, 0.5))
-    armature:setPosition(cc.p(winSize.width / 2, winSize.height / 2))
-    self:addChild(armature) 
-end
-
-function TestCSWithoutSkeleton.create()
-    local layer = TestCSWithoutSkeleton.extend(cc.Layer:create())
-
-    if nil ~= layer then
-        layer:createMenu()
-        layer:createToExtensionMenu()
-        layer:onEnter()
-        layer:creatTitleAndSubTitle(armatureSceneIdx)
-    end 
-    return layer   
-end
-
 local TestDragonBones20 = class("TestDragonBones20",ArmatureTestLayer)
 TestDragonBones20.__index = TestDragonBones20
 
@@ -278,7 +241,7 @@ function TestDragonBones20.extend(target)
 end
 
 function TestDragonBones20:onEnter()    
-    local armature = cc.Armature:create("Dragon")
+    local armature = ccs.Armature:create("Dragon")
     armature:getAnimation():playByIndex(1)
     armature:getAnimation():setAnimationScale(0.4)
     armature:setScale(0.6)
@@ -320,7 +283,7 @@ function TestPerformance.update(delta)
     TestPerformance.times = TestPerformance.times + delta
     if TestPerformance.times > 0.25 then
         TestPerformance.time = 0
-        local armature = cc.Armature:create("Knight_f/Knight")
+        local armature = ccs.Armature:create("Knight_f/Knight")
         armature:getAnimation():playByIndex(0)
         armature:setPosition(cc.p(50 + TestPerformance.armatureCount * 5, winSize.height / 2))
         armature:setScale(0.6)
@@ -363,40 +326,6 @@ function TestPerformance.create()
     return layer   
 end
 
-local TestCSWithoutSkeleton = class("TestCSWithoutSkeleton",ArmatureTestLayer)
-TestCSWithoutSkeleton.__index = TestCSWithoutSkeleton
-
-function TestCSWithoutSkeleton.extend(target)
-    local t = tolua.getpeer(target)
-    if not t then
-        t = {}
-        tolua.setpeer(target, t)
-    end
-    setmetatable(t, TestCSWithoutSkeleton)
-    return target
-end
-
-function TestCSWithoutSkeleton:onEnter()    
-    local armature = cc.Armature:create("TestBone")
-    armature:getAnimation():playByIndex(0)
-    armature:setScale(0.2)
-    armature:setAnchorPoint(cc.p(0.5, 0.5))
-    armature:setPosition(cc.p(winSize.width / 2, winSize.height / 2))
-    self:addChild(armature) 
-end
-
-function TestCSWithoutSkeleton.create()
-    local layer = TestCSWithoutSkeleton.extend(cc.Layer:create())
-
-    if nil ~= layer then
-        layer:createMenu()
-        layer:createToExtensionMenu()
-        layer:onEnter()
-        layer:creatTitleAndSubTitle(armatureSceneIdx)
-    end 
-    return layer   
-end
-
 local TestChangeZorder = class("TestChangeZorder",ArmatureTestLayer)
 TestChangeZorder.__index = TestChangeZorder
 TestChangeZorder.currentTag = -1
@@ -414,21 +343,21 @@ end
 function TestChangeZorder:onEnter()  
     self.currentTag = -1
 
-    local armature = cc.Armature:create("Knight_f/Knight")
+    local armature = ccs.Armature:create("Knight_f/Knight")
     armature:getAnimation():playByIndex(0)
     armature:setPosition(cc.p(winSize.width / 2, winSize.height / 2 - 100 ))
     armature:setScale(0.6)
     self.currentTag = self.currentTag + 1
     self:addChild(armature, self.currentTag, self.currentTag)
 
-    armature = cc.Armature:create("TestBone")
+    armature = ccs.Armature:create("Cowboy")
     armature:getAnimation():playByIndex(0)
     armature:setScale(0.24)
     armature:setPosition(cc.p(winSize.width / 2, winSize.height / 2 - 100))
     self.currentTag = self.currentTag + 1
     self:addChild(armature, self.currentTag, self.currentTag)
 
-    armature = cc.Armature:create("Dragon")
+    armature = ccs.Armature:create("Dragon")
     armature:getAnimation():playByIndex(0)
     armature:setPosition(cc.p(winSize.width / 2, winSize.height / 2 - 100))
     armature:setScale(0.6)
@@ -471,7 +400,7 @@ function TestAnimationEvent.extend(target)
 end
 
 function TestAnimationEvent:onEnter()    
-    local armature = cc.Armature:create("Cowboy")
+    local armature = ccs.Armature:create("Cowboy")
     armature:getAnimation():play("Fire")
     armature:setScaleX(-0.24)
     armature:setScaleY(0.24)
@@ -511,25 +440,25 @@ function TestParticleDisplay:onEnter()
     self:setTouchEnabled(true) 
     self.animationID = 0
 
-    self.armature = cc.Armature:create("robot")
+    self.armature = ccs.Armature:create("robot")
     self.armature:getAnimation():playByIndex(0)
     self.armature:setPosition(VisibleRect:center())
     self.armature:setScale(0.48)
     self:addChild(self.armature)
 
-    local displayData = cc.ParticleDisplayData:create()
-    displayData:setParam("Particles/SmallSun.plist")
+    local p1 = cc.ParticleSystemQuad:create("Particles/SmallSun.plist")
+    local p2 = cc.ParticleSystemQuad:create("Particles/SmallSun.plist")
 
-    local bone  = cc.Bone:create("p1")
-    bone:addDisplay(displayData, 0)
+    local bone  = ccs.Bone:create("p1")
+    bone:addDisplay(p1, 0)
     bone:changeDisplayByIndex(0, true)
     bone:setIgnoreMovementBoneData(true)
     bone:setZOrder(100)
     bone:setScale(1.2)
     self.armature:addBone(bone, "bady-a3")
     
-    bone  = cc.Bone:create("p2")
-    bone:addDisplay(displayData, 0)
+    bone  = ccs.Bone:create("p2")
+    bone:addDisplay(p2, 0)
     bone:changeDisplayByIndex(0, true)
     bone:setIgnoreMovementBoneData(true)
     bone:setZOrder(100)
@@ -583,7 +512,7 @@ function TestUseMutiplePicture:onEnter()
     self:setTouchEnabled(true) 
     self.displayIndex = 1
 
-    self.armature = cc.Armature:create("Knight_f/Knight")
+    self.armature = ccs.Armature:create("Knight_f/Knight")
     self.armature:getAnimation():playByIndex(0)
     self.armature:setPosition(cc.p(VisibleRect:left().x + 70, VisibleRect:left().y))
     self.armature:setScale(1.2)
@@ -600,11 +529,10 @@ function TestUseMutiplePicture:onEnter()
         "weapon_f-hammer.png",
     };
 
-    local spriteDisplayData = cc.SpriteDisplayData:create()
     local i = 1
     for i = 1,table.getn(weapon) do
-        spriteDisplayData:setParam(weapon[i])
-        self.armature:getBone("weapon"):addDisplay(spriteDisplayData, i - 1)
+        local skin = ccs.Skin:createWithSpriteFrameName(weapon[i])
+        self.armature:getBone("weapon"):addDisplay(skin, i - 1)
     end
 
     local function onTouchBegan(x, y)
@@ -649,7 +577,7 @@ function TestBoundingBox.extend(target)
 end
 
 function TestBoundingBox:onEnter()
-    local armature = cc.Armature:create("Cowboy")
+    local armature = ccs.Armature:create("Cowboy")
     armature:getAnimation():playByIndex(0)
     armature:setPosition(VisibleRect:center())
     armature:setScale(0.2)
@@ -685,7 +613,7 @@ end
 function TestAnchorPoint:onEnter()
     local i = 1
     for  i = 1 , 5 do
-        local armature = cc.Armature:create("Cowboy")
+        local armature = ccs.Armature:create("Cowboy")
         armature:getAnimation():playByIndex(0);
         armature:setPosition(VisibleRect:center())
         armature:setScale(0.2)
@@ -731,7 +659,7 @@ function TestArmatureNesting:onEnter()
     self:setTouchEnabled(true) 
     self.weaponIndex = 0
 
-    self.armature = cc.Armature:create("cyborg")
+    self.armature = ccs.Armature:create("cyborg")
     self.armature:getAnimation():playByIndex(1)
     self.armature:setPosition(VisibleRect:center())
     self.armature:setScale(1.2)
@@ -770,7 +698,6 @@ end
 local armatureSceneArr =
 {
     TestCSWithSkeleton.create,
-    TestCSWithoutSkeleton.create,
     TestDragonBones20.create,
     TestPerformance.create,
     TestChangeZorder.create,

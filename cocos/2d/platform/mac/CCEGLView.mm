@@ -202,7 +202,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             s_captured = true;
             if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
             {
-                int id = 0;
+                long id = 0;
                 eglView->handleTouchesBegin(1, &id, &s_mouseX, &s_mouseY);
             }
         }
@@ -211,7 +211,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             s_captured = false;
             if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
             {
-                int id = 0;
+                long id = 0;
                 eglView->handleTouchesEnd(1, &id, &s_mouseX, &s_mouseY);
             }
         }
@@ -249,7 +249,7 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
     {
         if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,eglView->getFrameSize().height - s_mouseY)))
         {
-            int id = 0;
+            long id = 0;
             eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
         }
     }

@@ -34,7 +34,6 @@ namespace gui {
 class UIHelper
 {
 public:
-
     /**
      * Finds a widget whose tag equals to param tag from root widget.
      *

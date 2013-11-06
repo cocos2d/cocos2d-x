@@ -207,7 +207,7 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     JsonDictionary *jsonDict = NULL;
     jsonpath = FileUtils::getInstance()->fullPathForFilename(fileName);
     
-    unsigned long size = 0;
+    long size = 0;
     des = (char*)(FileUtils::getInstance()->getFileData(jsonpath.c_str(),"r" , &size));
 	if(NULL == des || strcmp(des, "") == 0)
 	{
@@ -225,7 +225,7 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     }
     
     int texturesCount = DICTOOL->getArrayCount_json(jsonDict, "textures");
-    int pos = jsonpath.find_last_of('/');
+    long pos = jsonpath.find_last_of('/');
 	m_strFilePath = jsonpath.substr(0,pos+1);
     for (int i=0; i<texturesCount; i++)
     {
