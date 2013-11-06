@@ -141,6 +141,7 @@ target_link_libraries(cocos2d
   X11
   rt
   z
+  pthread
 )
 
 set_target_properties(cocos2d
