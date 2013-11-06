@@ -372,9 +372,6 @@
     <ClCompile Include="..\CocoStudio\Components\CCInputDelegate.cpp">
       <Filter>CocoStudio\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClCompile>
@@ -479,6 +476,9 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.cpp">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -727,9 +727,6 @@
     <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h">
       <Filter>CocoStudio\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClInclude>
@@ -858,6 +855,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\SceneReader.h">
+      <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

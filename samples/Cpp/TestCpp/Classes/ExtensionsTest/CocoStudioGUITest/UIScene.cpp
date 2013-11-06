@@ -52,7 +52,7 @@ void UIScene::toExtensionsMainLayer(CCObject* sender)
     UISceneManager::purgeUISceneManager();
     ActionManager::purgeActionManager();
     UIHelper::purgeUIHelper();
-    CCSSceneReader::sharedSceneReader()->purgeSceneReader();
+    SceneReader::sharedSceneReader()->purgeSceneReader();
     
     CocosGUITestScene* pScene = new CocosGUITestScene();
     pScene->runThisTest();
