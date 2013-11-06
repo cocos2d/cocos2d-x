@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCSSCENEREADER_H__
-#define __CCSSCENEREADER_H__
+#ifndef __SceneReader_H__
+#define __SceneReader_H__
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
@@ -34,14 +34,14 @@ NS_CC_EXT_BEGIN
 *   @js NA
 *   @lua NA
 */
-class CCSSceneReader
+class SceneReader
 {
 public:
-	CCSSceneReader(void);
-	~CCSSceneReader(void);
+	SceneReader(void);
+	~SceneReader(void);
 
 public:
-	static CCSSceneReader* sharedSceneReader();
+	static SceneReader* sharedSceneReader();
 	void purgeSceneReader();
 	static const char* sceneReaderVersion();
 	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
@@ -50,7 +50,7 @@ private:
     void setPropertyFromJsonDict(cocos2d::CCNode *node, cs::CSJsonDictionary* dict);
 
 private:
-	static CCSSceneReader* s_sharedReader;
+	static SceneReader* s_sharedReader;
 };
 
 
