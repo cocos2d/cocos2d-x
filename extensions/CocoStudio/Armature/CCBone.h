@@ -142,20 +142,23 @@ public:
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
      */
-    virtual void setTransformDirty(bool dirty);
+    virtual inline void setTransformDirty(bool dirty) { m_bBoneTransformDirty = dirty; }
 
-    virtual bool isTransformDirty();
+    virtual inline bool isTransformDirty() { return m_bBoneTransformDirty; }
 
     virtual CCAffineTransform nodeToArmatureTransform();
     virtual CCAffineTransform nodeToWorldTransform();
 
     CCNode *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
 
     /*
      * Get the ColliderBody list in this bone. The object in the CCArray is ColliderBody.
      */
     virtual CCArray *getColliderBodyList();
 
+    virtual void setColliderFilter(CCColliderFilter *filter);
+    virtual CCColliderFilter *getColliderFilter();
 public:
     /*
      *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
@@ -196,6 +199,12 @@ protected:
 
     //! World Point, Scale, Rotation in armature space
     CC_SYNTHESIZE_READONLY(CCBaseData *, m_tWorldInfo, WorldInfo);
+
+    //! Armature's parent bone
+    CCBone *m_pArmatureParentBone;
+
+    //! Data version
+    float m_fDataVersion;
 };
 
 NS_CC_EXT_END
