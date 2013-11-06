@@ -114,15 +114,15 @@ bool SAXParser::parse(const char* pXMLData, unsigned int uDataLength)
 
 bool SAXParser::parse(const char *pszFile)
 {
-    bool bRet = false;
-    unsigned long size = 0;
+    bool ret = false;
+    long size = 0;
     char* pBuffer = (char*)FileUtils::getInstance()->getFileData(pszFile, "rt", &size);
     if (pBuffer != NULL && size > 0)
     {
-        bRet = parse(pBuffer, size);
+        ret = parse(pBuffer, size);
     }
     CC_SAFE_DELETE_ARRAY(pBuffer);
-    return bRet;
+    return ret;
 }
 
 void SAXParser::startElement(void *ctx, const CC_XML_CHAR *name, const CC_XML_CHAR **atts)
