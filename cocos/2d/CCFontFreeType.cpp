@@ -99,8 +99,8 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
     FT_Face face;
 
-    int len = 0;
-    _ttfData = FileUtils::getInstance()->getFileData(fontName.c_str(), "rb", (unsigned long *)(&len));
+    long len = 0;
+    _ttfData = FileUtils::getInstance()->getFileData(fontName.c_str(), "rb", &len);
     if (!_ttfData)
         return false;
 

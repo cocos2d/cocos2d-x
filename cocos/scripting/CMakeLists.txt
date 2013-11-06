@@ -1,6 +1,7 @@
 set(LUABINDING_SRC
   auto-generated/lua-bindings/lua_cocos2dx_auto.cpp
   auto-generated/lua-bindings/lua_cocos2dx_extension_auto.cpp
+  auto-generated/lua-bindings/lua_cocos2dx_studio_auto.cpp
   lua/bindings/tolua_fix.c
   lua/bindings/CCLuaBridge.cpp
   lua/bindings/CCLuaEngine.cpp

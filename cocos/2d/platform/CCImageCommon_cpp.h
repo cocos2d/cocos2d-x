@@ -416,7 +416,7 @@ bool Image::initWithImageFile(const char * strPath)
 
     SDL_FreeSurface(iSurf);
 #else
-    unsigned long bufferLen = 0;
+    long bufferLen = 0;
     unsigned char* buffer = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &bufferLen);
 
     if (buffer != nullptr && bufferLen > 0)
@@ -432,23 +432,23 @@ bool Image::initWithImageFile(const char * strPath)
 
 bool Image::initWithImageFileThreadSafe(const char *fullpath)
 {
-    bool bRet = false;
-    unsigned long dataLen = 0;
+    bool ret = false;
+    long dataLen = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     FileUtilsAndroid *fileUitls = (FileUtilsAndroid*)FileUtils::getInstance();
-    unsigned char *pBuffer = fileUitls->getFileDataForAsync(fullpath, "rb", &dataLen);
+    unsigned char *buffer = fileUitls->getFileDataForAsync(fullpath, "rb", &dataLen);
 #else
-    unsigned char *pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &dataLen);
+    unsigned char *buffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &dataLen);
 #endif
-    if (pBuffer != NULL && dataLen > 0)
+    if (buffer != NULL && dataLen > 0)
     {
-        bRet = initWithImageData(pBuffer, dataLen);
+        ret = initWithImageData(buffer, dataLen);
     }
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    return bRet;
+    CC_SAFE_DELETE_ARRAY(buffer);
+    return ret;
 }
 
-bool Image::initWithImageData(const unsigned char * data, int dataLen)
+bool Image::initWithImageData(const unsigned char * data, long dataLen)
 {
     bool ret = false;
     
@@ -1190,13 +1190,13 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
     
     if (!testFormatForPvr2TCSupport(formatFlags))
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", (int)formatFlags);
         return false;
     }
 
     if (v2_pixel_formathash.find(formatFlags) == v2_pixel_formathash.end())
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", (int)formatFlags);
         return false;
     }
     
@@ -1204,7 +1204,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
 
     if (it == Texture2D::getPixelFormatInfoMap().end())
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", (int)formatFlags);
         return false;
     }
 
@@ -1757,7 +1757,7 @@ bool Image::initWithWebpData(const unsigned char * data, int dataLen)
 	return bRet;
 }
 
-bool Image::initWithRawData(const unsigned char * data, int dataLen, int width, int height, int bitsPerComponent, bool preMulti)
+bool Image::initWithRawData(const unsigned char * data, long dataLen, long width, long height, long bitsPerComponent, bool preMulti)
 {
     bool bRet = false;
     do 
