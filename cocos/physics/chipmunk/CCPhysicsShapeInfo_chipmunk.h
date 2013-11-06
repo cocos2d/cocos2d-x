@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
+#define __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
+
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-
-#ifndef __CCPHYSICS_SHAPE_INFO_H__
-#define __CCPHYSICS_SHAPE_INFO_H__
 
 #include <vector>
 #include <map>
@@ -70,6 +70,6 @@ private:
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_SHAPE_INFO_H__
 
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
