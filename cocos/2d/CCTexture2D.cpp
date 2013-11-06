@@ -119,7 +119,7 @@ static bool _PVRHaveAlphaPremultiplied = false;
 //conventer function
 
 // IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBB
-void Texture2D::convertI8ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertI8ToRGB888(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i=0; i < dataLen; ++i)
     {
@@ -130,7 +130,7 @@ void Texture2D::convertI8ToRGB888(const unsigned char* data, int dataLen, unsign
 }
 
 // IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
-void Texture2D::convertAI88ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertAI88ToRGB888(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen - 1; i < l; i += 2)
     {
@@ -141,7 +141,7 @@ void Texture2D::convertAI88ToRGB888(const unsigned char* data, int dataLen, unsi
 }
 
 // IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBBAAAAAAAA
-void Texture2D::convertI8ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertI8ToRGBA8888(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0; i < dataLen; ++i)
     {
@@ -153,7 +153,7 @@ void Texture2D::convertI8ToRGBA8888(const unsigned char* data, int dataLen, unsi
 }
 
 // IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
-void Texture2D::convertAI88ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertAI88ToRGBA8888(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen - 1; i < l; i += 2)
     {
@@ -165,7 +165,7 @@ void Texture2D::convertAI88ToRGBA8888(const unsigned char* data, int dataLen, un
 }
 
 // IIIIIIII -> RRRRRGGGGGGBBBBB
-void Texture2D::convertI8ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertI8ToRGB565(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0; i < dataLen; ++i)
@@ -177,7 +177,7 @@ void Texture2D::convertI8ToRGB565(const unsigned char* data, int dataLen, unsign
 }
 
 // IIIIIIIIAAAAAAAA -> RRRRRGGGGGGBBBBB
-void Texture2D::convertAI88ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertAI88ToRGB565(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0, l = dataLen - 1; i < l; i += 2)
@@ -189,7 +189,7 @@ void Texture2D::convertAI88ToRGB565(const unsigned char* data, int dataLen, unsi
 }
 
 // IIIIIIII -> RRRRGGGGBBBBAAAA
-void Texture2D::convertI8ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertI8ToRGBA4444(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0; i < dataLen; ++i)
@@ -202,7 +202,7 @@ void Texture2D::convertI8ToRGBA4444(const unsigned char* data, int dataLen, unsi
 }
 
 // IIIIIIIIAAAAAAAA -> RRRRGGGGBBBBAAAA
-void Texture2D::convertAI88ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertAI88ToRGBA4444(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0, l = dataLen - 1; i < l; i += 2)
@@ -215,7 +215,7 @@ void Texture2D::convertAI88ToRGBA4444(const unsigned char* data, int dataLen, un
 }
 
 // IIIIIIII -> RRRRRGGGGGBBBBBA
-void Texture2D::convertI8ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertI8ToRGB5A1(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0; i < dataLen; ++i)
@@ -228,7 +228,7 @@ void Texture2D::convertI8ToRGB5A1(const unsigned char* data, int dataLen, unsign
 }
 
 // IIIIIIIIAAAAAAAA -> RRRRRGGGGGBBBBBA
-void Texture2D::convertAI88ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertAI88ToRGB5A1(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0, l = dataLen - 1; i < l; i += 2)
@@ -241,7 +241,7 @@ void Texture2D::convertAI88ToRGB5A1(const unsigned char* data, int dataLen, unsi
 }
 
 // IIIIIIII -> IIIIIIIIAAAAAAAA
-void Texture2D::convertI8ToAI88(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertI8ToAI88(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0; i < dataLen; ++i)
@@ -252,7 +252,7 @@ void Texture2D::convertI8ToAI88(const unsigned char* data, int dataLen, unsigned
 }
 
 // IIIIIIIIAAAAAAAA -> AAAAAAAA
-void Texture2D::convertAI88ToA8(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertAI88ToA8(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 1; i < dataLen; i += 2)
     {
@@ -261,7 +261,7 @@ void Texture2D::convertAI88ToA8(const unsigned char* data, int dataLen, unsigned
 }
 
 // IIIIIIIIAAAAAAAA -> IIIIIIII
-void Texture2D::convertAI88ToI8(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertAI88ToI8(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen - 1; i < l; i += 2)
     {
@@ -270,7 +270,7 @@ void Texture2D::convertAI88ToI8(const unsigned char* data, int dataLen, unsigned
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
-void Texture2D::convertRGB888ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGB888ToRGBA8888(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen - 2; i < l; i += 3)
     {
@@ -282,7 +282,7 @@ void Texture2D::convertRGB888ToRGBA8888(const unsigned char* data, int dataLen, 
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
-void Texture2D::convertRGBA8888ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGBA8888ToRGB888(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen - 3; i < l; i += 4)
     {
@@ -293,7 +293,7 @@ void Texture2D::convertRGBA8888ToRGB888(const unsigned char* data, int dataLen, 
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGGBBBBB
-void Texture2D::convertRGB888ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGB888ToRGB565(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0, l = dataLen - 2; i < l; i += 3)
@@ -305,7 +305,7 @@ void Texture2D::convertRGB888ToRGB565(const unsigned char* data, int dataLen, un
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRGGGGGGBBBBB
-void Texture2D::convertRGBA8888ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGBA8888ToRGB565(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0, l = dataLen - 3; i < l; i += 4)
@@ -317,7 +317,7 @@ void Texture2D::convertRGBA8888ToRGB565(const unsigned char* data, int dataLen, 
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIII
-void Texture2D::convertRGB888ToI8(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGB888ToI8(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen - 2; i < l; i += 3)
     {
@@ -326,7 +326,7 @@ void Texture2D::convertRGB888ToI8(const unsigned char* data, int dataLen, unsign
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIII
-void Texture2D::convertRGBA8888ToI8(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGBA8888ToI8(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen - 3; i < l; i += 4)
     {
@@ -335,7 +335,7 @@ void Texture2D::convertRGBA8888ToI8(const unsigned char* data, int dataLen, unsi
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> AAAAAAAA
-void Texture2D::convertRGBA8888ToA8(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGBA8888ToA8(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen -3; i < l; i += 4)
     {
@@ -344,7 +344,7 @@ void Texture2D::convertRGBA8888ToA8(const unsigned char* data, int dataLen, unsi
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIIIAAAAAAAA
-void Texture2D::convertRGB888ToAI88(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGB888ToAI88(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen - 2; i < l; i += 3)
     {
@@ -355,7 +355,7 @@ void Texture2D::convertRGB888ToAI88(const unsigned char* data, int dataLen, unsi
 
 
 // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIIIAAAAAAAA
-void Texture2D::convertRGBA8888ToAI88(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGBA8888ToAI88(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     for (int i = 0, l = dataLen - 3; i < l; i += 4)
     {
@@ -365,7 +365,7 @@ void Texture2D::convertRGBA8888ToAI88(const unsigned char* data, int dataLen, un
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRGGGGBBBBAAAA
-void Texture2D::convertRGB888ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGB888ToRGBA4444(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0, l = dataLen - 2; i < l; i += 3)
@@ -378,7 +378,7 @@ void Texture2D::convertRGB888ToRGBA4444(const unsigned char* data, int dataLen, 
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRGGGGBBBBAAAA
-void Texture2D::convertRGBA8888ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGBA8888ToRGBA4444(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
     for (int i = 0, l = dataLen - 3; i < l; i += 4)
@@ -391,10 +391,10 @@ void Texture2D::convertRGBA8888ToRGBA4444(const unsigned char* data, int dataLen
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGBBBBBA
-void Texture2D::convertRGB888ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGB888ToRGB5A1(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
-    for (int i = 0, l = dataLen - 2; i < l; i += 3)
+    for (long i = 0, l = dataLen - 2; i < l; i += 3)
     {
         *out16++ = (data[i] & 0x00F8) << 8    //R
             | (data[i + 1] & 0x00F8) << 3     //G
@@ -404,10 +404,10 @@ void Texture2D::convertRGB888ToRGB5A1(const unsigned char* data, int dataLen, un
 }
 
 // RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGBBBBBA
-void Texture2D::convertRGBA8888ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData)
+void Texture2D::convertRGBA8888ToRGB5A1(const unsigned char* data, long dataLen, unsigned char* outData)
 {
     unsigned short* out16 = (unsigned short*)outData;
-    for (int i = 0, l = dataLen - 2; i < l; i += 4)
+    for (long i = 0, l = dataLen - 2; i < l; i += 4)
     {
         *out16++ = (data[i] & 0x00F8) << 8    //R
             | (data[i + 1] & 0x00F8) << 3     //G
@@ -451,12 +451,12 @@ Texture2D::PixelFormat Texture2D::getPixelFormat() const
     return _pixelFormat;
 }
 
-unsigned int Texture2D::getPixelsWide() const
+long Texture2D::getPixelsWide() const
 {
     return _pixelsWide;
 }
 
-unsigned int Texture2D::getPixelsHigh() const
+long Texture2D::getPixelsHigh() const
 {
     return _pixelsHigh;
 }
@@ -529,8 +529,10 @@ bool Texture2D::hasPremultipliedAlpha() const
     return _hasPremultipliedAlpha;
 }
 
-bool Texture2D::initWithData(const void *data, int dataLen, Texture2D::PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize)
+bool Texture2D::initWithData(const void *data, long dataLen, Texture2D::PixelFormat pixelFormat, long pixelsWide, long pixelsHigh, const Size& contentSize)
 {
+    CCASSERT(dataLen>0 && pixelsWide>0 && pixelsHigh>0, "Invalid size");
+
     //if data has no mipmaps, we will consider it has only one mipmap
     MipmapInfo mipmap;
     mipmap.address = (unsigned char*)data;
@@ -544,10 +546,11 @@ bool Texture2D::initWithData(const void *data, int dataLen, Texture2D::PixelForm
 
 }
 
-bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh)
+bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, long pixelsWide, long pixelsHigh)
 {
     //the pixelFormat must be a certain value 
-    CCAssert(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
+    CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
+    CCASSERT(pixelsWide>0 && pixelsHigh>0, "Invalid size");
 
     if (mipmapsNum <= 0)
     {
@@ -670,7 +673,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
 const char* Texture2D::description(void) const
 {
-    return String::createWithFormat("<Texture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", _name, _pixelsWide, _pixelsHigh, _maxS, _maxT)->getCString();
+    return String::createWithFormat("<Texture2D | Name = %u | Dimensions = %ld x %ld | Coordinates = (%.2f, %.2f)>", _name, (long)_pixelsWide, (long)_pixelsHigh, _maxS, _maxT)->getCString();
 }
 
 // implementation Texture2D (Image)
@@ -771,7 +774,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     }
 }
 
-Texture2D::PixelFormat Texture2D::convertI8ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
+Texture2D::PixelFormat Texture2D::convertI8ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
 {
     switch (format)
     {
@@ -820,7 +823,7 @@ Texture2D::PixelFormat Texture2D::convertI8ToFormat(const unsigned char* data, i
     return format;
 }
 
-Texture2D::PixelFormat Texture2D::convertAI88ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
+Texture2D::PixelFormat Texture2D::convertAI88ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
 {
     switch (format)
     {
@@ -875,7 +878,7 @@ Texture2D::PixelFormat Texture2D::convertAI88ToFormat(const unsigned char* data,
     return format;
 }
 
-Texture2D::PixelFormat Texture2D::convertRGB888ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
+Texture2D::PixelFormat Texture2D::convertRGB888ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
 {
     switch (format)
     {
@@ -923,7 +926,7 @@ Texture2D::PixelFormat Texture2D::convertRGB888ToFormat(const unsigned char* dat
     return format;
 }
 
-Texture2D::PixelFormat Texture2D::convertRGBA8888ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
+Texture2D::PixelFormat Texture2D::convertRGBA8888ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, int* outDataLen)
 {
 
     switch (format)
@@ -995,7 +998,7 @@ rgb(2) -> 1235678
 rgba(1) -> 12345678
 
 */
-Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data, int dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, int* outDataLen)
+Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data, long dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, int* outDataLen)
 {
     switch (originFormat)
     {

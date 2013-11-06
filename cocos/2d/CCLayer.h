@@ -112,12 +112,6 @@ public:
     //
     // Overrides
     //
-    
-#ifdef CC_USE_PHYSICS
-    virtual void addChild(Node* child) override;
-    virtual void addChild(Node* child, int zOrder) override;
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-#endif // CC_USE_PHYSICS
 };
 
 #ifdef __apple__

@@ -44,7 +44,7 @@ public:
     /**
      * Default destructor
      */
-    ~UIHelper();
+    virtual ~UIHelper();
     
     //initializes state of UIHelper.
     void init();

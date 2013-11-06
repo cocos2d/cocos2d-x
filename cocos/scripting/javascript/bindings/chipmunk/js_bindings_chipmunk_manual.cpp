@@ -473,13 +473,13 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 
 
 void register_CCPhysicsSprite(JSContext *cx, JSObject *obj) {
-    jsval nsval;
+    JS::RootedValue nsval(cx);
 	JSObject *ns;
 	JS_GetProperty(cx, obj, "cc", &nsval);
 	if (nsval == JSVAL_VOID) {
 		ns = JS_NewObject(cx, NULL, NULL, NULL);
 		nsval = OBJECT_TO_JSVAL(ns);
-		JS_SetProperty(cx, obj, "cc", &nsval);
+		JS_SetProperty(cx, obj, "cc", nsval);
 	} else {
 		JS_ValueToObject(cx, nsval, &ns);
 	}
@@ -488,13 +488,13 @@ void register_CCPhysicsSprite(JSContext *cx, JSObject *obj) {
 }
 
 void register_CCPhysicsDebugNode(JSContext *cx, JSObject *obj) {
-    jsval nsval;
+    JS::RootedValue nsval(cx);
     JSObject *ns;
     JS_GetProperty(cx, obj, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
         ns = JS_NewObject(cx, NULL, NULL, NULL);
         nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, obj, "cc", &nsval);
+        JS_SetProperty(cx, obj, "cc", nsval);
     } else {
         JS_ValueToObject(cx, nsval, &ns);
     }
@@ -509,7 +509,10 @@ JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
 	
-	jsval vall, valb, valr, valt;
+    JS::RootedValue vall(cx);
+    JS::RootedValue valb(cx);
+    JS::RootedValue valr(cx);
+    JS::RootedValue valt(cx);
 	ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "l", &vall);
 	ok &= JS_GetProperty(cx, jsobj, "b", &valb);

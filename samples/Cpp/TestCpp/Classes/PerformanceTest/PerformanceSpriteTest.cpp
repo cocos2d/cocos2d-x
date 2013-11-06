@@ -480,19 +480,12 @@ void  SpriteMainScene::dumpProfilerFPS()
     float maxFPS = *iter;
     float totalFPS = 0.0f;
     float averagerFPS = 0.0f;
-    for (; iter != _vecFPS.end(); ++iter)
+    for (auto fps : _vecFPS)
     {
-        if (minFPS > *iter)
-        {
-            minFPS = *iter;
-        }
-        
-        if (maxFPS < *iter)
-        {
-            maxFPS = *iter;
-        }
-        
-        totalFPS += *iter;
+        CCLOG("fps is :%f\n",fps);
+        minFPS = std::min(minFPS, fps);
+        maxFPS = std::max(maxFPS, fps);
+        totalFPS += fps;
     }
     
     averagerFPS = totalFPS / _vecFPS.size();
