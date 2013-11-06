@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
-float TweenFunction::tweenTo(float from, float change, float time, float duration, CCTweenType tweenType)
+float TweenFunction::tweenTo(float from, float change, float time, float duration, TweenType tweenType)
 {
     float delta = 0;
 
@@ -163,8 +163,8 @@ float TweenFunction::quadEaseOut(float t, float b, float c, float d)
 }
 float TweenFunction::quadEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t/d*2;
+    if ((t) < 1)
         return c / 2 * t * t + b;
     --t;
     return -c / 2 * (t * (t - 2) - 1) + b;
@@ -182,8 +182,8 @@ float TweenFunction::cubicEaseOut(float t, float b, float c, float d)
 }
 float TweenFunction::cubicEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t/d*2;
+    if ((t) < 1)
         return c / 2 * t * t * t + b;
     t -= 2;
     return c / 2 * (t * t * t + 2) + b;
@@ -201,8 +201,8 @@ float TweenFunction::quartEaseOut(float t, float b, float c, float d)
 }
 float TweenFunction::quartEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t/d*2;
+    if ((t) < 1)
         return c / 2 * t * t * t * t + b;
     t -= 2;
     return -c / 2 * (t * t * t * t - 2) + b;
@@ -220,8 +220,8 @@ float TweenFunction::quintEaseOut(float t, float b, float c, float d)
 }
 float TweenFunction::quintEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t/d*2;
+    if ((t) < 1)
         return c / 2 * t * t * t * t * t + b;
     t -= 2;
     return c / 2 * (t * t * t * t * t + 2) + b;
@@ -272,8 +272,8 @@ float TweenFunction::circEaseOut(float t, float b, float c, float d)
 }
 float TweenFunction::circEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t/d*2;
+    if ((t) < 1)
         return -c / 2 * (sqrt(1 - t * t) - 1) + b;
     t -= 2;
     return c / 2 * (sqrt(1 - t * t) + 1) + b;
@@ -323,8 +323,8 @@ float TweenFunction::elasticEaseInOut(float t, float b, float c, float d, float 
     float s = 0;
     if (t == 0)
         return b;
-    t /= d;
-    if ((t / 2) == 2)
+    t = t/d*2;
+    if ((t) == 2)
         return b + c;
     if (!p)
         p = d * (.3 * 1.5);
