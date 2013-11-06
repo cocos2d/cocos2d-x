@@ -48,7 +48,7 @@ void CocosGUIExamplesEquipScene::onExit()
 {
     m_pUILayer->removeFromParent();
     
-    CCSSceneReader::sharedSceneReader()->purgeSceneReader();
+    SceneReader::sharedSceneReader()->purgeSceneReader();
     UIHelper::purgeUIHelper();
     ActionManager::purgeActionManager();
     
