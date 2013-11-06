@@ -10,18 +10,19 @@ cocos2d-x-3.0alpha1 @??? 2013
      [FIX]          Could not set next animation in CCBAnimationCompleted callback.
      [FIX]          The Node's anchor point was changed after being added to ScrollView.
      [FIX]          Refactored and improved EventDispatcher.
-     [NEW]          Added Mouse Support For Desktop Platforms.
      [FIX]          EventListeners can't be removed sometimes.
      [FIX]          When parsing XML using TinyXML, the data size has to be specified.
+     [FIX]          Parameter type: const char* -> const string&
      [NEW]          Arm64 support.
+     [NEW]          Added Mouse Support For Desktop Platforms.
 [Android]
      [FIX]          Added EGL_RENDERABLE_TYPE to OpenGL attributes
-     [NEW]          Added Cocos2dxHelper.runOnGLThread(Runnable) again
      [FIX]          Fixed application will crash when pause and resume.
      [FIX]          Clear NoSuchMethodError Exception when JniHelper fails to find method id
      [NEW]          Added xlargeScreens="true" to supports-screens
      [NEW]          Added build/android-build.py to build all Android samples, and remove all build_native.sh/cmd
      [NEW]          Added build_native.py to build template projects, and remove build_native.sh/cmd
+     [NEW]          Added Cocos2dxHelper.runOnGLThread(Runnable) again
 [Mac]
      [FIX]          Removed unused CCLOG() from GL initialization
 [iOS]
