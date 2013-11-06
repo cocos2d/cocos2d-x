@@ -255,6 +255,15 @@ void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDi
 {
     ParticleDisplayData *displayData = (ParticleDisplayData *)decoDisplay->getDisplayData();
     ParticleSystem *system = ParticleSystemQuad::create(displayData->plist.c_str());
+
+    system->removeFromParent();
+    
+    Armature *armature = bone->getArmature();
+    if (armature)
+    {
+        system->setParent(armature);
+    }
+
     decoDisplay->setDisplay(system);
 }
 void DisplayFactory::updateParticleDisplay(Bone *bone, Node *display, float dt)

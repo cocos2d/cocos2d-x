@@ -149,6 +149,14 @@ void DisplayManager::addDisplay(Node *display, int index)
     else if (dynamic_cast<ParticleSystemQuad *>(display))
     {
         displayData = ParticleDisplayData::create();
+
+        display->removeFromParent();
+        
+        Armature *armature = _bone->getArmature();
+        if (armature)
+        {
+            display->setParent(armature);
+        }
     }
     else if(Armature *armature = dynamic_cast<Armature *>(display))
     {
