@@ -298,7 +298,7 @@ void DataReaderHelper::addDataFromFile(const char *filePath)
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
 
-    unsigned long size;
+    long size;
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
     const char *pFileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
 
@@ -389,7 +389,7 @@ void DataReaderHelper::addDataFromFileAsync(const char *filePath, Object *target
     std::string str = &filePathStr[startPos];
 
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
-    unsigned long size;
+    long size;
     data->fileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
 
     if (str.compare(".xml") == 0)
