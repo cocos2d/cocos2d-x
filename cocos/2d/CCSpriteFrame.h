@@ -58,12 +58,12 @@ public:
     /** Create a SpriteFrame with a texture filename, rect in points.
      It is assumed that the frame was not trimmed.
      */
-    static SpriteFrame* create(const char* filename, const Rect& rect);
+    static SpriteFrame* create(const std::string& filename, const Rect& rect);
     
     /** Create a SpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
      */
-    static SpriteFrame* create(const char* filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+    static SpriteFrame* create(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
     
     /** Create a SpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.
@@ -88,7 +88,7 @@ public:
     /** Initializes a SpriteFrame with a texture filename, rect in points;
      It is assumed that the frame was not trimmed.
      */
-    bool initWithTextureFilename(const char* filename, const Rect& rect);
+    bool initWithTextureFilename(const std::string& filename, const Rect& rect);
 
     /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
     The originalSize is the size in points of the frame before being trimmed.
@@ -100,7 +100,7 @@ public:
 
      @since v1.1
      */
-    bool initWithTextureFilename(const char* filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+    bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
 
 
     // attributes
