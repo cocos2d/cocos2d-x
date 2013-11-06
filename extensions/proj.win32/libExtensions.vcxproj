@@ -173,8 +173,8 @@
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp" />
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_value.cpp" />
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp" />
-    <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
@@ -318,8 +318,8 @@
     <ClInclude Include="..\CocoStudio\Json\lib_json\reader.h" />
     <ClInclude Include="..\CocoStudio\Json\lib_json\value.h" />
     <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h" />
-    <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h" />
     <ClInclude Include="..\CocoStudio\Reader\GUIReader.h" />
+    <ClInclude Include="..\CocoStudio\Reader\SceneReader.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />
