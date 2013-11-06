@@ -83,11 +83,11 @@ Skin::Skin()
     _skinTransform = AffineTransformIdentity;
 }
 
-bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
+bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
-    CCAssert(pszSpriteFrameName != nullptr, "");
+    CCAssert(spriteFrameName != "", "");
 
-    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
+    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     bool ret = true;
 
     if (pFrame != nullptr)
@@ -96,20 +96,20 @@ bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
     }
     else
     {
-        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", pszSpriteFrameName);
+        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", spriteFrameName.c_str());
         ret = false;
     }
 
-    _displayName = pszSpriteFrameName;
+    _displayName = spriteFrameName;
 
     return ret;
 }
 
-bool Skin::initWithFile(const char *pszFilename)
+bool Skin::initWithFile(const std::string& filename)
 {
-    bool ret = Sprite::initWithFile(pszFilename);
+    bool ret = Sprite::initWithFile(filename);
 
-    _displayName = pszFilename;
+    _displayName = filename;
 
     return ret;
 }
