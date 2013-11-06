@@ -112,7 +112,7 @@ bool ParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 10;
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, 60));
         this->_posVar = Point(40, 20);
 
@@ -213,7 +213,7 @@ bool ParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
         this->modeA.speedVar = 50;
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
 
         // angle
@@ -322,7 +322,7 @@ bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
         setPosVar(Point::ZERO);
 
@@ -429,7 +429,7 @@ bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
         setPosVar(Point::ZERO);
 
@@ -538,7 +538,7 @@ bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
         setPosVar(Point::ZERO);
 
@@ -646,7 +646,7 @@ bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
         setPosVar(Point::ZERO);
 
@@ -755,7 +755,7 @@ bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 0;
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
         setPosVar(Point::ZERO);
 
@@ -863,7 +863,7 @@ bool ParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 360;
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height/2));
         setPosVar(Point::ZERO);
 
@@ -968,7 +968,7 @@ bool ParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         _angleVar = 5;
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, 0));
         setPosVar(Point(20, 0));
 
@@ -1073,7 +1073,7 @@ bool ParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         setTangentialAccelVar(1);
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height + 10));
         setPosVar(Point(winSize.width/2, 0));
 
@@ -1185,7 +1185,7 @@ bool ParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
 
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        Size winSize = getDirector()->getWinSize();
         this->setPosition(Point(winSize.width/2, winSize.height));
         setPosVar(Point(winSize.width/2, 0));
 
