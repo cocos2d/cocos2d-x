@@ -47,8 +47,9 @@ void NewSprite::draw(void)
     kmMat4 transform;
     kmGLGetMatrix(KM_GL_MODELVIEW, &transform);
     RenderCommand* renderCommand = new RenderCommand();
-    renderCommand->setData(0, true, false, _ZOrder);
-    renderCommand->setQuadData(&transform, _quad, _texture->getName(), 0, 0);
+    renderCommand->setKeyData(0, true, false, _ZOrder);
+    renderCommand->setMaterialData(_texture->getName(), _shaderProgram->getProgram(), _blendFunc);
+    renderCommand->setQuadData(&transform, _quad);
 
     Renderer::getInstance()->addRenderCommand(renderCommand);
 }

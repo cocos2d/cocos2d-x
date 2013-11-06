@@ -14,13 +14,25 @@
 
 NS_CC_BEGIN
 
+class RenderCommandID
+{
+public:
+    virtual int64_t generateID() = 0;
+    inline int64_t getID() { return _id; }
+
+protected:
+    int64_t _id;
+
+};
+
 class RenderCommand
 {
 public:
 
     RenderCommand();
-    void setData(int viewport, bool isTranslucent, bool isCommand, int32_t depth);
-    void setQuadData(kmMat4* transform, V3F_C4B_T2F_Quad quad, GLuint textureID, int shaderID, int blendType);
+    void setKeyData(int viewport, bool isTranslucent, bool isCommand, int32_t depth);
+    void setMaterialData( GLuint textureID, GLuint shaderID, BlendFunc blendType);
+    void setQuadData(kmMat4* transform, V3F_C4B_T2F_Quad quad);
 
     void generateID();
 
@@ -35,8 +47,8 @@ public:
     inline GLuint getTextureID() { return _textureID; }
     inline kmMat4* getTransform() { return &_transform; }
     inline V3F_C4B_T2F_Quad* getQuad() { return &_quad; }
-    inline int getShaderID() { return _shaderID; }
-    inline int getBlendType() { return _blendType; }
+    inline GLuint getShaderID() { return _shaderID; }
+    inline BlendFunc getBlendType() { return _blendType; }
 
 protected:
     void printID();
@@ -46,17 +58,18 @@ protected:
     int64_t _renderCommandId; /// used for sorting render commands
     int32_t _materialID;
 
-    //Data
+    //Key Data
     int _viewport;          /// Which view port it belongs to
     bool _isTranslucent;    /// Is it translucent, if it is we will have to render it
     bool _isCommand;
     int32_t _depth;
+    //Maternal
+    GLuint _textureID;
+    GLuint _shaderID;
+    BlendFunc _blendType;
 
     kmMat4 _transform;
     V3F_C4B_T2F_Quad _quad;
-    GLuint _textureID;
-    int _shaderID;
-    int _blendType;
 };
 
 NS_CC_END
