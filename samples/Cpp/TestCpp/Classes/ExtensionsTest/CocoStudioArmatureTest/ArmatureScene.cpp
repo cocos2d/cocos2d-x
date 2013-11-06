@@ -1,7 +1,6 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
 
-
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
@@ -20,6 +19,9 @@ CCLayer *CreateLayer(int index)
     case TEST_ASYNCHRONOUS_LOADING:
         pLayer = new TestAsynchronousLoading();
         break;
+    case TEST_DIRECT_LOADING:
+        pLayer = new TestDirectLoading();
+        break;
     case TEST_DRAGON_BONES_2_0:
         pLayer = new TestDragonBones20();
         break;
@@ -29,11 +31,17 @@ CCLayer *CreateLayer(int index)
     case TEST_PERFORMANCE:
         pLayer = new TestPerformance();
         break;
+    case TEST_PERFORMANCE_BATCHNODE:
+        pLayer = new TestPerformanceBatchNode();
+        break;
     case TEST_CHANGE_ZORDER:
         pLayer = new TestChangeZorder();
         break;
     case TEST_ANIMATION_EVENT:
         pLayer = new TestAnimationEvent();
+        break;
+    case TEST_FRAME_EVENT:
+        pLayer = new TestFrameEvent();
         break;
     case  TEST_PARTICLE_DISPLAY:
         pLayer = new TestParticleDisplay();
@@ -236,7 +244,7 @@ void TestAsynchronousLoading::onEnter()
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
 
     //! load data directly
     // 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
@@ -256,6 +264,11 @@ std::string TestAsynchronousLoading::subtitle()
 {
     return "current percent : ";
 }
+void TestAsynchronousLoading::restartCallback(CCObject* pSender)
+{
+    CCArmatureDataManager::sharedArmatureDataManager()->purge();
+    ArmatureTestLayer::restartCallback(pSender);
+}
 void TestAsynchronousLoading::dataLoaded(float percent)
 {
     CCLabelTTF *label = (CCLabelTTF *)getChildByTag(10001);
@@ -272,6 +285,27 @@ void TestAsynchronousLoading::dataLoaded(float percent)
         restartItem->setEnabled(true);
         nextItem->setEnabled(true);
     }
+}
+
+
+void TestDirectLoading::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+
+    // remove sigle resource
+    CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/bear.ExportJson");
+
+    // load resource directly
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/bear.ExportJson");
+
+    CCArmature *armature = CCArmature::create("bear");
+    armature->getAnimation()->playByIndex(0);
+    armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+    addChild(armature);
+}
+std::string TestDirectLoading::title()
+{
+    return "Test Direct Loading";
 }
 
 
@@ -316,6 +350,9 @@ std::string TestDragonBones20::title()
 
 
 
+#define ArmaturePerformanceTag 20000
+
+
 TestPerformance::~TestPerformance()
 {
 }
@@ -323,10 +360,23 @@ void TestPerformance::onEnter()
 {
     ArmatureTestLayer::onEnter();
 
+    CCMenuItemFont::setFontSize(65);
+    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(TestPerformance::onDecrease));
+    decrease->setColor(ccc3(0,200,20));
+    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(TestPerformance::onIncrease));
+    increase->setColor(ccc3(0,200,20));
+
+    CCMenu *menu = CCMenu::create(decrease, increase, NULL);
+    menu->alignItemsHorizontally();
+    menu->setPosition(ccp(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
+    addChild(menu, 10000);
+
     armatureCount = frames = times = lastTimes = 0;
     generated = false;
 
     scheduleUpdate();
+
+    addArmature(100);
 }
 
 std::string TestPerformance::title()
@@ -337,35 +387,76 @@ std::string TestPerformance::subtitle()
 {
     return "Current CCArmature Count : ";
 }
-void TestPerformance::addArmature(cocos2d::extension::CCArmature *armature)
+void TestPerformance::onIncrease(CCObject* pSender)
 {
-    armatureCount++;
-    addChild(armature, armatureCount);
+    addArmature(20);
 }
-void TestPerformance::update(float delta)
+void TestPerformance::onDecrease(CCObject* pSender)
 {
-    frames ++;
-    times += delta;
+    if (armatureCount == 0)
+        return;
 
-    if (frames / times > 58)
+    for (int i = 0; i<20; i++)
     {
+        removeArmatureFromParent(ArmaturePerformanceTag + armatureCount);
+        armatureCount --;
+        refreshTitile();
+    }
+}
+void TestPerformance::addArmature(int number)
+{
+    for (int i = 0; i<number; i++)
+    {
+        armatureCount++;
+
         cocos2d::extension::CCArmature *armature = NULL;
         armature = new cocos2d::extension::CCArmature();
         armature->init("Knight_f/Knight");
         armature->getAnimation()->playByIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
         armature->setScale(0.6f);
-        addArmature(armature);
+        addArmatureToParent(armature);
         armature->release();
-
-        char pszCount[255];
-        sprintf(pszCount, "%s %i", subtitle().c_str(), armatureCount);
-        CCLabelTTF *label = (CCLabelTTF *)getChildByTag(10001);
-        label->setString(pszCount);
     }
+
+    refreshTitile();
+}
+void TestPerformance::addArmatureToParent(cocos2d::extension::CCArmature *armature)
+{
+    addChild(armature, 0, ArmaturePerformanceTag + armatureCount);
+}
+void TestPerformance::removeArmatureFromParent(int tag)
+{
+    removeChildByTag(ArmaturePerformanceTag + armatureCount);
+}
+void TestPerformance::refreshTitile()
+{
+    char pszCount[255];
+    sprintf(pszCount, "%s %i", subtitle().c_str(), armatureCount);
+    CCLabelTTF *label = (CCLabelTTF *)getChildByTag(10001);
+    label->setString(pszCount);
 }
 
 
+void TestPerformanceBatchNode::onEnter()
+{
+    batchNode = CCBatchNode::create();
+    addChild(batchNode);
+
+    TestPerformance::onEnter();
+}
+std::string TestPerformanceBatchNode::title()
+{
+    return "Test Performance of using CCBatchNode";
+}
+void TestPerformanceBatchNode::addArmatureToParent(cocos2d::extension::CCArmature *armature)
+{
+    batchNode->addChild(armature, 0, ArmaturePerformanceTag + armatureCount);
+}
+void TestPerformanceBatchNode::removeArmatureFromParent(int tag)
+{
+    batchNode->removeChildByTag(ArmaturePerformanceTag + armatureCount);
+}
 
 
 
@@ -474,6 +565,50 @@ void TestAnimationEvent::callback2()
 }
 
 
+
+#define  FRAME_EVENT_ACTION_TAG 10000
+
+void TestFrameEvent::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+    cocos2d::extension::CCArmature *armature = cocos2d::extension::CCArmature::create("HeroAnimation");
+    armature->getAnimation()->play("attack");
+    armature->getAnimation()->setSpeedScale(0.5);
+    armature->setPosition(ccp(VisibleRect::center().x - 50, VisibleRect::center().y -100));
+
+    /*
+     * Set armature's frame event callback function
+     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+     */
+    armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestFrameEvent::onFrameEvent));
+
+    addChild(armature);
+
+    schedule( schedule_selector(TestFrameEvent::checkAction) );
+}
+std::string TestFrameEvent::title()
+{
+    return "Test Frame Event";
+}
+void TestFrameEvent::onFrameEvent(cocos2d::extension::CCBone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
+{
+    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
+
+
+    if (!this->getActionByTag(FRAME_EVENT_ACTION_TAG) || this->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
+    {
+        this->stopAllActions();
+
+        CCActionInterval *action =  CCShatteredTiles3D::create(0.2f, CCSizeMake(16,12), 5, false); 
+        action->setTag(FRAME_EVENT_ACTION_TAG);
+        this->runAction(action);
+    }
+}
+void TestFrameEvent::checkAction(float dt)
+{
+    if ( this->numberOfRunningActions() == 0 && this->getGrid() != NULL)
+        this->setGrid(NULL);
+}
 
 
 void TestParticleDisplay::onEnter()
@@ -870,17 +1005,12 @@ void TestColliderDetector::initWorld()
 
     bullet->setCPBody(body);
 
-    body = cpBodyNew(INFINITY, INFINITY);
+    body = cpBodyNew(1.0f, INFINITY);
     cpSpaceAddBody(space, body);
     armature2->setBody(body);
 
-    shape = armature2->getShapeList();
-    while(shape)
-    {
-        cpShape *next = shape->next_private;
-        shape->collision_type = eEnemyTag;
-        shape = next;
-    }
+    CCColliderFilter filter = CCColliderFilter(eEnemyTag);
+    armature2->setColliderFilter(&filter);
 
     cpSpaceAddCollisionHandler(space, eEnemyTag, eBulletTag, beginHit, NULL, NULL, endHit, NULL);
 }
@@ -911,7 +1041,7 @@ void TestBoundingBox::draw()
 {
     CC_NODE_DRAW_SETUP();
 
-    rect = CCRectApplyAffineTransform(armature->boundingBox(), armature->nodeToParentTransform());
+    rect = armature->boundingBox();
 
     ccDrawColor4B(100, 100, 100, 255);
     ccDrawRect(rect.origin, ccp(rect.getMaxX(), rect.getMaxY()));

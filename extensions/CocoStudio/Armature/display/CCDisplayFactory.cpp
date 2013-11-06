@@ -68,13 +68,15 @@ void CCDisplayFactory::createDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
     }
 }
 
-void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty)
+void CCDisplayFactory::updateDisplay(CCBone *bone, float dt, bool dirty)
 {
-    CS_RETURN_IF(!decoDisplay);
+    CCNode *display = bone->getDisplayRenderNode();
+    CS_RETURN_IF(!display);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (dirty)
     {
+        CCDecorativeDisplay *decoDisplay = bone->getDisplayManager()->getCurrentDecorativeDisplay();
         CCColliderDetector *detector = decoDisplay->getColliderDetector();
         if (detector)
         {
@@ -85,9 +87,9 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
                 CC_BREAK_IF(!detector->getBody());
 #endif
-                CCNode *node = decoDisplay->getDisplay();
-                CCAffineTransform displayTransform = node->nodeToParentTransform();
-                CCPoint anchorPoint =  node->getAnchorPointInPoints();
+
+                CCAffineTransform displayTransform = display->nodeToParentTransform();
+                CCPoint anchorPoint =  display->getAnchorPointInPoints();
                 anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
                 displayTransform.tx = anchorPoint.x;
                 displayTransform.ty = anchorPoint.y;
@@ -99,24 +101,23 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
     }
 #endif
 
-    CCNode *display = decoDisplay->getDisplay();
-
-    switch(decoDisplay->getDisplayData()->displayType)
+    switch(bone->getDisplayRenderNodeType())
     {
     case CS_DISPLAY_SPRITE:
-        updateSpriteDisplay(bone, display, dt, dirty);
+        if (dirty)
+        {
+            ((CCSkin*)display)->updateArmatureTransform();
+        }
         break;
     case CS_DISPLAY_PARTICLE:
-        updateParticleDisplay(bone, display, dt, dirty);
+        updateParticleDisplay(bone, display, dt);
         break;
     case CS_DISPLAY_ARMATURE:
-        updateArmatureDisplay(bone, display, dt, dirty);
+        updateArmatureDisplay(bone, display, dt);
         break;
     default:
-    {
         display->setAdditionalTransform(bone->nodeToArmatureTransform());
-    }
-    break;
+        break;
     }
 }
 
@@ -154,6 +155,13 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
         skin = CCSkin::createWithSpriteFrameName((textureName + ".png").c_str());
     }
 
+    decoDisplay->setDisplay(skin);
+
+    if (skin == NULL)
+    {
+        return;
+    }
+
     skin->setBone(bone);
 
     initSpriteDisplay(bone, decoDisplay, displayData->displayName.c_str(), skin);
@@ -170,9 +178,6 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
             skin->setSkinData(*bone->getBoneData());
         }
     }
-
-    decoDisplay->setDisplay(skin);
-
 }
 
 void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, const char *displayName, CCSkin *skin)
@@ -207,17 +212,10 @@ void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *deco
 #endif
 }
 
-void CCDisplayFactory::updateSpriteDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
-{
-    CS_RETURN_IF(!dirty);
-    CCSkin *skin = (CCSkin *)display;
-    skin->updateArmatureTransform();
-}
-
 
 void CCDisplayFactory::addArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData)
 {
-    CCArmatureDisplayData *adp = CCArmatureDisplayData::create(); ;
+    CCArmatureDisplayData *adp = CCArmatureDisplayData::create();
     adp->copy((CCArmatureDisplayData *)displayData);
     decoDisplay->setDisplayData(adp);
 
@@ -231,7 +229,7 @@ void CCDisplayFactory::createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *
 
     decoDisplay->setDisplay(armature);
 }
-void CCDisplayFactory::updateArmatureDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
+void CCDisplayFactory::updateArmatureDisplay(CCBone *bone, CCNode *display, float dt)
 {
     CCArmature *armature = (CCArmature *)display;
     if(armature)
@@ -255,9 +253,18 @@ void CCDisplayFactory::createParticleDisplay(CCBone *bone, CCDecorativeDisplay *
 {
     CCParticleDisplayData *displayData = (CCParticleDisplayData *)decoDisplay->getDisplayData();
     CCParticleSystem *system = CCParticleSystemQuad::create(displayData->plist.c_str());
+    
+    system->removeFromParent();
+    
+    CCArmature *armature = bone->getArmature();
+    if (armature)
+    {
+        system->setParent(bone->getArmature());
+    }
+
     decoDisplay->setDisplay(system);
 }
-void CCDisplayFactory::updateParticleDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
+void CCDisplayFactory::updateParticleDisplay(CCBone *bone, CCNode *display, float dt)
 {
     CCParticleSystem *system = (CCParticleSystem *)display;
     CCBaseData node;
