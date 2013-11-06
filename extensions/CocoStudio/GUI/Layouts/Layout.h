@@ -198,6 +198,13 @@ public:
     
     virtual void doLayout();
     
+    /**
+     * Adds a child to the container.
+     *
+     * @param child A child widget
+     */
+    virtual bool addChild(UIWidget* child);
+    
     /*Compatible*/
     /**
      * These methods will be removed
@@ -218,11 +225,16 @@ protected:
     
     //init background image renderer.
     void addBackGroundImage();
+    
+    void supplyTheLayoutParameterLackToChild(UIWidget* child);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
 protected:
     bool m_bClippingEnabled;
     
     //background
-    bool m_bBackGroundScale9Enable;
+    bool m_bBackGroundScale9Enabled;
     CCNode* m_pBackGroundImage;
     std::string m_strBackGroundImageFileName;
     CCRect m_backGroundImageCapInsets;

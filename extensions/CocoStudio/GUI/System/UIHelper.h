@@ -25,10 +25,6 @@
 #ifndef __UIHELPER_H__
 #define __UIHELPER_H__
 
-#include "UIInputManager.h"
-#include "../../Json/CSContentJsonDictionary.h"
-
-
 #define CCUIHELPER cocos2d::extension::UIHelper::instance()
 
 NS_CC_EXT_BEGIN
@@ -108,6 +104,7 @@ public:
      * @return finded result.
      */
     UIWidget* seekWidgetByRelativeName(UIWidget* root, const char* name);
+    
     void setFileDesignWidth(float width);
     float getFileDesignWidth();
     void setFileDesignHeight(float height);

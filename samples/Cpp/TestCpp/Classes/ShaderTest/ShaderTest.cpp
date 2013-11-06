@@ -130,6 +130,37 @@ void ShaderTestDemo::restartCallback(CCObject* pSender)
     s->release();    
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+// On WinRT and WP8 platforms we need to precompile the shaders for release on Windows 8.0 platforms
+// Please note that this is not required for WinRT on Windows 8.1.
+void ShaderTestDemo::precompileShaders()
+{
+    ShaderNode *node = new ShaderNode();
+    node->loadShaderVertex("Shaders/example_Monjori.vsh", "Shaders/example_Monjori.fsh");
+    node->loadShaderVertex("Shaders/example_Mandelbrot.vsh", "Shaders/example_Mandelbrot.fsh");
+    node->loadShaderVertex("Shaders/example_Julia.vsh", "Shaders/example_Julia.fsh");
+    node->loadShaderVertex("Shaders/example_Heart.vsh", "Shaders/example_Heart.fsh");
+    node->loadShaderVertex("Shaders/example_Flower.vsh", "Shaders/example_Flower.fsh");
+    node->loadShaderVertex("Shaders/example_Plasma.vsh", "Shaders/example_Plasma.fsh");
+    node->release();
+
+
+    GLchar * fragSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathForFilename("Shaders/example_HorizontalColor.fsh").c_str())->getCString();
+    CCGLProgram *p = new CCGLProgram();
+    p->initWithVertexShaderByteArray(ccPositionTexture_vert, fragSource);
+    p->link();
+
+    fragSource = (GLchar*) CCString::createWithContentsOfFile(
+                                CCFileUtils::sharedFileUtils()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();\
+    p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
+    p->link();
+    p->release();
+    
+    
+}
+#endif
+
+
 ///---------------------------------------
 // 
 // ShaderNode
@@ -771,13 +802,16 @@ gl_FragColor = colors[z] * texture2D(CC_Texture0, v_texCoord);			\n\
 ShaderFail::ShaderFail()
 {
     CCGLProgram *p = new CCGLProgram();
-    p->initWithVertexShaderByteArray(ccPositionTexture_vert, shader_frag_fail);
+    bool result = p->initWithVertexShaderByteArray(ccPositionTexture_vert, shader_frag_fail);
+    if(result == true)
+	{
+		p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+		p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
     
-    p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
-    p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
-    
-    p->link();
-    p->updateUniforms();
+		p->link();
+		p->updateUniforms();
+	}
+
     p->release();
 }
 
@@ -803,3 +837,6 @@ void ShaderTestScene::runThisTest()
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
+
+
+

@@ -54,7 +54,8 @@ m_pfnPageTurningSelector(NULL)
 
 UIPageView::~UIPageView()
 {
-    m_pages->release();
+    m_pages->removeAllObjects();
+    CC_SAFE_RELEASE(m_pages);
 }
 
 UIPageView* UIPageView::create()
@@ -77,6 +78,7 @@ bool UIPageView::init()
         m_pages->retain();
         setClippingEnabled(true);
         setUpdateEnabled(true);
+        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -85,6 +87,10 @@ bool UIPageView::init()
 void UIPageView::addWidgetToPage(UIWidget *widget, int pageIdx, bool forceCreate)
 {
     if (!widget)
+    {
+        return;
+    }
+    if (pageIdx < 0)
     {
         return;
     }
@@ -110,7 +116,6 @@ void UIPageView::addWidgetToPage(UIWidget *widget, int pageIdx, bool forceCreate
             page->addChild(widget);
         }
     }
-    
 }
 
 Layout* UIPageView::createPage()
@@ -224,6 +229,7 @@ void UIPageView::updateBoundaryPages()
     {
         m_pLeftChild = NULL;
         m_pRightChild = NULL;
+        return;
     }
     m_pLeftChild = dynamic_cast<UIWidget*>(m_pages->objectAtIndex(0));
     m_pRightChild = dynamic_cast<UIWidget*>(m_pages->lastObject());
@@ -481,6 +487,10 @@ void UIPageView::handleMoveLogic(const CCPoint &touchPoint)
 
 void UIPageView::handleReleaseLogic(const CCPoint &touchPoint)
 {
+    if (m_pages->count() <= 0)
+    {
+        return;
+    }
     UIWidget* curPage = dynamic_cast<UIWidget*>(m_pages->objectAtIndex(m_nCurPageIdx));
     if (curPage)
     {
@@ -583,9 +593,39 @@ int UIPageView::getCurPageIndex() const
     return m_nCurPageIdx;
 }
 
+CCArray* UIPageView::getPages()
+{
+    return m_pages;
+}
+
 const char* UIPageView::getDescription() const
 {
     return "PageView";
+}
+
+UIWidget* UIPageView::createCloneInstance()
+{
+    return UIPageView::create();
+}
+
+void UIPageView::copyClonedWidgetChildren(UIWidget* model)
+{
+    ccArray* arrayPages = dynamic_cast<UIPageView*>(model)->getPages()->data;
+    int length = arrayPages->num;
+    for (int i=0; i<length; i++)
+    {
+        Layout* page = (Layout*)(arrayPages->arr[i]);
+        addPage(dynamic_cast<Layout*>(page->clone()));
+    }
+}
+
+void UIPageView::copySpecialProperties(UIWidget *widget)
+{
+    UIPageView* pageView = dynamic_cast<UIPageView*>(widget);
+    if (pageView)
+    {
+        Layout::copySpecialProperties(widget);
+    }
 }
 
 NS_CC_EXT_END

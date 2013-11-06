@@ -82,7 +82,7 @@ void UITextFieldTest::textFieldEvent(CCObject *pSender, TextFiledEventType type)
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words")->getCString());
             break;
             
@@ -170,7 +170,7 @@ void UITextFieldTest_MaxLength::textFieldEvent(CCObject *pSender, TextFiledEvent
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words max length %d", textField->getMaxLength())->getCString());
@@ -264,7 +264,7 @@ void UITextFieldTest_Password::textFieldEvent(CCObject *pSender, TextFiledEventT
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words password")->getCString());
             break;
             

@@ -26,11 +26,7 @@ void CocosGUITestScene::runThisTest()
 {
     
 	CCDirector::sharedDirector()->replaceScene(this);
-    
-    ul = UILayer::create();
-    ul->scheduleUpdate();
-    this->addChild(ul);
-    
+        
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
     m_pItemMenu = CCMenu::create();
@@ -47,9 +43,9 @@ void CocosGUITestScene::runThisTest()
     }
     addChild(m_pItemMenu);
 }
+
 void CocosGUITestScene::MainMenuCallback(CCObject* pSender)
 {
-    ul->removeFromParent();
     TestScene::MainMenuCallback(pSender);
 }
 
@@ -58,8 +54,6 @@ void CocosGUITestScene::toCocosGUIExampleScene(CCObject* pSender)
     ((UIScrollView*)pSender)->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
     ((UIScrollView*)pSender)->getChildByName("backtotopbutton")->disable();
     CCLOG("p2 click");
-    ul->removeFromParent();
-    
 }
 
 void CocosGUITestScene::load(CCObject *pSender, int count)
