@@ -14,7 +14,6 @@ SceneEditorTestLayer::~SceneEditorTestLayer()
     ArmatureDataManager::getInstance()->destoryInstance();
 	SceneReader::getInstance()->purgeSceneReader();
 	ActionManagerEx::shareManager()->purgeActionManager();
-	UIHelper::instance()->purgeUIHelper();
 }
 
 SceneEditorTestLayer::SceneEditorTestLayer()

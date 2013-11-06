@@ -25,11 +25,15 @@
 #ifndef __UIROOTWIDGET_H__
 #define __UIROOTWIDGET_H__
 
-#include "gui/Layout.h"
+#include "gui/UILayout.h"
 
 namespace gui {
-
-class UIRootWidget : public Layout
+    
+/**
+*   @js NA
+*   @lua NA
+*/
+class UIRootWidget : public UILayout
 {
 public:
     /**
