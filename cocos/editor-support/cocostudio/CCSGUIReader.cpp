@@ -162,8 +162,8 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(JsonDictionary* data)
     }
     else if (classname && strcmp(classname, "ListView") == 0)
     {
-//        widget = UIListView::create();
-//        setPropsForListViewFromJsonDictionary(widget, uiOptions);
+        widget = UIListView::create();
+        setPropsForListViewFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "PageView") == 0)
     {
@@ -232,13 +232,14 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
         const char* file = DICTOOL->getStringValueFromArray_json(jsonDict, "textures", i);
         std::string tp = m_strFilePath;
         tp.append(file);
-//        CCUIHELPER->addSpriteFrame(tp.c_str());
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp.c_str());
     }
     float fileDesignWidth = DICTOOL->getFloatValue_json(jsonDict, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(jsonDict, "designHeight");
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
         printf("Read design size error!\n");
         Size winSize = Director::getInstance()->getWinSize();
+//        UIHelper::
 //        CCUIHELPER->setFileDesignWidth(winSize.width);
 //        CCUIHELPER->setFileDesignHeight(winSize.height);
     }
