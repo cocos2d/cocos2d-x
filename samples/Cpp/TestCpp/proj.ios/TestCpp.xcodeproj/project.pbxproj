@@ -255,6 +255,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		3730EBE91829D0FA00CED152 /* SceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3730EBE71829D0FA00CED152 /* SceneReader.cpp */; };
 		37BB5BF417E89E9B002746B4 /* CCActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5BEA17E89E9B002746B4 /* CCActionFrame.cpp */; };
 		37BB5BF517E89E9B002746B4 /* CCActionFrameEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5BEC17E89E9B002746B4 /* CCActionFrameEasing.cpp */; };
 		37BB5BF617E89E9B002746B4 /* CCActionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5BEE17E89E9B002746B4 /* CCActionManager.cpp */; };
@@ -313,7 +314,6 @@
 		37CA1C5817D87A3300A649D0 /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = 37CA1C1317D87A3300A649D0 /* json_valueiterator.inl */; };
 		37CA1C5917D87A3300A649D0 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1C1417D87A3300A649D0 /* json_writer.cpp */; };
 		37CA1C5A17D87A3300A649D0 /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = 37CA1C1617D87A3300A649D0 /* sconscript */; };
-		37CA1C5B17D87A3300A649D0 /* CCSSceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1C1A17D87A3300A649D0 /* CCSSceneReader.cpp */; };
 		37CA1C7E17D87A5100A649D0 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37CA1C5C17D87A5100A649D0 /* animations */; };
 		37CA1C7F17D87A5100A649D0 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 37CA1C5D17D87A5100A649D0 /* app.icf */; };
 		37CA1C8017D87A5100A649D0 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37CA1C5E17D87A5100A649D0 /* armature */; };
@@ -977,6 +977,8 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
+		3730EBE71829D0FA00CED152 /* SceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneReader.cpp; sourceTree = "<group>"; };
+		3730EBE81829D0FA00CED152 /* SceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneReader.h; sourceTree = "<group>"; };
 		37BB5BEA17E89E9B002746B4 /* CCActionFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionFrame.cpp; sourceTree = "<group>"; };
 		37BB5BEB17E89E9B002746B4 /* CCActionFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionFrame.h; sourceTree = "<group>"; };
 		37BB5BEC17E89E9B002746B4 /* CCActionFrameEasing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionFrameEasing.cpp; sourceTree = "<group>"; };
@@ -1100,8 +1102,6 @@
 		37CA1C1617D87A3300A649D0 /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
 		37CA1C1717D87A3300A649D0 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		37CA1C1817D87A3300A649D0 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
-		37CA1C1A17D87A3300A649D0 /* CCSSceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSSceneReader.cpp; sourceTree = "<group>"; };
-		37CA1C1B17D87A3300A649D0 /* CCSSceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSSceneReader.h; sourceTree = "<group>"; };
 		37CA1C5C17D87A5100A649D0 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
 		37CA1C5D17D87A5100A649D0 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
 		37CA1C5E17D87A5100A649D0 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; path = armature; sourceTree = "<group>"; };
@@ -2977,10 +2977,10 @@
 		37CA1C1917D87A3300A649D0 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
+				3730EBE71829D0FA00CED152 /* SceneReader.cpp */,
+				3730EBE81829D0FA00CED152 /* SceneReader.h */,
 				50D6A4CB17E2C91100523A82 /* CCSGUIReader.cpp */,
 				50D6A4CC17E2C91100523A82 /* CCSGUIReader.h */,
-				37CA1C1A17D87A3300A649D0 /* CCSSceneReader.cpp */,
-				37CA1C1B17D87A3300A649D0 /* CCSSceneReader.h */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -3706,7 +3706,6 @@
 				37CA1C5617D87A3300A649D0 /* json_reader.cpp in Sources */,
 				37CA1C5717D87A3300A649D0 /* json_value.cpp in Sources */,
 				37CA1C5917D87A3300A649D0 /* json_writer.cpp in Sources */,
-				37CA1C5B17D87A3300A649D0 /* CCSSceneReader.cpp in Sources */,
 				37CA1CF917D87AC700A649D0 /* ArmatureScene.cpp in Sources */,
 				37CA1CFA17D87AC700A649D0 /* ComponentsTestScene.cpp in Sources */,
 				37CA1CFB17D87AC700A649D0 /* EnemyController.cpp in Sources */,
@@ -3750,6 +3749,7 @@
 				37BB5BF717E89E9B002746B4 /* CCActionNode.cpp in Sources */,
 				37BB5BF817E89E9B002746B4 /* CCActionObject.cpp in Sources */,
 				50BB392D180BC83200A9BACC /* UIListViewEx.cpp in Sources */,
+				3730EBE91829D0FA00CED152 /* SceneReader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
