@@ -1878,13 +1878,25 @@
 		59BDCDB518238373007B5C04 /* CCNewSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59BDCDB218238373007B5C04 /* CCNewSprite.cpp */; };
 		59BDCDB618238373007B5C04 /* CCNewSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 59BDCDB318238373007B5C04 /* CCNewSprite.h */; };
 		59BDCDB718238373007B5C04 /* CCNewSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 59BDCDB318238373007B5C04 /* CCNewSprite.h */; };
+		74AC8053498EE01447DD86E1 /* RenderMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC89CB8108D550559C5213 /* RenderMaterial.h */; };
+		74AC81E10C23CDDC2ABE562B /* MaterialManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC87458B7AB2B9B8E10929 /* MaterialManager.h */; };
 		74AC81FC6D93F3F794BC3DDE /* RenderCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8FA2760DA1381AA6838A /* RenderCommand.h */; };
 		74AC8307EEE22BCC8900430E /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8A18BF2E5EAE263EB04C /* Renderer.cpp */; };
 		74AC83AEA0AA1A486E261808 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8A18BF2E5EAE263EB04C /* Renderer.cpp */; };
 		74AC852499488A87E1E8ED5D /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8133F17EDBE0DCDA4306 /* Renderer.h */; };
+		74AC85A7131A1A60E04DF4EA /* QuadCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC83E1EEDB1177E8DA665C /* QuadCommand.cpp */; };
+		74AC8658B9D118D6EE5168D3 /* RenderMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8C7DD28F0D9F2E2DDD49 /* RenderMaterial.cpp */; };
+		74AC8735D79FAA35077AAEAE /* RenderMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC89CB8108D550559C5213 /* RenderMaterial.h */; };
+		74AC8770EE39B3F2E4B7E799 /* MaterialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC885DBD117ABCC95FAA17 /* MaterialManager.cpp */; };
+		74AC880ACF60F7E5C636B1C5 /* MaterialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC885DBD117ABCC95FAA17 /* MaterialManager.cpp */; };
+		74AC8819AA5E80928D56A860 /* QuadCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC83E1EEDB1177E8DA665C /* QuadCommand.cpp */; };
 		74AC884E0D45BD3E06641AF8 /* RenderCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8AC7F73A7C1210329428 /* RenderCommand.cpp */; };
+		74AC899ABF54BED33E6E36AB /* QuadCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8F457916A87F82A073E7 /* QuadCommand.h */; };
 		74AC89F4284366497D98ED74 /* RenderCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8AC7F73A7C1210329428 /* RenderCommand.cpp */; };
+		74AC8B2C8364EA4DD704A798 /* QuadCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8F457916A87F82A073E7 /* QuadCommand.h */; };
 		74AC8BE055748249CE9EDFA7 /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8133F17EDBE0DCDA4306 /* Renderer.h */; };
+		74AC8DADB432A21D2436ED02 /* MaterialManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC87458B7AB2B9B8E10929 /* MaterialManager.h */; };
+		74AC8E6D7A92A13B5D58C3BC /* RenderMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8C7DD28F0D9F2E2DDD49 /* RenderMaterial.cpp */; };
 		74AC8FD2F13829D3F14F8960 /* RenderCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8FA2760DA1381AA6838A /* RenderCommand.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
@@ -2992,8 +3004,14 @@
 		59BDCDB218238373007B5C04 /* CCNewSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewSprite.cpp; sourceTree = "<group>"; };
 		59BDCDB318238373007B5C04 /* CCNewSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewSprite.h; sourceTree = "<group>"; };
 		74AC8133F17EDBE0DCDA4306 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		74AC83E1EEDB1177E8DA665C /* QuadCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadCommand.cpp; sourceTree = "<group>"; };
+		74AC87458B7AB2B9B8E10929 /* MaterialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialManager.h; sourceTree = "<group>"; };
+		74AC885DBD117ABCC95FAA17 /* MaterialManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialManager.cpp; sourceTree = "<group>"; };
+		74AC89CB8108D550559C5213 /* RenderMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderMaterial.h; sourceTree = "<group>"; };
 		74AC8A18BF2E5EAE263EB04C /* Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		74AC8AC7F73A7C1210329428 /* RenderCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderCommand.cpp; sourceTree = "<group>"; };
+		74AC8C7DD28F0D9F2E2DDD49 /* RenderMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderMaterial.cpp; sourceTree = "<group>"; };
+		74AC8F457916A87F82A073E7 /* QuadCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuadCommand.h; sourceTree = "<group>"; };
 		74AC8FA2760DA1381AA6838A /* RenderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderCommand.h; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5219,6 +5237,12 @@
 				74AC8133F17EDBE0DCDA4306 /* Renderer.h */,
 				74AC8AC7F73A7C1210329428 /* RenderCommand.cpp */,
 				74AC8FA2760DA1381AA6838A /* RenderCommand.h */,
+				74AC8C7DD28F0D9F2E2DDD49 /* RenderMaterial.cpp */,
+				74AC89CB8108D550559C5213 /* RenderMaterial.h */,
+				74AC885DBD117ABCC95FAA17 /* MaterialManager.cpp */,
+				74AC87458B7AB2B9B8E10929 /* MaterialManager.h */,
+				74AC83E1EEDB1177E8DA665C /* QuadCommand.cpp */,
+				74AC8F457916A87F82A073E7 /* QuadCommand.h */,
 			);
 			path = renderer;
 			sourceTree = "<group>";
@@ -5582,6 +5606,9 @@
 				1A8C5A0F180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				74AC852499488A87E1E8ED5D /* Renderer.h in Headers */,
 				74AC81FC6D93F3F794BC3DDE /* RenderCommand.h in Headers */,
+				74AC8053498EE01447DD86E1 /* RenderMaterial.h in Headers */,
+				74AC81E10C23CDDC2ABE562B /* MaterialManager.h in Headers */,
+				74AC8B2C8364EA4DD704A798 /* QuadCommand.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6143,6 +6170,9 @@
 				1A8C5A10180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				74AC8BE055748249CE9EDFA7 /* Renderer.h in Headers */,
 				74AC8FD2F13829D3F14F8960 /* RenderCommand.h in Headers */,
+				74AC8735D79FAA35077AAEAE /* RenderMaterial.h in Headers */,
+				74AC8DADB432A21D2436ED02 /* MaterialManager.h in Headers */,
+				74AC899ABF54BED33E6E36AB /* QuadCommand.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6885,6 +6915,9 @@
 				1A8C5A0D180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 				74AC8307EEE22BCC8900430E /* Renderer.cpp in Sources */,
 				74AC884E0D45BD3E06641AF8 /* RenderCommand.cpp in Sources */,
+				74AC8658B9D118D6EE5168D3 /* RenderMaterial.cpp in Sources */,
+				74AC880ACF60F7E5C636B1C5 /* MaterialManager.cpp in Sources */,
+				74AC85A7131A1A60E04DF4EA /* QuadCommand.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7391,6 +7424,9 @@
 				1A8C5A0E180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 				74AC83AEA0AA1A486E261808 /* Renderer.cpp in Sources */,
 				74AC89F4284366497D98ED74 /* RenderCommand.cpp in Sources */,
+				74AC8E6D7A92A13B5D58C3BC /* RenderMaterial.cpp in Sources */,
+				74AC8770EE39B3F2E4B7E799 /* MaterialManager.cpp in Sources */,
+				74AC8819AA5E80928D56A860 /* QuadCommand.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
