@@ -1,23 +1,23 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this file,
- * You can obtain one at http://mozilla.org/MPL/2.0/. */
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* Provides checked integers, detecting integer overflow and divide-by-0. */
 
-#ifndef mozilla_CheckedInt_h_
-#define mozilla_CheckedInt_h_
+#ifndef mozilla_CheckedInt_h
+#define mozilla_CheckedInt_h
 
 // Enable relying of Mozilla's MFBT for possibly-available C++11 features
 #define MOZ_CHECKEDINT_USE_MFBT
 
+#include <stdint.h>
+
 #ifdef MOZ_CHECKEDINT_USE_MFBT
 #  include "mozilla/Assertions.h"
-#  include "mozilla/StandardInteger.h"
 #else
 #  include <cassert>
-#  include <stdint.h>
-#  define MOZ_STATIC_ASSERT(cond, reason) assert((cond) && reason)
 #  define MOZ_ASSERT(cond, reason) assert((cond) && reason)
 #  define MOZ_DELETE
 #endif
@@ -450,6 +450,44 @@ IsDivValid(T x, T y)
          !(IsSigned<T>::value && x == MinValue<T>::value && y == T(-1));
 }
 
+template<typename T, bool IsTSigned = IsSigned<T>::value>
+struct IsModValidImpl;
+
+template<typename T>
+inline bool
+IsModValid(T x, T y)
+{
+  return IsModValidImpl<T>::run(x, y);
+}
+
+/*
+ * Mod is pretty simple.
+ * For now, let's just use the ANSI C definition:
+ * If x or y are negative, the results are implementation defined.
+ *   Consider these invalid.
+ * Undefined for y=0.
+ * The result will never exceed either x or y.
+ *
+ * Checking that x>=0 is a warning when T is unsigned.
+ */
+
+template<typename T>
+struct IsModValidImpl<T, false> {
+  static inline bool run(T x, T y) {
+    return y >= 1;
+  }
+};
+
+template<typename T>
+struct IsModValidImpl<T, true> {
+  static inline bool run(T x, T y) {
+    if (x < 0)
+      return false;
+
+    return y >= 1;
+  }
+};
+
 template<typename T, bool IsSigned = IsSigned<T>::value>
 struct NegateImpl;
 
@@ -528,7 +566,7 @@ struct NegateImpl<T, true>
    CheckedInt<int8_t> x(-1);
    // 1000 is of type int16_t, is found not to be in range for int8_t,
    // x is invalid
-   CheckedInt<int8_t> x(int16_t(1000)); 
+   CheckedInt<int8_t> x(int16_t(1000));
    // 3123456789 is of type uint32_t, is found not to be in range for int32_t,
    // x is invalid
    CheckedInt<int32_t> x(uint32_t(3123456789));
@@ -561,12 +599,12 @@ class CheckedInt
     template<typename U>
     CheckedInt(U value, bool isValid) : mValue(value), mIsValid(isValid)
     {
-      MOZ_STATIC_ASSERT(detail::IsSupported<T>::value &&
-                        detail::IsSupported<U>::value,
-                        "This type is not supported by CheckedInt");
+      static_assert(detail::IsSupported<T>::value &&
+                    detail::IsSupported<U>::value,
+                    "This type is not supported by CheckedInt");
     }
 
-    friend class detail::NegateImpl<T>;
+    friend struct detail::NegateImpl<T>;
 
   public:
     /**
@@ -585,16 +623,27 @@ class CheckedInt
       : mValue(T(value)),
         mIsValid(detail::IsInRange<T>(value))
     {
-      MOZ_STATIC_ASSERT(detail::IsSupported<T>::value &&
-                        detail::IsSupported<U>::value,
-                        "This type is not supported by CheckedInt");
+      static_assert(detail::IsSupported<T>::value &&
+                    detail::IsSupported<U>::value,
+                    "This type is not supported by CheckedInt");
+    }
+
+    template<typename U>
+    friend class CheckedInt;
+
+    template<typename U>
+    CheckedInt<U> toChecked() const
+    {
+      CheckedInt<U> ret(mValue);
+      ret.mIsValid = ret.mIsValid && mIsValid;
+      return ret;
     }
 
     /** Constructs a valid checked integer with initial value 0 */
     CheckedInt() : mValue(0), mIsValid(true)
     {
-      MOZ_STATIC_ASSERT(detail::IsSupported<T>::value,
-                        "This type is not supported by CheckedInt");
+      static_assert(detail::IsSupported<T>::value,
+                    "This type is not supported by CheckedInt");
     }
 
     /** @returns the actual value */
@@ -619,21 +668,30 @@ class CheckedInt
                                     const CheckedInt<U>& rhs);
     template<typename U>
     CheckedInt& operator +=(U rhs);
+
     template<typename U>
     friend CheckedInt<U> operator -(const CheckedInt<U>& lhs,
-                                    const CheckedInt<U> &rhs);
+                                    const CheckedInt<U>& rhs);
     template<typename U>
     CheckedInt& operator -=(U rhs);
+
     template<typename U>
     friend CheckedInt<U> operator *(const CheckedInt<U>& lhs,
-                                    const CheckedInt<U> &rhs);
+                                    const CheckedInt<U>& rhs);
     template<typename U>
     CheckedInt& operator *=(U rhs);
+
     template<typename U>
     friend CheckedInt<U> operator /(const CheckedInt<U>& lhs,
-                                    const CheckedInt<U> &rhs);
+                                    const CheckedInt<U>& rhs);
     template<typename U>
     CheckedInt& operator /=(U rhs);
+
+    template<typename U>
+    friend CheckedInt<U> operator %(const CheckedInt<U>& lhs,
+                                    const CheckedInt<U>& rhs);
+    template<typename U>
+    CheckedInt& operator %=(U rhs);
 
     CheckedInt operator -() const
     {
@@ -726,6 +784,7 @@ MOZ_CHECKEDINT_BASIC_BINARY_OPERATOR(Add, +)
 MOZ_CHECKEDINT_BASIC_BINARY_OPERATOR(Sub, -)
 MOZ_CHECKEDINT_BASIC_BINARY_OPERATOR(Mul, *)
 MOZ_CHECKEDINT_BASIC_BINARY_OPERATOR(Div, /)
+MOZ_CHECKEDINT_BASIC_BINARY_OPERATOR(Mod, %)
 
 #undef MOZ_CHECKEDINT_BASIC_BINARY_OPERATOR
 
@@ -757,9 +816,9 @@ template<typename T, typename U>
 inline typename detail::CastToCheckedIntImpl<T, U>::ReturnType
 castToCheckedInt(U u)
 {
-  MOZ_STATIC_ASSERT(detail::IsSupported<T>::value &&
-                    detail::IsSupported<U>::value,
-                    "This type is not supported by CheckedInt");
+  static_assert(detail::IsSupported<T>::value &&
+                detail::IsSupported<U>::value,
+                "This type is not supported by CheckedInt");
   return detail::CastToCheckedIntImpl<T, U>::run(u);
 }
 
@@ -786,6 +845,7 @@ MOZ_CHECKEDINT_CONVENIENCE_BINARY_OPERATORS(+, +=)
 MOZ_CHECKEDINT_CONVENIENCE_BINARY_OPERATORS(*, *=)
 MOZ_CHECKEDINT_CONVENIENCE_BINARY_OPERATORS(-, -=)
 MOZ_CHECKEDINT_CONVENIENCE_BINARY_OPERATORS(/, /=)
+MOZ_CHECKEDINT_CONVENIENCE_BINARY_OPERATORS(%, %=)
 
 #undef MOZ_CHECKEDINT_CONVENIENCE_BINARY_OPERATORS
 
@@ -815,4 +875,4 @@ typedef CheckedInt<uint64_t> CheckedUint64;
 
 } // namespace mozilla
 
-#endif /* mozilla_CheckedInt_h_ */
+#endif /* mozilla_CheckedInt_h */

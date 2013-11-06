@@ -73,13 +73,15 @@ void Font::setCurrentGlyphCollection(GlyphCollection glyphs, const char *customG
             break;
             
         default:
-            
-            int lenght = strlen(customGlyphs);
-            _customGlyphs = new char [lenght + 2];
-            memcpy(_customGlyphs, customGlyphs, lenght);
-            
-            _customGlyphs[lenght]   = 0;
-            _customGlyphs[lenght+1] = 0;
+            if (customGlyphs)
+            {
+                size_t lenght = strlen(customGlyphs);
+                _customGlyphs = new char [lenght + 2];
+                memcpy(_customGlyphs, customGlyphs, lenght);
+
+                _customGlyphs[lenght]   = 0;
+                _customGlyphs[lenght+1] = 0;
+            }           
             
             break;
     }
