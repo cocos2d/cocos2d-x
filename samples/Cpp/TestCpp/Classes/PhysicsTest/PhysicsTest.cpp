@@ -382,7 +382,7 @@ Sprite* PhysicsDemo::makeTriangle(Point point, Size size, PhysicsMaterial materi
 bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
 {
     auto location = touch->getLocation();
-    Array* arr = _scene->getPhysicsWorld()->getShapesAtPoint(location);
+    Array* arr = _scene->getPhysicsWorld()->getShapes(location);
     
     PhysicsShape* shape = nullptr;
     for (Object* obj : *arr)
@@ -982,7 +982,7 @@ void PhysicsDemoPump::update(float delta)
         }
     }
     
-    PhysicsBody* gear = _scene->getPhysicsWorld()->getBodyByTag(1);
+    PhysicsBody* gear = _scene->getPhysicsWorld()->getBody(1);
     
     if (gear != nullptr)
     {
