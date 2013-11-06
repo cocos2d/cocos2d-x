@@ -39,21 +39,28 @@ public:
 public:
     Skin();
 
-    bool initWithSpriteFrameName(const char *pszSpriteFrameName);
-    bool initWithFile(const char *pszFilename);
+    virtual bool initWithSpriteFrameName(const std::string& spriteFrameName) override;
+    virtual bool initWithFile(const std::string& filename) override;
 
     void updateArmatureTransform();
-    void updateTransform();
+    void updateTransform() override;
 
-    cocos2d::AffineTransform getNodeToWorldTransform() const;
+    cocos2d::AffineTransform getNodeToWorldTransform() const override;
     cocos2d::AffineTransform getNodeToWorldTransformAR() const;
 
-    CC_PROPERTY_PASS_BY_REF(BaseData, _skinData, SkinData);
-    CC_SYNTHESIZE(Bone *, _bone, Bone);
+    virtual void setSkinData(const BaseData &data);
+    virtual const BaseData &getSkinData() const;
 
+    virtual void setBone(Bone *bone);
+    virtual Bone *getBone() const;
+
+    virtual const std::string &getDisplayName() const { return _displayName; }
 protected:
+    BaseData _skinData;
+    Bone *_bone;
+    Armature *_armature;
     cocos2d::AffineTransform _skinTransform;
-    CC_SYNTHESIZE_READONLY(std::string, _displayName, DisplayName)
+    std::string _displayName;
 };
 
 }

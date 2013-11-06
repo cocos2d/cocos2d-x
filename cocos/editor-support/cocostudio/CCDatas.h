@@ -39,7 +39,7 @@ public: \
 	return var;\
 }\
 	CC_SAFE_DELETE(var);\
-	return NULL;\
+	return nullptr;\
 }
 
 #define CC_CREATE_NO_PARAM(varType)\
@@ -52,7 +52,7 @@ public: \
 	return var;\
 }\
 	CC_SAFE_DELETE(var);\
-	return NULL;\
+	return nullptr;\
 }
 
 namespace cocostudio {
@@ -341,7 +341,7 @@ public:
 public:
     int frameID;
     int duration;                //! The frame will last duration frames
-    CCTweenType tweenEasing;     //! Every frame's tween easing effect
+    TweenType tweenEasing;     //! Every frame's tween easing effect
     bool isTween;                //! Whether it's a tween key frame
 
     /**
@@ -435,7 +435,7 @@ public:
     * Which tween easing effect the movement use
     * TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
     */
-    CCTweenType tweenEasing;
+    TweenType tweenEasing;
 
     /**
     * @brief	save movment bone data

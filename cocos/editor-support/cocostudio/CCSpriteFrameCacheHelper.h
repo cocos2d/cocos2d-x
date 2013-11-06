@@ -47,8 +47,6 @@ public:
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
-    cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture);
-
 private:
 	/**
      * @js ctor
@@ -59,8 +57,6 @@ private:
      * @lua NA
      */
     ~SpriteFrameCacheHelper();
-
-    cocos2d::Dictionary *_textureAtlasDic;
 
     static SpriteFrameCacheHelper *_spriteFrameCacheHelper;
 };
