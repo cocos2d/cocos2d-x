@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS
-
 #ifndef __CCPHYSICS_BODY_H__
 #define __CCPHYSICS_BODY_H__
+
+#include "CCPhysicsSetting.h"
+#ifdef CC_USE_PHYSICS
 
 #include "CCObject.h"
 #include "CCGeometry.h"
@@ -300,6 +300,5 @@ protected:
 
 NS_CC_END
 
-#endif // __CCPHYSICS_BODY_H__
-
 #endif // CC_USE_PHYSICS
+#endif // __CCPHYSICS_BODY_H__
