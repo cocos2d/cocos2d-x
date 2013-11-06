@@ -9,6 +9,10 @@ add_library(network STATIC
 
 target_link_libraries(network
   curl
+  ldap
+  lber
+  idn
+  rtmp
 )
 
 set_target_properties(network

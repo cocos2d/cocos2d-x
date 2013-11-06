@@ -7,8 +7,14 @@ add_library(audio STATIC
   ${AUDIO_SRC}
 )
 
+if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+set(FMOD_LIB "fmodex64")
+else()
+set(FMOD_LIB "fmodex")
+endif()
+
 target_link_libraries(audio
-  fmodex64
+  ${FMOD_LIB}
 )
 
 set_target_properties(audio
