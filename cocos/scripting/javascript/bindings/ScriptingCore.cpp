@@ -96,6 +96,9 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
     if (func == JSVAL_VOID) { return; }
     jsval thisObj = JS_GetReservedSlot(obj, 1);
     JSAutoCompartment ac(cx, obj);
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
     if (thisObj == JSVAL_VOID) {
         JS_CallFunctionValue(cx, obj, func, 1, &dataVal, &retval);
     } else {

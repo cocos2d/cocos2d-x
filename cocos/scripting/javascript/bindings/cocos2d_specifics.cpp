@@ -1267,6 +1267,8 @@ void JSScheduleWrapper::scheduleFunc(float dt)
         CCLOG("scheduleFunc: Root value fails.");
         return;
     }
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
     if(!_jsCallback.isNullOrUndefined()) {
         if (!_jsThisObj.isNullOrUndefined()) {
