@@ -28,7 +28,7 @@
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include "../Layouts/UILayoutDefine.h"
-#include "../Layouts/LayoutParameter.h"
+#include "../Layouts/UILayoutParameter.h"
 NS_CC_EXT_BEGIN
 
 
@@ -818,7 +818,7 @@ public:
      *
      * @param type  Relative or Linear
      */
-    void setLayoutParameter(LayoutParameter* parameter);
+    void setLayoutParameter(UILayoutParameter* parameter);
     
     /**
      * Gets LayoutParameter of widget.
@@ -829,7 +829,7 @@ public:
      *
      * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter(LayoutParameterType type);
+    UILayoutParameter* getLayoutParameter(LayoutParameterType type);
     
     /**
      * Ignore the widget size

@@ -35,13 +35,13 @@ NS_CC_EXT_BEGIN
 *   @js NA
 *   @lua NA
 */
-class CCSGUIReader : CCObject
+class GUIReader : CCObject
 {
 public:
-    CCSGUIReader();
-    ~CCSGUIReader();
-    static CCSGUIReader* shareReader();
-	static void purgeCCSGUIReader();
+    GUIReader();
+    ~GUIReader();
+    static GUIReader* shareReader();
+	static void purgeGUIReader();
     
     UIWidget* widgetFromJsonFile(const char* fileName);
     UIWidget* widgetFromJsonDictionary(cs::CSJsonDictionary* data);

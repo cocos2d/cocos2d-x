@@ -69,7 +69,7 @@ public:
     
 protected:
     UILayer *m_pUiLayer;
-    Layout *m_pWidget;
+    UILayout *m_pWidget;
 };
 
 #endif /* defined(__TestCpp__UIScene__) */

@@ -48,7 +48,7 @@ UIRootWidget* UIRootWidget::create()
 
 bool UIRootWidget::init()
 {
-    if (Layout::init())
+    if (UILayout::init())
     {
         setSize(CCDirector::sharedDirector()->getWinSize());
         return true;
