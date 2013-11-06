@@ -76,29 +76,29 @@ public:
 
     /** Adds a Animation with a name.
     */
-    void addAnimation(Animation *animation, const char * name);
+    void addAnimation(Animation *animation, const std::string& name);
 
     /** Deletes a Animation from the cache.
      
      */
-    void removeAnimation(const char* name);
+    void removeAnimation(const std::string& name);
     /** @deprecated. Use removeAnimation() instead
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void removeAnimationByName(const char* name){ removeAnimation(name);}
+    CC_DEPRECATED_ATTRIBUTE void removeAnimationByName(const std::string& name){ removeAnimation(name);}
 
     /** Returns a Animation that was previously added.
     If the name is not found it will return nil.
     You should retain the returned copy if you are going to use it.
     */
-    Animation* getAnimation(const char* name);
+    Animation* getAnimation(const std::string& name);
     /**
      @deprecated. Use getAnimation() instead
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Animation* animationByName(const char* name){ return getAnimation(name); }
+    CC_DEPRECATED_ATTRIBUTE Animation* animationByName(const std::string& name){ return getAnimation(name); }
 
     /** Adds an animation from an NSDictionary
      Make sure that the frames were previously loaded in the SpriteFrameCache.
@@ -112,7 +112,7 @@ public:
      * @js addAnimations
      * @lua addAnimations
      */
-    void addAnimationsWithFile(const char* plist);
+    void addAnimationsWithFile(const std::string& plist);
 
 private:
     void parseVersion1(Dictionary* animations);
