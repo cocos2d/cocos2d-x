@@ -25,6 +25,8 @@
 #include "CCPhysicsShape.h"
 #ifdef CC_USE_PHYSICS
 
+#include <climits>
+
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
 #elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
@@ -503,12 +505,10 @@ float PhysicsShapeBox::calculateDefaultMoment()
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, cpvzero));
 }
 
-Point* PhysicsShapeBox::getPoints(Point* points) const
+void PhysicsShapeBox::getPoints(Point* points) const
 {
     cpShape* shape = _info->getShapes().front();
-    return PhysicsHelper::cpvs2points(((cpPolyShape*)shape)->verts, points, ((cpPolyShape*)shape)->numVerts);
-    
-    return points;
+    PhysicsHelper::cpvs2points(((cpPolyShape*)shape)->verts, points, ((cpPolyShape*)shape)->numVerts);
 }
 
 Size PhysicsShapeBox::getSize() const
@@ -599,10 +599,10 @@ Point PhysicsShapePolygon::getPoint(int i) const
     return PhysicsHelper::cpv2point(cpPolyShapeGetVert(_info->getShapes().front(), i));
 }
 
-Point* PhysicsShapePolygon::getPoints(Point* points) const
+void PhysicsShapePolygon::getPoints(Point* outPoints) const
 {
     cpShape* shape = _info->getShapes().front();
-    return PhysicsHelper::cpvs2points(((cpPolyShape*)shape)->verts, points, ((cpPolyShape*)shape)->numVerts);
+    PhysicsHelper::cpvs2points(((cpPolyShape*)shape)->verts, outPoints, ((cpPolyShape*)shape)->numVerts);
 }
 
 int PhysicsShapePolygon::getPointsCount() const

@@ -46,24 +46,24 @@ public:
     static cpBB rect2cpbb(const Rect& rect) { return cpBBNew(rect.origin.x, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height); }
     static Rect cpbb2rect(const cpBB& bb) { return Rect(bb.l, bb.b, bb.r, bb.t); }
     
-    static Point* cpvs2points(const cpVect* cpvs, Point* points, int count)
+    static Point* cpvs2points(const cpVect* cpvs, Point* out, int count)
     {
         for (int i = 0; i < count; ++i)
         {
-            points[i] = cpv2point(cpvs[i]);
+            out[i] = cpv2point(cpvs[i]);
         }
         
-        return points;
+        return out;
     }
     
-    static cpVect* points2cpvs(const Point* points, cpVect* cpvs, int count)
+    static cpVect* points2cpvs(const Point* points, cpVect* out, int count)
     {
         for (int i = 0; i < count; ++i)
         {
-            cpvs[i] = point2cpv(points[i]);
+            out[i] = point2cpv(points[i]);
         }
         
-        return cpvs;
+        return out;
     }
 };
 

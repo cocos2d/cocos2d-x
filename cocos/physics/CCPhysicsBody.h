@@ -128,7 +128,7 @@ public:
     /*
      * @brief get the first body shapes.
      */
-    inline PhysicsShape* getShape() const { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
+    inline PhysicsShape* getFirstShape() const { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
     PhysicsShape* getShape(int tag) const;
     /*
      * @brief remove a shape from body
@@ -238,13 +238,13 @@ public:
     //virtual Clonable* clone() const override;
     
     bool isResting() const;
-    inline bool isEnable() const { return _enable; }
+    inline bool isEnabled() const { return _enable; }
     void setEnable(bool enable);
     
-    inline bool isRotationEnable() const { return _rotationEnable; }
+    inline bool isRotationEnabled() const { return _rotationEnable; }
     void setRotationEnable(bool enable);
     
-    inline bool isGravityEnable() const { return _gravityEnable; }
+    inline bool isGravityEnabled() const { return _gravityEnable; }
     void setGravityEnable(bool enable);
     
     

@@ -25,6 +25,8 @@
 #include "CCPhysicsWorld.h"
 #ifdef CC_USE_PHYSICS
 
+#include <climits>
+
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
 #elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
@@ -361,12 +363,12 @@ void PhysicsWorld::realAddBody(PhysicsBody* body)
         body->removeFromWorld();
     }
     
-    if (body->isEnable())
+    if (body->isEnabled())
     {
         body->_world = this;
         
         //is gravity enable
-        if (!body->isGravityEnable())
+        if (!body->isGravityEnabled())
         {
             body->applyForce(-_gravity);
         }
@@ -424,7 +426,7 @@ void PhysicsWorld::realRemoveBody(PhysicsBody* body)
     }
     
     // reset the gravity
-    if (!body->isGravityEnable())
+    if (!body->isGravityEnabled())
     {
         body->applyForce(-_gravity);
     }
@@ -707,13 +709,13 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
             continue;
         }
         
-        if (!joint->isCollisionEnable())
+        if (!joint->isCollisionEnabled())
         {
             PhysicsBody* body = joint->getBodyA() == bodyA ? joint->getBodyB() : joint->getBodyA();
             
             if (body == bodyB)
             {
-                contact.setNotify(false);
+                contact.setNotificationEnable(false);
                 return false;
             }
         }
@@ -723,7 +725,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     if ((shapeA->getCategoryBitmask() & shapeB->getContactTestBitmask()) == 0
         || (shapeB->getContactTestBitmask() & shapeA->getCategoryBitmask()) == 0)
     {
-        contact.setNotify(false);
+        contact.setNotificationEnable(false);
     }
     
     if (shapeA->getGroup() != 0 && shapeA->getGroup() == shapeB->getGroup())
@@ -750,7 +752,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
 
 int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
-    if (!contact.getNotify())
+    if (!contact.isNotificationEnabled())
     {
         cpArbiterIgnore(static_cast<cpArbiter*>(contact._contactInfo));
         return true;
@@ -767,7 +769,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 
 void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
 {
-    if (!contact.getNotify())
+    if (!contact.isNotificationEnabled())
     {
         return;
     }
@@ -781,7 +783,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
 {
-    if (!contact.getNotify())
+    if (!contact.isNotificationEnabled())
     {
         return;
     }
@@ -802,7 +804,7 @@ void PhysicsWorld::setGravity(Point gravity)
             PhysicsBody* body = dynamic_cast<PhysicsBody*>(child);
             
             // reset gravity for body
-            if (!body->isGravityEnable())
+            if (!body->isGravityEnabled())
             {
                 body->applyForce(-_gravity);
                 body->applyForce(gravity);

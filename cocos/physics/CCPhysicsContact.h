@@ -94,8 +94,8 @@ private:
     bool init(PhysicsShape* a, PhysicsShape* b);
     
     void setEventCode(EventCode eventCode) { _eventCode = eventCode; };
-    inline bool getNotify() const { return _notify; }
-    inline void setNotify(bool notify) { _notify = notify; }
+    inline bool isNotificationEnabled() const { return _notificationEnable; }
+    inline void setNotificationEnable(bool enable) { _notificationEnable = enable; }
     inline PhysicsWorld* getWorld() const { return _world; }
     inline void setWorld(PhysicsWorld* world) { _world = world; }
     inline void setResult(bool result) { _result = result; }
@@ -113,7 +113,7 @@ private:
     PhysicsShape* _shapeB;
     EventCode _eventCode;
     PhysicsContactInfo* _info;
-    bool _notify;
+    bool _notificationEnable;
     bool _begin;
     bool _result;
     
