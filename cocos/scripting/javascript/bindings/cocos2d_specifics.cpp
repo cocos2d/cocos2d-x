@@ -1272,7 +1272,6 @@ void JSScheduleWrapper::scheduleFunc(float dt)
 
     if(!_jsCallback.isNullOrUndefined()) {
         if (!_jsThisObj.isNullOrUndefined()) {
-            JSAutoCompartment ac(cx, JSVAL_TO_OBJECT(_jsThisObj));
             JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(_jsThisObj), _jsCallback, 1, &data, &retval);
         }
         else {
