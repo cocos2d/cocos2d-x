@@ -44,23 +44,28 @@ typedef enum
     LAYOUT_RELATIVE
 }LayoutType;
 
-class Layout : public UIWidget
+
+/**
+ *  @js NA
+ *  @lua NA
+ */
+class UILayout : public UIWidget
 {
 public:
     /**
      * Default constructor
      */
-    Layout();
+    UILayout();
     
     /**
      * Default destructor
      */
-    virtual ~Layout();
+    virtual ~UILayout();
     
     /**
      * Allocates and initializes a layout.
      */
-    static Layout* create();
+    static UILayout* create();
     
     //override "hitTest" method of widget.
     virtual bool hitTest(const cocos2d::Point &pt);
@@ -169,6 +174,11 @@ public:
     virtual const cocos2d::Size& getContentSize() const;
     
     /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
+    /**
      * Sets LayoutType.
      *
      * @see LayoutType
@@ -187,11 +197,14 @@ public:
     virtual LayoutType getLayoutType() const;
     
     virtual void doLayout();
-
+    
     /**
-     * Returns the "class name" of widget.
+     * Adds a child to the container.
+     *
+     * @param child A child widget
      */
-    virtual const char* getDescription() const;
+    virtual bool addChild(UIWidget* child);
+    
 protected:
     //override "init" method of widget.
     virtual bool init();
@@ -204,6 +217,11 @@ protected:
     
     //init background image renderer.
     void addBackGroundImage();
+    
+    void supplyTheLayoutParameterLackToChild(UIWidget* child);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
 protected:
     bool _clippingEnabled;
     
@@ -224,23 +242,26 @@ protected:
     cocos2d::Size _backGroundImageTextureSize;
     LayoutType _layoutType;
 };
-
-class RectClippingNode : public cocos2d::ClippingNode
+/**
+ *  @js NA
+ *  @lua NA
+ */
+class UIRectClippingNode : public cocos2d::ClippingNode
 {
 public:
-    virtual ~RectClippingNode();
+    virtual ~UIRectClippingNode();
     virtual bool init();
-    static RectClippingNode* create();
+    static UIRectClippingNode* create();
     void setClippingSize(const cocos2d::Size& size);
     void setClippingEnabled(bool enabled);
     virtual void visit();
     void setEnabled(bool enabled);
     bool isEnabled() const;
 protected:
-    cocos2d::DrawNode* m_pInnerStencil;
+    cocos2d::DrawNode* _innerStencil;
     bool _enabled;
 private:
-    RectClippingNode();
+    UIRectClippingNode();
     cocos2d::Point rect[4];
     cocos2d::Size _clippingSize;
     bool _clippingEnabled;

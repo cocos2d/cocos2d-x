@@ -26,7 +26,7 @@
 #define __UIINPUTMANAGER_H__
 
 #include "cocos2d.h"
-#include "gui/Layout.h"
+#include "gui/UILayout.h"
 
 namespace gui {
 
@@ -41,7 +41,7 @@ public:
     /**
      * Default destructor
      */
-    ~UIInputManager();
+    virtual ~UIInputManager();
     
     /**
      * Regist a widget to input manager.

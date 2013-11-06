@@ -27,8 +27,13 @@
 
 #include "gui/UIWidget.h"
 
+
 namespace gui {
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UILabel : public UIWidget
 {
 public:
@@ -124,11 +129,7 @@ public:
     
     void setTextAreaSize(const cocos2d::Size &size);
     void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
-    void setTextVerticalAlignment(cocos2d::TextVAlignment alignment);
-
-    
-    void setTouchScaleChangeAble(bool able){setTouchScaleChangeEnabled(able);};
-    bool getTouchScaleChangeAble(){return isTouchScaleChangeEnabled();};
+    void setTextVerticalAlignment(cocos2d::TextVAlignment alignment);    
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -138,6 +139,8 @@ protected:
     virtual void onSizeChanged();
     void clickScale(float scale);
     void labelScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     bool _touchScaleChangeEnabled;
     float _normalScaleValue;

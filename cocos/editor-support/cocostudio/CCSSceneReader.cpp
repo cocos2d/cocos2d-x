@@ -320,8 +320,8 @@ namespace cocostudio {
 				{
                     gui::UILayer *pLayer = gui::UILayer::create();
 					pLayer->scheduleUpdate();
-					UIWidget* widget= gui::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
-					pLayer->addWidget(widget);
+//					UIWidget* widget= gui::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
+//					pLayer->addWidget(widget);
 					ComRender *pRender = ComRender::create(pLayer, "GUIComponent");
 					if (pComName != NULL)
 					{
