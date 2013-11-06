@@ -54,9 +54,8 @@ bool Scene::init()
     bool bRet = false;
      do 
      {
-         Director * pDirector;
-         CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
-         this->setContentSize(pDirector->getWinSize());
+         CC_BREAK_IF( !getDirector());
+         this->setContentSize(getDirector()->getWinSize());
          // success
          bRet = true;
      } while (0);
@@ -99,9 +98,8 @@ bool Scene::initWithPhysics()
     bool bRet = false;
     do
     {
-        Director * pDirector;
-        CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
-        this->setContentSize(pDirector->getWinSize());
+        CC_BREAK_IF( !getDirector());
+        this->setContentSize(getDirector()->getWinSize());
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::create(*this)));
         
         this->scheduleUpdate();
