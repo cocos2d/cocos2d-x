@@ -70,6 +70,8 @@ UIListView::UIListView()
 
 UIListView::~UIListView()
 {
+    m_pUpdatePool->removeAllObjects();
+    m_pChildPool->removeAllObjects();
     CC_SAFE_RELEASE_NULL(m_pChildPool);
     CC_SAFE_RELEASE_NULL(m_pUpdatePool);
     CC_SAFE_RELEASE_NULL(m_overTopArray);
@@ -1484,6 +1486,32 @@ void UIListView::addUpdateChildEvent(cocos2d::CCObject *target, SEL_ListViewUpda
 const char* UIListView::getDescription() const
 {
     return "ListView";
+}
+
+UIWidget* UIListView::createCloneInstance()
+{
+    return UIListView::create();
+}
+
+void UIListView::copyClonedWidgetChildren(UIWidget* model)
+{
+    UIWidget::copyClonedWidgetChildren(model);
+}
+
+void UIListView::copySpecialProperties(UIWidget *widget)
+{
+    UIListView* listView = static_cast<UIListView*>(widget);
+    
+    if (listView)
+    {
+        Layout::copySpecialProperties(widget);
+        
+        setDirection(listView->m_eDirection);
+        initChildWithDataLength(listView->m_nDataLength);
+        setUpdateChild(listView->getUpdateChild());
+        setUpdateDataIndex(listView->getUpdateDataIndex());
+        setUpdateSuccess(listView->getUpdateSuccess());
+    }
 }
 
 NS_CC_EXT_END

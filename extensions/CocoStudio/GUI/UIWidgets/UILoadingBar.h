@@ -124,7 +124,6 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
-    
     /*Compatible*/
     /**
      * These methods will be removed
@@ -138,6 +137,8 @@ protected:
     virtual void onSizeChanged();
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     LoadingBarType m_nBarType;
     int m_nPercent;

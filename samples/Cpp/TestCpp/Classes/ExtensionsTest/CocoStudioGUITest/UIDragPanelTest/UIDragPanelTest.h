@@ -33,7 +33,6 @@ public:
     UIDragPanelTest();
     ~UIDragPanelTest();
     bool init();
-    void dragPanelEvent(CCObject* pSender, DragPanelEventType type);    
     
 protected:
     UI_SCENE_CREATE_FUNC(UIDragPanelTest)
@@ -46,7 +45,6 @@ public:
     UIDragPanelTest_Bounce();
     ~UIDragPanelTest_Bounce();
     bool init();
-    void dragPanelEvent(CCObject* pSender, DragPanelEventType type);    
     
 protected:
     UI_SCENE_CREATE_FUNC(UIDragPanelTest_Bounce)

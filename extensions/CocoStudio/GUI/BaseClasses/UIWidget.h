@@ -271,12 +271,7 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      */
     virtual void removeAllChildren();
-    
-    /**
-     * Unschedules the "update" method.
-     */
-    void disableUpdate();
-    
+        
     /**
      * Reorders a child according to a new z value.
      *
@@ -820,6 +815,8 @@ public:
      * @see LayoutParameter
      *
      * @param LayoutParameter pointer
+     *
+     * @param type  Relative or Linear
      */
     void setLayoutParameter(LayoutParameter* parameter);
     
@@ -827,8 +824,12 @@ public:
      * Gets LayoutParameter of widget.
      *
      * @see LayoutParameter
+     *
+     * @param type  Relative or Linear
+     *
+     * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter();
+    LayoutParameter* getLayoutParameter(LayoutParameterType type);
     
     /**
      * Ignore the widget size
@@ -887,6 +888,8 @@ public:
      */
     virtual const char* getDescription() const;
     
+    UIWidget* clone();
+
     virtual void onEnter();
     virtual void onExit();
     
@@ -1018,6 +1021,10 @@ protected:
      */
     virtual void releaseResoures();
     void updateSizeAndPosition();
+    void copyProperties(UIWidget* model);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
 protected:
     bool m_bEnabled;            ///< Highest control of widget
     bool m_bVisible;            ///< is this widget visible
@@ -1046,7 +1053,7 @@ protected:
 	int m_nActionTag;
     CCSize m_size;
     CCSize m_customSize;
-    LayoutParameter* m_pLayoutParameter;
+    CCDictionary* m_pLayoutParameterDictionary;
     bool m_bIgnoreSize;
     CCArray* m_children;
     bool m_bAffectByClipping;

@@ -22,11 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIHelper.h"
-#include "../../Json/DictionaryHelper.h"
-#include "cocos2d.h"
-#include "../../Reader/CCSGUIReader.h"
-
+#include "CocosGUI.h"
 
 NS_CC_EXT_BEGIN
     
@@ -182,7 +178,7 @@ UIWidget* UIHelper::seekWidgetByRelativeName(UIWidget *root, const char *name)
     for (int i=0;i<length;i++)
     {
         UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
-        RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter());
+        RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
         if (layoutParameter && strcmp(layoutParameter->getRelativeName(), name) == 0)
         {
             return child;

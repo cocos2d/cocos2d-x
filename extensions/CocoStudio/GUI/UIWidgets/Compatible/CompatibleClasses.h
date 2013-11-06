@@ -45,6 +45,32 @@ protected:
     };
 };
 
+class UIDragPanel : public UIScrollView
+{
+public:
+    static UIDragPanel* create()
+    {
+        UIDragPanel* widget = new UIDragPanel();
+        if (widget && widget->init())
+        {
+            widget->autorelease();
+            return widget;
+        }
+        CC_SAFE_DELETE(widget);
+        return NULL;
+    };
+protected:
+    virtual bool init()
+    {
+        if (UIScrollView::init())
+        {
+            setDirection(SCROLLVIEW_DIR_BOTH);
+            return true;
+        }
+        return false;
+    };
+};
+
 //enmu type define
 typedef LayoutBackGroundColorType PanelColorType;
 

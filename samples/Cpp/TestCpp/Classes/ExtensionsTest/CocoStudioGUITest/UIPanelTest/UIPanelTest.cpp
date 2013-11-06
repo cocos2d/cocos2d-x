@@ -546,7 +546,7 @@ bool UIPanelTest_Layout_Relative::init()
         
         RelativeLayoutParameter* rp1 = RelativeLayoutParameter::create();
         button->setLayoutParameter(rp1);
-        rp1->setAlign(RELATIVE_ALIGN_PARENT_BOTTOM);
+        rp1->setAlign(RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
 //        rp1->setMargin(UIMargin(0, 10, 0, 10));
         
         
@@ -558,7 +558,7 @@ bool UIPanelTest_Layout_Relative::init()
         
         RelativeLayoutParameter* rp2 = RelativeLayoutParameter::create();
         textButton->setLayoutParameter(rp2);
-        rp2->setAlign(RELATIVE_ALIGN_PARENT_LEFT);
+        rp2->setAlign(RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
         
         
         UIButton* button_scale9 = UIButton::create();
@@ -570,7 +570,7 @@ bool UIPanelTest_Layout_Relative::init()
         
         RelativeLayoutParameter* rp3 = RelativeLayoutParameter::create();
         textButton->setLayoutParameter(rp3);
-        rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT);
+        rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL);
         
         
         layout->doLayout();
