@@ -87,6 +87,7 @@ public:
 
 
     CCNode *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
 
     int getCurrentDisplayIndex();
 
@@ -129,6 +130,8 @@ protected:
     CCArray *m_pDecoDisplayList;
     //! Display render node.
     CCNode *m_pDisplayRenderNode;
+    //! Display render node type
+    DisplayType m_eDisplayType;
     //! Include current display information, like contour sprite, etc.
     CCDecorativeDisplay *m_pCurrentDecoDisplay;
     //! Current display index

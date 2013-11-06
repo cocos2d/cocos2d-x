@@ -134,7 +134,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Json/lib_json/json_value.cpp \
 ../CocoStudio/Json/lib_json/json_reader.cpp \
 ../CocoStudio/Json/lib_json/json_writer.cpp \
-../CocoStudio/Reader/CCSSceneReader.cpp \
+../CocoStudio/Reader/SceneReader.cpp \
 ../CocoStudio/Reader/GUIReader.cpp \
 ../CocoStudio/Action/CCActionManager.cpp \
 ../CocoStudio/Action/CCActionObject.cpp \

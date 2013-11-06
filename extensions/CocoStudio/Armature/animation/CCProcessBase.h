@@ -100,7 +100,6 @@ public:
     virtual void stop();
 
 
-    virtual void gotoFrame(int frameIndex);
 
     /**
      * You should never call this function, unless you know what you do
@@ -114,6 +113,7 @@ public:
 
 protected:
 
+    virtual void gotoFrame(int frameIndex);
 
     /**
      * Update(float dt) will call this handler, you can handle your logic here

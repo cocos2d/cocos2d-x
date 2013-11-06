@@ -1124,7 +1124,14 @@ string LabelTTFMultiline::subtitle()
 LabelTTFChinese::LabelTTFChinese()
 {
     CCSize size = CCDirector::sharedDirector()->getWinSize();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // Marker Felt is missing Chinese characters
+    CCLabelTTF *pLable = CCLabelTTF::create("中国", "PMingLiU", 30);
+#else
     CCLabelTTF *pLable = CCLabelTTF::create("中国", "Marker Felt", 30);
+#endif
+
+    
     pLable->setPosition(ccp(size.width / 2, size.height /2));
     this->addChild(pLable);
 }
