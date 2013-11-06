@@ -26,9 +26,9 @@ option(BUILD_TestLua "Only build TestLua sample" ON)
 
 
 if(DEBUG_MODE)
-  set(CMAKE_BUILE_TYPE DEBUG)
+  set(CMAKE_BUILD_TYPE DEBUG)
 else(DEBUG_MODE)
-  set(CMAKE_BUILE_TYPE RELEASE)
+  set(CMAKE_BUILD_TYPE RELEASE)
 endif(DEBUG_MODE)
 
 set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
