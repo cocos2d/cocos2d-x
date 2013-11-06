@@ -34,3 +34,9 @@ set(LUA_SRC
 add_library(lua STATIC
   ${LUA_SRC}
 )
+
+set_target_properties(lua
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+)
