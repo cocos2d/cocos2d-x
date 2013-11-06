@@ -39,8 +39,8 @@ public:
 public:
     Skin();
 
-    bool initWithSpriteFrameName(const char *pszSpriteFrameName) override;
-    bool initWithFile(const char *pszFilename) override;
+    virtual bool initWithSpriteFrameName(const char *pszSpriteFrameName) override;
+    virtual bool initWithFile(const char *pszFilename) override;
 
     void updateArmatureTransform();
     void updateTransform() override;
