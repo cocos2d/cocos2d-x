@@ -81,6 +81,7 @@ bool nodeComparisonLess(Object* p1, Object* p2);
 #endif
 
 class EventListener;
+class Director;
 
 /** @brief Node is the main element. Anything that gets drawn or contains things that get drawn is a Node.
  The most popular Nodes are: Scene, Layer, Sprite, Menu.
@@ -309,7 +310,7 @@ public:
      * The original point (0,0) is at the left-bottom corner of screen.
      * For example, this codesnip sets the node in the center of screen.
      * @code
-     * Size size = Director::getInstance()->getWinSize();
+     * Size size = getDirector()->getWinSize();
      * node->setPosition( Point(size.width/2, size.height/2) )
      * @endcode
      *
@@ -1393,6 +1394,8 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
     
+    //get the director
+    Director* getDirector() const;
     
 #ifdef CC_USE_PHYSICS
     /**
@@ -1413,6 +1416,8 @@ public:
 #endif
     
 protected:
+    //the director
+    Director* _director;
     
     /// lazy allocs
     void childrenAlloc(void);
