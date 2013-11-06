@@ -62,10 +62,9 @@ bool Layer::init()
 {
     bool bRet = false;
     do 
-    {        
-        Director * pDirector;
-        CC_BREAK_IF(!(pDirector = Director::getInstance()));
-        this->setContentSize(pDirector->getWinSize());
+    {
+        CC_BREAK_IF(!getDirector());
+        this->setContentSize(getDirector()->getWinSize());
         // success
         bRet = true;
     } while(0);
@@ -291,7 +290,7 @@ LayerColor * LayerColor::create(const Color4B& color)
 
 bool LayerColor::init()
 {
-    Size s = Director::getInstance()->getWinSize();
+    Size s = getDirector()->getWinSize();
     return initWithColor(Color4B(0,0,0,0), s.width, s.height);
 }
 
@@ -325,7 +324,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
 
 bool LayerColor::initWithColor(const Color4B& color)
 {
-    Size s = Director::getInstance()->getWinSize();
+    Size s = getDirector()->getWinSize();
     this->initWithColor(color, s.width, s.height);
     return true;
 }
