@@ -38,30 +38,82 @@ namespace cocostudio {
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
+ColliderFilter::ColliderFilter(unsigned short categoryBits, unsigned short maskBits, signed short groupIndex)
+    : _categoryBits(categoryBits)
+    , _maskBits(maskBits)
+    , _groupIndex(groupIndex)
+{
+}
+
+void ColliderFilter::updateShape(b2Fixture *fixture)
+{
+        b2Filter filter;
+        filter.categoryBits = _categoryBits;
+        filter.groupIndex = _groupIndex;
+        filter.maskBits = _maskBits;
+        
+        fixture->SetFilterData(filter);
+}
+
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+ColliderFilter::ColliderFilter(uintptr_t collisionType, uintptr_t group)
+    : _collisionType(collisionType)
+    , _group(group)
+{
+}
+void ColliderFilter::updateShape(cpShape *shape)
+{
+        shape->collision_type = _collisionType;
+        shape->group = _group;
+}
+#endif
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
 ColliderBody::ColliderBody(ContourData *contourData)
-    : _fixture(NULL)
-    , _filter(NULL)
+    : _fixture(nullptr)
     , _contourData(contourData)
 {
     CC_SAFE_RETAIN(_contourData);
+    _filter = new ColliderFilter();
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    _calculatedVertexList = Array::create();
+    CC_SAFE_RETAIN(_calculatedVertexList);
+#endif
 }
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 
 ColliderBody::ColliderBody(ContourData *contourData)
-    : _shape(NULL)
+    : _shape(nullptr)
     , _contourData(contourData)
 {
     CC_SAFE_RETAIN(_contourData);
+    _filter = new ColliderFilter();
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    _calculatedVertexList = Array::create();
+    CC_SAFE_RETAIN(_calculatedVertexList);
+#endif
 }
 #endif
 
 ColliderBody::~ColliderBody()
 {
     CC_SAFE_RELEASE(_contourData);
-
-#if ENABLE_PHYSICS_BOX2D_DETECT
     CC_SAFE_DELETE(_filter);
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    CC_SAFE_RELEASE(_calculatedVertexList);
 #endif
+}
+
+void ColliderBody::setColliderFilter(ColliderFilter *filter)
+{
+    *_filter = *filter;
+}
+ColliderFilter *ColliderBody::getColliderFilter()
+{
+    return _filter;
 }
 
 
@@ -75,7 +127,7 @@ ColliderDetector *ColliderDetector::create()
         return pColliderDetector;
     }
     CC_SAFE_DELETE(pColliderDetector);
-    return NULL;
+    return nullptr;
 }
 
 ColliderDetector *ColliderDetector::create(Bone *bone)
@@ -87,20 +139,22 @@ ColliderDetector *ColliderDetector::create(Bone *bone)
         return pColliderDetector;
     }
     CC_SAFE_DELETE(pColliderDetector);
-    return NULL;
+    return nullptr;
 }
 
 ColliderDetector::ColliderDetector()
-    : _colliderBodyList(NULL)
+    : _colliderBodyList(nullptr)
+    , _filter(nullptr)
     , _active(false)
 {
-    _body = NULL;
+    _body = nullptr;
 }
 
 ColliderDetector::~ColliderDetector()
 {
     _colliderBodyList->removeAllObjects();
     CC_SAFE_DELETE(_colliderBodyList);
+    CC_SAFE_DELETE(_filter);
 }
 
 bool ColliderDetector::init()
@@ -108,6 +162,8 @@ bool ColliderDetector::init()
     _colliderBodyList = Array::create();
     CCASSERT(_colliderBodyList, "create _colliderBodyList failed!");
     _colliderBodyList->retain();
+
+    _filter = new ColliderFilter();
 
     return true;
 }
@@ -125,12 +181,24 @@ void ColliderDetector::addContourData(ContourData *contourData)
     ColliderBody *colliderBody = new ColliderBody(contourData);
     _colliderBodyList->addObject(colliderBody);
     colliderBody->release();
+
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    CCArray *calculatedVertexList = colliderBody->getCalculatedVertexList();
+    
+    int num = contourData->vertexList.count();
+    for (int i = 0; i < num; i++)
+    {
+        ContourVertex2 *newVertex = new ContourVertex2(0, 0);
+        calculatedVertexList->addObject(newVertex);
+        newVertex->release();
+    }
+#endif
 }
 
 void ColliderDetector::addContourDataList(Array *contourDataList)
 {
-    Object *object = NULL;
-    CCARRAY_FOREACH(contourDataList, object)
+    for(auto object : *contourDataList)
     {
         addContourData((ContourData *)object);
     }
@@ -138,8 +206,7 @@ void ColliderDetector::addContourDataList(Array *contourDataList)
 
 void ColliderDetector::removeContourData(ContourData *contourData)
 {
-	Object *object = NULL;
-	CCARRAY_FOREACH(_colliderBodyList, object)
+	for(auto object : *_colliderBodyList)
 	{
 		ColliderBody *body = (ColliderBody*)object;
 		if (body && body->getContourData() == contourData)
@@ -173,40 +240,41 @@ void ColliderDetector::setActive(bool active)
         }
         else
         {
-            Object *object = NULL;
-            CCARRAY_FOREACH(_colliderBodyList, object)
+            for(auto object : *_colliderBodyList)
             {
                 ColliderBody *colliderBody = (ColliderBody *)object;
                 b2Fixture *fixture = colliderBody->getB2Fixture();
 
-                b2Filter *filter = colliderBody->getB2Filter();
-                *filter = fixture->GetFilterData();
-
                 _body->DestroyFixture(fixture);
-                colliderBody->setB2Fixture(NULL);
+                colliderBody->setB2Fixture(nullptr);
             }
         }
     }
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (_body)
     {
-        Object *object = NULL;
         if (_active)
         {
-            CCARRAY_FOREACH(_colliderBodyList, object)
+            for(auto object : *_colliderBodyList)
             {
                 ColliderBody *colliderBody = (ColliderBody *)object;
                 cpShape *shape = colliderBody->getShape();
-                cpSpaceAddShape(_body->space_private, shape);
+                if(shape->space_private == nullptr)
+                {
+                    cpSpaceAddShape(_body->space_private, shape);
+                }
             }
         }
         else
         {
-            CCARRAY_FOREACH(_colliderBodyList, object)
+            for(auto object : *_colliderBodyList)
             {
                 ColliderBody *colliderBody = (ColliderBody *)object;
                 cpShape *shape = colliderBody->getShape();
-                cpSpaceRemoveShape(_body->space_private, shape);
+                if (shape->space_private != nullptr)
+                {
+                    cpSpaceRemoveShape(_body->space_private, shape);
+                }
             }
         }
     }
@@ -223,6 +291,33 @@ Array *ColliderDetector::getColliderBodyList()
     return _colliderBodyList;
 }
 
+void ColliderDetector::setColliderFilter(ColliderFilter *filter)
+{
+    *_filter = *filter;
+    
+    for(auto object : *_colliderBodyList)
+    {
+        ColliderBody *colliderBody = (ColliderBody *)object;
+        colliderBody->setColliderFilter(filter);
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+        if (colliderBody->getB2Fixture())
+        {
+            colliderBody->getColliderFilter()->updateShape(colliderBody->getB2Fixture());
+        }
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+        if (colliderBody->getShape())
+        {
+            colliderBody->getColliderFilter()->updateShape(colliderBody->getShape());
+        }
+#endif
+    }
+}
+ColliderFilter *ColliderDetector::getColliderFilter()
+{
+    return _filter;
+}
+
 
 Point helpPoint;
 
@@ -233,21 +328,20 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         return;
     }
 
-    Object *object = NULL;
-    CCARRAY_FOREACH(_colliderBodyList, object)
+    for(auto object : *_colliderBodyList)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
         ContourData *contourData = colliderBody->getContourData();
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-        b2PolygonShape *shape = NULL;
-        if (_body != NULL)
+        b2PolygonShape *shape = nullptr;
+        if (_body != nullptr)
         {
             shape = (b2PolygonShape *)colliderBody->getB2Fixture()->GetShape();
         }
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-        cpPolyShape *shape = NULL;
-        if (_body != NULL)
+        cpPolyShape *shape = nullptr;
+        if (_body != nullptr)
         {
             shape = (cpPolyShape *)colliderBody->getShape();
         }
@@ -256,20 +350,29 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         int num = contourData->vertexList.count();
         ContourVertex2 **vs = (ContourVertex2 **)contourData->vertexList.data->arr;
 
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+        ContourVertex2 **cvs = (ContourVertex2 **)colliderBody->getCalculatedVertexList()->data->arr;
+#endif
+
         for (int i = 0; i < num; i++)
         {
             helpPoint.setPoint( vs[i]->x,  vs[i]->y);
             helpPoint = PointApplyAffineTransform(helpPoint, t);
 
 
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+            cvs[i]->x = helpPoint.x;
+            cvs[i]->y = helpPoint.y;
+#endif
+
 #if ENABLE_PHYSICS_BOX2D_DETECT
-            if (shape != NULL)
+            if (shape != nullptr)
             {
                 b2Vec2 &bv = shape->m_vertices[i];
                 bv.Set(helpPoint.x / PT_RATIO, helpPoint.y / PT_RATIO);
             }
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-            if (shape != NULL)
+            if (shape != nullptr)
             {
                 cpVect v ;
                 v.x = helpPoint.x;
@@ -280,7 +383,7 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         }
 
 #if ENABLE_PHYSICS_CHIPMUNK_DETECT
-        cpConvexHull(num, shape->verts, NULL, NULL, 0);
+        cpConvexHull(num, shape->verts, nullptr, nullptr, 0);
         for (int i = 0; i < num; i++)
         {
             cpVect b = shape->verts[(i + 1) % shape->numVerts];
@@ -299,19 +402,18 @@ void ColliderDetector::setBody(b2Body *pBody)
 {
     _body = pBody;
 
-    Object *object = NULL;
-    CCARRAY_FOREACH(_colliderBodyList, object)
+    for(auto object : *_colliderBodyList)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
 
         ContourData *contourData = colliderBody->getContourData();
         const Array *array = &contourData->vertexList;
-        Object *object = NULL;
+        Object *object = nullptr;
 
         b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.count()];
 
         int i = 0;
-        CCARRAY_FOREACH(array, object)
+        for(auto object : *array)
         {
             ContourVertex2 *v = (ContourVertex2 *)object;
             b2bv[i].Set(v->x / PT_RATIO, v->y / PT_RATIO);
@@ -330,25 +432,17 @@ void ColliderDetector::setBody(b2Body *pBody)
         b2Fixture *fixture = _body->CreateFixture(&fixtureDef);
         fixture->SetUserData(_bone);
 
-        if (colliderBody->getB2Fixture() != NULL)
+        if (colliderBody->getB2Fixture() != nullptr)
         {
             _body->DestroyFixture(colliderBody->getB2Fixture());
         }
         colliderBody->setB2Fixture(fixture);
 
-        if (colliderBody->getB2Filter() == NULL)
-        {
-            b2Filter *filter = new b2Filter;
-            colliderBody->setB2Filter(filter);
-        }
-        else
-        {
-            fixture->SetFilterData(*colliderBody->getB2Filter());
-        }
+        colliderBody->getColliderFilter()->updateShape(fixture);
     }
 }
 
-b2Body *ColliderDetector::getBody()
+b2Body *ColliderDetector::getBody() const
 {
     return _body;
 }
@@ -358,8 +452,7 @@ void ColliderDetector::setBody(cpBody *pBody)
 {
     _body = pBody;
 
-    Object *object = NULL;
-    CCARRAY_FOREACH(_colliderBodyList, object)
+    for(auto object : *_colliderBodyList)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
 
@@ -378,15 +471,20 @@ void ColliderDetector::setBody(cpBody *pBody)
 
         shape->sensor = true;
         shape->data = _bone;
-        cpSpaceAddShape(_body->space_private, shape);
+
+        if (_active)
+        {
+            cpSpaceAddShape(_body->space_private, shape);
+        }
 
         colliderBody->setShape(shape);
+        colliderBody->getColliderFilter()->updateShape(shape);
 
         delete []verts;
     }
 }
 
-cpBody *ColliderDetector::getBody()
+cpBody *ColliderDetector::getBody() const
 {
     return _body;
 }

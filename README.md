@@ -29,8 +29,8 @@ How to start a new game
 
 Example:
 
-	$ cd cocos2d-x/tools/project-creator
-	$ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
+    $ cd cocos2d-x/tools/project-creator
+    $ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
     $ cd ../../projects/mygame
 
 
@@ -70,7 +70,7 @@ Build Requirements
 ------------------
 
 * Mac OS X 10.7+, Xcode 4.6+
-* or Ubuntu 13.04+
+* or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
 
 
@@ -97,8 +97,9 @@ $ open samples.xcodeproj
 * For Linux
 
 ```
-$ cd cocos2d-x/build
-$ ./make-all-linux-projects.sh
+$ cd cocos2d-x
+$ cmake CMakeLists.txt
+$ make
 ```
 
 * For Windows
