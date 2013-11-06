@@ -9,6 +9,7 @@
 #include "CCNewSprite.h"
 #include "RenderCommand.h"
 #include "Renderer.h"
+#include "QuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -46,10 +47,7 @@ void NewSprite::draw(void)
 {
     kmMat4 transform;
     kmGLGetMatrix(KM_GL_MODELVIEW, &transform);
-    RenderCommand* renderCommand = new RenderCommand();
-    renderCommand->setKeyData(0, true, false, _ZOrder);
-    renderCommand->setMaterialData(_texture->getName(), _shaderProgram->getProgram(), _blendFunc);
-    renderCommand->setQuadData(&transform, _quad);
+    QuadCommand* renderCommand = new QuadCommand(0, _ZOrder,_texture->getName(), _shaderProgram->getProgram(), _blendFunc, transform, _quad);
 
     Renderer::getInstance()->addRenderCommand(renderCommand);
 }
