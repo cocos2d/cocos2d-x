@@ -236,16 +236,15 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     }
     float fileDesignWidth = DICTOOL->getFloatValue_json(jsonDict, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(jsonDict, "designHeight");
-    if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
+    if (fileDesignWidth <= 0 || fileDesignHeight <= 0)
+    {
         printf("Read design size error!\n");
         Size winSize = Director::getInstance()->getWinSize();
-//        CCUIHELPER->setFileDesignWidth(winSize.width);
-//        CCUIHELPER->setFileDesignHeight(winSize.height);
+        UIHelper::setFileDesignSize(fileName, winSize);
     }
     else
     {
-//        CCUIHELPER->setFileDesignWidth(fileDesignWidth);
-//        CCUIHELPER->setFileDesignHeight(fileDesignHeight);
+        UIHelper::setFileDesignSize(fileName, cocos2d::Size(fileDesignWidth, fileDesignHeight));
     }
     JsonDictionary* widgetTree = DICTOOL->getSubDictionary_json(jsonDict, "widgetTree");
     UIWidget* widget = widgetFromJsonDictionary(widgetTree);
