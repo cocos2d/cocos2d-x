@@ -26,7 +26,6 @@
 #define __UILAYOUTDEFINE_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
 namespace gui {
 /**
