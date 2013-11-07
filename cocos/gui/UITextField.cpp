@@ -586,7 +586,7 @@ void UITextField::copySpecialProperties(UIWidget *widget)
         setText(textField->_textFieldRenderer->getString());
         setPlaceHolder(textField->getStringValue());
         setFontSize(textField->_textFieldRenderer->getFontSize());
-        setFontName(textField->_textFieldRenderer->getFontName());
+        setFontName(textField->_textFieldRenderer->getFontName().c_str());
         setMaxLengthEnabled(textField->isMaxLengthEnabled());
         setMaxLength(textField->getMaxLength());
         setPasswordEnabled(textField->isPasswordEnabled());

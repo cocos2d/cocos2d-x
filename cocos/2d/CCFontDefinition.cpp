@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-const int FontDefinitionTTF::DEFAUL_ATALS_TEXTURE_SIZE = 1024;
+const int FontDefinitionTTF::DEFAUL_ATLAS_TEXTURE_SIZE = 1024;
 
 FontDefinitionTTF::FontDefinitionTTF():_textImages(0), _commonLineHeight(0)
 {
@@ -36,7 +36,7 @@ FontDefinitionTTF::FontDefinitionTTF():_textImages(0), _commonLineHeight(0)
 FontDefinitionTTF* FontDefinitionTTF::create(Font *font, int textureSize)
 {
     if (textureSize == 0)
-        textureSize = DEFAUL_ATALS_TEXTURE_SIZE;
+        textureSize = DEFAUL_ATLAS_TEXTURE_SIZE;
     
     FontDefinitionTTF *ret = new FontDefinitionTTF;
     
@@ -82,8 +82,8 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
         // loops all the lines in this page
         for (int cLines = 0; cLines<pages->getPageAt(cPages)->getNumLines(); ++cLines)
         {
-            float posXUV       = 0.0;
-            float posYUV       = pages->getPageAt(cPages)->getLineAt(cLines)->getY();
+            float posXUV = 0.0;
+            float posYUV = pages->getPageAt(cPages)->getLineAt(cLines)->getY();
             
             int   charsCounter = 0;
             
