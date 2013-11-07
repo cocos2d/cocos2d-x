@@ -462,7 +462,7 @@ void Director::purgeCachedData(void)
     if (s_SharedDirector->getOpenGLView())
     {
         SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
-        TextureCache::getInstance()->removeUnusedTextures();
+        _textureCache->removeUnusedTextures();
     }
     FileUtils::getInstance()->purgeCachedEntries();
 }
@@ -867,7 +867,7 @@ void Director::getFPSImageData(unsigned char** datapointer, long* length)
 void Director::createStatsLabel()
 {
     Texture2D *texture = nullptr;
-    TextureCache *textureCache = TextureCache::getInstance();
+    TextureCache *textureCache = _textureCache;
 
     if (_FPSLabel && _SPFLabel)
     {
