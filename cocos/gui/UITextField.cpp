@@ -139,7 +139,7 @@ void UICCTextField::insertText(const char * text, int len)
     {
         if (cocos2d::TextFieldTTF::getCharCount() > 0)
         {
-            setPasswordText(_inputText->c_str());
+            setPasswordText(_inputText.c_str());
         }
     }
 }
@@ -153,7 +153,7 @@ void UICCTextField::deleteBackward()
         // password
         if (_passwordEnabled)
         {
-            setPasswordText(_inputText->c_str());
+            setPasswordText(_inputText.c_str());
         }
     }
 }
