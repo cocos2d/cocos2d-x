@@ -6,14 +6,13 @@ INCLUDES = -I../ \
 
 SOURCES = UIRootWidget.cpp \
 UIWidget.cpp \
-Layout.cpp \
-LayoutParameter.cpp \
+UILayout.cpp \
+UILayoutParameter.cpp \
 UILayoutDefine.cpp \
 CocosGUI.cpp \
 UIHelper.cpp \
 UIInputManager.cpp \
 UILayer.cpp \
-UIDragPanel.cpp \
 UIListView.cpp \
 UIPageView.cpp \
 UIScrollView.cpp \
