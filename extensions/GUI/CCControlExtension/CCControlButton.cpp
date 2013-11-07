@@ -404,7 +404,7 @@ const char * ControlButton::getTitleTTFForState(State state)
     LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getFontName();
+        return labelTTF->getFontName().c_str();
     }
     else
     {
