@@ -36,3 +36,9 @@ target_link_libraries(luabinding
   tolua
   lua
 )
+
+set_target_properties(luabinding
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+)
