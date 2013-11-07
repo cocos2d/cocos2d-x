@@ -136,8 +136,8 @@ protected:
     static PhysicsWorld* create(Scene& scene);
     bool init(Scene& scene);
     
-    virtual PhysicsBody* addBody(PhysicsBody* body);
-    virtual PhysicsShape* addShape(PhysicsShape* shape);
+    virtual void addBody(PhysicsBody* body);
+    virtual void addShape(PhysicsShape* shape);
     virtual void removeShape(PhysicsShape* shape);
     virtual void update(float delta);
     
