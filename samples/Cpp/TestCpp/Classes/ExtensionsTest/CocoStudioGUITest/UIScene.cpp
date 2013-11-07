@@ -74,6 +74,7 @@ void UIScene::previousCallback(Object* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
+        m_pUiLayer->removeFromParent();
         CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->previousUIScene());
     }
 }
@@ -82,6 +83,7 @@ void UIScene::restartCallback(Object* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
+        m_pUiLayer->removeFromParent();
         CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->currentUIScene());
     }
 }
@@ -90,6 +92,7 @@ void UIScene::nextCallback(Object* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
+        m_pUiLayer->removeFromParent();
         CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->nextUIScene());
     }
 }

@@ -51,7 +51,9 @@ _frontCrossDisabledFileName("")
 
 UICheckBox::~UICheckBox()
 {
-    
+    CC_SAFE_RELEASE(_selectedStateEventListener);
+    _selectedStateEventListener = NULL;
+    _selectedStateEventSelector = NULL;
 }
 
 UICheckBox* UICheckBox::create()
@@ -300,7 +302,9 @@ void UICheckBox::unSelectedEvent()
 
 void UICheckBox::addEventListener(cocos2d::Object *target, SEL_SelectedStateEvent selector)
 {
+    CC_SAFE_RELEASE(_selectedStateEventListener);
     _selectedStateEventListener = target;
+    CC_SAFE_RETAIN(_selectedStateEventListener);
     _selectedStateEventSelector = selector;
 }
 
