@@ -166,9 +166,9 @@ class CC_DLL TMXMapInfo : public Object, public SAXDelegator
 {    
 public:    
     /** creates a TMX Format with a tmx file */
-    static TMXMapInfo * create(const char *tmxFile);
+    static TMXMapInfo * create(const std::string& tmxFile);
     /** creates a TMX Format with an XML string and a TMX resource path */
-    static TMXMapInfo * createWithXML(const char* tmxString, const char* resourcePath);
+    static TMXMapInfo * createWithXML(const std::string& tmxString, const std::string& resourcePath);
     
     /** creates a TMX Format with a tmx file */
     CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithTMXFile(const char *tmxFile) { return TMXMapInfo::create(tmxFile); };
@@ -185,13 +185,13 @@ public:
     virtual ~TMXMapInfo();
     
     /** initializes a TMX format with a  tmx file */
-    bool initWithTMXFile(const char *tmxFile);
+    bool initWithTMXFile(const std::string& tmxFile);
     /** initializes a TMX format with an XML string and a TMX resource path */
-    bool initWithXML(const char* tmxString, const char* resourcePath);
+    bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
     /** initializes parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
-    bool parseXMLFile(const char *xmlFilename);
+    bool parseXMLFile(const std::string& xmlFilename);
     /* initializes parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
-    bool parseXMLString(const char *xmlString);
+    bool parseXMLString(const std::string& xmlString);
 
     Dictionary* getTileProperties() { return _tileProperties; };
     void setTileProperties(Dictionary* tileProperties) {
@@ -278,13 +278,13 @@ public:
      */
     void textHandler(void *ctx, const char *ch, int len);
     
-    inline const char* getCurrentString(){ return _currentString.c_str(); }
-    inline void setCurrentString(const char *currentString){ _currentString = currentString; }
-    inline const char* getTMXFileName(){ return _TMXFileName.c_str(); }
-    inline void setTMXFileName(const char *fileName){ _TMXFileName = fileName; }
-private:
-    void internalInit(const char* tmxFileName, const char* resourcePath);
+    inline const std::string& getCurrentString() const { return _currentString; }
+    inline void setCurrentString(const std::string& currentString){ _currentString = currentString; }
+    inline const std::string& getTMXFileName() const { return _TMXFileName; }
+    inline void setTMXFileName(const std::string& fileName){ _TMXFileName = fileName; }
+
 protected:
+    void internalInit(const std::string& tmxFileName, const std::string& resourcePath);
 
     /// map orientation
     int    _orientation;
