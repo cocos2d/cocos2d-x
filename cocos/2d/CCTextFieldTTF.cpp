@@ -313,9 +313,9 @@ void TextFieldTTF::setString(const std::string &text)
     _charCount = _calcCharCount(_inputText.c_str());
 }
 
-const char* TextFieldTTF::getString(void) const
+const std::string& TextFieldTTF::getString() const
 {
-    return _inputText.c_str();
+    return _inputText;
 }
 
 // place holder text property
