@@ -654,10 +654,10 @@ void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
         const cpConstraintClass *klass = constraint->klass_private;
         if(klass == cpPinJointGetClass())
         {
-            cpPinJoint *joint = (cpPinJoint *)constraint;
+            cpPinJoint *subJoint = (cpPinJoint *)constraint;
             
-            cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
-            cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
+            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
+            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
             
             node->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, Color4F(0.0f, 0.0f, 1.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(a), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
@@ -665,10 +665,10 @@ void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
         }
         else if(klass == cpSlideJointGetClass())
         {
-            cpSlideJoint *joint = (cpSlideJoint *)constraint;
+            cpSlideJoint *subJoint = (cpSlideJoint *)constraint;
             
-            cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
-            cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
+            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
+            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
             
             node->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, Color4F(0.0f, 0.0f, 1.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(a), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
@@ -676,21 +676,21 @@ void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
         }
         else if(klass == cpPivotJointGetClass())
         {
-            cpPivotJoint *joint = (cpPivotJoint *)constraint;
+            cpPivotJoint *subJoint = (cpPivotJoint *)constraint;
             
-            cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
-            cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
+            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
+            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
             
             node->drawDot(PhysicsHelper::cpv2point(a), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(b), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
         }
         else if(klass == cpGrooveJointGetClass())
         {
-            cpGrooveJoint *joint = (cpGrooveJoint *)constraint;
+            cpGrooveJoint *subJoint = (cpGrooveJoint *)constraint;
             
-            cpVect a = cpvadd(body_a->p, cpvrotate(joint->grv_a, body_a->rot));
-            cpVect b = cpvadd(body_a->p, cpvrotate(joint->grv_b, body_a->rot));
-            cpVect c = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
+            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->grv_a, body_a->rot));
+            cpVect b = cpvadd(body_a->p, cpvrotate(subJoint->grv_b, body_a->rot));
+            cpVect c = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
             
             node->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, Color4F(0.0f, 0.0f, 1.0f, 1.0f));
             node->drawDot(PhysicsHelper::cpv2point(c), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
@@ -706,15 +706,15 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
 {
     for (auto it = shape->_info->getShapes().begin(); it != shape->_info->getShapes().end(); ++it)
     {
-        cpShape *shape = *it;
+        cpShape *subShape = *it;
         
         switch ((*it)->klass_private->type)
         {
             case CP_CIRCLE_SHAPE:
             {
-                float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(shape));
-                Point centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(shape)))
-                + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(shape));
+                float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(subShape));
+                Point centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)))
+                + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(subShape));
                 
                 static const int CIRCLE_SEG_NUM = 12;
                 Point seg[CIRCLE_SEG_NUM] = {};
@@ -730,7 +730,7 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
             }
             case CP_SEGMENT_SHAPE:
             {
-                cpSegmentShape *seg = (cpSegmentShape *)shape;
+                cpSegmentShape *seg = (cpSegmentShape *)subShape;
                 node->drawSegment(PhysicsHelper::cpv2point(seg->ta),
                                   PhysicsHelper::cpv2point(seg->tb),
                                   PhysicsHelper::cpfloat2float(seg->r==0 ? 1 : seg->r), Color4F(1, 0, 0, 1));
@@ -738,7 +738,7 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
             }
             case CP_POLY_SHAPE:
             {
-                cpPolyShape* poly = (cpPolyShape*)shape;
+                cpPolyShape* poly = (cpPolyShape*)subShape;
                 int num = poly->numVerts;
                 Point* seg = new Point[num];
                 

@@ -25,52 +25,15 @@
 #ifndef __UIHELPER_H__
 #define __UIHELPER_H__
 
-#include "gui/UIInputManager.h"
-#include "cocostudio/CSContentJsonDictionary.h"
-
-
-#define CCUIHELPER gui::UIHelper::instance()
-
 namespace gui {
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIHelper
 {
 public:
-    /**
-     * Default constructor
-     */
-    UIHelper();
-    
-    /**
-     * Default destructor
-     */
-    ~UIHelper();
-    
-    //initializes state of UIHelper.
-    void init();
-    
-    /**
-     * Load a widget with json file.
-     *
-     * @return a widget created with json file.
-     */
-    UIWidget* createWidgetFromJsonFile(const char* fileName);
-    
-    //get instance
-    static UIHelper* instance();
-    
-    //release instance
-	static void purgeUIHelper();
-    
-    //add a plist file for loading widget's texture.
-    void addSpriteFrame(const char* fileName);
-    
-    //remove a plist file for loading widget's texture.
-    void removeSpriteFrame(const char* fileName);
-    
-    //remove all plist files for loading widget's texture.
-    void removeAllSpriteFrame();
-    
     /**
      * Finds a widget whose tag equals to param tag from root widget.
      *
@@ -80,7 +43,7 @@ public:
      *
      * @return finded result.
      */
-    UIWidget* seekWidgetByTag(UIWidget* root, int tag);
+    static UIWidget* seekWidgetByTag(UIWidget* root, int tag);
     
     /**
      * Finds a widget whose name equals to param name from root widget.
@@ -91,7 +54,7 @@ public:
      *
      * @return finded result.
      */
-    UIWidget* seekWidgetByName(UIWidget* root, const char* name);
+    static UIWidget* seekWidgetByName(UIWidget* root, const char* name);
     
     /**
      * Finds a widget whose name equals to param name from root widget.
@@ -104,19 +67,10 @@ public:
      *
      * @return finded result.
      */
-    UIWidget* seekWidgetByRelativeName(UIWidget* root, const char* name);
-    void setFileDesignWidth(float width);
-    float getFileDesignWidth();
-    void setFileDesignHeight(float height);
-    float getFileDesignHeight();
-    /*temp action*/
-    UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
-protected:
+    static UIWidget* seekWidgetByRelativeName(UIWidget* root, const char* name);
     
-    float _fileDesignWidth;
-    float _fileDesignHeight;
-    //texture
-    cocos2d::Array* _textureFiles;
+    /*temp action*/
+    static UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
 };
 
 }

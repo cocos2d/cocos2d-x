@@ -30,6 +30,10 @@
 
 namespace gui {
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class UICCTextField: public cocos2d::TextFieldTTF, public cocos2d::TextFieldDelegate
 {
 public:
@@ -70,32 +74,32 @@ public:
     bool getInsertText();
     void setDeleteBackward(bool deleteBackward);
     bool getDeleteBackward();
-    
-
 protected:
-    bool m_bMaxLengthEnabled;
-    int m_nMaxLength;
-    bool m_bPasswordEnabled;
-    std::string m_strPasswordStyleText;
-    bool m_bAttachWithIME;
-    bool m_bDetachWithIME;
-    bool m_bInsertText;
-    bool m_bDeleteBackward;
+    bool _maxLengthEnabled;
+    int _maxLength;
+    bool _passwordEnabled;
+    std::string _passwordStyleText;
+    bool _attachWithIME;
+    bool _detachWithIME;
+    bool _insertText;
+    bool _deleteBackward;
 };
-
 
 typedef enum
 {
     TEXTFIELD_EVENT_ATTACH_WITH_IME,
     TEXTFIELD_EVENT_DETACH_WITH_IME,
-    TEXTFIELD_EVENT_INDERT_TEXT,
+    TEXTFIELD_EVENT_INSERT_TEXT,
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
 typedef void (cocos2d::Object::*SEL_TextFieldEvent)(cocos2d::Object*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
-//class UITextField : public UIWidget
+/** class UITextField : public UIWidget
+*   @js NA
+*   @lua NA
+*/
 class UITextField : public UIWidget
 {
 public:
@@ -129,22 +133,19 @@ public:
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
     void addEventListener(cocos2d::Object* target, SEL_TextFieldEvent selecor);
+
     virtual void setAnchorPoint(const cocos2d::Point &pt);
     virtual void setColor(const cocos2d::Color3B &color);
     virtual void setOpacity(int opacity);
+    
     /**
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
-    /*compatibel*/
-    /**
-     * These methods will be removed
-     */
-    void setMaxLengthEnable(bool is){setMaxLengthEnabled(is);};
-    void setPasswordEnable(bool is){setPasswordEnabled(is);};
-    /************/
+
     virtual const cocos2d::Size& getContentSize() const;
     virtual cocos2d::Node* getVirtualRenderer();
+    void attachWithIME();
 protected:
     // event
     void attachWithIMEEvent();
@@ -153,9 +154,11 @@ protected:
     void deleteBackwardEvent();
     virtual void onSizeChanged();
     void textfieldRendererScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     UICCTextField* _textFieldRenderer;
-    
+
     float _touchWidth;
     float _touchHeight;
     bool _useTouchArea;
@@ -163,6 +166,7 @@ protected:
     cocos2d::Object* _eventListener;
     SEL_TextFieldEvent _eventSelector;
     
+    std::string _passwordStyleText;
 };
 
 }

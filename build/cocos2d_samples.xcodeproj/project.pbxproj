@@ -745,8 +745,6 @@
 		1AAF51AF180E2C1A000584C8 /* UIButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5069180E2C18000584C8 /* UIButtonTest.cpp */; };
 		1AAF51B0180E2C1A000584C8 /* UICheckBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF506C180E2C18000584C8 /* UICheckBoxTest.cpp */; };
 		1AAF51B1180E2C1A000584C8 /* UICheckBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF506C180E2C18000584C8 /* UICheckBoxTest.cpp */; };
-		1AAF51B2180E2C1A000584C8 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF506F180E2C18000584C8 /* UIDragPanelTest.cpp */; };
-		1AAF51B3180E2C1A000584C8 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF506F180E2C18000584C8 /* UIDragPanelTest.cpp */; };
 		1AAF51B4180E2C1A000584C8 /* UIImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5072180E2C18000584C8 /* UIImageViewTest.cpp */; };
 		1AAF51B5180E2C1A000584C8 /* UIImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5072180E2C18000584C8 /* UIImageViewTest.cpp */; };
 		1AAF51B6180E2C1A000584C8 /* UILabelAtlasTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5075180E2C18000584C8 /* UILabelAtlasTest.cpp */; };
@@ -755,8 +753,6 @@
 		1AAF51B9180E2C1A000584C8 /* UILabelBMFontTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5078180E2C18000584C8 /* UILabelBMFontTest.cpp */; };
 		1AAF51BA180E2C1A000584C8 /* UILabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF507B180E2C18000584C8 /* UILabelTest.cpp */; };
 		1AAF51BB180E2C1A000584C8 /* UILabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF507B180E2C18000584C8 /* UILabelTest.cpp */; };
-		1AAF51BC180E2C1A000584C8 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF507E180E2C18000584C8 /* UIListViewTest.cpp */; };
-		1AAF51BD180E2C1A000584C8 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF507E180E2C18000584C8 /* UIListViewTest.cpp */; };
 		1AAF51BE180E2C1A000584C8 /* UILoadingBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5081180E2C18000584C8 /* UILoadingBarTest.cpp */; };
 		1AAF51BF180E2C1A000584C8 /* UILoadingBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5081180E2C18000584C8 /* UILoadingBarTest.cpp */; };
 		1AAF51C0180E2C1A000584C8 /* UINodeContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5084180E2C18000584C8 /* UINodeContainerTest.cpp */; };
@@ -934,8 +930,6 @@
 		1AAF534F180E2F4E000584C8 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
 		1AAF53AF180E363C000584C8 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538D180E363B000584C8 /* animations */; };
 		1AAF53B0180E363C000584C8 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538D180E363B000584C8 /* animations */; };
-		1AAF53B1180E363C000584C8 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538E180E363B000584C8 /* app.icf */; };
-		1AAF53B2180E363C000584C8 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538E180E363B000584C8 /* app.icf */; };
 		1AAF53B3180E363C000584C8 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538F180E363B000584C8 /* armature */; };
 		1AAF53B4180E363C000584C8 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538F180E363B000584C8 /* armature */; };
 		1AAF53B5180E363C000584C8 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5390180E363B000584C8 /* background-music-aac.wav */; };
@@ -956,8 +950,6 @@
 		1AAF53C4180E363C000584C8 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5397180E363B000584C8 /* components */; };
 		1AAF53C5180E363C000584C8 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5398180E363B000584C8 /* configs */; };
 		1AAF53C6180E363C000584C8 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5398180E363B000584C8 /* configs */; };
-		1AAF53C7180E363C000584C8 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5399180E363B000584C8 /* development.icf */; };
-		1AAF53C8180E363C000584C8 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5399180E363B000584C8 /* development.icf */; };
 		1AAF53C9180E363C000584C8 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539A180E363B000584C8 /* effect1.raw */; };
 		1AAF53CA180E363C000584C8 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539A180E363B000584C8 /* effect1.raw */; };
 		1AAF53CB180E363C000584C8 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539B180E363B000584C8 /* effect1.wav */; };
@@ -1028,10 +1020,8 @@
 		46A174E81807D96A005B8026 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174881807D934005B8026 /* HelloWorldScene.cpp */; };
 		46A174E91807D976005B8026 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174851807D934005B8026 /* AppDelegate.cpp */; };
 		46A174EA1807D976005B8026 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174881807D934005B8026 /* HelloWorldScene.cpp */; };
-		46A174F31807D9C4005B8026 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EB1807D9C4005B8026 /* app.icf */; };
 		46A174F41807D9C4005B8026 /* bang.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EC1807D9C4005B8026 /* bang.png */; };
 		46A174F51807D9C4005B8026 /* bang.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EC1807D9C4005B8026 /* bang.png */; };
-		46A174F71807D9C4005B8026 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 46A174ED1807D9C4005B8026 /* development.icf */; };
 		46A174F81807D9C4005B8026 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EE1807D9C4005B8026 /* fonts */; };
 		46A174F91807D9C4005B8026 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EE1807D9C4005B8026 /* fonts */; };
 		46A174FA1807D9C4005B8026 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EF1807D9C4005B8026 /* ipad */; };
@@ -1046,6 +1036,10 @@
 		46A175031807D9E2005B8026 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A174BF1807D934005B8026 /* RootViewController.mm */; };
 		5010FC91180F0F8300B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174AD1807D934005B8026 /* Default-568h@2x.png */; };
 		5010FC92180F105C00B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 460E452F1807E712000CDD6D /* Default-568h@2x.png */; };
+		50E9E93D182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */; };
+		50E9E93E182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */; };
+		50E9E93F182A274000F6FDF1 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */; };
+		50E9E940182A274000F6FDF1 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */; };
 		59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
 		59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
 		A01E16881784BDA100B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -2560,8 +2554,6 @@
 		1AAF506A180E2C18000584C8 /* UIButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButtonTest.h; sourceTree = "<group>"; };
 		1AAF506C180E2C18000584C8 /* UICheckBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UICheckBoxTest.cpp; sourceTree = "<group>"; };
 		1AAF506D180E2C18000584C8 /* UICheckBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckBoxTest.h; sourceTree = "<group>"; };
-		1AAF506F180E2C18000584C8 /* UIDragPanelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIDragPanelTest.cpp; sourceTree = "<group>"; };
-		1AAF5070180E2C18000584C8 /* UIDragPanelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDragPanelTest.h; sourceTree = "<group>"; };
 		1AAF5072180E2C18000584C8 /* UIImageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImageViewTest.cpp; sourceTree = "<group>"; };
 		1AAF5073180E2C18000584C8 /* UIImageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewTest.h; sourceTree = "<group>"; };
 		1AAF5075180E2C18000584C8 /* UILabelAtlasTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelAtlasTest.cpp; sourceTree = "<group>"; };
@@ -2570,8 +2562,6 @@
 		1AAF5079180E2C18000584C8 /* UILabelBMFontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelBMFontTest.h; sourceTree = "<group>"; };
 		1AAF507B180E2C18000584C8 /* UILabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelTest.cpp; sourceTree = "<group>"; };
 		1AAF507C180E2C18000584C8 /* UILabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelTest.h; sourceTree = "<group>"; };
-		1AAF507E180E2C18000584C8 /* UIListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest.cpp; sourceTree = "<group>"; };
-		1AAF507F180E2C18000584C8 /* UIListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewTest.h; sourceTree = "<group>"; };
 		1AAF5081180E2C18000584C8 /* UILoadingBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILoadingBarTest.cpp; sourceTree = "<group>"; };
 		1AAF5082180E2C18000584C8 /* UILoadingBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoadingBarTest.h; sourceTree = "<group>"; };
 		1AAF5084180E2C18000584C8 /* UINodeContainerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UINodeContainerTest.cpp; sourceTree = "<group>"; };
@@ -2750,7 +2740,6 @@
 		1AAF5284180E2C31000584C8 /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
 		1AAF5285180E2C31000584C8 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
 		1AAF538D180E363B000584C8 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../samples/Cpp/TestCpp/Resources/animations; sourceTree = "<group>"; };
-		1AAF538E180E363B000584C8 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = app.icf; path = ../samples/Cpp/TestCpp/Resources/app.icf; sourceTree = "<group>"; };
 		1AAF538F180E363B000584C8 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; name = armature; path = ../samples/Cpp/TestCpp/Resources/armature; sourceTree = "<group>"; };
 		1AAF5390180E363B000584C8 /* background-music-aac.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "background-music-aac.wav"; path = "../samples/Cpp/TestCpp/Resources/background-music-aac.wav"; sourceTree = "<group>"; };
 		1AAF5391180E363B000584C8 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../samples/Cpp/TestCpp/Resources/background.mp3; sourceTree = "<group>"; };
@@ -2761,7 +2750,6 @@
 		1AAF5396180E363B000584C8 /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosgui; path = ../samples/Cpp/TestCpp/Resources/cocosgui; sourceTree = "<group>"; };
 		1AAF5397180E363B000584C8 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; name = components; path = ../samples/Cpp/TestCpp/Resources/components; sourceTree = "<group>"; };
 		1AAF5398180E363B000584C8 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = configs; path = ../samples/Cpp/TestCpp/Resources/configs; sourceTree = "<group>"; };
-		1AAF5399180E363B000584C8 /* development.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = development.icf; path = ../samples/Cpp/TestCpp/Resources/development.icf; sourceTree = "<group>"; };
 		1AAF539A180E363B000584C8 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect1.raw; path = ../samples/Cpp/TestCpp/Resources/effect1.raw; sourceTree = "<group>"; };
 		1AAF539B180E363B000584C8 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = effect1.wav; path = ../samples/Cpp/TestCpp/Resources/effect1.wav; sourceTree = "<group>"; };
 		1AAF539C180E363B000584C8 /* effect2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect2.ogg; path = ../samples/Cpp/TestCpp/Resources/effect2.ogg; sourceTree = "<group>"; };
@@ -2843,13 +2831,15 @@
 		46A174CB1807D934005B8026 /* HelloCpp_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloCpp_Prefix.pch; sourceTree = "<group>"; };
 		46A174CC1807D934005B8026 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		46A174CD1807D934005B8026 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		46A174EB1807D9C4005B8026 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
 		46A174EC1807D9C4005B8026 /* bang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bang.png; sourceTree = "<group>"; };
-		46A174ED1807D9C4005B8026 /* development.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = development.icf; sourceTree = "<group>"; };
 		46A174EE1807D9C4005B8026 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		46A174EF1807D9C4005B8026 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		46A174F01807D9C4005B8026 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		46A174F11807D9C4005B8026 /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
+		50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIDragPanelTest.cpp; sourceTree = "<group>"; };
+		50E9E939182A274000F6FDF1 /* UIDragPanelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDragPanelTest.h; sourceTree = "<group>"; };
+		50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest.cpp; sourceTree = "<group>"; };
+		50E9E93C182A274000F6FDF1 /* UIListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewTest.h; sourceTree = "<group>"; };
 		59A79D5B1821E95C00F19697 /* MouseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MouseTest.cpp; sourceTree = "<group>"; };
 		59A79D5C1821E95C00F19697 /* MouseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTest.h; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4516,6 +4506,8 @@
 		1AAF5065180E2C18000584C8 /* CocoStudioGUITest */ = {
 			isa = PBXGroup;
 			children = (
+				50E9E937182A274000F6FDF1 /* UIDragPanelTest */,
+				50E9E93A182A274000F6FDF1 /* UIListViewTest */,
 				1AAF5066180E2C18000584C8 /* CocosGUIScene.cpp */,
 				1AAF5067180E2C18000584C8 /* CocosGUIScene.h */,
 				1AAF5068180E2C18000584C8 /* UIButtonTest */,
@@ -4564,8 +4556,6 @@
 		1AAF506E180E2C18000584C8 /* UIDragPanelTest */ = {
 			isa = PBXGroup;
 			children = (
-				1AAF506F180E2C18000584C8 /* UIDragPanelTest.cpp */,
-				1AAF5070180E2C18000584C8 /* UIDragPanelTest.h */,
 			);
 			path = UIDragPanelTest;
 			sourceTree = "<group>";
@@ -4609,8 +4599,6 @@
 		1AAF507D180E2C18000584C8 /* UIListViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				1AAF507E180E2C18000584C8 /* UIListViewTest.cpp */,
-				1AAF507F180E2C18000584C8 /* UIListViewTest.h */,
 			);
 			path = UIListViewTest;
 			sourceTree = "<group>";
@@ -5192,7 +5180,6 @@
 			isa = PBXGroup;
 			children = (
 				1AAF538D180E363B000584C8 /* animations */,
-				1AAF538E180E363B000584C8 /* app.icf */,
 				1AAF538F180E363B000584C8 /* armature */,
 				1AAF5390180E363B000584C8 /* background-music-aac.wav */,
 				1AAF5391180E363B000584C8 /* background.mp3 */,
@@ -5203,7 +5190,6 @@
 				1AAF5396180E363B000584C8 /* cocosgui */,
 				1AAF5397180E363B000584C8 /* components */,
 				1AAF5398180E363B000584C8 /* configs */,
-				1AAF5399180E363B000584C8 /* development.icf */,
 				1AAF539A180E363B000584C8 /* effect1.raw */,
 				1AAF539B180E363B000584C8 /* effect1.wav */,
 				1AAF539C180E363B000584C8 /* effect2.ogg */,
@@ -5423,15 +5409,31 @@
 		46A174D41807D934005B8026 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				46A174EB1807D9C4005B8026 /* app.icf */,
 				46A174EC1807D9C4005B8026 /* bang.png */,
-				46A174ED1807D9C4005B8026 /* development.icf */,
 				46A174EE1807D9C4005B8026 /* fonts */,
 				46A174EF1807D9C4005B8026 /* ipad */,
 				46A174F01807D9C4005B8026 /* ipadhd */,
 				46A174F11807D9C4005B8026 /* iphone */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		50E9E937182A274000F6FDF1 /* UIDragPanelTest */ = {
+			isa = PBXGroup;
+			children = (
+				50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */,
+				50E9E939182A274000F6FDF1 /* UIDragPanelTest.h */,
+			);
+			path = UIDragPanelTest;
+			sourceTree = "<group>";
+		};
+		50E9E93A182A274000F6FDF1 /* UIListViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */,
+				50E9E93C182A274000F6FDF1 /* UIListViewTest.h */,
+			);
+			path = UIListViewTest;
 			sourceTree = "<group>";
 		};
 		59A79D5A1821E95C00F19697 /* InputTest */ = {
@@ -6240,7 +6242,6 @@
 				1AAF5287180E2C31000584C8 /* MainMenu.xib in Resources */,
 				1AAF5288180E2C31000584C8 /* Icon.icns in Resources */,
 				1AAF53AF180E363C000584C8 /* animations in Resources */,
-				1AAF53B1180E363C000584C8 /* app.icf in Resources */,
 				1AAF53B3180E363C000584C8 /* armature in Resources */,
 				1AAF53B5180E363C000584C8 /* background-music-aac.wav in Resources */,
 				1AAF53B7180E363C000584C8 /* background.mp3 in Resources */,
@@ -6251,7 +6252,6 @@
 				1AAF53C1180E363C000584C8 /* cocosgui in Resources */,
 				1AAF53C3180E363C000584C8 /* components in Resources */,
 				1AAF53C5180E363C000584C8 /* configs in Resources */,
-				1AAF53C7180E363C000584C8 /* development.icf in Resources */,
 				1AAF53C9180E363C000584C8 /* effect1.raw in Resources */,
 				1AAF53CB180E363C000584C8 /* effect1.wav in Resources */,
 				1AAF53CD180E363C000584C8 /* effect2.ogg in Resources */,
@@ -6634,7 +6634,6 @@
 				1AAF527A180E2C26000584C8 /* Icon-80.png in Resources */,
 				1AAF527C180E2C26000584C8 /* Test-Info.plist in Resources */,
 				1AAF53B0180E363C000584C8 /* animations in Resources */,
-				1AAF53B2180E363C000584C8 /* app.icf in Resources */,
 				1AAF53B4180E363C000584C8 /* armature in Resources */,
 				1AAF53B6180E363C000584C8 /* background-music-aac.wav in Resources */,
 				1AAF53B8180E363C000584C8 /* background.mp3 in Resources */,
@@ -6645,7 +6644,6 @@
 				1AAF53C2180E363C000584C8 /* cocosgui in Resources */,
 				1AAF53C4180E363C000584C8 /* components in Resources */,
 				1AAF53C6180E363C000584C8 /* configs in Resources */,
-				1AAF53C8180E363C000584C8 /* development.icf in Resources */,
 				1AAF53CA180E363C000584C8 /* effect1.raw in Resources */,
 				1AAF53CC180E363C000584C8 /* effect1.wav in Resources */,
 				1AAF53CE180E363C000584C8 /* effect2.ogg in Resources */,
@@ -6675,10 +6673,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				46A174FD1807D9C4005B8026 /* ipadhd in Resources */,
-				46A174F31807D9C4005B8026 /* app.icf in Resources */,
 				46A174F51807D9C4005B8026 /* bang.png in Resources */,
 				46A174FF1807D9C4005B8026 /* iphone in Resources */,
-				46A174F71807D9C4005B8026 /* development.icf in Resources */,
 				5010FC91180F0F8300B8E2AE /* Default-568h@2x.png in Resources */,
 				46A174F91807D9C4005B8026 /* fonts in Resources */,
 				46A174FB1807D9C4005B8026 /* ipad in Resources */,
@@ -6785,6 +6781,7 @@
 				1AAF518C180E2C1A000584C8 /* EffectsAdvancedTest.cpp in Sources */,
 				1AAF518E180E2C1A000584C8 /* EffectsTest.cpp in Sources */,
 				1AAF5190180E2C1A000584C8 /* AnimationsTestLayer.cpp in Sources */,
+				50E9E93D182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */,
 				1AAF5192180E2C1A000584C8 /* ButtonTestLayer.cpp in Sources */,
 				1AAF5194180E2C1A000584C8 /* CocosBuilderTest.cpp in Sources */,
 				1AAF5196180E2C1A000584C8 /* HelloCocosBuilderLayer.cpp in Sources */,
@@ -6802,12 +6799,10 @@
 				1AAF51AC180E2C1A000584C8 /* CocosGUIScene.cpp in Sources */,
 				1AAF51AE180E2C1A000584C8 /* UIButtonTest.cpp in Sources */,
 				1AAF51B0180E2C1A000584C8 /* UICheckBoxTest.cpp in Sources */,
-				1AAF51B2180E2C1A000584C8 /* UIDragPanelTest.cpp in Sources */,
 				1AAF51B4180E2C1A000584C8 /* UIImageViewTest.cpp in Sources */,
 				1AAF51B6180E2C1A000584C8 /* UILabelAtlasTest.cpp in Sources */,
 				1AAF51B8180E2C1A000584C8 /* UILabelBMFontTest.cpp in Sources */,
 				1AAF51BA180E2C1A000584C8 /* UILabelTest.cpp in Sources */,
-				1AAF51BC180E2C1A000584C8 /* UIListViewTest.cpp in Sources */,
 				1AAF51BE180E2C1A000584C8 /* UILoadingBarTest.cpp in Sources */,
 				1AAF51C0180E2C1A000584C8 /* UINodeContainerTest.cpp in Sources */,
 				1AAF51C2180E2C1A000584C8 /* UIPageViewTest.cpp in Sources */,
@@ -6822,6 +6817,7 @@
 				1AAF51D4180E2C1A000584C8 /* SceneEditorTest.cpp in Sources */,
 				1AAF51D6180E2C1A000584C8 /* CCControlButtonTest.cpp in Sources */,
 				1AAF51D8180E2C1A000584C8 /* CCControlColourPickerTest.cpp in Sources */,
+				50E9E93F182A274000F6FDF1 /* UIListViewTest.cpp in Sources */,
 				1AAF51DA180E2C1A000584C8 /* CCControlPotentiometerTest.cpp in Sources */,
 				1AAF51DC180E2C1A000584C8 /* CCControlScene.cpp in Sources */,
 				1AAF51DE180E2C1A000584C8 /* CCControlSceneManager.cpp in Sources */,
@@ -7032,6 +7028,7 @@
 			files = (
 				1AAF514B180E2C1A000584C8 /* AccelerometerTest.cpp in Sources */,
 				1AAF514D180E2C1A000584C8 /* ActionManagerTest.cpp in Sources */,
+				50E9E93E182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */,
 				1AAF514F180E2C1A000584C8 /* ActionsEaseTest.cpp in Sources */,
 				1AAF5151180E2C1A000584C8 /* ActionsProgressTest.cpp in Sources */,
 				1AAF5153180E2C1A000584C8 /* ActionsTest.cpp in Sources */,
@@ -7040,6 +7037,7 @@
 				1AAF5159180E2C1A000584C8 /* Box2dTest.cpp in Sources */,
 				1AAF515B180E2C1A000584C8 /* Box2dView.cpp in Sources */,
 				1AAF515D180E2C1A000584C8 /* GLES-Render.cpp in Sources */,
+				50E9E940182A274000F6FDF1 /* UIListViewTest.cpp in Sources */,
 				1AAF515F180E2C1A000584C8 /* Test.cpp in Sources */,
 				1AAF5161180E2C1A000584C8 /* TestEntries.cpp in Sources */,
 				1AAF5163180E2C1A000584C8 /* Bug-1159.cpp in Sources */,
@@ -7082,12 +7080,10 @@
 				1AAF51AD180E2C1A000584C8 /* CocosGUIScene.cpp in Sources */,
 				1AAF51AF180E2C1A000584C8 /* UIButtonTest.cpp in Sources */,
 				1AAF51B1180E2C1A000584C8 /* UICheckBoxTest.cpp in Sources */,
-				1AAF51B3180E2C1A000584C8 /* UIDragPanelTest.cpp in Sources */,
 				1AAF51B5180E2C1A000584C8 /* UIImageViewTest.cpp in Sources */,
 				1AAF51B7180E2C1A000584C8 /* UILabelAtlasTest.cpp in Sources */,
 				1AAF51B9180E2C1A000584C8 /* UILabelBMFontTest.cpp in Sources */,
 				1AAF51BB180E2C1A000584C8 /* UILabelTest.cpp in Sources */,
-				1AAF51BD180E2C1A000584C8 /* UIListViewTest.cpp in Sources */,
 				1AAF51BF180E2C1A000584C8 /* UILoadingBarTest.cpp in Sources */,
 				1AAF51C1180E2C1A000584C8 /* UINodeContainerTest.cpp in Sources */,
 				1AAF51C3180E2C1A000584C8 /* UIPageViewTest.cpp in Sources */,
@@ -7883,9 +7879,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -7897,7 +7892,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7909,9 +7904,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7922,7 +7916,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7935,9 +7929,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -7949,7 +7942,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7961,9 +7954,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7974,7 +7966,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8147,9 +8139,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8161,7 +8152,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8173,9 +8164,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8186,7 +8176,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8199,9 +8189,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8214,7 +8203,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8226,9 +8215,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8240,7 +8228,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8253,9 +8241,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8268,7 +8255,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8280,9 +8267,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8294,7 +8280,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8307,9 +8293,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8322,7 +8307,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8334,9 +8319,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8348,7 +8332,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8361,9 +8345,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8376,7 +8359,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8388,9 +8371,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8402,7 +8384,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8415,9 +8397,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8430,7 +8411,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8442,9 +8423,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8456,7 +8436,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8777,9 +8757,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8791,7 +8770,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/TestCpp/proj.ios/Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -8804,9 +8783,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8817,7 +8795,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/TestCpp/proj.ios/Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -8831,9 +8809,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8845,7 +8822,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8857,9 +8834,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8870,7 +8846,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

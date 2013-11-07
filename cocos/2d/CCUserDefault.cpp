@@ -58,7 +58,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
 		//CCFileData data(UserDefault::getInstance()->getXMLFilePath().c_str(),"rt");
-		unsigned long nSize;
+		long nSize;
 		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &nSize);
 		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
@@ -66,7 +66,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 			CCLOG("can not read xml file");
 			break;
 		}
-		xmlDoc->Parse(pXmlBuffer);
+		xmlDoc->Parse(pXmlBuffer, nSize);
         delete[] pXmlBuffer;
 		// get root node
 		*rootNode = xmlDoc->RootElement();

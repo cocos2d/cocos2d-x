@@ -42,7 +42,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Create a directory for temporary objects
     mkdir android_build_objs
 
-    PROJECTS=("Cpp/HelloCpp" "Cpp/TestCpp" "Cpp/AssetsManagerTest" "Javascript/TestJavascript" "Javascript/CocosDragonJS" "Javascript/CrystalCraze" "Javascript/MoonWarriors" "Javascript/WatermelonWithMe" "Lua/HelloLua" "Lua/TestLua")
+    PROJECTS=("Cpp/HelloCpp" "Cpp/TestCpp" "Cpp/SimpleGame" "Cpp/AssetsManagerTest" "Javascript/TestJavascript" "Javascript/CocosDragonJS" "Javascript/CrystalCraze" "Javascript/MoonWarriors" "Javascript/WatermelonWithMe" "Lua/HelloLua" "Lua/TestLua")
     for i in ${PROJECTS[*]}; do
         ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/samples/$i/proj.android/obj
     done
@@ -50,7 +50,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Build all samples
     echo "Building all samples ..."
     cd $COCOS2DX_ROOT/build
-    ./android-build.py -n NDK_DEBUG=0 all
+    ./android-build.py -n "NDK_BUG=0 -j10" all
 
     # Build template
     # echo "Building template ..."
@@ -72,7 +72,10 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     ./generate-jsbindings.sh
 
     cd $COCOS2DX_ROOT/build
-    make -j4
+    mkdir -p linux-build
+    cd linux-build
+    cmake ../..
+    make -j10
 elif [ "$PLATFORM"x = "emscripten"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."

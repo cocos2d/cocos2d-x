@@ -2,10 +2,6 @@
 # android-build.py
 # Build android samples
 
-# You can use
-
-
-# begin
 import sys
 import os, os.path
 import shutil
@@ -182,15 +178,15 @@ def build_samples(target,ndk_build_param):
         elif target == 'testlua':
             app_android_root = os.path.join(cocos_root, 'samples/Lua/TestLua/proj.android')
         elif target == 'cocosdragon':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/CocosDragonJS/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CocosDragonJS/proj.android')
         elif target == 'crystalcraze':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/CrystalCraze/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CrystalCraze/proj.android')
         elif target == 'moonwarriors':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/MoonWarriors/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/MoonWarriors/proj.android')
         elif target == 'testjavascript':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/TestJavascript/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/TestJavascript/proj.android')
         elif target == 'watermelonwithme':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/WatermelonWithMe/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/WatermelonWithMe/proj.android')
         else:
             print 'unknown target: %s' % target
             continue

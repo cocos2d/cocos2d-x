@@ -34,10 +34,10 @@ bool UIPanelTest::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the layout
-        Layout* layout = Layout::create();
+        UILayout* layout = UILayout::create();
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getSize();
         layout->setPosition(Point((widgetSize.width - backgroundSize.width) / 2 +
@@ -98,10 +98,10 @@ bool UIPanelTest_Color::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the layout with color render
-        Layout* layout = Layout::create();
+        UILayout* layout = UILayout::create();
         layout->setBackGroundColorType(LAYOUT_COLOR_SOLID);
         layout->setBackGroundColor(Color3B(128, 128, 128));
         layout->setSize(Size(280, 150));
@@ -163,10 +163,10 @@ bool UIPanelTest_Gradient::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the layout with gradient render
-        Layout* layout = Layout::create();
+        UILayout* layout = UILayout::create();
         layout->setBackGroundColorType(LAYOUT_COLOR_GRADIENT);
         layout->setBackGroundColor(Color3B(64, 64, 64), Color3B(192, 192, 192));
         layout->setSize(Size(280, 150));
@@ -228,10 +228,10 @@ bool UIPanelTest_BackGroundImage::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the layout with background image
-        Layout* layout = Layout::create();
+        UILayout* layout = UILayout::create();
         layout->setClippingEnabled(true);
         layout->setBackGroundImage("cocosgui/Hello.png");
         layout->setSize(Size(280, 150));
@@ -293,10 +293,10 @@ bool UIPanelTest_BackGroundImage_Scale9::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the layout with background image
-        Layout* layout = Layout::create();
+        UILayout* layout = UILayout::create();
         layout->setBackGroundImageScale9Enabled(true);
         layout->setBackGroundImage("cocosgui/green_edit.png");
         layout->setSize(Size(280, 150));
@@ -358,10 +358,10 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the layout
-        Layout* layout = Layout::create();
+        UILayout* layout = UILayout::create();
         layout->setLayoutType(LAYOUT_LINEAR_VERTICAL);
         layout->setSize(Size(280, 150));        
         Size backgroundSize = background->getSize();
@@ -377,7 +377,7 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         layout->addChild(button);
         
-        LinearLayoutParameter* lp1 = LinearLayoutParameter::create();
+        UILinearLayoutParameter* lp1 = UILinearLayoutParameter::create();
         button->setLayoutParameter(lp1);
         lp1->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
         lp1->setMargin(UIMargin(0, 5, 0, 10));
@@ -389,7 +389,7 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         textButton->setTitleText("Text Button");
         layout->addChild(textButton);
         
-        LinearLayoutParameter* lp2 = LinearLayoutParameter::create();
+        UILinearLayoutParameter* lp2 = UILinearLayoutParameter::create();
         textButton->setLayoutParameter(lp2);
         lp2->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
         lp2->setMargin(UIMargin(0, 10, 0, 10));
@@ -402,7 +402,7 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         button_scale9->setSize(Size(100, button_scale9->getContentSize().height));
         layout->addChild(button_scale9);
         
-        LinearLayoutParameter* lp3 = LinearLayoutParameter::create();
+        UILinearLayoutParameter* lp3 = UILinearLayoutParameter::create();
         button_scale9->setLayoutParameter(lp3);
         lp3->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
         lp3->setMargin(UIMargin(0, 10, 0, 10));
@@ -441,10 +441,10 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the layout
-        Layout* layout = Layout::create();
+        UILayout* layout = UILayout::create();
         layout->setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
         layout->setClippingEnabled(true);
         layout->setSize(Size(280, 150));        
@@ -460,7 +460,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         layout->addChild(button);
         
-        LinearLayoutParameter* lp1 = LinearLayoutParameter::create();
+        UILinearLayoutParameter* lp1 = UILinearLayoutParameter::create();
         button->setLayoutParameter(lp1);
         lp1->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
         lp1->setMargin(UIMargin(0, 10, 0, 10));
@@ -472,7 +472,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         textButton->setTitleText("Text Button");
         layout->addChild(textButton);
         
-        LinearLayoutParameter* lp2 = LinearLayoutParameter::create();
+        UILinearLayoutParameter* lp2 = UILinearLayoutParameter::create();
         textButton->setLayoutParameter(lp2);
         lp2->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
         lp2->setMargin(UIMargin(0, 10, 0, 10));
@@ -485,7 +485,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         button_scale9->setSize(Size(100, button_scale9->getContentSize().height));
         layout->addChild(button_scale9);
         
-        LinearLayoutParameter* lp3 = LinearLayoutParameter::create();
+        UILinearLayoutParameter* lp3 = UILinearLayoutParameter::create();
         button_scale9->setLayoutParameter(lp3);
         lp3->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
         lp3->setMargin(UIMargin(0, 10, 0, 10));
@@ -524,10 +524,10 @@ bool UIPanelTest_Layout_Relative::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the layout
-        Layout* layout = Layout::create();
+        UILayout* layout = UILayout::create();
         layout->setLayoutType(LAYOUT_RELATIVE);
         layout->setSize(Size(280, 150));
         layout->setBackGroundColorType(LAYOUT_COLOR_SOLID);
@@ -544,9 +544,9 @@ bool UIPanelTest_Layout_Relative::init()
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         layout->addChild(button);
         
-        RelativeLayoutParameter* rp1 = RelativeLayoutParameter::create();
+        UIRelativeLayoutParameter* rp1 = UIRelativeLayoutParameter::create();
         button->setLayoutParameter(rp1);
-        rp1->setAlign(RELATIVE_ALIGN_PARENT_BOTTOM);
+        rp1->setAlign(RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL);
 //        rp1->setMargin(UIMargin(0, 10, 0, 10));
         
         
@@ -556,9 +556,9 @@ bool UIPanelTest_Layout_Relative::init()
         textButton->setTitleText("Text Button");
         layout->addChild(textButton);
         
-        RelativeLayoutParameter* rp2 = RelativeLayoutParameter::create();
+        UIRelativeLayoutParameter* rp2 = UIRelativeLayoutParameter::create();
         textButton->setLayoutParameter(rp2);
-        rp2->setAlign(RELATIVE_ALIGN_PARENT_LEFT);
+        rp2->setAlign(RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
         
         
         UIButton* button_scale9 = UIButton::create();
@@ -568,9 +568,9 @@ bool UIPanelTest_Layout_Relative::init()
         button_scale9->setSize(Size(100, button_scale9->getContentSize().height));
         layout->addChild(button_scale9);
         
-        RelativeLayoutParameter* rp3 = RelativeLayoutParameter::create();
+        UIRelativeLayoutParameter* rp3 = UIRelativeLayoutParameter::create();
         textButton->setLayoutParameter(rp3);
-        rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT);
+        rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM);
         
         
         layout->doLayout();

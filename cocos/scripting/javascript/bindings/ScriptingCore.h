@@ -320,6 +320,8 @@ public:
         JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
     }
     JSBool invoke(unsigned int argc, jsval *argv, jsval &rval) {
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        
         return JS_CallFunctionValue(this->_cx, this->_jsthis, this->_fval, argc, argv, &rval);
     }
 private:
