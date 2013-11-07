@@ -42,7 +42,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
     
-static unsigned int _globalFontSize = kItemSize;
+static long _globalFontSize = kItemSize;
 static std::string _globalFontName = "Marker Felt";
 static bool _globalFontNameRelease = false;
 
@@ -64,18 +64,18 @@ MenuItem* MenuItem::create()
 // XXX deprecated
 MenuItem* MenuItem::create(Object *target, SEL_MenuHandler selector)
 {
-    MenuItem *pRet = new MenuItem();
-    pRet->initWithTarget(target, selector);
-    pRet->autorelease();
-    return pRet;
+    MenuItem *ret = new MenuItem();
+    ret->initWithTarget(target, selector);
+    ret->autorelease();
+    return ret;
 }
 
 MenuItem* MenuItem::create( const ccMenuCallback& callback)
 {
-    MenuItem *pRet = new MenuItem();
-    pRet->initWithCallback(callback);
-    pRet->autorelease();
-    return pRet;
+    MenuItem *ret = new MenuItem();
+    ret->initWithCallback(callback);
+    ret->autorelease();
+    return ret;
 }
 
 // XXX deprecated
@@ -188,26 +188,26 @@ void MenuItemLabel::setLabel(Node* var)
 // XXX: deprecated
 MenuItemLabel * MenuItemLabel::create(Node*label, Object* target, SEL_MenuHandler selector)
 {
-    MenuItemLabel *pRet = new MenuItemLabel();
-    pRet->initWithLabel(label, target, selector);
-    pRet->autorelease();
-    return pRet;
+    MenuItemLabel *ret = new MenuItemLabel();
+    ret->initWithLabel(label, target, selector);
+    ret->autorelease();
+    return ret;
 }
 
 MenuItemLabel * MenuItemLabel::create(Node*label, const ccMenuCallback& callback)
 {
-    MenuItemLabel *pRet = new MenuItemLabel();
-    pRet->initWithLabel(label, callback);
-    pRet->autorelease();
-    return pRet;
+    MenuItemLabel *ret = new MenuItemLabel();
+    ret->initWithLabel(label, callback);
+    ret->autorelease();
+    return ret;
 }
 
 MenuItemLabel* MenuItemLabel::create(Node *label)
 {
-    MenuItemLabel *pRet = new MenuItemLabel();
-    pRet->initWithLabel(label, (const ccMenuCallback&) nullptr);
-    pRet->autorelease();
-    return pRet;
+    MenuItemLabel *ret = new MenuItemLabel();
+    ret->initWithLabel(label, (const ccMenuCallback&) nullptr);
+    ret->autorelease();
+    return ret;
 }
 
 // XXX: deprecated
@@ -237,7 +237,7 @@ MenuItemLabel::~MenuItemLabel()
 {
 }
 
-void MenuItemLabel::setString(const char * label)
+void MenuItemLabel::setString(const std::string& label)
 {
     dynamic_cast<LabelProtocol*>(_label)->setString(label);
     this->setContentSize(_label->getContentSize());
@@ -310,41 +310,39 @@ void MenuItemLabel::setEnabled(bool enabled)
 //CCMenuItemAtlasFont
 //
 
-MenuItemAtlasFont * MenuItemAtlasFont::create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap)
 {
     return MenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap, (const ccMenuCallback&)nullptr);
 }
 
 // XXX: deprecated
-MenuItemAtlasFont * MenuItemAtlasFont::create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
+MenuItemAtlasFont * MenuItemAtlasFont::create(const char* value, const char* charMapFile, long itemWidth, long itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
 {
-    MenuItemAtlasFont *pRet = new MenuItemAtlasFont();
-    pRet->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, target, selector);
-    pRet->autorelease();
-    return pRet;
+    MenuItemAtlasFont *ret = new MenuItemAtlasFont();
+    ret->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, target, selector);
+    ret->autorelease();
+    return ret;
 }
 
-MenuItemAtlasFont * MenuItemAtlasFont::create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
+MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
-    MenuItemAtlasFont *pRet = new MenuItemAtlasFont();
-    pRet->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, callback);
-    pRet->autorelease();
-    return pRet;
+    MenuItemAtlasFont *ret = new MenuItemAtlasFont();
+    ret->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, callback);
+    ret->autorelease();
+    return ret;
 }
 
 // XXX: deprecated
-bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
+bool MenuItemAtlasFont::initWithString(const char* value, const char* charMapFile, long itemWidth, long itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
 {
-    CCASSERT( value != NULL && strlen(value) != 0, "value length must be greater than 0");
-
 	_target = target;
 	CC_SAFE_RETAIN(_target);
 	return initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, std::bind(selector,target, std::placeholders::_1) );
 }
 
-bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
+bool MenuItemAtlasFont::initWithString(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
-    CCASSERT( value != NULL && strlen(value) != 0, "value length must be greater than 0");
+    CCASSERT( value.size() != 0, "value length must be greater than 0");
     LabelAtlas *label = new LabelAtlas();
     label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
     label->autorelease();
@@ -359,17 +357,17 @@ bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFil
 //CCMenuItemFont
 //
 
-void MenuItemFont::setFontSize(unsigned int s)
+void MenuItemFont::setFontSize(long s)
 {
     _globalFontSize = s;
 }
 
-unsigned int MenuItemFont::getFontSize()
+long MenuItemFont::getFontSize()
 {
     return _globalFontSize;
 }
 
-void MenuItemFont::setFontName(const char *name)
+void MenuItemFont::setFontName(const std::string& name)
 {
     if (_globalFontNameRelease)
     {
@@ -379,35 +377,35 @@ void MenuItemFont::setFontName(const char *name)
     _globalFontNameRelease = true;
 }
 
-const char * MenuItemFont::getFontName()
+const std::string& MenuItemFont::getFontName()
 {
-    return _globalFontName.c_str();
+    return _globalFontName;
 }
 
 // XXX: deprecated
 MenuItemFont * MenuItemFont::create(const char *value, Object* target, SEL_MenuHandler selector)
 {
-    MenuItemFont *pRet = new MenuItemFont();
-    pRet->initWithString(value, target, selector);
-    pRet->autorelease();
-    return pRet;
+    MenuItemFont *ret = new MenuItemFont();
+    ret->initWithString(value, target, selector);
+    ret->autorelease();
+    return ret;
 }
 
-MenuItemFont * MenuItemFont::create(const char *value, const ccMenuCallback& callback)
+MenuItemFont * MenuItemFont::create(const std::string& value, const ccMenuCallback& callback)
 {
-    MenuItemFont *pRet = new MenuItemFont();
-    pRet->initWithString(value, callback);
-    pRet->autorelease();
-    return pRet;
+    MenuItemFont *ret = new MenuItemFont();
+    ret->initWithString(value, callback);
+    ret->autorelease();
+    return ret;
 }
 
 
-MenuItemFont * MenuItemFont::create(const char *value)
+MenuItemFont * MenuItemFont::create(const std::string& value)
 {
-    MenuItemFont *pRet = new MenuItemFont();
-    pRet->initWithString(value, (const ccMenuCallback&)nullptr);
-    pRet->autorelease();
-    return pRet;
+    MenuItemFont *ret = new MenuItemFont();
+    ret->initWithString(value, (const ccMenuCallback&)nullptr);
+    ret->autorelease();
+    return ret;
 }
 
 MenuItemFont::MenuItemFont()
@@ -429,14 +427,14 @@ bool MenuItemFont::initWithString(const char *value, Object* target, SEL_MenuHan
 	return initWithString(value, std::bind(selector,target, std::placeholders::_1) );
 }
 
-bool MenuItemFont::initWithString(const char *value, const ccMenuCallback& callback)
+bool MenuItemFont::initWithString(const std::string& value, const ccMenuCallback& callback)
 {
-    CCASSERT( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+    CCASSERT( value.size() >= 0, "Value length must be greater than 0");
 
     _fontName = _globalFontName;
     _fontSize = _globalFontSize;
 
-    LabelTTF *label = LabelTTF::create(value, _fontName.c_str(), (float)_fontSize);
+    LabelTTF *label = LabelTTF::create(value, _fontName, (float)_fontSize);
     if (MenuItemLabel::initWithLabel(label, callback))
     {
         // do something ?
@@ -451,26 +449,26 @@ void MenuItemFont::recreateLabel()
     this->setLabel(label);
 }
 
-void MenuItemFont::setFontSizeObj(unsigned int s)
+void MenuItemFont::setFontSizeObj(long s)
 {
     _fontSize = s;
     recreateLabel();
 }
 
-unsigned int MenuItemFont::getFontSizeObj() const
+long MenuItemFont::getFontSizeObj() const
 {
     return _fontSize;
 }
 
-void MenuItemFont::setFontNameObj(const char* name)
+void MenuItemFont::setFontNameObj(const std::string& name)
 {
     _fontName = name;
     recreateLabel();
 }
 
-const char* MenuItemFont::getFontNameObj() const
+const std::string& MenuItemFont::getFontNameObj() const
 {
-    return _fontName.c_str();
+    return _fontName;
 }
 
 //
@@ -561,18 +559,18 @@ MenuItemSprite * MenuItemSprite::create(Node* normalSprite, Node* selectedSprite
 // XXX deprecated
 MenuItemSprite * MenuItemSprite::create(Node *normalSprite, Node *selectedSprite, Node *disabledSprite, Object *target, SEL_MenuHandler selector)
 {
-    MenuItemSprite *pRet = new MenuItemSprite();
-    pRet->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector); 
-    pRet->autorelease();
-    return pRet;
+    MenuItemSprite *ret = new MenuItemSprite();
+    ret->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector); 
+    ret->autorelease();
+    return ret;
 }
 
 MenuItemSprite * MenuItemSprite::create(Node *normalSprite, Node *selectedSprite, Node *disabledSprite, const ccMenuCallback& callback)
 {
-    MenuItemSprite *pRet = new MenuItemSprite();
-    pRet->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, callback);
-    pRet->autorelease();
-    return pRet;
+    MenuItemSprite *ret = new MenuItemSprite();
+    ret->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, callback);
+    ret->autorelease();
+    return ret;
 }
 
 // XXX deprecated
@@ -687,71 +685,71 @@ void MenuItemSprite::updateImagesVisibility()
 
 MenuItemImage* MenuItemImage::create()
 {
-    MenuItemImage *pRet = new MenuItemImage();
-    if (pRet && pRet->init())
+    MenuItemImage *ret = new MenuItemImage();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(ret);
     return NULL;
 }
 
 bool MenuItemImage::init(void)
 {
-    return initWithNormalImage(NULL, NULL, NULL, (const ccMenuCallback&)nullptr);
+    return initWithNormalImage("", "", "", (const ccMenuCallback&)nullptr);
 }
 
-MenuItemImage * MenuItemImage::create(const char *normalImage, const char *selectedImage)
+MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std::string& selectedImage)
 {
-    return MenuItemImage::create(normalImage, selectedImage, NULL, (const ccMenuCallback&)nullptr);
+    return MenuItemImage::create(normalImage, selectedImage, "", (const ccMenuCallback&)nullptr);
 }
 
 // XXX deprecated
 MenuItemImage * MenuItemImage::create(const char *normalImage, const char *selectedImage, Object* target, SEL_MenuHandler selector)
 {
-    return MenuItemImage::create(normalImage, selectedImage, NULL, target, selector);
+    return MenuItemImage::create(normalImage, selectedImage, "", target, selector);
 }
 
-MenuItemImage * MenuItemImage::create(const char *normalImage, const char *selectedImage, const ccMenuCallback& callback)
+MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std::string& selectedImage, const ccMenuCallback& callback)
 {
-    return MenuItemImage::create(normalImage, selectedImage, NULL, callback);
+    return MenuItemImage::create(normalImage, selectedImage, "", callback);
 }
 
 // XXX deprecated
 MenuItemImage * MenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage, Object* target, SEL_MenuHandler selector)
 {
-    MenuItemImage *pRet = new MenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, target, selector))
+    MenuItemImage *ret = new MenuItemImage();
+    if (ret && ret->initWithNormalImage(normalImage, selectedImage, disabledImage, target, selector))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(ret);
     return NULL;
 }
 
-MenuItemImage * MenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback)
+MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback)
 {
-    MenuItemImage *pRet = new MenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, callback))
+    MenuItemImage *ret = new MenuItemImage();
+    if (ret && ret->initWithNormalImage(normalImage, selectedImage, disabledImage, callback))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(ret);
     return NULL;
 }
 
-MenuItemImage * MenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage)
+MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage)
 {
-    MenuItemImage *pRet = new MenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, (const ccMenuCallback&)nullptr))
+    MenuItemImage *ret = new MenuItemImage();
+    if (ret && ret->initWithNormalImage(normalImage, selectedImage, disabledImage, (const ccMenuCallback&)nullptr))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(ret);
     return NULL;
 }
 
@@ -762,23 +760,23 @@ bool MenuItemImage::initWithNormalImage(const char *normalImage, const char *sel
 	CC_SAFE_RETAIN(_target);
 	return initWithNormalImage(normalImage, selectedImage, disabledImage, std::bind(selector,target, std::placeholders::_1) );
 }
-bool MenuItemImage::initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback)
+bool MenuItemImage::initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback)
 {
     Node *normalSprite = NULL;
     Node *selectedSprite = NULL;
     Node *disabledSprite = NULL;
 
-    if (normalImage)
+    if (normalImage.size() >0)
     {
         normalSprite = Sprite::create(normalImage);
     }
 
-    if (selectedImage)
+    if (selectedImage.size() >0)
     {
         selectedSprite = Sprite::create(selectedImage);
     }
 
-    if(disabledImage)
+    if(disabledImage.size() >0)
     {
         disabledSprite = Sprite::create(disabledImage);
     }
@@ -810,38 +808,38 @@ void MenuItemImage::setDisabledSpriteFrame(SpriteFrame * frame)
 // XXX: deprecated
 MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems)
 {
-    MenuItemToggle *pRet = new MenuItemToggle();
-    pRet->MenuItem::initWithTarget(target, selector);
-    pRet->_subItems = Array::create();
-    pRet->_subItems->retain();
+    MenuItemToggle *ret = new MenuItemToggle();
+    ret->MenuItem::initWithTarget(target, selector);
+    ret->_subItems = Array::create();
+    ret->_subItems->retain();
     
     for (int z=0; z < menuItems->count(); z++)
     {
         MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
-        pRet->_subItems->addObject(menuItem);
+        ret->_subItems->addObject(menuItem);
     }
     
-    pRet->_selectedIndex = UINT_MAX;
-    pRet->setSelectedIndex(0);
-    return pRet;
+    ret->_selectedIndex = UINT_MAX;
+    ret->setSelectedIndex(0);
+    return ret;
 }
 
 MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callback, Array* menuItems)
 {
-    MenuItemToggle *pRet = new MenuItemToggle();
-    pRet->MenuItem::initWithCallback(callback);
-    pRet->_subItems = Array::create();
-    pRet->_subItems->retain();
+    MenuItemToggle *ret = new MenuItemToggle();
+    ret->MenuItem::initWithCallback(callback);
+    ret->_subItems = Array::create();
+    ret->_subItems->retain();
 
     for (int z=0; z < menuItems->count(); z++)
     {
         MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
-        pRet->_subItems->addObject(menuItem);
+        ret->_subItems->addObject(menuItem);
     }
 
-    pRet->_selectedIndex = UINT_MAX;
-    pRet->setSelectedIndex(0);
-    return pRet;
+    ret->_selectedIndex = UINT_MAX;
+    ret->setSelectedIndex(0);
+    return ret;
 }
 
 // XXX: deprecated
@@ -849,30 +847,30 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandle
 {
     va_list args;
     va_start(args, item);
-    MenuItemToggle *pRet = new MenuItemToggle();
-    pRet->initWithTarget(target, selector, item, args);
-    pRet->autorelease();
+    MenuItemToggle *ret = new MenuItemToggle();
+    ret->initWithTarget(target, selector, item, args);
+    ret->autorelease();
     va_end(args);
-    return pRet;
+    return ret;
 }
 
 MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callback, MenuItem* item, ...)
 {
     va_list args;
     va_start(args, item);
-    MenuItemToggle *pRet = new MenuItemToggle();
-    pRet->initWithCallback(callback, item, args);
-    pRet->autorelease();
+    MenuItemToggle *ret = new MenuItemToggle();
+    ret->initWithCallback(callback, item, args);
+    ret->autorelease();
     va_end(args);
-    return pRet;
+    return ret;
 }
 
 MenuItemToggle * MenuItemToggle::create()
 {
-    MenuItemToggle *pRet = new MenuItemToggle();
-    pRet->initWithItem(NULL);
-    pRet->autorelease();
-    return pRet;
+    MenuItemToggle *ret = new MenuItemToggle();
+    ret->initWithItem(NULL);
+    ret->autorelease();
+    return ret;
 }
 
 // XXX: deprecated
@@ -903,10 +901,10 @@ bool MenuItemToggle::initWithCallback(const ccMenuCallback &callback, MenuItem *
 
 MenuItemToggle* MenuItemToggle::create(MenuItem *item)
 {
-    MenuItemToggle *pRet = new MenuItemToggle();
-    pRet->initWithItem(item);
-    pRet->autorelease();
-    return pRet;
+    MenuItemToggle *ret = new MenuItemToggle();
+    ret->initWithItem(item);
+    ret->autorelease();
+    return ret;
 }
 
 bool MenuItemToggle::initWithItem(MenuItem *item)
