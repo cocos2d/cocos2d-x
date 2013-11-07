@@ -307,6 +307,11 @@ void PhysicsWorld::delayTestRemoveJoint(PhysicsJoint* joint)
 
 void PhysicsWorld::addJoint(PhysicsJoint* joint)
 {
+    if (joint->getWorld() != nullptr && joint->getWorld() != this)
+    {
+        joint->removeFormWorld();
+    }
+    
     delayTestAddJoint(joint);
     _joints.push_back(joint);
     joint->_world = this;
@@ -388,14 +393,14 @@ void PhysicsWorld::removeAllJoints(bool destroy)
     _joints.clear();
 }
 
-PhysicsShape* PhysicsWorld::addShape(PhysicsShape* shape)
+void PhysicsWorld::addShape(PhysicsShape* shape)
 {
     for (auto cps : shape->_info->getShapes())
     {
         _info->addShape(cps);
     }
     
-    return shape;
+    return;
 }
 
 void PhysicsWorld::realAddJoint(PhysicsJoint *joint)
@@ -408,11 +413,6 @@ void PhysicsWorld::realAddJoint(PhysicsJoint *joint)
 
 void PhysicsWorld::realAddBody(PhysicsBody* body)
 {
-    if (body->getWorld() != this && body->getWorld() != nullptr)
-    {
-        body->removeFromWorld();
-    }
-    
     if (body->isEnabled())
     {
         //is gravity enable
@@ -435,15 +435,23 @@ void PhysicsWorld::realAddBody(PhysicsBody* body)
     }
 }
 
-PhysicsBody* PhysicsWorld::addBody(PhysicsBody* body)
+void PhysicsWorld::addBody(PhysicsBody* body)
 {
     CCASSERT(body != nullptr, "the body can not be nullptr");
+    
+    if (body->getWorld() == this)
+    {
+        return;
+    }
+    
+    if (body->getWorld() != nullptr)
+    {
+        body->removeFromWorld();
+    }
     
     delayTestAddBody(body);
     _bodies->addObject(body);
     body->_world = this;
-    
-    return body;
 }
 
 void PhysicsWorld::removeBody(PhysicsBody* body)
@@ -451,6 +459,7 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     
     if (body->getWorld() != this)
     {
+        CCLOG("Physics Warnning: this body doesn't belong to this world");
         return;
     }
     
