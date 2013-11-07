@@ -150,14 +150,14 @@ protected:
     virtual void collisionPostSolveCallback(PhysicsContact& contact);
     virtual void collisionSeparateCallback(PhysicsContact& contact);
     
-    virtual void realAddBody(PhysicsBody* body);
-    virtual void realRemoveBody(PhysicsBody* body);
-    virtual void realAddJoint(PhysicsJoint* joint);
-    virtual void realRemoveJoint(PhysicsJoint* joint);
-    virtual void delayTestAddBody(PhysicsBody* body);
-    virtual void delayTestRemoveBody(PhysicsBody* body);
-    virtual void delayTestAddJoint(PhysicsJoint* joint);
-    virtual void delayTestRemoveJoint(PhysicsJoint* joint);
+    virtual void doAddBody(PhysicsBody* body);
+    virtual void doRemoveBody(PhysicsBody* body);
+    virtual void doAddJoint(PhysicsJoint* joint);
+    virtual void doRemoveJoint(PhysicsJoint* joint);
+    virtual void addBodyOrDelay(PhysicsBody* body);
+    virtual void removeBodyOrDelay(PhysicsBody* body);
+    virtual void addJointOrDelay(PhysicsJoint* joint);
+    virtual void removeJointOrDelay(PhysicsJoint* joint);
     virtual void updateBodies();
     virtual void updateJoints();
     
