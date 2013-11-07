@@ -75,7 +75,6 @@ _isRunning(false)
 
 UIWidget::~UIWidget()
 {
-    CCLOG("widget aa");
     CC_SAFE_RELEASE(_touchEventListener);
     _touchEventListener = NULL;
     _touchEventSelector = NULL;
