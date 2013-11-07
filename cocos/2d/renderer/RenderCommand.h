@@ -27,6 +27,7 @@ class RenderCommand
 public:
 
     RenderCommand();
+    virtual ~RenderCommand();
     virtual int64_t generateID() = 0;
 
     /**
