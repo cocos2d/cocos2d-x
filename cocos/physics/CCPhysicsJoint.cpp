@@ -101,10 +101,10 @@ void PhysicsJoint::setEnable(bool enable)
         {
             if (enable)
             {
-                _world->delayTestAddJoint(this);
+                _world->addJointOrDelay(this);
             }else
             {
-                _world->delayTestRemoveJoint(this);
+                _world->removeJointOrDelay(this);
             }
         }
     }
