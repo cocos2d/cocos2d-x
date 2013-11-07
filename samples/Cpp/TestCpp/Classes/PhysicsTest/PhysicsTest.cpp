@@ -6,7 +6,6 @@ namespace
 {
     static std::function<Layer*()> createFunctions[] = {
         CL(PhysicsDemoLogoSmash),
-        CL(PhysicsDemoPyramidStack),
         CL(PhysicsDemoPlink),
         CL(PhysicsDemoClickAdd),
         CL(PhysicsDemoRayCast),
@@ -480,42 +479,6 @@ std::string PhysicsDemoLogoSmash::title()
 {
     return "Logo Smash";
 }
-
-void PhysicsDemoPyramidStack::onEnter()
-{
-    PhysicsDemo::onEnter();
-    
-    auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchBegan, this);
-    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchMoved, this);
-    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchEnded, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-    
-    auto node = Node::create();
-    node->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
-    this->addChild(node);
-    
-    auto ball = Sprite::create("Images/ball.png");
-    ball->setScale(1);
-    ball->setPhysicsBody(PhysicsBody::createCircle(10));
-    ball->setPosition(VisibleRect::bottom() + Point(0, 60));
-    this->addChild(ball);
-    
-	for(int i=0; i<14; i++)
-    {
-		for(int j=0; j<=i; j++)
-        {
-			auto sp = addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
-            
-            sp->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
-		}
-	}
-}
-std::string PhysicsDemoPyramidStack::title()
-{
-    return "Pyramid Stack";
-}
-
 
 void PhysicsDemoPlink::onEnter()
 {
@@ -995,6 +958,11 @@ std::string PhysicsDemoPump::title()
     return "Pump";
 }
 
+std::string PhysicsDemoPump::subtitle()
+{
+    return "open debug to see it";
+}
+
 void PhysicsDemoOneWayPlatform::onEnter()
 {
     PhysicsDemo::onEnter();
@@ -1135,15 +1103,5 @@ std::string PhysicsDemoSlice::title()
 
 std::string PhysicsDemoSlice::subtitle()
 {
-    return "click and drag to slice up the block";
-}
-
-void PhysicsDemoWater::onEnter()
-{
-    PhysicsDemo::onEnter();
-}
-
-std::string PhysicsDemoWater::title()
-{
-    return "Water";
+    return "click and drag to slice up the block, open debug to see it";
 }

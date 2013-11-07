@@ -70,13 +70,6 @@ public:
     std::string title() override;
 };
 
-class PhysicsDemoPyramidStack : public PhysicsDemo
-{
-public:
-    void onEnter() override;
-    std::string title() override;
-};
-
 class PhysicsDemoPlink : public PhysicsDemo
 {
 public:
@@ -122,8 +115,9 @@ class PhysicsDemoPump : public PhysicsDemo
 {
 public:
     void onEnter() override;
-    std::string title() override;
     void update(float delta) override;
+    std::string title() override;
+    std::string subtitle() override;
     
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
@@ -159,13 +153,6 @@ public:
     
 private:
     int _sliceTag;
-};
-
-class PhysicsDemoWater : public PhysicsDemo
-{
-public:
-    void onEnter() override;
-    std::string title() override;
 };
 
 #endif
