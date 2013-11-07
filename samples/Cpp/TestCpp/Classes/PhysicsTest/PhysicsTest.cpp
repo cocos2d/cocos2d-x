@@ -1,4 +1,5 @@
 #include "PhysicsTest.h"
+#include <cmath>
 #include "../testResource.h"
 USING_NS_CC;
 
@@ -1071,7 +1072,7 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Point normal, float 
         
         if (aDist*bDist < 0.0f)
         {
-            float t = abs(aDist)/(abs(aDist) + abs(bDist));
+            float t = std::fabs(aDist)/(std::fabs(aDist) + std::fabs(bDist));
             points[pointsCount] = a.lerp(b, t);
             ++pointsCount;
         }
