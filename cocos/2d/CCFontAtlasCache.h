@@ -26,7 +26,7 @@
 #define _CCFontAtlasCache_h_
 
 #include <iostream>
-#include <map>
+#include <unordered_map>
 
 #include "cocos2d.h"
 #include "CCFontAtlas.h"
@@ -41,12 +41,12 @@ public:
     static FontAtlas * getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs = 0);
     static FontAtlas * getFontAtlasFNT(const char *fontFileName);
     
-    static bool        releaseFontAtlas(FontAtlas *atlas);
+    static bool releaseFontAtlas(FontAtlas *atlas);
     
 private:
     
     static std::string generateFontName(const char *fontFileName, int size, GlyphCollection theGlyphs);
-    static std::map<std::string, FontAtlas *> _atlasMap;
+    static std::unordered_map<std::string, FontAtlas *> _atlasMap;
 };
 
 NS_CC_END
