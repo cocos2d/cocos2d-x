@@ -1495,7 +1495,14 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
     argc = lua_gettop(L) - 1;
     
     if (2 == argc)
-    {
+    {        
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L, 2, "LUA_FUNCTION", 0, &tolua_err) ||
+                !tolua_isnumber(L, 3, 0, &tolua_err) )
+        {
+                goto tolua_lerror;
+        }
+#endif
         LuaAssetsManagerDelegateProtocol* delegate = dynamic_cast<LuaAssetsManagerDelegateProtocol*>( self->getDelegate());
         if (nullptr == delegate)
         {
@@ -1508,21 +1515,11 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
             delegate->release();
         }
         
-        if (2 == argc)
-        {
-#if COCOS2D_DEBUG >= 1
-            if (!toluafix_isfunction(L, 2, "LUA_FUNCTION", 0, &tolua_err) ||
-                !tolua_isnumber(L, 3, 0, &tolua_err) )
-            {
-                goto tolua_lerror;
-            }
-#endif
-            LUA_FUNCTION handler = toluafix_ref_function(L, 2, 0);
-            ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(L,3,0) + (int)ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
+        LUA_FUNCTION handler = toluafix_ref_function(L, 2, 0);
+        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(L,3,0) + (int)ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
             
-            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)delegate, handler, handlerType);
-            return 0;
-        }
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)delegate, handler, handlerType);
+        return 0;
     }
     
     CCLOG("'setDelegate' function of AssetsManager has wrong number of arguments: %d, was expecting %d\n", argc, 2);
