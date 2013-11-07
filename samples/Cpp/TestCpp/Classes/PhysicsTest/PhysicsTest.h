@@ -96,7 +96,7 @@ public:
     
     void changeModeCallback(Object* sender);
     
-    bool anyRay(PhysicsWorld& world, const PhysicsRayCastCallback::Info& info, void* data);
+    bool anyRay(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
     
 private:
     float _angle;
@@ -150,7 +150,7 @@ public:
     std::string title() override;
     std::string subtitle() override;
     
-    bool slice(PhysicsWorld& world, const PhysicsRayCastCallback::Info& info, void* data);
+    bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
     void clipPoly(PhysicsShapePolygon* shape, Point normal, float distance);
     
     bool onTouchBegan(Touch *touch, Event *event);

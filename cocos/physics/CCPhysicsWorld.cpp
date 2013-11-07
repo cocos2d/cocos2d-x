@@ -73,7 +73,7 @@ namespace
     typedef struct RayCastCallbackInfo
     {
         PhysicsWorld* world;
-        PhysicsRayCastCallback* callback;
+        PhysicsRayCastCallbackFunc func;
         Point p1;
         Point p2;
         void* data;
@@ -82,7 +82,7 @@ namespace
     typedef struct RectQueryCallbackInfo
     {
         PhysicsWorld* world;
-        PhysicsRectQueryCallback* callback;
+        PhysicsRectQueryCallbackFunc func;
         void* data;
     }RectQueryCallbackInfo;
 }
@@ -148,7 +148,7 @@ void PhysicsWorldCallback::rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect
     auto it = PhysicsShapeInfo::getMap().find(shape);
     CC_ASSERT(it != PhysicsShapeInfo::getMap().end());
     
-    PhysicsRayCastCallback::Info callbackInfo =
+    PhysicsRayCastInfo callbackInfo =
     {
         it->second->getShape(),
         info->p1,
@@ -158,7 +158,7 @@ void PhysicsWorldCallback::rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect
         (float)t,
     };
     
-    PhysicsWorldCallback::continues = info->callback->report(*info->world, callbackInfo, info->data);
+    PhysicsWorldCallback::continues = info->func(*info->world, callbackInfo, info->data);
 }
 
 void PhysicsWorldCallback::rectQueryCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info)
@@ -172,9 +172,7 @@ void PhysicsWorldCallback::rectQueryCallbackFunc(cpShape *shape, RectQueryCallba
         return;
     }
     
-    PhysicsWorldCallback::continues = info->callback->report(*info->world,
-                                                             *it->second->getShape(),
-                                                             info->data);
+    PhysicsWorldCallback::continues = info->func(*info->world, *it->second->getShape(), info->data);
 }
 
 void PhysicsWorldCallback::nearestPointQueryFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr)
@@ -883,13 +881,13 @@ void PhysicsWorld::setGravity(const Vect& gravity)
 }
 
 
-void PhysicsWorld::rayCast(PhysicsRayCastCallback& callback, const Point& point1, const Point& point2, void* data)
+void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data)
 {
-    CCASSERT(callback.report != nullptr, "callback.report shouldn't be nullptr");
+    CCASSERT(func != nullptr, "callback.report shouldn't be nullptr");
     
-    if (callback.report != nullptr)
+    if (func != nullptr)
     {
-        RayCastCallbackInfo info = { this, &callback, point1, point2, data };
+        RayCastCallbackInfo info = { this, func, point1, point2, data };
         
         PhysicsWorldCallback::continues = true;
         cpSpaceSegmentQuery(this->_info->getSpace(),
@@ -903,13 +901,13 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallback& callback, const Point& point1
 }
 
 
-void PhysicsWorld::rectQuery(PhysicsRectQueryCallback& callback, const Rect& rect, void* data)
+void PhysicsWorld::rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data)
 {
-    CCASSERT(callback.report != nullptr, "callback.report shouldn't be nullptr");
+    CCASSERT(func != nullptr, "callback.report shouldn't be nullptr");
     
-    if (callback.report != nullptr)
+    if (func != nullptr)
     {
-        RectQueryCallbackInfo info = {this, &callback, data};
+        RectQueryCallbackInfo info = {this, func, data};
         
         PhysicsWorldCallback::continues = true;
         cpSpaceBBQuery(this->_info->getSpace(),
