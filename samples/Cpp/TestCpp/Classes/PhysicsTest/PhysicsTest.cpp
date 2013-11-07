@@ -602,63 +602,10 @@ void PhysicsDemoRayCast::changeModeCallback(Object* sender)
     }
 }
 
-bool PhysicsDemoRayCast::anyRay(PhysicsWorld& world, const PhysicsRayCastCallback::Info& info, void* data)
+bool PhysicsDemoRayCast::anyRay(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data)
 {
     *((Point*)data) = info.contact;
     return false;
-}
-
-class PhysicsDemoNearestRayCastCallback : public PhysicsRayCastCallback
-{
-public:
-    PhysicsDemoNearestRayCastCallback();
-
-private:
-    float _friction;
-};
-
-PhysicsDemoNearestRayCastCallback::PhysicsDemoNearestRayCastCallback()
-: _friction(1.0f)
-{
-    report = [this](PhysicsWorld& world, const PhysicsRayCastCallback::Info& info, void* data)->bool
-    {
-        if (_friction > info.fraction)
-        {
-            *((Point*)data) = info.contact;
-            _friction = info.fraction;
-        }
-        
-        return true;
-    };
-}
-
-namespace
-{
-    static const int MAX_MULTI_RAYCAST_NUM = 5;
-}
-
-class PhysicsDemoMultiRayCastCallback : public PhysicsRayCastCallback
-{
-public:
-    PhysicsDemoMultiRayCastCallback();
-    
-public:
-    Point points[MAX_MULTI_RAYCAST_NUM];
-    int num;
-};
-
-PhysicsDemoMultiRayCastCallback::PhysicsDemoMultiRayCastCallback()
-: num(0)
-{
-    report = [this](PhysicsWorld& world, const PhysicsRayCastCallback::Info& info, void* data)->bool
-    {
-        if (num < MAX_MULTI_RAYCAST_NUM)
-        {
-            points[num++] = info.contact;
-        }
-        
-        return true;
-    };
 }
 
 void PhysicsDemoRayCast::update(float delta)
@@ -674,11 +621,10 @@ void PhysicsDemoRayCast::update(float delta)
     {
         case 0:
         {
-            PhysicsRayCastCallback callback;
             Point point3 = point2;
-            callback.report = CC_CALLBACK_3(PhysicsDemoRayCast::anyRay, this);
+            auto func = CC_CALLBACK_3(PhysicsDemoRayCast::anyRay, this);
             
-            _scene->getPhysicsWorld()->rayCast(callback, point1, point2, &point3);
+            _scene->getPhysicsWorld()->rayCast(func, point1, point2, &point3);
             _node->drawSegment(point1, point3, 1, STATIC_COLOR);
             
             if (point2 != point3)
@@ -691,10 +637,20 @@ void PhysicsDemoRayCast::update(float delta)
         }
         case 1:
         {
-            PhysicsDemoNearestRayCastCallback callback;
             Point point3 = point2;
+            float friction = 1.0f;
+            PhysicsRayCastCallbackFunc func = [&point3, &friction](PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data)->bool
+            {
+                if (friction > info.fraction)
+                {
+                    point3 = info.contact;
+                    friction = info.fraction;
+                }
+                
+                return true;
+            };
             
-            _scene->getPhysicsWorld()->rayCast(callback, point1, point2, &point3);
+            _scene->getPhysicsWorld()->rayCast(func, point1, point2, nullptr);
             _node->drawSegment(point1, point3, 1, STATIC_COLOR);
             
             if (point2 != point3)
@@ -707,15 +663,27 @@ void PhysicsDemoRayCast::update(float delta)
         }
         case 2:
         {
-            PhysicsDemoMultiRayCastCallback callback;
+#define MAX_MULTI_RAYCAST_NUM 5
+            Point points[MAX_MULTI_RAYCAST_NUM];
+            int num = 0;
             
-            _scene->getPhysicsWorld()->rayCast(callback, point1, point2, nullptr);
+            PhysicsRayCastCallbackFunc func = [&points, &num](PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data)->bool
+            {
+                if (num < MAX_MULTI_RAYCAST_NUM)
+                {
+                    points[num++] = info.contact;
+                }
+                
+                return true;
+            };
+            
+            _scene->getPhysicsWorld()->rayCast(func, point1, point2, nullptr);
             
             _node->drawSegment(point1, point2, 1, STATIC_COLOR);
             
-            for (int i = 0; i < callback.num; ++i)
+            for (int i = 0; i < num; ++i)
             {
-                _node->drawDot(callback.points[i], 2, Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+                _node->drawDot(points[i], 2, Color4F(1.0f, 1.0f, 1.0f, 1.0f));
             }
             
             addChild(_node);
@@ -1089,7 +1057,7 @@ void PhysicsDemoSlice::onEnter()
     addChild(box);
 }
 
-bool PhysicsDemoSlice::slice(PhysicsWorld &world, const PhysicsRayCastCallback::Info &info, void *data)
+bool PhysicsDemoSlice::slice(PhysicsWorld &world, const PhysicsRayCastInfo& info, void *data)
 {
     if (info.shape->getBody()->getTag() != _sliceTag)
     {
@@ -1156,9 +1124,8 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Point normal, float 
 
 void PhysicsDemoSlice::onTouchEnded(Touch *touch, Event *event)
 {
-    PhysicsRayCastCallback callback;
-    callback.report = CC_CALLBACK_3(PhysicsDemoSlice::slice, this);
-    _scene->getPhysicsWorld()->rayCast(callback, touch->getStartLocation(), touch->getLocation(), nullptr);
+    auto func = CC_CALLBACK_3(PhysicsDemoSlice::slice, this);
+    _scene->getPhysicsWorld()->rayCast(func, touch->getStartLocation(), touch->getLocation(), nullptr);
 }
 
 std::string PhysicsDemoSlice::title()

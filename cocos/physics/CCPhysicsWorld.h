@@ -48,49 +48,31 @@ class Scene;
 class DrawNode;
 
 class PhysicsWorld;
-class PhysicsRayCastCallback
-{
-public:
-    typedef struct Info
-    {
-        PhysicsShape* shape;
-        Point start;
-        Point end;
-        Point contact;
-        Vect normal;
-        float fraction;
-        void* data;
-    }Info;
-    
-public:
-    PhysicsRayCastCallback()
-    : report(nullptr)
-    {}
-    virtual ~PhysicsRayCastCallback(){}
-	/**
-     * @brief Called for each fixture found in the query. You control how the ray cast
-	 * proceeds by returning a float:
-	 * return true: continue
-	 * return false: terminate the ray cast
-	 * @param fixture the fixture hit by the ray
-	 * @param point the point of initial intersection
-	 * @param normal the normal vector at the point of intersection
-	 * @return true to continue, false to terminate
-     */
-    std::function<bool(PhysicsWorld& world, const Info& info, void* data)> report;
-};
 
-class PhysicsRectQueryCallback
+
+typedef struct PhysicsRayCastInfo
 {
-public:
-    PhysicsRectQueryCallback()
-    : report(nullptr)
-    {}
-    virtual ~PhysicsRectQueryCallback(){}
-    
-public:
-    std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> report;
-};
+    PhysicsShape* shape;
+    Point start;
+    Point end;
+    Point contact;
+    Vect normal;
+    float fraction;
+    void* data;
+}PhysicsRayCastInfo;
+
+/**
+ * @brief Called for each fixture found in the query. You control how the ray cast
+ * proceeds by returning a float:
+ * return true: continue
+ * return false: terminate the ray cast
+ * @param fixture the fixture hit by the ray
+ * @param point the point of initial intersection
+ * @param normal the normal vector at the point of intersection
+ * @return true to continue, false to terminate
+ */
+typedef std::function<bool(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data)> PhysicsRayCastCallbackFunc;
+typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsRectQueryCallbackFunc;
 
 /**
  * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
@@ -109,8 +91,8 @@ public:
     virtual void removeBody(int tag);
     virtual void removeAllBodies();
     
-    void rayCast(PhysicsRayCastCallback& callback, const Point& point1, const Point& point2, void* data);
-    void rectQuery(PhysicsRectQueryCallback& callback, const Rect& rect, void* data);
+    void rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data);
+    void rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data);
     Array* getShapes(const Point& point) const;
     PhysicsShape* getShape(const Point& point) const;
     Array* getAllBodies() const;
