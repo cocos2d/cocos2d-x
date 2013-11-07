@@ -603,7 +603,7 @@ void UIButton::setTitleFontName(const char* fontName)
 
 const char* UIButton::getTitleFontName() const
 {
-    return _titleRenderer->getFontName();
+    return _titleRenderer->getFontName().c_str();
 }
 
 void UIButton::setColor(const cocos2d::Color3B &color)

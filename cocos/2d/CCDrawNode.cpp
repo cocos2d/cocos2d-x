@@ -140,7 +140,7 @@ DrawNode* DrawNode::create()
     return pRet;
 }
 
-void DrawNode::ensureCapacity(int count)
+void DrawNode::ensureCapacity(long count)
 {
     CCASSERT(count>=0, "capacity must be >= 0");
     
@@ -331,8 +331,10 @@ void DrawNode::drawSegment(const Point &from, const Point &to, float radius, con
 	_dirty = true;
 }
 
-void DrawNode::drawPolygon(Point *verts, unsigned int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
+void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
 {
+    CCASSERT(count >= 0, "invalid count value");
+
     struct ExtrudeVerts {Vertex2F offset, n;};
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
 	memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
@@ -376,9 +378,9 @@ void DrawNode::drawPolygon(Point *verts, unsigned int count, const Color4F &fill
 		*cursor++ = tmp;
 	}
 	
-	for(unsigned int i = 0; i < count; i++)
+	for(long i = 0; i < count; i++)
     {
-		int j = (i+1)%count;
+		long j = (i+1)%count;
 		Vertex2F v0 = __v2f(verts[i]);
 		Vertex2F v1 = __v2f(verts[j]);
 		

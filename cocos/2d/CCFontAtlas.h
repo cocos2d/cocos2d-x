@@ -24,7 +24,7 @@
 #ifndef _CCFontAtlas_h_
 #define _CCFontAtlas_h_
 
-#include <map>
+#include <unordered_map>
 
 NS_CC_BEGIN
 
@@ -34,17 +34,17 @@ class Font;
 struct FontLetterDefinition
 {
     unsigned short  letteCharUTF16;
-    float           U;
-    float           V;
-    float           width;
-    float           height;
-    float           offsetX;
-    float           offsetY;
-    int             textureID;
-    float           commonLineHeight;
-    float           anchorX;
-    float           anchorY;
-    bool            validDefinition;
+    float U;
+    float V;
+    float width;
+    float height;
+    float offsetX;
+    float offsetY;
+    int textureID;
+    float commonLineHeight;
+    float anchorX;
+    float anchorY;
+    bool validDefinition;
 };
 
 class CC_DLL FontAtlas : public Object
@@ -69,26 +69,26 @@ public:
     float getCommonLineHeight() const;
     void  setCommonLineHeight(float newHeight);
     
-    Texture2D                 & getTexture(int slot);
-    const Font                * getFont() const;
+    Texture2D& getTexture(int slot);
+    const Font* getFont() const;
     
 private:
     bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
 
     void relaseTextures();
-    std::map<int, Texture2D *>                      _atlasTextures;
-    std::map<unsigned short, FontLetterDefinition>  _fontLetterDefinitions;
-    float                                           _commonLineHeight;
-    Font *                                          _font;
+    std::unordered_map<int, Texture2D*> _atlasTextures;
+    std::unordered_map<unsigned short, FontLetterDefinition> _fontLetterDefinitions;
+    float _commonLineHeight;
+    Font * _font;
 
     // Dynamic GlyphCollection related stuff
-    int                                             _currentPage;
-    unsigned char                                  *_currentPageData;    
-    int                                             _currentPageDataSize;
-    float                                           _currentPageOrigX;
-    float                                           _currentPageOrigY;
-    float                                           _currentPageLineHeight;
-    float                                           _letterPadding;
+    int _currentPage;
+    unsigned char *_currentPageData;
+    int _currentPageDataSize;
+    float _currentPageOrigX;
+    float _currentPageOrigY;
+    float _currentPageLineHeight;
+    float _letterPadding;
 };
 
 
