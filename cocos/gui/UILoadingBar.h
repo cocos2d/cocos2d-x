@@ -34,7 +34,10 @@ typedef enum
     LoadingBarTypeLeft,
     LoadingBarTypeRight
 }LoadingBarType;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UILoadingBar : public UIWidget
 {
 public:
@@ -126,6 +129,8 @@ protected:
     virtual void onSizeChanged();
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     LoadingBarType _barType;
     int _percent;
