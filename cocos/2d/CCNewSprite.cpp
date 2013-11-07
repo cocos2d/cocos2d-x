@@ -109,7 +109,7 @@ void NewSprite::updateTransform()
 void NewSprite::draw(void)
 {
     updateTransform();
-    QuadCommand* renderCommand = new QuadCommand(0, _ZOrder,_texture->getName(), _shaderProgram->getProgram(), _blendFunc, _quad);
+    QuadCommand* renderCommand = new QuadCommand(0, _ZOrder,_texture->getName(), _shaderProgram, _blendFunc, _quad);
 
     Renderer::getInstance()->addRenderCommand(renderCommand);
 }

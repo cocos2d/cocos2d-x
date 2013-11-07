@@ -4,13 +4,8 @@
 
 
 #include "Renderer.h"
-
-#include "CCGL.h"
-#include "ccMacros.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
-#include "CCGLProgram.h"
-#include "QuadCommand.h"
 
 NS_CC_BEGIN
 using namespace std;
@@ -28,8 +23,16 @@ Renderer *Renderer::getInstance()
 
 Renderer::Renderer()
 :_lastMaterialID(0)
+,_numQuadsAlloc(0)
+,_numQuads(0)
 {
-    _shaderProgram = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+    _quadBuffer = (V3F_C4B_T2F_Quad*)malloc(sizeof(V3F_C4B_T2F_Quad) * NUM_QUADS_PER_ALLOC);
+    _numQuadsAlloc = NUM_QUADS_PER_ALLOC;
+}
+
+Renderer::~Renderer()
+{
+    free(_quadBuffer);
 }
 
 void Renderer::addRenderCommand(RenderCommand *command)
@@ -66,35 +69,27 @@ void Renderer::render()
             {
                 QuadCommand* cmd = (QuadCommand*)command;
 
-                //Set Shader
-                _shaderProgram->use();
-                _shaderProgram->setUniformsForBuiltins();
+                if(_lastMaterialID != cmd->getMaterialID())
+                {
+                    //Draw batched data
+                    if(_numQuads > 0)
+                    {
+                        drawQuads();
+                    }
 
-                //Set Blend Mode
-                //Set texture
-                GL::bindTexture2D(cmd->getTextureID());
-                GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+                    //Set new material
+                    _lastMaterialID = cmd->getMaterialID();
 
-#define kQuadSize sizeof(cmd->getQuad()->bl)
-                long offset = (long)cmd->getQuad();
+                    //Set Shader
+                    cmd->useMaterial();
 
-                // vertex
-                int diff = offsetof( V3F_C4B_T2F, vertices);
-                glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+                    //TODO: Set Blend Mode
 
-                // texCoods
-                diff = offsetof( V3F_C4B_T2F, texCoords);
-                glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+                    //Set texture
+                    GL::bindTexture2D(cmd->getTextureID());
+                }
 
-                // color
-                diff = offsetof( V3F_C4B_T2F, colors);
-                glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-
-
-                glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-                CHECK_GL_ERROR_DEBUG();
-                CC_INCREMENT_GL_DRAWS(1);
+                batchQuads(cmd);
 
                 break;
             }
@@ -105,7 +100,47 @@ void Renderer::render()
         delete command;
     }
 
+    drawQuads();
+
     _renderQueue.clear();
+}
+
+void Renderer::drawQuads()
+{
+    //Bind VAO
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    long offset = (long)_quadBuffer;
+
+    // vertex
+    int diff = offsetof( V3F_C4B_T2F, vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (void*) (offset + diff));
+
+    // texCoods
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (void*)(offset + diff));
+
+    // color
+    diff = offsetof( V3F_C4B_T2F, colors);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (void*)(offset + diff));
+
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4 * _numQuads);
+
+    CHECK_GL_ERROR_DEBUG();
+    CC_INCREMENT_GL_DRAWS(1);
+
+    _numQuads = 0;
+}
+
+void Renderer::batchQuads(QuadCommand* cmd)
+{
+    //Batch data
+    _numQuads++; //Every quad command only contains one quad
+    if(_numQuads > _numQuadsAlloc)
+    {
+        _numQuadsAlloc = _numQuads + NUM_QUADS_PER_ALLOC;
+        _quadBuffer = (V3F_C4B_T2F_Quad*)realloc(_quadBuffer, sizeof(V3F_C4B_T2F_Quad) * _numQuadsAlloc);
+    }
+    _quadBuffer[_numQuads - 1] = *cmd->getQuad();
 }
 
 NS_CC_END
