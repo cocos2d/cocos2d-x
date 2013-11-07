@@ -57,7 +57,7 @@ public:
         Point start;
         Point end;
         Point contact;
-        Point normal;
+        Vect normal;
         float fraction;
         void* data;
     }Info;
@@ -101,9 +101,9 @@ public:
     /** Adds a joint to the physics world.*/
     virtual void addJoint(PhysicsJoint* joint);
     /** Removes a joint from the physics world.*/
-    virtual void removeJoint(PhysicsJoint* joint);
+    virtual void removeJoint(PhysicsJoint* joint, bool destroy);
     /** Remove all joints from the physics world.*/
-    virtual void removeAllJoints();
+    virtual void removeAllJoints(bool destroy);
     
     virtual void removeBody(PhysicsBody* body);
     virtual void removeBody(int tag);
@@ -123,9 +123,9 @@ public:
     
     inline Scene& getScene() const { return *_scene; }
     /** get the gravity value */
-    inline Point getGravity() const { return _gravity; }
+    inline Vect getGravity() const { return _gravity; }
     /** set the gravity value */
-    void setGravity(Point gravity);
+    void setGravity(const Vect& gravity);
     
     /** test the debug draw is enabled */
     inline bool isDebugDraw() const { return _debugDraw; }
@@ -162,7 +162,7 @@ protected:
     virtual void updateJoints();
     
 protected:
-    Point _gravity;
+    Vect _gravity;
     float _speed;
     PhysicsWorldInfo* _info;
     
@@ -187,6 +187,7 @@ protected:
     friend class Scene;
     friend class PhysicsBody;
     friend class PhysicsShape;
+    friend class PhysicsJoint;
     friend class PhysicsWorldCallback;
 };
 

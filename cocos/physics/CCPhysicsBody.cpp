@@ -86,22 +86,15 @@ PhysicsBody::PhysicsBody()
 
 PhysicsBody::~PhysicsBody()
 {
-    if (_world)
-    {
-        removeFromWorld();
-    }
-    
-    removeAllShapes();
-    
     for (auto it = _joints.begin(); it != _joints.end(); ++it)
     {
         PhysicsJoint* joint = *it;
+        
         PhysicsBody* other = joint->getBodyA() == this ? joint->getBodyB() : joint->getBodyA();
-        
-        other->_joints.erase(std::find(other->_joints.begin(), other->_joints.end(), joint));
-        
+        other->removeJoint(joint);
         delete joint;
     }
+    
     CC_SAFE_DELETE(_info);
 }
 
@@ -280,6 +273,16 @@ bool PhysicsBody::init()
     } while (false);
     
     return false;
+}
+
+void PhysicsBody::removeJoint(PhysicsJoint* joint)
+{
+    auto it = std::find(_joints.begin(), _joints.end(), joint);
+    
+    if (it != _joints.end())
+    {
+        _joints.erase(it);
+    }
 }
 
 void PhysicsBody::setDynamic(bool dynamic)
@@ -616,7 +619,7 @@ void PhysicsBody::removeShape(int tag)
 
 void PhysicsBody::removeShape(PhysicsShape* shape)
 {
-    if (_shapes->getIndexOfObject(shape) == UINT_MAX)
+    if (_shapes->getIndexOfObject(shape) != UINT_MAX)
     {
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
@@ -629,6 +632,9 @@ void PhysicsBody::removeShape(PhysicsShape* shape)
         {
             _world->removeShape(shape);
         }
+        
+        // set shape->_body = nullptr make the shape->setBody will not trigger the _body->removeShape function call.
+        shape->_body = nullptr;
         shape->setBody(nullptr);
         _shapes->removeObject(shape);
     }
@@ -650,6 +656,9 @@ void PhysicsBody::removeAllShapes()
         {
             _world->removeShape(shape);
         }
+        
+        // set shape->_body = nullptr make the shape->setBody will not trigger the _body->removeShape function call.
+        shape->_body = nullptr;
         shape->setBody(nullptr);
     }
     
@@ -674,10 +683,10 @@ void PhysicsBody::setEnable(bool enable)
         {
             if (enable)
             {
-                _world->addBody(this);
+                _world->delayTestAddBody(this);
             }else
             {
-                _world->removeBody(this);
+                _world->delayTestRemoveBody(this);
             }
         }
     }
