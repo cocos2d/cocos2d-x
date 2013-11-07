@@ -70,10 +70,6 @@ public:
     
     /*temp action*/
     static UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
-    
-    static void setFileDesignSize(const char* fileName, const cocos2d::CCSize &size);
-    
-    static const cocos2d::CCSize getFileDesignSize(const char* fileName);
 };
 NS_CC_EXT_END
 

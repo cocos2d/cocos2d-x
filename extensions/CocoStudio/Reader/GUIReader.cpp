@@ -37,12 +37,14 @@ GUIReader::GUIReader():
 m_strFilePath(""),
 m_bOlderVersion(false)
 {
-    
+    _fileDesignSizes = CCDictionary::create();
+    CC_SAFE_RETAIN(_fileDesignSizes);
 }
 
 GUIReader::~GUIReader()
 {
-    
+    _fileDesignSizes->removeAllObjects();
+    CC_SAFE_RELEASE(_fileDesignSizes);
 }
 
 GUIReader* GUIReader::shareReader()
@@ -193,6 +195,25 @@ UIWidget* GUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
     return widget;
 }
 
+void GUIReader::storeFileDesignSize(const char *fileName, const cocos2d::CCSize &size)
+{
+    if (!_fileDesignSizes)
+    {
+        return;
+    }
+    cocos2d::CCString* strSize = cocos2d::CCString::createWithFormat("{%f,%f}", size.width, size.height);
+    _fileDesignSizes->setObject(strSize, fileName);
+}
+
+const cocos2d::CCSize GUIReader::getFileDesignSize(const char* fileName) const
+{
+    if (!_fileDesignSizes)
+    {
+        return cocos2d::CCSizeZero;
+    }
+    cocos2d::CCSize designSize = cocos2d::CCSizeFromString(((cocos2d::CCString*)_fileDesignSizes->objectForKey(fileName))->m_sString.c_str());
+    return designSize;
+}
 
 
 UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
@@ -236,11 +257,11 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
         printf("Read design size error!\n");
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        UIHelper::setFileDesignSize(fileName, winSize);
+        storeFileDesignSize(fileName, winSize);
     }
     else
     {
-        UIHelper::setFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
+        storeFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
     }
     cs::CSJsonDictionary* widgetTree = dicHelper->getSubDictionary_json(jsonDict, "widgetTree");
     UIWidget* widget = widgetFromJsonDictionary(widgetTree);
