@@ -51,8 +51,8 @@ static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
             ok = true;
             break;
         }
-        const char* normalImage = ((const char*)  tolua_tostring(tolua_S,2,0));
-        const char* selectedImage = ((const char*)  tolua_tostring(tolua_S,3,0));
+        const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+        const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
         MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage);
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
@@ -70,9 +70,9 @@ static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
             break;
         }
 #endif
-        const char* normalImage = ((const char*)  tolua_tostring(tolua_S,2,0));
-        const char* selectedImage = ((const char*)  tolua_tostring(tolua_S,3,0));
-        const char* disabledImage = ((const char*)  tolua_tostring(tolua_S,4,0));
+        const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+        const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+        const std::string disabledImage = ((const std::string)  tolua_tocppstring(tolua_S,4,0));
         
         MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage,disabledImage);
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -155,7 +155,7 @@ static int tolua_cocos2d_MenuItemFont_create(lua_State* tolua_S)
             goto tolua_lerror;
         }
 #endif
-        const char* value = ((const char*)  tolua_tostring(tolua_S,2,0));
+        const std::string value = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
         MenuItemFont* tolua_ret = (MenuItemFont*)  MenuItemFont::create(value);
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
