@@ -60,7 +60,7 @@ void UILabelBMFont::initRenderer()
 
 void UILabelBMFont::setFntFile(const char *fileName)
 {
-    if (!fileName || std::strcmp(fileName, "") == 0)
+    if (!fileName || strcmp(fileName, "") == 0)
     {
         return;
     }
