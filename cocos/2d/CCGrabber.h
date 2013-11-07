@@ -59,7 +59,7 @@ public:
 protected:
     GLuint _FBO;
     GLint _oldFBO;
-    GLfloat    _oldClearColor[4];
+    GLfloat _oldClearColor[4];
 };
 
 // end of effects group
