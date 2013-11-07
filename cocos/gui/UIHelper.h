@@ -71,8 +71,11 @@ public:
     
     /*temp action*/
     static UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
+    
+    static void setFileDesignSize(const char* fileName, const cocos2d::Size &size);
+    
+    static const cocos2d::Size getFileDesignSize(const char* fileName);
 };
-
 }
 
 #endif /* defined(__CocoGUI__UISystem__) */
