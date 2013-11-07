@@ -64,6 +64,7 @@ void UIScene::menuCloseCallback(Object* pSender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
+        m_pUiLayer->removeFromParent();
         auto scene = new ExtensionsTestScene();
         scene->runThisTest();
         scene->release();
