@@ -59,7 +59,7 @@ class CC_DLL TextureCache : public Object
 {
 public:
     /** Returns the shared instance of the cache */
-    static TextureCache * getInstance();
+    CC_DEPRECATED_ATTRIBUTE static TextureCache * getInstance();
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache() { return TextureCache::getInstance(); }
@@ -67,7 +67,7 @@ public:
     /** purges the cache. It releases the retained instance.
      @since v0.99.0
      */
-    static void destroyInstance();
+    CC_DEPRECATED_ATTRIBUTE static void destroyInstance();
 
     /** @deprecated Use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache() { return TextureCache::destroyInstance(); }
