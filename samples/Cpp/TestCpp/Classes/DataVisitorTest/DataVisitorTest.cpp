@@ -71,7 +71,7 @@ void PrettyPrinterDemo::onEnter()
     
     vistor.clear();
     addSprite();
-//    dict = TextureCache::getInstance()->snapshotTextures();
+//    dict = Director::getInstance()->getTextureCache()->snapshotTextures();
 //    dict->acceptVisitor(vistor);
 //    log("%s", vistor.getResult().c_str());
 }

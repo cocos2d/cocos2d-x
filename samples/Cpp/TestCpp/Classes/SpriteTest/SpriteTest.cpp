@@ -1389,9 +1389,9 @@ SpriteNewTexture::SpriteNewTexture()
     auto node = Node::create();
     addChild(node, 0, kTagSpriteBatchNode);
 
-    _texture1 = TextureCache::getInstance()->addImage("Images/grossini_dance_atlas.png");
+    _texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas.png");
     _texture1->retain();
-    _texture2 = TextureCache::getInstance()->addImage("Images/grossini_dance_atlas-mono.png");
+    _texture2 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas-mono.png");
     _texture2->retain();
     
     _usingTexture1 = true;
@@ -1501,7 +1501,7 @@ SpriteBatchNodeNewTexture::SpriteBatchNodeNewTexture()
     addChild(batch, 0, kTagSpriteBatchNode);
     
     _texture1 = batch->getTexture(); _texture1->retain();
-    _texture2 = TextureCache::getInstance()->addImage("Images/grossini_dance_atlas-mono.png");
+    _texture2 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas-mono.png");
     _texture2->retain();
     
     for(int i=0;i<30;i++)
@@ -2096,7 +2096,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
 {
     auto s = Director::getInstance()->getWinSize();
     
-    auto texture = TextureCache::getInstance()->addImage("animations/dragon_animation.png");
+    auto texture = Director::getInstance()->getTextureCache()->addImage("animations/dragon_animation.png");
     
     // manually add frames to the frame cache
     auto frame0 = SpriteFrame::createWithTexture(texture, Rect(132*0, 132*0, 132, 132));
