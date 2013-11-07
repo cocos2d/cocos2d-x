@@ -55,15 +55,7 @@ TextureCache* TextureCache::_sharedTextureCache = nullptr;
 
 TextureCache * TextureCache::getInstance()
 {
-    if (!_sharedTextureCache)
-    {
-#ifdef EMSCRIPTEN
-        _sharedTextureCache = new TextureCacheEmscripten();
-#else
-        _sharedTextureCache = new TextureCache();
-#endif // EMSCRIPTEN
-    }
-    return _sharedTextureCache;
+    return Director::getInstance()->getTextureCache();
 }
 
 TextureCache::TextureCache()
@@ -89,15 +81,6 @@ TextureCache::~TextureCache()
 
 void TextureCache::destroyInstance()
 {
-    if (_sharedTextureCache)
-    {
-        // notify sub thread to quick
-        _sharedTextureCache->_needQuit = true;
-        _sharedTextureCache->_sleepCondition.notify_one();
-        if (_sharedTextureCache->_loadingThread) _sharedTextureCache->_loadingThread->join();
-        
-        CC_SAFE_RELEASE_NULL(_sharedTextureCache);
-    }
 }
 
 const char* TextureCache::description() const
@@ -441,6 +424,14 @@ void TextureCache::reloadAllTextures()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::reloadAllTextures();
 #endif
+}
+
+void TextureCache::waitForQuit()
+{
+    // notify sub thread to quick
+    _needQuit = true;
+    _sleepCondition.notify_one();
+    if (_loadingThread) _loadingThread->join();
 }
 
 void TextureCache::dumpCachedTextureInfo() const

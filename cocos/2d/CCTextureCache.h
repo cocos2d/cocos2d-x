@@ -158,6 +158,10 @@ public:
     */
     void dumpCachedTextureInfo() const;
 
+    //wait for texture cahe to quit befor destroy instance
+    //called by director, please do not called outside
+    void waitForQuit();
+
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
