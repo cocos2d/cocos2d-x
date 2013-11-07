@@ -71,7 +71,7 @@ public:
     * In lua:local drawPolygon(local pointTable,local tableCount,local fillColor,local width,local borderColor)
     * @endcode
     */
-    void drawPolygon(Point *verts, unsigned int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
+    void drawPolygon(Point *verts, long count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
@@ -99,13 +99,13 @@ public:
     virtual void draw() override;
 
 protected:
-    void ensureCapacity(int count);
+    void ensureCapacity(long count);
     void render();
 
     GLuint      _vao;
     GLuint      _vbo;
 
-    int         _bufferCapacity;
+    long         _bufferCapacity;
     GLsizei     _bufferCount;
     V2F_C4B_T2F *_buffer;
 

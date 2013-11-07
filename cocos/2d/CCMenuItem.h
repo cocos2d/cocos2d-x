@@ -166,7 +166,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE bool initWithLabel(Node* label, Object* target, SEL_MenuHandler selector);
 
     /** sets a new string to the inner label */
-    void setString(const char * label);
+    void setString(const std::string& label);
 
     /** Gets the color that will be used to disable the item */
     inline const Color3B& getDisabledColor() const { return _disabledColor; };
@@ -204,11 +204,11 @@ class CC_DLL MenuItemAtlasFont : public MenuItemLabel
 {
 public:
     /** creates a menu item from a string and atlas with a target/selector */
-    static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
+    static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE static MenuItemAtlasFont* create(const char* value, const char* charMapFile, long itemWidth, long itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-    static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
+    static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap, const ccMenuCallback& callback);
     /**
      * @js ctor
      */
@@ -220,9 +220,9 @@ public:
     virtual ~MenuItemAtlasFont(){}
 
     /** initializes a menu item from a string and atlas with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, const char *charMapFile, long itemWidth, long itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string and atlas with a target/selector */
-    bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
+    bool initWithString(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap, const ccMenuCallback& callback);
 };
 
 
@@ -233,11 +233,11 @@ class CC_DLL MenuItemFont : public MenuItemLabel
 {
 public:
     /** creates a menu item from a string without target/selector. To be used with MenuItemToggle */
-    static MenuItemFont * create(const char *value);
+    static MenuItemFont * create(const std::string& value);
     /** creates a menu item from a string with a target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const char *value, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string with a target/selector */
-    static MenuItemFont * create(const char *value, const ccMenuCallback& callback);
+    static MenuItemFont * create(const std::string& value, const ccMenuCallback& callback);
     /**
      * @js ctor
      */
@@ -251,30 +251,30 @@ public:
     /** initializes a menu item from a string with a target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, Object* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string with a target/selector */
-    bool initWithString(const char *value, const ccMenuCallback& callback);
+    bool initWithString(const std::string& value, const ccMenuCallback& callback);
 
     /** set default font size */
-    static void setFontSize(unsigned int s);
+    static void setFontSize(long size);
     /** get default font size */
-    static unsigned int getFontSize();
+    static long getFontSize();
     CC_DEPRECATED_ATTRIBUTE static unsigned int fontSize() { return MenuItemFont::getFontSize(); };
     /** set the default font name */
-    static void setFontName(const char *name);
+    static void setFontName(const std::string& name);
     /** get the default font name */
-    static const char *getFontName();
-    CC_DEPRECATED_ATTRIBUTE static const char *fontName() { return MenuItemFont::getFontName(); };
+    static const std::string& getFontName();
+    CC_DEPRECATED_ATTRIBUTE static const std::string& fontName() { return MenuItemFont::getFontName(); };
 
     /** set font size
      * c++ can not overload static and non-static member functions with the same parameter types
      * so change the name to setFontSizeObj
      * @js setFontSize
      */
-    void setFontSizeObj(unsigned int s);
+    void setFontSizeObj(long size);
     
     /** get font size 
      * @js getFontSize
      */
-    unsigned int getFontSizeObj() const;
+    long getFontSizeObj() const;
     CC_DEPRECATED_ATTRIBUTE unsigned int fontSizeObj() const { return getFontSizeObj(); };
     
     /** set the font name 
@@ -282,20 +282,20 @@ public:
      * so change the name to setFontNameObj
      * @js setFontName
      */
-    void setFontNameObj(const char* name);
+    void setFontNameObj(const std::string& name);
 
     /** returns the name of the Font 
      * @js getFontNameObj
      */
-    const char* getFontNameObj() const;
+    const std::string& getFontNameObj() const;
 
     /** deprecated Use getFontNameObj() instead */
-    CC_DEPRECATED_ATTRIBUTE const char* fontNameObj() const { return getFontNameObj(); }
+    CC_DEPRECATED_ATTRIBUTE const std::string& fontNameObj() const { return getFontNameObj(); }
     
 protected:
     void recreateLabel();
     
-    unsigned int _fontSize;
+    long _fontSize;
     std::string _fontName;
 };
 
@@ -384,18 +384,18 @@ public:
     /** Creates an MenuItemImage. */
     static MenuItemImage* create();
     /** creates a menu item with a normal and selected image*/
-    static MenuItemImage* create(const char *normalImage, const char *selectedImage);
+    static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage);
     /** creates a menu item with a normal,selected  and disabled image*/
-    static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage);
+    static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage);
     /** creates a menu item with a normal and selected image with target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const char *normalImage, const char *selectedImage, Object* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal and selected image with a callable object */
-    static MenuItemImage* create(const char *normalImage, const char *selectedImage, const ccMenuCallback& callback);
+    static MenuItemImage* create(const std::string&normalImage, const std::string&selectedImage, const ccMenuCallback& callback);
 
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, Object* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with a callable object */
-    static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback);
+    static MenuItemImage* create(const std::string&normalImage, const std::string&selectedImage, const std::string&disabledImage, const ccMenuCallback& callback);
     /**
      * @js ctor
      */
@@ -410,7 +410,7 @@ public:
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, Object* target, SEL_MenuHandler selector);
     /** initializes a menu item with a normal, selected  and disabled image with a callable object */
-    bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback);
+    bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback);
 
     /** sets the sprite frame for the normal image */
     void setNormalSpriteFrame(SpriteFrame* frame);
