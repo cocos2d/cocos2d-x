@@ -152,7 +152,7 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(JsonDictionary* data)
     }
     else if (classname && strcmp(classname, "Panel") == 0)
     {
-        widget = Layout::create();
+        widget = UILayout::create();
         setPropsForPanelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "Slider") == 0)
@@ -162,8 +162,8 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(JsonDictionary* data)
     }
     else if (classname && strcmp(classname, "ListView") == 0)
     {
-//        widget = UIListView::create();
-//        setPropsForListViewFromJsonDictionary(widget, uiOptions);
+        widget = UIListView::create();
+        setPropsForListViewFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "PageView") == 0)
     {
@@ -177,7 +177,7 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(JsonDictionary* data)
     }
     else if (classname && strcmp(classname, "DragPanel") == 0)
     {
-        widget = UIDragPanel::create();
+        widget = UIScrollView::create();
         setPropsForDragPanelFromJsonDictionary(widget, uiOptions);
     }
 
@@ -207,7 +207,7 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     JsonDictionary *jsonDict = NULL;
     jsonpath = FileUtils::getInstance()->fullPathForFilename(fileName);
     
-    unsigned long size = 0;
+    long size = 0;
     des = (char*)(FileUtils::getInstance()->getFileData(jsonpath.c_str(),"r" , &size));
 	if(NULL == des || strcmp(des, "") == 0)
 	{
@@ -225,27 +225,27 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     }
     
     int texturesCount = DICTOOL->getArrayCount_json(jsonDict, "textures");
-    int pos = jsonpath.find_last_of('/');
+    long pos = jsonpath.find_last_of('/');
 	m_strFilePath = jsonpath.substr(0,pos+1);
     for (int i=0; i<texturesCount; i++)
     {
         const char* file = DICTOOL->getStringValueFromArray_json(jsonDict, "textures", i);
         std::string tp = m_strFilePath;
         tp.append(file);
-        CCUIHELPER->addSpriteFrame(tp.c_str());
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp.c_str());
     }
     float fileDesignWidth = DICTOOL->getFloatValue_json(jsonDict, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(jsonDict, "designHeight");
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
         printf("Read design size error!\n");
         Size winSize = Director::getInstance()->getWinSize();
-        CCUIHELPER->setFileDesignWidth(winSize.width);
-        CCUIHELPER->setFileDesignHeight(winSize.height);
+//        CCUIHELPER->setFileDesignWidth(winSize.width);
+//        CCUIHELPER->setFileDesignHeight(winSize.height);
     }
     else
     {
-        CCUIHELPER->setFileDesignWidth(fileDesignWidth);
-        CCUIHELPER->setFileDesignHeight(fileDesignHeight);
+//        CCUIHELPER->setFileDesignWidth(fileDesignWidth);
+//        CCUIHELPER->setFileDesignHeight(fileDesignHeight);
     }
     JsonDictionary* widgetTree = DICTOOL->getSubDictionary_json(jsonDict, "widgetTree");
     UIWidget* widget = widgetFromJsonDictionary(widgetTree);
@@ -253,7 +253,7 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     /* *********temp********* */
     if (widget->getContentSize().equals(Size::ZERO))
     {
-        Layout* rootWidget = dynamic_cast<Layout*>(widget);
+        UILayout* rootWidget = dynamic_cast<UILayout*>(widget);
         rootWidget->setSize(Size(fileDesignWidth, fileDesignHeight));
     }
     /* ********************** */
@@ -792,7 +792,7 @@ void CCSGUIReader::setPropsForLabelFromJsonDictionary(UIWidget*widget,JsonDictio
     setPropsForWidgetFromJsonDictionary(widget, options);
     UILabel* label = (UILabel*)widget;
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
-    label->setTouchScaleChangeAble(touchScaleChangeAble);
+    label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
     label->setText(text);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
@@ -877,10 +877,9 @@ void CCSGUIReader::setPropsForLabelAtlasFromJsonDictionary(UIWidget*widget,JsonD
 void CCSGUIReader::setPropsForContainerWidgetFromJsonDictionary(UIWidget *widget, JsonDictionary *options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    Layout* containerWidget = (Layout*)widget;
+    UILayout* containerWidget = (UILayout*)widget;
     if (!dynamic_cast<UIScrollView*>(containerWidget)
-        && !dynamic_cast<UIListView*>(containerWidget)
-        && !dynamic_cast<UIDragPanel*>(containerWidget))
+        && !dynamic_cast<UIListView*>(containerWidget))
     {
         containerWidget->setClippingEnabled(DICTOOL->getBooleanValue_json(options, "clipAble"));
     }
@@ -892,7 +891,7 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,JsonDictio
     if (m_bOlderVersion)
     {
         setPropsForContainerWidgetFromJsonDictionary(widget, options);
-        Layout* panel = (Layout*)widget;
+        UILayout* panel = (UILayout*)widget;
         bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
         int cr = DICTOOL->getIntValue_json(options, "bgColorR");
@@ -959,7 +958,7 @@ void CCSGUIReader::setPropsForPanelFromJsonDictionary(UIWidget*widget,JsonDictio
     else
     {
         setPropsForContainerWidgetFromJsonDictionary(widget, options);
-        Layout* panel = (Layout*)widget;
+        UILayout* panel = (UILayout*)widget;
         bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
         int cr = DICTOOL->getIntValue_json(options, "bgColorR");
@@ -1394,7 +1393,7 @@ void CCSGUIReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,JsonDi
         //textField->setSize(CCSizeMake(dw, dh));
     }
 	bool maxLengthEnable = DICTOOL->getBooleanValue_json(options, "maxLengthEnable");
-	textField->setMaxLengthEnable(maxLengthEnable);
+	textField->setMaxLengthEnabled(maxLengthEnable);
 
 	if (maxLengthEnable)
 	{
@@ -1402,7 +1401,7 @@ void CCSGUIReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,JsonDi
 		textField->setMaxLength(maxLength);
 	}
     bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
-    textField->setPasswordEnable(passwordEnable);
+    textField->setPasswordEnabled(passwordEnable);
     if (passwordEnable)
     {
         textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, "passwordStyleText"));
@@ -1557,10 +1556,10 @@ void CCSGUIReader::setPropsForDragPanelFromJsonDictionary(UIWidget *widget, Json
 {
     setPropsForPanelFromJsonDictionary(widget, options);
     
-    UIDragPanel* dragPanel = (UIDragPanel*)widget;
+    UIScrollView* dragPanel = (UIScrollView*)widget;
     
     bool bounceEnable = DICTOOL->getBooleanValue_json(options, "bounceEnable");
-    dragPanel->setBounceEnable(bounceEnable);
+    dragPanel->setBounceEnabled(bounceEnable);
     
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");

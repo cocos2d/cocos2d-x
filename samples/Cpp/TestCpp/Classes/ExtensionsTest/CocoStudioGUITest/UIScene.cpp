@@ -3,6 +3,7 @@
 #include "UIScene.h"
 #include "UISceneManager.h"
 #include "../ExtensionsTest.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
 
 using namespace gui;
 
@@ -25,7 +26,7 @@ bool UIScene::init()
         m_pUiLayer = UILayer::create();
         addChild(m_pUiLayer);
         
-        m_pWidget = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/UITest/UITest.json"));
+        m_pWidget = dynamic_cast<UILayout*>(cocostudio::CCSGUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
         m_pUiLayer->addWidget(m_pWidget);
         
         m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));

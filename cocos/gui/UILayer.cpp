@@ -119,7 +119,7 @@ UIWidget* UILayer::getWidgetByTag(int tag)
     {
         return NULL;
     }
-    return CCUIHELPER->seekWidgetByTag(_rootWidget, tag);
+    return UIHelper::seekWidgetByTag(_rootWidget, tag);
 }
 
 UIWidget* UILayer::getWidgetByName(const char* name)
@@ -128,7 +128,7 @@ UIWidget* UILayer::getWidgetByName(const char* name)
     {
         return NULL;
     }
-    return CCUIHELPER->seekWidgetByName(_rootWidget, name);
+    return UIHelper::seekWidgetByName(_rootWidget, name);
 }
 
 UIRootWidget* UILayer::getRootWidget()

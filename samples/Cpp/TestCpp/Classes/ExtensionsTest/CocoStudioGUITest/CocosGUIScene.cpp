@@ -19,7 +19,6 @@ CocosGUITestScene::~CocosGUITestScene()
 {
 	cocostudio::SceneReader::getInstance()->purgeSceneReader();
 	cocostudio::ActionManagerEx::purgeActionManager();
-	gui::UIHelper::purgeUIHelper();
 }
 
 void CocosGUITestScene::runThisTest()

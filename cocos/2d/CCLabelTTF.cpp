@@ -171,10 +171,8 @@ bool LabelTTF::initWithStringAndTextDefinition(const char *string, FontDefinitio
 }
 
 
-void LabelTTF::setString(const char *string)
+void LabelTTF::setString(const std::string &string)
 {
-    CCASSERT(string != NULL, "Invalid string");
-    
     if (_string.compare(string))
     {
         _string = string;

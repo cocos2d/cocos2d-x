@@ -113,7 +113,7 @@ bool LabelAtlas::initWithString(const char *theString, const char *fntFile)
 //CCLabelAtlas - Atlas generation
 void LabelAtlas::updateAtlasValues()
 {
-    int n = _string.length();
+    size_t n = _string.length();
 
     const unsigned char *s = (unsigned char*)_string.c_str();
 
@@ -186,9 +186,9 @@ void LabelAtlas::updateAtlasValues()
 }
 
 //CCLabelAtlas - LabelProtocol
-void LabelAtlas::setString(const char *label)
+void LabelAtlas::setString(const std::string &label)
 {
-    int len = strlen(label);
+    size_t len = label.size();
     if (len > _textureAtlas->getTotalQuads())
     {
         _textureAtlas->resizeCapacity(len);

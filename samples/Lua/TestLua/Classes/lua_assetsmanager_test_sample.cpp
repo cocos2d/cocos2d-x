@@ -26,10 +26,7 @@ static int lua_cocos2dx_createDownloadDir(lua_State* L)
         return 0;
     
     int argc = lua_gettop(L);
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
+
     if (0 == argc)
     {
         std::string pathToSave = FileUtils::getInstance()->getWritablePath();
@@ -50,18 +47,11 @@ static int lua_cocos2dx_createDownloadDir(lua_State* L)
         }
 #endif
         tolua_pushstring(L, pathToSave.c_str());
-        CCLOG("the path to save is %s",pathToSave.c_str());
         return 1;
     }
     
     CCLOG("'createDownloadDir' function wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(L,"#ferror in function 'createDownloadDir'.",&tolua_err);
-    return 0;
-#endif
 }
 
 static int lua_cocos2dx_deleteDownloadDir(lua_State* L)

@@ -27,9 +27,9 @@
 
 #include "cocos2d.h"
 #include "gui/UILayoutDefine.h"
-#include "gui/LayoutParameter.h"
-namespace gui {
+#include "gui/UILayoutParameter.h"
 
+namespace gui {
 
 typedef enum
 {
@@ -72,11 +72,10 @@ typedef enum
 
 typedef void (cocos2d::Object::*SEL_TouchEvent)(cocos2d::Object*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
-
-//class UILayer;
-/*temp action*/
-class UIActionNode;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIWidget : public cocos2d::Object
 {
 public:    
@@ -260,12 +259,7 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      */
     virtual void removeAllChildren();
-    
-    /**
-     * Unschedules the "update" method.
-     */
-    void disableUpdate();
-    
+        
     /**
      * Reorders a child according to a new z value.
      *
@@ -304,27 +298,27 @@ public:
     /**
      * Gets the renderer of widget
      *
-     * renderer is a CCNode, it's for drawing
+     * renderer is a Node, it's for drawing
      *
-     * @return a CCNode object
+     * @return a Node object
      */
     cocos2d::Node* getRenderer();
     
     /**
-     * Add a CCNode for rendering.
+     * Add a Node for rendering.
      *
-     * renderer is a CCNode, it's for drawing
+     * renderer is a Node, it's for drawing
      *
      * @param renderer     A render node
      *
-     * @param zOrder    Z order for drawing priority. Please refer to CCNode::setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to Node::setZOrder(int)
      */
     void addRenderer(cocos2d::Node* renderer, int zOrder);
     
     /**
-     * Remove a CCNode from widget.
+     * Remove a Node from widget.
      *
-     * renderer is a CCNode, it's for drawing
+     * renderer is a Node, it's for drawing
      *
      * @param renderer     A render node which needs to be removed
      *
@@ -359,7 +353,7 @@ public:
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
-     * Usually we use ccp(x,y) to compose Point object.
+     * Usually we use p(x,y) to compose Point object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
@@ -369,7 +363,7 @@ public:
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
-     * Usually we use ccp(x,y) to compose Point object.
+     * Usually we use p(x,y) to compose Point object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
      * @param percent  The percent (x,y) of the widget in OpenGL coordinates
@@ -809,15 +803,21 @@ public:
      * @see LayoutParameter
      *
      * @param LayoutParameter pointer
+     *
+     * @param type  Relative or Linear
      */
-    void setLayoutParameter(LayoutParameter* parameter);
+    void setLayoutParameter(UILayoutParameter* parameter);
     
     /**
      * Gets LayoutParameter of widget.
      *
      * @see LayoutParameter
+     *
+     * @param type  Relative or Linear
+     *
+     * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter();
+    UILayoutParameter* getLayoutParameter(LayoutParameterType type);
     
     /**
      * Ignore the widget size
@@ -850,7 +850,7 @@ public:
      *
      * For example, a button's Virtual Renderer is it's texture renderer.
      *
-     * @return CCNode pointer.
+     * @return Node pointer.
      */
     virtual cocos2d::Node* getVirtualRenderer();
     
@@ -871,14 +871,15 @@ public:
      */
     virtual const cocos2d::Size& getContentSize() const;
     
-    virtual void onEnter();
-    virtual void onExit();
-    
     /**
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
     
+    UIWidget* clone();
+
+    virtual void onEnter();
+    virtual void onExit();
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
@@ -913,6 +914,10 @@ protected:
      */
     virtual void releaseResoures();
     void updateSizeAndPosition();
+    void copyProperties(UIWidget* model);
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
 protected:
     bool _enabled;            ///< Highest control of widget
     bool _visible;            ///< is this widget visible
@@ -930,7 +935,7 @@ protected:
     cocos2d::Point _touchMovePos;     ///< touch moved point
     cocos2d::Point _touchEndPos;      ///< touch ended point
     
-    cocos2d::Object*       _touchEventListener;
+    Object*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
     
 
@@ -941,7 +946,7 @@ protected:
 	int _actionTag;
     cocos2d::Size _size;
     cocos2d::Size _customSize;
-    LayoutParameter* _layoutParameter;
+    cocos2d::Dictionary* _layoutParameterDictionary;
     bool _ignoreSize;
     cocos2d::Array* _children;
     bool _affectByClipping;
@@ -954,7 +959,10 @@ protected:
     cocos2d::Point _positionPercent;
     bool _isRunning;
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class GUIRenderer : public cocos2d::NodeRGBA
 {
 public:
@@ -969,5 +977,4 @@ protected:
 };
 
 }
-
 #endif /* defined(__UIWidget__) */
