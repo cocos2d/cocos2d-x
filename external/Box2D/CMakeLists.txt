@@ -53,3 +53,9 @@ include_directories(
 add_library(box2d STATIC
   ${BOX2D_SRC}
 )
+
+set_target_properties(box2d
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+)

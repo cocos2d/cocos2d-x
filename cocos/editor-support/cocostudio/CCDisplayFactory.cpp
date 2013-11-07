@@ -70,13 +70,15 @@ void DisplayFactory::createDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
     }
 }
 
-void DisplayFactory::updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty)
+void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
 {
-    CS_RETURN_IF(!decoDisplay);
+    Node *display = bone->getDisplayRenderNode();
+    CS_RETURN_IF(!display);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (dirty)
     {
+        DecorativeDisplay *decoDisplay = bone->getDisplayManager()->getCurrentDecorativeDisplay();
         ColliderDetector *detector = decoDisplay->getColliderDetector();
         if (detector)
         {
@@ -84,9 +86,8 @@ void DisplayFactory::updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, f
             {
                 CC_BREAK_IF(!detector->getBody());
 
-                Node *node = decoDisplay->getDisplay();
-                AffineTransform displayTransform = node->getNodeToParentTransform();
-                Point anchorPoint =  node->getAnchorPointInPoints();
+                AffineTransform displayTransform = display->getNodeToParentTransform();
+                Point anchorPoint =  display->getAnchorPointInPoints();
                 anchorPoint = PointApplyAffineTransform(anchorPoint, displayTransform);
                 displayTransform.tx = anchorPoint.x;
                 displayTransform.ty = anchorPoint.y;
@@ -98,18 +99,19 @@ void DisplayFactory::updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, f
     }
 #endif
 
-    Node *display = decoDisplay->getDisplay();
-
-    switch(decoDisplay->getDisplayData()->displayType)
+    switch(bone->getDisplayRenderNodeType())
     {
     case CS_DISPLAY_SPRITE:
-        updateSpriteDisplay(bone, display, dt, dirty);
+        if (dirty)
+        {
+            static_cast<Skin*>(display)->updateArmatureTransform();
+        }
         break;
     case CS_DISPLAY_PARTICLE:
-        updateParticleDisplay(bone, display, dt, dirty);
+        updateParticleDisplay(bone, display, dt);
         break;
     case CS_DISPLAY_ARMATURE:
-        updateArmatureDisplay(bone, display, dt, dirty);
+        updateArmatureDisplay(bone, display, dt);
         break;
     default:
     {
@@ -131,7 +133,7 @@ void DisplayFactory::addSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay
 
 void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
 {
-    Skin *skin = NULL;
+    Skin *skin = nullptr;
 
     SpriteDisplayData *displayData = (SpriteDisplayData *)decoDisplay->getDisplayData();
 
@@ -153,6 +155,13 @@ void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisp
         skin = Skin::createWithSpriteFrameName((textureName + ".png").c_str());
     }
 
+    decoDisplay->setDisplay(skin);
+
+    if (skin == nullptr)
+    {
+        return;
+    }
+
     skin->setBone(bone);
 
     initSpriteDisplay(bone, decoDisplay, displayData->displayName.c_str(), skin);
@@ -169,8 +178,6 @@ void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisp
             skin->setSkinData(*bone->getBoneData());
         }
     }
-
-    decoDisplay->setDisplay(skin);
 
 }
 
@@ -206,17 +213,11 @@ void DisplayFactory::initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDispla
 #endif
 }
 
-void DisplayFactory::updateSpriteDisplay(Bone *bone, Node *display, float dt, bool dirty)
-{
-    CS_RETURN_IF(!dirty);
-    Skin *skin = (Skin *)display;
-    skin->updateArmatureTransform();
-}
 
 
 void DisplayFactory::addArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
 {
-    ArmatureDisplayData *adp = ArmatureDisplayData::create(); ;
+    ArmatureDisplayData *adp = ArmatureDisplayData::create();
     adp->copy((ArmatureDisplayData *)displayData);
     decoDisplay->setDisplayData(adp);
 
@@ -228,15 +229,9 @@ void DisplayFactory::createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDi
 
     Armature *armature = Armature::create(displayData->displayName.c_str(), bone);
 
-    /*
-     *  because this bone have called this name, so armature should change it's name, or it can't add to
-     *  Armature's bone children.
-     */
-    armature->setName((bone->getName() + "_armatureChild").c_str());
-
     decoDisplay->setDisplay(armature);
 }
-void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt, bool dirty)
+void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt)
 {
     Armature *armature = (Armature *)display;
     if(armature)
@@ -250,7 +245,7 @@ void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt, 
 
 void DisplayFactory::addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
 {
-    ParticleDisplayData *adp = ParticleDisplayData::create(); ;
+    ParticleDisplayData *adp = ParticleDisplayData::create();
     adp->copy((ParticleDisplayData *)displayData);
     decoDisplay->setDisplayData(adp);
 
@@ -260,9 +255,18 @@ void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDi
 {
     ParticleDisplayData *displayData = (ParticleDisplayData *)decoDisplay->getDisplayData();
     ParticleSystem *system = ParticleSystemQuad::create(displayData->plist.c_str());
+
+    system->removeFromParent();
+    
+    Armature *armature = bone->getArmature();
+    if (armature)
+    {
+        system->setParent(armature);
+    }
+
     decoDisplay->setDisplay(system);
 }
-void DisplayFactory::updateParticleDisplay(Bone *bone, Node *display, float dt, bool dirty)
+void DisplayFactory::updateParticleDisplay(Bone *bone, Node *display, float dt)
 {
     ParticleSystem *system = (ParticleSystem *)display;
     BaseData node;

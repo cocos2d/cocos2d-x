@@ -29,7 +29,7 @@ using namespace cocos2d;
 
 namespace cocostudio {
 
-SpriteFrameCacheHelper *SpriteFrameCacheHelper::_spriteFrameCacheHelper = NULL;
+SpriteFrameCacheHelper *SpriteFrameCacheHelper::_spriteFrameCacheHelper = nullptr;
 
 SpriteFrameCacheHelper *SpriteFrameCacheHelper::getInstance()
 {
@@ -44,7 +44,7 @@ SpriteFrameCacheHelper *SpriteFrameCacheHelper::getInstance()
 void SpriteFrameCacheHelper::purge()
 {
     delete _spriteFrameCacheHelper;
-    _spriteFrameCacheHelper = NULL;
+    _spriteFrameCacheHelper = nullptr;
 }
 
 void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
@@ -52,26 +52,12 @@ void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const
     CCSpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath, imagePath);
 }
 
-TextureAtlas *SpriteFrameCacheHelper::getTexureAtlasWithTexture(Texture2D *texture)
-{
-    int key = texture->getName();
-    TextureAtlas *atlas = (TextureAtlas *)_textureAtlasDic->objectForKey(key);
-    if (atlas == NULL)
-    {
-        atlas = TextureAtlas::createWithTexture(texture, 4);
-        _textureAtlasDic->setObject(atlas, key);
-    }
-    return atlas;
-}
-
 SpriteFrameCacheHelper::SpriteFrameCacheHelper()
 {
-    _textureAtlasDic = new Dictionary();
 }
 
 SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
 {
-    CC_SAFE_RELEASE_NULL(_textureAtlasDic);
 }
 
 }

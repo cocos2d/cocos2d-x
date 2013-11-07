@@ -87,7 +87,7 @@ public:
     
     // super methods
     virtual void updateAtlasValues();
-    virtual void setString(const char *label);
+    virtual void setString(const std::string &label);
     virtual const char* getString(void) const;
     
 #if CC_LABELATLAS_DEBUG_DRAW

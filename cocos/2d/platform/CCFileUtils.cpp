@@ -488,7 +488,7 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-unsigned char* FileUtils::getFileData(const char* filename, const char* mode, unsigned long * size)
+unsigned char* FileUtils::getFileData(const char* filename, const char* mode, long *size)
 {
     unsigned char * buffer = NULL;
     CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
@@ -518,7 +518,7 @@ unsigned char* FileUtils::getFileData(const char* filename, const char* mode, un
     return buffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, unsigned long * size)
+unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, long *size)
 {
     unsigned char * buffer = NULL;
     unzFile pFile = NULL;
