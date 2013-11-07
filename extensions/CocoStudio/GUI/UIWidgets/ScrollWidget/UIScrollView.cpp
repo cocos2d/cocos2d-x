@@ -86,7 +86,21 @@ m_pfnScrollToRightSelector(NULL)
 
 UIScrollView::~UIScrollView()
 {
-    
+    CC_SAFE_RELEASE(m_pEventListener);
+    m_pEventListener = NULL;
+    m_pfnEventSelector = NULL;
+    CC_SAFE_RELEASE(m_pScrollToTopListener);
+    m_pScrollToTopListener = NULL;
+    m_pfnScrollToTopSelector = NULL;
+    CC_SAFE_RELEASE(m_pScrollToBottomListener);
+    m_pScrollToBottomListener = NULL;
+    m_pfnScrollToBottomSelector = NULL;
+    CC_SAFE_RELEASE(m_pScrollToLeftListener);
+    m_pScrollToLeftListener = NULL;
+    m_pfnScrollToLeftSelector = NULL;
+    CC_SAFE_RELEASE(m_pScrollToRightListener);
+    m_pScrollToRightListener = NULL;
+    m_pfnScrollToRightSelector = NULL;
 }
 
 UIScrollView* UIScrollView::create()
@@ -1563,32 +1577,42 @@ void UIScrollView::bounceRightEvent()
 
 void UIScrollView::addEventListener(CCObject *target, SEL_ScrollViewEvent selector)
 {
+    CC_SAFE_RELEASE(m_pEventListener);
     m_pEventListener = target;
+    CC_SAFE_RETAIN(m_pEventListener);
     m_pfnEventSelector = selector;
 }
 
 /*******Compatible*******/
 void UIScrollView::addScrollToTopEvent(CCObject *target, SEL_ScrollToTopEvent selector)
 {
+    CC_SAFE_RELEASE(m_pScrollToTopListener);
     m_pScrollToTopListener = target;
+    CC_SAFE_RETAIN(m_pScrollToTopListener);
     m_pfnScrollToTopSelector = selector;
 }
 
 void UIScrollView::addScrollToBottomEvent(CCObject *target, SEL_ScrollToBottomEvent selector)
 {
+    CC_SAFE_RELEASE(m_pScrollToBottomListener);
     m_pScrollToBottomListener = target;
+    CC_SAFE_RETAIN(m_pScrollToBottomListener);
     m_pfnScrollToBottomSelector = selector;
 }
 
 void UIScrollView::addScrollToLeftEvent(CCObject *target, SEL_ScrollToLeftEvent selector)
 {
+    CC_SAFE_RELEASE(m_pScrollToLeftListener);
     m_pScrollToLeftListener = target;
+    CC_SAFE_RETAIN(m_pScrollToLeftListener);
     m_pfnScrollToLeftSelector = selector;
 }
 
 void UIScrollView::addScrollToRightEvent(CCObject *target, SEL_ScrollToRightEvent selector)
 {
+    CC_SAFE_RELEASE(m_pScrollToRightListener);
     m_pScrollToRightListener = target;
+    CC_SAFE_RETAIN(m_pScrollToRightListener);
     m_pfnScrollToRightSelector = selector;
 }
 /************************/

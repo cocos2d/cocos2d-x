@@ -77,7 +77,16 @@ UIListView::~UIListView()
     CC_SAFE_RELEASE_NULL(m_overTopArray);
     CC_SAFE_RELEASE_NULL(m_overBottomArray);
     CC_SAFE_RELEASE_NULL(m_overLeftArray);
-    CC_SAFE_RELEASE_NULL(m_overRightArray);        
+    CC_SAFE_RELEASE_NULL(m_overRightArray);
+    CC_SAFE_RELEASE(m_pEventListener);
+    m_pEventListener = NULL;
+    m_pfnEventSelector = NULL;
+    CC_SAFE_RELEASE(m_pInitChildListener);
+    m_pInitChildListener = NULL;
+    m_pfnInitChildSelector = NULL;
+    CC_SAFE_RELEASE(m_pUpdateChildListener);
+    m_pUpdateChildListener = NULL;
+    m_pfnUpdateChildSelector = NULL;
 }
 
 UIListView* UIListView::create()
@@ -1465,20 +1474,26 @@ void UIListView::updateChildEvent()
 
 void UIListView::addEventListenter(CCObject *target, SEL_ListViewEvent selector)
 {
+    CC_SAFE_RELEASE(m_pEventListener);
     m_pEventListener = target;
+    CC_SAFE_RETAIN(m_pEventListener);
     m_pfnEventSelector = selector;
 }
 
 /*Compatible*/
 void UIListView::addInitChildEvent(cocos2d::CCObject *target, SEL_ListViewInitChildEvent seletor)
 {
+    CC_SAFE_RELEASE(m_pInitChildListener);
     m_pInitChildListener = target;
+    CC_SAFE_RETAIN(m_pInitChildListener);
     m_pfnInitChildSelector = seletor;
 }
 
 void UIListView::addUpdateChildEvent(cocos2d::CCObject *target, SEL_ListViewUpdateChildEvent selector)
 {
+    CC_SAFE_RELEASE(m_pUpdateChildListener);
     m_pUpdateChildListener = target;
+    CC_SAFE_RETAIN(m_pUpdateChildListener);
     m_pfnUpdateChildSelector = selector;
 }
 /************/

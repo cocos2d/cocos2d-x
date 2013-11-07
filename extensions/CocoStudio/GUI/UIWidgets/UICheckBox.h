@@ -184,12 +184,16 @@ public:
     void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCrossDisabled(frontCrossDisabled,texType);};
     void addSelectEvent(CCObject* target,SEL_SelectEvent selector)
     {
+        CC_SAFE_RELEASE(m_pSelectListener);
         m_pSelectListener = target;
+        CC_SAFE_RETAIN(m_pSelectListener);
         m_pfnSelectSelector = selector;
     };
     void addUnSelectEvent(CCObject* target,SEL_UnSelectEvent selector)
     {
+        CC_SAFE_RELEASE(m_pUnSelectListener);
         m_pUnSelectListener = target;
+        CC_SAFE_RETAIN(m_pUnSelectListener);
         m_pfnUnSelectSelector = selector;
     };
     /************/

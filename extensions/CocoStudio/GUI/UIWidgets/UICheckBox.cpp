@@ -56,7 +56,15 @@ m_pfnUnSelectSelector(NULL)
 
 UICheckBox::~UICheckBox()
 {
-    
+    CC_SAFE_RELEASE(m_pSelectedStateEventListener);
+    m_pSelectedStateEventListener = NULL;
+    m_pfnSelectedStateEventSelector = NULL;
+    CC_SAFE_RELEASE(m_pSelectListener);
+    m_pSelectListener = NULL;
+    m_pfnSelectSelector = NULL;
+    CC_SAFE_RELEASE(m_pUnSelectListener);
+    m_pUnSelectListener = NULL;
+    m_pfnUnSelectSelector = NULL;
 }
 
 UICheckBox* UICheckBox::create()
@@ -317,7 +325,9 @@ void UICheckBox::unSelectedEvent()
 
 void UICheckBox::addEventListener(cocos2d::CCObject *target, SEL_SelectedStateEvent selector)
 {
+    CC_SAFE_RELEASE(m_pSelectedStateEventListener);
     m_pSelectedStateEventListener = target;
+    CC_SAFE_RETAIN(m_pSelectedStateEventListener);
     m_pfnSelectedStateEventSelector = selector;
 }
 

@@ -293,6 +293,21 @@ m_pfnDeleteBackwardSelector(NULL)
 
 UITextField::~UITextField()
 {
+    CC_SAFE_RELEASE(m_pEventListener);
+    m_pEventListener = NULL;
+    m_pfnEventSelector = NULL;
+    CC_SAFE_RELEASE(m_pAttachWithIMEListener);
+    CC_SAFE_RELEASE(m_pDetachWithIMEListener);
+    CC_SAFE_RELEASE(m_pInsertTextListener);
+    CC_SAFE_RELEASE(m_pDeleteBackwardListener);
+    m_pAttachWithIMEListener = NULL;
+    m_pDetachWithIMEListener = NULL;
+    m_pInsertTextListener = NULL;
+    m_pDeleteBackwardListener = NULL;
+    m_pfnAttachWithIMESelector = NULL;
+    m_pfnDetachWithIMESelector = NULL;
+    m_pfnInsertTextSelector = NULL;
+    m_pfnDeleteBackwardSelector = NULL;
 }
 
 UITextField* UITextField::create()
@@ -538,32 +553,42 @@ void UITextField::deleteBackwardEvent()
 
 void UITextField::addEventListener(CCObject *target, SEL_TextFieldEvent selecor)
 {
+    CC_SAFE_RELEASE(m_pEventListener);
     m_pEventListener = target;
+    CC_SAFE_RETAIN(m_pEventListener);
     m_pfnEventSelector = selecor;
 }
 
 /*******Compatible*******/
 void UITextField::addAttachWithIMEEvent(CCObject *target, SEL_TextFieldAttachWithIMEEvent selecor)
 {
+    CC_SAFE_RELEASE(m_pAttachWithIMEListener);
     m_pAttachWithIMEListener = target;
+    CC_SAFE_RETAIN(m_pAttachWithIMEListener);
     m_pfnAttachWithIMESelector = selecor;
 }
 
 void UITextField::addDetachWithIMEEvent(CCObject *target, SEL_TextFieldDetachWithIMEEvent selecor)
 {
+    CC_SAFE_RELEASE(m_pDetachWithIMEListener);
     m_pDetachWithIMEListener = target;
+    CC_SAFE_RETAIN(m_pDetachWithIMEListener);
     m_pfnDetachWithIMESelector = selecor;
 }
 
 void UITextField::addInsertTextEvent(CCObject *target, SEL_TextFieldInsertTextEvent selecor)
 {
+    CC_SAFE_RELEASE(m_pInsertTextListener);
     m_pInsertTextListener = target;
+    CC_SAFE_RETAIN(m_pInsertTextListener);
     m_pfnInsertTextSelector = selecor;
 }
 
 void UITextField::addDeleteBackwardEvent(CCObject *target, SEL_TextFieldDeleteBackwardEvent selecor)
 {
+    CC_SAFE_RELEASE(m_pDeleteBackwardListener);
     m_pDeleteBackwardListener = target;
+    CC_SAFE_RETAIN(m_pDeleteBackwardListener);
     m_pfnDeleteBackwardSelector = selecor;
 }
 /**************/
