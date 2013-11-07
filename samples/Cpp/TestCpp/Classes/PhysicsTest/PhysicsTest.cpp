@@ -210,7 +210,7 @@ void PhysicsDemoClickAdd::onEnter()
     touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
-	Device::setAccelerometerEnabled(true);
+    Device::setAccelerometerEnabled(true);
     auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(PhysicsDemoClickAdd::onAcceleration, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     
