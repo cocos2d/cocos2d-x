@@ -32,6 +32,7 @@ void AccelerometerTest::onEnter()
 {
     Layer::onEnter();
 
+	Device::setAccelerometerEnabled(true);
     auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(AccelerometerTest::onAcceleration, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
