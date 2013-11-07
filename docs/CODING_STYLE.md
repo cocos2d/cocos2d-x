@@ -594,7 +594,7 @@ Can make code appear more intuitive because a class will behave in the same way 
 While operator overloading can make code more intuitive, it has several drawbacks:
 
 * It can fool our intuition into thinking that expensive operations are cheap, built-in operations.
-* It is much harder to find the call sites for overloaded operators. Searching for `equals()` is much easier than searching for relevant invocations of ==.
+* It is much harder to find the call sites for overloaded operators. Searching for `equals()` is much easier than searching for relevant invocations of `==`.
 * Some operators work on pointers too, making it easy to introduce bugs. Foo + 4 may do one thing, while &Foo + 4 does something totally different. The compiler does not complain for either of these, making this very hard to debug.
 
 Overloading also has surprising ramifications. For instance, if a class overloads unary operator&, it cannot safely be forward-declared.
@@ -1933,7 +1933,7 @@ or if you cannot fit even the first parameter:
 
 ```c++
 ReturnType LongClassName::ReallyReallyReallyLongFunctionName(
-    Type par_name1,  // 4 or 8 space indent is acceptable
+    Type par_name1,  // 4 space indent
     Type par_name2,
     Type par_name3)
 {
@@ -1952,7 +1952,7 @@ Some points to note:
 * All parameters should be named, with identical names in the declaration and implementation.
 * All parameters should be aligned if possible.
 * Default indentation is 4 spaces.
-* Wrapped parameters have a 4 or 8 space indent.
+* Wrapped parameters have a 4 space indent.
 
 If some parameters are unused, comment out the variable name in the function definition:
 
@@ -2089,7 +2089,7 @@ if ( condition ) {  // spaces inside parentheses - rare
 }
 ```
 
-Note that in all cases you must have a space between the if and the open parenthesis. You must also have a space between the close parenthesis and the curly brace, if you're using one.
+Note that in all cases you must have a space between the `if` and the open parenthesis. You must also have a space between the close parenthesis and the curly brace, if you're using one.
 
 ```c++
 if(condition)     // Bad - space missing after IF.
@@ -2106,7 +2106,7 @@ if (x == FOO) return new Foo();
 if (x == BAR) return new Bar();
 ```
 
-This is not allowed when the if statement has an else:
+This is not allowed when the if statement has an `else`:
 
 ```c++
 // Not allowed - IF statement on one line when there is an ELSE clause
@@ -2174,7 +2174,7 @@ switch (var) {
 }
 ```
 
-Empty loop bodies should use {} or continue, but not a single semicolon.
+Empty loop bodies should use `{}` or `continue`, but not a single semicolon.
 
 ```c++
 while (condition) {
@@ -2241,7 +2241,7 @@ Note that when the code wraps in this example, both of the && logical AND operat
 
 Do not needlessly surround the return expression with parentheses.
 
-Use parentheses in return expr; only where you would use them in x = expr;.
+Use parentheses in `return expr;` only where you would use them in `x = expr;`.
 
 ```c++
 return result;                  // No parentheses in the simple case.
@@ -2254,9 +2254,9 @@ return(result);                // return is not a function!
 
 ## Variable and Array Initialization
 
-Your choice of =, (), or {}.
+Your choice of `=`, `()`, or `{}`.
 
-You may choose between =, (), and {}; the following are all correct:
+You may choose between `=`, `()`, and `{}`; the following are all correct:
 
 ```c++
 int x = 3;
@@ -2267,7 +2267,7 @@ string name("Some Name");
 string name{"Some Name"};
 ```
 
-Be careful when using the {} on a type that takes an initializer_list in one of its constructors. The {} syntax prefers the initializer_list constructor whenever possible. To get the non- initializer_list constructor, use ().
+Be careful when using the `{}` on a type that takes an initializer_list in one of its constructors. The `{}` syntax prefers the initializer_list constructor whenever possible. To get the non- initializer_list constructor, use `()`.
 
 ```c++
 vector<int> v(100, 1);  // A vector of 100 1s.
@@ -2331,22 +2331,22 @@ public:      // Note the 0 space indent!
     void setSomeVar(int var) { _someVar = var; }
     int getSomeVar() const { return _someVar; }
 
- private:
-  bool someInternalFunction();
+private:
+    bool someInternalFunction();
 
-  int _someVar;
-  int _someOtherVar;
-  DISALLOW_COPY_AND_ASSIGN(MyClass);
+    int _someVar;
+    int _someOtherVar;
+    DISALLOW_COPY_AND_ASSIGN(MyClass);
 };
 ```
 
 Things to note:
 
 * Any base class name should be on the same line as the subclass name, subject to the 80-column limit.
-* The public:, protected:, and private: keywords should be indented one space.
+* The `public:`, `protected:`, and `private:` keywords should not be indented.
 * Except for the first instance, these keywords should be preceded by a blank line. This rule is optional in small classes.
 * Do not leave a blank line after these keywords.
-* The public section should be first, followed by the protected and finally the private section.
+* The `public:` section should be first, followed by the `protected:` and finally the `private:` section.
 * See Declaration Order for rules on ordering declarations within each of these sections.
 
 
@@ -2420,18 +2420,19 @@ Use of horizontal whitespace depends on location. Never put trailing whitespace 
 
 ```c++
 void f(bool b) {  // Open braces should always have a space before them.
-  ...
+    ...
 int i = 0;  // Semicolons usually have no space before them.
 int x[] = { 0 };  // Spaces inside braces for braced-init-list are
 int x[] = {0};    // optional.  If you use them, put them on both sides!
+
 // Spaces around the colon in inheritance and initializer lists.
 class Foo : public Bar {
- public:
-  // For inline function implementations, put spaces between the braces
-  // and the implementation itself.
-  Foo(int b) : Bar(), baz_(b) {}  // No spaces inside empty braces.
-  void Reset() { baz_ = 0; }  // Spaces separating braces from implementation.
-  ...
+public:
+    // For inline function implementations, put spaces between the braces
+    // and the implementation itself.
+    Foo(int b) : Bar(), baz_(b) {}  // No spaces inside empty braces.
+    void Reset() { baz_ = 0; }  // Spaces separating braces from implementation.
+    ...
 ```
 
 Adding trailing whitespace can cause extra work for others editing the same file, when they merge, as can removing existing trailing whitespace. So: Don't introduce trailing whitespace. Remove it if you're already changing that line, or do it in a separate clean-up operation (preferably when no-one else is working on the file).
@@ -2449,15 +2450,15 @@ switch ( i ) {    // Loops and conditions may have spaces inside
 if ( test ) {     // parentheses, but this is rare.  Be consistent.
 for ( int i = 0; i < 5; ++i ) {
 for ( ; i < 5 ; ++i) {  // For loops always have a space after the
-  ...                   // semicolon, and may have a space before the
+    ...                 // semicolon, and may have a space before the
                         // semicolon.
 for (auto x : counts) {  // Range-based for loops always have a
-  ...                    // space before and after the colon.
+    ...                  // space before and after the colon.
 }
 switch (i) {
-  case 1:         // No space before colon in a switch case.
+    case 1:         // No space before colon in a switch case.
     ...
-  case 2: break;  // Use a space after a colon if there's code after it.
+    case 2: break;  // Use a space after a colon if there's code after it.
 ```
 
 ### Operators
@@ -2468,7 +2469,7 @@ x = 0;              // Assignment operators always have spaces around
 x = -5;             // No spaces separating unary operators and their
 ++x;                // arguments.
 if (x && !y)
-  ...
+    ...
 v = w * x + y / z;  // Binary operators usually have spaces around them,
 v = w*x + y/z;      // but it's okay to remove spaces around factors.
 v = w * (x + z);    // Parentheses should have no spaces inside them.
