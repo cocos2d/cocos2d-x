@@ -283,6 +283,9 @@ _passwordStyleText("")
 
 UITextField::~UITextField()
 {
+    CC_SAFE_RELEASE(_eventListener);
+    _eventListener = NULL;
+    _eventSelector = NULL;
 }
 
 UITextField* UITextField::create()
@@ -504,7 +507,9 @@ void UITextField::deleteBackwardEvent()
 
 void UITextField::addEventListener(cocos2d::Object *target, SEL_TextFieldEvent selecor)
 {
+    CC_SAFE_RELEASE(_eventListener);
     _eventListener = target;
+    CC_SAFE_RETAIN(_eventListener);
     _eventSelector = selecor;
 }
 

@@ -75,7 +75,15 @@ _isRunning(false)
 
 UIWidget::~UIWidget()
 {
-    releaseResoures();
+    CCLOG("widget aa");
+    CC_SAFE_RELEASE(_touchEventListener);
+    _touchEventListener = NULL;
+    _touchEventSelector = NULL;
+    removeAllChildren();
+    _children->release();
+    _renderer->removeAllChildrenWithCleanup(true);
+    _renderer->removeFromParentAndCleanup(true);
+    _renderer->release();
     setParent(NULL);
     _layoutParameterDictionary->removeAllObjects();
     CC_SAFE_RELEASE(_layoutParameterDictionary);
@@ -114,15 +122,6 @@ bool UIWidget::init()
     _scheduler = cocos2d::Director::getInstance()->getScheduler();
     CC_SAFE_RETAIN(_scheduler);
     return true;
-}
-
-void UIWidget::releaseResoures()
-{
-    removeAllChildren();
-    _children->release();
-    _renderer->removeAllChildrenWithCleanup(true);
-    _renderer->removeFromParentAndCleanup(true);
-    _renderer->release();
 }
 
 void UIWidget::onEnter()
@@ -700,7 +699,9 @@ void UIWidget::longClickEvent()
 
 void UIWidget::addTouchEventListener(cocos2d::Object *target, SEL_TouchEvent selector)
 {
+    CC_SAFE_RELEASE(_touchEventListener);
     _touchEventListener = target;
+    CC_SAFE_RETAIN(_touchEventListener);
     _touchEventSelector = selector;
 }
 
