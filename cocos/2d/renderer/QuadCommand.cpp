@@ -7,7 +7,7 @@
 
 NS_CC_BEGIN
 
-QuadCommand::QuadCommand(int viewport, int32_t depth, GLuint textureID, GLuint shaderID, BlendFunc blendType, kmMat4 transform, V3F_C4B_T2F_Quad quad)
+QuadCommand::QuadCommand(int viewport, int32_t depth, GLuint textureID, GLuint shaderID, BlendFunc blendType, V3F_C4B_T2F_Quad quad)
 :RenderCommand()
 ,_viewport(viewport)
 ,_depth(depth)
@@ -17,7 +17,6 @@ QuadCommand::QuadCommand(int viewport, int32_t depth, GLuint textureID, GLuint s
 ,_quad(quad)
 {
     _type = QUAD_COMMAND;
-    kmMat4Assign(&_transform, &transform);
 }
 
 int64_t QuadCommand::generateID()
@@ -61,8 +60,7 @@ int64_t QuadCommand::generateID()
     _id = (int64_t)_viewport << 61
             | (int64_t)1 << 60 //translucent
             | (int64_t)0 << 59 //is command
-            | (int64_t)_depth << 35
-            | (int64_t)_materialID << 11;
+            | (int64_t)_depth << 35;
 
     return _id;
 }

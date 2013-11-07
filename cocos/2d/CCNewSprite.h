@@ -22,6 +22,8 @@ public:
     static NewSprite* create(const char *filename);
 
     NewSprite(void);
+
+    virtual void updateTransform();
     virtual void draw(void) override;
     
 protected:

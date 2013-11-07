@@ -777,7 +777,7 @@ void Sprite::setDirtyRecursively(bool bValue)
 
 // XXX HACK: optimization
 #define SET_DIRTY_RECURSIVELY() {                                    \
-                    if (_batchNode && ! _recursiveDirty) {    \
+                    if (! _recursiveDirty) {    \
                         _recursiveDirty = true;                    \
                         setDirty(true);                              \
                         if ( _hasChildren)                        \

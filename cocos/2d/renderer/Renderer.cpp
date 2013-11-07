@@ -54,6 +54,8 @@ void Renderer::render()
     //Uncomment this once everything is rendered by new renderer
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    //TODO setup camera or MVP
+
     //Process render commands
     //1. Sort render commands based on ID
     stable_sort(_renderQueue.begin(), _renderQueue.end(), compareRenderCommand);
@@ -69,9 +71,6 @@ void Renderer::render()
             case QUAD_COMMAND:
             {
                 QuadCommand* cmd = (QuadCommand*)command;
-                //Transform
-                kmGLMatrixMode(KM_GL_MODELVIEW);
-                kmGLLoadMatrix(cmd->getTransform());
 
                 //Set Shader
                 _shaderProgram->use();
@@ -103,7 +102,6 @@ void Renderer::render()
                 CHECK_GL_ERROR_DEBUG();
                 CC_INCREMENT_GL_DRAWS(1);
 
-                kmGLLoadIdentity();
                 break;
             }
             default:
