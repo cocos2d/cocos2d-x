@@ -25,8 +25,6 @@
 #include "CocosGUI.h"
 
 NS_CC_EXT_BEGIN
-    
-static cocos2d::CCDictionary* fileDesignSizes = NULL;
 
 UIWidget* UIHelper::seekWidgetByTag(UIWidget* root, int tag)
 {
@@ -119,27 +117,6 @@ UIWidget* UIHelper::seekActionWidgetByActionTag(UIWidget* root, int tag)
 		}
 	}
 	return NULL;
-}
-
-void UIHelper::setFileDesignSize(const char *fileName, const cocos2d::CCSize &size)
-{
-    if (!fileDesignSizes)
-    {
-        fileDesignSizes = cocos2d::CCDictionary::create();
-        fileDesignSizes->retain();
-    }
-    cocos2d::CCString* strSize = cocos2d::CCString::createWithFormat("{%f,%f}", size.width, size.height);
-    fileDesignSizes->setObject(strSize, fileName);
-}
-
-const cocos2d::CCSize UIHelper::getFileDesignSize(const char* fileName)
-{
-    if (!fileDesignSizes)
-    {
-        return cocos2d::CCSizeZero;
-    }
-    cocos2d::CCSize designSize = cocos2d::CCSizeFromString(((cocos2d::CCString*)fileDesignSizes->objectForKey(fileName))->m_sString.c_str());
-    return designSize;
 }
 
 NS_CC_EXT_END
