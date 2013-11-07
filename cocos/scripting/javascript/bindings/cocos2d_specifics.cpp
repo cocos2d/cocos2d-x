@@ -1267,10 +1267,11 @@ void JSScheduleWrapper::scheduleFunc(float dt)
         CCLOG("scheduleFunc: Root value fails.");
         return;
     }
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
     if(!_jsCallback.isNullOrUndefined()) {
         if (!_jsThisObj.isNullOrUndefined()) {
-            JSAutoCompartment ac(cx, JSVAL_TO_OBJECT(_jsThisObj));
             JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(_jsThisObj), _jsCallback, 1, &data, &retval);
         }
         else {
@@ -3642,7 +3643,7 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
         const char* arg0;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-        unsigned long size = 0;
+        long size = 0;
         unsigned char* data = cobj->getFileData(arg0, "rb", &size);
         if (data && size > 0) {
             jsval jsret = c_string_to_jsval(cx, (char*)data, size);
@@ -3674,7 +3675,7 @@ JSBool js_cocos2dx_CCFileUtils_getByteArrayFromFile(JSContext *cx, uint32_t argc
         const char* arg0;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-        unsigned long size = 0;
+        long size = 0;
         unsigned char* data = cobj->getFileData(arg0, "rb", &size);
         do
         {

@@ -51,13 +51,13 @@ class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAPr
 public:
     
     // static create
-    static Label* createWithTTF(const char* label, const char* fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0);
+    static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0);
     
-    static Label* createWithBMFont(const char* label, const char* bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0);
+    static Label* createWithBMFont(const std::string& label, const std::string& bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0);
     
-    bool setText(const char *stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
+    bool setText(const std::string& stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
     
-    virtual void setString(const char *stringToRender) override;
+    virtual void setString(const std::string &stringToRender) override;
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);

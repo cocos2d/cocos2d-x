@@ -96,6 +96,7 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
     if (func == JSVAL_VOID) { return; }
     jsval thisObj = JS_GetReservedSlot(obj, 1);
     JSAutoCompartment ac(cx, obj);
+    
     if (thisObj == JSVAL_VOID) {
         JS_CallFunctionValue(cx, obj, func, 1, &dataVal, &retval);
     } else {
@@ -527,7 +528,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    unsigned long length = 0;
+    long length = 0;
     unsigned char* data = futil->getFileData(byteCodePath.c_str(),
                                     "rb",
                                     &length);

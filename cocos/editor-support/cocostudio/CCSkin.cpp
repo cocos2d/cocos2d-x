@@ -37,6 +37,8 @@ namespace cocostudio {
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
+#define SET_VERTEX3F(_v_, _x_, _y_, _z_) (_v_).x = (_x_); (_v_).y = (_y_); (_v_).z = (_z_);
+
 Skin *Skin::create()
 {
     Skin *skin = new Skin();
@@ -46,7 +48,7 @@ Skin *Skin::create()
         return skin;
     }
     CC_SAFE_DELETE(skin);
-    return NULL;
+    return nullptr;
 }
 
 Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
@@ -58,7 +60,7 @@ Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
         return skin;
     }
     CC_SAFE_DELETE(skin);
-    return NULL;
+    return nullptr;
 }
 
 Skin *Skin::create(const char *pszFileName)
@@ -70,42 +72,44 @@ Skin *Skin::create(const char *pszFileName)
         return skin;
     }
     CC_SAFE_DELETE(skin);
-    return NULL;
+    return nullptr;
 }
 
 Skin::Skin()
-    : _bone(NULL)
+    : _bone(nullptr)
+    , _armature(nullptr)
     , _displayName("")
 {
     _skinTransform = AffineTransformIdentity;
 }
 
-bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
+bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
-    bool ret = Sprite::initWithSpriteFrameName(pszSpriteFrameName);
+    CCAssert(spriteFrameName != "", "");
 
-    if (ret)
+    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
+    bool ret = true;
+
+    if (pFrame != nullptr)
     {
-		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
-		setTextureAtlas(atlas);
-
-		_displayName = pszSpriteFrameName;
+        ret = initWithSpriteFrame(pFrame);
     }
+    else
+    {
+        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", spriteFrameName.c_str());
+        ret = false;
+    }
+
+    _displayName = spriteFrameName;
 
     return ret;
 }
 
-bool Skin::initWithFile(const char *pszFilename)
+bool Skin::initWithFile(const std::string& filename)
 {
-    bool ret = Sprite::initWithFile(pszFilename);
+    bool ret = Sprite::initWithFile(filename);
 
-    if (ret)
-    {
-		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
-		setTextureAtlas(atlas);
-
-		_displayName = pszFilename;
-    }
+    _displayName = filename;
 
     return ret;
 }
@@ -116,10 +120,12 @@ void Skin::setSkinData(const BaseData &var)
 
     setScaleX(_skinData.scaleX);
     setScaleY(_skinData.scaleY);
-    setRotation(CC_RADIANS_TO_DEGREES(_skinData.skewX));
+    setRotationX(CC_RADIANS_TO_DEGREES(_skinData.skewX));
+    setRotationY(CC_RADIANS_TO_DEGREES(-_skinData.skewY));
     setPosition(Point(_skinData.x, _skinData.y));
 
     _skinTransform = getNodeToParentTransform();
+    updateArmatureTransform();
 }
 
 const BaseData &Skin::getSkinData() const
@@ -130,6 +136,10 @@ const BaseData &Skin::getSkinData() const
 void Skin::updateArmatureTransform()
 {
     _transform = AffineTransformConcat(_skinTransform, _bone->getNodeToArmatureTransform());
+    if(_armature && _armature->getBatchNode())
+    {
+        _transform = AffineTransformConcat(_transform, _armature->getNodeToParentTransform());
+    }
 }
 
 void Skin::updateTransform()
@@ -172,13 +182,13 @@ void Skin::updateTransform()
         float dx = x1 * cr - y2 * sr2 + x;
         float dy = x1 * sr + y2 * cr2 + y;
 
-        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+        SET_VERTEX3F( _quad.bl.vertices, RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
+        SET_VERTEX3F( _quad.br.vertices, RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
+        SET_VERTEX3F( _quad.tl.vertices, RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
+        SET_VERTEX3F( _quad.tr.vertices, RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
     }
 
-    // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+    // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
     if (_textureAtlas)
     {
         _textureAtlas->updateQuad(&_quad, _textureAtlas->getTotalQuads());
@@ -201,6 +211,22 @@ AffineTransform Skin::getNodeToWorldTransformAR() const
     displayTransform.ty = anchorPoint.y;
 
     return AffineTransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
+}
+
+void Skin::setBone(Bone *bone)
+{
+    _bone = bone;
+    if(Armature *armature = _bone->getArmature())
+    {
+        _armature = armature;
+        TextureAtlas *atlas = armature->getTexureAtlasWithTexture(_texture);
+        setTextureAtlas(atlas);
+    }
+}
+
+Bone *Skin::getBone() const
+{
+    return _bone;
 }
 
 }

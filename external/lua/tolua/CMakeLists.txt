@@ -15,3 +15,8 @@ add_library(tolua STATIC
   ${TOLUA_SRC}
 )
 
+set_target_properties(tolua
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+)
