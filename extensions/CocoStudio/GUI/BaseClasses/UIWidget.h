@@ -964,22 +964,30 @@ public:
     void removeCCNode(bool cleanup){removeCCNode(cleanup);};
     void addPushDownEvent(CCObject* target,SEL_PushEvent selector)
     {
+        CC_SAFE_RELEASE(m_pPushListener);
         m_pPushListener = target;
+        CC_SAFE_RETAIN(m_pPushListener);
         m_pfnPushSelector = selector;
     };
     void addMoveEvent(CCObject* target,SEL_MoveEvent selector)
     {
+        CC_SAFE_RELEASE(m_pMoveListener);
         m_pMoveListener = target;
+        CC_SAFE_RETAIN(m_pMoveListener);
         m_pfnMoveSelector = selector;
     };
     void addReleaseEvent(CCObject* target,SEL_ReleaseEvent selector)
     {
+        CC_SAFE_RELEASE(m_pReleaseListener);
         m_pReleaseListener = target;
+        CC_SAFE_RETAIN(m_pReleaseListener);
         m_pfnReleaseSelector = selector;
     };
     void addCancelEvent(CCObject* target,SEL_CancelEvent selector)
     {
+        CC_SAFE_RELEASE(m_pCancelListener);
         m_pCancelListener = target;
+        CC_SAFE_RETAIN(m_pCancelListener);
         m_pfnCancelSelector = selector;
     };
     bool removeChild(UIWidget* child,bool cleanup){return removeChild(child);};
@@ -1014,12 +1022,6 @@ protected:
     void cancelUpEvent();
     void longClickEvent();
     void updateAnchorPoint();
-    /**
-     * Release texture resoures of widget.
-     * Release renderer.
-     * If you override releaseResoures, you shall call its parent's one, e.g. UIWidget::releaseResoures().
-     */
-    virtual void releaseResoures();
     void updateSizeAndPosition();
     void copyProperties(UIWidget* model);
     virtual UIWidget* createCloneInstance();

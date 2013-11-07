@@ -86,7 +86,26 @@ m_pfnCancelSelector(NULL)
 
 UIWidget::~UIWidget()
 {
-    releaseResoures();
+    CC_SAFE_RELEASE(m_pPushListener);
+    m_pPushListener = NULL;
+    m_pfnPushSelector = NULL;
+    CC_SAFE_RELEASE(m_pMoveListener);
+    m_pMoveListener = NULL;
+    m_pfnMoveSelector = NULL;
+    CC_SAFE_RELEASE(m_pReleaseListener);
+    m_pReleaseListener = NULL;
+    m_pfnReleaseSelector = NULL;
+    CC_SAFE_RELEASE(m_pCancelListener);
+    m_pCancelListener = NULL;
+    m_pfnCancelSelector = NULL;
+    CC_SAFE_RELEASE(m_pTouchEventListener);
+    m_pTouchEventListener = NULL;
+    m_pfnTouchEventSelector = NULL;
+    removeAllChildren();
+    m_children->release();
+    m_pRenderer->removeAllChildrenWithCleanup(true);
+    m_pRenderer->removeFromParentAndCleanup(true);
+    m_pRenderer->release();
     setParent(NULL);
     m_pLayoutParameterDictionary->removeAllObjects();
     CC_SAFE_RELEASE(m_pLayoutParameterDictionary);
@@ -125,23 +144,6 @@ bool UIWidget::init()
     m_pScheduler = CCDirector::sharedDirector()->getScheduler();
     CC_SAFE_RETAIN(m_pScheduler);
     return true;
-}
-
-void UIWidget::releaseResoures()
-{
-    m_pPushListener = NULL;
-    m_pfnPushSelector = NULL;
-    m_pMoveListener = NULL;
-    m_pfnMoveSelector = NULL;
-    m_pReleaseListener = NULL;
-    m_pfnReleaseSelector = NULL;
-    m_pCancelListener = NULL;
-    m_pfnCancelSelector = NULL;
-    removeAllChildren();
-    m_children->release();
-    m_pRenderer->removeAllChildrenWithCleanup(true);
-    m_pRenderer->removeFromParentAndCleanup(true);
-    m_pRenderer->release();
 }
 
 void UIWidget::onEnter()
@@ -316,12 +318,12 @@ void UIWidget::setEnabled(bool enabled)
 
 UIWidget* UIWidget::getChildByName(const char *name)
 {
-    return CCUIHELPER->seekWidgetByName(this, name);
+    return UIHelper::seekWidgetByName(this, name);
 }
 
 UIWidget* UIWidget::getChildByTag(int tag)
 {
-    return CCUIHELPER->seekWidgetByTag(this, tag);
+    return UIHelper::seekWidgetByTag(this, tag);
 }
 
 CCArray* UIWidget::getChildren()
@@ -747,7 +749,9 @@ void UIWidget::longClickEvent()
 
 void UIWidget::addTouchEventListener(cocos2d::CCObject *target, SEL_TouchEvent selector)
 {
+    CC_SAFE_RELEASE(m_pTouchEventListener);
     m_pTouchEventListener = target;
+    CC_SAFE_RETAIN(m_pTouchEventListener);
     m_pfnTouchEventSelector = selector;
 }
 

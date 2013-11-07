@@ -25,7 +25,7 @@ bool UIScene::init()
         m_pUiLayer->scheduleUpdate();
         addChild(m_pUiLayer);
         
-        m_pWidget = dynamic_cast<UILayout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/UITest/UITest.json"));
+        m_pWidget = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
         m_pUiLayer->addWidget(m_pWidget);
         
         m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));
@@ -51,7 +51,6 @@ void UIScene::toExtensionsMainLayer(CCObject* sender)
 {
     UISceneManager::purgeUISceneManager();
     ActionManager::purgeActionManager();
-    UIHelper::purgeUIHelper();
     SceneReader::sharedSceneReader()->purgeSceneReader();
     
     CocosGUITestScene* pScene = new CocosGUITestScene();
