@@ -29,6 +29,10 @@
 
 namespace gui {
     
+/**
+*   @js NA
+*   @lua NA
+*/    
 class UILabelBMFont : public UIWidget
 {
 public:
@@ -58,7 +62,6 @@ public:
     virtual void setAnchorPoint(const cocos2d::Point &pt);
     virtual const cocos2d::Size& getContentSize() const;
     virtual cocos2d::Node* getVirtualRenderer();
-    
     /**
      * Returns the "class name" of widget.
      */
@@ -67,9 +70,13 @@ protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void labelBMFontScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     cocos2d::LabelBMFont* _labelBMFontRenderer;
     bool _fntFileHasInit;
+    std::string _fntFileName;
+    std::string _stringValue;
 };
     
 }
