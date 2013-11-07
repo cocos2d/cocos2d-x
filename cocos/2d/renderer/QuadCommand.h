@@ -8,6 +8,7 @@
 #define _CC_QUADCOMMAND_H_
 
 #include "RenderCommand.h"
+#include "CCGLProgram.h"
 
 NS_CC_BEGIN
 
@@ -15,7 +16,7 @@ NS_CC_BEGIN
 class QuadCommand : public RenderCommand
 {
 public:
-    QuadCommand(int viewport, int32_t depth, GLuint textureID, GLuint shaderID, BlendFunc blendType, V3F_C4B_T2F_Quad quad);
+    QuadCommand(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad quad);
     ~QuadCommand();
 
     // +----------+----------+-----+-----------------------------------+
@@ -24,6 +25,8 @@ public:
     // |   3 bits |    1 bit |  1  |    24 bits     |      24 bit2     |
     // +----------+----------+-----+----------------+------------------+
     virtual int64_t generateID();
+
+    void useMaterial();
 
     //TODO use material to decide if it is translucent
     inline bool isTranslucent() { return true; }
@@ -36,7 +39,7 @@ public:
 
     inline V3F_C4B_T2F_Quad* getQuad() { return &_quad; }
 
-    inline GLuint getShaderID() { return _shaderID; }
+    inline GLProgram* getShader() { return _shader; }
 
     inline BlendFunc getBlendType() { return _blendType; }
 
@@ -52,7 +55,8 @@ protected:
     //Maternal
     GLuint _textureID;
 
-    GLuint _shaderID;
+    GLProgram* _shader;
+//    GLuint _shaderID;
 
     BlendFunc _blendType;
 

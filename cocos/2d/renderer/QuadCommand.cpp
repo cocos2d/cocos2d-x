@@ -4,19 +4,20 @@
 
 
 #include "QuadCommand.h"
+#include "ccGLStateCache.h"
 
 NS_CC_BEGIN
 
-QuadCommand::QuadCommand(int viewport, int32_t depth, GLuint textureID, GLuint shaderID, BlendFunc blendType, V3F_C4B_T2F_Quad quad)
+QuadCommand::QuadCommand(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad quad)
 :RenderCommand()
 ,_viewport(viewport)
 ,_depth(depth)
 ,_textureID(textureID)
-,_shaderID(shaderID)
 ,_blendType(blendType)
 ,_quad(quad)
 {
     _type = QUAD_COMMAND;
+    _shader = shader;
 }
 
 QuadCommand::~QuadCommand()
@@ -30,7 +31,7 @@ int64_t QuadCommand::generateID()
 
     //Generate Material ID
     //TODO fix shader ID generation
-    CCASSERT(_shaderID < 64, "ShaderID is greater than 64");
+    CCASSERT(_shader->getProgram() < 64, "ShaderID is greater than 64");
     //TODO fix texture ID generation
     CCASSERT(_textureID < 1024, "TextureID is greater than 1024");
 
@@ -57,7 +58,7 @@ int64_t QuadCommand::generateID()
         blendID = 4;
     }
 
-    _materialID = (int32_t)_shaderID << 28
+    _materialID = (int32_t)_shader->getProgram() << 28
             | (int32_t)blendID << 24
             | (int32_t)_textureID << 14;
 
@@ -68,6 +69,13 @@ int64_t QuadCommand::generateID()
             | (int64_t)_depth << 35;
 
     return _id;
+}
+
+void QuadCommand::useMaterial()
+{
+    _shader->use();
+    //TODO once everything is using world coordinate, we can reduce the uniforms for shaders
+    _shader->setUniformsForBuiltins();
 }
 
 NS_CC_END

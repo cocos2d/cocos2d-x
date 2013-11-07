@@ -11,6 +11,9 @@
 #include "CCEGLView.h"
 #include "RenderCommand.h"
 #include "CCGLProgram.h"
+#include "QuadCommand.h"
+
+#define NUM_QUADS_PER_ALLOC 20
 
 NS_CC_BEGIN
 using namespace std;
@@ -21,17 +24,22 @@ public:
     static Renderer* getInstance();
 
     //TODO support multiple viewport
-    void addRenderCommand(RenderCommand* commnad);
+    void addRenderCommand(RenderCommand* command);
     void render();
 
 protected:
     Renderer();
+    ~Renderer();
+
+    void batchQuads(QuadCommand* cmd);
+    void drawQuads();
 
 protected:
     vector<RenderCommand*> _renderQueue;
-    GLProgram* _shaderProgram;
     int _lastMaterialID;
     V3F_C4B_T2F_Quad* _quadBuffer;
+    int _numQuadsAlloc;
+    int _numQuads;
 };
 
 NS_CC_END
