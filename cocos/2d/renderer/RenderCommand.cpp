@@ -13,6 +13,9 @@ RenderCommand::RenderCommand()
     _type = UNKNOWN_COMMAND;
 }
 
+RenderCommand::~RenderCommand()
+{
+}
 
 void printBits(size_t const size, void const * const ptr)
 {

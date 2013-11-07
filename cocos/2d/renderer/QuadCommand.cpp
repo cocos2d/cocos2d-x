@@ -19,6 +19,11 @@ QuadCommand::QuadCommand(int viewport, int32_t depth, GLuint textureID, GLuint s
     _type = QUAD_COMMAND;
 }
 
+QuadCommand::~QuadCommand()
+{
+
+}
+
 int64_t QuadCommand::generateID()
 {
     _id = 0;

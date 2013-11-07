@@ -16,6 +16,7 @@ class QuadCommand : public RenderCommand
 {
 public:
     QuadCommand(int viewport, int32_t depth, GLuint textureID, GLuint shaderID, BlendFunc blendType, V3F_C4B_T2F_Quad quad);
+    ~QuadCommand();
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
@@ -26,12 +27,17 @@ public:
 
     //TODO use material to decide if it is translucent
     inline bool isTranslucent() { return true; }
+
     inline bool isCommand() { return false; }
+
     inline int32_t getMaterialID() { return _materialID; }
 
     inline GLuint getTextureID() { return _textureID; }
+
     inline V3F_C4B_T2F_Quad* getQuad() { return &_quad; }
+
     inline GLuint getShaderID() { return _shaderID; }
+
     inline BlendFunc getBlendType() { return _blendType; }
 
 protected:
@@ -39,11 +45,15 @@ protected:
 
     //Key Data
     int _viewport;          /// Which view port it belongs to
+
     //TODO use material to determine if it's translucent
     int32_t _depth;
+
     //Maternal
     GLuint _textureID;
+
     GLuint _shaderID;
+
     BlendFunc _blendType;
 
     V3F_C4B_T2F_Quad _quad;

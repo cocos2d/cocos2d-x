@@ -27,15 +27,9 @@ Renderer *Renderer::getInstance()
 }
 
 Renderer::Renderer()
-:_currentMaterialID(0)
+:_lastMaterialID(0)
 {
     _shaderProgram = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-}
-
-void Renderer::setOpenGLView(EGLView *newOpenGLView)
-{
-    //TODO move render related logic to render
-    _openGLView = newOpenGLView;
 }
 
 void Renderer::addRenderCommand(RenderCommand *command)

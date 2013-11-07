@@ -20,7 +20,7 @@ class Renderer
 public:
     static Renderer* getInstance();
 
-    void setOpenGLView(EGLView *newOpenGLView);
+    //TODO support multiple viewport
     void addRenderCommand(RenderCommand* commnad);
     void render();
 
@@ -28,10 +28,10 @@ protected:
     Renderer();
 
 protected:
-    EGLView* _openGLView;
     vector<RenderCommand*> _renderQueue;
     GLProgram* _shaderProgram;
-    int _currentMaterialID;
+    int _lastMaterialID;
+    V3F_C4B_T2F_Quad* _quadBuffer;
 };
 
 NS_CC_END
