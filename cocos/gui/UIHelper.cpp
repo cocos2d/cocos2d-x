@@ -25,8 +25,6 @@
 #include "CocosGUI.h"
 
 namespace gui {
-    
-static cocos2d::Dictionary* fileDesignSizes = NULL;
 
 UIWidget* UIHelper::seekWidgetByTag(UIWidget* root, int tag)
 {
@@ -119,27 +117,6 @@ UIWidget* UIHelper::seekActionWidgetByActionTag(UIWidget* root, int tag)
 		}
 	}
 	return NULL;
-}
-    
-void UIHelper::setFileDesignSize(const char *fileName, const cocos2d::Size &size)
-{
-    if (!fileDesignSizes)
-    {
-        fileDesignSizes = cocos2d::Dictionary::create();
-        fileDesignSizes->retain();
-    }
-    cocos2d::String* strSize = cocos2d::String::createWithFormat("{%f,%f}", size.width, size.height);
-    fileDesignSizes->setObject(strSize, fileName);
-}
-    
-const cocos2d::Size UIHelper::getFileDesignSize(const char* fileName)
-{
-    if (!fileDesignSizes)
-    {
-        return cocos2d::Size::ZERO;
-    }
-    cocos2d::Size designSize = cocos2d::SizeFromString(((cocos2d::String*)fileDesignSizes->objectForKey(fileName))->_string.c_str());
-    return designSize;
 }
 
 }
