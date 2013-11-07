@@ -61,8 +61,7 @@ AtlasNode::~AtlasNode()
     CC_SAFE_RELEASE(_textureAtlas);
 }
 
-AtlasNode * AtlasNode::create(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
-											 unsigned int itemsToRender)
+AtlasNode * AtlasNode::create(const std::string& tile, long tileWidth, long tileHeight, long itemsToRender)
 {
 	AtlasNode * pRet = new AtlasNode();
 	if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
@@ -74,15 +73,14 @@ AtlasNode * AtlasNode::create(const char *tile, unsigned int tileWidth, unsigned
 	return NULL;
 }
 
-bool AtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender)
+bool AtlasNode::initWithTileFile(const std::string& tile, long tileWidth, long tileHeight, long itemsToRender)
 {
-    CCASSERT(tile != NULL, "title should not be null");
+    CCASSERT(tile.size() > 0, "file size should not be empty");
     Texture2D *texture = TextureCache::getInstance()->addImage(tile);
 	return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
 }
 
-bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsigned int tileHeight, 
-                                   unsigned int itemsToRender)
+bool AtlasNode::initWithTexture(Texture2D* texture, long tileWidth, long tileHeight, long itemsToRender)
 {
     _itemWidth  = tileWidth;
     _itemHeight = tileHeight;

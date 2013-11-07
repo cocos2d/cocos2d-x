@@ -140,10 +140,10 @@ public:
     const char * description() const;
 
     /** allocates a CCBMFontConfiguration with a FNT file */
-    static CCBMFontConfiguration * create(const char *FNTfile);
+    static CCBMFontConfiguration * create(const std::string& FNTfile);
 
     /** initializes a BitmapFontConfiguration with a FNT file */
-    bool initWithFNTfile(const char *FNTfile);
+    bool initWithFNTfile(const std::string& FNTfile);
     
     inline const std::string& getAtlasName(){ return _atlasName; }
     inline void setAtlasName(const std::string& atlasName) { _atlasName = atlasName; }
@@ -303,7 +303,7 @@ protected:
     bool _cascadeColorEnabled;
     bool _cascadeOpacityEnabled;
     /** conforms to RGBAProtocol protocol */
-    bool        _isOpacityModifyRGB;
+    bool _isOpacityModifyRGB;
 
 };
 
