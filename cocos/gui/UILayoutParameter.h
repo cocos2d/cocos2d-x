@@ -35,25 +35,28 @@ typedef enum
     LAYOUT_PARAMETER_LINEAR,
     LAYOUT_PARAMETER_RELATIVE
 }LayoutParameterType;
-
-class LayoutParameter : public cocos2d::Object
+/**
+*   @js NA
+*   @lua NA
+*/
+class UILayoutParameter : public cocos2d::Object
 {
 public:
     /**
      * Default constructor
      */
-    LayoutParameter() : _margin(UIMargin()){_layoutParameterType = LAYOUT_PARAMETER_NONE;};
+    UILayoutParameter() : _margin(UIMargin()){_layoutParameterType = LAYOUT_PARAMETER_NONE;};
     
     /**
      * Default destructor
      */
-    virtual ~LayoutParameter(){};
+    virtual ~UILayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static LayoutParameter* create();
+    static UILayoutParameter* create();
     
     /**
      * Sets Margin parameter for LayoutParameter.
@@ -85,25 +88,28 @@ protected:
     UIMargin _margin;
     LayoutParameterType _layoutParameterType;
 };
-
-class LinearLayoutParameter : public LayoutParameter
+/**
+*   @js NA
+*   @lua NA
+*/
+class UILinearLayoutParameter : public UILayoutParameter
 {
 public:
     /**
      * Default constructor
      */
-    LinearLayoutParameter() : _linearGravity(LINEAR_GRAVITY_NONE){_layoutParameterType = LAYOUT_PARAMETER_LINEAR;};
+    UILinearLayoutParameter() : _linearGravity(LINEAR_GRAVITY_NONE){_layoutParameterType = LAYOUT_PARAMETER_LINEAR;};
     
     /**
      * Default destructor
      */
-    virtual ~LinearLayoutParameter(){};
+    virtual ~UILinearLayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static LinearLayoutParameter* create();
+    static UILinearLayoutParameter* create();
     
     /**
      * Sets UILinearGravity parameter for LayoutParameter.
@@ -125,25 +131,31 @@ public:
 protected:
     UILinearGravity _linearGravity;
 };
+/**
+*   @js NA
+*   @lua NA
+*/
 
-class RelativeLayoutParameter : public LayoutParameter
+class UILayout;
+
+class UIRelativeLayoutParameter : public UILayoutParameter
 {
 public:
     /**
      * Default constructor
      */
-    RelativeLayoutParameter() : _relativeAlign(RELATIVE_ALIGN_NONE),_relativeWidgetName(""),_relativeLayoutName(""){_layoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
+    UIRelativeLayoutParameter() : _relativeAlign(RELATIVE_ALIGN_NONE),_relativeWidgetName(""),_relativeLayoutName(""),_put(false){_layoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
     
     /**
      * Default destructor
      */
-    virtual ~RelativeLayoutParameter(){};
+    virtual ~UIRelativeLayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static RelativeLayoutParameter* create();
+    static UIRelativeLayoutParameter* create();
     
     /**
      * Sets UIRelativeAlign parameter for LayoutParameter.
@@ -194,6 +206,8 @@ protected:
     UIRelativeAlign _relativeAlign;
     std::string _relativeWidgetName;
     std::string _relativeLayoutName;
+    bool _put;
+    friend class UILayout;
 };
 
 }
