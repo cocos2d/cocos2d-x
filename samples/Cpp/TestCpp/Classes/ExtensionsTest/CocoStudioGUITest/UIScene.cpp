@@ -61,21 +61,18 @@ void UIScene::toExtensionsMainLayer(CCObject* sender)
 
 void UIScene::previousCallback(CCObject* sender)
 {
-	m_pUiLayer->unscheduleUpdate();
 	m_pUiLayer->removeFromParent();
     CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->previousUIScene());
 }
 
 void UIScene::restartCallback(CCObject* sender)
 {
-	m_pUiLayer->unscheduleUpdate();
 	m_pUiLayer->removeFromParent();
     CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->currentUIScene());
 }
 
 void UIScene::nextCallback(CCObject* sender)
 {
-	m_pUiLayer->unscheduleUpdate();
 	m_pUiLayer->removeFromParent();
     CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->nextUIScene());
 }
