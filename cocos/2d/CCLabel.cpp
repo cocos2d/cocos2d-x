@@ -29,9 +29,9 @@
 
 NS_CC_BEGIN
 
-Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fontSize, int lineSize, TextHAlignment alignment, GlyphCollection glyphs, const char *customGlyphs )
+Label* Label::createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize, TextHAlignment alignment, GlyphCollection glyphs, const char *customGlyphs )
 {
-    FontAtlas *tmpAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath, fontSize, glyphs, customGlyphs);
+    FontAtlas *tmpAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath.c_str(), fontSize, glyphs, customGlyphs);
 
     if (!tmpAtlas)
         return nullptr;
@@ -48,10 +48,10 @@ Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fo
     return nullptr;
 }
 
-Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, TextHAlignment alignment, int lineSize)
+Label* Label::createWithBMFont(const std::string& label, const std::string& bmfontFilePath, TextHAlignment alignment, int lineSize)
 {
     
-    FontAtlas *tmpAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath);
+    FontAtlas *tmpAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath.c_str());
     
     if (!tmpAtlas)
         return 0;
@@ -135,12 +135,12 @@ bool Label::init()
     return true;
 }
 
-void Label::setString(const char *stringToRender)
+void Label::setString(const std::string &stringToRender)
 {
     setText(stringToRender, _width, TextHAlignment::CENTER, false);
 }
 
-bool Label::setText(const char *stringToRender, float lineWidth, TextHAlignment alignment, bool lineBreakWithoutSpaces)
+bool Label::setText(const std::string& stringToRender, float lineWidth, TextHAlignment alignment, bool lineBreakWithoutSpaces)
 {
     if (!_fontAtlas)
         return false;
@@ -158,8 +158,8 @@ bool Label::setText(const char *stringToRender, float lineWidth, TextHAlignment 
     if (_commonLineHeight <= 0)
         return false;
     
-    int numLetter = 0;
-    unsigned short* utf16String = cc_utf8_to_utf16(stringToRender);
+//    int numLetter = 0;
+    unsigned short* utf16String = cc_utf8_to_utf16(stringToRender.c_str());
     if(!utf16String)
         return false;
     

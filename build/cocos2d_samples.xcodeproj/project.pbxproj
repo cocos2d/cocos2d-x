@@ -934,8 +934,6 @@
 		1AAF534F180E2F4E000584C8 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
 		1AAF53AF180E363C000584C8 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538D180E363B000584C8 /* animations */; };
 		1AAF53B0180E363C000584C8 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538D180E363B000584C8 /* animations */; };
-		1AAF53B1180E363C000584C8 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538E180E363B000584C8 /* app.icf */; };
-		1AAF53B2180E363C000584C8 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538E180E363B000584C8 /* app.icf */; };
 		1AAF53B3180E363C000584C8 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538F180E363B000584C8 /* armature */; };
 		1AAF53B4180E363C000584C8 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538F180E363B000584C8 /* armature */; };
 		1AAF53B5180E363C000584C8 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5390180E363B000584C8 /* background-music-aac.wav */; };
@@ -956,8 +954,6 @@
 		1AAF53C4180E363C000584C8 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5397180E363B000584C8 /* components */; };
 		1AAF53C5180E363C000584C8 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5398180E363B000584C8 /* configs */; };
 		1AAF53C6180E363C000584C8 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5398180E363B000584C8 /* configs */; };
-		1AAF53C7180E363C000584C8 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5399180E363B000584C8 /* development.icf */; };
-		1AAF53C8180E363C000584C8 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5399180E363B000584C8 /* development.icf */; };
 		1AAF53C9180E363C000584C8 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539A180E363B000584C8 /* effect1.raw */; };
 		1AAF53CA180E363C000584C8 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539A180E363B000584C8 /* effect1.raw */; };
 		1AAF53CB180E363C000584C8 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539B180E363B000584C8 /* effect1.wav */; };
@@ -1028,10 +1024,8 @@
 		46A174E81807D96A005B8026 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174881807D934005B8026 /* HelloWorldScene.cpp */; };
 		46A174E91807D976005B8026 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174851807D934005B8026 /* AppDelegate.cpp */; };
 		46A174EA1807D976005B8026 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174881807D934005B8026 /* HelloWorldScene.cpp */; };
-		46A174F31807D9C4005B8026 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EB1807D9C4005B8026 /* app.icf */; };
 		46A174F41807D9C4005B8026 /* bang.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EC1807D9C4005B8026 /* bang.png */; };
 		46A174F51807D9C4005B8026 /* bang.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EC1807D9C4005B8026 /* bang.png */; };
-		46A174F71807D9C4005B8026 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 46A174ED1807D9C4005B8026 /* development.icf */; };
 		46A174F81807D9C4005B8026 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EE1807D9C4005B8026 /* fonts */; };
 		46A174F91807D9C4005B8026 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EE1807D9C4005B8026 /* fonts */; };
 		46A174FA1807D9C4005B8026 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EF1807D9C4005B8026 /* ipad */; };
@@ -2750,7 +2744,6 @@
 		1AAF5284180E2C31000584C8 /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
 		1AAF5285180E2C31000584C8 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
 		1AAF538D180E363B000584C8 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../samples/Cpp/TestCpp/Resources/animations; sourceTree = "<group>"; };
-		1AAF538E180E363B000584C8 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = app.icf; path = ../samples/Cpp/TestCpp/Resources/app.icf; sourceTree = "<group>"; };
 		1AAF538F180E363B000584C8 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; name = armature; path = ../samples/Cpp/TestCpp/Resources/armature; sourceTree = "<group>"; };
 		1AAF5390180E363B000584C8 /* background-music-aac.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "background-music-aac.wav"; path = "../samples/Cpp/TestCpp/Resources/background-music-aac.wav"; sourceTree = "<group>"; };
 		1AAF5391180E363B000584C8 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../samples/Cpp/TestCpp/Resources/background.mp3; sourceTree = "<group>"; };
@@ -2761,7 +2754,6 @@
 		1AAF5396180E363B000584C8 /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosgui; path = ../samples/Cpp/TestCpp/Resources/cocosgui; sourceTree = "<group>"; };
 		1AAF5397180E363B000584C8 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; name = components; path = ../samples/Cpp/TestCpp/Resources/components; sourceTree = "<group>"; };
 		1AAF5398180E363B000584C8 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = configs; path = ../samples/Cpp/TestCpp/Resources/configs; sourceTree = "<group>"; };
-		1AAF5399180E363B000584C8 /* development.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = development.icf; path = ../samples/Cpp/TestCpp/Resources/development.icf; sourceTree = "<group>"; };
 		1AAF539A180E363B000584C8 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect1.raw; path = ../samples/Cpp/TestCpp/Resources/effect1.raw; sourceTree = "<group>"; };
 		1AAF539B180E363B000584C8 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = effect1.wav; path = ../samples/Cpp/TestCpp/Resources/effect1.wav; sourceTree = "<group>"; };
 		1AAF539C180E363B000584C8 /* effect2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect2.ogg; path = ../samples/Cpp/TestCpp/Resources/effect2.ogg; sourceTree = "<group>"; };
@@ -2843,9 +2835,7 @@
 		46A174CB1807D934005B8026 /* HelloCpp_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloCpp_Prefix.pch; sourceTree = "<group>"; };
 		46A174CC1807D934005B8026 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		46A174CD1807D934005B8026 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		46A174EB1807D9C4005B8026 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
 		46A174EC1807D9C4005B8026 /* bang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bang.png; sourceTree = "<group>"; };
-		46A174ED1807D9C4005B8026 /* development.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = development.icf; sourceTree = "<group>"; };
 		46A174EE1807D9C4005B8026 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		46A174EF1807D9C4005B8026 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		46A174F01807D9C4005B8026 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
@@ -5192,7 +5182,6 @@
 			isa = PBXGroup;
 			children = (
 				1AAF538D180E363B000584C8 /* animations */,
-				1AAF538E180E363B000584C8 /* app.icf */,
 				1AAF538F180E363B000584C8 /* armature */,
 				1AAF5390180E363B000584C8 /* background-music-aac.wav */,
 				1AAF5391180E363B000584C8 /* background.mp3 */,
@@ -5203,7 +5192,6 @@
 				1AAF5396180E363B000584C8 /* cocosgui */,
 				1AAF5397180E363B000584C8 /* components */,
 				1AAF5398180E363B000584C8 /* configs */,
-				1AAF5399180E363B000584C8 /* development.icf */,
 				1AAF539A180E363B000584C8 /* effect1.raw */,
 				1AAF539B180E363B000584C8 /* effect1.wav */,
 				1AAF539C180E363B000584C8 /* effect2.ogg */,
@@ -5423,9 +5411,7 @@
 		46A174D41807D934005B8026 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				46A174EB1807D9C4005B8026 /* app.icf */,
 				46A174EC1807D9C4005B8026 /* bang.png */,
-				46A174ED1807D9C4005B8026 /* development.icf */,
 				46A174EE1807D9C4005B8026 /* fonts */,
 				46A174EF1807D9C4005B8026 /* ipad */,
 				46A174F01807D9C4005B8026 /* ipadhd */,
@@ -6240,7 +6226,6 @@
 				1AAF5287180E2C31000584C8 /* MainMenu.xib in Resources */,
 				1AAF5288180E2C31000584C8 /* Icon.icns in Resources */,
 				1AAF53AF180E363C000584C8 /* animations in Resources */,
-				1AAF53B1180E363C000584C8 /* app.icf in Resources */,
 				1AAF53B3180E363C000584C8 /* armature in Resources */,
 				1AAF53B5180E363C000584C8 /* background-music-aac.wav in Resources */,
 				1AAF53B7180E363C000584C8 /* background.mp3 in Resources */,
@@ -6251,7 +6236,6 @@
 				1AAF53C1180E363C000584C8 /* cocosgui in Resources */,
 				1AAF53C3180E363C000584C8 /* components in Resources */,
 				1AAF53C5180E363C000584C8 /* configs in Resources */,
-				1AAF53C7180E363C000584C8 /* development.icf in Resources */,
 				1AAF53C9180E363C000584C8 /* effect1.raw in Resources */,
 				1AAF53CB180E363C000584C8 /* effect1.wav in Resources */,
 				1AAF53CD180E363C000584C8 /* effect2.ogg in Resources */,
@@ -6634,7 +6618,6 @@
 				1AAF527A180E2C26000584C8 /* Icon-80.png in Resources */,
 				1AAF527C180E2C26000584C8 /* Test-Info.plist in Resources */,
 				1AAF53B0180E363C000584C8 /* animations in Resources */,
-				1AAF53B2180E363C000584C8 /* app.icf in Resources */,
 				1AAF53B4180E363C000584C8 /* armature in Resources */,
 				1AAF53B6180E363C000584C8 /* background-music-aac.wav in Resources */,
 				1AAF53B8180E363C000584C8 /* background.mp3 in Resources */,
@@ -6645,7 +6628,6 @@
 				1AAF53C2180E363C000584C8 /* cocosgui in Resources */,
 				1AAF53C4180E363C000584C8 /* components in Resources */,
 				1AAF53C6180E363C000584C8 /* configs in Resources */,
-				1AAF53C8180E363C000584C8 /* development.icf in Resources */,
 				1AAF53CA180E363C000584C8 /* effect1.raw in Resources */,
 				1AAF53CC180E363C000584C8 /* effect1.wav in Resources */,
 				1AAF53CE180E363C000584C8 /* effect2.ogg in Resources */,
@@ -6675,10 +6657,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				46A174FD1807D9C4005B8026 /* ipadhd in Resources */,
-				46A174F31807D9C4005B8026 /* app.icf in Resources */,
 				46A174F51807D9C4005B8026 /* bang.png in Resources */,
 				46A174FF1807D9C4005B8026 /* iphone in Resources */,
-				46A174F71807D9C4005B8026 /* development.icf in Resources */,
 				5010FC91180F0F8300B8E2AE /* Default-568h@2x.png in Resources */,
 				46A174F91807D9C4005B8026 /* fonts in Resources */,
 				46A174FB1807D9C4005B8026 /* ipad in Resources */,
@@ -7883,9 +7863,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -7897,7 +7876,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7909,9 +7888,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7922,7 +7900,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7935,9 +7913,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -7949,7 +7926,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7961,9 +7938,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7974,7 +7950,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8147,9 +8123,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8161,7 +8136,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8173,9 +8148,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8186,7 +8160,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8199,9 +8173,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8214,7 +8187,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8226,9 +8199,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8240,7 +8212,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8253,9 +8225,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8268,7 +8239,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8280,9 +8251,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8294,7 +8264,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8307,9 +8277,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8322,7 +8291,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8334,9 +8303,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8348,7 +8316,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8361,9 +8329,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8376,7 +8343,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8388,9 +8355,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8402,7 +8368,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8415,9 +8381,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8430,7 +8395,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8442,9 +8407,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8456,7 +8420,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8777,9 +8741,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8791,7 +8754,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/TestCpp/proj.ios/Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -8804,9 +8767,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8817,7 +8779,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/TestCpp/proj.ios/Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -8831,9 +8793,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8845,7 +8806,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8857,9 +8818,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8870,7 +8830,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

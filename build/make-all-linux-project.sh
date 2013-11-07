@@ -17,10 +17,8 @@ if $COCOS2DX_USEAPT; then
     ./install-deps-linux.sh
 fi
 
-export MAKEFLAGS=-j10
+mkdir -p linux-build
+cd linux-build
+cmake ../..
+make -j10
 
-make PLATFORM=linux DEBUG=1 clean
-make PLATFORM=linux DEBUG=0 clean
-
-make PLATFORM=linux DEBUG=1 all
-make PLATFORM=linux DEBUG=0 all

@@ -402,7 +402,7 @@ void Node::setPositionY(float y)
     setPosition(Point(_position.x, y));
 }
 
-unsigned int Node::getChildrenCount() const
+long Node::getChildrenCount() const
 {
     return _children ? _children->count() : 0;
 }
@@ -694,7 +694,7 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-    int index = _children->getIndexOfObject(child);
+    long index = _children->getIndexOfObject(child);
     if( index != CC_INVALID_INDEX )
         this->detachChild( child, index, cleanup );
 }
@@ -754,7 +754,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
     
 }
 
-void Node::detachChild(Node *child, int childIndex, bool doCleanup)
+void Node::detachChild(Node *child, long childIndex, bool doCleanup)
 {
     // IMPORTANT:
     //  -1st do onExit
