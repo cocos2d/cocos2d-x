@@ -403,7 +403,7 @@ bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
         mouse->getPhysicsBody()->setDynamic(false);
         mouse->setPosition(location);
         this->addChild(mouse);
-        PhysicsJointPin* joint = PhysicsJointPin::create(mouse->getPhysicsBody(), shape->getBody(), location);
+        PhysicsJointPin* joint = PhysicsJointPin::construct(mouse->getPhysicsBody(), shape->getBody(), location);
         joint->setMaxForce(5000.0f * shape->getBody()->getMass());
         _scene->getPhysicsWorld()->addJoint(joint);
         _mouses.insert(std::make_pair(touch->getID(), mouse));
@@ -765,7 +765,7 @@ void PhysicsDemoJoints::onEnter()
                     auto sp2 = makeBall(offset + Point(30, 0), 10);
                     sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
                     
-                    PhysicsJointPin* joint = PhysicsJointPin::create(sp1->getPhysicsBody(), sp2->getPhysicsBody(), offset);
+                    PhysicsJointPin* joint = PhysicsJointPin::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), offset);
                     _scene->getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -780,7 +780,7 @@ void PhysicsDemoJoints::onEnter()
                     auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
                     sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
                     
-                    PhysicsJointFixed* joint = PhysicsJointFixed::create(sp1->getPhysicsBody(), sp2->getPhysicsBody(), offset);
+                    PhysicsJointFixed* joint = PhysicsJointFixed::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), offset);
                     _scene->getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -895,7 +895,7 @@ void PhysicsDemoPump::onEnter()
     sgearB->setCategoryBitmask(0x04);
     sgearB->setCollisionBitmask(0x04);
     sgearB->setTag(1);
-    _world->addJoint(PhysicsJointPin::create(body, sgearB, sgearB->getPosition()));
+    _world->addJoint(PhysicsJointPin::construct(body, sgearB, sgearB->getPosition()));
     
     
     // big gear
@@ -905,7 +905,7 @@ void PhysicsDemoPump::onEnter()
     bgear->setPosition(VisibleRect::leftBottom() + Point(275, 0));
     this->addChild(bgear);
     bgearB->setCategoryBitmask(0x04);
-    _world->addJoint(PhysicsJointPin::create(body, bgearB, bgearB->getPosition()));
+    _world->addJoint(PhysicsJointPin::construct(body, bgearB, bgearB->getPosition()));
     
     
     // pump
@@ -917,7 +917,7 @@ void PhysicsDemoPump::onEnter()
     this->addChild(pump);
     pumpB->setCategoryBitmask(0x02);
     pumpB->setGravityEnable(false);
-    _world->addJoint(PhysicsJointDistance::create(pumpB, sgearB, Point(0, 0), Point(0, -44)));
+    _world->addJoint(PhysicsJointDistance::construct(pumpB, sgearB, Point(0, 0), Point(0, -44)));
     
     // plugger
     Point seg[] = {VisibleRect::leftTop() + Point(75, -120), VisibleRect::leftBottom() + Point(75, -100)};
@@ -934,8 +934,8 @@ void PhysicsDemoPump::onEnter()
     this->addChild(plugger);
     pluggerB->setCategoryBitmask(0x02);
     sgearB->setCollisionBitmask(0x04 | 0x01);
-    _world->addJoint(PhysicsJointPin::create(body, pluggerB, VisibleRect::leftBottom() + Point(75, -90)));
-    _world->addJoint(PhysicsJointDistance::create(pluggerB, sgearB, pluggerB->world2Local(VisibleRect::leftBottom() + Point(75, 0)), Point(44, 0)));
+    _world->addJoint(PhysicsJointPin::construct(body, pluggerB, VisibleRect::leftBottom() + Point(75, -90)));
+    _world->addJoint(PhysicsJointDistance::construct(pluggerB, sgearB, pluggerB->world2Local(VisibleRect::leftBottom() + Point(75, 0)), Point(44, 0)));
 }
 
 void PhysicsDemoPump::update(float delta)

@@ -89,7 +89,7 @@ protected:
 class PhysicsJointFixed : public PhysicsJoint
 {
 public:
-    static PhysicsJointFixed* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    static PhysicsJointFixed* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
@@ -105,7 +105,7 @@ protected:
 class PhysicsJointSliding : public PhysicsJoint
 {
 public:
-    static PhysicsJointSliding* create(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
+    static PhysicsJointSliding* construct(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
@@ -121,7 +121,7 @@ protected:
 class PhysicsJointSpring : public PhysicsJoint
 {
 public:
-    PhysicsJointSpring* create();
+    PhysicsJointSpring* construct();
     
 protected:
     bool init();
@@ -137,7 +137,7 @@ protected:
 class PhysicsJointLimit : public PhysicsJoint
 {
 public:
-    PhysicsJointLimit* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
     float getMin() const;
     void setMin(float min);
@@ -158,7 +158,7 @@ protected:
 class PhysicsJointPin : public PhysicsJoint
 {
 public:
-    static PhysicsJointPin* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
     void setMaxForce(float force);
     float getMaxForce() const;
@@ -175,7 +175,7 @@ class PhysicsJointDistance : public PhysicsJoint
 {
     
 public:
-    static PhysicsJointDistance* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    static PhysicsJointDistance* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
