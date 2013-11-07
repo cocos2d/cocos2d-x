@@ -263,6 +263,8 @@ protected:
     
     virtual void update(float delta) override;
     
+    void removeJoint(PhysicsJoint* joint);
+    
 protected:
     PhysicsBody();
     virtual ~PhysicsBody();

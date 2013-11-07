@@ -34,6 +34,7 @@
 NS_CC_BEGIN
 
 class PhysicsBody;
+class PhysicsWorld;
 class PhysicsJointInfo;
 class PhysicsBodyInfo;
 
@@ -47,14 +48,17 @@ protected:
     virtual ~PhysicsJoint() = 0;
 
 public:
-    PhysicsBody* getBodyA() const { return _bodyA; }
-    PhysicsBody* getBodyB() const { return _bodyB; }
+    inline PhysicsBody* getBodyA() const { return _bodyA; }
+    inline PhysicsBody* getBodyB() const { return _bodyB; }
+    inline PhysicsWorld* getWorld() const { return _world; }
     inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
     inline bool isEnabled() const { return _enable; }
     void setEnable(bool enable);
     inline bool isCollisionEnabled() const { return _collisionEnable; }
     void setCollisionEnable(bool enable);
+    void removeFormWorld();
+    static void destroy(PhysicsJoint* joint);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b);
@@ -68,9 +72,11 @@ protected:
 protected:
     PhysicsBody* _bodyA;
     PhysicsBody* _bodyB;
+    PhysicsWorld* _world;
     PhysicsJointInfo* _info;
     bool _enable;
     bool _collisionEnable;
+    bool _destoryMark;
     int _tag;
     
     friend class PhysicsBody;

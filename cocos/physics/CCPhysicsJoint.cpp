@@ -32,6 +32,7 @@
 #endif
 
 #include "CCPhysicsBody.h"
+#include "CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsJointInfo_chipmunk.h"
 #include "box2d/CCPhysicsJointInfo_box2d.h"
@@ -48,9 +49,11 @@ NS_CC_BEGIN
 PhysicsJoint::PhysicsJoint()
 : _bodyA(nullptr)
 , _bodyB(nullptr)
+, _world(nullptr)
 , _info(nullptr)
 , _enable(false)
 , _collisionEnable(true)
+, _destoryMark(false)
 , _tag(0)
 {
     
@@ -94,12 +97,15 @@ void PhysicsJoint::setEnable(bool enable)
     {
         _enable = enable;
         
-        if (enable)
+        if (_world != nullptr)
         {
-            
-        }else
-        {
-            
+            if (enable)
+            {
+                _world->delayTestAddJoint(this);
+            }else
+            {
+                _world->delayTestRemoveJoint(this);
+            }
         }
     }
 }
@@ -171,6 +177,40 @@ void PhysicsJoint::setCollisionEnable(bool enable)
     if (_collisionEnable != enable)
     {
         _collisionEnable = enable;
+    }
+}
+
+void PhysicsJoint::removeFormWorld()
+{
+    if (_world)
+    {
+        _world->removeJoint(this, false);
+    }
+}
+
+void PhysicsJoint::destroy(PhysicsJoint* joint)
+{
+    if (joint!= nullptr)
+    {
+        // remove the joint and delete it.
+        if (joint->_world != nullptr)
+        {
+            joint->_world->removeJoint(joint, true);
+        }
+        else
+        {
+            if (joint->_bodyA != nullptr)
+            {
+                joint->_bodyA->removeJoint(joint);
+            }
+            
+            if (joint->_bodyB != nullptr)
+            {
+                joint->_bodyB->removeJoint(joint);
+            }
+            
+            delete joint;
+        }
     }
 }
 

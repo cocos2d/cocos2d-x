@@ -265,7 +265,7 @@ Point PhysicsShape::getPolyonCenter(const Point* points, int count)
 void PhysicsShape::setBody(PhysicsBody *body)
 {
     // already added
-    if (_body == body)
+    if (body != nullptr && _body == body)
     {
         return;
     }
@@ -278,12 +278,10 @@ void PhysicsShape::setBody(PhysicsBody *body)
     if (body == nullptr)
     {
         _info->setBody(nullptr);
-        //_info->setGroup(CP_NO_GROUP);
         _body = nullptr;
     }else
     {
         _info->setBody(body->_info->getBody());
-        //_info->setGroup(body->_info->group);
         _body = body;
     }
 }
