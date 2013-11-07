@@ -33,7 +33,6 @@ public:
     UIListViewTest_Vertical();
     ~UIListViewTest_Vertical();
     bool init();
-    void listViewEvent(Object* pSender, ListViewEventType type);    
     
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Vertical)
@@ -49,7 +48,6 @@ public:
     UIListViewTest_Horizontal();
     ~UIListViewTest_Horizontal();
     bool init();
-    void listViewEvent(Object* pSender, ListViewEventType type);    
     
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Horizontal)

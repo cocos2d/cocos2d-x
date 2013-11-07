@@ -27,7 +27,7 @@
 
 
 #include "gui/UIWidget.h"
-#include "gui/Layout.h"
+#include "gui/UILayout.h"
 #include "gui/UIRootWidget.h"
 #include "gui/UIButton.h"
 #include "gui/UICheckBox.h"
@@ -36,10 +36,9 @@
 #include "gui/UILabelAtlas.h"
 #include "gui/UILoadingBar.h"
 #include "gui/UIScrollView.h"
+#include "gui/UIListView.h"
 #include "gui/UISlider.h"
 #include "gui/UITextField.h"
-#include "gui/UIListView.h"
-#include "gui/UIDragPanel.h"
 #include "gui/UILabelBMFont.h"
 #include "gui/UIPageView.h"
 #include "gui/UIHelper.h"

@@ -24,9 +24,8 @@
 
 #include "gui/UICheckBox.h"
 
- using namespace cocos2d;
-
 namespace gui {
+
 
 UICheckBox::UICheckBox():
 _backGroundBoxRenderer(NULL),
@@ -41,7 +40,12 @@ _backGroundTexType(UI_TEX_TYPE_LOCAL),
 _backGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
 _frontCrossTexType(UI_TEX_TYPE_LOCAL),
 _backGroundDisabledTexType(UI_TEX_TYPE_LOCAL),
-_frontCrossDisabledTexType(UI_TEX_TYPE_LOCAL)
+_frontCrossDisabledTexType(UI_TEX_TYPE_LOCAL),
+_backGroundFileName(""),
+_backGroundSelectedFileName(""),
+_frontCrossFileName(""),
+_backGroundDisabledFileName(""),
+_frontCrossDisabledFileName("")
 {
 }
 
@@ -75,11 +79,11 @@ bool UICheckBox::init()
 void UICheckBox::initRenderer()
 {
     UIWidget::initRenderer();
-    _backGroundBoxRenderer = Sprite::create();
-    _backGroundSelectedBoxRenderer = Sprite::create();
-    _frontCrossRenderer = Sprite::create();
-    _backGroundBoxDisabledRenderer = Sprite::create();
-    _frontCrossDisabledRenderer = Sprite::create();
+    _backGroundBoxRenderer = cocos2d::Sprite::create();
+    _backGroundSelectedBoxRenderer = cocos2d::Sprite::create();
+    _frontCrossRenderer = cocos2d::Sprite::create();
+    _backGroundBoxDisabledRenderer = cocos2d::Sprite::create();
+    _frontCrossDisabledRenderer = cocos2d::Sprite::create();
     _renderer->addChild(_backGroundBoxRenderer);
     _renderer->addChild(_backGroundSelectedBoxRenderer);
     _renderer->addChild(_frontCrossRenderer);
@@ -102,6 +106,7 @@ void UICheckBox::loadTextureBackGround(const char *backGround,TextureResType tex
     {
         return;
     }
+    _backGroundFileName = backGround;
     _backGroundTexType = texType;
     switch (_backGroundTexType)
     {
@@ -125,6 +130,7 @@ void UICheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Te
     {
         return;
     }
+    _backGroundSelectedFileName = backGroundSelected;
     _backGroundSelectedTexType = texType;
     switch (_backGroundSelectedTexType)
     {
@@ -148,6 +154,7 @@ void UICheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
     {
         return;
     }
+    _frontCrossFileName = cross;
     _frontCrossTexType = texType;
     switch (_frontCrossTexType)
     {
@@ -171,6 +178,7 @@ void UICheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Te
     {
         return;
     }
+    _backGroundDisabledFileName = backGroundDisabled;
     _backGroundDisabledTexType = texType;
     switch (_backGroundDisabledTexType)
     {
@@ -194,6 +202,7 @@ void UICheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Te
     {
         return;
     }
+    _frontCrossDisabledFileName = frontCrossDisabled;
     _frontCrossDisabledTexType = texType;
     switch (_frontCrossDisabledTexType)
     {
@@ -211,7 +220,7 @@ void UICheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Te
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 
-void UICheckBox::onTouchEnded(const Point &touchPoint)
+void UICheckBox::onTouchEnded(const cocos2d::Point &touchPoint)
 {
     if (_focus)
     {
@@ -289,7 +298,7 @@ void UICheckBox::unSelectedEvent()
     }
 }
 
-void UICheckBox::addEventListener(Object *target, SEL_SelectedStateEvent selector)
+void UICheckBox::addEventListener(cocos2d::Object *target, SEL_SelectedStateEvent selector)
 {
     _selectedStateEventListener = target;
     _selectedStateEventSelector = selector;
@@ -323,7 +332,7 @@ bool UICheckBox::isFlipY()
     return _backGroundBoxRenderer->isFlippedY();
 }
 
-void UICheckBox::setAnchorPoint(const Point &pt)
+void UICheckBox::setAnchorPoint(const cocos2d::Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
     _backGroundBoxRenderer->setAnchorPoint(pt);
@@ -342,12 +351,12 @@ void UICheckBox::onSizeChanged()
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 
-const Size& UICheckBox::getContentSize() const
+const cocos2d::Size& UICheckBox::getContentSize() const
 {
     return _backGroundBoxRenderer->getContentSize();
 }
 
-Node* UICheckBox::getVirtualRenderer()
+cocos2d::Node* UICheckBox::getVirtualRenderer()
 {
     return _backGroundBoxRenderer;
 }
@@ -361,7 +370,7 @@ void UICheckBox::backGroundTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _backGroundBoxRenderer->getContentSize();
+        cocos2d::Size textureSize = _backGroundBoxRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundBoxRenderer->setScale(1.0f);
@@ -382,7 +391,7 @@ void UICheckBox::backGroundSelectedTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _backGroundSelectedBoxRenderer->getContentSize();
+        cocos2d::Size textureSize = _backGroundSelectedBoxRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundSelectedBoxRenderer->setScale(1.0f);
@@ -403,7 +412,7 @@ void UICheckBox::frontCrossTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _frontCrossRenderer->getContentSize();
+        cocos2d::Size textureSize = _frontCrossRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _frontCrossRenderer->setScale(1.0f);
@@ -424,7 +433,7 @@ void UICheckBox::backGroundDisabledTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _backGroundBoxDisabledRenderer->getContentSize();
+        cocos2d::Size textureSize = _backGroundBoxDisabledRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundBoxDisabledRenderer->setScale(1.0f);
@@ -445,7 +454,7 @@ void UICheckBox::frontCrossDisabledTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _frontCrossDisabledRenderer->getContentSize();
+        cocos2d::Size textureSize = _frontCrossDisabledRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _frontCrossDisabledRenderer->setScale(1.0f);
@@ -461,6 +470,25 @@ void UICheckBox::frontCrossDisabledTextureScaleChangedWithSize()
 const char* UICheckBox::getDescription() const
 {
     return "CheckBox";
+}
+
+UIWidget* UICheckBox::createCloneInstance()
+{
+    return UICheckBox::create();
+}
+
+void UICheckBox::copySpecialProperties(UIWidget *widget)
+{
+    UICheckBox* checkBox = dynamic_cast<UICheckBox*>(widget);
+    if (checkBox)
+    {
+        loadTextureBackGround(checkBox->_backGroundFileName.c_str(), checkBox->_backGroundTexType);
+        loadTextureBackGroundSelected(checkBox->_backGroundSelectedFileName.c_str(), checkBox->_backGroundSelectedTexType);
+        loadTextureFrontCross(checkBox->_frontCrossFileName.c_str(), checkBox->_frontCrossTexType);
+        loadTextureBackGroundDisabled(checkBox->_backGroundDisabledFileName.c_str(), checkBox->_backGroundDisabledTexType);
+        loadTextureFrontCrossDisabled(checkBox->_frontCrossDisabledFileName.c_str(), checkBox->_frontCrossDisabledTexType);
+        setSelectedState(checkBox->_isSelected);
+    }
 }
 
 }
