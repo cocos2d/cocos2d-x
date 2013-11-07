@@ -145,6 +145,8 @@ bool Director::init(void)
     _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
     _eventDispatcher = new EventDispatcher();
+    //init TextureCache
+    initTextureCache();
     
     // create autorelease pool
     PoolManager::sharedPoolManager()->push();
@@ -356,6 +358,29 @@ void Director::setOpenGLView(EGLView *pobOpenGLView)
         CHECK_GL_ERROR_DEBUG();
 
 //        _touchDispatcher->setDispatchEvents(true);
+    }
+}
+
+TextureCache* Director::getTextureCache() const
+{
+    return _textureCache;
+}
+
+void Director::initTextureCache()
+{
+#ifdef EMSCRIPTEN
+    _textureCache = new TextureCacheEmscripten();
+#else
+    _textureCache = new TextureCache();
+#endif // EMSCRIPTEN
+}
+
+void Director::destroyTextureCache()
+{
+    if (_textureCache)
+    {
+        _textureCache->waitForQuit();
+        CC_SAFE_RELEASE_NULL(_textureCache);
     }
 }
 
@@ -693,7 +718,6 @@ void Director::purgeDirector()
     DrawPrimitives::free();
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
-    TextureCache::destroyInstance();
     ShaderCache::destroyInstance();
     FileUtils::destroyInstance();
     Configuration::destroyInstance();
@@ -704,6 +728,8 @@ void Director::purgeDirector()
     
     GL::invalidateStateCache();
     
+    destroyTextureCache();
+
     CHECK_GL_ERROR_DEBUG();
     
     // OpenGL view
