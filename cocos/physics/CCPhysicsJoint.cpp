@@ -214,7 +214,7 @@ void PhysicsJoint::destroy(PhysicsJoint* joint)
     }
 }
 
-PhysicsJointFixed* PhysicsJointFixed::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
+PhysicsJointFixed* PhysicsJointFixed::construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
 {
     PhysicsJointFixed* joint = new PhysicsJointFixed();
     
@@ -255,7 +255,7 @@ bool PhysicsJointFixed::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
     return false;
 }
 
-PhysicsJointPin* PhysicsJointPin::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
+PhysicsJointPin* PhysicsJointPin::construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr)
 {
     PhysicsJointPin* joint = new PhysicsJointPin();
     
@@ -296,7 +296,7 @@ float PhysicsJointPin::getMaxForce() const
     return PhysicsHelper::cpfloat2float(_info->getJoints().front()->maxForce);
 }
 
-PhysicsJointSliding* PhysicsJointSliding::create(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr)
+PhysicsJointSliding* PhysicsJointSliding::construct(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr)
 {
     PhysicsJointSliding* joint = new PhysicsJointSliding();
     
@@ -331,7 +331,7 @@ bool PhysicsJointSliding::init(PhysicsBody* a, PhysicsBody* b, const Point& groo
 }
 
 
-PhysicsJointLimit* PhysicsJointLimit::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
+PhysicsJointLimit* PhysicsJointLimit::construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
 {
     PhysicsJointLimit* joint = new PhysicsJointLimit();
     
@@ -386,7 +386,7 @@ void PhysicsJointLimit::setMax(float max)
     cpSlideJointSetMax(_info->getJoints().front(), PhysicsHelper::float2cpfloat(max));
 }
 
-PhysicsJointDistance* PhysicsJointDistance::create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
+PhysicsJointDistance* PhysicsJointDistance::construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
 {
     PhysicsJointDistance* joint = new PhysicsJointDistance();
     
