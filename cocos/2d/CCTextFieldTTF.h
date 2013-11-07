@@ -148,7 +148,7 @@ public:
     // input text property
 public:
     virtual void setString(const std::string& text) override;
-    virtual const char* getString(void) const;
+    virtual const std::string& getString() const override;
 protected:
     TextFieldDelegate * _delegate;
     int _charCount;

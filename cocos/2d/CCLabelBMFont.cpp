@@ -767,9 +767,9 @@ void LabelBMFont::setString(unsigned short *newString, bool needUpdateLabel)
     }
 }
 
-const char* LabelBMFont::getString(void) const
+const std::string& LabelBMFont::getString() const
 {
-    return _initialStringUTF8.c_str();
+    return _initialStringUTF8;
 }
 
 void LabelBMFont::setCString(const char *label)

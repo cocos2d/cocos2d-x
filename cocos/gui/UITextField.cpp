@@ -105,7 +105,7 @@ bool UICCTextField::onTextFieldDetachWithIME(cocos2d::TextFieldTTF *pSender)
 void UICCTextField::insertText(const char * text, int len)
 {
     std::string str_text = text;
-    int str_len = strlen(cocos2d::TextFieldTTF::getString());
+    int str_len = cocos2d::TextFieldTTF::getString().size();
     
     if (strcmp(text, "\n") != 0)
     {
@@ -321,18 +321,16 @@ void UITextField::setTouchSize(const cocos2d::Size &size)
     _touchHeight = size.height;
 }
 
-void UITextField::setText(const char* text)
+void UITextField::setText(const std::string& text)
 {
-	if (!text)
-	{
+	if (text.size()==0)
 		return;
-	}
-    std::string strText(text);
-    _textFieldRenderer->setString(strText.c_str());
+
+    _textFieldRenderer->setString(text);
     textfieldRendererScaleChangedWithSize();
 }
 
-void UITextField::setPlaceHolder(const char *value)
+void UITextField::setPlaceHolder(const std::string& value)
 {
     _textFieldRenderer->setPlaceHolder(value);
     textfieldRendererScaleChangedWithSize();
@@ -344,7 +342,7 @@ void UITextField::setFontSize(int size)
     textfieldRendererScaleChangedWithSize();
 }
 
-void UITextField::setFontName(const char *name)
+void UITextField::setFontName(const std::string& name)
 {
     _textFieldRenderer->setFontName(name);
     textfieldRendererScaleChangedWithSize();
@@ -355,7 +353,7 @@ void UITextField::didNotSelectSelf()
     _textFieldRenderer->detachWithIME();
 }
 
-const char* UITextField::getStringValue()
+const std::string& UITextField::getStringValue()
 {
     return _textFieldRenderer->getString();
 }
