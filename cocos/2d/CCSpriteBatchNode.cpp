@@ -114,7 +114,7 @@ bool SpriteBatchNode::init()
 */
 bool SpriteBatchNode::initWithFile(const char* fileImage, long capacity)
 {
-    Texture2D *texture2D = TextureCache::getInstance()->addImage(fileImage);
+    Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
 }
 

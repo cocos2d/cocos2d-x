@@ -486,7 +486,7 @@ bool LabelBMFont::initWithString(const std::string& theString, const std::string
         
         _fntFile = fntFile;
         
-        texture = TextureCache::getInstance()->addImage(_configuration->getAtlasName());
+        texture = Director::getInstance()->getTextureCache()->addImage(_configuration->getAtlasName());
     }
     else 
     {
@@ -1213,7 +1213,7 @@ void LabelBMFont::setFntFile(const char* fntFile)
         CC_SAFE_RELEASE(_configuration);
         _configuration = newConf;
 
-        this->setTexture(TextureCache::getInstance()->addImage(_configuration->getAtlasName()));
+        this->setTexture(Director::getInstance()->getTextureCache()->addImage(_configuration->getAtlasName()));
         this->createFontChars();
     }
 }
