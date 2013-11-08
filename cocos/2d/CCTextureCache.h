@@ -214,7 +214,7 @@ class VolatileTexture
         kImage,
     }ccCachedImageType;
 
-public:
+private:
     VolatileTexture(Texture2D *t);
     /**
      * @js NA
@@ -222,25 +222,8 @@ public:
      */
     ~VolatileTexture();
 
-    static void addImageTexture(Texture2D *tt, const char* imageFileName);
-    static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
-    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
-    static void addImage(Texture2D *tt, Image *image);
-
-    static void setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams);
-    static void removeTexture(Texture2D *t);
-    static void reloadAllTextures();
-
-public:
-    static std::list<VolatileTexture*> _textures;
-    static bool _isReloading;
-    
-private:
-    // find VolatileTexture by Texture2D*
-    // if not found, create a new one
-    static VolatileTexture* findVolotileTexture(Texture2D *tt);
-
 protected:
+    friend class  VolatileTextureMgr;
     Texture2D *_texture;
     
     Image *_uiImage;
@@ -257,6 +240,26 @@ protected:
     Texture2D::TexParams      _texParams;
     std::string               _text;
     FontDefinition            _fontDefinition;
+};
+
+class VolatileTextureMgr
+{
+public:
+    static void addImageTexture(Texture2D *tt, const char* imageFileName);
+    static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
+    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
+    static void addImage(Texture2D *tt, Image *image);
+
+    static void setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams);
+    static void removeTexture(Texture2D *t);
+    static void reloadAllTextures();
+public:
+    static std::list<VolatileTexture*> _textures;
+    static bool _isReloading;
+private:
+    // find VolatileTexture by Texture2D*
+    // if not found, create a new one
+    static VolatileTexture* findVolotileTexture(Texture2D *tt);
 };
 
 #endif
