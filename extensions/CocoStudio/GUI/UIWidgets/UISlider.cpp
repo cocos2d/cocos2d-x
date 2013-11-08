@@ -64,10 +64,8 @@ m_pfnPercentSelector(NULL)
 
 UISlider::~UISlider()
 {
-    CC_SAFE_RELEASE(m_pSlidPercentListener);
     m_pSlidPercentListener = NULL;
     m_pfnSlidPercentSelector = NULL;
-    CC_SAFE_RELEASE(m_pSlidPercentListener);
     m_pSlidPercentListener = NULL;
     m_pfnSlidPercentSelector = NULL;
 }

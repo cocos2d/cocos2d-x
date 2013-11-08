@@ -893,6 +893,27 @@ public:
     virtual void onEnter();
     virtual void onExit();
     
+    /**
+     * Returns a user assigned CCObject
+     *
+     * Similar to userData, but instead of holding a void* it holds an object
+     *
+     * @return A user assigned CCObject
+     * @js NA
+     */
+    virtual CCObject* getUserObject();
+    /**
+     * Returns a user assigned CCObject
+     *
+     * Similar to UserData, but instead of holding a void* it holds an object.
+     * The UserObject will be retained once in this method,
+     * and the previous UserObject (if existed) will be relese.
+     * The UserObject will be released in CCNode's destructure.
+     *
+     * @param A user assigned CCObject
+     */
+    virtual void setUserObject(CCObject *pUserObject);
+    
     /*******Compatible*******/
     /**
      * These methods will be removed
@@ -964,30 +985,22 @@ public:
     void removeCCNode(bool cleanup){removeCCNode(cleanup);};
     void addPushDownEvent(CCObject* target,SEL_PushEvent selector)
     {
-        CC_SAFE_RELEASE(m_pPushListener);
         m_pPushListener = target;
-        CC_SAFE_RETAIN(m_pPushListener);
         m_pfnPushSelector = selector;
     };
     void addMoveEvent(CCObject* target,SEL_MoveEvent selector)
     {
-        CC_SAFE_RELEASE(m_pMoveListener);
         m_pMoveListener = target;
-        CC_SAFE_RETAIN(m_pMoveListener);
         m_pfnMoveSelector = selector;
     };
     void addReleaseEvent(CCObject* target,SEL_ReleaseEvent selector)
     {
-        CC_SAFE_RELEASE(m_pReleaseListener);
         m_pReleaseListener = target;
-        CC_SAFE_RETAIN(m_pReleaseListener);
         m_pfnReleaseSelector = selector;
     };
     void addCancelEvent(CCObject* target,SEL_CancelEvent selector)
     {
-        CC_SAFE_RELEASE(m_pCancelListener);
         m_pCancelListener = target;
-        CC_SAFE_RETAIN(m_pCancelListener);
         m_pfnCancelSelector = selector;
     };
     bool removeChild(UIWidget* child,bool cleanup){return removeChild(child);};
@@ -1067,6 +1080,7 @@ protected:
     PositionType m_ePositionType;
     CCPoint m_positionPercent;
     bool m_bIsRunning;
+    CCObject* m_pUserObject;
     
     /*Compatible*/
     CCObject*       m_pPushListener;

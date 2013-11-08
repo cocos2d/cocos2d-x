@@ -69,6 +69,7 @@ m_sizePercent(CCPointZero),
 m_ePositionType(POSITION_ABSOLUTE),
 m_positionPercent(CCPointZero),
 m_bIsRunning(false),
+m_pUserObject(NULL),
 
 /*Compatible*/
 m_pPushListener(NULL),
@@ -86,19 +87,14 @@ m_pfnCancelSelector(NULL)
 
 UIWidget::~UIWidget()
 {
-    CC_SAFE_RELEASE(m_pPushListener);
     m_pPushListener = NULL;
     m_pfnPushSelector = NULL;
-    CC_SAFE_RELEASE(m_pMoveListener);
     m_pMoveListener = NULL;
     m_pfnMoveSelector = NULL;
-    CC_SAFE_RELEASE(m_pReleaseListener);
     m_pReleaseListener = NULL;
     m_pfnReleaseSelector = NULL;
-    CC_SAFE_RELEASE(m_pCancelListener);
     m_pCancelListener = NULL;
     m_pfnCancelSelector = NULL;
-    CC_SAFE_RELEASE(m_pTouchEventListener);
     m_pTouchEventListener = NULL;
     m_pfnTouchEventSelector = NULL;
     removeAllChildren();
@@ -110,6 +106,7 @@ UIWidget::~UIWidget()
     m_pLayoutParameterDictionary->removeAllObjects();
     CC_SAFE_RELEASE(m_pLayoutParameterDictionary);
     CC_SAFE_RELEASE(m_pScheduler);
+    CC_SAFE_RELEASE(m_pUserObject);
 }
 
 UIWidget* UIWidget::create()
@@ -157,6 +154,18 @@ void UIWidget::onExit()
 {
     m_bIsRunning = false;
     arrayMakeObjectsPerformSelector(m_children, onExit, UIWidget*);
+}
+
+CCObject* UIWidget::getUserObject()
+{
+    return m_pUserObject;
+}
+
+void UIWidget::setUserObject(CCObject *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(m_pUserObject);
+    m_pUserObject = pUserObject;
 }
 
 bool UIWidget::addChild(UIWidget *child)
@@ -749,9 +758,7 @@ void UIWidget::longClickEvent()
 
 void UIWidget::addTouchEventListener(cocos2d::CCObject *target, SEL_TouchEvent selector)
 {
-    CC_SAFE_RELEASE(m_pTouchEventListener);
     m_pTouchEventListener = target;
-    CC_SAFE_RETAIN(m_pTouchEventListener);
     m_pfnTouchEventSelector = selector;
 }
 
