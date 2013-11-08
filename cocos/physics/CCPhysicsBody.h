@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS
-
 #ifndef __CCPHYSICS_BODY_H__
 #define __CCPHYSICS_BODY_H__
+
+#include "CCPhysicsSetting.h"
+#ifdef CC_USE_PHYSICS
 
 #include "CCObject.h"
 #include "CCGeometry.h"
@@ -59,60 +59,62 @@ public:
     /**
      * @brief Create a body contains a circle shape.
      */
-    static PhysicsBody* createCircle(float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    static PhysicsBody* createCircle(float radius, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Point& offset = Point::ZERO);
     /**
      * @brief Create a body contains a box shape.
      */
-    static PhysicsBody* createBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    static PhysicsBody* createBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Point& offset = Point::ZERO);
     /**
      * @brief Create a body contains a polygon shape.
      * points is an array of Point structs defining a convex hull with a clockwise winding.
      */
-    static PhysicsBody* createPolygon(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    static PhysicsBody* createPolygon(const Point* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Point& offset = Point::ZERO);
     
     /**
      * @brief Create a body contains a EdgeSegment shape.
      */
-    static PhysicsBody* createEdgeSegment(Point a, Point b, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsBody* createEdgeSegment(const Point& a, const Point& b, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /**
      * @brief Create a body contains a EdgeBox shape.
      */
-    static PhysicsBody* createEdgeBox(Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsBody* createEdgeBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1, const Point& offset = Point::ZERO);
     /**
      * @brief Create a body contains a EdgePolygon shape.
      */
-    static PhysicsBody* createEdgePolygon(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsBody* createEdgePolygon(const Point* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /**
      * @brief Create a body contains a EdgeChain shape.
      */
-    static PhysicsBody* createEdgeChain(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsBody* createEdgeChain(const Point* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
     virtual PhysicsShape* addShape(PhysicsShape* shape);
     
     /**
      * @brief Applies a immediate force to body.
      */
-    virtual void applyForce(Point force);
+    virtual void applyForce(const Vect& force);
     /**
      * @brief Applies a immediate force to body.
      */
-    virtual void applyForce(Point force, Point offset);
+    virtual void applyForce(const Vect& force, const Point& offset);
     /**
      * @brief Applies a continuous force to body.
      */
-    virtual void applyImpulse(Point impulse);
+    virtual void applyImpulse(const Vect& impulse);
     /**
      * @brief Applies a continuous force to body.
      */
-    virtual void applyImpulse(Point impulse, Point offset);
+    virtual void applyImpulse(const Vect& impulse, const Point& offset);
     /**
      * @brief Applies a torque force to body.
      */
     virtual void applyTorque(float torque);
     
-    virtual void setVelocity(Point velocity);
+    virtual void setVelocity(const Vect& velocity);
     virtual Point getVelocity();
     virtual void setAngularVelocity(float velocity);
+    virtual Point getVelocityAtLocalPoint(const Point& point);
+    virtual Point getVelocityAtWorldPoint(const Point& point);
     virtual float getAngularVelocity();
     virtual void setVelocityLimit(float limit);
     virtual float getVelocityLimit();
@@ -126,13 +128,13 @@ public:
     /*
      * @brief get the first body shapes.
      */
-    inline PhysicsShape* getShape() const { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
-    PhysicsShape* getShapeByTag(int tag) const;
+    inline PhysicsShape* getFirstShape() const { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
+    PhysicsShape* getShape(int tag) const;
     /*
      * @brief remove a shape from body
      */
     void removeShape(PhysicsShape* shape);
-    void removeShapeByTag(int tag);
+    void removeShape(int tag);
     /*
      * @brief remove all shapes
      */
@@ -236,13 +238,13 @@ public:
     //virtual Clonable* clone() const override;
     
     bool isResting() const;
-    inline bool isEnable() const { return _enable; }
+    inline bool isEnabled() const { return _enable; }
     void setEnable(bool enable);
     
-    inline bool isRotationEnable() const { return _rotationEnable; }
+    inline bool isRotationEnabled() const { return _rotationEnable; }
     void setRotationEnable(bool enable);
     
-    inline bool isGravityEnable() const { return _gravityEnable; }
+    inline bool isGravityEnabled() const { return _gravityEnable; }
     void setGravityEnable(bool enable);
     
     
@@ -260,6 +262,8 @@ protected:
     virtual void setRotation(float rotation);
     
     virtual void update(float delta) override;
+    
+    void removeJoint(PhysicsJoint* joint);
     
 protected:
     PhysicsBody();
@@ -298,6 +302,5 @@ protected:
 
 NS_CC_END
 
-#endif // __CCPHYSICS_BODY_H__
-
 #endif // CC_USE_PHYSICS
+#endif // __CCPHYSICS_BODY_H__

@@ -50,7 +50,7 @@ PhysicsContact::PhysicsContact()
 , _shapeB(nullptr)
 , _eventCode(EventCode::NONE)
 , _info(nullptr)
-, _notify(true)
+, _notificationEnable(true)
 , _begin(false)
 , _data(nullptr)
 , _contactInfo(nullptr)
@@ -120,6 +120,11 @@ PhysicsContactPreSolve::PhysicsContactPreSolve(PhysicsContactData* data, void* c
 {
 }
 
+PhysicsContactPreSolve::~PhysicsContactPreSolve()
+{
+    CC_SAFE_DELETE(_preContactData);
+}
+
 float PhysicsContactPreSolve::getElasticity() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->e;
@@ -145,14 +150,14 @@ void PhysicsContactPreSolve::setFriction(float friction)
     static_cast<cpArbiter*>(_contactInfo)->u = friction;
 }
 
-void PhysicsContactPreSolve::setSurfaceVelocity(Point surfaceVelocity)
+void PhysicsContactPreSolve::setSurfaceVelocity(const Vect& velocity)
 {
-    static_cast<cpArbiter*>(_contactInfo)->surface_vr = PhysicsHelper::point2cpv(surfaceVelocity);
+    static_cast<cpArbiter*>(_contactInfo)->surface_vr = PhysicsHelper::point2cpv(velocity);
 }
 
-PhysicsContactPreSolve::~PhysicsContactPreSolve()
+void PhysicsContactPreSolve::ignore()
 {
-    CC_SAFE_DELETE(_preContactData);
+    cpArbiterIgnore(static_cast<cpArbiter*>(_contactInfo));
 }
 
 // PhysicsContactPostSolve implementation
@@ -194,7 +199,7 @@ bool EventListenerPhysicsContact::init()
 {
     auto func = [this](EventCustom* event) -> void
     {
-        return onEvent(event);
+        onEvent(event);
     };
     
     return EventListenerCustom::init(std::hash<std::string>()(PHYSICSCONTACT_EVENT_NAME), func);
@@ -211,7 +216,6 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             bool ret = true;
             
             if (onContactBegin != nullptr
-                && contact.getNotify()
                 && test(contact.getShapeA(), contact.getShapeB()))
             {
                 contact._begin = true;
@@ -250,7 +254,7 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
         }
         case PhysicsContact::EventCode::POSTSOLVE:
         {
-            if (onContactPreSolve != nullptr
+            if (onContactPostSolve != nullptr
                 && test(contact.getShapeA(), contact.getShapeB()))
             {
                 PhysicsContactPostSolve solve(contact._contactInfo);
