@@ -68,7 +68,6 @@ public:
      */
     static UIWidget* seekWidgetByRelativeName(UIWidget* root, const char* name);
     
-    /*temp action*/
     static UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
 };
 NS_CC_EXT_END
