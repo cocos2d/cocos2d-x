@@ -12,6 +12,7 @@
 #include "RenderCommand.h"
 #include "CCGLProgram.h"
 #include "QuadCommand.h"
+#include "CCGL.h"
 
 #define VBO_SIZE 64
 
@@ -39,10 +40,12 @@ protected:
     void batchQuads(QuadCommand* cmd);
     void drawQuads();
 
+    //Draw the previews queued quads and flush previous context
+    void flush();
+
 protected:
     vector<RenderCommand*> _renderQueue;
     int _lastMaterialID;
-
 
     V3F_C4B_T2F_Quad*_quads;
     GLushort* _indices;
