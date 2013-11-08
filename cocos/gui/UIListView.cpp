@@ -381,7 +381,6 @@ void UIListView::refreshView()
         remedyLayoutParameter(item);
     }
     updateInnerContainerSize();
-    doLayout();
 }
     
 void UIListView::addEventListenerListView(cocos2d::Object *target, SEL_ListViewEvent selector)
