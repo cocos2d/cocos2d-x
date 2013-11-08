@@ -163,8 +163,8 @@ float CCTweenFunction::quadEaseOut(float t, float b, float c, float d)
 }
 float CCTweenFunction::quadEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t/d*2;
+    if ((t) < 1)
         return c / 2 * t * t + b;
     --t;
     return -c / 2 * (t * (t - 2) - 1) + b;
@@ -182,8 +182,8 @@ float CCTweenFunction::cubicEaseOut(float t, float b, float c, float d)
 }
 float CCTweenFunction::cubicEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t/d*2;
+    if ((t) < 1)
         return c / 2 * t * t * t + b;
     t -= 2;
     return c / 2 * (t * t * t + 2) + b;
@@ -201,8 +201,8 @@ float CCTweenFunction::quartEaseOut(float t, float b, float c, float d)
 }
 float CCTweenFunction::quartEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t/d*2;
+    if ((t) < 1)
         return c / 2 * t * t * t * t + b;
     t -= 2;
     return -c / 2 * (t * t * t * t - 2) + b;
@@ -220,8 +220,8 @@ float CCTweenFunction::quintEaseOut(float t, float b, float c, float d)
 }
 float CCTweenFunction::quintEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t/d*2;
+    if ((t) < 1)
         return c / 2 * t * t * t * t * t + b;
     t -= 2;
     return c / 2 * (t * t * t * t * t + 2) + b;
@@ -254,7 +254,7 @@ float CCTweenFunction::expoEaseInOut(float t, float b, float c, float d)
         return b;
     if (t == d)
         return b + c;
-    if ((t /= d / 2) < 1)
+    if ((t /= d/2) < 1)
         return c / 2 * pow(2, 10 * (t - 1)) + b;
     --t;
     return c / 2 * (-pow(2, -10 * t) + 2) + b;
@@ -272,8 +272,8 @@ float CCTweenFunction::circEaseOut(float t, float b, float c, float d)
 }
 float CCTweenFunction::circEaseInOut(float t, float b, float c, float d)
 {
-    t /= d;
-    if ((t / 2) < 1)
+    t = t / d * 2;
+    if (t < 1)
         return -c / 2 * (sqrt(1 - t * t) - 1) + b;
     t -= 2;
     return c / 2 * (sqrt(1 - t * t) + 1) + b;
@@ -323,8 +323,8 @@ float CCTweenFunction::elasticEaseInOut(float t, float b, float c, float d, floa
     float s = 0;
     if (t == 0)
         return b;
-    t /= d;
-    if ((t / 2) == 2)
+    t = t / d * 2;
+    if ((t) == 2)
         return b + c;
     if (!p)
         p = d * (.3 * 1.5);

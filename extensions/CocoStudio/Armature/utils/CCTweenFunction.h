@@ -38,8 +38,8 @@ enum CCTweenType
     Linear,
 
     Sine_EaseIn,
-    Sine_EaseInOut,
     Sine_EaseOut,
+    Sine_EaseInOut,
 
 
     Quad_EaseIn,

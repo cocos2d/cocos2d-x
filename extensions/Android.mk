@@ -74,8 +74,8 @@ CocoStudio/Armature/utils/CCTweenFunction.cpp \
 CocoStudio/Armature/utils/CCUtilMath.cpp \
 CocoStudio/GUI/BaseClasses/UIRootWidget.cpp \
 CocoStudio/GUI/BaseClasses/UIWidget.cpp \
-CocoStudio/GUI/Layouts/Layout.cpp \
-CocoStudio/GUI/Layouts/LayoutParameter.cpp \
+CocoStudio/GUI/Layouts/UILayout.cpp \
+CocoStudio/GUI/Layouts/UILayoutParameter.cpp \
 CocoStudio/GUI/Layouts/UILayoutDefine.cpp \
 CocoStudio/GUI/System/CocosGUI.cpp \
 CocoStudio/GUI/System/UIHelper.cpp \
@@ -105,8 +105,8 @@ CocoStudio/Json/DictionaryHelper.cpp \
 CocoStudio/Json/lib_json/json_value.cpp \
 CocoStudio/Json/lib_json/json_reader.cpp \
 CocoStudio/Json/lib_json/json_writer.cpp \
-CocoStudio/Reader/CCSSceneReader.cpp \
-CocoStudio/Reader/CCSGUIReader.cpp \
+CocoStudio/Reader/SceneReader.cpp \
+CocoStudio/Reader/GUIReader.cpp \
 CocoStudio/Action/CCActionManager.cpp \
 CocoStudio/Action/CCActionObject.cpp \
 CocoStudio/Action/CCActionNode.cpp \

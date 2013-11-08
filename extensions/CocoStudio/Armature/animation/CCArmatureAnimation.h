@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __CCANIMATION_H__
 
 #include "CCProcessBase.h"
+#include <queue>
 
 NS_CC_EXT_BEGIN
 
@@ -47,6 +48,14 @@ typedef void (CCObject::*SEL_FrameEventCallFunc)(CCBone *, const char *, int, in
 
 #define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
+
+struct CCFrameEvent
+{
+    CCBone *bone;
+    const char *frameEventName;
+    int originFrameIndex;
+    int currentFrameIndex;
+};
 
 /**
  *  @lua NA
@@ -71,10 +80,11 @@ public:
 
     /**
      * Scale animation play speed.
+     * This method is deprecated, please use setSpeedScale.
      * @param animationScale Scale value
      */
-    virtual void setAnimationScale(float animationScale);
-    virtual float getAnimationScale() const;
+    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationScale(float animationScale);
+    CC_DEPRECATED_ATTRIBUTE virtual float getAnimationScale() const;
 
     /**
      * Scale animation play speed.
@@ -118,9 +128,26 @@ public:
 
     /**
      * Play animation by index, the other param is the same to play.
-     * @param  _animationIndex  the animation index you want to play
+     * @param  animationIndex  the animation index you want to play
      */
     void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+
+    /**
+     * Go to specified frame and play current movement.
+     * You need first switch to the movement you want to play, then call this function.
+     * 
+     * example : playByIndex(0);
+     *           gotoAndPlay(0);
+     *           playByIndex(1);
+     *           gotoAndPlay(0);
+     *           gotoAndPlay(15);
+     */
+    virtual void gotoAndPlay(int frameIndex);
+
+    /**
+     * Go to specified frame and pause current movement.
+     */
+    virtual void gotoAndPause(int frameIndex);
 
     /**
      * Pause the Process
@@ -181,6 +208,8 @@ protected:
      */
     void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
+    inline bool isIgnoreFrameEvent() { return m_bIgnoreFrameEvent; }
+
     friend class CCTween;
 protected:
     //! CCAnimationData save all MovementDatas this animation used.
@@ -189,16 +218,19 @@ protected:
     //! Scale the animation speed
     float m_fSpeedScale;
 
-    CCMovementData *m_pMovementData;				//! CCMovementData save all MovementFrameDatas this animation used.
+    CCMovementData *m_pMovementData;            //! CCMovementData save all MovementFrameDatas this animation used.
 
-    CCArmature *m_pArmature;						//! A weak reference of armature
+    CCArmature *m_pArmature;                    //! A weak reference of armature
 
-    std::string m_strMovementID;				//! Current movment's name
+    std::string m_strMovementID;                //! Current movment's name
 
-    int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+    int m_iToIndex;	                            //! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
     CCArray *m_pTweenList;
 
+    bool m_bIgnoreFrameEvent;
+
+    std::queue<CCFrameEvent*> m_sFrameEventQueue;
 protected:
     /**
      * MovementEvent CallFunc.
