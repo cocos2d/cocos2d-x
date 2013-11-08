@@ -58,7 +58,6 @@ _ballDTexType(UI_TEX_TYPE_LOCAL)
 
 UISlider::~UISlider()
 {
-    CC_SAFE_RELEASE(_slidPercentListener);
     _slidPercentListener = NULL;
     _slidPercentSelector = NULL;
 }
@@ -414,9 +413,7 @@ float UISlider::getPercentWithBallPos(float px)
 
 void UISlider::addEventListener(cocos2d::Object *target, SEL_SlidPercentChangedEvent selector)
 {
-    CC_SAFE_RELEASE(_slidPercentListener);
     _slidPercentListener = target;
-    CC_SAFE_RETAIN(_slidPercentListener);
     _slidPercentSelector = selector;
 }
 

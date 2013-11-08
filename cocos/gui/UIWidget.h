@@ -880,6 +880,25 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
+    
+    virtual Object* getUserObject() { return _userObject; }
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual const Object* getUserObject() const { return _userObject; }
+    
+    /**
+     * Returns a user assigned Object
+     *
+     * Similar to UserData, but instead of holding a void* it holds an object.
+     * The UserObject will be retained once in this method,
+     * and the previous UserObject (if existed) will be relese.
+     * The UserObject will be released in Node's destructure.
+     *
+     * @param userObject    A user assigned Object
+     */
+    virtual void setUserObject(Object *userObject);
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
@@ -952,6 +971,7 @@ protected:
     PositionType _positionType;
     cocos2d::Point _positionPercent;
     bool _isRunning;
+    cocos2d::Object* _userObject;
 };
 /**
 *   @js NA

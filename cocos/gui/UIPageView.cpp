@@ -51,7 +51,6 @@ UIPageView::~UIPageView()
 {
     _pages->removeAllObjects();
     CC_SAFE_RELEASE(_pages);
-    CC_SAFE_RELEASE(_eventListener);
     _eventListener = NULL;
     _eventSelector = NULL;
 }
@@ -574,9 +573,7 @@ void UIPageView::pageTurningEvent()
 
 void UIPageView::addEventListener(cocos2d::Object *target, SEL_PageViewEvent selector)
 {
-    CC_SAFE_RELEASE(_eventListener);
     _eventListener = target;
-    CC_SAFE_RETAIN(_eventListener);
     _eventSelector = selector;
 }
 
