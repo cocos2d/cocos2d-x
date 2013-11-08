@@ -86,7 +86,16 @@ m_pfnScrollToRightSelector(NULL)
 
 UIScrollView::~UIScrollView()
 {
-    
+    m_pEventListener = NULL;
+    m_pfnEventSelector = NULL;
+    m_pScrollToTopListener = NULL;
+    m_pfnScrollToTopSelector = NULL;
+    m_pScrollToBottomListener = NULL;
+    m_pfnScrollToBottomSelector = NULL;
+    m_pScrollToLeftListener = NULL;
+    m_pfnScrollToLeftSelector = NULL;
+    m_pScrollToRightListener = NULL;
+    m_pfnScrollToRightSelector = NULL;
 }
 
 UIScrollView* UIScrollView::create()

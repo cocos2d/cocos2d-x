@@ -77,7 +77,13 @@ UIListView::~UIListView()
     CC_SAFE_RELEASE_NULL(m_overTopArray);
     CC_SAFE_RELEASE_NULL(m_overBottomArray);
     CC_SAFE_RELEASE_NULL(m_overLeftArray);
-    CC_SAFE_RELEASE_NULL(m_overRightArray);        
+    CC_SAFE_RELEASE_NULL(m_overRightArray);
+    m_pEventListener = NULL;
+    m_pfnEventSelector = NULL;
+    m_pInitChildListener = NULL;
+    m_pfnInitChildSelector = NULL;
+    m_pUpdateChildListener = NULL;
+    m_pfnUpdateChildSelector = NULL;
 }
 
 UIListView* UIListView::create()

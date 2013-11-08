@@ -591,7 +591,7 @@ void UILayout::doLayout()
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))
                         {
-                            relativeWidget = CCUIHELPER->seekWidgetByRelativeName(this, relativeName);
+                            relativeWidget = UIHelper::seekWidgetByRelativeName(this, relativeName);
                             if (relativeWidget)
                             {
                                 relativeWidgetLP = dynamic_cast<UIRelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));

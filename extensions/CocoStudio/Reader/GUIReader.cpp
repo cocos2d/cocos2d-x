@@ -37,12 +37,14 @@ GUIReader::GUIReader():
 m_strFilePath(""),
 m_bOlderVersion(false)
 {
-    
+    _fileDesignSizes = CCDictionary::create();
+    CC_SAFE_RETAIN(_fileDesignSizes);
 }
 
 GUIReader::~GUIReader()
 {
-    
+    _fileDesignSizes->removeAllObjects();
+    CC_SAFE_RELEASE(_fileDesignSizes);
 }
 
 GUIReader* GUIReader::shareReader()
@@ -193,12 +195,30 @@ UIWidget* GUIReader::widgetFromJsonDictionary(cs::CSJsonDictionary* data)
     return widget;
 }
 
+void GUIReader::storeFileDesignSize(const char *fileName, const cocos2d::CCSize &size)
+{
+    if (!_fileDesignSizes)
+    {
+        return;
+    }
+    cocos2d::CCString* strSize = cocos2d::CCString::createWithFormat("{%f,%f}", size.width, size.height);
+    _fileDesignSizes->setObject(strSize, fileName);
+}
+
+const cocos2d::CCSize GUIReader::getFileDesignSize(const char* fileName) const
+{
+    if (!_fileDesignSizes)
+    {
+        return cocos2d::CCSizeZero;
+    }
+    cocos2d::CCSize designSize = cocos2d::CCSizeFromString(((cocos2d::CCString*)_fileDesignSizes->objectForKey(fileName))->m_sString.c_str());
+    return designSize;
+}
 
 
 UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 {
     DictionaryHelper* dicHelper = DICTOOL;
-    UIHelper* uiHelper = CCUIHELPER;
     m_bOlderVersion = false;
     const char *des = NULL;
     std::string jsonpath;
@@ -230,20 +250,18 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
         const char* file = dicHelper->getStringValueFromArray_json(jsonDict, "textures", i);
         std::string tp = m_strFilePath;
         tp.append(file);
-        uiHelper->addSpriteFrame(tp.c_str());
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(tp.c_str());
     }
     float fileDesignWidth = dicHelper->getFloatValue_json(jsonDict, "designWidth");
     float fileDesignHeight = dicHelper->getFloatValue_json(jsonDict, "designHeight");
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
         printf("Read design size error!\n");
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        uiHelper->setFileDesignWidth(winSize.width);
-        uiHelper->setFileDesignHeight(winSize.height);
+        storeFileDesignSize(fileName, winSize);
     }
     else
     {
-        uiHelper->setFileDesignWidth(fileDesignWidth);
-        uiHelper->setFileDesignHeight(fileDesignHeight);
+        storeFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
     }
     cs::CSJsonDictionary* widgetTree = dicHelper->getSubDictionary_json(jsonDict, "widgetTree");
     UIWidget* widget = widgetFromJsonDictionary(widgetTree);
