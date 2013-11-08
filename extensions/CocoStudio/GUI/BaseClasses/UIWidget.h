@@ -1011,6 +1011,7 @@ public:
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
+    void updateSizeAndPosition();
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
@@ -1035,7 +1036,6 @@ protected:
     void cancelUpEvent();
     void longClickEvent();
     void updateAnchorPoint();
-    void updateSizeAndPosition();
     void copyProperties(UIWidget* model);
     virtual UIWidget* createCloneInstance();
     virtual void copySpecialProperties(UIWidget* model);
