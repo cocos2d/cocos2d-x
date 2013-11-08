@@ -55,10 +55,8 @@ UIPageView::~UIPageView()
 {
     m_pages->removeAllObjects();
     CC_SAFE_RELEASE(m_pages);
-    CC_SAFE_RELEASE(m_pEventListener);
     m_pEventListener = NULL;
     m_pfnEventSelector = NULL;
-    CC_SAFE_RELEASE(m_pPageTurningListener);
     m_pPageTurningListener = NULL;
     m_pfnPageTurningSelector = NULL;
 }
@@ -587,18 +585,14 @@ void UIPageView::pageTurningEvent()
 
 void UIPageView::addEventListener(CCObject *target, SEL_PageViewEvent selector)
 {
-    CC_SAFE_RELEASE(m_pEventListener);
     m_pEventListener = target;
-    CC_SAFE_RETAIN(m_pEventListener);
     m_pfnEventSelector = selector;
 }
 
 /*Compatible*/
 void UIPageView::addPageTurningEvent(CCObject *target, SEL_PageViewPageTurningEvent selector)
 {
-    CC_SAFE_RELEASE(m_pPageTurningListener);
     m_pPageTurningListener = target;
-    CC_SAFE_RETAIN(m_pPageTurningListener);
     m_pfnPageTurningSelector = selector;
 }
 /************/

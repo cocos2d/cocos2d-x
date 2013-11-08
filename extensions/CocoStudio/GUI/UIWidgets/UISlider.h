@@ -213,9 +213,7 @@ public:
     void setScale9Enable(bool is){setScale9Enabled(is);};
     void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector)
     {
-        CC_SAFE_RELEASE(m_pPercentListener);
         m_pPercentListener = target;
-        CC_SAFE_RETAIN(m_pPercentListener);
         m_pfnPercentSelector = selector;
     };
     /************/
