@@ -109,12 +109,12 @@ public:
     virtual bool init();
     virtual void initRenderer();
     void setTouchSize(const cocos2d::Size &size);
-    void setText(const char* text);
-    void setPlaceHolder(const char* value);
+    void setText(const std::string& text);
+    void setPlaceHolder(const std::string& value);
     void setFontSize(int size);
-    void setFontName(const char* name);
+    void setFontName(const std::string& name);
     virtual void didNotSelectSelf();
-    const char* getStringValue();
+    const std::string& getStringValue();
     virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
     void setMaxLengthEnabled(bool enable);
     bool isMaxLengthEnabled();

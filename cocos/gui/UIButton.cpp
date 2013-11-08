@@ -565,12 +565,12 @@ void UIButton::setPressedActionEnabled(bool enabled)
     _pressedActionEnabled = enabled;
 }
 
-void UIButton::setTitleText(const char* text)
+void UIButton::setTitleText(const std::string& text)
 {
     _titleRenderer->setString(text);
 }
 
-const char* UIButton::getTitleText() const
+const std::string& UIButton::getTitleText() const
 {
     return _titleRenderer->getString();
 }
