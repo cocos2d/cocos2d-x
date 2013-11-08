@@ -159,7 +159,7 @@ void ActionNode::initActionNodeFromRoot(Object* root)
 		UIWidget* rootWidget = dynamic_cast<UIWidget*>(root);
 		if (rootWidget != NULL)
 		{
-			UIWidget* widget = UIHelper::instance()->seekActionWidgetByActionTag(rootWidget, getActionTag());
+			UIWidget* widget = UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
 			if (widget != NULL)
 			{
 				setObject(widget);
@@ -424,7 +424,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 	bool bFindFrame = false;
 
 	ActionFrame* srcFrame = NULL;
-	ActionFrame* destFrame = NULL;
+//	ActionFrame* destFrame = NULL;
 
 	for (int n = 0; n < _frameArrayNum; n++)
 	{

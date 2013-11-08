@@ -62,9 +62,9 @@ static unsigned short* copyUTF16StringN(unsigned short* str)
 //
 static Dictionary* s_pConfigurations = NULL;
 
-CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
+CCBMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
 {
-    CCBMFontConfiguration* pRet = NULL;
+    CCBMFontConfiguration* ret = NULL;
 
     if( s_pConfigurations == NULL )
     {
@@ -72,17 +72,17 @@ CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
         s_pConfigurations->init();
     }
 
-    pRet = static_cast<CCBMFontConfiguration*>( s_pConfigurations->objectForKey(fntFile) );
-    if( pRet == NULL )
+    ret = static_cast<CCBMFontConfiguration*>( s_pConfigurations->objectForKey(fntFile) );
+    if( ret == NULL )
     {
-        pRet = CCBMFontConfiguration::create(fntFile);
-        if (pRet)
+        ret = CCBMFontConfiguration::create(fntFile.c_str());
+        if (ret)
         {
-            s_pConfigurations->setObject(pRet, fntFile);
+            s_pConfigurations->setObject(ret, fntFile);
         }        
     }
 
-    return pRet;
+    return ret;
 }
 
 void FNTConfigRemoveCache( void )
@@ -98,19 +98,19 @@ void FNTConfigRemoveCache( void )
 //BitmapFontConfiguration
 //
 
-CCBMFontConfiguration * CCBMFontConfiguration::create(const char *FNTfile)
+CCBMFontConfiguration * CCBMFontConfiguration::create(const std::string& FNTfile)
 {
-    CCBMFontConfiguration * pRet = new CCBMFontConfiguration();
-    if (pRet->initWithFNTfile(FNTfile))
+    CCBMFontConfiguration * ret = new CCBMFontConfiguration();
+    if (ret->initWithFNTfile(FNTfile))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(ret);
     return NULL;
 }
 
-bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
+bool CCBMFontConfiguration::initWithFNTfile(const std::string& FNTfile)
 {
     _kerningDictionary = NULL;
     _fontDefDictionary = NULL;
@@ -180,7 +180,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
     }
 }
 
-std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *controlFile)
+std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const std::string& controlFile)
 {    
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(controlFile);
     String *contents = String::createWithContentsOfFile(fullpath.c_str());
@@ -191,7 +191,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *contr
 
     if (!contents)
     {
-        CCLOG("cocos2d: Error parsing FNTfile %s", controlFile);
+        CCLOG("cocos2d: Error parsing FNTfile %s", controlFile.c_str());
         return NULL;
     }
 
@@ -200,7 +200,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *contr
     std::string strLeft = contents->getCString();
     while (strLeft.length() > 0)
     {
-        int pos = strLeft.find('\n');
+        size_t pos = strLeft.find('\n');
 
         if (pos != (int)std::string::npos)
         {
@@ -259,7 +259,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *contr
     return validCharsString;
 }
 
-void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fntFile)
+void CCBMFontConfiguration::parseImageFileName(std::string line, const std::string& fntFile)
 {
     //////////////////////////////////////////////////////////////////////////
     // line to parse:
@@ -267,8 +267,8 @@ void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fnt
     //////////////////////////////////////////////////////////////////////////
 
     // page ID. Sanity check
-    int index = line.find('=')+1;
-    int index2 = line.find(' ', index);
+    long index = line.find('=')+1;
+    long index2 = line.find(' ', index);
     std::string value = line.substr(index, index2-index);
     CCASSERT(atoi(value.c_str()) == 0, "LabelBMFont file could not be found");
     // file 
@@ -288,8 +288,8 @@ void CCBMFontConfiguration::parseInfoArguments(std::string line)
     //////////////////////////////////////////////////////////////////////////
 
     // padding
-    int index = line.find("padding=");
-    int index2 = line.find(' ', index);
+    long index = line.find("padding=");
+    long index2 = line.find(' ', index);
     std::string value = line.substr(index, index2-index);
     sscanf(value.c_str(), "padding=%d,%d,%d,%d", &_padding.top, &_padding.right, &_padding.bottom, &_padding.left);
     CCLOG("cocos2d: padding: %d,%d,%d,%d", _padding.left, _padding.top, _padding.right, _padding.bottom);
@@ -303,8 +303,8 @@ void CCBMFontConfiguration::parseCommonArguments(std::string line)
     //////////////////////////////////////////////////////////////////////////
 
     // Height
-    int index = line.find("lineHeight=");
-    int index2 = line.find(' ', index);
+    long index = line.find("lineHeight=");
+    long index2 = line.find(' ', index);
     std::string value = line.substr(index, index2-index);
     sscanf(value.c_str(), "lineHeight=%d", &_commonHeight);
     // scaleW. sanity check
@@ -334,8 +334,8 @@ void CCBMFontConfiguration::parseCharacterDefinition(std::string line, ccBMFontD
     //////////////////////////////////////////////////////////////////////////
 
     // Character ID
-    int index = line.find("id=");
-    int index2 = line.find(' ', index);
+    long index = line.find("id=");
+    long index2 = line.find(' ', index);
     std::string value = line.substr(index, index2-index);
     sscanf(value.c_str(), "id=%u", &characterDefinition->charID);
 
@@ -385,8 +385,8 @@ void CCBMFontConfiguration::parseKerningEntry(std::string line)
 
     // first
     int first;
-    int index = line.find("first=");
-    int index2 = line.find(' ', index);
+    long index = line.find("first=");
+    long index2 = line.find(' ', index);
     std::string value = line.substr(index, index2-index);
     sscanf(value.c_str(), "first=%d", &first);
 
@@ -431,23 +431,23 @@ LabelBMFont * LabelBMFont::create()
     return NULL;
 }
 
-LabelBMFont * LabelBMFont::create(const char *str, const char *fntFile, float width, TextHAlignment alignment)
+LabelBMFont * LabelBMFont::create(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment)
 {
     return LabelBMFont::create(str, fntFile, width, alignment, Point::ZERO);
 }
 
-LabelBMFont * LabelBMFont::create(const char *str, const char *fntFile, float width)
+LabelBMFont * LabelBMFont::create(const std::string& str, const std::string& fntFile, float width)
 {
     return LabelBMFont::create(str, fntFile, width, TextHAlignment::LEFT, Point::ZERO);
 }
 
-LabelBMFont * LabelBMFont::create(const char *str, const char *fntFile)
+LabelBMFont * LabelBMFont::create(const std::string& str, const std::string& fntFile)
 {
     return LabelBMFont::create(str, fntFile, kLabelAutomaticWidth, TextHAlignment::LEFT, Point::ZERO);
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFont *LabelBMFont::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextHAlignment alignment/* = TextHAlignment::LEFT*/, Point imageOffset/* = Point::ZERO*/)
+LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width/* = kLabelAutomaticWidth*/, TextHAlignment alignment/* = TextHAlignment::LEFT*/, Point imageOffset/* = Point::ZERO*/)
 {
     LabelBMFont *pRet = new LabelBMFont();
     if(pRet && pRet->initWithString(str, fntFile, width, alignment, imageOffset))
@@ -461,22 +461,21 @@ LabelBMFont *LabelBMFont::create(const char *str, const char *fntFile, float wid
 
 bool LabelBMFont::init()
 {
-    return initWithString(NULL, NULL, kLabelAutomaticWidth, TextHAlignment::LEFT, Point::ZERO);
+    return initWithString("", "", kLabelAutomaticWidth, TextHAlignment::LEFT, Point::ZERO);
 }
 
-bool LabelBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextHAlignment alignment/* = TextHAlignment::LEFT*/, Point imageOffset/* = Point::ZERO*/)
+bool LabelBMFont::initWithString(const std::string& theString, const std::string& fntFile, float width/* = kLabelAutomaticWidth*/, TextHAlignment alignment/* = TextHAlignment::LEFT*/, Point imageOffset/* = Point::ZERO*/)
 {
     CCASSERT(!_configuration, "re-init is no longer supported");
-    CCASSERT( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for LabelBMFont");
-    
+
     Texture2D *texture = NULL;
     
-    if (fntFile)
+    if (fntFile.size() > 0 )
     {
         CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
         if (!newConf)
         {
-            CCLOG("cocos2d: WARNING. LabelBMFont: Impossible to create font. Please check file: '%s'", fntFile);
+            CCLOG("cocos2d: WARNING. LabelBMFont: Impossible to create font. Please check file: '%s'", fntFile.c_str());
             release();
             return false;
         }
@@ -495,12 +494,7 @@ bool LabelBMFont::initWithString(const char *theString, const char *fntFile, flo
         texture->autorelease();
     }
 
-    if (theString == NULL)
-    {
-        theString = "";
-    }
-
-    if (SpriteBatchNode::initWithTexture(texture, strlen(theString)))
+    if (SpriteBatchNode::initWithTexture(texture, theString.size()))
     {
         _width = width;
         _alignment = alignment;
@@ -724,20 +718,17 @@ void LabelBMFont::createFontChars()
 }
 
 //LabelBMFont - LabelProtocol protocol
-void LabelBMFont::setString(const char *newString)
+void LabelBMFont::setString(const std::string &newString)
 {
     this->setString(newString, true);
 }
 
-void LabelBMFont::setString(const char *newString, bool needUpdateLabel)
+void LabelBMFont::setString(const std::string &newString, bool needUpdateLabel)
 {
-    if (newString == NULL) {
-        newString = "";
-    }
     if (needUpdateLabel) {
         _initialStringUTF8 = newString;
     }
-    unsigned short* utf16String = cc_utf8_to_utf16(newString);
+    unsigned short* utf16String = cc_utf8_to_utf16(newString.c_str());
     setString(utf16String, needUpdateLabel);
     CC_SAFE_DELETE_ARRAY(utf16String);
  }

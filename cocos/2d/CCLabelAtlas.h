@@ -67,27 +67,27 @@ public:
     }
 
     /** creates the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    static LabelAtlas * create(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    static LabelAtlas * create(const std::string& string, const std::string& charMapFile, long itemWidth, long itemHeight, long startCharMap);
     
     /** creates the LabelAtlas with a string and a configuration file
      @since v2.0
      */
-    static LabelAtlas* create(const char *string, const char *fntFile);
+    static LabelAtlas* create(const std::string& string, const std::string& fntFile);
 
     /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    bool initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    bool initWithString(const std::string& string, const std::string& charMapFile, long itemWidth, long itemHeight, long startCharMap);
     
     /** initializes the LabelAtlas with a string and a configuration file
      @since v2.0
      */
-    bool initWithString(const char *string, const char *fntFile);
+    bool initWithString(const std::string& string, const std::string& fntFile);
     
     /** initializes the LabelAtlas with a string, a texture, the width and height in points of each element and the starting char of the atlas */
-    bool initWithString(const char* string, Texture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    bool initWithString(const std::string& string, Texture2D* texture, long itemWidth, long itemHeight, long startCharMap);
     
     // super methods
     virtual void updateAtlasValues();
-    virtual void setString(const char *label);
+    virtual void setString(const std::string &label);
     virtual const char* getString(void) const;
     
 #if CC_LABELATLAS_DEBUG_DRAW
@@ -98,7 +98,7 @@ protected:
     // string to render
     std::string _string;
     // the first char in the charmap
-    unsigned int _mapStartChar;
+    long _mapStartChar;
 };
 
 // end of GUI group

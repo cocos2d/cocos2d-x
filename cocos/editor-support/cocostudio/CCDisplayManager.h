@@ -76,7 +76,7 @@ public:
 
     void removeDisplay(int index);
 
-    cocos2d::Array *getDecorativeDisplayList();
+    cocos2d::Array *getDecorativeDisplayList() const;
 
     /**
      * Change display by index. You can just use this method to change display in the display list.
@@ -90,13 +90,14 @@ public:
     void changeDisplayByIndex(int index, bool force);
 
 
-    cocos2d::Node *getDisplayRenderNode();
+    cocos2d::Node *getDisplayRenderNode() const;
+    DisplayType getDisplayRenderNodeType() const;
 
-    int getCurrentDisplayIndex();
+    int getCurrentDisplayIndex() const;
 
     virtual void setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay);
-    virtual DecorativeDisplay *getCurrentDecorativeDisplay();
-    virtual DecorativeDisplay *getDecorativeDisplayByIndex( int index);
+    virtual DecorativeDisplay *getCurrentDecorativeDisplay() const;
+    virtual DecorativeDisplay *getDecorativeDisplayByIndex( int index) const;
 
     /**
      * Sets whether the display is visible
@@ -111,13 +112,13 @@ public:
      * @see setVisible(bool)
      * @return true if the node is visible, false if the node is hidden.
      */
-    virtual bool isVisible();
+    virtual bool isVisible() const;
 
-    cocos2d::Size getContentSize();
-    cocos2d::Rect getBoundingBox();
+    cocos2d::Size getContentSize() const;
+    cocos2d::Rect getBoundingBox() const;
 
-    cocos2d::Point getAnchorPoint();
-    cocos2d::Point getAnchorPointInPoints();
+    cocos2d::Point getAnchorPoint() const;
+    cocos2d::Point getAnchorPointInPoints() const;
 
     /**
      * Check if the position is inside the bone.
@@ -129,16 +130,20 @@ public:
      */
     virtual bool containPoint(float x, float y);
 
+    virtual void setForceChangeDisplay(bool force) { _forceChangeDisplay = force; }
+    virtual bool isForceChangeDisplay() const { return _forceChangeDisplay; }
 protected:
     cocos2d::Array *_decoDisplayList;
     //! Display render node.
     cocos2d::Node *_displayRenderNode;
+    //! Display render node type
+    DisplayType _displayType;
     //! Include current display information, like contour sprite, etc.
     DecorativeDisplay *_currentDecoDisplay;
     //! Current display index
     int _displayIndex;
 
-    CC_SYNTHESIZE(bool, _forceChangeDisplay, ForceChangeDisplay)
+    bool _forceChangeDisplay;
 
     //! Whether of not the bone is visible. Default is true
     bool _visible;

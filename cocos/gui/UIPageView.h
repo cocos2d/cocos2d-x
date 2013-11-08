@@ -25,7 +25,7 @@
 #ifndef __UIPAGEVIEW_H__
 #define __UIPAGEVIEW_H__
 
-#include "gui/Layout.h"
+#include "gui/UILayout.h"
 #include "gui/UIScrollInterface.h"
 
 namespace gui {
@@ -43,7 +43,7 @@ typedef enum {
     PAGEVIEW_TOUCHRIGHT
 }PVTouchDir;
 
-class UIPageView : public Layout , public UIScrollInterface
+class UIPageView : public UILayout , public UIScrollInterface
 {
     
 public:
@@ -78,21 +78,21 @@ public:
      *
      * @param page    page to be added to pageview.
      */
-    void addPage(Layout* page);
+    void addPage(UILayout* page);
     
     /**
      * Inert a page to pageview.
      *
      * @param page    page to be added to pageview.
      */
-    void insertPage(Layout* page, int idx);
+    void insertPage(UILayout* page, int idx);
     
     /**
      * Remove a page of pageview.
      *
      * @param page    page which will be removed.
      */
-    void removePage(Layout* page);
+    void removePage(UILayout* page);
 
     /**
      * Remove a page at index of pageview.
@@ -115,8 +115,11 @@ public:
      */
     int getCurPageIndex() const;
     
+    cocos2d::Array* getPages();
+    
     // event
     void addEventListener(cocos2d::Object *target, SEL_PageViewEvent selector);
+
     
     //override "removeChild" method of widget.
     virtual bool removeChild(UIWidget* widget);
@@ -140,15 +143,16 @@ public:
     virtual void update(float dt);
     
     virtual void doLayout(){};
-
+    
     /**
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+    
 protected:
     virtual bool addChild(UIWidget* widget);
     virtual bool init();
-    Layout* createPage();
+    UILayout* createPage();
     float getPositionXByIndex(int idx);
     void updateBoundaryPages();
     virtual void handlePressLogic(const cocos2d::Point &touchPoint);
@@ -162,14 +166,15 @@ protected:
     void updateChildrenSize();
     void updateChildrenPosition();
     virtual void onSizeChanged();
-
-    virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
+    virtual void setClippingEnabled(bool able){UILayout::setClippingEnabled(able);};
 protected:
     int _curPageIdx;
     cocos2d::Array* _pages;
     PVTouchDir _touchMoveDir;
     float _touchStartLocation;
-    float _touchEndLocation;
     float _touchMoveStartLocation;
     cocos2d::Point _movePagePoint;
     UIWidget* _leftChild;
@@ -183,6 +188,7 @@ protected:
     float _childFocusCancelOffset;
     cocos2d::Object* _eventListener;
     SEL_PageViewEvent _eventSelector;
+
 };
 
 }

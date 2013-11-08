@@ -79,15 +79,6 @@ static std::map<int,int> ports_sockets;
 // name ~> globals
 static std::map<std::string, js::RootedObject*> globals;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-namespace js {
-bool IsInRequest(JSContext* cx)
-{
-    return true;
-}
-}
-#endif
-
 static void ReportException(JSContext *cx)
 {
     if (JS_IsExceptionPending(cx)) {
@@ -105,6 +96,7 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
     if (func == JSVAL_VOID) { return; }
     jsval thisObj = JS_GetReservedSlot(obj, 1);
     JSAutoCompartment ac(cx, obj);
+    
     if (thisObj == JSVAL_VOID) {
         JS_CallFunctionValue(cx, obj, func, 1, &dataVal, &retval);
     } else {
@@ -536,7 +528,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    unsigned long length = 0;
+    long length = 0;
     unsigned char* data = futil->getFileData(byteCodePath.c_str(),
                                     "rb",
                                     &length);

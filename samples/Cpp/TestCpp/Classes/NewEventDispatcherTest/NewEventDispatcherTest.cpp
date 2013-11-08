@@ -19,7 +19,8 @@ std::function<Layer*()> createFunctions[] =
     CL(CustomEventTest),
     CL(LabelKeyboardEventTest),
     CL(SpriteAccelerationEventTest),
-    CL(RemoveAndRetainNodeTest)
+    CL(RemoveAndRetainNodeTest),
+    CL(RemoveListenerAfterAddingTest)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -666,3 +667,87 @@ std::string RemoveAndRetainNodeTest::subtitle()
 {
     return "Sprite should be removed after 5s, add to scene again after 5s";
 }
+
+//RemoveListenerAfterAddingTest
+void RemoveListenerAfterAddingTest::onEnter()
+{
+    EventDispatcherTestDemo::onEnter();
+
+    auto item1 = MenuItemFont::create("Click Me 1", [this](Object* sender){
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = [](Touch* touch, Event* event) -> bool{
+            CCASSERT(false, "Should not come here!");
+            return true;
+        };
+        
+        _eventDispatcher->addEventListenerWithFixedPriority(listener, -1);
+        _eventDispatcher->removeEventListener(listener);
+    });
+
+    item1->setPosition(VisibleRect::center() + Point(0, 80));
+    
+    auto addNextButton = [this](){
+        auto next = MenuItemFont::create("Please Click Me To Reset!", [this](Object* sender){
+            this->restartCallback(nullptr);
+        });
+        next->setPosition(VisibleRect::center() + Point(0, -40));
+        
+        auto menu = Menu::create(next, nullptr);
+        menu->setPosition(VisibleRect::leftBottom());
+        menu->setAnchorPoint(Point::ZERO);
+        this->addChild(menu);
+    };
+    
+    auto item2 = MenuItemFont::create("Click Me 2", [=](Object* sender){
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = [](Touch* touch, Event* event) -> bool{
+            CCASSERT(false, "Should not come here!");
+            return true;
+        };
+        
+        _eventDispatcher->addEventListenerWithFixedPriority(listener, -1);
+        _eventDispatcher->removeEventListeners(EventListener::Type::TOUCH_ONE_BY_ONE);
+        
+        addNextButton();
+    });
+    
+    item2->setPosition(VisibleRect::center() + Point(0, 40));
+    
+    auto item3 = MenuItemFont::create("Click Me 3", [=](Object* sender){
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = [](Touch* touch, Event* event) -> bool{
+            CCASSERT(false, "Should not come here!");
+            return true;
+        };
+        
+        _eventDispatcher->addEventListenerWithFixedPriority(listener, -1);
+        _eventDispatcher->removeAllEventListeners();
+        
+        addNextButton();
+    });
+    
+    item3->setPosition(VisibleRect::center());
+    
+    auto menu = Menu::create(item1, item2, item3, nullptr);
+    menu->setPosition(VisibleRect::leftBottom());
+    menu->setAnchorPoint(Point::ZERO);
+
+    addChild(menu);
+}
+
+void RemoveListenerAfterAddingTest::onExit()
+{
+    EventDispatcherTestDemo::onExit();
+}
+
+std::string RemoveListenerAfterAddingTest::title()
+{
+    return "RemoveListenerAfterAddingTest";
+}
+
+std::string RemoveListenerAfterAddingTest::subtitle()
+{
+    return "Should not crash!";
+}
+
+

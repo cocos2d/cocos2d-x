@@ -24,9 +24,8 @@
 
 #include "gui/UILabel.h"
 
- using namespace cocos2d;
-
 namespace gui {
+
 
 UILabel::UILabel():
 _touchScaleChangeEnabled(false),
@@ -67,7 +66,7 @@ bool UILabel::init()
 void UILabel::initRenderer()
 {
     UIWidget::initRenderer();
-    _labelRenderer = CCLabelTTF::create();
+    _labelRenderer = cocos2d::LabelTTF::create();
     _renderer->addChild(_labelRenderer);
 }
 
@@ -95,29 +94,31 @@ int UILabel::getStringLength()
 
 void UILabel::setFontSize(int size)
 {
+    _fontSize = size;
     _labelRenderer->setFontSize(size);
     labelScaleChangedWithSize();
 }
 
 void UILabel::setFontName(const char* name)
 {
+    _fontName = name;
     _labelRenderer->setFontName(name);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTextAreaSize(const Size &size)
+void UILabel::setTextAreaSize(const cocos2d::Size &size)
 {
     _labelRenderer->setDimensions(size);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTextHorizontalAlignment(TextHAlignment alignment)
+void UILabel::setTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
 {
     _labelRenderer->setHorizontalAlignment(alignment);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTextVerticalAlignment(TextVAlignment alignment)
+void UILabel::setTextVerticalAlignment(cocos2d::TextVAlignment alignment)
 {
     _labelRenderer->setVerticalAlignment(alignment);
     labelScaleChangedWithSize();
@@ -182,7 +183,7 @@ bool UILabel::isFlipY()
     return _labelRenderer->isFlippedY();
 }
 
-void UILabel::setAnchorPoint(const Point &pt)
+void UILabel::setAnchorPoint(const cocos2d::Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
     _labelRenderer->setAnchorPoint(pt);
@@ -193,12 +194,12 @@ void UILabel::onSizeChanged()
     labelScaleChangedWithSize();
 }
 
-const Size& UILabel::getContentSize() const
+const cocos2d::Size& UILabel::getContentSize() const
 {
     return _labelRenderer->getContentSize();
 }
 
-Node* UILabel::getVirtualRenderer()
+cocos2d::Node* UILabel::getVirtualRenderer()
 {
     return _labelRenderer;
 }
@@ -212,7 +213,7 @@ void UILabel::labelScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _labelRenderer->getContentSize();
+        cocos2d::Size textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _labelRenderer->setScale(1.0f);
@@ -223,11 +224,29 @@ void UILabel::labelScaleChangedWithSize()
         _labelRenderer->setScaleX(scaleX);
         _labelRenderer->setScaleY(scaleY);
     }
+    
 }
 
 const char* UILabel::getDescription() const
 {
     return "Label";
+}
+
+UIWidget* UILabel::createCloneInstance()
+{
+    return UILabel::create();
+}
+
+void UILabel::copySpecialProperties(UIWidget *widget)
+{
+    UILabel* label = dynamic_cast<UILabel*>(widget);
+    if (label)
+    {
+        setFontName(label->_fontName.c_str());
+        setFontSize(label->_labelRenderer->getFontSize());
+        setText(label->getStringValue());
+        setTouchScaleChangeEnabled(label->_touchScaleChangeEnabled);
+    }
 }
 
 }

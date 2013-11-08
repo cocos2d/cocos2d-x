@@ -29,6 +29,10 @@
 
 namespace gui {
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIImageView : public UIWidget
 {
 public:
@@ -100,22 +104,22 @@ public:
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
-    
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
     
     void setDoubleClickEnabled(bool able);
     void doubleClickEvent();
     void checkDoubleClick(float dt);
     virtual const cocos2d::Size& getContentSize() const;
     virtual cocos2d::Node* getVirtualRenderer();
-    
-    /**
-     * Returns the "class name" of widget.
-     */
-    virtual const char* getDescription() const;
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void imageTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     int _clickCount;
     float _clickTimeInterval;

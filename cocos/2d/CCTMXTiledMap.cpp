@@ -32,33 +32,33 @@ NS_CC_BEGIN
 
 // implementation TMXTiledMap
 
-TMXTiledMap * TMXTiledMap::create(const char *tmxFile)
+TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
 {
-    TMXTiledMap *pRet = new TMXTiledMap();
-    if (pRet->initWithTMXFile(tmxFile))
+    TMXTiledMap *ret = new TMXTiledMap();
+    if (ret->initWithTMXFile(tmxFile))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(ret);
     return NULL;
 }
 
-TMXTiledMap* TMXTiledMap::createWithXML(const char* tmxString, const char* resourcePath)
+TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
-    TMXTiledMap *pRet = new TMXTiledMap();
-    if (pRet->initWithXML(tmxString, resourcePath))
+    TMXTiledMap *ret = new TMXTiledMap();
+    if (ret->initWithXML(tmxString, resourcePath))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(ret);
     return NULL;
 }
 
-bool TMXTiledMap::initWithTMXFile(const char *tmxFile)
+bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
 {
-    CCASSERT(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi NULL");
+    CCASSERT(tmxFile.size()>0, "TMXTiledMap: tmx file should not be empty");
     
     setContentSize(Size::ZERO);
 
@@ -74,7 +74,7 @@ bool TMXTiledMap::initWithTMXFile(const char *tmxFile)
     return true;
 }
 
-bool TMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
+bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
     setContentSize(Size::ZERO);
 
@@ -195,8 +195,8 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
                 // update content size with the max size
                 const Size& childSize = child->getContentSize();
                 Size currentSize = this->getContentSize();
-                currentSize.width = MAX( currentSize.width, childSize.width );
-                currentSize.height = MAX( currentSize.height, childSize.height );
+                currentSize.width = std::max( currentSize.width, childSize.width );
+                currentSize.height = std::max( currentSize.height, childSize.height );
                 this->setContentSize(currentSize);
 
                 idx++;
@@ -206,16 +206,16 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 }
 
 // public
-TMXLayer * TMXTiledMap::getLayer(const char *layerName) const
+TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
 {
-    CCASSERT(layerName != NULL && strlen(layerName) > 0, "Invalid layer name!");
+    CCASSERT(layerName.size() > 0, "Invalid layer name!");
     Object* pObj = NULL;
     CCARRAY_FOREACH(_children, pObj) 
     {
         TMXLayer* layer = dynamic_cast<TMXLayer*>(pObj);
         if(layer)
         {
-            if(0 == strcmp(layer->getLayerName(), layerName))
+            if(layerName.compare( layer->getLayerName()) == 0)
             {
                 return layer;
             }
@@ -226,11 +226,10 @@ TMXLayer * TMXTiledMap::getLayer(const char *layerName) const
     return NULL;
 }
 
-TMXObjectGroup * TMXTiledMap::getObjectGroup(const char *groupName) const
+TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
 {
-    CCASSERT(groupName != NULL && strlen(groupName) > 0, "Invalid group name!");
+    CCASSERT(groupName.size() > 0, "Invalid group name!");
 
-    std::string sGroupName = groupName;
     if (_objectGroups && _objectGroups->count()>0)
     {
         TMXObjectGroup* objectGroup = NULL;
@@ -238,7 +237,7 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const char *groupName) const
         CCARRAY_FOREACH(_objectGroups, pObj)
         {
             objectGroup = static_cast<TMXObjectGroup*>(pObj);
-            if (objectGroup && objectGroup->getGroupName() == sGroupName)
+            if (objectGroup && objectGroup->getGroupName() == groupName)
             {
                 return objectGroup;
             }
@@ -249,7 +248,7 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const char *groupName) const
     return NULL;
 }
 
-String* TMXTiledMap::getProperty(const char *propertyName) const
+String* TMXTiledMap::getProperty(const std::string& propertyName) const
 {
     return static_cast<String*>(_properties->objectForKey(propertyName));
 }

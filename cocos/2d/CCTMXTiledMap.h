@@ -120,19 +120,19 @@ public:
     virtual ~TMXTiledMap();
 
     /** creates a TMX Tiled Map with a TMX file.*/
-    static TMXTiledMap* create(const char *tmxFile);
+    static TMXTiledMap* create(const std::string& tmxFile);
 
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-    static TMXTiledMap* createWithXML(const char* tmxString, const char* resourcePath);
+    static TMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
 
     /** initializes a TMX Tiled Map with a TMX file */
-    bool initWithTMXFile(const char *tmxFile);
+    bool initWithTMXFile(const std::string& tmxFile);
 
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-    bool initWithXML(const char* tmxString, const char* resourcePath);
+    bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
 
     /** return the TMXLayer for the specific layer */
-    TMXLayer* getLayer(const char *layerName) const;
+    TMXLayer* getLayer(const std::string& layerName) const;
     /**
      * @js NA
      * @lua NA
@@ -140,7 +140,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const char *layerName) const { return getLayer(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
-    TMXObjectGroup* getObjectGroup(const char *groupName) const;
+    TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
     /**
      * @js NA
      * @lua NA
@@ -148,7 +148,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const char *groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
-    String *getProperty(const char *propertyName) const;
+    String *getProperty(const std::string& propertyName) const;
     /**
      * @js NA
      * @lua NA
