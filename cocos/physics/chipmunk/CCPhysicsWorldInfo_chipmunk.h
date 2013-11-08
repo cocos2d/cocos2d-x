@@ -22,29 +22,39 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__
+#define __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__
+
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
-#ifndef __CCPHYSICS_WORLD_INFO_H__
-#define __CCPHYSICS_WORLD_INFO_H__
-
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
+#include <vector>
 NS_CC_BEGIN
 
 class PhysicsWorldInfo
 {
 public:
-    cpSpace* space;
+    cpSpace* getSpace() const { return _space; }
+    void addShape(cpShape* shape);
+    void removeShape(cpShape* shape);
+    void addBody(cpBody* body);
+    void removeBody(cpBody* body);
+    void addJoint(cpConstraint* joint);
+    void removeJoint(cpConstraint* joint);
     
 private:
     PhysicsWorldInfo();
     ~PhysicsWorldInfo();
     
+private:
+    cpSpace* _space;
+    
     friend class PhysicsWorld;
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_WORLD_INFO_H__
 
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__

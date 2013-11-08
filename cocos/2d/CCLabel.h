@@ -83,38 +83,38 @@ public:
     
      // CCLabelTextFormat protocol implementation
     virtual std::vector<LetterInfo>     *getLettersInfo() override { return &_lettersInfo; };
-    virtual bool                        recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) override;
-    virtual bool                        recordPlaceholderInfo(int spriteIndex) override;
-    virtual float                       getLetterPosXLeft( int index ) const override;
-    virtual float                       getLetterPosXRight( int index ) const override;
+    virtual bool recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) override;
+    virtual bool recordPlaceholderInfo(int spriteIndex) override;
+    virtual float getLetterPosXLeft( int index ) const override;
+    virtual float getLetterPosXRight( int index ) const override;
 
-    virtual Sprite *                    getLetter(int ID) override;  
+    virtual Sprite * getLetter(int ID) override;
     
     // font related stuff
-    virtual int                         getCommonLineHeight() const override;
-    virtual int                         getKerningForCharsPair(unsigned short first, unsigned short second) const override;
-    virtual int                         getXOffsetForChar(unsigned short c) const override;
-    virtual int                         getYOffsetForChar(unsigned short c) const override;
-    virtual int                         getAdvanceForChar(unsigned short c, int hintPositionInString) const override;
-    virtual Rect                        getRectForChar(unsigned short c) const override;
+    virtual int getCommonLineHeight() const override;
+    virtual int getKerningForCharsPair(unsigned short first, unsigned short second) const override;
+    virtual int getXOffsetForChar(unsigned short c) const override;
+    virtual int getYOffsetForChar(unsigned short c) const override;
+    virtual int getAdvanceForChar(unsigned short c, int hintPositionInString) const override;
+    virtual Rect getRectForChar(unsigned short c) const override;
     
     // string related stuff
-    virtual int                         getStringNumLines() const override;
-    virtual int                         getStringLenght() const override;
-    virtual unsigned short              getCharAtStringPosition(int position) const override;
-    virtual unsigned short *            getUTF8String() const override;
-    virtual void                        assignNewUTF8String(unsigned short *newString) override;
-    virtual TextHAlignment              getTextAlignment() const override;
+    virtual int getStringNumLines() const override;
+    virtual int getStringLenght() const override;
+    virtual unsigned short getCharAtStringPosition(int position) const override;
+    virtual unsigned short * getUTF8String() const override;
+    virtual void assignNewUTF8String(unsigned short *newString) override;
+    virtual TextHAlignment getTextAlignment() const override;
     
     // label related stuff
-    virtual float                       getMaxLineWidth() const override;
-    virtual bool                        breakLineWithoutSpace() const override;
-    virtual Size                        getLabelContentSize() const override;
-    virtual void                        setLabelContentSize(const Size &newSize) override;
+    virtual float getMaxLineWidth() const override;
+    virtual bool breakLineWithoutSpace() const override;
+    virtual Size getLabelContentSize() const override;
+    virtual void setLabelContentSize(const Size &newSize) override;
     
     // carloX
-    const char * getString() const { return "not implemented"; }
-    void addChild(Node * child, int zOrder=0, int tag=0);
+    virtual const std::string& getString() const override { static std::string _ret("not implemented"); return _ret; }
+    void addChild(Node * child, int zOrder=0, int tag=0) override;
 
 private:
     /**
