@@ -7,7 +7,7 @@ namespace
 {
     static std::function<Layer*()> createFunctions[] = {
         CL(PhysicsDemoLogoSmash),
-        CL(PhysicsDemoPlink),
+        CL(PhysicsDemoPyramidStack),
         CL(PhysicsDemoClickAdd),
         CL(PhysicsDemoRayCast),
         CL(PhysicsDemoJoints),
@@ -67,7 +67,10 @@ bool PhysicsTestScene::initTest()
 #ifdef CC_USE_PHYSICS
     if(TestScene::initWithPhysics())
     {
-        this->getPhysicsWorld()->setDebugDraw(_debugDraw);
+        if (_debugDraw)
+        {
+            getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PHYSICS_DEBUGDRAW_ALL : PHYSICS_DEBUGDRAW_NONE);
+        }
         return true;
     }
 #else
@@ -91,7 +94,7 @@ void PhysicsTestScene::runThisTest()
 void PhysicsTestScene::toggleDebug()
 {
     _debugDraw = !_debugDraw;
-    getPhysicsWorld()->setDebugDraw(_debugDraw);
+    getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PHYSICS_DEBUGDRAW_ALL : PHYSICS_DEBUGDRAW_NONE);
 }
 
 PhysicsDemo::PhysicsDemo()
@@ -99,7 +102,6 @@ PhysicsDemo::PhysicsDemo()
 , _ball(nullptr)
 , _spriteTexture(nullptr)
 {
-    
 }
 
 PhysicsDemo::~PhysicsDemo()
@@ -479,39 +481,39 @@ void PhysicsDemoLogoSmash::onEnter()
 std::string PhysicsDemoLogoSmash::title()
 {
     return "Logo Smash";
-}
-
-void PhysicsDemoPlink::onEnter()
+}void PhysicsDemoPyramidStack::onEnter()
 {
     PhysicsDemo::onEnter();
     
-    auto node = DrawNode::create();
-    auto body = PhysicsBody::create();
-    body->setDynamic(false);
-    node->setPhysicsBody(body);
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
-    Point tris[] = { Point(-15, -15), Point(0, 10), Point(15, -15) };
+    auto node = Node::create();
+    node->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
+    this->addChild(node);
     
-    auto rect = VisibleRect::getVisibleRect();
-    for (int i = 0; i < 9; ++i)
+    auto ball = Sprite::create("Images/ball.png");
+    ball->setScale(1);
+    ball->setPhysicsBody(PhysicsBody::createCircle(10));
+    ball->setPosition(VisibleRect::bottom() + Point(0, 60));
+    this->addChild(ball);
+    
+	for(int i=0; i<14; i++)
     {
-        for (int j = 0; j < 4; ++j)
+		for(int j=0; j<=i; j++)
         {
-            Point offset(rect.origin.x + rect.size.width/9*i + (j%2)*40 - 20, rect.origin.y + j*70);
-            body->addShape(PhysicsShapePolygon::create(tris, 3, PHYSICSSHAPE_MATERIAL_DEFAULT, offset));
+			auto sp = addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
             
-            Point drawVec[] = {tris[0] + offset, tris[1] + offset, tris[2] + offset};
-            node->drawPolygon(drawVec, 3, STATIC_COLOR, 1, STATIC_COLOR);
-        }
-    }
-    
-    addChild(node);
-    
+            sp->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+		}
+	}
 }
-
-std::string PhysicsDemoPlink::title()
+std::string PhysicsDemoPyramidStack::title()
 {
-    return "Plink";
+    return "Pyramid Stack";
 }
 
 PhysicsDemoRayCast::PhysicsDemoRayCast()
