@@ -180,9 +180,9 @@ void LabelTTF::setString(const std::string &string)
     }
 }
 
-const char* LabelTTF::getString(void) const
+const std::string& LabelTTF::getString() const
 {
-    return _string.c_str();
+    return _string;
 }
 
 const char* LabelTTF::description() const
