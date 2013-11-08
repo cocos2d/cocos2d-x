@@ -57,14 +57,14 @@ public:
      *
      * @param text  string value.
      */
-    void setText(const char* text);
+    void setText(const std::string& text);
     
     /**
      * Gets the string value of label.
      *
      * @return text  string value.
      */
-    const char* getStringValue();
+    const std::string& getStringValue();
     
     /**
      * Gets the string length of label.
@@ -85,7 +85,7 @@ public:
      *
      * @param  font name.
      */
-    void setFontName(const char* name);
+    void setFontName(const std::string& name);
     
     /**
      * Sets the touch scale enabled of label.

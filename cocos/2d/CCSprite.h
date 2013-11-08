@@ -494,6 +494,7 @@ public:
     /// @name Functions inherited from Node
     virtual void setScaleX(float scaleX) override;
     virtual void setScaleY(float scaleY) override;
+    virtual void setScale(float scaleX, float scaleY) override;
     /**
     * @js  NA
     * @lua NA

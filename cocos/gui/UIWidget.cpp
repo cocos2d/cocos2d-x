@@ -68,18 +68,26 @@ _sizeType(SIZE_ABSOLUTE),
 _sizePercent(cocos2d::Point::ZERO),
 _positionType(POSITION_ABSOLUTE),
 _positionPercent(cocos2d::Point::ZERO),
-_isRunning(false)
+_isRunning(false),
+_userObject(NULL)
 {
     
 }
 
 UIWidget::~UIWidget()
 {
-    releaseResoures();
+    _touchEventListener = NULL;
+    _touchEventSelector = NULL;
+    removeAllChildren();
+    _children->release();
+    _renderer->removeAllChildrenWithCleanup(true);
+    _renderer->removeFromParentAndCleanup(true);
+    _renderer->release();
     setParent(NULL);
     _layoutParameterDictionary->removeAllObjects();
     CC_SAFE_RELEASE(_layoutParameterDictionary);
     CC_SAFE_RELEASE(_scheduler);
+    CC_SAFE_RELEASE(_userObject);
 }
 
 UIWidget* UIWidget::create()
@@ -116,15 +124,6 @@ bool UIWidget::init()
     return true;
 }
 
-void UIWidget::releaseResoures()
-{
-    removeAllChildren();
-    _children->release();
-    _renderer->removeAllChildrenWithCleanup(true);
-    _renderer->removeFromParentAndCleanup(true);
-    _renderer->release();
-}
-
 void UIWidget::onEnter()
 {
     arrayMakeObjectsPerformSelector(_children, onEnter, UIWidget*);
@@ -136,6 +135,13 @@ void UIWidget::onExit()
 {
     _isRunning = false;
     arrayMakeObjectsPerformSelector(_children, onExit, UIWidget*);
+}
+    
+void UIWidget::setUserObject(cocos2d::Object *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(_userObject);
+    _userObject = pUserObject;
 }
 
 bool UIWidget::addChild(UIWidget *child)

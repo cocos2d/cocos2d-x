@@ -171,8 +171,8 @@ public:
      */
     virtual const char* getDescription() const;
     
-    void setTitleText(const char* text);
-    const char* getTitleText() const;
+    void setTitleText(const std::string& text);
+    const std::string& getTitleText() const;
     void setTitleColor(const cocos2d::Color3B& color);
     const cocos2d::Color3B& getTitleColor() const;
     void setTitleFontSize(float size);

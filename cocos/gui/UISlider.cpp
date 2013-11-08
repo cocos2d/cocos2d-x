@@ -58,7 +58,8 @@ _ballDTexType(UI_TEX_TYPE_LOCAL)
 
 UISlider::~UISlider()
 {
-    
+    _slidPercentListener = NULL;
+    _slidPercentSelector = NULL;
 }
 
 UISlider* UISlider::create()

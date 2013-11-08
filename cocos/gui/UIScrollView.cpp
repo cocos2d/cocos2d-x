@@ -76,7 +76,8 @@ _eventSelector(NULL)
 
 UIScrollView::~UIScrollView()
 {
-    
+    _eventListener = NULL;
+    _eventSelector = NULL;
 }
 
 UIScrollView* UIScrollView::create()
