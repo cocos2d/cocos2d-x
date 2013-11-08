@@ -51,8 +51,6 @@ NS_CC_BEGIN
 
 // implementation TextureCache
 
-TextureCache* TextureCache::_sharedTextureCache = nullptr;
-
 TextureCache * TextureCache::getInstance()
 {
     return Director::getInstance()->getTextureCache();
@@ -65,7 +63,6 @@ TextureCache::TextureCache()
 , _needQuit(false)
 , _asyncRefCount(0)
 {
-    CCASSERT(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
 }
 
 TextureCache::~TextureCache()
@@ -76,7 +73,6 @@ TextureCache::~TextureCache()
         (it->second)->release();
 
     CC_SAFE_DELETE(_loadingThread);
-    _sharedTextureCache = nullptr;
 }
 
 void TextureCache::destroyInstance()
