@@ -987,7 +987,7 @@ void PhysicsDebugDraw::drawContact()
 
 #endif
 
-PhysicsWorld* PhysicsWorld::create(Scene& scene)
+PhysicsWorld* PhysicsWorld::construct(Scene& scene)
 {
     PhysicsWorld * world = new PhysicsWorld();
     if(world && world->init(scene))

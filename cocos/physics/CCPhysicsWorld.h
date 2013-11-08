@@ -121,7 +121,7 @@ public:
     inline int getDebugDrawMask() { return _debugDrawMask; }
     
 protected:
-    static PhysicsWorld* create(Scene& scene);
+    static PhysicsWorld* construct(Scene& scene);
     bool init(Scene& scene);
     
     virtual void addBody(PhysicsBody* body);
@@ -182,10 +182,9 @@ protected:
 
 class PhysicsDebugDraw
 {
-public:
+protected:
     virtual bool begin();
     virtual void end();
-    void close();
     virtual void drawShape(PhysicsShape& shape);
     virtual void drawJoint(PhysicsJoint& joint);
     virtual void drawContact();
