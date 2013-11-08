@@ -52,7 +52,7 @@ bool UISliderTest::init()
         slider->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
         slider->loadProgressBarTexture("cocosgui/sliderProgress.png");
         slider->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        slider->addEventListener(this, sliderpercentchangedselector(UISliderTest::sliderEvent));
+        slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest::sliderEvent));
         m_pUiLayer->addWidget(slider);
         
         return true;
@@ -123,7 +123,7 @@ bool UISliderTest_Scale9::init()
         slider->setCapInsets(CCRectMake(0, 0, 0, 0));
         slider->setSize(CCSizeMake(250, 10));
         slider->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        slider->addEventListener(this, sliderpercentchangedselector(UISliderTest_Scale9::sliderEvent));
+        slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest_Scale9::sliderEvent));
         m_pUiLayer->addWidget(slider);
         
         return true;

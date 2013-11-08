@@ -142,7 +142,7 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addEventListener(CCObject* target, SEL_TextFieldEvent selecor);
+    void addEventListenerTextField(CCObject* target, SEL_TextFieldEvent selecor);
 
     /*******Compatible*******/
     void addAttachWithIMEEvent(CCObject* target, SEL_TextFieldAttachWithIMEEvent selecor);
@@ -185,8 +185,8 @@ protected:
     float m_fTouchHeight;
     bool m_bUseTouchArea;
     
-    CCObject* m_pEventListener;
-    SEL_TextFieldEvent m_pfnEventSelector;
+    CCObject* m_pTextFieldEventListener;
+    SEL_TextFieldEvent m_pfnTextFieldEventSelector;
     
     std::string m_strPasswordStyleText;
 
