@@ -147,9 +147,9 @@
     <ClCompile Include="..\CocoStudio\Components\CCInputDelegate.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayout.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\UIHelper.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\UIInputManager.cpp" />
@@ -173,8 +173,8 @@
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp" />
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_value.cpp" />
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp" />
-    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp" />
-    <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
@@ -283,9 +283,9 @@
     <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h" />
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h" />
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h" />
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\Layout.h" />
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutParameter.h" />
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayout.h" />
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h" />
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\CocosGUI.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UIHelper.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UIInputManager.h" />
@@ -318,8 +318,8 @@
     <ClInclude Include="..\CocoStudio\Json\lib_json\reader.h" />
     <ClInclude Include="..\CocoStudio\Json\lib_json\value.h" />
     <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h" />
-    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h" />
-    <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h" />
+    <ClInclude Include="..\CocoStudio\Reader\GUIReader.h" />
+    <ClInclude Include="..\CocoStudio\Reader\SceneReader.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />

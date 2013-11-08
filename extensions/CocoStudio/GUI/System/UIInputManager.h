@@ -26,7 +26,7 @@
 #define __UIINPUTMANAGER_H__
 
 #include "cocos2d.h"
-#include "../Layouts/Layout.h"
+#include "../Layouts/UILayout.h"
 
 NS_CC_EXT_BEGIN
 /**
@@ -44,7 +44,7 @@ public:
     /**
      * Default destructor
      */
-    ~UIInputManager();
+    virtual ~UIInputManager();
     
     /**
      * Regist a widget to input manager.
@@ -52,13 +52,6 @@ public:
      * @param widget    registed widget can be touched.
      */
     void registWidget(UIWidget* widget);
-    
-    /**
-     * A call back function called when widget tree struct has changed.
-     *
-     * If widget tree struct has changed, uiinputmanager will resort registed widgets.
-     */
-    void uiSceneHasChanged();
     
     /**
      * Remove a registed widget from input manager.
@@ -95,7 +88,6 @@ protected:
     CCPoint touchMovedPoint;
     CCPoint touchEndedPoint;
     CCPoint touchCanceledPoint;
-    bool m_bWidgetBeSorted;
     bool m_bTouchDown;
     float m_fLongClickTime;
     float m_fLongClickRecordTime;

@@ -17,7 +17,7 @@ CocosGUITestScene::CocosGUITestScene(bool bPortrait)
 
 CocosGUITestScene::~CocosGUITestScene()
 {
-	cocos2d::extension::CCSSceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::purgeActionManager();
 	cocos2d::extension::UIHelper::purgeUIHelper();
 }

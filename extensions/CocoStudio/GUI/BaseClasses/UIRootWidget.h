@@ -25,14 +25,14 @@
 #ifndef __UIROOTWIDGET_H__
 #define __UIROOTWIDGET_H__
 
-#include "../Layouts/Layout.h"
+#include "../Layouts/UILayout.h"
 
 NS_CC_EXT_BEGIN
 /**
 *   @js NA
 *   @lua NA
 */
-class UIRootWidget : public Layout
+class UIRootWidget : public UILayout
 {
 public:
     /**

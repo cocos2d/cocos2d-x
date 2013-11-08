@@ -372,20 +372,11 @@
     <ClCompile Include="..\CocoStudio\Components\CCInputDelegate.cpp">
       <Filter>CocoStudio\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
@@ -474,11 +465,20 @@
     <ClCompile Include="..\CocoStudio\Action\CCActionObject.cpp">
       <Filter>CocoStudio\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.cpp">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayout.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -727,20 +727,11 @@
     <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h">
       <Filter>CocoStudio\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\Layout.h">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutParameter.h">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h">
       <Filter>CocoStudio\GUI\Layouts</Filter>
@@ -853,11 +844,20 @@
     <ClInclude Include="..\CocoStudio\Action\CCActionObject.h">
       <Filter>CocoStudio\Action</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\GUIReader.h">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayout.h">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.h">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\SceneReader.h">
+      <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@
 
 #include "UIWidget.h"
 #include "../System/UILayer.h"
-#include "../Layouts/Layout.h"
+#include "../Layouts/UILayout.h"
 #include "../System/UIHelper.h"
 
 NS_CC_EXT_BEGIN
@@ -303,7 +303,7 @@ void UIWidget::setEnabled(bool enabled)
     }
     else
     {
-        dynamic_cast<RectClippingNode*>(m_pRenderer)->setEnabled(enabled);
+        dynamic_cast<UIRectClippingNode*>(m_pRenderer)->setEnabled(enabled);
     }
     ccArray* arrayChildren = m_children->data;
     int childrenCount = arrayChildren->num;
@@ -784,7 +784,7 @@ bool UIWidget::clippingParentAreaContainPoint(const CCPoint &pt)
     UIWidget* clippingParent = NULL;
     while (parent)
     {
-        Layout* layoutParent = dynamic_cast<Layout*>(parent);
+        UILayout* layoutParent = dynamic_cast<UILayout*>(parent);
         if (layoutParent)
         {
             if (layoutParent->isClippingEnabled())
@@ -1154,14 +1154,14 @@ WidgetType UIWidget::getWidgetType() const
     return m_WidgetType;
 }
 
-void UIWidget::setLayoutParameter(LayoutParameter *parameter)
+void UIWidget::setLayoutParameter(UILayoutParameter *parameter)
 {
     m_pLayoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
 }
 
-LayoutParameter* UIWidget::getLayoutParameter(LayoutParameterType type)
+UILayoutParameter* UIWidget::getLayoutParameter(LayoutParameterType type)
 {
-    return dynamic_cast<LayoutParameter*>(m_pLayoutParameterDictionary->objectForKey(type));
+    return dynamic_cast<UILayoutParameter*>(m_pLayoutParameterDictionary->objectForKey(type));
 }
 
 const char* UIWidget::getDescription() const

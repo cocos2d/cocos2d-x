@@ -3,16 +3,17 @@
 #define __COMPATIBLECLASSES_H__
 
 #include "../UILabel.h"
-#include "../../Layouts/Layout.h"
+#include "../../Layouts/UILayout.h"
 #include "../UIButton.h"
 #include "../ScrollWidget/UIScrollView.h"
 
 NS_CC_EXT_BEGIN
 
 //class type define
-typedef Layout UIPanel;
+typedef UILayout Layout;
+typedef UILayout UIPanel;
 typedef UILabel UITextArea;
-typedef Layout UIContainerWidget;
+typedef UILayout UIContainerWidget;
 typedef UIButton UITextButton;
 typedef UIWidget UINodeContainer;
 /**

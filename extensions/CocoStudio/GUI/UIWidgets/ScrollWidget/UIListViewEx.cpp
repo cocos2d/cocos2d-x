@@ -117,10 +117,10 @@ void UIListViewEx::remedyLayoutParameter(UIWidget *item)
     switch (m_eDirection) {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            UILinearLayoutParameter* llp = (UILinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!llp)
             {
-                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
+                UILinearLayoutParameter* defaultLp = UILinearLayoutParameter::create();
                 switch (m_eGravity) {
                     case LISTVIEW_GRAVITY_LEFT:
                         defaultLp->setGravity(LINEAR_GRAVITY_LEFT);
@@ -172,10 +172,10 @@ void UIListViewEx::remedyLayoutParameter(UIWidget *item)
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            UILinearLayoutParameter* llp = (UILinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!llp)
             {
-                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
+                UILinearLayoutParameter* defaultLp = UILinearLayoutParameter::create();
                 switch (m_eGravity) {
                     case LISTVIEW_GRAVITY_TOP:
                         defaultLp->setGravity(LINEAR_GRAVITY_TOP);

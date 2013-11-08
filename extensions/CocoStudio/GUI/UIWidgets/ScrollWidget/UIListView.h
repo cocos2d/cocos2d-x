@@ -26,7 +26,7 @@
 #define __UILISTVIEW_H__
 
 /* gui mark */
-#include "../../Layouts/Layout.h"
+#include "../../Layouts/UILayout.h"
 /**/
 
 NS_CC_EXT_BEGIN
@@ -72,7 +72,7 @@ typedef void (cocos2d::CCObject::*SEL_ListViewUpdateChildEvent)(cocos2d::CCObjec
 #define coco_ListView_UpdateChild_selector(_SELECTOR) (SEL_ListViewUpdateChildEvent)(&_SELECTOR)
 /************************/
 
-class UIListView : public Layout
+class UIListView : public UILayout
 {
 public:
     UIListView();
@@ -217,7 +217,7 @@ protected:
      */
     virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
-    virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
+    virtual void setClippingEnabled(bool able){UILayout::setClippingEnabled(able);};
 protected:
     ListViewDirection m_eDirection;
     ListViewMoveDirection m_eMoveDirection;
