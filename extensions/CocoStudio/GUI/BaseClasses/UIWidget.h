@@ -893,6 +893,27 @@ public:
     virtual void onEnter();
     virtual void onExit();
     
+    /**
+     * Returns a user assigned CCObject
+     *
+     * Similar to userData, but instead of holding a void* it holds an object
+     *
+     * @return A user assigned CCObject
+     * @js NA
+     */
+    virtual CCObject* getUserObject();
+    /**
+     * Returns a user assigned CCObject
+     *
+     * Similar to UserData, but instead of holding a void* it holds an object.
+     * The UserObject will be retained once in this method,
+     * and the previous UserObject (if existed) will be relese.
+     * The UserObject will be released in CCNode's destructure.
+     *
+     * @param A user assigned CCObject
+     */
+    virtual void setUserObject(CCObject *pUserObject);
+    
     /*******Compatible*******/
     /**
      * These methods will be removed
@@ -1014,12 +1035,6 @@ protected:
     void cancelUpEvent();
     void longClickEvent();
     void updateAnchorPoint();
-    /**
-     * Release texture resoures of widget.
-     * Release renderer.
-     * If you override releaseResoures, you shall call its parent's one, e.g. UIWidget::releaseResoures().
-     */
-    virtual void releaseResoures();
     void updateSizeAndPosition();
     void copyProperties(UIWidget* model);
     virtual UIWidget* createCloneInstance();
@@ -1065,6 +1080,7 @@ protected:
     PositionType m_ePositionType;
     CCPoint m_positionPercent;
     bool m_bIsRunning;
+    CCObject* m_pUserObject;
     
     /*Compatible*/
     CCObject*       m_pPushListener;

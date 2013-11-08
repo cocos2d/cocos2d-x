@@ -56,7 +56,12 @@ m_pfnUnSelectSelector(NULL)
 
 UICheckBox::~UICheckBox()
 {
-    
+    m_pSelectedStateEventListener = NULL;
+    m_pfnSelectedStateEventSelector = NULL;
+    m_pSelectListener = NULL;
+    m_pfnSelectSelector = NULL;
+    m_pUnSelectListener = NULL;
+    m_pfnUnSelectSelector = NULL;
 }
 
 UICheckBox* UICheckBox::create()

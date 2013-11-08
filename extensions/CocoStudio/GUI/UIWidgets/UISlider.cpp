@@ -64,7 +64,10 @@ m_pfnPercentSelector(NULL)
 
 UISlider::~UISlider()
 {
-    
+    m_pSlidPercentListener = NULL;
+    m_pfnSlidPercentSelector = NULL;
+    m_pSlidPercentListener = NULL;
+    m_pfnSlidPercentSelector = NULL;
 }
 
 UISlider* UISlider::create()
@@ -418,7 +421,9 @@ float UISlider::getPercentWithBallPos(float px)
 
 void UISlider::addEventListener(cocos2d::CCObject *target, SEL_SlidPercentChangedEvent selector)
 {
+    CC_SAFE_RELEASE(m_pSlidPercentListener);
     m_pSlidPercentListener = target;
+    CC_SAFE_RETAIN(m_pSlidPercentListener);
     m_pfnSlidPercentSelector = selector;
 }
 
