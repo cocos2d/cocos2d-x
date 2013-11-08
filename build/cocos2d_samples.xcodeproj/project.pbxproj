@@ -50,6 +50,18 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1585AAC81821F8D900000FB5 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1585AAC71821F8D900000FB5 /* LuaObjectCBridgeTest.mm */; };
+		1585AB111821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
+		1585AB121821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
+		1585AB131821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
+		1585AB141821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
+		1585AB181821FF4C00000FB5 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB171821FF4C00000FB5 /* LuaObjectCBridgeTest.mm */; };
+		1585AB35182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1585AB36182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1585AB37182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1585AB38182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1585AB4B1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */; };
+		1585AB4C1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -733,8 +745,6 @@
 		1AAF51AF180E2C1A000584C8 /* UIButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5069180E2C18000584C8 /* UIButtonTest.cpp */; };
 		1AAF51B0180E2C1A000584C8 /* UICheckBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF506C180E2C18000584C8 /* UICheckBoxTest.cpp */; };
 		1AAF51B1180E2C1A000584C8 /* UICheckBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF506C180E2C18000584C8 /* UICheckBoxTest.cpp */; };
-		1AAF51B2180E2C1A000584C8 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF506F180E2C18000584C8 /* UIDragPanelTest.cpp */; };
-		1AAF51B3180E2C1A000584C8 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF506F180E2C18000584C8 /* UIDragPanelTest.cpp */; };
 		1AAF51B4180E2C1A000584C8 /* UIImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5072180E2C18000584C8 /* UIImageViewTest.cpp */; };
 		1AAF51B5180E2C1A000584C8 /* UIImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5072180E2C18000584C8 /* UIImageViewTest.cpp */; };
 		1AAF51B6180E2C1A000584C8 /* UILabelAtlasTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5075180E2C18000584C8 /* UILabelAtlasTest.cpp */; };
@@ -743,8 +753,6 @@
 		1AAF51B9180E2C1A000584C8 /* UILabelBMFontTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5078180E2C18000584C8 /* UILabelBMFontTest.cpp */; };
 		1AAF51BA180E2C1A000584C8 /* UILabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF507B180E2C18000584C8 /* UILabelTest.cpp */; };
 		1AAF51BB180E2C1A000584C8 /* UILabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF507B180E2C18000584C8 /* UILabelTest.cpp */; };
-		1AAF51BC180E2C1A000584C8 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF507E180E2C18000584C8 /* UIListViewTest.cpp */; };
-		1AAF51BD180E2C1A000584C8 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF507E180E2C18000584C8 /* UIListViewTest.cpp */; };
 		1AAF51BE180E2C1A000584C8 /* UILoadingBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5081180E2C18000584C8 /* UILoadingBarTest.cpp */; };
 		1AAF51BF180E2C1A000584C8 /* UILoadingBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5081180E2C18000584C8 /* UILoadingBarTest.cpp */; };
 		1AAF51C0180E2C1A000584C8 /* UINodeContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5084180E2C18000584C8 /* UINodeContainerTest.cpp */; };
@@ -922,8 +930,6 @@
 		1AAF534F180E2F4E000584C8 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
 		1AAF53AF180E363C000584C8 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538D180E363B000584C8 /* animations */; };
 		1AAF53B0180E363C000584C8 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538D180E363B000584C8 /* animations */; };
-		1AAF53B1180E363C000584C8 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538E180E363B000584C8 /* app.icf */; };
-		1AAF53B2180E363C000584C8 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538E180E363B000584C8 /* app.icf */; };
 		1AAF53B3180E363C000584C8 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538F180E363B000584C8 /* armature */; };
 		1AAF53B4180E363C000584C8 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538F180E363B000584C8 /* armature */; };
 		1AAF53B5180E363C000584C8 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5390180E363B000584C8 /* background-music-aac.wav */; };
@@ -944,8 +950,6 @@
 		1AAF53C4180E363C000584C8 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5397180E363B000584C8 /* components */; };
 		1AAF53C5180E363C000584C8 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5398180E363B000584C8 /* configs */; };
 		1AAF53C6180E363C000584C8 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5398180E363B000584C8 /* configs */; };
-		1AAF53C7180E363C000584C8 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5399180E363B000584C8 /* development.icf */; };
-		1AAF53C8180E363C000584C8 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5399180E363B000584C8 /* development.icf */; };
 		1AAF53C9180E363C000584C8 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539A180E363B000584C8 /* effect1.raw */; };
 		1AAF53CA180E363C000584C8 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539A180E363B000584C8 /* effect1.raw */; };
 		1AAF53CB180E363C000584C8 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539B180E363B000584C8 /* effect1.wav */; };
@@ -1016,10 +1020,8 @@
 		46A174E81807D96A005B8026 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174881807D934005B8026 /* HelloWorldScene.cpp */; };
 		46A174E91807D976005B8026 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174851807D934005B8026 /* AppDelegate.cpp */; };
 		46A174EA1807D976005B8026 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174881807D934005B8026 /* HelloWorldScene.cpp */; };
-		46A174F31807D9C4005B8026 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EB1807D9C4005B8026 /* app.icf */; };
 		46A174F41807D9C4005B8026 /* bang.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EC1807D9C4005B8026 /* bang.png */; };
 		46A174F51807D9C4005B8026 /* bang.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EC1807D9C4005B8026 /* bang.png */; };
-		46A174F71807D9C4005B8026 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 46A174ED1807D9C4005B8026 /* development.icf */; };
 		46A174F81807D9C4005B8026 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EE1807D9C4005B8026 /* fonts */; };
 		46A174F91807D9C4005B8026 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EE1807D9C4005B8026 /* fonts */; };
 		46A174FA1807D9C4005B8026 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 46A174EF1807D9C4005B8026 /* ipad */; };
@@ -1034,6 +1036,12 @@
 		46A175031807D9E2005B8026 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A174BF1807D934005B8026 /* RootViewController.mm */; };
 		5010FC91180F0F8300B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174AD1807D934005B8026 /* Default-568h@2x.png */; };
 		5010FC92180F105C00B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 460E452F1807E712000CDD6D /* Default-568h@2x.png */; };
+		50E9E93D182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */; };
+		50E9E93E182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */; };
+		50E9E93F182A274000F6FDF1 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */; };
+		50E9E940182A274000F6FDF1 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */; };
+		59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
+		59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
 		A01E16881784BDA100B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A01E16891784BDA100B0CA4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		A01E168A1784BDA100B0CA4A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
@@ -2046,6 +2054,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1585AAC61821F8D900000FB5 /* LuaObjectCBridgeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaObjectCBridgeTest.h; sourceTree = "<group>"; };
+		1585AAC71821F8D900000FB5 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
+		1585AB101821FA1A00000FB5 /* luaoc.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaoc.lua; path = ../cocos/scripting/lua/script/luaoc.lua; sourceTree = "<group>"; };
+		1585AB161821FF4C00000FB5 /* LuaObjectCBridgeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaObjectCBridgeTest.h; sourceTree = "<group>"; };
+		1585AB171821FF4C00000FB5 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
+		1585AB34182299FA00000FB5 /* json.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json.lua; path = ../cocos/scripting/lua/script/json.lua; sourceTree = "<group>"; };
+		1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
+		1585AB4A1823A55400000FB5 /* lua_assetsmanager_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanager_test_sample.h; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		15C64826165F394E007D4F18 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -2538,8 +2554,6 @@
 		1AAF506A180E2C18000584C8 /* UIButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButtonTest.h; sourceTree = "<group>"; };
 		1AAF506C180E2C18000584C8 /* UICheckBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UICheckBoxTest.cpp; sourceTree = "<group>"; };
 		1AAF506D180E2C18000584C8 /* UICheckBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckBoxTest.h; sourceTree = "<group>"; };
-		1AAF506F180E2C18000584C8 /* UIDragPanelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIDragPanelTest.cpp; sourceTree = "<group>"; };
-		1AAF5070180E2C18000584C8 /* UIDragPanelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDragPanelTest.h; sourceTree = "<group>"; };
 		1AAF5072180E2C18000584C8 /* UIImageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImageViewTest.cpp; sourceTree = "<group>"; };
 		1AAF5073180E2C18000584C8 /* UIImageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewTest.h; sourceTree = "<group>"; };
 		1AAF5075180E2C18000584C8 /* UILabelAtlasTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelAtlasTest.cpp; sourceTree = "<group>"; };
@@ -2548,8 +2562,6 @@
 		1AAF5079180E2C18000584C8 /* UILabelBMFontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelBMFontTest.h; sourceTree = "<group>"; };
 		1AAF507B180E2C18000584C8 /* UILabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelTest.cpp; sourceTree = "<group>"; };
 		1AAF507C180E2C18000584C8 /* UILabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelTest.h; sourceTree = "<group>"; };
-		1AAF507E180E2C18000584C8 /* UIListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest.cpp; sourceTree = "<group>"; };
-		1AAF507F180E2C18000584C8 /* UIListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewTest.h; sourceTree = "<group>"; };
 		1AAF5081180E2C18000584C8 /* UILoadingBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILoadingBarTest.cpp; sourceTree = "<group>"; };
 		1AAF5082180E2C18000584C8 /* UILoadingBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoadingBarTest.h; sourceTree = "<group>"; };
 		1AAF5084180E2C18000584C8 /* UINodeContainerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UINodeContainerTest.cpp; sourceTree = "<group>"; };
@@ -2728,7 +2740,6 @@
 		1AAF5284180E2C31000584C8 /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
 		1AAF5285180E2C31000584C8 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
 		1AAF538D180E363B000584C8 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../samples/Cpp/TestCpp/Resources/animations; sourceTree = "<group>"; };
-		1AAF538E180E363B000584C8 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = app.icf; path = ../samples/Cpp/TestCpp/Resources/app.icf; sourceTree = "<group>"; };
 		1AAF538F180E363B000584C8 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; name = armature; path = ../samples/Cpp/TestCpp/Resources/armature; sourceTree = "<group>"; };
 		1AAF5390180E363B000584C8 /* background-music-aac.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "background-music-aac.wav"; path = "../samples/Cpp/TestCpp/Resources/background-music-aac.wav"; sourceTree = "<group>"; };
 		1AAF5391180E363B000584C8 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../samples/Cpp/TestCpp/Resources/background.mp3; sourceTree = "<group>"; };
@@ -2739,7 +2750,6 @@
 		1AAF5396180E363B000584C8 /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosgui; path = ../samples/Cpp/TestCpp/Resources/cocosgui; sourceTree = "<group>"; };
 		1AAF5397180E363B000584C8 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; name = components; path = ../samples/Cpp/TestCpp/Resources/components; sourceTree = "<group>"; };
 		1AAF5398180E363B000584C8 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = configs; path = ../samples/Cpp/TestCpp/Resources/configs; sourceTree = "<group>"; };
-		1AAF5399180E363B000584C8 /* development.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = development.icf; path = ../samples/Cpp/TestCpp/Resources/development.icf; sourceTree = "<group>"; };
 		1AAF539A180E363B000584C8 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect1.raw; path = ../samples/Cpp/TestCpp/Resources/effect1.raw; sourceTree = "<group>"; };
 		1AAF539B180E363B000584C8 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = effect1.wav; path = ../samples/Cpp/TestCpp/Resources/effect1.wav; sourceTree = "<group>"; };
 		1AAF539C180E363B000584C8 /* effect2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect2.ogg; path = ../samples/Cpp/TestCpp/Resources/effect2.ogg; sourceTree = "<group>"; };
@@ -2821,13 +2831,17 @@
 		46A174CB1807D934005B8026 /* HelloCpp_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloCpp_Prefix.pch; sourceTree = "<group>"; };
 		46A174CC1807D934005B8026 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		46A174CD1807D934005B8026 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		46A174EB1807D9C4005B8026 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
 		46A174EC1807D9C4005B8026 /* bang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bang.png; sourceTree = "<group>"; };
-		46A174ED1807D9C4005B8026 /* development.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = development.icf; sourceTree = "<group>"; };
 		46A174EE1807D9C4005B8026 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		46A174EF1807D9C4005B8026 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		46A174F01807D9C4005B8026 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		46A174F11807D9C4005B8026 /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
+		50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIDragPanelTest.cpp; sourceTree = "<group>"; };
+		50E9E939182A274000F6FDF1 /* UIDragPanelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDragPanelTest.h; sourceTree = "<group>"; };
+		50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest.cpp; sourceTree = "<group>"; };
+		50E9E93C182A274000F6FDF1 /* UIListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewTest.h; sourceTree = "<group>"; };
+		59A79D5B1821E95C00F19697 /* MouseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MouseTest.cpp; sourceTree = "<group>"; };
+		59A79D5C1821E95C00F19697 /* MouseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTest.h; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E17721784C06E00B0CA4A /* Test JavaScript iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E18571784C45500B0CA4A /* JS Watermelon With Me iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon With Me iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3708,6 +3722,8 @@
 		1A8C5595180E8B6500EF57C3 /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				1585AB34182299FA00000FB5 /* json.lua */,
+				1585AB101821FA1A00000FB5 /* luaoc.lua */,
 				1A8C5596180E8B8400EF57C3 /* AudioEngine.lua */,
 				1A8C5597180E8B8400EF57C3 /* CCBReaderLoad.lua */,
 				1A8C5598180E8B8400EF57C3 /* Cocos2d.lua */,
@@ -3738,6 +3754,8 @@
 		1A8C566C180E8E9600EF57C3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */,
+				1585AB4A1823A55400000FB5 /* lua_assetsmanager_test_sample.h */,
 				1A8C566D180E8E9600EF57C3 /* AppDelegate.cpp */,
 				1A8C566E180E8E9600EF57C3 /* AppDelegate.h */,
 			);
@@ -3790,6 +3808,8 @@
 		1A8C5852180E8F0100EF57C3 /* proj.ios */ = {
 			isa = PBXGroup;
 			children = (
+				1585AAC61821F8D900000FB5 /* LuaObjectCBridgeTest.h */,
+				1585AAC71821F8D900000FB5 /* LuaObjectCBridgeTest.mm */,
 				1A8C5853180E8F0100EF57C3 /* AppController.h */,
 				1A8C5854180E8F0100EF57C3 /* AppController.mm */,
 				1A8C5855180E8F0100EF57C3 /* Default-568h@2x.png */,
@@ -3815,6 +3835,8 @@
 		1A8C5872180E8F0C00EF57C3 /* proj.mac */ = {
 			isa = PBXGroup;
 			children = (
+				1585AB161821FF4C00000FB5 /* LuaObjectCBridgeTest.h */,
+				1585AB171821FF4C00000FB5 /* LuaObjectCBridgeTest.mm */,
 				1A8C5873180E8F0C00EF57C3 /* InfoPlist.strings */,
 				1A8C5875180E8F0C00EF57C3 /* MainMenu.xib */,
 				1A8C5877180E8F0C00EF57C3 /* Icon.icns */,
@@ -4020,6 +4042,7 @@
 				1AAF50D0180E2C19000584C8 /* FileUtilsTest */,
 				1AAF50D3180E2C19000584C8 /* FontTest */,
 				1AAF50D6180E2C19000584C8 /* IntervalTest */,
+				59A79D5A1821E95C00F19697 /* InputTest */,
 				1AAF50D9180E2C19000584C8 /* KeyboardTest */,
 				1AAF50DC180E2C19000584C8 /* KeypadTest */,
 				1AAF50DF180E2C19000584C8 /* LabelTest */,
@@ -4483,6 +4506,8 @@
 		1AAF5065180E2C18000584C8 /* CocoStudioGUITest */ = {
 			isa = PBXGroup;
 			children = (
+				50E9E937182A274000F6FDF1 /* UIDragPanelTest */,
+				50E9E93A182A274000F6FDF1 /* UIListViewTest */,
 				1AAF5066180E2C18000584C8 /* CocosGUIScene.cpp */,
 				1AAF5067180E2C18000584C8 /* CocosGUIScene.h */,
 				1AAF5068180E2C18000584C8 /* UIButtonTest */,
@@ -4531,8 +4556,6 @@
 		1AAF506E180E2C18000584C8 /* UIDragPanelTest */ = {
 			isa = PBXGroup;
 			children = (
-				1AAF506F180E2C18000584C8 /* UIDragPanelTest.cpp */,
-				1AAF5070180E2C18000584C8 /* UIDragPanelTest.h */,
 			);
 			path = UIDragPanelTest;
 			sourceTree = "<group>";
@@ -4576,8 +4599,6 @@
 		1AAF507D180E2C18000584C8 /* UIListViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				1AAF507E180E2C18000584C8 /* UIListViewTest.cpp */,
-				1AAF507F180E2C18000584C8 /* UIListViewTest.h */,
 			);
 			path = UIListViewTest;
 			sourceTree = "<group>";
@@ -5159,7 +5180,6 @@
 			isa = PBXGroup;
 			children = (
 				1AAF538D180E363B000584C8 /* animations */,
-				1AAF538E180E363B000584C8 /* app.icf */,
 				1AAF538F180E363B000584C8 /* armature */,
 				1AAF5390180E363B000584C8 /* background-music-aac.wav */,
 				1AAF5391180E363B000584C8 /* background.mp3 */,
@@ -5170,7 +5190,6 @@
 				1AAF5396180E363B000584C8 /* cocosgui */,
 				1AAF5397180E363B000584C8 /* components */,
 				1AAF5398180E363B000584C8 /* configs */,
-				1AAF5399180E363B000584C8 /* development.icf */,
 				1AAF539A180E363B000584C8 /* effect1.raw */,
 				1AAF539B180E363B000584C8 /* effect1.wav */,
 				1AAF539C180E363B000584C8 /* effect2.ogg */,
@@ -5390,15 +5409,40 @@
 		46A174D41807D934005B8026 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				46A174EB1807D9C4005B8026 /* app.icf */,
 				46A174EC1807D9C4005B8026 /* bang.png */,
-				46A174ED1807D9C4005B8026 /* development.icf */,
 				46A174EE1807D9C4005B8026 /* fonts */,
 				46A174EF1807D9C4005B8026 /* ipad */,
 				46A174F01807D9C4005B8026 /* ipadhd */,
 				46A174F11807D9C4005B8026 /* iphone */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		50E9E937182A274000F6FDF1 /* UIDragPanelTest */ = {
+			isa = PBXGroup;
+			children = (
+				50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */,
+				50E9E939182A274000F6FDF1 /* UIDragPanelTest.h */,
+			);
+			path = UIDragPanelTest;
+			sourceTree = "<group>";
+		};
+		50E9E93A182A274000F6FDF1 /* UIListViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */,
+				50E9E93C182A274000F6FDF1 /* UIListViewTest.h */,
+			);
+			path = UIListViewTest;
+			sourceTree = "<group>";
+		};
+		59A79D5A1821E95C00F19697 /* InputTest */ = {
+			isa = PBXGroup;
+			children = (
+				59A79D5B1821E95C00F19697 /* MouseTest.cpp */,
+				59A79D5C1821E95C00F19697 /* MouseTest.h */,
+			);
+			path = InputTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -6000,6 +6044,7 @@
 				1A8C5551180E8B3D00EF57C3 /* Icon-152.png in Resources */,
 				1A8C5552180E8B3D00EF57C3 /* Icon-57.png in Resources */,
 				1A8C5553180E8B3D00EF57C3 /* Icon-72.png in Resources */,
+				1585AB131821FA1A00000FB5 /* luaoc.lua in Resources */,
 				1A8C5554180E8B3D00EF57C3 /* Icon-76.png in Resources */,
 				1A8C557C180E8B5100EF57C3 /* background.mp3 in Resources */,
 				1A8C557E180E8B5100EF57C3 /* background.ogg in Resources */,
@@ -6024,6 +6069,7 @@
 				1A8C55B3180E8B8400EF57C3 /* DrawPrimitives.lua in Resources */,
 				1A8C55B5180E8B8400EF57C3 /* luaj.lua in Resources */,
 				1A8C55B7180E8B8400EF57C3 /* Opengl.lua in Resources */,
+				1585AB37182299FA00000FB5 /* json.lua in Resources */,
 				1A8C55B9180E8B8400EF57C3 /* OpenglConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6050,6 +6096,7 @@
 				1A8C582F180E8ED400EF57C3 /* fileLookup.plist in Resources */,
 				1A8C5831180E8ED400EF57C3 /* fonts in Resources */,
 				1A8C5833180E8ED400EF57C3 /* fps_images.png in Resources */,
+				1585AB38182299FA00000FB5 /* json.lua in Resources */,
 				1A8C5835180E8ED400EF57C3 /* hd in Resources */,
 				1A8C5837180E8ED400EF57C3 /* Hello.png in Resources */,
 				1A8C5839180E8ED400EF57C3 /* Images in Resources */,
@@ -6057,6 +6104,7 @@
 				1A8C583D180E8ED400EF57C3 /* ipadhd in Resources */,
 				1A8C583F180E8ED400EF57C3 /* Misc in Resources */,
 				1A8C5841180E8ED400EF57C3 /* music.mid in Resources */,
+				1585AB141821FA1A00000FB5 /* luaoc.lua in Resources */,
 				1A8C5843180E8ED400EF57C3 /* Particles in Resources */,
 				1A8C5845180E8ED400EF57C3 /* pew-pew-lei.wav in Resources */,
 				1A8C5847180E8ED400EF57C3 /* scenetest in Resources */,
@@ -6105,10 +6153,12 @@
 				1A8C5583180E8B5100EF57C3 /* dog.png in Resources */,
 				1A8C5585180E8B5100EF57C3 /* effect1.wav in Resources */,
 				1A8C5587180E8B5100EF57C3 /* farm.jpg in Resources */,
+				1585AB35182299FA00000FB5 /* json.lua in Resources */,
 				1A8C5589180E8B5100EF57C3 /* Marker Felt.ttf in Resources */,
 				1A8C558B180E8B5100EF57C3 /* hello.lua in Resources */,
 				1A8C558D180E8B5100EF57C3 /* hello2.lua in Resources */,
 				1A8C558F180E8B5100EF57C3 /* land.png in Resources */,
+				1585AB111821FA1A00000FB5 /* luaoc.lua in Resources */,
 				1A8C5591180E8B5100EF57C3 /* menu1.png in Resources */,
 				1A8C5593180E8B5100EF57C3 /* menu2.png in Resources */,
 				1A8C55A2180E8B8400EF57C3 /* AudioEngine.lua in Resources */,
@@ -6149,6 +6199,7 @@
 				1A8C5830180E8ED400EF57C3 /* fonts in Resources */,
 				1A8C5832180E8ED400EF57C3 /* fps_images.png in Resources */,
 				1A8C5834180E8ED400EF57C3 /* hd in Resources */,
+				1585AB121821FA1A00000FB5 /* luaoc.lua in Resources */,
 				1A8C5836180E8ED400EF57C3 /* Hello.png in Resources */,
 				1A8C5838180E8ED400EF57C3 /* Images in Resources */,
 				1A8C583A180E8ED400EF57C3 /* ipad in Resources */,
@@ -6160,6 +6211,7 @@
 				1A8C5846180E8ED400EF57C3 /* scenetest in Resources */,
 				1A8C5848180E8ED400EF57C3 /* Shaders in Resources */,
 				1A8C584A180E8ED400EF57C3 /* spine in Resources */,
+				1585AB36182299FA00000FB5 /* json.lua in Resources */,
 				1A8C584C180E8ED400EF57C3 /* TileMaps in Resources */,
 				1A8C584E180E8ED400EF57C3 /* zwoptex in Resources */,
 				1A8C587B180E8F0C00EF57C3 /* InfoPlist.strings in Resources */,
@@ -6190,7 +6242,6 @@
 				1AAF5287180E2C31000584C8 /* MainMenu.xib in Resources */,
 				1AAF5288180E2C31000584C8 /* Icon.icns in Resources */,
 				1AAF53AF180E363C000584C8 /* animations in Resources */,
-				1AAF53B1180E363C000584C8 /* app.icf in Resources */,
 				1AAF53B3180E363C000584C8 /* armature in Resources */,
 				1AAF53B5180E363C000584C8 /* background-music-aac.wav in Resources */,
 				1AAF53B7180E363C000584C8 /* background.mp3 in Resources */,
@@ -6201,7 +6252,6 @@
 				1AAF53C1180E363C000584C8 /* cocosgui in Resources */,
 				1AAF53C3180E363C000584C8 /* components in Resources */,
 				1AAF53C5180E363C000584C8 /* configs in Resources */,
-				1AAF53C7180E363C000584C8 /* development.icf in Resources */,
 				1AAF53C9180E363C000584C8 /* effect1.raw in Resources */,
 				1AAF53CB180E363C000584C8 /* effect1.wav in Resources */,
 				1AAF53CD180E363C000584C8 /* effect2.ogg in Resources */,
@@ -6584,7 +6634,6 @@
 				1AAF527A180E2C26000584C8 /* Icon-80.png in Resources */,
 				1AAF527C180E2C26000584C8 /* Test-Info.plist in Resources */,
 				1AAF53B0180E363C000584C8 /* animations in Resources */,
-				1AAF53B2180E363C000584C8 /* app.icf in Resources */,
 				1AAF53B4180E363C000584C8 /* armature in Resources */,
 				1AAF53B6180E363C000584C8 /* background-music-aac.wav in Resources */,
 				1AAF53B8180E363C000584C8 /* background.mp3 in Resources */,
@@ -6595,7 +6644,6 @@
 				1AAF53C2180E363C000584C8 /* cocosgui in Resources */,
 				1AAF53C4180E363C000584C8 /* components in Resources */,
 				1AAF53C6180E363C000584C8 /* configs in Resources */,
-				1AAF53C8180E363C000584C8 /* development.icf in Resources */,
 				1AAF53CA180E363C000584C8 /* effect1.raw in Resources */,
 				1AAF53CC180E363C000584C8 /* effect1.wav in Resources */,
 				1AAF53CE180E363C000584C8 /* effect2.ogg in Resources */,
@@ -6625,10 +6673,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				46A174FD1807D9C4005B8026 /* ipadhd in Resources */,
-				46A174F31807D9C4005B8026 /* app.icf in Resources */,
 				46A174F51807D9C4005B8026 /* bang.png in Resources */,
 				46A174FF1807D9C4005B8026 /* iphone in Resources */,
-				46A174F71807D9C4005B8026 /* development.icf in Resources */,
 				5010FC91180F0F8300B8E2AE /* Default-568h@2x.png in Resources */,
 				46A174F91807D9C4005B8026 /* fonts in Resources */,
 				46A174FB1807D9C4005B8026 /* ipad in Resources */,
@@ -6670,6 +6716,8 @@
 				1A8C5864180E8F0100EF57C3 /* AppController.mm in Sources */,
 				1A8C5870180E8F0100EF57C3 /* main.m in Sources */,
 				1A8C5871180E8F0100EF57C3 /* RootViewController.mm in Sources */,
+				1585AAC81821F8D900000FB5 /* LuaObjectCBridgeTest.mm in Sources */,
+				1585AB4C1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6687,7 +6735,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A8C566F180E8E9600EF57C3 /* AppDelegate.cpp in Sources */,
+				1585AB181821FF4C00000FB5 /* LuaObjectCBridgeTest.mm in Sources */,
 				1A8C587F180E8F0C00EF57C3 /* main.cpp in Sources */,
+				1585AB4B1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6731,6 +6781,7 @@
 				1AAF518C180E2C1A000584C8 /* EffectsAdvancedTest.cpp in Sources */,
 				1AAF518E180E2C1A000584C8 /* EffectsTest.cpp in Sources */,
 				1AAF5190180E2C1A000584C8 /* AnimationsTestLayer.cpp in Sources */,
+				50E9E93D182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */,
 				1AAF5192180E2C1A000584C8 /* ButtonTestLayer.cpp in Sources */,
 				1AAF5194180E2C1A000584C8 /* CocosBuilderTest.cpp in Sources */,
 				1AAF5196180E2C1A000584C8 /* HelloCocosBuilderLayer.cpp in Sources */,
@@ -6741,18 +6792,17 @@
 				1AAF51A0180E2C1A000584C8 /* ComponentsTestScene.cpp in Sources */,
 				1AAF51A2180E2C1A000584C8 /* EnemyController.cpp in Sources */,
 				1AAF51A4180E2C1A000584C8 /* GameOverScene.cpp in Sources */,
+				59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */,
 				1AAF51A6180E2C1A000584C8 /* PlayerController.cpp in Sources */,
 				1AAF51A8180E2C1A000584C8 /* ProjectileController.cpp in Sources */,
 				1AAF51AA180E2C1A000584C8 /* SceneController.cpp in Sources */,
 				1AAF51AC180E2C1A000584C8 /* CocosGUIScene.cpp in Sources */,
 				1AAF51AE180E2C1A000584C8 /* UIButtonTest.cpp in Sources */,
 				1AAF51B0180E2C1A000584C8 /* UICheckBoxTest.cpp in Sources */,
-				1AAF51B2180E2C1A000584C8 /* UIDragPanelTest.cpp in Sources */,
 				1AAF51B4180E2C1A000584C8 /* UIImageViewTest.cpp in Sources */,
 				1AAF51B6180E2C1A000584C8 /* UILabelAtlasTest.cpp in Sources */,
 				1AAF51B8180E2C1A000584C8 /* UILabelBMFontTest.cpp in Sources */,
 				1AAF51BA180E2C1A000584C8 /* UILabelTest.cpp in Sources */,
-				1AAF51BC180E2C1A000584C8 /* UIListViewTest.cpp in Sources */,
 				1AAF51BE180E2C1A000584C8 /* UILoadingBarTest.cpp in Sources */,
 				1AAF51C0180E2C1A000584C8 /* UINodeContainerTest.cpp in Sources */,
 				1AAF51C2180E2C1A000584C8 /* UIPageViewTest.cpp in Sources */,
@@ -6767,6 +6817,7 @@
 				1AAF51D4180E2C1A000584C8 /* SceneEditorTest.cpp in Sources */,
 				1AAF51D6180E2C1A000584C8 /* CCControlButtonTest.cpp in Sources */,
 				1AAF51D8180E2C1A000584C8 /* CCControlColourPickerTest.cpp in Sources */,
+				50E9E93F182A274000F6FDF1 /* UIListViewTest.cpp in Sources */,
 				1AAF51DA180E2C1A000584C8 /* CCControlPotentiometerTest.cpp in Sources */,
 				1AAF51DC180E2C1A000584C8 /* CCControlScene.cpp in Sources */,
 				1AAF51DE180E2C1A000584C8 /* CCControlSceneManager.cpp in Sources */,
@@ -6977,6 +7028,7 @@
 			files = (
 				1AAF514B180E2C1A000584C8 /* AccelerometerTest.cpp in Sources */,
 				1AAF514D180E2C1A000584C8 /* ActionManagerTest.cpp in Sources */,
+				50E9E93E182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */,
 				1AAF514F180E2C1A000584C8 /* ActionsEaseTest.cpp in Sources */,
 				1AAF5151180E2C1A000584C8 /* ActionsProgressTest.cpp in Sources */,
 				1AAF5153180E2C1A000584C8 /* ActionsTest.cpp in Sources */,
@@ -6985,6 +7037,7 @@
 				1AAF5159180E2C1A000584C8 /* Box2dTest.cpp in Sources */,
 				1AAF515B180E2C1A000584C8 /* Box2dView.cpp in Sources */,
 				1AAF515D180E2C1A000584C8 /* GLES-Render.cpp in Sources */,
+				50E9E940182A274000F6FDF1 /* UIListViewTest.cpp in Sources */,
 				1AAF515F180E2C1A000584C8 /* Test.cpp in Sources */,
 				1AAF5161180E2C1A000584C8 /* TestEntries.cpp in Sources */,
 				1AAF5163180E2C1A000584C8 /* Bug-1159.cpp in Sources */,
@@ -7027,12 +7080,10 @@
 				1AAF51AD180E2C1A000584C8 /* CocosGUIScene.cpp in Sources */,
 				1AAF51AF180E2C1A000584C8 /* UIButtonTest.cpp in Sources */,
 				1AAF51B1180E2C1A000584C8 /* UICheckBoxTest.cpp in Sources */,
-				1AAF51B3180E2C1A000584C8 /* UIDragPanelTest.cpp in Sources */,
 				1AAF51B5180E2C1A000584C8 /* UIImageViewTest.cpp in Sources */,
 				1AAF51B7180E2C1A000584C8 /* UILabelAtlasTest.cpp in Sources */,
 				1AAF51B9180E2C1A000584C8 /* UILabelBMFontTest.cpp in Sources */,
 				1AAF51BB180E2C1A000584C8 /* UILabelTest.cpp in Sources */,
-				1AAF51BD180E2C1A000584C8 /* UIListViewTest.cpp in Sources */,
 				1AAF51BF180E2C1A000584C8 /* UILoadingBarTest.cpp in Sources */,
 				1AAF51C1180E2C1A000584C8 /* UINodeContainerTest.cpp in Sources */,
 				1AAF51C3180E2C1A000584C8 /* UIPageViewTest.cpp in Sources */,
@@ -7081,6 +7132,7 @@
 				1AAF5219180E2C1A000584C8 /* PerformanceNodeChildrenTest.cpp in Sources */,
 				1AAF521B180E2C1A000584C8 /* PerformanceParticleTest.cpp in Sources */,
 				1AAF521D180E2C1A000584C8 /* PerformanceSpriteTest.cpp in Sources */,
+				59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */,
 				1AAF521F180E2C1A000584C8 /* PerformanceTest.cpp in Sources */,
 				1AAF5221180E2C1A000584C8 /* PerformanceTextureTest.cpp in Sources */,
 				1AAF5223180E2C1A000584C8 /* PerformanceTouchesTest.cpp in Sources */,
@@ -7826,9 +7878,9 @@
 		1A1197D51785363400D62A44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -7838,28 +7890,22 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
 		1A1197D61785363400D62A44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7868,19 +7914,13 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7888,9 +7928,9 @@
 		1A11986E178538E400D62A44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -7900,28 +7940,22 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
 		1A11986F178538E400D62A44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7930,19 +7964,13 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7950,6 +7978,7 @@
 		1A6FB56917854FE400CDF010 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7959,14 +7988,7 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.mac/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -7977,14 +7999,16 @@
 					"-image_base",
 					100000000,
 				);
+				SDKROOT = macosx10.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
 		1A6FB56A17854FE400CDF010 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7993,14 +8017,7 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/HelloLua/proj.mac/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -8011,8 +8028,9 @@
 					"-image_base",
 					100000000,
 				);
+				SDKROOT = macosx10.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8020,6 +8038,8 @@
 		1A6FB7B11785614200CDF010 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8029,14 +8049,7 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.mac/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -8047,14 +8060,17 @@
 					"-image_base",
 					100000000,
 				);
+				SDKROOT = macosx10.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 			};
 			name = Debug;
 		};
 		1A6FB7B21785614200CDF010 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8063,14 +8079,7 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/lua/bindings",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-					"$(SRCROOT)/../external/lua/luajit/include",
-					"$(SRCROOT)/../external/lua/tolua",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Lua/TestLua/proj.mac/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -8081,8 +8090,9 @@
 					"-image_base",
 					100000000,
 				);
+				SDKROOT = macosx10.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/lua/bindings $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8100,13 +8110,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/TestCpp/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8122,13 +8128,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/TestCpp/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8136,9 +8138,9 @@
 		A01E16911784BDA100B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8148,25 +8150,22 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 			};
 			name = Debug;
 		};
 		A01E16921784BDA100B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8175,16 +8174,13 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8192,9 +8188,9 @@
 		A01E17701784C06E00B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8205,28 +8201,22 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E17711784C06E00B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8236,19 +8226,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8256,9 +8240,9 @@
 		A01E18551784C45400B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8269,28 +8253,22 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E18561784C45400B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8300,19 +8278,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8320,9 +8292,9 @@
 		A01E188A1784C4D600B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8333,28 +8305,22 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E188B1784C4D600B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8364,19 +8330,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8384,9 +8344,9 @@
 		A01E18BF1784C4DC00B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8397,28 +8357,22 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E18C01784C4DC00B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8428,19 +8382,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8448,9 +8396,9 @@
 		A01E18F41784C4E000B0CA4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8461,28 +8409,22 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
 		A01E18F51784C4E000B0CA4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8492,19 +8434,13 @@
 					COCOS2D_JAVASCRIPT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8523,16 +8459,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8549,16 +8478,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8577,16 +8499,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8603,16 +8518,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/WatermelonWithMe/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8631,16 +8539,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8657,16 +8558,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/MoonWarriors/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8685,16 +8579,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8711,16 +8598,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CrystalCraze/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8739,16 +8619,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8765,16 +8638,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Javascript/CocosDragonJS/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/scripting/javascript/bindings $(SRCROOT)/../cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8806,13 +8672,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/SimpleGame/proj.mac/SampleGame_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8828,13 +8690,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/SimpleGame/proj.mac/SampleGame_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8852,13 +8710,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/HelloCpp/proj.mac/HelloCpp_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -8874,13 +8728,9 @@
 					CC_KEYBOARD_SUPPORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/mac",
-					"$(SRCROOT)/../external/glfw3/include/mac",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ../samples/Cpp/HelloCpp/proj.mac/HelloCpp_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8906,9 +8756,9 @@
 		A07A52271783A1D20073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8918,28 +8768,23 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/2d/platform/ios/Simulation",
-					"$(SRCROOT)/../external/curl/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/TestCpp/proj.ios/Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/2d/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
 			};
 			name = Debug;
 		};
 		A07A52281783A1D20073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8948,19 +8793,14 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-					"$(SRCROOT)/../cocos/2d/platform/ios/Simulation",
-					"$(SRCROOT)/../external/curl/include/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/TestCpp/proj.ios/Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/2d/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8968,9 +8808,9 @@
 		A07A537F1784AC9B0073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8980,25 +8820,22 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 			};
 			name = Debug;
 		};
 		A07A53801784AC9B0073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9007,16 +8844,13 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../cocos/2d/platform/ios",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "../samples/Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -9024,6 +8858,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -9040,31 +8875,18 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/..",
-					"$(SRCROOT)/../cocos",
-					"$(SRCROOT)/../cocos/base",
-					"$(SRCROOT)/../cocos/physics",
-					"$(SRCROOT)/../cocos/math/kazmath/include",
-					"$(SRCROOT)/../cocos/2d",
-					"$(SRCROOT)/../cocos/gui",
-					"$(SRCROOT)/../cocos/network",
-					"$(SRCROOT)/../cocos/audio/include",
-					"$(SRCROOT)/../cocos/editor-support",
-					"$(SRCROOT)/../extensions",
-					"$(SRCROOT)/../external",
-					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
-				);
+				HEADER_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -9078,24 +8900,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/..",
-					"$(SRCROOT)/../cocos",
-					"$(SRCROOT)/../cocos/base",
-					"$(SRCROOT)/../cocos/physics",
-					"$(SRCROOT)/../cocos/math/kazmath/include",
-					"$(SRCROOT)/../cocos/2d",
-					"$(SRCROOT)/../cocos/gui",
-					"$(SRCROOT)/../cocos/network",
-					"$(SRCROOT)/../cocos/audio/include",
-					"$(SRCROOT)/../cocos/editor-support",
-					"$(SRCROOT)/../extensions",
-					"$(SRCROOT)/../external",
-					"$(SRCROOT)/../external/chipmunk/include/chipmunk",
-				);
+				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Release;
 		};

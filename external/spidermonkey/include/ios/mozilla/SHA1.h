@@ -1,17 +1,18 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* Simple class for computing SHA1. */
 
-#ifndef mozilla_SHA1_h_
-#define mozilla_SHA1_h_
+#ifndef mozilla_SHA1_h
+#define mozilla_SHA1_h
 
-#include "mozilla/StandardInteger.h"
 #include "mozilla/Types.h"
 
 #include <stddef.h>
+#include <stdint.h>
 
 namespace mozilla {
 
@@ -58,4 +59,4 @@ class SHA1Sum
 
 } /* namespace mozilla */
 
-#endif /* mozilla_SHA1_h_ */
+#endif /* mozilla_SHA1_h */

@@ -46,6 +46,7 @@ public:
         TOUCH,
         KEYBOARD,
         ACCELERATION,
+        MOUSE,
         CUSTOM
     };
     

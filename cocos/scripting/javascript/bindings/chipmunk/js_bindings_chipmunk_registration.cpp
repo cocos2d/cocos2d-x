@@ -36,32 +36,34 @@
 #include "js_bindings_chipmunk_manual.h"
 
 
-void jsb_register_chipmunk(JSContext *_cx, JSObject *object)
+void jsb_register_chipmunk(JSContext* cx, JSObject *object)
 {
 	//
 	// Chipmunk
 	//
-	JSObject *chipmunk = JS_NewObject(_cx, NULL, NULL, NULL);
-	jsval chipmunkVal = OBJECT_TO_JSVAL(chipmunk);
-	JS_SetProperty(_cx, object, "cp", &chipmunkVal);
+	JSObject *chipmunk = JS_NewObject(cx, NULL, NULL, NULL);
+    JS::RootedValue chipmunkVal(cx);
+    
+    chipmunkVal = OBJECT_TO_JSVAL(chipmunk);
+	JS_SetProperty(cx, object, "cp", chipmunkVal);
 	
-	JSB_cpBase_createClass(_cx, chipmunk, "Base");  // manual base class registration
+	JSB_cpBase_createClass(cx, chipmunk, "Base");  // manual base class registration
 #include "js_bindings_chipmunk_auto_classes_registration.h"
 #include "js_bindings_chipmunk_functions_registration.h"
 	
 	// manual
-	JS_DefineFunction(_cx, chipmunk, "spaceAddCollisionHandler", JSB_cpSpaceAddCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(_cx, chipmunk, "spaceRemoveCollisionHandler", JSB_cpSpaceRemoveCollisionHandler, 3, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(_cx, chipmunk, "arbiterGetBodies", JSB_cpArbiterGetBodies, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(_cx, chipmunk, "arbiterGetShapes", JSB_cpArbiterGetShapes, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(_cx, chipmunk, "bodyGetUserData", JSB_cpBodyGetUserData, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(_cx, chipmunk, "bodySetUserData", JSB_cpBodySetUserData, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+	JS_DefineFunction(cx, chipmunk, "spaceAddCollisionHandler", JSB_cpSpaceAddCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+	JS_DefineFunction(cx, chipmunk, "spaceRemoveCollisionHandler", JSB_cpSpaceRemoveCollisionHandler, 3, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+	JS_DefineFunction(cx, chipmunk, "arbiterGetBodies", JSB_cpArbiterGetBodies, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+	JS_DefineFunction(cx, chipmunk, "arbiterGetShapes", JSB_cpArbiterGetShapes, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+	JS_DefineFunction(cx, chipmunk, "bodyGetUserData", JSB_cpBodyGetUserData, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+	JS_DefineFunction(cx, chipmunk, "bodySetUserData", JSB_cpBodySetUserData, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
-	JS_DefineFunction(_cx, chipmunk, "areaForPoly", JSB_cpAreaForPoly, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(_cx, chipmunk, "momentForPoly", JSB_cpMomentForPoly, 3, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(_cx, chipmunk, "centroidForPoly", JSB_cpCentroidForPoly, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-	JS_DefineFunction(_cx, chipmunk, "recenterPoly", JSB_cpRecenterPoly, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-    register_CCPhysicsSprite(_cx, object);
-    register_CCPhysicsDebugNode(_cx, object);
+	JS_DefineFunction(cx, chipmunk, "areaForPoly", JSB_cpAreaForPoly, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+	JS_DefineFunction(cx, chipmunk, "momentForPoly", JSB_cpMomentForPoly, 3, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+	JS_DefineFunction(cx, chipmunk, "centroidForPoly", JSB_cpCentroidForPoly, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+	JS_DefineFunction(cx, chipmunk, "recenterPoly", JSB_cpRecenterPoly, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    register_CCPhysicsSprite(cx, object);
+    register_CCPhysicsDebugNode(cx, object);
 }
 

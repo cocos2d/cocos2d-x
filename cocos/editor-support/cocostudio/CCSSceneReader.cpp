@@ -47,7 +47,7 @@ namespace cocostudio {
 
     cocos2d::Node* SceneReader::createNodeWithSceneFile(const char* pszFileName)
     {
-        unsigned long size = 0;
+        long size = 0;
         const char* pData = 0;
 		cocos2d::Node *pNode = NULL;
         do {
@@ -213,7 +213,7 @@ namespace cocostudio {
 					{
 						file_path = reDir.substr(0, pos+1);
 					}
-					unsigned long size = 0;
+					long size = 0;
 					const char *des = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(),"r" , &size));
 					JsonDictionary *jsonDict = new JsonDictionary();
 					jsonDict->initWithDescription(des);
@@ -227,7 +227,7 @@ namespace cocostudio {
 					const char *name = DICTOOL->getStringValue_json(subData, "name");
 
 					childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
-					for (int i = 0; i < childrenCount; ++i)
+					for (long i = 0; i < childrenCount; ++i)
 					{
 						const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", i);
 						std::string plistpath;
@@ -283,7 +283,7 @@ namespace cocostudio {
 					if (nResType == 0)
 					{
 						pAttribute = ComAttribute::create();
-						unsigned long size = 0;
+						long size = 0;
 						const char* pData = 0;
 						pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(), "r", &size));
 						if(pData != NULL && strcmp(pData, "") != 0)
@@ -320,8 +320,8 @@ namespace cocostudio {
 				{
                     gui::UILayer *pLayer = gui::UILayer::create();
 					pLayer->scheduleUpdate();
-					UIWidget* widget= gui::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
-					pLayer->addWidget(widget);
+//					UIWidget* widget= gui::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
+//					pLayer->addWidget(widget);
 					ComRender *pRender = ComRender::create(pLayer, "GUIComponent");
 					if (pComName != NULL)
 					{

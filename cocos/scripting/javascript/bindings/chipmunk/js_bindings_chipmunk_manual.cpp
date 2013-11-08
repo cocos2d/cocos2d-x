@@ -473,13 +473,13 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 
 
 void register_CCPhysicsSprite(JSContext *cx, JSObject *obj) {
-    jsval nsval;
+    JS::RootedValue nsval(cx);
 	JSObject *ns;
 	JS_GetProperty(cx, obj, "cc", &nsval);
 	if (nsval == JSVAL_VOID) {
 		ns = JS_NewObject(cx, NULL, NULL, NULL);
 		nsval = OBJECT_TO_JSVAL(ns);
-		JS_SetProperty(cx, obj, "cc", &nsval);
+		JS_SetProperty(cx, obj, "cc", nsval);
 	} else {
 		JS_ValueToObject(cx, nsval, &ns);
 	}
@@ -488,13 +488,13 @@ void register_CCPhysicsSprite(JSContext *cx, JSObject *obj) {
 }
 
 void register_CCPhysicsDebugNode(JSContext *cx, JSObject *obj) {
-    jsval nsval;
+    JS::RootedValue nsval(cx);
     JSObject *ns;
     JS_GetProperty(cx, obj, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
         ns = JS_NewObject(cx, NULL, NULL, NULL);
         nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, obj, "cc", &nsval);
+        JS_SetProperty(cx, obj, "cc", nsval);
     } else {
         JS_ValueToObject(cx, nsval, &ns);
     }
@@ -509,7 +509,10 @@ JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
 	
-	jsval vall, valb, valr, valt;
+    JS::RootedValue vall(cx);
+    JS::RootedValue valb(cx);
+    JS::RootedValue valr(cx);
+    JS::RootedValue valt(cx);
 	ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "l", &vall);
 	ok &= JS_GetProperty(cx, jsobj, "b", &valb);
@@ -635,6 +638,8 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
 		args[0] = opaque_to_jsval( handler->cx, arb);
 		args[1] = opaque_to_jsval( handler->cx, space );
 	}
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 	
 	jsval rval;
 	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->begin), 2, args, &rval);
@@ -659,6 +664,8 @@ static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
 		args[0] = opaque_to_jsval( handler->cx, arb);
 		args[1] = opaque_to_jsval( handler->cx, space );
 	}
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 	
 	jsval rval;
 	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->pre), 2, args, &rval);
@@ -684,6 +691,8 @@ static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
 		args[0] = opaque_to_jsval( handler->cx, arb);
 		args[1] = opaque_to_jsval( handler->cx, space );
 	}
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 	
 	jsval ignore;
 	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->post), 2, args, &ignore);
@@ -702,6 +711,8 @@ static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 		args[0] = opaque_to_jsval( handler->cx, arb);
 		args[1] = opaque_to_jsval( handler->cx, space );
 	}
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 	
 	jsval ignore;
 	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->separate), 2, args, &ignore);

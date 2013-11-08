@@ -18,8 +18,8 @@
 ** for all C files.
 **/
 
-#ifndef jstypes_h___
-#define jstypes_h___
+#ifndef jstypes_h
+#define jstypes_h
 
 #include "mozilla/Attributes.h"
 #include "mozilla/Util.h"
@@ -279,4 +279,4 @@ typedef int JSBool;
 # define JS_EXTENSION_(s) s
 #endif
 
-#endif /* jstypes_h___ */
+#endif /* jstypes_h */
