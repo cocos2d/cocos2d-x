@@ -81,6 +81,7 @@ protected:
     
     friend class PhysicsBody;
     friend class PhysicsWorld;
+    friend class PhysicsDebugDraw;
 };
 
 /*

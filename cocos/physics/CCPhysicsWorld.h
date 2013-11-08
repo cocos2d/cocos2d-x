@@ -46,8 +46,15 @@ class Array;
 class Sprite;
 class Scene;
 class DrawNode;
+class PhysicsDebugDraw;
 
 class PhysicsWorld;
+
+#define PHYSICS_DEBUGDRAW_NONE      0x00
+#define PHYSICS_DEBUGDRAW_SHAPE     0x01
+#define PHYSICS_DEBUGDRAW_JOINT     0x02
+#define PHYSICS_DEBUGDRAW_CONTACT   0x04
+#define PHYSICS_DEBUGDRAW_ALL       PHYSICS_DEBUGDRAW_SHAPE | PHYSICS_DEBUGDRAW_JOINT | PHYSICS_DEBUGDRAW_CONTACT
 
 
 typedef struct PhysicsRayCastInfo
@@ -109,10 +116,9 @@ public:
     /** set the gravity value */
     void setGravity(const Vect& gravity);
     
-    /** test the debug draw is enabled */
-    inline bool isDebugDraw() const { return _debugDraw; }
     /** set the debug draw */
-    inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
+    void setDebugDrawMask(int mask);
+    inline int getDebugDrawMask() { return _debugDrawMask; }
     
 protected:
     static PhysicsWorld* create(Scene& scene);
@@ -124,8 +130,6 @@ protected:
     virtual void update(float delta);
     
     virtual void debugDraw();
-    virtual void drawWithShape(DrawNode* node, PhysicsShape* shape);
-    virtual void drawWithJoint(DrawNode* node, PhysicsJoint* joint);
     
     virtual int collisionBeginCallback(PhysicsContact& contact);
     virtual int collisionPreSolveCallback(PhysicsContact& contact);
@@ -153,8 +157,9 @@ protected:
     Scene* _scene;
     
     bool _delayDirty;
-    bool _debugDraw;
-    DrawNode* _drawNode;
+    PhysicsDebugDraw* _debugDraw;
+    int _debugDrawMask;
+    
     
     Array* _delayAddBodies;
     Array* _delayRemoveBodies;
@@ -171,6 +176,29 @@ protected:
     friend class PhysicsShape;
     friend class PhysicsJoint;
     friend class PhysicsWorldCallback;
+    friend class PhysicsDebugDraw;
+};
+
+
+class PhysicsDebugDraw
+{
+public:
+    virtual bool begin();
+    virtual void end();
+    void close();
+    virtual void drawShape(PhysicsShape& shape);
+    virtual void drawJoint(PhysicsJoint& joint);
+    virtual void drawContact();
+    
+protected:
+    PhysicsDebugDraw(PhysicsWorld& world);
+    virtual ~PhysicsDebugDraw();
+    
+protected:
+    DrawNode* _drawNode;
+    PhysicsWorld& _world;
+    
+    friend class PhysicsWorld;
 };
 
 NS_CC_END
