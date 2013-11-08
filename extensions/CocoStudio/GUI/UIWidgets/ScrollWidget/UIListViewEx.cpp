@@ -420,7 +420,6 @@ void UIListViewEx::refreshView()
         remedyLayoutParameter(item);
     }
     updateInnerContainerSize();
-    doLayout();
 }
 
 void UIListViewEx::onSizeChanged()
