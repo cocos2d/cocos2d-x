@@ -68,14 +68,14 @@ _sizeType(SIZE_ABSOLUTE),
 _sizePercent(cocos2d::Point::ZERO),
 _positionType(POSITION_ABSOLUTE),
 _positionPercent(cocos2d::Point::ZERO),
-_isRunning(false)
+_isRunning(false),
+_userObject(NULL)
 {
     
 }
 
 UIWidget::~UIWidget()
 {
-    CC_SAFE_RELEASE(_touchEventListener);
     _touchEventListener = NULL;
     _touchEventSelector = NULL;
     removeAllChildren();
@@ -87,6 +87,7 @@ UIWidget::~UIWidget()
     _layoutParameterDictionary->removeAllObjects();
     CC_SAFE_RELEASE(_layoutParameterDictionary);
     CC_SAFE_RELEASE(_scheduler);
+    CC_SAFE_RELEASE(_userObject);
 }
 
 UIWidget* UIWidget::create()
@@ -134,6 +135,13 @@ void UIWidget::onExit()
 {
     _isRunning = false;
     arrayMakeObjectsPerformSelector(_children, onExit, UIWidget*);
+}
+    
+void UIWidget::setUserObject(cocos2d::Object *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(_userObject);
+    _userObject = pUserObject;
 }
 
 bool UIWidget::addChild(UIWidget *child)
@@ -698,9 +706,7 @@ void UIWidget::longClickEvent()
 
 void UIWidget::addTouchEventListener(cocos2d::Object *target, SEL_TouchEvent selector)
 {
-    CC_SAFE_RELEASE(_touchEventListener);
     _touchEventListener = target;
-    CC_SAFE_RETAIN(_touchEventListener);
     _touchEventSelector = selector;
 }
 
