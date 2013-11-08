@@ -76,7 +76,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cd linux-build
     cmake ../..
     make -j10
-    cd ../../multi-platform-cpp
+    cd ../../template/multi-platform-cpp
     cmake .
     make -j10
     cd ../multi-platform-lua
