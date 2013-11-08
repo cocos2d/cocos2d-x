@@ -70,26 +70,23 @@ void UILabel::initRenderer()
     _renderer->addChild(_labelRenderer);
 }
 
-void UILabel::setText(const char* text)
+void UILabel::setText(const std::string& text)
 {
-	if (!text)
-	{
+	if (text.size()==0)
 		return;
-	}
-    std::string strText(text);
-    _labelRenderer->setString(strText.c_str());
+
+    _labelRenderer->setString(text);
     labelScaleChangedWithSize();
 }
 
-const char* UILabel::getStringValue()
+const std::string& UILabel::getStringValue()
 {
     return _labelRenderer->getString();
 }
 
 int UILabel::getStringLength()
 {
-    const char* str = _labelRenderer->getString();
-    return strlen(str);
+    return _labelRenderer->getString().size();
 }
 
 void UILabel::setFontSize(int size)
@@ -99,7 +96,7 @@ void UILabel::setFontSize(int size)
     labelScaleChangedWithSize();
 }
 
-void UILabel::setFontName(const char* name)
+void UILabel::setFontName(const std::string& name)
 {
     _fontName = name;
     _labelRenderer->setFontName(name);

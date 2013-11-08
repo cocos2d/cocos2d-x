@@ -51,7 +51,8 @@ _frontCrossDisabledFileName("")
 
 UICheckBox::~UICheckBox()
 {
-    
+    _selectedStateEventListener = NULL;
+    _selectedStateEventSelector = NULL;
 }
 
 UICheckBox* UICheckBox::create()

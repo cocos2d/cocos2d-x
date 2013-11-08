@@ -127,6 +127,16 @@ public:
      * @js NA
      * @lua NA
      */
+    bool operator==(const Point& right) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
+    bool operator!=(const Point& right) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Point operator*(float a) const;
     /**
      * @js NA
@@ -423,7 +433,26 @@ public:
      */
     static Point getIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D);
     
+    /** equals to Point(0,0) */
     static const Point ZERO;
+    /** equals to Point(0.5, 0.5) */
+    static const Point ANCHOR_MIDDLE;
+    /** equals to Point(0, 0) */
+    static const Point ANCHOR_BOTTOM_LEFT;
+    /** equals to Point(0, 1) */
+    static const Point ANCHOR_TOP_LEFT;
+    /** equals to Point(1, 0) */
+    static const Point ANCHOR_BOTTOM_RIGHT;
+    /** equals to Point(1, 1) */
+    static const Point ANCHOR_TOP_RIGHT;
+    /** equals to Point(1, 0.5) */
+    static const Point ANCHOR_MIDDLE_RIGHT;
+    /** equals to Point(0, 0.5) */
+    static const Point ANCHOR_MIDDLE_LEFT;
+    /** equals to Point(0.5, 1) */
+    static const Point ANCHOR_MIDDLE_TOP;
+    /** equals to Point(0.5, 0) */
+    static const Point ANCHOR_MIDDLE_BOTTOM;
     
 private:
     // returns true if segment A-B intersects with segment C-D. S->E is the ovderlap part

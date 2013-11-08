@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __CCPHYSICS_CONTACT_INFO_BOX2D_H__
+#define __CCPHYSICS_CONTACT_INFO_BOX2D_H__
+
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
-#ifndef __CCPHYSICS_CONTACT_INFO_H__
-#define __CCPHYSICS_CONTACT_INFO_H__
 
 #include "CCPlatformMacros.h"
 NS_CC_BEGIN
@@ -39,6 +39,6 @@ public:
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_CONTACT_INFO_H__
 
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D
+#endif // __CCPHYSICS_CONTACT_INFO_BOX2D_H__

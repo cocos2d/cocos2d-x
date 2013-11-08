@@ -203,9 +203,9 @@ void LabelAtlas::setString(const std::string &label)
     _quadsToDraw = len;
 }
 
-const char* LabelAtlas::getString(void) const
+const std::string& LabelAtlas::getString(void) const
 {
-    return _string.c_str();
+    return _string;
 }
 
 //CCLabelAtlas - draw
