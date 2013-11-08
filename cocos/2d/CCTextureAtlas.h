@@ -215,6 +215,8 @@ public:
     void setQuads(V3F_C4B_T2F_Quad* quads);
     
 private:
+    void renderCommand();
+
     void setupIndices();
     void mapBuffers();
 #if CC_TEXTURE_ATLAS_USE_VAO
