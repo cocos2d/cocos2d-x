@@ -31,16 +31,15 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
-enum CCTweenType
+enum TweenType
 {
     TWEEN_EASING_MIN = -1,
 
     Linear,
 
     Sine_EaseIn,
-    Sine_EaseInOut,
     Sine_EaseOut,
-
+    Sine_EaseInOut,
 
     Quad_EaseIn,
     Quad_EaseOut,
@@ -85,7 +84,7 @@ class  TweenFunction
 {
 public:
 
-    static float tweenTo(float from, float change, float time, float duration, CCTweenType tweenType);
+    static float tweenTo(float from, float change, float time, float duration, TweenType tweenType);
 
     static float linear(float t, float b, float c, float d);
 

@@ -77,6 +77,9 @@ static EventListener::ListenerID getListenerID(Event* event)
         case Event::Type::KEYBOARD:
             ret = static_cast<EventListener::ListenerID>(EventListener::Type::KEYBOARD);
             break;
+        case Event::Type::MOUSE:
+            ret = static_cast<EventListener::ListenerID>(EventListener::Type::MOUSE);
+            break;
         case Event::Type::TOUCH:
             // Touch listener is very special, it contains two kinds of listeners, EventListenerTouchOneByOne and EventListenerTouchAllAtOnce.
             // return UNKNOW instead.
@@ -442,6 +445,17 @@ void EventDispatcher::removeEventListener(EventListener* listener)
     if (isFound)
     {
         CC_SAFE_RELEASE(listener);
+    }
+    else
+    {
+        for(auto iter = _toAddedListeners.begin(); iter != _toAddedListeners.end(); ++iter)
+        {
+            if (*iter == listener)
+            {
+                _toAddedListeners.erase(iter);
+                break;
+            }
+        }
     }
 }
 
@@ -1036,6 +1050,18 @@ void EventDispatcher::removeEventListenersForListenerID(EventListener::ListenerI
             delete listeners;
             _listeners.erase(listenerItemIter);
             _priorityDirtyFlagMap.erase(listenerID);
+        }
+    }
+    
+    for(auto iter = _toAddedListeners.begin(); iter != _toAddedListeners.end();)
+    {
+        if ((*iter)->getListenerID() == listenerID)
+        {
+            iter = _toAddedListeners.erase(iter);
+        }
+        else
+        {
+            ++iter;
         }
     }
 }

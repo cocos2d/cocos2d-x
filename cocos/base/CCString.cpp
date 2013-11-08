@@ -216,15 +216,15 @@ bool String::isEqual(const Object* pObject)
 
 String* String::create(const std::string& str)
 {
-    String* pRet = new String(str);
-    pRet->autorelease();
-    return pRet;
+    String* ret = new String(str);
+    ret->autorelease();
+    return ret;
 }
 
-String* String::createWithData(const unsigned char* pData, unsigned long nLen)
+String* String::createWithData(const unsigned char* data, unsigned long nLen)
 {
-    String* pRet = NULL;
-    if (pData != NULL)
+    String* ret = NULL;
+    if (data != NULL)
     {
         char* pStr = (char*)malloc(nLen+1);
         if (pStr != NULL)
@@ -232,36 +232,36 @@ String* String::createWithData(const unsigned char* pData, unsigned long nLen)
             pStr[nLen] = '\0';
             if (nLen > 0)
             {
-                memcpy(pStr, pData, nLen);
+                memcpy(pStr, data, nLen);
             }
             
-            pRet = String::create(pStr);
+            ret = String::create(pStr);
             free(pStr);
         }
     }
-    return pRet;
+    return ret;
 }
 
 String* String::createWithFormat(const char* format, ...)
 {
-    String* pRet = String::create("");
+    String* ret = String::create("");
     va_list ap;
     va_start(ap, format);
-    pRet->initWithFormatAndValist(format, ap);
+    ret->initWithFormatAndValist(format, ap);
     va_end(ap);
 
-    return pRet;
+    return ret;
 }
 
 String* String::createWithContentsOfFile(const char* filename)
 {
-    unsigned long size = 0;
-    unsigned char* pData = 0;
-    String* pRet = NULL;
-    pData = FileUtils::getInstance()->getFileData(filename, "rb", &size);
-    pRet = String::createWithData(pData, size);
-    CC_SAFE_DELETE_ARRAY(pData);
-    return pRet;
+    long size = 0;
+    unsigned char* data = 0;
+    String* ret = NULL;
+    data = FileUtils::getInstance()->getFileData(filename, "rb", &size);
+    ret = String::createWithData(data, size);
+    CC_SAFE_DELETE_ARRAY(data);
+    return ret;
 }
 
 void String::acceptVisitor(DataVisitor &visitor)

@@ -25,7 +25,7 @@
 #ifndef __UISCROLLVIEW_H__
 #define __UISCROLLVIEW_H__
 
-#include "gui//Layout.h"
+#include "gui/UILayout.h"
 #include "gui/UIScrollInterface.h"
 
 namespace gui {
@@ -34,16 +34,8 @@ enum SCROLLVIEW_DIR
 {
     SCROLLVIEW_DIR_NONE,
     SCROLLVIEW_DIR_VERTICAL,
-    SCROLLVIEW_DIR_HORIZONTAL
-};
-
-enum SCROLLVIEW_MOVE_DIR
-{
-    SCROLLVIEW_MOVE_DIR_NONE,
-    SCROLLVIEW_MOVE_DIR_UP,
-    SCROLLVIEW_MOVE_DIR_DOWN,
-    SCROLLVIEW_MOVE_DIR_LEFT,
-    SCROLLVIEW_MOVE_DIR_RIGHT,
+    SCROLLVIEW_DIR_HORIZONTAL,
+    SCROLLVIEW_DIR_BOTH
 };
 
 typedef enum
@@ -52,13 +44,18 @@ typedef enum
     SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
     SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
     SCROLLVIEW_EVENT_SCROLL_TO_RIGHT,
+    SCROLLVIEW_EVENT_SCROLLING,
+    SCROLLVIEW_EVENT_BOUNCE_TOP,
+    SCROLLVIEW_EVENT_BOUNCE_BOTTOM,
+    SCROLLVIEW_EVENT_BOUNCE_LEFT,
+    SCROLLVIEW_EVENT_BOUNCE_RIGHT
 }ScrollviewEventType;
 
-typedef void (cocos2d::Object::*SEL_ScrollViewEvent)(cocos2d::Object*, ScrollviewEventType);
+typedef void (cocos2d::CCObject::*SEL_ScrollViewEvent)(cocos2d::Object*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
-class UIScrollView : public Layout , public UIScrollInterface
+class UIScrollView : public UILayout , public UIScrollInterface
 {
 public:
     /**
@@ -83,7 +80,7 @@ public:
      *
      * @param SCROLLVIEW_DIR
      */
-    void setDirection(SCROLLVIEW_DIR dir);
+    virtual void setDirection(SCROLLVIEW_DIR dir);
     
     /**
      * Gets scroll direction of scrollview.
@@ -101,17 +98,117 @@ public:
      *
      * @return inner container.
      */
-    Layout* getInnerContainer();
+    UILayout* getInnerContainer();
     
     /**
      * Scroll inner container to bottom boundary of scrollview.
      */
-    void scrollToBottom();
+    void scrollToBottom(float time, bool attenuated);
     
     /**
      * Scroll inner container to top boundary of scrollview.
      */
-    void scrollToTop();
+    void scrollToTop(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to left boundary of scrollview.
+     */
+    void scrollToLeft(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to right boundary of scrollview.
+     */
+    void scrollToRight(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to top and left boundary of scrollview.
+     */
+    void scrollToTopLeft(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to top and right boundary of scrollview.
+     */
+    void scrollToTopRight(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to bottom and left boundary of scrollview.
+     */
+    void scrollToBottomLeft(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to bottom and right boundary of scrollview.
+     */
+    void scrollToBottomRight(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to vertical percent position of scrollview.
+     */
+    void scrollToPercentVertical(float percent, float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to horizontal percent position of scrollview.
+     */
+    void scrollToPercentHorizontal(float percent, float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to both direction percent position of scrollview.
+     */
+    void scrollToPercentBothDirection(const cocos2d::Point& percent, float time, bool attenuated);
+    
+    /**
+     * Move inner container to bottom boundary of scrollview.
+     */
+    void jumpToBottom();
+    
+    /**
+     * Move inner container to top boundary of scrollview.
+     */
+    void jumpToTop();
+    
+    /**
+     * Move inner container to left boundary of scrollview.
+     */
+    void jumpToLeft();
+    
+    /**
+     * Move inner container to right boundary of scrollview.
+     */
+    void jumpToRight();
+    
+    /**
+     * Move inner container to top and left boundary of scrollview.
+     */
+    void jumpToTopLeft();
+    
+    /**
+     * Move inner container to top and right boundary of scrollview.
+     */
+    void jumpToTopRight();
+    
+    /**
+     * Move inner container to bottom and left boundary of scrollview.
+     */
+    void jumpToBottomLeft();
+    
+    /**
+     * Move inner container to bottom and right boundary of scrollview.
+     */
+    void jumpToBottomRight();
+    
+    /**
+     * Move inner container to vertical percent position of scrollview.
+     */
+    void jumpToPercentVertical(float percent);
+    
+    /**
+     * Move inner container to horizontal percent position of scrollview.
+     */
+    void jumpToPercentHorizontal(float percent);
+    
+    /**
+     * Move inner container to both direction percent position of scrollview.
+     */
+    void jumpToPercentBothDirection(const cocos2d::Point& percent);
     
     /**
      * Changes inner container size of scrollview.
@@ -134,7 +231,7 @@ public:
     /**
      * Add call back function called scrollview event triggered
      */
-    void addEventListener(cocos2d::Object* target, SEL_ScrollViewEvent selector);    
+    void addEventListener(cocos2d::Object* target, SEL_ScrollViewEvent selector);
         
     //override "addChild" method of widget.
     virtual bool addChild(UIWidget* widget);
@@ -165,6 +262,14 @@ public:
     
     virtual void update(float dt);
     
+    void setBounceEnabled(bool enabled);
+    
+    bool isBounceEnabled() const;
+    
+    void setInertiaScrollEnabled(bool enabled);
+    
+    bool isInertiaScrollEnabled() const;
+    
     /**
      * Sets LayoutType.
      *
@@ -192,12 +297,20 @@ public:
 protected:
     virtual bool init();
     virtual void initRenderer();
-    void moveChildren(float offset);
+    void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
-    void startAutoScrollChildren(float v);
+    void bounceChildren(float dt);
+    void checkBounceBoundary();
+    bool checkNeedBounce();
+    void startAutoScrollChildrenWithOriginalSpeed(const cocos2d::Point& dir, float v, bool attenuated, float acceleration);
+    void startAutoScrollChildrenWithDestination(const cocos2d::Point& des, float time, bool attenuated);
+    void jumpToDestination(const cocos2d::Point& des);
     void stopAutoScrollChildren();
-    float getCurAutoScrollDistance(float time);
-    virtual bool scrollChildren(float touchOffset);
+    void startBounceChildren(float v);
+    void stopBounceChildren();
+    bool checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY);
+    virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
+    bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
     virtual void handlePressLogic(const cocos2d::Point &touchPoint);
@@ -206,48 +319,71 @@ protected:
     virtual void interceptTouchEvent(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint);
     virtual void checkChildInfo(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint);
     void recordSlidTime(float dt);
-    //override "releaseResoures" method of widget.
-    virtual void releaseResoures();
-    
     void scrollToTopEvent();
     void scrollToBottomEvent();
     void scrollToLeftEvent();
     void scrollToRightEvent();
-    void setMoveDirection(SCROLLVIEW_MOVE_DIR dir);
-    SCROLLVIEW_MOVE_DIR getMoveDirection();
+    void scrollingEvent();
+    void bounceTopEvent();
+    void bounceBottomEvent();
+    void bounceLeftEvent();
+    void bounceRightEvent();
     virtual void onSizeChanged();
-    virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
+    virtual void copyClonedWidgetChildren(UIWidget* model);
+    virtual void setClippingEnabled(bool able){UILayout::setClippingEnabled(able);};
 protected:
-    Layout* _innerContainer;
+    UILayout* _innerContainer;
     
     SCROLLVIEW_DIR _direction;
-    SCROLLVIEW_MOVE_DIR _moveDirection;
-    float _touchStartLocation;
-    float _touchEndLocation;
-    float _touchMoveStartLocation;
-    float _topBoundary;//test
-    float _bottomBoundary;//test
+
+    cocos2d::Point _touchBeganPoint;
+    cocos2d::Point _touchMovedPoint;
+    cocos2d::Point _touchEndedPoint;
+    cocos2d::Point _touchMovingPoint;
+    cocos2d::Point _autoScrollDir;
+    
+    float _topBoundary;
+    float _bottomBoundary;
     float _leftBoundary;
     float _rightBoundary;
     
-    bool _topEnd;
-    bool _bottomEnd;
-    bool _leftEnd;
-    bool _rightEnd;
+    float _bounceTopBoundary;
+    float _bounceBottomBoundary;
+    float _bounceLeftBoundary;
+    float _bounceRightBoundary;
+
     
     bool _autoScroll;
+    float _autoScrollAddUpTime;
     
     float _autoScrollOriginalSpeed;
     float _autoScrollAcceleration;
+    bool _isAutoScrollSpeedAttenuated;
+    bool _needCheckAutoScrollDestination;
+    cocos2d::Point _autoScrollDestination;
     
     bool _bePressed;
     float _slidTime;
     cocos2d::Point _moveChildPoint;
     float _childFocusCancelOffset;
     
+    bool _leftBounceNeeded;
+    bool _topBounceNeeded;
+    bool _rightBounceNeeded;
+    bool _bottomBounceNeeded;
+    
+    bool _bounceEnabled;
+    bool _bouncing;
+    cocos2d::Point _bounceDir;
+    float _bounceOriginalSpeed;
+    bool _inertiaScrollEnabled;
+
+
+    
     cocos2d::Object* _eventListener;
     SEL_ScrollViewEvent _eventSelector;
-    
 };
 
 }

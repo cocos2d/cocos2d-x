@@ -27,8 +27,12 @@
 
 #include "gui/UIWidget.h"
 
-namespace gui {
+namespace gui{
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIButton : public UIWidget
 {
 public:
@@ -162,19 +166,20 @@ public:
      */
     virtual void setColor(const cocos2d::Color3B &color);
     
-    void setTitleText(const char* text);
-    const char* getTitleText() const;
+    /**
+     * Returns the "class name" of widget.
+     */
+    virtual const char* getDescription() const;
+    
+    void setTitleText(const std::string& text);
+    const std::string& getTitleText() const;
     void setTitleColor(const cocos2d::Color3B& color);
     const cocos2d::Color3B& getTitleColor() const;
     void setTitleFontSize(float size);
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
-    
-    /**
-     * Returns the "class name" of widget.
-     */
-    virtual const char* getDescription() const;
+
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -186,6 +191,8 @@ protected:
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     cocos2d::Node* _buttonNormalRenderer;
     cocos2d::Node* _buttonClickedRenderer;

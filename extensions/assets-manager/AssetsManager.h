@@ -141,6 +141,12 @@ public:
      */
     void setDelegate(AssetsManagerDelegateProtocol *delegate);
     
+    /**
+     * @js NA
+     * @lua NA
+     */
+    AssetsManagerDelegateProtocol* getDelegate() const { return _delegate ;}
+    
     /** @brief Sets connection time out in seconds
      */
     void setConnectionTimeout(unsigned int timeout);

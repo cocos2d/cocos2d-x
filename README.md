@@ -23,14 +23,15 @@ How to start a new game
 -----------------------
 
 1. Download the code from [cocos2d download site][4]
+2. Enter `tools/project-creator`
 
-2. Run the `create-multi-platform-projects.py` script
+2. Run the `create-projects.py` script
 
 Example:
 
-	$ cd cocos2d-x
-	$ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
-    $ cd projects/mygame
+    $ cd cocos2d-x/tools/project-creator
+    $ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
+    $ cd ../../projects/mygame
 
 
 Main features
@@ -69,7 +70,7 @@ Build Requirements
 ------------------
 
 * Mac OS X 10.7+, Xcode 4.6+
-* or Ubuntu 13.04+
+* or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
 
 
@@ -79,9 +80,6 @@ Runtime Requirements
   * Android 2.3+ for Android games
   * OS X v10.6+ for Mac games
   * Windows 7+ for Win games
-  * Tizen 2.2+
-  * Emscripten
-  * Google Native Client
 
 
 Running Tests
@@ -92,7 +90,7 @@ Select the test you want from Xcode Scheme chooser.
 * For OS X / iOS
 
 ```
-$ cd cocos2d-x/samples
+$ cd cocos2d-x/build
 $ open samples.xcodeproj
 ```
 
@@ -100,20 +98,19 @@ $ open samples.xcodeproj
 
 ```
 $ cd cocos2d-x
-$ ./make-all-linux-projects.sh
+$ cmake CMakeLists.txt
+$ make
 ```
-
-or open the `cocos2d-x/cocos2dx-qt5.pro` file using QT Creator 5.
 
 * For Windows
 
-Open the `cocos2d-x/cocos2d-win32.vc2012.sln`
+Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
 
 * For Android
 
 ```
-$ cd cocos2d-x/samples/Cpp/HelloCpp/proj.android
-$ ./build_native.sh
+$ cd cocos2d-x/build
+$ python ./android-build.py hellocpp
 ```
 
 Import HelloCpp Android project using Eclipse(released with Android SDK). The path to be imported is `cocos2d-x/samples/Cpp/HelloCpp/proj.android`.

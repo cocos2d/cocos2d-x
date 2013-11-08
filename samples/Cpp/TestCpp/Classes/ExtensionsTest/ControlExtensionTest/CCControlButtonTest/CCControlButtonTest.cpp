@@ -110,6 +110,7 @@ ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(cons
 
 ControlButtonTest_Event::ControlButtonTest_Event()
 : _displayValueLabel(NULL)
+, _displayBitmaskLabel(NULL)
 {
 
 }
@@ -117,6 +118,7 @@ ControlButtonTest_Event::ControlButtonTest_Event()
 ControlButtonTest_Event::~ControlButtonTest_Event()
 {
     CC_SAFE_RELEASE_NULL(_displayValueLabel);
+    CC_SAFE_RELEASE_NULL(_displayBitmaskLabel);
 }
 
 bool ControlButtonTest_Event::init()
@@ -130,7 +132,13 @@ bool ControlButtonTest_Event::init()
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
         _displayValueLabel->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(_displayValueLabel, 1);
-        
+
+        setDisplayBitmaskLabel(LabelTTF::create("No bitmask event", "Marker Felt", 24));
+        _displayBitmaskLabel->setAnchorPoint(Point(0.5f, -1));
+        Point bitmaskLabelPos = _displayValueLabel->getPosition() - Point(0, _displayBitmaskLabel->getBoundingBox().size.height);
+        _displayBitmaskLabel->setPosition(bitmaskLabelPos);
+        addChild(_displayBitmaskLabel, 1);
+
         // Add the button
         auto backgroundButton = Scale9Sprite::create("extensions/button.png");
         auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
@@ -162,9 +170,18 @@ bool ControlButtonTest_Event::init()
         controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchUpInsideAction), Control::EventType::TOUCH_UP_INSIDE);
         controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchUpOutsideAction), Control::EventType::TOUCH_UP_OUTSIDE);
         controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchCancelAction), Control::EventType::TOUCH_CANCEL);
+        // test for issue 2882
+        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchBitmaskAction),
+            Control::EventType::TOUCH_DOWN | Control::EventType::DRAG_INSIDE | Control::EventType::DRAG_OUTSIDE | Control::EventType::DRAG_ENTER | Control::EventType::DRAG_EXIT | Control::EventType::TOUCH_UP_INSIDE | Control::EventType::TOUCH_UP_OUTSIDE | Control::EventType::TOUCH_CANCEL | Control::EventType::VALUE_CHANGED);
+
         return true;
     }
     return false;
+}
+
+void ControlButtonTest_Event::touchBitmaskAction(Object *senderz, Control::EventType controlEvent)
+{
+    _displayBitmaskLabel->setString(String::createWithFormat("using bitmask (%d)", controlEvent)->getCString());
 }
 
 void ControlButtonTest_Event::touchDownAction(Object *senderz, Control::EventType controlEvent)
