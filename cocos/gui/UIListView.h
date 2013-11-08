@@ -40,6 +40,14 @@ typedef enum
     LISTVIEW_GRAVITY_BOTTOM,
     LISTVIEW_GRAVITY_CENTER_VERTICAL,
 }ListViewGravity;
+    
+typedef enum
+{
+    LISTVIEW_ONSELECEDTITEM
+}ListViewEventType;
+
+typedef void (cocos2d::Object::*SEL_ListViewEvent)(cocos2d::Object*,ListViewEventType);
+#define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
 class UIListView : public UIScrollView
 {
@@ -145,6 +153,10 @@ public:
      */
     void refreshView();
     
+    int getCurSelectedIndex() const;
+    
+    void addEventListenerListView(cocos2d::Object* target, SEL_ListViewEvent selector);
+    
     /**
      * Changes scroll direction of scrollview.
      *
@@ -164,12 +176,17 @@ protected:
     virtual UIWidget* createCloneInstance();
     virtual void copySpecialProperties(UIWidget* model);
     virtual void copyClonedWidgetChildren(UIWidget* model);
+    void selectedItemEvent();
+    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint);
 protected:
     
     UIWidget* _model;
     cocos2d::Array* _items;
     ListViewGravity _gravity;
     float _itemsMargin;
+    cocos2d::Object*       _listViewEventListener;
+    SEL_ListViewEvent    _listViewEventSelector;
+    int _curSelectedIndex;
 };
 
 }
