@@ -200,8 +200,6 @@ protected:
     int _asyncRefCount;
 
     std::unordered_map<std::string, Texture2D*> _textures;
-
-    static TextureCache *_sharedTextureCache;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
