@@ -128,6 +128,13 @@ void UILayout::setClippingEnabled(bool able)
 void UILayout::onSizeChanged()
 {
     DYNAMIC_CAST_CLIPPINGLAYER->setClippingSize(m_size);
+    ccArray* arrayChildren = m_children->data;
+    int length = arrayChildren->num;
+    for (int i=0; i<length; ++i)
+    {
+        UIWidget* child = (UIWidget*)arrayChildren->arr[i];
+        child->updateSizeAndPosition();
+    }
     doLayout();
     if (m_pBackGroundImage)
     {
