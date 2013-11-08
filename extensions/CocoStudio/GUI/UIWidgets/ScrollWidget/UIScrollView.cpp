@@ -69,8 +69,8 @@ m_bBouncing(false),
 m_bounceDir(CCPointZero),
 m_fBounceOriginalSpeed(0.0f),
 m_bInertiaScrollEnabled(true),
-m_pEventListener(NULL),
-m_pfnEventSelector(NULL),
+m_pScrollViewEventListener(NULL),
+m_pfnScrollViewEventSelector(NULL),
 /*******Compatible*******/
 m_pScrollToTopListener(NULL),
 m_pfnScrollToTopSelector(NULL),
@@ -86,8 +86,8 @@ m_pfnScrollToRightSelector(NULL)
 
 UIScrollView::~UIScrollView()
 {
-    m_pEventListener = NULL;
-    m_pfnEventSelector = NULL;
+    m_pScrollViewEventListener = NULL;
+    m_pfnScrollViewEventSelector = NULL;
     m_pScrollToTopListener = NULL;
     m_pfnScrollToTopSelector = NULL;
     m_pScrollToBottomListener = NULL;
@@ -1482,9 +1482,9 @@ void UIScrollView::scrollToTopEvent()
         (m_pScrollToTopListener->*m_pfnScrollToTopSelector)(this);
     }
     /************************/
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pScrollViewEventListener && m_pfnScrollViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
+        (m_pScrollViewEventListener->*m_pfnScrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
     }
 }
 
@@ -1496,9 +1496,9 @@ void UIScrollView::scrollToBottomEvent()
         (m_pScrollToBottomListener->*m_pfnScrollToBottomSelector)(this);
     }
     /************************/
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pScrollViewEventListener && m_pfnScrollViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
+        (m_pScrollViewEventListener->*m_pfnScrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
     }
 }
 
@@ -1510,9 +1510,9 @@ void UIScrollView::scrollToLeftEvent()
         (m_pScrollToLeftListener->*m_pfnScrollToLeftSelector)(this);
     }
     /************************/
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pScrollViewEventListener && m_pfnScrollViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
+        (m_pScrollViewEventListener->*m_pfnScrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
     }
 }
 
@@ -1524,56 +1524,56 @@ void UIScrollView::scrollToRightEvent()
         (m_pScrollToRightListener->*m_pfnScrollToRightSelector)(this);
     }
     /************************/
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pScrollViewEventListener && m_pfnScrollViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
+        (m_pScrollViewEventListener->*m_pfnScrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
     }
 }
 
 void UIScrollView::scrollingEvent()
 {
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pScrollViewEventListener && m_pfnScrollViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLLING);
+        (m_pScrollViewEventListener->*m_pfnScrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLLING);
     }
 }
 
 void UIScrollView::bounceTopEvent()
 {
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pScrollViewEventListener && m_pfnScrollViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_TOP);
+        (m_pScrollViewEventListener->*m_pfnScrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_TOP);
     }
 }
 
 void UIScrollView::bounceBottomEvent()
 {
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pScrollViewEventListener && m_pfnScrollViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_BOTTOM);
+        (m_pScrollViewEventListener->*m_pfnScrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_BOTTOM);
     }
 }
 
 void UIScrollView::bounceLeftEvent()
 {
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pScrollViewEventListener && m_pfnScrollViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_LEFT);
+        (m_pScrollViewEventListener->*m_pfnScrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_LEFT);
     }
 }
 
 void UIScrollView::bounceRightEvent()
 {
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pScrollViewEventListener && m_pfnScrollViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
+        (m_pScrollViewEventListener->*m_pfnScrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
     }
 }
 
-void UIScrollView::addEventListener(CCObject *target, SEL_ScrollViewEvent selector)
+void UIScrollView::addEventListenerScrollView(CCObject *target, SEL_ScrollViewEvent selector)
 {
-    m_pEventListener = target;
-    m_pfnEventSelector = selector;
+    m_pScrollViewEventListener = target;
+    m_pfnScrollViewEventSelector = selector;
 }
 
 /*******Compatible*******/

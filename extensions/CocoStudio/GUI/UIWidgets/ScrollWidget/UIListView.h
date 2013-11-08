@@ -137,7 +137,7 @@ public:
     /**
      *  add event
      */
-    void addEventListenter(cocos2d::CCObject* target, SEL_ListViewEvent selector);
+    void addEventListenterListView(cocos2d::CCObject* target, SEL_ListViewEvent selector);
     /*******Compatible*******/
     /**
      *  add init child event
@@ -260,8 +260,8 @@ protected:
     float m_fDisBoundaryToChild_0;
     float m_fDisBetweenChild;
     
-    CCObject* m_pEventListener;
-    SEL_ListViewEvent m_pfnEventSelector;
+    CCObject* m_pListViewEventListener;
+    SEL_ListViewEvent m_pfnListViewEventSelector;
     
     /*compatible*/
     cocos2d::CCObject* m_pInitChildListener;

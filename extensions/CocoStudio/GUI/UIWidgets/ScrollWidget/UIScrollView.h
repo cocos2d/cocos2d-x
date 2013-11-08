@@ -242,7 +242,7 @@ public:
     /**
      * Add call back function called scrollview event triggered
      */
-    void addEventListener(CCObject* target, SEL_ScrollViewEvent selector);
+    void addEventListenerScrollView(CCObject* target, SEL_ScrollViewEvent selector);
     
     /*******Compatible*******/
     /**
@@ -421,8 +421,8 @@ protected:
 
 
     
-    CCObject* m_pEventListener;
-    SEL_ScrollViewEvent m_pfnEventSelector;
+    CCObject* m_pScrollViewEventListener;
+    SEL_ScrollViewEvent m_pfnScrollViewEventSelector;
     
 
     
