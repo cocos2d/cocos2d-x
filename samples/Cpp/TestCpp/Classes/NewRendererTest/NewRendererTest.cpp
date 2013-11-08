@@ -12,7 +12,7 @@ NewRendererTest::NewRendererTest()
     auto touchListener = EventListenerTouchAllAtOnce::create();
     touchListener->onTouchesEnded = CC_CALLBACK_2(NewRendererTest::onTouchesEnded, this);
 
-//    createSpriteTest();
+    createSpriteTest();
     createNewSpriteTest();
 }
 

@@ -13,15 +13,16 @@
 #include "CCGLProgram.h"
 #include "QuadCommand.h"
 
-#define NUM_QUADS_PER_ALLOC 20
+#define VBO_SIZE 64
 
 NS_CC_BEGIN
 using namespace std;
 
-class Renderer
+class Renderer : public Object
 {
 public:
     static Renderer* getInstance();
+    static void destroyInstance();
 
     //TODO support multiple viewport
     void addRenderCommand(RenderCommand* command);
@@ -31,14 +32,23 @@ protected:
     Renderer();
     ~Renderer();
 
+    bool init();
+    void setupIndices();
+    void setupVBOAndVAO();
+
     void batchQuads(QuadCommand* cmd);
     void drawQuads();
 
 protected:
     vector<RenderCommand*> _renderQueue;
     int _lastMaterialID;
-    V3F_C4B_T2F_Quad* _quadBuffer;
-    int _numQuadsAlloc;
+
+
+    V3F_C4B_T2F_Quad*_quads;
+    GLushort* _indices;
+    GLuint _VAOname;
+    GLuint _buffersVBO[2]; //0: vertex  1: indices
+
     int _numQuads;
 };
 
