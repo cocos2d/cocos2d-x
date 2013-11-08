@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __CCPHYSICS_CONTACT_INFO_CHIPMUNK_H__
+#define __CCPHYSICS_CONTACT_INFO_CHIPMUNK_H__
+
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-
-#ifndef __CCPHYSICS_CONTACT_INFO_H__
-#define __CCPHYSICS_CONTACT_INFO_H__
 
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
@@ -36,16 +36,19 @@ class PhysicsContact;
 class PhysicsContactInfo
 {
 public:
-    PhysicsContact* contact;
+    inline PhysicsContact* getContact() const { return _contact; }
     
 private:
     PhysicsContactInfo(PhysicsContact* contact);
     ~PhysicsContactInfo();
     
+private:
+    PhysicsContact* _contact;
+    
     friend class PhysicsContact;
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_WORLD_INFO_H__
 
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // __CCPHYSICS_CONTACT_INFO_CHIPMUNK_H__
