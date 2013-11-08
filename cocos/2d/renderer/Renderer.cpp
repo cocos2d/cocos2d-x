@@ -7,6 +7,7 @@
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CustomCommand.h"
+#include "CCGL.h"
 
 
 NS_CC_BEGIN
@@ -132,7 +133,7 @@ void Renderer::render()
     stable_sort(_renderQueue.begin(), _renderQueue.end(), compareRenderCommand);
 
     //2. Process commands
-    for(vector<RenderCommand*>::iterator it = _renderQueue.begin(); it != _renderQueue.end(); ++it)
+    for(auto it = _renderQueue.begin(); it != _renderQueue.end(); ++it)
     {
         //TODO: Perform Sprite batching here
         auto command = *it;
@@ -141,9 +142,9 @@ void Renderer::render()
         {
             case QUAD_COMMAND:
             {
-                QuadCommand* cmd = (QuadCommand*)command;
+                QuadCommand* cmd = static_cast<QuadCommand*>(command);
 
-                if(_lastMaterialID != cmd->getMaterialID() || _numQuads == VBO_SIZE)
+                if(_lastMaterialID != cmd->getMaterialID() || _numQuads >= VBO_SIZE)
                 {
                     //Draw batched data
                     drawQuads();
@@ -157,11 +158,6 @@ void Renderer::render()
 
                     //Set Shader
                     cmd->useMaterial();
-
-                    //TODO: Set Blend Mode
-
-                    //Set texture
-                    GL::bindTexture2D(cmd->getTextureID());
                 }
 
 
@@ -172,7 +168,7 @@ void Renderer::render()
             case CUSTOM_COMMAND:
             {
                 flush();
-                CustomCommand* cmd = (CustomCommand*)command;
+                CustomCommand* cmd = static_cast<CustomCommand*>(command);
                 cmd->execute();
 
                 break;

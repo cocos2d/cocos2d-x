@@ -76,6 +76,11 @@ void QuadCommand::useMaterial()
     _shader->use();
     //TODO once everything is using world coordinate, we can reduce the uniforms for shaders
     _shader->setUniformsForBuiltins();
+
+    //TODO set blend mode
+
+    //Set texture
+    GL::bindTexture2D(_textureID);
 }
 
 NS_CC_END
