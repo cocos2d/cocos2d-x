@@ -22,6 +22,7 @@ enum RenderCommandType
     UNKNOWN_COMMAND,
 };
 
+//TODO make RenderCommand inherent from Object
 class RenderCommand
 {
 public:
