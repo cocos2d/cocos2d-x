@@ -96,6 +96,16 @@ bool Point::operator!=(const Point& right)
     return this->x != right.x || this->y != right.y;
 }
 
+bool Point::operator==(const Point& right) const
+{
+    return this->x == right.x && this->y == right.y;
+}
+
+bool Point::operator!=(const Point& right) const
+{
+    return this->x != right.x || this->y != right.y;
+}
+
 Point Point::operator*(float a) const
 {
     return Point(this->x * a, this->y * a);

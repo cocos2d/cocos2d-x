@@ -79,29 +79,22 @@ PhysicsBody::PhysicsBody()
 , _tag(0)
 , _categoryBitmask(UINT_MAX)
 , _collisionBitmask(UINT_MAX)
-, _contactTestBitmask(0)
+, _contactTestBitmask(UINT_MAX)
 , _group(0)
 {
 }
 
 PhysicsBody::~PhysicsBody()
 {
-    if (_world)
-    {
-        removeFromWorld();
-    }
-    
-    removeAllShapes();
-    
     for (auto it = _joints.begin(); it != _joints.end(); ++it)
     {
         PhysicsJoint* joint = *it;
+        
         PhysicsBody* other = joint->getBodyA() == this ? joint->getBodyB() : joint->getBodyA();
-        
-        other->_joints.erase(std::find(other->_joints.begin(), other->_joints.end(), joint));
-        
+        other->removeJoint(joint);
         delete joint;
     }
+    
     CC_SAFE_DELETE(_info);
 }
 
@@ -157,12 +150,12 @@ PhysicsBody* PhysicsBody::create(float mass, float moment)
     
 }
 
-PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
+PhysicsBody* PhysicsBody::createCircle(float radius, const PhysicsMaterial& material, const Point& offset)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeCircle::create(radius, material));
+        body->addShape(PhysicsShapeCircle::create(radius, material, offset));
         body->autorelease();
         return body;
     }
@@ -171,12 +164,12 @@ PhysicsBody* PhysicsBody::createCircle(float radius, PhysicsMaterial material)
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createBox(Size size, PhysicsMaterial material)
+PhysicsBody* PhysicsBody::createBox(const Size& size, const PhysicsMaterial& material, const Point& offset)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeBox::create(size, material));
+        body->addShape(PhysicsShapeBox::create(size, material, offset));
         body->autorelease();
         return body;
     }
@@ -185,12 +178,12 @@ PhysicsBody* PhysicsBody::createBox(Size size, PhysicsMaterial material)
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createPolygon(Point* points, int count, PhysicsMaterial material)
+PhysicsBody* PhysicsBody::createPolygon(const Point* points, int count, const PhysicsMaterial& material, const Point& offset)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapePolygon::create(points, count, material));
+        body->addShape(PhysicsShapePolygon::create(points, count, material, offset));
         body->autorelease();
         return body;
     }
@@ -199,7 +192,7 @@ PhysicsBody* PhysicsBody::createPolygon(Point* points, int count, PhysicsMateria
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createEdgeSegment(Point a, Point b, PhysicsMaterial material, float border/* = 1*/)
+PhysicsBody* PhysicsBody::createEdgeSegment(const Point& a, const Point& b, const PhysicsMaterial& material, float border/* = 1*/)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
@@ -214,12 +207,12 @@ PhysicsBody* PhysicsBody::createEdgeSegment(Point a, Point b, PhysicsMaterial ma
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createEdgeBox(Size size, PhysicsMaterial material, float border/* = 1*/)
+PhysicsBody* PhysicsBody::createEdgeBox(const Size& size, const PhysicsMaterial& material, float border/* = 1*/, const Point& offset)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
     {
-        body->addShape(PhysicsShapeEdgeBox::create(size, material, border));
+        body->addShape(PhysicsShapeEdgeBox::create(size, material, border, offset));
         body->_dynamic = false;
         body->autorelease();
         return body;
@@ -230,7 +223,7 @@ PhysicsBody* PhysicsBody::createEdgeBox(Size size, PhysicsMaterial material, flo
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createEdgePolygon(Point* points, int count, PhysicsMaterial material, float border/* = 1*/)
+PhysicsBody* PhysicsBody::createEdgePolygon(const Point* points, int count, const PhysicsMaterial& material, float border/* = 1*/)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
@@ -246,7 +239,7 @@ PhysicsBody* PhysicsBody::createEdgePolygon(Point* points, int count, PhysicsMat
     return nullptr;
 }
 
-PhysicsBody* PhysicsBody::createEdgeChain(Point* points, int count, PhysicsMaterial material, float border/* = 1*/)
+PhysicsBody* PhysicsBody::createEdgeChain(const Point* points, int count, const PhysicsMaterial& material, float border/* = 1*/)
 {
     PhysicsBody* body = new PhysicsBody();
     if (body && body->init())
@@ -272,9 +265,9 @@ bool PhysicsBody::init()
         CC_BREAK_IF(_shapes == nullptr);
         _shapes->retain();
         
-        _info->body = cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment));
+        _info->setBody(cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment)));
         
-        CC_BREAK_IF(_info->body == nullptr);
+        CC_BREAK_IF(_info->getBody() == nullptr);
         
         return true;
     } while (false);
@@ -282,19 +275,36 @@ bool PhysicsBody::init()
     return false;
 }
 
+void PhysicsBody::removeJoint(PhysicsJoint* joint)
+{
+    auto it = std::find(_joints.begin(), _joints.end(), joint);
+    
+    if (it != _joints.end())
+    {
+        _joints.erase(it);
+    }
+}
+
 void PhysicsBody::setDynamic(bool dynamic)
 {
     if (dynamic != _dynamic)
     {
         _dynamic = dynamic;
-        if (_world != nullptr)
+        if (dynamic)
         {
-            if (dynamic)
+            cpBodySetMass(_info->getBody(), _mass);
+            
+            if (_world != nullptr)
             {
-                cpSpaceAddBody(_world->_info->space, _info->body);
-            }else
+                cpSpaceAddBody(_world->_info->getSpace(), _info->getBody());
+            }
+        }else
+        {
+            cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
+            
+            if (_world != nullptr)
             {
-                cpSpaceRemoveBody(_world->_info->space, _info->body);
+                cpSpaceRemoveBody(_world->_info->getSpace(), _info->getBody());
             }
         }
         
@@ -305,7 +315,7 @@ void PhysicsBody::setRotationEnable(bool enable)
 {
     if (_rotationEnable != enable)
     {
-        cpBodySetMoment(_info->body, enable ? _moment : PHYSICS_INFINITY);
+        cpBodySetMoment(_info->getBody(), enable ? _moment : PHYSICS_INFINITY);
         _rotationEnable = enable;
     }
 }
@@ -331,23 +341,23 @@ void PhysicsBody::setGravityEnable(bool enable)
 
 void PhysicsBody::setPosition(Point position)
 {
-    cpBodySetPos(_info->body, PhysicsHelper::point2cpv(position));
+    cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position));
 }
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_info->body, PhysicsHelper::float2cpfloat(rotation));
+    cpBodySetAngle(_info->getBody(), PhysicsHelper::float2cpfloat(rotation));
 }
 
 Point PhysicsBody::getPosition() const
 {
-    cpVect vec = cpBodyGetPos(_info->body);
+    cpVect vec = cpBodyGetPos(_info->getBody());
     return PhysicsHelper::cpv2point(vec);
 }
 
 float PhysicsBody::getRotation() const
 {
-    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->body) / 3.14f * 180.0f);
+    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) / 3.14f * 180.0f);
 }
 
 PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape)
@@ -381,29 +391,29 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape)
     return shape;
 }
 
-void PhysicsBody::applyForce(Point force)
+void PhysicsBody::applyForce(const Vect& force)
 {
     applyForce(force, Point::ZERO);
 }
 
-void PhysicsBody::applyForce(Point force, Point offset)
+void PhysicsBody::applyForce(const Vect& force, const Point& offset)
 {
-    cpBodyApplyForce(_info->body, PhysicsHelper::point2cpv(force), PhysicsHelper::point2cpv(offset));
+    cpBodyApplyForce(_info->getBody(), PhysicsHelper::point2cpv(force), PhysicsHelper::point2cpv(offset));
 }
 
-void PhysicsBody::applyImpulse(Point impulse)
+void PhysicsBody::applyImpulse(const Vect& impulse)
 {
     applyImpulse(impulse, Point());
 }
 
-void PhysicsBody::applyImpulse(Point impulse, Point offset)
+void PhysicsBody::applyImpulse(const Vect& impulse, const Point& offset)
 {
-    cpBodyApplyImpulse(_info->body, PhysicsHelper::point2cpv(impulse), PhysicsHelper::point2cpv(offset));
+    cpBodyApplyImpulse(_info->getBody(), PhysicsHelper::point2cpv(impulse), PhysicsHelper::point2cpv(offset));
 }
 
 void PhysicsBody::applyTorque(float torque)
 {
-    cpBodySetTorque(_info->body, PhysicsHelper::float2cpfloat(torque));
+    cpBodySetTorque(_info->getBody(), PhysicsHelper::float2cpfloat(torque));
 }
 
 void PhysicsBody::setMass(float mass)
@@ -432,7 +442,7 @@ void PhysicsBody::setMass(float mass)
         }
     }
     
-    cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
+    cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
 }
 
 void PhysicsBody::addMass(float mass)
@@ -474,7 +484,7 @@ void PhysicsBody::addMass(float mass)
         }
     }
     
-    cpBodySetMass(_info->body, PhysicsHelper::float2cpfloat(_mass));
+    cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
 }
 
 void PhysicsBody::addMoment(float moment)
@@ -515,48 +525,58 @@ void PhysicsBody::addMoment(float moment)
     
     if (_rotationEnable)
     {
-        cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
+        cpBodySetMoment(_info->getBody(), PhysicsHelper::float2cpfloat(_moment));
     }
 }
 
-void PhysicsBody::setVelocity(Point velocity)
+void PhysicsBody::setVelocity(const Point& velocity)
 {
-    cpBodySetVel(_info->body, PhysicsHelper::point2cpv(velocity));
+    cpBodySetVel(_info->getBody(), PhysicsHelper::point2cpv(velocity));
 }
 
 Point PhysicsBody::getVelocity()
 {
-    return PhysicsHelper::cpv2point(cpBodyGetVel(_info->body));
+    return PhysicsHelper::cpv2point(cpBodyGetVel(_info->getBody()));
+}
+
+Point PhysicsBody::getVelocityAtLocalPoint(const Point& point)
+{
+    return PhysicsHelper::cpv2point(cpBodyGetVelAtLocalPoint(_info->getBody(), PhysicsHelper::point2cpv(point)));
+}
+
+Point PhysicsBody::getVelocityAtWorldPoint(const Point& point)
+{
+    return PhysicsHelper::cpv2point(cpBodyGetVelAtWorldPoint(_info->getBody(), PhysicsHelper::point2cpv(point)));
 }
 
 void PhysicsBody::setAngularVelocity(float velocity)
 {
-    cpBodySetAngVel(_info->body, PhysicsHelper::float2cpfloat(velocity));
+    cpBodySetAngVel(_info->getBody(), PhysicsHelper::float2cpfloat(velocity));
 }
 
 float PhysicsBody::getAngularVelocity()
 {
-    return PhysicsHelper::cpfloat2float(cpBodyGetAngVel(_info->body));
+    return PhysicsHelper::cpfloat2float(cpBodyGetAngVel(_info->getBody()));
 }
 
 void PhysicsBody::setVelocityLimit(float limit)
 {
-    cpBodySetVelLimit(_info->body, PhysicsHelper::float2cpfloat(limit));
+    cpBodySetVelLimit(_info->getBody(), PhysicsHelper::float2cpfloat(limit));
 }
 
 float PhysicsBody::getVelocityLimit()
 {
-    return PhysicsHelper::cpfloat2float(cpBodyGetVelLimit(_info->body));
+    return PhysicsHelper::cpfloat2float(cpBodyGetVelLimit(_info->getBody()));
 }
 
 void PhysicsBody::setAngularVelocityLimit(float limit)
 {
-    cpBodySetVelLimit(_info->body, PhysicsHelper::float2cpfloat(limit));
+    cpBodySetVelLimit(_info->getBody(), PhysicsHelper::float2cpfloat(limit));
 }
 
 float PhysicsBody::getAngularVelocityLimit()
 {
-    return PhysicsHelper::cpfloat2float(cpBodyGetAngVelLimit(_info->body));
+    return PhysicsHelper::cpfloat2float(cpBodyGetAngVelLimit(_info->getBody()));
 }
 
 void PhysicsBody::setMoment(float moment)
@@ -566,11 +586,11 @@ void PhysicsBody::setMoment(float moment)
     
     if (_rotationEnable)
     {
-        cpBodySetMoment(_info->body, PhysicsHelper::float2cpfloat(_moment));
+        cpBodySetMoment(_info->getBody(), PhysicsHelper::float2cpfloat(_moment));
     }
 }
 
-PhysicsShape* PhysicsBody::getShapeByTag(int tag) const
+PhysicsShape* PhysicsBody::getShape(int tag) const
 {
     for (auto child : *_shapes)
     {
@@ -584,7 +604,7 @@ PhysicsShape* PhysicsBody::getShapeByTag(int tag) const
     return nullptr;
 }
 
-void PhysicsBody::removeShapeByTag(int tag)
+void PhysicsBody::removeShape(int tag)
 {
     for (auto child : *_shapes)
     {
@@ -599,7 +619,7 @@ void PhysicsBody::removeShapeByTag(int tag)
 
 void PhysicsBody::removeShape(PhysicsShape* shape)
 {
-    if (_shapes->getIndexOfObject(shape) == UINT_MAX)
+    if (_shapes->getIndexOfObject(shape) != UINT_MAX)
     {
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
@@ -612,6 +632,9 @@ void PhysicsBody::removeShape(PhysicsShape* shape)
         {
             _world->removeShape(shape);
         }
+        
+        // set shape->_body = nullptr make the shape->setBody will not trigger the _body->removeShape function call.
+        shape->_body = nullptr;
         shape->setBody(nullptr);
         _shapes->removeObject(shape);
     }
@@ -633,6 +656,9 @@ void PhysicsBody::removeAllShapes()
         {
             _world->removeShape(shape);
         }
+        
+        // set shape->_body = nullptr make the shape->setBody will not trigger the _body->removeShape function call.
+        shape->_body = nullptr;
         shape->setBody(nullptr);
     }
     
@@ -657,10 +683,10 @@ void PhysicsBody::setEnable(bool enable)
         {
             if (enable)
             {
-                _world->addBody(this);
+                _world->addBodyOrDelay(this);
             }else
             {
-                _world->removeBody(this);
+                _world->removeBodyOrDelay(this);
             }
         }
     }
@@ -668,7 +694,7 @@ void PhysicsBody::setEnable(bool enable)
 
 bool PhysicsBody::isResting() const
 {
-    return cpBodyIsSleeping(_info->body) == cpTrue;
+    return cpBodyIsSleeping(_info->getBody()) == cpTrue;
 }
 
 void PhysicsBody::update(float delta)
@@ -676,9 +702,9 @@ void PhysicsBody::update(float delta)
     // damping compute
     if (_dynamic)
     {
-        _info->body->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->body->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->body->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
+        _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+        _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+        _info->getBody()->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
     }
 }
 
@@ -722,12 +748,12 @@ void PhysicsBody::setGroup(int group)
 
 Point PhysicsBody::world2Local(const Point& point)
 {
-    return PhysicsHelper::cpv2point(cpBodyWorld2Local(_info->body, PhysicsHelper::point2cpv(point)));
+    return PhysicsHelper::cpv2point(cpBodyWorld2Local(_info->getBody(), PhysicsHelper::point2cpv(point)));
 }
 
 Point PhysicsBody::local2World(const Point& point)
 {
-    return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->body, PhysicsHelper::point2cpv(point)));
+    return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->getBody(), PhysicsHelper::point2cpv(point)));
 }
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
