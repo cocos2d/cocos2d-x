@@ -100,3 +100,8 @@ tools/jenkins_scripts/mac/android/userconf.ini
 
 # CTags
 tags
+
+# ignore files, created with make-all-linux-project script
+/lib
+/build/linux-build
+

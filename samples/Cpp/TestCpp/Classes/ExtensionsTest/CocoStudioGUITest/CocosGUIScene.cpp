@@ -25,17 +25,7 @@ void CocosGUITestScene::runThisTest()
 {
     
 	Director::getInstance()->replaceScene(this);
-    
-    ul = UILayer::create();
-    ul->scheduleUpdate();
-    this->addChild(ul);
-    
-    /*
-    Layout* layout = static_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/UI/UI01.json"));
-    ul->addWidget(layout);
-     */
-    
-//    /*
+
     Size s = CCDirector::getInstance()->getWinSize();
     
     _itemMenu = CCMenu::create();
@@ -56,7 +46,6 @@ void CocosGUITestScene::runThisTest()
 }
 void CocosGUITestScene::MainMenuCallback(Object* pSender)
 {
-    ul->removeFromParent();
     ExtensionsTestScene *pScene = new ExtensionsTestScene();
 	pScene->runThisTest();
 	pScene->release();    

@@ -27,7 +27,7 @@
 NS_CC_BEGIN
 
 PhysicsContactInfo::PhysicsContactInfo(PhysicsContact* contact)
-: contact(contact)
+: _contact(contact)
 {
 }
 

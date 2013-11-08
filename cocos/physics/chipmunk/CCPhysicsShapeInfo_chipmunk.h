@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
+#define __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
+
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-
-#ifndef __CCPHYSICS_SHAPE_INFO_H__
-#define __CCPHYSICS_SHAPE_INFO_H__
 
 #include <vector>
 #include <map>
@@ -47,21 +47,29 @@ public:
     void setBody(cpBody* body);
     
 public:
-    std::vector<cpShape*> shapes;
-    PhysicsShape* shape;
-    cpBody* body;
-    cpGroup group;
-    static std::map<cpShape*, PhysicsShapeInfo*> map;
-    static cpBody* shareBody;
+    PhysicsShape* getShape() const { return _shape; }
+    std::vector<cpShape*>& getShapes() { return _shapes; }
+    cpBody* getBody() const { return _body; }
+    cpGroup getGourp() const { return _group; }
+    static std::map<cpShape*, PhysicsShapeInfo*>& getMap() { return _map; }
+    static cpBody* getSharedBody() { return _sharedBody; }
     
 private:
     PhysicsShapeInfo(PhysicsShape* shape);
     ~PhysicsShapeInfo();
     
+private:
+    std::vector<cpShape*> _shapes;
+    PhysicsShape* _shape;
+    cpBody* _body;
+    cpGroup _group;
+    static std::map<cpShape*, PhysicsShapeInfo*> _map;
+    static cpBody* _sharedBody;
+    
     friend class PhysicsShape;
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_SHAPE_INFO_H__
 
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
