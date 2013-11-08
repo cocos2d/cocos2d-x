@@ -6,6 +6,8 @@
 #include "Renderer.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
+#include "CustomCommand.h"
+
 
 NS_CC_BEGIN
 using namespace std;
@@ -144,11 +146,12 @@ void Renderer::render()
                 if(_lastMaterialID != cmd->getMaterialID() || _numQuads == VBO_SIZE)
                 {
                     //Draw batched data
-                    if(_numQuads > 0)
-                    {
-                        drawQuads();
-                    }
+                    drawQuads();
+                }
 
+                //Reset material if needed.
+                if(_lastMaterialID != cmd->getMaterialID())
+                {
                     //Set new material
                     _lastMaterialID = cmd->getMaterialID();
 
@@ -161,7 +164,16 @@ void Renderer::render()
                     GL::bindTexture2D(cmd->getTextureID());
                 }
 
+
                 batchQuads(cmd);
+
+                break;
+            }
+            case CUSTOM_COMMAND:
+            {
+                flush();
+                CustomCommand* cmd = (CustomCommand*)command;
+                cmd->execute();
 
                 break;
             }
@@ -179,6 +191,9 @@ void Renderer::render()
 
 void Renderer::drawQuads()
 {
+    if(_numQuads <= 0)
+        return;
+
     //Set VBO data
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
@@ -205,6 +220,12 @@ void Renderer::batchQuads(QuadCommand* cmd)
     //Batch data
     _numQuads++; //Every quad command only contains one quad
     _quads[_numQuads - 1] = *cmd->getQuad();
+}
+
+void Renderer::flush()
+{
+    drawQuads();
+    _lastMaterialID = 0;
 }
 
 NS_CC_END
