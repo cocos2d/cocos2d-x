@@ -30,6 +30,7 @@
 
 #include "CCObject.h"
 #include "CCGeometry.h"
+#include "CCArray.h"
 
 #include "CCPhysicsShape.h"
 
@@ -43,7 +44,7 @@ class PhysicsJoint;
 class PhysicsBodyInfo;
 
 
-const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(1.0f, 1.0f, 1.0f);
+const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
 
 /**
  * A body affect by physics.
@@ -53,6 +54,8 @@ class PhysicsBody : public Object//, public Clonable
 {
 public:
     static PhysicsBody* create();
+    static PhysicsBody* create(float mass);
+    static PhysicsBody* create(float mass, float moment);
     /**
      * @brief Create a body contains a circle shape.
      */
@@ -84,7 +87,7 @@ public:
      */
     static PhysicsBody* createEdgeChain(Point* points, int count, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
-    virtual void addShape(PhysicsShape* shape);
+    virtual PhysicsShape* addShape(PhysicsShape* shape);
     
     /**
      * @brief Applies a immediate force to body.
@@ -119,12 +122,12 @@ public:
     /*
      * @brief get the body shapes.
      */
-    inline std::vector<PhysicsShape*>& getShapes() { return _shapes; }
+    inline Array* getShapes() const { return _shapes; }
     /*
      * @brief get the first body shapes.
      */
-    inline PhysicsShape* getShape() { return _shapes.size() >= 1 ? _shapes.front() : nullptr; }
-    PhysicsShape* getShapeByTag(int tag);
+    inline PhysicsShape* getShape() const { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
+    PhysicsShape* getShapeByTag(int tag) const;
     /*
      * @brief remove a shape from body
      */
@@ -135,6 +138,8 @@ public:
      */
     void removeAllShapes();
     
+    void removeFromWorld();
+    
     /*
      * @brief get the world body added to.
      */
@@ -142,19 +147,22 @@ public:
     /*
      * @brief get all joints the body have
      */
-    inline const std::vector<PhysicsJoint*>* getJoints() const { return &_joints; }
+    inline const std::vector<PhysicsJoint*>& getJoints() const { return _joints; }
     
     /*
      * @brief get the sprite the body set to.
      */
-    inline Sprite* getOwner() const { return _owner; }
+    inline Node* getNode() const { return _node; }
     
-    inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
+    void setCategoryBitmask(int bitmask);
+    void setContactTestBitmask(int bitmask);
+    void setCollisionBitmask(int bitmask);
     inline int getCategoryBitmask() const { return _categoryBitmask; }
-    inline void setContactTestBitmask(int bitmask) { _contactTestBitmask = bitmask; }
     inline int getContactTestBitmask() const { return _contactTestBitmask; }
-    inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
     inline int getCollisionBitmask() const { return _collisionBitmask; }
+    
+    void setGroup(int group);
+    inline int getGroup() const { return _group; }
     
     /*
      * @brief get the body position.
@@ -169,7 +177,7 @@ public:
      * @brief test the body is dynamic or not.
      * a dynamic body will effect with gravity.
      */
-    inline bool isDynamic() { return _dynamic; }
+    inline bool isDynamic() const { return _dynamic; }
     /*
      * @brief set dynamic to body.
      * a dynamic body will effect with gravity.
@@ -184,7 +192,7 @@ public:
     /*
      * @brief get the body mass.
      */
-    inline float getMass() { return _mass; }
+    inline float getMass() const { return _mass; }
     /*
      * @brief add mass to body.
      * if _mass(mass of the body) == PHYSICS_INFINITY, it remains.
@@ -203,7 +211,7 @@ public:
     /*
      * @brief get the body moment of inertia.
      */
-    inline float getMoment(float moment) { return _moment; }
+    inline float getMoment(float moment) const { return _moment; }
     /*
      * @brief add moment of inertia to body.
      * if _moment(moment of the body) == PHYSICS_INFINITY, it remains.
@@ -220,27 +228,29 @@ public:
     /*
      * @brief get angular damping.
      */
-    inline float getLinearDamping() { return _linearDamping; }
+    inline float getLinearDamping() const { return _linearDamping; }
     inline void setLinearDamping(float damping) { _linearDamping = damping; }
-    inline float getAngularDamping() { return _angularDamping; }
+    inline float getAngularDamping() const { return _angularDamping; }
     inline void setAngularDamping(float damping) { _angularDamping = damping; }
     
     //virtual Clonable* clone() const override;
     
-    bool isResting();
-    inline bool isEnable() { return _enable; }
+    bool isResting() const;
+    inline bool isEnable() const { return _enable; }
     void setEnable(bool enable);
     
-    inline bool isRotationEnable() { return _rotationEnable; }
+    inline bool isRotationEnable() const { return _rotationEnable; }
     void setRotationEnable(bool enable);
     
-    inline bool isGravityEnable() { return _gravityEnable; }
+    inline bool isGravityEnable() const { return _gravityEnable; }
     void setGravityEnable(bool enable);
     
     
-    inline int getTag() { return _tag; }
+    inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
     
+    Point world2Local(const Point& point);
+    Point local2World(const Point& point);
     
 protected:
     
@@ -256,9 +266,9 @@ protected:
     virtual ~PhysicsBody();
     
 protected:
-    Sprite*  _owner;
+    Node*                       _node;
     std::vector<PhysicsJoint*>  _joints;
-    std::vector<PhysicsShape*>  _shapes;
+    Array*                      _shapes;
     PhysicsWorld*               _world;
     PhysicsBodyInfo*            _info;
     bool                        _dynamic;
@@ -275,9 +285,10 @@ protected:
     float                       _angularDamping;
     int                         _tag;
     
-    int    _categoryBitmask;
-    int    _collisionBitmask;
-    int    _contactTestBitmask;
+    int                         _categoryBitmask;
+    int                         _collisionBitmask;
+    int                         _contactTestBitmask;
+    int                         _group;
     
     friend class PhysicsWorld;
     friend class PhysicsShape;

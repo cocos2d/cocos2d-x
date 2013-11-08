@@ -34,11 +34,11 @@
 #include "CCPhysicsBody.h"
 #include "CCPhysicsWorld.h"
 
-#include "chipmunk/CCPhysicsBodyInfo.h"
-#include "box2d/CCPhysicsBodyInfo.h"
-#include "chipmunk/CCPhysicsShapeInfo.h"
-#include "box2d/CCPhysicsShapeInfo.h"
-#include "chipmunk/CCPhysicsHelper.h"
+#include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
+#include "box2d/CCPhysicsBodyInfo_box2d.h"
+#include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
+#include "box2d/CCPhysicsShapeInfo_box2d.h"
+#include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
 NS_CC_BEGIN
 
@@ -50,6 +50,10 @@ PhysicsShape::PhysicsShape()
 , _mass(0)
 , _moment(0)
 , _tag(0)
+, _categoryBitmask(UINT_MAX)
+, _collisionBitmask(UINT_MAX)
+, _contactTestBitmask(0)
+, _group(0)
 {
     
 }
@@ -272,12 +276,12 @@ void PhysicsShape::setBody(PhysicsBody *body)
     if (body == nullptr)
     {
         _info->setBody(nullptr);
-        _info->setGroup(CP_NO_GROUP);
+        //_info->setGroup(CP_NO_GROUP);
         _body = nullptr;
     }else
     {
         _info->setBody(body->_info->body);
-        _info->setGroup(body->_info->group);
+        //_info->setGroup(body->_info->group);
         _body = body;
     }
 }
@@ -349,7 +353,7 @@ float PhysicsShapeCircle::calculateDefaultMoment()
                                                      cpCircleShapeGetOffset(shape)));
 }
 
-float PhysicsShapeCircle::getRadius()
+float PhysicsShapeCircle::getRadius() const
 {
     return PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(_info->shapes.front()));
 }
@@ -401,12 +405,12 @@ bool PhysicsShapeEdgeSegment::init(Point a, Point b, PhysicsMaterial material/* 
     return false;
 }
 
-Point PhysicsShapeEdgeSegment::getPointA()
+Point PhysicsShapeEdgeSegment::getPointA() const
 {
     return PhysicsHelper::cpv2point(((cpSegmentShape*)(_info->shapes.front()))->ta);
 }
 
-Point PhysicsShapeEdgeSegment::getPointB()
+Point PhysicsShapeEdgeSegment::getPointB() const
 {
     return PhysicsHelper::cpv2point(((cpSegmentShape*)(_info->shapes.front()))->tb);
 }
@@ -499,7 +503,7 @@ float PhysicsShapeBox::calculateDefaultMoment()
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, cpvzero));
 }
 
-Point* PhysicsShapeBox::getPoints(Point* points)
+Point* PhysicsShapeBox::getPoints(Point* points) const
 {
     cpShape* shape = _info->shapes.front();
     return PhysicsHelper::cpvs2points(((cpPolyShape*)shape)->verts, points, ((cpPolyShape*)shape)->numVerts);
@@ -507,7 +511,7 @@ Point* PhysicsShapeBox::getPoints(Point* points)
     return points;
 }
 
-Size PhysicsShapeBox::getSize()
+Size PhysicsShapeBox::getSize() const
 {
     cpShape* shape = _info->shapes.front();
     return PhysicsHelper::cpv2size(cpv(cpvdist(cpPolyShapeGetVert(shape, 0), cpPolyShapeGetVert(shape, 1)),
@@ -590,13 +594,13 @@ float PhysicsShapePolygon::calculateDefaultMoment()
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, cpvzero));
 }
 
-Point* PhysicsShapePolygon::getPoints(Point* points)
+Point* PhysicsShapePolygon::getPoints(Point* points) const
 {
     cpShape* shape = _info->shapes.front();
     return PhysicsHelper::cpvs2points(((cpPolyShape*)shape)->verts, points, ((cpPolyShape*)shape)->numVerts);
 }
 
-int PhysicsShapePolygon::getPointsCount()
+long PhysicsShapePolygon::getPointsCount() const
 {
     return ((cpPolyShape*)_info->shapes.front())->numVerts;
 }
@@ -711,7 +715,7 @@ Point PhysicsShapeEdgePolygon::getCenter()
     return _center;
 }
 
-int PhysicsShapeEdgePolygon::getPointsCount()
+long PhysicsShapeEdgePolygon::getPointsCount() const
 {
     return _info->shapes.size() + 1;
 }
@@ -772,9 +776,20 @@ Point PhysicsShapeEdgeChain::getCenter()
     return _center;
 }
 
-int PhysicsShapeEdgeChain::getPointsCount()
+long PhysicsShapeEdgeChain::getPointsCount() const
 {
     return _info->shapes.size() + 1;
+}
+
+void PhysicsShape::setGroup(int group)
+{
+    if (group < 0)
+    {
+        for (auto shape : _info->shapes)
+        {
+            cpShapeSetGroup(shape, (cpGroup)group);
+        }
+    }
 }
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)

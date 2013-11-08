@@ -40,21 +40,20 @@ class DisplayFactory
 public:
     static void addDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     static void createDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-    static void updateDisplay(Bone *bone, DecorativeDisplay *decoDisplay, float dt, bool dirty);
+    static void updateDisplay(Bone *bone, float dt, bool dirty);
 
     static void addSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     static void createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
     static void initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, const char *displayName, Skin *skin);
-    static void updateSpriteDisplay(Bone *bone, cocos2d::Node *display, float dt, bool dirty);
 
 
     static void addArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     static void createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-    static void updateArmatureDisplay(Bone *bone, cocos2d::Node *display, float dt, bool dirty);
+    static void updateArmatureDisplay(Bone *bone, cocos2d::Node *display, float dt);
 
     static void addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     static void createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
-    static void updateParticleDisplay(Bone *bone, cocos2d::Node *display, float dt, bool dirty);
+    static void updateParticleDisplay(Bone *bone, cocos2d::Node *display, float dt);
 };
 
 

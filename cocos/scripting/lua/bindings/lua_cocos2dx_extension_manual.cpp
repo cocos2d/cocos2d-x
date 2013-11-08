@@ -1426,6 +1426,125 @@ static void extendBone(lua_State* L)
     }
 }
 
+class LuaAssetsManagerDelegateProtocol:public Object, public AssetsManagerDelegateProtocol
+{
+public:
+    virtual ~LuaAssetsManagerDelegateProtocol()
+    {}
+    
+    virtual void onProgress(int percent)
+    {
+        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
+        if (0 != handler)
+        {
+            LuaAssetsManagerEventData eventData(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS,percent);
+            BasicScriptData data((void*)this,&eventData);
+            ScriptEvent event(kAssetsManagerEvent,(void*)&data);
+            LuaEngine::getInstance()->sendEvent(&event);
+        }
+    }
+    
+    virtual void onSuccess()
+    {
+        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS);
+        if (0 != handler)
+        {
+            LuaAssetsManagerEventData eventData(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS);
+            BasicScriptData data((void*)this,&eventData);
+            ScriptEvent event(kAssetsManagerEvent,(void*)&data);
+            LuaEngine::getInstance()->sendEvent(&event);
+        }
+    }
+    
+    virtual void onError(AssetsManager::ErrorCode errorCode)
+    {
+        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR);
+        if (0 != handler)
+        {
+            LuaAssetsManagerEventData eventData(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR, (int)errorCode);
+            BasicScriptData data((void*)this,&eventData);
+            ScriptEvent event(kAssetsManagerEvent,(void*)&data);
+            LuaEngine::getInstance()->sendEvent(&event);
+        }
+    }
+};
+
+static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    AssetsManager* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"AssetsManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (AssetsManager*)  tolua_tousertype(L,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_AssetsManager_setDelegate'\n", nullptr);
+		return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (2 == argc)
+    {
+        LuaAssetsManagerDelegateProtocol* delegate = dynamic_cast<LuaAssetsManagerDelegateProtocol*>( self->getDelegate());
+        if (nullptr == delegate)
+        {
+            delegate = new LuaAssetsManagerDelegateProtocol();
+            if (nullptr == delegate)
+                return 0;
+            
+            self->setUserObject(delegate);
+            self->setDelegate(delegate);
+            delegate->release();
+        }
+        
+        if (2 == argc)
+        {
+#if COCOS2D_DEBUG >= 1
+            if (!toluafix_isfunction(L, 2, "LUA_FUNCTION", 0, &tolua_err) ||
+                !tolua_isnumber(L, 3, 0, &tolua_err) )
+            {
+                goto tolua_lerror;
+            }
+#endif
+            LUA_FUNCTION handler = toluafix_ref_function(L, 2, 0);
+            ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(L,3,0) + (int)ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
+            
+            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)delegate, handler, handlerType);
+            return 0;
+        }
+    }
+    
+    CCLOG("'setDelegate' function of AssetsManager has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setDelegate'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendAssetsManager(lua_State* L)
+{
+    lua_pushstring(L, "AssetsManager");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "setDelegate", lua_cocos2dx_AssetsManager_setDelegate);
+    }
+}
+
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendScrollView(tolua_S);
@@ -1435,5 +1554,6 @@ int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
     extendCCBAnimationManager(tolua_S);
     extendTableView(tolua_S);
     extendBone(tolua_S);
+    extendAssetsManager(tolua_S);
     return 0;
 }

@@ -2,10 +2,6 @@
 # android-build.py
 # Build android samples
 
-# You can use
-
-
-# begin
 import sys
 import os, os.path
 import shutil
@@ -127,7 +123,7 @@ def copy_resources(target, app_android_root):
         copy_files(resources_dir, assets_dir)
 
     # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
-    if target in JSB_SAMPLES or target == "assetsmanager":
+    if target in JSB_SAMPLES:
         resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
         copy_files(resources_dir, assets_dir)
 
@@ -164,7 +160,7 @@ def build_samples(target,ndk_build_param):
     select_toolchain_version()
     build_targets = caculate_built_samples(target)
 
-    current_dir = os.getcwd()
+    current_dir = os.path.dirname(os.path.realpath(__file__))
     cocos_root = os.path.join(current_dir, "..")
 
     app_android_root = ''
@@ -176,23 +172,23 @@ def build_samples(target,ndk_build_param):
         elif target == 'simplegame':
             app_android_root = os.path.join(cocos_root, 'samples/Cpp/SimpleGame/proj.android')
         elif target == 'assetsmanager':
-            app_android_root = os.path.join(cocos_root, 'samples/Cpp/AssetsManager/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Cpp/AssetsManagerTest/proj.android')
         elif target == 'hellolua':
             app_android_root = os.path.join(cocos_root, 'samples/Lua/HelloLua/proj.android')
         elif target == 'testlua':
             app_android_root = os.path.join(cocos_root, 'samples/Lua/TestLua/proj.android')
         elif target == 'cocosdragon':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/CocosDragonJS/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CocosDragonJS/proj.android')
         elif target == 'crystalcraze':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/CrystalCraze/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CrystalCraze/proj.android')
         elif target == 'moonwarriors':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/MoonWarriors/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/MoonWarriors/proj.android')
         elif target == 'testjavascript':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/TestJavascript/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/TestJavascript/proj.android')
         elif target == 'watermelonwithme':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/WatermelonWithMe/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/WatermelonWithMe/proj.android')
         else:
-            print 'unknown target %s, pass it', target
+            print 'unknown target: %s' % target
             continue
 
         copy_resources(target, app_android_root)

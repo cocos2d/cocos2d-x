@@ -34,9 +34,13 @@ typedef enum
     SLIDER_PERCENTCHANGED
 }SliderEventType;
 
-typedef void (cocos2d::CCObject::*SEL_SlidPercentChangedEvent)(cocos2d::Object*,SliderEventType);
+typedef void (cocos2d::Object::*SEL_SlidPercentChangedEvent)(cocos2d::Object*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UISlider : public UIWidget
 {
 public:
@@ -185,6 +189,7 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+
 protected:
     virtual void initRenderer();
     float getPercentWithBallPos(float location);
@@ -195,6 +200,8 @@ protected:
     virtual void onSizeChanged();
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     cocos2d::Node*  _barRenderer;
     cocos2d::Node* _progressBarRenderer;

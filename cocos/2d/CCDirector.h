@@ -376,7 +376,7 @@ protected:
     void showStats();
     void createStatsLabel();
     void calculateMPF();
-    void getFPSImageData(unsigned char** datapointer, unsigned int* length);
+    void getFPSImageData(unsigned char** datapointer, long* length);
     
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();

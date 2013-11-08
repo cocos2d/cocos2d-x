@@ -105,7 +105,7 @@ public:
      * @param   filename The string which indicates a path to image file, e.g., "scene1/monster.png".
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static Sprite* create(const char *filename);
+    static Sprite* create(const std::string& filename);
     
     /**
      * Creates a sprite with an image filename and a rect.
@@ -114,7 +114,7 @@ public:
      * @param   rect        Only the contents inside rect of filename's texture will be applied for this sprite.
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static Sprite* create(const char *filename, const Rect& rect);
+    static Sprite* create(const std::string& filename, const Rect& rect);
     
     /**
      * Creates a sprite with an exsiting texture contained in a Texture2D object
@@ -154,7 +154,7 @@ public:
      * @param   spriteFrameName A null terminated string which indicates the sprite frame name.
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static Sprite* createWithSpriteFrameName(const char *spriteFrameName);
+    static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
     
     /// @}  end of creators group
     
@@ -233,7 +233,7 @@ public:
      * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache
      * @return  true if the sprite is initialized properly, false otherwise.
      */
-    virtual bool initWithSpriteFrameName(const char *spriteFrameName);
+    virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
     
     /**
      * Initializes a sprite with an image filename.
@@ -247,7 +247,7 @@ public:
      * @js      init
      * @lua     init
      */
-    virtual bool initWithFile(const char *filename);
+    virtual bool initWithFile(const std::string& filename);
     
     /**
      * Initializes a sprite with an image filename, and a rect.
@@ -262,7 +262,7 @@ public:
      * @js      init
      * @lua     init
      */
-    virtual bool initWithFile(const char *filename, const Rect& rect);
+    virtual bool initWithFile(const std::string& filename, const Rect& rect);
     
     /// @} end of initializers
 
@@ -354,7 +354,7 @@ public:
      * Changes the display frame with animation name and index.
      * The animation name will be get from the AnimationCache
      */
-    virtual void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
+    virtual void setDisplayFrameWithAnimationName(const std::string& animationName, int frameIndex);
     /// @}
     
     

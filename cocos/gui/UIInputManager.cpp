@@ -37,11 +37,11 @@ _longClickRecordTime(0.0),
 _checkedDoubleClickWidget(NULL),
 _rootWidget(NULL)
 {
-    _manageredWidget = CCArray::create();
+    _manageredWidget = Array::create();
     _manageredWidget->retain();
-    _checkedDoubleClickWidget = CCArray::create();
+    _checkedDoubleClickWidget = Array::create();
     _checkedDoubleClickWidget->retain();
-    _selectedWidgets = CCArray::create();
+    _selectedWidgets = Array::create();
     _selectedWidgets->retain();
 }
 

@@ -140,21 +140,21 @@ public:
     const char * description() const;
 
     /** allocates a CCBMFontConfiguration with a FNT file */
-    static CCBMFontConfiguration * create(const char *FNTfile);
+    static CCBMFontConfiguration * create(const std::string& FNTfile);
 
     /** initializes a BitmapFontConfiguration with a FNT file */
-    bool initWithFNTfile(const char *FNTfile);
+    bool initWithFNTfile(const std::string& FNTfile);
     
-    inline const char* getAtlasName(){ return _atlasName.c_str(); }
-    inline void setAtlasName(const char* atlasName) { _atlasName = atlasName; }
+    inline const std::string& getAtlasName(){ return _atlasName; }
+    inline void setAtlasName(const std::string& atlasName) { _atlasName = atlasName; }
     
     std::set<unsigned int>* getCharacterSet() const;
 private:
-    std::set<unsigned int>* parseConfigFile(const char *controlFile);
+    std::set<unsigned int>* parseConfigFile(const std::string& controlFile);
     void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
     void parseInfoArguments(std::string line);
     void parseCommonArguments(std::string line);
-    void parseImageFileName(std::string line, const char *fntFile);
+    void parseImageFileName(std::string line, const std::string& fntFile);
     void parseKerningEntry(std::string line);
     void purgeKerningDictionary();
     void purgeFontDefDictionary();
@@ -209,13 +209,13 @@ public:
     static void purgeCachedData();
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
-    static LabelBMFont * create(const char *str, const char *fntFile, float width, TextHAlignment alignment, Point imageOffset);
+    static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment, Point imageOffset);
     
-	static LabelBMFont * create(const char *str, const char *fntFile, float width, TextHAlignment alignment);
+	static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment);
 
-	static LabelBMFont * create(const char *str, const char *fntFile, float width);
+	static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width);
 
-	static LabelBMFont * create(const char *str, const char *fntFile);
+	static LabelBMFont * create(const std::string& str, const std::string& fntFile);
 
     /** Creates an label.
      */
@@ -223,15 +223,15 @@ public:
 
     bool init();
     /** init a bitmap font atlas with an initial string and the FNT file */
-    bool initWithString(const char *str, const char *fntFile, float width = kLabelAutomaticWidth, TextHAlignment alignment = TextHAlignment::LEFT, Point imageOffset = Point::ZERO);
+    bool initWithString(const std::string& str, const std::string& fntFile, float width = kLabelAutomaticWidth, TextHAlignment alignment = TextHAlignment::LEFT, Point imageOffset = Point::ZERO);
 
     /** updates the font chars based on the string to render */
     void createFontChars();
     // super method
-    virtual void setString(const char *newString);
-    virtual void setString(const char *newString, bool needUpdateLabel);
+    virtual void setString(const std::string& newString);
+    virtual void setString(const std::string& newString, bool needUpdateLabel);
 
-    virtual const char* getString(void) const;
+    virtual const char* getString() const;
     virtual void setCString(const char *label);
     virtual void setAnchorPoint(const Point& var);
     virtual void updateLabel();
@@ -264,7 +264,7 @@ public:
     virtual void draw();
 #endif // CC_LABELBMFONT_DEBUG_DRAW
 private:
-    char * atlasNameFromFntFile(const char *fntFile);
+    char * atlasNameFromFntFile(const std::string& fntFile);
     int kerningAmountForFirst(unsigned short first, unsigned short second);
     float getLetterPosXLeft( Sprite* characterSprite );
     float getLetterPosXRight( Sprite* characterSprite );
@@ -303,13 +303,13 @@ protected:
     bool _cascadeColorEnabled;
     bool _cascadeOpacityEnabled;
     /** conforms to RGBAProtocol protocol */
-    bool        _isOpacityModifyRGB;
+    bool _isOpacityModifyRGB;
 
 };
 
 /** Free function that parses a FNT file a place it on the cache
 */
-CC_DLL CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
+CC_DLL CCBMFontConfiguration * FNTConfigLoadFile(const std::string &file);
 /** Purges the FNT config cache
 */
 CC_DLL void FNTConfigRemoveCache( void );

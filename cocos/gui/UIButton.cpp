@@ -25,9 +25,6 @@
 #include "gui/UIButton.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
- using namespace cocos2d;
- using namespace cocos2d::extension;
-
 namespace gui {
 
 #define NORMALRENDERERZ (0)
@@ -45,9 +42,9 @@ _clickedFileName(""),
 _disabledFileName(""),
 _prevIgnoreSize(true),
 _scale9Enabled(false),
-_capInsetsNormal(Rect::ZERO),
-_capInsetsPressed(Rect::ZERO),
-_capInsetsDisabled(Rect::ZERO),
+_capInsetsNormal(cocos2d::Rect::ZERO),
+_capInsetsPressed(cocos2d::Rect::ZERO),
+_capInsetsDisabled(cocos2d::Rect::ZERO),
 _normalTexType(UI_TEX_TYPE_LOCAL),
 _pressedTexType(UI_TEX_TYPE_LOCAL),
 _disabledTexType(UI_TEX_TYPE_LOCAL),
@@ -55,7 +52,7 @@ _normalTextureSize(_size),
 _pressedTextureSize(_size),
 _disabledTextureSize(_size),
 _pressedActionEnabled(false),
-_titleColor(Color3B::WHITE)
+_titleColor(cocos2d::Color3B::WHITE)
 {
     
 }
@@ -88,10 +85,10 @@ bool UIButton::init()
 void UIButton::initRenderer()
 {
     UIWidget::initRenderer();
-    _buttonNormalRenderer = Sprite::create();
-    _buttonClickedRenderer = Sprite::create();
-    _buttonDisableRenderer = Sprite::create();
-    _titleRenderer = LabelTTF::create();
+    _buttonNormalRenderer = cocos2d::Sprite::create();
+    _buttonClickedRenderer = cocos2d::Sprite::create();
+    _buttonDisableRenderer = cocos2d::Sprite::create();
+    _titleRenderer = cocos2d::LabelTTF::create();
     _renderer->addChild(_buttonNormalRenderer,NORMALRENDERERZ);
     _renderer->addChild(_buttonClickedRenderer,PRESSEDRENDERERZ);
     _renderer->addChild(_buttonDisableRenderer,DISABLEDRENDERERZ);
@@ -117,15 +114,15 @@ void UIButton::setScale9Enabled(bool able)
     _buttonDisableRenderer = NULL;
     if (_scale9Enabled)
     {
-        _buttonNormalRenderer = Scale9Sprite::create();
-        _buttonClickedRenderer = Scale9Sprite::create();
-        _buttonDisableRenderer = Scale9Sprite::create();
+        _buttonNormalRenderer = cocos2d::extension::Scale9Sprite::create();
+        _buttonClickedRenderer = cocos2d::extension::Scale9Sprite::create();
+        _buttonDisableRenderer = cocos2d::extension::Scale9Sprite::create();
     }
     else
     {
-        _buttonNormalRenderer = CCSprite::create();
-        _buttonClickedRenderer = CCSprite::create();
-        _buttonDisableRenderer = CCSprite::create();
+        _buttonNormalRenderer = cocos2d::Sprite::create();
+        _buttonClickedRenderer = cocos2d::Sprite::create();
+        _buttonDisableRenderer = cocos2d::Sprite::create();
     }
 
     loadTextureNormal(_normalFileName.c_str(), _normalTexType);
@@ -179,32 +176,33 @@ void UIButton::loadTextureNormal(const char* normal,TextureResType texType)
         switch (_normalTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Scale9Sprite*>(_buttonNormalRenderer)->initWithFile(normal);
+                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonNormalRenderer)->initWithFile(normal);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Scale9Sprite*>(_buttonNormalRenderer)->initWithSpriteFrameName(normal);
+                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonNormalRenderer)->initWithSpriteFrameName(normal);
                 break;
             default:
                 break;
         }
-        dynamic_cast<Scale9Sprite*>(_buttonNormalRenderer)->setColor(getColor());
-        dynamic_cast<Scale9Sprite*>(_buttonNormalRenderer)->setOpacity(getOpacity());
+        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonNormalRenderer)->setColor(getColor());
+        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonNormalRenderer)->setOpacity(getOpacity());
+        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(_capInsetsNormal);
     }
     else
     {
         switch (_normalTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Sprite*>(_buttonNormalRenderer)->initWithFile(normal);
+                dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->initWithFile(normal);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Sprite*>(_buttonNormalRenderer)->initWithSpriteFrameName(normal);
+                dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->initWithSpriteFrameName(normal);
                 break;
             default:
                 break;
         }
-        dynamic_cast<Sprite*>(_buttonNormalRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_buttonNormalRenderer)->setOpacity(getOpacity());
+        dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->setColor(getColor());
+        dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->setOpacity(getOpacity());
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
     updateAnchorPoint();
@@ -224,32 +222,33 @@ void UIButton::loadTexturePressed(const char* selected,TextureResType texType)
         switch (_pressedTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Scale9Sprite*>(_buttonClickedRenderer)->initWithFile(selected);
+                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonClickedRenderer)->initWithFile(selected);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Scale9Sprite*>(_buttonClickedRenderer)->initWithSpriteFrameName(selected);
+                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonClickedRenderer)->initWithSpriteFrameName(selected);
                 break;
             default:
                 break;
         }
-        dynamic_cast<Scale9Sprite*>(_buttonClickedRenderer)->setColor(getColor());
-        dynamic_cast<Scale9Sprite*>(_buttonClickedRenderer)->setOpacity(getOpacity());
+        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonClickedRenderer)->setColor(getColor());
+        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonClickedRenderer)->setOpacity(getOpacity());
+        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(_capInsetsPressed);
     }
     else
     {
         switch (_pressedTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Sprite*>(_buttonClickedRenderer)->initWithFile(selected);
+                dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->initWithFile(selected);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Sprite*>(_buttonClickedRenderer)->initWithSpriteFrameName(selected);
+                dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->initWithSpriteFrameName(selected);
                 break;
             default:
                 break;
         }
-        dynamic_cast<Sprite*>(_buttonClickedRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_buttonClickedRenderer)->setOpacity(getOpacity());
+        dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->setColor(getColor());
+        dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->setOpacity(getOpacity());
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
     updateAnchorPoint();
@@ -269,73 +268,74 @@ void UIButton::loadTextureDisabled(const char* disabled,TextureResType texType)
         switch (_disabledTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Scale9Sprite*>(_buttonDisableRenderer)->initWithFile(disabled);
+                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonDisableRenderer)->initWithFile(disabled);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Scale9Sprite*>(_buttonDisableRenderer)->initWithSpriteFrameName(disabled);
+                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonDisableRenderer)->initWithSpriteFrameName(disabled);
                 break;
             default:
                 break;
         }
-        dynamic_cast<Scale9Sprite*>(_buttonDisableRenderer)->setColor(getColor());
-        dynamic_cast<Scale9Sprite*>(_buttonDisableRenderer)->setOpacity(getOpacity());
+        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonDisableRenderer)->setColor(getColor());
+        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonDisableRenderer)->setOpacity(getOpacity());
+        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(_capInsetsDisabled);
     }
     else
     {
         switch (_disabledTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Sprite*>(_buttonDisableRenderer)->initWithFile(disabled);
+                dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->initWithFile(disabled);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Sprite*>(_buttonDisableRenderer)->initWithSpriteFrameName(disabled);
+                dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->initWithSpriteFrameName(disabled);
                 break;
             default:
                 break;
         }
-        dynamic_cast<Sprite*>(_buttonDisableRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_buttonDisableRenderer)->setOpacity(getOpacity());
+        dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->setColor(getColor());
+        dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->setOpacity(getOpacity());
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
     updateAnchorPoint();
     disabledTextureScaleChangedWithSize();
 }
 
-void UIButton::setCapInsets(const Rect &capInsets)
+void UIButton::setCapInsets(const cocos2d::Rect &capInsets)
 {
     setCapInsetsNormalRenderer(capInsets);
     setCapInsetsPressedRenderer(capInsets);
     setCapInsetsDisabledRenderer(capInsets);
 }
 
-void UIButton::setCapInsetsNormalRenderer(const Rect &capInsets)
+void UIButton::setCapInsetsNormalRenderer(const cocos2d::Rect &capInsets)
 {
     _capInsetsNormal = capInsets;
     if (!_scale9Enabled)
     {
         return;
     }
-    dynamic_cast<Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
+    dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
 }
 
-void UIButton::setCapInsetsPressedRenderer(const Rect &capInsets)
+void UIButton::setCapInsetsPressedRenderer(const cocos2d::Rect &capInsets)
 {
     _capInsetsPressed = capInsets;
     if (!_scale9Enabled)
     {
         return;
     }
-    dynamic_cast<Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
+    dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
 }
 
-void UIButton::setCapInsetsDisabledRenderer(const Rect &capInsets)
+void UIButton::setCapInsetsDisabledRenderer(const cocos2d::Rect &capInsets)
 {
     _capInsetsDisabled = capInsets;
     if (!_scale9Enabled)
     {
         return;
     }
-    dynamic_cast<Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
+    dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
 }
 
 void UIButton::onPressStateChangedToNormal()
@@ -348,9 +348,9 @@ void UIButton::onPressStateChangedToNormal()
         _buttonNormalRenderer->stopAllActions();
         _buttonClickedRenderer->stopAllActions();
         _buttonDisableRenderer->stopAllActions();
-        Action *zoomAction = ScaleTo::create(0.05f, 1.0f);
-        Action *zoomAction1 = ScaleTo::create(0.05f, 1.0f);
-        Action *zoomAction2 = ScaleTo::create(0.05f, 1.0f);
+        cocos2d::Action *zoomAction = cocos2d::ScaleTo::create(0.05f, 1.0f);
+        cocos2d::Action *zoomAction1 = cocos2d::ScaleTo::create(0.05f, 1.0f);
+        cocos2d::Action *zoomAction2 = cocos2d::ScaleTo::create(0.05f, 1.0f);
         _buttonNormalRenderer->runAction(zoomAction);
         _buttonClickedRenderer->runAction(zoomAction1);
         _buttonDisableRenderer->runAction(zoomAction2);
@@ -367,9 +367,9 @@ void UIButton::onPressStateChangedToPressed()
         _buttonNormalRenderer->stopAllActions();
         _buttonClickedRenderer->stopAllActions();
         _buttonDisableRenderer->stopAllActions();
-        Action *zoomAction = ScaleTo::create(0.05f, 1.1f);
-        Action *zoomAction1 = ScaleTo::create(0.05f, 1.1f);
-        Action *zoomAction2 = ScaleTo::create(0.05f, 1.1f);
+        cocos2d::Action *zoomAction = cocos2d::ScaleTo::create(0.05f, 1.1f);
+        cocos2d::Action *zoomAction1 = cocos2d::ScaleTo::create(0.05f, 1.1f);
+        cocos2d::Action *zoomAction2 = cocos2d::ScaleTo::create(0.05f, 1.1f);
         _buttonNormalRenderer->runAction(zoomAction);
         _buttonClickedRenderer->runAction(zoomAction1);
         _buttonDisableRenderer->runAction(zoomAction2);
@@ -390,9 +390,9 @@ void UIButton::setFlipX(bool flipX)
     {
         return;
     }
-    dynamic_cast<Sprite*>(_buttonNormalRenderer)->setFlippedX(flipX);
-    dynamic_cast<Sprite*>(_buttonClickedRenderer)->setFlippedX(flipX);
-    dynamic_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(flipX);
+    dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->setFlippedX(flipX);
+    dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->setFlippedX(flipX);
+    dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->setFlippedX(flipX);
 }
 
 void UIButton::setFlipY(bool flipY)
@@ -402,9 +402,9 @@ void UIButton::setFlipY(bool flipY)
     {
         return;
     }
-    dynamic_cast<Sprite*>(_buttonNormalRenderer)->setFlippedY(flipY);
-    dynamic_cast<Sprite*>(_buttonClickedRenderer)->setFlippedY(flipY);
-    dynamic_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(flipY);
+    dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->setFlippedY(flipY);
+    dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->setFlippedY(flipY);
+    dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->setFlippedY(flipY);
 }
 
 bool UIButton::isFlipX()
@@ -413,7 +413,7 @@ bool UIButton::isFlipX()
     {
         return false;
     }
-    return dynamic_cast<Sprite*>(_buttonNormalRenderer)->isFlippedX();
+    return dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->isFlippedX();
 }
 
 bool UIButton::isFlipY()
@@ -422,16 +422,16 @@ bool UIButton::isFlipY()
     {
         return false;
     }
-    return dynamic_cast<Sprite*>(_buttonNormalRenderer)->isFlippedY();
+    return dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->isFlippedY();
 }
 
-void UIButton::setAnchorPoint(const Point &pt)
+void UIButton::setAnchorPoint(const cocos2d::Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
     _buttonNormalRenderer->setAnchorPoint(pt);
     _buttonClickedRenderer->setAnchorPoint(pt);
     _buttonDisableRenderer->setAnchorPoint(pt);
-    _titleRenderer->setPosition(Point(_size.width*(0.5f-_anchorPoint.x), _size.height*(0.5f-_anchorPoint.y)));
+    _titleRenderer->setPosition(cocos2d::Point(_size.width*(0.5f-_anchorPoint.x), _size.height*(0.5f-_anchorPoint.y)));
 }
 
 void UIButton::onSizeChanged()
@@ -441,12 +441,12 @@ void UIButton::onSizeChanged()
     disabledTextureScaleChangedWithSize();
 }
 
-const Size& UIButton::getContentSize() const
+const cocos2d::Size& UIButton::getContentSize() const
 {
     return _normalTextureSize;
 }
 
-Node* UIButton::getVirtualRenderer()
+cocos2d::Node* UIButton::getVirtualRenderer()
 {
     if (_bright)
     {
@@ -480,11 +480,11 @@ void UIButton::normalTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_size);
+            dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_size);
         }
         else
         {
-            Size textureSize = _normalTextureSize;
+            cocos2d::Size textureSize = _normalTextureSize;
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 _buttonNormalRenderer->setScale(1.0f);
@@ -511,11 +511,11 @@ void UIButton::pressedTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_size);
+            dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_size);
         }
         else
         {
-            Size textureSize = _pressedTextureSize;
+            cocos2d::Size textureSize = _pressedTextureSize;
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 _buttonClickedRenderer->setScale(1.0f);
@@ -542,11 +542,11 @@ void UIButton::disabledTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<Scale9Sprite*>(_buttonDisableRenderer)->setPreferredSize(_size);
+            dynamic_cast<cocos2d::extension::Scale9Sprite*>(_buttonDisableRenderer)->setPreferredSize(_size);
         }
         else
         {
-            Size textureSize = _disabledTextureSize;
+            cocos2d::Size textureSize = _disabledTextureSize;
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 _buttonDisableRenderer->setScale(1.0f);
@@ -575,13 +575,13 @@ const char* UIButton::getTitleText() const
     return _titleRenderer->getString();
 }
 
-void UIButton::setTitleColor(const Color3B& color)
+void UIButton::setTitleColor(const cocos2d::Color3B& color)
 {
     _titleColor = color;
     _titleRenderer->setColor(color);
 }
 
-const Color3B& UIButton::getTitleColor() const
+const cocos2d::Color3B& UIButton::getTitleColor() const
 {
     return _titleRenderer->getColor();
 }
@@ -603,10 +603,10 @@ void UIButton::setTitleFontName(const char* fontName)
 
 const char* UIButton::getTitleFontName() const
 {
-    return _titleRenderer->getFontName();
+    return _titleRenderer->getFontName().c_str();
 }
 
-void UIButton::setColor(const Color3B &color)
+void UIButton::setColor(const cocos2d::Color3B &color)
 {
     UIWidget::setColor(color);
     setTitleColor(_titleColor);
@@ -615,6 +615,32 @@ void UIButton::setColor(const Color3B &color)
 const char* UIButton::getDescription() const
 {
     return "Button";
+}
+
+UIWidget* UIButton::createCloneInstance()
+{
+    return UIButton::create();
+}
+
+void UIButton::copySpecialProperties(UIWidget *widget)
+{
+    UIButton* button = dynamic_cast<UIButton*>(widget);
+    if (button)
+    {   
+        _prevIgnoreSize = button->_prevIgnoreSize;
+        setScale9Enabled(button->_scale9Enabled);
+        loadTextureNormal(button->_normalFileName.c_str(), button->_normalTexType);
+        loadTexturePressed(button->_clickedFileName.c_str(), button->_pressedTexType);
+        loadTextureDisabled(button->_disabledFileName.c_str(), button->_disabledTexType);
+        setCapInsetsNormalRenderer(button->_capInsetsNormal);
+        setCapInsetsPressedRenderer(button->_capInsetsPressed);
+        setCapInsetsDisabledRenderer(button->_capInsetsDisabled);
+        setTitleText(button->getTitleText());
+        setTitleFontName(button->getTitleFontName());
+        setTitleFontSize(button->getTitleFontSize());
+        setTitleColor(button->getTitleColor());
+        setPressedActionEnabled(button->_pressedActionEnabled);
+    }
 }
 
 }

@@ -46,6 +46,11 @@
 namespace cocos2d
 {
     extern const float PHYSICS_INFINITY;
+    
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+    static const int   PHYSICS_CONTACT_POINT_MAX = 4;
+#else
+#endif
 }
 
 #endif // __CCPHYSICS_SETTING_H__

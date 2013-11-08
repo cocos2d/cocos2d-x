@@ -29,6 +29,10 @@
 
 namespace gui {
 
+/**
+ *   @js NA
+ *   @lua NA
+ */
 class UICCLabelAtlas : public cocos2d::LabelAtlas
 {
 public:
@@ -51,7 +55,10 @@ public:
     virtual void updateDisplayedOpacity(GLubyte opacity);
     virtual void draw(void);
 };
-
+/**
+ *   @js NA
+ *   @lua NA
+ */
 class UILabelAtlas : public UIWidget
 {
 public:
@@ -71,7 +78,7 @@ public:
     static UILabelAtlas* create();
     
     /** initializes the UILabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    void setProperty(const char* stringValue,const char* charMapFile, int itemWidth, int itemHeight, const char* startCharMap,bool useSpriteFrame = false);
+    void setProperty(const char* stringValue,const char* charMapFile, int itemWidth, int itemHeight, const char* startCharMap);
     
     //set string value for labelatlas.
     void setStringValue(const char* value);
@@ -92,12 +99,20 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+    
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void labelAtlasScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     UICCLabelAtlas* _laberAtlasRenderer;
+    std::string _stringValue;
+    std::string _charMapFileName;
+    int _itemWidth;
+    int _itemHeight;
+    std::string _startCharMap;
 };
 
 }

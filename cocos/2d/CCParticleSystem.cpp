@@ -136,7 +136,7 @@ ParticleSystem::ParticleSystem()
 }
 // implementation ParticleSystem
 
-ParticleSystem * ParticleSystem::create(const char *plistFile)
+ParticleSystem * ParticleSystem::create(const std::string& plistFile)
 {
     ParticleSystem *pRet = new ParticleSystem();
     if (pRet && pRet->initWithFile(plistFile))
@@ -165,7 +165,7 @@ bool ParticleSystem::init()
     return initWithTotalParticles(150);
 }
 
-bool ParticleSystem::initWithFile(const char *plistFile)
+bool ParticleSystem::initWithFile(const std::string& plistFile)
 {
     bool bRet = false;
     _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
@@ -195,7 +195,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary)
     return initWithDictionary(dictionary, "");
 }
 
-bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirname)
+bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::string& dirname)
 {
     bool bRet = false;
     unsigned char *buffer = NULL;
@@ -353,17 +353,17 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                 {
                     string textureDir = textureName.substr(0, rPos + 1);
                     
-                    if (dirname != NULL && textureDir != dirname)
+                    if (dirname.size()>0 && textureDir != dirname)
                     {
                         textureName = textureName.substr(rPos+1);
-                        textureName = string(dirname) + textureName;
+                        textureName = dirname + textureName;
                     }
                 }
                 else
                 {
-                    if (dirname != NULL)
+                    if (dirname.size()>0)
                     {
-                        textureName = string(dirname) + textureName;
+                        textureName = dirname + textureName;
                     }
                 }
                 
@@ -388,7 +388,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                     const char *textureData = dictionary->valueForKey("textureImageData")->getCString();
                     CCASSERT(textureData, "");
                     
-                    int dataLen = strlen(textureData);
+                    long dataLen = strlen(textureData);
                     if(dataLen != 0)
                     {
                         // if it fails, try to get it from the base64-gzipped data    
