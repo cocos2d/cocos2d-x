@@ -87,11 +87,12 @@ public:
     
     // super methods
     virtual void updateAtlasValues();
-    virtual void setString(const std::string &label);
-    virtual const char* getString(void) const;
+
+    virtual void setString(const std::string &label) override;
+    virtual const std::string& getString(void) const override;
     
 #if CC_LABELATLAS_DEBUG_DRAW
-    virtual void draw();
+    virtual void draw() override;
 #endif
 
 protected:

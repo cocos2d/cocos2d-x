@@ -228,10 +228,10 @@ public:
     /** updates the font chars based on the string to render */
     void createFontChars();
     // super method
-    virtual void setString(const std::string& newString);
+    virtual void setString(const std::string& newString) override;
     virtual void setString(const std::string& newString, bool needUpdateLabel);
 
-    virtual const char* getString() const;
+    virtual const std::string& getString() const override;
     virtual void setCString(const char *label);
     virtual void setAnchorPoint(const Point& var);
     virtual void updateLabel();

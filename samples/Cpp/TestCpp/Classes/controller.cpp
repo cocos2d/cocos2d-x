@@ -14,6 +14,11 @@ struct {
 	const char *test_name;
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
+
+    //
+    // TESTS MUST BE ORDERED ALPHABETICALLY
+    //     violators will be prosecuted
+    //
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
@@ -50,7 +55,6 @@ struct {
 	{ "FontTest", []() { return new FontTestScene(); } },
 	{ "IntervalTest", [](){return new IntervalTestScene(); } },
 	{ "KeyboardTest", []() { return new KeyboardTestScene(); } },
-    { "MouseTest", []() { return new MouseTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "KeypadTest", []() { return new KeypadTestScene(); } },
 #endif
@@ -59,6 +63,7 @@ struct {
 	{ "LayerTest", [](){return new LayerTestScene();} },
 	{ "MenuTest", [](){return new MenuTestScene();} },
 	{ "MotionStreakTest", [](){return new MotionStreakTestScene();} },
+    { "MouseTest", []() { return new MouseTestScene(); } },
 	{ "MutiTouchTest", []() { return new MutiTouchTestScene(); } },
 	{ "NodeTest", [](){return new CocosNodeTestScene();} },
 	{ "ParallaxTest", [](){return new ParallaxTestScene(); } },

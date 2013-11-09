@@ -176,10 +176,10 @@ void UIInputManager::onTouchEnd(Touch* touch)
     int length = selectedWidgetArray->num;
     for (int i=0; i<length; ++i)
     {
-        UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[i]);
+        UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[0]);
+        _selectedWidgets->removeObject(hitWidget);
         hitWidget->onTouchEnded(_touchEndedPoint);
     }
-    _selectedWidgets->removeAllObjects();
 }
 
 void UIInputManager::onTouchCancelled(Touch* touch)
@@ -191,10 +191,10 @@ void UIInputManager::onTouchCancelled(Touch* touch)
     int length = selectedWidgetArray->num;
     for (int i=0; i<length; ++i)
     {
-        UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[i]);
+        UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[0]);
+        _selectedWidgets->removeObject(hitWidget);
         hitWidget->onTouchCancelled(_touchEndedPoint);
     }
-    _selectedWidgets->removeAllObjects();
 }
 
 void UIInputManager::setRootWidget(UIWidget *root)
