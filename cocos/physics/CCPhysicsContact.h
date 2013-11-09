@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS
-
 #ifndef __CCPHYSICS_CONTACT_H__
 #define __CCPHYSICS_CONTACT_H__
+
+#include "CCPhysicsSetting.h"
+#ifdef CC_USE_PHYSICS
 
 #include "CCObject.h"
 #include "CCGeometry.h"
@@ -94,8 +94,8 @@ private:
     bool init(PhysicsShape* a, PhysicsShape* b);
     
     void setEventCode(EventCode eventCode) { _eventCode = eventCode; };
-    inline bool getNotify() const { return _notify; }
-    inline void setNotify(bool notify) { _notify = notify; }
+    inline bool isNotificationEnabled() const { return _notificationEnable; }
+    inline void setNotificationEnable(bool enable) { _notificationEnable = enable; }
     inline PhysicsWorld* getWorld() const { return _world; }
     inline void setWorld(PhysicsWorld* world) { _world = world; }
     inline void setResult(bool result) { _result = result; }
@@ -113,7 +113,7 @@ private:
     PhysicsShape* _shapeB;
     EventCode _eventCode;
     PhysicsContactInfo* _info;
-    bool _notify;
+    bool _notificationEnable;
     bool _begin;
     bool _result;
     
@@ -138,7 +138,8 @@ public:
     Point getSurfaceVelocity() const;
     void setElasticity(float elasticity);
     void setFriction(float friction);
-    void setSurfaceVelocity(Point surfaceVelocity);
+    void setSurfaceVelocity(const Vect& velocity);
+    void ignore();
     
 private:
     PhysicsContactPreSolve(PhysicsContactData* data, void* contactInfo);
@@ -266,6 +267,6 @@ protected:
 };
 
 NS_CC_END
-#endif //__CCPHYSICS_CONTACT_H__
 
 #endif // CC_USE_PHYSICS
+#endif //__CCPHYSICS_CONTACT_H__

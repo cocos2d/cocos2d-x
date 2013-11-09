@@ -51,6 +51,8 @@ UIPageView::~UIPageView()
 {
     _pages->removeAllObjects();
     CC_SAFE_RELEASE(_pages);
+    _eventListener = NULL;
+    _eventSelector = NULL;
 }
 
 UIPageView* UIPageView::create()

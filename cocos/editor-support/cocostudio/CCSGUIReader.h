@@ -65,9 +65,13 @@ public:
     void setPropsForLabelBMFontFromJsonDictionary(gui::UIWidget*widget,JsonDictionary* options);
     void setPropsForDragPanelFromJsonDictionary(gui::UIWidget*widget,JsonDictionary* options);
     
+    void storeFileDesignSize(const char* fileName, const cocos2d::Size &size);
+    
+    const cocos2d::Size getFileDesignSize(const char* fileName) const;
 protected:
     std::string m_strFilePath;
     bool m_bOlderVersion;
+    cocos2d::Dictionary* _fileDesignSizes;
 };
 
 }

@@ -40,12 +40,13 @@ CCSGUIReader::CCSGUIReader():
 m_strFilePath(""),
 m_bOlderVersion(false)
 {
-    
+    _fileDesignSizes = Dictionary::create();
+    CC_SAFE_RETAIN(_fileDesignSizes);
 }
 
 CCSGUIReader::~CCSGUIReader()
 {
-    
+    CC_SAFE_RELEASE(_fileDesignSizes);
 }
 
 CCSGUIReader* CCSGUIReader::shareReader()
@@ -197,7 +198,26 @@ UIWidget* CCSGUIReader::widgetFromJsonDictionary(JsonDictionary* data)
     return widget;
 }
 
+void CCSGUIReader::storeFileDesignSize(const char *fileName, const cocos2d::Size &size)
+{
+    if (!_fileDesignSizes)
+    {
+        _fileDesignSizes = cocos2d::Dictionary::create();
+        _fileDesignSizes->retain();
+    }
+    cocos2d::String* strSize = cocos2d::String::createWithFormat("{%f,%f}", size.width, size.height);
+    _fileDesignSizes->setObject(strSize, fileName);
+}
 
+const cocos2d::Size CCSGUIReader::getFileDesignSize(const char* fileName) const
+{
+    if (!_fileDesignSizes)
+    {
+        return cocos2d::Size::ZERO;
+    }
+    cocos2d::Size designSize = cocos2d::SizeFromString(((cocos2d::String*)_fileDesignSizes->objectForKey(fileName))->_string.c_str());
+    return designSize;
+}
 
 UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
 {
@@ -236,16 +256,15 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
     }
     float fileDesignWidth = DICTOOL->getFloatValue_json(jsonDict, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(jsonDict, "designHeight");
-    if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
+    if (fileDesignWidth <= 0 || fileDesignHeight <= 0)
+    {
         printf("Read design size error!\n");
         Size winSize = Director::getInstance()->getWinSize();
-//        CCUIHELPER->setFileDesignWidth(winSize.width);
-//        CCUIHELPER->setFileDesignHeight(winSize.height);
+        storeFileDesignSize(fileName, winSize);
     }
     else
     {
-//        CCUIHELPER->setFileDesignWidth(fileDesignWidth);
-//        CCUIHELPER->setFileDesignHeight(fileDesignHeight);
+        storeFileDesignSize(fileName, cocos2d::Size(fileDesignWidth, fileDesignHeight));
     }
     JsonDictionary* widgetTree = DICTOOL->getSubDictionary_json(jsonDict, "widgetTree");
     UIWidget* widget = widgetFromJsonDictionary(widgetTree);

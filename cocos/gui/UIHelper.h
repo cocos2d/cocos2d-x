@@ -72,7 +72,6 @@ public:
     /*temp action*/
     static UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
 };
-
 }
 
 #endif /* defined(__CocoGUI__UISystem__) */
