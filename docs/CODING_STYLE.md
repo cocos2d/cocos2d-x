@@ -1,6 +1,6 @@
 # cocos2d C++ coding style
 
-v0.1 - Last updated November 7 , 2013
+v0.2 - Last updated November 8 , 2013
 
 C++ coding style was based on [Google's C++ coding style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml) rev. 3.274
 
