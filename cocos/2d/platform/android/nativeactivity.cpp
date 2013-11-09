@@ -292,7 +292,7 @@ static void engine_term_display(struct engine* engine) {
 /*
  * Get X, Y positions and ID's for all pointers
  */
-static void getTouchPos(AInputEvent *event, int ids[], float xs[], float ys[]) {
+static void getTouchPos(AInputEvent *event, long ids[], float xs[], float ys[]) {
     int pointerCount = AMotionEvent_getPointerCount(event);
     for(int i = 0; i < pointerCount; ++i) {
         ids[i] = AMotionEvent_getPointerId(event, i);
@@ -321,7 +321,7 @@ static int32_t handle_touch_input(AInputEvent *event) {
 
             LOG_EVENTS_DEBUG("Event: Action DOWN x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerId);
-            int pId = pointerId;
+            long pId = pointerId;
             float x = xP;
             float y = yP;
 
@@ -340,7 +340,7 @@ static int32_t handle_touch_input(AInputEvent *event) {
 
             LOG_EVENTS_DEBUG("Event: Action POINTER DOWN x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerId);
-            int pId = pointerId;
+            long pId = pointerId;
             float x = xP;
             float y = yP;
 
@@ -353,10 +353,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
         {
             LOG_EVENTS_DEBUG("AMOTION_EVENT_ACTION_MOVE");
             int pointerCount = AMotionEvent_getPointerCount(event);
-            int ids[pointerCount];
+            long ids[pointerCount];
             float xs[pointerCount], ys[pointerCount];
             getTouchPos(event, ids, xs, ys);
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(pointerCount, ids, xs, ys);
+			cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(pointerCount, ids, xs, ys);
             return 1;
         }
         break;
@@ -369,7 +369,7 @@ static int32_t handle_touch_input(AInputEvent *event) {
             float yP = AMotionEvent_getY(event,0);
             LOG_EVENTS_DEBUG("Event: Action UP x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerId);
-            int pId = pointerId;
+            long pId = pointerId;
             float x = xP;
             float y = yP;
 
@@ -387,7 +387,7 @@ static int32_t handle_touch_input(AInputEvent *event) {
             float yP = AMotionEvent_getY(event,pointerIndex);
             LOG_EVENTS_DEBUG("Event: Action POINTER UP x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerIndex);
-            int pId = pointerId;
+            long pId = pointerId;
             float x = xP;
             float y = yP;
 
@@ -400,10 +400,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
         {
             LOG_EVENTS_DEBUG("AMOTION_EVENT_ACTION_CANCEL");
             int pointerCount = AMotionEvent_getPointerCount(event);
-            int ids[pointerCount];
+            long ids[pointerCount];
             float xs[pointerCount], ys[pointerCount];
             getTouchPos(event, ids, xs, ys);
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesCancel(pointerCount, ids, xs, ys);
+			cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesCancel(pointerCount, ids, xs, ys);
             return 1;
         }
         break;
@@ -422,18 +422,20 @@ static int32_t handle_key_input(AInputEvent *event)
 {
     if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
     {
+        auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+
         switch (AKeyEvent_getKeyCode(event))
         {
         case AKEYCODE_BACK:	
             {
                 cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, false);
-                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+                dispatcher->dispatchEvent(&event);
             }
             return 1;
         case AKEYCODE_MENU:
             {
                 cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
-                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+                dispatcher->dispatchEvent(&event);
             }
             return 1;
         default:
@@ -629,8 +631,8 @@ void android_main(struct android_app* state) {
                             acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
                             cocos2d::EventAcceleration accEvent(acc);
-
-                            cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
+                            auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+                            dispatcher->dispatchEvent(&accEvent);
                         } else {
                             // ACONFIGURATION_ORIENTATION_LAND
                             // swap x and y parameters
@@ -640,8 +642,8 @@ void android_main(struct android_app* state) {
                             acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
                             cocos2d::EventAcceleration accEvent(acc);
-
-                            cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
+                            auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+                            dispatcher->dispatchEvent(&accEvent);
                         }
                     }
                 }

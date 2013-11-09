@@ -51,20 +51,20 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-extern const int CC_INVALID_INDEX;
+extern const long CC_INVALID_INDEX;
 
 // Easy integration
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
-__object__=__array__->arr[0]; for(int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
+__object__=__array__->arr[0]; for(long i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
 
 
 typedef struct _ccArray {
-	int num, max;
+	long num, max;
 	Object** arr;
 } ccArray;
 
 /** Allocates and initializes a new array with specified capacity */
-ccArray* ccArrayNew(int capacity);
+ccArray* ccArrayNew(long capacity);
 
 /** Frees array after removing all remaining objects. Silently ignores nil arr. */
 void ccArrayFree(ccArray*& arr);
@@ -73,13 +73,13 @@ void ccArrayFree(ccArray*& arr);
 void ccArrayDoubleCapacity(ccArray *arr);
 
 /** Increases array capacity such that max >= num + extra. */
-void ccArrayEnsureExtraCapacity(ccArray *arr, int extra);
+void ccArrayEnsureExtraCapacity(ccArray *arr, long extra);
 
 /** shrinks the array so the memory footprint corresponds with the number of items */
 void ccArrayShrink(ccArray *arr);
 
 /** Returns index of first occurrence of object, NSNotFound if object not found. */
-int ccArrayGetIndexOfObject(ccArray *arr, Object* object);
+long ccArrayGetIndexOfObject(ccArray *arr, Object* object);
 
 /** Returns a Boolean value that indicates whether object is present in array. */
 bool ccArrayContainsObject(ccArray *arr, Object* object);
@@ -98,22 +98,22 @@ void ccArrayAppendArray(ccArray *arr, ccArray *plusArr);
 void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr);
 
 /** Inserts an object at index */
-void ccArrayInsertObjectAtIndex(ccArray *arr, Object* object, int index);
+void ccArrayInsertObjectAtIndex(ccArray *arr, Object* object, long index);
 
 /** Swaps two objects */
-void ccArraySwapObjectsAtIndexes(ccArray *arr, int index1, int index2);
+void ccArraySwapObjectsAtIndexes(ccArray *arr, long index1, long index2);
 
 /** Removes all objects from arr */
 void ccArrayRemoveAllObjects(ccArray *arr);
 
 /** Removes object at specified index and pushes back all subsequent objects.
  Behavior undefined if index outside [0, num-1]. */
-void ccArrayRemoveObjectAtIndex(ccArray *arr, int index, bool bReleaseObj = true);
+void ccArrayRemoveObjectAtIndex(ccArray *arr, long index, bool bReleaseObj = true);
 
 /** Removes object at specified index and fills the gap with the last object,
  thereby avoiding the need to push back subsequent objects.
  Behavior undefined if index outside [0, num-1]. */
-void ccArrayFastRemoveObjectAtIndex(ccArray *arr, int index);
+void ccArrayFastRemoveObjectAtIndex(ccArray *arr, long index);
 
 void ccArrayFastRemoveObject(ccArray *arr, Object* object);
 
@@ -133,12 +133,12 @@ void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr);
 // #pragma mark ccCArray for Values (c structures)
 
 typedef struct _ccCArray {
-    int num, max;
+    long num, max;
     void** arr;
 } ccCArray;
 
 /** Allocates and initializes a new C array with specified capacity */
-ccCArray* ccCArrayNew(int capacity);
+ccCArray* ccCArrayNew(long capacity);
 
 /** Frees C array after removing all remaining values. Silently ignores nil arr. */
 void ccCArrayFree(ccCArray *arr);
@@ -147,16 +147,16 @@ void ccCArrayFree(ccCArray *arr);
 void ccCArrayDoubleCapacity(ccCArray *arr);
 
 /** Increases array capacity such that max >= num + extra. */
-void ccCArrayEnsureExtraCapacity(ccCArray *arr, int extra);
+void ccCArrayEnsureExtraCapacity(ccCArray *arr, long extra);
 
 /** Returns index of first occurrence of value, NSNotFound if value not found. */
-int ccCArrayGetIndexOfValue(ccCArray *arr, void* value);
+long ccCArrayGetIndexOfValue(ccCArray *arr, void* value);
 
 /** Returns a Boolean value that indicates whether value is present in the C array. */
 bool ccCArrayContainsValue(ccCArray *arr, void* value);
 
 /** Inserts a value at a certain position. Behavior undefined if array doesn't have enough capacity */
-void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, int index);
+void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, long index);
 
 /** Appends an value. Behavior undefined if array doesn't have enough capacity. */
 void ccCArrayAppendValue(ccCArray *arr, void* value);
@@ -178,14 +178,14 @@ void ccCArrayRemoveAllValues(ccCArray *arr);
  Behavior undefined if index outside [0, num-1].
  @since v0.99.4
  */
-void ccCArrayRemoveValueAtIndex(ccCArray *arr, int index);
+void ccCArrayRemoveValueAtIndex(ccCArray *arr, long index);
 
 /** Removes value at specified index and fills the gap with the last value,
  thereby avoiding the need to push back subsequent values.
  Behavior undefined if index outside [0, num-1].
  @since v0.99.4
  */
-void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, int index);
+void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, long index);
 
 /** Searches for the first occurrence of value and removes it. If value is not found the function has no effect.
  @since v0.99.4

@@ -244,7 +244,7 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner,
     }
 
     std::string strPath = FileUtils::getInstance()->fullPathForFilename(strCCBFileName.c_str());
-    unsigned long size = 0;
+    long size = 0;
 
     unsigned char * pBytes = FileUtils::getInstance()->getFileData(strPath.c_str(), "rb", &size);
     Data *data = new Data(pBytes, size);
@@ -273,7 +273,7 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     Dictionary* animationManagers = Dictionary::create();
     Node *pNodeGraph = readFileWithCleanUp(true, animationManagers);
     
-    if (pNodeGraph && _actionManager->getAutoPlaySequenceId() != -1 && !_jsControlled)
+    if (pNodeGraph && _actionManager->getAutoPlaySequenceId() != -1)
     {
         // Auto play animations
         _actionManager->runAnimationsForSequenceIdTweenDuration(_actionManager->getAutoPlaySequenceId(), 0);

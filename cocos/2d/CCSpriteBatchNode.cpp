@@ -64,7 +64,7 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, int capacity
 * creation with File Image
 */
 
-SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, int capacity/* = DEFAULT_CAPACITY*/)
+SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, long capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
@@ -76,7 +76,7 @@ SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, int capacity/* =
 /*
 * init with Texture2D
 */
-bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
+bool SpriteBatchNode::initWithTexture(Texture2D *tex, long capacity)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
@@ -112,7 +112,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const char* fileImage, int capacity)
+bool SpriteBatchNode::initWithFile(const char* fileImage, long capacity)
 {
     Texture2D *texture2D = TextureCache::getInstance()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
@@ -158,7 +158,6 @@ void SpriteBatchNode::visit(void)
     transform();
 
     draw();
-    updateEventPriorityIndex();
     
     if (_grid && _grid->isActive())
     {
@@ -182,17 +181,6 @@ void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
     Node::addChild(child, zOrder, tag);
 
     appendChild(sprite);
-    
-    
-    if (this->getParent() &&
-        dynamic_cast<Layer*>(this->getParent()) != nullptr)
-    {
-        if (this->getParent()->getParent() &&
-            dynamic_cast<Scene*>(this->getParent()->getParent()))
-        {
-            dynamic_cast<Scene*>(this->getParent()->getParent())->addChildToPhysicsWorld(child);
-        }
-    }
 }
 
 // override reorderChild

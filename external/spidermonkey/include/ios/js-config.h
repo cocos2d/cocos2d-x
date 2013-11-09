@@ -38,8 +38,8 @@
    JS_HAVE_STDINT_H.  */
 #define JS_BYTES_PER_WORD 4
 
-/* Some mozilla code uses JS-friend APIs that depend on JS_METHODJIT being
-   correct. */
-/* #undef JS_METHODJIT */
+/* MOZILLA JSAPI version number components */
+#define MOZJS_MAJOR_VERSION 25
+#define MOZJS_MINOR_VERSION 0
 
 #endif /* js_config_h___ */

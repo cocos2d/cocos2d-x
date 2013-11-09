@@ -25,8 +25,14 @@ enum {
 //------------------------------------------------------------------
 MenuLayerMainMenu::MenuLayerMainMenu()
 {
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    _touchListener = EventListenerTouchOneByOne::create();
+    _touchListener->setSwallowTouches(true);
+    _touchListener->onTouchBegan = CC_CALLBACK_2(MenuLayerMainMenu::onTouchBegan, this);
+    _touchListener->onTouchMoved = CC_CALLBACK_2(MenuLayerMainMenu::onTouchMoved, this);
+    _touchListener->onTouchEnded = CC_CALLBACK_2(MenuLayerMainMenu::onTouchEnded, this);
+    _touchListener->onTouchCancelled = CC_CALLBACK_2(MenuLayerMainMenu::onTouchCancelled, this);
+    
+    _eventDispatcher->addEventListenerWithFixedPriority(_touchListener, 1);
 
     // Font Item    
     auto spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
@@ -132,6 +138,7 @@ void MenuLayerMainMenu::onTouchMoved(Touch *touch, Event * event)
 
 MenuLayerMainMenu::~MenuLayerMainMenu()
 {
+    _eventDispatcher->removeEventListener(_touchListener);
     _disabledItem->release();
 }
 
@@ -147,8 +154,7 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 
 void MenuLayerMainMenu::allowTouches(float dt)
 {
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY+1, this);
+    _eventDispatcher->setPriority(_touchListener, 1);
     unscheduleAllSelectors();
     log("TOUCHES ALLOWED AGAIN");
 }
@@ -156,8 +162,7 @@ void MenuLayerMainMenu::allowTouches(float dt)
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
 {
     // hijack all touch events for 5 seconds
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY-1, this);
+    _eventDispatcher->setPriority(_touchListener, -1);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     log("TOUCHES DISABLED FOR 5 SECONDS");
 }
@@ -532,8 +537,8 @@ BugsTest::BugsTest()
 void BugsTest::issue1410MenuCallback(Object *sender)
 {
     auto menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
-    menu->setTouchEnabled(false);
-    menu->setTouchEnabled(true);
+    menu->setEnabled(false);
+    menu->setEnabled(true);
     
     log("NO CRASHES");
 }
@@ -541,8 +546,8 @@ void BugsTest::issue1410MenuCallback(Object *sender)
 void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
 {
     auto menu = static_cast<Menu*>( static_cast<MenuItem*>(pSender)->getParent() );
-    menu->setTouchEnabled(true);
-    menu->setTouchEnabled(false);
+    menu->setEnabled(true);
+    menu->setEnabled(false);
     
     log("NO CRASHES. AND MENU SHOULD STOP WORKING");
 }
@@ -571,17 +576,14 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     
     menu->setPosition(Point(s.width/2, s.height/2));
     
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-    
     // Register Touch Event
-    _touchListener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    _touchListener = EventListenerTouchOneByOne::create();
     _touchListener->setSwallowTouches(false);
     
     _touchListener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);
     _touchListener->onTouchMoved = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchMoved, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(_touchListener, -129);
+    _eventDispatcher->addEventListenerWithFixedPriority(_touchListener, -129);
     
 }
 
@@ -592,7 +594,7 @@ void RemoveMenuItemWhenMove::goBack(Object *pSender)
 
 RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()
 {
-    EventDispatcher::getInstance()->removeEventListener(_touchListener);
+    _eventDispatcher->removeEventListener(_touchListener);
     CC_SAFE_RELEASE(item);
 }
 

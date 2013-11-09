@@ -32,11 +32,11 @@ using namespace cocos2d;
 
 namespace cocostudio {
 
-static ArmatureDataManager *s_sharedArmatureDataManager = NULL;
+static ArmatureDataManager *s_sharedArmatureDataManager = nullptr;
 
 ArmatureDataManager *ArmatureDataManager::getInstance()
 {
-    if (s_sharedArmatureDataManager == NULL)
+    if (s_sharedArmatureDataManager == nullptr)
     {
         s_sharedArmatureDataManager = new ArmatureDataManager();
         if (!s_sharedArmatureDataManager || !s_sharedArmatureDataManager->init())
@@ -56,16 +56,30 @@ void ArmatureDataManager::destoryInstance()
 
 ArmatureDataManager::ArmatureDataManager(void)
 {
-    _armarureDatas = NULL;
-    _animationDatas = NULL;
-    _textureDatas = NULL;
+    _armarureDatas = nullptr;
+    _animationDatas = nullptr;
+    _textureDatas = nullptr;
     _autoLoadSpriteFile = false;
 }
 
 
 ArmatureDataManager::~ArmatureDataManager(void)
 {
-    removeAll();
+    if( _animationDatas )
+    {
+        _animationDatas->removeAllObjects();
+    }
+    if( _armarureDatas )
+    {
+        _armarureDatas->removeAllObjects();
+    }
+
+    if( _textureDatas )
+    {
+        _textureDatas->removeAllObjects();
+    }
+
+    _relativeDatas.clear();
 
     CC_SAFE_DELETE(_animationDatas);
     CC_SAFE_DELETE(_armarureDatas);
@@ -97,17 +111,52 @@ bool ArmatureDataManager::init()
     return bRet;
 }
 
-void ArmatureDataManager::addArmatureData(const char *id, ArmatureData *armatureData)
+void ArmatureDataManager::removeArmatureFileInfo(const char *configFilePath)
+{
+    if (RelativeData *data = getRelativeData(configFilePath))
+    {
+        for (std::string str : data->armatures)
+        {
+            removeArmatureData(str.c_str());
+        }
+
+        for (std::string str : data->animations)
+        {
+            removeAnimationData(str.c_str());
+        }
+
+        for (std::string str : data->textures)
+        {
+            removeTextureData(str.c_str());
+        }
+
+        for (std::string str : data->plistFiles)
+        {
+            SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(str.c_str());
+        }
+
+        _relativeDatas.erase(configFilePath);
+        DataReaderHelper::getInstance()->removeConfigFile(configFilePath);
+    }
+}
+
+
+void ArmatureDataManager::addArmatureData(const char *id, ArmatureData *armatureData, const char *configFilePath)
 {
     if(_armarureDatas)
     {
+        if (RelativeData *data = getRelativeData(configFilePath))
+        {
+            data->armatures.push_back(id);
+        }
+
         _armarureDatas->setObject(armatureData, id);
     }
 }
 
 ArmatureData *ArmatureDataManager::getArmatureData(const char *id)
 {
-    ArmatureData *armatureData = NULL;
+    ArmatureData *armatureData = nullptr;
     if (_armarureDatas)
     {
         armatureData = (ArmatureData *)_armarureDatas->objectForKey(id);
@@ -123,17 +172,22 @@ void ArmatureDataManager::removeArmatureData(const char *id)
     }
 }
 
-void ArmatureDataManager::addAnimationData(const char *id, AnimationData *animationData)
+void ArmatureDataManager::addAnimationData(const char *id, AnimationData *animationData, const char *configFilePath)
 {
     if(_animationDatas)
     {
+        if (RelativeData *data = getRelativeData(configFilePath))
+        {
+            data->animations.push_back(id);
+        }
+
         _animationDatas->setObject(animationData, id);
     }
 }
 
 AnimationData *ArmatureDataManager::getAnimationData(const char *id)
 {
-    AnimationData *animationData = NULL;
+    AnimationData *animationData = nullptr;
     if (_animationDatas)
     {
         animationData = (AnimationData *)_animationDatas->objectForKey(id);
@@ -149,10 +203,15 @@ void ArmatureDataManager::removeAnimationData(const char *id)
     }
 }
 
-void ArmatureDataManager::addTextureData(const char *id, TextureData *textureData)
+void ArmatureDataManager::addTextureData(const char *id, TextureData *textureData, const char *configFilePath)
 {
     if(_textureDatas)
     {
+        if (RelativeData *data = getRelativeData(configFilePath))
+        {
+            data->textures.push_back(id);
+        }
+
         _textureDatas->setObject(textureData, id);
     }
 }
@@ -160,7 +219,7 @@ void ArmatureDataManager::addTextureData(const char *id, TextureData *textureDat
 
 TextureData *ArmatureDataManager::getTextureData(const char *id)
 {
-    TextureData *textureData = NULL;
+    TextureData *textureData = nullptr;
     if (_textureDatas)
     {
         textureData = (TextureData *)_textureDatas->objectForKey(id);
@@ -179,18 +238,24 @@ void ArmatureDataManager::removeTextureData(const char *id)
 
 void ArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 {
+    addRelativeData(configFilePath);
+
     _autoLoadSpriteFile = true;
     DataReaderHelper::getInstance()->addDataFromFile(configFilePath);
 }
 
 void ArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, Object *target, SEL_SCHEDULE selector)
 {
+    addRelativeData(configFilePath);
+
     _autoLoadSpriteFile = true;
-    DataReaderHelper::getInstance()->addDataFromFileAsync(configFilePath, target, selector);
+    DataReaderHelper::getInstance()->addDataFromFileAsync("", "", configFilePath, target, selector);
 }
 
 void ArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
+    addRelativeData(configFilePath);
+
     _autoLoadSpriteFile = false;
     DataReaderHelper::getInstance()->addDataFromFile(configFilePath);
     addSpriteFrameFromFile(plistPath, imagePath);
@@ -198,35 +263,22 @@ void ArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char 
 
 void ArmatureDataManager::addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, Object *target, SEL_SCHEDULE selector)
 {
+    addRelativeData(configFilePath);
+
     _autoLoadSpriteFile = false;
-    DataReaderHelper::getInstance()->addDataFromFileAsync(configFilePath, target, selector);
+    DataReaderHelper::getInstance()->addDataFromFileAsync(imagePath, plistPath, configFilePath, target, selector);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
 
-void ArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
+void ArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const char *imagePath, const char *configFilePath)
 {
+    if (RelativeData *data = getRelativeData(configFilePath))
+    {
+        data->plistFiles.push_back(plistPath);
+    }
     SpriteFrameCacheHelper::getInstance()->addSpriteFrameFromFile(plistPath, imagePath);
 }
 
-
-void ArmatureDataManager::removeAll()
-{
-    if( _animationDatas )
-    {
-        _animationDatas->removeAllObjects();
-    }
-    if( _armarureDatas )
-    {
-        _armarureDatas->removeAllObjects();
-    }
-
-    if( _textureDatas )
-    {
-        _textureDatas->removeAllObjects();
-    }
-
-    DataReaderHelper::clear();
-}
 
 bool ArmatureDataManager::isAutoLoadSpriteFile()
 {
@@ -244,6 +296,19 @@ Dictionary *ArmatureDataManager::getAnimationDatas() const
 Dictionary *ArmatureDataManager::getTextureDatas() const
 {
     return _textureDatas;
+}
+
+void CCArmatureDataManager::addRelativeData(const char *configFilePath)
+{
+    if (_relativeDatas.find(configFilePath) == _relativeDatas.end())
+    {
+        _relativeDatas[configFilePath] = RelativeData();
+    }
+}
+
+RelativeData *CCArmatureDataManager::getRelativeData(const char* configFilePath)
+{
+    return &_relativeDatas[configFilePath];
 }
 
 }

@@ -213,6 +213,7 @@ namespace cocos2d {
         jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
         if (! methodID) {
             LOGD("Failed to find method id of %s", methodName);
+            pEnv->ExceptionClear();
             return false;
         }
 
@@ -247,6 +248,7 @@ namespace cocos2d {
         jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
         if (! methodID) {
             LOGD("Failed to find method id of %s", methodName);
+            pEnv->ExceptionClear();
             return false;
         }
 

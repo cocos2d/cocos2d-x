@@ -53,6 +53,8 @@ extern "C" {
 #include "LuaBasicConversions.h"
 #include "lua_cocos2dx_extension_manual.h"
 #include "lua_cocos2dx_deprecated.h"
+#include "lua_xml_http_request.h"
+#include "lua_cocos2dx_studio_auto.hpp"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -134,6 +136,7 @@ bool LuaStack::init(void)
     register_all_cocos2dx_deprecated(_state);
     register_cocos2dx_extension_CCBProxy(_state);
     tolua_opengl_open(_state);
+    register_all_cocos2dx_studio(_state);
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_extension_manual(_state);
     register_all_cocos2dx_manual_deprecated(_state);
@@ -148,6 +151,9 @@ bool LuaStack::init(void)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     tolua_web_socket_open(_state);
 #endif
+    
+    register_xml_http_request(_state);
+    
     tolua_script_handler_mgr_open(_state);
     
     // add cocos2dx loader
