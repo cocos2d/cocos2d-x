@@ -135,12 +135,12 @@ Node::Node(void)
 #endif
 {
     // set default scheduler and actionManager
-    Director *director = Director::getInstance();
-    _actionManager = director->getActionManager();
+    _director = Director::getInstance();
+    _actionManager = _director->getActionManager();
     _actionManager->retain();
-    _scheduler = director->getScheduler();
+    _scheduler = _director->getScheduler();
     _scheduler->retain();
-    _eventDispatcher = director->getEventDispatcher();
+    _eventDispatcher = _director->getEventDispatcher();
     _eventDispatcher->retain();
     
     ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
@@ -192,6 +192,11 @@ Node::~Node()
 #ifdef CC_USE_PHYSICS
     CC_SAFE_RELEASE(_physicsBody);
 #endif
+}
+
+Director* Node::getDirector() const
+{
+    return _director;
 }
 
 bool Node::init()
@@ -1323,7 +1328,7 @@ Point Node::convertToWorldSpaceAR(const Point& nodePoint) const
 Point Node::convertToWindowSpace(const Point& nodePoint) const
 {
     Point worldPoint = this->convertToWorldSpace(nodePoint);
-    return Director::getInstance()->convertToUI(worldPoint);
+    return getDirector()->convertToUI(worldPoint);
 }
 
 // convenience methods which take a Touch instead of Point

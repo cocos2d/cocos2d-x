@@ -129,7 +129,7 @@ bool Menu::initWithArray(Array* pArrayOfItems)
     {
         _enabled = true;
         // menu in the center of the screen
-        Size s = Director::getInstance()->getWinSize();
+        Size s = getDirector()->getWinSize();
 
         this->ignoreAnchorPointForPosition(true);
         setAnchorPoint(Point(0.5f, 0.5f));
@@ -438,7 +438,7 @@ void Menu::alignItemsInColumnsWithArray(Array* rowsArray)
     // check if too many rows/columns for available menu items
     CCASSERT(! columnsOccupied, "");
 
-    Size winSize = Director::getInstance()->getWinSize();
+    Size winSize = getDirector()->getWinSize();
 
     row = 0;
     rowHeight = 0;
@@ -560,7 +560,7 @@ void Menu::alignItemsInRowsWithArray(Array* columnArray)
     // check if too many rows/columns for available menu items.
     CCASSERT(! rowsOccupied, "");
 
-    Size winSize = Director::getInstance()->getWinSize();
+    Size winSize = getDirector()->getWinSize();
 
     column = 0;
     columnWidth = 0;

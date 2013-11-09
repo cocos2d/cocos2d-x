@@ -303,7 +303,7 @@ void RenderTexture::begin()
 	kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
     
-    Director *director = Director::getInstance();
+    Director *director = getDirector();
     director->setProjection(director->getProjection());
 
     const Size& texSize = _texture->getContentSizeInPixels();
@@ -398,7 +398,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
 
 void RenderTexture::end()
 {
-    Director *director = Director::getInstance();
+    Director *director = getDirector();
     
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 

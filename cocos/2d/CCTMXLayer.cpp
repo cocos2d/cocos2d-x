@@ -71,7 +71,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         _maxGID = layerInfo->_maxGID;
         _opacity = layerInfo->_opacity;
         setProperties(Dictionary::createWithDictionary(layerInfo->getProperties()));
-        _contentScaleFactor = Director::getInstance()->getContentScaleFactor(); 
+        _contentScaleFactor = getDirector()->getContentScaleFactor(); 
 
         // tilesetInfo
         _tileSet = tilesetInfo;

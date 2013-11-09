@@ -42,7 +42,7 @@ to transition to the scene beneath it simulating a page turn.
 This uses a 3DAction so it's strongly recommended that depth buffering
 is turned on in Director using:
 
- Director::getInstance()->setDepthBufferFormat(kDepthBuffer16);
+ getDirector()->setDepthBufferFormat(kDepthBuffer16);
 
  @since v0.8.2
 */
