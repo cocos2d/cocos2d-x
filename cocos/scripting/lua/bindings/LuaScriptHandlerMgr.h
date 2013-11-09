@@ -103,7 +103,7 @@ public:
         ASSETSMANAGER_ERROR,
         
         EVENT_LISTENER,
-        EVENT_TOUCH_LISTENER,
+        ARMATURE_EVENT,
     };
     
     typedef int Handler;
