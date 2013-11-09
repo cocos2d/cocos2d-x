@@ -578,21 +578,21 @@ The problems with doing work in constructors are:
 
 If your class defines member variables, you must provide an in-class initializer for every member variable or write a constructor (which can be a default constructor). If you do not declare any constructors yourself then the compiler will generate a default constructor for you, which may leave some fields uninitialized or initialized to inappropriate values.
 
-** Definition: ** The default constructor is called when we new a class object with no arguments. It is always called when calling `new[]` (for arrays). In-class member initialization means declaring a member variable using a construction like `int _count = 17;` or `string name_{"abc"};`, as opposed to just `int _count;` or `string _name;`.
+**Definition:** The default constructor is called when we new a class object with no arguments. It is always called when calling `new[]` (for arrays). In-class member initialization means declaring a member variable using a construction like `int _count = 17;` or `string name_{"abc"};`, as opposed to just `int _count;` or `string _name;`.
 
-** Pros: **
+**Pros:**
 
 A user defined default constructor is used to initialize an object if no initializer is provided. It can ensure that an object is always in a valid and usable state as soon as it's constructed; it can also ensure that an object is initially created in an obviously "impossible" state, to aid debugging.
 
 In-class member initialization ensures that a member variable will be initialized appropriately without having to duplicate the initialization code in multiple constructors. This can reduce bugs where you add a new member variable, initialize it in one constructor, and forget to put that initialization code in another constructor.
 
-** Cons: **
+**Cons:**
 
 Explicitly defining a default constructor is extra work for you, the code writer.
 
 In-class member initialization is potentially confusing if a member variable is initialized as part of its declaration and also initialized in a constructor, since the value in the constructor will override the value in the declaration.
 
-** Decision: **
+**Decision:**
 
 Use in-class member initialization for simple initializations, especially when a member variable must be initialized the same way in more than one constructor.
 
@@ -675,7 +675,7 @@ private:
 
 Use delegating and inheriting constructors when they reduce code duplication.
 
-** Definition: **
+**Definition:**
 
 Delegating and inheriting constructors are two different features, both introduced in C++11, for reducing code duplication in constructors. Delegating constructors allow one of a class's constructors to forward work to one of the class's other constructors, using a special variant of the initialization list syntax. For example:
 
@@ -706,19 +706,19 @@ public:
 
 This is especially useful when Derived's constructors don't have to do anything more than calling Base's constructors.
 
-** Pros: **
+**Pros:**
 
 Delegating and inheriting constructors reduce verbosity and boilerplate, which can improve readability.
 
 Delegating constructors are familiar to Java programmers.
 
-** Cons: **
+**Cons:**
 
 It's possible to approximate the behavior of delegating constructors by using a helper function.
 
 Inheriting constructors may be confusing if a derived class introduces new member variables, since the base class constructor doesn't know about them.
 
-** Decision: **
+**Decision:**
 
 Use delegating and inheriting constructors when they reduce boilerplate and improve readability. Be cautious about inheriting constructors when your derived class has new member variables. Inheriting constructors may still be appropriate in that case if you can use in-class member initialization for the derived class's member variables.
 
