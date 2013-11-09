@@ -53,13 +53,46 @@ public:
 
     virtual bool init();
 
-protected:
+    virtual void setDisplay(cocos2d::Node *display) 
+    { 
+        if (_display != display)
+        {
+            CC_SAFE_RETAIN(display);
+            CC_SAFE_RELEASE(_display);
+            _display = display; 
+        }
+    }
+    virtual cocos2d::Node *getDisplay() const { return _display; }
 
-    CC_SYNTHESIZE_RETAIN(cocos2d::Node *, _display, Display);
-    CC_SYNTHESIZE_RETAIN(DisplayData *, _displayData, DisplayData);
+    virtual void setDisplayData(DisplayData *data)
+    {
+        if (_displayData != data)
+        {
+            CC_SAFE_RETAIN(data);
+            CC_SAFE_RELEASE(_displayData);
+            _displayData = data; 
+        }
+    }
+    virtual DisplayData *getDisplayData() const { return _displayData; }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_SYNTHESIZE_RETAIN(ColliderDetector *, _colliderDetector, ColliderDetector);
+    virtual void setColliderDetector(ColliderDetector *detector)
+    {
+        if (_colliderDetector != detector)
+        {
+            CC_SAFE_RETAIN(detector);
+            CC_SAFE_RELEASE(_colliderDetector);
+            _colliderDetector = detector; 
+        }
+    }
+    virtual ColliderDetector *getColliderDetector() const { return _colliderDetector; }
+#endif
+protected:
+    cocos2d::Node *_display;
+    DisplayData *_displayData;
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    ColliderDetector *_colliderDetector;
 #endif
 };
 

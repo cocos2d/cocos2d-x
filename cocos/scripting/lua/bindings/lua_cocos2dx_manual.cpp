@@ -51,8 +51,8 @@ static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
             ok = true;
             break;
         }
-        const char* normalImage = ((const char*)  tolua_tostring(tolua_S,2,0));
-        const char* selectedImage = ((const char*)  tolua_tostring(tolua_S,3,0));
+        const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+        const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
         MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage);
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
@@ -70,9 +70,9 @@ static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
             break;
         }
 #endif
-        const char* normalImage = ((const char*)  tolua_tostring(tolua_S,2,0));
-        const char* selectedImage = ((const char*)  tolua_tostring(tolua_S,3,0));
-        const char* disabledImage = ((const char*)  tolua_tostring(tolua_S,4,0));
+        const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+        const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+        const std::string disabledImage = ((const std::string)  tolua_tocppstring(tolua_S,4,0));
         
         MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage,disabledImage);
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -155,7 +155,7 @@ static int tolua_cocos2d_MenuItemFont_create(lua_State* tolua_S)
             goto tolua_lerror;
         }
 #endif
-        const char* value = ((const char*)  tolua_tostring(tolua_S,2,0));
+        const std::string value = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
         MenuItemFont* tolua_ret = (MenuItemFont*)  MenuItemFont::create(value);
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
@@ -514,6 +514,709 @@ tolua_lerror:
 #endif
 }
 
+
+static int executeScriptTouchHandler(Layer* layer, EventTouch::EventCode eventType, Touch* touch)
+{
+    TouchScriptData data(eventType, layer, touch);
+    ScriptEvent event(kTouchEvent, &data);
+    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+}
+
+static int executeScriptTouchesHandler(Layer* layer, EventTouch::EventCode eventType, const std::vector<Touch*>& touches)
+{
+    TouchesScriptData data(eventType, layer, touches);
+    ScriptEvent event(kTouchesEvent, &data);
+    return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+}
+
+static void setTouchEnabledForLayer(Layer* layer, bool enabled)
+{
+    if (nullptr == layer)
+        return;
+    
+    auto dict = static_cast<Dictionary*>(layer->getUserObject());
+    if (dict == nullptr)
+    {
+        dict = Dictionary::create();
+        layer->setUserObject(dict);
+    }
+    
+    dict->setObject(Bool::create(enabled), "touchEnabled");
+    
+    auto touchListenerAllAtOnce = static_cast<EventListenerTouchAllAtOnce*>(dict->objectForKey("touchListenerAllAtOnce"));
+    auto touchListenerOneByOne = static_cast<EventListenerTouchOneByOne*>(dict->objectForKey("touchListenerOneByOne"));
+    auto touchMode = static_cast<Integer*>(dict->objectForKey("touchMode"));
+    auto swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+    
+    auto dispatcher = layer->getEventDispatcher();
+    if (nullptr != dispatcher)
+    {
+        dispatcher->removeEventListener(touchListenerAllAtOnce);
+        dispatcher->removeEventListener(touchListenerOneByOne);
+    }
+
+    if (enabled)
+    {
+        if (touchMode == nullptr || touchMode->getValue() == (int)Touch::DispatchMode::ALL_AT_ONCE)
+        {
+            auto listener = EventListenerTouchAllAtOnce::create();
+            listener->onTouchesBegan = [layer](const std::vector<Touch*>& touches, Event* event){
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::BEGAN, touches);
+            };
+            listener->onTouchesMoved = [layer](const std::vector<Touch*>& touches, Event* event){
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::MOVED, touches);
+            };
+            listener->onTouchesEnded = [layer](const std::vector<Touch*>& touches, Event* event){
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::ENDED, touches);
+            };
+            listener->onTouchesCancelled = [layer](const std::vector<Touch*>& touches, Event* event){
+                executeScriptTouchesHandler(layer, EventTouch::EventCode::CANCELLED, touches);
+            };
+            
+            dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+            
+            dict->setObject(listener, "touchListenerAllAtOnce");
+        }
+        else
+        {
+            auto listener = EventListenerTouchOneByOne::create();
+            listener->setSwallowTouches(swallowTouches ? swallowTouches->getValue() : false);
+            listener->onTouchBegan = [layer](Touch* touch, Event* event) -> bool{
+                return executeScriptTouchHandler(layer, EventTouch::EventCode::BEGAN, touch) == 0 ? false : true;
+            };
+            listener->onTouchMoved = [layer](Touch* touch, Event* event){
+                executeScriptTouchHandler(layer, EventTouch::EventCode::MOVED, touch);
+            };
+            listener->onTouchEnded = [layer](Touch* touch, Event* event){
+                executeScriptTouchHandler(layer, EventTouch::EventCode::ENDED, touch);
+            };
+            listener->onTouchCancelled = [layer](Touch* touch, Event* event){
+                executeScriptTouchHandler(layer, EventTouch::EventCode::CANCELLED, touch);
+            };
+            
+            dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+            
+            dict->setObject(listener, "touchListenerOneByOne");
+        }
+    }
+    
+}
+
+//Only for v2.x lua compatibility
+static int lua_cocos2dx_Layer_setTouchPriority(lua_State* L)
+{
+    return 0;
+}
+
+static int lua_cocos2dx_Layer_setTouchEnabled(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_setTouchEnabled'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isboolean(L, 2, 0, &tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        bool enabled = tolua_toboolean(L, 2, 0);
+        setTouchEnabledForLayer(self, enabled);
+        return 0;
+    }
+    
+    CCLOG("'setTouchEnabled' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setTouchEnabled'.",&tolua_err);
+    return 0;
+#endif
+    
+}
+
+static int lua_cocos2dx_Layer_isTouchEnabled(lua_State* L)
+{
+    if (nullptr == L)
+    return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_isTouchEnabled'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    if (0 == argc)
+    {
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict != nullptr)
+        {
+            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            bool ret = enabled ? enabled->getValue() : false;
+            tolua_pushboolean(L, ret);
+            return 1;
+        }
+        
+        return 0;
+    }
+    
+    CCLOG("'isTouchEnabled' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'isTouchEnabled'.",&tolua_err);
+    return 0;
+#endif
+    
+    
+}
+
+static int lua_cocos2dx_Layer_setTouchMode(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_setTouchMode'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isnumber(L, 2, 0, &tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        int32_t mode = (int32_t)tolua_tonumber(L, 2, 0);
+        
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if ( nullptr == dict)
+        {
+            dict = Dictionary::create();
+            self->setUserObject(dict);
+        }
+        
+        Integer* touchModeObj = static_cast<Integer*>(dict->objectForKey("touchMode"));
+        int32_t touchMode = touchModeObj ? touchModeObj->getValue() : 0;
+        if (touchMode != mode)
+        {
+            dict->setObject(Integer::create(mode), "touchMode");
+            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            if (enabled && enabled->getValue())
+            {
+                setTouchEnabledForLayer(self, false);
+                setTouchEnabledForLayer(self, true);
+            }
+        }
+        return 0;
+    }
+    
+    CCLOG("'setTouchMode' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setTouchMode'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Layer_getTouchMode(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_getTouchMode'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    if (0 == argc)
+    {
+        int32_t ret = 0;
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict != nullptr)
+        {
+            Integer* mode = static_cast<Integer*>(dict->objectForKey("touchMode"));
+            ret = mode ? mode->getValue() : 0;
+            tolua_pushnumber(L, (lua_Number)ret);
+            return 1;
+        }
+        
+        return 0;
+    }
+    
+    CCLOG("'getTouchMode' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'getTouchMode'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Layer_setSwallowsTouches(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_setSwallowsTouches'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isboolean(L, 2, 0, &tolua_err))
+            goto tolua_lerror;
+#endif
+        
+        bool swallowsTouches = tolua_toboolean(L, 2, 0);
+        Bool* swallowsTouchesObj = nullptr;
+        
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict == nullptr)
+        {
+            dict = Dictionary::create();
+            self->setUserObject(dict);
+        }
+        
+        swallowsTouchesObj = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+        bool oldSwallowsTouches = swallowsTouchesObj ? swallowsTouchesObj->getValue() : false;
+        
+        if (oldSwallowsTouches != swallowsTouches)
+        {
+            dict->setObject(Integer::create(swallowsTouches), "swallowTouches");
+            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            if (enabled && enabled->getValue())
+            {
+                setTouchEnabledForLayer(self, false);
+                setTouchEnabledForLayer(self, true);
+            }
+        }
+        
+        return 0;
+    }
+    
+    CCLOG("'setSwallowsTouches' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setSwallowsTouches'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Layer_isSwallowsTouches(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_isSwallowsTouches'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    if (0 == argc)
+    {
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict != nullptr)
+        {
+            Bool* swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+            bool ret = swallowTouches ? swallowTouches->getValue() : false;
+            lua_pushboolean(L, ret);
+            return 1;
+        }
+        return 0;
+    }
+    
+    CCLOG("'isSwallowsTouches' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'isSwallowsTouches'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Layer_setKeyboardEnabled(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_setKeyboardEnabled'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isboolean(L, 2, 0, &tolua_err))
+            goto tolua_lerror;
+#endif
+        bool enabled = tolua_toboolean(L, 2, 0);
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict == nullptr)
+        {
+            dict = Dictionary::create();
+            self->setUserObject(dict);
+        }
+        
+        dict->setObject(Bool::create(enabled), "keyboardEnabled");
+        
+        auto keyboardListener = static_cast<EventListenerKeyboard*>(dict->objectForKey("keyboardListener"));
+        
+        auto dispatcher = self->getEventDispatcher();
+        dispatcher->removeEventListener(keyboardListener);
+        if (enabled)
+        {
+            auto listener = EventListenerKeyboard::create();
+            listener->onKeyPressed = [self](EventKeyboard::KeyCode keyCode, Event* event){
+                
+            };
+            listener->onKeyReleased = [self](EventKeyboard::KeyCode keyCode, Event* event){
+                KeypadScriptData data(keyCode, self);
+                ScriptEvent scriptEvent(kKeypadEvent,&data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+            };
+            CCLOG("come in the keyboardEnable");
+            dispatcher->addEventListenerWithSceneGraphPriority(listener, self);
+            
+            dict->setObject(listener, "keyboardListener");
+        }
+        return 0;
+    }
+    
+    CCLOG("'setKeyboardEnabled' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setKeyboardEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Layer_isKeyboardEnabled(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self)
+    {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_isKeyboardEnabled'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    if (0 == argc)
+    {
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict != nullptr)
+        {
+            Bool* enabled = static_cast<Bool*>(dict->objectForKey("keyboardEnabled"));
+            bool ret = enabled ? enabled->getValue() : false;
+            tolua_pushboolean(L, ret);
+            return 1;
+        }
+        return 0;
+    }
+    
+    CCLOG("'isKeyboardEnabled' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'isKeyboardEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Layer_setAccelerometerEnabled(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self)
+    {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_setAccelerometerEnabled'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isboolean(L, 2, 0, &tolua_err))
+            goto tolua_lerror;
+#endif
+        bool enabled = tolua_toboolean(L, 2, 0);
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict == nullptr)
+        {
+            dict = Dictionary::create();
+            self->setUserObject(dict);
+        }
+        
+        dict->setObject(Bool::create(enabled), "accelerometerEnabled");
+        
+        auto accListener = static_cast<EventListenerAcceleration*>(dict->objectForKey("accListener"));
+        
+        auto dispatcher = self->getEventDispatcher();
+        dispatcher->removeEventListener(accListener);
+        
+        Device::setAccelerometerEnabled(enabled);
+        
+        if (enabled)
+        {
+            auto listener = EventListenerAcceleration::create([self](Acceleration* acc, Event* event){
+                BasicScriptData data(self,(void*)acc);
+                ScriptEvent accEvent(kAccelerometerEvent,&data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&accEvent);
+            });
+            
+            dispatcher->addEventListenerWithSceneGraphPriority(listener, self);
+            
+            dict->setObject(listener, "accListener");
+        }
+        
+        return 0;
+    }
+    
+    CCLOG("'setAccelerometerEnabled' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setAccelerometerEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Layer_isAccelerometerEnabled(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self)
+    {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_isAccelerometerEnabled'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    if (0 == argc)
+    {
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict != nullptr)
+        {
+            Bool* enabled = static_cast<Bool*>(dict->objectForKey("accelerometerEnabled"));
+            bool ret = enabled ? enabled->getValue() : false;
+            tolua_pushboolean(L, ret);
+            return 1;
+        }
+        
+        return 0;
+    }
+    
+    
+    CCLOG("'isAccelerometerEnabled' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'isAccelerometerEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Layer* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocos2d::Layer*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self)
+    {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Layer_setAccelerometerInterval'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isnumber(L, 2, 0, &tolua_err))
+            goto tolua_lerror;
+#endif
+        double interval = tolua_tonumber(L, 2, 0);
+        Device::setAccelerometerEnabled(interval);
+        return 0;
+    }
+    
+    CCLOG("'setAccelerometerInterval' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setAccelerometerInterval'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
 static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -546,6 +1249,7 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         bool isMultiTouches  = false;
+        //Note:priority is useless
         int  priority        = 0;
         bool swallowTouches  = true;
         
@@ -579,9 +1283,43 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
         Touch::DispatchMode touchesMode = Touch::DispatchMode::ALL_AT_ONCE;
         if (!isMultiTouches)
             touchesMode = Touch::DispatchMode::ONE_BY_ONE;
-        self->setTouchMode(touchesMode);
-//        self->setTouchPriority(priority);
-		self->setSwallowsTouches(swallowTouches);
+        
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict == nullptr)
+        {
+            dict = Dictionary::create();
+            self->setUserObject(dict);
+        }
+        
+        auto touchModeobj = static_cast<Integer*>(dict->objectForKey("touchMode"));
+        auto swallowTouchesValue = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+        
+        //touch model
+        int32_t mode = touchModeobj?touchModeobj->getValue() : 0;
+        if (mode != (int)touchesMode)
+        {
+            dict->setObject(Integer::create((int)touchesMode), "touchMode");
+            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            if (enabled && enabled->getValue())
+            {
+                setTouchEnabledForLayer(self, false);
+                setTouchEnabledForLayer(self, true);
+            }
+        }
+        
+        //swallowsTouches Obj
+        bool oldSwallowTouchesValue = swallowTouchesValue?swallowTouchesValue->getValue():false;
+        if (oldSwallowTouchesValue != swallowTouches)
+        {
+            dict->setObject(Integer::create(swallowTouches), "swallowTouches");
+            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            if (enabled && enabled->getValue())
+            {
+                setTouchEnabledForLayer(self, false);
+                setTouchEnabledForLayer(self, true);
+            }
+        }
+		
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::TOUCHES);
         return 0;
     }
@@ -622,6 +1360,19 @@ static int tolua_cocos2d_Layer_unregisterScriptTouchHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict != nullptr)
+        {
+            auto touchListenerAllAtOnce = static_cast<EventListenerTouchAllAtOnce*>(dict->objectForKey("touchListenerAllAtOnce"));
+            auto touchListenerOneByOne = static_cast<EventListenerTouchOneByOne*>(dict->objectForKey("touchListenerOneByOne"));
+            auto dispatcher = self->getEventDispatcher();
+            if (nullptr != dispatcher)
+            {
+                dispatcher->removeEventListener(touchListenerAllAtOnce);
+                dispatcher->removeEventListener(touchListenerOneByOne);
+            }
+        }
+
         ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::TOUCHES);
         return 0;
     }
@@ -710,6 +1461,18 @@ static int tolua_cocos2d_Layer_unregisterScriptKeypadHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict != nullptr)
+        {
+            auto keyboardListener = static_cast<EventListenerKeyboard*>(dict->objectForKey("keyboardListener"));
+            
+            auto dispatcher = self->getEventDispatcher();
+            if (dispatcher != nullptr)
+            {
+                dispatcher->removeEventListener(keyboardListener);
+            }
+        }
+        
         ScriptHandlerMgr::getInstance()->removeObjectHandler(self, ScriptHandlerMgr::HandlerType::KEYPAD);
         return 0;
     }
@@ -795,6 +1558,18 @@ static int tolua_cocos2d_Layer_unregisterScriptAccelerateHandler(lua_State* tolu
     
     if (0 == argc)
     {
+        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        if (dict != nullptr)
+        {
+            auto accListener = static_cast<EventListenerAcceleration*>(dict->objectForKey("accListener"));
+            
+            auto dispatcher = self->getEventDispatcher();
+            if (dispatcher != nullptr)
+            {
+                dispatcher->removeEventListener(accListener);
+            }
+        }
+        
         ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::ACCELEROMETER);
         return 0;
     }
@@ -2503,6 +3278,18 @@ static void extendLayer(lua_State* tolua_S)
         lua_pushstring(tolua_S, "unregisterScriptAccelerateHandler");
         lua_pushcfunction(tolua_S, tolua_cocos2d_Layer_unregisterScriptAccelerateHandler);
         lua_rawset(tolua_S, -3);
+        
+        tolua_function(tolua_S, "setTouchEnabled", lua_cocos2dx_Layer_setTouchEnabled);
+        tolua_function(tolua_S, "isTouchEnabled", lua_cocos2dx_Layer_isTouchEnabled);
+        tolua_function(tolua_S, "setTouchMode", lua_cocos2dx_Layer_setTouchMode);
+        tolua_function(tolua_S, "getTouchMode", lua_cocos2dx_Layer_getTouchMode);
+        tolua_function(tolua_S, "setSwallowsTouches", lua_cocos2dx_Layer_setSwallowsTouches);
+        tolua_function(tolua_S, "isSwallowsTouches", lua_cocos2dx_Layer_isSwallowsTouches);
+        tolua_function(tolua_S, "setKeyboardEnabled", lua_cocos2dx_Layer_setKeyboardEnabled);
+        tolua_function(tolua_S, "isKeyboardEnabled", lua_cocos2dx_Layer_isKeyboardEnabled);
+        tolua_function(tolua_S, "setAccelerometerEnabled", lua_cocos2dx_Layer_setAccelerometerEnabled);
+        tolua_function(tolua_S, "isAccelerometerEnabled", lua_cocos2dx_Layer_isAccelerometerEnabled);
+        tolua_function(tolua_S, "setAccelerometerInterval", lua_cocos2dx_Layer_setAccelerometerInterval);
     }
 }
 

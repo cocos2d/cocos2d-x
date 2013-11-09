@@ -130,21 +130,21 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
 }
 
 
-unsigned char* FileUtilsAndroid::getFileData(const char* filename, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtilsAndroid::getFileData(const char* filename, const char* mode, long * size)
 {    
-    return doGetFileData(filename, pszMode, pSize, false);
+    return doGetFileData(filename, mode, size, false);
 }
 
-unsigned char* FileUtilsAndroid::getFileDataForAsync(const char* filename, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtilsAndroid::getFileDataForAsync(const char* filename, const char* pszMode, long * pSize)
 {
     return doGetFileData(filename, pszMode, pSize, true);
 }
 
-unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char* pszMode, unsigned long * pSize, bool forAsync)
+unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char* mode, long * size, bool forAsync)
 {
-    unsigned char * pData = 0;
+    unsigned char * data = 0;
     
-    if ((! filename) || (! pszMode) || 0 == strlen(filename))
+    if ((! filename) || (! mode) || 0 == strlen(filename))
     {
         return 0;
     }
@@ -189,14 +189,14 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
             return NULL;
         }
 
-        off_t size = AAsset_getLength(asset);
+        off_t fileSize = AAsset_getLength(asset);
 
-        pData = new unsigned char[size];
+        data = new unsigned char[fileSize];
 
-        int bytesread = AAsset_read(asset, (void*)pData, size);
-        if (pSize)
+        int bytesread = AAsset_read(asset, (void*)data, fileSize);
+        if (size)
         {
-            *pSize = bytesread;
+            *size = bytesread;
         }
 
         AAsset_close(asset);
@@ -207,32 +207,32 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
         {
             // read rrom other path than user set it
 	        //CCLOG("GETTING FILE ABSOLUTE DATA: %s", filename);
-            FILE *fp = fopen(fullPath.c_str(), pszMode);
+            FILE *fp = fopen(fullPath.c_str(), mode);
             CC_BREAK_IF(!fp);
             
-            unsigned long size;
+            long fileSize;
             fseek(fp,0,SEEK_END);
-            size = ftell(fp);
+            fileSize = ftell(fp);
             fseek(fp,0,SEEK_SET);
-            pData = new unsigned char[size];
-            size = fread(pData,sizeof(unsigned char), size,fp);
+            data = new unsigned char[fileSize];
+            fileSize = fread(data,sizeof(unsigned char), fileSize,fp);
             fclose(fp);
             
-            if (pSize)
+            if (size)
             {
-                *pSize = size;
+                *size = fileSize;
             }
         } while (0);
     }
     
-    if (! pData)
+    if (! data)
     {
         std::string msg = "Get data from file(";
         msg.append(filename).append(") failed!");
         CCLOG("%s", msg.c_str());
     }
     
-    return pData;
+    return data;
 }
 
 string FileUtilsAndroid::getWritablePath() const

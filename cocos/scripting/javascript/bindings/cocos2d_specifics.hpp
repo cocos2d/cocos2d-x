@@ -101,25 +101,6 @@ protected:
     jsval _extraData;
 };
 
-
-class JSCCBAnimationWrapper: public JSCallbackWrapper {
-public:
-    JSCCBAnimationWrapper() {}
-    virtual ~JSCCBAnimationWrapper() {}
-    
-    void animationCompleteCallback() {
-        
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        jsval retval = JSVAL_NULL;
-        
-        if(!JSVAL_IS_VOID(_jsCallback)  && !JSVAL_IS_VOID(_jsThisObj)) {
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(_jsThisObj), _jsCallback, 0, NULL, &retval);
-        }
-    }
-    
-};
-
-
 class JSCallFuncWrapper: public JSCallbackWrapper {
 public:
     JSCallFuncWrapper() {}
@@ -218,7 +199,8 @@ private:
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
     bool _needUnroot;
-    EventListenerTouch* _touchListener;
+    EventListenerTouchOneByOne*  _touchListenerOneByOne;
+    EventListenerTouchAllAtOnce* _touchListenerAllAtOnce;
 };
 
 

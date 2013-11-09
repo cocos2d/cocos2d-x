@@ -18,7 +18,8 @@ JSBool jsval_to_CCPoint( JSContext *cx, jsval vp, Point *ret )
 	
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
     
-	jsval valx, valy;
+    JS::RootedValue valx(cx);
+    JS::RootedValue valy(cx);
 	JSBool ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "x", &valx);
 	ok &= JS_GetProperty(cx, jsobj, "y", &valy);
@@ -65,7 +66,8 @@ JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *ret )
 	
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
     
-	jsval valx, valy;
+    JS::RootedValue valx(cx);
+    JS::RootedValue valy(cx);
 	JSBool ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "x", &valx);
 	ok &= JS_GetProperty(cx, jsobj, "y", &valy);

@@ -80,6 +80,15 @@ bool Control::init()
         _dispatchTable = new Dictionary();
         _dispatchTable->init();
         
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        auto touchListener = EventListenerTouchOneByOne::create();
+        touchListener->onTouchBegan = CC_CALLBACK_2(Control::onTouchBegan, this);
+        touchListener->onTouchMoved = CC_CALLBACK_2(Control::onTouchMoved, this);
+        touchListener->onTouchEnded = CC_CALLBACK_2(Control::onTouchEnded, this);
+        touchListener->onTouchCancelled = CC_CALLBACK_2(Control::onTouchCancelled, this);
+        
+        dispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+        
         return true;
     }
     else
@@ -91,24 +100,6 @@ bool Control::init()
 Control::~Control()
 {
     CC_SAFE_RELEASE(_dispatchTable);
-}
-
-////Menu - Events
-//void Control::registerWithTouchDispatcher()
-//{
-//    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
-//}
-
-void Control::onEnter()
-{
-    Layer::onEnter();
-
-    this->setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-}
-
-void Control::onExit()
-{
-    Layer::onExit();
 }
 
 void Control::sendActionsForControlEvents(EventType controlEvents)
@@ -335,4 +326,9 @@ bool Control::hasVisibleParents() const
     }
     return true;
 }
+
+Control::EventType operator|(Control::EventType a, Control::EventType b) {
+    return static_cast<Control::EventType>(static_cast<int>(a) | static_cast<int>(b));
+}
+
 NS_CC_EXT_END

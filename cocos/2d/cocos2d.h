@@ -226,6 +226,8 @@ THE SOFTWARE.
 #include "CCEventTouch.h"
 #include "CCEventListenerKeyboard.h"
 #include "CCEventKeyboard.h"
+#include "CCEventListenerMouse.h"
+#include "CCEventMouse.h"
 #include "CCEventAcceleration.h"
 #include "CCEventListenerAcceleration.h"
 #include "CCEventCustom.h"

@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "CCEventDispatcher.h"
 #include "CCEvent.h"
 #include "CCEventTouch.h"
+#include "CCScene.h"
 
 #ifdef CC_USE_PHYSICS
 #include "CCPhysicsBody.h"
@@ -89,7 +90,6 @@ bool nodeComparisonLess(Object* p1, Object* p2)
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
-int Node::_globalEventPriorityIndex = 0;
 
 Node::Node(void)
 : _rotationX(0.0f)
@@ -130,12 +130,8 @@ Node::Node(void)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
-, _eventPriority(0)
-, _oldEventPriority(0)
 #ifdef CC_USE_PHYSICS
 , _physicsBody(nullptr)
-, _physicsPositionMark(true)
-, _physicsRotationMark(true)
 #endif
 {
     // set default scheduler and actionManager
@@ -144,7 +140,9 @@ Node::Node(void)
     _actionManager->retain();
     _scheduler = director->getScheduler();
     _scheduler->retain();
-
+    _eventDispatcher = director->getEventDispatcher();
+    _eventDispatcher->retain();
+    
     ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
 }
@@ -160,6 +158,10 @@ Node::~Node()
 
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_scheduler);
+    
+    _eventDispatcher->cleanTarget(this);
+    CC_SAFE_RELEASE(_eventDispatcher);
+    
     // attributes
     CC_SAFE_RELEASE(_camera);
 
@@ -186,8 +188,6 @@ Node::~Node()
     removeAllComponents();
     
     CC_SAFE_DELETE(_componentContainer);
-    
-    removeAllEventListeners();
     
 #ifdef CC_USE_PHYSICS
     CC_SAFE_RELEASE(_physicsBody);
@@ -242,6 +242,8 @@ void Node::setZOrder(int z)
     {
         _parent->reorderChild(this, z);
     }
+    
+    _eventDispatcher->setDirtyForNode(this);
 }
 
 /// vertexZ getter
@@ -272,12 +274,10 @@ void Node::setRotation(float newRotation)
     _transformDirty = _inverseDirty = true;
     
 #ifdef CC_USE_PHYSICS
-    if (_physicsBody && _physicsRotationMark)
+    if (_physicsBody)
     {
         _physicsBody->setRotation(newRotation);
     }
-    
-    _physicsRotationMark = true;
 #endif
 }
 
@@ -364,12 +364,10 @@ void Node::setPosition(const Point& newPosition)
     _transformDirty = _inverseDirty = true;
     
 #ifdef CC_USE_PHYSICS
-    if (_physicsBody && _physicsPositionMark)
+    if (_physicsBody)
     {
         _physicsBody->setPosition(newPosition);
     }
-    
-    _physicsPositionMark = true;
 #endif
 }
 
@@ -404,7 +402,7 @@ void Node::setPositionY(float y)
     setPosition(Point(_position.x, y));
 }
 
-unsigned int Node::getChildrenCount() const
+long Node::getChildrenCount() const
 {
     return _children ? _children->count() : 0;
 }
@@ -632,6 +630,17 @@ void Node::addChild(Node *child, int zOrder, int tag)
     }
 
     this->insertChild(child, zOrder);
+    
+#ifdef CC_USE_PHYSICS
+    for (Node* node = this->getParent(); node != nullptr; node = node->getParent())
+    {
+        if (dynamic_cast<Scene*>(node) != nullptr)
+        {
+            (dynamic_cast<Scene*>(node))->addChildToPhysicsWorld(child);
+            break;
+        }
+    }
+#endif
 
     child->_tag = tag;
 
@@ -685,7 +694,7 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-    int index = _children->getIndexOfObject(child);
+    long index = _children->getIndexOfObject(child);
     if( index != CC_INVALID_INDEX )
         this->detachChild( child, index, cleanup );
 }
@@ -745,7 +754,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
     
 }
 
-void Node::detachChild(Node *child, int childIndex, bool doCleanup)
+void Node::detachChild(Node *child, long childIndex, bool doCleanup)
 {
     // IMPORTANT:
     //  -1st do onExit
@@ -755,6 +764,14 @@ void Node::detachChild(Node *child, int childIndex, bool doCleanup)
         child->onExitTransitionDidStart();
         child->onExit();
     }
+    
+#ifdef CC_USE_PHYSICS
+    if (child->_physicsBody != nullptr)
+    {
+        child->_physicsBody->removeFromWorld();
+    }
+    
+#endif
 
     // If you don't do cleanup, the child's actions will not get removed and the
     // its scheduledSelectors_ dict will not get released!
@@ -865,7 +882,6 @@ void Node::visit()
         }
         // self draw
         this->draw();
-        updateEventPriorityIndex();
 
         for( ; i < _children->count(); i++ )
         {
@@ -877,7 +893,6 @@ void Node::visit()
     else
     {
         this->draw();
-        updateEventPriorityIndex();
     }
 
     // reset for next frame
@@ -901,7 +916,11 @@ void Node::transformAncestors()
 }
 
 void Node::transform()
-{    
+{
+#ifdef CC_USE_PHYSICS
+    updatePhysicsTransform();
+#endif
+
     kmMat4 transfrom4x4;
 
     // Convert 3x3 into 4x4 matrix
@@ -936,8 +955,8 @@ void Node::onEnter()
 
     arrayMakeObjectsPerformSelector(_children, onEnter, Node*);
 
-    this->resumeSchedulerAndActions();
-
+    this->resume();
+    
     _running = true;
 
     if (_scriptType != kScriptTypeNone)
@@ -978,7 +997,7 @@ void Node::onExitTransitionDidStart()
 
 void Node::onExit()
 {
-    this->pauseSchedulerAndActions();
+    this->pause();
 
     _running = false;
     if (_scriptType != kScriptTypeNone)
@@ -990,8 +1009,17 @@ void Node::onExit()
     }
 
     arrayMakeObjectsPerformSelector(_children, onExit, Node*);
-    
-    removeAllEventListeners();
+}
+
+void Node::setEventDispatcher(EventDispatcher* dispatcher)
+{
+    if (dispatcher != _eventDispatcher)
+    {
+        _eventDispatcher->cleanTarget(this);
+        CC_SAFE_RETAIN(dispatcher);
+        CC_SAFE_RELEASE(_eventDispatcher);
+        _eventDispatcher = dispatcher;
+    }
 }
 
 void Node::setActionManager(ActionManager* actionManager)
@@ -1119,16 +1147,28 @@ void Node::unscheduleAllSelectors()
     _scheduler->unscheduleAllForTarget(this);
 }
 
-void Node::resumeSchedulerAndActions()
+void Node::resume()
 {
     _scheduler->resumeTarget(this);
     _actionManager->resumeTarget(this);
+    _eventDispatcher->resumeTarget(this);
+}
+
+void Node::pause()
+{
+    _scheduler->pauseTarget(this);
+    _actionManager->pauseTarget(this);
+    _eventDispatcher->pauseTarget(this);
+}
+
+void Node::resumeSchedulerAndActions()
+{
+    resume();
 }
 
 void Node::pauseSchedulerAndActions()
 {
-    _scheduler->pauseTarget(this);
-    _actionManager->pauseTarget(this);
+    pause();
 }
 
 // override me
@@ -1298,18 +1338,20 @@ Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
     return this->convertToNodeSpaceAR(point);
 }
 
-void Node::updateTransform()
-{
 #ifdef CC_USE_PHYSICS
+void Node::updatePhysicsTransform()
+{
     if (_physicsBody)
     {
-        _physicsPositionMark = false;
-        _physicsRotationMark = false;
-        setPosition(_physicsBody->getPosition());
-        setRotation(_physicsBody->getRotation());
+        _position = _physicsBody->getPosition();
+        _rotationX = _rotationY = _physicsBody->getRotation();
+        _transformDirty = _inverseDirty = true;
     }
+}
 #endif
-    
+
+void Node::updateTransform()
+{
     // Recursively iterate over children
     arrayMakeObjectsPerformSelector(_children, updateTransform, Node*);
 }
@@ -1342,52 +1384,17 @@ void Node::removeAllComponents()
         _componentContainer->removeAll();
 }
 
-void Node::resetEventPriorityIndex()
-{
-    _globalEventPriorityIndex = 0;
-}
-
-void Node::associateEventListener(EventListener* listener)
-{
-    _eventlisteners.insert(listener);
-}
-
-void Node::dissociateEventListener(EventListener* listener)
-{
-    _eventlisteners.erase(listener);
-}
-
-void Node::removeAllEventListeners()
-{
-    auto dispatcher = EventDispatcher::getInstance();
-    
-    auto eventListenersCopy = _eventlisteners;
-    
-    for (auto& listener : eventListenersCopy)
-    {
-        dispatcher->removeEventListener(listener);
-    }
-}
-
-void Node::setDirtyForAllEventListeners()
-{
-    auto dispatcher = EventDispatcher::getInstance();
-    
-    for (auto& listener : _eventlisteners)
-    {
-        dispatcher->setDirtyForEventType(listener->_type, true);
-    }
-}
-
 #ifdef CC_USE_PHYSICS
 void Node::setPhysicsBody(PhysicsBody* body)
 {
     if (_physicsBody != nullptr)
     {
+        _physicsBody->_node = nullptr;
         _physicsBody->release();
     }
     
     _physicsBody = body;
+    _physicsBody->_node = this;
     _physicsBody->retain();
     _physicsBody->setPosition(getPosition());
     _physicsBody->setRotation(getRotation());

@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #define VERSION_COMBINED 0.30f
 #define VERSION_CHANGE_ROTATION_RANGE 1.0f
+#define VERSION_COLOR_READING 1.1f
 
 #ifndef AUTO_ADD_SPRITE_FRAME_NAME_PREFIX
 #define AUTO_ADD_SPRITE_FRAME_NAME_PREFIX 0
@@ -44,8 +45,12 @@ THE SOFTWARE.
 #define ENABLE_PHYSICS_CHIPMUNK_DETECT 1
 #endif
 
+#ifndef ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX 
+#define ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX 0
+#endif
+
 #define CS_RETURN_IF(cond) if (cond) return
-#define CS_RETURN_NULL_IF(cond) if (cond) return NULL;
+#define CS_RETURN_NULL_IF(cond) if (cond) return nullptr;
 
 namespace cocostudio {
 

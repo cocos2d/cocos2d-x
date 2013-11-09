@@ -21,7 +21,6 @@
 void js_log(const char *format, ...);
 
 using namespace cocos2d;
-using namespace std;
 
 typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
 
@@ -189,7 +188,7 @@ public:
 	/**
 	 * enable the debug environment
 	 */
-	void debugProcessInput(string str);
+	void debugProcessInput(const std::string& str);
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return _debugGlobal; }
     JSObject* getGlobalObject() { return _global; }
@@ -230,7 +229,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition* ret );
 jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );
 jsval long_long_to_jsval(JSContext* cx, long long v);
-jsval std_string_to_jsval(JSContext* cx, const string& v);
+jsval std_string_to_jsval(JSContext* cx, const std::string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
 jsval ccpoint_to_jsval(JSContext* cx, const Point& v);
 jsval ccrect_to_jsval(JSContext* cx, const Rect& v);
@@ -321,6 +320,8 @@ public:
         JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
     }
     JSBool invoke(unsigned int argc, jsval *argv, jsval &rval) {
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        
         return JS_CallFunctionValue(this->_cx, this->_jsthis, this->_fval, argc, argv, &rval);
     }
 private:

@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS
-
 #ifndef __CCPHYSICS_JOINT_H__
 #define __CCPHYSICS_JOINT_H__
+
+#include "CCPhysicsSetting.h"
+#ifdef CC_USE_PHYSICS
 
 #include "CCObject.h"
 #include "CCGeometry.h"
@@ -34,25 +34,31 @@
 NS_CC_BEGIN
 
 class PhysicsBody;
+class PhysicsWorld;
 class PhysicsJointInfo;
 class PhysicsBodyInfo;
 
 /*
  * @brief An PhysicsJoint object connects two physics bodies together.
  */
-class PhysicsJoint : public Object
+class PhysicsJoint
 {
 protected:
     PhysicsJoint();
     virtual ~PhysicsJoint() = 0;
 
 public:
-    PhysicsBody* getBodyA() { return _bodyA; }
-    PhysicsBody* getBodyB() { return _bodyB; }
-    inline int getTag() { return _tag; }
+    inline PhysicsBody* getBodyA() const { return _bodyA; }
+    inline PhysicsBody* getBodyB() const { return _bodyB; }
+    inline PhysicsWorld* getWorld() const { return _world; }
+    inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
-    inline bool isEnable() { return _enable; }
+    inline bool isEnabled() const { return _enable; }
     void setEnable(bool enable);
+    inline bool isCollisionEnabled() const { return _collisionEnable; }
+    void setCollisionEnable(bool enable);
+    void removeFormWorld();
+    static void destroy(PhysicsJoint* joint);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b);
@@ -60,13 +66,17 @@ protected:
     /**
      * PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
      */
-    PhysicsBodyInfo* bodyInfo(PhysicsBody* body) const;
+    PhysicsBodyInfo* getBodyInfo(PhysicsBody* body) const;
+    Node* getBodyNode(PhysicsBody* body) const;
     
 protected:
     PhysicsBody* _bodyA;
     PhysicsBody* _bodyB;
+    PhysicsWorld* _world;
     PhysicsJointInfo* _info;
     bool _enable;
+    bool _collisionEnable;
+    bool _destoryMark;
     int _tag;
     
     friend class PhysicsBody;
@@ -79,7 +89,7 @@ protected:
 class PhysicsJointFixed : public PhysicsJoint
 {
 public:
-    PhysicsJointFixed* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    static PhysicsJointFixed* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
@@ -95,7 +105,7 @@ protected:
 class PhysicsJointSliding : public PhysicsJoint
 {
 public:
-    PhysicsJointSliding* create(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
+    static PhysicsJointSliding* construct(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
@@ -111,7 +121,7 @@ protected:
 class PhysicsJointSpring : public PhysicsJoint
 {
 public:
-    PhysicsJointSpring* create();
+    PhysicsJointSpring* construct();
     
 protected:
     bool init();
@@ -127,10 +137,15 @@ protected:
 class PhysicsJointLimit : public PhysicsJoint
 {
 public:
-    PhysicsJointLimit* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
+    PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    
+    float getMin() const;
+    void setMin(float min);
+    float getMax() const;
+    void setMax(float max);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
 protected:
     PhysicsJointLimit();
@@ -143,18 +158,34 @@ protected:
 class PhysicsJointPin : public PhysicsJoint
 {
 public:
-    static PhysicsJointPin* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    
+    void setMaxForce(float force);
+    float getMaxForce() const;
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
     PhysicsJointPin();
     virtual ~PhysicsJointPin();
 };
 
+class PhysicsJointDistance : public PhysicsJoint
+{
+    
+public:
+    static PhysicsJointDistance* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    
+protected:
+    PhysicsJointDistance();
+    virtual ~PhysicsJointDistance();
+};
+
 NS_CC_END
 
-#endif // __CCPHYSICS_JOINT_H__
-
 #endif // CC_USE_PHYSICS
+#endif // __CCPHYSICS_JOINT_H__

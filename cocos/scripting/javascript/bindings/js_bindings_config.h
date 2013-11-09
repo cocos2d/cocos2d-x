@@ -144,6 +144,9 @@ JSAutoCompartment ac(cx, obj)
 #define JSB_ENSURE_AUTOCOMPARTMENT(cx, obj)
 #endif
 
+#define JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET \
+JSAutoCompartment __jsb_ac(ScriptingCore::getInstance()->getGlobalContext(), ScriptingCore::getInstance()->getGlobalObject());
+
 /**
  * @def JSB_DEBUGGER_PORT
  * The port number, where the client will be listening on

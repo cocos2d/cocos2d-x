@@ -25,6 +25,8 @@
 #include "CCPhysicsWorld.h"
 #ifdef CC_USE_PHYSICS
 
+#include <climits>
+
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
 #elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
@@ -35,65 +37,100 @@
 #include "CCPhysicsShape.h"
 #include "CCPhysicsContact.h"
 #include "CCPhysicsJoint.h"
+#include "CCPhysicsContact.h"
 
-#include "chipmunk/CCPhysicsWorldInfo.h"
-#include "Box2D/CCPhysicsWorldInfo.h"
-#include "chipmunk/CCPhysicsBodyInfo.h"
-#include "Box2D/CCPhysicsBodyInfo.h"
-#include "chipmunk/CCPhysicsShapeInfo.h"
-#include "Box2D/CCPhysicsShapeInfo.h"
-#include "chipmunk/CCPhysicsContactInfo.h"
-#include "Box2D/CCPhysicsContactInfo.h"
-#include "chipmunk/CCPhysicsJointInfo.h"
-#include "Box2D/CCPhysicsJointInfo.h"
-#include "chipmunk/CCPhysicsHelper.h"
+#include "chipmunk/CCPhysicsWorldInfo_chipmunk.h"
+#include "box2d/CCPhysicsWorldInfo_box2d.h"
+#include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
+#include "box2d/CCPhysicsBodyInfo_box2d.h"
+#include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
+#include "box2d/CCPhysicsShapeInfo_box2d.h"
+#include "chipmunk/CCPhysicsContactInfo_chipmunk.h"
+#include "box2d/CCPhysicsContactInfo_box2d.h"
+#include "chipmunk/CCPhysicsJointInfo_chipmunk.h"
+#include "box2d/CCPhysicsJointInfo_box2d.h"
+#include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
 #include "CCDrawNode.h"
 #include "CCArray.h"
 #include "CCScene.h"
 #include "CCDirector.h"
+#include "CCEventDispatcher.h"
+#include "CCEventCustom.h"
 
 #include <algorithm>
 
 NS_CC_BEGIN
 
+extern const char* PHYSICSCONTACT_EVENT_NAME;
+
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
 const float PHYSICS_INFINITY = INFINITY;
 
-int PhysicsWorld::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, void *data)
+namespace
 {
-    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
+    typedef struct RayCastCallbackInfo
+    {
+        PhysicsWorld* world;
+        PhysicsRayCastCallbackFunc func;
+        Point p1;
+        Point p2;
+        void* data;
+    }RayCastCallbackInfo;
     
+    typedef struct RectQueryCallbackInfo
+    {
+        PhysicsWorld* world;
+        PhysicsRectQueryCallbackFunc func;
+        void* data;
+    }RectQueryCallbackInfo;
+}
+
+class PhysicsWorldCallback
+{
+public:
+    static int collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, PhysicsWorld *world);
+    static int collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
+    static void collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
+    static void collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
+    static void rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info);
+    static void rectQueryCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info);
+    static void nearestPointQueryFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr);
+    
+public:
+    static bool continues;
+};
+
+bool PhysicsWorldCallback::continues = true;
+
+int PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, PhysicsWorld *world)
+{
     CP_ARBITER_GET_SHAPES(arb, a, b);
     
-    auto ita = PhysicsShapeInfo::map.find(a);
-    auto itb = PhysicsShapeInfo::map.find(b);
-    CC_ASSERT(ita != PhysicsShapeInfo::map.end() && itb != PhysicsShapeInfo::map.end());
+    auto ita = PhysicsShapeInfo::getMap().find(a);
+    auto itb = PhysicsShapeInfo::getMap().find(b);
+    CC_ASSERT(ita != PhysicsShapeInfo::getMap().end() && itb != PhysicsShapeInfo::getMap().end());
     
-    PhysicsContact* contact = PhysicsContact::create(ita->second->shape, itb->second->shape);
+    PhysicsContact* contact = PhysicsContact::create(ita->second->getShape(), itb->second->getShape());
     arb->data = contact;
+    contact->_contactInfo = arb;
     
-    return world->collisionBeginCallback(*static_cast<PhysicsContact*>(arb->data));
+    return world->collisionBeginCallback(*contact);
 }
 
-int PhysicsWorld::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
+int PhysicsWorldCallback::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
-    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
-    return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(arb->data),
-                                            PhysicsContactPreSolve());
+    return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(arb->data));
 }
 
-void PhysicsWorld::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
+void PhysicsWorldCallback::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
-    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
-    world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(arb->data),
-                                      PhysicsContactPostSolve());
+    world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(arb->data));
 }
 
-void PhysicsWorld::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, void *data)
+void PhysicsWorldCallback::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
-    PhysicsWorld* world = static_cast<PhysicsWorld*>(data);
     PhysicsContact* contact = static_cast<PhysicsContact*>(arb->data);
     
     world->collisionSeparateCallback(*contact);
@@ -101,124 +138,343 @@ void PhysicsWorld::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space,
     delete contact;
 }
 
-bool PhysicsWorld::init()
+void PhysicsWorldCallback::rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info)
 {
-    _info = new PhysicsWorldInfo();
+    if (!PhysicsWorldCallback::continues)
+    {
+        return;
+    }
     
-    cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(_gravity));
+    auto it = PhysicsShapeInfo::getMap().find(shape);
+    CC_ASSERT(it != PhysicsShapeInfo::getMap().end());
     
-    cpSpaceSetDefaultCollisionHandler(_info->space,
-                                      PhysicsWorld::collisionBeginCallbackFunc,
-                                      PhysicsWorld::collisionPreSolveCallbackFunc,
-                                      PhysicsWorld::collisionPostSolveCallbackFunc,
-                                      PhysicsWorld::collisionSeparateCallbackFunc,
-                                      this);
+    PhysicsRayCastInfo callbackInfo =
+    {
+        it->second->getShape(),
+        info->p1,
+        info->p2,
+        Point(info->p1.x+(info->p2.x-info->p1.x)*t, info->p1.y+(info->p2.y-info->p1.y)*t),
+        Point(n.x, n.y),
+        (float)t,
+    };
     
-    return true;
+    PhysicsWorldCallback::continues = info->func(*info->world, callbackInfo, info->data);
+}
+
+void PhysicsWorldCallback::rectQueryCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info)
+{
+    auto it = PhysicsShapeInfo::getMap().find(shape);
+    
+    CC_ASSERT(it != PhysicsShapeInfo::getMap().end());
+    
+    if (!PhysicsWorldCallback::continues)
+    {
+        return;
+    }
+    
+    PhysicsWorldCallback::continues = info->func(*info->world, *it->second->getShape(), info->data);
+}
+
+void PhysicsWorldCallback::nearestPointQueryFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr)
+{
+    auto it = PhysicsShapeInfo::getMap().find(shape);
+    
+    CC_ASSERT(it != PhysicsShapeInfo::getMap().end());
+    
+    arr->addObject(it->second->getShape());
+}
+
+bool PhysicsWorld::init(Scene& scene)
+{
+    do
+    {
+        _delayAddBodies = Array::create();
+        _delayRemoveBodies = Array::create();
+        CC_BREAK_IF(_delayAddBodies == nullptr || _delayRemoveBodies == nullptr);
+        _delayAddBodies->retain();
+        _delayRemoveBodies->retain();
+        
+        _info = new PhysicsWorldInfo();
+        CC_BREAK_IF(_info == nullptr);
+        _bodies = Array::create();
+        CC_BREAK_IF(_bodies == nullptr);
+        _bodies->retain();
+
+        _scene = &scene;
+        
+        cpSpaceSetGravity(_info->getSpace(), PhysicsHelper::point2cpv(_gravity));
+        
+        cpSpaceSetDefaultCollisionHandler(_info->getSpace(),
+                                          (cpCollisionBeginFunc)PhysicsWorldCallback::collisionBeginCallbackFunc,
+                                          (cpCollisionPreSolveFunc)PhysicsWorldCallback::collisionPreSolveCallbackFunc,
+                                          (cpCollisionPostSolveFunc)PhysicsWorldCallback::collisionPostSolveCallbackFunc,
+                                          (cpCollisionSeparateFunc)PhysicsWorldCallback::collisionSeparateCallbackFunc,
+                                          this);
+        
+        return true;
+    } while (false);
+    
+    return false;
+}
+
+void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
+{
+    if (_delayRemoveBodies->getIndexOfObject(body) != UINT_MAX)
+    {
+        _delayRemoveBodies->removeObject(body);
+        return;
+    }
+    
+    if (_info->getSpace()->locked_private)
+    {
+        if (_delayAddBodies->getIndexOfObject(body) == UINT_MAX)
+        {
+            _delayAddBodies->addObject(body);
+            _delayDirty = true;
+        }
+    }else
+    {
+        doAddBody(body);
+    }
+}
+
+void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
+{
+    if (_delayAddBodies->getIndexOfObject(body) != UINT_MAX)
+    {
+        _delayAddBodies->removeObject(body);
+        return;
+    }
+    
+    if (_info->getSpace()->locked_private)
+    {
+        if (_delayRemoveBodies->getIndexOfObject(body) == UINT_MAX)
+        {
+            _delayRemoveBodies->addObject(body);
+            _delayDirty = true;
+        }
+    }else
+    {
+        doRemoveBody(body);
+    }
+}
+
+void PhysicsWorld::addJointOrDelay(PhysicsJoint* joint)
+{
+    auto it = std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint);
+    if (it != _delayRemoveJoints.end())
+    {
+        _delayRemoveJoints.erase(it);
+        return;
+    }
+    
+    if (_info->getSpace()->locked_private)
+    {
+        if (std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint) == _delayAddJoints.end())
+        {
+            _delayAddJoints.push_back(joint);
+            _delayDirty = true;
+        }
+    }else
+    {
+        doAddJoint(joint);
+    }
+}
+
+void PhysicsWorld::removeJointOrDelay(PhysicsJoint* joint)
+{
+    auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
+    if (it != _delayAddJoints.end())
+    {
+        _delayAddJoints.erase(it);
+        return;
+    }
+    
+    if (_info->getSpace()->locked_private)
+    {
+        if (std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint) == _delayRemoveJoints.end())
+        {
+            _delayRemoveJoints.push_back(joint);
+            _delayDirty = true;
+        }
+    }else
+    {
+        doRemoveJoint(joint);
+    }
 }
 
 void PhysicsWorld::addJoint(PhysicsJoint* joint)
 {
-    auto it = std::find(_joints.begin(), _joints.end(), joint);
-    
-    if (it == _joints.end())
+    if (joint->getWorld() != nullptr && joint->getWorld() != this)
     {
-        _joints.push_back(joint);
-        
-        if (!cpSpaceContainsConstraint(_info->space, joint->_info->joint))
+        joint->removeFormWorld();
+    }
+    
+    addJointOrDelay(joint);
+    _joints.push_back(joint);
+    joint->_world = this;
+}
+
+void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
+{
+    if (joint->getWorld() != this)
+    {
+        if (destroy)
         {
-            cpSpaceAddConstraint(_info->space, joint->_info->joint);
+            CCLOG("physics warnning: the joint is not in this world, it won't be destoried utill the body it conntect is destoried");
+        }
+        return;
+    }
+    
+    removeJointOrDelay(joint);
+    
+    _joints.remove(joint);
+    joint->_world = nullptr;
+    
+    // clean the connection to this joint
+    if (destroy)
+    {
+        if (joint->getBodyA() != nullptr)
+        {
+            joint->getBodyA()->removeJoint(joint);
+        }
+        
+        if (joint->getBodyB() != nullptr)
+        {
+            joint->getBodyB()->removeJoint(joint);
+        }
+        
+        // test the distraction is delaied or not
+        if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+        {
+            joint->_destoryMark = true;
+        }
+        else
+        {
+            delete joint;
+        }
+    }
+}
+
+void PhysicsWorld::removeAllJoints(bool destroy)
+{
+    for (auto joint : _joints)
+    {
+        removeJointOrDelay(joint);
+        joint->_world = nullptr;
+        
+        // clean the connection to this joint
+        if (destroy)
+        {
+            if (joint->getBodyA() != nullptr)
+            {
+                joint->getBodyA()->removeJoint(joint);
+            }
+            
+            if (joint->getBodyB() != nullptr)
+            {
+                joint->getBodyB()->removeJoint(joint);
+            }
+            
+            // test the distraction is delaied or not
+            if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+            {
+                joint->_destoryMark = true;
+            }
+            else
+            {
+                delete joint;
+            }
         }
     }
     
-}
-
-void PhysicsWorld::removeJoint(PhysicsJoint* joint)
-{
-    
-}
-
-void PhysicsWorld::removeAllJoints()
-{
-    
+    _joints.clear();
 }
 
 void PhysicsWorld::addShape(PhysicsShape* shape)
 {
-    for (auto cps : shape->_info->shapes)
+    for (auto cps : shape->_info->getShapes())
     {
-        if (cpSpaceContainsShape(_info->space, cps))
+        _info->addShape(cps);
+    }
+    
+    return;
+}
+
+void PhysicsWorld::doAddJoint(PhysicsJoint *joint)
+{
+    for (auto subjoint : joint->_info->getJoints())
+    {
+        _info->addJoint(subjoint);
+    }
+}
+
+void PhysicsWorld::doAddBody(PhysicsBody* body)
+{
+    if (body->isEnabled())
+    {
+        //is gravity enable
+        if (!body->isGravityEnabled())
         {
-            continue;
+            body->applyForce(-_gravity);
         }
         
-        if (cpBodyIsStatic(shape->getBody()->_info->body))
+        // add body to space
+        if (body->isDynamic())
         {
-            cpSpaceAddStaticShape(_info->space, cps);
-        }else
+            _info->addBody(body->_info->getBody());
+        }
+        
+        // add shapes to space
+        for (auto shape : *body->getShapes())
         {
-            cpSpaceAddShape(_info->space, cps);
+            addShape(dynamic_cast<PhysicsShape*>(shape));
         }
     }
 }
 
 void PhysicsWorld::addBody(PhysicsBody* body)
 {
-    if (body->isEnable())
+    CCASSERT(body != nullptr, "the body can not be nullptr");
+    
+    if (body->getWorld() == this)
     {
-        // add body to space
-        if (body->isDynamic())
-        {
-            cpSpaceAddBody(_info->space, body->_info->body);
-        }
-        
-        // add shapes to space
-        for (auto shape : body->getShapes())
-        {
-            if (shape->isEnable())
-            {
-                addShape(shape);
-            }
-        }
+        return;
     }
     
-    if (_bodys == nullptr)
+    if (body->getWorld() != nullptr)
     {
-        _bodys = Array::create(body, NULL);
-        _bodys->retain();
-    }else
-    {
-        _bodys->addObject(body);
+        body->removeFromWorld();
     }
+    
+    addBodyOrDelay(body);
+    _bodies->addObject(body);
+    body->_world = this;
 }
 
 void PhysicsWorld::removeBody(PhysicsBody* body)
 {
-    for (auto shape : body->getShapes())
+    
+    if (body->getWorld() != this)
     {
-        for (auto cps : shape->_info->shapes)
-        {
-            if (cpSpaceContainsShape(_info->space, cps))
-            {
-                cpSpaceRemoveShape(_info->space, cps);
-            }
-        }
+        CCLOG("Physics Warnning: this body doesn't belong to this world");
+        return;
     }
     
-    if (cpSpaceContainsBody(_info->space, body->_info->body))
+    // destory the body's joints
+    for (auto joint : body->_joints)
     {
-        cpSpaceRemoveBody(_info->space, body->_info->body);
+        removeJoint(joint, true);
     }
     
-    if (_bodys != nullptr)
-    {
-        _bodys->removeObject(body);
-    }
+    removeBodyOrDelay(body);
+    _bodies->removeObject(body);
+    body->_world = nullptr;
 }
 
-void PhysicsWorld::removeBodyByTag(int tag)
+void PhysicsWorld::removeBody(int tag)
 {
-    for (Object* obj : *_bodys)
+    for (Object* obj : *_bodies)
     {
         PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
         if (body->getTag() == tag)
@@ -229,20 +485,121 @@ void PhysicsWorld::removeBodyByTag(int tag)
     }
 }
 
+void PhysicsWorld::doRemoveBody(PhysicsBody* body)
+{
+    CCASSERT(body != nullptr, "the body can not be nullptr");
+    
+    // reset the gravity
+    if (!body->isGravityEnabled())
+    {
+        body->applyForce(-_gravity);
+    }
+    
+    // remove shaps
+    for (auto shape : *body->getShapes())
+    {
+        removeShape(dynamic_cast<PhysicsShape*>(shape));
+    }
+    
+    // remove body
+    _info->removeBody(body->_info->getBody());
+}
+
+void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
+{
+    for (auto subjoint : joint->_info->getJoints())
+    {
+        _info->removeJoint(subjoint);
+    }
+}
+
+void PhysicsWorld::removeAllBodies()
+{
+    for (Object* obj : *_bodies)
+    {
+        PhysicsBody* child = dynamic_cast<PhysicsBody*>(obj);
+        removeBodyOrDelay(child);
+        child->_world = nullptr;
+    }
+
+    _bodies->removeAllObjects();
+    CC_SAFE_RELEASE(_bodies);
+}
+
 void PhysicsWorld::removeShape(PhysicsShape* shape)
 {
-    for (auto cps : shape->_info->shapes)
+    for (auto cps : shape->_info->getShapes())
     {
-        if (cpSpaceContainsShape(_info->space, cps))
+        if (cpSpaceContainsShape(_info->getSpace(), cps))
         {
-            cpSpaceRemoveShape(_info->space, cps);
+            cpSpaceRemoveShape(_info->getSpace(), cps);
         }
     }
 }
 
+void PhysicsWorld::updateBodies()
+{
+    if (_info->getSpace()->locked_private)
+    {
+        return;
+    }
+    
+    for (auto body : *_delayAddBodies)
+    {
+        doAddBody(dynamic_cast<PhysicsBody*>(body));
+    }
+    
+    for (auto body : *_delayRemoveBodies)
+    {
+        doRemoveBody(dynamic_cast<PhysicsBody*>(body));
+    }
+    
+    _delayAddBodies->removeAllObjects();
+    _delayRemoveBodies->removeAllObjects();
+}
+
+void PhysicsWorld::updateJoints()
+{
+    if (_info->getSpace()->locked_private)
+    {
+        return;
+    }
+    
+    for (auto joint : _delayAddJoints)
+    {
+        doAddJoint(joint);
+    }
+    
+    for (auto joint : _delayRemoveJoints)
+    {
+        doRemoveJoint(joint);
+        
+        if (joint->_destoryMark)
+        {
+            delete joint;
+        }
+    }
+    
+    _delayAddJoints.clear();
+    _delayRemoveJoints.clear();
+}
+
 void PhysicsWorld::update(float delta)
 {
-    cpSpaceStep(_info->space, delta);
+    if (_delayDirty)
+    {
+        // the updateJoints must run before the updateBodies.
+        updateJoints();
+        updateBodies();
+        _delayDirty = !(_delayAddBodies->count() == 0 && _delayRemoveBodies->count() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
+    }
+    
+    for (auto body : *_bodies)
+    {
+        body->update(delta);
+    }
+    
+    cpSpaceStep(_info->getSpace(), delta);
     
     if (_drawNode)
     {
@@ -258,20 +615,23 @@ void PhysicsWorld::update(float delta)
 
 void PhysicsWorld::debugDraw()
 {
-    if (_debugDraw && _bodys != nullptr)
+    if (_debugDraw && _bodies != nullptr)
     {
         _drawNode= DrawNode::create();
 
-        for (Object* obj : *_bodys)
+        for (Object* obj : *_bodies)
         {
             PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
             
-            std::vector<PhysicsShape*> shapes = body->getShapes();
-            
-            for (auto shape : shapes)
+            for (auto shape : *body->getShapes())
             {
-                drawWithShape(_drawNode, shape);
+                drawWithShape(_drawNode, dynamic_cast<PhysicsShape*>(shape));
             }
+        }
+        
+        for (auto joint : _joints)
+        {
+            drawWithJoint(_drawNode, joint);
         }
         
         if (_scene)
@@ -281,36 +641,96 @@ void PhysicsWorld::debugDraw()
     }
 }
 
-void PhysicsWorld::setScene(Scene *scene)
+void PhysicsWorld::drawWithJoint(DrawNode* node, PhysicsJoint* joint)
 {
-    _scene = scene;
+    for (auto it = joint->_info->getJoints().begin(); it != joint->_info->getJoints().end(); ++it)
+    {
+        cpConstraint *constraint = *it;
+        
+        
+        cpBody *body_a = constraint->a;
+        cpBody *body_b = constraint->b;
+        
+        const cpConstraintClass *klass = constraint->klass_private;
+        if(klass == cpPinJointGetClass())
+        {
+            cpPinJoint *subJoint = (cpPinJoint *)constraint;
+            
+            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
+            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
+            
+            node->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, Color4F(0.0f, 0.0f, 1.0f, 1.0f));
+            node->drawDot(PhysicsHelper::cpv2point(a), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
+            node->drawDot(PhysicsHelper::cpv2point(b), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
+        }
+        else if(klass == cpSlideJointGetClass())
+        {
+            cpSlideJoint *subJoint = (cpSlideJoint *)constraint;
+            
+            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
+            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
+            
+            node->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, Color4F(0.0f, 0.0f, 1.0f, 1.0f));
+            node->drawDot(PhysicsHelper::cpv2point(a), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
+            node->drawDot(PhysicsHelper::cpv2point(b), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
+        }
+        else if(klass == cpPivotJointGetClass())
+        {
+            cpPivotJoint *subJoint = (cpPivotJoint *)constraint;
+            
+            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
+            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
+            
+            node->drawDot(PhysicsHelper::cpv2point(a), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
+            node->drawDot(PhysicsHelper::cpv2point(b), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
+        }
+        else if(klass == cpGrooveJointGetClass())
+        {
+            cpGrooveJoint *subJoint = (cpGrooveJoint *)constraint;
+            
+            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->grv_a, body_a->rot));
+            cpVect b = cpvadd(body_a->p, cpvrotate(subJoint->grv_b, body_a->rot));
+            cpVect c = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
+            
+            node->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, Color4F(0.0f, 0.0f, 1.0f, 1.0f));
+            node->drawDot(PhysicsHelper::cpv2point(c), 2, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
+        }
+        else if(klass == cpDampedSpringGetClass())
+        {
+            
+        }
+    }
 }
 
 void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
 {
-    for (auto it = shape->_info->shapes.begin(); it != shape->_info->shapes.end(); ++it)
+    for (auto it = shape->_info->getShapes().begin(); it != shape->_info->getShapes().end(); ++it)
     {
-        cpShape *shape = *it;
+        cpShape *subShape = *it;
         
         switch ((*it)->klass_private->type)
         {
             case CP_CIRCLE_SHAPE:
             {
-                float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(shape));
-                Point centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(shape)))
-                + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(shape));
+                float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(subShape));
+                Point centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)))
+                + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(subShape));
                 
-                Point seg[4] = {};
-                seg[0] = Point(centre.x - radius, centre.y - radius);
-                seg[1] = Point(centre.x - radius, centre.y + radius);
-                seg[2] = Point(centre.x + radius, centre.y + radius);
-                seg[3] = Point(centre.x + radius, centre.y - radius);
-                node->drawPolygon(seg, 4, Color4F(), 1, Color4F(1, 0, 0, 1));
+                static const int CIRCLE_SEG_NUM = 12;
+                Point seg[CIRCLE_SEG_NUM] = {};
+                
+                for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
+                {
+                    float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
+                    Point d(radius * cosf(angle), radius * sinf(angle));
+                    seg[i] = centre + d;
+                }
+                node->drawPolygon(seg, CIRCLE_SEG_NUM, Color4F(1.0f, 0.0f, 0.0f, 0.3f), 1, Color4F(1, 0, 0, 1));
                 break;
             }
             case CP_SEGMENT_SHAPE:
             {
-                cpSegmentShape *seg = (cpSegmentShape *)shape;
+                cpSegmentShape *seg = (cpSegmentShape *)subShape;
                 node->drawSegment(PhysicsHelper::cpv2point(seg->ta),
                                   PhysicsHelper::cpv2point(seg->tb),
                                   PhysicsHelper::cpfloat2float(seg->r==0 ? 1 : seg->r), Color4F(1, 0, 0, 1));
@@ -318,7 +738,7 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
             }
             case CP_POLY_SHAPE:
             {
-                cpPolyShape* poly = (cpPolyShape*)shape;
+                cpPolyShape* poly = (cpPolyShape*)subShape;
                 int num = poly->numVerts;
                 Point* seg = new Point[num];
                 
@@ -335,56 +755,222 @@ void PhysicsWorld::drawWithShape(DrawNode* node, PhysicsShape* shape)
     }
 }
 
-int PhysicsWorld::collisionBeginCallback(const PhysicsContact& contact)
+int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
 {
-    if (_listener && _listener->onContactBegin)
+    bool ret = true;
+    
+    PhysicsShape* shapeA = contact.getShapeA();
+    PhysicsShape* shapeB = contact.getShapeB();
+    PhysicsBody* bodyA = shapeA->getBody();
+    PhysicsBody* bodyB = shapeB->getBody();
+    std::vector<PhysicsJoint*> jointsA = bodyA->getJoints();
+    
+    // check the joint is collision enable or not
+    for (PhysicsJoint* joint : jointsA)
     {
-        return _listener->onContactBegin(contact);
+        if (std::find(_joints.begin(), _joints.end(), joint) == _joints.end())
+        {
+            continue;
+        }
+        
+        if (!joint->isCollisionEnabled())
+        {
+            PhysicsBody* body = joint->getBodyA() == bodyA ? joint->getBodyB() : joint->getBodyA();
+            
+            if (body == bodyB)
+            {
+                contact.setNotificationEnable(false);
+                return false;
+            }
+        }
     }
     
-    return true;
-}
-
-int PhysicsWorld::collisionPreSolveCallback(const PhysicsContact& contact, const PhysicsContactPreSolve& solve)
-{
-    if (_listener && _listener->onContactPreSolve)
+    // bitmask check
+    if ((shapeA->getCategoryBitmask() & shapeB->getContactTestBitmask()) == 0
+        || (shapeB->getContactTestBitmask() & shapeA->getCategoryBitmask()) == 0)
     {
-        return _listener->onContactPreSolve(contact, solve);
+        contact.setNotificationEnable(false);
     }
     
-    return true;
-}
-
-void PhysicsWorld::collisionPostSolveCallback(const PhysicsContact& contact, const PhysicsContactPostSolve& solve)
-{
-    if (_listener && _listener->onContactPreSolve)
+    if (shapeA->getGroup() != 0 && shapeA->getGroup() == shapeB->getGroup())
     {
-        _listener->onContactPostSolve(contact, solve);
+        ret = shapeA->getGroup() > 0;
     }
-}
-
-void PhysicsWorld::collisionSeparateCallback(const PhysicsContact& contact)
-{
-    if (_listener && _listener->onContactEnd)
+    else
     {
-        _listener->onContactEnd(contact);
+        if ((shapeA->getCategoryBitmask() & shapeB->getCollisionBitmask()) == 0
+            || (shapeB->getCategoryBitmask() & shapeA->getCollisionBitmask()) == 0)
+        {
+            ret = false;
+        }
     }
+    
+    contact.setEventCode(PhysicsContact::EventCode::BEGIN);
+    contact.setWorld(this);
+    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
+    event.setUserData(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&event);
+    
+    return ret ? contact.resetResult() : false;
 }
 
-void PhysicsWorld::setGravity(Point gravity)
+int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
+    if (!contact.isNotificationEnabled())
+    {
+        cpArbiterIgnore(static_cast<cpArbiter*>(contact._contactInfo));
+        return true;
+    }
+    
+    contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
+    contact.setWorld(this);
+    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
+    event.setUserData(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&event);
+    
+    return contact.resetResult();
+}
+
+void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
+{
+    if (!contact.isNotificationEnabled())
+    {
+        return;
+    }
+    
+    contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
+    contact.setWorld(this);
+    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
+    event.setUserData(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&event);
+}
+
+void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
+{
+    if (!contact.isNotificationEnabled())
+    {
+        return;
+    }
+    
+    contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
+    contact.setWorld(this);
+    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
+    event.setUserData(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&event);
+}
+
+void PhysicsWorld::setGravity(const Vect& gravity)
+{
+    if (_bodies != nullptr)
+    {
+        for (auto child : *_bodies)
+        {
+            PhysicsBody* body = dynamic_cast<PhysicsBody*>(child);
+            
+            // reset gravity for body
+            if (!body->isGravityEnabled())
+            {
+                body->applyForce(-_gravity);
+                body->applyForce(gravity);
+            }
+        }
+    }
+    
     _gravity = gravity;
-    cpSpaceSetGravity(_info->space, PhysicsHelper::point2cpv(_gravity));
+    cpSpaceSetGravity(_info->getSpace(), PhysicsHelper::point2cpv(gravity));
+}
+
+
+void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data)
+{
+    CCASSERT(func != nullptr, "callback.report shouldn't be nullptr");
+    
+    if (func != nullptr)
+    {
+        RayCastCallbackInfo info = { this, func, point1, point2, data };
+        
+        PhysicsWorldCallback::continues = true;
+        cpSpaceSegmentQuery(this->_info->getSpace(),
+                            PhysicsHelper::point2cpv(point1),
+                            PhysicsHelper::point2cpv(point2),
+                            CP_ALL_LAYERS,
+                            CP_NO_GROUP,
+                            (cpSpaceSegmentQueryFunc)PhysicsWorldCallback::rayCastCallbackFunc,
+                            &info);
+    }
+}
+
+
+void PhysicsWorld::rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data)
+{
+    CCASSERT(func != nullptr, "callback.report shouldn't be nullptr");
+    
+    if (func != nullptr)
+    {
+        RectQueryCallbackInfo info = {this, func, data};
+        
+        PhysicsWorldCallback::continues = true;
+        cpSpaceBBQuery(this->_info->getSpace(),
+                       PhysicsHelper::rect2cpbb(rect),
+                       CP_ALL_LAYERS,
+                       CP_NO_GROUP,
+                       (cpSpaceBBQueryFunc)PhysicsWorldCallback::rectQueryCallbackFunc,
+                       &info);
+    }
+}
+
+Array* PhysicsWorld::getShapes(const Point& point) const
+{
+    Array* arr = Array::create();
+    cpSpaceNearestPointQuery(this->_info->getSpace(),
+                             PhysicsHelper::point2cpv(point),
+                             0,
+                             CP_ALL_LAYERS,
+                             CP_NO_GROUP,
+                             (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::nearestPointQueryFunc,
+                             arr);
+    
+    return arr;
+}
+
+PhysicsShape* PhysicsWorld::getShape(const Point& point) const
+{
+    cpShape* shape = cpSpaceNearestPointQueryNearest(this->_info->getSpace(),
+                                    PhysicsHelper::point2cpv(point),
+                                    0,
+                                    CP_ALL_LAYERS,
+                                    CP_NO_GROUP,
+                                    nullptr);
+    
+    return shape == nullptr ? nullptr : PhysicsShapeInfo::getMap().find(shape)->second->getShape();
+}
+
+Array* PhysicsWorld::getAllBodies() const
+{
+    return _bodies;
+}
+
+PhysicsBody* PhysicsWorld::getBody(int tag) const
+{
+    for (auto body : *_bodies)
+    {
+        if (((PhysicsBody*)body)->getTag() == tag)
+        {
+            return (PhysicsBody*)body;
+        }
+    }
+    
+    return nullptr;
 }
 
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 
 #endif
 
-PhysicsWorld* PhysicsWorld::create()
+PhysicsWorld* PhysicsWorld::create(Scene& scene)
 {
     PhysicsWorld * world = new PhysicsWorld();
-    if(world && world->init())
+    if(world && world->init(scene))
     {
         return world;
     }
@@ -397,19 +983,24 @@ PhysicsWorld::PhysicsWorld()
 : _gravity(Point(0.0f, -98.0f))
 , _speed(1.0f)
 , _info(nullptr)
-, _listener(nullptr)
-, _bodys(nullptr)
+, _bodies(nullptr)
 , _scene(nullptr)
+, _delayDirty(false)
 , _debugDraw(false)
 , _drawNode(nullptr)
+, _delayAddBodies(nullptr)
+, _delayRemoveBodies(nullptr)
 {
     
 }
 
 PhysicsWorld::~PhysicsWorld()
 {
+    removeAllJoints(true);
+    removeAllBodies();
+    CC_SAFE_RELEASE(_delayRemoveBodies);
+    CC_SAFE_RELEASE(_delayAddBodies);
     CC_SAFE_DELETE(_info);
-    CC_SAFE_RELEASE(_bodys);
 }
 
 NS_CC_END

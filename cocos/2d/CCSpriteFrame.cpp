@@ -31,61 +31,61 @@ NS_CC_BEGIN
 
 // implementation of SpriteFrame
 
-SpriteFrame* SpriteFrame::create(const char* filename, const Rect& rect)
+SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect)
 {
-    SpriteFrame *pSpriteFrame = new SpriteFrame();;
+    SpriteFrame *pSpriteFrame = new SpriteFrame();
     pSpriteFrame->initWithTextureFilename(filename, rect);
     pSpriteFrame->autorelease();
 
     return pSpriteFrame;
 }
 
-SpriteFrame* SpriteFrame::createWithTexture(Texture2D *pobTexture, const Rect& rect)
+SpriteFrame* SpriteFrame::createWithTexture(Texture2D *texture, const Rect& rect)
 {
-    SpriteFrame *pSpriteFrame = new SpriteFrame();;
-    pSpriteFrame->initWithTexture(pobTexture, rect);
+    SpriteFrame *pSpriteFrame = new SpriteFrame();
+    pSpriteFrame->initWithTexture(texture, rect);
     pSpriteFrame->autorelease();
     
     return pSpriteFrame;
 }
 
-SpriteFrame* SpriteFrame::createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
+SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
 {
-    SpriteFrame *pSpriteFrame = new SpriteFrame();;
-    pSpriteFrame->initWithTexture(pobTexture, rect, rotated, offset, originalSize);
+    SpriteFrame *pSpriteFrame = new SpriteFrame();
+    pSpriteFrame->initWithTexture(texture, rect, rotated, offset, originalSize);
     pSpriteFrame->autorelease();
 
     return pSpriteFrame;
 }
 
-SpriteFrame* SpriteFrame::create(const char* filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
+SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
 {
-    SpriteFrame *pSpriteFrame = new SpriteFrame();;
+    SpriteFrame *pSpriteFrame = new SpriteFrame();
     pSpriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);
     pSpriteFrame->autorelease();
 
     return pSpriteFrame;
 }
 
-bool SpriteFrame::initWithTexture(Texture2D* pobTexture, const Rect& rect)
+bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect)
 {
     Rect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);
-    return initWithTexture(pobTexture, rectInPixels, false, Point::ZERO, rectInPixels.size);
+    return initWithTexture(texture, rectInPixels, false, Point::ZERO, rectInPixels.size);
 }
 
-bool SpriteFrame::initWithTextureFilename(const char* filename, const Rect& rect)
+bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect)
 {
     Rect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
     return initWithTextureFilename(filename, rectInPixels, false, Point::ZERO, rectInPixels.size);
 }
 
-bool SpriteFrame::initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
+bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
 {
-    _texture = pobTexture;
+    _texture = texture;
 
-    if (pobTexture)
+    if (texture)
     {
-        pobTexture->retain();
+        texture->retain();
     }
 
     _rectInPixels = rect;
@@ -99,7 +99,7 @@ bool SpriteFrame::initWithTexture(Texture2D* pobTexture, const Rect& rect, bool 
     return true;
 }
 
-bool SpriteFrame::initWithTextureFilename(const char* filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
+bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
 {
     _texture = NULL;
     _textureFilename = filename;

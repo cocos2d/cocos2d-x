@@ -59,7 +59,8 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
-
+#include "CCEventDispatcher.h"
+#include "CCFontFreeType.h"
 
 /**
  Position of the FPS
@@ -143,6 +144,8 @@ bool Director::init(void)
     _actionManager = new ActionManager();
     _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
+    _eventDispatcher = new EventDispatcher();
+    
     // create autorelease pool
     PoolManager::sharedPoolManager()->push();
 
@@ -162,7 +165,8 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_scenesStack);
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
-
+    CC_SAFE_RELEASE(_eventDispatcher);
+    
     // pop the autorelease pool
     PoolManager::sharedPoolManager()->pop();
     PoolManager::purgePoolManager();
@@ -229,8 +233,6 @@ void Director::setGLDefaultValues()
 // Draw the Scene
 void Director::drawScene()
 {
-    Node::resetEventPriorityIndex();
-    
     // calculate "global" dt
     calculateDeltaTime();
 
@@ -685,6 +687,8 @@ void Director::purgeDirector()
     // purge bitmap cache
     LabelBMFont::purgeCachedData();
 
+    FontFreeType::shutdownFreeType();
+
     // purge all managed caches
     DrawPrimitives::free();
     AnimationCache::destroyInstance();
@@ -697,7 +701,6 @@ void Director::purgeDirector()
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
     NotificationCenter::destroyInstance();
-    EventDispatcher::destroyInstance();
     
     GL::invalidateStateCache();
     
@@ -828,7 +831,7 @@ void Director::calculateMPF()
 }
 
 // returns the FPS image data pointer and len
-void Director::getFPSImageData(unsigned char** datapointer, unsigned int* length)
+void Director::getFPSImageData(unsigned char** datapointer, long* length)
 {
     // XXX fixed me if it should be used 
     *datapointer = cc_fps_images_png;
@@ -852,7 +855,7 @@ void Director::createStatsLabel()
     Texture2D::PixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
     unsigned char *data = nullptr;
-    unsigned int dataLength = 0;
+    long dataLength = 0;
     getFPSImageData(&data, &dataLength);
 
     Image* image = new Image();
@@ -966,6 +969,21 @@ void Director::setActionManager(ActionManager* actionManager)
 ActionManager* Director::getActionManager() const
 {
     return _actionManager;
+}
+
+EventDispatcher* Director::getEventDispatcher() const
+{
+    return _eventDispatcher;
+}
+
+void Director::setEventDispatcher(EventDispatcher* dispatcher)
+{
+    if (_eventDispatcher != dispatcher)
+    {
+        CC_SAFE_RETAIN(dispatcher);
+        CC_SAFE_RELEASE(_eventDispatcher);
+        _eventDispatcher = dispatcher;
+    }
 }
 
 /***************************************************

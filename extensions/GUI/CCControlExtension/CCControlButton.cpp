@@ -96,7 +96,6 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         this->setTitleLabelDispatchTable(Dictionary::create());
         this->setBackgroundSpriteDispatchTable(Dictionary::create());
 
-        setTouchEnabled(true);
         _isPushed = false;
         _zoomOnTouchDown = true;
 
@@ -405,7 +404,7 @@ const char * ControlButton::getTitleTTFForState(State state)
     LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getFontName();
+        return labelTTF->getFontName().c_str();
     }
     else
     {
