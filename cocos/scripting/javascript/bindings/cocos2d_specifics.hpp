@@ -101,19 +101,6 @@ protected:
     jsval _extraData;
 };
 
-class JSCallFuncWrapper: public JSCallbackWrapper {
-public:
-    JSCallFuncWrapper() {}
-    virtual ~JSCallFuncWrapper(void) {
-        return;
-    }
-
-    static void setTargetForNativeNode(Node *pNode, JSCallFuncWrapper *target);
-    static Array * getTargetForNativeNode(Node *pNode);
-
-    void callbackFunc(Node *node);
-};
-
 
 class JSScheduleWrapper: public JSCallbackWrapper {
     

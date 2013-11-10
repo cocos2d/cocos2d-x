@@ -248,54 +248,21 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 // just a simple utility to avoid mem leaking when using JSString
 class JSStringWrapper
 {
-	JSString*	string;
-	const char*	buffer;
 public:
-	JSStringWrapper() {
-		buffer = NULL;
-	}
-	JSStringWrapper(JSString* str, JSContext* cx = NULL) {
-		set(str, cx);
-	}
-	JSStringWrapper(jsval val, JSContext* cx = NULL) {
-		set(val, cx);
-	}
-	~JSStringWrapper() {
-		if (buffer) {
-			//JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
-            delete[] buffer;
-		}
-	}
-	void set(jsval val, JSContext* cx) {
-		if (val.isString()) {
-			this->set(val.toString(), cx);
-		} else {
-			buffer = NULL;
-		}
-	}
-	void set(JSString* str, JSContext* cx) {
-		string = str;
-		if (!cx) {
-			cx = ScriptingCore::getInstance()->getGlobalContext();
-            
-		}
-        // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
-        //buffer = JS_EncodeString(cx, string);
-        unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
-        buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
-	}
-	std::string get() {
-        return buffer;
-    }
+    JSStringWrapper();
+    JSStringWrapper(JSString* str, JSContext* cx = NULL);
+    JSStringWrapper(jsval val, JSContext* cx = NULL);
+    ~JSStringWrapper();
 
-	operator std::string() {
-		return std::string(buffer);
-	}
-	operator char*() {
-		return (char*)buffer;
-	}
+    void set(jsval val, JSContext* cx);
+    void set(JSString* str, JSContext* cx);
+    const char* get();
+
 private:
-	/* Copy and assignment are not supported. */
+    JSString*   _string;
+    const char* _buffer;
+
+    /* Copy and assignment are not supported. */
     JSStringWrapper(const JSStringWrapper &another);
     JSStringWrapper &operator=(const JSStringWrapper &another);
 };
