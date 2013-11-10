@@ -30,7 +30,7 @@ def checkParams():
                       metavar="PROGRAMMING_NAME",
                       type="choice",
                       choices=["cpp", "lua", "javascript"],
-                      help="Major programing language you want to used, should be [cpp | lua | javascript]")
+                      help="Major programming language you want to use, should be [cpp | lua | javascript]")
     
     #parse the params
     (opts, args) = parser.parse_args()
