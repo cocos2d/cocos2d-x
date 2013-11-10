@@ -643,6 +643,9 @@ Developers:
         Fixed a bug that EventListeners can't be removed sometimes.
         Fixed a bug that the data size has to be specified when parsing XML using TinyXML.
         
+    Luis Parravicini (luisparravicini)
+        Fixed typos in create_project.py.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
