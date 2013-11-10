@@ -259,7 +259,6 @@ public:
     const char* get();
 
 private:
-    JSString*   _string;
     const char* _buffer;
 
     /* Copy and assignment are not supported. */
