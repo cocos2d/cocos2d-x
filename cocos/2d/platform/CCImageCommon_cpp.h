@@ -1737,12 +1737,12 @@ bool Image::initWithWebpData(const unsigned char * data, int dataLen)
         _width    = config.input.width;
         _height   = config.input.height;
         
-        int bufferSize = _width * _height * 4;
-        _data = new unsigned char[bufferSize];
+        _dataLen = _width * _height * 4;
+        _data = new unsigned char[_dataLen];
         
         config.output.u.RGBA.rgba = static_cast<uint8_t*>(_data);
         config.output.u.RGBA.stride = _width * 4;
-        config.output.u.RGBA.size = bufferSize;
+        config.output.u.RGBA.size = _dataLen;
         config.output.is_external_memory = 1;
         
         if (WebPDecode(static_cast<const uint8_t*>(data), dataLen, &config) != VP8_STATUS_OK)
