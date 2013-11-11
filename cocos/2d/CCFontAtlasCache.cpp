@@ -28,7 +28,7 @@
 
 NS_CC_BEGIN
 
-std::map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
+std::unordered_map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
 
 FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs)
 {

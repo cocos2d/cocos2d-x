@@ -283,6 +283,30 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
     return ok;
 }
 
+bool luaval_to_long(lua_State* L,int lo, long* outValue)
+{
+    if (NULL == L || NULL == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_isnumber(L,lo,0,&tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        *outValue = (long)tolua_tonumber(L, lo, 0);
+    }
+    
+    return ok;
+}
+
 bool luaval_to_size(lua_State* L,int lo,Size* outValue)
 {
     if (NULL == L || NULL == outValue)

@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __CCPHYSICS_HELPER_BOX2D_H__
+#define __CCPHYSICS_HELPER_BOX2D_H__
+
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
-#ifndef __CCPHYSICS_HELPER_H__
-#define __CCPHYSICS_HELPER_H__
 #include "CCPlatformMacros.h"
 #include "CCGeometry.h"
 
@@ -37,6 +37,6 @@ class PhysicsHelper
 };
 
 NS_CC_END
-#endif // __CCPHYSICS_HELPER_H__
 
 #endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D
+#endif // __CCPHYSICS_HELPER_BOX2D_H__

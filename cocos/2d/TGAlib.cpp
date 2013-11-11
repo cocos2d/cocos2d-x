@@ -198,8 +198,8 @@ tImageTGA * tgaLoad(const char *filename)
     int mode,total;
     tImageTGA *info = NULL;
     
-    unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(filename, "rb", &nSize);
+    long size = 0;
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(filename, "rb", &size);
 
     do
     {
@@ -207,7 +207,7 @@ tImageTGA * tgaLoad(const char *filename)
         info = (tImageTGA *)malloc(sizeof(tImageTGA));
 
         // get the file header info
-        if (! tgaLoadHeader(pBuffer, nSize, info))
+        if (! tgaLoadHeader(pBuffer, size, info))
         {
             info->status = TGA_ERROR_MEMORY;
             break;
@@ -245,11 +245,11 @@ tImageTGA * tgaLoad(const char *filename)
         // finally load the image pixels
         if ( info->type == 10 )
         {
-            bLoadImage = tgaLoadRLEImageData(pBuffer, nSize, info);
+            bLoadImage = tgaLoadRLEImageData(pBuffer, size, info);
         }
         else
         {
-            bLoadImage = tgaLoadImageData(pBuffer, nSize, info);
+            bLoadImage = tgaLoadImageData(pBuffer, size, info);
         }
 
         // check for errors when reading the pixels

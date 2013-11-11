@@ -99,12 +99,12 @@ const char * Font::getCurrentGlyphCollection() const
     }
 }
 
-Font* Font::createWithTTF(const char* fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
+Font* Font::createWithTTF(const std::string& fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
     return FontFreeType::create(fntName, fontSize, glyphs, customGlyphs);
 }
 
-Font* Font::createWithFNT(const char* fntFilePath)
+Font* Font::createWithFNT(const std::string& fntFilePath)
 {
    return FontFNT::create(fntFilePath);
 }

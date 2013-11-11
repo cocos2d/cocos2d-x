@@ -64,7 +64,7 @@ namespace cocos2d
         *
         @since v0.8.1
         */
-        static int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
+        static int ccInflateMemory(unsigned char *in, long inLength, unsigned char **out);
 
         /** 
         * Inflates either zlib or gzip deflated memory. The inflated memory is
@@ -76,7 +76,7 @@ namespace cocos2d
         *
         @since v1.0.0
         */
-        static int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int outLenghtHint);
+        static int ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLenghtHint);
 
         /** inflates a GZip file into memory
         *
@@ -100,7 +100,7 @@ namespace cocos2d
         *
         * @since v3.0
         */
-        static bool ccIsGZipBuffer(const unsigned char *buffer, int len);
+        static bool ccIsGZipBuffer(const unsigned char *buffer, long len);
 
         /** inflates a CCZ file into memory
         *
@@ -116,7 +116,7 @@ namespace cocos2d
         *
         * @since v3.0
         */
-        static int ccInflateCCZBuffer(const unsigned char *buffer, int len, unsigned char **out);
+        static int ccInflateCCZBuffer(const unsigned char *buffer, long len, unsigned char **out);
         
         /** test a file is a CCZ format file or not
         *
@@ -132,7 +132,7 @@ namespace cocos2d
         *
         * @since v3.0
         */
-        static bool ccIsCCZBuffer(const unsigned char *buffer, int len);
+        static bool ccIsCCZBuffer(const unsigned char *buffer, long len);
 
         /** Sets the pvr.ccz encryption key parts separately for added
         * security.
@@ -187,10 +187,10 @@ namespace cocos2d
         static void ccSetPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4);
 
     private:
-        static int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength, 
-                                           unsigned int outLenghtHint);
-        static inline void ccDecodeEncodedPvr (unsigned int *data, int len);
-        static inline unsigned int ccChecksumPvr(const unsigned int *data, int len);
+        static int ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long *outLength,
+                                           long outLenghtHint);
+        static inline void ccDecodeEncodedPvr (unsigned int *data, long len);
+        static inline unsigned int ccChecksumPvr(const unsigned int *data, long len);
 
         static unsigned int s_uEncryptedPvrKeyParts[4];
         static unsigned int s_uEncryptionKey[1024];
@@ -253,7 +253,7 @@ namespace cocos2d
         *
         * @since v2.0.5
         */
-        unsigned char *getFileData(const std::string &fileName, unsigned long *pSize);
+        unsigned char *getFileData(const std::string &fileName, long *size);
 
     private:
         /** Internal data like zip file pointer / file list array and so on */

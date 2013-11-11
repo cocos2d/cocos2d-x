@@ -29,6 +29,10 @@
 
 namespace gui {
 
+/**
+ *   @js NA
+ *   @lua NA
+ */
 class UICCLabelAtlas : public cocos2d::LabelAtlas
 {
 public:
@@ -46,12 +50,15 @@ public:
      * Allocates and initializes.
      */
     static UICCLabelAtlas* create();
-    void setProperty(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    void setProperty(const char *string, cocos2d::Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    void setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    void setProperty(const std::string& string, cocos2d::Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     virtual void updateDisplayedOpacity(GLubyte opacity);
     virtual void draw(void);
 };
-
+/**
+ *   @js NA
+ *   @lua NA
+ */
 class UILabelAtlas : public UIWidget
 {
 public:
@@ -71,13 +78,13 @@ public:
     static UILabelAtlas* create();
     
     /** initializes the UILabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    void setProperty(const char* stringValue,const char* charMapFile, int itemWidth, int itemHeight, const char* startCharMap,bool useSpriteFrame = false);
+    void setProperty(const std::string& stringValue,const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap);
     
     //set string value for labelatlas.
-    void setStringValue(const char* value);
+    void setStringValue(const std::string& value);
     
     //get string value for labelatlas.
-    const char* getStringValue();
+    const std::string& getStringValue() const;
     
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const cocos2d::Point &pt);
@@ -92,12 +99,20 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+    
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void labelAtlasScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     UICCLabelAtlas* _laberAtlasRenderer;
+    std::string _stringValue;
+    std::string _charMapFileName;
+    int _itemWidth;
+    int _itemHeight;
+    std::string _startCharMap;
 };
 
 }

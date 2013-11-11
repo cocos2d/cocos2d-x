@@ -1,53 +1,13 @@
-# This file was copied from GamePlay
-# Copies files for the given game into the target res directory
-#   GAME_NAME name of the game
-#   REL_DIR to which directory these files are relative
-#   SRC_FILES which files from the REL_DIR to copy (GLOB)
-macro(COPY_RES_FILES GAME_NAME GAME_RES_TARGET REL_DIR SRC_FILES)
-    file( GLOB_RECURSE RES_FILES RELATIVE ${REL_DIR} ${SRC_FILES} )
+macro(pre_build TARGET_NAME)
+  add_custom_target( ${TARGET_NAME}_PRE_BUILD ALL )
 
-    set(ALL_FILES)
-    foreach(SRC_FILE ${RES_FILES})
-        IF(NOT (SRC_FILE MATCHES "(^\\.\\.)"))
-            add_custom_command(
-                OUTPUT "${APP_BIN_DIR}/${SRC_FILE}"
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                    "${REL_DIR}/${SRC_FILE}"
-                    "${APP_BIN_DIR}/Resources/${SRC_FILE}"
-                COMMENT "Copy ${SRC_FILE}"
-                )
-            list(APPEND ALL_FILES "${APP_BIN_DIR}/${SRC_FILE}" )
-        ENDIF(NOT (SRC_FILE MATCHES "(^\\.\\.)"))
-    endforeach()
-    # create target for copying these files
-    add_custom_target( ${GAME_RES_TARGET} DEPENDS ${ALL_FILES} )
-endmacro()
+  add_custom_command(
+    TARGET ${TARGET_NAME}_PRE_BUILD
+    ${ARGN}
+    PRE_BUILD
+    COMMENT "${TARGET_NAME}_PRE_BUILD ..."
+    )
 
-# convenience to call above with current directory and everything in "res"
-macro(COPY_RES GAME_NAME)
-    # a target for all addition asserts (will be done in default compile, but if you target the executable
-    # it won't be done -- good for testing)
-    add_custom_target( ${GAME_NAME}_ASSETS ALL )
-    
-    # copy entire "res" directory and "game.config" if there is one
-    set(CRG_PATTERN "*")
-    COPY_RES_FILES( ${GAME_NAME} ${GAME_NAME}_CORE_RES 
-        ${CMAKE_CURRENT_SOURCE_DIR}/Resources 
-        "${CRG_PATTERN}"
-        )
-    add_dependencies( ${GAME_NAME}_ASSETS ${GAME_NAME}_CORE_RES )
-endmacro()
-
-# Copies resources from an additional directory
-#   GAME_NAME name of the game
-#   REL_DIR from which directory
-#   ARGN which patterns to copy (should include res/ in name if to be placed in the res/ output)
-macro(COPY_RES_EXTRA GAME_NAME EXTRA_RES REL_DIR)
-    # convert src's to full paths (based on rel_dir)
-    set(SRC_FILES)
-    foreach(SRC_FILE ${ARGN} )
-        list(APPEND SRC_FILES "${REL_DIR}/${SRC_FILE}")
-    endforeach()
-    COPY_RES_FILES( ${GAME_NAME} ${GAME_NAME}_${EXTRA_RES} ${REL_DIR} "${SRC_FILES}" )
-    add_dependencies( ${GAME_NAME}_ASSETS ${GAME_NAME}_${EXTRA_RES} )
+  add_custom_target( ${TARGET_NAME}_CORE_PRE_BUILD )
+  add_dependencies( ${TARGET_NAME}_PRE_BUILD ${TARGET_NAME}_CORE_PRE_BUILD )
 endmacro()

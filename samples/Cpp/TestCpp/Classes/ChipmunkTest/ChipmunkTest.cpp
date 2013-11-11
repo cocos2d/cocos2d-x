@@ -26,6 +26,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     touchListener->onTouchesEnded = CC_CALLBACK_2(ChipmunkTestLayer::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
+    Device::setAccelerometerEnabled(true);
     auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(ChipmunkTestLayer::onAcceleration, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     
@@ -90,6 +91,8 @@ ChipmunkTestLayer::~ChipmunkTestLayer()
     }
 
     cpSpaceFree( _space );
+    
+    Device::setAccelerometerEnabled(false);
 
 }
 

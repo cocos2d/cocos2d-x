@@ -94,8 +94,7 @@ bool ArmatureAnimation::init(Armature *armature)
 
 void ArmatureAnimation:: pause()
 {
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_tweenList, object)
+    for(auto object : *_tweenList)
     {
 		static_cast<Tween*>(object)->pause();
     }
@@ -104,8 +103,7 @@ void ArmatureAnimation:: pause()
 
 void ArmatureAnimation::resume()
 {
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_tweenList, object)
+    for(auto object : *_tweenList)
     {
         static_cast<Tween*>(object)->resume();
     }
@@ -114,8 +112,7 @@ void ArmatureAnimation::resume()
 
 void ArmatureAnimation::stop()
 {
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_tweenList, object)
+    for(auto object : *_tweenList)
     {
         static_cast<Tween*>(object)->stop();
     }
@@ -302,8 +299,7 @@ void ArmatureAnimation::gotoAndPlay(int frameIndex)
     _currentPercent = (float)_curFrameIndex / (float)_movementData->duration;
     _currentFrame = _nextFrameIndex * _currentPercent;
 
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_tweenList, object)
+    for(auto object : *_tweenList)
     {
         static_cast<Tween *>(object)->gotoAndPlay(frameIndex);
     }
@@ -327,8 +323,8 @@ int ArmatureAnimation::getMovementCount() const
 void ArmatureAnimation::update(float dt)
 {
     ProcessBase::update(dt);
-    Object *object = nullptr;
-    CCARRAY_FOREACH(_tweenList, object)
+    
+    for(auto object : *_tweenList)
     {
 		static_cast<Tween *>(object)->update(dt);
     }

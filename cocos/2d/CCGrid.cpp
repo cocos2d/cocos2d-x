@@ -119,7 +119,7 @@ bool GridBase::initWithSize(const Size& gridSize)
     // we only use rgba8888
     Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
 
-    int dataLen = (int)(POTWide * POTHigh * 4);
+    long dataLen = POTWide * POTHigh * 4;
     void *data = calloc(dataLen, 1);
     if (! data)
     {

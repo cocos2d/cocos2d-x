@@ -149,6 +149,14 @@ void DisplayManager::addDisplay(Node *display, int index)
     else if (dynamic_cast<ParticleSystemQuad *>(display))
     {
         displayData = ParticleDisplayData::create();
+
+        display->removeFromParent();
+        
+        Armature *armature = _bone->getArmature();
+        if (armature)
+        {
+            display->setParent(armature);
+        }
     }
     else if(Armature *armature = dynamic_cast<Armature *>(display))
     {
@@ -310,11 +318,9 @@ void DisplayManager::initDisplayList(BoneData *boneData)
 
     CS_RETURN_IF(!boneData);
 
-    Object *object = nullptr;
-    Array *displayDataList = &boneData->displayDataList;
-    CCARRAY_FOREACH(displayDataList, object)
+    for(auto object : boneData->displayDataList)
     {
-        DisplayData *displayData = (DisplayData *)object;
+        DisplayData *displayData = static_cast<DisplayData *>(object);
 
         DecorativeDisplay *decoDisplay = DecorativeDisplay::create();
         decoDisplay->setDisplayData(displayData);
