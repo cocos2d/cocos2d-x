@@ -29,8 +29,8 @@ How to start a new game
 
 Example:
 
-	$ cd cocos2d-x/tools/project-creator
-	$ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
+    $ cd cocos2d-x/tools/project-creator
+    $ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
     $ cd ../../projects/mygame
 
 
@@ -70,7 +70,7 @@ Build Requirements
 ------------------
 
 * Mac OS X 10.7+, Xcode 4.6+
-* or Ubuntu 13.04+
+* or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
 
 
@@ -98,8 +98,13 @@ $ open samples.xcodeproj
 
 ```
 $ cd cocos2d-x/build
-$ ./make-all-linux-projects.sh
+$ ./install-deps-linux.sh
+$ cmake ..
+$ make
 ```
+
+      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target, you should make it to direct to a correct one.
+      `install-deps-linux.sh` only has to be run onece.
 
 * For Windows
 

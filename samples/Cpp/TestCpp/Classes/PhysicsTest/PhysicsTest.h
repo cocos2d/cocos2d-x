@@ -5,6 +5,8 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
+#include <map>
+
 
 class PhysicsTestScene : public TestScene
 {
@@ -36,24 +38,25 @@ public:
     void backCallback(Object* sender);
     void toggleDebugCallback(Object* sender);
     
-    void addGrossiniAtPosition(Point p, float scale = 1.0);
-    Sprite* makeBall(float x, float y, float radius, PhysicsMaterial material = PhysicsMaterial(1.0f, 1.0f, 1.0f));
-    Sprite* makeBox(float x, float y, Size size, PhysicsMaterial material = PhysicsMaterial(1.0f, 1.0f, 1.0f));
-    Sprite* makeTriangle(float x, float y, Size size, PhysicsMaterial material = PhysicsMaterial(1.0f, 1.0f, 1.0f));
+    Sprite* addGrossiniAtPosition(Point p, float scale = 1.0);
+    Sprite* makeBall(Point point, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeBox(Point point, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeTriangle(Point point, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
     
 protected:
     Texture2D* _spriteTexture;    // weak ref
     SpriteBatchNode* _ball;
-    DrawNode* _mouse;
+    std::map<int, Node*> _mouses;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
 {
 public:
+    virtual ~PhysicsDemoClickAdd();
     void onEnter() override;
     std::string subtitle() override;
     
@@ -62,13 +65,6 @@ public:
 };
 
 class PhysicsDemoLogoSmash : public PhysicsDemo
-{
-public:
-    void onEnter() override;
-    std::string title() override;
-};
-
-class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
     void onEnter() override;
@@ -94,7 +90,7 @@ public:
     
     void changeModeCallback(Object* sender);
     
-    static bool anyRay(PhysicsWorld& world, PhysicsShape& shape, Point point, Point normal, float fraction, void* data);
+    bool anyRay(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
     
 private:
     float _angle;
@@ -105,12 +101,59 @@ private:
 class PhysicsDemoJoints : public PhysicsDemo
 {
 public:
-    PhysicsDemoJoints();
-    
+    void onEnter() override;
+    std::string title() override;
+};
+
+class PhysicsDemoActions : public PhysicsDemo
+{
 public:
     void onEnter() override;
     std::string title() override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+class PhysicsDemoPump : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    void update(float delta) override;
+    std::string title() override;
+    std::string subtitle() override;
+    
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
+    
+private:
+    float _distance;
+    float _rotationV;
+};
+
+class PhysicsDemoOneWayPlatform : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
+    
+    bool onContactBegin(EventCustom* event, const PhysicsContact& contact);
+};
+
+class PhysicsDemoSlice : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
+    std::string subtitle() override;
+    
+    bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
+    void clipPoly(PhysicsShapePolygon* shape, Point normal, float distance);
+    
+    bool onTouchBegan(Touch *touch, Event *event);
+    void onTouchMoved(Touch *touch, Event *event);
+    void onTouchEnded(Touch *touch, Event *event);
+    
+private:
+    int _sliceTag;
 };
 
 #endif

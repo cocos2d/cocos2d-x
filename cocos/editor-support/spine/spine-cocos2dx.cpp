@@ -31,7 +31,7 @@ USING_NS_CC;
 namespace spine {
 
 void _AtlasPage_createTexture (AtlasPage* self, const char* path) {
-	Texture2D* texture = TextureCache::getInstance()->addImage(path);
+	Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
 	TextureAtlas* textureAtlas = TextureAtlas::createWithTexture(texture, 4);
 	textureAtlas->retain();
 	self->rendererObject = textureAtlas;
@@ -47,7 +47,7 @@ void _AtlasPage_disposeTexture (AtlasPage* self) {
 }
 
 char* _Util_readFile (const char* path, int* length) {
-	unsigned long size;
+	long size;
     char* data = reinterpret_cast<char*>(FileUtils::getInstance()->getFileData(
 		FileUtils::getInstance()->fullPathForFilename(path).c_str(), "r", &size));
 	*length = size;

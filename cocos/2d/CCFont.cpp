@@ -75,7 +75,7 @@ void Font::setCurrentGlyphCollection(GlyphCollection glyphs, const char *customG
         default:
             if (customGlyphs)
             {
-                int lenght = strlen(customGlyphs);
+                size_t lenght = strlen(customGlyphs);
                 _customGlyphs = new char [lenght + 2];
                 memcpy(_customGlyphs, customGlyphs, lenght);
 
@@ -99,12 +99,12 @@ const char * Font::getCurrentGlyphCollection() const
     }
 }
 
-Font* Font::createWithTTF(const char* fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
+Font* Font::createWithTTF(const std::string& fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
     return FontFreeType::create(fntName, fontSize, glyphs, customGlyphs);
 }
 
-Font* Font::createWithFNT(const char* fntFilePath)
+Font* Font::createWithFNT(const std::string& fntFilePath)
 {
    return FontFNT::create(fntFilePath);
 }

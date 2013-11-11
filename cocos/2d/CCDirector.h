@@ -54,6 +54,7 @@ class Node;
 class Scheduler;
 class ActionManager;
 class EventDispatcher;
+class TextureCache;
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -136,6 +137,8 @@ public:
     */
     inline EGLView* getOpenGLView() { return _openGLView; }
     void setOpenGLView(EGLView *pobOpenGLView);
+
+    TextureCache* getTextureCache() const;
 
     inline bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
     void setNextDeltaTimeZero(bool nextDeltaTimeZero);
@@ -376,10 +379,14 @@ protected:
     void showStats();
     void createStatsLabel();
     void calculateMPF();
-    void getFPSImageData(unsigned char** datapointer, unsigned int* length);
+    void getFPSImageData(unsigned char** datapointer, long* length);
     
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
+
+    //textureCache creation or release
+    void initTextureCache();
+    void destroyTextureCache();
 
 protected:
     /** Scheduler associated with this director
@@ -402,6 +409,9 @@ protected:
     
     /* The EGLView, where everything is rendered */
     EGLView    *_openGLView;
+
+    //texture cache belongs to this director
+    TextureCache *_textureCache;
 
     double _animationInterval;
     double _oldAnimationInterval;

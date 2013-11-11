@@ -84,7 +84,7 @@ void TextureTest::performTestsPNG(const char* filename)
 {
     struct timeval now;
     Texture2D *texture;
-    auto cache = TextureCache::getInstance();
+    auto cache = Director::getInstance()->getTextureCache();
 
     log("RGBA 8888");
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
@@ -131,7 +131,7 @@ void TextureTest::performTests()
 {
 //     Texture2D *texture;
 //     struct timeval now;
-//     auto cache = TextureCache::getInstance();
+//     auto cache = Director::getInstance()->getTextureCache();
 
     log("--------");
 

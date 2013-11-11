@@ -43,22 +43,24 @@ ArmatureAnimation *ArmatureAnimation::create(Armature *armature)
         return pArmatureAnimation;
     }
     CC_SAFE_DELETE(pArmatureAnimation);
-    return NULL;
+    return nullptr;
 }
 
 
 ArmatureAnimation::ArmatureAnimation()
-    : _animationData(NULL)
+    : _animationData(nullptr)
     , _speedScale(1)
-    , _movementData(NULL)
-    , _armature(NULL)
+    , _movementData(nullptr)
+    , _armature(nullptr)
     , _movementID("")
     , _toIndex(0)
+    , _tweenList(nullptr)
+    , _ignoreFrameEvent(false)
 
-    , _movementEventCallFunc(NULL)
-    , _frameEventCallFunc(NULL)
-    , _movementEventTarget(NULL)
-    , _frameEventTarget(NULL)
+    , _movementEventCallFunc(nullptr)
+    , _frameEventCallFunc(nullptr)
+    , _movementEventTarget(nullptr)
+    , _frameEventTarget(nullptr)
 {
 
 }
@@ -92,8 +94,7 @@ bool ArmatureAnimation::init(Armature *armature)
 
 void ArmatureAnimation:: pause()
 {
-    Object *object = NULL;
-    CCARRAY_FOREACH(_tweenList, object)
+    for(auto object : *_tweenList)
     {
 		static_cast<Tween*>(object)->pause();
     }
@@ -102,8 +103,7 @@ void ArmatureAnimation:: pause()
 
 void ArmatureAnimation::resume()
 {
-    Object *object = NULL;
-    CCARRAY_FOREACH(_tweenList, object)
+    for(auto object : *_tweenList)
     {
         static_cast<Tween*>(object)->resume();
     }
@@ -112,8 +112,7 @@ void ArmatureAnimation::resume()
 
 void ArmatureAnimation::stop()
 {
-    Object *object = NULL;
-    CCARRAY_FOREACH(_tweenList, object)
+    for(auto object : *_tweenList)
     {
         static_cast<Tween*>(object)->stop();
     }
@@ -143,8 +142,8 @@ void ArmatureAnimation::setSpeedScale(float speedScale)
 
     _processScale = !_movementData ? _speedScale : _speedScale * _movementData->scale;
 
-    DictElement *element = NULL;
-    Dictionary *dict = _armature->getBoneDic();
+    DictElement *element = nullptr;
+    const Dictionary *dict = _armature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
         Bone *bone = static_cast<Bone*>(element->getObject());
@@ -171,8 +170,8 @@ void ArmatureAnimation::setAnimationInternal(float animationInternal)
 
     _animationInternal = animationInternal;
 
-    DictElement *element = NULL;
-    Dictionary *dict = _armature->getBoneDic();
+    DictElement *element = nullptr;
+    const Dictionary *dict = _armature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
         Bone *bone = static_cast<Bone*>(element->getObject());
@@ -230,11 +229,11 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
         _durationTween = durationTween;
     }
 
-    MovementBoneData *movementBoneData = NULL;
+    MovementBoneData *movementBoneData = nullptr;
     _tweenList->removeAllObjects();
 
-    DictElement *element = NULL;
-    Dictionary *dict = _armature->getBoneDic();
+    DictElement *element = nullptr;
+    const Dictionary *dict = _armature->getBoneDic();
 
     CCDICT_FOREACH(dict, element)
     {
@@ -259,7 +258,7 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
         }
         else
         {
-            if(!bone->getIgnoreMovementBoneData())
+            if(!bone->isIgnoreMovementBoneData())
             {
                 //! this bone is not include in this movement, so hide it
                 bone->getDisplayManager()->changeDisplayByIndex(-1, false);
@@ -268,6 +267,8 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
 
         }
     }
+
+    _armature->update(0);
 }
 
 
@@ -280,9 +281,41 @@ void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int dura
     play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);
 }
 
+void ArmatureAnimation::gotoAndPlay(int frameIndex)
+{
+    if (!_movementData || frameIndex < 0 || frameIndex >= _movementData->duration)
+    {
+        CCLOG("Please ensure you have played a movement, and the frameIndex is in the range.");
+        return;
+    }
 
+    bool ignoreFrameEvent = _ignoreFrameEvent;
+    _ignoreFrameEvent = true;
 
-int ArmatureAnimation::getMovementCount()
+    _isPlaying = true;
+    _isComplete = _isPause = false;
+
+    ProcessBase::gotoFrame(frameIndex);
+    _currentPercent = (float)_curFrameIndex / (float)_movementData->duration;
+    _currentFrame = _nextFrameIndex * _currentPercent;
+
+    for(auto object : *_tweenList)
+    {
+        static_cast<Tween *>(object)->gotoAndPlay(frameIndex);
+    }
+
+    _armature->update(0);
+
+    _ignoreFrameEvent = ignoreFrameEvent;
+}
+
+void ArmatureAnimation::gotoAndPause(int frameIndex)
+{
+    gotoAndPlay(frameIndex);
+    pause();
+}
+
+int ArmatureAnimation::getMovementCount() const
 {
     return _animationData->getMovementCount();
 }
@@ -290,10 +323,22 @@ int ArmatureAnimation::getMovementCount()
 void ArmatureAnimation::update(float dt)
 {
     ProcessBase::update(dt);
-    Object *object = NULL;
-    CCARRAY_FOREACH(_tweenList, object)
+    
+    for(auto object : *_tweenList)
     {
 		static_cast<Tween *>(object)->update(dt);
+    }
+
+    while (_frameEventQueue.size() > 0)
+    {
+        FrameEvent *frameEvent = _frameEventQueue.front();
+        _frameEventQueue.pop();
+
+        _ignoreFrameEvent = true;
+        (_frameEventTarget->*_frameEventCallFunc)(frameEvent->bone, frameEvent->frameEventName, frameEvent->originFrameIndex, frameEvent->currentFrameIndex);
+        _ignoreFrameEvent = false;
+
+        CC_SAFE_DELETE(frameEvent);
     }
 }
 
@@ -367,7 +412,7 @@ void ArmatureAnimation::updateHandler()
     }
 }
 
-std::string ArmatureAnimation::getCurrentMovementID()
+std::string ArmatureAnimation::getCurrentMovementID() const
 {
     if (_isComplete)
     {
@@ -402,7 +447,13 @@ void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int o
 {
     if (_frameEventTarget && _frameEventCallFunc)
     {
-        (_frameEventTarget->*_frameEventCallFunc)(bone, frameEventName, originFrameIndex, currentFrameIndex);
+        FrameEvent *frameEvent = new FrameEvent();
+        frameEvent->bone = bone;
+        frameEvent->frameEventName = frameEventName;
+        frameEvent->originFrameIndex = originFrameIndex;
+        frameEvent->currentFrameIndex = currentFrameIndex;
+
+        _frameEventQueue.push(frameEvent);
     }
 }
 }

@@ -35,9 +35,13 @@ typedef enum
     CHECKBOX_STATE_EVENT_UNSELECTED
 }CheckBoxEventType;
 
-typedef void (cocos2d::CCObject::*SEL_SelectedStateEvent)(cocos2d::Object*,CheckBoxEventType);
+typedef void (cocos2d::Object::*SEL_SelectedStateEvent)(cocos2d::Object*,CheckBoxEventType);
 #define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UICheckBox : public UIWidget
 {
 public:
@@ -156,11 +160,12 @@ public:
     
     //override "getVirtualRenderer" method of widget.
     virtual cocos2d::Node* getVirtualRenderer();
-
+    
     /**
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
+
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -175,6 +180,8 @@ protected:
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     cocos2d::Sprite* _backGroundBoxRenderer;
     cocos2d::Sprite* _backGroundSelectedBoxRenderer;
@@ -191,6 +198,12 @@ protected:
     TextureResType _frontCrossTexType;
     TextureResType _backGroundDisabledTexType;
     TextureResType _frontCrossDisabledTexType;
+    
+    std::string _backGroundFileName;
+    std::string _backGroundSelectedFileName;
+    std::string _frontCrossFileName;
+    std::string _backGroundDisabledFileName;
+    std::string _frontCrossDisabledFileName;
 };
 
 }

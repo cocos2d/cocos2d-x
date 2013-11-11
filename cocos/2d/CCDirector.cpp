@@ -145,6 +145,8 @@ bool Director::init(void)
     _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
     _eventDispatcher = new EventDispatcher();
+    //init TextureCache
+    initTextureCache();
     
     // create autorelease pool
     PoolManager::sharedPoolManager()->push();
@@ -359,6 +361,29 @@ void Director::setOpenGLView(EGLView *pobOpenGLView)
     }
 }
 
+TextureCache* Director::getTextureCache() const
+{
+    return _textureCache;
+}
+
+void Director::initTextureCache()
+{
+#ifdef EMSCRIPTEN
+    _textureCache = new TextureCacheEmscripten();
+#else
+    _textureCache = new TextureCache();
+#endif // EMSCRIPTEN
+}
+
+void Director::destroyTextureCache()
+{
+    if (_textureCache)
+    {
+        _textureCache->waitForQuit();
+        CC_SAFE_RELEASE_NULL(_textureCache);
+    }
+}
+
 void Director::setViewport()
 {
     if (_openGLView)
@@ -437,7 +462,7 @@ void Director::purgeCachedData(void)
     if (s_SharedDirector->getOpenGLView())
     {
         SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
-        TextureCache::getInstance()->removeUnusedTextures();
+        _textureCache->removeUnusedTextures();
     }
     FileUtils::getInstance()->purgeCachedEntries();
 }
@@ -693,7 +718,6 @@ void Director::purgeDirector()
     DrawPrimitives::free();
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
-    TextureCache::destroyInstance();
     ShaderCache::destroyInstance();
     FileUtils::destroyInstance();
     Configuration::destroyInstance();
@@ -704,6 +728,8 @@ void Director::purgeDirector()
     
     GL::invalidateStateCache();
     
+    destroyTextureCache();
+
     CHECK_GL_ERROR_DEBUG();
     
     // OpenGL view
@@ -831,7 +857,7 @@ void Director::calculateMPF()
 }
 
 // returns the FPS image data pointer and len
-void Director::getFPSImageData(unsigned char** datapointer, unsigned int* length)
+void Director::getFPSImageData(unsigned char** datapointer, long* length)
 {
     // XXX fixed me if it should be used 
     *datapointer = cc_fps_images_png;
@@ -841,21 +867,20 @@ void Director::getFPSImageData(unsigned char** datapointer, unsigned int* length
 void Director::createStatsLabel()
 {
     Texture2D *texture = nullptr;
-    TextureCache *textureCache = TextureCache::getInstance();
 
     if (_FPSLabel && _SPFLabel)
     {
         CC_SAFE_RELEASE_NULL(_FPSLabel);
         CC_SAFE_RELEASE_NULL(_SPFLabel);
         CC_SAFE_RELEASE_NULL(_drawsLabel);
-        textureCache->removeTextureForKey("/cc_fps_images");
+        _textureCache->removeTextureForKey("/cc_fps_images");
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
     Texture2D::PixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
     unsigned char *data = nullptr;
-    unsigned int dataLength = 0;
+    long dataLength = 0;
     getFPSImageData(&data, &dataLength);
 
     Image* image = new Image();
@@ -865,7 +890,7 @@ void Director::createStatsLabel()
         return;
     }
 
-    texture = textureCache->addImage(image, "/cc_fps_images");
+    texture = _textureCache->addImage(image, "/cc_fps_images");
     CC_SAFE_RELEASE(image);
 
     /*

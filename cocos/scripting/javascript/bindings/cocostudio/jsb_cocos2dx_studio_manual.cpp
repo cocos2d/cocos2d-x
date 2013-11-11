@@ -73,6 +73,9 @@ void JSArmatureWrapper::movementCallbackFunc(cocostudio::Armature *pArmature, co
         valArr[2] = idVal;
 
         JS_AddValueRoot(cx, valArr);
+        
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        
         JS_CallFunctionValue(cx, thisObj, _jsCallback, 3, valArr, &retval);
         JS_RemoveValueRoot(cx, valArr);
     }
@@ -88,6 +91,9 @@ void JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc(float percent)
         jsval percentVal = DOUBLE_TO_JSVAL(percent);
 
         JS_AddValueRoot(cx, &percentVal);
+        
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        
         JS_CallFunctionValue(cx, thisObj, _jsCallback, 1, &percentVal, &retval);
         JS_RemoveValueRoot(cx, &percentVal);
     }
@@ -113,6 +119,9 @@ void JSArmatureWrapper::frameCallbackFunc(cocostudio::Bone *pBone, const char *f
         valArr[3] = currentIndexVal;
 
         JS_AddValueRoot(cx, valArr);
+        
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+        
         JS_CallFunctionValue(cx, thisObj, _jsCallback, 4, valArr, &retval);
         JS_RemoveValueRoot(cx, valArr);
     }

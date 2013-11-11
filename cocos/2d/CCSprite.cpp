@@ -82,7 +82,7 @@ Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect)
     return NULL;
 }
 
-Sprite* Sprite::create(const char *filename)
+Sprite* Sprite::create(const std::string& filename)
 {
     Sprite *sprite = new Sprite();
     if (sprite && sprite->initWithFile(filename))
@@ -94,7 +94,7 @@ Sprite* Sprite::create(const char *filename)
     return NULL;
 }
 
-Sprite* Sprite::create(const char *filename, const Rect& rect)
+Sprite* Sprite::create(const std::string& filename, const Rect& rect)
 {
     Sprite *sprite = new Sprite();
     if (sprite && sprite->initWithFile(filename, rect))
@@ -118,13 +118,13 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
     return NULL;
 }
 
-Sprite* Sprite::createWithSpriteFrameName(const char *spriteFrameName)
+Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 {
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
-    sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName);
+    sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName.c_str());
     CCASSERT(frame != NULL, msg);
 #endif
     
@@ -215,11 +215,11 @@ bool Sprite::initWithTexture(Texture2D *texture)
     return initWithTexture(texture, rect);
 }
 
-bool Sprite::initWithFile(const char *filename)
+bool Sprite::initWithFile(const std::string& filename)
 {
-    CCASSERT(filename != NULL, "Invalid filename for sprite");
+    CCASSERT(filename.size()>0, "Invalid filename for sprite");
 
-    Texture2D *texture = TextureCache::getInstance()->addImage(filename);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
         Rect rect = Rect::ZERO;
@@ -233,11 +233,11 @@ bool Sprite::initWithFile(const char *filename)
     return false;
 }
 
-bool Sprite::initWithFile(const char *filename, const Rect& rect)
+bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
-    CCASSERT(filename != NULL, "");
+    CCASSERT(filename.size()>0, "Invalid filename");
 
-    Texture2D *texture = TextureCache::getInstance()->addImage(filename);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
         return initWithTexture(texture, rect);
@@ -259,9 +259,9 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
     return bRet;
 }
 
-bool Sprite::initWithSpriteFrameName(const char *spriteFrameName)
+bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
-    CCASSERT(spriteFrameName != NULL, "");
+    CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
 
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     return initWithSpriteFrame(frame);
@@ -284,7 +284,7 @@ Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
     CCASSERT(pImage != NULL);
 
     // XXX: possible bug. See issue #349. New API should be added
-    Texture2D *texture = TextureCache::getInstance()->addCGImage(pImage, pszKey);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addCGImage(pImage, pszKey);
 
     const Size& size = texture->getContentSize();
     Rect rect = Rect(0 ,0, size.width, size.height);
@@ -840,6 +840,12 @@ void Sprite::setScale(float fScale)
     SET_DIRTY_RECURSIVELY();
 }
 
+void Sprite::setScale(float scaleX, float scaleY)
+{
+    Node::setScale(scaleX, scaleY);
+    SET_DIRTY_RECURSIVELY();
+}
+
 void Sprite::setVertexZ(float fVertexZ)
 {
     Node::setVertexZ(fVertexZ);
@@ -992,9 +998,9 @@ void Sprite::setDisplayFrame(SpriteFrame *pNewFrame)
     setTextureRect(pNewFrame->getRect(), _rectRotated, pNewFrame->getOriginalSize());
 }
 
-void Sprite::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
+void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, int frameIndex)
 {
-    CCASSERT(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
+    CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
 
     Animation *a = AnimationCache::getInstance()->getAnimation(animationName);
 
@@ -1107,7 +1113,7 @@ void Sprite::setTexture(Texture2D *texture)
     if (NULL == texture)
     {
         // Gets the texture by key firstly.
-        texture = TextureCache::getInstance()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
+        texture = Director::getInstance()->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
         
         // If texture wasn't in cache, create it from RAW data.
         if (NULL == texture)
@@ -1116,7 +1122,7 @@ void Sprite::setTexture(Texture2D *texture)
             bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
-            texture = TextureCache::getInstance()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            texture = Director::getInstance()->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
     }
