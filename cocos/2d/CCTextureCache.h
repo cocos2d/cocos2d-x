@@ -73,9 +73,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache() { return TextureCache::destroyInstance(); }
 
     /** Reload all textures
-     It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
+    should not call it, called by frame work
+    now the function do nothing, use VolatileTextureMgr::reloadAllTextures
      */
-    static void reloadAllTextures();
+    CC_DEPRECATED_ATTRIBUTE static void reloadAllTextures();
 
 public:
     /**

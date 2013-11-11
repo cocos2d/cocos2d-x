@@ -417,9 +417,10 @@ Texture2D* TextureCache::getTextureForKey(const std::string &key) const
 
 void TextureCache::reloadAllTextures()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTextureMgr::reloadAllTextures();
-#endif
+//will do nothing
+// #if CC_ENABLE_CACHE_TEXTURE_DATA
+//     VolatileTextureMgr::reloadAllTextures();
+// #endif
 }
 
 void TextureCache::waitForQuit()
