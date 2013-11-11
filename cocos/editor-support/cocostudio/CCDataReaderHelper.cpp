@@ -579,8 +579,7 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
     ArmatureData *armatureData = new ArmatureData();
     armatureData->init();
 
-    const char	*name = armatureXML->Attribute(A_NAME);
-    armatureData->name = name;
+    armatureData->name = armatureXML->Attribute(A_NAME);
 
 
     tinyxml2::XMLElement *boneXML = armatureXML->FirstChildElement(BONE);
@@ -595,10 +594,10 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
         if (parentName)
         {
             parentXML = armatureXML->FirstChildElement(BONE);
-            std::string name = parentName;
+            std::string parentNameStr = parentName;
             while (parentXML)
             {
-                if (name.compare(parentXML->Attribute(A_NAME)) == 0)
+                if (parentNameStr.compare(parentXML->Attribute(A_NAME)) == 0)
                 {
                     break;
                 }
@@ -823,7 +822,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
     }
 
     int length = 0;
-    int i = 0;
+    int index = 0;
     int parentTotalDuration = 0;
     int currentDuration = 0;
 
@@ -864,13 +863,12 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
             /*
             *  in this loop we get the corresponding parent frame xml
             */
-            while(i < length && (parentFrameXML ? (totalDuration < parentTotalDuration || totalDuration >= parentTotalDuration + currentDuration) : true))
+            while(index < length && (parentFrameXML ? (totalDuration < parentTotalDuration || totalDuration >= parentTotalDuration + currentDuration) : true))
             {
-                parentFrameXML = parentXmlList[i];
+                parentFrameXML = parentXmlList[index];
                 parentTotalDuration += currentDuration;
                 parentFrameXML->QueryIntAttribute(A_DURATION, &currentDuration);
-                i++;
-
+                index++;
             }
         }
 
@@ -888,21 +886,21 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
 	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
 	FrameData **frames = (FrameData **)movBoneData->frameList.data->arr;
-	for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
+	for (int j = movBoneData->frameList.count() - 1; j >= 0; j--)
 	{
-		if (i > 0)
+		if (j > 0)
 		{
-			float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
-			float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+			float difSkewX = frames[j]->skewX -  frames[j - 1]->skewX;
+			float difSkewY = frames[j]->skewY -  frames[j - 1]->skewY;
 
 			if (difSkewX < -M_PI || difSkewX > M_PI)
 			{
-				frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+				frames[j - 1]->skewX = difSkewX < 0 ? frames[j - 1]->skewX - 2 * M_PI : frames[j - 1]->skewX + 2 * M_PI;
 			}
 
 			if (difSkewY < -M_PI || difSkewY > M_PI)
 			{
-				frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+				frames[j - 1]->skewY = difSkewY < 0 ? frames[j - 1]->skewY - 2 * M_PI : frames[j - 1]->skewY + 2 * M_PI;
 			}
 		}
 	}
