@@ -924,7 +924,7 @@ void SchedulerTimeScale::onEnter()
     kathia->runAction(Speed::create(action3, 1.0f));
 
     auto emitter = ParticleFireworks::create();
-    emitter->setTexture( TextureCache::getInstance()->addImage(s_stars1) );
+    emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_stars1) );
     addChild(emitter);
 
     _sliderCtl = sliderCtl();

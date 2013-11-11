@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "CCString.h"
 #include "CCArray.h"
 #include "CCDictionary.h"
+#include "CCDirector.h"
 #include <vector>
 
 using namespace std;
@@ -215,7 +216,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist, Text
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
 {
     CCASSERT(textureFileName.size()>0, "texture name should not be null");
-    Texture2D *texture = TextureCache::getInstance()->addImage(textureFileName);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(textureFileName);
 
     if (texture)
     {
@@ -265,7 +266,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
             CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
         }
 
-        Texture2D *texture = TextureCache::getInstance()->addImage(texturePath.c_str());
+        Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(texturePath.c_str());
 
         if (texture)
         {
