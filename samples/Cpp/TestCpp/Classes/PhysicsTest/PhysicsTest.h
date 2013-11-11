@@ -56,6 +56,7 @@ protected:
 class PhysicsDemoClickAdd : public PhysicsDemo
 {
 public:
+    virtual ~PhysicsDemoClickAdd();
     void onEnter() override;
     std::string subtitle() override;
     
@@ -64,13 +65,6 @@ public:
 };
 
 class PhysicsDemoLogoSmash : public PhysicsDemo
-{
-public:
-    void onEnter() override;
-    std::string title() override;
-};
-
-class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
     void onEnter() override;
@@ -96,7 +90,7 @@ public:
     
     void changeModeCallback(Object* sender);
     
-    static bool anyRay(PhysicsWorld& world, PhysicsShape& shape, Point point, Point normal, float fraction, void* data);
+    bool anyRay(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
     
 private:
     float _angle;
@@ -122,8 +116,9 @@ class PhysicsDemoPump : public PhysicsDemo
 {
 public:
     void onEnter() override;
-    std::string title() override;
     void update(float delta) override;
+    std::string title() override;
+    std::string subtitle() override;
     
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
@@ -140,7 +135,25 @@ public:
     void onEnter() override;
     std::string title() override;
     
-    bool onPreSolve(EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve);
+    bool onContactBegin(EventCustom* event, const PhysicsContact& contact);
+};
+
+class PhysicsDemoSlice : public PhysicsDemo
+{
+public:
+    void onEnter() override;
+    std::string title() override;
+    std::string subtitle() override;
+    
+    bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
+    void clipPoly(PhysicsShapePolygon* shape, Point normal, float distance);
+    
+    bool onTouchBegan(Touch *touch, Event *event);
+    void onTouchMoved(Touch *touch, Event *event);
+    void onTouchEnded(Touch *touch, Event *event);
+    
+private:
+    int _sliceTag;
 };
 
 #endif

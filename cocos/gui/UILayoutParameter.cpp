@@ -22,14 +22,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "gui/LayoutParameter.h"
-#include "gui/Layout.h"
+#include "gui/UILayoutParameter.h"
+#include "gui/UILayout.h"
 
 namespace gui {
 
-LayoutParameter* LayoutParameter::create()
+
+UILayoutParameter* UILayoutParameter::create()
 {
-    LayoutParameter* parameter = new LayoutParameter();
+    UILayoutParameter* parameter = new UILayoutParameter();
     if (parameter)
     {
         parameter->autorelease();
@@ -39,24 +40,24 @@ LayoutParameter* LayoutParameter::create()
     return NULL;
 }
 
-void LayoutParameter::setMargin(const UIMargin &margin)
+void UILayoutParameter::setMargin(const UIMargin &margin)
 {
     _margin = margin;
 }
 
-const UIMargin& LayoutParameter::getMargin() const
+const UIMargin& UILayoutParameter::getMargin() const
 {
     return _margin;
 }
 
-LayoutParameterType LayoutParameter::getLayoutType() const
+LayoutParameterType UILayoutParameter::getLayoutType() const
 {
     return _layoutParameterType;
 }
 
-LinearLayoutParameter* LinearLayoutParameter::create()
+UILinearLayoutParameter* UILinearLayoutParameter::create()
 {
-    LinearLayoutParameter* parameter = new LinearLayoutParameter();
+    UILinearLayoutParameter* parameter = new UILinearLayoutParameter();
     if (parameter)
     {
         parameter->autorelease();
@@ -66,19 +67,19 @@ LinearLayoutParameter* LinearLayoutParameter::create()
     return NULL;
 }
 
-void LinearLayoutParameter::setGravity(UILinearGravity gravity)
+void UILinearLayoutParameter::setGravity(UILinearGravity gravity)
 {
     _linearGravity = gravity;
 }
 
-UILinearGravity LinearLayoutParameter::getGravity() const
+UILinearGravity UILinearLayoutParameter::getGravity() const
 {
     return _linearGravity;
 }
 
-RelativeLayoutParameter* RelativeLayoutParameter::create()
+UIRelativeLayoutParameter* UIRelativeLayoutParameter::create()
 {
-    RelativeLayoutParameter* parameter = new RelativeLayoutParameter();
+    UIRelativeLayoutParameter* parameter = new UIRelativeLayoutParameter();
     if (parameter)
     {
         parameter->autorelease();
@@ -88,32 +89,32 @@ RelativeLayoutParameter* RelativeLayoutParameter::create()
     return NULL;
 }
 
-void RelativeLayoutParameter::setAlign(UIRelativeAlign align)
+void UIRelativeLayoutParameter::setAlign(UIRelativeAlign align)
 {
     _relativeAlign = align;
 }
 
-UIRelativeAlign RelativeLayoutParameter::getAlign() const
+UIRelativeAlign UIRelativeLayoutParameter::getAlign() const
 {
     return _relativeAlign;
 }
 
-void RelativeLayoutParameter::setRelativeToWidgetName(const char *name)
+void UIRelativeLayoutParameter::setRelativeToWidgetName(const char *name)
 {
     _relativeWidgetName = name;
 }
 
-const char* RelativeLayoutParameter::getRelativeToWidgetName() const
+const char* UIRelativeLayoutParameter::getRelativeToWidgetName() const
 {
     return _relativeWidgetName.c_str();
 }
 
-void RelativeLayoutParameter::setRelativeName(const char* name)
+void UIRelativeLayoutParameter::setRelativeName(const char* name)
 {
     _relativeLayoutName = name;
 }
 
-const char* RelativeLayoutParameter::getRelativeName() const
+const char* UIRelativeLayoutParameter::getRelativeName() const
 {
     return _relativeLayoutName.c_str();
 }

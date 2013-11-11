@@ -82,7 +82,7 @@ void UITextFieldTest::textFieldEvent(Object *pSender, TextFiledEventType type)
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words")->getCString());
             break;
             
@@ -132,7 +132,7 @@ bool UITextFieldTest_MaxLength::init()
         
         // Create the textfield
         UITextField* textField = UITextField::create();
-        textField->setMaxLengthEnable(true);
+        textField->setMaxLengthEnabled(true);
         textField->setMaxLength(3);
         textField->setTouchEnabled(true);
         textField->setFontName(font_UITextFieldTest);
@@ -170,7 +170,7 @@ void UITextFieldTest_MaxLength::textFieldEvent(Object *pSender, TextFiledEventTy
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words max length %d", textField->getMaxLength())->getCString());
@@ -226,7 +226,7 @@ bool UITextFieldTest_Password::init()
         
         // Create the textfield
         UITextField* textField = UITextField::create();
-        textField->setPasswordEnable(true);
+        textField->setPasswordEnabled(true);
         textField->setPasswordStyleText("*");
         textField->setTouchEnabled(true);
         textField->setFontName(font_UITextFieldTest);
@@ -264,7 +264,7 @@ void UITextFieldTest_Password::textFieldEvent(Object *pSender, TextFiledEventTyp
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words password")->getCString());
             break;
             

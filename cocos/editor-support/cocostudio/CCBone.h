@@ -176,6 +176,11 @@ public:
     virtual void setIgnoreMovementBoneData(bool ignore) { _ignoreMovementBoneData = ignore; }
     virtual bool isIgnoreMovementBoneData() const { return _ignoreMovementBoneData; }
 
+    /*
+     * This function is deprecated, please use isIgnoreMovementBoneData()
+     */
+    CC_DEPRECATED_ATTRIBUTE virtual bool getIgnoreMovementBoneData() const { return isIgnoreMovementBoneData(); }
+
     virtual void setBlendType(BlendType type) { _blendType = type; }
     virtual BlendType getBlendType() const { return _blendType; }
 
@@ -184,7 +189,7 @@ public:
     virtual void setName(const std::string &name) { _name = name; }
     virtual const std::string getName() const { return _name; }
 
-    virtual const BaseData *getWorldInfo() const { return _worldInfo; }
+    virtual BaseData *getWorldInfo() const { return _worldInfo; }
 protected:
     void applyParentTransform(Bone *parent);
 

@@ -614,10 +614,10 @@ void VolatileTexture::reloadAllTextures()
         case kImageFile:
             {
                 Image* image = new Image();
-                unsigned long nSize = 0;
-                unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &nSize);
+                long size = 0;
+                unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &size);
                 
-                if (image && image->initWithImageData(pBuffer, nSize))
+                if (image && image->initWithImageData(pBuffer, size))
                 {
                     Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);

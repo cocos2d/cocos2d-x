@@ -94,7 +94,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~Armature(void);
+    virtual ~Armature(void);
 
     /**
      * Init the empty armature
@@ -140,7 +140,7 @@ public:
      * Get Armature's bone dictionary
      * @return Armature's bone dictionary
      */
-    const cocos2d::Dictionary *getBoneDic() const;
+    cocos2d::Dictionary *getBoneDic() const;
 
     /**
      * This boundingBox will calculate all bones' boundingBox every time
@@ -180,10 +180,10 @@ public:
 
 
     virtual void setArmatureData(ArmatureData *armatureData) { _armatureData = armatureData; }
-    virtual const ArmatureData *getArmatureData() const { return _armatureData; }
+    virtual ArmatureData *getArmatureData() const { return _armatureData; }
 
     virtual void setBatchNode(BatchNode *batchNode) { _batchNode = batchNode; }
-    virtual const BatchNode *getBatchNode() const { return _batchNode; }
+    virtual BatchNode *getBatchNode() const { return _batchNode; }
 
     virtual void setName(const std::string &name) { _name = name; }
     virtual const std::string &getName() const { return _name; } 

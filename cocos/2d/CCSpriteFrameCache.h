@@ -85,29 +85,29 @@ public:
 public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
-     * If you want to use another texture, you should use the addSpriteFramesWithFile(const char *plist, const char *textureFileName) method.
+     * If you want to use another texture, you should use the addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName) method.
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
-    void addSpriteFramesWithFile(const char *plist);
+    void addSpriteFramesWithFile(const std::string& plist);
 
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
      @since v0.99.5
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
-    void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
+    void addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName);
 
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
-    void addSpriteFramesWithFile(const char *plist, Texture2D *texture);
+    void addSpriteFramesWithFile(const std::string&plist, Texture2D *texture);
 
     /** Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
      */
-    void addSpriteFrame(SpriteFrame *frame, const char *frameName);
+    void addSpriteFrame(SpriteFrame *frame, const std::string& frameName);
 
     /** Purges the dictionary of loaded sprite frames.
      * Call this method if you receive the "Memory Warning".
@@ -124,14 +124,14 @@ public:
     void removeUnusedSpriteFrames(void);
 
     /** Deletes an sprite frame from the sprite frame cache. */
-    void removeSpriteFrameByName(const char *name);
+    void removeSpriteFrameByName(const std::string& name);
 
     /** Removes multiple Sprite Frames from a plist file.
     * Sprite Frames stored in this file will be removed.
     * It is convenient to call this method when a specific texture needs to be removed.
     * @since v0.99.5
     */
-    void removeSpriteFramesFromFile(const char* plist);
+    void removeSpriteFramesFromFile(const std::string& plist);
 
     /** Removes all Sprite Frames associated with the specified textures.
      * It is convenient to call this method when a specific texture needs to be removed.
@@ -145,10 +145,10 @@ public:
      * @js getSpriteFrame
      * @lua getSpriteFrame
      */
-    SpriteFrame* getSpriteFrameByName(const char *name);
+    SpriteFrame* getSpriteFrameByName(const std::string& name);
 
     /** @deprecated use getSpriteFrameByName() instead */
-    CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const char *name) { return getSpriteFrameByName(name); }
+    CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
 
 private:
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.

@@ -44,76 +44,23 @@ bool UIDragPanelTest::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
-        
-        // Create the dragpanel
-        UIDragPanel* dragPanel = UIDragPanel::create();
-        dragPanel->setTouchEnabled(true);
-        dragPanel->setBackGroundImageScale9Enabled(true);
-        dragPanel->setBackGroundImage("cocosgui/scrollviewbg.png");
-        dragPanel->setSize(Size(210, 122.5));        
-        Size backgroundSize = background->getContentSize();
-        dragPanel->setPosition(Point((widgetSize.width - backgroundSize.width) / 2 +
-                                   (backgroundSize.width - dragPanel->getSize().width) / 2,
-                                   (widgetSize.height - backgroundSize.height) / 2 +
-                                   (backgroundSize.height - dragPanel->getSize().height) / 2));
-        dragPanel->addEventListener(this, dragpaneleventselector(UIDragPanelTest::dragPanelEvent));
-        
-        UIImageView* imageView = UIImageView::create();
-        imageView->setTouchEnabled(true);
-        imageView->loadTexture("cocosgui/b11.png");
-        dragPanel->addChild(imageView);
-        
-        dragPanel->setInnerContainerSize(imageView->getContentSize());
-        Size innerSize = dragPanel->getInnerContainerSize();
-        imageView->setPosition(Point(innerSize.width / 2, innerSize.height / 2));                
-        
-        m_pUiLayer->addWidget(dragPanel);
+        UIScrollView* sc = UIScrollView::create();
+        sc->setBackGroundColor(Color3B::GREEN);
+        sc->setBackGroundColorType(LAYOUT_COLOR_SOLID);
+        sc->setDirection(SCROLLVIEW_DIR_BOTH);
+        sc->setInnerContainerSize(Size(480, 320));
+        sc->setSize(Size(100,100));
+        sc->setPosition(Point(100,100));
+        sc->scrollToPercentBothDirection(Point(50, 50), 1, true);
+        UIImageView* iv = UIImageView::create();
+        iv->loadTexture("cocosgui/Hello.png");
+        iv->setPosition(Point(240, 160));
+        sc->addChild(iv);
+        m_pUiLayer->addWidget(sc);
         
         return true;
     }
     return false;
-}
-
-void UIDragPanelTest::dragPanelEvent(Object *pSender, DragPanelEventType type)
-{
-    switch (type)
-    {
-        case DRAGPANEL_EVENT_BERTH_LEFTBOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Left Bottom")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_LFETTOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Left Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_RIGHTBOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Right Bottom")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_RIGHTTOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Right Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_LEFT:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Left")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_TOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_RIGHT:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Right")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_BOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Bottom")->getCString());
-            break;
-            
-        default:
-            break;
-    }
 }
 
 // UIDragPanelTest_Bounce
@@ -151,76 +98,23 @@ bool UIDragPanelTest_Bounce::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
-        
-        // Create the dragpanel
-        UIDragPanel* dragPanel = UIDragPanel::create();
-        dragPanel->setTouchEnabled(true);
-        dragPanel->setBounceEnable(true);
-        dragPanel->setBackGroundImageScale9Enabled(true);
-        dragPanel->setBackGroundImage("cocosgui/green_edit.png");
-        dragPanel->setSize(Size(210, 122.5));
-        Size backgroundSize = background->getContentSize();
-        dragPanel->setPosition(Point((widgetSize.width - backgroundSize.width) / 2 +
-                                   (backgroundSize.width - dragPanel->getSize().width) / 2,
-                                   (widgetSize.height - backgroundSize.height) / 2 +
-                                   (backgroundSize.height - dragPanel->getSize().height) / 2));
-        dragPanel->addEventListener(this, dragpaneleventselector(UIDragPanelTest_Bounce::dragPanelEvent));
-        
-        UIImageView* imageView = UIImageView::create();
-        imageView->setTouchEnabled(true);
-        imageView->loadTexture("cocosgui/b11.png");
-        dragPanel->addChild(imageView);
-        
-        dragPanel->setInnerContainerSize(imageView->getContentSize());
-        Size innerSize = dragPanel->getInnerContainerSize();
-        imageView->setPosition(Point(innerSize.width / 2, innerSize.height / 2));
-        
-        m_pUiLayer->addWidget(dragPanel);
-        
+        UIScrollView* sc = UIScrollView::create();
+        sc->setBackGroundColor(Color3B::GREEN);
+        sc->setBackGroundColorType(LAYOUT_COLOR_SOLID);
+        sc->setBounceEnabled(true);
+        sc->setDirection(SCROLLVIEW_DIR_BOTH);
+        sc->setInnerContainerSize(Size(480, 320));
+        sc->setSize(Size(100,100));
+        sc->setPosition(Point(100,100));
+        sc->scrollToPercentBothDirection(Point(50, 50), 1, true);
+        UIImageView* iv = UIImageView::create();
+        iv->loadTexture("cocosgui/Hello.png");
+        iv->setPosition(Point(240, 160));
+        sc->addChild(iv);
+        m_pUiLayer->addWidget(sc);
         return true;
     }
     
     return false;
 }
 
-void UIDragPanelTest_Bounce::dragPanelEvent(Object *pSender, DragPanelEventType type)
-{
-    switch (type)
-    {
-        case DRAGPANEL_EVENT_BOUNCE_LEFTBOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Left Bottom")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_LEFTTOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Left Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_RIGHTBOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Right Bottom")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_RIGHTTOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Right Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_LEFT:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Left")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_TOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_RIGHT:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Right")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_BOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Bottom")->getCString());
-            break;
-            
-        default:
-            break;
-    }
-}

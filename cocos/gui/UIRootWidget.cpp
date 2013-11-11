@@ -24,8 +24,6 @@
 
 #include "gui/UIRootWidget.h"
 
- using namespace cocos2d;
-
 namespace gui {
 
 UIRootWidget::UIRootWidget()
@@ -50,9 +48,9 @@ UIRootWidget* UIRootWidget::create()
 
 bool UIRootWidget::init()
 {
-    if (Layout::init())
+    if (UILayout::init())
     {
-        setSize(Director::getInstance()->getWinSize());
+        setSize(cocos2d::Director::getInstance()->getWinSize());
         return true;
     }
     return false;

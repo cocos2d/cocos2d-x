@@ -245,7 +245,7 @@ void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt)
 
 void DisplayFactory::addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
 {
-    ParticleDisplayData *adp = ParticleDisplayData::create(); ;
+    ParticleDisplayData *adp = ParticleDisplayData::create();
     adp->copy((ParticleDisplayData *)displayData);
     decoDisplay->setDisplayData(adp);
 
@@ -255,6 +255,15 @@ void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDi
 {
     ParticleDisplayData *displayData = (ParticleDisplayData *)decoDisplay->getDisplayData();
     ParticleSystem *system = ParticleSystemQuad::create(displayData->plist.c_str());
+
+    system->removeFromParent();
+    
+    Armature *armature = bone->getArmature();
+    if (armature)
+    {
+        system->setParent(armature);
+    }
+
     decoDisplay->setDisplay(system);
 }
 void DisplayFactory::updateParticleDisplay(Bone *bone, Node *display, float dt)
