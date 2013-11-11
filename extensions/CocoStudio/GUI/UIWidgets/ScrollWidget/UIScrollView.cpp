@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "UIScrollView.h"
-#include "../../System/UILayer.h"
 
 NS_CC_EXT_BEGIN
 
@@ -87,7 +86,16 @@ m_pfnScrollToRightSelector(NULL)
 
 UIScrollView::~UIScrollView()
 {
-    
+    m_pEventListener = NULL;
+    m_pfnEventSelector = NULL;
+    m_pScrollToTopListener = NULL;
+    m_pfnScrollToTopSelector = NULL;
+    m_pScrollToBottomListener = NULL;
+    m_pfnScrollToBottomSelector = NULL;
+    m_pScrollToLeftListener = NULL;
+    m_pfnScrollToLeftSelector = NULL;
+    m_pScrollToRightListener = NULL;
+    m_pfnScrollToRightSelector = NULL;
 }
 
 UIScrollView* UIScrollView::create()
@@ -104,7 +112,7 @@ UIScrollView* UIScrollView::create()
 
 bool UIScrollView::init()
 {
-    if (Layout::init())
+    if (UILayout::init())
     {
         setUpdateEnabled(true);
         setTouchEnabled(true);
@@ -117,14 +125,14 @@ bool UIScrollView::init()
 
 void UIScrollView::initRenderer()
 {
-    Layout::initRenderer();
-    m_pInnerContainer = Layout::create();
-    Layout::addChild(m_pInnerContainer);
+    UILayout::initRenderer();
+    m_pInnerContainer = UILayout::create();
+    UILayout::addChild(m_pInnerContainer);
 }
 
 void UIScrollView::onSizeChanged()
 {
-    Layout::onSizeChanged();
+    UILayout::onSizeChanged();
     m_fTopBoundary = m_size.height;
     m_fRightBoundary = m_size.width;
     float bounceBoundaryParameterX = m_size.width / 3.0f;
@@ -684,96 +692,96 @@ bool UIScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touc
             if (*touchOffsetX > 0.0f && *touchOffsetY > 0.0f) // up right
             {
                 float icLeftPos = m_pInnerContainer->getLeftInParent();
-                if (icLeftPos + *touchOffsetX >= m_fLeftBoundary)
+                if (icLeftPos + *touchOffsetX >= m_autoScrollDestination.x)
                 {
-                    *touchOffsetX = m_fLeftBoundary - icLeftPos;
+                    *touchOffsetX = m_autoScrollDestination.x - icLeftPos;
                     scrollenabled = false;
                 }
                 float icBottomPos = m_pInnerContainer->getBottomInParent();
-                if (icBottomPos + *touchOffsetY >= m_fBottomBoundary)
+                if (icBottomPos + *touchOffsetY >= m_autoScrollDestination.y)
                 {
-                    *touchOffsetY = m_fBottomBoundary - icBottomPos;
+                    *touchOffsetY = m_autoScrollDestination.y - icBottomPos;
                     scrollenabled = false;
                 }
             }
             else if (*touchOffsetX < 0.0f && *touchOffsetY > 0.0f) // up left
             {
                 float icRightPos = m_pInnerContainer->getRightInParent();
-                if (icRightPos + *touchOffsetX <= m_fRightBoundary)
+                if (icRightPos + *touchOffsetX <= m_autoScrollDestination.x)
                 {
-                    *touchOffsetX = m_fRightBoundary - icRightPos;
+                    *touchOffsetX = m_autoScrollDestination.x - icRightPos;
                     scrollenabled = false;
                 }
                 float icBottomPos = m_pInnerContainer->getBottomInParent();
-                if (icBottomPos + *touchOffsetY >= m_fBottomBoundary)
+                if (icBottomPos + *touchOffsetY >= m_autoScrollDestination.y)
                 {
-                    *touchOffsetY = m_fBottomBoundary - icBottomPos;
+                    *touchOffsetY = m_autoScrollDestination.y - icBottomPos;
                     scrollenabled = false;
                 }
             }
             else if (*touchOffsetX < 0.0f && *touchOffsetY < 0.0f) // down left
             {
                 float icRightPos = m_pInnerContainer->getRightInParent();
-                if (icRightPos + *touchOffsetX <= m_fRightBoundary)
+                if (icRightPos + *touchOffsetX <= m_autoScrollDestination.x)
                 {
-                    *touchOffsetX = m_fRightBoundary - icRightPos;
+                    *touchOffsetX = m_autoScrollDestination.x - icRightPos;
                     scrollenabled = false;
                 }
                 float icTopPos = m_pInnerContainer->getTopInParent();
-                if (icTopPos + *touchOffsetY <= m_fTopBoundary)
+                if (icTopPos + *touchOffsetY <= m_autoScrollDestination.y)
                 {
-                    *touchOffsetY = m_fTopBoundary - icTopPos;
+                    *touchOffsetY = m_autoScrollDestination.y - icTopPos;
                     scrollenabled = false;
                 }
             }
             else if (*touchOffsetX > 0.0f && *touchOffsetY < 0.0f) // down right
             {
                 float icLeftPos = m_pInnerContainer->getLeftInParent();
-                if (icLeftPos + *touchOffsetX >= m_fLeftBoundary)
+                if (icLeftPos + *touchOffsetX >= m_autoScrollDestination.x)
                 {
-                    *touchOffsetX = m_fLeftBoundary - icLeftPos;
+                    *touchOffsetX = m_autoScrollDestination.x - icLeftPos;
                     scrollenabled = false;
                 }
                 float icTopPos = m_pInnerContainer->getTopInParent();
-                if (icTopPos + *touchOffsetY <= m_fTopBoundary)
+                if (icTopPos + *touchOffsetY <= m_autoScrollDestination.y)
                 {
-                    *touchOffsetY = m_fTopBoundary - icTopPos;
+                    *touchOffsetY = m_autoScrollDestination.y - icTopPos;
                     scrollenabled = false;
                 }
             }
             else if (*touchOffsetX == 0.0f && *touchOffsetY > 0.0f) // up
             {
                 float icBottomPos = m_pInnerContainer->getBottomInParent();
-                if (icBottomPos + *touchOffsetY >= m_fBottomBoundary)
+                if (icBottomPos + *touchOffsetY >= m_autoScrollDestination.y)
                 {
-                    *touchOffsetY = m_fBottomBoundary - icBottomPos;
+                    *touchOffsetY = m_autoScrollDestination.y - icBottomPos;
                     scrollenabled = false;
                 }
             }
             else if (*touchOffsetX < 0.0f && *touchOffsetY == 0.0f) // left
             {
                 float icRightPos = m_pInnerContainer->getRightInParent();
-                if (icRightPos + *touchOffsetX <= m_fRightBoundary)
+                if (icRightPos + *touchOffsetX <= m_autoScrollDestination.x)
                 {
-                    *touchOffsetX = m_fRightBoundary - icRightPos;
+                    *touchOffsetX = m_autoScrollDestination.x - icRightPos;
                     scrollenabled = false;
                 }
             }
             else if (*touchOffsetX == 0.0f && *touchOffsetY < 0.0f) // down
             {
                 float icTopPos = m_pInnerContainer->getTopInParent();
-                if (icTopPos + *touchOffsetY <= m_fTopBoundary)
+                if (icTopPos + *touchOffsetY <= m_autoScrollDestination.y)
                 {
-                    *touchOffsetY = m_fTopBoundary - icTopPos;
+                    *touchOffsetY = m_autoScrollDestination.y - icTopPos;
                     scrollenabled = false;
                 }
             }
             else if (*touchOffsetX > 0.0f && *touchOffsetY == 0.0f) // right
             {
                 float icLeftPos = m_pInnerContainer->getLeftInParent();
-                if (icLeftPos + *touchOffsetX >= m_fLeftBoundary)
+                if (icLeftPos + *touchOffsetX >= m_autoScrollDestination.x)
                 {
-                    *touchOffsetX = m_fLeftBoundary - icLeftPos;
+                    *touchOffsetX = m_autoScrollDestination.x - icLeftPos;
                     scrollenabled = false;
                 }
             }
@@ -1278,10 +1286,6 @@ void UIScrollView::jumpToPercentBothDirection(const CCPoint& percent)
 
 void UIScrollView::startRecordSlidAction()
 {
-    if (m_children->count() <= 0)
-    {
-        return;
-    }
     if (m_bAutoScroll)
     {
         stopAutoScrollChildren();
@@ -1295,10 +1299,6 @@ void UIScrollView::startRecordSlidAction()
 
 void UIScrollView::endRecordSlidAction()
 {
-    if (m_children->count() <= 0)
-    {
-        return;
-    }
     if (!checkNeedBounce() && m_bInertiaScrollEnabled)
     {
         if (m_fSlidTime <= 0.016f)
@@ -1391,26 +1391,26 @@ void UIScrollView::handleReleaseLogic(const CCPoint &touchPoint)
 
 bool UIScrollView::onTouchBegan(const CCPoint &touchPoint)
 {
-    bool pass = Layout::onTouchBegan(touchPoint);
+    bool pass = UILayout::onTouchBegan(touchPoint);
     handlePressLogic(touchPoint);
     return pass;
 }
 
 void UIScrollView::onTouchMoved(const CCPoint &touchPoint)
 {
-    Layout::onTouchMoved(touchPoint);
+    UILayout::onTouchMoved(touchPoint);
     handleMoveLogic(touchPoint);
 }
 
 void UIScrollView::onTouchEnded(const CCPoint &touchPoint)
 {
-    Layout::onTouchEnded(touchPoint);
+    UILayout::onTouchEnded(touchPoint);
     handleReleaseLogic(touchPoint);
 }
 
 void UIScrollView::onTouchCancelled(const CCPoint &touchPoint)
 {
-    Layout::onTouchCancelled(touchPoint);
+    UILayout::onTouchCancelled(touchPoint);
     handleReleaseLogic(touchPoint);
 }
 
@@ -1632,7 +1632,7 @@ bool UIScrollView::isInertiaScrollEnabled() const
     return m_bInertiaScrollEnabled;
 }
 
-Layout* UIScrollView::getInnerContainer()
+UILayout* UIScrollView::getInnerContainer()
 {
     return m_pInnerContainer;
 }
@@ -1664,7 +1664,7 @@ UIWidget* UIScrollView::createCloneInstance()
 
 void UIScrollView::copyClonedWidgetChildren(UIWidget* model)
 {
-    Layout::copyClonedWidgetChildren(model);
+    UILayout::copyClonedWidgetChildren(model);
 }
 
 void UIScrollView::copySpecialProperties(UIWidget *widget)
@@ -1672,7 +1672,7 @@ void UIScrollView::copySpecialProperties(UIWidget *widget)
     UIScrollView* scrollView = dynamic_cast<UIScrollView*>(widget);
     if (scrollView)
     {
-        Layout::copySpecialProperties(widget);
+        UILayout::copySpecialProperties(widget);
         setInnerContainerSize(scrollView->getInnerContainerSize());
         setDirection(scrollView->m_eDirection);
         setBounceEnabled(scrollView->m_bBounceEnabled);

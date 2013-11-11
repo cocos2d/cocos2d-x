@@ -35,13 +35,13 @@ NS_CC_EXT_BEGIN
 *   @js NA
 *   @lua NA
 */
-class CCSGUIReader : CCObject
+class GUIReader : CCObject
 {
 public:
-    CCSGUIReader();
-    ~CCSGUIReader();
-    static CCSGUIReader* shareReader();
-	static void purgeCCSGUIReader();
+    GUIReader();
+    ~GUIReader();
+    static GUIReader* shareReader();
+	static void purgeGUIReader();
     
     UIWidget* widgetFromJsonFile(const char* fileName);
     UIWidget* widgetFromJsonDictionary(cs::CSJsonDictionary* data);
@@ -68,10 +68,12 @@ public:
     void setPropsForPageViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options);
     void setPropsForLabelBMFontFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options);
     void setPropsForDragPanelFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options);
-    
+    void storeFileDesignSize(const char* fileName, const cocos2d::CCSize &size);
+    const cocos2d::CCSize getFileDesignSize(const char* fileName) const;
 protected:
     std::string m_strFilePath;
     bool m_bOlderVersion;
+    CCDictionary* _fileDesignSizes;
 };
 
 NS_CC_EXT_END

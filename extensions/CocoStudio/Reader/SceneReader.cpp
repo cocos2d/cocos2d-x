@@ -327,7 +327,7 @@ NS_CC_EXT_BEGIN
 				{
 					cocos2d::extension::UILayer *pLayer = cocos2d::extension::UILayer::create();
                     pLayer->scheduleUpdate();
-					UIWidget* widget=cocos2d::extension::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
+                    UIWidget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
 					pLayer->addWidget(widget);
 					CCComRender *pRender = CCComRender::create(pLayer, "GUIComponent");
 					if (pComName != NULL)

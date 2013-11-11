@@ -29,9 +29,6 @@
 
 NS_CC_EXT_BEGIN
 
-#define LINEAR_LAYOUT_PARAMETER "LinearLayoutParameter"
-#define RELATIVE_LAYOUT_PARAMETER "RelativeLayoutParameter"
-
 typedef enum
 {
     LAYOUT_PARAMETER_NONE,
@@ -42,24 +39,24 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class LayoutParameter : public CCObject
+class UILayoutParameter : public CCObject
 {
 public:
     /**
      * Default constructor
      */
-    LayoutParameter() : m_margin(UIMargin()){m_eLayoutParameterType = LAYOUT_PARAMETER_NONE;};
+    UILayoutParameter() : m_margin(UIMargin()){m_eLayoutParameterType = LAYOUT_PARAMETER_NONE;};
     
     /**
      * Default destructor
      */
-    virtual ~LayoutParameter(){};
+    virtual ~UILayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static LayoutParameter* create();
+    static UILayoutParameter* create();
     
     /**
      * Sets Margin parameter for LayoutParameter.
@@ -95,24 +92,24 @@ protected:
 *   @js NA
 *   @lua NA
 */
-class LinearLayoutParameter : public LayoutParameter
+class UILinearLayoutParameter : public UILayoutParameter
 {
 public:
     /**
      * Default constructor
      */
-    LinearLayoutParameter() : m_eLinearGravity(LINEAR_GRAVITY_NONE){m_eLayoutParameterType = LAYOUT_PARAMETER_LINEAR;};
+    UILinearLayoutParameter() : m_eLinearGravity(LINEAR_GRAVITY_NONE){m_eLayoutParameterType = LAYOUT_PARAMETER_LINEAR;};
     
     /**
      * Default destructor
      */
-    virtual ~LinearLayoutParameter(){};
+    virtual ~UILinearLayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static LinearLayoutParameter* create();
+    static UILinearLayoutParameter* create();
     
     /**
      * Sets UILinearGravity parameter for LayoutParameter.
@@ -139,26 +136,26 @@ protected:
 *   @lua NA
 */
 
-class Layout;
+class UILayout;
 
-class RelativeLayoutParameter : public LayoutParameter
+class UIRelativeLayoutParameter : public UILayoutParameter
 {
 public:
     /**
      * Default constructor
      */
-    RelativeLayoutParameter() : m_eRelativeAlign(RELATIVE_ALIGN_NONE),m_strRelativeWidgetName(""),m_strRelativeLayoutName(""),m_bPut(false){m_eLayoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
+    UIRelativeLayoutParameter() : m_eRelativeAlign(RELATIVE_ALIGN_NONE),m_strRelativeWidgetName(""),m_strRelativeLayoutName(""),m_bPut(false){m_eLayoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
     
     /**
      * Default destructor
      */
-    virtual ~RelativeLayoutParameter(){};
+    virtual ~UIRelativeLayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static RelativeLayoutParameter* create();
+    static UIRelativeLayoutParameter* create();
     
     /**
      * Sets UIRelativeAlign parameter for LayoutParameter.
@@ -210,7 +207,7 @@ protected:
     std::string m_strRelativeWidgetName;
     std::string m_strRelativeLayoutName;
     bool m_bPut;
-    friend class Layout;
+    friend class UILayout;
 };
 
 NS_CC_EXT_END

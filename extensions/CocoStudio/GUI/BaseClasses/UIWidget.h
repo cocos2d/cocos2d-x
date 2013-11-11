@@ -28,7 +28,7 @@
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include "../Layouts/UILayoutDefine.h"
-#include "../Layouts/LayoutParameter.h"
+#include "../Layouts/UILayoutParameter.h"
 NS_CC_EXT_BEGIN
 
 
@@ -818,7 +818,7 @@ public:
      *
      * @param type  Relative or Linear
      */
-    void setLayoutParameter(LayoutParameter* parameter);
+    void setLayoutParameter(UILayoutParameter* parameter);
     
     /**
      * Gets LayoutParameter of widget.
@@ -829,7 +829,7 @@ public:
      *
      * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter(LayoutParameterType type);
+    UILayoutParameter* getLayoutParameter(LayoutParameterType type);
     
     /**
      * Ignore the widget size
@@ -892,6 +892,27 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
+    
+    /**
+     * Returns a user assigned CCObject
+     *
+     * Similar to userData, but instead of holding a void* it holds an object
+     *
+     * @return A user assigned CCObject
+     * @js NA
+     */
+    virtual CCObject* getUserObject();
+    /**
+     * Returns a user assigned CCObject
+     *
+     * Similar to UserData, but instead of holding a void* it holds an object.
+     * The UserObject will be retained once in this method,
+     * and the previous UserObject (if existed) will be relese.
+     * The UserObject will be released in CCNode's destructure.
+     *
+     * @param A user assigned CCObject
+     */
+    virtual void setUserObject(CCObject *pUserObject);
     
     /*******Compatible*******/
     /**
@@ -1014,12 +1035,6 @@ protected:
     void cancelUpEvent();
     void longClickEvent();
     void updateAnchorPoint();
-    /**
-     * Release texture resoures of widget.
-     * Release renderer.
-     * If you override releaseResoures, you shall call its parent's one, e.g. UIWidget::releaseResoures().
-     */
-    virtual void releaseResoures();
     void updateSizeAndPosition();
     void copyProperties(UIWidget* model);
     virtual UIWidget* createCloneInstance();
@@ -1065,6 +1080,7 @@ protected:
     PositionType m_ePositionType;
     CCPoint m_positionPercent;
     bool m_bIsRunning;
+    CCObject* m_pUserObject;
     
     /*Compatible*/
     CCObject*       m_pPushListener;

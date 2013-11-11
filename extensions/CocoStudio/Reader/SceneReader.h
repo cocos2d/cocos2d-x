@@ -38,7 +38,7 @@ class SceneReader
 {
 public:
 	SceneReader(void);
-	~SceneReader(void);
+	virtual ~SceneReader(void);
 
 public:
 	static SceneReader* sharedSceneReader();
