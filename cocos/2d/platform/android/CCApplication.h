@@ -50,6 +50,13 @@ public:
      */
     virtual Platform getTargetPlatform();
 
+	/**
+	@brief  This function will be called when the application screen size is changed.
+	@param new width
+	@param new height
+	*/
+	virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
+
 protected:
     static Application * sm_pSharedApplication;
 };

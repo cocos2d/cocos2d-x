@@ -434,7 +434,7 @@ Texture2D::Texture2D()
 Texture2D::~Texture2D()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::removeTexture(this);
+    VolatileTextureMgr::removeTexture(this);
 #endif
 
     CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
@@ -1041,7 +1041,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture data
-    VolatileTexture::addStringTexture(this, text, textDefinition);
+    VolatileTextureMgr::addStringTexture(this, text, textDefinition);
 #endif
 
     bool bRet = false;
@@ -1267,7 +1267,7 @@ void Texture2D::setTexParameters(const TexParams &texParams)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams.wrapT );
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::setTexParameters(this, texParams);
+    VolatileTextureMgr::setTexParameters(this, texParams);
 #endif
 }
 
@@ -1287,7 +1287,7 @@ void Texture2D::setAliasTexParameters()
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     TexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
-    VolatileTexture::setTexParameters(this, texParams);
+    VolatileTextureMgr::setTexParameters(this, texParams);
 #endif
 }
 
@@ -1307,7 +1307,7 @@ void Texture2D::setAntiAliasTexParameters()
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
-    VolatileTexture::setTexParameters(this, texParams);
+    VolatileTextureMgr::setTexParameters(this, texParams);
 #endif
 }
 

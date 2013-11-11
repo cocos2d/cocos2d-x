@@ -10,6 +10,11 @@
 // Bug624Layer
 //
 ////////////////////////////////////////////////////////
+Bug624Layer::~Bug624Layer()
+{
+    Device::setAccelerometerEnabled(false);
+}
+
 bool Bug624Layer::init()
 {
     if(BugsTestBaseLayer::init())
@@ -20,6 +25,7 @@ bool Bug624Layer::init()
         label->setPosition(Point(size.width/2, size.height/2));
         addChild(label);
         
+        Device::setAccelerometerEnabled(true);
         auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Bug624Layer::onAcceleration,  this));
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
@@ -50,6 +56,11 @@ void Bug624Layer::onAcceleration(Acceleration* acc, Event* event)
 // Bug624Layer2
 //
 ////////////////////////////////////////////////////////
+Bug624Layer2::~Bug624Layer2()
+{
+    Device::setAccelerometerEnabled(false);
+}
+
 bool Bug624Layer2::init()
 {
     if(BugsTestBaseLayer::init())
@@ -60,6 +71,7 @@ bool Bug624Layer2::init()
         label->setPosition(Point(size.width/2, size.height/2));
         addChild(label);
         
+        Device::setAccelerometerEnabled(true);
         auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Bug624Layer2::onAcceleration, this));
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         

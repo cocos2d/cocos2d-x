@@ -39,13 +39,13 @@ PongLayer::PongLayer()
 {
     _ballStartingVelocity = Point(20.0f, -100.0f);
     
-    _ball = Ball::ballWithTexture( TextureCache::getInstance()->addImage(s_Ball) );
+    _ball = Ball::ballWithTexture( Director::getInstance()->getTextureCache()->addImage(s_Ball) );
     _ball->setPosition( VisibleRect::center() );
     _ball->setVelocity( _ballStartingVelocity );
     addChild( _ball );
     _ball->retain();
     
-    auto paddleTexture = TextureCache::getInstance()->addImage(s_Paddle);
+    auto paddleTexture = Director::getInstance()->getTextureCache()->addImage(s_Paddle);
     
     auto paddlesM = Array::createWithCapacity(4);
     
