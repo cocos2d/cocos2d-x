@@ -203,7 +203,7 @@ Sequence* Sequence::create(Array* arrayOfActions)
     Sequence* pRet = NULL;
     do 
     {
-        unsigned  int count = arrayOfActions->count();
+        long count = arrayOfActions->count();
         CC_BREAK_IF(count == 0);
 
         FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
@@ -576,7 +576,7 @@ Spawn* Spawn::create(Array *arrayOfActions)
     Spawn* pRet = NULL;
     do 
     {
-        unsigned  int count = arrayOfActions->count();
+        long count = arrayOfActions->count();
         CC_BREAK_IF(count == 0);
         FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
         if (count > 1)
@@ -2100,7 +2100,7 @@ void Animate::update(float t)
     }
 
     Array* frames = _animation->getFrames();
-    int numberOfFrames = frames->count();
+    long numberOfFrames = frames->count();
     SpriteFrame *frameToDisplay = NULL;
 
     for( int i=_nextFrame; i < numberOfFrames; i++ ) {

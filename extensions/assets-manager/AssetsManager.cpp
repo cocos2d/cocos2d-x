@@ -214,7 +214,7 @@ void AssetsManager::downloadAndUncompress()
     _isDownloading = false;
 }
 
-void AssetsManager::update(float delta)
+void AssetsManager::update()
 {
     if (_isDownloading) return;
     
