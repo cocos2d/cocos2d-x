@@ -102,8 +102,7 @@ bool Scene::initWithPhysics()
         Director * pDirector;
         CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
         this->setContentSize(pDirector->getWinSize());
-        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::create()));
-        _physicsWorld->setScene(this);
+        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::create(*this)));
         
         this->scheduleUpdate();
         // success
@@ -134,37 +133,27 @@ void Scene::addChildToPhysicsWorld(Node* child)
     if (_physicsWorld)
     {
         std::function<void(Object*)> addToPhysicsWorldFunc = nullptr;
-        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Object* child) -> void
+        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Object* obj) -> void
         {
-            if (dynamic_cast<SpriteBatchNode*>(child) != nullptr)
+            
+            if (dynamic_cast<Node*>(obj) != nullptr)
             {
-                Object* subChild = nullptr;
-                CCARRAY_FOREACH((dynamic_cast<SpriteBatchNode*>(child))->getChildren(), subChild)
-                {
-                    addToPhysicsWorldFunc(subChild);
-                }
-            }else if (dynamic_cast<Node*>(child) != nullptr)
-            {
-                Node* node = dynamic_cast<Node*>(child);
+                Node* node = dynamic_cast<Node*>(obj);
                 
                 if (node->getPhysicsBody())
                 {
                     _physicsWorld->addBody(node->getPhysicsBody());
                 }
+                
+                Object* subChild = nullptr;
+                CCARRAY_FOREACH(node->getChildren(), subChild)
+                {
+                    addToPhysicsWorldFunc(subChild);
+                }
             }
         };
         
-        if(dynamic_cast<Layer*>(child) != nullptr)
-        {
-            Object* subChild = nullptr;
-            CCARRAY_FOREACH(child->getChildren(), subChild)
-            {
-                addToPhysicsWorldFunc(subChild);
-            }
-        }else
-        {
-            addToPhysicsWorldFunc(child);
-        }
+        addToPhysicsWorldFunc(child);
     }
 }
 

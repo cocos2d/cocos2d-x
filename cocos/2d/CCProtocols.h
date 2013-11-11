@@ -229,7 +229,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void setString(const char *label) = 0;
+    virtual void setString(const std::string &label) = 0;
 
     /** 
      * Returns the string that is currently being used in this label 
@@ -238,7 +238,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual const char* getString() const = 0;
+    virtual const std::string& getString() const = 0;
 };
 
 /** 

@@ -262,6 +262,8 @@ protected:
     CC_SYNTHESIZE_READONLY(State, _state, State);
 };
 
+Control::EventType operator|(Control::EventType a, Control::EventType b);
+
 // end of GUI group
 /// @}
 /// @}

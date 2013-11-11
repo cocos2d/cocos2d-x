@@ -244,7 +244,7 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner,
     }
 
     std::string strPath = FileUtils::getInstance()->fullPathForFilename(strCCBFileName.c_str());
-    unsigned long size = 0;
+    long size = 0;
 
     unsigned char * pBytes = FileUtils::getInstance()->getFileData(strPath.c_str(), "rb", &size);
     Data *data = new Data(pBytes, size);
@@ -482,12 +482,12 @@ int CCBReader::readInt(bool pSigned) {
     if(pSigned) {
         int s = current % 2;
         if(s) {
-            num = (int)(current / 2);
+            num = static_cast<int>(current / 2);
         } else {
-            num = (int)(-current / 2);
+            num = static_cast<int>(-current / 2);
         }
     } else {
-        num = current - 1;
+        num = static_cast<int>(current - 1);
     }
     
     this->alignBits();
@@ -833,7 +833,7 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
         {
             spriteFile = _CCBRootPath + spriteFile;
 
-            Texture2D *texture = TextureCache::getInstance()->addImage(spriteFile.c_str());
+            Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
             Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
             
             spriteFrame = SpriteFrame::createWithTexture(texture, bounds);

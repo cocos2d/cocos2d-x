@@ -577,7 +577,7 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
         if (spriteSheet.length() == 0)
         {
             spriteFile = ccbReader->getCCBRootPath() + spriteFile;
-            Texture2D * texture = TextureCache::getInstance()->addImage(spriteFile.c_str());
+            Texture2D * texture = Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
             if(texture != NULL) {
                 Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
                 spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
@@ -635,7 +635,7 @@ Texture2D * NodeLoader::parsePropTypeTexture(Node * pNode, Node * pParent, CCBRe
     
     if (spriteFile.length() > 0)
     {
-        return TextureCache::getInstance()->addImage(spriteFile.c_str());
+        return Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
     }
     else 
     {
@@ -918,7 +918,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     
     // Load sub file
     std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName.c_str());
-    unsigned long size = 0;
+    long size = 0;
     unsigned char * pBytes = FileUtils::getInstance()->getFileData(path.c_str(), "rb", &size);
 
     CCBReader * reader = new CCBReader(pCCBReader);

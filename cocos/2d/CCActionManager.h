@@ -102,7 +102,7 @@ public:
      * - If you are running 1 Sequence of 7 actions, it will return 1.
      * - If you are running 7 Sequences of 2 actions, it will return 7.
      */
-    unsigned int getNumberOfRunningActionsInTarget(const Object *target) const;
+    long getNumberOfRunningActionsInTarget(const Object *target) const;
 
     /** @deprecated use getNumberOfRunningActionsInTarget() instead */
     CC_DEPRECATED_ATTRIBUTE inline unsigned int numberOfRunningActionsInTarget(Object *target) const { return getNumberOfRunningActionsInTarget(target); }
@@ -126,7 +126,7 @@ public:
 protected:
     // declared in ActionManager.m
 
-    void removeActionAtIndex(int index, struct _hashElement *pElement);
+    void removeActionAtIndex(long index, struct _hashElement *pElement);
     void deleteHashElement(struct _hashElement *pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
     void update(float dt);

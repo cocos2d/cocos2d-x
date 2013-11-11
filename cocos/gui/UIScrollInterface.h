@@ -36,7 +36,6 @@ protected:
     virtual void handleMoveLogic(const cocos2d::Point &touchPoint) = 0;
     virtual void handleReleaseLogic(const cocos2d::Point &touchPoint) = 0;
     virtual void interceptTouchEvent(int handleState, UIWidget* sender, const cocos2d::Point &touchPoint) = 0;
-//    virtual bool isInScrollDegreeRange(UIWidget* widget) = 0;
 };
 
 }

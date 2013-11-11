@@ -96,6 +96,16 @@ bool Point::operator!=(const Point& right)
     return this->x != right.x || this->y != right.y;
 }
 
+bool Point::operator==(const Point& right) const
+{
+    return this->x == right.x && this->y == right.y;
+}
+
+bool Point::operator!=(const Point& right) const
+{
+    return this->x != right.x || this->y != right.y;
+}
+
 Point Point::operator*(float a) const
 {
     return Point(this->x * a, this->y * a);
@@ -283,7 +293,16 @@ Point Point::getIntersectPoint(const Point& A, const Point& B, const Point& C, c
     return Point::ZERO;
 }
 
-const Point Point::ZERO = Point(0, 0);
+const Point Point::ZERO = Point(0.0f, 0.0f);
+const Point Point::ANCHOR_MIDDLE = Point(0.5f, 0.5f);
+const Point Point::ANCHOR_BOTTOM_LEFT = Point(0.0f, 0.0f);
+const Point Point::ANCHOR_TOP_LEFT = Point(0.0f, 1.0f);
+const Point Point::ANCHOR_BOTTOM_RIGHT = Point(1.0f, 0.0f);
+const Point Point::ANCHOR_TOP_RIGHT = Point(1.0f, 1.0f);
+const Point Point::ANCHOR_MIDDLE_RIGHT = Point(1.0f, 0.5f);
+const Point Point::ANCHOR_MIDDLE_LEFT = Point(0.0f, 0.5f);
+const Point Point::ANCHOR_MIDDLE_TOP = Point(0.5f, 1.0f);
+const Point Point::ANCHOR_MIDDLE_BOTTOM = Point(0.5f, 0.0f);
 
 // implementation of Size
 

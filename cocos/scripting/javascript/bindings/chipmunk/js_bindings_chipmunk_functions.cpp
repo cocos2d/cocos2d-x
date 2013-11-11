@@ -3095,7 +3095,7 @@ JSBool JSB_cpShapeGetCollisionType(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpShapeGetCollisionType((cpShape*)arg0  );
 
-	jsval ret_jsval = uint_to_jsval( cx, (cpCollisionType)ret_val );
+	jsval ret_jsval = uint32_to_jsval( cx, (cpCollisionType)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -3149,7 +3149,7 @@ JSBool JSB_cpShapeGetGroup(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpShapeGetGroup((cpShape*)arg0  );
 
-	jsval ret_jsval = uint_to_jsval( cx, (cpGroup)ret_val );
+	jsval ret_jsval = uint32_to_jsval( cx, (cpGroup)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;

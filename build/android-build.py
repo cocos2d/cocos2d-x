@@ -2,10 +2,6 @@
 # android-build.py
 # Build android samples
 
-# You can use
-
-
-# begin
 import sys
 import os, os.path
 import shutil
@@ -99,7 +95,8 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param):
         command = '%s -C %s %s' % (ndk_path, app_android_root, ndk_module_path)
     else:
         command = '%s -C %s %s %s' % (ndk_path, app_android_root, ndk_build_param, ndk_module_path)
-    os.system(command)
+    if os.system(command) != 0:
+        raise Exception("Build project [ " + app_android_root + " ] fails!")
 
 def copy_files(src, dst):
 
@@ -182,15 +179,15 @@ def build_samples(target,ndk_build_param):
         elif target == 'testlua':
             app_android_root = os.path.join(cocos_root, 'samples/Lua/TestLua/proj.android')
         elif target == 'cocosdragon':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/CocosDragonJS/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CocosDragonJS/proj.android')
         elif target == 'crystalcraze':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/CrystalCraze/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CrystalCraze/proj.android')
         elif target == 'moonwarriors':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/MoonWarriors/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/MoonWarriors/proj.android')
         elif target == 'testjavascript':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/TestJavascript/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/TestJavascript/proj.android')
         elif target == 'watermelonwithme':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/WatermelonWithMe/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/WatermelonWithMe/proj.android')
         else:
             print 'unknown target: %s' % target
             continue
@@ -209,4 +206,8 @@ if __name__ == '__main__':
     if len(args) == 0:
         usage()
     else:
-        build_samples(args, opts.ndk_build_param)
+        try:
+            build_samples(args, opts.ndk_build_param)
+        except Exception as e:
+            print e
+            sys.exit(1)

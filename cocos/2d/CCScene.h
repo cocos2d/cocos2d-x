@@ -68,18 +68,14 @@ public:
 #ifdef CC_USE_PHYSICS
 public:
     bool initWithPhysics();
-    
+
+    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+
     virtual void addChild(Node* child) override;
     virtual void addChild(Node* child, int zOrder) override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
-    
-    /*
-     * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
-     */
-    virtual void update(float delta) override;
-    
-    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
-    
+    virtual void update(float delta) override;    
+
 protected:
     virtual void addChildToPhysicsWorld(Node* child);
     
@@ -87,7 +83,7 @@ protected:
     PhysicsWorld* _physicsWorld;
 #endif // CC_USE_PHYSICS
     
-    friend class Layer;
+    friend class Node;
     friend class SpriteBatchNode;
 };
 

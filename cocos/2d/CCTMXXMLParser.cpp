@@ -112,7 +112,7 @@ Rect TMXTilesetInfo::rectForGID(unsigned int gid)
 
 // implementation TMXMapInfo
 
-TMXMapInfo * TMXMapInfo::create(const char *tmxFile)
+TMXMapInfo * TMXMapInfo::create(const std::string& tmxFile)
 {
     TMXMapInfo *pRet = new TMXMapInfo();
     if(pRet->initWithTMXFile(tmxFile))
@@ -124,7 +124,7 @@ TMXMapInfo * TMXMapInfo::create(const char *tmxFile)
     return NULL;
 }
 
-TMXMapInfo * TMXMapInfo::createWithXML(const char* tmxString, const char* resourcePath)
+TMXMapInfo * TMXMapInfo::createWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
     TMXMapInfo *pRet = new TMXMapInfo();
     if(pRet->initWithXML(tmxString, resourcePath))
@@ -136,7 +136,7 @@ TMXMapInfo * TMXMapInfo::createWithXML(const char* tmxString, const char* resour
     return NULL;
 }
 
-void TMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePath)
+void TMXMapInfo::internalInit(const std::string& tmxFileName, const std::string& resourcePath)
 {
     _tilesets = Array::create();
     _tilesets->retain();
@@ -144,12 +144,12 @@ void TMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePath)
     _layers = Array::create();
     _layers->retain();
 
-    if (tmxFileName != NULL)
+    if (tmxFileName.size() > 0)
     {
         _TMXFileName = FileUtils::getInstance()->fullPathForFilename(tmxFileName);
     }
     
-    if (resourcePath != NULL)
+    if (resourcePath.size() > 0)
     {
         _resources = resourcePath;
     }
@@ -169,15 +169,15 @@ void TMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePath)
     _parentElement = TMXPropertyNone;
     _currentFirstGID = 0;
 }
-bool TMXMapInfo::initWithXML(const char* tmxString, const char* resourcePath)
+bool TMXMapInfo::initWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
-    internalInit(NULL, resourcePath);
+    internalInit("", resourcePath);
     return parseXMLString(tmxString);
 }
 
-bool TMXMapInfo::initWithTMXFile(const char *tmxFile)
+bool TMXMapInfo::initWithTMXFile(const std::string& tmxFile)
 {
-    internalInit(tmxFile, NULL);
+    internalInit(tmxFile, "");
     return parseXMLFile(_TMXFileName.c_str());
 }
 
@@ -205,13 +205,11 @@ TMXMapInfo::~TMXMapInfo()
     CC_SAFE_RELEASE(_objectGroups);
 }
 
-bool TMXMapInfo::parseXMLString(const char *xmlString)
+bool TMXMapInfo::parseXMLString(const std::string& xmlString)
 {
-    int len = strlen(xmlString);
-    if (xmlString == NULL || len <= 0) 
-    {
+    int len = xmlString.size();
+    if (len <= 0)
         return false;
-    }
 
     SAXParser parser;
 
@@ -222,10 +220,10 @@ bool TMXMapInfo::parseXMLString(const char *xmlString)
 
     parser.setDelegator(this);
 
-    return parser.parse(xmlString, len);
+    return parser.parse(xmlString.c_str(), len);
 }
 
-bool TMXMapInfo::parseXMLFile(const char *xmlFilename)
+bool TMXMapInfo::parseXMLFile(const std::string& xmlFilename)
 {
     SAXParser parser;
     

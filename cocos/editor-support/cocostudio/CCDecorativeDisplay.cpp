@@ -37,16 +37,16 @@ DecorativeDisplay *DecorativeDisplay::create()
         return pDisplay;
     }
     CC_SAFE_DELETE(pDisplay);
-    return NULL;
+    return nullptr;
 }
 
 DecorativeDisplay::DecorativeDisplay()
-    : _display(NULL)
-    , _displayData(NULL)
+    : _display(nullptr)
+    , _displayData(nullptr)
 
 {
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    _colliderDetector = NULL;
+    _colliderDetector = nullptr;
 #endif
 }
 
