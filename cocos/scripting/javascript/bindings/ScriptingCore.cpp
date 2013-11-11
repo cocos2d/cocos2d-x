@@ -60,14 +60,15 @@ static std::vector<std::string> g_queue;
 static std::mutex g_qMutex;
 static std::mutex g_rwMutex;
 static int clientSocket = -1;
-static unsigned long s_nestedLoopLevel = 0;
+static uint32_t s_nestedLoopLevel = 0;
 
 // server entry point for the bg thread
 static void serverEntryPoint(void);
 
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
-js_type_class_t *_js_global_type_ht = NULL;
+std::unordered_map<long, js_type_class_t*> _js_global_type_map;
+
 static char *_js_log_buf = NULL;
 
 static std::vector<sc_register_sth> registrationList;
@@ -246,7 +247,7 @@ JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     char version[256];
-    snprintf(version, sizeof(version)-1, "%s - %s", cocos2dVersion(), JSB_version);
+    snprintf(version, sizeof(version)-1, "%s", cocos2dVersion());
     JSString * js_version = JS_InternString(cx, version);
 
     jsval ret = STRING_TO_JSVAL(js_version);
@@ -377,7 +378,7 @@ void ScriptingCore::string_report(jsval val) {
             LOGD("val : return string is NULL");
         } else {
             JSStringWrapper wrapper(str);
-            LOGD("val : return string =\n%s\n", (char *)wrapper);
+            LOGD("val : return string =\n%s\n", wrapper.get());
         }
     } else if (JSVAL_IS_NUMBER(val)) {
         double number;
@@ -605,14 +606,13 @@ void ScriptingCore::cleanup()
         _js_log_buf = NULL;
     }
 
-    js_type_class_t* current, *tmp;
-    HASH_ITER(hh, _js_global_type_ht, current, tmp)
+    for (auto iter = _js_global_type_map.begin(); iter != _js_global_type_map.end(); ++iter)
     {
-        HASH_DEL(_js_global_type_ht, current);
-        free(current->jsclass);
-        free(current);
+        free(iter->second->jsclass);
+        free(iter->second);
     }
-    HASH_CLEAR(hh, _js_global_type_ht);
+    
+    _js_global_type_map.clear();
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
@@ -631,7 +631,7 @@ JSBool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
         JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
         if (string) {
             JSStringWrapper wrapper(string);
-            js_log("%s", (char *)wrapper);
+            js_log("%s", wrapper.get());
         }
     }
     return JS_TRUE;
@@ -671,14 +671,14 @@ JSBool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 //            js::RootedObject* rootedGlobal = globals[name];
             JSObject* debugObj = ScriptingCore::getInstance()->getDebugGlobal();
             if (debugObj) {
-                res = ScriptingCore::getInstance()->runScript(path, debugObj);
+                res = ScriptingCore::getInstance()->runScript(path.get(), debugObj);
             } else {
-                JS_ReportError(cx, "Invalid global object: %s", (char*)name);
+                JS_ReportError(cx, "Invalid global object: %s", name.get());
                 return JS_FALSE;
             }
         } else {
             JSObject* glob = JS::CurrentGlobalOrNull(cx);
-            res = ScriptingCore::getInstance()->runScript(path, glob);
+            res = ScriptingCore::getInstance()->runScript(path.get(), glob);
         }
         return res;
     }
@@ -764,12 +764,7 @@ void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
 
 void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
 {
-    Array * arr = JSCallFuncWrapper::getTargetForNativeNode((Node*)p->ptr);
-    if (arr) {
-        arr->removeAllObjects();
-    }
-    
-    arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
+    Array* arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if (arr) {
         Scheduler* pScheduler = Director::getInstance()->getScheduler();
         Object* pObj = NULL;
@@ -1297,7 +1292,7 @@ JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** r
         else if (JSVAL_IS_STRING(*vp))
         {
             JSStringWrapper str(JSVAL_TO_STRING(*vp), cx);
-            pArray->addObject(String::create(str));
+            pArray->addObject(String::create(str.get()));
         }
         else
         {
@@ -2373,9 +2368,11 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     JS_GetProperty(cx, jsobj, "fontName", &jsr);
     JS_ValueToString(cx, jsr);
     JSStringWrapper wrapper(jsr);
-    if ( wrapper )
+    const char* fontName = wrapper.get();
+    
+    if (fontName && strlen(fontName) > 0)
     {
-        out->_fontName  = (char*)wrapper;
+        out->_fontName  = fontName;
     }
     else
     {
@@ -2539,3 +2536,59 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     // we are done here
 	return JS_TRUE;
 }
+
+// JSStringWrapper
+JSStringWrapper::JSStringWrapper()
+: _buffer(nullptr)
+{
+}
+
+JSStringWrapper::JSStringWrapper(JSString* str, JSContext* cx/* = NULL*/)
+: _buffer(nullptr)
+{
+    set(str, cx);
+}
+
+JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
+: _buffer(nullptr)
+{
+    set(val, cx);
+}
+
+JSStringWrapper::~JSStringWrapper()
+{
+    CC_SAFE_DELETE_ARRAY(_buffer);
+}
+
+void JSStringWrapper::set(jsval val, JSContext* cx)
+{
+    if (val.isString())
+    {
+        this->set(val.toString(), cx);
+    }
+    else
+    {
+        CC_SAFE_DELETE_ARRAY(_buffer);
+    }
+}
+
+void JSStringWrapper::set(JSString* str, JSContext* cx)
+{
+    CC_SAFE_DELETE_ARRAY(_buffer);
+    
+    if (!cx)
+    {
+        cx = ScriptingCore::getInstance()->getGlobalContext();
+    }
+    // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
+    //buffer = JS_EncodeString(cx, string);
+    unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
+    
+    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
+}
+
+const char* JSStringWrapper::get()
+{
+    return _buffer ? _buffer : "";
+}
+
