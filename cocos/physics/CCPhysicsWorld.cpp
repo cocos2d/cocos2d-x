@@ -818,6 +818,24 @@ void PhysicsWorld::rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect
     }
 }
 
+void PhysicsWorld::pointQuery(PhysicsPointQueryCallbackFunc func, const Point& point, void* data)
+{
+    CCASSERT(func != nullptr, "callback.report shouldn't be nullptr");
+    
+    if (func != nullptr)
+    {
+        RectQueryCallbackInfo info = {this, func, data};
+        
+        PhysicsWorldCallback::continues = true;
+        cpSpaceBBQuery(this->_info->getSpace(),
+                       PhysicsHelper::rect2cpbb(Rect(point.x - 0.01f, point.y - 0.01f, 0.02f, 0.02f)),
+                       CP_ALL_LAYERS,
+                       CP_NO_GROUP,
+                       (cpSpaceBBQueryFunc)PhysicsWorldCallback::rectQueryCallbackFunc,
+                       &info);
+    }
+}
+
 Array* PhysicsWorld::getShapes(const Point& point) const
 {
     Array* arr = Array::create();
