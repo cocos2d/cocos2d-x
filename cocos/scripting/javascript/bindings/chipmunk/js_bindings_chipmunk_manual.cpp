@@ -42,9 +42,13 @@ static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
     T* cobj = new T();
     cobj->autorelease();
     js_type_class_t *p;
-    uint32_t typeId = t.s_id();
-    HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-    assert(p);
+    long typeId = t.s_id();
+    auto typeMapIter = _js_global_type_map.find(typeId);
+    
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    p = typeMapIter->second;
+    CCASSERT(p, "The value is null.");
+    
     JSObject *_tmp = JS_NewObject(cx, p->jsclass, p->proto, p->parentProto);
     js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
     JS_AddObjectRoot(cx, &pp->obj);
@@ -179,10 +183,14 @@ JSBool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_
     do {
         if (ret) {
             TypeTest<PhysicsDebugNode> t;
-            js_type_class_t *typeClass;
-            uint32_t typeId = t.s_id();
-            HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
-            assert(typeClass);
+            js_type_class_t *typeClass = nullptr;
+            long typeId = t.s_id();
+            auto typeMapIter = _js_global_type_map.find(typeId);
+            
+            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+            typeClass = typeMapIter->second;
+            CCASSERT(typeClass, "The value is null.");
+            
             JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p = jsb_new_proxy(ret, obj);
@@ -265,24 +273,27 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 
     TypeTest<cocos2d::DrawNode> t1;
-    js_type_class_t *typeClass;
-    uint32_t typeId = t1.s_id();
-    HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
-    assert(typeClass);
+    js_type_class_t *typeClass = nullptr;
+    long typeId = t1.s_id();
+    auto typeMapIter = _js_global_type_map.find(typeId);
+    
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
 
     JSB_CCPhysicsDebugNode_object = JS_InitClass(cx, globalObj, typeClass->proto, JSB_CCPhysicsDebugNode_class, dummy_constructor<PhysicsDebugNode>, 0,properties,funcs,NULL,st_funcs);
 
     TypeTest<PhysicsDebugNode> t;
     js_type_class_t *p;
     typeId = t.s_id();
-    HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-    if (!p) {
+    
+    if (_js_global_type_map.find(typeId) == _js_global_type_map.end())
+    {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->type = typeId;
         p->jsclass = JSB_CCPhysicsDebugNode_class;
         p->proto = JSB_CCPhysicsDebugNode_object;
         p->parentProto = typeClass->proto;
-        HASH_ADD_INT(_js_global_type_ht, type, p);
+        _js_global_type_map.insert(std::make_pair(typeId, p));
     }
 }
 
@@ -305,10 +316,13 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		do {
 			if (ret) {
                 TypeTest<PhysicsSprite> t;
-                js_type_class_t *typeClass;
-                uint32_t typeId = t.s_id();
-                HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
-                assert(typeClass);
+                js_type_class_t *typeClass = nullptr;
+                long typeId = t.s_id();
+                auto typeMapIter = _js_global_type_map.find(typeId);
+                CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+                typeClass = typeMapIter->second;
+                CCASSERT(typeClass, "The value is null.");
+                
                 JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
 				jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p = jsb_new_proxy(ret, obj);
@@ -331,10 +345,12 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		do {
 			if (ret) {
 				TypeTest<PhysicsSprite> t;
-                js_type_class_t *typeClass;
-                uint32_t typeId = t.s_id();
-                HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
-                assert(typeClass);
+                js_type_class_t *typeClass = nullptr;
+                long typeId = t.s_id();
+                auto typeMapIter = _js_global_type_map.find(typeId);
+                CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+                typeClass = typeMapIter->second;
+                CCASSERT(typeClass, "The value is null.");
                 JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
 				jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p = jsb_new_proxy(ret, obj);
@@ -370,10 +386,12 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint
 	do {
 		if (ret) {
             TypeTest<PhysicsSprite> t;
-            js_type_class_t *typeClass;
-            uint32_t typeId = t.s_id();
-            HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
-            assert(typeClass);
+            js_type_class_t *typeClass = nullptr;
+            long typeId = t.s_id();
+            auto typeMapIter = _js_global_type_map.find(typeId);
+            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+            typeClass = typeMapIter->second;
+            CCASSERT(typeClass, "The value is null.");
             JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p = jsb_new_proxy(ret, obj);
@@ -393,29 +411,35 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, 
     JSBool ok = JS_TRUE;
 	const char* arg0;
     std::string arg0_tmp;
-	if (argc >= 1) {
+	if (argc == 1) {
 		ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-	}
-    PhysicsSprite* ret = PhysicsSprite::createWithSpriteFrameName(arg0);
 
-	jsval jsret;
-	do {
-		if (ret) {
-            TypeTest<PhysicsSprite> t;
-            js_type_class_t *typeClass;
-            uint32_t typeId = t.s_id();
-            HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
-            assert(typeClass);
-            JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-            jsret = OBJECT_TO_JSVAL(obj);
-            js_proxy_t *p = jsb_new_proxy(ret, obj);
-            JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
-		} else {
-			jsret = JSVAL_NULL;
-		}
-	} while (0);
-	JS_SET_RVAL(cx, vp, jsret);
-	return JS_TRUE;
+        PhysicsSprite* ret = PhysicsSprite::createWithSpriteFrameName(arg0);
+
+        jsval jsret;
+        do {
+            if (ret) {
+                TypeTest<PhysicsSprite> t;
+                js_type_class_t *typeClass = nullptr;
+                long typeId = t.s_id();
+                auto typeMapIter = _js_global_type_map.find(typeId);
+                CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+                typeClass = typeMapIter->second;
+                CCASSERT(typeClass, "The value is null.");
+                JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+                jsret = OBJECT_TO_JSVAL(obj);
+                js_proxy_t *p = jsb_new_proxy(ret, obj);
+                JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        JS_SET_RVAL(cx, vp, jsret);
+        return JS_TRUE;
+    }
+    
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return JS_FALSE;
 }
 
 void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
@@ -450,24 +474,25 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 	};
 
     TypeTest<cocos2d::Sprite> t1;
-    js_type_class_t *typeClass;
-    uint32_t typeId = t1.s_id();
-    HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
-    assert(typeClass);
+	js_type_class_t *typeClass = nullptr;
+	long typeId = t1.s_id();
+	auto typeMapIter = _js_global_type_map.find(typeId);
+	CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+	typeClass = typeMapIter->second;
+	CCASSERT(typeClass, "The value is null.");
 
 	JSPROXY_CCPhysicsSprite_object = JS_InitClass(cx, globalObj, typeClass->proto, JSPROXY_CCPhysicsSprite_class, dummy_constructor<PhysicsSprite>, 0,properties,funcs,NULL,st_funcs);
 
     TypeTest<PhysicsSprite> t;
 	js_type_class_t *p;
 	typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	if (_js_global_type_map.find(typeId) == _js_global_type_map.end())
+    {
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
 		p->jsclass = JSPROXY_CCPhysicsSprite_class;
 		p->proto = JSPROXY_CCPhysicsSprite_object;
 		p->parentProto = typeClass->proto;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+        _js_global_type_map.insert(std::make_pair(typeId, p));
 	}
 }
 

@@ -107,7 +107,7 @@ bool BaseClippingNodeTest::init()
 
 BaseClippingNodeTest::~BaseClippingNodeTest()
 {
-	TextureCache::getInstance()->removeUnusedTextures();
+	Director::getInstance()->getTextureCache()->removeUnusedTextures();
 }
 
 std::string BaseClippingNodeTest::title()

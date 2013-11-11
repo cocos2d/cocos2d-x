@@ -75,10 +75,9 @@ EventListenerTouchOneByOne* EventListenerTouchOneByOne::create()
 
 bool EventListenerTouchOneByOne::checkAvailable()
 {
-    if (onTouchBegan == nullptr && onTouchMoved == nullptr
-        && onTouchEnded == nullptr && onTouchCancelled == nullptr)
+    if (onTouchBegan == nullptr)
     {
-        CCASSERT(false, "Invalid TouchEventListener.");
+        CCASSERT(false, "Invalid EventListenerTouchOneByOne!");
         return false;
     }
     
@@ -150,7 +149,7 @@ bool EventListenerTouchAllAtOnce::checkAvailable()
     if (onTouchesBegan == nullptr && onTouchesMoved == nullptr
         && onTouchesEnded == nullptr && onTouchesCancelled == nullptr)
     {
-        CCASSERT(false, "Invalid TouchEventListener.");
+        CCASSERT(false, "Invalid EventListenerTouchAllAtOnce!");
         return false;
     }
     

@@ -294,7 +294,7 @@ void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Object *target, float in
     CCASSERT(target, "Argument target must be non-NULL");
 
     tHashTimerEntry *element = NULL;
-    HASH_FIND_INT(_hashForTimers, &target, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
 
     if (! element)
     {
@@ -304,7 +304,7 @@ void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Object *target, float in
         {
             target->retain();
         }
-        HASH_ADD_INT(_hashForTimers, target, element);
+        HASH_ADD_PTR(_hashForTimers, target, element);
 
         // Is this the 1st element ? Then set the pause level to all the selectors of this target
         element->paused = paused;
@@ -352,7 +352,7 @@ void Scheduler::unscheduleSelector(SEL_SCHEDULE selector, Object *target)
     //CCASSERT(selector);
 
     tHashTimerEntry *element = NULL;
-    HASH_FIND_INT(_hashForTimers, &target, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
 
     if (element)
     {
@@ -448,7 +448,7 @@ void Scheduler::priorityIn(tListEntry **list, Object *target, int priority, bool
     target->retain();
     pHashElement->list = list;
     pHashElement->entry = listElement;
-    HASH_ADD_INT(_hashForUpdates, target, pHashElement);
+    HASH_ADD_PTR(_hashForUpdates, target, pHashElement);
 }
 
 void Scheduler::appendIn(_listEntry **list, Object *target, bool paused)
@@ -467,14 +467,14 @@ void Scheduler::appendIn(_listEntry **list, Object *target, bool paused)
     target->retain();
     pHashElement->list = list;
     pHashElement->entry = listElement;
-    HASH_ADD_INT(_hashForUpdates, target, pHashElement);
+    HASH_ADD_PTR(_hashForUpdates, target, pHashElement);
 }
 
 void Scheduler::scheduleUpdateForTarget(Object *target, int priority, bool paused)
 {
 
     tHashUpdateEntry *pHashElement = NULL;
-    HASH_FIND_INT(_hashForUpdates, &target, pHashElement);
+    HASH_FIND_PTR(_hashForUpdates, &target, pHashElement);
     if (pHashElement)
     {
 #if COCOS2D_DEBUG >= 1
@@ -509,7 +509,7 @@ bool Scheduler::isScheduledForTarget(SEL_SCHEDULE selector, Object *target)
     CCASSERT(target, "Argument target must be non-NULL");
     
     tHashTimerEntry *element = NULL;
-    HASH_FIND_INT(_hashForTimers, &target, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     
     if (!element)
     {
@@ -541,7 +541,7 @@ void Scheduler::removeUpdateFromHash(struct _listEntry *entry)
 {
     tHashUpdateEntry *element = NULL;
 
-    HASH_FIND_INT(_hashForUpdates, &entry->target, element);
+    HASH_FIND_PTR(_hashForUpdates, &entry->target, element);
     if (element)
     {
         // list entry
@@ -567,7 +567,7 @@ void Scheduler::unscheduleUpdateForTarget(const Object *target)
     }
 
     tHashUpdateEntry *element = NULL;
-    HASH_FIND_INT(_hashForUpdates, &target, element);
+    HASH_FIND_PTR(_hashForUpdates, &target, element);
     if (element)
     {
         if (_updateHashLocked)
@@ -601,31 +601,31 @@ void Scheduler::unscheduleAllWithMinPriority(int nMinPriority)
     }
 
     // Updates selectors
-    tListEntry *pEntry, *pTmp;
+    tListEntry *entry, *tmp;
     if(nMinPriority < 0) 
     {
-        DL_FOREACH_SAFE(_updatesNegList, pEntry, pTmp)
+        DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
         {
-            if(pEntry->priority >= nMinPriority) 
+            if(entry->priority >= nMinPriority)
             {
-                unscheduleUpdateForTarget(pEntry->target);
+                unscheduleUpdateForTarget(entry->target);
             }
         }
     }
 
     if(nMinPriority <= 0) 
     {
-        DL_FOREACH_SAFE(_updates0List, pEntry, pTmp)
+        DL_FOREACH_SAFE(_updates0List, entry, tmp)
         {
-            unscheduleUpdateForTarget(pEntry->target);
+            unscheduleUpdateForTarget(entry->target);
         }
     }
 
-    DL_FOREACH_SAFE(_updatesPosList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesPosList, entry, tmp)
     {
-        if(pEntry->priority >= nMinPriority) 
+        if(entry->priority >= nMinPriority)
         {
-            unscheduleUpdateForTarget(pEntry->target);
+            unscheduleUpdateForTarget(entry->target);
         }
     }
 
@@ -645,7 +645,7 @@ void Scheduler::unscheduleAllForTarget(Object *target)
 
     // Custom Selectors
     tHashTimerEntry *element = NULL;
-    HASH_FIND_INT(_hashForTimers, &target, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
 
     if (element)
     {
@@ -702,7 +702,7 @@ void Scheduler::resumeTarget(Object *target)
 
     // custom selectors
     tHashTimerEntry *element = NULL;
-    HASH_FIND_INT(_hashForTimers, &target, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     if (element)
     {
         element->paused = false;
@@ -710,7 +710,7 @@ void Scheduler::resumeTarget(Object *target)
 
     // update selector
     tHashUpdateEntry *elementUpdate = NULL;
-    HASH_FIND_INT(_hashForUpdates, &target, elementUpdate);
+    HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
     if (elementUpdate)
     {
         CCASSERT(elementUpdate->entry != NULL, "");
@@ -724,7 +724,7 @@ void Scheduler::pauseTarget(Object *target)
 
     // custom selectors
     tHashTimerEntry *element = NULL;
-    HASH_FIND_INT(_hashForTimers, &target, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     if (element)
     {
         element->paused = true;
@@ -732,7 +732,7 @@ void Scheduler::pauseTarget(Object *target)
 
     // update selector
     tHashUpdateEntry *elementUpdate = NULL;
-    HASH_FIND_INT(_hashForUpdates, &target, elementUpdate);
+    HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
     if (elementUpdate)
     {
         CCASSERT(elementUpdate->entry != NULL, "");
@@ -746,7 +746,7 @@ bool Scheduler::isTargetPaused(Object *target)
 
     // Custom selectors
     tHashTimerEntry *element = NULL;
-    HASH_FIND_INT(_hashForTimers, &target, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     if( element )
     {
         return element->paused;
@@ -754,7 +754,7 @@ bool Scheduler::isTargetPaused(Object *target)
     
     // We should check update selectors if target does not have custom selectors
 	tHashUpdateEntry *elementUpdate = NULL;
-	HASH_FIND_INT(_hashForUpdates, &target, elementUpdate);
+	HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
 	if ( elementUpdate )
     {
 		return elementUpdate->entry->paused;
@@ -836,32 +836,32 @@ void Scheduler::update(float dt)
     }
 
     // Iterate over all the Updates' selectors
-    tListEntry *pEntry, *pTmp;
+    tListEntry *entry, *tmp;
 
     // updates with priority < 0
-    DL_FOREACH_SAFE(_updatesNegList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
     {
-        if ((! pEntry->paused) && (! pEntry->markedForDeletion))
+        if ((! entry->paused) && (! entry->markedForDeletion))
         {
-            pEntry->target->update(dt);
+            entry->target->update(dt);
         }
     }
 
     // updates with priority == 0
-    DL_FOREACH_SAFE(_updates0List, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updates0List, entry, tmp)
     {
-        if ((! pEntry->paused) && (! pEntry->markedForDeletion))
+        if ((! entry->paused) && (! entry->markedForDeletion))
         {
-            pEntry->target->update(dt);
+            entry->target->update(dt);
         }
     }
 
     // updates with priority > 0
-    DL_FOREACH_SAFE(_updatesPosList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesPosList, entry, tmp)
     {
-        if ((! pEntry->paused) && (! pEntry->markedForDeletion))
+        if ((! entry->paused) && (! entry->markedForDeletion))
         {
-            pEntry->target->update(dt);
+            entry->target->update(dt);
         }
     }
 
@@ -909,43 +909,43 @@ void Scheduler::update(float dt)
     {
         for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
         {
-            SchedulerScriptHandlerEntry* pEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
-            if (pEntry->isMarkedForDeletion())
+            SchedulerScriptHandlerEntry* eachEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
+            if (eachEntry->isMarkedForDeletion())
             {
                 _scriptHandlerEntries->removeObjectAtIndex(i);
             }
-            else if (!pEntry->isPaused())
+            else if (!eachEntry->isPaused())
             {
-                pEntry->getTimer()->update(dt);
+                eachEntry->getTimer()->update(dt);
             }
         }
     }
 
     // delete all updates that are marked for deletion
     // updates with priority < 0
-    DL_FOREACH_SAFE(_updatesNegList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
     {
-        if (pEntry->markedForDeletion)
+        if (entry->markedForDeletion)
         {
-            this->removeUpdateFromHash(pEntry);
+            this->removeUpdateFromHash(entry);
         }
     }
 
     // updates with priority == 0
-    DL_FOREACH_SAFE(_updates0List, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updates0List, entry, tmp)
     {
-        if (pEntry->markedForDeletion)
+        if (entry->markedForDeletion)
         {
-            this->removeUpdateFromHash(pEntry);
+            this->removeUpdateFromHash(entry);
         }
     }
 
     // updates with priority > 0
-    DL_FOREACH_SAFE(_updatesPosList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesPosList, entry, tmp)
     {
-        if (pEntry->markedForDeletion)
+        if (entry->markedForDeletion)
         {
-            this->removeUpdateFromHash(pEntry);
+            this->removeUpdateFromHash(entry);
         }
     }
 
