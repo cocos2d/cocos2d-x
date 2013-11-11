@@ -69,9 +69,6 @@ ArmatureAnimation::~ArmatureAnimation(void)
 {
     CC_SAFE_RELEASE_NULL(_tweenList);
     CC_SAFE_RELEASE_NULL(_animationData);
-
-    CC_SAFE_RELEASE_NULL(_movementEventTarget);
-    CC_SAFE_RELEASE_NULL(_frameEventTarget);
 }
 
 bool ArmatureAnimation::init(Armature *armature)
@@ -423,23 +420,13 @@ std::string ArmatureAnimation::getCurrentMovementID() const
 
 void ArmatureAnimation::setMovementEventCallFunc(Object *target, SEL_MovementEventCallFunc callFunc)
 {
-    if (target != _movementEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(_movementEventTarget);
-        _movementEventTarget = target;
-    }
+    _movementEventTarget = target;
     _movementEventCallFunc = callFunc;
 }
 
 void ArmatureAnimation::setFrameEventCallFunc(Object *target, SEL_FrameEventCallFunc callFunc)
 {
-    if (target != _frameEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(_frameEventTarget);
-        _frameEventTarget = target;
-    }
+    _frameEventTarget = target;
     _frameEventCallFunc = callFunc;
 }
 
