@@ -782,7 +782,7 @@ void PhysicsWorld::setGravity(const Vect& gravity)
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data)
 {
-    CCASSERT(func != nullptr, "callback.report shouldn't be nullptr");
+    CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
     if (func != nullptr)
     {
@@ -802,7 +802,7 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1,
 
 void PhysicsWorld::rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data)
 {
-    CCASSERT(func != nullptr, "callback.report shouldn't be nullptr");
+    CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
     if (func != nullptr)
     {
@@ -820,7 +820,7 @@ void PhysicsWorld::rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect
 
 void PhysicsWorld::pointQuery(PhysicsPointQueryCallbackFunc func, const Point& point, void* data)
 {
-    CCASSERT(func != nullptr, "callback.report shouldn't be nullptr");
+    CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
     if (func != nullptr)
     {
