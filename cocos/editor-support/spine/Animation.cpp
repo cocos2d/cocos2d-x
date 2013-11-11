@@ -248,12 +248,12 @@ void _RotateTimeline_apply (const Timeline* timeline, Skeleton* skeleton, float 
 	bone = skeleton->bones[self->boneIndex];
 
 	if (time >= self->frames[self->framesLength - 2]) { /* Time is after last frame. */
-		float amount = bone->data->rotation + self->frames[self->framesLength - 1] - bone->rotation;
-		while (amount > 180)
-			amount -= 360;
-		while (amount < -180)
-			amount += 360;
-		bone->rotation += amount * alpha;
+		float count = bone->data->rotation + self->frames[self->framesLength - 1] - bone->rotation;
+		while (count > 180)
+			count -= 360;
+		while (count < -180)
+			count += 360;
+		bone->rotation += count * alpha;
 		return;
 	}
 
