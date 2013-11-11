@@ -579,8 +579,7 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
     ArmatureData *armatureData = new ArmatureData();
     armatureData->init();
 
-    const char	*name = armatureXML->Attribute(A_NAME);
-    armatureData->name = name;
+    armatureData->name = armatureXML->Attribute(A_NAME);
 
 
     tinyxml2::XMLElement *boneXML = armatureXML->FirstChildElement(BONE);
@@ -887,21 +886,21 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
 	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
 	FrameData **frames = (FrameData **)movBoneData->frameList.data->arr;
-	for (int i = movBoneData->frameList.count() - 1; i >= 0; i--)
+	for (int j = movBoneData->frameList.count() - 1; j >= 0; j--)
 	{
-		if (i > 0)
+		if (j > 0)
 		{
-			float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
-			float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+			float difSkewX = frames[j]->skewX -  frames[j - 1]->skewX;
+			float difSkewY = frames[j]->skewY -  frames[j - 1]->skewY;
 
 			if (difSkewX < -M_PI || difSkewX > M_PI)
 			{
-				frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+				frames[j - 1]->skewX = difSkewX < 0 ? frames[j - 1]->skewX - 2 * M_PI : frames[j - 1]->skewX + 2 * M_PI;
 			}
 
 			if (difSkewY < -M_PI || difSkewY > M_PI)
 			{
-				frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+				frames[j - 1]->skewY = difSkewY < 0 ? frames[j - 1]->skewY - 2 * M_PI : frames[j - 1]->skewY + 2 * M_PI;
 			}
 		}
 	}
