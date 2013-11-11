@@ -10,6 +10,11 @@
 // Bug624Layer
 //
 ////////////////////////////////////////////////////////
+Bug624Layer::~Bug624Layer()
+{
+    Device::setAccelerometerEnabled(false);
+}
+
 bool Bug624Layer::init()
 {
     if(BugsTestBaseLayer::init())
@@ -51,6 +56,11 @@ void Bug624Layer::onAcceleration(Acceleration* acc, Event* event)
 // Bug624Layer2
 //
 ////////////////////////////////////////////////////////
+Bug624Layer2::~Bug624Layer2()
+{
+    Device::setAccelerometerEnabled(false);
+}
+
 bool Bug624Layer2::init()
 {
     if(BugsTestBaseLayer::init())

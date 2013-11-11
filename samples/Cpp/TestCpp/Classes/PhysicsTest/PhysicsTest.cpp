@@ -199,6 +199,11 @@ void PhysicsDemo::toggleDebugCallback(Object* sender)
 #endif
 }
 
+PhysicsDemoClickAdd::~PhysicsDemoClickAdd()
+{
+    Device::setAccelerometerEnabled(false);
+}
+
 void PhysicsDemoClickAdd::onEnter()
 {
     PhysicsDemo::onEnter();

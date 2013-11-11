@@ -56,6 +56,7 @@ protected:
 class PhysicsDemoClickAdd : public PhysicsDemo
 {
 public:
+    virtual ~PhysicsDemoClickAdd();
     void onEnter() override;
     std::string subtitle() override;
     
