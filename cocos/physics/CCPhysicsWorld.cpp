@@ -85,6 +85,13 @@ namespace
         PhysicsRectQueryCallbackFunc func;
         void* data;
     }RectQueryCallbackInfo;
+    
+    typedef struct PointQueryCallbackInfo
+    {
+        PhysicsWorld* world;
+        PhysicsPointQueryCallbackFunc func;
+        void* data;
+    }PointQueryCallbackInfo;
 }
 
 class PhysicsWorldCallback
@@ -96,7 +103,8 @@ public:
     static void collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
     static void rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info);
     static void rectQueryCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info);
-    static void nearestPointQueryFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr);
+    static void nearestPointQueryFunc(cpShape *shape, cpFloat distance, cpVect point, PointQueryCallbackInfo *info);
+    static void getShapesQueryFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr);
     
 public:
     static bool continues;
@@ -175,13 +183,22 @@ void PhysicsWorldCallback::rectQueryCallbackFunc(cpShape *shape, RectQueryCallba
     PhysicsWorldCallback::continues = info->func(*info->world, *it->second->getShape(), info->data);
 }
 
-void PhysicsWorldCallback::nearestPointQueryFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr)
+void PhysicsWorldCallback::getShapesQueryFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr)
 {
     auto it = PhysicsShapeInfo::getMap().find(shape);
     
     CC_ASSERT(it != PhysicsShapeInfo::getMap().end());
     
     arr->addObject(it->second->getShape());
+}
+
+void PhysicsWorldCallback::nearestPointQueryFunc(cpShape *shape, cpFloat distance, cpVect point, PointQueryCallbackInfo *info)
+{
+    auto it = PhysicsShapeInfo::getMap().find(shape);
+    
+    CC_ASSERT(it != PhysicsShapeInfo::getMap().end());
+    
+    PhysicsWorldCallback::continues = info->func(*info->world, *it->second->getShape(), info->data);
 }
 
 bool PhysicsWorld::init(Scene& scene)
@@ -824,15 +841,16 @@ void PhysicsWorld::pointQuery(PhysicsPointQueryCallbackFunc func, const Point& p
     
     if (func != nullptr)
     {
-        RectQueryCallbackInfo info = {this, func, data};
+        PointQueryCallbackInfo info = {this, func, data};
         
         PhysicsWorldCallback::continues = true;
-        cpSpaceBBQuery(this->_info->getSpace(),
-                       PhysicsHelper::rect2cpbb(Rect(point.x - 0.01f, point.y - 0.01f, 0.02f, 0.02f)),
-                       CP_ALL_LAYERS,
-                       CP_NO_GROUP,
-                       (cpSpaceBBQueryFunc)PhysicsWorldCallback::rectQueryCallbackFunc,
-                       &info);
+        cpSpaceNearestPointQuery(this->_info->getSpace(),
+                                 PhysicsHelper::point2cpv(point),
+                                 0,
+                                 CP_ALL_LAYERS,
+                                 CP_NO_GROUP,
+                                 (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::getShapesQueryFunc,
+                                 &info);
     }
 }
 
@@ -844,7 +862,7 @@ Array* PhysicsWorld::getShapes(const Point& point) const
                              0,
                              CP_ALL_LAYERS,
                              CP_NO_GROUP,
-                             (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::nearestPointQueryFunc,
+                             (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::getShapesQueryFunc,
                              arr);
     
     return arr;
