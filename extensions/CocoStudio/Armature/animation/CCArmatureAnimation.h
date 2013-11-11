@@ -96,6 +96,7 @@ public:
     //! The animation update speed
     virtual void setAnimationInternal(float animationInternal);
 
+    using CCProcessBase::play;
     /**
      * Play animation by animation name.
      *

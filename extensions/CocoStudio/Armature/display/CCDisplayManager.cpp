@@ -143,12 +143,12 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
             for (int i = m_pDecoDisplayList->count()-2; i>=0; i--)
             {
                 CCDecorativeDisplay *dd = static_cast<CCDecorativeDisplay*>(m_pDecoDisplayList->objectAtIndex(i));
-                CCSpriteDisplayData *spriteDisplayData = static_cast<CCSpriteDisplayData *>(dd->getDisplayData());
-                if (spriteDisplayData)
+                CCSpriteDisplayData *sdd = static_cast<CCSpriteDisplayData *>(dd->getDisplayData());
+                if (sdd)
                 {
                     find = true;
-                    skin->setSkinData(spriteDisplayData->skinData);
-                    (static_cast<CCSpriteDisplayData *>(displayData))->skinData = spriteDisplayData->skinData;
+                    skin->setSkinData(sdd->skinData);
+                    (static_cast<CCSpriteDisplayData *>(displayData))->skinData = sdd->skinData;
                     break;
                 }
             }

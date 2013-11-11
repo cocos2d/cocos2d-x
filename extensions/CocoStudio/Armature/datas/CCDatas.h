@@ -150,10 +150,7 @@ public:
     CCSpriteDisplayData();
     virtual ~CCSpriteDisplayData();
 
-    inline void setParam(const char *displayName)
-    {
-        this->displayName = displayName;
-    }
+    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
     void copy(CCSpriteDisplayData *displayData);
 public:
     /**
@@ -180,10 +177,7 @@ public:
     CCArmatureDisplayData();
     virtual ~CCArmatureDisplayData();
 
-    inline void setParam(const char *displayName)
-    {
-        this->displayName = displayName;
-    }
+    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
     void copy(CCArmatureDisplayData *displayData);
 public:
     /**
@@ -209,10 +203,7 @@ public:
     CCParticleDisplayData();
     virtual ~CCParticleDisplayData() {};
 
-    void setParam(const char *plist)
-    {
-        this->plist = plist;
-    }
+    void setParam(const char *pszPlist) { this->plist = pszPlist; }
 
     void copy(CCParticleDisplayData *displayData);
 public:
@@ -430,10 +421,10 @@ public:
 
 struct CCContourVertex2 : public CCObject
 {
-    CCContourVertex2(float x, float y)
+    CCContourVertex2(float xx, float yy)
     {
-        this->x = x;
-        this->y = y;
+        this->x = xx;
+        this->y = yy;
     }
 
     float x;
