@@ -44,11 +44,12 @@ bool UIScrollViewTest_Vertical::init()
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the scrollview by vertical
         UIScrollView* scrollView = UIScrollView::create();
         scrollView->setTouchEnable(true);
+        scrollView->setBounceEnabled(true);
         scrollView->setSize(CCSizeMake(280, 150));        
         CCSize backgroundSize = background->getContentSize();
         scrollView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
@@ -129,11 +130,12 @@ bool UIScrollViewTest_Horizontal::init()
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the scrollview by horizontal
         UIScrollView* scrollView = UIScrollView::create();        
         scrollView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
+        scrollView->setBounceEnabled(true);
         scrollView->setTouchEnable(true);
         scrollView->setSize(CCSizeMake(280, 150));
         scrollView->setInnerContainerSize(scrollView->getRect().size);

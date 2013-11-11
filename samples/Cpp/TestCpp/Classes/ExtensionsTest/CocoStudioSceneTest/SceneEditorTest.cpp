@@ -9,9 +9,8 @@ using namespace cocos2d::extension;
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
 	CCArmatureDataManager::purge();
-	CCSSceneReader::sharedSceneReader()->purgeSceneReader();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
 }
 
 SceneEditorTestLayer::SceneEditorTestLayer()
@@ -60,7 +59,7 @@ bool SceneEditorTestLayer::init()
 
 cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
 {
-    CCNode *pNode = CCSSceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
 	if (pNode == NULL)
 	{
 		return NULL;

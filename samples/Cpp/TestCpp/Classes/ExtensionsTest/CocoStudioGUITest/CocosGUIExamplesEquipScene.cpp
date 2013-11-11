@@ -48,8 +48,7 @@ void CocosGUIExamplesEquipScene::onExit()
 {
     m_pUILayer->removeFromParent();
     
-    CCSSceneReader::sharedSceneReader()->purgeSceneReader();
-    UIHelper::purgeUIHelper();
+    SceneReader::sharedSceneReader()->purgeSceneReader();
     ActionManager::purgeActionManager();
     
     CCScene::onExit();
@@ -110,19 +109,19 @@ void CocosGUIExamplesEquipScene::EquipInit()
     //        
     
     // equip root from json
-    Layout* equipe_root =dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/equip_1/equip_1.json"));
+    UILayout* equipe_root =dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/equip_1/equip_1.json"));
     equipe_root->setWidgetTag(EQUIP_LAYOUT_TAG_ROOT);
     m_pUILayer->addWidget(equipe_root);        
     
     // title layout
-    Layout* title_layout = dynamic_cast<Layout*>(equipe_root->getChildByName("title_panel"));
+    UILayout* title_layout = dynamic_cast<UILayout*>(equipe_root->getChildByName("title_panel"));
     // close button
     UIButton* close_btn = dynamic_cast<UIButton*>(title_layout->getChildByName("close_button"));
     close_btn->setVisible(false);
 //    close_btn->addReleaseEvent(this, coco_releaseselector(CocosGUIExamplesEquipScene::close));
     
     // up layout
-    Layout* up_layout = dynamic_cast<Layout*>(equipe_root->getChildByName("up_panel"));
+    UILayout* up_layout = dynamic_cast<UILayout*>(equipe_root->getChildByName("up_panel"));
     up_layout->setWidgetTag(EQUIP_LAYOUT_TAG_UP);
     
     // switch button
@@ -144,15 +143,15 @@ void CocosGUIExamplesEquipScene::EquipInit()
     
     // repertories
     // clothes layout
-    Layout* clothes_layout = dynamic_cast<Layout*>(equipe_root->getChildByName("clothes_panel"));
+    UILayout* clothes_layout = dynamic_cast<UILayout*>(equipe_root->getChildByName("clothes_panel"));
     clothes_layout->setWidgetTag(EQUIP_LAYOUT_TAG_CLOTHES);
     
     // weapons layout
-    Layout* weapons_layout = dynamic_cast<Layout*>(equipe_root->getChildByName("weapons_panel"));
+    UILayout* weapons_layout = dynamic_cast<UILayout*>(equipe_root->getChildByName("weapons_panel"));
     weapons_layout->setWidgetTag(EQUIP_LAYOUT_TAG_WEAPONS);
     
     // pets layout
-    Layout* pets_layout = dynamic_cast<Layout*>(equipe_root->getChildByName("pets_panel"));
+    UILayout* pets_layout = dynamic_cast<UILayout*>(equipe_root->getChildByName("pets_panel"));
     pets_layout->setWidgetTag(EQUIP_LAYOUT_TAG_PETS);
     
     container_1_Zorder = clothes_layout->getWidgetZOrder();
@@ -231,7 +230,7 @@ void CocosGUIExamplesEquipScene::create()
 
 void CocosGUIExamplesEquipScene::createClothes()
 {
-    Layout* clothes_layout = dynamic_cast<Layout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_CLOTHES));
+    UILayout* clothes_layout = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_CLOTHES));
     
     // clothes
     float parent_w = clothes_layout->getRect().size.width;
@@ -337,7 +336,7 @@ void CocosGUIExamplesEquipScene::createClothes()
 
 void CocosGUIExamplesEquipScene::createWeapons()
 {
-    Layout* weapons_panel = dynamic_cast<Layout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_WEAPONS));
+    UILayout* weapons_panel = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_WEAPONS));
     
     // weapons
     float parent_w = weapons_panel->getRect().size.width;
@@ -482,7 +481,7 @@ void CocosGUIExamplesEquipScene::createWeapons()
 
 void CocosGUIExamplesEquipScene::createPets()
 {
-    Layout* pets_layout = dynamic_cast<Layout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_PETS));
+    UILayout* pets_layout = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_PETS));
     
     // pets
     float parent_w = pets_layout->getRect().size.width;
@@ -582,14 +581,14 @@ void CocosGUIExamplesEquipScene::switchBtnCallBack(CCObject *pSender)
     UIButton* button = dynamic_cast<UIButton*>(pSender);
     
     // equip root
-    Layout* root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_ROOT));
+    UILayout* root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_ROOT));
     
     // equip repertory
-    Layout* clothes_layout = dynamic_cast<Layout*>(root->getChildByTag(EQUIP_LAYOUT_TAG_CLOTHES));
-    Layout* weapons_layout = dynamic_cast<Layout*>(root->getChildByTag(EQUIP_LAYOUT_TAG_WEAPONS));
-    Layout* pets_layout = dynamic_cast<Layout*>(root->getChildByTag(EQUIP_LAYOUT_TAG_PETS));
+    UILayout* clothes_layout = dynamic_cast<UILayout*>(root->getChildByTag(EQUIP_LAYOUT_TAG_CLOTHES));
+    UILayout* weapons_layout = dynamic_cast<UILayout*>(root->getChildByTag(EQUIP_LAYOUT_TAG_WEAPONS));
+    UILayout* pets_layout = dynamic_cast<UILayout*>(root->getChildByTag(EQUIP_LAYOUT_TAG_PETS));
     
-    Layout* up_layout = dynamic_cast<Layout*>(root->getChildByTag(EQUIP_LAYOUT_TAG_UP));
+    UILayout* up_layout = dynamic_cast<UILayout*>(root->getChildByTag(EQUIP_LAYOUT_TAG_UP));
     UITextButton* clothes_btn = dynamic_cast<UITextButton*>(up_layout->getChildByTag(EQUIP_SWITCH_LAYOUT_BUTTON_TAG_CLOTHES));
     UITextButton* weapons_btn = dynamic_cast<UITextButton*>(up_layout->getChildByTag(EQUIP_SWITCH_LAYOUT_BUTTON_TAG_WEAPONS));
     UITextButton* pets_btn = dynamic_cast<UITextButton*>(up_layout->getChildByTag(EQUIP_SWITCH_LAYOUT_BUTTON_TAG_PETS));
@@ -792,8 +791,8 @@ void CocosGUIExamplesEquipScene::drop(CCObject *pSender)
         }
         
         // equip up layout
-        Layout* equipe_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_ROOT));
-        Layout* up_layout = dynamic_cast<Layout*>(equipe_root->getChildByName("up_panel"));
+        UILayout* equipe_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_ROOT));
+        UILayout* up_layout = dynamic_cast<UILayout*>(equipe_root->getChildByName("up_panel"));
         up_layout->setTouchEnable(false, true);
     }
 }
@@ -834,8 +833,8 @@ void CocosGUIExamplesEquipScene::backOver(CCObject *pObject)
     }
     
     // equip up layout
-    Layout* equip_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_ROOT));
-    Layout* up_layout = dynamic_cast<Layout*>(equip_root->getChildByName("up_panel"));
+    UILayout* equip_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_ROOT));
+    UILayout* up_layout = dynamic_cast<UILayout*>(equip_root->getChildByName("up_panel"));
     up_layout->setTouchEnable(true, true);
 }
 
@@ -843,6 +842,6 @@ void CocosGUIExamplesEquipScene::close(CCObject* pObject)
 {
     
     // equip
-    Layout* equip_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_ROOT));
+    UILayout* equip_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByTag(EQUIP_LAYOUT_TAG_ROOT));
     equip_root->setVisible(false);
 }

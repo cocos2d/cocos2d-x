@@ -25,9 +25,6 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{97c3b83c-49c5-4c12-b313-2ad896c789fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\Resources">
-      <UniqueIdentifier>{37c28dd7-c865-4574-ac83-fb26da23dce7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -71,15 +68,6 @@
   <ItemGroup>
     <Image Include="Assets\WideLogo.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\Resources\CloseNormal.png">
-      <Filter>Assets\Resources</Filter>
-    </Image>
-    <Image Include="Assets\Resources\CloseSelected.png">
-      <Filter>Assets\Resources</Filter>
-    </Image>
-    <Image Include="Assets\Resources\HelloWorld.png">
-      <Filter>Assets\Resources</Filter>
     </Image>
   </ItemGroup>
 </Project>

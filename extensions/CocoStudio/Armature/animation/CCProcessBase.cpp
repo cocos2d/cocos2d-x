@@ -136,11 +136,19 @@ void CCProcessBase::update(float dt)
 }
 
 
-
 void CCProcessBase::gotoFrame(int frameIndex)
 {
+    if (m_eLoopType == ANIMATION_NO_LOOP)
+    {
+        m_eLoopType = ANIMATION_MAX;
+    }
+    else if (m_eLoopType == ANIMATION_TO_LOOP_FRONT)
+    {
+        m_eLoopType = ANIMATION_LOOP_FRONT;
+    }
+
     m_iCurFrameIndex = frameIndex;
-    pause();
+    m_iNextFrameIndex = m_iDurationTween;
 }
 
 int CCProcessBase::getCurrentFrameIndex()

@@ -328,8 +328,10 @@
     <ClCompile Include="..\platform\winrt\CCFileUtilsWinRT.cpp" />
     <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\winrt\CCImage.cpp" />
+    <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp" />
     <ClCompile Include="..\platform\winrt\CCStdC.cpp" />
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
+    <ClCompile Include="..\platform\winrt\sha1.cpp" />
     <ClCompile Include="..\platform\wp8\CCEGLView.cpp" />
     <ClCompile Include="..\platform\wp8\Direct3DBase.cpp" />
     <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp" />
@@ -481,8 +483,10 @@
     <ClInclude Include="..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="..\platform\winrt\CCGL.h" />
     <ClInclude Include="..\platform\winrt\CCPlatformDefine.h" />
+    <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="..\platform\winrt\CCStdC.h" />
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
+    <ClInclude Include="..\platform\winrt\sha1.h" />
     <ClInclude Include="..\platform\wp8\CCEGLView.h" />
     <ClInclude Include="..\platform\wp8\Direct3DBase.h" />
     <ClInclude Include="..\platform\wp8\WP8Keyboard.h" />

@@ -141,6 +141,8 @@ protected:
     virtual void onSizeChanged();
     void clickScale(float scale);
     void labelScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     bool m_bTouchScaleChangeEnabled;
     float m_fNormalScaleValue;
