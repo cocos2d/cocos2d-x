@@ -52,7 +52,7 @@ void SubTest::initWithSubTest(int nSubTest, Node* p)
     */
 
     // purge textures
-    auto mgr = TextureCache::getInstance();
+    auto mgr = Director::getInstance()->getTextureCache();
     //        [mgr removeAllTextures];
     mgr->removeTexture(mgr->addImage("Images/grossinis_sister1.png"));
     mgr->removeTexture(mgr->addImage("Images/grossini_dance_atlas.png"));

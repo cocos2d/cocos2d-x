@@ -34,7 +34,7 @@ FontFNT * FontFNT::create(const std::string& fntFilePath)
         return nullptr;
     
     // add the texture
-    Texture2D *tempTexture = TextureCache::getInstance()->addImage(newConf->getAtlasName());
+    Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(newConf->getAtlasName());
     if (!tempTexture)
     {
         delete newConf;
@@ -198,7 +198,7 @@ FontAtlas * FontFNT::createFontAtlas()
     
     // add the texture (only one texture for now)
     
-    Texture2D *tempTexture = TextureCache::getInstance()->addImage(_configuration->getAtlasName());
+    Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(_configuration->getAtlasName());
     if (!tempTexture)
         return 0;
     

@@ -100,6 +100,7 @@ public:
     //! The animation update speed
     virtual void setAnimationInternal(float animationInternal);
 
+    using ProcessBase::play;
     /**
      * Play animation by animation name.
      *
