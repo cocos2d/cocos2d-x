@@ -24,16 +24,12 @@ public:
     LuaCocoStudioEventListener();
     virtual ~LuaCocoStudioEventListener();
     
-    virtual void setObjTarget(Object* objTarget);
-    
     static LuaCocoStudioEventListener* create();
     
     virtual void eventCallbackFunc(Object* sender,int eventType);
-private:
-    Object* _objTarget;
 };
 
-LuaCocoStudioEventListener::LuaCocoStudioEventListener():_objTarget(nullptr)
+LuaCocoStudioEventListener::LuaCocoStudioEventListener()
 {
     
 }
@@ -54,18 +50,13 @@ LuaCocoStudioEventListener* LuaCocoStudioEventListener::create()
     return listener;
 }
 
-void LuaCocoStudioEventListener::setObjTarget(Object* objTarget)
-{
-    _objTarget = objTarget;
-}
-
 void LuaCocoStudioEventListener::eventCallbackFunc(Object* sender,int eventType)
 {
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
     
     if (0 != handler)
     {
-        LuaCocoStudioEventListenerData eventData(_objTarget,eventType);
+        LuaCocoStudioEventListenerData eventData(sender,eventType);
         BasicScriptData data(this,(void*)&eventData);
         ScriptEvent scriptEvent(kCocoStudioEventListener,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
@@ -93,35 +84,35 @@ static int lua_cocos2dx_UIWidget_addTouchEventListener(lua_State* L)
 		return 0;
 	}
 #endif
-    if (2 == argc)
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) ||
-            !tolua_isusertype(L, 3, "Object", 0, &tolua_err) )
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
         {
             goto tolua_lerror;
         }
 #endif
-        LuaCocoStudioEventListener* listern = LuaCocoStudioEventListener::create();
-        if (nullptr == listern)
+        LuaCocoStudioEventListener* listener = LuaCocoStudioEventListener::create();
+        if (nullptr == listener)
         {
             tolua_error(L,"LuaCocoStudioEventListener create fail\n", NULL);
             return 0;
         }
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 3, nullptr));
         
-        listern->setObjTarget(obj);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
         
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listern, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
-        
-        self->addTouchEventListener(listern, toucheventselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        self->setUserObject(listener);
+        self->addTouchEventListener(listener, toucheventselector(LuaCocoStudioEventListener::eventCallbackFunc));
                 
         return 0;
     }
     
-    CCLOG("'addTouchEventListener' function of UIWidget has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'addTouchEventListener' function of UIWidget has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -163,34 +154,32 @@ static int lua_cocos2dx_UICheckBox_addEventListener(lua_State* L)
 	}
 #endif
     argc = lua_gettop(L) - 1;
-    if (2 == argc)
+    if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) ||
-            !tolua_isusertype(L, 3, "Object", 0, &tolua_err) )
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
         {
             goto tolua_lerror;
         }
 #endif
-        LuaCocoStudioEventListener* listern = LuaCocoStudioEventListener::create();
-        if (nullptr == listern)
+        LuaCocoStudioEventListener* listener = LuaCocoStudioEventListener::create();
+        if (nullptr == listener)
         {
             tolua_error(L,"LuaCocoStudioEventListener create fail\n", NULL);
             return 0;
         }
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 3, nullptr));
         
-        listern->setObjTarget(obj);
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listern, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
         
-        self->addEventListener(listern, checkboxselectedeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        self->setUserObject(listener);        
+        self->addEventListener(listener, checkboxselectedeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
         
         return 0;
     }
     
-    CCLOG("'addEventListener' function of UICheckBox has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'addEventListener' function of UICheckBox has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -233,34 +222,32 @@ static int lua_cocos2dx_UISlider_addEventListener(lua_State* L)
 	}
 #endif
     argc = lua_gettop(L) - 1;
-    if (2 == argc)
+    if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) ||
-            !tolua_isusertype(L, 3, "Object", 0, &tolua_err) )
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) )
         {
             goto tolua_lerror;
         }
 #endif
-        LuaCocoStudioEventListener* listern = LuaCocoStudioEventListener::create();
-        if (nullptr == listern)
+        LuaCocoStudioEventListener* listener = LuaCocoStudioEventListener::create();
+        if (nullptr == listener)
         {
             tolua_error(L,"LuaCocoStudioEventListener create fail\n", NULL);
             return 0;
         }
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 3, nullptr));
+
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
         
-        listern->setObjTarget(obj);
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listern, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
-        
-        self->addEventListener(listern, sliderpercentchangedselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        self->setUserObject(listener);        
+        self->addEventListener(listener, sliderpercentchangedselector(LuaCocoStudioEventListener::eventCallbackFunc));
         
         return 0;
     }
     
-    CCLOG("'addEventListener' function of UISlider has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'addEventListener' function of UISlider has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -303,34 +290,32 @@ static int lua_cocos2dx_UITextField_addEventListener(lua_State* L)
 	}
 #endif
     argc = lua_gettop(L) - 1;
-    if (2 == argc)
+    if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) ||
-            !tolua_isusertype(L, 3, "Object", 0, &tolua_err) )
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
         {
             goto tolua_lerror;
         }
 #endif
-        LuaCocoStudioEventListener* listern = LuaCocoStudioEventListener::create();
-        if (nullptr == listern)
+        LuaCocoStudioEventListener* listener = LuaCocoStudioEventListener::create();
+        if (nullptr == listener)
         {
             tolua_error(L,"LuaCocoStudioEventListener create fail\n", NULL);
             return 0;
         }
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 3, nullptr));
+
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
         
-        listern->setObjTarget(obj);
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listern, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
-        
-        self->addEventListener(listern, textfieldeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        self->setUserObject(listener);        
+        self->addEventListener(listener, textfieldeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
         
         return 0;
     }
     
-    CCLOG("'addEventListener' function of UITextField has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'addEventListener' function of UITextField has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -373,34 +358,32 @@ static int lua_cocos2dx_UIPageView_addEventListener(lua_State* L)
 	}
 #endif
     argc = lua_gettop(L) - 1;
-    if (2 == argc)
+    if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) ||
-            !tolua_isusertype(L, 3, "Object", 0, &tolua_err) )
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) )
         {
             goto tolua_lerror;
         }
 #endif
-        LuaCocoStudioEventListener* listern = LuaCocoStudioEventListener::create();
-        if (nullptr == listern)
+        LuaCocoStudioEventListener* listener = LuaCocoStudioEventListener::create();
+        if (nullptr == listener)
         {
             tolua_error(L,"LuaCocoStudioEventListener create fail\n", NULL);
             return 0;
         }
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 3, nullptr));
+
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
         
-        listern->setObjTarget(obj);
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listern, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
-        
-        self->addEventListener(listern, pagevieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        self->setUserObject(listener);        
+        self->addEventListener(listener, pagevieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
         
         return 0;
     }
     
-    CCLOG("'addEventListener' function of UIPageView has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'addEventListener' function of UIPageView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -635,15 +618,12 @@ public:
     LuaArmatureWrapper();
     virtual ~LuaArmatureWrapper();
     
-    virtual void setObjTarget(Object* objTarget);
     virtual void movementEventCallback(Armature* armature, MovementEventType type,const char* movementID);
     virtual void frameEventCallback(Bone* bone, const char* frameEventName, int orginFrameIndex, int currentFrameIndex);
     virtual void addArmatureFileInfoAsyncCallback(float percent);
-private:
-    Object* _objTarget;
 };
 
-LuaArmatureWrapper::LuaArmatureWrapper():_objTarget(nullptr)
+LuaArmatureWrapper::LuaArmatureWrapper()
 {
     
 }
@@ -651,11 +631,6 @@ LuaArmatureWrapper::LuaArmatureWrapper():_objTarget(nullptr)
 LuaArmatureWrapper::~LuaArmatureWrapper()
 {
     
-}
-
-void LuaArmatureWrapper::setObjTarget(Object* objTarget)
-{
-    _objTarget = objTarget;
 }
 
 void LuaArmatureWrapper::movementEventCallback(Armature* armature, MovementEventType type,const char* movementID)
@@ -736,23 +711,20 @@ static int lua_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(lua_State* L)
 #endif
     argc = lua_gettop(L) - 1;
     
-    if (2 == argc)
+    if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) ||
-            !tolua_isusertype(L, 3, "Object", 0, &tolua_err) )
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
         {
             goto tolua_lerror;
         }
 #endif
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 3, nullptr));
         
         LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
         wrapper->autorelease();
         
-        wrapper->setObjTarget(obj);
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
         
         self->setMovementEventCallFunc(wrapper, movementEvent_selector(LuaArmatureWrapper::movementEventCallback));
@@ -760,7 +732,7 @@ static int lua_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setMovementEventCallFunc' function of ArmatureAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'setMovementEventCallFunc' function of ArmatureAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -794,29 +766,30 @@ static int lua_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(lua_State* L)
 #endif
     argc = lua_gettop(L) - 1;
     
-    if (2 == argc)
+    if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) ||
-            !tolua_isusertype(L, 3, "Object", 0, &tolua_err) )
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) )
         {
             goto tolua_lerror;
         }
 #endif
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 3, nullptr));
         
         LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
         wrapper->autorelease();
         
-        wrapper->setObjTarget(obj);
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
         
         self->setFrameEventCallFunc(wrapper, frameEvent_selector(LuaArmatureWrapper::frameEventCallback));
         
         return 0;
     }
+    
+    
+    CCLOG("'setFrameEventCallFunc' function of ArmatureAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(L,"#ferror in function 'setFrameEventCallFunc'.",&tolua_err);
@@ -858,38 +831,34 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
 #endif
     argc = lua_gettop(L) - 1;
     
-    if (3 == argc)
+    if (2 == argc)
     {
 #if COCOS2D_DEBUG >= 1
         if (!tolua_isstring(L, 2, 0, &tolua_err)  ||
-            !tolua_isusertype(L, 3, "Object", 0, &tolua_err) ||
-            !toluafix_isfunction(L,4,"LUA_FUNCTION",0,&tolua_err))
+            !toluafix_isfunction(L,3,"LUA_FUNCTION",0,&tolua_err))
         {
             goto tolua_lerror;
         }
 #endif
         const char* configFilePath = tolua_tostring(L, 2, "");
-        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 3, nullptr));
-        LUA_FUNCTION handler = (  toluafix_ref_function(L,4,0));
+        LUA_FUNCTION handler = (  toluafix_ref_function(L, 3, 0));
     
         LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
         wrapper->autorelease();
         
-        wrapper->setObjTarget(obj);
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
         
         self->addArmatureFileInfoAsync(configFilePath, wrapper, schedule_selector(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
         
         return 0;
     }
-    else if (5 == argc)
+    else if (4 == argc)
     {
 #if COCOS2D_DEBUG >= 1
         if ( !tolua_isstring(L, 2, 0, &tolua_err)  ||
              !tolua_isstring(L, 3, 0, &tolua_err)  ||
              !tolua_isstring(L, 4, 0, &tolua_err)  ||
-             !tolua_isusertype(L, 5, "Object", 0, &tolua_err) ||
-             !toluafix_isfunction(L,6,"LUA_FUNCTION",0,&tolua_err))
+             !toluafix_isfunction(L,5,"LUA_FUNCTION",0,&tolua_err))
         {
             goto tolua_lerror;
         }
@@ -898,19 +867,20 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         const char* plistPath = tolua_tostring(L, 3, "");
         const char* configFilePath = tolua_tostring(L, 4, "");
         
-        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 5, nullptr));
-        LUA_FUNCTION handler = (  toluafix_ref_function(L,6,0));
+        LUA_FUNCTION handler = (  toluafix_ref_function(L,5,0));
         
         LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
         wrapper->autorelease();
         
-        wrapper->setObjTarget(obj);
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
         
         self->addArmatureFileInfoAsync(imagePath, plistPath,configFilePath,wrapper, schedule_selector(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
         
         return 0;
     }
+    
+    CCLOG("'addArmatureFileInfoAsync' function of ArmatureDataManager has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(L,"#ferror in function 'addArmatureFileInfoAsync'.",&tolua_err);
@@ -935,7 +905,7 @@ int register_all_cocos2dx_coco_studio_manual(lua_State* L)
     extendUIWidget(L);
     extendUICheckBox(L);
     extendUISlider(L);
-    extendUISlider(L);
+    extendUITextField(L);
     extendUIPageView(L);
 //  extendUIListView(L);
     extendLayoutParameter(L);

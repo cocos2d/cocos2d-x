@@ -31,11 +31,11 @@
 namespace cocostudio {
 
 #define kCCSVersion 1.0
-class CCSGUIReader : cocos2d::Object
+class CCSGUIReader : public cocos2d::Object
 {
 public:
     CCSGUIReader();
-    ~CCSGUIReader();
+    virtual ~CCSGUIReader();
     static CCSGUIReader* shareReader();
 	static void purgeCCSGUIReader();
     
