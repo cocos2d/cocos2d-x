@@ -25,12 +25,12 @@ void CocosGUIExamplesRegisterScene::onEnter()
     addChild(m_pUILayer);
     
     // register root from json
-    m_pLayout = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/register_1/register_1.json"));
+    m_pLayout = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/register_1/register_1.json"));
     m_pUILayer->addWidget(m_pLayout);
     
     
     // e-mail layout
-    Layout* eMail_layout = dynamic_cast<Layout*>(m_pLayout->getChildByName("e-mail_Panel"));
+    UILayout* eMail_layout = dynamic_cast<UILayout*>(m_pLayout->getChildByName("e-mail_Panel"));
     
     // ui node container add to e-mail layout
     UINodeContainer* nodeContainer = UINodeContainer::create();
@@ -53,7 +53,7 @@ void CocosGUIExamplesRegisterScene::onEnter()
 #pragma message ("Warning: CCEditBox not implmented for CC_PLATFORM_WINRT and CC_PLATFORM_WP8")
 #endif   
     // content panel
-    Layout* content_panel = dynamic_cast<Layout*>(m_pLayout->getChildByName("content_Panel"));
+    UILayout* content_panel = dynamic_cast<UILayout*>(m_pLayout->getChildByName("content_Panel"));
     
     // password textfield add event
     UITextField* passwordAgin_textfield = dynamic_cast<UITextField*>(content_panel->getChildByName("password agin_TextField"));
@@ -62,7 +62,7 @@ void CocosGUIExamplesRegisterScene::onEnter()
     
     
     // register button
-    Layout* register_button_panel = dynamic_cast<Layout*>(m_pLayout->getChildByName("register button_Panel"));
+    UILayout* register_button_panel = dynamic_cast<UILayout*>(m_pLayout->getChildByName("register button_Panel"));
     
     UIButton* button = dynamic_cast<UIButton*>(register_button_panel->getChildByName("register_Button"));
     button->addReleaseEvent(this, coco_releaseselector(CocosGUIExamplesRegisterScene::toCocosGUIExamplesEquipScene));
@@ -81,8 +81,7 @@ void CocosGUIExamplesRegisterScene::onExit()
 {
     m_pUILayer->removeFromParent();
     
-    CCSSceneReader::sharedSceneReader()->purgeSceneReader();
-    UIHelper::purgeUIHelper();
+    SceneReader::sharedSceneReader()->purgeSceneReader();
 	ActionManager::shareManager()->purgeActionManager();
     
     CCScene::onExit();

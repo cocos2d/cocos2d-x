@@ -29,3 +29,8 @@ script:
 before_install: 
 - ./tools/travis-scripts/before-install.sh
 
+# whitelist
+branches:
+  only:
+    - master
+    - develop

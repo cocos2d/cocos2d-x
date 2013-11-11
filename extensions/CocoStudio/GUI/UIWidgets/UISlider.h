@@ -196,6 +196,8 @@ public:
      */
     virtual const char* getDescription() const;
     
+
+    
     /*Compatible*/
     /**
      * These methods will be removed
@@ -225,6 +227,8 @@ protected:
     virtual void onSizeChanged();
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     CCNode*  m_pBarRenderer;
     CCNode* m_pProgressBarRenderer;

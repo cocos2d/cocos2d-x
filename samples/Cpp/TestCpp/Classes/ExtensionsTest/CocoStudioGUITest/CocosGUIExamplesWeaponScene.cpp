@@ -124,8 +124,7 @@ void CocosGUIExamplesWeaponScene::onExit()
 {
     m_pUILayer->removeFromParent();
     
-    CCSSceneReader::sharedSceneReader()->purgeSceneReader();
-    UIHelper::purgeUIHelper();
+    SceneReader::sharedSceneReader()->purgeSceneReader();
     ActionManager::purgeActionManager();
     
     CCScene::onExit();
@@ -154,17 +153,17 @@ void CocosGUIExamplesWeaponScene::toCocosGUIExamplesMapScene(CCObject *pSender)
 void CocosGUIExamplesWeaponScene::WeaponInit()
 {
     // weapon root from json
-    Layout* weapon_root = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/weapon_introduce_1/weapon_introduce_1.json"));
+    UILayout* weapon_root = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/weapon_introduce_1/weapon_introduce_1.json"));
     m_pUILayer->addWidget(weapon_root);
     
     // title layout
-    Layout* title_layout = dynamic_cast<Layout*>(weapon_root->getChildByName("title_panel"));
+    UILayout* title_layout = dynamic_cast<UILayout*>(weapon_root->getChildByName("title_panel"));
     UIButton* close_btn = dynamic_cast<UIButton*>(title_layout->getChildByName("close_button"));
     close_btn->setVisible(false);
 //    close_btn->addReleaseEvent(this, coco_releaseselector(CocosGUIExamplesWeaponScene::WeaponClose));
     
     // introduce layout
-    Layout* introduce_layout = dynamic_cast<Layout*>(weapon_root->getChildByName("introduce_panel"));
+    UILayout* introduce_layout = dynamic_cast<UILayout*>(weapon_root->getChildByName("introduce_panel"));
     UITextArea* introduce_text = dynamic_cast<UITextArea*>(introduce_layout->getChildByName("introduce_text"));
     introduce_text->setFontSize(16);
     introduce_text->setText("Touch weapon icon to buy weapon introduce, scroll weapon warehouse to check more weapon.");
@@ -176,10 +175,10 @@ void CocosGUIExamplesWeaponScene::WeaponInit()
 void CocosGUIExamplesWeaponScene::create()
 {    
     // weapon root
-    Layout* weapon_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByName("weapon_root"));
+    UILayout* weapon_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByName("weapon_root"));
     
     // weapon layout
-    Layout* weapon_layout = dynamic_cast<Layout*>(weapon_root->getChildByName("weapon_panel"));
+    UILayout* weapon_layout = dynamic_cast<UILayout*>(weapon_root->getChildByName("weapon_panel"));
     
     // weapon scrollview
     UIScrollView* weapon_scrlv = dynamic_cast<UIScrollView*>(weapon_layout->getChildByName("weapon_scrollview"));
@@ -216,7 +215,7 @@ void CocosGUIExamplesWeaponScene::create()
                 break;
             }
             
-            Layout* item = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/weapon_introduce_1/weapon_item_1/weapon_item_1.json"));
+            UILayout* item = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/weapon_introduce_1/weapon_item_1/weapon_item_1.json"));
             item->setWidgetTag(WEAPON_ITEM_LAYOUT_TAG + i * columnMax + j);
             
             float width = item->getRect().size.width;
@@ -260,14 +259,14 @@ void CocosGUIExamplesWeaponScene::itemTouch(CCObject* pObject)
     UIImageView* widget = dynamic_cast<UIImageView*>(pObject);
     
     // weapon item
-    Layout* item = dynamic_cast<Layout*>(widget->getWidgetParent());
+    UILayout* item = dynamic_cast<UILayout*>(widget->getWidgetParent());
     
     // weapon scrollview
     UIContainerWidget* innerContainer = dynamic_cast<UIContainerWidget*>(item->getWidgetParent());
     CCObject* obj = NULL;
     CCARRAY_FOREACH(innerContainer->getChildren(), obj)
     {
-        Layout* item = dynamic_cast<Layout*>(obj);
+        UILayout* item = dynamic_cast<UILayout*>(obj);
         
         UIImageView* normal = dynamic_cast<UIImageView*>(item->getChildByName("normal"));
         normal->setVisible(true);
@@ -293,9 +292,9 @@ void CocosGUIExamplesWeaponScene::itemTouch(CCObject* pObject)
 void CocosGUIExamplesWeaponScene::itemShowDetail(UIWidget* widget)
 {
     // weapon
-    Layout* weapon_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByName("weapon_root"));
+    UILayout* weapon_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByName("weapon_root"));
     // introduce layout
-    Layout* introduce_layout = dynamic_cast<Layout*>(weapon_root->getChildByName("introduce_panel"));
+    UILayout* introduce_layout = dynamic_cast<UILayout*>(weapon_root->getChildByName("introduce_panel"));
     UITextArea* introduce_text = dynamic_cast<UITextArea*>(introduce_layout->getChildByName("introduce_text"));
     
     introduce_text->setText(weapon_introduce_text[widget->getWidgetTag() - WEAPON_ITEM_LAYOUT_TAG]);
@@ -304,11 +303,11 @@ void CocosGUIExamplesWeaponScene::itemShowDetail(UIWidget* widget)
 void CocosGUIExamplesWeaponScene::close(CCObject* pObject)
 {
     // weapon
-    Layout* weapon_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByName("weapon_root"));
+    UILayout* weapon_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByName("weapon_root"));
     weapon_root->setVisible(false);
     
     // button layout
-    Layout* button_layout = dynamic_cast<Layout*>(weapon_root->getChildByName("button_panel"));
+    UILayout* button_layout = dynamic_cast<UILayout*>(weapon_root->getChildByName("button_panel"));
     button_layout->active(true);
 }
 
@@ -316,7 +315,7 @@ void CocosGUIExamplesWeaponScene::close(CCObject* pObject)
 void CocosGUIExamplesWeaponScene::BuyInit()
 {
     // buy root from json
-    Layout* buy_root = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/buy_1/buy_1.json"));
+    UILayout* buy_root = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/buy_1/buy_1.json"));
     buy_root->setVisible(false);
     buy_root->setPosition(ccp((m_pUILayer->getContentSize().width - buy_root->getSize().width) / 2,
                               (m_pUILayer->getContentSize().height - buy_root->getSize().height) / 2 - buy_root->getSize().height / 2));
@@ -331,9 +330,9 @@ void CocosGUIExamplesWeaponScene::BuyInit()
 
 void CocosGUIExamplesWeaponScene::BuyLogic(CCObject *pSender)
 {
-    Layout* weapon_item = dynamic_cast<Layout*>(pSender);
+    UILayout* weapon_item = dynamic_cast<UILayout*>(pSender);
     
-    Layout* buy_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByName("buy_root"));
+    UILayout* buy_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByName("buy_root"));
     buy_root->setVisible(true);
     
     UIImageView* weapon_imageview = dynamic_cast<UIImageView*>(buy_root->getChildByName("alert_imageview"));
@@ -349,12 +348,12 @@ void CocosGUIExamplesWeaponScene::BuyLogic(CCObject *pSender)
 
 void CocosGUIExamplesWeaponScene::BuyCanel(CCObject *pSender)
 {
-    Layout* buy_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByName("buy_root"));
+    UILayout* buy_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByName("buy_root"));
     buy_root->setVisible(false);
 }
 
 void CocosGUIExamplesWeaponScene::BuyOk(CCObject *pSender)
 {
-    Layout* buy_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByName("buy_root"));
+    UILayout* buy_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByName("buy_root"));
     buy_root->setVisible(false);
 }

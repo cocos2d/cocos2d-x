@@ -186,6 +186,7 @@ void UIButton::loadTextureNormal(const char* normal,TextureResType texType)
         }
         dynamic_cast<CCScale9Sprite*>(m_pButtonNormalRenderer)->setColor(getColor());
         dynamic_cast<CCScale9Sprite*>(m_pButtonNormalRenderer)->setOpacity(getOpacity());
+        dynamic_cast<CCScale9Sprite*>(m_pButtonNormalRenderer)->setCapInsets(m_capInsetsNormal);
     }
     else
     {
@@ -231,6 +232,7 @@ void UIButton::loadTexturePressed(const char* selected,TextureResType texType)
         }
         dynamic_cast<CCScale9Sprite*>(m_pButtonClickedRenderer)->setColor(getColor());
         dynamic_cast<CCScale9Sprite*>(m_pButtonClickedRenderer)->setOpacity(getOpacity());
+        dynamic_cast<CCScale9Sprite*>(m_pButtonClickedRenderer)->setCapInsets(m_capInsetsPressed);
     }
     else
     {
@@ -276,6 +278,7 @@ void UIButton::loadTextureDisabled(const char* disabled,TextureResType texType)
         }
         dynamic_cast<CCScale9Sprite*>(m_pButtonDisableRenderer)->setColor(getColor());
         dynamic_cast<CCScale9Sprite*>(m_pButtonDisableRenderer)->setOpacity(getOpacity());
+        dynamic_cast<CCScale9Sprite*>(m_pButtonDisableRenderer)->setCapInsets(m_capInsetsDisabled);
     }
     else
     {
@@ -613,5 +616,32 @@ const char* UIButton::getDescription() const
 {
     return "Button";
 }
+
+UIWidget* UIButton::createCloneInstance()
+{
+    return UIButton::create();
+}
+
+void UIButton::copySpecialProperties(UIWidget *widget)
+{
+    UIButton* button = dynamic_cast<UIButton*>(widget);
+    if (button)
+    {   
+        m_bPrevIgnoreSize = button->m_bPrevIgnoreSize;
+        setScale9Enabled(button->m_bScale9Enabled);
+        loadTextureNormal(button->m_strNormalFileName.c_str(), button->m_eNormalTexType);
+        loadTexturePressed(button->m_strClickedFileName.c_str(), button->m_ePressedTexType);
+        loadTextureDisabled(button->m_strDisabledFileName.c_str(), button->m_eDisabledTexType);
+        setCapInsetsNormalRenderer(button->m_capInsetsNormal);
+        setCapInsetsPressedRenderer(button->m_capInsetsPressed);
+        setCapInsetsDisabledRenderer(button->m_capInsetsDisabled);
+        setTitleText(button->getTitleText());
+        setTitleFontName(button->getTitleFontName());
+        setTitleFontSize(button->getTitleFontSize());
+        setTitleColor(button->getTitleColor());
+        setPressedActionEnabled(button->m_bPressedActionEnabled);
+    }
+}
+
 
 NS_CC_EXT_END

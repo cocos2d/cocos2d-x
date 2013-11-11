@@ -65,8 +65,7 @@ void CocosGUIExamplesMapScene::onExit()
 {
     m_pUILayer->removeFromParent();
     
-    CCSSceneReader::sharedSceneReader()->purgeSceneReader();
-    UIHelper::purgeUIHelper();
+    SceneReader::sharedSceneReader()->purgeSceneReader();
     ActionManager::purgeActionManager();
     
     CCScene::onExit();
@@ -94,11 +93,11 @@ void CocosGUIExamplesMapScene::toCocosGUIExamplesPageScene(CCObject *pSender)
 void CocosGUIExamplesMapScene::MapInit()
 {
     // map root from json
-    Layout* map_root = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/map_1/map_1.json"));\
+    UILayout* map_root = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/map_1/map_1.json"));
     m_pUILayer->addWidget(map_root);    
     
     // build button on map root
-    Layout* button_layout = dynamic_cast<Layout*>(map_root->getChildByName("button_Panel"));
+    UILayout* button_layout = dynamic_cast<UILayout*>(map_root->getChildByName("button_Panel"));
     
     for (unsigned int i = 0; i < button_layout->getChildren()->count(); ++i)
     {
@@ -113,7 +112,7 @@ void CocosGUIExamplesMapScene::buildTouchEvent(CCObject *pSender)
 {
     UIButton* build_button = dynamic_cast<UIButton*>(pSender);
     
-    Layout* map_alert_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByName("map_alert_root"));
+    UILayout* map_alert_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByName("map_alert_root"));
     map_alert_root->setVisible(true);
     
     UIImageView* alert_imageview = dynamic_cast<UIImageView*>(map_alert_root->getChildByName("alert_imageview"));
@@ -129,7 +128,7 @@ void CocosGUIExamplesMapScene::buildTouchEvent(CCObject *pSender)
 void CocosGUIExamplesMapScene::MapAlertInit()
 {
     // map alert from json
-    Layout* map_alert_root = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/map_alert_1/map_alert_1.json"));
+    UILayout* map_alert_root = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/map_alert_1/map_alert_1.json"));
     map_alert_root->setVisible(false);
     map_alert_root->setPosition(ccp((m_pUILayer->getContentSize().width - map_alert_root->getSize().width) / 2,
                                     (m_pUILayer->getContentSize().height - map_alert_root->getSize().height) / 2));
@@ -141,6 +140,6 @@ void CocosGUIExamplesMapScene::MapAlertInit()
 
 void CocosGUIExamplesMapScene::MapAlertClose(CCObject* pSender)
 {
-    Layout* map_alert_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByName("map_alert_root"));
+    UILayout* map_alert_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByName("map_alert_root"));
     map_alert_root->setVisible(false);
 }

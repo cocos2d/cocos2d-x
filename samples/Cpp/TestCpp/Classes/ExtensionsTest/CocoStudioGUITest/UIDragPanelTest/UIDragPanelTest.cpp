@@ -44,7 +44,7 @@ bool UIDragPanelTest::init()
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the dragpanel
         UIDragPanel* dragPanel = UIDragPanel::create();
@@ -57,15 +57,6 @@ bool UIDragPanelTest::init()
                                    (backgroundSize.width - dragPanel->getRect().size.width) / 2,
                                    (widgetSize.height - backgroundSize.height) / 2 +
                                    (backgroundSize.height - dragPanel->getRect().size.height) / 2));
-        dragPanel->addEventListener(this, dragpaneleventselector(UIDragPanelTest::dragPanelEvent));
-//        dragPanel->addBerthToLeftBottomEvent(this, coco_DragPane_BerthToLeftBottom_selector(UIDragPanelTest::berthToLeftBottomEvent));
-//        dragPanel->addBerthToLeftTopEvent(this, coco_DragPanel_BerthToLeftTop_selector(UIDragPanelTest::berthToLeftTopEvent));
-//        dragPanel->addBerthToRightBottomEvent(this, coco_DragPanel_BerthToRightBottom_selector(UIDragPanelTest::berthToRightBottomEvent));
-//        dragPanel->addBerthToRightTopEvent(this,  coco_DragPanel_BerthToRightTop_selector(UIDragPanelTest::berthToRightTopEvent));
-//        dragPanel->addBerthToLeftEvent(this, coco_DragPanel_BerthToLeft_selector(UIDragPanelTest::berthToLeftEvent));
-//        dragPanel->addBerthToTopEvent(this, coco_DragPanel_BerthToTop_selector(UIDragPanelTest::berthToTopEvent));
-//        dragPanel->addBerthToRightEvent(this, coco_DragPanel_BerthToRight_selector(UIDragPanelTest::berthToRightEvent));
-//        dragPanel->addBerthToBottomEvent(this, coco_DragPanel_BerthToBottom_selector(UIDragPanelTest::berthToBottomEvent));
         
         UIImageView* imageView = UIImageView::create();
         imageView->setTouchEnable(true);
@@ -81,47 +72,6 @@ bool UIDragPanelTest::init()
         return true;
     }
     return false;
-}
-
-void UIDragPanelTest::dragPanelEvent(CCObject *pSender, DragPanelEventType type)
-{
-    switch (type)
-    {
-        case DRAGPANEL_EVENT_BERTH_LEFTBOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Left Bottom")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_LFETTOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Left Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_RIGHTBOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Right Bottom")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_RIGHTTOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Right Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_LEFT:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Left")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_TOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_RIGHT:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Right")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BERTH_BOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Berth To Bottom")->getCString());
-            break;
-            
-        default:
-            break;
-    }
 }
 
 // UIDragPanelTest_Bounce
@@ -159,7 +109,7 @@ bool UIDragPanelTest_Bounce::init()
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the dragpanel
         UIDragPanel* dragPanel = UIDragPanel::create();
@@ -172,9 +122,7 @@ bool UIDragPanelTest_Bounce::init()
         dragPanel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                    (backgroundSize.width - dragPanel->getRect().size.width) / 2,
                                    (widgetSize.height - backgroundSize.height) / 2 +
-                                   (backgroundSize.height - dragPanel->getRect().size.height) / 2));
-        dragPanel->addEventListener(this, dragpaneleventselector(UIDragPanelTest_Bounce::dragPanelEvent));
-        
+                                   (backgroundSize.height - dragPanel->getRect().size.height) / 2));        
         UIImageView* imageView = UIImageView::create();
         imageView->setTouchEnable(true);
         imageView->setTexture("cocosgui/b11.png");
@@ -190,45 +138,4 @@ bool UIDragPanelTest_Bounce::init()
     }
     
     return false;
-}
-
-void UIDragPanelTest_Bounce::dragPanelEvent(CCObject *pSender, DragPanelEventType type)
-{
-    switch (type)
-    {
-        case DRAGPANEL_EVENT_BOUNCE_LEFTBOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Left Bottom")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_LEFTTOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Left Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_RIGHTBOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Right Bottom")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_RIGHTTOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Right Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_LEFT:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Left")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_TOP:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Top")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_RIGHT:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Right")->getCString());
-            break;
-            
-        case DRAGPANEL_EVENT_BOUNCE_BOTTOM:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Bounce To Bottom")->getCString());
-            break;
-            
-        default:
-            break;
-    }
 }
