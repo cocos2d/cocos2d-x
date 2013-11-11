@@ -91,6 +91,8 @@ ChipmunkTestLayer::~ChipmunkTestLayer()
     }
 
     cpSpaceFree( _space );
+    
+    Device::setAccelerometerEnabled(false);
 
 }
 

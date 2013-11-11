@@ -21,6 +21,7 @@ AccelerometerTest::AccelerometerTest(void)
 AccelerometerTest::~AccelerometerTest(void)
 {
     _ball->release();
+    Device::setAccelerometerEnabled(false);
 }
 
 std::string AccelerometerTest::title()
