@@ -72,12 +72,12 @@ TextureAtlas::~TextureAtlas()
 #endif
 }
 
-int TextureAtlas::getTotalQuads() const
+long TextureAtlas::getTotalQuads() const
 {
     return _totalQuads;
 }
 
-int TextureAtlas::getCapacity() const
+long TextureAtlas::getCapacity() const
 {
     return _capacity;
 }
@@ -216,7 +216,7 @@ void TextureAtlas::listenBackToForeground(Object *obj)
 
 const char* TextureAtlas::description() const
 {
-    return String::createWithFormat("<TextureAtlas | totalQuads = %u>", _totalQuads)->getCString();
+    return String::createWithFormat("<TextureAtlas | totalQuads = %ld>", _totalQuads)->getCString();
 }
 
 
@@ -357,7 +357,7 @@ void TextureAtlas::insertQuads(V3F_C4B_T2F_Quad* quads, long index, long amount)
     CCASSERT( _totalQuads <= _capacity, "invalid totalQuads");
 
     // issue #575. index can be > totalQuads
-    int remaining = (_totalQuads-1) - index - amount;
+    long remaining = (_totalQuads-1) - index - amount;
 
     // last object doesn't need to be moved
     if( remaining > 0)
@@ -367,9 +367,9 @@ void TextureAtlas::insertQuads(V3F_C4B_T2F_Quad* quads, long index, long amount)
     }
 
 
-    int max = index + amount;
+    long max = index + amount;
     int j = 0;
-    for (int i = index; i < max ; i++)
+    for (long i = index; i < max ; i++)
     {
         _quads[index] = quads[j];
         index++;
@@ -390,9 +390,9 @@ void TextureAtlas::insertQuadFromIndex(long oldIndex, long newIndex)
     }
     // because it is ambiguous in iphone, so we implement abs ourselves
     // unsigned int howMany = abs( oldIndex - newIndex);
-    int howMany = (oldIndex - newIndex) > 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
-    int dst = oldIndex;
-    int src = oldIndex + 1;
+    long howMany = (oldIndex - newIndex) > 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
+    long dst = oldIndex;
+    long src = oldIndex + 1;
     if( oldIndex > newIndex)
     {
         dst = newIndex+1;
@@ -412,7 +412,7 @@ void TextureAtlas::removeQuadAtIndex(long index)
 {
     CCASSERT( index>=0 && index<_totalQuads, "removeQuadAtIndex: Invalid index");
 
-    int remaining = (_totalQuads-1) - index;
+    long remaining = (_totalQuads-1) - index;
 
     // last object doesn't need to be moved
     if( remaining ) 
@@ -431,7 +431,7 @@ void TextureAtlas::removeQuadsAtIndex(long index, long amount)
 {
     CCASSERT(index>=0 && amount>=0 && index+amount<=_totalQuads, "removeQuadAtIndex: index + amount out of bounds");
 
-    int remaining = (_totalQuads) - (index + amount);
+    long remaining = (_totalQuads) - (index + amount);
 
     _totalQuads -= amount;
 
@@ -456,7 +456,7 @@ bool TextureAtlas::resizeCapacity(long newCapacity)
     {
         return true;
     }
-    int oldCapactiy = _capacity;
+    long oldCapactiy = _capacity;
     // update capacity and totolQuads
     _totalQuads = MIN(_totalQuads, newCapacity);
     _capacity = newCapacity;
@@ -575,8 +575,8 @@ void TextureAtlas::fillWithEmptyQuadsFromIndex(long index, long amount)
     V3F_C4B_T2F_Quad quad;
     memset(&quad, 0, sizeof(quad));
 
-    int to = index + amount;
-    for (int i = index ; i < to ; i++)
+    long to = index + amount;
+    for (long i = index ; i < to ; i++)
     {
         _quads[i] = quad;
     }
