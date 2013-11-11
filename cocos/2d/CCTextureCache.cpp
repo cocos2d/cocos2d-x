@@ -81,12 +81,11 @@ void TextureCache::destroyInstance()
 
 TextureCache * TextureCache::sharedTextureCache() 
 {
-    return TextureCache::getInstance(); 
+    return Director::getInstance()->getTextureCache();
 }
 
 void TextureCache::purgeSharedTextureCache() 
 { 
-    return TextureCache::destroyInstance(); 
 }
 
 const char* TextureCache::description() const
