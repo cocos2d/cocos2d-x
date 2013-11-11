@@ -3,6 +3,7 @@
 
 #include "jsapi.h"
 #include "uthash.h"
+#include <unordered_map>
 
 typedef struct js_proxy {
 	void *ptr;
@@ -14,20 +15,18 @@ extern js_proxy_t *_native_js_global_ht;
 extern js_proxy_t *_js_native_global_ht;
 
 typedef struct js_type_class {
-	uint32_t type;
 	JSClass *jsclass;
 	JSObject *proto;
 	JSObject *parentProto;
-	UT_hash_handle hh;
 } js_type_class_t;
 
-extern js_type_class_t *_js_global_type_ht;
+extern std::unordered_map<long, js_type_class_t*> _js_global_type_map;
 
 template< typename DERIVED >
 class TypeTest
 {
 	public:
-	static int s_id()
+	static long s_id()
 	{
 		// return id unique for DERIVED
 		// NOT SURE IT WILL BE REALLY UNIQUE FOR EACH CLASS!!
