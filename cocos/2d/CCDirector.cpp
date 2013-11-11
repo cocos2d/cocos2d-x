@@ -867,14 +867,13 @@ void Director::getFPSImageData(unsigned char** datapointer, long* length)
 void Director::createStatsLabel()
 {
     Texture2D *texture = nullptr;
-    TextureCache *textureCache = _textureCache;
 
     if (_FPSLabel && _SPFLabel)
     {
         CC_SAFE_RELEASE_NULL(_FPSLabel);
         CC_SAFE_RELEASE_NULL(_SPFLabel);
         CC_SAFE_RELEASE_NULL(_drawsLabel);
-        textureCache->removeTextureForKey("/cc_fps_images");
+        _textureCache->removeTextureForKey("/cc_fps_images");
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
@@ -891,7 +890,7 @@ void Director::createStatsLabel()
         return;
     }
 
-    texture = textureCache->addImage(image, "/cc_fps_images");
+    texture = _textureCache->addImage(image, "/cc_fps_images");
     CC_SAFE_RELEASE(image);
 
     /*
