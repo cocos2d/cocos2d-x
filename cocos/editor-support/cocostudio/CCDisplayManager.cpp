@@ -146,13 +146,13 @@ void DisplayManager::addDisplay(Node *display, int index)
 
             for (int i = _decoDisplayList->count()-2; i>=0; i--)
             {
-                DecorativeDisplay *dd = static_cast<DecorativeDisplay*>(_decoDisplayList->objectAtIndex(i));
-                SpriteDisplayData *spriteDisplayData = static_cast<SpriteDisplayData*>(dd->getDisplayData());
-                if (spriteDisplayData)
+                DecorativeDisplay *dd = static_cast<DecorativeDisplay*>(_decoDisplayList->getObjectAtIndex(i));
+                SpriteDisplayData *sdd = static_cast<SpriteDisplayData*>(dd->getDisplayData());
+                if (sdd)
                 {
                     find = true;
-                    skin->setSkinData(spriteDisplayData->skinData);
-                    static_cast<SpriteDisplayData*>(displayData)->skinData = spriteDisplayData->skinData;
+                    skin->setSkinData(sdd->skinData);
+                    static_cast<SpriteDisplayData*>(displayData)->skinData = sdd->skinData;
                     break;
                 }
             }

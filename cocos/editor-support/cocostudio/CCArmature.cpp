@@ -289,7 +289,7 @@ void Armature::removeBone(Bone *bone, bool recursion)
     CCASSERT(bone != nullptr, "bone must be added to the bone dictionary!");
 
     bone->setArmature(nullptr);
-    bone->removeFromParent();
+    bone->removeFromParent(recursion);
 
     if (_topBoneList->containsObject(bone))
     {
