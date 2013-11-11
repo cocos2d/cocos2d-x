@@ -50,6 +50,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		15394DF3182E8F5D000A418D /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
+		15394DF4182E8F5D000A418D /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
+		15394DF5182E8F5D000A418D /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
+		15394DF6182E8F5D000A418D /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
 		1585AAC81821F8D900000FB5 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1585AAC71821F8D900000FB5 /* LuaObjectCBridgeTest.mm */; };
 		1585AB111821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
 		1585AB121821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
@@ -2054,6 +2058,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15394DF2182E8F5D000A418D /* StudioConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = StudioConstants.lua; path = ../cocos/scripting/lua/script/StudioConstants.lua; sourceTree = "<group>"; };
 		1585AAC61821F8D900000FB5 /* LuaObjectCBridgeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaObjectCBridgeTest.h; sourceTree = "<group>"; };
 		1585AAC71821F8D900000FB5 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
 		1585AB101821FA1A00000FB5 /* luaoc.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaoc.lua; path = ../cocos/scripting/lua/script/luaoc.lua; sourceTree = "<group>"; };
@@ -3722,6 +3727,7 @@
 		1A8C5595180E8B6500EF57C3 /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				15394DF2182E8F5D000A418D /* StudioConstants.lua */,
 				1585AB34182299FA00000FB5 /* json.lua */,
 				1585AB101821FA1A00000FB5 /* luaoc.lua */,
 				1A8C5596180E8B8400EF57C3 /* AudioEngine.lua */,
@@ -6046,6 +6052,7 @@
 				1A8C5553180E8B3D00EF57C3 /* Icon-72.png in Resources */,
 				1585AB131821FA1A00000FB5 /* luaoc.lua in Resources */,
 				1A8C5554180E8B3D00EF57C3 /* Icon-76.png in Resources */,
+				15394DF5182E8F5D000A418D /* StudioConstants.lua in Resources */,
 				1A8C557C180E8B5100EF57C3 /* background.mp3 in Resources */,
 				1A8C557E180E8B5100EF57C3 /* background.ogg in Resources */,
 				1A8C5580180E8B5100EF57C3 /* crop.png in Resources */,
@@ -6108,6 +6115,7 @@
 				1A8C5843180E8ED400EF57C3 /* Particles in Resources */,
 				1A8C5845180E8ED400EF57C3 /* pew-pew-lei.wav in Resources */,
 				1A8C5847180E8ED400EF57C3 /* scenetest in Resources */,
+				15394DF6182E8F5D000A418D /* StudioConstants.lua in Resources */,
 				1A8C5849180E8ED400EF57C3 /* Shaders in Resources */,
 				1A8C584B180E8ED400EF57C3 /* spine in Resources */,
 				1A8C584D180E8ED400EF57C3 /* TileMaps in Resources */,
@@ -6159,6 +6167,7 @@
 				1A8C558D180E8B5100EF57C3 /* hello2.lua in Resources */,
 				1A8C558F180E8B5100EF57C3 /* land.png in Resources */,
 				1585AB111821FA1A00000FB5 /* luaoc.lua in Resources */,
+				15394DF3182E8F5D000A418D /* StudioConstants.lua in Resources */,
 				1A8C5591180E8B5100EF57C3 /* menu1.png in Resources */,
 				1A8C5593180E8B5100EF57C3 /* menu2.png in Resources */,
 				1A8C55A2180E8B8400EF57C3 /* AudioEngine.lua in Resources */,
@@ -6212,6 +6221,7 @@
 				1A8C5848180E8ED400EF57C3 /* Shaders in Resources */,
 				1A8C584A180E8ED400EF57C3 /* spine in Resources */,
 				1585AB36182299FA00000FB5 /* json.lua in Resources */,
+				15394DF4182E8F5D000A418D /* StudioConstants.lua in Resources */,
 				1A8C584C180E8ED400EF57C3 /* TileMaps in Resources */,
 				1A8C584E180E8ED400EF57C3 /* zwoptex in Resources */,
 				1A8C587B180E8F0C00EF57C3 /* InfoPlist.strings in Resources */,
