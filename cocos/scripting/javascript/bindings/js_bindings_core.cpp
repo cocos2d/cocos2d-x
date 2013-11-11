@@ -43,17 +43,6 @@ typedef struct _hashJSObject
 static tHashJSObject *hash = NULL;
 static tHashJSObject *reverse_hash = NULL;
 
-// Globals
-char* JSB_association_proxy_key = NULL;
-
-const char* JSB_version = "0.3-beta";
-
-
-static void its_finalize(JSFreeOp *fop, JSObject *obj)
-{
-	CCLOGINFO("Finalizing global class");
-}
-
 //#pragma mark JSBCore - Helper free functions
 static void reportError(JSContext *cx, const char *message, JSErrorReport *report)
 {
