@@ -7,7 +7,6 @@
 
 schedFunc_proxy_t *_schedFunc_target_ht = NULL;
 schedTarget_proxy_t *_schedObj_target_ht = NULL;
-callfuncTarget_proxy_t *_callfuncTarget_native_ht = NULL;
 
 JSTouchDelegate::TouchDelegateMap JSTouchDelegate::sTouchDelegateMap;
 
@@ -453,7 +452,7 @@ JSBool js_cocos2dx_CCMenuItemImage_create(JSContext *cx, uint32_t argc, jsval *v
 				last = 3;
 			}
 		}
-		cocos2d::MenuItemImage* ret = cocos2d::MenuItemImage::create((char*)arg0, (char*)arg1, (char*)arg2);
+		cocos2d::MenuItemImage* ret = cocos2d::MenuItemImage::create(arg0.get(), arg1.get(), std::string(arg2.get()));
 
 		if (argc >= 3) { 
 			if (!thirdArgIsString) {
@@ -514,7 +513,7 @@ JSBool js_cocos2dx_CCMenuItemAtlasFont_create(JSContext *cx, uint32_t argc, jsva
 		int arg3; ok &= jsval_to_int32(cx, argv[3], &arg3);
 		int arg4; ok &= jsval_to_int32(cx, argv[4], &arg4);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cocos2d::MenuItemAtlasFont* ret = cocos2d::MenuItemAtlasFont::create(arg0, arg1, arg2, arg3, arg4);
+		cocos2d::MenuItemAtlasFont* ret = cocos2d::MenuItemAtlasFont::create(arg0.get(), arg1.get(), arg2, arg3, arg4);
 		JSObject *obj = bind_menu_item<cocos2d::MenuItemAtlasFont>(cx, ret, (argc >= 6 ? argv[5] : JSVAL_VOID), (argc == 7 ? argv[6] : JSVAL_VOID));
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
@@ -530,7 +529,7 @@ JSBool js_cocos2dx_CCMenuItemFont_create(JSContext *cx, uint32_t argc, jsval *vp
 	if (argc >= 1 && argc <= 3) {
 		jsval *argv = JS_ARGV(cx, vp);
 		JSStringWrapper arg0(argv[0]);
-		cocos2d::MenuItemFont* ret = cocos2d::MenuItemFont::create(arg0);
+		cocos2d::MenuItemFont* ret = cocos2d::MenuItemFont::create(arg0.get());
 		JSObject *obj = bind_menu_item<cocos2d::MenuItemFont>(cx, ret, (argc >= 2 ? argv[1] : JSVAL_VOID), (argc == 3 ? argv[2] : JSVAL_VOID));
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
@@ -858,85 +857,14 @@ const jsval& JSCallbackWrapper::getJSExtraData() const
     return _extraData;
 }
 
-void JSCallFuncWrapper::setTargetForNativeNode(Node *pNode, JSCallFuncWrapper *target) {
-    callfuncTarget_proxy_t *t;
-    HASH_FIND_PTR(_callfuncTarget_native_ht, &pNode, t);
-    
-    Array *arr;
-    if(!t) {
-        arr = new Array();
-        arr->init();
-    } else {
-        arr = t->obj;
-    }
-    
-    arr->addObject(target);
-    
-    callfuncTarget_proxy_t *p = (callfuncTarget_proxy_t *)malloc(sizeof(callfuncTarget_proxy_t));
-    assert(p);
-    p->ptr = (void *)pNode;
-    p->obj = arr;
-    HASH_ADD_PTR(_callfuncTarget_native_ht, ptr, p);
-}
-
-Array * JSCallFuncWrapper::getTargetForNativeNode(Node *pNode) {
-    
-    callfuncTarget_proxy_t *t;
-    HASH_FIND_PTR(_callfuncTarget_native_ht, &pNode, t);
-    if(!t) {
-        return NULL;
-    }
-    return t->obj;
-    
-}
-
-void JSCallFuncWrapper::callbackFunc(Node *node) {
-    bool hasExtraData = !JSVAL_IS_VOID(_extraData);
-    JSObject* thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);
-    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    
-    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, node);
-
-    jsval retval;
-    if(_jsCallback != JSVAL_VOID)
-    {
-        if (hasExtraData)
-        {
-            jsval valArr[2];
-            valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
-            valArr[1] = _extraData;
-
-            JS_AddValueRoot(cx, valArr);
-            JS_CallFunctionValue(cx, thisObj, _jsCallback, 2, valArr, &retval);
-            JS_RemoveValueRoot(cx, valArr);
-        }
-        else
-        {
-            jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
-            JS_AddValueRoot(cx, &senderVal);
-            JS_CallFunctionValue(cx, thisObj, _jsCallback, 1, &senderVal, &retval);
-            JS_RemoveValueRoot(cx, &senderVal);
-        }
-    }
-
-    // I think the JSCallFuncWrapper isn't needed.
-    // Since an action will be run by a cc.Node, it will be released at the Node::cleanup.
-    // By James Chen
-    // JSCallFuncWrapper::setTargetForNativeNode(node, (JSCallFuncWrapper *)this);
-}
-
 // cc.CallFunc.create( func, this, [data])
 // cc.CallFunc.create( func )
 static JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    
-    if (argc >= 1 && argc <= 3) {        
+    if (argc >= 1 && argc <= 3) {
 		jsval *argv = JS_ARGV(cx, vp);
 
-        JSCallFuncWrapper *tmpCobj = new JSCallFuncWrapper();        
-        tmpCobj->autorelease();
+        std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper());
         
         tmpCobj->setJSCallbackFunc(argv[0]);
         if(argc >= 2) {
@@ -945,7 +873,45 @@ static JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
             tmpCobj->setJSExtraData(argv[2]);
         }
         
-        CallFuncN *ret = CallFuncN::create(tmpCobj, callfuncN_selector(JSCallFuncWrapper::callbackFunc));
+        CallFuncN *ret = CallFuncN::create([=](Node* sender){
+            const jsval& jsvalThis = tmpCobj->getJSCallbackThis();
+            const jsval& jsvalCallback = tmpCobj->getJSCallbackFunc();
+            const jsval& jsvalExtraData = tmpCobj->getJSExtraData();
+            
+            bool hasExtraData = !JSVAL_IS_VOID(jsvalExtraData);
+            JSObject* thisObj = JSVAL_IS_VOID(jsvalThis) ? nullptr : JSVAL_TO_OBJECT(jsvalThis);
+            
+            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+            
+            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
+            
+            jsval retval;
+            if(jsvalCallback != JSVAL_VOID)
+            {
+                if (hasExtraData)
+                {
+                    jsval valArr[2];
+                    valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+                    valArr[1] = jsvalExtraData;
+                    
+                    JS_AddValueRoot(cx, valArr);
+                    JS_CallFunctionValue(cx, thisObj, jsvalCallback, 2, valArr, &retval);
+                    JS_RemoveValueRoot(cx, valArr);
+                }
+                else
+                {
+                    jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
+                    JS_AddValueRoot(cx, &senderVal);
+                    JS_CallFunctionValue(cx, thisObj, jsvalCallback, 1, &senderVal, &retval);
+                    JS_RemoveValueRoot(cx, &senderVal);
+                }
+            }
+            
+            // I think the JSCallFuncWrapper isn't needed.
+            // Since an action will be run by a cc.Node, it will be released at the Node::cleanup.
+            // By James Chen
+            // JSCallFuncWrapper::setTargetForNativeNode(node, (JSCallFuncWrapper *)this);
+        });
         
 		js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CallFunc>(cx, ret);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(proxy->obj));
@@ -2173,10 +2139,13 @@ JSBool js_cocos2dx_CCSet_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 		cobj = new cocos2d::Set();
 		cobj->autorelease();
 		TypeTest<cocos2d::Set> t;
-		js_type_class_t *typeClass;
-		uint32_t typeId = t.s_id();
-		HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
-		assert(typeClass);
+        js_type_class_t *typeClass = nullptr;
+        long typeId = t.s_id();
+        auto typeMapIter = _js_global_type_map.find(typeId);
+        
+        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+        typeClass = typeMapIter->second;
+        CCASSERT(typeClass, "The value is null.");
 		obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
 		js_proxy_t *proxy = jsb_new_proxy(cobj, obj);
 		JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(cobj).name());
