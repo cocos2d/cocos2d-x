@@ -12,6 +12,7 @@
 #include <android/configuration.h>
 
 #include <pthread.h>
+#include <chrono>
 
 #include "CCDirector.h"
 #include "CCApplication.h"
@@ -68,6 +69,9 @@ struct engine {
     int32_t height;
     struct saved_state state;
 };
+
+static bool isContentRectChanged = false;
+static std::chrono::steady_clock::time_point timeRectChanged;
 
 static struct engine engine;
 
@@ -127,7 +131,7 @@ static void cocos_init(cocos_dimensions d, struct android_app* app) {
         cocos2d::GL::invalidateStateCache();
         cocos2d::ShaderCache::getInstance()->reloadDefaultShaders();
         cocos2d::DrawPrimitives::init();
-        cocos2d::TextureCache::reloadAllTextures();
+        cocos2d::VolatileTextureMgr::reloadAllTextures();
         cocos2d::NotificationCenter::getInstance()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
         cocos2d::Director::getInstance()->setGLDefaultValues(); 
     }
@@ -558,6 +562,11 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
     }
 }
 
+static void onContentRectChanged(ANativeActivity* activity, const ARect* rect) {
+	timeRectChanged = std::chrono::steady_clock::now();
+	isContentRectChanged = true;
+}
+
 /**
  * This is the main entry point of a native application that is using
  * android_native_app_glue.  It runs in its own thread, with its own
@@ -585,6 +594,9 @@ void android_main(struct android_app* state) {
         // We are starting with a previous saved state; restore from it.
         engine.state = *(struct saved_state*)state->savedState;
     }
+
+	// Screen size change support
+	state->activity->callbacks->onContentRectChanged = onContentRectChanged;
 
     // loop waiting for stuff to do.
 
@@ -673,5 +685,20 @@ void android_main(struct android_app* state) {
         } else {
             LOG_RENDER_DEBUG("android_main : !engine.animating");
         }
+
+		// Check if screen size changed
+		if (isContentRectChanged) {
+			std::chrono::duration<int, std::milli> duration(
+					std::chrono::duration_cast<std::chrono::duration<int, std::milli>>(std::chrono::steady_clock::now() - timeRectChanged));
+
+			// Wait about 30 ms to get new width and height. Without waiting we can get old values sometime
+			if (duration.count() > 30) {
+				isContentRectChanged = false;
+
+				int32_t newWidth = ANativeWindow_getWidth(engine.app->window);
+				int32_t newHeight = ANativeWindow_getHeight(engine.app->window);
+				cocos2d::Application::getInstance()->applicationScreenSizeChanged(newWidth, newHeight);
+			}
+		}
     }
 }

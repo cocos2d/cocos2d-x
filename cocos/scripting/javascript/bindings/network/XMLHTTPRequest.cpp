@@ -609,8 +609,8 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         
         JSStringWrapper w1(jsMethod);
         JSStringWrapper w2(jsURL);
-        method = w1;
-        urlstr = w2;
+        method = w1.get();
+        urlstr = w2.get();
         
         _url = urlstr;
         _meth = method;
@@ -771,8 +771,8 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, setRequestHeader)
         
         JSStringWrapper w1(jsField);
         JSStringWrapper w2(jsValue);
-        field = w1;
-        value = w2;
+        field = w1.get();
+        value = w2.get();
         
         // Populate the request_header map.
         _setRequestHeader(field, value);

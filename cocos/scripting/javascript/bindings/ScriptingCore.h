@@ -17,6 +17,7 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "spidermonkey_specifics.h"
+#include "js_manual_conversions.h"
 
 void js_log(const char *format, ...);
 
@@ -204,98 +205,25 @@ public:
     int handleKeypadEvent(void* data);
 };
 
-// some utility functions
-// to native
-JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
-JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
-JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
-JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret);
-JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
-JSBool jsval_to_ccpoint(JSContext *cx, jsval v, Point* ret);
-JSBool jsval_to_ccrect(JSContext *cx, jsval v, Rect* ret);
-JSBool jsval_to_ccsize(JSContext *cx, jsval v, Size* ret);
-JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret);
-JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret);
-JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret);
-JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *numPoints);
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret);
-JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret);
-JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, Acceleration* ret);
-JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** ret);
-JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, AffineTransform* ret);
-JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition* ret );
-
-// from native
-jsval int32_to_jsval( JSContext *cx, int32_t l);
-jsval uint32_to_jsval( JSContext *cx, uint32_t number );
-jsval long_long_to_jsval(JSContext* cx, long long v);
-jsval std_string_to_jsval(JSContext* cx, const std::string& v);
-jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
-jsval ccpoint_to_jsval(JSContext* cx, const Point& v);
-jsval ccrect_to_jsval(JSContext* cx, const Rect& v);
-jsval ccsize_to_jsval(JSContext* cx, const Size& v);
-jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v);
-jsval cccolor4f_to_jsval(JSContext* cx, const Color4F& v);
-jsval cccolor3b_to_jsval(JSContext* cx, const Color3B& v);
-jsval ccdictionary_to_jsval(JSContext* cx, Dictionary *dict);
-jsval ccarray_to_jsval(JSContext* cx, Array *arr);
-jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v);
-jsval ccaffinetransform_to_jsval(JSContext* cx, const AffineTransform& t);
-jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t);
-
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 
 // just a simple utility to avoid mem leaking when using JSString
 class JSStringWrapper
 {
-	JSString*	string;
-	const char*	buffer;
 public:
-	JSStringWrapper() {
-		buffer = NULL;
-	}
-	JSStringWrapper(JSString* str, JSContext* cx = NULL) {
-		set(str, cx);
-	}
-	JSStringWrapper(jsval val, JSContext* cx = NULL) {
-		set(val, cx);
-	}
-	~JSStringWrapper() {
-		if (buffer) {
-			//JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
-            delete[] buffer;
-		}
-	}
-	void set(jsval val, JSContext* cx) {
-		if (val.isString()) {
-			this->set(val.toString(), cx);
-		} else {
-			buffer = NULL;
-		}
-	}
-	void set(JSString* str, JSContext* cx) {
-		string = str;
-		if (!cx) {
-			cx = ScriptingCore::getInstance()->getGlobalContext();
-            
-		}
-        // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
-        //buffer = JS_EncodeString(cx, string);
-        unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
-        buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
-	}
-	std::string get() {
-        return buffer;
-    }
+    JSStringWrapper();
+    JSStringWrapper(JSString* str, JSContext* cx = NULL);
+    JSStringWrapper(jsval val, JSContext* cx = NULL);
+    ~JSStringWrapper();
 
-	operator std::string() {
-		return std::string(buffer);
-	}
-	operator char*() {
-		return (char*)buffer;
-	}
+    void set(jsval val, JSContext* cx);
+    void set(JSString* str, JSContext* cx);
+    const char* get();
+
 private:
-	/* Copy and assignment are not supported. */
+    const char* _buffer;
+
+    /* Copy and assignment are not supported. */
     JSStringWrapper(const JSStringWrapper &another);
     JSStringWrapper &operator=(const JSStringWrapper &another);
 };

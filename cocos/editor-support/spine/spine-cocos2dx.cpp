@@ -31,7 +31,7 @@ USING_NS_CC;
 namespace spine {
 
 void _AtlasPage_createTexture (AtlasPage* self, const char* path) {
-	Texture2D* texture = TextureCache::getInstance()->addImage(path);
+	Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
 	TextureAtlas* textureAtlas = TextureAtlas::createWithTexture(texture, 4);
 	textureAtlas->retain();
 	self->rendererObject = textureAtlas;

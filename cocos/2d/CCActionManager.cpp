@@ -123,7 +123,7 @@ void ActionManager::removeActionAtIndex(long index, tHashElement *element)
 void ActionManager::pauseTarget(Object *target)
 {
     tHashElement *element = NULL;
-    HASH_FIND_INT(_targets, &target, element);
+    HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
         element->paused = true;
@@ -133,7 +133,7 @@ void ActionManager::pauseTarget(Object *target)
 void ActionManager::resumeTarget(Object *target)
 {
     tHashElement *element = NULL;
-    HASH_FIND_INT(_targets, &target, element);
+    HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
         element->paused = false;
@@ -176,14 +176,14 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
     tHashElement *element = NULL;
     // we should convert it to Object*, because we save it as Object*
     Object *tmp = target;
-    HASH_FIND_INT(_targets, &tmp, element);
+    HASH_FIND_PTR(_targets, &tmp, element);
     if (! element)
     {
         element = (tHashElement*)calloc(sizeof(*element), 1);
         element->paused = paused;
         target->retain();
         element->target = target;
-        HASH_ADD_INT(_targets, target, element);
+        HASH_ADD_PTR(_targets, target, element);
     }
 
      actionAllocWithHashElement(element);
@@ -215,7 +215,7 @@ void ActionManager::removeAllActionsFromTarget(Object *target)
     }
 
     tHashElement *element = NULL;
-    HASH_FIND_INT(_targets, &target, element);
+    HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
         if (ccArrayContainsObject(element->actions, element->currentAction) && (! element->currentActionSalvaged))
@@ -250,7 +250,7 @@ void ActionManager::removeAction(Action *action)
 
     tHashElement *element = NULL;
     Object *target = action->getOriginalTarget();
-    HASH_FIND_INT(_targets, &target, element);
+    HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
         long i = ccArrayGetIndexOfObject(element->actions, action);
@@ -271,7 +271,7 @@ void ActionManager::removeActionByTag(int tag, Object *target)
     CCASSERT(target != NULL, "");
 
     tHashElement *element = NULL;
-    HASH_FIND_INT(_targets, &target, element);
+    HASH_FIND_PTR(_targets, &target, element);
 
     if (element)
     {
@@ -298,7 +298,7 @@ Action* ActionManager::getActionByTag(int tag, const Object *target) const
     CCASSERT(tag != Action::INVALID_TAG, "");
 
     tHashElement *element = NULL;
-    HASH_FIND_INT(_targets, &target, element);
+    HASH_FIND_PTR(_targets, &target, element);
 
     if (element)
     {
@@ -327,10 +327,10 @@ Action* ActionManager::getActionByTag(int tag, const Object *target) const
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
 // and, it is not possible to get the address of a reference
-unsigned int ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
+long ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
 {
     tHashElement *element = NULL;
-    HASH_FIND_INT(_targets, &target, element);
+    HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
         return element->actions ? element->actions->num : 0;

@@ -29,7 +29,7 @@ Box2DTestLayer::Box2DTestLayer()
     _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    _spriteTexture = TextureCache::getInstance()->addImage("Images/blocks.png");
+    _spriteTexture = Director::getInstance()->getTextureCache()->addImage("Images/blocks.png");
     auto parent = Node::create();
 #endif
     addChild(parent, 0, kTagParentNode);

@@ -24,9 +24,6 @@
     <ClInclude Include="..\UIScrollView.h">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClInclude>
-    <ClInclude Include="..\UIDragPanel.h">
-      <Filter>UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
     <ClInclude Include="..\UIListView.h">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClInclude>
@@ -72,12 +69,6 @@
     <ClInclude Include="..\UILayer.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="..\Layout.h">
-      <Filter>Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\LayoutParameter.h">
-      <Filter>Layouts</Filter>
-    </ClInclude>
     <ClInclude Include="..\UILayoutDefine.h">
       <Filter>Layouts</Filter>
     </ClInclude>
@@ -87,12 +78,15 @@
     <ClInclude Include="..\UIWidget.h">
       <Filter>BaseClasses</Filter>
     </ClInclude>
+    <ClInclude Include="..\UILayout.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UILayoutParameter.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
-      <Filter>UIWidgets\ScrollWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UIDragPanel.cpp">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClCompile>
     <ClCompile Include="..\UIListView.cpp">
@@ -140,12 +134,6 @@
     <ClCompile Include="..\UILayer.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="..\Layout.cpp">
-      <Filter>Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\LayoutParameter.cpp">
-      <Filter>Layouts</Filter>
-    </ClCompile>
     <ClCompile Include="..\UILayoutDefine.cpp">
       <Filter>Layouts</Filter>
     </ClCompile>
@@ -154,6 +142,12 @@
     </ClCompile>
     <ClCompile Include="..\UIWidget.cpp">
       <Filter>BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UILayout.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UILayoutParameter.cpp">
+      <Filter>Layouts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
