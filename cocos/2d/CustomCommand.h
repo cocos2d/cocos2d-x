@@ -20,17 +20,14 @@ public:
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
-    // | ViewPort | Transluc | Cmd |      Depth     |                  |
-    // |   3 bits |    1 bit |  1  |    24 bits     |                  |
+    // | ViewPort | Transluc |     |      Depth     |                  |
+    // |   3 bits |    1 bit |     |    24 bits     |                  |
     // +----------+----------+-----+----------------+------------------+
     virtual int64_t generateID();
 
     void execute();
 
     inline bool isTranslucent() { return true; }
-
-    //TODO support non-graphical command
-    inline bool isCommand() { return false; }
 
 public:
     function<void()> func;

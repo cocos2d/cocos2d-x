@@ -18,6 +18,7 @@ QuadCommand::QuadCommand(int viewport, int32_t depth, GLuint textureID, GLProgra
 {
     _type = QUAD_COMMAND;
     _shader = shader;
+    _quadCount = 1;
 }
 
 QuadCommand::~QuadCommand()
@@ -65,8 +66,7 @@ int64_t QuadCommand::generateID()
     //Generate RenderCommandID
     _id = (int64_t)_viewport << 61
             | (int64_t)1 << 60 //translucent
-            | (int64_t)0 << 59 //is command
-            | (int64_t)_depth << 35;
+            | (int64_t)_depth << 36;
 
     return _id;
 }

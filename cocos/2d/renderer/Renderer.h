@@ -47,12 +47,17 @@ protected:
     vector<RenderCommand*> _renderQueue;
     int _lastMaterialID;
 
-    V3F_C4B_T2F_Quad*_quads;
-    GLushort* _indices;
+    size_t _firstCommand;
+    size_t _lastCommand;
+
+    V3F_C4B_T2F_Quad _quads[VBO_SIZE];
+    GLushort _indices[6 * VBO_SIZE];
     GLuint _VAOname;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
     int _numQuads;
+
+    void drawBatchedQuads();
 };
 
 NS_CC_END
