@@ -142,8 +142,26 @@ void DisplayManager::addDisplay(Node *display, int index)
         }
         else
         {
-            BaseData baseData;
-            skin->setSkinData(baseData);
+            bool find = false;
+
+            for (int i = _decoDisplayList->count()-2; i>=0; i--)
+            {
+                DecorativeDisplay *dd = static_cast<DecorativeDisplay*>(_decoDisplayList->objectAtIndex(i));
+                SpriteDisplayData *spriteDisplayData = static_cast<SpriteDisplayData*>(dd->getDisplayData());
+                if (spriteDisplayData)
+                {
+                    find = true;
+                    skin->setSkinData(spriteDisplayData->skinData);
+                    static_cast<SpriteDisplayData*>(displayData)->skinData = spriteDisplayData->skinData;
+                    break;
+                }
+            }
+
+            if (!find)
+            {
+                BaseData baseData;
+                skin->setSkinData(baseData);
+            }
         }
     }
     else if (dynamic_cast<ParticleSystemQuad *>(display))
