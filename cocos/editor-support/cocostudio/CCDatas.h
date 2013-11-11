@@ -163,9 +163,9 @@ public:
      */
     virtual ~SpriteDisplayData();
 
-    inline void setParam(const char *displayName)
+    inline void setParam(const char *name)
     {
-        this->displayName = displayName;
+        this->displayName = name;
     }
     void copy(SpriteDisplayData *displayData);
 public:
@@ -197,9 +197,9 @@ public:
      */
     virtual ~ArmatureDisplayData();
 
-    inline void setParam(const char *displayName)
+    inline void setParam(const char *name)
     {
-        this->displayName = displayName;
+        this->displayName = name;
     }
     void copy(ArmatureDisplayData *displayData);
 public:
@@ -230,9 +230,9 @@ public:
      */
     virtual ~ParticleDisplayData() {};
 
-    void setParam(const char *plist)
+    void setParam(const char *aPlist)
     {
-        this->plist = plist;
+        this->plist = aPlist;
     }
 
     void copy(ParticleDisplayData *displayData);
@@ -478,10 +478,10 @@ public:
 
 struct ContourVertex2 : public cocos2d::Object
 {
-    ContourVertex2(float x, float y)
+    ContourVertex2(float ax, float ay)
     {
-        this->x = x;
-        this->y = y;
+        this->x = ax;
+        this->y = ay;
     }
 
     float x;
