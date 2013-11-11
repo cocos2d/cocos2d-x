@@ -67,9 +67,6 @@ CCArmatureAnimation::~CCArmatureAnimation(void)
 {
     CC_SAFE_RELEASE_NULL(m_pTweenList);
     CC_SAFE_RELEASE_NULL(m_pAnimationData);
-
-    CC_SAFE_RELEASE_NULL(m_sMovementEventTarget);
-    CC_SAFE_RELEASE_NULL(m_sFrameEventTarget);
 }
 
 bool CCArmatureAnimation::init(CCArmature *armature)
@@ -425,23 +422,13 @@ std::string CCArmatureAnimation::getCurrentMovementID()
 
 void CCArmatureAnimation::setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc)
 {
-    if (target != m_sMovementEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(m_sMovementEventTarget);
-        m_sMovementEventTarget = target;
-    }
+    m_sMovementEventTarget = target;
     m_sMovementEventCallFunc = callFunc;
 }
 
 void CCArmatureAnimation::setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc)
 {
-    if (target != m_sFrameEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(m_sFrameEventTarget);
-        m_sFrameEventTarget = target;
-    }
+    m_sFrameEventTarget = target;
     m_sFrameEventCallFunc = callFunc;
 }
 
