@@ -1073,9 +1073,9 @@ void LabelBMFont::updateLabel()
         int size = multiline_string.size();
         unsigned short* str_new = new unsigned short[size + 1];
 
-        for (int i = 0; i < size; ++i)
+        for (int j = 0; j < size; ++j)
         {
-            str_new[i] = multiline_string[i];
+            str_new[j] = multiline_string[j];
         }
 
         str_new[size] = '\0';

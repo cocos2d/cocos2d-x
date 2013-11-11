@@ -601,31 +601,31 @@ void Scheduler::unscheduleAllWithMinPriority(int nMinPriority)
     }
 
     // Updates selectors
-    tListEntry *pEntry, *pTmp;
+    tListEntry *entry, *tmp;
     if(nMinPriority < 0) 
     {
-        DL_FOREACH_SAFE(_updatesNegList, pEntry, pTmp)
+        DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
         {
-            if(pEntry->priority >= nMinPriority) 
+            if(entry->priority >= nMinPriority)
             {
-                unscheduleUpdateForTarget(pEntry->target);
+                unscheduleUpdateForTarget(entry->target);
             }
         }
     }
 
     if(nMinPriority <= 0) 
     {
-        DL_FOREACH_SAFE(_updates0List, pEntry, pTmp)
+        DL_FOREACH_SAFE(_updates0List, entry, tmp)
         {
-            unscheduleUpdateForTarget(pEntry->target);
+            unscheduleUpdateForTarget(entry->target);
         }
     }
 
-    DL_FOREACH_SAFE(_updatesPosList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesPosList, entry, tmp)
     {
-        if(pEntry->priority >= nMinPriority) 
+        if(entry->priority >= nMinPriority)
         {
-            unscheduleUpdateForTarget(pEntry->target);
+            unscheduleUpdateForTarget(entry->target);
         }
     }
 
@@ -836,32 +836,32 @@ void Scheduler::update(float dt)
     }
 
     // Iterate over all the Updates' selectors
-    tListEntry *pEntry, *pTmp;
+    tListEntry *entry, *tmp;
 
     // updates with priority < 0
-    DL_FOREACH_SAFE(_updatesNegList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
     {
-        if ((! pEntry->paused) && (! pEntry->markedForDeletion))
+        if ((! entry->paused) && (! entry->markedForDeletion))
         {
-            pEntry->target->update(dt);
+            entry->target->update(dt);
         }
     }
 
     // updates with priority == 0
-    DL_FOREACH_SAFE(_updates0List, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updates0List, entry, tmp)
     {
-        if ((! pEntry->paused) && (! pEntry->markedForDeletion))
+        if ((! entry->paused) && (! entry->markedForDeletion))
         {
-            pEntry->target->update(dt);
+            entry->target->update(dt);
         }
     }
 
     // updates with priority > 0
-    DL_FOREACH_SAFE(_updatesPosList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesPosList, entry, tmp)
     {
-        if ((! pEntry->paused) && (! pEntry->markedForDeletion))
+        if ((! entry->paused) && (! entry->markedForDeletion))
         {
-            pEntry->target->update(dt);
+            entry->target->update(dt);
         }
     }
 
@@ -909,43 +909,43 @@ void Scheduler::update(float dt)
     {
         for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
         {
-            SchedulerScriptHandlerEntry* pEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
-            if (pEntry->isMarkedForDeletion())
+            SchedulerScriptHandlerEntry* eachEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
+            if (eachEntry->isMarkedForDeletion())
             {
                 _scriptHandlerEntries->removeObjectAtIndex(i);
             }
-            else if (!pEntry->isPaused())
+            else if (!eachEntry->isPaused())
             {
-                pEntry->getTimer()->update(dt);
+                eachEntry->getTimer()->update(dt);
             }
         }
     }
 
     // delete all updates that are marked for deletion
     // updates with priority < 0
-    DL_FOREACH_SAFE(_updatesNegList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
     {
-        if (pEntry->markedForDeletion)
+        if (entry->markedForDeletion)
         {
-            this->removeUpdateFromHash(pEntry);
+            this->removeUpdateFromHash(entry);
         }
     }
 
     // updates with priority == 0
-    DL_FOREACH_SAFE(_updates0List, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updates0List, entry, tmp)
     {
-        if (pEntry->markedForDeletion)
+        if (entry->markedForDeletion)
         {
-            this->removeUpdateFromHash(pEntry);
+            this->removeUpdateFromHash(entry);
         }
     }
 
     // updates with priority > 0
-    DL_FOREACH_SAFE(_updatesPosList, pEntry, pTmp)
+    DL_FOREACH_SAFE(_updatesPosList, entry, tmp)
     {
-        if (pEntry->markedForDeletion)
+        if (entry->markedForDeletion)
         {
-            this->removeUpdateFromHash(pEntry);
+            this->removeUpdateFromHash(entry);
         }
     }
 

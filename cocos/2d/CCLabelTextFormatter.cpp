@@ -200,9 +200,9 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         int size = multiline_string.size();
         unsigned short* strNew = new unsigned short[size + 1];
         
-        for (int i = 0; i < size; ++i)
+        for (int j = 0; j < size; ++j)
         {
-            strNew[i] = multiline_string[i];
+            strNew[j] = multiline_string[j];
         }
         
         strNew[size] = 0;

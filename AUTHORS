@@ -646,6 +646,9 @@ Developers:
     Luis Parravicini (luisparravicini)
         Fixed typos in create_project.py.
         
+    xhcnb
+        Device::setAccelerometerEnabled needs to be invoked before adding ACC listener.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
