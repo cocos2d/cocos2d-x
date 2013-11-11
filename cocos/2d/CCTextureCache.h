@@ -50,6 +50,10 @@ NS_CC_BEGIN
  * @addtogroup textures
  * @{
  */
+/*
+* from version 3.0, TextureCache will never to treated as a singleton, it will be owned by director.
+* all call by TextureCache::getInstance() should be replaced by Director::getInstance()->getTextureCache()
+*/
 
 /** @brief Singleton that handles the loading of textures
 * Once the texture is loaded, the next time it will return
@@ -62,7 +66,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static TextureCache * getInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache() { return TextureCache::getInstance(); }
+    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
 
     /** purges the cache. It releases the retained instance.
      @since v0.99.0
@@ -70,7 +74,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static void destroyInstance();
 
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache() { return TextureCache::destroyInstance(); }
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
 
     /** Reload all textures
     should not call it, called by frame work
