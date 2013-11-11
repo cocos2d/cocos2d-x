@@ -24,7 +24,7 @@
 
 #include "UIWidget.h"
 #include "../System/UILayer.h"
-#include "../Layouts/Layout.h"
+#include "../Layouts/UILayout.h"
 #include "../System/UIHelper.h"
 
 NS_CC_EXT_BEGIN
@@ -69,6 +69,7 @@ m_sizePercent(CCPointZero),
 m_ePositionType(POSITION_ABSOLUTE),
 m_positionPercent(CCPointZero),
 m_bIsRunning(false),
+m_pUserObject(NULL),
 
 /*Compatible*/
 m_pPushListener(NULL),
@@ -86,11 +87,26 @@ m_pfnCancelSelector(NULL)
 
 UIWidget::~UIWidget()
 {
-    releaseResoures();
+    m_pPushListener = NULL;
+    m_pfnPushSelector = NULL;
+    m_pMoveListener = NULL;
+    m_pfnMoveSelector = NULL;
+    m_pReleaseListener = NULL;
+    m_pfnReleaseSelector = NULL;
+    m_pCancelListener = NULL;
+    m_pfnCancelSelector = NULL;
+    m_pTouchEventListener = NULL;
+    m_pfnTouchEventSelector = NULL;
+    removeAllChildren();
+    m_children->release();
+    m_pRenderer->removeAllChildrenWithCleanup(true);
+    m_pRenderer->removeFromParentAndCleanup(true);
+    m_pRenderer->release();
     setParent(NULL);
     m_pLayoutParameterDictionary->removeAllObjects();
     CC_SAFE_RELEASE(m_pLayoutParameterDictionary);
     CC_SAFE_RELEASE(m_pScheduler);
+    CC_SAFE_RELEASE(m_pUserObject);
 }
 
 UIWidget* UIWidget::create()
@@ -127,23 +143,6 @@ bool UIWidget::init()
     return true;
 }
 
-void UIWidget::releaseResoures()
-{
-    m_pPushListener = NULL;
-    m_pfnPushSelector = NULL;
-    m_pMoveListener = NULL;
-    m_pfnMoveSelector = NULL;
-    m_pReleaseListener = NULL;
-    m_pfnReleaseSelector = NULL;
-    m_pCancelListener = NULL;
-    m_pfnCancelSelector = NULL;
-    removeAllChildren();
-    m_children->release();
-    m_pRenderer->removeAllChildrenWithCleanup(true);
-    m_pRenderer->removeFromParentAndCleanup(true);
-    m_pRenderer->release();
-}
-
 void UIWidget::onEnter()
 {
     arrayMakeObjectsPerformSelector(m_children, onEnter, UIWidget*);
@@ -155,6 +154,18 @@ void UIWidget::onExit()
 {
     m_bIsRunning = false;
     arrayMakeObjectsPerformSelector(m_children, onExit, UIWidget*);
+}
+
+CCObject* UIWidget::getUserObject()
+{
+    return m_pUserObject;
+}
+
+void UIWidget::setUserObject(CCObject *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(m_pUserObject);
+    m_pUserObject = pUserObject;
 }
 
 bool UIWidget::addChild(UIWidget *child)
@@ -303,7 +314,7 @@ void UIWidget::setEnabled(bool enabled)
     }
     else
     {
-        dynamic_cast<RectClippingNode*>(m_pRenderer)->setEnabled(enabled);
+        dynamic_cast<UIRectClippingNode*>(m_pRenderer)->setEnabled(enabled);
     }
     ccArray* arrayChildren = m_children->data;
     int childrenCount = arrayChildren->num;
@@ -316,12 +327,12 @@ void UIWidget::setEnabled(bool enabled)
 
 UIWidget* UIWidget::getChildByName(const char *name)
 {
-    return CCUIHELPER->seekWidgetByName(this, name);
+    return UIHelper::seekWidgetByName(this, name);
 }
 
 UIWidget* UIWidget::getChildByTag(int tag)
 {
-    return CCUIHELPER->seekWidgetByTag(this, tag);
+    return UIHelper::seekWidgetByTag(this, tag);
 }
 
 CCArray* UIWidget::getChildren()
@@ -784,7 +795,7 @@ bool UIWidget::clippingParentAreaContainPoint(const CCPoint &pt)
     UIWidget* clippingParent = NULL;
     while (parent)
     {
-        Layout* layoutParent = dynamic_cast<Layout*>(parent);
+        UILayout* layoutParent = dynamic_cast<UILayout*>(parent);
         if (layoutParent)
         {
             if (layoutParent->isClippingEnabled())
@@ -1154,14 +1165,14 @@ WidgetType UIWidget::getWidgetType() const
     return m_WidgetType;
 }
 
-void UIWidget::setLayoutParameter(LayoutParameter *parameter)
+void UIWidget::setLayoutParameter(UILayoutParameter *parameter)
 {
     m_pLayoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
 }
 
-LayoutParameter* UIWidget::getLayoutParameter(LayoutParameterType type)
+UILayoutParameter* UIWidget::getLayoutParameter(LayoutParameterType type)
 {
-    return dynamic_cast<LayoutParameter*>(m_pLayoutParameterDictionary->objectForKey(type));
+    return dynamic_cast<UILayoutParameter*>(m_pLayoutParameterDictionary->objectForKey(type));
 }
 
 const char* UIWidget::getDescription() const

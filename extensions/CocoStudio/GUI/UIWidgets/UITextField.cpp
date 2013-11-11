@@ -293,6 +293,16 @@ m_pfnDeleteBackwardSelector(NULL)
 
 UITextField::~UITextField()
 {
+    m_pEventListener = NULL;
+    m_pfnEventSelector = NULL;
+    m_pAttachWithIMEListener = NULL;
+    m_pDetachWithIMEListener = NULL;
+    m_pInsertTextListener = NULL;
+    m_pDeleteBackwardListener = NULL;
+    m_pfnAttachWithIMESelector = NULL;
+    m_pfnDetachWithIMESelector = NULL;
+    m_pfnInsertTextSelector = NULL;
+    m_pfnDeleteBackwardSelector = NULL;
 }
 
 UITextField* UITextField::create()

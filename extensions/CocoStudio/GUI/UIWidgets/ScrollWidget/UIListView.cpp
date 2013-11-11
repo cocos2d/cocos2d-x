@@ -77,7 +77,13 @@ UIListView::~UIListView()
     CC_SAFE_RELEASE_NULL(m_overTopArray);
     CC_SAFE_RELEASE_NULL(m_overBottomArray);
     CC_SAFE_RELEASE_NULL(m_overLeftArray);
-    CC_SAFE_RELEASE_NULL(m_overRightArray);        
+    CC_SAFE_RELEASE_NULL(m_overRightArray);
+    m_pEventListener = NULL;
+    m_pfnEventSelector = NULL;
+    m_pInitChildListener = NULL;
+    m_pfnInitChildSelector = NULL;
+    m_pUpdateChildListener = NULL;
+    m_pfnUpdateChildSelector = NULL;
 }
 
 UIListView* UIListView::create()
@@ -94,7 +100,7 @@ UIListView* UIListView::create()
 
 bool UIListView::init()
 {
-    if (Layout::init())
+    if (UILayout::init())
     {
         setUpdateEnabled(true);
         setTouchEnabled(true);
@@ -120,14 +126,14 @@ bool UIListView::init()
 
 void UIListView::onSizeChanged()
 {
-    Layout::onSizeChanged();
+    UILayout::onSizeChanged();
     m_fTopBoundary = m_size.height;
     m_fRightBoundary = m_size.width;
 }
 
 bool UIListView::addChild(UIWidget* widget)
 {
-    Layout::addChild(widget);
+    UILayout::addChild(widget);
     resetProperty();
     return true;
 }
@@ -136,14 +142,14 @@ void UIListView::removeAllChildren()
 {
     m_pUpdatePool->removeAllObjects();
     m_pChildPool->removeAllObjects();
-    Layout::removeAllChildren();
+    UILayout::removeAllChildren();
 }
 
 bool UIListView::removeChild(UIWidget* child)
 {
     bool value = false;
     
-    if (Layout::removeChild(child))
+    if (UILayout::removeChild(child))
     {
         value = true;
         resetProperty();
@@ -154,26 +160,26 @@ bool UIListView::removeChild(UIWidget* child)
 
 bool UIListView::onTouchBegan(const CCPoint &touchPoint)
 {
-    bool pass = Layout::onTouchBegan(touchPoint);
+    bool pass = UILayout::onTouchBegan(touchPoint);
     handlePressLogic(touchPoint);
     return pass;    
 }
 
 void UIListView::onTouchMoved(const CCPoint &touchPoint)
 {
-    Layout::onTouchMoved(touchPoint);
+    UILayout::onTouchMoved(touchPoint);
     handleMoveLogic(touchPoint);
 }
 
 void UIListView::onTouchEnded(const CCPoint &touchPoint)
 {
-    Layout::onTouchEnded(touchPoint);
+    UILayout::onTouchEnded(touchPoint);
     handleReleaseLogic(touchPoint);
 }
 
 void UIListView::onTouchCancelled(const CCPoint &touchPoint)
 {
-    Layout::onTouchCancelled(touchPoint);
+    UILayout::onTouchCancelled(touchPoint);
 }
 
 void UIListView::onTouchLongClicked(const CCPoint &touchPoint)
@@ -1504,7 +1510,7 @@ void UIListView::copySpecialProperties(UIWidget *widget)
     
     if (listView)
     {
-        Layout::copySpecialProperties(widget);
+        UILayout::copySpecialProperties(widget);
         
         setDirection(listView->m_eDirection);
         initChildWithDataLength(listView->m_nDataLength);
