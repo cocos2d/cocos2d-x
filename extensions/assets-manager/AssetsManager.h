@@ -98,7 +98,7 @@ public:
     /* @brief Download new package if there is a new version, and uncompress downloaded zip file.
      *        Ofcourse it will set search path that stores downloaded files.
      */
-    virtual void update(float delta) override;
+    virtual void update();
     
     /* @brief Gets url of package.
      */
