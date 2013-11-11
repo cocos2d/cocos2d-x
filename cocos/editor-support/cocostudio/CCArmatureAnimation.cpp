@@ -56,6 +56,7 @@ ArmatureAnimation::ArmatureAnimation()
     , _toIndex(0)
     , _tweenList(nullptr)
     , _ignoreFrameEvent(false)
+    , _userObject(nullptr)
 
     , _movementEventCallFunc(nullptr)
     , _frameEventCallFunc(nullptr)
@@ -69,6 +70,8 @@ ArmatureAnimation::~ArmatureAnimation(void)
 {
     CC_SAFE_RELEASE_NULL(_tweenList);
     CC_SAFE_RELEASE_NULL(_animationData);
+
+    CC_SAFE_RELEASE_NULL(_userObject);
 }
 
 bool ArmatureAnimation::init(Armature *armature)
@@ -428,6 +431,13 @@ void ArmatureAnimation::setFrameEventCallFunc(Object *target, SEL_FrameEventCall
 {
     _frameEventTarget = target;
     _frameEventCallFunc = callFunc;
+}
+
+void ArmatureAnimation::setUserObject(Object *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(_userObject);
+    _userObject = pUserObject;
 }
 
 void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)
