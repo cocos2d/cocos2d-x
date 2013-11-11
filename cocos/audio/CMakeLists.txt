@@ -3,6 +3,17 @@ set(AUDIO_SRC
   linux/FmodAudioPlayer.cpp
 )
 
+# architecture
+if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+set(ARCH_DIR "64-bit")
+else()
+set(ARCH_DIR "32-bit")
+endif()
+
+include_directories(
+  ../../external/linux-specific/fmod/include/${ARCH_DIR}
+)
+
 add_library(audio STATIC
   ${AUDIO_SRC}
 )

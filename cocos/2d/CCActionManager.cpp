@@ -327,7 +327,7 @@ Action* ActionManager::getActionByTag(int tag, const Object *target) const
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
 // and, it is not possible to get the address of a reference
-unsigned int ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
+long ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
 {
     tHashElement *element = NULL;
     HASH_FIND_PTR(_targets, &target, element);
