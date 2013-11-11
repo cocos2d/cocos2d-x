@@ -4,15 +4,14 @@
 
 
 
-#ifndef __CCRENDERER_H_
-#define __CCRENDERER_H_
+#ifndef __CC_RENDERER_H_
+#define __CC_RENDERER_H_
 
 #include "CCPlatformMacros.h"
-#include "CCEGLView.h"
 #include "RenderCommand.h"
 #include "CCGLProgram.h"
-#include "QuadCommand.h"
 #include "CCGL.h"
+#include <vector>
 
 #define VBO_SIZE 64
 
@@ -37,9 +36,6 @@ protected:
     void setupIndices();
     void setupVBOAndVAO();
 
-    void batchQuads(QuadCommand* cmd);
-    void drawQuads();
-
     //Draw the previews queued quads and flush previous context
     void flush();
 
@@ -62,4 +58,4 @@ protected:
 
 NS_CC_END
 
-#endif //__CCRENDERER_H_
+#endif //__CC_RENDERER_H_

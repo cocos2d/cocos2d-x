@@ -7,6 +7,7 @@
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CustomCommand.h"
+#include "QuadCommand.h"
 #include "CCGL.h"
 
 
@@ -129,88 +130,47 @@ void Renderer::render()
     {
         auto command = _renderQueue[i];
 
-        if( command->getType() == QUAD_COMMAND )
+        switch (command->getType())
         {
-            QuadCommand* cmd = static_cast<QuadCommand*>(command);
-
-            //
-            if(_numQuads + cmd->getQuadCount() < VBO_SIZE)
+            case QUAD_COMMAND:
             {
-                memcpy(_quads + _numQuads - 1, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-                _numQuads += cmd->getQuadCount();
-                _lastCommand = i;
-            }
-            else
-            {
-                //Draw batched quads if VBO is full
-                drawBatchedQuads();
-            }
+                QuadCommand* cmd = static_cast<QuadCommand*>(command);
 
-        }
-        else
-        {
-            //Draw batched quads if we encountered a different command
-            drawBatchedQuads();
+                //Batch quads
+                if(_numQuads + cmd->getQuadCount() < VBO_SIZE)
+                {
+                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
+                    _numQuads += cmd->getQuadCount();
+                    _lastCommand = i;
+                }
+                else
+                {
+                    //Draw batched quads if VBO is full
+                    drawBatchedQuads();
+                }
+                break;
+            }
+            case CUSTOM_COMMAND:
+            {
+                flush();
+                CustomCommand* cmd = static_cast<CustomCommand*>(command);
+                cmd->execute();
+            }
+            default:
+                flush();
+                break;
         }
     }
 
     //Draw the batched quads
     drawBatchedQuads();
 
+    //TODO give command back to command pool
+    for_each(_renderQueue.begin(), _renderQueue.end(), [](RenderCommand* cmd){delete cmd;});
+
     _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
     _renderQueue.clear();
-
-//    //2. Process commands
-//    for(auto it = _renderQueue.begin(); it != _renderQueue.end(); ++it)
-//    {
-//        //TODO: Perform Sprite batching here
-//        auto command = *it;
-//
-//        switch(command->getType())
-//        {
-//            case QUAD_COMMAND:
-//            {
-//                QuadCommand* cmd = static_cast<QuadCommand*>(command);
-//
-//                if(_lastMaterialID != cmd->getMaterialID() || _numQuads >= VBO_SIZE)
-//                {
-//                    //Draw batched data
-//                    drawQuads();
-//                }
-//
-//                //Reset material if needed.
-//                if(_lastMaterialID != cmd->getMaterialID())
-//                {
-//                    //Set new material
-//                    _lastMaterialID = cmd->getMaterialID();
-//
-//                    //Set Shader
-//                    cmd->useMaterial();
-//                }
-//
-//                batchQuads(cmd);
-//
-//                break;
-//            }
-//            case CUSTOM_COMMAND:
-//            {
-//                flush();
-//                CustomCommand* cmd = static_cast<CustomCommand*>(command);
-//                cmd->execute();
-//
-//                break;
-//            }
-//            default:
-//                break;
-//        }
-//
-//        delete command;
-//    }
-//
-//    drawQuads();
-//
-//    _renderQueue.clear();
 }
 
 void Renderer::drawBatchedQuads()
@@ -235,6 +195,7 @@ void Renderer::drawBatchedQuads()
     //Bind VAO
     GL::bindVAO(_VAOname);
 
+    //Start drawing verties in batch
     for(size_t i = _firstCommand; i <= _lastCommand; i++)
     {
         RenderCommand* command = _renderQueue[i];
@@ -260,46 +221,19 @@ void Renderer::drawBatchedQuads()
         }
     }
 
+    //Draw any remaining quad
+    if(quadsToDraw > 0)
+    {
+        glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+    }
+
     _firstCommand = _lastCommand;
     _numQuads = 0;
 }
 
-void Renderer::drawQuads()
-{
-    if(_numQuads <= 0)
-        return;
-
-    //Set VBO data
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), NULL, GL_DYNAMIC_DRAW);
-    void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-    memcpy(buf, _quads, sizeof(_quads[0])* (_numQuads));
-    glUnmapBuffer(GL_ARRAY_BUFFER);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    //Bind VAO
-    GL::bindVAO(_VAOname);
-
-    glDrawElements(GL_TRIANGLES, (GLsizei) _numQuads*6, GL_UNSIGNED_SHORT, 0 );
-
-    CHECK_GL_ERROR_DEBUG();
-    CC_INCREMENT_GL_DRAWS(1);
-
-    _numQuads = 0;
-}
-
-void Renderer::batchQuads(QuadCommand* cmd)
-{
-    //Batch data
-    _numQuads++; //Every quad command only contains one quad
-    _quads[_numQuads - 1] = *cmd->getQuad();
-}
-
 void Renderer::flush()
 {
-    drawQuads();
+    drawBatchedQuads();
     _lastMaterialID = 0;
 }
 
