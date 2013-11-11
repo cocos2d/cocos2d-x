@@ -482,12 +482,12 @@ int CCBReader::readInt(bool pSigned) {
     if(pSigned) {
         int s = current % 2;
         if(s) {
-            num = (int)(current / 2);
+            num = static_cast<int>(current / 2);
         } else {
-            num = (int)(-current / 2);
+            num = static_cast<int>(-current / 2);
         }
     } else {
-        num = current - 1;
+        num = static_cast<int>(current - 1);
     }
     
     this->alignBits();
