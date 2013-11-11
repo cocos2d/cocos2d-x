@@ -111,7 +111,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
  */
 bool ParticleBatchNode::initWithFile(const char* fileImage, unsigned int capacity)
 {
-    Texture2D *tex = TextureCache::getInstance()->addImage(fileImage);
+    Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(tex, capacity);
 }
 

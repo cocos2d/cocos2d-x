@@ -127,7 +127,7 @@ static void cocos_init(cocos_dimensions d, struct android_app* app) {
         cocos2d::GL::invalidateStateCache();
         cocos2d::ShaderCache::getInstance()->reloadDefaultShaders();
         cocos2d::DrawPrimitives::init();
-        cocos2d::TextureCache::reloadAllTextures();
+        cocos2d::VolatileTextureMgr::reloadAllTextures();
         cocos2d::NotificationCenter::getInstance()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
         cocos2d::Director::getInstance()->setGLDefaultValues(); 
     }

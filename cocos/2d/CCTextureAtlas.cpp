@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
+#include "CCDirector.h"
 #include "CCGL.h"
 // support
 #include "CCTexture2D.h"
@@ -134,7 +135,7 @@ TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, long capacity
 bool TextureAtlas::initWithFile(const char * file, long capacity)
 {
     // retained in property
-    Texture2D *texture = TextureCache::getInstance()->addImage(file);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(file);
 
     if (texture)
     {   
