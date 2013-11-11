@@ -246,7 +246,7 @@ JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     char version[256];
-    snprintf(version, sizeof(version)-1, "%s - %s", cocos2dVersion(), JSB_version);
+    snprintf(version, sizeof(version)-1, "%s", cocos2dVersion());
     JSString * js_version = JS_InternString(cx, version);
 
     jsval ret = STRING_TO_JSVAL(js_version);
