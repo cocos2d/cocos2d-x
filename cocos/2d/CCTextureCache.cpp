@@ -79,6 +79,16 @@ void TextureCache::destroyInstance()
 {
 }
 
+TextureCache * TextureCache::sharedTextureCache() 
+{
+    return TextureCache::getInstance(); 
+}
+
+void TextureCache::purgeSharedTextureCache() 
+{ 
+    return TextureCache::destroyInstance(); 
+}
+
 const char* TextureCache::description() const
 {
     return String::createWithFormat("<TextureCache | Number of textures = %lu>", _textures.size() )->getCString();
