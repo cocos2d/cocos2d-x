@@ -139,8 +139,25 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
         }
         else
         {
-            CCBaseData baseData;
-            skin->setSkinData(baseData);
+            bool find = false;
+            for (int i = m_pDecoDisplayList->count()-2; i>=0; i--)
+            {
+                CCDecorativeDisplay *dd = static_cast<CCDecorativeDisplay*>(m_pDecoDisplayList->objectAtIndex(i));
+                CCSpriteDisplayData *spriteDisplayData = static_cast<CCSpriteDisplayData *>(dd->getDisplayData());
+                if (spriteDisplayData)
+                {
+                    find = true;
+                    skin->setSkinData(spriteDisplayData->skinData);
+                    (static_cast<CCSpriteDisplayData *>(displayData))->skinData = spriteDisplayData->skinData;
+                    break;
+                }
+            }
+
+            if (!find)
+            {
+                CCBaseData baseData;
+                skin->setSkinData(baseData);
+            }
         }
     }
     else if (dynamic_cast<CCParticleSystemQuad *>(display))
