@@ -80,6 +80,7 @@ typedef struct PhysicsRayCastInfo
  */
 typedef std::function<bool(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data)> PhysicsRayCastCallbackFunc;
 typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsRectQueryCallbackFunc;
+typedef PhysicsRectQueryCallbackFunc PhysicsPointQueryCallbackFunc;
 
 /**
  * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
@@ -100,6 +101,7 @@ public:
     
     void rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data);
     void rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data);
+    void pointQuery(PhysicsPointQueryCallbackFunc func, const Point& point, void* data);
     Array* getShapes(const Point& point) const;
     PhysicsShape* getShape(const Point& point) const;
     Array* getAllBodies() const;
