@@ -206,7 +206,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
     loop = (loop < 0) ? m_pMovementData->loop : loop;
 
 
-    CCProcessBase::play((void *)animationName, durationTo, durationTween, loop, tweenEasing);
+    CCProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
 
     if (m_iRawDuration == 0)
