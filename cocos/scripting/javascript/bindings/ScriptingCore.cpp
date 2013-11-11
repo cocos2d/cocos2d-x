@@ -2544,13 +2544,13 @@ JSStringWrapper::JSStringWrapper()
 }
 
 JSStringWrapper::JSStringWrapper(JSString* str, JSContext* cx/* = NULL*/)
-: JSStringWrapper()
+: _buffer(nullptr)
 {
     set(str, cx);
 }
 
 JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
-: JSStringWrapper()
+: _buffer(nullptr)
 {
     set(val, cx);
 }
