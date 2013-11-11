@@ -208,7 +208,7 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     loop = (loop < 0) ? _movementData->loop : loop;
 
 
-    ProcessBase::play((void *)animationName, durationTo, durationTween, loop, tweenEasing);
+    ProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
 
     if (_rawDuration == 0)
