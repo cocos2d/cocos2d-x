@@ -112,16 +112,18 @@ public:
      */
     Bone *getParentBone();
 
+    using Node::removeFromParent;
     /**
      * Remove itself from its parent.
+     * @param recursion    whether or not to remove childBone's display
      */
-    void removeFromParent();
+    void removeFromParent(bool recursion);
 
     /**
      * Removes a child Bone
      * @param 	bone   the bone you want to remove
      */
-    void removeChildBone(Bone *bone);
+    void removeChildBone(Bone *bone, bool recursion);
 
     void update(float delta) override;
 

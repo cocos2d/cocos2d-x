@@ -322,16 +322,19 @@ void Bone::addChildBone(Bone *child)
     }
 }
 
-void Bone::removeChildBone(Bone *bone)
+void Bone::removeChildBone(Bone *bone, bool recursion)
 {
     if (_children && _children->getIndexOfObject(bone) != UINT_MAX )
     {
-        Array *ccbones = bone->_children;
-            
-        for(auto object : *ccbones)
+        if(recursion)
         {
-            Bone *ccBone = (Bone *)object;
-            bone->removeChildBone(ccBone);
+            Array *ccbones = bone->_children;
+            
+            for(auto object : *ccbones)
+            {
+                Bone *ccBone = (Bone *)object;
+                bone->removeChildBone(ccBone, recursion);
+            }
         }
 
         bone->setParentBone(nullptr);
@@ -342,11 +345,11 @@ void Bone::removeChildBone(Bone *bone)
     }
 }
 
-void Bone::removeFromParent()
+void Bone::removeFromParent(bool recursion)
 {
     if (nullptr != _parentBone)
     {
-        _parentBone->removeChildBone(this);
+        _parentBone->removeChildBone(this, recursion);
     }
 }
 
