@@ -36,27 +36,18 @@ void Renderer::destroyInstance()
 Renderer::Renderer()
 :_lastMaterialID(0)
 ,_numQuads(0)
+,_firstCommand(0)
+,_lastCommand(0)
 {
 
 }
 
 Renderer::~Renderer()
 {
-    free(_quads);
 }
 
 bool Renderer::init()
 {
-    _quads = (V3F_C4B_T2F_Quad*)malloc(sizeof(V3F_C4B_T2F_Quad) * VBO_SIZE);
-    _indices = (GLushort*) malloc(sizeof(GLushort) * 6 * VBO_SIZE);
-    if( ! ( _quads && _indices) )
-    {
-        //not enough memory
-        CC_SAFE_FREE(_quads);
-        CC_SAFE_FREE(_indices);
-        return false;
-    }
-
     setupIndices();
 
     setupVBOAndVAO();
@@ -132,57 +123,145 @@ void Renderer::render()
     //1. Sort render commands based on ID
     stable_sort(_renderQueue.begin(), _renderQueue.end(), compareRenderCommand);
 
-    //2. Process commands
-    for(auto it = _renderQueue.begin(); it != _renderQueue.end(); ++it)
+    size_t len = _renderQueue.size();
+
+    for (size_t i = 0; i < len; i++)
     {
-        //TODO: Perform Sprite batching here
-        auto command = *it;
+        auto command = _renderQueue[i];
 
-        switch(command->getType())
+        if( command->getType() == QUAD_COMMAND )
         {
-            case QUAD_COMMAND:
+            QuadCommand* cmd = static_cast<QuadCommand*>(command);
+
+            //
+            if(_numQuads + cmd->getQuadCount() < VBO_SIZE)
             {
-                QuadCommand* cmd = static_cast<QuadCommand*>(command);
-
-                if(_lastMaterialID != cmd->getMaterialID() || _numQuads >= VBO_SIZE)
-                {
-                    //Draw batched data
-                    drawQuads();
-                }
-
-                //Reset material if needed.
-                if(_lastMaterialID != cmd->getMaterialID())
-                {
-                    //Set new material
-                    _lastMaterialID = cmd->getMaterialID();
-
-                    //Set Shader
-                    cmd->useMaterial();
-                }
-
-
-                batchQuads(cmd);
-
-                break;
+                memcpy(_quads + _numQuads - 1, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
+                _numQuads += cmd->getQuadCount();
+                _lastCommand = i;
             }
-            case CUSTOM_COMMAND:
+            else
             {
-                flush();
-                CustomCommand* cmd = static_cast<CustomCommand*>(command);
-                cmd->execute();
-
-                break;
+                //Draw batched quads if VBO is full
+                drawBatchedQuads();
             }
-            default:
-                break;
+
         }
-
-        delete command;
+        else
+        {
+            //Draw batched quads if we encountered a different command
+            drawBatchedQuads();
+        }
     }
 
-    drawQuads();
+    //Draw the batched quads
+    drawBatchedQuads();
 
+    _firstCommand = _lastCommand = 0;
+    _lastMaterialID = 0;
     _renderQueue.clear();
+
+//    //2. Process commands
+//    for(auto it = _renderQueue.begin(); it != _renderQueue.end(); ++it)
+//    {
+//        //TODO: Perform Sprite batching here
+//        auto command = *it;
+//
+//        switch(command->getType())
+//        {
+//            case QUAD_COMMAND:
+//            {
+//                QuadCommand* cmd = static_cast<QuadCommand*>(command);
+//
+//                if(_lastMaterialID != cmd->getMaterialID() || _numQuads >= VBO_SIZE)
+//                {
+//                    //Draw batched data
+//                    drawQuads();
+//                }
+//
+//                //Reset material if needed.
+//                if(_lastMaterialID != cmd->getMaterialID())
+//                {
+//                    //Set new material
+//                    _lastMaterialID = cmd->getMaterialID();
+//
+//                    //Set Shader
+//                    cmd->useMaterial();
+//                }
+//
+//                batchQuads(cmd);
+//
+//                break;
+//            }
+//            case CUSTOM_COMMAND:
+//            {
+//                flush();
+//                CustomCommand* cmd = static_cast<CustomCommand*>(command);
+//                cmd->execute();
+//
+//                break;
+//            }
+//            default:
+//                break;
+//        }
+//
+//        delete command;
+//    }
+//
+//    drawQuads();
+//
+//    _renderQueue.clear();
+}
+
+void Renderer::drawBatchedQuads()
+{
+    int quadsToDraw = 0;
+    int startQuad = 0;
+
+    //Upload buffer to VBO
+    if(_numQuads <= 0)
+        return;
+
+    //Set VBO data
+    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), NULL, GL_DYNAMIC_DRAW);
+    void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+    memcpy(buf, _quads, sizeof(_quads[0])* (_numQuads));
+    glUnmapBuffer(GL_ARRAY_BUFFER);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    //Bind VAO
+    GL::bindVAO(_VAOname);
+
+    for(size_t i = _firstCommand; i <= _lastCommand; i++)
+    {
+        RenderCommand* command = _renderQueue[i];
+        if (command->getType() == QUAD_COMMAND)
+        {
+            QuadCommand* cmd = static_cast<QuadCommand*>(command);
+            if(_lastMaterialID != cmd->getMaterialID())
+            {
+                //Draw quads
+                if(quadsToDraw > 0)
+                {
+                    glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+                    startQuad += quadsToDraw;
+                    quadsToDraw = 0;
+                }
+
+                //Use new material
+                cmd->useMaterial();
+                _lastMaterialID = cmd->getMaterialID();
+            }
+
+            quadsToDraw += cmd->getQuadCount();
+        }
+    }
+
+    _firstCommand = _lastCommand;
+    _numQuads = 0;
 }
 
 void Renderer::drawQuads()

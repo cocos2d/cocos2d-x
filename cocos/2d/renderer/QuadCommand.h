@@ -21,8 +21,8 @@ public:
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
-    // | ViewPort | Transluc | Cmd |      Depth     |  Material ID     |
-    // |   3 bits |    1 bit |  1  |    24 bits     |      24 bit2     |
+    // | ViewPort | Transluc |     |      Depth     |  Material ID     |
+    // |   3 bits |    1 bit |     |    24 bits     |      24 bit2     |
     // +----------+----------+-----+----------------+------------------+
     virtual int64_t generateID();
 
@@ -31,13 +31,13 @@ public:
     //TODO use material to decide if it is translucent
     inline bool isTranslucent() { return true; }
 
-    inline bool isCommand() { return false; }
-
     inline int32_t getMaterialID() { return _materialID; }
 
     inline GLuint getTextureID() { return _textureID; }
 
     inline V3F_C4B_T2F_Quad* getQuad() { return &_quad; }
+
+    inline int getQuadCount() { return _quadCount; }
 
     inline GLProgram* getShader() { return _shader; }
 
@@ -61,6 +61,7 @@ protected:
     BlendFunc _blendType;
 
     V3F_C4B_T2F_Quad _quad;
+    int _quadCount;
 };
 
 NS_CC_END

@@ -27,8 +27,7 @@ int64_t CustomCommand::generateID()
 
     _id = (int64_t)_viewport << 61
             | (int64_t)1 << 60 // translucent
-            | (int64_t)0 << 59 // is command
-            | (int64_t)_depth << 35;
+            | (int64_t)_depth << 36;
 
     return _id;
 }
