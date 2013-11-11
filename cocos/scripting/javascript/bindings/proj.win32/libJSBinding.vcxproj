@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.cpp" />
     <ClCompile Include="..\cocos2d_specifics.cpp" />
-    <ClCompile Include="..\cocosjs_manual_conversions.cpp" />
     <ClCompile Include="..\jsb_opengl_functions.cpp" />
     <ClCompile Include="..\jsb_opengl_manual.cpp" />
     <ClCompile Include="..\jsb_opengl_registration.cpp" />
@@ -25,7 +24,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.hpp" />
     <ClInclude Include="..\cocos2d_specifics.hpp" />
-    <ClInclude Include="..\cocosjs_manual_conversions.h" />
     <ClInclude Include="..\jsb_helper.h" />
     <ClInclude Include="..\jsb_opengl_functions.h" />
     <ClInclude Include="..\jsb_opengl_manual.h" />

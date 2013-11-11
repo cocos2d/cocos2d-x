@@ -9,7 +9,6 @@ LOCAL_MODULE_FILENAME := libcocos2dxjsb
 LOCAL_SRC_FILES := ScriptingCore.cpp \
                    cocos2d_specifics.cpp \
                    js_manual_conversions.cpp \
-                   cocosjs_manual_conversions.cpp \
                    js_bindings_core.cpp \
                    js_bindings_opengl.cpp \
                    jsb_opengl_functions.cpp \
