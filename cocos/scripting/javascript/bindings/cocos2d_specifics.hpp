@@ -39,14 +39,23 @@ extern callfuncTarget_proxy_t *_callfuncTarget_native_ht;
  */
 template <class T>
 inline js_type_class_t *js_get_type_from_native(T* native_obj) {
-    js_type_class_t *typeProxy;
+    bool found = false;
     long typeId = typeid(*native_obj).hash_code();
-    HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
-    if (!typeProxy) {
+    auto typeProxyIter = _js_global_type_map.find(typeId);
+    if (typeProxyIter == _js_global_type_map.end())
+    {
         typeId = typeid(T).hash_code();
-        HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
+        typeProxyIter = _js_global_type_map.find(typeId);
+        if (typeProxyIter != _js_global_type_map.end())
+        {
+            found = true;
+        }
     }
-    return typeProxy;
+    else
+    {
+        found = true;
+    }
+    return found ? typeProxyIter->second : nullptr;
 }
 
 /**

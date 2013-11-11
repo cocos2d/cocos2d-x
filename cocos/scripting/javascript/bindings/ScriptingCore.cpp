@@ -67,7 +67,8 @@ static void serverEntryPoint(void);
 
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
-js_type_class_t *_js_global_type_ht = NULL;
+std::unordered_map<long, js_type_class_t*> _js_global_type_map;
+
 static char *_js_log_buf = NULL;
 
 static std::vector<sc_register_sth> registrationList;
@@ -605,14 +606,13 @@ void ScriptingCore::cleanup()
         _js_log_buf = NULL;
     }
 
-    js_type_class_t* current, *tmp;
-    HASH_ITER(hh, _js_global_type_ht, current, tmp)
+    for (auto iter = _js_global_type_map.begin(); iter != _js_global_type_map.end(); ++iter)
     {
-        HASH_DEL(_js_global_type_ht, current);
-        free(current->jsclass);
-        free(current);
+        free(iter->second->jsclass);
+        free(iter->second);
     }
-    HASH_CLEAR(hh, _js_global_type_ht);
+    
+    _js_global_type_map.clear();
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)

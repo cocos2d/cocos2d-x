@@ -2139,10 +2139,13 @@ JSBool js_cocos2dx_CCSet_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 		cobj = new cocos2d::Set();
 		cobj->autorelease();
 		TypeTest<cocos2d::Set> t;
-		js_type_class_t *typeClass;
-		uint32_t typeId = t.s_id();
-		HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
-		assert(typeClass);
+        js_type_class_t *typeClass = nullptr;
+        long typeId = t.s_id();
+        auto typeMapIter = _js_global_type_map.find(typeId);
+        
+        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+        typeClass = typeMapIter->second;
+        CCASSERT(typeClass, "The value is null.");
 		obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
 		js_proxy_t *proxy = jsb_new_proxy(cobj, obj);
 		JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(cobj).name());
