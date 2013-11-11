@@ -54,6 +54,7 @@ CCArmatureAnimation::CCArmatureAnimation()
     , m_iToIndex(0)
     , m_pTweenList(NULL)
     , m_bIgnoreFrameEvent(false)
+    , m_pUserObject(NULL)
 
     , m_sMovementEventCallFunc(NULL)
     , m_sFrameEventCallFunc(NULL)
@@ -67,6 +68,8 @@ CCArmatureAnimation::~CCArmatureAnimation(void)
 {
     CC_SAFE_RELEASE_NULL(m_pTweenList);
     CC_SAFE_RELEASE_NULL(m_pAnimationData);
+
+    CC_SAFE_RELEASE_NULL(m_pUserObject);
 }
 
 bool CCArmatureAnimation::init(CCArmature *armature)
@@ -430,6 +433,18 @@ void CCArmatureAnimation::setFrameEventCallFunc(CCObject *target, SEL_FrameEvent
 {
     m_sFrameEventTarget = target;
     m_sFrameEventCallFunc = callFunc;
+}
+
+void CCArmatureAnimation::setUserObject(CCObject *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(m_pUserObject);
+    m_pUserObject = pUserObject;
+}
+
+CCObject* CCArmatureAnimation::getUserObject()
+{
+    return m_pUserObject;
 }
 
 void CCArmatureAnimation::frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)
