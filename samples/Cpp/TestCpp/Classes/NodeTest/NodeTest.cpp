@@ -359,7 +359,7 @@ void StressTest1::shouldNotCrash(float dt)
 
     // if the node has timers, it crashes
     auto explosion = ParticleSun::create();
-    explosion->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
+    explosion->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
     
     // if it doesn't, it works Ok.
 //    auto explosion = [Sprite create:@"grossinis_sister2.png");
@@ -409,7 +409,7 @@ StressTest2::StressTest2()
     sublayer->addChild(sp1, 1);
 
     auto fire = ParticleFire::create();
-    fire->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
+    fire->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
     fire->setPosition( Point(80, s.height/2-50) );
     
     auto copy_seq3 = seq3->clone();

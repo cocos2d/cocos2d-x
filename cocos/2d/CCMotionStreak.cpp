@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCGLProgram.h"
 #include "CCShaderCache.h"
 #include "ccMacros.h"
-
+#include "CCDirector.h"
 #include "CCVertex.h"
 
 NS_CC_BEGIN
@@ -93,7 +93,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 {
     CCASSERT(path != NULL, "Invalid filename");
 
-    Texture2D *texture = TextureCache::getInstance()->addImage(path);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);
 }
 

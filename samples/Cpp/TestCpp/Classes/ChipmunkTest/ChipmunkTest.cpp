@@ -26,6 +26,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     touchListener->onTouchesEnded = CC_CALLBACK_2(ChipmunkTestLayer::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
+    Device::setAccelerometerEnabled(true);
     auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(ChipmunkTestLayer::onAcceleration, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     
@@ -46,7 +47,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    _spriteTexture = TextureCache::getInstance()->addImage("Images/grossini_dance_atlas.png");
+    _spriteTexture = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas.png");
     auto parent = Node::create();
 #endif
     addChild(parent, 0, kTagParentNode);
@@ -90,6 +91,8 @@ ChipmunkTestLayer::~ChipmunkTestLayer()
     }
 
     cpSpaceFree( _space );
+    
+    Device::setAccelerometerEnabled(false);
 
 }
 

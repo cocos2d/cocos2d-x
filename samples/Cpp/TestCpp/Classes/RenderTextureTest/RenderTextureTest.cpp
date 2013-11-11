@@ -156,7 +156,7 @@ void RenderTextureSave::saveImage(cocos2d::Object *sender)
 
     auto image = _target->newImage();
 
-    auto tex = TextureCache::getInstance()->addImage(image, png);
+    auto tex = Director::getInstance()->getTextureCache()->addImage(image, png);
 
     CC_SAFE_DELETE(image);
 
@@ -176,7 +176,7 @@ RenderTextureSave::~RenderTextureSave()
 {
     _brush->release();
     _target->release();
-    TextureCache::getInstance()->removeUnusedTextures();
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
 }
 
 void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
