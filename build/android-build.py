@@ -109,7 +109,6 @@ def copy_files(src, dst):
         if os.path.isdir(path):
             new_dst = os.path.join(dst, item)
             os.mkdir(new_dst)
-            print new_dst
             copy_files(path, new_dst)
 
 def copy_resources(target, app_android_root):
