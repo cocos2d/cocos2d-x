@@ -56,8 +56,8 @@ UIListView::UIListView()
 , m_overRightArray(NULL)
 , m_fDisBoundaryToChild_0(0.0f)
 , m_fDisBetweenChild(0.0f)
-, m_pEventListener(NULL)
-, m_pfnEventSelector(NULL)
+, m_pListViewEventListener(NULL)
+, m_pfnListViewEventSelector(NULL)
 
 /*compatible*/
 , m_pInitChildListener(NULL)
@@ -77,7 +77,13 @@ UIListView::~UIListView()
     CC_SAFE_RELEASE_NULL(m_overTopArray);
     CC_SAFE_RELEASE_NULL(m_overBottomArray);
     CC_SAFE_RELEASE_NULL(m_overLeftArray);
-    CC_SAFE_RELEASE_NULL(m_overRightArray);        
+    CC_SAFE_RELEASE_NULL(m_overRightArray);
+    m_pListViewEventListener = NULL;
+    m_pfnListViewEventSelector = NULL;
+    m_pInitChildListener = NULL;
+    m_pfnInitChildSelector = NULL;
+    m_pUpdateChildListener = NULL;
+    m_pfnUpdateChildSelector = NULL;
 }
 
 UIListView* UIListView::create()
@@ -1443,9 +1449,9 @@ void UIListView::initChildEvent()
         (m_pInitChildListener->*m_pfnInitChildSelector)(this);
     }
     /************/
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pListViewEventListener && m_pfnListViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, LISTVIEW_EVENT_INIT_CHILD);
+        (m_pListViewEventListener->*m_pfnListViewEventSelector)(this, LISTVIEW_EVENT_INIT_CHILD);
     }
 }
 
@@ -1457,16 +1463,16 @@ void UIListView::updateChildEvent()
         (m_pUpdateChildListener->*m_pfnUpdateChildSelector)(this);
     }
     /************/
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pListViewEventListener && m_pfnListViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, LISTVIEW_EVENT_UPDATE_CHILD);
+        (m_pListViewEventListener->*m_pfnListViewEventSelector)(this, LISTVIEW_EVENT_UPDATE_CHILD);
     }
 }
 
-void UIListView::addEventListenter(CCObject *target, SEL_ListViewEvent selector)
+void UIListView::addEventListenterListView(CCObject *target, SEL_ListViewEvent selector)
 {
-    m_pEventListener = target;
-    m_pfnEventSelector = selector;
+    m_pListViewEventListener = target;
+    m_pfnListViewEventSelector = selector;
 }
 
 /*Compatible*/

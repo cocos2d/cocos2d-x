@@ -125,7 +125,6 @@ void CocosGUIExamplesWeaponScene::onExit()
     m_pUILayer->removeFromParent();
     
     SceneReader::sharedSceneReader()->purgeSceneReader();
-    UIHelper::purgeUIHelper();
     ActionManager::purgeActionManager();
     
     CCScene::onExit();
@@ -154,7 +153,7 @@ void CocosGUIExamplesWeaponScene::toCocosGUIExamplesMapScene(CCObject *pSender)
 void CocosGUIExamplesWeaponScene::WeaponInit()
 {
     // weapon root from json
-    UILayout* weapon_root = dynamic_cast<UILayout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/weapon_introduce_1/weapon_introduce_1.json"));
+    UILayout* weapon_root = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/weapon_introduce_1/weapon_introduce_1.json"));
     m_pUILayer->addWidget(weapon_root);
     
     // title layout
@@ -216,7 +215,7 @@ void CocosGUIExamplesWeaponScene::create()
                 break;
             }
             
-            UILayout* item = dynamic_cast<UILayout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/weapon_introduce_1/weapon_item_1/weapon_item_1.json"));
+            UILayout* item = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/weapon_introduce_1/weapon_item_1/weapon_item_1.json"));
             item->setWidgetTag(WEAPON_ITEM_LAYOUT_TAG + i * columnMax + j);
             
             float width = item->getRect().size.width;
@@ -316,7 +315,7 @@ void CocosGUIExamplesWeaponScene::close(CCObject* pObject)
 void CocosGUIExamplesWeaponScene::BuyInit()
 {
     // buy root from json
-    UILayout* buy_root = dynamic_cast<UILayout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/buy_1/buy_1.json"));
+    UILayout* buy_root = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/buy_1/buy_1.json"));
     buy_root->setVisible(false);
     buy_root->setPosition(ccp((m_pUILayer->getContentSize().width - buy_root->getSize().width) / 2,
                               (m_pUILayer->getContentSize().height - buy_root->getSize().height) / 2 - buy_root->getSize().height / 2));

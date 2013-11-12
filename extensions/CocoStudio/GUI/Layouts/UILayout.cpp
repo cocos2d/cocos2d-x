@@ -128,7 +128,18 @@ void UILayout::setClippingEnabled(bool able)
 void UILayout::onSizeChanged()
 {
     DYNAMIC_CAST_CLIPPINGLAYER->setClippingSize(m_size);
-    doLayout();
+    if (strcmp(getDescription(), "Layout") == 0)
+    {
+        ccArray* arrayChildren = m_children->data;
+        int length = arrayChildren->num;
+        for (int i=0; i<length; ++i)
+        {
+            UIWidget* child = (UIWidget*)arrayChildren->arr[i];
+            child->updateSizeAndPosition();
+        }
+        doLayout();
+    }
+    
     if (m_pBackGroundImage)
     {
         m_pBackGroundImage->setPosition(ccp(m_size.width/2.0f, m_size.height/2.0f));
@@ -591,7 +602,7 @@ void UILayout::doLayout()
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))
                         {
-                            relativeWidget = CCUIHELPER->seekWidgetByRelativeName(this, relativeName);
+                            relativeWidget = UIHelper::seekWidgetByRelativeName(this, relativeName);
                             if (relativeWidget)
                             {
                                 relativeWidgetLP = dynamic_cast<UIRelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));

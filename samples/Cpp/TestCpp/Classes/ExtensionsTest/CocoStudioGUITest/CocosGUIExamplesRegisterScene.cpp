@@ -25,7 +25,7 @@ void CocosGUIExamplesRegisterScene::onEnter()
     addChild(m_pUILayer);
     
     // register root from json
-    m_pLayout = dynamic_cast<UILayout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/register_1/register_1.json"));
+    m_pLayout = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/register_1/register_1.json"));
     m_pUILayer->addWidget(m_pLayout);
     
     
@@ -82,7 +82,6 @@ void CocosGUIExamplesRegisterScene::onExit()
     m_pUILayer->removeFromParent();
     
     SceneReader::sharedSceneReader()->purgeSceneReader();
-    UIHelper::purgeUIHelper();
 	ActionManager::shareManager()->purgeActionManager();
     
     CCScene::onExit();

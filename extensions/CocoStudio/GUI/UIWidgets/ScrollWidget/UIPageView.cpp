@@ -42,8 +42,8 @@ m_fAutoScrollDistance(0.0f),
 m_fAutoScrollSpeed(0.0f),
 m_nAutoScrollDir(0),
 m_fChildFocusCancelOffset(5.0f),
-m_pEventListener(NULL),
-m_pfnEventSelector(NULL),
+m_pPageViewEventListener(NULL),
+m_pfnPageViewEventSelector(NULL),
 /*compatible*/
 m_pPageTurningListener(NULL),
 m_pfnPageTurningSelector(NULL)
@@ -55,6 +55,10 @@ UIPageView::~UIPageView()
 {
     m_pages->removeAllObjects();
     CC_SAFE_RELEASE(m_pages);
+    m_pPageViewEventListener = NULL;
+    m_pfnPageViewEventSelector = NULL;
+    m_pPageTurningListener = NULL;
+    m_pfnPageTurningSelector = NULL;
 }
 
 UIPageView* UIPageView::create()
@@ -573,16 +577,16 @@ void UIPageView::pageTurningEvent()
         (m_pPageTurningListener->*m_pfnPageTurningSelector)(this);
     }
     /************/
-    if (m_pEventListener && m_pfnEventSelector)
+    if (m_pPageViewEventListener && m_pfnPageViewEventSelector)
     {
-        (m_pEventListener->*m_pfnEventSelector)(this, PAGEVIEW_EVENT_TURNING);
+        (m_pPageViewEventListener->*m_pfnPageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
     }
 }
 
-void UIPageView::addEventListener(CCObject *target, SEL_PageViewEvent selector)
+void UIPageView::addEventListenerPageView(CCObject *target, SEL_PageViewEvent selector)
 {
-    m_pEventListener = target;
-    m_pfnEventSelector = selector;
+    m_pPageViewEventListener = target;
+    m_pfnPageViewEventSelector = selector;
 }
 
 /*Compatible*/

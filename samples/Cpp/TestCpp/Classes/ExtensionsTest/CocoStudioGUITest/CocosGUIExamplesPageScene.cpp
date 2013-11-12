@@ -56,7 +56,6 @@ void CocosGUIExamplesPageScene::onExit()
     m_pUILayer->removeFromParent();
     
     SceneReader::sharedSceneReader()->purgeSceneReader();
-    UIHelper::purgeUIHelper();
     ActionManager::purgeActionManager();
     
     CCScene::onExit();
@@ -77,7 +76,7 @@ void CocosGUIExamplesPageScene::toCocosGUIExamplesMapScene(CCObject *pSender)
 void CocosGUIExamplesPageScene::PageInit()
 {
     // page root from json
-    UILayout* page_root = dynamic_cast<UILayout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/page_1/page_1.json"));
+    UILayout* page_root = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/page_1/page_1.json"));
     m_pUILayer->addWidget(page_root);
     
     // page layout
