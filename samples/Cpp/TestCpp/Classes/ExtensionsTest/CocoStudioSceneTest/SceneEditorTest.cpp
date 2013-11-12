@@ -11,7 +11,6 @@ SceneEditorTestLayer::~SceneEditorTestLayer()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
 }
 
 SceneEditorTestLayer::SceneEditorTestLayer()

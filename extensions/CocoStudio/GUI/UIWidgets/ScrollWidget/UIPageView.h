@@ -123,7 +123,7 @@ public:
     CCArray* getPages();
     
     // event
-    void addEventListener(CCObject *target, SEL_PageViewEvent selector);
+    void addEventListenerPageView(CCObject *target, SEL_PageViewEvent selector);
     /*******Compatible*******/
     //Add call back function called when page turning.
     void addPageTurningEvent(CCObject *target, SEL_PageViewPageTurningEvent selector);
@@ -208,8 +208,8 @@ protected:
     float m_fAutoScrollSpeed;
     int m_nAutoScrollDir;
     float m_fChildFocusCancelOffset;
-    CCObject* m_pEventListener;
-    SEL_PageViewEvent m_pfnEventSelector;
+    CCObject* m_pPageViewEventListener;
+    SEL_PageViewEvent m_pfnPageViewEventSelector;
     /*compatible*/
     CCObject* m_pPageTurningListener;
     SEL_PageViewPageTurningEvent m_pfnPageTurningSelector;

@@ -54,6 +54,7 @@ CCArmatureAnimation::CCArmatureAnimation()
     , m_iToIndex(0)
     , m_pTweenList(NULL)
     , m_bIgnoreFrameEvent(false)
+    , m_pUserObject(NULL)
 
     , m_sMovementEventCallFunc(NULL)
     , m_sFrameEventCallFunc(NULL)
@@ -68,8 +69,7 @@ CCArmatureAnimation::~CCArmatureAnimation(void)
     CC_SAFE_RELEASE_NULL(m_pTweenList);
     CC_SAFE_RELEASE_NULL(m_pAnimationData);
 
-    CC_SAFE_RELEASE_NULL(m_sMovementEventTarget);
-    CC_SAFE_RELEASE_NULL(m_sFrameEventTarget);
+    CC_SAFE_RELEASE_NULL(m_pUserObject);
 }
 
 bool CCArmatureAnimation::init(CCArmature *armature)
@@ -209,7 +209,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
     loop = (loop < 0) ? m_pMovementData->loop : loop;
 
 
-    CCProcessBase::play((void *)animationName, durationTo, durationTween, loop, tweenEasing);
+    CCProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
 
     if (m_iRawDuration == 0)
@@ -425,24 +425,26 @@ std::string CCArmatureAnimation::getCurrentMovementID()
 
 void CCArmatureAnimation::setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc)
 {
-    if (target != m_sMovementEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(m_sMovementEventTarget);
-        m_sMovementEventTarget = target;
-    }
+    m_sMovementEventTarget = target;
     m_sMovementEventCallFunc = callFunc;
 }
 
 void CCArmatureAnimation::setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc)
 {
-    if (target != m_sFrameEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(m_sFrameEventTarget);
-        m_sFrameEventTarget = target;
-    }
+    m_sFrameEventTarget = target;
     m_sFrameEventCallFunc = callFunc;
+}
+
+void CCArmatureAnimation::setUserObject(CCObject *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(m_pUserObject);
+    m_pUserObject = pUserObject;
+}
+
+CCObject* CCArmatureAnimation::getUserObject()
+{
+    return m_pUserObject;
 }
 
 void CCArmatureAnimation::frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)

@@ -168,7 +168,7 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addEventListener(CCObject* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListenerSlider(CCObject* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const CCPoint &touchPoint);
@@ -253,8 +253,8 @@ protected:
     CCRect m_capInsetsBarRenderer;
     CCRect m_capInsetsProgressBarRenderer;
 
-    CCObject*       m_pSlidPercentListener;
-    SEL_SlidPercentChangedEvent    m_pfnSlidPercentSelector;
+    CCObject*       m_pSliderEventListener;
+    SEL_SlidPercentChangedEvent    m_pfnSliderEventSelector;
     TextureResType m_eBarTexType;
     TextureResType m_eProgressBarTexType;
     TextureResType m_eBallNTexType;

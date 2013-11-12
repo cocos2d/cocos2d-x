@@ -144,7 +144,7 @@ public:
     virtual void setAnchorPoint(const CCPoint &pt);
     
     //add a call back function would called when checkbox is selected or unselected.
-    void addEventListener(CCObject* target,SEL_SelectedStateEvent selector);
+    void addEventListenerCheckBox(CCObject* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
@@ -218,8 +218,8 @@ protected:
     CCSprite* m_pFrontCrossDisabledRenderer;
     bool m_bIsSelected;
 
-    CCObject*       m_pSelectedStateEventListener;
-    SEL_SelectedStateEvent    m_pfnSelectedStateEventSelector;
+    CCObject*       m_pCheckBoxEventListener;
+    SEL_SelectedStateEvent    m_pfnCheckBoxEventSelector;
     
     TextureResType m_eBackGroundTexType;
     TextureResType m_eBackGroundSelectedTexType;

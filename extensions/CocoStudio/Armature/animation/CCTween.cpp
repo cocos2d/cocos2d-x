@@ -98,7 +98,7 @@ bool CCTween::init(CCBone *bone)
 
 void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    CCProcessBase::play(NULL, durationTo, durationTween, loop, tweenEasing);
+    CCProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
     if (loop)
     {

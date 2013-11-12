@@ -65,7 +65,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 			CCLOG("can not read xml file");
 			break;
 		}
-		xmlDoc->Parse(pXmlBuffer);
+		xmlDoc->Parse(pXmlBuffer, nSize);
         delete[] pXmlBuffer;
 		// get root node
 		*rootNode = xmlDoc->RootElement();
