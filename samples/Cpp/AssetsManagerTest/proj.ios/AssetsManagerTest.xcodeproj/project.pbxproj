@@ -214,6 +214,7 @@
 		46A2145E16D4AC2F00723F2B /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = 46A2141D16D4ABFD00723F2B /* jsb_sys.js */; };
 		46A2145F16D4AC2F00723F2B /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = 46A2141E16D4ABFD00723F2B /* main.debug.js */; };
 		46A2146116D4B04A00723F2B /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A2146016D4B04A00723F2B /* Background.png */; };
+		ED7C66A61831C60E00BE6B1A /* UIListViewEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED7C66A41831C60E00BE6B1A /* UIListViewEx.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -625,6 +626,8 @@
 		46A2143A16D4ABFD00723F2B /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		46A2143B16D4ABFD00723F2B /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
 		46A2146016D4B04A00723F2B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		ED7C66A41831C60E00BE6B1A /* UIListViewEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewEx.cpp; sourceTree = "<group>"; };
+		ED7C66A51831C60E00BE6B1A /* UIListViewEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewEx.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -881,6 +884,8 @@
 		1A5E72F117F085BC00B9ACAE /* ScrollWidget */ = {
 			isa = PBXGroup;
 			children = (
+				ED7C66A41831C60E00BE6B1A /* UIListViewEx.cpp */,
+				ED7C66A51831C60E00BE6B1A /* UIListViewEx.h */,
 				1A5E72F417F085BC00B9ACAE /* UIListView.cpp */,
 				1A5E72F517F085BC00B9ACAE /* UIListView.h */,
 				1A5E72F617F085BC00B9ACAE /* UIPageView.cpp */,
@@ -1657,6 +1662,7 @@
 				1A5E734D17F085BC00B9ACAE /* CocosGUI.cpp in Sources */,
 				1A5E734E17F085BC00B9ACAE /* UIHelper.cpp in Sources */,
 				1A5E734F17F085BC00B9ACAE /* UIInputManager.cpp in Sources */,
+				ED7C66A61831C60E00BE6B1A /* UIListViewEx.cpp in Sources */,
 				1A5E735017F085BC00B9ACAE /* UILayer.cpp in Sources */,
 				1A5E735217F085BC00B9ACAE /* UIListView.cpp in Sources */,
 				1A5E735317F085BC00B9ACAE /* UIPageView.cpp in Sources */,
