@@ -37,8 +37,8 @@ public:
 class NewSpriteTest : public MultiSceneTest
 {
 public:
-    NewRendererTest();
-    virtual ~NewRendererTest();
+    NewSpriteTest();
+    virtual ~NewSpriteTest();
 
     virtual string title();
     virtual string subtitle();

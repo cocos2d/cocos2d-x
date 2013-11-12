@@ -14,7 +14,7 @@ Layer* restartSpriteTestAction();
 
 static std::function<Layer*()> createFunctions[] =
 {
-    CL(NewRendererTest),
+    CL(NewSpriteTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -111,16 +111,16 @@ void MultiSceneTest::backCallback(Object *sender)
     s->release();
 }
 
-NewSpriteTest::NewRendererTest()
+NewSpriteTest::NewSpriteTest()
 {
     auto touchListener = EventListenerTouchAllAtOnce::create();
-    touchListener->onTouchesEnded = CC_CALLBACK_2(NewRendererTest::onTouchesEnded, this);
+    touchListener->onTouchesEnded = CC_CALLBACK_2(NewSpriteTest::onTouchesEnded, this);
 
     createSpriteTest();
     createNewSpriteTest();
 }
 
-NewSpriteTest::~NewRendererTest()
+NewSpriteTest::~NewSpriteTest()
 {
 
 }
