@@ -231,7 +231,7 @@ public:
     /**
      * Add call back function called scrollview event triggered
      */
-    void addEventListener(cocos2d::Object* target, SEL_ScrollViewEvent selector);
+    void addEventListenerScrollView(cocos2d::Object* target, SEL_ScrollViewEvent selector);
         
     //override "addChild" method of widget.
     virtual bool addChild(UIWidget* widget);
@@ -382,8 +382,8 @@ protected:
 
 
     
-    cocos2d::Object* _eventListener;
-    SEL_ScrollViewEvent _eventSelector;
+    cocos2d::Object* _scrollViewEventListener;
+    SEL_ScrollViewEvent _scrollViewEventSelector;
 };
 
 }
