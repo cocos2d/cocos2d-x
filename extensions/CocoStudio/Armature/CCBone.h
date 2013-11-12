@@ -109,6 +109,7 @@ public:
      */
     CCBone *getParentBone();
 
+    using CCNode::removeFromParent;
     /**
      * Remove itself from its parent.
      * @param 	recursion    whether or not to remove childBone's display
