@@ -51,7 +51,7 @@ bool UITextFieldTest::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        textField->addEventListener(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -139,7 +139,7 @@ bool UITextFieldTest_MaxLength::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addEventListener(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -233,7 +233,7 @@ bool UITextFieldTest_Password::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input password here");
         textField->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addEventListener(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
