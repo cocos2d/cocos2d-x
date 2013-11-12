@@ -4,6 +4,25 @@
 
 var cc = cc || {};
 
+/**
+ * Device type
+ * @constant
+ * @type {Object}
+ */
+cc.TARGET_PLATFORM = {
+    WINDOWS:0,
+    LINUX:1,
+    MACOS:2,
+    ANDROID:3,
+    IPHONE:4,
+    IPAD:5,
+    BLACKBERRY:6,
+    NACL:7,
+    EMSCRIPTEN:8,
+    MOBILE_BROWSER:100,
+    PC_BROWSER:101
+};
+
 cc.LANGUAGE_ENGLISH    = 0;
 cc.LANGUAGE_CHINESE    = 1;
 cc.LANGUAGE_FRENCH     = 2;
@@ -178,6 +197,10 @@ cc.pointEqualToPoint = function (point1, point2) {
     return ((point1.x == point2.x) && (point1.y == point2.y));
 };
 
+cc.PointZero = function () {
+    return cc.p(0, 0);
+};
+
 //
 // Grid
 //
@@ -204,6 +227,9 @@ cc._size = function(w,h)
 cc.sizeEqualToSize = function (size1, size2)
 {
     return ((size1.width == size2.width) && (size1.height == size2.height));
+};
+cc.SizeZero = function () {
+    return cc.size(0, 0);
 };
 
 //
@@ -294,6 +320,10 @@ cc.rectIntersection = function (rectA, rectB) {
     intersection.width = Math.min(rectA.x+rectA.width, rectB.x+rectB.width) - intersection.x;
     intersection.height = Math.min(rectA.y+rectA.height, rectB.y+rectB.height) - intersection.y;
     return intersection;
+};
+
+cc.RectZero = function () {
+    return cc.rect(0, 0, 0, 0);
 };
 
 //
@@ -544,3 +574,5 @@ cc.Loader.preload = function (resources, selector, target) {
     this._instance.initWith(resources, selector, target);
     return this._instance;
 };
+
+cc.LoaderScene = cc.Loader;
