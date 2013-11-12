@@ -114,7 +114,7 @@ bool SpriteBatchNode::init()
 */
 bool SpriteBatchNode::initWithFile(const char* fileImage, long capacity)
 {
-    Texture2D *texture2D = TextureCache::getInstance()->addImage(fileImage);
+    Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
 }
 
@@ -598,8 +598,8 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     {
         auto next = std::next(it);
 
-        std::for_each(next, _descendants.end(), [](Sprite *sprite) {
-            sprite->setAtlasIndex( sprite->getAtlasIndex() - 1 );
+        std::for_each(next, _descendants.end(), [](Sprite *spr) {
+            spr->setAtlasIndex( spr->getAtlasIndex() - 1 );
         });
 
         _descendants.erase(it);

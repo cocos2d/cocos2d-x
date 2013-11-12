@@ -42,8 +42,8 @@ _autoScrollDistance(0.0f),
 _autoScrollSpeed(0.0f),
 _autoScrollDir(0),
 _childFocusCancelOffset(5.0f),
-_eventListener(NULL),
-_eventSelector(NULL)
+_pageViewEventListener(NULL),
+_pageViewEventSelector(NULL)
 {
 }
 
@@ -51,6 +51,8 @@ UIPageView::~UIPageView()
 {
     _pages->removeAllObjects();
     CC_SAFE_RELEASE(_pages);
+    _pageViewEventListener = NULL;
+    _pageViewEventSelector = NULL;
 }
 
 UIPageView* UIPageView::create()
@@ -563,16 +565,16 @@ void UIPageView::interceptTouchEvent(int handleState, UIWidget *sender, const co
 
 void UIPageView::pageTurningEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_pageViewEventListener && _pageViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, PAGEVIEW_EVENT_TURNING);
+        (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
     }
 }
 
-void UIPageView::addEventListener(cocos2d::Object *target, SEL_PageViewEvent selector)
+void UIPageView::addEventListenerPageView(cocos2d::Object *target, SEL_PageViewEvent selector)
 {
-    _eventListener = target;
-    _eventSelector = selector;
+    _pageViewEventListener = target;
+    _pageViewEventSelector = selector;
 }
 
 int UIPageView::getCurPageIndex() const

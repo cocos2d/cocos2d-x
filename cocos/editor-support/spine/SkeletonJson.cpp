@@ -118,7 +118,7 @@ static Animation* _SkeletonJson_readAnimation (SkeletonJson* self, Json* root, S
 	skeletonData->animationCount++;
 
 	for (i = 0; i < boneCount; ++i) {
-		int timelineCount;
+		timelineCount = 0;
 		Json* boneMap = Json_getItemAt(bones, i);
 
 		const char* boneName = boneMap->name;
@@ -175,7 +175,7 @@ static Animation* _SkeletonJson_readAnimation (SkeletonJson* self, Json* root, S
 	}
 
 	for (i = 0; i < slotCount; ++i) {
-		int timelineCount;
+        timelineCount = 0;
 		Json* slotMap = Json_getItemAt(slots, i);
 		const char* slotName = slotMap->name;
 
