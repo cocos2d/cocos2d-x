@@ -21,11 +21,13 @@ Thumbs.db
 *.ilk
 *.log
 [Bb]in
-[Dd]ebug*/
+[Dd]ebug/
+[Dd]ebug.win32/
 *.sbr
 *.sdf
 obj/
-[Rr]elease*/
+[Rr]elease/
+[Rr]elease.win32/
 _ReSharper*/
 [Tt]est[Rr]esult*
 ipch/
@@ -63,11 +65,13 @@ build_*_vc10/
 *.xcuserstate
 *.xccheckout
 xcschememanagement.plist
-build/
 .DS_Store
 ._.*
 xcuserdata/
 DerivedData/
+
+# Ignore files built by AppCode
+.idea/
 
 # Ignore files built by bada
 .Simulator-Debug/
@@ -96,3 +100,8 @@ tools/jenkins_scripts/mac/android/userconf.ini
 
 # CTags
 tags
+
+# ignore files, created with make-all-linux-project script
+/lib
+/build/linux-build
+

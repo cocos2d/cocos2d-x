@@ -30,7 +30,7 @@ public:
 
 	void updateGame(float dt);
 
-	virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
+	void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     
     
 protected:
