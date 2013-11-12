@@ -248,7 +248,7 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner,
 
     unsigned char * pBytes = FileUtils::getInstance()->getFileData(strPath.c_str(), "rb", &size);
     Data *data = new Data(pBytes, size);
-    CC_SAFE_DELETE_ARRAY(pBytes);
+    free(pBytes);
 
     Node *ret =  this->readNodeGraphFromData(data, pOwner, parentSize);
     

@@ -926,7 +926,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     reader->getAnimationManager()->setRootContainerSize(pParent->getContentSize());
     
     Data *data = new Data(pBytes, size);
-    CC_SAFE_DELETE_ARRAY(pBytes);
+    free(pBytes);
 
     data->retain();
     reader->_data = data;
