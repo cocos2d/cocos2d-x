@@ -56,6 +56,7 @@ ArmatureAnimation::ArmatureAnimation()
     , _toIndex(0)
     , _tweenList(nullptr)
     , _ignoreFrameEvent(false)
+    , _userObject(nullptr)
 
     , _movementEventCallFunc(nullptr)
     , _frameEventCallFunc(nullptr)
@@ -70,8 +71,7 @@ ArmatureAnimation::~ArmatureAnimation(void)
     CC_SAFE_RELEASE_NULL(_tweenList);
     CC_SAFE_RELEASE_NULL(_animationData);
 
-    CC_SAFE_RELEASE_NULL(_movementEventTarget);
-    CC_SAFE_RELEASE_NULL(_frameEventTarget);
+    CC_SAFE_RELEASE_NULL(_userObject);
 }
 
 bool ArmatureAnimation::init(Armature *armature)
@@ -208,7 +208,7 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     loop = (loop < 0) ? _movementData->loop : loop;
 
 
-    ProcessBase::play((void *)animationName, durationTo, durationTween, loop, tweenEasing);
+    ProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
 
     if (_rawDuration == 0)
@@ -423,24 +423,21 @@ std::string ArmatureAnimation::getCurrentMovementID() const
 
 void ArmatureAnimation::setMovementEventCallFunc(Object *target, SEL_MovementEventCallFunc callFunc)
 {
-    if (target != _movementEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(_movementEventTarget);
-        _movementEventTarget = target;
-    }
+    _movementEventTarget = target;
     _movementEventCallFunc = callFunc;
 }
 
 void ArmatureAnimation::setFrameEventCallFunc(Object *target, SEL_FrameEventCallFunc callFunc)
 {
-    if (target != _frameEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(_frameEventTarget);
-        _frameEventTarget = target;
-    }
+    _frameEventTarget = target;
     _frameEventCallFunc = callFunc;
+}
+
+void ArmatureAnimation::setUserObject(Object *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(_userObject);
+    _userObject = pUserObject;
 }
 
 void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)
