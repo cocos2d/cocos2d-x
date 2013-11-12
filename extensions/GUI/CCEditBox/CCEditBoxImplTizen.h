@@ -31,7 +31,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 
-#include "ExtensionMacros.h"
+#include "extensions/ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
 NS_CC_EXT_BEGIN

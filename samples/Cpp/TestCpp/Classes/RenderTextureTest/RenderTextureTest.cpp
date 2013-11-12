@@ -111,8 +111,11 @@ RenderTextureSave::RenderTextureSave()
     _brush->retain();
     _brush->setColor(Color3B::RED);
     _brush->setOpacity(20);
-    this->setTouchEnabled(true);
-
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     // Save Image menu
     MenuItemFont::setFontSize(16);
     auto item1 = MenuItemFont::create("Save Image", CC_CALLBACK_1(RenderTextureSave::saveImage, this));
@@ -153,7 +156,7 @@ void RenderTextureSave::saveImage(cocos2d::Object *sender)
 
     auto image = _target->newImage();
 
-    auto tex = TextureCache::getInstance()->addImage(image, png);
+    auto tex = Director::getInstance()->getTextureCache()->addImage(image, png);
 
     CC_SAFE_DELETE(image);
 
@@ -173,7 +176,7 @@ RenderTextureSave::~RenderTextureSave()
 {
     _brush->release();
     _target->release();
-    TextureCache::getInstance()->removeUnusedTextures();
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
 }
 
 void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
@@ -296,7 +299,12 @@ void RenderTextureScene::runThisTest()
 
 RenderTextureZbuffer::RenderTextureZbuffer()
 {
-    this->setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(RenderTextureZbuffer::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureZbuffer::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(RenderTextureZbuffer::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     auto size = Director::getInstance()->getWinSize();
     auto label = LabelTTF::create("vertexZ = 50", "Marker Felt", 64);
     label->setPosition(Point(size.width / 2, size.height * 0.25f));
@@ -627,7 +635,9 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()
 {
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(SpriteRenderTextureBug::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords(Point(s.width/2, s.height/2));

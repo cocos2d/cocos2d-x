@@ -2,9 +2,10 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../../VisibleRect.h"
 #include "../../testBasic.h"
+#include "cocostudio/CocoStudio.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "../../Box2DTestBed/GLES-Render.h"
@@ -26,17 +27,21 @@ public:
 
 enum {
 	TEST_ASYNCHRONOUS_LOADING = 0,
+    TEST_DIRECT_LOADING,
 	TEST_COCOSTUDIO_WITH_SKELETON,
 	TEST_DRAGON_BONES_2_0,
 	TEST_PERFORMANCE,
+    TEST_PERFORMANCE_BATCHNODE,
 	TEST_CHANGE_ZORDER,
 	TEST_ANIMATION_EVENT,
+    TEST_FRAME_EVENT,
 	TEST_PARTICLE_DISPLAY,
 	TEST_USE_DIFFERENT_PICTURE,
 	TEST_BCOLLIDER_DETECTOR,
 	TEST_BOUDINGBOX,
 	TEST_ANCHORPOINT,
 	TEST_ARMATURE_NESTING,
+    TEST_ARMATURE_NESTING_2,
 
 	TEST_LAYER_COUNT
 };
@@ -69,8 +74,16 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
+    virtual void restartCallback(Object* pSender);
 
 	void dataLoaded(float percent);
+};
+
+class TestDirectLoading : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class TestCSWithSkeleton : public ArmatureTestLayer
@@ -96,8 +109,12 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void addArmature(cocos2d::extension::armature::Armature *armature);
-	void update(float delta);
+    virtual void onIncrease(Object* pSender);
+    virtual void onDecrease(Object* pSender);
+    virtual void addArmature(int number);
+    virtual void addArmatureToParent(cocostudio::Armature *armature);
+    virtual void removeArmatureFromParent(int tag);
+    virtual void refreshTitile();
 
 	int armatureCount;
 
@@ -107,6 +124,15 @@ public:
 	bool generated;
 };
 
+class TestPerformanceBatchNode : public TestPerformance
+{
+    virtual void onEnter();
+    virtual std::string title();
+    virtual void addArmatureToParent(cocostudio::Armature *armature);
+    virtual void removeArmatureFromParent(int tag);
+
+    cocostudio::BatchNode *batchNode;
+};
 
 class TestChangeZorder : public ArmatureTestLayer
 {
@@ -124,12 +150,23 @@ public:
 
 	virtual void onEnter();
 	virtual std::string title();
-	void animationEvent(cocos2d::extension::armature::Armature *armature, cocos2d::extension::armature::MovementEventType movementType, const char *movementID);
+	void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const char *movementID);
 	void callback1();
 	void callback2();
 
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 };
+
+
+class TestFrameEvent : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+    void checkAction(float dt);
+};
+
 
 class TestUseMutiplePicture : public ArmatureTestLayer
 {
@@ -137,10 +174,10 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void onExit();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	int displayIndex;
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 };
 
 class TestParticleDisplay : public ArmatureTestLayer
@@ -149,10 +186,10 @@ class TestParticleDisplay : public ArmatureTestLayer
 	virtual void onExit();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	int animationID;
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 };
 
 
@@ -173,13 +210,13 @@ public:
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocos2d::extension::armature::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+	void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
 
 	void initWorld();
 
 
-	cocos2d::extension::armature::Armature *armature;
-	cocos2d::extension::armature::Armature *armature2;
+	cocostudio::Armature *armature;
+	cocostudio::Armature *armature2;
 
 	cocos2d::extension::PhysicsSprite *bullet;
 
@@ -202,13 +239,13 @@ public:
 	virtual std::string title();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocos2d::extension::armature::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+	void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
 
 	void initWorld();
 
 
-	cocos2d::extension::armature::Armature *armature;
-	cocos2d::extension::armature::Armature *armature2;
+	cocostudio::Armature *armature;
+	cocostudio::Armature *armature2;
 
 	cocos2d::extension::PhysicsSprite *bullet;
 
@@ -233,7 +270,7 @@ public:
 	virtual std::string title();
 	virtual void draw();
 
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 	Rect rect;
 };
 
@@ -250,9 +287,44 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
 	virtual std::string title();
-	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
-	cocos2d::extension::armature::Armature *armature;
+	cocostudio::Armature *armature;
 	int weaponIndex;
+};
+
+class Hero : public cocostudio::Armature
+{
+public:
+    static Hero *create(const char *name);
+    Hero();
+
+    virtual void changeMount(cocostudio::Armature *armature);
+    virtual void playByIndex(int index);
+
+    CC_SYNTHESIZE(cocostudio::Armature*, m_pMount, Mount);
+    CC_SYNTHESIZE(cocos2d::Layer*, m_pLayer, Layer);
+};
+
+class TestArmatureNesting2 : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+
+    virtual void ChangeMountCallback(Object* pSender);
+    virtual cocostudio::Armature *createMount(const char *name, Point position);
+
+    Hero *hero;
+
+    cocostudio::Armature *horse;
+    cocostudio::Armature *horse2;
+    cocostudio::Armature *bear;
+
+
+    bool touchedMenu;
 };
 #endif  // __HELLOWORLD_SCENE_H__
