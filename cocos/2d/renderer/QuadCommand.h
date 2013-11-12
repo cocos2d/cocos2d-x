@@ -16,7 +16,7 @@ NS_CC_BEGIN
 class QuadCommand : public RenderCommand
 {
 public:
-    QuadCommand(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad quad);
+    QuadCommand(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount);
     ~QuadCommand();
 
     // +----------+----------+-----+-----------------------------------+
@@ -35,7 +35,7 @@ public:
 
     inline GLuint getTextureID() { return _textureID; }
 
-    inline V3F_C4B_T2F_Quad* getQuad() { return &_quad; }
+    inline V3F_C4B_T2F_Quad* getQuad() { return _quad; }
 
     inline int getQuadCount() { return _quadCount; }
 
@@ -60,7 +60,7 @@ protected:
 
     BlendFunc _blendType;
 
-    V3F_C4B_T2F_Quad _quad;
+    V3F_C4B_T2F_Quad* _quad;
     int _quadCount;
 };
 

@@ -13,7 +13,7 @@
 #include "CCGL.h"
 #include <vector>
 
-#define VBO_SIZE 64
+#define VBO_SIZE 1024
 
 NS_CC_BEGIN
 using namespace std;

@@ -22,6 +22,7 @@ public:
     static NewSprite* create(const char *filename);
 
     NewSprite(void);
+    ~NewSprite();
 
     virtual void updateTransform();
     virtual void draw(void) override;

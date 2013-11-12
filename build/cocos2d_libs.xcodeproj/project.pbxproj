@@ -1867,10 +1867,18 @@
 		59A79D561821E26E00F19697 /* CCEventMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D4F1821E26E00F19697 /* CCEventMouse.cpp */; };
 		59A79D571821E26E00F19697 /* CCEventMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 59A79D501821E26E00F19697 /* CCEventMouse.h */; };
 		59A79D581821E26E00F19697 /* CCEventMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 59A79D501821E26E00F19697 /* CCEventMouse.h */; };
+		74AC804B4F4F8EFE7C388C5A /* CCNewTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8B72E9E2CB68A32DFAD0 /* CCNewTextureAtlas.h */; };
+		74AC80607344CF78FA01E586 /* CCNewSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8595CF5D51E2CD7D0D10 /* CCNewSpriteBatchNode.h */; };
+		74AC80E3AEE80D0F3C2EA914 /* CCNewTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8B72E9E2CB68A32DFAD0 /* CCNewTextureAtlas.h */; };
+		74AC82CA7ADF24CEBF003D35 /* CCNewSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC803F724104A2760727F4 /* CCNewSpriteBatchNode.cpp */; };
+		74AC84D6D85A7B2C5D7BF97D /* CCNewSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8595CF5D51E2CD7D0D10 /* CCNewSpriteBatchNode.h */; };
 		74AC84FD1818C324532298B9 /* CustomCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8EEBA128AF944335D0F5 /* CustomCommand.h */; };
+		74AC85B537BD09BCD59C6B53 /* CCNewTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC863530E6A014AF1A380B /* CCNewTextureAtlas.cpp */; };
 		74AC8619CD9D66300CFA8116 /* CustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC863874C3EBCD037CED6F /* CustomCommand.cpp */; };
 		74AC8A9BE957346632483614 /* CustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC863874C3EBCD037CED6F /* CustomCommand.cpp */; };
+		74AC8AE774CED93AA3FEF3A6 /* CCNewSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC803F724104A2760727F4 /* CCNewSpriteBatchNode.cpp */; };
 		74AC8E1404C49A9685F340D7 /* CustomCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8EEBA128AF944335D0F5 /* CustomCommand.h */; };
+		74AC8F0E83F73FA15EF8AF2C /* CCNewTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC863530E6A014AF1A380B /* CCNewTextureAtlas.cpp */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B375105B1823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510501823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp */; };
 		B375105C1823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510511823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h */; };
@@ -3017,7 +3025,11 @@
 		59A79D4E1821E26E00F19697 /* CCEventListenerMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventListenerMouse.h; sourceTree = "<group>"; };
 		59A79D4F1821E26E00F19697 /* CCEventMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventMouse.cpp; sourceTree = "<group>"; };
 		59A79D501821E26E00F19697 /* CCEventMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventMouse.h; sourceTree = "<group>"; };
+		74AC803F724104A2760727F4 /* CCNewSpriteBatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewSpriteBatchNode.cpp; sourceTree = "<group>"; };
+		74AC8595CF5D51E2CD7D0D10 /* CCNewSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewSpriteBatchNode.h; sourceTree = "<group>"; };
+		74AC863530E6A014AF1A380B /* CCNewTextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewTextureAtlas.cpp; sourceTree = "<group>"; };
 		74AC863874C3EBCD037CED6F /* CustomCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomCommand.cpp; sourceTree = "<group>"; };
+		74AC8B72E9E2CB68A32DFAD0 /* CCNewTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewTextureAtlas.h; sourceTree = "<group>"; };
 		74AC8EEBA128AF944335D0F5 /* CustomCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCommand.h; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5282,6 +5294,10 @@
 				599121BF182C72BF00CE785B /* CCNewSprite.h */,
 				74AC863874C3EBCD037CED6F /* CustomCommand.cpp */,
 				74AC8EEBA128AF944335D0F5 /* CustomCommand.h */,
+				74AC863530E6A014AF1A380B /* CCNewTextureAtlas.cpp */,
+				74AC8B72E9E2CB68A32DFAD0 /* CCNewTextureAtlas.h */,
+				74AC803F724104A2760727F4 /* CCNewSpriteBatchNode.cpp */,
+				74AC8595CF5D51E2CD7D0D10 /* CCNewSpriteBatchNode.h */,
 			);
 			name = renderer;
 			sourceTree = "<group>";
@@ -5653,6 +5669,8 @@
 				59A79D571821E26E00F19697 /* CCEventMouse.h in Headers */,
 				1A8C5A0F180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				74AC8E1404C49A9685F340D7 /* CustomCommand.h in Headers */,
+				74AC804B4F4F8EFE7C388C5A /* CCNewTextureAtlas.h in Headers */,
+				74AC80607344CF78FA01E586 /* CCNewSpriteBatchNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6224,6 +6242,8 @@
 				1A8C5A0C180E930E00EF57C3 /* CSContentJsonDictionary.h in Headers */,
 				1A8C5A10180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				74AC84FD1818C324532298B9 /* CustomCommand.h in Headers */,
+				74AC80E3AEE80D0F3C2EA914 /* CCNewTextureAtlas.h in Headers */,
+				74AC84D6D85A7B2C5D7BF97D /* CCNewSpriteBatchNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6970,6 +6990,8 @@
 				1A8C5A09180E930E00EF57C3 /* CSContentJsonDictionary.cpp in Sources */,
 				1A8C5A0D180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 				74AC8619CD9D66300CFA8116 /* CustomCommand.cpp in Sources */,
+				74AC8F0E83F73FA15EF8AF2C /* CCNewTextureAtlas.cpp in Sources */,
+				74AC82CA7ADF24CEBF003D35 /* CCNewSpriteBatchNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7484,6 +7506,8 @@
 				1A8C5A0A180E930E00EF57C3 /* CSContentJsonDictionary.cpp in Sources */,
 				1A8C5A0E180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 				74AC8A9BE957346632483614 /* CustomCommand.cpp in Sources */,
+				74AC85B537BD09BCD59C6B53 /* CCNewTextureAtlas.cpp in Sources */,
+				74AC8AE774CED93AA3FEF3A6 /* CCNewSpriteBatchNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
