@@ -11,11 +11,37 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
-class NewRendererTest : public Layer
+using namespace std;
+
+class NewRendererTestScene : public TestScene
+{
+public:
+    virtual void runThisTest();
+};
+
+class MultiSceneTest : public BaseTest
+{
+public:
+    MultiSceneTest();
+    virtual ~MultiSceneTest();
+
+    virtual string title();
+    virtual string subtitle();
+    virtual void onEnter();
+
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
+};
+
+class NewSpriteTest : public MultiSceneTest
 {
 public:
     NewRendererTest();
-    ~NewRendererTest();
+    virtual ~NewRendererTest();
+
+    virtual string title();
+    virtual string subtitle();
 
     void createSpriteTest();
     void createNewSpriteTest();
@@ -23,12 +49,6 @@ public:
 
 protected:
 
-};
-
-class NewRendererTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 

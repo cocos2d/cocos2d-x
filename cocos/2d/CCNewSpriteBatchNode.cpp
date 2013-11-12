@@ -90,11 +90,7 @@ void NewSpriteBatchNode::draw()
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
-
     arrayMakeObjectsPerformSelector(_children, updateTransform, NewSprite*);
-
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     QuadCommand* cmd = new QuadCommand(0, 0, _textureAtlas->getTexture()->getName(), _shaderProgram, _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads());
     Renderer::getInstance()->addRenderCommand(cmd);
