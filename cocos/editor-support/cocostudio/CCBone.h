@@ -112,6 +112,7 @@ public:
      */
     Bone *getParentBone();
 
+    using Node::removeFromParent;
     /**
      * Remove itself from its parent.
      * @param recursion    whether or not to remove childBone's display

@@ -132,7 +132,7 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addEventListener(cocos2d::Object* target, SEL_TextFieldEvent selecor);
+    void addEventListenerTextField(cocos2d::Object* target, SEL_TextFieldEvent selecor);
 
     virtual void setAnchorPoint(const cocos2d::Point &pt);
     virtual void setColor(const cocos2d::Color3B &color);
@@ -163,8 +163,8 @@ protected:
     float _touchHeight;
     bool _useTouchArea;
     
-    cocos2d::Object* _eventListener;
-    SEL_TextFieldEvent _eventSelector;
+    cocos2d::Object* _textFieldEventListener;
+    SEL_TextFieldEvent _textFieldEventSelector;
     
     std::string _passwordStyleText;
 };
