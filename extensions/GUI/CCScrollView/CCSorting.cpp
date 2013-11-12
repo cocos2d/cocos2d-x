@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCSorting.h"
-#include "support/data_support/ccCArray.h"
+#include "ccCArray.h"
 
 
 NS_CC_EXT_BEGIN
@@ -33,7 +33,7 @@ class SortedObject : public Object, public SortableObject
 {
 public:
     SortedObject() : objectID(0) {}
-    virtual void setObjectID(unsigned int objectID) { this->objectID = objectID; }
+    virtual void setObjectID(unsigned int id) { this->objectID = id; }
     virtual unsigned int getObjectID() { return objectID; }
 private:
     unsigned int objectID;

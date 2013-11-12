@@ -9,7 +9,9 @@ CurlTest::CurlTest()
     addChild(label, 0);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
 
-    setTouchEnabled(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(CurlTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     // create a label to display the tip string
     _label = LabelTTF::create("Touch the screen to connect", "Arial", 22);
