@@ -21,7 +21,7 @@ function UIScene:init()
     self._uiLayer = ccs.UILayer:create()
     self:addChild(self._uiLayer)
 
-    self._widget = ccs.CCSGUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
+    self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
     self._uiLayer:addWidget(self._widget)
 
     self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
@@ -463,7 +463,7 @@ function UICheckBoxTest:initExtend()
                                "cocosgui/check_box_active_disable.png")
     checkBox:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
         
-    checkBox:addEventListener(selectedEvent)  
+    checkBox:addEventListenerCheckBox(selectedEvent)  
 
     self._uiLayer:addWidget(checkBox)
 end
@@ -525,7 +525,7 @@ function UISliderTest:initExtend()
     slider:loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "")
     slider:loadProgressBarTexture("cocosgui/sliderProgress.png")
     slider:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    slider:addEventListener(percentChangedEvent)
+    slider:addEventListenerSlider(percentChangedEvent)
 
     self._uiLayer:addWidget(slider)
 end
@@ -590,7 +590,7 @@ function UISliderScale9Test:initExtend()
     slider:setCapInsets(cc.rect(0, 0, 0, 0))
     slider:setSize(cc.size(250, 10))
     slider:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    slider:addEventListener(percentChangedEvent)
+    slider:addEventListenerSlider(percentChangedEvent)
 
     self._uiLayer:addWidget(slider)
 end
@@ -704,7 +704,7 @@ function UILoadingBarLeftTest:initExtend()
     self._uiLayer = ccs.UILayer:create()
     self:addChild(self._uiLayer)
 
-    self._widget = ccs.CCSGUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
+    self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
     self._uiLayer:addWidget(self._widget)
 
     self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
@@ -832,7 +832,7 @@ function UILoadingBarRightTest:initExtend()
     self._uiLayer = ccs.UILayer:create()
     self:addChild(self._uiLayer)
 
-    self._widget = ccs.CCSGUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
+    self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
     self._uiLayer:addWidget(self._widget)
 
     self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
@@ -961,7 +961,7 @@ function UILoadingBarLeftScale9Test:initExtend()
     self._uiLayer = ccs.UILayer:create()
     self:addChild(self._uiLayer)
 
-    self._widget = ccs.CCSGUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
+    self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
     self._uiLayer:addWidget(self._widget)
 
     self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
@@ -1092,7 +1092,7 @@ function UILoadingBarRightScale9Test:initExtend()
     self._uiLayer = ccs.UILayer:create()
     self:addChild(self._uiLayer)
 
-    self._widget = ccs.CCSGUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
+    self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
     self._uiLayer:addWidget(self._widget)
 
     self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
@@ -1431,7 +1431,7 @@ function UITextFieldTest:initExtend()
     textField:setFontSize(30)
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    textField:addEventListener(textFieldEvent) 
+    textField:addEventListenerTextField(textFieldEvent) 
     self._uiLayer:addWidget(textField) 
 end
 
@@ -1509,7 +1509,7 @@ function UITextFieldMaxLengthTest:initExtend()
     textField:setFontSize(30)
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    textField:addEventListener(textFieldEvent) 
+    textField:addEventListenerTextField(textFieldEvent) 
     self._uiLayer:addWidget(textField) 
 end
 
@@ -1581,7 +1581,7 @@ function UITextFieldPasswordTest:initExtend()
     textField:setFontSize(30)
     textField:setPlaceHolder("input password here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    textField:addEventListener(textFieldEvent) 
+    textField:addEventListenerTextField(textFieldEvent) 
     self._uiLayer:addWidget(textField) 
 end
 
@@ -2367,7 +2367,7 @@ function UIPageViewTest:initExtend()
         end
     end 
 
-    pageView:addEventListener(pageViewEvent)
+    pageView:addEventListenerPageView(pageViewEvent)
         
     self._uiLayer:addWidget(pageView)
   

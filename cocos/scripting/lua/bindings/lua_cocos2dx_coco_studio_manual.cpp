@@ -132,7 +132,7 @@ static void extendUIWidget(lua_State* L)
     }
 }
 
-static int lua_cocos2dx_UICheckBox_addEventListener(lua_State* L)
+static int lua_cocos2dx_UICheckBox_addEventListenerCheckBox(lua_State* L)
 {
     if (nullptr == L)
         return 0;
@@ -149,7 +149,7 @@ static int lua_cocos2dx_UICheckBox_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UICheckBox_addEventListener'\n", NULL);
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UICheckBox_addEventListenerCheckBox'\n", NULL);
 		return 0;
 	}
 #endif
@@ -174,17 +174,17 @@ static int lua_cocos2dx_UICheckBox_addEventListener(lua_State* L)
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
         
         self->setUserObject(listener);        
-        self->addEventListener(listener, checkboxselectedeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        self->addEventListenerCheckBox(listener, checkboxselectedeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
         
         return 0;
     }
     
-    CCLOG("'addEventListener' function of UICheckBox has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'addEventListenerCheckBox' function of UICheckBox has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'addEventListener'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'addEventListenerCheckBox'.",&tolua_err);
     return 0;
 #endif
 }
@@ -196,11 +196,11 @@ static void extendUICheckBox(lua_State* L)
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
-        tolua_function(L, "addEventListener", lua_cocos2dx_UICheckBox_addEventListener);
+        tolua_function(L, "addEventListenerCheckBox", lua_cocos2dx_UICheckBox_addEventListenerCheckBox);
     }
 }
 
-static int lua_cocos2dx_UISlider_addEventListener(lua_State* L)
+static int lua_cocos2dx_UISlider_addEventListenerSlider(lua_State* L)
 {
     if (nullptr == L)
         return 0;
@@ -217,7 +217,7 @@ static int lua_cocos2dx_UISlider_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UISlider_addEventListener'\n", NULL);
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UISlider_addEventListenerSlider'\n", NULL);
 		return 0;
 	}
 #endif
@@ -242,18 +242,18 @@ static int lua_cocos2dx_UISlider_addEventListener(lua_State* L)
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
         
         self->setUserObject(listener);        
-        self->addEventListener(listener, sliderpercentchangedselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        self->addEventListenerSlider(listener, sliderpercentchangedselector(LuaCocoStudioEventListener::eventCallbackFunc));
         
         return 0;
     }
     
-    CCLOG("'addEventListener' function of UISlider has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'addEventListenerSlider' function of UISlider has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'addEventListener'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'addEventListenerSlider'.",&tolua_err);
     return 0;
 #endif
 }
@@ -264,11 +264,11 @@ static void extendUISlider(lua_State* L)
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
-        tolua_function(L, "addEventListener", lua_cocos2dx_UISlider_addEventListener);
+        tolua_function(L, "addEventListenerSlider", lua_cocos2dx_UISlider_addEventListenerSlider);
     }
 }
 
-static int lua_cocos2dx_UITextField_addEventListener(lua_State* L)
+static int lua_cocos2dx_UITextField_addEventListenerTextField(lua_State* L)
 {
     if (nullptr == L)
         return 0;
@@ -285,7 +285,7 @@ static int lua_cocos2dx_UITextField_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UITextField_addEventListener'\n", NULL);
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UITextField_addEventListenerTextField'\n", NULL);
 		return 0;
 	}
 #endif
@@ -310,18 +310,18 @@ static int lua_cocos2dx_UITextField_addEventListener(lua_State* L)
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
         
         self->setUserObject(listener);        
-        self->addEventListener(listener, textfieldeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        self->addEventListenerTextField(listener, textfieldeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
         
         return 0;
     }
     
-    CCLOG("'addEventListener' function of UITextField has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'addEventListenerTextField' function of UITextField has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'addEventListener'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'addEventListenerTextField'.",&tolua_err);
     return 0;
 #endif
 }
@@ -332,11 +332,11 @@ static void extendUITextField(lua_State* L)
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
-        tolua_function(L, "addEventListener", lua_cocos2dx_UITextField_addEventListener);
+        tolua_function(L, "addEventListenerTextField", lua_cocos2dx_UITextField_addEventListenerTextField);
     }
 }
 
-static int lua_cocos2dx_UIPageView_addEventListener(lua_State* L)
+static int lua_cocos2dx_UIPageView_addEventListenerPageView(lua_State* L)
 {
     if (nullptr == L)
         return 0;
@@ -353,7 +353,7 @@ static int lua_cocos2dx_UIPageView_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UIPageView_addEventListener'\n", NULL);
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UIPageView_addEventListenerPageView'\n", NULL);
 		return 0;
 	}
 #endif
@@ -378,18 +378,18 @@ static int lua_cocos2dx_UIPageView_addEventListener(lua_State* L)
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
         
         self->setUserObject(listener);        
-        self->addEventListener(listener, pagevieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        self->addEventListenerPageView(listener, pagevieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
         
         return 0;
     }
     
-    CCLOG("'addEventListener' function of UIPageView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'addEventListenerPageView' function of UIPageView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'addEventListener'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'addEventListenerPageView'.",&tolua_err);
     return 0;
 #endif
 }
@@ -400,79 +400,77 @@ static void extendUIPageView(lua_State* L)
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
-        tolua_function(L, "addEventListener", lua_cocos2dx_UIPageView_addEventListener);
+        tolua_function(L, "addEventListenerPageView", lua_cocos2dx_UIPageView_addEventListenerPageView);
     }
 }
 
-//static int lua_cocos2dx_UIListView_addEventListener(lua_State* L)
-//{
-//    if (nullptr == L)
-//        return 0;
-//    
-//    int argc = 0;
-//    UIListView* self = nullptr;
-//    
-//#if COCOS2D_DEBUG >= 1
-//    tolua_Error tolua_err;
-//	if (!tolua_isusertype(L,1,"UIListView",0,&tolua_err)) goto tolua_lerror;
-//#endif
-//    
-//    self = static_cast<UIListView*>(tolua_tousertype(L,1,0));
-//    
-//#if COCOS2D_DEBUG >= 1
-//	if (nullptr == self) {
-//		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UIListView_addEventListener'\n", NULL);
-//		return 0;
-//	}
-//#endif
-//    argc = lua_gettop(L) - 1;
-//    if (2 == argc)
-//    {
-//#if COCOS2D_DEBUG >= 1
-//        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) ||
-//            !tolua_isusertype(L, 3, "Object", 0, &tolua_err) )
-//        {
-//            goto tolua_lerror;
-//        }
-//#endif
-//        LuaCocoStudioEventListener* listern = LuaCocoStudioEventListener::create();
-//        if (nullptr == listern)
-//        {
-//            tolua_error(L,"LuaCocoStudioEventListener create fail\n", NULL);
-//            return 0;
-//        }
-//        
-//        LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-//        Object* obj  = static_cast<Object*>(tolua_tousertype(L, 3, nullptr));
-//        
-//        listern->setObjToLua(obj);
-//        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listern, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
-//        
-//        self->addEventListener(listern, listvieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
-//        
-//        return 0;
-//    }
-//    
-//    CCLOG("'addEventListener' function of UIListView has wrong number of arguments: %d, was expecting %d\n", argc, 2);
-//    
-//    return 0;
-//    
-//#if COCOS2D_DEBUG >= 1
-//tolua_lerror:
-//    tolua_error(L,"#ferror in function 'addEventListener'.",&tolua_err);
-//    return 0;
-//#endif
-//}
-//
-//static void extendUIListView(lua_State* L)
-//{
-//    lua_pushstring(L, "UIListView");
-//    lua_rawget(L, LUA_REGISTRYINDEX);
-//    if (lua_istable(L,-1))
-//    {
-//        tolua_function(L, "addEventListener", lua_cocos2dx_UIListView_addEventListener);
-//    }
-//}
+static int lua_cocos2dx_UIListView_addEventListenerListView(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    UIListView* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"UIListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<UIListView*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_UIListView_addEventListenerListView'\n", NULL);
+		return 0;
+	}
+#endif
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LuaCocoStudioEventListener* listern = LuaCocoStudioEventListener::create();
+        if (nullptr == listern)
+        {
+            tolua_error(L,"LuaCocoStudioEventListener create fail\n", NULL);
+            return 0;
+        }
+        
+        LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
+        
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listern, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+        
+        self->setUserObject(listern);
+        self->addEventListenerListView(listern, listvieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
+        
+        return 0;
+    }
+    
+    CCLOG("'addEventListenerListView' function of UIListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'addEventListenerListView'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendUIListView(lua_State* L)
+{
+    lua_pushstring(L, "UIListView");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "addEventListenerListView", lua_cocos2dx_UIListView_addEventListenerListView);
+    }
+}
 
 static int lua_cocos2dx_UILayoutParameter_setMargin(lua_State* L)
 {
@@ -907,7 +905,7 @@ int register_all_cocos2dx_coco_studio_manual(lua_State* L)
     extendUISlider(L);
     extendUITextField(L);
     extendUIPageView(L);
-//  extendUIListView(L);
+    extendUIListView(L);
     extendLayoutParameter(L);
     extendArmatureAnimation(L);
     extendArmatureDataManager(L);

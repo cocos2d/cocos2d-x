@@ -32,10 +32,8 @@ function SceneEditorTestLayer:createGameScene()
     self._curNode = node
 
     local function menuCloseCallback( sender )
-        local backMusic = tolua.cast(self._curNode:getComponent("CCBackgroundAudio"),"ComAudio")
-        backMusic:stopBackgroundMusic();
-        ccs.SceneReader:getInstance():purgeSceneReader();
-        ccs.ActionManagerEx:getInstance():purgeActionManager();
+        ccs.SceneReader:getInstance():destroySceneReader()
+        ccs.ActionManagerEx:destroyActionManager()
         local scene = CocoStudioTestMain()
         if scene ~= nil then
             cc.Director:getInstance():replaceScene(scene)
