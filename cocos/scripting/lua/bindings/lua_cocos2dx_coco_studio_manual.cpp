@@ -603,7 +603,7 @@ tolua_lerror:
 
 static void extendLayoutParameter(lua_State* L)
 {
-    lua_pushstring(L, "LayoutParameter");
+    lua_pushstring(L, "UILayoutParameter");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
