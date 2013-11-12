@@ -162,7 +162,7 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addEventListener(cocos2d::Object* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListenerSlider(cocos2d::Object* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
@@ -226,8 +226,8 @@ protected:
     cocos2d::Rect _capInsetsBarRenderer;
     cocos2d::Rect _capInsetsProgressBarRenderer;
 
-    cocos2d::Object*       _slidPercentListener;
-    SEL_SlidPercentChangedEvent    _slidPercentSelector;
+    cocos2d::Object*       _sliderEventListener;
+    SEL_SlidPercentChangedEvent    _sliderEventSelector;
     TextureResType _barTexType;
     TextureResType _progressBarTexType;
     TextureResType _ballNTexType;

@@ -34,8 +34,8 @@ _frontCrossRenderer(NULL),
 _backGroundBoxDisabledRenderer(NULL),
 _frontCrossDisabledRenderer(NULL),
 _isSelected(true),
-_selectedStateEventListener(NULL),
-_selectedStateEventSelector(NULL),
+_checkBoxEventListener(NULL),
+_checkBoxEventSelector(NULL),
 _backGroundTexType(UI_TEX_TYPE_LOCAL),
 _backGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
 _frontCrossTexType(UI_TEX_TYPE_LOCAL),
@@ -51,8 +51,8 @@ _frontCrossDisabledFileName("")
 
 UICheckBox::~UICheckBox()
 {
-    _selectedStateEventListener = NULL;
-    _selectedStateEventSelector = NULL;
+    _checkBoxEventListener = NULL;
+    _checkBoxEventSelector = NULL;
 }
 
 UICheckBox* UICheckBox::create()
@@ -285,24 +285,24 @@ bool UICheckBox::getSelectedState()
 
 void UICheckBox::selectedEvent()
 {
-    if (_selectedStateEventListener && _selectedStateEventSelector)
+    if (_checkBoxEventListener && _checkBoxEventSelector)
     {
-        (_selectedStateEventListener->*_selectedStateEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
+        (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
     }
 }
 
 void UICheckBox::unSelectedEvent()
 {
-    if (_selectedStateEventListener && _selectedStateEventSelector)
+    if (_checkBoxEventListener && _checkBoxEventSelector)
     {
-        (_selectedStateEventListener->*_selectedStateEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
+        (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
     }
 }
 
-void UICheckBox::addEventListener(cocos2d::Object *target, SEL_SelectedStateEvent selector)
+void UICheckBox::addEventListenerCheckBox(cocos2d::Object *target, SEL_SelectedStateEvent selector)
 {
-    _selectedStateEventListener = target;
-    _selectedStateEventSelector = selector;
+    _checkBoxEventListener = target;
+    _checkBoxEventSelector = selector;
 }
 
 void UICheckBox::setFlipX(bool flipX)

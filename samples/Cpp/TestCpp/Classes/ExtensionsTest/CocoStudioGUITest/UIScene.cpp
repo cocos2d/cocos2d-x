@@ -26,7 +26,7 @@ bool UIScene::init()
         m_pUiLayer = UILayer::create();
         addChild(m_pUiLayer);
         
-        m_pWidget = dynamic_cast<UILayout*>(cocostudio::CCSGUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
+        m_pWidget = dynamic_cast<UILayout*>(cocostudio::GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
         m_pUiLayer->addWidget(m_pWidget);
         
         m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));
