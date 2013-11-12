@@ -46,8 +46,8 @@ _slidBallPressedTextureFile(""),
 _slidBallDisabledTextureFile(""),
 _capInsetsBarRenderer(cocos2d::Rect::ZERO),
 _capInsetsProgressBarRenderer(cocos2d::Rect::ZERO),
-_slidPercentListener(NULL),
-_slidPercentSelector(NULL),
+_sliderEventListener(NULL),
+_sliderEventSelector(NULL),
 _barTexType(UI_TEX_TYPE_LOCAL),
 _progressBarTexType(UI_TEX_TYPE_LOCAL),
 _ballNTexType(UI_TEX_TYPE_LOCAL),
@@ -58,8 +58,8 @@ _ballDTexType(UI_TEX_TYPE_LOCAL)
 
 UISlider::~UISlider()
 {
-    _slidPercentListener = NULL;
-    _slidPercentSelector = NULL;
+    _sliderEventListener = NULL;
+    _sliderEventSelector = NULL;
 }
 
 UISlider* UISlider::create()
@@ -411,17 +411,17 @@ float UISlider::getPercentWithBallPos(float px)
     return (((px-(-_barLength/2.0f))/_barLength)*100.0f);
 }
 
-void UISlider::addEventListener(cocos2d::Object *target, SEL_SlidPercentChangedEvent selector)
+void UISlider::addEventListenerSlider(cocos2d::Object *target, SEL_SlidPercentChangedEvent selector)
 {
-    _slidPercentListener = target;
-    _slidPercentSelector = selector;
+    _sliderEventListener = target;
+    _sliderEventSelector = selector;
 }
 
 void UISlider::percentChangedEvent()
 {
-    if (_slidPercentListener && _slidPercentSelector)
+    if (_sliderEventListener && _sliderEventSelector)
     {
-        (_slidPercentListener->*_slidPercentSelector)(this,SLIDER_PERCENTCHANGED);
+        (_sliderEventListener->*_sliderEventSelector)(this,SLIDER_PERCENTCHANGED);
     }
 }
 
