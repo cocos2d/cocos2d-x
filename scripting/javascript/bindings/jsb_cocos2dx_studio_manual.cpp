@@ -83,6 +83,7 @@ static JSBool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -107,6 +108,7 @@ static JSBool js_cocos2dx_UICheckBox_addEventListener(JSContext *cx, uint32_t ar
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -131,6 +133,7 @@ static JSBool js_cocos2dx_UISlider_addEventListener(JSContext *cx, uint32_t argc
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -155,6 +158,7 @@ static JSBool js_cocos2dx_UITextField_addEventListener(JSContext *cx, uint32_t a
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -179,6 +183,7 @@ static JSBool js_cocos2dx_UIPageView_addEventListener(JSContext *cx, uint32_t ar
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -203,6 +208,7 @@ static JSBool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t ar
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
         cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -298,6 +304,7 @@ static JSBool js_cocos2dx_CCArmatureAnimation_setMovementEventCallFunc(JSContext
         
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -322,6 +329,7 @@ static JSBool js_cocos2dx_CCArmatureAnimation_setFrameEventCallFunc(JSContext *c
         
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
