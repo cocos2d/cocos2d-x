@@ -1629,6 +1629,11 @@ C++11 features may be used unless specified otherwise. In addition to what's des
 * Compile-time rational numbers (`<ratio>`), because of concerns that it's tied to a more template-heavy interface style.
 * The `<cfenv>` and `<fenv.h>` headers, because many compilers do not support those features reliably.
 
+Additionaly, any C++11 features that is used, must work on the following compilers:
+
+* Xcode 5.0.2 or newer
+* gcc 4.8 or newer
+* VS 2012 or newer
 
 ## General Naming Rules
 
