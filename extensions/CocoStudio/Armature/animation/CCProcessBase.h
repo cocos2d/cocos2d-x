@@ -59,7 +59,6 @@ public:
     /**
      * Play animation by animation name.
      *
-     * @param  animation  It will not used in the CCProcessBase Class
      * @param  durationTo The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
@@ -84,7 +83,7 @@ public:
      *         2  : fade in and out
      *
      */
-    virtual void play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing);
+    virtual void play(int durationTo, int durationTween,  int loop, int tweenEasing);
 
     /**
      * Pause the Process

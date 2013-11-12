@@ -55,6 +55,7 @@ public:
      */
     virtual bool init(CCBone *bone);
 
+    using CCProcessBase::play;
     /**
      * Start the Process
      *

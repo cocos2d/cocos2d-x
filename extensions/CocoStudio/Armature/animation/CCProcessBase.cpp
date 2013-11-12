@@ -75,7 +75,7 @@ void CCProcessBase::stop()
     m_fCurrentPercent = 0;
 }
 
-void CCProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
+void CCProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     m_bIsComplete = false;
     m_bIsPause = false;
