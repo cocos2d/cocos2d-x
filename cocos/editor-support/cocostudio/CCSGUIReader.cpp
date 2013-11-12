@@ -222,14 +222,14 @@ const cocos2d::Size CCSGUIReader::getFileDesignSize(const char* fileName) const
 UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
 {
     m_bOlderVersion = false;
-    const char *des = NULL;
+    char *des = NULL;
     std::string jsonpath;
     JsonDictionary *jsonDict = NULL;
     jsonpath = FileUtils::getInstance()->fullPathForFilename(fileName);
     
     long size = 0;
-    des = (char*)(FileUtils::getInstance()->getFileData(jsonpath.c_str(),"r" , &size));
-	if(NULL == des || strcmp(des, "") == 0)
+    des = (char*)FileUtils::getInstance()->getFileData(jsonpath.c_str(),"r" , &size);
+	if(des == NULL || strcmp(des, "") == 0)
 	{
 		printf("read json file[%s] error!\n", fileName);
 		return NULL;
@@ -288,7 +288,7 @@ UIWidget* CCSGUIReader::widgetFromJsonFile(const char *fileName)
 	CC_SAFE_DELETE(widgetTree);
 	CC_SAFE_DELETE(actions);
 	CC_SAFE_DELETE(jsonDict);
-    CC_SAFE_DELETE_ARRAY(des);
+    free(des);
     return widget;
 }
 

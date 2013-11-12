@@ -460,13 +460,13 @@ bool Image::initWithImageData(const unsigned char * data, long dataLen)
         int unpackedLen = 0;
         
         //detecgt and unzip the compress file
-        if (ZipUtils::ccIsCCZBuffer(data, dataLen))
+        if (ZipUtils::isCCZBuffer(data, dataLen))
         {
-            unpackedLen = ZipUtils::ccInflateCCZBuffer(data, dataLen, &unpackedData);
+            unpackedLen = ZipUtils::inflateCCZBuffer(data, dataLen, &unpackedData);
         }
-        else if (ZipUtils::ccIsGZipBuffer(data, dataLen))
+        else if (ZipUtils::isGZipBuffer(data, dataLen))
         {
-            unpackedLen = ZipUtils::ccInflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
+            unpackedLen = ZipUtils::inflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
         }
         else
         {

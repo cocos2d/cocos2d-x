@@ -48,18 +48,19 @@ namespace cocostudio {
     cocos2d::Node* SceneReader::createNodeWithSceneFile(const char* pszFileName)
     {
         long size = 0;
-        const char* pData = 0;
+        char* pData = 0;
 		cocos2d::Node *pNode = NULL;
         do {
-			  CC_BREAK_IF(pszFileName == NULL);
-              pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pszFileName, "r", &size));
-              CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
-              JsonDictionary *jsonDict = new JsonDictionary();
-              jsonDict->initWithDescription(pData);
-              pNode = createObject(jsonDict,NULL);
-              CC_SAFE_DELETE(jsonDict);
+            CC_BREAK_IF(pszFileName == NULL);
+            pData = (char*)cocos2d::FileUtils::getInstance()->getFileData(pszFileName, "r", &size);
+            CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
+            JsonDictionary *jsonDict = new JsonDictionary();
+            jsonDict->initWithDescription(pData);
+            pNode = createObject(jsonDict,NULL);
+            CC_SAFE_DELETE(jsonDict);
+            free(pData);
         } while (0);
-        
+
         return pNode;
 	}
 
@@ -214,10 +215,10 @@ namespace cocostudio {
 						file_path = reDir.substr(0, pos+1);
 					}
 					long size = 0;
-					const char *des = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(),"r" , &size));
+                    char *des = (char*)cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(),"r" , &size);
 					JsonDictionary *jsonDict = new JsonDictionary();
 					jsonDict->initWithDescription(des);
-					if(NULL == des || strcmp(des, "") == 0)
+					if(des == NULL || strcmp(des, "") == 0)
 					{
 						CCLOG("read json file[%s] error!\n", pPath.c_str());
 					}
@@ -261,7 +262,7 @@ namespace cocostudio {
 
 					CC_SAFE_DELETE(jsonDict);
 					CC_SAFE_DELETE(subData);
-					CC_SAFE_DELETE_ARRAY(des);
+					free(des);
                 }
                 else if(comName != NULL && strcmp(comName, "CCComAudio") == 0)
                 {
@@ -284,12 +285,12 @@ namespace cocostudio {
 					{
 						pAttribute = ComAttribute::create();
 						long size = 0;
-						const char* pData = 0;
-						pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(), "r", &size));
+						char* pData = (char*)cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(), "r", &size);
 						if(pData != NULL && strcmp(pData, "") != 0)
 						{
 							pAttribute->getDict()->initWithDescription(pData);
 						}
+                        free(pData);
 					}
 					else
 					{
