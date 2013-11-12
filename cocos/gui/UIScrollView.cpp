@@ -69,14 +69,15 @@ _bouncing(false),
 _bounceDir(cocos2d::Point::ZERO),
 _bounceOriginalSpeed(0.0f),
 _inertiaScrollEnabled(true),
-_eventListener(NULL),
-_eventSelector(NULL)
+_scrollViewEventListener(NULL),
+_scrollViewEventSelector(NULL)
 {
 }
 
 UIScrollView::~UIScrollView()
 {
-    
+    _scrollViewEventListener = NULL;
+    _scrollViewEventSelector = NULL;
 }
 
 UIScrollView* UIScrollView::create()
@@ -1457,80 +1458,80 @@ void UIScrollView::checkChildInfo(int handleState,UIWidget* sender,const cocos2d
 
 void UIScrollView::scrollToTopEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
     }
 }
 
 void UIScrollView::scrollToBottomEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
     }
 }
 
 void UIScrollView::scrollToLeftEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
     }
 }
 
 void UIScrollView::scrollToRightEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
     }
 }
 
 void UIScrollView::scrollingEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_SCROLLING);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLLING);
     }
 }
 
 void UIScrollView::bounceTopEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_TOP);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_TOP);
     }
 }
 
 void UIScrollView::bounceBottomEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_BOTTOM);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_BOTTOM);
     }
 }
 
 void UIScrollView::bounceLeftEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_LEFT);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_LEFT);
     }
 }
 
 void UIScrollView::bounceRightEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
     }
 }
 
-void UIScrollView::addEventListener(cocos2d::Object *target, SEL_ScrollViewEvent selector)
+void UIScrollView::addEventListenerScrollView(cocos2d::Object *target, SEL_ScrollViewEvent selector)
 {
-    _eventListener = target;
-    _eventSelector = selector;
+    _scrollViewEventListener = target;
+    _scrollViewEventSelector = selector;
 }
 
 void UIScrollView::setDirection(SCROLLVIEW_DIR dir)

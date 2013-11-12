@@ -51,19 +51,9 @@ NS_CC_BEGIN
 
 // implementation TextureCache
 
-TextureCache* TextureCache::_sharedTextureCache = nullptr;
-
 TextureCache * TextureCache::getInstance()
 {
-    if (!_sharedTextureCache)
-    {
-#ifdef EMSCRIPTEN
-        _sharedTextureCache = new TextureCacheEmscripten();
-#else
-        _sharedTextureCache = new TextureCache();
-#endif // EMSCRIPTEN
-    }
-    return _sharedTextureCache;
+    return Director::getInstance()->getTextureCache();
 }
 
 TextureCache::TextureCache()
@@ -73,7 +63,6 @@ TextureCache::TextureCache()
 , _needQuit(false)
 , _asyncRefCount(0)
 {
-    CCASSERT(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
 }
 
 TextureCache::~TextureCache()
@@ -84,20 +73,19 @@ TextureCache::~TextureCache()
         (it->second)->release();
 
     CC_SAFE_DELETE(_loadingThread);
-    _sharedTextureCache = nullptr;
 }
 
 void TextureCache::destroyInstance()
 {
-    if (_sharedTextureCache)
-    {
-        // notify sub thread to quick
-        _sharedTextureCache->_needQuit = true;
-        _sharedTextureCache->_sleepCondition.notify_one();
-        if (_sharedTextureCache->_loadingThread) _sharedTextureCache->_loadingThread->join();
-        
-        CC_SAFE_RELEASE_NULL(_sharedTextureCache);
-    }
+}
+
+TextureCache * TextureCache::sharedTextureCache() 
+{
+    return Director::getInstance()->getTextureCache();
+}
+
+void TextureCache::purgeSharedTextureCache() 
+{ 
 }
 
 const char* TextureCache::description() const
@@ -260,7 +248,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
        // cache the texture file name
-       VolatileTexture::addImageTexture(texture, filename);
+       VolatileTextureMgr::addImageTexture(texture, filename);
 #endif
         // cache the texture. retain it, since it is added in the map
         _textures.insert( std::make_pair(filename, texture) );
@@ -320,7 +308,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
             {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                 // cache the texture file name
-                VolatileTexture::addImageTexture(texture, fullpath.c_str());
+                VolatileTextureMgr::addImageTexture(texture, fullpath.c_str());
 #endif
                 // texture already retained, no need to re-retain it
                 _textures.insert( std::make_pair(fullpath, texture) );
@@ -370,7 +358,7 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
     } while (0);
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::addImage(texture, image);
+    VolatileTextureMgr::addImage(texture, image);
 #endif
     
     return texture;
@@ -438,9 +426,18 @@ Texture2D* TextureCache::getTextureForKey(const std::string &key) const
 
 void TextureCache::reloadAllTextures()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::reloadAllTextures();
-#endif
+//will do nothing
+// #if CC_ENABLE_CACHE_TEXTURE_DATA
+//     VolatileTextureMgr::reloadAllTextures();
+// #endif
+}
+
+void TextureCache::waitForQuit()
+{
+    // notify sub thread to quick
+    _needQuit = true;
+    _sleepCondition.notify_one();
+    if (_loadingThread) _loadingThread->join();
 }
 
 void TextureCache::dumpCachedTextureInfo() const
@@ -453,7 +450,7 @@ void TextureCache::dumpCachedTextureInfo() const
         Texture2D* tex = it->second;
         unsigned int bpp = tex->getBitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
-        unsigned int bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
+        long bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
         totalBytes += bytes;
         count++;
         log("cocos2d: \"%s\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB",
@@ -471,8 +468,8 @@ void TextureCache::dumpCachedTextureInfo() const
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 
-std::list<VolatileTexture*> VolatileTexture::_textures;
-bool VolatileTexture::_isReloading = false;
+std::list<VolatileTexture*> VolatileTextureMgr::_textures;
+bool VolatileTextureMgr::_isReloading = false;
 
 VolatileTexture::VolatileTexture(Texture2D *t)
 : _texture(t)
@@ -487,16 +484,14 @@ VolatileTexture::VolatileTexture(Texture2D *t)
     _texParams.magFilter = GL_LINEAR;
     _texParams.wrapS = GL_CLAMP_TO_EDGE;
     _texParams.wrapT = GL_CLAMP_TO_EDGE;
-    _textures.push_back(this);
 }
 
 VolatileTexture::~VolatileTexture()
 {
-    _textures.remove(this);
     CC_SAFE_RELEASE(_uiImage);
 }
 
-void VolatileTexture::addImageTexture(Texture2D *tt, const char* imageFileName)
+void VolatileTextureMgr::addImageTexture(Texture2D *tt, const char* imageFileName)
 {
     if (_isReloading)
     {
@@ -505,20 +500,20 @@ void VolatileTexture::addImageTexture(Texture2D *tt, const char* imageFileName)
 
     VolatileTexture *vt = findVolotileTexture(tt);
 
-    vt->_cashedImageType = kImageFile;
+    vt->_cashedImageType = VolatileTexture::kImageFile;
     vt->_fileName = imageFileName;
     vt->_pixelFormat = tt->getPixelFormat();
 }
 
-void VolatileTexture::addImage(Texture2D *tt, Image *image)
+void VolatileTextureMgr::addImage(Texture2D *tt, Image *image)
 {
     VolatileTexture *vt = findVolotileTexture(tt);
     image->retain();
     vt->_uiImage = image;
-    vt->_cashedImageType = kImage;
+    vt->_cashedImageType = VolatileTexture::kImage;
 }
 
-VolatileTexture* VolatileTexture::findVolotileTexture(Texture2D *tt)
+VolatileTexture* VolatileTextureMgr::findVolotileTexture(Texture2D *tt)
 {
     VolatileTexture *vt = 0;
     auto i = _textures.begin();
@@ -535,12 +530,13 @@ VolatileTexture* VolatileTexture::findVolotileTexture(Texture2D *tt)
     if (! vt)
     {
         vt = new VolatileTexture(tt);
+        _textures.push_back(vt);
     }
     
     return vt;
 }
 
-void VolatileTexture::addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize)
+void VolatileTextureMgr::addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize)
 {
     if (_isReloading)
     {
@@ -549,14 +545,14 @@ void VolatileTexture::addDataTexture(Texture2D *tt, void* data, int dataLen, Tex
 
     VolatileTexture *vt = findVolotileTexture(tt);
 
-    vt->_cashedImageType = kImageData;
+    vt->_cashedImageType = VolatileTexture::kImageData;
     vt->_textureData = data;
     vt->_dataLen = dataLen;
     vt->_pixelFormat = pixelFormat;
     vt->_textureSize = contentSize;
 }
 
-void VolatileTexture::addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition)
+void VolatileTextureMgr::addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition)
 {
     if (_isReloading)
     {
@@ -565,12 +561,12 @@ void VolatileTexture::addStringTexture(Texture2D *tt, const char* text, const Fo
 
     VolatileTexture *vt = findVolotileTexture(tt);
 
-    vt->_cashedImageType = kString;
+    vt->_cashedImageType = VolatileTexture::kString;
     vt->_text     = text;
     vt->_fontDefinition = fontDefinition;
 }
 
-void VolatileTexture::setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams)
+void VolatileTextureMgr::setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams)
 {
     VolatileTexture *vt = findVolotileTexture(t);
 
@@ -584,7 +580,7 @@ void VolatileTexture::setTexParameters(Texture2D *t, const Texture2D::TexParams 
         vt->_texParams.wrapT = texParams.wrapT;
 }
 
-void VolatileTexture::removeTexture(Texture2D *t) 
+void VolatileTextureMgr::removeTexture(Texture2D *t) 
 {
     auto i = _textures.begin();
     while (i != _textures.end())
@@ -592,13 +588,14 @@ void VolatileTexture::removeTexture(Texture2D *t)
         VolatileTexture *vt = *i++;
         if (vt->_texture == t) 
         {
+            _textures.remove(vt);
             delete vt;
             break;
         }
     }
 }
 
-void VolatileTexture::reloadAllTextures()
+void VolatileTextureMgr::reloadAllTextures()
 {
     _isReloading = true;
 
@@ -611,7 +608,7 @@ void VolatileTexture::reloadAllTextures()
 
         switch (vt->_cashedImageType)
         {
-        case kImageFile:
+        case VolatileTexture::kImageFile:
             {
                 Image* image = new Image();
                 long size = 0;
@@ -629,7 +626,7 @@ void VolatileTexture::reloadAllTextures()
                 CC_SAFE_RELEASE(image);
             }
             break;
-        case kImageData:
+        case VolatileTexture::kImageData:
             {
                 vt->_texture->initWithData(vt->_textureData,
                                            vt->_dataLen,
@@ -639,12 +636,12 @@ void VolatileTexture::reloadAllTextures()
                                           vt->_textureSize);
             }
             break;
-        case kString:
+        case VolatileTexture::kString:
             {
                 vt->_texture->initWithString(vt->_text.c_str(), vt->_fontDefinition);
             }
             break;
-        case kImage:
+        case VolatileTexture::kImage:
             {
                 vt->_texture->initWithImage(vt->_uiImage);
             }

@@ -275,14 +275,16 @@ _textFieldRenderer(NULL),
 _touchWidth(0.0f),
 _touchHeight(0.0f),
 _useTouchArea(false),
-_eventListener(NULL),
-_eventSelector(NULL),
+_textFieldEventListener(NULL),
+_textFieldEventSelector(NULL),
 _passwordStyleText("")
 {
 }
 
 UITextField::~UITextField()
 {
+    _textFieldEventListener = NULL;
+    _textFieldEventSelector = NULL;
 }
 
 UITextField* UITextField::create()
@@ -470,40 +472,40 @@ void UITextField::setDeleteBackward(bool deleteBackward)
 
 void UITextField::attachWithIMEEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
     }
 }
 
 void UITextField::detachWithIMEEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
     }
 }
 
 void UITextField::insertTextEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
     }
 }
 
 void UITextField::deleteBackwardEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
     }
 }
 
-void UITextField::addEventListener(cocos2d::Object *target, SEL_TextFieldEvent selecor)
+void UITextField::addEventListenerTextField(cocos2d::Object *target, SEL_TextFieldEvent selecor)
 {
-    _eventListener = target;
-    _eventSelector = selecor;
+    _textFieldEventListener = target;
+    _textFieldEventSelector = selecor;
 }
 
 void UITextField::setAnchorPoint(const cocos2d::Point &pt)

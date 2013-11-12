@@ -77,8 +77,8 @@ public:
     void setTextureAtlas(TextureAtlas* textureAtlas);
     TextureAtlas* getTextureAtlas() const;
     
-    void setQuadsToDraw(unsigned int quadsToDraw);
-    unsigned int getQuadsToDraw() const;
+    void setQuadsToDraw(long quadsToDraw);
+    long getQuadsToDraw() const;
 
     
     // Overrides

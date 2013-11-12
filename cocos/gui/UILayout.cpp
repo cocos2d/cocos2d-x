@@ -129,7 +129,17 @@ void UILayout::setClippingEnabled(bool able)
 void UILayout::onSizeChanged()
 {
     DYNAMIC_CAST_CLIPPINGLAYER->setClippingSize(_size);
-    doLayout();
+    if (strcmp(getDescription(), "Layout") == 0)
+    {
+        cocos2d::ccArray* arrayChildren = _children->data;
+        int length = arrayChildren->num;
+        for (int i=0; i<length; ++i)
+        {
+            UIWidget* child = (UIWidget*)arrayChildren->arr[i];
+            child->updateSizeAndPosition();
+        }
+        doLayout();
+    }
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(cocos2d::Point(_size.width/2.0f, _size.height/2.0f));
@@ -953,7 +963,7 @@ bool UIRectClippingNode::init()
     rect[2] = cocos2d::Point(_clippingSize.width, _clippingSize.height);
     rect[3] = cocos2d::Point(0, _clippingSize.height);
     
-    cocos2d::Color4F green = cocos2d::Color4F(0, 1, 0, 1);
+    cocos2d::Color4F green(0, 1, 0, 1);
     _innerStencil->drawPolygon(rect, 4, green, 0, green);
     if (cocos2d::ClippingNode::init(_innerStencil))
     {
@@ -971,7 +981,7 @@ void UIRectClippingNode::setClippingSize(const cocos2d::Size &size)
     rect[1] = cocos2d::Point(_clippingSize.width, 0);
     rect[2] = cocos2d::Point(_clippingSize.width, _clippingSize.height);
     rect[3] = cocos2d::Point(0, _clippingSize.height);
-    cocos2d::Color4F green = cocos2d::Color4F(0, 1, 0, 1);
+    cocos2d::Color4F green(0, 1, 0, 1);
     _innerStencil->clear();
     _innerStencil->drawPolygon(rect, 4, green, 0, green);
 }
