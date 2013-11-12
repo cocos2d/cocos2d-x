@@ -3,6 +3,7 @@
 //
 
 
+#include <OpenGL/OpenGL.h>
 #include "Renderer.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
@@ -135,6 +136,8 @@ void Renderer::render()
             case QUAD_COMMAND:
             {
                 QuadCommand* cmd = static_cast<QuadCommand*>(command);
+
+                CCASSERT(cmd->getQuadCount()<VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                 //Batch quads
                 if(_numQuads + cmd->getQuadCount() < VBO_SIZE)

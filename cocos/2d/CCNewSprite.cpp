@@ -49,6 +49,10 @@ NewSprite::NewSprite()
 
 }
 
+NewSprite::~NewSprite(void)
+{
+}
+
 void NewSprite::updateTransform()
 {
     if(_dirty)
@@ -109,7 +113,8 @@ void NewSprite::updateTransform()
 void NewSprite::draw(void)
 {
     updateTransform();
-    QuadCommand* renderCommand = new QuadCommand(0, _ZOrder,_texture->getName(), _shaderProgram, _blendFunc, _quad);
+    //TODO implement z order
+    QuadCommand* renderCommand = new QuadCommand(0, 0,_texture->getName(), _shaderProgram, _blendFunc, &_quad, 1);
 
     Renderer::getInstance()->addRenderCommand(renderCommand);
 }

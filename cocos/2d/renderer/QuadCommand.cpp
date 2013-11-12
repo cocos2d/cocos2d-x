@@ -8,22 +8,23 @@
 
 NS_CC_BEGIN
 
-QuadCommand::QuadCommand(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad quad)
+QuadCommand::QuadCommand(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount)
 :RenderCommand()
 ,_viewport(viewport)
 ,_depth(depth)
 ,_textureID(textureID)
 ,_blendType(blendType)
-,_quad(quad)
+,_quadCount(quadCount)
 {
     _type = QUAD_COMMAND;
     _shader = shader;
-    _quadCount = 1;
+    _quad = (V3F_C4B_T2F_Quad*)malloc(sizeof(V3F_C4B_T2F_Quad) * quadCount);
+    memcpy(_quad, quad, sizeof(V3F_C4B_T2F_Quad) * quadCount);
 }
 
 QuadCommand::~QuadCommand()
 {
-
+    free(_quad);
 }
 
 int64_t QuadCommand::generateID()
