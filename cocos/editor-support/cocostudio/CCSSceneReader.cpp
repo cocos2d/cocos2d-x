@@ -227,9 +227,9 @@ namespace cocostudio {
 					const char *name = DICTOOL->getStringValue_json(subData, "name");
 
 					childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
-					for (long i = 0; i < childrenCount; ++i)
+					for (long j = 0; j < childrenCount; ++j)
 					{
-						const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", i);
+						const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", j);
 						std::string plistpath;
 						plistpath += file_path;
 						plistpath.append(plist);

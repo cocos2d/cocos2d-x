@@ -126,7 +126,7 @@ static void s3tc_decode_block(uint8_t **blockData,
         {
             for (int x = 0; x < 4; ++x)
             {
-                initAlpha   = (alpha & 0x0f) << 28;
+                initAlpha   = (static_cast<int>(alpha) & 0x0f) << 28;
                 initAlpha   += initAlpha >> 4;
                 decodeBlockData[x] = initAlpha + colors[pixelsIndex & 3];
                 pixelsIndex >>= 2;

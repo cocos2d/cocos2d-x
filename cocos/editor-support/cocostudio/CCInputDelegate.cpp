@@ -47,6 +47,7 @@ InputDelegate::~InputDelegate(void)
     dispatcher->removeEventListener(_touchListener);
     dispatcher->removeEventListener(_keyboardListener);
     dispatcher->removeEventListener(_accelerometerListener);
+    Device::setAccelerometerEnabled(false);
 }
 
 bool InputDelegate::onTouchBegan(Touch *pTouch, Event *pEvent)
@@ -195,6 +196,8 @@ void InputDelegate::setAccelerometerEnabled(bool enabled)
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         dispatcher->removeEventListener(_accelerometerListener);
         _accelerometerListener = nullptr;
+        
+        Device::setAccelerometerEnabled(enabled);
         
         if (enabled)
         {

@@ -50,6 +50,10 @@ NS_CC_BEGIN
  * @addtogroup textures
  * @{
  */
+/*
+* from version 3.0, TextureCache will never to treated as a singleton, it will be owned by director.
+* all call by TextureCache::getInstance() should be replaced by Director::getInstance()->getTextureCache()
+*/
 
 /** @brief Singleton that handles the loading of textures
 * Once the texture is loaded, the next time it will return
@@ -59,23 +63,24 @@ class CC_DLL TextureCache : public Object
 {
 public:
     /** Returns the shared instance of the cache */
-    static TextureCache * getInstance();
+    CC_DEPRECATED_ATTRIBUTE static TextureCache * getInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache() { return TextureCache::getInstance(); }
+    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
 
     /** purges the cache. It releases the retained instance.
      @since v0.99.0
      */
-    static void destroyInstance();
+    CC_DEPRECATED_ATTRIBUTE static void destroyInstance();
 
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache() { return TextureCache::destroyInstance(); }
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
 
     /** Reload all textures
-     It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
+    should not call it, called by frame work
+    now the function do nothing, use VolatileTextureMgr::reloadAllTextures
      */
-    static void reloadAllTextures();
+    CC_DEPRECATED_ATTRIBUTE static void reloadAllTextures();
 
 public:
     /**
@@ -158,6 +163,10 @@ public:
     */
     void dumpCachedTextureInfo() const;
 
+    //wait for texture cahe to quit befor destroy instance
+    //called by director, please do not called outside
+    void waitForQuit();
+
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
@@ -196,8 +205,6 @@ protected:
     int _asyncRefCount;
 
     std::unordered_map<std::string, Texture2D*> _textures;
-
-    static TextureCache *_sharedTextureCache;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -212,7 +219,7 @@ class VolatileTexture
         kImage,
     }ccCachedImageType;
 
-public:
+private:
     VolatileTexture(Texture2D *t);
     /**
      * @js NA
@@ -220,25 +227,8 @@ public:
      */
     ~VolatileTexture();
 
-    static void addImageTexture(Texture2D *tt, const char* imageFileName);
-    static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
-    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
-    static void addImage(Texture2D *tt, Image *image);
-
-    static void setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams);
-    static void removeTexture(Texture2D *t);
-    static void reloadAllTextures();
-
-public:
-    static std::list<VolatileTexture*> _textures;
-    static bool _isReloading;
-    
-private:
-    // find VolatileTexture by Texture2D*
-    // if not found, create a new one
-    static VolatileTexture* findVolotileTexture(Texture2D *tt);
-
 protected:
+    friend class  VolatileTextureMgr;
     Texture2D *_texture;
     
     Image *_uiImage;
@@ -255,6 +245,26 @@ protected:
     Texture2D::TexParams      _texParams;
     std::string               _text;
     FontDefinition            _fontDefinition;
+};
+
+class VolatileTextureMgr
+{
+public:
+    static void addImageTexture(Texture2D *tt, const char* imageFileName);
+    static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
+    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
+    static void addImage(Texture2D *tt, Image *image);
+
+    static void setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams);
+    static void removeTexture(Texture2D *t);
+    static void reloadAllTextures();
+public:
+    static std::list<VolatileTexture*> _textures;
+    static bool _isReloading;
+private:
+    // find VolatileTexture by Texture2D*
+    // if not found, create a new one
+    static VolatileTexture* findVolotileTexture(Texture2D *tt);
 };
 
 #endif

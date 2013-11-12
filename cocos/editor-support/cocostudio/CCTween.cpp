@@ -98,7 +98,7 @@ bool Tween::init(Bone *bone)
 
 void Tween::play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    ProcessBase::play(nullptr, durationTo, durationTween, loop, tweenEasing);
+    ProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
     if (loop)
     {
