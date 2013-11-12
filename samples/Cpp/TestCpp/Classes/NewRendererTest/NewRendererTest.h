@@ -13,6 +13,8 @@
 
 using namespace std;
 
+#define kTagSpriteBatchNode 100
+
 class NewRendererTestScene : public TestScene
 {
 public:
@@ -48,6 +50,20 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 protected:
+
+};
+
+class NewSpriteBatchTest : public MultiSceneTest
+{
+public:
+    NewSpriteBatchTest();
+    virtual ~NewSpriteBatchTest();
+
+    virtual string title();
+    virtual string subtitle();
+
+    void onTouchesEnded(const vector<Touch*>& touches, Event* event);
+    void addNewSpriteWithCoords(Point p);
 
 };
 

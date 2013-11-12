@@ -5,6 +5,7 @@
 
 #include "NewRendererTest.h"
 #include "CCNewSprite.h"
+#include "CCNewSpriteBatchNode.h"
 
 static int sceneIdx = -1;
 
@@ -15,6 +16,7 @@ Layer* restartSpriteTestAction();
 static std::function<Layer*()> createFunctions[] =
 {
     CL(NewSpriteTest),
+    CL(NewSpriteBatchTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -201,4 +203,74 @@ string NewSpriteTest::title()
 string NewSpriteTest::subtitle()
 {
     return "SpriteTest";
+}
+
+//-------- New Sprite Batch Test
+
+NewSpriteBatchTest::NewSpriteBatchTest()
+{
+    auto touchListener = EventListenerTouchAllAtOnce::create();
+    touchListener->onTouchesEnded = CC_CALLBACK_2(NewSpriteBatchTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+    auto BatchNode = NewSpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
+    addChild(BatchNode, 0, kTagSpriteBatchNode);
+}
+
+NewSpriteBatchTest::~NewSpriteBatchTest()
+{
+
+}
+
+string NewSpriteBatchTest::title()
+{
+    return "NewRender";
+}
+
+string NewSpriteBatchTest::subtitle()
+{
+    return "SpriteBatchTest";
+}
+
+void NewSpriteBatchTest::onTouchesEnded(const vector<Touch *> &touches, Event *event)
+{
+    for (auto &touch : touches)
+    {
+        auto location = touch->getLocation();
+        addNewSpriteWithCoords(location);
+    }
+}
+
+void NewSpriteBatchTest::addNewSpriteWithCoords(Point p)
+{
+    auto BatchNode = static_cast<NewSpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
+
+    int idx = CCRANDOM_0_1() * 1400 / 100;
+    int x = (idx%5) * 85;
+    int y = (idx/5) * 121;
+
+
+    auto sprite = Sprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
+    BatchNode->addChild(sprite);
+
+    sprite->setPosition( Point( p.x, p.y) );
+
+//    ActionInterval* action;
+//    float random = CCRANDOM_0_1();
+//
+//    if( random < 0.20 )
+//        action = ScaleBy::create(3, 2);
+//    else if(random < 0.40)
+//        action = RotateBy::create(3, 360);
+//    else if( random < 0.60)
+//        action = Blink::create(1, 3);
+//    else if( random < 0.8 )
+//        action = TintBy::create(2, 0, -255, -255);
+//    else
+//        action = FadeOut::create(2);
+//
+//    auto action_back = action->reverse();
+//    auto seq = Sequence::create(action, action_back, NULL);
+//
+//    sprite->runAction( RepeatForever::create(seq));
 }

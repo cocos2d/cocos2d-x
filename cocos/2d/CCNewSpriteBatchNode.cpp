@@ -29,7 +29,7 @@ NewSpriteBatchNode *NewSpriteBatchNode::create(const char *fileImage, long capac
     batchNode->initWithFile(fileImage, capacity);
     batchNode->autorelease();
 
-    return nullptr;
+    return batchNode;
 }
 
 NewSpriteBatchNode::NewSpriteBatchNode()
