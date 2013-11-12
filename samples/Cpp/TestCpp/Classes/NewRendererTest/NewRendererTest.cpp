@@ -6,8 +6,112 @@
 #include "NewRendererTest.h"
 #include "CCNewSprite.h"
 
+static int sceneIdx = -1;
 
-NewRendererTest::NewRendererTest()
+Layer* nextSpriteTestAction();
+Layer* backSpriteTestAction();
+Layer* restartSpriteTestAction();
+
+static std::function<Layer*()> createFunctions[] =
+{
+    CL(NewRendererTest),
+};
+
+#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
+
+Layer* nextTest()
+{
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_LAYER;
+
+    auto layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
+
+    return layer;
+}
+
+Layer* prevTest()
+{
+    sceneIdx--;
+    int total = MAX_LAYER;
+    if( sceneIdx < 0 )
+        sceneIdx += total;
+
+    auto layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
+
+    return layer;
+}
+
+Layer* restartTest()
+{
+    auto layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
+
+    return layer;
+}
+
+void NewRendererTestScene::runThisTest()
+{
+    auto layer = nextTest();
+    addChild(layer);
+
+    Director::getInstance()->replaceScene(this);
+}
+
+MultiSceneTest::MultiSceneTest()
+{
+
+}
+
+MultiSceneTest::~MultiSceneTest()
+{
+
+}
+
+string MultiSceneTest::title()
+{
+    return BaseTest::title();
+}
+
+string MultiSceneTest::subtitle()
+{
+    return BaseTest::subtitle();
+}
+
+void MultiSceneTest::onEnter()
+{
+    BaseTest::onEnter();
+}
+
+void MultiSceneTest::restartCallback(Object *sender)
+{
+    auto s = new NewRendererTestScene();
+    s->addChild(restartTest());
+
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void MultiSceneTest::nextCallback(Object *sender)
+{
+    auto s = new NewRendererTestScene();
+    s->addChild(nextTest());
+
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void MultiSceneTest::backCallback(Object *sender)
+{
+    auto s = new NewRendererTestScene();
+    s->addChild(prevTest());
+
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+NewSpriteTest::NewRendererTest()
 {
     auto touchListener = EventListenerTouchAllAtOnce::create();
     touchListener->onTouchesEnded = CC_CALLBACK_2(NewRendererTest::onTouchesEnded, this);
@@ -16,12 +120,12 @@ NewRendererTest::NewRendererTest()
     createNewSpriteTest();
 }
 
-NewRendererTest::~NewRendererTest()
+NewSpriteTest::~NewRendererTest()
 {
 
 }
 
-void NewRendererTest::createSpriteTest()
+void NewSpriteTest::createSpriteTest()
 {
     Size winSize = Director::getInstance()->getWinSize();
 
@@ -52,7 +156,7 @@ void NewRendererTest::createSpriteTest()
     addChild(parent);
 }
 
-void NewRendererTest::createNewSpriteTest()
+void NewSpriteTest::createNewSpriteTest()
 {
     Size winSize = Director::getInstance()->getWinSize();
 
@@ -83,16 +187,18 @@ void NewRendererTest::createNewSpriteTest()
     addChild(parent);
 }
 
-void NewRendererTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *event)
+void NewSpriteTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *event)
 {
 
 }
 
-void NewRendererTestScene::runThisTest()
-{
-    auto layer = new NewRendererTest();
-    addChild(layer);
 
-    Director::getInstance()->replaceScene(this);
-    layer->release();
+string NewSpriteTest::title()
+{
+    return "NewRender";
+}
+
+string NewSpriteTest::subtitle()
+{
+    return "SpriteTest";
 }
