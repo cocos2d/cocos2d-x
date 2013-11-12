@@ -54,7 +54,7 @@ bool UICheckBoxTest::init()
                                "cocosgui/check_box_active_disable.png");
         checkBox->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         
-        checkBox->addEventListener(this, checkboxselectedeventselector(UICheckBoxTest::selectedEvent));
+        checkBox->addEventListenerCheckBox(this, checkboxselectedeventselector(UICheckBoxTest::selectedEvent));
         
 //        checkBox->addSelectEvent(this, coco_selectselector(UICheckBoxTest::selectedEvent));
         m_pUiLayer->addWidget(checkBox);

@@ -59,6 +59,7 @@ public:
      */
     virtual bool init(Bone *bone);
 
+    using ProcessBase::play;
     /**
      * Start the Process
      *
