@@ -360,7 +360,7 @@ float PhysicsBody::getRotation() const
     return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) / 3.14f * 180.0f);
 }
 
-PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape)
+PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/* = true*/)
 {
     if (shape == nullptr) return nullptr;
     
@@ -371,9 +371,12 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape)
         
         // calculate the area, mass, and desity
         // area must update before mass, because the density changes depend on it.
-        _area += shape->getArea();
-        addMass(shape->getMass());
-        addMoment(shape->getMoment());
+        if (addMassAndMoment)
+        {
+            _area += shape->getArea();
+            addMass(shape->getMass());
+            addMoment(shape->getMoment());
+        }
         
         if (_world != nullptr)
         {
@@ -399,6 +402,17 @@ void PhysicsBody::applyForce(const Vect& force)
 void PhysicsBody::applyForce(const Vect& force, const Point& offset)
 {
     cpBodyApplyForce(_info->getBody(), PhysicsHelper::point2cpv(force), PhysicsHelper::point2cpv(offset));
+}
+
+void PhysicsBody::resetForce()
+{
+    cpBodyResetForces(_info->getBody());
+    
+    // if _gravityEnable is false, add a reverse of gravity force to body
+    if (_world != nullptr && !_gravityEnable)
+    {
+        applyForce(-_world->getGravity() * _mass);
+    }
 }
 
 void PhysicsBody::applyImpulse(const Vect& impulse)
@@ -604,28 +618,31 @@ PhysicsShape* PhysicsBody::getShape(int tag) const
     return nullptr;
 }
 
-void PhysicsBody::removeShape(int tag)
+void PhysicsBody::removeShape(int tag, bool reduceMassAndMoment/* = true*/)
 {
     for (auto child : *_shapes)
     {
         PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
         if (shape->getTag() == tag)
         {
-            removeShape(shape);
+            removeShape(shape, reduceMassAndMoment);
             return;
         }
     }
 }
 
-void PhysicsBody::removeShape(PhysicsShape* shape)
+void PhysicsBody::removeShape(PhysicsShape* shape, bool reduceMassAndMoment/* = true*/)
 {
     if (_shapes->getIndexOfObject(shape) != UINT_MAX)
     {
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
-        _area -= shape->getArea();
-        addMass(-shape->getMass());
-        addMoment(-shape->getMoment());
+        if (reduceMassAndMoment)
+        {
+            _area -= shape->getArea();
+            addMass(-shape->getMass());
+            addMoment(-shape->getMoment());
+        }
         
         //remove
         if (_world)
@@ -640,7 +657,7 @@ void PhysicsBody::removeShape(PhysicsShape* shape)
     }
 }
 
-void PhysicsBody::removeAllShapes()
+void PhysicsBody::removeAllShapes(bool reduceMassAndMoment/* = true*/)
 {
     for (auto child : *_shapes)
     {
@@ -648,9 +665,12 @@ void PhysicsBody::removeAllShapes()
         
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
-        _area -= shape->getArea();
-        addMass(-shape->getMass());
-        addMoment(-shape->getMoment());
+        if (reduceMassAndMoment)
+        {
+            _area -= shape->getArea();
+            addMass(-shape->getMass());
+            addMoment(-shape->getMoment());
+        }
         
         if (_world)
         {
