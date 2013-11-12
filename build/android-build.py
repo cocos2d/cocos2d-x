@@ -15,11 +15,12 @@ ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
 
 def usage():
 
-    print "%prog [-n ndk-build-parameter] target\n\
-    valid target are [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon\
-|crystalcraze|moonwarriors|testjavascript|watermelonwithme], of course you can use 'cpp'\
-to build all cpp samples, 'lua' to build all lua samples, 'jsb' to build all javascript samples,\
- and 'all' for all samples" 
+    print """%s [-n ndk-build-parameter] target.
+
+Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon
+                   |crystalcraze|moonwarriors|testjavascript|watermelonwithme]
+
+You can use [all|cpp|lua|jsb], to build all, or all the C++, or all the Lua, or all the JavaScript samples respectevely.""" % sys.argv[0]
 
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
