@@ -594,10 +594,10 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
         if (parentName)
         {
             parentXML = armatureXML->FirstChildElement(BONE);
-            std::string name = parentName;
+            std::string parentNameStr = parentName;
             while (parentXML)
             {
-                if (name.compare(parentXML->Attribute(A_NAME)) == 0)
+                if (parentNameStr.compare(parentXML->Attribute(A_NAME)) == 0)
                 {
                     break;
                 }
@@ -822,7 +822,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
     }
 
     int length = 0;
-    int i = 0;
+    int index = 0;
     int parentTotalDuration = 0;
     int currentDuration = 0;
 
@@ -863,13 +863,12 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
             /*
             *  in this loop we get the corresponding parent frame xml
             */
-            while(i < length && (parentFrameXML ? (totalDuration < parentTotalDuration || totalDuration >= parentTotalDuration + currentDuration) : true))
+            while(index < length && (parentFrameXML ? (totalDuration < parentTotalDuration || totalDuration >= parentTotalDuration + currentDuration) : true))
             {
-                parentFrameXML = parentXmlList[i];
+                parentFrameXML = parentXmlList[index];
                 parentTotalDuration += currentDuration;
                 parentFrameXML->QueryIntAttribute(A_DURATION, &currentDuration);
-                i++;
-
+                index++;
             }
         }
 
