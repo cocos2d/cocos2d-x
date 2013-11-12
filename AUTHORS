@@ -650,6 +650,9 @@ Developers:
     xhcnb
         Device::setAccelerometerEnabled needs to be invoked before adding ACC listener.
         
+    bopohaa
+        Fixed a bug that Webp test crashes.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
