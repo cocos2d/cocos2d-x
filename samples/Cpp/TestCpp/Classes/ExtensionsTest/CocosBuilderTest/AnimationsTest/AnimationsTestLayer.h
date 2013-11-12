@@ -2,12 +2,13 @@
 #define _ANIMATIONSTESTLAYER_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
+#include "cocosbuilder/CocosBuilder.h"
 
 class AnimationsTestLayer
 : public cocos2d::Layer
-, public cocos2d::extension::CCBSelectorResolver
-, public cocos2d::extension::CCBMemberVariableAssigner 
+, public cocosbuilder::CCBSelectorResolver
+, public cocosbuilder::CCBMemberVariableAssigner 
 {
 public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(AnimationsTestLayer, create);
@@ -24,10 +25,10 @@ public:
     void onControlButtonJumpClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
     void onControlButtonFunkyClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
     
-    void setAnimationManager(cocos2d::extension::CCBAnimationManager *pAnimationManager);
+    void setAnimationManager(cocosbuilder::CCBAnimationManager *pAnimationManager);
     
 private:
-    cocos2d::extension::CCBAnimationManager *mAnimationManager;
+    cocosbuilder::CCBAnimationManager *mAnimationManager;
 };
 
 #endif

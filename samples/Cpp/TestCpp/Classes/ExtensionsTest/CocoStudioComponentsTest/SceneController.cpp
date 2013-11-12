@@ -6,6 +6,7 @@
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
+using namespace cocostudio;
 
 SceneController::SceneController(void)
 : _fAddTargetTime(0.0f)
