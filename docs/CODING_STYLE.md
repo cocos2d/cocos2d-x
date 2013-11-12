@@ -1,4 +1,4 @@
-# ![][1] cocos2d-x C++ coding style
+# ![][1] C++ coding style
 
 _v0.2 - Last updated November 8, 2013_
 
