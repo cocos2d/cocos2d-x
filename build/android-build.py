@@ -15,11 +15,12 @@ ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
 
 def usage():
 
-    print "%prog [-n ndk-build-parameter] target\n\
-    valid target are [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon\
-|crystalcraze|moonwarriors|testjavascript|watermelonwithme], of course you can use 'cpp'\
-to build all cpp samples, 'lua' to build all lua samples, 'jsb' to build all javascript samples,\
- and 'all' for all samples" 
+    print """%s [-n ndk-build-parameter] target.
+
+Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon
+                   |crystalcraze|moonwarriors|testjavascript|watermelonwithme]
+
+You can use [all|cpp|lua|jsb], to build all, or all the C++, or all the Lua, or all the JavaScript samples respectevely.""" % sys.argv[0]
 
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
@@ -95,7 +96,8 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param):
         command = '%s -C %s %s' % (ndk_path, app_android_root, ndk_module_path)
     else:
         command = '%s -C %s %s %s' % (ndk_path, app_android_root, ndk_build_param, ndk_module_path)
-    os.system(command)
+    if os.system(command) != 0:
+        raise Exception("Build project [ " + app_android_root + " ] fails!")
 
 def copy_files(src, dst):
 
@@ -205,4 +207,8 @@ if __name__ == '__main__':
     if len(args) == 0:
         usage()
     else:
-        build_samples(args, opts.ndk_build_param)
+        try:
+            build_samples(args, opts.ndk_build_param)
+        except Exception as e:
+            print e
+            sys.exit(1)

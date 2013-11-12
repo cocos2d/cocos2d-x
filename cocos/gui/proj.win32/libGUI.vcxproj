@@ -12,11 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CocosGUI.h" />
-    <ClInclude Include="..\Layout.h" />
-    <ClInclude Include="..\LayoutParameter.h" />
     <ClInclude Include="..\UIButton.h" />
     <ClInclude Include="..\UICheckBox.h" />
-    <ClInclude Include="..\UIDragPanel.h" />
     <ClInclude Include="..\UIHelper.h" />
     <ClInclude Include="..\UIImageView.h" />
     <ClInclude Include="..\UIInputManager.h" />
@@ -24,7 +21,9 @@
     <ClInclude Include="..\UILabelAtlas.h" />
     <ClInclude Include="..\UILabelBMFont.h" />
     <ClInclude Include="..\UILayer.h" />
+    <ClInclude Include="..\UILayout.h" />
     <ClInclude Include="..\UILayoutDefine.h" />
+    <ClInclude Include="..\UILayoutParameter.h" />
     <ClInclude Include="..\UIListView.h" />
     <ClInclude Include="..\UILoadingBar.h" />
     <ClInclude Include="..\UIPageView.h" />
@@ -37,11 +36,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CocosGUI.cpp" />
-    <ClCompile Include="..\Layout.cpp" />
-    <ClCompile Include="..\LayoutParameter.cpp" />
     <ClCompile Include="..\UIButton.cpp" />
     <ClCompile Include="..\UICheckBox.cpp" />
-    <ClCompile Include="..\UIDragPanel.cpp" />
     <ClCompile Include="..\UIHelper.cpp" />
     <ClCompile Include="..\UIImageView.cpp" />
     <ClCompile Include="..\UIInputManager.cpp" />
@@ -49,7 +45,9 @@
     <ClCompile Include="..\UILabelAtlas.cpp" />
     <ClCompile Include="..\UILabelBMFont.cpp" />
     <ClCompile Include="..\UILayer.cpp" />
+    <ClCompile Include="..\UILayout.cpp" />
     <ClCompile Include="..\UILayoutDefine.cpp" />
+    <ClCompile Include="..\UILayoutParameter.cpp" />
     <ClCompile Include="..\UIListView.cpp" />
     <ClCompile Include="..\UILoadingBar.cpp" />
     <ClCompile Include="..\UIPageView.cpp" />

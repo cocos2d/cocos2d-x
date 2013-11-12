@@ -79,7 +79,7 @@ bool UIPageViewTest::init()
             
             pageView->addPage(layout);
         }
-        pageView->addEventListener(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
+        pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
         
         m_pUiLayer->addWidget(pageView);
         

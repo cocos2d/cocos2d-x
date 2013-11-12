@@ -77,7 +77,7 @@ void ProcessBase::stop()
     _currentPercent = 0;
 }
 
-void ProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     _isComplete = false;
     _isPause = false;

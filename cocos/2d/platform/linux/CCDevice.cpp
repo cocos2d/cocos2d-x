@@ -24,6 +24,7 @@ int Device::getDPI()
 	        ((double) DisplayWidthMM(dpy,scr)));
 	    dpi = (int) (xres + 0.5);
 	    //printf("dpi = %d\n", dpi);
+		XCloseDisplay (dpy);
 	}
 	return dpi;
 }
