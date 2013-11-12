@@ -27,6 +27,7 @@ Dictionary* NodeLoader::getCustomProperties()
 }
 
 Node * NodeLoader::loadNode(Node * pParent, CCBReader * ccbReader) {
+    m_pCustomProperties->removeAllObjects();
     Node * ccNode = this->createNode(pParent, ccbReader);
 
     //this->parseProperties(ccNode, pParent, ccbReader);
