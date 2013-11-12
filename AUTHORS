@@ -642,6 +642,7 @@ Developers:
     ledyba
         Fixed a bug that EventListeners can't be removed sometimes.
         Fixed a bug that the data size has to be specified when parsing XML using TinyXML.
+        Closed X display after getting DPI on Linux.
         
     Luis Parravicini (luisparravicini)
         Fixed typos in create_project.py.
