@@ -41,7 +41,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~SceneReader(void);
+    virtual ~SceneReader(void);
 
 public:
     static SceneReader* getInstance();

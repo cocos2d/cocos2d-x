@@ -1,4 +1,5 @@
 require "luaScript/CocoStudioTest/CocoStudioGUITest/CocoStudioGUITest"
+require "luaScript/CocoStudioTest/CocoStudioSceneTest/CocoStudioSceneTest"
 
 local LINE_SPACE = 40
 local ITEM_TAG_BASIC = 1000
@@ -26,7 +27,7 @@ local cocoStudioTestItemNames =
     {
         itemTitle = "CocoStudioSceneTest",
         testScene = function () 
-            --runSceneEditorTestLayer()
+            runCocosSceneTestScene()
         end
     }
 } 
