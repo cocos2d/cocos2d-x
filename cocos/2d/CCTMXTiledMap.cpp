@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCTMXXMLParser.h"
 #include "CCTMXLayer.h"
 #include "CCSprite.h"
+#include <algorithm>
 
 NS_CC_BEGIN
 

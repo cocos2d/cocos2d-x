@@ -138,7 +138,7 @@ public:
     virtual void setAnchorPoint(const cocos2d::Point &pt);
     
     //add a call back function would called when checkbox is selected or unselected.
-    void addEventListener(cocos2d::Object* target,SEL_SelectedStateEvent selector);
+    void addEventListenerCheckBox(cocos2d::Object* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
@@ -190,8 +190,8 @@ protected:
     cocos2d::Sprite* _frontCrossDisabledRenderer;
     bool _isSelected;
 
-    cocos2d::Object*       _selectedStateEventListener;
-    SEL_SelectedStateEvent    _selectedStateEventSelector;
+    cocos2d::Object*       _checkBoxEventListener;
+    SEL_SelectedStateEvent    _checkBoxEventSelector;
     
     TextureResType _backGroundTexType;
     TextureResType _backGroundSelectedTexType;
