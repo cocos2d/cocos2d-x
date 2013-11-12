@@ -793,6 +793,8 @@ void PhysicsShape::setGroup(int group)
             cpShapeSetGroup(shape, (cpGroup)group);
         }
     }
+    
+    _group = group;
 }
 
 bool PhysicsShape::containsPoint(const Point& point) const
