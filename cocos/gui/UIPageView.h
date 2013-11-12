@@ -118,7 +118,7 @@ public:
     cocos2d::Array* getPages();
     
     // event
-    void addEventListener(cocos2d::Object *target, SEL_PageViewEvent selector);
+    void addEventListenerPageView(cocos2d::Object *target, SEL_PageViewEvent selector);
 
     
     //override "removeChild" method of widget.
@@ -186,8 +186,8 @@ protected:
     float _autoScrollSpeed;
     int _autoScrollDir;
     float _childFocusCancelOffset;
-    cocos2d::Object* _eventListener;
-    SEL_PageViewEvent _eventSelector;
+    cocos2d::Object* _pageViewEventListener;
+    SEL_PageViewEvent _pageViewEventSelector;
 
 };
 
