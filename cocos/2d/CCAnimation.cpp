@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "ccMacros.h"
 #include "CCSpriteFrame.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -176,7 +177,7 @@ void Animation::addSpriteFrame(SpriteFrame *pFrame)
 
 void Animation::addSpriteFrameWithFile(const char *filename)
 {
-    Texture2D *texture = TextureCache::getInstance()->addImage(filename);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     Rect rect = Rect::ZERO;
     rect.size = texture->getContentSize();
     SpriteFrame *pFrame = SpriteFrame::createWithTexture(texture, rect);

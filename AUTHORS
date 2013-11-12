@@ -643,6 +643,12 @@ Developers:
         Fixed a bug that EventListeners can't be removed sometimes.
         Fixed a bug that the data size has to be specified when parsing XML using TinyXML.
         
+    Luis Parravicini (luisparravicini)
+        Fixed typos in create_project.py.
+        
+    xhcnb
+        Device::setAccelerometerEnabled needs to be invoked before adding ACC listener.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

@@ -128,4 +128,8 @@ Application::Platform Application::getTargetPlatform()
     return Platform::OS_ANDROID;
 }
 
+void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
+
+}
+
 NS_CC_END
