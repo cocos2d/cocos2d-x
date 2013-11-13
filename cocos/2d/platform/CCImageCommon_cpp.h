@@ -380,8 +380,8 @@ Image::Image()
 , _fileType(Format::UNKOWN)
 , _renderFormat(Texture2D::PixelFormat::NONE)
 , _preMulti(false)
-, _hasPremultipliedAlpha(true)
 , _numberOfMipmaps(0)
+, _hasPremultipliedAlpha(true)
 {
 
 }
@@ -602,7 +602,7 @@ bool Image::isWebp(const unsigned char * data, int dataLen)
 
 bool Image::isPvr(const unsigned char * data, int dataLen)
 {
-    if (dataLen < sizeof(PVRv2TexHeader) || dataLen < sizeof(PVRv3TexHeader))
+    if (static_cast<size_t>(dataLen) < sizeof(PVRv2TexHeader) || static_cast<size_t>(dataLen) < sizeof(PVRv3TexHeader))
     {
         return false;
     }
@@ -1283,7 +1283,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
 
 bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
 {
-    if (dataLen < sizeof(PVRv3TexHeader))
+    if (static_cast<size_t>(dataLen) < sizeof(PVRv3TexHeader))
     {
 		return false;
 	}

@@ -81,15 +81,15 @@ NS_CC_BEGIN
 //
 
 ParticleSystem::ParticleSystem()
-: _configName("")
-, _isBlendAdditive(false)
+: _isBlendAdditive(false)
 , _isAutoRemoveOnFinish(false)
 , _plistFile("")
 , _elapsed(0)
-, _particles(NULL)
+, _particles(nullptr)
+, _configName("")
 , _emitCounter(0)
 , _particleIdx(0)
-, _batchNode(NULL)
+, _batchNode(nullptr)
 , _atlasIndex(0)
 , _transformSystemDirty(false)
 , _allocatedParticles(0)
@@ -113,11 +113,11 @@ ParticleSystem::ParticleSystem()
 , _endSpinVar(0)
 , _emissionRate(0)
 , _totalParticles(0)
-, _texture(NULL)
+, _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 , _opacityModifyRGB(false)
-, _positionType(PositionType::FREE)
 , _yCoordFlipped(0)
+, _positionType(PositionType::FREE)
 {
     modeA.gravity = Point::ZERO;
     modeA.speed = 0;
