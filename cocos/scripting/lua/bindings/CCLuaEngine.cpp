@@ -877,7 +877,7 @@ int LuaEngine::handleArmatureWrapper(void* data)
             {
                 LuaArmatureMovementEventData* movementData = static_cast<LuaArmatureMovementEventData*>(wrapperData->eventData);
                 
-                _stack->pushObject(movementData->objTarget, "Object");
+                _stack->pushObject(movementData->objTarget, "Armature");
                 _stack->pushInt(movementData->movementType);
                 _stack->pushString(movementData->movementID.c_str());
                 _stack->executeFunctionByHandler(handler, 3);
@@ -887,7 +887,7 @@ int LuaEngine::handleArmatureWrapper(void* data)
             {
                 LuaArmatureFrameEventData* frameData = static_cast<LuaArmatureFrameEventData*>(wrapperData->eventData);
                 
-                _stack->pushObject(frameData->objTarget, "Object");
+                _stack->pushObject(frameData->objTarget, "Bone");
                 _stack->pushString(frameData->frameEventName.c_str());
                 _stack->pushInt(frameData->originFrameIndex);
                 _stack->pushInt(frameData->currentFrameIndex);
@@ -897,7 +897,7 @@ int LuaEngine::handleArmatureWrapper(void* data)
         case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::FILE_ASYNC:
             {
                 _stack->pushFloat(*(float*)wrapperData->eventData);
-                _stack->executeFunctionByHandler(handler, 0);
+                _stack->executeFunctionByHandler(handler, 1);
             }
             break;
         default:
