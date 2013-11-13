@@ -7,6 +7,8 @@
 class NodeChildrenMenuLayer : public PerformBasicLayer
 {
 public:
+    CREATE_FUNC(NodeChildrenMenuLayer);
+
     NodeChildrenMenuLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
     virtual void showCurrentTest();
     void dumpProfilerInfo(float dt);
@@ -19,6 +21,8 @@ public:
 class NodeChildrenMainScene : public Scene
 {
 public:
+    CREATE_FUNC(NodeChildrenMainScene);
+
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual std::string title();
     virtual std::string subtitle();
@@ -44,6 +48,8 @@ protected:
 class IterateSpriteSheet : public NodeChildrenMainScene
 {
 public:
+    CREATE_FUNC(IterateSpriteSheet);
+
     ~IterateSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
@@ -57,6 +63,8 @@ protected:
 class IterateSpriteSheetForLoop : public IterateSpriteSheet
 {
 public:
+    CREATE_FUNC(IterateSpriteSheetForLoop);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -67,6 +75,8 @@ public:
 class IterateSpriteSheetIterator : public IterateSpriteSheet
 {
 public:
+    CREATE_FUNC(IterateSpriteSheetIterator);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -77,6 +87,8 @@ public:
 class IterateSpriteSheetCArray : public IterateSpriteSheet
 {
 public:
+    CREATE_FUNC(IterateSpriteSheetCArray);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -87,6 +99,8 @@ public:
 class AddRemoveSpriteSheet : public NodeChildrenMainScene
 {
 public:
+    CREATE_FUNC(AddRemoveSpriteSheet);
+
     ~AddRemoveSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
@@ -106,6 +120,8 @@ protected:
 class CallFuncsSpriteSheetForEach : public IterateSpriteSheet
 {
 public:
+    CREATE_FUNC(CallFuncsSpriteSheetForEach);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -116,6 +132,8 @@ public:
 class CallFuncsSpriteSheetCMacro : public IterateSpriteSheet
 {
 public:
+    CREATE_FUNC(CallFuncsSpriteSheetCMacro);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -128,6 +146,8 @@ public:
 class AddSprite : public AddRemoveSpriteSheet
 {
 public:
+    CREATE_FUNC(AddSprite);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -138,6 +158,8 @@ public:
 class AddSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
+    CREATE_FUNC(AddSpriteSheet);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -148,6 +170,8 @@ public:
 class GetSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
+    CREATE_FUNC(GetSpriteSheet);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -158,6 +182,8 @@ public:
 class RemoveSprite : public AddRemoveSpriteSheet
 {
 public:
+    CREATE_FUNC(RemoveSprite);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -168,6 +194,8 @@ public:
 class RemoveSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
+    CREATE_FUNC(RemoveSpriteSheet);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -178,6 +206,8 @@ public:
 class ReorderSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
+    CREATE_FUNC(ReorderSpriteSheet);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -188,6 +218,8 @@ public:
 class SortAllChildrenSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
+    CREATE_FUNC(SortAllChildrenSpriteSheet);
+
     virtual void update(float dt);
 
     virtual std::string title();
@@ -198,6 +230,8 @@ public:
 class VisitSceneGraph : public NodeChildrenMainScene
 {
 public:
+    CREATE_FUNC(VisitSceneGraph);
+
     void initWithQuantityOfNodes(unsigned int nodes) override;
 
     virtual void update(float dt) override;

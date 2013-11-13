@@ -26,9 +26,6 @@ namespace
         sceneIdx = sceneIdx % MAX_LAYER;
         
         auto layer = (createFunctions[sceneIdx])();
-        layer->init();
-        layer->autorelease();
-        
         return layer;
     }
     
@@ -40,18 +37,12 @@ namespace
             sceneIdx += total;
         
         auto layer = (createFunctions[sceneIdx])();
-        layer->init();
-        layer->autorelease();
-        
         return layer;
     }
     
     static Layer* restart()
     {
         auto layer = (createFunctions[sceneIdx])();
-        layer->init();
-        layer->autorelease();
-        
         return layer;
     }
     

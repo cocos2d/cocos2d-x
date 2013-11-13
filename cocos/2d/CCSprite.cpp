@@ -70,10 +70,10 @@ Sprite* Sprite::createWithTexture(Texture2D *texture)
     return NULL;
 }
 
-Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect)
+Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
     Sprite *sprite = new Sprite();
-    if (sprite && sprite->initWithTexture(texture, rect))
+    if (sprite && sprite->initWithTexture(texture, rect, rotated))
     {
         sprite->autorelease();
         return sprite;
@@ -304,11 +304,17 @@ Sprite::~Sprite(void)
     CC_SAFE_RELEASE(_texture);
 }
 
+
+void Sprite::setTexture(const std::string &filename)
+{
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    setTexture(texture);
+}
+
 void Sprite::setTextureRect(const Rect& rect)
 {
     setTextureRect(rect, false, rect.size);
 }
-
 
 void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)
 {
@@ -982,7 +988,17 @@ void Sprite::updateDisplayedOpacity(GLubyte opacity)
 
 // Frames
 
-void Sprite::setDisplayFrame(SpriteFrame *pNewFrame)
+void Sprite::setSpriteFrame(const std::string &spriteFrameName)
+{
+    SpriteFrameCache *cache = SpriteFrameCache::getInstance();
+    SpriteFrame *spriteFrame = cache->getSpriteFrameByName(spriteFrameName);
+
+    CCASSERT(spriteFrame, "Invalid spriteFrameName");
+
+    setSpriteFrame(spriteFrame);
+}
+
+void Sprite::setSpriteFrame(SpriteFrame *pNewFrame)
 {
     _unflippedOffsetPositionFromCenter = pNewFrame->getOffset();
 

@@ -101,18 +101,11 @@ template <class spriteType>
 class ShaderSpriteCreator
 {
 public:
-    static spriteType* createSprite(const char* pszFileName)
+    static spriteType* createSprite(const std::string& fileName)
     {
-        spriteType* pRet = new spriteType();
-        if (pRet && pRet->initWithFile(pszFileName))
-        {
-            pRet->autorelease();
-        }
-        else
-        {
-            CC_SAFE_DELETE(pRet);
-        }
-        return pRet;
+        spriteType* ret = spriteType::create();
+        ret->setTexture(fileName);
+        return ret;
     }
 };
 
@@ -236,6 +229,7 @@ void ShaderSprite::draw()
 class NormalSprite : public ShaderSprite, public ShaderSpriteCreator<NormalSprite>
 {
 public:
+    CREATE_FUNC(NormalSprite);
     NormalSprite();
 protected:
     virtual void buildCustomUniforms();
@@ -260,6 +254,7 @@ void NormalSprite::setCustomUniforms()
 class GreyScaleSprite : public ShaderSprite, public ShaderSpriteCreator<GreyScaleSprite>
 {
 public:
+    CREATE_FUNC(GreyScaleSprite);
     GreyScaleSprite();
 protected:
     virtual void buildCustomUniforms();
@@ -284,6 +279,7 @@ void GreyScaleSprite::setCustomUniforms()
 class BlurSprite : public ShaderSprite, public ShaderSpriteCreator<BlurSprite>
 {
 public:
+    CREATE_FUNC(BlurSprite);
     BlurSprite();
     void setBlurSize(float f);
 protected:
@@ -331,6 +327,7 @@ void BlurSprite::setBlurSize(float f)
 class NoiseSprite : public ShaderSprite, public ShaderSpriteCreator<NoiseSprite>
 {
 public:
+    CREATE_FUNC(NoiseSprite);
     NoiseSprite();
     
 private:
@@ -362,6 +359,7 @@ void NoiseSprite::setCustomUniforms()
 class EdgeDetectionSprite : public ShaderSprite, public ShaderSpriteCreator<EdgeDetectionSprite>
 {
 public:
+    CREATE_FUNC(EdgeDetectionSprite);
     EdgeDetectionSprite();
     
 private:
@@ -393,6 +391,7 @@ void EdgeDetectionSprite::setCustomUniforms()
 class BloomSprite : public ShaderSprite, public ShaderSpriteCreator<BloomSprite>
 {
 public:
+    CREATE_FUNC(BloomSprite);
     BloomSprite();
     
 private:
@@ -424,6 +423,7 @@ void BloomSprite::setCustomUniforms()
 class CelShadingSprite : public ShaderSprite, public ShaderSpriteCreator<CelShadingSprite>
 {
 public:
+    CREATE_FUNC(CelShadingSprite);
     CelShadingSprite();
     
 private:
@@ -455,6 +455,7 @@ void CelShadingSprite::setCustomUniforms()
 class LensFlareSprite : public ShaderSprite, public ShaderSpriteCreator<LensFlareSprite>
 {
 public:
+    CREATE_FUNC(LensFlareSprite);
     LensFlareSprite();
     
 private:

@@ -119,16 +119,16 @@ Label::~Label()
     if (_fontAtlas)
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
 
-    delete _reusedLetter;
+    _reusedLetter->release();
 }
 
 bool Label::init()
 { 
     if(_fontAtlas)
     {
-        _reusedLetter = new Sprite;
-        _reusedLetter->initWithTexture(&_fontAtlas->getTexture(0));
+        _reusedLetter = Sprite::createWithTexture(&_fontAtlas->getTexture(0));
         _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);
+        _reusedLetter->retain();
         return SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), 30);
     }
 
@@ -437,15 +437,13 @@ Sprite * Label::getLetter(int ID)
             uvRect.origin.x    = _lettersInfo[ID].def.U;
             uvRect.origin.y    = _lettersInfo[ID].def.V;
 
-            sp = new Sprite();
-            sp->initWithTexture(&_fontAtlas->getTexture(_lettersInfo[ID].def.textureID),uvRect);
+            sp = Sprite::createWithTexture(&_fontAtlas->getTexture(_lettersInfo[ID].def.textureID), uvRect);
             sp->setBatchNode(this);
             sp->setAnchorPoint(Point(_lettersInfo[ID].def.anchorX, _lettersInfo[ID].def.anchorY));                    
             sp->setPosition(_lettersInfo[ID].position);
             sp->setOpacity(_realOpacity);
          
             this->addSpriteWithoutQuad(sp, ID, ID);
-            sp->release();
         }
         return sp;
     }

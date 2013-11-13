@@ -3188,23 +3188,19 @@ SpriteNilTexture::SpriteNilTexture()
     
     // TEST: If no texture is given, then Opacity + Color should work.
 
-    sprite = new Sprite();
-    sprite->init();
+    sprite = Sprite::create();
     sprite->setTextureRect( Rect(0, 0, 300,300) );
     sprite->setColor(Color3B::RED);
     sprite->setOpacity(128);
     sprite->setPosition(Point(3*s.width/4, s.height/2));
     addChild(sprite, 100);
-    sprite->release();
 
-    sprite = new Sprite();
-    sprite->init();
+    sprite = Sprite::create();
     sprite->setTextureRect(Rect(0, 0, 300,300));
     sprite->setColor(Color3B::BLUE);
     sprite->setOpacity(128);
     sprite->setPosition(Point(1*s.width/4, s.height/2));
     addChild(sprite, 100);
-    sprite->release();
 }
 
 std::string SpriteNilTexture::title()

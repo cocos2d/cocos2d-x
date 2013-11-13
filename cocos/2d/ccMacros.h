@@ -257,4 +257,22 @@ extern unsigned int CC_DLL g_uNumberOfDraws;
  */
 #define AnimationFrameDisplayedNotification "CCAnimationFrameDisplayedNotification"
 
+// A macro to disallow the copy constructor and operator= functions
+// This should be used in the private: declarations for a class
+#define CC_DISALLOW_COPY_AND_ASSIGN(TypeName)   \
+    TypeName(const TypeName&);                  \
+    void operator=(const TypeName&)
+
+// A macro to disallow all the implicit constructors, namely the
+// default constructor, copy constructor and operator= functions.
+//
+// This should be used in the private: declarations for a class
+// that wants to prevent anyone from instantiating it. This is
+// especially useful for classes containing only static methods.
+#define CC_DISALLOW_IMPLICIT_CONSTRUCTORS(TypeName)    \
+    TypeName();                                        \
+    CC_DISALLOW_COPY_AND_ASSIGN(TypeName)
+
+
+
 #endif // __CCMACROS_H__
