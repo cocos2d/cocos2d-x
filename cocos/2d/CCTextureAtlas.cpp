@@ -62,7 +62,8 @@ TextureAtlas::~TextureAtlas()
 
     glDeleteBuffers(2, _buffersVBO);
 
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         glDeleteVertexArrays(1, &_VAOname);
         GL::bindVAO(0);
     }
@@ -192,10 +193,12 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, long capacity)
     
     this->setupIndices();
 
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         setupVBOandVAO();
     }
-    else {
+    else
+    {
         setupVBO();
     }
 
@@ -206,10 +209,12 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, long capacity)
 
 void TextureAtlas::listenBackToForeground(Object *obj)
 {  
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         setupVBOandVAO();
     }
-    else {
+    else
+    {
         setupVBO();
     }
     
@@ -605,7 +610,8 @@ void TextureAtlas::drawNumberOfQuads(long numberOfQuads, long start)
 
     GL::bindTexture2D(_texture->getName());
 
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         //
         // Using VBO and VAO
         //
@@ -649,7 +655,8 @@ void TextureAtlas::drawNumberOfQuads(long numberOfQuads, long start)
 
 //    glBindVertexArray(0);
     }
-    else {
+    else
+    {
         //
         // Using VBO without VAO
         //

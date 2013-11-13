@@ -58,10 +58,12 @@ bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
         }
 
         initIndices();
-        if (Configuration::getInstance()->supportsShareableVAO()) {
+        if (Configuration::getInstance()->supportsShareableVAO())
+        {
             setupVBOandVAO();
         }
-        else {
+        else
+        {
             setupVBO();
         }
 
@@ -95,7 +97,8 @@ ParticleSystemQuad::~ParticleSystemQuad()
         CC_SAFE_FREE(_quads);
         CC_SAFE_FREE(_indices);
         glDeleteBuffers(2, &_buffersVBO[0]);
-        if (Configuration::getInstance()->supportsShareableVAO()) {
+        if (Configuration::getInstance()->supportsShareableVAO())
+        {
             glDeleteVertexArrays(1, &_VAOname);
             GL::bindVAO(0);
         }
@@ -355,7 +358,8 @@ void ParticleSystemQuad::draw()
 
     CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
 
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         //
         // Using VBO and VAO
         //
@@ -371,7 +375,8 @@ void ParticleSystemQuad::draw()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif
     }
-    else {
+    else
+    {
         //
         // Using VBO without VAO
         //
@@ -453,10 +458,12 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         }
 
         initIndices();
-        if (Configuration::getInstance()->supportsShareableVAO()) {
+        if (Configuration::getInstance()->supportsShareableVAO())
+        {
             setupVBOandVAO();
         }
-        else {
+        else
+        {
             setupVBO();
         }
     }
@@ -527,10 +534,12 @@ void ParticleSystemQuad::setupVBO()
 
 void ParticleSystemQuad::listenBackToForeground(Object *obj)
 {
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         setupVBOandVAO();
     }
-    else {
+    else
+    {
         setupVBO();
     }
 }
@@ -575,10 +584,12 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
             allocMemory();
             initIndices();
             setTexture(oldBatch->getTexture());
-            if (Configuration::getInstance()->supportsShareableVAO()) {
+            if (Configuration::getInstance()->supportsShareableVAO())
+            {
                 setupVBOandVAO();
             }
-            else {
+            else
+            {
                 setupVBO();
             }
         }
@@ -595,7 +606,8 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
 
             glDeleteBuffers(2, &_buffersVBO[0]);
             memset(_buffersVBO, 0, sizeof(_buffersVBO));
-            if (Configuration::getInstance()->supportsShareableVAO()) {
+            if (Configuration::getInstance()->supportsShareableVAO())
+            {
                 glDeleteVertexArrays(1, &_VAOname);
                 GL::bindVAO(0);
                 _VAOname = 0;
