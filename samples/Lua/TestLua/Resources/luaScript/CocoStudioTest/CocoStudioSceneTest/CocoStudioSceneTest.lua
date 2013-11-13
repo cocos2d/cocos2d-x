@@ -11,19 +11,6 @@ function SceneEditorTestLayer.extend(target)
     return target
 end
 
-function SceneEditorTestLayer:init()
-
-
-    local mainMenuLabel = ccs.UILabel:create()
-    mainMenuLabel:setText("MainMenu")
-    mainMenuLabel:setFontSize(20)
-    mainMenuLabel:setTouchScaleChangeEnabled(true)
-    mainMenuLabel:setPosition(cc.p(430,30))
-    mainMenuLabel:setTouchEnabled(true)
-    mainMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addWidget(mainMenuLabel) 
-end
-
 function SceneEditorTestLayer:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/FishJoy2.json")
     if nil == node then
@@ -44,7 +31,7 @@ function SceneEditorTestLayer:createGameScene()
     cc.MenuItemFont:setFontSize(24)
     local itemBack = cc.MenuItemFont:create("Back")
     itemBack:setColor(cc.c3b(255, 255, 255))
-    itemBack:setPosition(cc.p(VisibleRect:bottom().x - 50, VisibleRect:bottom().y + 25))
+    itemBack:setPosition( cc.p(430,30) )
     itemBack:registerScriptTapHandler(menuCloseCallback)
     local menuBack = cc.Menu:create()
     menuBack:setPosition(cc.p(0.0, 0.0))
