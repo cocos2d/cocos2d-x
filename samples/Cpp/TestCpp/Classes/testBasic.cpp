@@ -40,17 +40,14 @@ void TestScene::onEnter()
                       outside the scope. So I choose the (2) solution. Commented by James Chen.
         */
 
-//        auto scene = Scene::create();
-        auto scene = new Scene();
-        if (scene && scene->init())
-        {
-            auto layer = new TestController();
-            scene->addChild(layer);
-            layer->release();
-            Director::getInstance()->replaceScene(scene);
-            scene->release();
-        }
-        
+        auto scene = Scene::create();
+
+        auto layer = new TestController();
+        scene->addChild(layer);
+        layer->release();
+
+        Director::getInstance()->replaceScene(scene);
+
         cocostudio::ArmatureDataManager::destoryInstance();
 	});
 

@@ -59,18 +59,8 @@ class CC_DLL Layer : public Node
 {
 public:    
     /** creates a fullscreen black layer */
-    static Layer *create(void);
-    /**
-     * @js ctor
-     */
-    Layer();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~Layer();
-    virtual bool init();
-    
+    static Layer *create();
+
     // Deprecated touch callbacks.
     CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
@@ -109,9 +99,14 @@ public:
     /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
-    //
-    // Overrides
-    //
+
+protected:
+    Layer();
+    virtual ~Layer();
+    virtual bool init();
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Layer);
 };
 
 #ifdef __apple__
@@ -130,17 +125,7 @@ class CC_DLL LayerRGBA : public Layer, public RGBAProtocol
 {
 public:
     CREATE_FUNC(LayerRGBA);
-    /**
-     * @js ctor
-     */
-    LayerRGBA();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerRGBA();
-    
-    virtual bool init();
+
 
     //
     // Overrides
@@ -161,10 +146,18 @@ public:
     
     virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB() const override { return false; }
+
 protected:
+    LayerRGBA();
+    virtual ~LayerRGBA();
+    virtual bool init();
+
 	GLubyte		_displayedOpacity, _realOpacity;
 	Color3B	    _displayedColor, _realColor;
 	bool		_cascadeOpacityEnabled, _cascadeColorEnabled;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(LayerRGBA);
 };
 
 //
@@ -188,27 +181,6 @@ public:
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
     static LayerColor * create(const Color4B& color);
-    /**
-     * @js ctor
-     */
-    LayerColor();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerColor();
-
-    virtual bool init();
-    /** initializes a Layer with color, width and height in Points 
-     * @js init
-     * @lua init
-     */
-    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
-    /** initializes a Layer with color. Width and height are the window size. 
-     * @js init
-     * @lua init
-     */
-    bool initWithColor(const Color4B& color);
 
     /** change width in Points*/
     void changeWidth(GLfloat w);
@@ -242,11 +214,21 @@ public:
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
 protected:
+    LayerColor();
+    virtual ~LayerColor();
+    virtual bool init();
+    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
+    bool initWithColor(const Color4B& color);
+
     virtual void updateColor();
 
     BlendFunc _blendFunc;
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
+
 };
 
 //

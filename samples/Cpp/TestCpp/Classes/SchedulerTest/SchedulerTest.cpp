@@ -55,9 +55,6 @@ Layer* nextSchedulerTest()
     sceneIdx = sceneIdx % MAX_LAYER;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -69,18 +66,12 @@ Layer* backSchedulerTest()
         sceneIdx += total;    
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-
     return layer;
 }
 
 Layer* restartSchedulerTest()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -1098,6 +1089,8 @@ std::string TwoSchedulers::subtitle()
 class TestNode2 : public Node
 {
 public:
+    CREATE_FUNC(TestNode2);
+
 	~TestNode2() {
 		cocos2d::log("Delete TestNode (should not crash)");
 		this->unscheduleAllSelectors();
@@ -1111,9 +1104,7 @@ void SchedulerIssue2268::onEnter()
 {
 	SchedulerTestLayer::onEnter();
 
-	testNode = new TestNode2();
-	testNode->init();
-	testNode->autorelease();
+	testNode = TestNode2::create();
 	testNode->retain();
 	testNode->schedule(SEL_SCHEDULE(&TestNode::update));
 	this->addChild(testNode);

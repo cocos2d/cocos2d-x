@@ -27,6 +27,6 @@ static Layer* create##className() \
 
 // C++ 11
 
-#define CL(__className__) [](){ return new __className__();}
+#define CL(__className__) [](){ return __className__::create();}
 
 #endif

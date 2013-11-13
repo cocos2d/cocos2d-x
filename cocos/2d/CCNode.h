@@ -153,25 +153,6 @@ public:
     static Node * create(void);
 
     /**
-     * Default constructor
-     * @js ctor
-     */
-    Node(void);
-    
-    /**
-     * Default destructor
-     * @js NA
-     * @lua NA
-     */
-    virtual ~Node(void);
-    
-    /**
-     *  Initializes the instance of Node
-     *  @return Whether the initialization was successful.
-     */
-    virtual bool init();
-
-    /**
      * Gets the description string. It makes debugging easier.
      * @return A string terminated with '\0'
      * @js NA
@@ -1413,7 +1394,11 @@ public:
 #endif
     
 protected:
-    
+    // Nodes should be created using create();
+    Node();
+    virtual ~Node();
+    virtual bool init();
+
     /// lazy allocs
     void childrenAlloc(void);
     
@@ -1496,6 +1481,9 @@ protected:
 #ifdef CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
 #endif
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Node);
 };
 
 //#pragma mark - NodeRGBA
@@ -1512,18 +1500,6 @@ protected:
 class CC_DLL NodeRGBA : public Node, public RGBAProtocol
 {
 public:
-    /**
-     * @js ctor
-     */
-    NodeRGBA();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~NodeRGBA();
-    
-    virtual bool init();
-
     // overrides
     virtual GLubyte getOpacity() const override;
     virtual GLubyte getDisplayedOpacity() const  override;
@@ -1543,12 +1519,19 @@ public:
     virtual bool isOpacityModifyRGB() const override { return false; };
 
 protected:
+    NodeRGBA();
+    virtual ~NodeRGBA();
+    virtual bool init();
+
 	GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
 	Color3B	    _displayedColor;
     Color3B     _realColor;
 	bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(NodeRGBA);
 };
 
 // end of base_node group
