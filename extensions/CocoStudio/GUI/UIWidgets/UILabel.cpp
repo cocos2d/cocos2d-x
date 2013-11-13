@@ -28,7 +28,8 @@ NS_CC_EXT_BEGIN
 
 UILabel::UILabel():
 m_bTouchScaleChangeEnabled(false),
-m_fNormalScaleValue(1.0f),
+m_fNormalScaleValueX(1.0f),
+m_fNormalScaleValueY(1.0f),
 m_sFontName("Thonburi"),
 m_nFontSize(10),
 m_fOnSelectedScaleOffset(0.5),
@@ -126,7 +127,8 @@ void UILabel::setTextVerticalAlignment(CCVerticalTextAlignment alignment)
 void UILabel::setTouchScaleChangeEnabled(bool enable)
 {
     m_bTouchScaleChangeEnabled = enable;
-    m_fNormalScaleValue = getScale();
+    m_fNormalScaleValueX = getScaleX();
+    m_fNormalScaleValueY = getScaleY();
 }
 
 bool UILabel::isTouchScaleChangeEnabled()
@@ -140,7 +142,7 @@ void UILabel::onPressStateChangedToNormal()
     {
         return;
     }
-    clickScale(m_fNormalScaleValue);
+    clickScale(m_fNormalScaleValueX, m_fNormalScaleValueY);
 }
 
 void UILabel::onPressStateChangedToPressed()
@@ -149,7 +151,7 @@ void UILabel::onPressStateChangedToPressed()
     {
         return;
     }
-    clickScale(m_fNormalScaleValue + m_fOnSelectedScaleOffset);
+    clickScale(m_fNormalScaleValueX + m_fOnSelectedScaleOffset, m_fNormalScaleValueY + m_fOnSelectedScaleOffset);
 }
 
 void UILabel::onPressStateChangedToDisabled()
@@ -157,9 +159,28 @@ void UILabel::onPressStateChangedToDisabled()
     
 }
 
-void UILabel::clickScale(float scale)
+void UILabel::setScale(float fScale)
 {
-    m_pRenderer->setScale(scale);
+    UIWidget::setScale(fScale);
+    m_fNormalScaleValueX = m_fNormalScaleValueY = fScale;
+}
+
+void UILabel::setScaleX(float fScaleX)
+{
+    UIWidget::setScaleX(fScaleX);
+    m_fNormalScaleValueX = fScaleX;
+}
+
+void UILabel::setScaleY(float fScaleY)
+{
+    UIWidget::setScaleY(fScaleY);
+    m_fNormalScaleValueY = fScaleY;
+}
+
+void UILabel::clickScale(float scaleX, float scaleY)
+{
+    m_pRenderer->setScaleX(scaleX);
+    m_pRenderer->setScaleY(scaleY);
 }
 
 void UILabel::setFlipX(bool flipX)
