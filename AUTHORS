@@ -597,6 +597,7 @@ Developers:
         
     bmanGH
         Use gl caching functions in TexturePVR::createGLTexture()
+        Configuration of VAO in runtime
         
     metadao
         make create_project.py more pythonic and fix some typoes
