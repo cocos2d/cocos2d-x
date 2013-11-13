@@ -147,6 +147,8 @@ public:
     /*init properties with a json dictionary*/
     void initWithDictionary(cs::CSJsonDictionary* dic,CCObject* root);
     
+	void simulationActionUpdate(float dt);
+
 protected:
 	CCArray* m_ActionNodeList;/*actionnode*/
 	std::string m_name;
@@ -155,6 +157,7 @@ protected:
 	bool m_bPlaying;
 	float m_fUnitTime;
 	float m_CurrentTime;
+	CCScheduler *m_pScheduler;
 };
 
 NS_CC_EXT_END

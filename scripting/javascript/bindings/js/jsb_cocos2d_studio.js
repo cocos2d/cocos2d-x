@@ -12,13 +12,6 @@ ccs.MovementEventType = {
     complete: 1,
     loopComplete: 2
 };
-// Armature
-ccs.Armature.prototype.setBody = function( body ) {
-    var b = body;
-    if( body.handle !== undefined )
-        b = body.handle;
-    return this._setCPBody( b );
-};
 
 ccs.BrightStyle = {
     none: -1,
@@ -163,6 +156,15 @@ ccs.ListViewEventType = {
     update_child: 1
 };
 
+ccs.PageViewEventType = {
+    turning: 0
+};
+
+ccs.PVTouchDir = {
+    touchLeft: 0,
+    touchRight: 1
+};
+
 ccs.UIPanel = ccs.UILayout;
 ccs.UITextArea = ccs.UILabel;
 ccs.UIContainerWidget = ccs.UILayout;
@@ -203,4 +205,15 @@ ccs.UIMargin = cc.Class.extend({
     }
 });
 
-ccs.ComController.extend = cc.Class.extend;
+// Armature
+if(ccs.Armature){
+	ccs.Armature.prototype.setBody = function( body ) {
+    var b = body;
+    if( body.handle !== undefined )
+        b = body.handle;
+    return this._setCPBody( b );
+  };
+  
+  ccs.ComController.extend = cc.Class.extend;
+  ccs.Armature.extend = cc.Class.extend;
+}
