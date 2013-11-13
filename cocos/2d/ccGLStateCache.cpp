@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCGLProgram.h"
 #include "CCDirector.h"
 #include "ccConfig.h"
+#include "CCConfiguration.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -50,9 +51,7 @@ static GLuint    s_uCurrentBoundTexture[kMaxActiveTexture] =  {(GLuint)-1,(GLuin
 static GLenum    s_eBlendingSource = -1;
 static GLenum    s_eBlendingDest = -1;
 static int       s_eGLServerState = 0;
-#if CC_TEXTURE_ATLAS_USE_VAO
 static GLuint    s_uVAO = 0;
-#endif
 #endif // CC_ENABLE_GL_STATE_CACHE
 
 // GL State Cache functions
@@ -78,9 +77,7 @@ void invalidateStateCache( void )
     s_eBlendingSource = -1;
     s_eBlendingDest = -1;
     s_eGLServerState = 0;
-#if CC_TEXTURE_ATLAS_USE_VAO
     s_uVAO = 0;
-#endif
     
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
@@ -187,19 +184,20 @@ void deleteTextureN(GLuint textureUnit, GLuint textureId)
 
 void bindVAO(GLuint vaoId)
 {
-#if CC_TEXTURE_ATLAS_USE_VAO  
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
     
 #if CC_ENABLE_GL_STATE_CACHE
-	if (s_uVAO != vaoId)
-	{
-		s_uVAO = vaoId;
-		glBindVertexArray(vaoId);
-	}
+        if (s_uVAO != vaoId)
+        {
+            s_uVAO = vaoId;
+            glBindVertexArray(vaoId);
+        }
 #else
-	glBindVertexArray(vaoId);
+        glBindVertexArray(vaoId);
 #endif // CC_ENABLE_GL_STATE_CACHE
     
-#endif
+    }
 }
 
 //#pragma mark - GL Vertex Attrib functions

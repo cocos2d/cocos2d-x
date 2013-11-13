@@ -25,6 +25,7 @@
 #include "CCGL.h"
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
+#include "CCConfiguration.h"
 
 NS_CC_BEGIN
 
@@ -114,11 +115,12 @@ DrawNode::~DrawNode()
     glDeleteBuffers(1, &_vbo);
     _vbo = 0;
     
-#if CC_TEXTURE_ATLAS_USE_VAO      
-    glDeleteVertexArrays(1, &_vao);
-    GL::bindVAO(0);
-    _vao = 0;
-#endif
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glDeleteVertexArrays(1, &_vao);
+        GL::bindVAO(0);
+        _vao = 0;
+    }
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
@@ -159,10 +161,11 @@ bool DrawNode::init()
     
     ensureCapacity(512);
     
-#if CC_TEXTURE_ATLAS_USE_VAO    
-    glGenVertexArrays(1, &_vao);
-    GL::bindVAO(_vao);
-#endif
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glGenVertexArrays(1, &_vao);
+        GL::bindVAO(_vao);
+    }
     
     glGenBuffers(1, &_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -179,9 +182,10 @@ bool DrawNode::init()
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-#if CC_TEXTURE_ATLAS_USE_VAO 
-    GL::bindVAO(0);
-#endif
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        GL::bindVAO(0);
+    }
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -206,21 +210,24 @@ void DrawNode::render()
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
         _dirty = false;
     }
-#if CC_TEXTURE_ATLAS_USE_VAO     
-    GL::bindVAO(_vao);
-#else
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        GL::bindVAO(_vao);
+    }
+    else
+    {
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    // vertex
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        // vertex
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
     
-    // color
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+        // color
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
     
-    // texcood
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-#endif
+        // texcood
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
+    }
 
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
