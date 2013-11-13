@@ -366,11 +366,11 @@ void UIWidget::setSize(const CCSize &size)
 void UIWidget::setSizePercent(const CCPoint &percent)
 {
     m_sizePercent = percent;
-    if (!m_bIsRunning)
+    CCSize cSize = m_customSize;
+    if (m_bIsRunning)
     {
-        return;
+        cSize = (m_pWidgetParent == NULL) ? CCSizeZero : CCSize(m_pWidgetParent->getSize().width * percent.x , m_pWidgetParent->getSize().height * percent.y);
     }
-    CCSize cSize = (m_pWidgetParent == NULL) ? CCSizeZero : CCSizeMake(m_pWidgetParent->getSize().width * percent.x , m_pWidgetParent->getSize().height * percent.y);
     if (m_bIgnoreSize)
     {
         m_size = getContentSize();
@@ -1167,6 +1167,10 @@ WidgetType UIWidget::getWidgetType() const
 
 void UIWidget::setLayoutParameter(UILayoutParameter *parameter)
 {
+    if (!parameter)
+    {
+        return;
+    }
     m_pLayoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
 }
 
