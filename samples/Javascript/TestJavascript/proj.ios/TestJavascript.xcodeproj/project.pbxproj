@@ -227,6 +227,17 @@
 		1A36F54417EFE19B000D0275 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4C117EFE19B000D0275 /* json_writer.cpp */; };
 		1A36F54517EFE19B000D0275 /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4C317EFE19B000D0275 /* sconscript */; };
 		1A36F54617EFE19B000D0275 /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4C317EFE19B000D0275 /* sconscript */; };
+		1A646F791831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F761831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js */; };
+		1A646F7A1831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F761831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js */; };
+		1A646F7B1831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F771831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp */; };
+		1A646F7C1831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F771831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp */; };
+		1A646F7F1831FA42001578C3 /* UIListViewEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F7D1831FA42001578C3 /* UIListViewEx.cpp */; };
+		1A646F801831FA42001578C3 /* UIListViewEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F7D1831FA42001578C3 /* UIListViewEx.cpp */; };
+		1A646F831831FA6B001578C3 /* jsb_cocos2dx_studio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F811831FA6B001578C3 /* jsb_cocos2dx_studio_manual.cpp */; };
+		1A646F841831FA6B001578C3 /* jsb_cocos2dx_studio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F811831FA6B001578C3 /* jsb_cocos2dx_studio_manual.cpp */; };
+		1A646F861831FA8F001578C3 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F851831FA8F001578C3 /* jsb_cocos2d_studio.js */; };
+		1A646F871831FA8F001578C3 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F851831FA8F001578C3 /* jsb_cocos2d_studio.js */; };
+		1A646F881831FB0E001578C3 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A646F851831FA8F001578C3 /* jsb_cocos2d_studio.js */; };
 		1A729AC117E1C60B00F37B6A /* MotionStreakTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A729AC017E1C60B00F37B6A /* MotionStreakTest */; };
 		1A729AC217E1C60B00F37B6A /* MotionStreakTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A729AC017E1C60B00F37B6A /* MotionStreakTest */; };
 		1A80332A1728DECD00240CC3 /* EffectsAdvancedTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A8033291728DECD00240CC3 /* EffectsAdvancedTest */; };
@@ -275,6 +286,8 @@
 		1AA51ACC16F70E21000FDF05 /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51AC616F70E0B000FDF05 /* jsb_chipmunk_constants.js */; };
 		1AA51ACD16F70E21000FDF05 /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51AC716F70E0B000FDF05 /* jsb_cocos2d_constants.js */; };
 		1AA51ACE16F70E21000FDF05 /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51AC816F70E0B000FDF05 /* jsb_opengl_constants.js */; };
+		1AAB66F51831FD6A0091F8AC /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AAB66F41831FD6A0091F8AC /* CocoStudioTest */; };
+		1AAB66F61831FD6A0091F8AC /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AAB66F41831FD6A0091F8AC /* CocoStudioTest */; };
 		1AB1F48316EDBDB700FEB62A /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1F47D16EDBDB700FEB62A /* jsb_cocos2dx_auto.cpp */; };
 		1AB1F48516EDBDB700FEB62A /* jsb_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1F48016EDBDB700FEB62A /* jsb_cocos2dx_extension_auto.cpp */; };
 		1AB1F48816EDBF2700FEB62A /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AB1F48616EDBEF100FEB62A /* jsb_cocos2d_extension.js */; };
@@ -812,6 +825,14 @@
 		1A36F4C317EFE19B000D0275 /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
 		1A36F4C417EFE19B000D0275 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		1A36F4C517EFE19B000D0275 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		1A646F761831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2dx_studio_auto_api.js; sourceTree = "<group>"; };
+		1A646F771831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_studio_auto.cpp; sourceTree = "<group>"; };
+		1A646F781831FA29001578C3 /* jsb_cocos2dx_studio_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_studio_auto.hpp; sourceTree = "<group>"; };
+		1A646F7D1831FA42001578C3 /* UIListViewEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewEx.cpp; sourceTree = "<group>"; };
+		1A646F7E1831FA42001578C3 /* UIListViewEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewEx.h; sourceTree = "<group>"; };
+		1A646F811831FA6B001578C3 /* jsb_cocos2dx_studio_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_studio_manual.cpp; sourceTree = "<group>"; };
+		1A646F821831FA6B001578C3 /* jsb_cocos2dx_studio_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_studio_manual.h; sourceTree = "<group>"; };
+		1A646F851831FA8F001578C3 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_studio.js; sourceTree = "<group>"; };
 		1A729AC017E1C60B00F37B6A /* MotionStreakTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MotionStreakTest; path = ../../Shared/tests/MotionStreakTest; sourceTree = "<group>"; };
 		1A8033291728DECD00240CC3 /* EffectsAdvancedTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = EffectsAdvancedTest; path = ../../Shared/tests/EffectsAdvancedTest; sourceTree = "<group>"; };
 		1A80332B1728F1FB00240CC3 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../Shared/tests/res; sourceTree = "<group>"; };
@@ -860,6 +881,7 @@
 		1AA51AC616F70E0B000FDF05 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
 		1AA51AC716F70E0B000FDF05 /* jsb_cocos2d_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_constants.js; sourceTree = "<group>"; };
 		1AA51AC816F70E0B000FDF05 /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_constants.js; sourceTree = "<group>"; };
+		1AAB66F41831FD6A0091F8AC /* CocoStudioTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CocoStudioTest; path = ../../Shared/tests/CocoStudioTest; sourceTree = "<group>"; };
 		1AB1F47C16EDBDB700FEB62A /* jsb_cocos2dx_auto_api.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2dx_auto_api.js; sourceTree = "<group>"; };
 		1AB1F47D16EDBDB700FEB62A /* jsb_cocos2dx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_auto.cpp; sourceTree = "<group>"; };
 		1AB1F47E16EDBDB700FEB62A /* jsb_cocos2dx_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_auto.hpp; sourceTree = "<group>"; };
@@ -1003,14 +1025,6 @@
 		15A3D2F81682F0A0002FB0C5 /* bindings */ = {
 			isa = PBXGroup;
 			children = (
-				263034AE17041277004A749B /* js_bindings_opengl.cpp */,
-				263034AF17041277004A749B /* jsb_opengl_functions.cpp */,
-				263034B017041277004A749B /* jsb_opengl_manual.cpp */,
-				263034B117041277004A749B /* js_bindings_opengl.h */,
-				263034B217041277004A749B /* jsb_opengl_registration.cpp */,
-				263034B317041277004A749B /* jsb_opengl_functions.h */,
-				263034B417041277004A749B /* jsb_opengl_registration.h */,
-				263034B517041277004A749B /* jsb_opengl_manual.h */,
 				15A3D2FA1682F0A0002FB0C5 /* cocos2d_specifics.cpp */,
 				15A3D2FB1682F0A0002FB0C5 /* cocos2d_specifics.hpp */,
 				15A3D2FC1682F0A0002FB0C5 /* cocosjs_manual_conversions.cpp */,
@@ -1043,13 +1057,18 @@
 				15A3D3191682F0A0002FB0C5 /* js_manual_conversions.h */,
 				1AB1F48916EDC09700FEB62A /* jsb_cocos2dx_extension_manual.cpp */,
 				1AB1F48A16EDC09700FEB62A /* jsb_cocos2dx_extension_manual.h */,
+				1A646F811831FA6B001578C3 /* jsb_cocos2dx_studio_manual.cpp */,
+				1A646F821831FA6B001578C3 /* jsb_cocos2dx_studio_manual.h */,
 				1A05B47E174F34B800BFE80B /* jsb_helper.h */,
 				263034AF17041277004A749B /* jsb_opengl_functions.cpp */,
 				263034B317041277004A749B /* jsb_opengl_functions.h */,
 				263034B017041277004A749B /* jsb_opengl_manual.cpp */,
 				263034B517041277004A749B /* jsb_opengl_manual.h */,
+				263034AE17041277004A749B /* js_bindings_opengl.cpp */,
 				263034B217041277004A749B /* jsb_opengl_registration.cpp */,
+				263034B117041277004A749B /* js_bindings_opengl.h */,
 				263034B417041277004A749B /* jsb_opengl_registration.h */,
+				263034AF17041277004A749B /* jsb_opengl_functions.cpp */,
 				1A05B4BD174F6F5400BFE80B /* jsb_websocket.cpp */,
 				1A05B4BC174F6F4C00BFE80B /* jsb_websocket.h */,
 				15A3D31A1682F0A0002FB0C5 /* ScriptingCore.cpp */,
@@ -1057,6 +1076,11 @@
 				15A3D31C1682F0A0002FB0C5 /* spidermonkey_specifics.h */,
 				A2278C4E17438CFB001FC8E0 /* XMLHTTPRequest.cpp */,
 				A2278C4F17438CFB001FC8E0 /* XMLHTTPRequest.h */,
+				263034B317041277004A749B /* jsb_opengl_functions.h */,
+				263034B017041277004A749B /* jsb_opengl_manual.cpp */,
+				263034B517041277004A749B /* jsb_opengl_manual.h */,
+				263034B217041277004A749B /* jsb_opengl_registration.cpp */,
+				263034B417041277004A749B /* jsb_opengl_registration.h */,
 			);
 			name = bindings;
 			path = ../../../../scripting/javascript/bindings;
@@ -1065,6 +1089,9 @@
 		15A3D2FE1682F0A0002FB0C5 /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				1A646F761831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js */,
+				1A646F771831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp */,
+				1A646F781831FA29001578C3 /* jsb_cocos2dx_studio_auto.hpp */,
 				1AB1F47C16EDBDB700FEB62A /* jsb_cocos2dx_auto_api.js */,
 				1AB1F47D16EDBDB700FEB62A /* jsb_cocos2dx_auto.cpp */,
 				1AB1F47E16EDBDB700FEB62A /* jsb_cocos2dx_auto.hpp */,
@@ -1085,6 +1112,7 @@
 				1A2757B11697FAAD00504026 /* jsb_cocos2d.js */,
 				1AA51AC716F70E0B000FDF05 /* jsb_cocos2d_constants.js */,
 				1AB1F48616EDBEF100FEB62A /* jsb_cocos2d_extension.js */,
+				1A646F851831FA8F001578C3 /* jsb_cocos2d_studio.js */,
 				1A2757B21697FAAD00504026 /* jsb_cocosbuilder.js */,
 				1A2757B31697FAAD00504026 /* jsb_debugger.js */,
 				1AF2873B17F014C200642436 /* jsb_deprecated.js */,
@@ -1624,6 +1652,8 @@
 			children = (
 				1A36F49417EFE19B000D0275 /* UIListView.cpp */,
 				1A36F49517EFE19B000D0275 /* UIListView.h */,
+				1A646F7D1831FA42001578C3 /* UIListViewEx.cpp */,
+				1A646F7E1831FA42001578C3 /* UIListViewEx.h */,
 				1A36F49617EFE19B000D0275 /* UIPageView.cpp */,
 				1A36F49717EFE19B000D0275 /* UIPageView.h */,
 				1A36F49817EFE19B000D0275 /* UIScrollInterface.h */,
@@ -1796,6 +1826,7 @@
 				A22656EE1743DCBB00598A2C /* ClippingNodeTest */,
 				1AA51A7E16F708FA000FDF05 /* CocosDenshionTest */,
 				1AA51A7F16F708FA000FDF05 /* CocosNodeTest */,
+				1AAB66F41831FD6A0091F8AC /* CocoStudioTest */,
 				1AA51A8016F708FA000FDF05 /* CurrentLanguageTest */,
 				1AA51A8116F708FA000FDF05 /* DrawPrimitivesTest */,
 				1AA51A8216F708FA000FDF05 /* EaseActionsTest */,
@@ -1808,6 +1839,7 @@
 				1AA51A8816F708FA000FDF05 /* IntervalTest */,
 				1AA51A8916F708FA000FDF05 /* LabelTest */,
 				1AA51A8A16F708FA000FDF05 /* LayerTest */,
+				15A3D4621682F14C002FB0C5 /* main.js */,
 				1AA51A8B16F708FA000FDF05 /* MenuTest */,
 				1A729AC017E1C60B00F37B6A /* MotionStreakTest */,
 				1AA51A8C16F708FA000FDF05 /* OpenGLTest */,
@@ -1822,6 +1854,9 @@
 				1AA51A9616F708FA000FDF05 /* SchedulerTest */,
 				1AA51A9716F708FA000FDF05 /* SpriteTest */,
 				1AA51A9816F708FA000FDF05 /* SysTest */,
+				D401B6DE16FC071100F2529D /* tests-boot-jsb.js */,
+				15A3D4741682F14C002FB0C5 /* tests-main.js */,
+				15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */,
 				1AA51A9916F708FA000FDF05 /* TextInputTest */,
 				1AA51A9A16F708FA000FDF05 /* TextureCacheTest */,
 				1AA51A9B16F708FA000FDF05 /* TileMapTest */,
@@ -1829,10 +1864,6 @@
 				1AA51A9D16F708FA000FDF05 /* TransitionsTest */,
 				1AA51A9E16F708FA000FDF05 /* UnitTest */,
 				A218F7DB1743D97E00F65883 /* XHRTest */,
-				15A3D4621682F14C002FB0C5 /* main.js */,
-				D401B6DE16FC071100F2529D /* tests-boot-jsb.js */,
-				15A3D4741682F14C002FB0C5 /* tests-main.js */,
-				15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */,
 			);
 			name = js_src_raw;
 			sourceTree = "<group>";
@@ -1957,6 +1988,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A646F881831FB0E001578C3 /* jsb_cocos2d_studio.js in Resources */,
 				1AF2873F17F014D700642436 /* jsb_deprecated.js in Resources */,
 				1AF2874017F014D700642436 /* main.debug.js in Resources */,
 				D401B6E016FC072B00F2529D /* tests-boot-jsb.js in Resources */,
@@ -2030,6 +2062,7 @@
 				1A36F53B17EFE19B000D0275 /* json_internalmap.inl in Resources */,
 				1A36F54117EFE19B000D0275 /* json_valueiterator.inl in Resources */,
 				1A36F54517EFE19B000D0275 /* sconscript in Resources */,
+				1AAB66F51831FD6A0091F8AC /* CocoStudioTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2052,6 +2085,7 @@
 				1A36F53C17EFE19B000D0275 /* json_internalmap.inl in Resources */,
 				1A36F54217EFE19B000D0275 /* json_valueiterator.inl in Resources */,
 				1A36F54617EFE19B000D0275 /* sconscript in Resources */,
+				1AAB66F61831FD6A0091F8AC /* CocoStudioTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2140,6 +2174,7 @@
 				15A3D5301682F1A5002FB0C5 /* CCData.cpp in Sources */,
 				15A3D5311682F1A5002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */,
 				15A3D5321682F1A5002FB0C5 /* CCLabelTTFLoader.cpp in Sources */,
+				1A646F831831FA6B001578C3 /* jsb_cocos2dx_studio_manual.cpp in Sources */,
 				15A3D5331682F1A5002FB0C5 /* CCLayerColorLoader.cpp in Sources */,
 				15A3D5341682F1A5002FB0C5 /* CCLayerGradientLoader.cpp in Sources */,
 				15A3D5351682F1A5002FB0C5 /* CCLayerLoader.cpp in Sources */,
@@ -2147,6 +2182,7 @@
 				15A3D5371682F1A5002FB0C5 /* CCMenuItemLoader.cpp in Sources */,
 				15A3D5381682F1A5002FB0C5 /* CCNode+CCBRelativePositioning.cpp in Sources */,
 				15A3D5391682F1A5002FB0C5 /* CCNodeLoader.cpp in Sources */,
+				1A646F861831FA8F001578C3 /* jsb_cocos2d_studio.js in Sources */,
 				15A3D53A1682F1A5002FB0C5 /* CCNodeLoaderLibrary.cpp in Sources */,
 				15A3D53B1682F1A5002FB0C5 /* CCParticleSystemQuadLoader.cpp in Sources */,
 				15A3D53C1682F1A5002FB0C5 /* CCScale9SpriteLoader.cpp in Sources */,
@@ -2179,6 +2215,7 @@
 				1A82F5F9169AC91400C4B13A /* LocalStorageAndroid.cpp in Sources */,
 				1AB1F48316EDBDB700FEB62A /* jsb_cocos2dx_auto.cpp in Sources */,
 				460E53A9182B74360040458A /* UILayoutParameter.cpp in Sources */,
+				1A646F791831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js in Sources */,
 				1AB1F48516EDBDB700FEB62A /* jsb_cocos2dx_extension_auto.cpp in Sources */,
 				1AB1F48B16EDC09700FEB62A /* jsb_cocos2dx_extension_manual.cpp in Sources */,
 				263034B617041277004A749B /* js_bindings_opengl.cpp in Sources */,
@@ -2194,6 +2231,7 @@
 				1A36F4CF17EFE19B000D0275 /* CCActionManager.cpp in Sources */,
 				1A36F4D117EFE19B000D0275 /* CCActionNode.cpp in Sources */,
 				1A36F4D317EFE19B000D0275 /* CCActionObject.cpp in Sources */,
+				1A646F7F1831FA42001578C3 /* UIListViewEx.cpp in Sources */,
 				1A36F4D517EFE19B000D0275 /* CCArmatureAnimation.cpp in Sources */,
 				1A36F4D717EFE19B000D0275 /* CCProcessBase.cpp in Sources */,
 				1A36F4D917EFE19B000D0275 /* CCTween.cpp in Sources */,
@@ -2215,6 +2253,7 @@
 				1A36F4F917EFE19B000D0275 /* CCUtilMath.cpp in Sources */,
 				1A36F4FB17EFE19B000D0275 /* CCComAttribute.cpp in Sources */,
 				1A36F4FD17EFE19B000D0275 /* CCComAudio.cpp in Sources */,
+				1A646F7B1831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp in Sources */,
 				1A36F4FF17EFE19B000D0275 /* CCComController.cpp in Sources */,
 				1A36F50117EFE19B000D0275 /* CCComRender.cpp in Sources */,
 				1A36F50317EFE19B000D0275 /* CCInputDelegate.cpp in Sources */,
@@ -2314,6 +2353,7 @@
 				D401B63D16FB637400F2529D /* SimpleAudioEngine_objc.m in Sources */,
 				D401B63E16FB637400F2529D /* CCBAnimationManager.cpp in Sources */,
 				D401B63F16FB637400F2529D /* CCBFileLoader.cpp in Sources */,
+				1A646F841831FA6B001578C3 /* jsb_cocos2dx_studio_manual.cpp in Sources */,
 				D401B64016FB637400F2529D /* CCBKeyframe.cpp in Sources */,
 				D401B64116FB637400F2529D /* CCBReader.cpp in Sources */,
 				D401B64216FB637400F2529D /* CCBSequence.cpp in Sources */,
@@ -2321,6 +2361,7 @@
 				D401B64416FB637400F2529D /* CCBValue.cpp in Sources */,
 				D401B64516FB637400F2529D /* CCControlButtonLoader.cpp in Sources */,
 				D401B64616FB637400F2529D /* CCControlLoader.cpp in Sources */,
+				1A646F871831FA8F001578C3 /* jsb_cocos2d_studio.js in Sources */,
 				D401B64716FB637400F2529D /* CCData.cpp in Sources */,
 				D401B64816FB637400F2529D /* CCLabelBMFontLoader.cpp in Sources */,
 				D401B64916FB637400F2529D /* CCLabelTTFLoader.cpp in Sources */,
@@ -2353,6 +2394,7 @@
 				D401B66416FB637400F2529D /* CCScrollView.cpp in Sources */,
 				D401B66516FB637400F2529D /* CCSorting.cpp in Sources */,
 				D401B66616FB637400F2529D /* CCTableView.cpp in Sources */,
+				1A646F7A1831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js in Sources */,
 				D401B66716FB637400F2529D /* CCTableViewCell.cpp in Sources */,
 				D401B66816FB637400F2529D /* CCPhysicsDebugNode.cpp in Sources */,
 				D401B66916FB637400F2529D /* CCPhysicsSprite.cpp in Sources */,
@@ -2368,6 +2410,7 @@
 				1A36F4CC17EFE19B000D0275 /* CCActionFrame.cpp in Sources */,
 				1A36F4CE17EFE19B000D0275 /* CCActionFrameEasing.cpp in Sources */,
 				1A36F4D017EFE19B000D0275 /* CCActionManager.cpp in Sources */,
+				1A646F801831FA42001578C3 /* UIListViewEx.cpp in Sources */,
 				1A36F4D217EFE19B000D0275 /* CCActionNode.cpp in Sources */,
 				1A36F4D417EFE19B000D0275 /* CCActionObject.cpp in Sources */,
 				1A36F4D617EFE19B000D0275 /* CCArmatureAnimation.cpp in Sources */,
@@ -2389,6 +2432,7 @@
 				1A36F4F617EFE19B000D0275 /* CCTransformHelp.cpp in Sources */,
 				1A36F4F817EFE19B000D0275 /* CCTweenFunction.cpp in Sources */,
 				1A36F4FA17EFE19B000D0275 /* CCUtilMath.cpp in Sources */,
+				1A646F7C1831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp in Sources */,
 				1A36F4FC17EFE19B000D0275 /* CCComAttribute.cpp in Sources */,
 				1A36F4FE17EFE19B000D0275 /* CCComAudio.cpp in Sources */,
 				1A36F50017EFE19B000D0275 /* CCComController.cpp in Sources */,
