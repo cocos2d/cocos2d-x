@@ -48,7 +48,7 @@ end
 function SceneEditorTestLayer.create()
     local scene = cc.Scene:create()
     local layer = SceneEditorTestLayer.extend(cc.LayerColor:create())
-    --layer:initWithColor(cc.c4b(0,0,0,255))
+    layer:initWithColor(cc.c4b(0,0,0,255))
     layer:addChild(layer:createGameScene(), 0, 1)
     scene:addChild(layer)
     return scene   

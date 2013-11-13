@@ -1,8 +1,11 @@
 ccs = ccs or {}
 
-CC_MovementEventType_START = 0
-CC_MovementEventType_COMPLETE = 1
-CC_MovementEventType_LOOP_COMPLETE = 2
+
+ccs.MovementEventType = {
+    START = 0,
+    COMPLETE = 1,
+    LOOP_COMPLETE = 2, 
+}
 
 ccs.BrightStyle = 
 {
