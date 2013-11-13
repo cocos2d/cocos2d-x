@@ -100,6 +100,7 @@ public:
     //! The animation update speed
     virtual void setAnimationInternal(float animationInternal);
 
+    using ProcessBase::play;
     /**
      * Play animation by animation name.
      *
@@ -202,6 +203,35 @@ public:
         }
     }
     virtual AnimationData *getAnimationData() const { return _animationData; }
+
+
+    /** 
+     * Returns a user assigned Object
+     * 
+     * Similar to userData, but instead of holding a void* it holds an object
+     *
+     * @return A user assigned Object
+     * @js NA
+     * @lua NA
+     */
+    virtual Object* getUserObject() { return _userObject; }
+    /** 
+    * @js NA
+    * @lua NA
+    */
+    virtual const Object* getUserObject() const { return _userObject; }
+
+    /**
+     * Returns a user assigned Object
+     *
+     * Similar to UserData, but instead of holding a void* it holds an object.
+     * The UserObject will be retained once in this method,
+     * and the previous UserObject (if existed) will be relese.
+     * The UserObject will be released in Node's destructure.
+     *
+     * @param userObject    A user assigned Object
+     */
+    virtual void setUserObject(Object *userObject);
 protected:
 
     /**
@@ -242,6 +272,8 @@ protected:
     bool _ignoreFrameEvent;
     
     std::queue<FrameEvent*> _frameEventQueue;
+
+    cocos2d::Object *_userObject;
 protected:
     /**
      * MovementEvent CallFunc.
