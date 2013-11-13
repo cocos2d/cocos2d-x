@@ -219,6 +219,11 @@ void UIPageView::removePageAtIndex(int index)
         removePage(page);
     }
 }
+    
+void UIPageView::removeAllPages()
+{
+    removeAllChildren();
+}
 
 void UIPageView::updateBoundaryPages()
 {
@@ -247,9 +252,8 @@ bool UIPageView::removeChild(UIWidget* widget)
     if (_pages->containsObject(widget))
     {
         _pages->removeObject(widget);
-        return UILayout::removeChild(widget);
     }
-    return false;
+    return UILayout::removeChild(widget);
 }
 
 void UIPageView::onSizeChanged()
@@ -585,6 +589,15 @@ int UIPageView::getCurPageIndex() const
 cocos2d::Array* UIPageView::getPages()
 {
     return _pages;
+}
+    
+UILayout* UIPageView::getPage(int index)
+{
+    if (index < 0 || index >= (int)(_pages->count()))
+    {
+        return NULL;
+    }
+    return (UILayout*)_pages->getObjectAtIndex(index);
 }
 
 const char* UIPageView::getDescription() const
