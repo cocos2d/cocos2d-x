@@ -57,7 +57,7 @@ public:
         CUSTOM
     };
     
-    typedef int ListenerID;
+    typedef std::size_t ListenerID;
     
 protected:
     /** Constructor */
