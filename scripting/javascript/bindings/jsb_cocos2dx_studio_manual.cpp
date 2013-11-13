@@ -355,8 +355,8 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         tmpObj->autorelease();
 
-        tmpObj->setJSCallbackFunc(argv[2]);
-        tmpObj->setJSCallbackThis(argv[1]);
+        tmpObj->setJSCallbackFunc(argv[1]);
+        tmpObj->setJSCallbackThis(argv[2]);
         
         std::string ret;
         jsval_to_std_string(cx, argv[0], &ret);
@@ -372,8 +372,8 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         tmpObj->autorelease();
         
-        tmpObj->setJSCallbackFunc(argv[4]);
-        tmpObj->setJSCallbackThis(argv[3]);
+        tmpObj->setJSCallbackFunc(argv[5]);
+        tmpObj->setJSCallbackThis(argv[4]);
         
         std::string imagePath;
         jsval_to_std_string(cx ,argv[0] , &imagePath);
@@ -531,8 +531,8 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_UITextField_prototype, "addEventListenerTextField", js_cocos2dx_UITextField_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_UIPageView_prototype, "addEventListenerPageView", js_cocos2dx_UIPageView_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-
-    JS_DefineFunction(cx, jsb_UIListView_prototype, "addEventListenterListView", js_cocos2dx_UIListView_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, jsb_UIListView_prototype, "addEventListenerListView", js_cocos2dx_UIListView_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_UILayoutParameter_prototype, "setMargin", js_cocos2dx_LayoutParameter_setMargin, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
