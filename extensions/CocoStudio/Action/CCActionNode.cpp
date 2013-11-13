@@ -477,7 +477,7 @@ void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* destF
 
 bool ActionNode::isActionDoneOnce()
 {
-	if (m_action == nullptr)
+	if (m_action == NULL)
 	{
 		return true;
 	}
