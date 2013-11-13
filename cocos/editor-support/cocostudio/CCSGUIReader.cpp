@@ -1033,6 +1033,12 @@ UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(JsonDictionary *d
         }
         CC_SAFE_DELETE(subData);
     }
+
+    UILayout* layout = dynamic_cast<UILayout*>(widget);
+    if (layout)
+    {
+        layout->doLayout();
+    }
     
     CC_SAFE_DELETE(uiOptions);
     return widget;
@@ -1046,6 +1052,12 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(UIWidget*wi
     {
         widget->ignoreContentAdaptWithSize(dicHelper->getBooleanValue_json(options, "ignoreSize"));
     }
+    
+    widget->setSizeType((SizeType)dicHelper->getIntValue_json(options, "sizeType"));
+    widget->setPositionType((PositionType)dicHelper->getIntValue_json(options, "positionType"));
+    
+    widget->setSizePercent(Point(dicHelper->getFloatValue_json(options, "sizePercentX"), dicHelper->getFloatValue_json(options, "sizePercentY")));
+    widget->setPositionPercent(Point(dicHelper->getFloatValue_json(options, "positionPercentX"), dicHelper->getFloatValue_json(options, "positionPercentY")));
     
     float w = dicHelper->getFloatValue_json(options, "width");
     float h = dicHelper->getFloatValue_json(options, "height");
@@ -1082,6 +1094,46 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(UIWidget*wi
     }
     int z = dicHelper->getIntValue_json(options, "ZOrder");
     widget->setZOrder(z);
+
+    JsonDictionary* layoutParameterDic = dicHelper->getSubDictionary_json(options, "layoutParameter");
+    if (layoutParameterDic)
+    {
+        int paramType = dicHelper->getIntValue_json(layoutParameterDic, "type");
+        UILayoutParameter* parameter = NULL;
+        switch (paramType)
+        {
+            case 0:
+                break;
+            case 1:
+            {
+                parameter = UILinearLayoutParameter::create();
+                int gravity = dicHelper->getIntValue_json(layoutParameterDic, "gravity");
+                ((UILinearLayoutParameter*)parameter)->setGravity((UILinearGravity)gravity);
+                break;
+            }
+            case 2:
+            {
+                parameter = UIRelativeLayoutParameter::create();
+                UIRelativeLayoutParameter* rParameter = (UIRelativeLayoutParameter*)parameter;
+                const char* relativeName = dicHelper->getStringValue_json(layoutParameterDic, "relativeName");
+                rParameter->setRelativeName(relativeName);
+                const char* relativeToName = dicHelper->getStringValue_json(layoutParameterDic, "relativeToName");
+                rParameter->setRelativeToWidgetName(relativeToName);
+                int align = dicHelper->getIntValue_json(layoutParameterDic, "align");
+                rParameter->setAlign((UIRelativeAlign)align);
+                break;
+            }
+            default:
+                break;
+        }
+        float mgl = dicHelper->getFloatValue_json(layoutParameterDic, "marginLeft");
+        float mgt = dicHelper->getFloatValue_json(layoutParameterDic, "marginTop");
+        float mgr = dicHelper->getFloatValue_json(layoutParameterDic, "marginRight");
+        float mgb = dicHelper->getFloatValue_json(layoutParameterDic, "marginDown");
+        parameter->setMargin(UIMargin(mgl, mgt, mgr, mgb));
+        widget->setLayoutParameter(parameter);
+    }
+    
 }
 
 void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(UIWidget *widget, JsonDictionary *options)
@@ -1563,6 +1615,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(UIWidget*wi
         float ch = dicHelper->getFloatValue_json(options, "capInsetsHeight");
         panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
     }
+    panel->setLayoutType((LayoutType)dicHelper->getIntValue_json(options, "layoutType"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
