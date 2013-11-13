@@ -1133,7 +1133,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(UIWidget*wi
         parameter->setMargin(UIMargin(mgl, mgt, mgr, mgb));
         widget->setLayoutParameter(parameter);
     }
-    
+    CC_SAFE_DELETE(layoutParameterDic);
 }
 
 void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(UIWidget *widget, JsonDictionary *options)

@@ -89,6 +89,7 @@ void UILayer::onEnter()
 
 void UILayer::onExit()
 {
+    _rootWidget->onExit();
     CCLayer::onExit();
 }
 
