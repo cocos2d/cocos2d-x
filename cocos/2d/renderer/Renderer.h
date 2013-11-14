@@ -12,11 +12,21 @@
 #include "CCGLProgram.h"
 #include "CCGL.h"
 #include <vector>
+#include <stack>
 
 #define VBO_SIZE 1024
+#define DEFAULT_RENDER_QUEUE 0
 
 NS_CC_BEGIN
 using namespace std;
+
+typedef vector<RenderCommand*> RenderQueue;
+
+struct RenderStackElement
+{
+    int renderQueueID;
+    size_t currentIndex;
+};
 
 class Renderer : public Object
 {
@@ -25,7 +35,7 @@ public:
     static void destroyInstance();
 
     //TODO support multiple viewport
-    void addRenderCommand(RenderCommand* command);
+    void addRenderCommand(RenderCommand* command, int renderQueue = DEFAULT_RENDER_QUEUE);
     void render();
 
 protected:
@@ -40,7 +50,9 @@ protected:
     void flush();
 
 protected:
-    vector<RenderCommand*> _renderQueue;
+    stack<RenderStackElement> _renderStack;
+    vector<RenderQueue> _renderGroups;
+
     int _lastMaterialID;
 
     size_t _firstCommand;
