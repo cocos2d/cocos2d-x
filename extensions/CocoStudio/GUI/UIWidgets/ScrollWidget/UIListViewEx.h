@@ -32,7 +32,7 @@ NS_CC_EXT_BEGIN
 
 typedef enum
 {
-    LISTVIEWEX_ONSELECEDTITEM
+    LISTVIEWEX_ONSELECTEDITEM
 }ListViewExEventType;
 
 typedef void (cocos2d::CCObject::*SEL_ListViewExEvent)(cocos2d::CCObject*,ListViewExEventType);
