@@ -194,8 +194,18 @@ public:
     /// @{
     /// @name Texture / Frame methods
 
-    /** Sets a new texture (from a filename) to the sprite */
+    /** Sets a new texture (from a filename) to the sprite.
+     It will call `setTextureRect()` with the texture's content size.
+     */
     virtual void setTexture(const std::string &filename );
+
+    /** Sets a new texture to the sprite.
+     The Texture's rect is not changed.
+     */
+    virtual void setTexture(Texture2D *texture) override;
+
+    /** returns the Texture2D object used by the sprite */
+    virtual Texture2D* getTexture() const override;
 
     /**
      * Updates the texture rect of the Sprite in points.
@@ -224,20 +234,21 @@ public:
     virtual void setSpriteFrame(const std::string &spriteFrameName);
 
     /** @deprecated Use `setSpriteFrame()` instead. */
-    virtual void setDisplayFrame(SpriteFrame *newFrame) CC_DEPRECATED_ATTRIBUTE { setSpriteFrame(newFrame); }
+    CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
 
     /**
      * Returns whether or not a SpriteFrame is being displayed
      */
     virtual bool isFrameDisplayed(SpriteFrame *pFrame) const;
 
-    /** @deprecated Use getDisplayFrame() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() { return getDisplayFrame(); };
-
     /**
      * Returns the current displayed frame.
      */
-    virtual SpriteFrame* getDisplayFrame();
+    virtual SpriteFrame* getSpriteFrame() const;
+    /** @deprecated Use `getSpriteFrame()` instead */
+    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* getDisplayFrame() const { return getSpriteFrame(); }
+    /** @deprecated Use `getSpriteFrame()` instead */
+    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() const { return getSpriteFrame(); };
 
     /// @} End of frames methods
 
@@ -367,8 +378,6 @@ public:
     //
     /// @{
     /// @name Functions inherited from TextureProtocol
-    virtual void setTexture(Texture2D *texture) override;
-    virtual Texture2D* getTexture() const override;
     /**
     *@code
     *When this function bound into js or lua,the parameter will be changed
