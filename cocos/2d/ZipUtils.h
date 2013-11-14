@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <string>
 #include "CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
+#include "CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtilsAndroid.h"
@@ -64,6 +65,7 @@ namespace cocos2d
         *
         @since v0.8.1
         */
+        CC_DEPRECATED_ATTRIBUTE static int ccInflateMemory(unsigned char *in, long inLength, unsigned char **out) { return inflateMemory(in, inLength, out); }
         static int inflateMemory(unsigned char *in, long inLength, unsigned char **out);
 
         /** 
@@ -76,7 +78,8 @@ namespace cocos2d
         *
         @since v1.0.0
         */
-        static int inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLenghtHint);
+        CC_DEPRECATED_ATTRIBUTE static int ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLengthHint) { return inflateMemoryWithHint(in, inLength, out, outLengthHint); }
+        static int inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLengthHint);
 
         /** inflates a GZip file into memory
         *
@@ -84,6 +87,7 @@ namespace cocos2d
         *
         * @since v0.99.5
         */
+        CC_DEPRECATED_ATTRIBUTE static int ccInflateGZipFile(const char *filename, unsigned char **out) { return inflateGZipFile(filename, out); }
         static int inflateGZipFile(const char *filename, unsigned char **out);
         
         /** test a file is a GZip format file or not
@@ -92,6 +96,7 @@ namespace cocos2d
         *
         * @since v3.0
         */
+        CC_DEPRECATED_ATTRIBUTE static bool ccIsGZipFile(const char *filename) { return isGZipFile(filename); }
         static bool isGZipFile(const char *filename);
 
         /** test the buffer is GZip format or not
@@ -100,6 +105,7 @@ namespace cocos2d
         *
         * @since v3.0
         */
+        CC_DEPRECATED_ATTRIBUTE static bool ccIsGZipBuffer(const unsigned char *buffer, long len) { return isGZipBuffer(buffer, len); }
         static bool isGZipBuffer(const unsigned char *buffer, long len);
 
         /** inflates a CCZ file into memory
@@ -108,6 +114,7 @@ namespace cocos2d
         *
         * @since v0.99.5
         */
+        CC_DEPRECATED_ATTRIBUTE static int ccInflateCCZFile(const char *filename, unsigned char **out) { return inflateCCZFile(filename, out); }
         static int inflateCCZFile(const char *filename, unsigned char **out);
 
         /** inflates a buffer with CCZ format into memory
@@ -116,6 +123,7 @@ namespace cocos2d
         *
         * @since v3.0
         */
+        CC_DEPRECATED_ATTRIBUTE static int ccInflateCCZBuffer(const unsigned char *buffer, long len, unsigned char **out) { return inflateCCZBuffer(buffer, len, out); }
         static int inflateCCZBuffer(const unsigned char *buffer, long len, unsigned char **out);
         
         /** test a file is a CCZ format file or not
@@ -124,6 +132,7 @@ namespace cocos2d
         *
         * @since v3.0
         */
+        CC_DEPRECATED_ATTRIBUTE static bool ccIsCCZFile(const char *filename) { return isCCZFile(filename); }
         static bool isCCZFile(const char *filename);
 
         /** test the buffer is CCZ format or not
@@ -132,6 +141,7 @@ namespace cocos2d
         *
         * @since v3.0
         */
+        CC_DEPRECATED_ATTRIBUTE static bool ccIsCCZBuffer(const unsigned char *buffer, long len) { return isCCZBuffer(buffer, len); }
         static bool isCCZBuffer(const unsigned char *buffer, long len);
 
         /** Sets the pvr.ccz encryption key parts separately for added
@@ -160,6 +170,7 @@ namespace cocos2d
         * @param index part of the key [0..3]
         * @param value value of the key part
         */
+        CC_DEPRECATED_ATTRIBUTE static void ccSetPvrEncryptionKeyPart(int index, unsigned int value) { setPvrEncryptionKeyPart(index, value); }
         static void setPvrEncryptionKeyPart(int index, unsigned int value);
         
         /** Sets the pvr.ccz encryption key.
@@ -184,6 +195,7 @@ namespace cocos2d
         * @param keyPart3 the key value part 3.
         * @param keyPart4 the key value part 4.
         */
+        CC_DEPRECATED_ATTRIBUTE static void ccSetPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4) { setPvrEncryptionKey(keyPart1, keyPart2, keyPart3, keyPart4); }
         static void setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4);
 
     private:
