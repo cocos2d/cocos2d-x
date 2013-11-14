@@ -52,10 +52,10 @@ PhysicsContact::PhysicsContact()
 , _info(nullptr)
 , _notificationEnable(true)
 , _begin(false)
+, _result(true)
 , _data(nullptr)
 , _contactInfo(nullptr)
 , _contactData(nullptr)
-, _result(true)
 {
     
 }

@@ -142,6 +142,8 @@ private:
     int handleTableViewEvent(void* data);
     int handleTableViewEventReturnArray(void* data,int numResults,Array& resultArray);
     int handleAssetsManagerEvent(void* data);
+    int handleCocoStudioEventListener(void* data);
+    int handleArmatureWrapper(void* data);
     void extendWebsocket(lua_State* lua_S);
     void extendGLNode(lua_State* lua_S);
 private:

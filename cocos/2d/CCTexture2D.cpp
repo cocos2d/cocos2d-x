@@ -622,8 +622,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     CHECK_GL_ERROR_DEBUG(); // clean possible GL error
     
     // Specify OpenGL texture image
-    int width = pixelsWide;
-    int height = pixelsHigh;
+    long width = pixelsWide;
+    long height = pixelsHigh;
     
     for (int i = 0; i < mipmapsNum; ++i)
     {
@@ -641,7 +641,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
         if (i > 0 && (width != height || ccNextPOT(width) != width ))
         {
-            CCLOG("cocos2d: Texture2D. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%u != height=%u", i, width, height);
+            CCLOG("cocos2d: Texture2D. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%ld != height=%ld", i, width, height);
         }
 
         GLenum err = glGetError();
@@ -1243,7 +1243,7 @@ void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 
 void Texture2D::generateMipmap()
 {
-    CCASSERT( _pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
+    CCASSERT( static_cast<unsigned long>(_pixelsWide) == ccNextPOT(_pixelsWide) && static_cast<unsigned long>(_pixelsHigh) == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
     GL::bindTexture2D( _name );
     glGenerateMipmap(GL_TEXTURE_2D);
     _hasMipmaps = true;
@@ -1256,8 +1256,8 @@ bool Texture2D::hasMipmaps() const
 
 void Texture2D::setTexParameters(const TexParams &texParams)
 {
-    CCASSERT( (_pixelsWide == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
-        (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
+    CCASSERT( (static_cast<unsigned long>(_pixelsWide) == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
+        (static_cast<unsigned long>(_pixelsHigh) == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
         "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
     GL::bindTexture2D( _name );

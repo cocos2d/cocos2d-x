@@ -25,7 +25,7 @@
 #include "cocostudio/CCActionObject.h"
 #include "cocostudio/DictionaryHelper.h"
 
- using namespace cocos2d;
+using namespace cocos2d;
 
 namespace cocostudio {
 
@@ -37,15 +37,19 @@ ActionObject::ActionObject()
 , _bPlaying(false)
 , _fUnitTime(0.1f)
 , _currentTime(0.0f)
+, _pScheduler(NULL)
 {
 	_actionNodeList = Array::create();
 	_actionNodeList->retain();
+	_pScheduler = new Scheduler();
+	Director::sharedDirector()->getScheduler()->scheduleUpdateForTarget(_pScheduler, 0, false);
 }
 
 ActionObject::~ActionObject()
 {
 	_actionNodeList->removeAllObjects();
 	_actionNodeList->release();
+	CC_SAFE_DELETE(_pScheduler);
 }
 
 void ActionObject::setName(const char* name)
@@ -134,11 +138,16 @@ void ActionObject::removeActionNode(ActionNode* node)
 void ActionObject::play()
 {
     stop();
+	this->updateToFrameByTime(0.0f);
 	int frameNum = _actionNodeList->count();
 	for ( int i = 0; i < frameNum; i++ )
 	{
 		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
-		actionNode->playAction( getLoop());
+		actionNode->playAction();
+	}
+	if (_loop)
+	{
+		_pScheduler->scheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f , kRepeatForever, 0.0f, false);
 	}
 }
 
@@ -157,6 +166,7 @@ void ActionObject::stop()
 		actionNode->stopAction();
 	}
 
+	_pScheduler->unscheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this);
 	_bPause = false;
 }
 
@@ -174,4 +184,30 @@ void ActionObject::updateToFrameByTime(float fTime)
 	}
 }
 
+void ActionObject::simulationActionUpdate(float dt)
+{
+	if (_loop)
+	{
+		bool isEnd = true;
+		int nodeNum = _actionNodeList->count();
+
+		for ( int i = 0; i < nodeNum; i++ )
+		{
+			ActionNode* actionNode = (ActionNode*)_actionNodeList->objectAtIndex(i);
+
+			if (actionNode->isActionDoneOnce() == false)
+			{
+				isEnd = false;
+				break;
+			}
+		}
+
+		if (isEnd)
+		{
+			this->play();
+		}
+
+		CCLOG("ActionObject Update");
+	}
+}
 }

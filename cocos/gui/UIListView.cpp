@@ -32,7 +32,10 @@ UIListView::UIListView():
 _model(NULL),
 _items(NULL),
 _gravity(LISTVIEW_GRAVITY_CENTER_HORIZONTAL),
-_itemsMargin(0.0f)
+_itemsMargin(0.0f),
+_listViewEventListener(NULL),
+_listViewEventSelector(NULL),
+_curSelectedIndex(0)
 {
     
 }
@@ -41,6 +44,8 @@ UIListView::~UIListView()
 {
     _items->removeAllObjects();
     CC_SAFE_RELEASE(_items);
+    _listViewEventListener = NULL;
+    _listViewEventSelector = NULL;
 }
 
 UIListView* UIListView::create()
@@ -376,7 +381,44 @@ void UIListView::refreshView()
         remedyLayoutParameter(item);
     }
     updateInnerContainerSize();
-    doLayout();
+}
+    
+void UIListView::addEventListenerListView(cocos2d::Object *target, SEL_ListViewEvent selector)
+{
+    _listViewEventListener = target;
+    _listViewEventSelector = selector;
+}
+    
+void UIListView::selectedItemEvent()
+{
+    if (_listViewEventListener && _listViewEventSelector)
+    {
+        (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECEDTITEM);
+    }
+}
+    
+void UIListView::interceptTouchEvent(int handleState, gui::UIWidget *sender, const cocos2d::Point &touchPoint)
+{
+    UIScrollView::interceptTouchEvent(handleState, sender, touchPoint);
+    if (handleState != 1)
+    {
+        UIWidget* parent = sender;
+        while (parent)
+        {
+            if (parent && parent->getParent() == _innerContainer)
+            {
+                _curSelectedIndex = getIndex(parent);
+                break;
+            }
+            parent = parent->getParent();
+        }
+        selectedItemEvent();
+    }
+}
+    
+int UIListView::getCurSelectedIndex() const
+{
+    return _curSelectedIndex;
 }
 
 void UIListView::onSizeChanged()

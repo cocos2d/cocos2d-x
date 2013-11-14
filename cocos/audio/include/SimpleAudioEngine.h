@@ -64,7 +64,7 @@ public:
 
     /**
      @brief Release the shared Engine object
-     @warning It must be called before the application exit, or a memroy leak will be casued.
+     @warning It must be called before the application exit, or a memory leak will be casued.
      */
     static void end();
 

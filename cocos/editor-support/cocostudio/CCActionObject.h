@@ -142,7 +142,9 @@ public:
 
     /*init properties with a json dictionary*/
     void initWithDictionary(JsonDictionary* dic,cocos2d::Object* root);
-    
+
+    /*scheduler update function*/
+	void simulationActionUpdate(float dt);
 protected:
 	cocos2d::Array* _actionNodeList;/*actionnode*/
 	std::string _name;
@@ -151,6 +153,7 @@ protected:
 	bool _bPlaying;
 	float _fUnitTime;
 	float _currentTime;
+	cocos2d::Scheduler *_pScheduler;
 };
 
 }

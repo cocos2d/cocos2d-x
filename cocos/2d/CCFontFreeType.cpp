@@ -87,11 +87,11 @@ FT_Library FontFreeType::getFTLibrary()
     return _FTlibrary;
 }
 
-FontFreeType::FontFreeType(bool dynamicGlyphCollection) 
-    : _letterPadding(5),
-    _ttfData(nullptr),
-    _dynamicGlyphCollection(dynamicGlyphCollection),
-    _fontRef(nullptr)
+FontFreeType::FontFreeType(bool dynamicGlyphCollection)
+: _fontRef(nullptr),
+_letterPadding(5),
+_ttfData(nullptr),
+_dynamicGlyphCollection(dynamicGlyphCollection)
 {
 }
 
