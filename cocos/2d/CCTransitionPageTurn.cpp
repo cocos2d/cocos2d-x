@@ -32,6 +32,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+float TransitionPageTurn::POLYGONOFFSETFACTOR = -20.f;
+float TransitionPageTurn::POLYGONOFFSETUNITS = -20.f;
+
 TransitionPageTurn::TransitionPageTurn()
 {
 }
@@ -65,6 +68,27 @@ bool TransitionPageTurn::initWithDuration(float t, Scene *scene, bool backwards)
 void TransitionPageTurn::sceneOrder()
 {
     _isInSceneOnTop = _back;
+}
+
+void TransitionPageTurn::draw()
+{
+    Scene::draw();
+    
+    if( _isInSceneOnTop ) {
+        _outScene->visit();
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(POLYGONOFFSETFACTOR, POLYGONOFFSETUNITS);
+        _inScene->visit();
+        glDisable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(0, 0);
+    } else {
+        _inScene->visit();
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(POLYGONOFFSETFACTOR, POLYGONOFFSETUNITS);
+        _outScene->visit();
+        glDisable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(0, 0);
+    }
 }
 
 void TransitionPageTurn::onEnter()
