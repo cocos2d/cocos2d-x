@@ -29,12 +29,12 @@
 namespace gui {
 
 UIListView::UIListView():
-_model(NULL),
-_items(NULL),
+_model(nullptr),
+_items(nullptr),
 _gravity(LISTVIEW_GRAVITY_CENTER_HORIZONTAL),
 _itemsMargin(0.0f),
-_listViewEventListener(NULL),
-_listViewEventSelector(NULL),
+_listViewEventListener(nullptr),
+_listViewEventSelector(nullptr),
 _curSelectedIndex(0)
 {
     
@@ -44,8 +44,8 @@ UIListView::~UIListView()
 {
     _items->removeAllObjects();
     CC_SAFE_RELEASE(_items);
-    _listViewEventListener = NULL;
-    _listViewEventSelector = NULL;
+    _listViewEventListener = nullptr;
+    _listViewEventSelector = nullptr;
 }
 
 UIListView* UIListView::create()
@@ -57,7 +57,7 @@ UIListView* UIListView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UIListView::init()
@@ -303,7 +303,7 @@ UIWidget* UIListView::getItem(unsigned int index)
 {
     if ((int)index < 0 || index >= _items->count())
     {
-        return NULL;
+        return nullptr;
     }
     return (UIWidget*)(_items->data->arr[index]);
 }
@@ -393,7 +393,7 @@ void UIListView::selectedItemEvent()
 {
     if (_listViewEventListener && _listViewEventSelector)
     {
-        (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECEDTITEM);
+        (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM);
     }
 }
     

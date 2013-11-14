@@ -43,7 +43,7 @@ UIRootWidget* UIRootWidget::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UIRootWidget::init()

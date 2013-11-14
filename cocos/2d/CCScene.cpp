@@ -161,7 +161,11 @@ void Scene::update(float delta)
 {
     Node::update(delta);
     
-    _physicsWorld->update(delta);
+    if (nullptr != _physicsWorld)
+    {
+        _physicsWorld->update(delta);
+    }
+    
 }
 #endif
 
