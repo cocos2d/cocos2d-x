@@ -186,7 +186,7 @@ static int tolua_cocos2d_ScrollView_unregisterScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("'unregisterScriptHandler' function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterScriptHandler' function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -313,7 +313,7 @@ static int tolua_cocos2d_control_unregisterControlEventHandler(lua_State* tolua_
         return 0;
     }
     
-    CCLOG("'unregisterControlEventHandler' function of Control  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterControlEventHandler' function of Control  has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1190,7 +1190,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
 #if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(L,3,"Node",0,&tolua_err)) goto tolua_lerror;
 #endif
-            Node* node = static_cast<Node*>(tolua_tousertype(L, 2, nullptr));
+            Node* node = static_cast<Node*>(tolua_tousertype(L, 3, nullptr));
             ret = TableView::create(dataSource, size, node);
         }
         
