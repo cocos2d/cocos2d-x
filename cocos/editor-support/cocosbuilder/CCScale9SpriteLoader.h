@@ -28,7 +28,13 @@ protected:
      * @js NA
      * @lua NA
      */
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::extension::Scale9Sprite);
+    virtual cocos2d::extension::Scale9Sprite * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader) {
+        cocos2d::extension::Scale9Sprite* pNode = cocos2d::extension::Scale9Sprite::create();
+        
+        pNode->setAnchorPoint(cocos2d::Point(0,0));
+        
+        return pNode;
+    };
     /**
      * @js NA
      * @lua NA
