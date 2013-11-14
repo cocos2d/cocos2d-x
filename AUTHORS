@@ -616,6 +616,7 @@ Developers:
         Added support of passing array to cc.Sequence.create and cc.Spawn.create.
         Fixed a bug that sys.localStorage.getItem() does not support non-ascii string.
         Fixed a memory leak in XMLHttpRequest.
+        Fixed a bug that wrong convention to jsval in cccolor4f_to_jsval and cccolor3b_to_jsval.
     
     Keita Obo (ktaobo)
         Avoid unnecessary object duplication for Scale9Sprite.
