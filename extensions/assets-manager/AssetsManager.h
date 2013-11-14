@@ -238,6 +238,8 @@ private:
 class AssetsManagerDelegateProtocol
 {
 public:
+    virtual ~AssetsManagerDelegateProtocol(){};
+public:
     /* @brief Call back function for error
        @param errorCode Type of error
      * @js NA

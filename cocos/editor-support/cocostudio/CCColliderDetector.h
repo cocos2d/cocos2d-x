@@ -50,7 +50,7 @@ class Bone;
 class ColliderFilter
 {
 public:
-    ~ColliderFilter() { }
+    virtual ~ColliderFilter() { }
 #if ENABLE_PHYSICS_BOX2D_DETECT
 public:
     ColliderFilter(unsigned short categoryBits = 0x0001, unsigned short maskBits = 0xFFFF, signed short groupIndex = 0);

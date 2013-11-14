@@ -96,8 +96,8 @@ void PhysicsTestScene::toggleDebug()
 
 PhysicsDemo::PhysicsDemo()
 : _scene(nullptr)
-, _ball(nullptr)
 , _spriteTexture(nullptr)
+, _ball(nullptr)
 {
     
 }
