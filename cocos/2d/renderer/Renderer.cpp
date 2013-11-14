@@ -134,19 +134,16 @@ void Renderer::render()
 
     while(!_renderStack.empty())
     {
-        size_t len = _renderGroups[_renderStack.top().renderQueueID].size();
+        RenderQueue currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
+        size_t len = currRenderQueue.size();
 
-        //If pop the render stack if we already processed all the commands
-        if(_renderStack.top().currentIndex >= len)
-        {
-            _renderStack.pop();
-            _firstCommand = _lastCommand = 0;
-            continue;
-        }
+        //Refresh the batch command index in case the renderStack has changed.
+        _firstCommand = _lastCommand = _renderStack.top().currentIndex;
 
+        //Process RenderQueue
         for(size_t i = _renderStack.top().currentIndex; i < len; i++)
         {
-            auto command = _renderGroups[_renderStack.top().renderQueueID][i];
+            auto command = currRenderQueue[i];
 
             if(command->getType() == QUAD_COMMAND)
             {
@@ -159,7 +156,7 @@ void Renderer::render()
                 {
                     memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
                     _numQuads += cmd->getQuadCount();
-                    _lastCommand = i;
+                    _renderStack.top().currentIndex = _lastCommand = i;
                 }
                 else
                 {
@@ -182,7 +179,6 @@ void Renderer::render()
 
                 //push new renderQueue to renderStack
                 _renderStack.push({cmd->getRenderQueueID(), 0});
-                _firstCommand = _lastCommand = 0;
 
                 //Exit current loop
                 break;
@@ -195,6 +191,12 @@ void Renderer::render()
 
         //Draw the batched quads
         drawBatchedQuads();
+
+        //If pop the render stack if we already processed all the commands
+        if(_renderStack.top().currentIndex + 1 >= len)
+        {
+            _renderStack.pop();
+        }
     }
 
     //TODO give command back to command pool
@@ -204,6 +206,7 @@ void Renderer::render()
         _renderGroups[j].clear();
     }
 
+    _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
     _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
 }
@@ -235,7 +238,7 @@ void Renderer::drawBatchedQuads()
     //Start drawing verties in batch
     for(size_t i = _firstCommand; i <= _lastCommand; i++)
     {
-        RenderCommand* command = _renderGroups[DEFAULT_RENDER_QUEUE][i];
+        RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
         if (command->getType() == QUAD_COMMAND)
         {
             QuadCommand* cmd = static_cast<QuadCommand*>(command);
