@@ -367,7 +367,7 @@ void SIOClientImpl::onOpen(WebSocket* ws)
 		c->onOpen();
 	}
 
-	Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9), false);
+	Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
 	
 	log("SIOClientImpl::onOpen socket connected!");
 }

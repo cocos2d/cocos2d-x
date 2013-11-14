@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2008, Luke Benstead.
 All rights reserved.
 

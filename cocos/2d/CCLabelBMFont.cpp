@@ -925,16 +925,16 @@ void LabelBMFont::updateLabel()
         vector<unsigned short> last_word;
         last_word.reserve( stringLength );
 
-        unsigned int line = 1, i = 0;
+        long line = 1, i = 0;
         bool start_line = false, start_word = false;
         float startOfLine = -1, startOfWord = -1;
-        int skip = 0;
+        long skip = 0;
 
         Array* children = getChildren();
-        for (int j = 0; j < children->count(); j++)
+        for (long j = 0; j < children->count(); j++)
         {
             Sprite* characterSprite;
-            unsigned int justSkipped = 0;
+            long justSkipped = 0;
             
             while (!(characterSprite = static_cast<Sprite*>( this->getChildByTag(j + skip + justSkipped))) )
             {
@@ -1091,7 +1091,7 @@ void LabelBMFont::updateLabel()
         int i = 0;
 
         int lineNumber = 0;
-        int str_len = cc_wcslen(_string);
+        long str_len = cc_wcslen(_string);
         vector<unsigned short> last_line;
         for (long ctr = 0; ctr <= str_len; ++ctr)
         {
@@ -1129,7 +1129,7 @@ void LabelBMFont::updateLabel()
 
                 if (shift != 0)
                 {
-                    for (unsigned j = 0; j < line_length; j++)
+                    for (long j = 0; j < line_length; j++)
                     {
                         index = i + j + lineNumber;
                         if (index < 0) continue;

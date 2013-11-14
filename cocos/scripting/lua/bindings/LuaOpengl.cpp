@@ -5210,12 +5210,12 @@ static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00(lua_State* tolu
 #endif
     {
         GLProgram* self = (GLProgram*)  tolua_tousertype(tolua_S,1,0);
-        int location = ((int)  tolua_tonumber(tolua_S,2,0));
-        unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+        int location = static_cast<int>(tolua_tonumber(tolua_S,2,0));
+        int numberOfArrays = static_cast<int>(tolua_tonumber(tolua_S,4,0));
         float* floatArray = new float[numberOfArrays * 4];
         for (int i = 1; i <= numberOfArrays * 4; ++i)
         {
-            floatArray[i - 1] = (float)tolua_tofieldnumber(tolua_S, 3, i, 0);
+            floatArray[i - 1] = static_cast<float>(tolua_tofieldnumber(tolua_S, 3, i, 0));
         }
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4fv'", NULL);
@@ -5793,7 +5793,7 @@ int tolua_Cocos2d_CCDrawNode_drawPolygon00(lua_State* tolua_S)
 #endif
     {
         DrawNode* self = (DrawNode*)  tolua_tousertype(tolua_S,1,0);
-        size_t size = lua_tonumber(tolua_S, 3);
+        int size = static_cast<int>(lua_tonumber(tolua_S, 3));
 
         if (NULL != self && size > 0)
         {
@@ -5875,7 +5875,7 @@ static int tolua_cocos2d_DrawPrimitives_drawPoints00(lua_State* tolua_S)
     else
 #endif
     {
-        unsigned int numberOfPoints = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+        int numberOfPoints = static_cast<int>(tolua_tonumber(tolua_S,2,0));
         
         if (numberOfPoints > 0)
         {
@@ -6036,7 +6036,7 @@ static int tolua_cocos2d_DrawPrimitives_drawPoly00(lua_State* tolua_S)
     else
 #endif
     {
-        unsigned int numOfVertices = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+        int numOfVertices = static_cast<int>(tolua_tonumber(tolua_S,2,0));
         bool closePolygon = ((bool)  tolua_toboolean(tolua_S,3,0));
 
         if (numOfVertices > 0)
@@ -6092,7 +6092,7 @@ static int tolua_cocos2d_DrawPrimitives_drawSolidPoly00(lua_State* tolua_S)
     else
 #endif
     {
-        unsigned int numberOfPoints = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+        int numberOfPoints = static_cast<int>(tolua_tonumber(tolua_S,2,0));
         if (numberOfPoints > 0)
         {
             Point* points = new Point[numberOfPoints];

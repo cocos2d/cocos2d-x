@@ -719,7 +719,7 @@ bool luaval_to_array(lua_State* L,int lo, Array** outValue)
             if (NULL == arr)
                 return false;
             
-            for (int i = 0; i < len; i++)
+            for (long i = 0; i < static_cast<long>(len); i++)
             {
                 lua_pushnumber(L,i + 1);
                 lua_gettable(L,lo);

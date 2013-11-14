@@ -134,7 +134,7 @@ void PointArray::insertControlPoint(Point &controlPoint, long index)
 
 Point PointArray::getControlPointAtIndex(long index)
 {
-    index = MIN(_controlPoints->size()-1, MAX(index, 0));
+    index = MIN(static_cast<long>(_controlPoints->size()-1), MAX(index, 0));
     return *(_controlPoints->at(index));
 }
 
@@ -383,7 +383,7 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
 	// convert "absolutes" to "diffs"
 	//
     Point p = copyConfig->getControlPointAtIndex(0);
-    for (unsigned int i = 1; i < copyConfig->count(); ++i)
+    for (long i = 1; i < copyConfig->count(); ++i)
     {
         Point current = copyConfig->getControlPointAtIndex(i);
         Point diff = current - p;
@@ -405,7 +405,7 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
     p = -p;
     pReverse->insertControlPoint(p, 0);
     
-    for (unsigned int i = 1; i < pReverse->count(); ++i)
+    for (long i = 1; i < pReverse->count(); ++i)
     {
         Point current = pReverse->getControlPointAtIndex(i);
         current = -current;
@@ -528,7 +528,7 @@ CatmullRomBy* CatmullRomBy::reverse() const
 	// convert "absolutes" to "diffs"
 	//
     Point p = copyConfig->getControlPointAtIndex(0);
-    for (unsigned int i = 1; i < copyConfig->count(); ++i)
+    for (long i = 1; i < copyConfig->count(); ++i)
     {
         Point current = copyConfig->getControlPointAtIndex(i);
         Point diff = current - p;
@@ -550,7 +550,7 @@ CatmullRomBy* CatmullRomBy::reverse() const
     p = -p;
     pReverse->insertControlPoint(p, 0);
 
-    for (unsigned int i = 1; i < pReverse->count(); ++i)
+    for (long i = 1; i < pReverse->count(); ++i)
     {
         Point current = pReverse->getControlPointAtIndex(i);
         current = -current;

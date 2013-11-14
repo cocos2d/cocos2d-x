@@ -527,7 +527,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
         if (!shouldStopPropagation)
         {
             // priority > 0
-            for (; i < fixedPriorityListeners->size(); ++i)
+            for (; i < static_cast<long>(fixedPriorityListeners->size()); ++i)
             {
                 auto l = fixedPriorityListeners->at(i);
                 

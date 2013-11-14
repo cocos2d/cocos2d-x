@@ -658,7 +658,7 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
         
         self->getByteData(tmpData);
         
-        for (int i = 0 ; i < self->getDataSize(); i++)
+        for (size_t i = 0 ; i < self->getDataSize(); i++)
         {
             LuaValue value = LuaValue::intValue(tmpData[i]);
             array.push_back(value);

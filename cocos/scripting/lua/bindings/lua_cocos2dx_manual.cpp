@@ -248,7 +248,7 @@ static int tolua_cocos2d_Menu_create(lua_State* tolua_S)
             CCLOG("Menu create method create array fail\n");
             return 0;
         }
-        uint32_t i = 1;
+        int i = 1;
         while (i <= argc)
         {
 #if COCOS2D_DEBUG >= 1
@@ -398,7 +398,7 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
             return 0;
         }
         
-        for (uint32_t i = 0; i < argc; ++i)
+        for (int i = 0; i < argc; ++i)
         {
 #if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(tolua_S, i + 2,"MenuItem",0,&tolua_err) )
@@ -1702,7 +1702,7 @@ int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
             CCLOG("Sequence create method create array fail\n");
             return 0;
         }
-        uint32_t i = 1;
+        int i = 1;
         while (i <= argc)
         {
 #if COCOS2D_DEBUG >= 1
@@ -2022,7 +2022,7 @@ static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
             return 0;
         }
         
-        uint32_t i = 1;
+        int i = 1;
         while (i <= argc)
         {
 #if COCOS2D_DEBUG >= 1
@@ -2407,7 +2407,7 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
             goto tolua_lerror;
         }
 #endif
-        size_t size = lua_tonumber(tolua_S, 3);
+        int size = static_cast<int>(lua_tonumber(tolua_S, 3));
         if ( size > 0 )
         {
             Point* points = new Point[size];
