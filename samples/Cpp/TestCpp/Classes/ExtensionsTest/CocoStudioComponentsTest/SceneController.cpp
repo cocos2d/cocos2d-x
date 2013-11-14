@@ -44,7 +44,7 @@ void SceneController::onEnter()
     _projectiles = new CCArray;
    
     ((CCComAudio*)(m_pOwner->getComponent("Audio")))->playBackgroundMusic("background-music-aac.wav", true);
-    ((CCComAttribute*)(m_pOwner->getComponent("ComAttribute")))->setInt("KillCount", 0);
+    ((CCComAttribute*)(m_pOwner->getComponent("ComAttribute")))->getDict()->insertItem("KillCount", 0);
 }
 
 void SceneController::onExit()
@@ -109,10 +109,10 @@ void SceneController::spriteMoveFinished(CCNode* sender)
 
 void SceneController::increaseKillCount()
 {
-    int nProjectilesDestroyed = ((CCComAttribute*)(m_pOwner->getComponent("ComAttribute")))->getInt("KillCount");
+    int nProjectilesDestroyed = ((CCComAttribute*)(m_pOwner->getComponent("ComAttribute")))->getDict()->getItemIntValue("KillCount", -1);
     
     CCComAttribute *p = (CCComAttribute*)(m_pOwner->getComponent("ComAttribute"));
-    p->setInt("KillCount", ++nProjectilesDestroyed);
+    p->getDict()->insertItem("KillCount", ++nProjectilesDestroyed);
 
     if (nProjectilesDestroyed >= 5)
     {
