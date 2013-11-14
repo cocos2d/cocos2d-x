@@ -356,9 +356,20 @@ void UIWidget::setSize(const CCSize &size)
     {
         m_size = size;
     }
-    if (m_bIsRunning)
+    if (m_bIsRunning && m_pWidgetParent)
     {
-        m_sizePercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(m_customSize.width / m_pWidgetParent->getSize().width, m_customSize.height / m_pWidgetParent->getSize().height);   
+        CCSize pSize = m_pWidgetParent->getSize();
+        float spx = 0.0f;
+        float spy = 0.0f;
+        if (pSize.width > 0.0f)
+        {
+            spx = m_customSize.width / pSize.width;
+        }
+        if (pSize.height > 0.0f)
+        {
+            spy = m_customSize.height / pSize.height;
+        }
+        m_sizePercent = ccp(spx, spy);
     }
     onSizeChanged();
 }
@@ -388,6 +399,7 @@ void UIWidget::updateSizeAndPosition()
     switch (m_eSizeType)
     {
         case SIZE_ABSOLUTE:
+        {
             if (m_bIgnoreSize)
             {
                 m_size = getContentSize();
@@ -396,8 +408,23 @@ void UIWidget::updateSizeAndPosition()
             {
                 m_size = m_customSize;
             }
-            m_sizePercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(m_customSize.width / m_pWidgetParent->getSize().width, m_customSize.height / m_pWidgetParent->getSize().height);
+            if (m_pWidgetParent)
+            {
+                CCSize pSize = m_pWidgetParent->getSize();
+                float spx = 0.0f;
+                float spy = 0.0f;
+                if (pSize.width > 0.0f)
+                {
+                    spx = m_customSize.width / pSize.width;
+                }
+                if (pSize.height > 0.0f)
+                {
+                    spy = m_customSize.height / pSize.height;
+                }
+                m_sizePercent = ccp(spx, spy);
+            }
             break;
+        }
         case SIZE_PERCENT:
         {
             CCSize cSize = (m_pWidgetParent == NULL) ? CCSizeZero : CCSizeMake(m_pWidgetParent->getSize().width * m_sizePercent.x , m_pWidgetParent->getSize().height * m_sizePercent.y);
@@ -420,14 +447,38 @@ void UIWidget::updateSizeAndPosition()
     switch (m_ePositionType)
     {
         case POSITION_ABSOLUTE:
-            m_positionPercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(absPos.x / m_pWidgetParent->getSize().width, absPos.y / m_pWidgetParent->getSize().height);
+        {
+            if (m_pWidgetParent)
+            {
+                CCSize pSize = m_pWidgetParent->getSize();
+                if (pSize.width <= 0.0f || pSize.height <= 0.0f)
+                {
+                    m_positionPercent = CCPointZero;
+                }
+                else
+                {
+                    m_positionPercent = ccp(absPos.x / m_pWidgetParent->getSize().width, absPos.y / m_pWidgetParent->getSize().height);
+                }
+            }
+            else
+            {
+                m_positionPercent = CCPointZero;
+            }
             break;
+        }
         case POSITION_PERCENT:
         {
-            CCSize parentSize = m_pWidgetParent->getSize();
-            absPos = ccp(parentSize.width * m_positionPercent.x, parentSize.height * m_positionPercent.y);
-        }
+            if (m_pWidgetParent)
+            {
+                CCSize parentSize = m_pWidgetParent->getSize();
+                absPos = ccp(parentSize.width * m_positionPercent.x, parentSize.height * m_positionPercent.y);
+            }
+            else
+            {
+                absPos = CCPointZero;
+            }
             break;
+        }
         default:
             break;
     }
@@ -842,7 +893,15 @@ void UIWidget::setPosition(const CCPoint &pos)
 {
     if (m_bIsRunning)
     {
-        m_positionPercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(pos.x / m_pWidgetParent->getSize().width, pos.y / m_pWidgetParent->getSize().height);
+        CCSize pSize = m_pWidgetParent->getSize();
+        if (pSize.width <= 0.0f || pSize.height <= 0.0f)
+        {
+            m_positionPercent = CCPointZero;
+        }
+        else
+        {
+            m_positionPercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(pos.x / m_pWidgetParent->getSize().width, pos.y / m_pWidgetParent->getSize().height);
+        }
     }
     m_pRenderer->setPosition(pos);
 }
