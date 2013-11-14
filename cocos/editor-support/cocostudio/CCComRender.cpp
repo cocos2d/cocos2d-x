@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace cocostudio {
 
 ComRender::ComRender(void)
-: _render(NULL)
+: _render(nullptr)
 {
   
 }
