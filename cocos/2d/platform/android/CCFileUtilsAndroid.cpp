@@ -153,16 +153,6 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
     
     if (fullPath[0] != '/')
     {
-        
-        // fullPathForFilename is not thread safe.
-        if (forAsync) {
-            LOGD("Async loading not supported. fullPathForFilename is not thread safe.");
-            return NULL;
-        }
-
-        string fullPath = fullPathForFilename(filename);
-        LOGD("full path = %s", fullPath.c_str());
-
         string relativePath = string();
 
         size_t position = fullPath.find("assets/");
