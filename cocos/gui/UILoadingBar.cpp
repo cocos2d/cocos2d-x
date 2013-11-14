@@ -34,7 +34,7 @@ UILoadingBar::UILoadingBar():
 _barType(LoadingBarTypeLeft),
 _percent(100),
 _totalLength(0),
-_barRenderer(NULL),
+_barRenderer(nullptr),
 _renderBarTexType(UI_TEX_TYPE_LOCAL),
 _barRendererTextureSize(cocos2d::Size::ZERO),
 _scale9Enabled(false),
@@ -58,7 +58,7 @@ UILoadingBar* UILoadingBar::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 void UILoadingBar::initRenderer()
@@ -179,7 +179,7 @@ void UILoadingBar::setScale9Enabled(bool enabled)
     }
     _scale9Enabled = enabled;
     _renderer->removeChild(_barRenderer, true);
-    _barRenderer = NULL;
+    _barRenderer = nullptr;
     if (_scale9Enabled)
     {
         _barRenderer = cocos2d::extension::Scale9Sprite::create();
