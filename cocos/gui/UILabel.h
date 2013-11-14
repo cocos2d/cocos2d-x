@@ -100,6 +100,34 @@ public:
      * @return  touch scale enabled of label.
      */
     bool isTouchScaleChangeEnabled();
+    
+    /**
+     * Changes both X and Y scale factor of the widget.
+     *
+     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
+     *
+     * @param scale     The scale factor for both X and Y axis.
+     */
+    virtual void setScale(float fScale);
+    
+    /**
+     * Changes the scale factor on X axis of this widget
+     *
+     * The deafult value is 1.0 if you haven't changed it before
+     *
+     * @param fScaleX   The scale factor on X axis.
+     */
+    virtual void setScaleX(float fScaleX);
+    
+    /**
+     * Changes the scale factor on Y axis of this widget
+     *
+     * The Default value is 1.0 if you haven't changed it before.
+     *
+     * @param fScaleY   The scale factor on Y axis.
+     */
+    virtual void setScaleY(float fScaleY);
+    
 
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
@@ -137,13 +165,14 @@ protected:
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
     virtual void onSizeChanged();
-    void clickScale(float scale);
+    void clickScale(float scaleX, float scaleY);
     void labelScaleChangedWithSize();
     virtual UIWidget* createCloneInstance();
     virtual void copySpecialProperties(UIWidget* model);
 protected:
     bool _touchScaleChangeEnabled;
-    float _normalScaleValue;
+    float _normalScaleValueX;
+    float _normalScaleValueY;
     std::string _fontName;
     int _fontSize;
     float _onSelectedScaleOffset;

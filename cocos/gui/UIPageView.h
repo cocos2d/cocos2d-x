@@ -101,6 +101,8 @@ public:
      */
     void removePageAtIndex(int index);
     
+    void removeAllPages();
+    
     /**
      * scroll pageview to index.
      *
@@ -117,15 +119,13 @@ public:
     
     cocos2d::Array* getPages();
     
+    UILayout* getPage(int index);
+    
     // event
     void addEventListenerPageView(cocos2d::Object *target, SEL_PageViewEvent selector);
 
     
-    //override "removeChild" method of widget.
-    virtual bool removeChild(UIWidget* widget);
-    
-    //override "removeAllChildrenAndCleanUp" method of widget.
-    virtual void removeAllChildren();
+
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
@@ -145,12 +145,32 @@ public:
     virtual void doLayout(){};
     
     /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    virtual void setLayoutType(LayoutType type){};
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    virtual LayoutType getLayoutType() const{return LAYOUT_ABSOLUTE;};
+    
+    /**
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
     
 protected:
     virtual bool addChild(UIWidget* widget);
+    virtual bool removeChild(UIWidget* widget);
+    virtual void removeAllChildren();
     virtual bool init();
     UILayout* createPage();
     float getPositionXByIndex(int idx);
