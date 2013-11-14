@@ -840,7 +840,7 @@ void UIWidget::checkChildInfo(int handleState, UIWidget *sender, const cocos2d::
 
 void UIWidget::setPosition(const cocos2d::Point &pos)
 {
-    if (_isRunning)
+    if (_isRunning && _widgetParent)
     {
         cocos2d::Size pSize = _widgetParent->getSize();
         if (pSize.width <= 0.0f || pSize.height <= 0.0f)
@@ -849,7 +849,7 @@ void UIWidget::setPosition(const cocos2d::Point &pos)
         }
         else
         {
-            _positionPercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(pos.x / _widgetParent->getSize().width, pos.y / _widgetParent->getSize().height);
+            _positionPercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(pos.x / pSize.width, pos.y / pSize.height);
         }
     }
     _renderer->setPosition(pos);
@@ -858,7 +858,7 @@ void UIWidget::setPosition(const cocos2d::Point &pos)
 void UIWidget::setPositionPercent(const cocos2d::Point &percent)
 {
     _positionPercent = percent;
-    if (_isRunning)
+    if (_isRunning && _widgetParent)
     {
         cocos2d::Size parentSize = _widgetParent->getSize();
         cocos2d::Point absPos = cocos2d::Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
