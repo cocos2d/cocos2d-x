@@ -48,7 +48,6 @@ bool UILayer::init()
     {
         _rootWidget = UIRootWidget::create();
         _rootWidget->retain();
-        _rootWidget->onEnter();
         addChild(_rootWidget->getRenderer());
         _inputManager = new UIInputManager();
         _inputManager->setRootWidget(_rootWidget);
@@ -85,10 +84,12 @@ void UILayer::onEnter()
     listener->onTouchCancelled = CC_CALLBACK_2(UILayer::onTouchCancelled, this);
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    _rootWidget->onEnter();
 }
 
 void UILayer::onExit()
 {
+    _rootWidget->onExit();
     CCLayer::onExit();
 }
 
