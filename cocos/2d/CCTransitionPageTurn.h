@@ -89,8 +89,8 @@ protected:
 
 protected:
     bool    _back;    
-    static float POLYGONOFFSETFACTOR;
-    static float POLYGONOFFSETUNITS;
+    static float POLYGON_OFFSET_FACTOR;
+    static float POLYGON_OFFSET_UNITS;
 };
 
 // end of transition group
