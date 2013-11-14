@@ -26,6 +26,7 @@ public:
 class LayerTestCascadingOpacityA : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerTestCascadingOpacityA);
     virtual void onEnter();
     virtual std::string title();
 };
@@ -33,6 +34,7 @@ public:
 class LayerTestCascadingOpacityB : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerTestCascadingOpacityB);
     virtual void onEnter();
     virtual std::string title();
 };
@@ -40,6 +42,7 @@ public:
 class LayerTestCascadingOpacityC : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerTestCascadingOpacityC);
     virtual void onEnter();
     virtual std::string title();
 };
@@ -47,6 +50,7 @@ public:
 class LayerTestCascadingColorA : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerTestCascadingColorA);
     virtual void onEnter();
     virtual std::string title();
 };
@@ -54,6 +58,7 @@ public:
 class LayerTestCascadingColorB : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerTestCascadingColorB);
     virtual void onEnter();
     virtual std::string title();
 };
@@ -61,6 +66,7 @@ public:
 class LayerTestCascadingColorC : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerTestCascadingColorC);
     virtual void onEnter();
     virtual std::string title();
 };
@@ -69,6 +75,8 @@ public:
 class LayerTest1 : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerTest1);
+
     virtual void onEnter();
     virtual std::string title();
 
@@ -82,6 +90,7 @@ public:
 class LayerTest2 : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerTest2);
     virtual void onEnter();
     virtual std::string title();
 };
@@ -90,6 +99,8 @@ public:
 class LayerTestBlend : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerTestBlend);
+
     LayerTestBlend();
     void newBlend(float dt);
     virtual std::string title();
@@ -98,6 +109,7 @@ public:
 class LayerGradientTest : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerGradientTest);
     LayerGradientTest();
     void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
     virtual std::string title();
@@ -108,6 +120,7 @@ public:
 class LayerGradientTest2 : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerGradientTest2);
     LayerGradientTest2();
     virtual std::string title();
     virtual std::string subtitle();
@@ -116,6 +129,7 @@ public:
 class LayerGradientTest3 : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerGradientTest3);
     LayerGradientTest3();
     virtual std::string title();
     virtual std::string subtitle();
@@ -124,6 +138,7 @@ public:
 class LayerIgnoreAnchorPointPos : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerIgnoreAnchorPointPos);
     virtual void onEnter();
     void onToggle(Object* pObject);
     virtual std::string title();
@@ -133,6 +148,7 @@ public:
 class LayerIgnoreAnchorPointRot : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerIgnoreAnchorPointRot);
     virtual void onEnter();
     void onToggle(Object* pObject);
     virtual std::string title();
@@ -142,6 +158,7 @@ public:
 class LayerIgnoreAnchorPointScale : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerIgnoreAnchorPointScale);
     virtual void onEnter();
     void onToggle(Object* pObject);
     virtual std::string title();
@@ -151,6 +168,7 @@ public:
 class LayerExtendedBlendOpacityTest : public LayerTest
 {
 public:
+    CREATE_FUNC(LayerExtendedBlendOpacityTest);
     LayerExtendedBlendOpacityTest();
     virtual std::string title();
     virtual std::string subtitle();

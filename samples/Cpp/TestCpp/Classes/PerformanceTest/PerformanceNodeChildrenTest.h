@@ -9,6 +9,7 @@ class NodeChildrenMenuLayer : public PerformBasicLayer
 public:
     CREATE_FUNC(NodeChildrenMenuLayer);
 
+    NodeChildrenMenuLayer();
     NodeChildrenMenuLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
     virtual void showCurrentTest();
     void dumpProfilerInfo(float dt);
@@ -21,8 +22,6 @@ public:
 class NodeChildrenMainScene : public Scene
 {
 public:
-    CREATE_FUNC(NodeChildrenMainScene);
-
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual std::string title();
     virtual std::string subtitle();
@@ -48,8 +47,6 @@ protected:
 class IterateSpriteSheet : public NodeChildrenMainScene
 {
 public:
-    CREATE_FUNC(IterateSpriteSheet);
-
     ~IterateSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
@@ -65,6 +62,7 @@ class IterateSpriteSheetForLoop : public IterateSpriteSheet
 public:
     CREATE_FUNC(IterateSpriteSheetForLoop);
 
+    IterateSpriteSheetForLoop() {}
     virtual void update(float dt);
 
     virtual std::string title();
@@ -77,6 +75,7 @@ class IterateSpriteSheetIterator : public IterateSpriteSheet
 public:
     CREATE_FUNC(IterateSpriteSheetIterator);
 
+    IterateSpriteSheetIterator() {}
     virtual void update(float dt);
 
     virtual std::string title();
@@ -99,8 +98,6 @@ public:
 class AddRemoveSpriteSheet : public NodeChildrenMainScene
 {
 public:
-    CREATE_FUNC(AddRemoveSpriteSheet);
-
     ~AddRemoveSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);

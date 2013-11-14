@@ -14,19 +14,19 @@ public:
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
-    
-    CREATE_FUNC(ShaderTestDemo2);
 };
 
 class ShaderTestScene2 : public TestScene
 {
 public:
+    CREATE_FUNC(ShaderTestScene2);
     virtual void runThisTest();
 };
 
 class NormalSpriteTest : public ShaderTestDemo2
 {
 public:
+    CREATE_FUNC(NormalSpriteTest);
     NormalSpriteTest();
     
     virtual std::string subtitle() {return "NormalSpriteTest";}
@@ -35,6 +35,7 @@ public:
 class GreyScaleSpriteTest : public ShaderTestDemo2
 {
 public:
+    CREATE_FUNC(GreyScaleSpriteTest);
     GreyScaleSpriteTest();
     
     virtual std::string subtitle() {return "GreyScaleSpriteTest";}
@@ -43,6 +44,7 @@ public:
 class BlurSpriteTest : public ShaderTestDemo2
 {
 public:
+    CREATE_FUNC(BlurSpriteTest);
     BlurSpriteTest();
     
     virtual std::string subtitle() {return "BlurSpriteTest";}
@@ -51,6 +53,7 @@ public:
 class NoiseSpriteTest : public ShaderTestDemo2
 {
 public:
+    CREATE_FUNC(NoiseSpriteTest);
     NoiseSpriteTest();
     virtual std::string subtitle() {return "NoiseSpriteTest";}
 };
@@ -58,6 +61,8 @@ public:
 class EdgeDetectionSpriteTest : public ShaderTestDemo2
 {
 public:
+    CREATE_FUNC(EdgeDetectionSpriteTest);
+
     EdgeDetectionSpriteTest();
     virtual std::string subtitle() {return "EdgeDetectionSpriteTest";}
 };
@@ -65,6 +70,8 @@ public:
 class BloomSpriteTest : public ShaderTestDemo2
 {
 public:
+    CREATE_FUNC(BloomSpriteTest);
+
     BloomSpriteTest();
     virtual std::string subtitle() {return "BloomSpriteTest";}
 };
@@ -72,6 +79,8 @@ public:
 class LensFlareSpriteTest : public ShaderTestDemo2
 {
 public:
+    CREATE_FUNC(LensFlareSpriteTest);
+
     LensFlareSpriteTest();
     virtual std::string subtitle() {return "LensFlareSpriteTest";}
 };
@@ -79,6 +88,8 @@ public:
 class CelShadingSpriteTest : public ShaderTestDemo2
 {
 public:
+    CREATE_FUNC(CelShadingSpriteTest);
+
     CelShadingSpriteTest();
     virtual std::string subtitle() {return "CelShadingSpriteTest";}
 };

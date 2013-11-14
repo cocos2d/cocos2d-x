@@ -28,13 +28,7 @@ unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[
 int sceneIdx=-1;
 Layer* createTest(int index)
 {
-    auto layer = (createFunctions[index])();;
-    
-    if (layer)
-    {
-        layer->autorelease();
-    }
-    
+    auto layer = (createFunctions[index])();;    
     return layer;
 }
 
