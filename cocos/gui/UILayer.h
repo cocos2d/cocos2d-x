@@ -53,11 +53,11 @@ public:
     static UILayer *create(void);
     
     //initializes state of uilayer.
-    virtual bool init();
+    virtual bool init() override;
     
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void onEnterTransitionDidFinish();
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void onEnterTransitionDidFinish() override;
     
     virtual bool onTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
     virtual void onTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
@@ -87,7 +87,7 @@ public:
      *
      * @param visible   true if the UILayer is visible, false if the UILayer is hidden.
      */
-    virtual void setVisible(bool visible);
+    virtual void setVisible(bool visible) override;
     
     /**
      * Finds a widget whose tag is equal tag param from widget tree.

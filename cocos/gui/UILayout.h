@@ -68,7 +68,7 @@ public:
     static UILayout* create();
     
     //override "hitTest" method of widget.
-    virtual bool hitTest(const cocos2d::Point &pt);
+    virtual bool hitTest(const cocos2d::Point &pt) override;
     
     //background
     /**
@@ -133,10 +133,10 @@ public:
     void setBackGroundColorVector(const cocos2d::Point &vector);
     
     //override "setColor" method of widget.
-    virtual void setColor(const cocos2d::Color3B &color);
+    virtual void setColor(const cocos2d::Color3B &color) override;
     
     //override "setOpacity" method of widget.
-    virtual void setOpacity(int opacity);
+    virtual void setOpacity(int opacity) override;
     
     /**
      * Remove the background image of layout.
@@ -157,7 +157,7 @@ public:
      *
      * @param clipping enabled.
      */
-    virtual void setClippingEnabled(bool able);
+    virtual void setClippingEnabled(bool enabled);
     
     /**
      * Gets if layout is clipping enabled.
@@ -171,12 +171,12 @@ public:
      *
      * Content size is widget's texture size.
      */
-    virtual const cocos2d::Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
     
     /**
      * Sets LayoutType.
@@ -203,25 +203,25 @@ public:
      *
      * @param child A child widget
      */
-    virtual bool addChild(UIWidget* child);
+    virtual bool addChild(UIWidget* child) override;
     
 protected:
     //override "init" method of widget.
-    virtual bool init();
+    virtual bool init() override;
     
     //override "initRenderer" method of widget.
-    virtual void initRenderer();
+    virtual void initRenderer() override;
     
     //override "onSizeChanged" method of widget.
-    virtual void onSizeChanged();
+    virtual void onSizeChanged() override;
     
     //init background image renderer.
     void addBackGroundImage();
     
     void supplyTheLayoutParameterLackToChild(UIWidget* child);
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
-    virtual void copyClonedWidgetChildren(UIWidget* model);
+    virtual UIWidget* createCloneInstance() override;
+    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual void copyClonedWidgetChildren(UIWidget* model) override;
 protected:
     bool _clippingEnabled;
     
