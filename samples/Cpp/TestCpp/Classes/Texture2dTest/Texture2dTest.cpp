@@ -85,12 +85,6 @@ static int sceneIdx=-1;
 Layer* createTextureTest(int index)
 {
     auto layer = (createFunctions[index])();;
-
-    if (layer)
-    {
-        layer->autorelease();
-    }
-
     return layer;
 }
 
@@ -145,26 +139,23 @@ TextureDemo::~TextureDemo()
 
 void TextureDemo::restartCallback(Object* sender)
 {
-    auto s = new TextureTestScene();
+    auto s = TextureTestScene::create();
     s->addChild(restartTextureTest());
     Director::getInstance()->replaceScene(s);
-    s->autorelease();
 }
 
 void TextureDemo::nextCallback(Object* sender)
 {
-    auto s = new TextureTestScene();
+    auto s = TextureTestScene::create();
     s->addChild(nextTextureTest());
     Director::getInstance()->replaceScene(s);
-    s->autorelease();
 }
 
 void TextureDemo::backCallback(Object* sender)
 {
-    auto s = new TextureTestScene();
+    auto s = TextureTestScene::create();
     s->addChild(backTextureTest());
     Director::getInstance()->replaceScene(s);
-    s->autorelease();
 }
 
 std::string TextureDemo::title()
