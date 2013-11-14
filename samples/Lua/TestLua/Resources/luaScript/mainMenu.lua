@@ -4,6 +4,7 @@ require "Cocos2d"
 require "Cocos2dConstants"
 require "Opengl"
 require "OpenglConstants"
+require "StudioConstants"
 require "luaScript/helper"
 require "luaScript/testResource"
 require "luaScript/VisibleRect"
@@ -17,6 +18,7 @@ require "luaScript/AssetsManagerTest/AssetsManagerTest"
 require "luaScript/BugsTest/BugsTest"
 require "luaScript/ClickAndMoveTest/ClickAndMoveTest"
 require "luaScript/CocosDenshionTest/CocosDenshionTest"
+require "luaScript/CocoStudioTest/CocoStudioTest"
 require "luaScript/CurrentLanguageTest/CurrentLanguageTest"
 require "luaScript/DrawPrimitivesTest/DrawPrimitivesTest"
 require "luaScript/EffectsTest/EffectsTest"
@@ -67,6 +69,7 @@ local _allTests = {
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
+    { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },  
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },

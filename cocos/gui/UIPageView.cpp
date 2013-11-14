@@ -28,13 +28,13 @@ namespace gui {
 
 UIPageView::UIPageView():
 _curPageIdx(0),
-_pages(NULL),
+_pages(nullptr),
 _touchMoveDir(PAGEVIEW_TOUCHLEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
 _movePagePoint(cocos2d::Point::ZERO),
-_leftChild(NULL),
-_rightChild(NULL),
+_leftChild(nullptr),
+_rightChild(nullptr),
 _leftBoundary(0.0f),
 _rightBoundary(0.0f),
 _isAutoScrolling(false),
@@ -42,8 +42,8 @@ _autoScrollDistance(0.0f),
 _autoScrollSpeed(0.0f),
 _autoScrollDir(0),
 _childFocusCancelOffset(5.0f),
-_pageViewEventListener(NULL),
-_pageViewEventSelector(NULL)
+_pageViewEventListener(nullptr),
+_pageViewEventSelector(nullptr)
 {
 }
 
@@ -51,8 +51,8 @@ UIPageView::~UIPageView()
 {
     _pages->removeAllObjects();
     CC_SAFE_RELEASE(_pages);
-    _pageViewEventListener = NULL;
-    _pageViewEventSelector = NULL;
+    _pageViewEventListener = nullptr;
+    _pageViewEventSelector = nullptr;
 }
 
 UIPageView* UIPageView::create()
@@ -64,7 +64,7 @@ UIPageView* UIPageView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UIPageView::init()
@@ -219,13 +219,18 @@ void UIPageView::removePageAtIndex(int index)
         removePage(page);
     }
 }
+    
+void UIPageView::removeAllPages()
+{
+    removeAllChildren();
+}
 
 void UIPageView::updateBoundaryPages()
 {
     if (_pages->count() <= 0)
     {
-        _leftChild = NULL;
-        _rightChild = NULL;
+        _leftChild = nullptr;
+        _rightChild = nullptr;
         return;
     }
     _leftChild = dynamic_cast<UIWidget*>(_pages->getObjectAtIndex(0));
@@ -247,9 +252,8 @@ bool UIPageView::removeChild(UIWidget* widget)
     if (_pages->containsObject(widget))
     {
         _pages->removeObject(widget);
-        return UILayout::removeChild(widget);
     }
-    return false;
+    return UILayout::removeChild(widget);
 }
 
 void UIPageView::onSizeChanged()
@@ -585,6 +589,15 @@ int UIPageView::getCurPageIndex() const
 cocos2d::Array* UIPageView::getPages()
 {
     return _pages;
+}
+    
+UILayout* UIPageView::getPage(int index)
+{
+    if (index < 0 || index >= (int)(_pages->count()))
+    {
+        return nullptr;
+    }
+    return (UILayout*)_pages->getObjectAtIndex(index);
 }
 
 const char* UIPageView::getDescription() const

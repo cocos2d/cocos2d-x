@@ -50,7 +50,7 @@ namespace cocostudio {
     {
     public:
         JsonDictionary();
-        ~JsonDictionary();
+        virtual ~JsonDictionary();
 
     public:
         void    initWithDescription(const char *pszDescription);
