@@ -39,7 +39,8 @@ void SceneController::onEnter()
     _projectiles->retain();
    
     ((ComAudio*)(_owner->getComponent("Audio")))->playBackgroundMusic("background-music-aac.wav", true);
-    ((ComAttribute*)(_owner->getComponent("ComAttribute")))->getDict()->insertItem("KillCount", 0);
+    ((ComAttribute*)(_owner->getComponent("ComAttribute")))->setInt("KillCount", 0);
+
 }
 
 void SceneController::onExit()
@@ -102,10 +103,10 @@ void SceneController::spriteMoveFinished(Node* sender)
 
 void SceneController::increaseKillCount()
 {
-    int nProjectilesDestroyed = ((ComAttribute*)(_owner->getComponent("ComAttribute")))->getDict()->getItemIntValue("KillCount", -1);
+    int nProjectilesDestroyed = ((ComAttribute*)(_owner->getComponent("ComAttribute")))->getInt("KillCount");
     
     ComAttribute *p = (ComAttribute*)(_owner->getComponent("ComAttribute"));
-    p->getDict()->insertItem("KillCount", ++nProjectilesDestroyed);
+    p->setInt("KillCount", ++nProjectilesDestroyed);
 
     if (nProjectilesDestroyed >= 5)
     {

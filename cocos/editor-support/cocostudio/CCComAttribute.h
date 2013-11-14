@@ -47,6 +47,17 @@ protected:
 public:
    virtual bool init();
    static ComAttribute* create(void);
+   
+   void setInt(const char *key, int value);
+   void setFloat(const char *key, float value);
+   void setBool(const char *key, bool value);
+   void setCString(const char *key, const char *value);
+   
+   int    getInt(const char *key) const;
+   float  getFloat(const char *key) const;
+   bool   getBool(const char *key) const;
+   const char* getCString(const char *key) const;
+   
    JsonDictionary* getDict() const;
    
 private:
