@@ -86,6 +86,8 @@ public:
     void removeDisplay(int index);
 
     void changeDisplayByIndex(int index, bool force);
+    void changeDisplayByName(const char *name, bool force);
+
 
     /**
      * Add a child to this bone, and it will let this child call setParent(CCBone *parent) function to set self to it's parent

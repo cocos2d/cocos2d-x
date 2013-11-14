@@ -85,6 +85,8 @@ public:
      */
     void changeDisplayByIndex(int index, bool force);
 
+    void changeDisplayByName(const char *name, bool force);
+
 
     CCNode *getDisplayRenderNode();
     DisplayType getDisplayRenderNodeType();
