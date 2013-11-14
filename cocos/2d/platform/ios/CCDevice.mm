@@ -37,8 +37,10 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 
 - (id) init
 {
-    _acceleration = new cocos2d::Acceleration();
-    _motionManager = [[CMMotionManager alloc] init];
+    if( (self = [super init]) ) {
+        _acceleration = new cocos2d::Acceleration();
+        _motionManager = [[CMMotionManager alloc] init];
+    }
     return self;
 }
 

@@ -82,22 +82,22 @@ bool nodeComparisonLess(Object* p1, Object* p2);
 
 class EventListener;
 
-/** @brief Node is the main element. Anything that gets drawn or contains things that get drawn is a Node.
- The most popular Nodes are: Scene, Layer, Sprite, Menu.
+/** @brief Node is the base element of the Scene Graph. Element of the Scene Graph must be Node objects or subclasses of it.
+ The most common Node objects are: Scene, Layer, Sprite, Menu.
 
  The main features of a Node are:
- - They can contain other Node nodes (addChild, getChildByTag, removeChild, etc)
- - They can schedule periodic callback (schedule, unschedule, etc)
- - They can execute actions (runAction, stopAction, etc)
+ - They can contain other Node objects (`addChild`, `getChildByTag`, `removeChild`, etc)
+ - They can schedule periodic callback (`schedule`, `unschedule`, etc)
+ - They can execute actions (`runAction`, `stopAction`, etc)
 
- Some Node nodes provide extra functionality for them or their children.
+ Some Node objects provide extra functionality for them or their children.
 
  Subclassing a Node usually means (one/all) of:
  - overriding init to initialize resources and schedule callbacks
  - create callbacks to handle the advancement of time
  - overriding draw to render the node
 
- Features of Node:
+ Properties of Node:
  - position
  - scale (x, y)
  - rotation (in degrees, clockwise)
@@ -117,7 +117,7 @@ class EventListener;
  - anchorPoint: (x=0,y=0)
 
  Limitations:
- - A Node is a "void" object. It doesn't have a texture
+ - A Node is a "invisible" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
 
  Order in transformations with grid disabled
  -# The node will be translated (position)
@@ -189,15 +189,15 @@ public:
     /**
      * Sets the Z order which stands for the drawing order, and reorder this node in its parent's children array.
      *
-     * The Z order of node is relative to its "brothers": children of the same parent.
-     * It's nothing to do with OpenGL's z vertex. This one only affects the draw order of nodes in cocos2d.
-     * The larger number it is, the later this node will be drawn in each message loop.
-     * Please refer to setVertexZ(float) for the difference.
+     * The Z order of node is relative to its siblings.
+     * It is not related to the OpenGL's z property. This one only affects the draw order of itself and its siblings.
+     * Lower Z order number are drawn before higher numbers.
+     * Please refer to `setVertexZ(float)` for the difference.
      *
      * @param zOrder   Z order of this node.
      */
     virtual void setZOrder(int zOrder);
-    /**
+    /*
      * Sets the z order which stands for the drawing order
      *
      * This is an internal method. Don't call it outside the framework.
@@ -209,7 +209,7 @@ public:
     /**
      * Gets the Z order of this node.
      *
-     * @see setZOrder(int)
+     * @see `setZOrder(int)`
      *
      * @return The Z order.
      */
@@ -221,7 +221,7 @@ public:
      * Differences between openGL Z vertex and cocos2d Z order:
      * - OpenGL Z modifies the Z vertex, and not the Z order in the relation between parent-children
      * - OpenGL Z might require to set 2D projection
-     * - cocos2d Z order works OK if all the nodes uses the same openGL Z vertex. eg: vertexZ = 0
+     * - cocos2d Z order works OK if all the nodes uses the same openGL Z vertex. eg: `vertexZ = 0`
      *
      * @warning Use it at your own risk since it might break the cocos2d parent-children z order
      *
@@ -267,7 +267,7 @@ public:
     /**
      * Returns the scale factor on Y axis of this node
      *
-     * @see setScaleY(float)
+     * @see `setScaleY(float)`
      *
      * @return The scale factor on Y axis. 
      */
@@ -285,7 +285,7 @@ public:
     /**
      * Gets the scale factor of the node,  when X and Y have the same scale factor.
      *
-     * @warning Assert when _scaleX != _scaleY.
+     * @warning Assert when `_scaleX != _scaleY`
      * @see setScale(float)
      *
      * @return The scale factor of the node.
@@ -305,13 +305,13 @@ public:
     /**
      * Changes the position (x,y) of the node in OpenGL coordinates
      *
-     * Usually we use Point(x,y) to compose Point object.
+     * Usually we use `Point(x,y)` to compose Point object.
      * The original point (0,0) is at the left-bottom corner of screen.
      * For example, this codesnip sets the node in the center of screen.
-     * @code
-     * Size size = Director::getInstance()->getWinSize();
-     * node->setPosition( Point(size.width/2, size.height/2) )
-     * @endcode
+     @code
+     Size size = Director::getInstance()->getWinSize();
+     node->setPosition( Point(size.width/2, size.height/2) )
+     @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
      */
@@ -334,11 +334,11 @@ public:
      * This method is binded to lua and javascript. 
      * Passing a number is 10 times faster than passing a object from lua to c++
      *
-     * @code
-     * // sample code in lua
-     * local pos  = node::getPosition()  -- returns Point object from C++
-     * node:setPosition(x, y)            -- pass x, y coordinate to C++
-     * @endcode
+     @code
+     // sample code in lua
+     local pos  = node::getPosition()  -- returns Point object from C++
+     node:setPosition(x, y)            -- pass x, y coordinate to C++
+     @endcode
      *
      * @param x     X coordinate for position
      * @param y     Y coordinate for position
@@ -347,10 +347,8 @@ public:
     /**
      * Gets position in a more efficient way, returns two number instead of a Point object
      *
-     * @see setPosition(float, float)
-     * @code
+     * @see `setPosition(float, float)`
      * In js,out value not return
-     * @endcode
      */
     virtual void getPosition(float* x, float* y) const;
     /**
@@ -376,7 +374,7 @@ public:
     /**
      * Returns the X skew angle of the node in degrees.
      *
-     * @see setSkewX(float)
+     * @see `setSkewX(float)`
      *
      * @return The X skew angle of the node in degrees.
      */
@@ -396,7 +394,7 @@ public:
     /**
      * Returns the Y skew angle of the node in degrees.
      *
-     * @see setSkewY(float)
+     * @see `setSkewY(float)`
      *
      * @return The Y skew angle of the node in degrees.
      */
@@ -418,7 +416,7 @@ public:
     /** 
      * Returns the anchor point in percent.
      *
-     * @see setAnchorPoint(const Point&)
+     * @see `setAnchorPoint(const Point&)`
      *
      * @return The anchor point of node.
      */
@@ -427,7 +425,7 @@ public:
      * Returns the anchorPoint in absolute pixels.
      * 
      * @warning You can only read it. If you wish to modify it, use anchorPoint instead.
-     * @see getAnchorPoint()
+     * @see `getAnchorPoint()`
      *
      * @return The anchor point in absolute pixels.
      */
@@ -446,7 +444,7 @@ public:
     /**
      * Returns the untransformed size of the node.
      *
-     * @see setContentSize(const Size&)
+     * @see `setContentSize(const Size&)`
      *
      * @return The untransformed size of the node.
      */
@@ -464,7 +462,7 @@ public:
     /**
      * Determines if the node is visible
      *
-     * @see setVisible(bool)
+     * @see `setVisible(bool)`
      *
      * @return true if the node is visible, false if the node is hidden.
      */
@@ -483,7 +481,7 @@ public:
     /**
      * Returns the rotation of the node in degrees.
      *
-     * @see setRotation(float)
+     * @see `setRotation(float)`
      *
      * @return The rotation of the node in degrees.
      */
@@ -502,7 +500,7 @@ public:
     /**
      * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
      *
-     * @see setRotationX(float)
+     * @see `setRotationX(float)`
      *
      * @return The X rotation in degrees.
      */
@@ -521,7 +519,7 @@ public:
     /**
      * Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
      *
-     * @see setRotationY(float)
+     * @see `setRotationY(float)`
      *
      * @return The Y rotation in degrees.
      */
@@ -542,7 +540,7 @@ public:
     /**
      * Returns the arrival order, indecates which children is added previously.
      *
-     * @see setOrderOfArrival(unsigned int)
+     * @see `setOrderOfArrival(unsigned int)`
      *
      * @return The arrival order.
      */
@@ -573,7 +571,7 @@ public:
     /**
      * Gets whether the anchor point will be (0,0) when you position this node.
      *
-     * @see ignoreAnchorPointForPosition(bool)
+     * @see `ignoreAnchorPointForPosition(bool)`
      *
      * @return true if the anchor point will be (0,0) when you position this node.
      */
@@ -625,13 +623,13 @@ public:
      *
      * Composing a "tree" structure is a very important feature of Node
      * Here's a sample code of traversing children array:
-     * @code
-     * Node* node = NULL;
-     * CCARRAY_FOREACH(parent->getChildren(), node)
-     * {
-     *     node->setPosition(0,0);
-     * }
-     * @endcode
+     @code
+     Node* node = NULL;
+     CCARRAY_FOREACH(parent->getChildren(), node)
+     {
+        node->setPosition(0,0);
+     }
+     @endcode
      * This sample code traverses all children nodes, and set their position to (0,0)
      *
      * @return An array of children
@@ -655,7 +653,7 @@ public:
     /**
      * Returns a pointer to the parent node
      * 
-     * @see setParent(Node*)
+     * @see `setParent(Node*)`
      *
      * @returns A pointer to the parnet node
      */
@@ -668,7 +666,7 @@ public:
     /** 
      * Removes this node itself from its parent node with a cleanup.
      * If the node orphan, then nothing happens.
-     * @see removeFromParentAndCleanup(bool)
+     * @see `removeFromParentAndCleanup(bool)`
      */
     virtual void removeFromParent();
     /** 
@@ -698,7 +696,7 @@ public:
     /** 
      * Removes all children from the container with a cleanup.
      *
-     * @see removeAllChildrenWithCleanup(bool)
+     * @see `removeAllChildrenWithCleanup(bool)`
      */
     virtual void removeAllChildren();
     /** 
@@ -761,32 +759,32 @@ public:
      * Returns a tag that is used to identify the node easily.
      *
      * You can set tags to node then identify them easily.
-     * @code
-     * #define TAG_PLAYER  1
-     * #define TAG_MONSTER 2
-     * #define TAG_BOSS    3
-     * // set tags
-     * node1->setTag(TAG_PLAYER);
-     * node2->setTag(TAG_MONSTER);
-     * node3->setTag(TAG_BOSS);
-     * parent->addChild(node1);
-     * parent->addChild(node2);
-     * parent->addChild(node3);
-     * // identify by tags
-     * Node* node = NULL;
-     * CCARRAY_FOREACH(parent->getChildren(), node)
-     * {
-     *     switch(node->getTag())
-     *     {
-     *         case TAG_PLAYER:
-     *             break;
-     *         case TAG_MONSTER:
-     *             break;
-     *         case TAG_BOSS:
-     *             break;
-     *     }
-     * }
-     * @endcode
+     @code
+     #define TAG_PLAYER  1
+     #define TAG_MONSTER 2
+     #define TAG_BOSS    3
+     // set tags
+     node1->setTag(TAG_PLAYER);
+     node2->setTag(TAG_MONSTER);
+     node3->setTag(TAG_BOSS);
+     parent->addChild(node1);
+     parent->addChild(node2);
+     parent->addChild(node3);
+     // identify by tags
+     Node* node = NULL;
+     CCARRAY_FOREACH(parent->getChildren(), node)
+     {
+         switch(node->getTag())
+         {
+             case TAG_PLAYER:
+                 break;
+             case TAG_MONSTER:
+                 break;
+             case TAG_BOSS:
+                 break;
+         }
+     }
+     @endcode
      *
      * @return A interger that identifies the node.
      */
@@ -820,7 +818,7 @@ public:
      * Sets a custom user data pointer
      *
      * You can set everything in UserData pointer, a data block, a structure or an object, etc.
-     * @warning Don't forget to release the memroy manually, 
+     * @warning Don't forget to release the memory manually, 
      *          especially before you change this data pointer, and before this node is autoreleased.
      *
      * @param userData  A custom user data pointer
@@ -875,9 +873,9 @@ public:
      *
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
-     * @code
-     * node->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-     * @endcode
+     @code
+     node->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+     @endcode
      * 
      * @param shaderProgram The shader program which fetchs from ShaderCache.
      */
@@ -888,11 +886,11 @@ public:
     /**
      * Returns a camera object that lets you move the node using a gluLookAt
      *
-     * @code
-     * Camera* camera = node->getCamera();
-     * camera->setEye(0, 0, 415/2);
-     * camera->setCenter(0, 0, 0);
-     * @endcode
+     @code
+     Camera* camera = node->getCamera();
+     camera->setEye(0, 0, 415/2);
+     camera->setCenter(0, 0, 0);
+     @endcode
      *
      * @return A Camera object that lets you move the node using a gluLookAt
      */
@@ -966,10 +964,10 @@ public:
     /** 
      * Override this method to draw your own node.
      * The following GL states will be enabled by default:
-     * - glEnableClientState(GL_VERTEX_ARRAY);
-     * - glEnableClientState(GL_COLOR_ARRAY);
-     * - glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-     * - glEnable(GL_TEXTURE_2D);
+     * - `glEnableClientState(GL_VERTEX_ARRAY);`
+     * - `glEnableClientState(GL_COLOR_ARRAY);`
+     * - `glEnableClientState(GL_TEXTURE_COORD_ARRAY);`
+     * - `glEnable(GL_TEXTURE_2D);`
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
@@ -986,7 +984,7 @@ public:
      * The returned box is relative only to its parent.
      *
      * @note This method returns a temporaty variable, so it can't returns const Rect&
-     * @todo Rename to getBoundingBox() in the future versions.
+     * @todo Rename to `getBoundingBox()` in the future versions.
      * 
      * @return A "local" axis aligned boudning box of the node.
      */
@@ -1049,7 +1047,7 @@ public:
     /** 
      * Gets an action from the running action list by its tag.
      *
-     * @see setTag(int), getTag().
+     * @see `setTag(int)`, `getTag()`.
      *
      * @return The action object with the given tag.
      */
@@ -1135,12 +1133,12 @@ public:
      * Schedules a custom selector.
      *
      * If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
-     * @code
-     * // firstly, implement a schedule function
-     * void MyNode::TickMe(float dt);
-     * // wrap this function into a selector via schedule_selector marco.
-     * this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
-     * @endcode
+     @code
+     // firstly, implement a schedule function
+     void MyNode::TickMe(float dt);
+     // wrap this function into a selector via schedule_selector marco.
+     this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
+     @endcode
      *
      * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
@@ -1152,7 +1150,7 @@ public:
     
     /**
      * Schedules a custom selector with an interval time in seconds.
-     * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
+     * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
      * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param interval      Callback interval time in seconds. 0 means tick every frame,
@@ -1162,7 +1160,7 @@ public:
     
     /**
      * Schedules a selector that runs only once, with a delay of 0 or larger
-     * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
+     * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
      * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param delay         The amount of time that the first tick will wait before execution.
@@ -1181,7 +1179,7 @@ public:
     
     /** 
      * Unschedules a custom selector.
-     * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
+     * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
      * @param selector      A function wrapped as a selector
      * @lua NA
@@ -1242,7 +1240,7 @@ public:
      *
      * This method is moved from Sprite, so it's no longer specific to Sprite.
      * As the result, you apply SpriteBatchNode's optimization on your customed Node.
-     * e.g., batchNode->addChild(myCustomNode), while you can only addChild(sprite) before.
+     * e.g., `batchNode->addChild(myCustomNode)`, while you can only addChild(sprite) before.
      */
     virtual void updateTransform();
     
@@ -1323,48 +1321,48 @@ public:
      *
      *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
-     *  @code
-        // create a batchNode
-        SpriteBatchNode* batch= SpriteBatchNode::create("Icon-114.png");
-        this->addChild(batch);
-     
-        // create two sprites, spriteA will be added to batchNode, they are using different textures.
-        Sprite* spriteA = Sprite::createWithTexture(batch->getTexture());
-        Sprite* spriteB = Sprite::create("Icon-72.png");
+     @code
+     // create a batchNode
+     SpriteBatchNode* batch= SpriteBatchNode::create("Icon-114.png");
+     this->addChild(batch);
 
-        batch->addChild(spriteA); 
-     
-        // We can't make spriteB as spriteA's child since they use different textures. So just add it to layer.
-        // But we want to simulate `parent-child` relationship for these two node.
-        this->addChild(spriteB); 
+     // create two sprites, spriteA will be added to batchNode, they are using different textures.
+     Sprite* spriteA = Sprite::createWithTexture(batch->getTexture());
+     Sprite* spriteB = Sprite::create("Icon-72.png");
 
-        //position
-        spriteA->setPosition(Point(200, 200));
-     
-        // Gets the spriteA's transform.
-        AffineTransform t = spriteA->getNodeToParentTransform();
-     
-        // Sets the additional transform to spriteB, spriteB's postion will based on its pseudo parent i.e. spriteA.
-        spriteB->setAdditionalTransform(t);
+     batch->addChild(spriteA);
 
-        //scale
-        spriteA->setScale(2);
-     
-        // Gets the spriteA's transform.
-        t = spriteA->getNodeToParentTransform();
-     
-        // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
-        spriteB->setAdditionalTransform(t);
+     // We can't make spriteB as spriteA's child since they use different textures. So just add it to layer.
+     // But we want to simulate `parent-child` relationship for these two node.
+     this->addChild(spriteB);
 
-        //rotation
-        spriteA->setRotation(20);
-     
-        // Gets the spriteA's transform.
-        t = spriteA->getNodeToParentTransform();
-     
-        // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
-        spriteB->setAdditionalTransform(t);
-     *  @endcode
+     //position
+     spriteA->setPosition(Point(200, 200));
+
+     // Gets the spriteA's transform.
+     AffineTransform t = spriteA->getNodeToParentTransform();
+
+     // Sets the additional transform to spriteB, spriteB's postion will based on its pseudo parent i.e. spriteA.
+     spriteB->setAdditionalTransform(t);
+
+     //scale
+     spriteA->setScale(2);
+
+     // Gets the spriteA's transform.
+     t = spriteA->getNodeToParentTransform();
+
+     // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
+     spriteB->setAdditionalTransform(t);
+
+     //rotation
+     spriteA->setRotation(20);
+
+     // Gets the spriteA's transform.
+     t = spriteA->getNodeToParentTransform();
+
+     // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
+     spriteB->setAdditionalTransform(t);
+     @endcode
      */
     void setAdditionalTransform(const AffineTransform& additionalTransform);
     

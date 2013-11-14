@@ -480,7 +480,7 @@ bool UserDefault::createXMLFile()
     {  
         return false;  
     }  
-	tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration("1.0");  
+	tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration(nullptr);  
 	if (NULL==pDeclaration)  
 	{  
 		return false;  

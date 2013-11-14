@@ -136,10 +136,8 @@ public:
 
     /**
      * Play the action.
-     *
-     * @param bloop   true the
      */
-	virtual void playAction(bool bloop);
+	virtual void playAction();
     
     /**
      * Stop the action.
@@ -148,6 +146,13 @@ public:
 	
     /*init properties with a json dictionary*/
     virtual void initWithDictionary(JsonDictionary* dic,cocos2d::Object* root);
+
+    /**
+     * Gets if the action is done once time.
+     *
+	 * @return   that if the action is done once time
+     */
+	virtual bool isActionDoneOnce();
 protected:
 	int _currentFrameIndex;
 	int _destFrameIndex;

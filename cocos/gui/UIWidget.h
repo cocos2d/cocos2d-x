@@ -881,6 +881,8 @@ public:
     virtual void onEnter();
     virtual void onExit();
     
+    void updateSizeAndPosition();
+    
     virtual Object* getUserObject() { return _userObject; }
     /**
      * @js NA
@@ -926,7 +928,6 @@ protected:
     void cancelUpEvent();
     void longClickEvent();
     void updateAnchorPoint();
-    void updateSizeAndPosition();
     void copyProperties(UIWidget* model);
     virtual UIWidget* createCloneInstance();
     virtual void copySpecialProperties(UIWidget* model);

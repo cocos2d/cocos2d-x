@@ -342,11 +342,11 @@ void UIWidget::setSize(const cocos2d::Size &size)
 void UIWidget::setSizePercent(const cocos2d::Point &percent)
 {
     _sizePercent = percent;
-    if (!_isRunning)
+    cocos2d::Size cSize = _customSize;
+    if (_isRunning)
     {
-        return;
+        cSize = (_widgetParent == NULL) ? cocos2d::Size::ZERO : cocos2d::Size(_widgetParent->getSize().width * percent.x , _widgetParent->getSize().height * percent.y);
     }
-    cocos2d::Size cSize = (_widgetParent == NULL) ? cocos2d::Size::ZERO : cocos2d::Size(_widgetParent->getSize().width * percent.x , _widgetParent->getSize().height * percent.y);
     if (_ignoreSize)
     {
         _size = getContentSize();
@@ -1115,6 +1115,10 @@ WidgetType UIWidget::getWidgetType() const
 
 void UIWidget::setLayoutParameter(UILayoutParameter *parameter)
 {
+    if (!parameter)
+    {
+        return;
+    }
     _layoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
 }
 

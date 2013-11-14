@@ -10,7 +10,7 @@ extern "C" {
 
 using namespace cocos2d;
 
-extern std::map<int, std::string>  g_luaType;
+extern std::map<long, std::string>  g_luaType;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err);
