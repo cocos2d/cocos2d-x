@@ -27,7 +27,7 @@
 namespace gui {
     
 UILabelBMFont::UILabelBMFont():
-_labelBMFontRenderer(NULL),
+_labelBMFontRenderer(nullptr),
 _fntFileHasInit(false),
 _fntFileName(""),
 _stringValue("")
@@ -48,7 +48,7 @@ UILabelBMFont* UILabelBMFont::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 void UILabelBMFont::initRenderer()
