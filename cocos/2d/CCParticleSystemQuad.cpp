@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "TransformUtils.h"
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
+#include "CCConfiguration.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -57,11 +58,14 @@ bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
         }
 
         initIndices();
-#if CC_TEXTURE_ATLAS_USE_VAO
-        setupVBOandVAO();
-#else
-        setupVBO();
-#endif
+        if (Configuration::getInstance()->supportsShareableVAO())
+        {
+            setupVBOandVAO();
+        }
+        else
+        {
+            setupVBO();
+        }
 
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
         
@@ -81,9 +85,7 @@ bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
 ParticleSystemQuad::ParticleSystemQuad()
 :_quads(NULL)
 ,_indices(NULL)
-#if CC_TEXTURE_ATLAS_USE_VAO
 ,_VAOname(0)
-#endif
 {
     memset(_buffersVBO, 0, sizeof(_buffersVBO));
 }
@@ -95,10 +97,11 @@ ParticleSystemQuad::~ParticleSystemQuad()
         CC_SAFE_FREE(_quads);
         CC_SAFE_FREE(_indices);
         glDeleteBuffers(2, &_buffersVBO[0]);
-#if CC_TEXTURE_ATLAS_USE_VAO
-        glDeleteVertexArrays(1, &_VAOname);
-        GL::bindVAO(0);
-#endif
+        if (Configuration::getInstance()->supportsShareableVAO())
+        {
+            glDeleteVertexArrays(1, &_VAOname);
+            GL::bindVAO(0);
+        }
     }
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -355,47 +358,48 @@ void ParticleSystemQuad::draw()
 
     CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
 
-#if CC_TEXTURE_ATLAS_USE_VAO
-    //
-    // Using VBO and VAO
-    //
-    GL::bindVAO(_VAOname);
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        //
+        // Using VBO and VAO
+        //
+        GL::bindVAO(_VAOname);
 
 #if CC_REBIND_INDICES_BUFFER
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 #endif
 
-    glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
 
 #if CC_REBIND_INDICES_BUFFER
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif
+    }
+    else
+    {
+        //
+        // Using VBO without VAO
+        //
 
-#else
-    //
-    // Using VBO without VAO
-    //
+        #define kQuadSize sizeof(_quads[0].bl)
 
-    #define kQuadSize sizeof(_quads[0].bl)
+        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+        // vertices
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
+        // colors
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
+        // tex coords
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    // vertices
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
-    // colors
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
-    // tex coords
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
 
-    glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-#endif
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
 
     CC_INCREMENT_GL_DRAWS(1);
     CHECK_GL_ERROR_DEBUG();
@@ -454,11 +458,14 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         }
 
         initIndices();
-#if CC_TEXTURE_ATLAS_USE_VAO
-        setupVBOandVAO();
-#else
-        setupVBO();
-#endif
+        if (Configuration::getInstance()->supportsShareableVAO())
+        {
+            setupVBOandVAO();
+        }
+        else
+        {
+            setupVBO();
+        }
     }
     else
     {
@@ -468,7 +475,6 @@ void ParticleSystemQuad::setTotalParticles(int tp)
     resetSystem();
 }
 
-#if CC_TEXTURE_ATLAS_USE_VAO
 void ParticleSystemQuad::setupVBOandVAO()
 {
     // clean VAO
@@ -508,7 +514,6 @@ void ParticleSystemQuad::setupVBOandVAO()
 
     CHECK_GL_ERROR_DEBUG();
 }
-#else
 
 void ParticleSystemQuad::setupVBO()
 {
@@ -527,15 +532,16 @@ void ParticleSystemQuad::setupVBO()
     CHECK_GL_ERROR_DEBUG();
 }
 
-#endif
-
 void ParticleSystemQuad::listenBackToForeground(Object *obj)
 {
-#if CC_TEXTURE_ATLAS_USE_VAO
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         setupVBOandVAO();
-#else
+    }
+    else
+    {
         setupVBO();
-#endif
+    }
 }
 
 bool ParticleSystemQuad::allocMemory()
@@ -578,11 +584,14 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
             allocMemory();
             initIndices();
             setTexture(oldBatch->getTexture());
-#if CC_TEXTURE_ATLAS_USE_VAO
-            setupVBOandVAO();
-#else
-            setupVBO();
-#endif
+            if (Configuration::getInstance()->supportsShareableVAO())
+            {
+                setupVBOandVAO();
+            }
+            else
+            {
+                setupVBO();
+            }
         }
         // OLD: was it self render ? cleanup
         else if( !oldBatch )
@@ -597,11 +606,12 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
 
             glDeleteBuffers(2, &_buffersVBO[0]);
             memset(_buffersVBO, 0, sizeof(_buffersVBO));
-#if CC_TEXTURE_ATLAS_USE_VAO
-            glDeleteVertexArrays(1, &_VAOname);
-            GL::bindVAO(0);
-            _VAOname = 0;
-#endif
+            if (Configuration::getInstance()->supportsShareableVAO())
+            {
+                glDeleteVertexArrays(1, &_VAOname);
+                GL::bindVAO(0);
+                _VAOname = 0;
+            }
         }
     }
 }

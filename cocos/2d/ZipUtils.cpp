@@ -318,7 +318,7 @@ bool ZipUtils::ccIsCCZFile(const char *path)
 
 bool ZipUtils::ccIsCCZBuffer(const unsigned char *buffer, long len)
 {
-    if (len < sizeof(struct CCZHeader))
+    if (static_cast<size_t>(len) < sizeof(struct CCZHeader))
     {
         return false;
     }

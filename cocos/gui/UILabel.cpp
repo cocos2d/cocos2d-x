@@ -29,7 +29,8 @@ namespace gui {
 
 UILabel::UILabel():
 _touchScaleChangeEnabled(false),
-_normalScaleValue(1.0f),
+_normalScaleValueX(1.0f),
+_normalScaleValueY(1.0f),
 _fontName("Thonburi"),
 _fontSize(10),
 _onSelectedScaleOffset(0.5),
@@ -124,7 +125,26 @@ void UILabel::setTextVerticalAlignment(cocos2d::TextVAlignment alignment)
 void UILabel::setTouchScaleChangeEnabled(bool enable)
 {
     _touchScaleChangeEnabled = enable;
-    _normalScaleValue = getScale();
+    _normalScaleValueX = getScaleX();
+    _normalScaleValueY = getScaleY();
+}
+    
+void UILabel::setScale(float fScale)
+{
+    UIWidget::setScale(fScale);
+    _normalScaleValueX = _normalScaleValueY = fScale;
+}
+    
+void UILabel::setScaleX(float fScaleX)
+{
+    UIWidget::setScaleX(fScaleX);
+    _normalScaleValueX = fScaleX;
+}
+    
+void UILabel::setScaleY(float fScaleY)
+{
+    UIWidget::setScaleY(fScaleY);
+    _normalScaleValueY = fScaleY;
 }
 
 bool UILabel::isTouchScaleChangeEnabled()
@@ -138,7 +158,7 @@ void UILabel::onPressStateChangedToNormal()
     {
         return;
     }
-    clickScale(_normalScaleValue);
+    clickScale(_normalScaleValueX, _normalScaleValueY);
 }
 
 void UILabel::onPressStateChangedToPressed()
@@ -147,7 +167,7 @@ void UILabel::onPressStateChangedToPressed()
     {
         return;
     }
-    clickScale(_normalScaleValue + _onSelectedScaleOffset);
+    clickScale(_normalScaleValueX + _onSelectedScaleOffset, _normalScaleValueY + _onSelectedScaleOffset);
 }
 
 void UILabel::onPressStateChangedToDisabled()
@@ -155,9 +175,10 @@ void UILabel::onPressStateChangedToDisabled()
     
 }
 
-void UILabel::clickScale(float scale)
+void UILabel::clickScale(float scaleX, float scaleY)
 {
-    _renderer->setScale(scale);
+    _renderer->setScaleX(scaleX);
+    _renderer->setScaleY(scaleY);
 }
 
 void UILabel::setFlipX(bool flipX)
