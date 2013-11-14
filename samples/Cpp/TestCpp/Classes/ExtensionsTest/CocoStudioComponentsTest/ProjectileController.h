@@ -12,10 +12,10 @@ protected:
     virtual ~ProjectileController(void);
         
 public:
-    virtual bool init();
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void update(float delta);
+    virtual bool init() override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void update(float delta) override;
     
     static ProjectileController* create(void);
 public:
