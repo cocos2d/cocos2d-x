@@ -28,7 +28,7 @@ using namespace cocos2d;
 namespace cocostudio {
 
 ComAttribute::ComAttribute(void)
-: _jsonDict(NULL)
+: _jsonDict(nullptr)
 {
     _name = "ComAttribute";
 }
