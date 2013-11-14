@@ -235,8 +235,6 @@ IterateSpriteSheet::~IterateSpriteSheet()
 
 void IterateSpriteSheet::updateQuantityOfNodes()
 {
-    auto s = Director::getInstance()->getWinSize();
-
     // increase nodes
     if( currentQuantityOfNodes < quantityOfNodes )
     {

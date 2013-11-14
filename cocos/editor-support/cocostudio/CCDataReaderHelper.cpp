@@ -242,11 +242,11 @@ void DataReaderHelper::purge()
 
 DataReaderHelper::DataReaderHelper()
 	: _loadingThread(nullptr)
-	, _asyncStructQueue(nullptr)
-	, _dataQueue(nullptr)
-	, need_quit(false)
 	, _asyncRefCount(0)
 	, _asyncRefTotalCount(0)
+	, need_quit(false)
+	, _asyncStructQueue(nullptr)
+	, _dataQueue(nullptr)
 {
 
 }

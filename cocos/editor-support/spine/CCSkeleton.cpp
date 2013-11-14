@@ -63,26 +63,26 @@ void CCSkeleton::initialize () {
 	scheduleUpdate();
 }
 
-void CCSkeleton::setSkeletonData (SkeletonData *skeletonData, bool ownsSkeletonData) {
+void CCSkeleton::setSkeletonData (SkeletonData *skeletonData, bool isOwnsSkeletonData) {
 	skeleton = Skeleton_create(skeletonData);
 	rootBone = skeleton->bones[0];
-	this->ownsSkeletonData = ownsSkeletonData;	
+	this->ownsSkeletonData = isOwnsSkeletonData;
 }
 
 CCSkeleton::CCSkeleton () {
 	initialize();
 }
 
-CCSkeleton::CCSkeleton (SkeletonData *skeletonData, bool ownsSkeletonData) {
+CCSkeleton::CCSkeleton (SkeletonData *skeletonData, bool isOwnsSkeletonData) {
 	initialize();
 
-	setSkeletonData(skeletonData, ownsSkeletonData);
+	setSkeletonData(skeletonData, isOwnsSkeletonData);
 }
 
-CCSkeleton::CCSkeleton (const char* skeletonDataFile, Atlas* atlas, float scale) {
+CCSkeleton::CCSkeleton (const char* skeletonDataFile, Atlas* aAtlas, float scale) {
 	initialize();
 
-	SkeletonJson* json = SkeletonJson_create(atlas);
+	SkeletonJson* json = SkeletonJson_create(aAtlas);
 	json->scale = scale;
 	SkeletonData* skeletonData = SkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
 	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data.");
@@ -164,16 +164,16 @@ void CCSkeleton::draw () {
 		DrawPrimitives::setDrawColor4B(0, 0, 255, 255);
 		glLineWidth(1);
 		Point points[4];
-		V3F_C4B_T2F_Quad quad;
+		V3F_C4B_T2F_Quad tmpQuad;
 		for (int i = 0, n = skeleton->slotCount; i < n; i++) {
 			Slot* slot = skeleton->slots[i];
 			if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
 			RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
-			RegionAttachment_updateQuad(attachment, slot, &quad);
-			points[0] = Point(quad.bl.vertices.x, quad.bl.vertices.y);
-			points[1] = Point(quad.br.vertices.x, quad.br.vertices.y);
-			points[2] = Point(quad.tr.vertices.x, quad.tr.vertices.y);
-			points[3] = Point(quad.tl.vertices.x, quad.tl.vertices.y);
+			RegionAttachment_updateQuad(attachment, slot, &tmpQuad);
+			points[0] = Point(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y);
+			points[1] = Point(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y);
+			points[2] = Point(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y);
+			points[3] = Point(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y);
 			DrawPrimitives::drawPoly(points, 4, true);
 		}
 	}
@@ -275,8 +275,8 @@ const BlendFunc& CCSkeleton::getBlendFunc() const
     return blendFunc;
 }
 
-void CCSkeleton::setBlendFunc( const BlendFunc &blendFunc) {
-    this->blendFunc = blendFunc;
+void CCSkeleton::setBlendFunc( const BlendFunc &aBlendFunc) {
+    this->blendFunc = aBlendFunc;
 }
 
 void CCSkeleton::setOpacityModifyRGB (bool value) {
