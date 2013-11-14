@@ -26,14 +26,14 @@ class PathUtils:
         for dir in self.__exclude:
             dir = os.path.abspath(os.path.join(self.__root, dir))
             if os.path.isdir(dir) and os.path.isdir(curDir[:len(dir)]):
-                if os.path.samefile(dir, curDir[:len(dir)]):
+                if self.samefile(dir, curDir[:len(dir)]):
                     return False
     
         if self.__rep.match(fileName):
             # check file is exclude or not
             for file in self.__exclude:
                 if os.path.isfile(os.path.join(self.__root, file)):
-                    if os.path.samefile(realFilePath, os.path.join(self.__root, file)):
+                    if self.samefile(realFilePath, os.path.join(self.__root, file)):
                         return False
         
             return True
@@ -46,7 +46,10 @@ class PathUtils:
             if self.__check_file_matchs(os.path.join(dirname, name)):
                 if type(lst) is types.ListType:
                     lst += [os.path.abspath(os.path.join(dirname, name))]
-                    
+                 
+    def samefile(self, path1, path2):
+        return os.stat(path1) == os.stat(path2)
+
     def set_root(self, root):
         "set the root path"
         self._root = root

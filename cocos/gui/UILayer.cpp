@@ -30,8 +30,8 @@
 namespace gui {
 
 UILayer::UILayer():
-_rootWidget(NULL),
-_inputManager(NULL)
+_rootWidget(nullptr),
+_inputManager(nullptr)
 {
     
 }
@@ -48,7 +48,6 @@ bool UILayer::init()
     {
         _rootWidget = UIRootWidget::create();
         _rootWidget->retain();
-        _rootWidget->onEnter();
         addChild(_rootWidget->getRenderer());
         _inputManager = new UIInputManager();
         _inputManager->setRootWidget(_rootWidget);
@@ -68,7 +67,7 @@ UILayer* UILayer::create(void)
     else
     {
         CC_SAFE_DELETE(pRet);
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -85,10 +84,12 @@ void UILayer::onEnter()
     listener->onTouchCancelled = CC_CALLBACK_2(UILayer::onTouchCancelled, this);
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    _rootWidget->onEnter();
 }
 
 void UILayer::onExit()
 {
+    _rootWidget->onExit();
     CCLayer::onExit();
 }
 
@@ -117,7 +118,7 @@ UIWidget* UILayer::getWidgetByTag(int tag)
 {
     if (!_rootWidget)
     {
-        return NULL;
+        return nullptr;
     }
     return UIHelper::seekWidgetByTag(_rootWidget, tag);
 }
@@ -126,7 +127,7 @@ UIWidget* UILayer::getWidgetByName(const char* name)
 {
     if (!_rootWidget)
     {
-        return NULL;
+        return nullptr;
     }
     return UIHelper::seekWidgetByName(_rootWidget, name);
 }

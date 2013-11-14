@@ -59,6 +59,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), "Images");
     searchPaths.insert(searchPaths.begin(), "cocosbuilderRes");
+    if (screenSize.height > 320)
+    {
+        searchPaths.insert(searchPaths.begin(), "hd/scenetest");
+    }
+    else
+    {
+        searchPaths.insert(searchPaths.begin(), "scenetest");
+    }
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");

@@ -32,7 +32,7 @@ namespace cocostudio {
 
 class ComController : public cocos2d::Component, public InputDelegate
 {
-protected:
+public:
     ComController(void);
     
 public:
@@ -51,10 +51,10 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onExit();
-    virtual void update(float delta);
-    virtual bool isEnabled() const;
-    virtual void setEnabled(bool b);
+    virtual void onExit() override;
+    virtual void update(float delta) override;
+    virtual bool isEnabled() const override;
+    virtual void setEnabled(bool b) override;
     
     static ComController* create(void);
 };

@@ -28,14 +28,14 @@ namespace gui {
 
 
 UICheckBox::UICheckBox():
-_backGroundBoxRenderer(NULL),
-_backGroundSelectedBoxRenderer(NULL),
-_frontCrossRenderer(NULL),
-_backGroundBoxDisabledRenderer(NULL),
-_frontCrossDisabledRenderer(NULL),
+_backGroundBoxRenderer(nullptr),
+_backGroundSelectedBoxRenderer(nullptr),
+_frontCrossRenderer(nullptr),
+_backGroundBoxDisabledRenderer(nullptr),
+_frontCrossDisabledRenderer(nullptr),
 _isSelected(true),
-_checkBoxEventListener(NULL),
-_checkBoxEventSelector(NULL),
+_checkBoxEventListener(nullptr),
+_checkBoxEventSelector(nullptr),
 _backGroundTexType(UI_TEX_TYPE_LOCAL),
 _backGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
 _frontCrossTexType(UI_TEX_TYPE_LOCAL),
@@ -51,8 +51,8 @@ _frontCrossDisabledFileName("")
 
 UICheckBox::~UICheckBox()
 {
-    _checkBoxEventListener = NULL;
-    _checkBoxEventSelector = NULL;
+    _checkBoxEventListener = nullptr;
+    _checkBoxEventSelector = nullptr;
 }
 
 UICheckBox* UICheckBox::create()
@@ -64,7 +64,7 @@ UICheckBox* UICheckBox::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UICheckBox::init()

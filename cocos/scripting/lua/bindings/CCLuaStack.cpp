@@ -55,6 +55,7 @@ extern "C" {
 #include "lua_cocos2dx_deprecated.h"
 #include "lua_xml_http_request.h"
 #include "lua_cocos2dx_studio_auto.hpp"
+#include "lua_cocos2dx_coco_studio_manual.hpp"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -140,6 +141,7 @@ bool LuaStack::init(void)
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_extension_manual(_state);
     register_all_cocos2dx_manual_deprecated(_state);
+    register_all_cocos2dx_coco_studio_manual(_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaObjcBridge::luaopen_luaoc(_state);
 #endif
