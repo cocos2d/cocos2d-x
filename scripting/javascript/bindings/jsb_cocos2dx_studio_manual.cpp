@@ -372,7 +372,7 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         tmpObj->autorelease();
         
-        tmpObj->setJSCallbackFunc(argv[5]);
+        tmpObj->setJSCallbackFunc(argv[3]);
         tmpObj->setJSCallbackThis(argv[4]);
         
         std::string imagePath;
