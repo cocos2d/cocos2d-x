@@ -16,7 +16,7 @@ class GroupCommand : public RenderCommand
 {
 
 public:
-    GroupCommand(int viewport, int32_t depth, int renderQueueID);
+    GroupCommand(int viewport, int32_t depth);
     ~GroupCommand();
 
     // +----------+----------+-----+-----------------------------------+

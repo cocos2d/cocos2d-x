@@ -140,6 +140,7 @@ void Renderer::render()
         if(_renderStack.top().currentIndex >= len)
         {
             _renderStack.pop();
+            _firstCommand = _lastCommand = 0;
             continue;
         }
 
@@ -174,12 +175,14 @@ void Renderer::render()
             }
             else if(command->getType() == GROUP_COMMAND)
             {
+                flush();
                 GroupCommand* cmd = static_cast<GroupCommand*>(command);
 
                 _renderStack.top().currentIndex = i + 1;
 
                 //push new renderQueue to renderStack
                 _renderStack.push({cmd->getRenderQueueID(), 0});
+                _firstCommand = _lastCommand = 0;
 
                 //Exit current loop
                 break;
@@ -190,57 +193,19 @@ void Renderer::render()
             }
         }
 
+        //Draw the batched quads
+        drawBatchedQuads();
     }
-
-    size_t len = _renderGroups[DEFAULT_RENDER_QUEUE].size();
-
-    for (size_t i = 0; i < len; i++)
-    {
-        auto command = _renderGroups[DEFAULT_RENDER_QUEUE][i];
-
-        switch (command->getType())
-        {
-            case QUAD_COMMAND:
-            {
-                QuadCommand* cmd = static_cast<QuadCommand*>(command);
-
-                CCASSERT(cmd->getQuadCount()<VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
-
-                //Batch quads
-                if(_numQuads + cmd->getQuadCount() < VBO_SIZE)
-                {
-                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-                    _numQuads += cmd->getQuadCount();
-                    _lastCommand = i;
-                }
-                else
-                {
-                    //Draw batched quads if VBO is full
-                    drawBatchedQuads();
-                }
-                break;
-            }
-            case CUSTOM_COMMAND:
-            {
-                flush();
-                CustomCommand* cmd = static_cast<CustomCommand*>(command);
-                cmd->execute();
-            }
-            default:
-                flush();
-                break;
-        }
-    }
-
-    //Draw the batched quads
-    drawBatchedQuads();
 
     //TODO give command back to command pool
-    for_each(_renderGroups[DEFAULT_RENDER_QUEUE].begin(), _renderGroups[DEFAULT_RENDER_QUEUE].end(), [](RenderCommand* cmd){delete cmd;});
+    for (size_t j = 0 ; j < _renderGroups.size(); j++)
+    {
+        for_each(_renderGroups[j].begin(), _renderGroups[j].end(), [](RenderCommand* cmd){delete cmd;});
+        _renderGroups[j].clear();
+    }
 
     _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
-    _renderGroups[DEFAULT_RENDER_QUEUE].clear();
 }
 
 void Renderer::drawBatchedQuads()

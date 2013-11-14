@@ -23,10 +23,6 @@ public:
     NewSpriteBatchNode();
     virtual ~NewSpriteBatchNode();
 
-    bool initWithTexture(Texture2D *tex, long capacity);
-
-    bool initWithFile(const char* fileImage, long capacity);
-
     bool init();
 
     void draw(void);

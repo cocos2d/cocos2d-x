@@ -43,38 +43,6 @@ NewSpriteBatchNode::~NewSpriteBatchNode()
 
 }
 
-bool NewSpriteBatchNode::initWithTexture(Texture2D *tex, long capacity)
-{
-    CCASSERT(capacity>=0, "Capacity must be >= 0");
-
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-    _textureAtlas = new TextureAtlas();
-
-    if (capacity == 0)
-    {
-        capacity = DEFAULT_CAPACITY;
-    }
-
-    _textureAtlas->initWithTexture(tex, capacity);
-
-    updateBlendFunc();
-
-    // no lazy alloc in this node
-    _children = new Array();
-    _children->initWithCapacity(capacity);
-
-    _descendants.reserve(capacity);
-
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-    return true;
-}
-
-bool NewSpriteBatchNode::initWithFile(const char *fileImage, long capacity)
-{
-    Texture2D* tex = Director::getInstance()->getTextureCache()->addImage(fileImage);
-    return initWithTexture(tex, capacity);
-}
-
 bool NewSpriteBatchNode::init()
 {
     Texture2D* texture = new Texture2D();

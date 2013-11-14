@@ -7,11 +7,10 @@
 
 NS_CC_BEGIN
 
-GroupCommand::GroupCommand(int viewport, int32_t depth, int renderQueueID)
+GroupCommand::GroupCommand(int viewport, int32_t depth)
 :RenderCommand()
 , _viewport(viewport)
 , _depth(depth)
-, _renderQueueID(renderQueueID)
 {
     _type = GROUP_COMMAND;
 }
