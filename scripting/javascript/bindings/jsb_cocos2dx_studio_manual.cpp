@@ -213,7 +213,7 @@ static JSBool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t ar
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
 
-        cobj->addEventListenterListView(tmpObj, listvieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
+        cobj->addEventListenerListView(tmpObj, listvieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
         return JS_TRUE;
     }
