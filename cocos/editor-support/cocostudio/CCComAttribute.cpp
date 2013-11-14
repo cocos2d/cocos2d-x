@@ -58,6 +58,51 @@ ComAttribute* ComAttribute::create(void)
     return pRet;
 }
 
+void ComAttribute::setInt(const char *key, int value)
+{
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
+    _jsonDict->insertItem(key, value);
+}
+
+void ComAttribute::setFloat(const char *key, float value)
+{
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
+    _jsonDict->insertItem(key, value);
+}
+
+void ComAttribute::setBool(const char *key, bool value)
+{
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
+    _jsonDict->insertItem(key, value);
+}
+
+void ComAttribute::setCString(const char *key, const char *value)
+{
+    CCASSERT(key != NULL, "Argument must be non-nil"); 
+    _jsonDict->insertItem(key, value);
+}
+
+
+int ComAttribute::getInt(const char *key) const
+{
+    return _jsonDict->getItemIntValue(key, -1);
+}
+
+float ComAttribute::getFloat(const char *key) const
+{
+    return _jsonDict->getItemFloatValue(key, -1.0f);
+}
+
+bool ComAttribute::getBool(const char *key) const
+{
+	return _jsonDict->getItemBoolvalue(key, false);
+}
+
+const char* ComAttribute::getCString(const char *key) const
+{
+   return _jsonDict->getItemStringValue(key);
+}
+
 JsonDictionary* ComAttribute::getDict() const
 {
 	return _jsonDict;
