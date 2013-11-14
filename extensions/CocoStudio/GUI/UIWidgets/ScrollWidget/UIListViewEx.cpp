@@ -376,7 +376,7 @@ void UIListViewEx::selectedItemEvent()
 {
     if (_listViewEventListener && _listViewEventSelector)
     {
-        (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEWEX_ONSELECEDTITEM);
+        (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEWEX_ONSELECTEDITEM);
     }
 }
 
