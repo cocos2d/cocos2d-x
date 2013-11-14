@@ -71,8 +71,6 @@ void CCProcessBase::stop()
 {
     m_bIsComplete = true;
     m_bIsPlaying = false;
-    m_fCurrentFrame = 0;
-    m_fCurrentPercent = 0;
 }
 
 void CCProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEasing)
@@ -153,7 +151,7 @@ void CCProcessBase::gotoFrame(int frameIndex)
 
 int CCProcessBase::getCurrentFrameIndex()
 {
-    m_iCurFrameIndex = m_iRawDuration * m_fCurrentPercent;
+    m_iCurFrameIndex = (m_iRawDuration-1) * m_fCurrentPercent;
     return m_iCurFrameIndex;
 }
 
