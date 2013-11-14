@@ -33,16 +33,16 @@ using namespace gui;
 
 namespace cocostudio {
 
-	ActionNode::ActionNode()
-	: _currentFrameIndex(0)
-	, _destFrameIndex(0)
-	, _fUnitTime(0.1f)
-	, _actionTag(0)
-	, _actionSpawn(NULL)
-	, _action(NULL)
-	, _object(NULL)
-	, _frameArray(NULL)
-	, _frameArrayNum(0)
+ActionNode::ActionNode()
+: _currentFrameIndex(0)
+, _destFrameIndex(0)
+, _fUnitTime(0.1f)
+, _actionTag(0)
+, _actionSpawn(NULL)
+, _action(NULL)
+, _object(NULL)
+, _frameArray(NULL)
+, _frameArrayNum(0)
 {
 	_frameArray = Array::create();
 	_frameArray->retain();
@@ -322,7 +322,7 @@ Spawn * ActionNode::refreshActionProperty()
 	return _actionSpawn;
 }
 
-void ActionNode::playAction(bool bloop)
+void ActionNode::playAction()
 {
 	if ( _object == NULL || _actionSpawn == NULL)
 	{
@@ -333,14 +333,8 @@ void ActionNode::playAction(bool bloop)
 	{
 		_action->release();
 	}
-	if (bloop)
-	{
-		_action = RepeatForever::create(_actionSpawn);
-	}
-	else
-	{
-		_action = Sequence::create(_actionSpawn, NULL);
-	}
+
+	_action = Sequence::create(_actionSpawn, NULL);
 	_action->retain();
 
 	this->runAction();
@@ -478,6 +472,16 @@ void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* destF
 	}	
 	cAction->startWithTarget(cNode);
 	cAction->update(delayTime);
+}
+
+
+bool ActionNode::isActionDoneOnce()
+{
+	if (_action == nullptr)
+	{
+		return true;
+	}
+	return _action->isDone();
 }
 
 }
