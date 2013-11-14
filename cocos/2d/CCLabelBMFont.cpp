@@ -202,7 +202,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const std::string
     {
         size_t pos = strLeft.find('\n');
 
-        if (pos != (int)std::string::npos)
+        if (pos != std::string::npos)
         {
             // the data is more than a line.get one line
             line = strLeft.substr(0, pos);

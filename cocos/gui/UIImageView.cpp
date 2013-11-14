@@ -40,7 +40,7 @@ _doubleClickEnabled(false),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(cocos2d::Rect::ZERO),
-_imageRenderer(NULL),
+_imageRenderer(nullptr),
 _textureFile(""),
 _imageTexType(UI_TEX_TYPE_LOCAL),
 _imageTextureSize(_size)
@@ -62,7 +62,7 @@ UIImageView* UIImageView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 void UIImageView::initRenderer()
@@ -275,7 +275,7 @@ void UIImageView::setScale9Enabled(bool able)
     
     _scale9Enabled = able;
     _renderer->removeChild(_imageRenderer, true);
-    _imageRenderer = NULL;
+    _imageRenderer = nullptr;
     if (_scale9Enabled)
     {
         _imageRenderer = cocos2d::extension::Scale9Sprite::create();

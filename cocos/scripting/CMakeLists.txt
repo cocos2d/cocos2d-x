@@ -14,6 +14,7 @@ set(LUABINDING_SRC
   lua/bindings/LuaBasicConversions.cpp
   lua/bindings/lua_cocos2dx_manual.cpp
   lua/bindings/lua_cocos2dx_extension_manual.cpp
+  lua/bindings/lua_cocos2dx_coco_studio_manual.cpp
   lua/bindings/lua_cocos2dx_deprecated.cpp
   lua/bindings/lua_xml_http_request.cpp
 )
@@ -23,6 +24,7 @@ include_directories(
   lua/bindings
   ../../cocos/editor-support/cocosbuilder
   ../../cocos/editor-support/cocostudio
+  ../../cocos/gui
   ../../external/lua/lua
   ../../external/lua/tolua
 )

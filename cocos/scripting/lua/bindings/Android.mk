@@ -20,6 +20,7 @@ LOCAL_SRC_FILES := CCLuaBridge.cpp \
           ../../auto-generated/lua-bindings/lua_cocos2dx_studio_auto.cpp \
           lua_cocos2dx_manual.cpp \
           lua_cocos2dx_extension_manual.cpp \
+          lua_cocos2dx_coco_studio_manual.cpp \
           lua_cocos2dx_deprecated.cpp \
           lua_xml_http_request.cpp \
           platform/android/CCLuaJavaBridge.cpp \
@@ -37,7 +38,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/platform/android/jni \
                     $(LOCAL_PATH)/../../../../extensions \
                     $(LOCAL_PATH)/../../../editor-support/cocosbuilder \
-                    $(LOCAL_PATH)/../../../editor-support/cocostudio
+                    $(LOCAL_PATH)/../../../editor-support/cocostudio \
+                    $(LOCAL_PATH)/../../../gui
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)

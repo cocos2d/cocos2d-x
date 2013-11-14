@@ -16,6 +16,19 @@ rawset(CCDirector,"sharedDirector",CCDirectorDeprecated.sharedDirector)
 
 
 --functions of CCTextureCache will be deprecated begin
+local TextureCacheDeprecated = {}
+function TextureCacheDeprecated.getInstance(self)
+    deprecatedTip("cc.TextureCache:getInstance","cc.Director:getInstance():getTextureCache")
+    return cc.Director:getInstance():getTextureCache()
+end
+rawset(cc.TextureCache,"getInstance",TextureCacheDeprecated.getInstance)
+
+function TextureCacheDeprecated.destroyInstance(self)
+    deprecatedTip("cc.TextureCache:destroyInstance","cc.Director:getInstance():destroyTextureCache")
+    return cc.Director:getInstance():destroyTextureCache()
+end
+rawset(cc.TextureCache,"destroyInstance",TextureCacheDeprecated.destroyInstance)
+
 local CCTextureCacheDeprecated = { }
 function CCTextureCacheDeprecated.sharedTextureCache()
     deprecatedTip("CCTextureCache:sharedTextureCache","CCTextureCache:getInstance")

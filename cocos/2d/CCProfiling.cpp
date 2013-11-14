@@ -101,12 +101,12 @@ void Profiler::displayTimers()
 // implementation of ProfilingTimer
 
 ProfilingTimer::ProfilingTimer()
-: numberOfCalls(0)
-, _averageTime1(0)
+: _averageTime1(0)
 , _averageTime2(0)
-, totalTime(0)
 , minTime(100000000)
 , maxTime(0)
+, totalTime(0)
+, numberOfCalls(0)
 {
 }
 
