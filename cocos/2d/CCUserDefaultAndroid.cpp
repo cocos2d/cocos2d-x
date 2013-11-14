@@ -75,7 +75,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
         *doc = xmlDoc;
         long size;
-        const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &size);
+        char* pXmlBuffer = (char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &size);
         //const char* pXmlBuffer = (const char*)data.getBuffer();
         if(NULL == pXmlBuffer)
         {
