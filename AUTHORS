@@ -595,6 +595,7 @@ Developers:
         [Android] added EGL_RENDERABLE_TYPE to OpenGL attributes
         Android: add xlargeScreens="true" to supports-screens
         Trigger onKeyReleased only after the key has been released.
+        Makes Colors are now comparable and explicit convertible
         
     bmanGH
         Use gl caching functions in TexturePVR::createGLTexture()
