@@ -95,6 +95,7 @@ public:
      */
     virtual bool checkUpdate();
     
+    using Node::update;
     /* @brief Download new package if there is a new version, and uncompress downloaded zip file.
      *        Ofcourse it will set search path that stores downloaded files.
      */
