@@ -225,7 +225,6 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
         else
         {
             m_eLoopType = ANIMATION_NO_LOOP;
-            m_iRawDuration --;
         }
         m_iDurationTween = durationTween;
     }
