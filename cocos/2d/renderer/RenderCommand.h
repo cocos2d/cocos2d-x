@@ -31,11 +31,12 @@ public:
     virtual ~RenderCommand();
     virtual int64_t generateID() = 0;
 
-    /**
+    virtual /**
     * Get Render Command Id
     */
     inline int64_t getID() { return _id; }
-    inline RenderCommandType getType() { return _type; }
+
+    virtual inline RenderCommandType getType() { return _type; }
 
 protected:
     void printID();

@@ -10,6 +10,7 @@
 #include "CustomCommand.h"
 #include "QuadCommand.h"
 #include "CCGL.h"
+#include "GroupCommand.h"
 
 
 NS_CC_BEGIN
@@ -41,11 +42,14 @@ Renderer::Renderer()
 ,_firstCommand(0)
 ,_lastCommand(0)
 {
-
+    RenderQueue defaultRenderQueue;
+    _renderGroups.push_back(defaultRenderQueue);
+    _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
 }
 
 Renderer::~Renderer()
 {
+    _renderGroups.clear();
 }
 
 bool Renderer::init()
@@ -103,10 +107,10 @@ void Renderer::setupVBOAndVAO()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Renderer::addRenderCommand(RenderCommand *command)
+void Renderer::addRenderCommand(RenderCommand *command, int renderQueue)
 {
     command->generateID();
-    _renderQueue.push_back(command);
+    _renderGroups[renderQueue].push_back(command);
 }
 
 bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
@@ -123,13 +127,76 @@ void Renderer::render()
 
     //Process render commands
     //1. Sort render commands based on ID
-    stable_sort(_renderQueue.begin(), _renderQueue.end(), compareRenderCommand);
+    for (auto it = _renderGroups.begin(); it != _renderGroups.end(); ++it)
+    {
+        stable_sort((*it).begin(), (*it).end(), compareRenderCommand);
+    }
 
-    size_t len = _renderQueue.size();
+    while(!_renderStack.empty())
+    {
+        size_t len = _renderGroups[_renderStack.top().renderQueueID].size();
+
+        //If pop the render stack if we already processed all the commands
+        if(_renderStack.top().currentIndex >= len)
+        {
+            _renderStack.pop();
+            continue;
+        }
+
+        for(size_t i = _renderStack.top().currentIndex; i < len; i++)
+        {
+            auto command = _renderGroups[_renderStack.top().renderQueueID][i];
+
+            if(command->getType() == QUAD_COMMAND)
+            {
+                QuadCommand* cmd = static_cast<QuadCommand*>(command);
+
+                CCASSERT(cmd->getQuadCount()<VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+
+                //Batch quads
+                if(_numQuads + cmd->getQuadCount() < VBO_SIZE)
+                {
+                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
+                    _numQuads += cmd->getQuadCount();
+                    _lastCommand = i;
+                }
+                else
+                {
+                    //Draw batched quads if VBO is full
+                    drawBatchedQuads();
+                }
+            }
+            else if(command->getType() == CUSTOM_COMMAND)
+            {
+                flush();
+                CustomCommand* cmd = static_cast<CustomCommand*>(command);
+                cmd->execute();
+            }
+            else if(command->getType() == GROUP_COMMAND)
+            {
+                GroupCommand* cmd = static_cast<GroupCommand*>(command);
+
+                _renderStack.top().currentIndex = i + 1;
+
+                //push new renderQueue to renderStack
+                _renderStack.push({cmd->getRenderQueueID(), 0});
+
+                //Exit current loop
+                break;
+            }
+            else
+            {
+                flush();
+            }
+        }
+
+    }
+
+    size_t len = _renderGroups[DEFAULT_RENDER_QUEUE].size();
 
     for (size_t i = 0; i < len; i++)
     {
-        auto command = _renderQueue[i];
+        auto command = _renderGroups[DEFAULT_RENDER_QUEUE][i];
 
         switch (command->getType())
         {
@@ -169,11 +236,11 @@ void Renderer::render()
     drawBatchedQuads();
 
     //TODO give command back to command pool
-    for_each(_renderQueue.begin(), _renderQueue.end(), [](RenderCommand* cmd){delete cmd;});
+    for_each(_renderGroups[DEFAULT_RENDER_QUEUE].begin(), _renderGroups[DEFAULT_RENDER_QUEUE].end(), [](RenderCommand* cmd){delete cmd;});
 
     _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
-    _renderQueue.clear();
+    _renderGroups[DEFAULT_RENDER_QUEUE].clear();
 }
 
 void Renderer::drawBatchedQuads()
@@ -203,7 +270,7 @@ void Renderer::drawBatchedQuads()
     //Start drawing verties in batch
     for(size_t i = _firstCommand; i <= _lastCommand; i++)
     {
-        RenderCommand* command = _renderQueue[i];
+        RenderCommand* command = _renderGroups[DEFAULT_RENDER_QUEUE][i];
         if (command->getType() == QUAD_COMMAND)
         {
             QuadCommand* cmd = static_cast<QuadCommand*>(command);
