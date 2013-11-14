@@ -457,7 +457,7 @@ void UIWidget::updateSizeAndPosition()
                 }
                 else
                 {
-                    m_positionPercent = ccp(absPos.x / m_pWidgetParent->getSize().width, absPos.y / m_pWidgetParent->getSize().height);
+                    m_positionPercent = ccp(absPos.x / pSize.width, absPos.y / pSize.height);
                 }
             }
             else
@@ -891,7 +891,7 @@ void UIWidget::checkChildInfo(int handleState, UIWidget *sender, const CCPoint &
 
 void UIWidget::setPosition(const CCPoint &pos)
 {
-    if (m_bIsRunning)
+    if (m_bIsRunning && m_pWidgetParent)
     {
         CCSize pSize = m_pWidgetParent->getSize();
         if (pSize.width <= 0.0f || pSize.height <= 0.0f)
@@ -900,7 +900,7 @@ void UIWidget::setPosition(const CCPoint &pos)
         }
         else
         {
-            m_positionPercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(pos.x / m_pWidgetParent->getSize().width, pos.y / m_pWidgetParent->getSize().height);
+            m_positionPercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(pos.x / pSize.width, pos.y / pSize.height);
         }
     }
     m_pRenderer->setPosition(pos);
@@ -909,7 +909,7 @@ void UIWidget::setPosition(const CCPoint &pos)
 void UIWidget::setPositionPercent(const CCPoint &percent)
 {
     m_positionPercent = percent;
-    if (m_bIsRunning)
+    if (m_bIsRunning && m_pWidgetParent)
     {
         CCSize parentSize = m_pWidgetParent->getSize();
         CCPoint absPos = ccp(parentSize.width * m_positionPercent.x, parentSize.height * m_positionPercent.y);
