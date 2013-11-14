@@ -148,24 +148,24 @@ void ShaderSprite::initShader()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                                                      FileUtils::getInstance()->fullPathForFilename(_fragSourceFile).c_str())->getCString();
-    auto pProgram = new GLProgram();
-    pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
-    setShaderProgram(pProgram);
-    pProgram->release();
+    auto program = new GLProgram();
+    program->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
+    setShaderProgram(program);
+    program->release();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    program->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    program->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    program->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->link();
+    program->link();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->updateUniforms();
+    program->updateUniforms();
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -176,14 +176,12 @@ void ShaderSprite::initShader()
 
 void ShaderSprite::draw()
 {
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-    BlendFunc blend = getBlendFunc();
-    GL::blendFunc(blend.src, blend.dst);
-    
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins();
+    CC_NODE_DRAW_SETUP();
+
     setCustomUniforms();
-    
+
+    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     GL::bindTexture2D( getTexture()->getName());
     
     //
