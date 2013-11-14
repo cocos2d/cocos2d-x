@@ -113,26 +113,23 @@ std::string BaseClippingNodeTest::subtitle()
 
 void BaseClippingNodeTest::restartCallback(Object* sender)
 {
-	Scene *s = new ClippingNodeTestScene();
+	Scene *s = ClippingNodeTestScene::create();
 	s->addChild(restartAction());
 	Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void BaseClippingNodeTest::nextCallback(Object* sender)
 {
-	Scene *s = new ClippingNodeTestScene();
+	Scene *s = ClippingNodeTestScene::create();
 	s->addChild(nextAction());
 	Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void BaseClippingNodeTest::backCallback(Object* sender)
 {
-	Scene *s = new ClippingNodeTestScene();
+	Scene *s = ClippingNodeTestScene::create();
 	s->addChild(backAction());
 	Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void BaseClippingNodeTest::setup()

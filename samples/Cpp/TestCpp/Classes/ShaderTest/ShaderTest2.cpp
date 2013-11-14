@@ -23,12 +23,6 @@ namespace ShaderTest2
     Layer* createTest(int index)
     {
         auto layer = (createFunctions[index])();;
-        
-        if (layer)
-        {
-            layer->autorelease();
-        }
-        
         return layer;
     }
     
@@ -67,27 +61,23 @@ ShaderTestDemo2::ShaderTestDemo2()
 
 void ShaderTestDemo2::backCallback(Object* sender)
 {
-    auto s = new ShaderTestScene2();
+    auto s = ShaderTestScene2::create();
     s->addChild( ShaderTest2::backAction() );
     Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void ShaderTestDemo2::nextCallback(Object* sender)
 {
-    auto s = new ShaderTestScene2();//CCScene::create();
+    auto s = ShaderTestScene2::create();
     s->addChild( ShaderTest2::nextAction() );
     Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void ShaderTestDemo2::restartCallback(Object* sender)
 {
-    auto s = new ShaderTestScene2();
-    s->addChild(ShaderTest2::restartAction());
-    
+    auto s = ShaderTestScene2::create();
+    s->addChild(ShaderTest2::restartAction());    
     Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void ShaderTestScene2::runThisTest()
@@ -101,10 +91,12 @@ template <class spriteType>
 class ShaderSpriteCreator
 {
 public:
-    static spriteType* createSprite(const std::string& fileName)
+    static spriteType* createSprite(const std::string& filename)
     {
         spriteType* ret = spriteType::create();
-        ret->setTexture(fileName);
+        ret->setTexture(filename);
+        ret->initShader();
+        ret->setBackgroundNotification();
         return ret;
     }
 };
@@ -115,9 +107,10 @@ public:
     ShaderSprite();
     ~ShaderSprite();
 
-    bool initWithTexture(Texture2D* texture, const Rect&  rect);
+    virtual void initShader();
+    void setBackgroundNotification();
+
     void draw();
-    void initProgram();
     void listenBackToForeground(Object *obj);
     
 protected:
@@ -140,30 +133,21 @@ ShaderSprite::~ShaderSprite()
 void ShaderSprite::listenBackToForeground(Object *obj)
 {
     setShaderProgram(NULL);
-    initProgram();
+    initShader();
 }
 
-bool ShaderSprite::initWithTexture(Texture2D* texture, const Rect& rect)
+void ShaderSprite::setBackgroundNotification()
 {
-    if( Sprite::initWithTexture(texture, rect) )
-    {
-        NotificationCenter::getInstance()->addObserver(this,
-                                                       callfuncO_selector(ShaderSprite::listenBackToForeground),
-                                                       EVNET_COME_TO_FOREGROUND,
-                                                       NULL);
-        
-        this->initProgram();
-        
-        return true;
-    }
-    
-    return false;
+    NotificationCenter::getInstance()->addObserver(this,
+                                               callfuncO_selector(ShaderSprite::listenBackToForeground),
+                                               EVNET_COME_TO_FOREGROUND,
+                                               NULL);
 }
 
-void ShaderSprite::initProgram()
+void ShaderSprite::initShader()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
-                                                                     FileUtils::getInstance()->fullPathForFilename(_fragSourceFile.c_str()).c_str())->getCString();
+                                                                     FileUtils::getInstance()->fullPathForFilename(_fragSourceFile).c_str())->getCString();
     auto pProgram = new GLProgram();
     pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
     setShaderProgram(pProgram);
