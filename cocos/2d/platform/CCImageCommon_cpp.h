@@ -424,7 +424,7 @@ bool Image::initWithImageFile(const char * strPath)
         bRet = initWithImageData(buffer, bufferLen);
     }
 
-    CC_SAFE_DELETE_ARRAY(buffer);
+    free(buffer);
 #endif // EMSCRIPTEN
 
     return bRet;
@@ -444,7 +444,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath)
     {
         ret = initWithImageData(buffer, dataLen);
     }
-    CC_SAFE_DELETE_ARRAY(buffer);
+    free(buffer);
     return ret;
 }
 
