@@ -169,6 +169,10 @@ public:
     virtual const char* getDescription() const;
 
 protected:
+    virtual bool addChild(UIWidget* widget){return UIScrollView::addChild(widget);};
+    virtual bool removeChild(UIWidget* widget){return UIScrollView::removeChild(widget);};
+    virtual void removeAllChildren(){UIScrollView::removeAllChildren();};
+    virtual CCArray* getChildren(){return UIScrollView::getChildren();};
     virtual bool init();
     void updateInnerContainerSize();
     void remedyLayoutParameter(UIWidget* item);
