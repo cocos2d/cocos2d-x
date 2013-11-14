@@ -41,27 +41,6 @@ void CocosGUITestScene::runThisTest()
         m_pItemMenu->addChild(pItem);
     }
     addChild(m_pItemMenu);
-    
-    UILayout* l = UILayout::create();
-    l->setSize(CCSizeMake(100, 100));
-    l->setPosition(ccp(100, 100));
-    l->setBackGroundColor(ccGREEN);
-    l->setBackGroundColorType(LAYOUT_COLOR_SOLID);
-    l->setLayoutType(LAYOUT_LINEAR_VERTICAL);
-    
-    for (int i=0; i<10; i++)
-    {
-        UIButton* b = UIButton::create();
-        b->loadTextures("cocosgui/animationbuttonnormal.png", "", "");
-        l->addChild(b);
-//        ((UILinearLayoutParameter*)(b->getLayoutParameter(LAYOUT_PARAMETER_LINEAR)))->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
-        ((UILinearLayoutParameter*)(b->getLayoutParameter(LAYOUT_PARAMETER_LINEAR)))->setGravity(LINEAR_GRAVITY_RIGHT);
-    }
-    
-    UILayer* ul = UILayer::create();
-    ul->addWidget(l);
-    addChild(ul);
-    l->doLayout();
 }
 
 void CocosGUITestScene::MainMenuCallback(CCObject* pSender)

@@ -222,6 +222,9 @@
 		1AF284D317F00D3300642436 /* js_bindings_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284D117F00D3300642436 /* js_bindings_opengl.cpp */; };
 		1AF2873017F013D800642436 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2872F17F013D800642436 /* jsb_deprecated.js */; };
 		1AF2873117F013E200642436 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2872F17F013D800642436 /* jsb_deprecated.js */; };
+		3EC20B8B183355E300F2C4D6 /* UIListViewEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B89183355E300F2C4D6 /* UIListViewEx.cpp */; };
+		3EC20B8D1833564000F2C4D6 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B8C1833564000F2C4D6 /* jsb_cocos2d_studio.js */; };
+		3EC20B8E1833566100F2C4D6 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EC20B8C1833564000F2C4D6 /* jsb_cocos2d_studio.js */; };
 		460E5380182B719A0040458A /* UILayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E537C182B719A0040458A /* UILayout.cpp */; };
 		460E5381182B719A0040458A /* UILayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E537E182B719A0040458A /* UILayoutParameter.cpp */; };
 		460E5386182B71B10040458A /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E5382182B71B10040458A /* GUIReader.cpp */; };
@@ -643,6 +646,9 @@
 		1AF284D117F00D3300642436 /* js_bindings_opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_opengl.cpp; sourceTree = "<group>"; };
 		1AF284D217F00D3300642436 /* js_bindings_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_opengl.h; sourceTree = "<group>"; };
 		1AF2872F17F013D800642436 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		3EC20B89183355E300F2C4D6 /* UIListViewEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewEx.cpp; sourceTree = "<group>"; };
+		3EC20B8A183355E300F2C4D6 /* UIListViewEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewEx.h; sourceTree = "<group>"; };
+		3EC20B8C1833564000F2C4D6 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_studio.js; sourceTree = "<group>"; };
 		460E537C182B719A0040458A /* UILayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayout.cpp; sourceTree = "<group>"; };
 		460E537D182B719A0040458A /* UILayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayout.h; sourceTree = "<group>"; };
 		460E537E182B719A0040458A /* UILayoutParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutParameter.cpp; sourceTree = "<group>"; };
@@ -899,6 +905,7 @@
 		15A3D0831682E721002FB0C5 /* js */ = {
 			isa = PBXGroup;
 			children = (
+				3EC20B8C1833564000F2C4D6 /* jsb_cocos2d_studio.js */,
 				1AF2872F17F013D800642436 /* jsb_deprecated.js */,
 				1A27579F1697FA7200504026 /* jsb.js */,
 				1A2757991697FA7200504026 /* jsb_chipmunk.js */,
@@ -1147,6 +1154,8 @@
 		1A36F5AC17EFE682000D0275 /* ScrollWidget */ = {
 			isa = PBXGroup;
 			children = (
+				3EC20B89183355E300F2C4D6 /* UIListViewEx.cpp */,
+				3EC20B8A183355E300F2C4D6 /* UIListViewEx.h */,
 				1A36F5AF17EFE682000D0275 /* UIListView.cpp */,
 				1A36F5B017EFE682000D0275 /* UIListView.h */,
 				1A36F5B117EFE682000D0275 /* UIPageView.cpp */,
@@ -1612,6 +1621,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EC20B8E1833566100F2C4D6 /* jsb_cocos2d_studio.js in Resources */,
 				1AF2873117F013E200642436 /* jsb_deprecated.js in Resources */,
 				1AF284AB17F00C1500642436 /* jsb_chipmunk_constants.js in Resources */,
 				1AF284AC17F00C1500642436 /* jsb_cocos2d_extension.js in Resources */,
@@ -1691,6 +1701,7 @@
 				15A3CF691682C2B8002FB0C5 /* CCNodeLoader.cpp in Sources */,
 				15A3CF6A1682C2B8002FB0C5 /* CCNodeLoaderLibrary.cpp in Sources */,
 				1AF284BA17F00C5400642436 /* js_bindings_chipmunk_functions.cpp in Sources */,
+				3EC20B8B183355E300F2C4D6 /* UIListViewEx.cpp in Sources */,
 				15A3CF6B1682C2B8002FB0C5 /* CCParticleSystemQuadLoader.cpp in Sources */,
 				15A3CF6C1682C2B8002FB0C5 /* CCScale9SpriteLoader.cpp in Sources */,
 				15A3CF6D1682C2B8002FB0C5 /* CCScrollViewLoader.cpp in Sources */,
@@ -1841,6 +1852,7 @@
 				1AF284BB17F00C5400642436 /* js_bindings_chipmunk_manual.cpp in Sources */,
 				1AF284D017F00D0F00642436 /* jsb_opengl_registration.cpp in Sources */,
 				1A36F6A717EFE6D2000D0275 /* cpSpaceHash.c in Sources */,
+				3EC20B8D1833564000F2C4D6 /* jsb_cocos2d_studio.js in Sources */,
 				1A36F6A817EFE6D2000D0275 /* cpSpaceQuery.c in Sources */,
 				1A36F6A917EFE6D2000D0275 /* cpSpaceStep.c in Sources */,
 				1A36F6AA17EFE6D2000D0275 /* cpSpatialIndex.c in Sources */,
