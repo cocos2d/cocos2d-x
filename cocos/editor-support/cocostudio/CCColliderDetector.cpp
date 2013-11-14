@@ -347,7 +347,7 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         }
 #endif
 
-        int num = contourData->vertexList.count();
+        long num = contourData->vertexList.count();
         ContourVertex2 **vs = (ContourVertex2 **)contourData->vertexList.data->arr;
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
@@ -383,8 +383,8 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         }
 
 #if ENABLE_PHYSICS_CHIPMUNK_DETECT
-        cpConvexHull(num, shape->verts, nullptr, nullptr, 0);
-        for (int i = 0; i < num; i++)
+        cpConvexHull(static_cast<int>(num), shape->verts, nullptr, nullptr, 0);
+        for (long i = 0; i < num; i++)
         {
             cpVect b = shape->verts[(i + 1) % shape->numVerts];
             cpVect n = cpvnormalize(cpvperp(cpvsub(b, shape->verts[i])));
@@ -458,7 +458,7 @@ void ColliderDetector::setBody(cpBody *pBody)
 
         ContourData *contourData = colliderBody->getContourData();
 
-        int num = contourData->vertexList.count();
+        long num = contourData->vertexList.count();
         ContourVertex2 **vs = (ContourVertex2 **)contourData->vertexList.data->arr;
         cpVect *verts = new cpVect[num];
         for (int i = 0; i < num; i++)
@@ -467,7 +467,7 @@ void ColliderDetector::setBody(cpBody *pBody)
             verts[num - 1 - i].y = vs[i]->y;
         }
 
-        cpShape *shape = cpPolyShapeNew(_body, num, verts, cpvzero);
+        cpShape *shape = cpPolyShapeNew(_body, static_cast<int>(num), verts, cpvzero);
 
         shape->sensor = true;
         shape->data = _bone;

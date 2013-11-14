@@ -286,8 +286,8 @@ Spawn * ActionNode::refreshActionProperty()
 		}
 
 		Array* cSequenceArray = Array::create();
-		int frameCount = cArray->count();
-		for (int i = 0; i < frameCount; i++)
+		long frameCount = cArray->count();
+		for (long i = 0; i < frameCount; i++)
 		{
 			ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(i));
 			if (i == 0)
@@ -359,11 +359,11 @@ void ActionNode::stopAction()
 	}
 }
 
-int ActionNode::getFirstFrameIndex()
+long ActionNode::getFirstFrameIndex()
 {
-	int frameindex = 99999;
+	long frameindex = 99999;
 	bool bFindFrame = false;
-	for (int n = 0; n < _frameArrayNum; n++)
+	for (long n = 0; n < _frameArrayNum; n++)
 	{
 		Array* cArray = (Array*)(_frameArray->getObjectAtIndex(n));
 		if (cArray == NULL || cArray->count() <= 0)
@@ -386,9 +386,9 @@ int ActionNode::getFirstFrameIndex()
 	return frameindex;
 }
 
-int ActionNode::getLastFrameIndex()
+long ActionNode::getLastFrameIndex()
 {
-	int frameindex = -1;
+	long frameindex = -1;
 	bool bFindFrame = false;
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
@@ -398,9 +398,9 @@ int ActionNode::getLastFrameIndex()
 			continue;
 		}
 		bFindFrame = true;
-		int lastInex = cArray->count() - 1;
+		long lastInex = cArray->count() - 1;
 		ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(lastInex));
-		int iFrameIndex = frame->getFrameIndex();
+		long iFrameIndex = frame->getFrameIndex();
 
 		if (frameindex < iFrameIndex)
 		{
@@ -427,8 +427,8 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 		{
 			continue;
 		}
-		int frameCount = cArray->count();
-		for (int i = 0; i < frameCount; i++)
+		long frameCount = cArray->count();
+		for (long i = 0; i < frameCount; i++)
 		{
 			ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(i));
 

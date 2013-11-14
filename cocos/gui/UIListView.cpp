@@ -92,7 +92,7 @@ void UIListView::updateInnerContainerSize()
     switch (_direction) {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            int childrenCount = _items->count();
+            long childrenCount = _items->count();
             float totalHeight = _model->getSize().height * childrenCount + (childrenCount - 1) * _itemsMargin;
             float finalWidth = _size.width;
             float finalHeight = totalHeight;
@@ -101,7 +101,7 @@ void UIListView::updateInnerContainerSize()
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            int childrenCount = _items->count();
+            long childrenCount = _items->count();
             float totalWidth = _model->getSize().width * childrenCount + (childrenCount - 1) * _itemsMargin;
             float finalWidth = totalWidth;
             float finalHeight = _size.height;
@@ -278,7 +278,7 @@ void UIListView::insertCustomItem(UIWidget* item, int index)
     addChild(item);
 }
 
-void UIListView::removeItem(int index)
+void UIListView::removeItem(long index)
 {
     if (!_items)
     {
@@ -299,7 +299,7 @@ void UIListView::removeLastItem()
     removeItem(_items->count() -1);
 }
 
-UIWidget* UIListView::getItem(unsigned int index)
+UIWidget* UIListView::getItem(long index)
 {
     if ((int)index < 0 || index >= _items->count())
     {
@@ -313,7 +313,7 @@ cocos2d::Array* UIListView::getItems()
     return _items;
 }
 
-unsigned int UIListView::getIndex(UIWidget *item) const
+long UIListView::getIndex(UIWidget *item) const
 {
     if (!_items)
     {
@@ -373,7 +373,7 @@ void UIListView::refreshView()
         return;
     }
     cocos2d::ccArray* arrayItems = _items->data;
-    int length = arrayItems->num;
+    long length = arrayItems->num;
     for (int i=0; i<length; i++)
     {
         UIWidget* item = (UIWidget*)(arrayItems->arr[i]);
@@ -416,7 +416,7 @@ void UIListView::interceptTouchEvent(int handleState, gui::UIWidget *sender, con
     }
 }
     
-int UIListView::getCurSelectedIndex() const
+long UIListView::getCurSelectedIndex() const
 {
     return _curSelectedIndex;
 }
@@ -440,8 +440,8 @@ UIWidget* UIListView::createCloneInstance()
 void UIListView::copyClonedWidgetChildren(UIWidget* model)
 {
     cocos2d::ccArray* arrayItems = dynamic_cast<UIListView*>(model)->getItems()->data;
-    int length = arrayItems->num;
-    for (int i=0; i<length; i++)
+    long length = arrayItems->num;
+    for (long i=0; i<length; i++)
     {
         UIWidget* item = (UIWidget*)(arrayItems->arr[i]);
         pushBackCustomItem(item->clone());

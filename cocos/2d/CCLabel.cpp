@@ -384,7 +384,7 @@ Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const F
     }
 }
 
-bool Label::recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex)
+bool Label::recordLetterInfo(const cocos2d::Point& point,unsigned short theChar, long spriteIndex)
 {
     if (static_cast<std::size_t>(spriteIndex) >= _lettersInfo.size())
     {
@@ -400,7 +400,7 @@ bool Label::recordLetterInfo(const cocos2d::Point& point,unsigned short int theC
     return _lettersInfo[spriteIndex].def.validDefinition;
 }
 
-bool Label::recordPlaceholderInfo(int spriteIndex)
+bool Label::recordPlaceholderInfo(long spriteIndex)
 {
     if (static_cast<std::size_t>(spriteIndex) >= _lettersInfo.size())
     {
@@ -453,12 +453,12 @@ Sprite * Label::getLetter(int ID)
     return nullptr;
 }
 
-float Label::getLetterPosXLeft( int index ) const
+float Label::getLetterPosXLeft( long index ) const
 {
     return _lettersInfo[index].position.x * _scaleX - (_lettersInfo[index].contentSize.width * _scaleX * _lettersInfo[index].def.anchorX);
 }
 
-float Label::getLetterPosXRight( int index ) const
+float Label::getLetterPosXRight( long index ) const
 {
     return _lettersInfo[index].position.x * _scaleX + (_lettersInfo[index].contentSize.width * _scaleX * _lettersInfo[index].def.anchorX);
 }
@@ -648,7 +648,7 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 		item->updateDisplayedOpacity(_displayedOpacity);
 	}
     V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    int count = _textureAtlas->getTotalQuads();
+    long count = _textureAtlas->getTotalQuads();
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
     if (_isOpacityModifyRGB)
     {
@@ -715,7 +715,7 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
 	}
 
     V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    int count = _textureAtlas->getTotalQuads();
+    long count = _textureAtlas->getTotalQuads();
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
 
     // special opacity for premultiplied textures

@@ -48,10 +48,10 @@ public:
     // CCTextFieldDelegate
     virtual bool onTextFieldAttachWithIME(cocos2d::TextFieldTTF *pSender);
     virtual bool onTextFieldDetachWithIME(cocos2d::TextFieldTTF * pSender);
-    virtual bool onTextFieldInsertText(cocos2d::TextFieldTTF * pSender, const char * text, int nLen);
-    virtual bool onTextFieldDeleteBackward(cocos2d::TextFieldTTF * pSender, const char * delText, int nLen);
+    virtual bool onTextFieldInsertText(cocos2d::TextFieldTTF * pSender, const char * text, long nLen);
+    virtual bool onTextFieldDeleteBackward(cocos2d::TextFieldTTF * pSender, const char * delText, long nLen);
     
-    void insertText(const char* text, int len);
+    void insertText(const char* text, long len);
     void deleteBackward();
     
     void openIME();

@@ -118,14 +118,14 @@ public:
      *
      * @return  index of first ActionFrame
      */
-	int getFirstFrameIndex();
+	long getFirstFrameIndex();
     
     /**
      * Gets index of last ActionFrame.
      *
      * @return  index of last ActionFrame
      */
-	int getLastFrameIndex();
+	long getLastFrameIndex();
 
     /**
      * Updates action states to some time.

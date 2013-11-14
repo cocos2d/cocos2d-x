@@ -159,13 +159,13 @@ bool TextFieldTTF::canDetachWithIME()
     return (_delegate) ? (! _delegate->onTextFieldDetachWithIME(this)) : true;
 }
 
-void TextFieldTTF::insertText(const char * text, int len)
+void TextFieldTTF::insertText(const char * text, long len)
 {
     std::string sInsert(text, len);
 
     // insert \n means input end
-    int nPos = sInsert.find('\n');
-    if ((int)sInsert.npos != nPos)
+    std::size_t nPos = sInsert.find('\n');
+    if (sInsert.npos != nPos)
     {
         len = nPos;
         sInsert.erase(nPos);
@@ -185,7 +185,7 @@ void TextFieldTTF::insertText(const char * text, int len)
         setString(sText);
     }
 
-    if ((int)sInsert.npos == nPos) {
+    if (sInsert.npos == nPos) {
         return;
     }
 
@@ -201,29 +201,29 @@ void TextFieldTTF::insertText(const char * text, int len)
 
 void TextFieldTTF::deleteBackward()
 {
-    int nStrLen = _inputText.length();
-    if (! nStrLen)
+    long strLen = _inputText.length();
+    if (! strLen)
     {
         // there is no string
         return;
     }
 
     // get the delete byte number
-    int nDeleteLen = 1;    // default, erase 1 byte
+    int deleteLen = 1;    // default, erase 1 byte
 
-    while(0x80 == (0xC0 & _inputText.at(nStrLen - nDeleteLen)))
+    while(0x80 == (0xC0 & _inputText.at(strLen - deleteLen)))
     {
-        ++nDeleteLen;
+        ++deleteLen;
     }
 
-    if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText.c_str() + nStrLen - nDeleteLen, nDeleteLen))
+    if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText.c_str() + strLen - deleteLen, deleteLen))
     {
         // delegate doesn't wan't to delete backwards
         return;
     }
 
     // if all text deleted, show placeholder string
-    if (nStrLen <= nDeleteLen)
+    if (strLen <= deleteLen)
     {
         _inputText = "";
         _charCount = 0;
@@ -232,7 +232,7 @@ void TextFieldTTF::deleteBackward()
     }
 
     // set new input text
-    std::string sText(_inputText.c_str(), nStrLen - nDeleteLen);
+    std::string sText(_inputText.c_str(), strLen - deleteLen);
     setString(sText);
 }
 
@@ -279,7 +279,7 @@ void TextFieldTTF::setString(const std::string &text)
 {
     static char bulletString[] = {(char)0xe2, (char)0x80, (char)0xa2, (char)0x00};
     std::string displayText;
-    int length;
+    long length;
 
     if (text.length()>0)
     {

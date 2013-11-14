@@ -126,10 +126,10 @@ public:
     void appendChild(Sprite* sprite);
     void removeSpriteFromAtlas(Sprite *sprite);
 
-    int rebuildIndexInOrder(Sprite *parent, int index);
-    int highestAtlasIndexInChild(Sprite *sprite);
-    int lowestAtlasIndexInChild(Sprite *sprite);
-    int atlasIndexForChild(Sprite *sprite, int z);
+    long rebuildIndexInOrder(Sprite *parent, long index);
+    long highestAtlasIndexInChild(Sprite *sprite);
+    long lowestAtlasIndexInChild(Sprite *sprite);
+    long atlasIndexForChild(Sprite *sprite, int z);
     /* Sprites use this to start sortChildren, don't call this manually */
     void reorderBatch(bool reorder);
 
@@ -169,19 +169,19 @@ protected:
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void insertQuadFromSprite(Sprite *sprite, int index);
+    void insertQuadFromSprite(Sprite *sprite, long index);
     /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void updateQuadFromSprite(Sprite *sprite, int index);
+    void updateQuadFromSprite(Sprite *sprite, long index);
     /* This is the opposite of "addQuadFromSprite.
     It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
     */
     SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
 
-    void updateAtlasIndex(Sprite* sprite, int* curIndex);
-    void swap(int oldIndex, int newIndex);
+    void updateAtlasIndex(Sprite* sprite, long* curIndex);
+    void swap(long oldIndex, long newIndex);
     void updateBlendFunc();
 
     TextureAtlas *_textureAtlas;

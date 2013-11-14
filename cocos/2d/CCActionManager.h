@@ -105,7 +105,7 @@ public:
     long getNumberOfRunningActionsInTarget(const Object *target) const;
 
     /** @deprecated use getNumberOfRunningActionsInTarget() instead */
-    CC_DEPRECATED_ATTRIBUTE inline unsigned int numberOfRunningActionsInTarget(Object *target) const { return getNumberOfRunningActionsInTarget(target); }
+    CC_DEPRECATED_ATTRIBUTE inline long numberOfRunningActionsInTarget(Object *target) const { return getNumberOfRunningActionsInTarget(target); }
 
     /** Pauses the target: all running actions and newly added actions will be paused.
     */

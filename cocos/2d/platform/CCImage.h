@@ -49,7 +49,7 @@ NS_CC_BEGIN
 typedef struct _MipmapInfo
 {
     unsigned char* address;
-    int len;
+    long len;
 }MipmapInfo;
 
 class CC_DLL Image : public Object
@@ -137,21 +137,21 @@ public:
     */
     bool initWithString(
         const char *    text,
-        int             width = 0,
-        int             height = 0,
+        long            width = 0,
+        long            height = 0,
         TextAlign       alignMask = TextAlign::CENTER,
         const char *    fontName = 0,
-        int             size = 0);
+        long            size = 0);
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
         bool initWithStringShadowStroke(
-                                            const char *    pText,
-                                            int             nWidth      = 0,
-                                            int             nHeight     = 0,
-                                            TextAlign       eAlignMask  = TextAlign::CENTER,
-                                            const char *    pFontName   = 0,
-                                            int             nSize       = 0,
+                                            const char *    text,
+                                            long            width      = 0,
+                                            long            height     = 0,
+                                            TextAlign       alignMask  = TextAlign::CENTER,
+                                            const char *    fontName   = 0,
+                                            long            size       = 0,
                                             float           textTintR   = 1,
                                             float           textTintG   = 1,
                                             float           textTintB   = 1,
@@ -173,17 +173,17 @@ public:
     
     // Getters
     inline unsigned char *   getData()               { return _data; }
-    inline int               getDataLen()            { return _dataLen; }
+    inline long              getDataLen()            { return _dataLen; }
     inline Format            getFileType()           {return _fileType; }
     inline Texture2D::PixelFormat getRenderFormat()    { return _renderFormat; }
-    inline int               getWidth()              { return _width; }
-    inline int               getHeight()             { return _height; }
+    inline long              getWidth()              { return _width; }
+    inline long              getHeight()             { return _height; }
     inline bool              isPremultipliedAlpha()  { return _preMulti;   }
-    inline int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
+    inline long              getNumberOfMipmaps()    { return _numberOfMipmaps; }
     inline MipmapInfo*       getMipmaps()            { return _mipmaps; }
     inline bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
 
-    int                      getBitPerPixel();
+    long                     getBitPerPixel();
     bool                     hasAlpha();
     bool                     isCompressed();
 
@@ -196,16 +196,16 @@ public:
     bool saveToFile(const char *filePath, bool isToRGB = true);
 
 protected:
-    bool initWithJpgData(const unsigned char *  data, int dataLen);
-    bool initWithPngData(const unsigned char * data, int dataLen);
-    bool initWithTiffData(const unsigned char * data, int dataLen);
-    bool initWithWebpData(const unsigned char * data, int dataLen);
-    bool initWithPVRData(const unsigned char * data, int dataLen);
-    bool initWithPVRv2Data(const unsigned char * data, int dataLen);
-    bool initWithPVRv3Data(const unsigned char * data, int dataLen);
-    bool initWithETCData(const unsigned char * data, int dataLen);
-    bool initWithS3TCData(const unsigned char * data, int dataLen);
-    bool initWithATITCData(const unsigned char *data, int dataLen);
+    bool initWithJpgData(const unsigned char *  data, long dataLen);
+    bool initWithPngData(const unsigned char * data, long dataLen);
+    bool initWithTiffData(const unsigned char * data, long dataLen);
+    bool initWithWebpData(const unsigned char * data, long dataLen);
+    bool initWithPVRData(const unsigned char * data, long dataLen);
+    bool initWithPVRv2Data(const unsigned char * data, long dataLen);
+    bool initWithPVRv3Data(const unsigned char * data, long dataLen);
+    bool initWithETCData(const unsigned char * data, long dataLen);
+    bool initWithS3TCData(const unsigned char * data, long dataLen);
+    bool initWithATITCData(const unsigned char *data, long dataLen);
 
     bool saveImageToPNG(const char *filePath, bool isToRGB = true);
     bool saveImageToJPG(const char *filePath);
@@ -215,16 +215,16 @@ private:
      @brief Determine how many mipmaps can we have.
      Its same as define but it respects namespaces
      */
-    static const int MIPMAP_MAX = 16;
+    static const long MIPMAP_MAX = 16;
     unsigned char *_data;
-    int _dataLen;
-    int _width;
-    int _height;
+    long _dataLen;
+    long _width;
+    long _height;
     Format _fileType;
     Texture2D::PixelFormat _renderFormat;
     bool _preMulti;
     MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
-    int _numberOfMipmaps;
+    long _numberOfMipmaps;
     // false if we cann't auto detect the image is premultiplied or not.
     bool _hasPremultipliedAlpha;
 
@@ -243,15 +243,15 @@ private:
      */
     bool initWithImageFileThreadSafe(const char *fullpath);
     
-    Format detectFormat(const unsigned char * data, int dataLen);
-    bool isPng(const unsigned char * data, int dataLen);
-    bool isJpg(const unsigned char * data, int dataLen);
-    bool isTiff(const unsigned char * data, int dataLen);
-    bool isWebp(const unsigned char * data, int dataLen);
-    bool isPvr(const unsigned char * data, int dataLen);
-    bool isEtc(const unsigned char * data, int dataLen);
-    bool isS3TC(const unsigned char * data,int dataLen);
-    bool isATITC(const unsigned char *data, int dataLen);
+    Format detectFormat(const unsigned char * data, long dataLen);
+    bool isPng(const unsigned char * data, long dataLen);
+    bool isJpg(const unsigned char * data, long dataLen);
+    bool isTiff(const unsigned char * data, long dataLen);
+    bool isWebp(const unsigned char * data, long dataLen);
+    bool isPvr(const unsigned char * data, long dataLen);
+    bool isEtc(const unsigned char * data, long dataLen);
+    bool isS3TC(const unsigned char * data,long dataLen);
+    bool isATITC(const unsigned char *data, long dataLen);
 };
 
 // end of platform group

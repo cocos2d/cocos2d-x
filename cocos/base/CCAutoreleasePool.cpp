@@ -157,20 +157,20 @@ void PoolManager::pop()
         return;
     }
 
-    int nCount = _releasePoolStack->count();
+    long count = _releasePoolStack->count();
 
     _curReleasePool->clear();
  
-    if (nCount > 1)
+    if (count > 1)
     {
-        _releasePoolStack->removeObjectAtIndex(nCount-1);
+        _releasePoolStack->removeObjectAtIndex(count-1);
 
 //         if(nCount > 1)
 //         {
 //             _curReleasePool = _releasePoolStack->getObjectAtIndex(nCount - 2);
 //             return;
 //         }
-        _curReleasePool = (AutoreleasePool*)_releasePoolStack->getObjectAtIndex(nCount - 2);
+        _curReleasePool = (AutoreleasePool*)_releasePoolStack->getObjectAtIndex(count - 2);
     }
 
     /*_curReleasePool = NULL;*/

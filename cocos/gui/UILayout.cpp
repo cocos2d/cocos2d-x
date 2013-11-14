@@ -132,8 +132,8 @@ void UILayout::onSizeChanged()
     if (strcmp(getDescription(), "Layout") == 0)
     {
         cocos2d::ccArray* arrayChildren = _children->data;
-        int length = arrayChildren->num;
-        for (int i=0; i<length; ++i)
+        long length = arrayChildren->num;
+        for (long i=0; i<length; ++i)
         {
             UIWidget* child = (UIWidget*)arrayChildren->arr[i];
             child->updateSizeAndPosition();
@@ -464,8 +464,8 @@ void UILayout::setLayoutType(LayoutType type)
     _layoutType = type;
 
     cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-    int length = layoutChildrenArray->num;
-    for (int i=0; i<length; i++)
+    long length = layoutChildrenArray->num;
+    for (long i=0; i<length; i++)
     {
         UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
         supplyTheLayoutParameterLackToChild(child);
@@ -486,10 +486,10 @@ void UILayout::doLayout()
         case LAYOUT_LINEAR_VERTICAL:
         {
             cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
+            long length = layoutChildrenArray->num;
             cocos2d::Size layoutSize = getSize();
             float topBoundary = layoutSize.height;
-            for (int i=0; i<length; ++i)
+            for (long i=0; i<length; ++i)
             {
                 UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
                 UILinearLayoutParameter* layoutParameter = dynamic_cast<UILinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
@@ -527,10 +527,10 @@ void UILayout::doLayout()
         case LAYOUT_LINEAR_HORIZONTAL:
         {
             cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
+            long length = layoutChildrenArray->num;
             cocos2d::Size layoutSize = getSize();
             float leftBoundary = 0.0f;
-            for (int i=0; i<length; ++i)
+            for (long i=0; i<length; ++i)
             {
                 UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
                 UILinearLayoutParameter* layoutParameter = dynamic_cast<UILinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
@@ -568,11 +568,11 @@ void UILayout::doLayout()
         case LAYOUT_RELATIVE:
         {
             cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
-            int unlayoutChildCount = length;
+            long length = layoutChildrenArray->num;
+            long unlayoutChildCount = length;
             cocos2d::Size layoutSize = getSize();
             
-            for (int i=0; i<length; i++)
+            for (long i=0; i<length; i++)
             {
                 UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
                 UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
@@ -581,7 +581,7 @@ void UILayout::doLayout()
             
             while (unlayoutChildCount > 0)
             {
-                for (int i=0; i<length; i++)
+                for (long i=0; i<length; i++)
                 {
                     UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
                     UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));

@@ -42,11 +42,11 @@ struct LetterInfo
 class CC_DLL LabelTextFormatProtocol
 {
 public:
-    virtual bool             recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) = 0; 
-    virtual bool             recordPlaceholderInfo(int spriteIndex) = 0; 
+    virtual bool             recordLetterInfo(const cocos2d::Point& point,unsigned short theChar, long spriteIndex) = 0;
+    virtual bool             recordPlaceholderInfo(long spriteIndex) = 0;
     virtual std::vector<LetterInfo>  *getLettersInfo()                                                 = 0;
-    virtual float            getLetterPosXLeft(int index)  const                                       = 0;
-    virtual float            getLetterPosXRight(int index) const                                       = 0;
+    virtual float            getLetterPosXLeft(long index)  const                                       = 0;
+    virtual float            getLetterPosXRight(long index) const                                       = 0;
     // sprite related stuff
     virtual cocos2d::Sprite *getLetter(int ID)                                                    = 0;   
     

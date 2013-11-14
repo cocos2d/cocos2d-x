@@ -125,7 +125,7 @@ void NotificationCenter::removeObserver(Object *target,const char *name)
     }
 }
 
-int NotificationCenter::removeAllObservers(Object *target)
+long NotificationCenter::removeAllObservers(Object *target)
 {
     Object *obj = NULL;
     Array *toRemove = Array::create();

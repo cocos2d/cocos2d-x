@@ -60,7 +60,7 @@ ActionManagerEx::~ActionManagerEx()
 void ActionManagerEx::initWithDictionary(const char* jsonName,JsonDictionary *dic,Object* root)
 {
 	std::string path = jsonName;
-	int pos = path.find_last_of("/");
+    std::size_t pos = path.find_last_of("/");
 	std::string fileName = path.substr(pos+1,path.length());
 	CCLOG("filename == %s",fileName.c_str());
 	Array* actionList = Array::create();

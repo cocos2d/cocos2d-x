@@ -144,7 +144,7 @@ void DisplayManager::addDisplay(Node *display, int index)
         {
             bool find = false;
 
-            for (int i = _decoDisplayList->count()-2; i>=0; i--)
+            for (long i = _decoDisplayList->count()-2; i>=0; i--)
             {
                 DecorativeDisplay *dd = static_cast<DecorativeDisplay*>(_decoDisplayList->getObjectAtIndex(i));
                 SpriteDisplayData *sdd = static_cast<SpriteDisplayData*>(dd->getDisplayData());

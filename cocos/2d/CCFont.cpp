@@ -125,7 +125,7 @@ int Font::getUTF16TextLenght(unsigned short int *text) const
      return cc_wcslen(text);
 }
 
-unsigned short int  * Font::trimUTF16Text(unsigned short int *text, int newBegin, int newEnd) const
+unsigned short int  * Font::trimUTF16Text(unsigned short int *text, long newBegin, long newEnd) const
 {
     if ( newBegin < 0 || newEnd <= 0 )
         return 0;
@@ -136,10 +136,10 @@ unsigned short int  * Font::trimUTF16Text(unsigned short int *text, int newBegin
     if (newEnd >= cc_wcslen(text))
         return 0;
     
-    int newLenght = newEnd - newBegin + 2;
+    long newLenght = newEnd - newBegin + 2;
     unsigned short* trimmedString = new unsigned short[newLenght];
     
-    for(int c = 0; c < (newLenght - 1); ++c)
+    for(long c = 0; c < (newLenght - 1); ++c)
     {
         trimmedString[c] = text[newBegin + c];
     }

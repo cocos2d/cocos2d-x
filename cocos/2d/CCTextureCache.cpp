@@ -448,7 +448,7 @@ void TextureCache::dumpCachedTextureInfo() const
     for( auto it = _textures.begin(); it != _textures.end(); ++it ) {
 
         Texture2D* tex = it->second;
-        unsigned int bpp = tex->getBitsPerPixelForFormat();
+        long bpp = tex->getBitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
         long bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
         totalBytes += bytes;
@@ -457,9 +457,9 @@ void TextureCache::dumpCachedTextureInfo() const
                it->first.c_str(),
                (long)tex->retainCount(),
                (long)tex->getName(),
-               (long)tex->getPixelsWide(),
-               (long)tex->getPixelsHigh(),
-               (long)bpp,
+               tex->getPixelsWide(),
+               tex->getPixelsHigh(),
+               bpp,
                (long)bytes / 1024);
     }
 

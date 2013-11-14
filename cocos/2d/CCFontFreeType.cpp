@@ -267,8 +267,8 @@ Size * FontFreeType::getAdvancesForTextUTF16(unsigned short *text, int &outNumLe
     
     for (int c = 0; c < outNumLetters; ++c)
     {
-        int advance = 0;
-        int kerning = 0;
+        long advance = 0;
+        long kerning = 0;
         
         advance = getAdvanceForChar(text[c]) - getBearingXForChar(text[c]);
         
@@ -281,7 +281,7 @@ Size * FontFreeType::getAdvancesForTextUTF16(unsigned short *text, int &outNumLe
     return sizes;
 }
 
-int FontFreeType::getAdvanceForChar(unsigned short theChar) const
+long FontFreeType::getAdvanceForChar(unsigned short theChar) const
 {
     if (!_fontRef)
         return 0;
@@ -300,7 +300,7 @@ int FontFreeType::getAdvanceForChar(unsigned short theChar) const
     return (_fontRef->glyph->advance.x >> 6);
 }
 
-int FontFreeType::getBearingXForChar(unsigned short theChar) const
+long FontFreeType::getBearingXForChar(unsigned short theChar) const
 {
     
     if (!_fontRef)
@@ -319,7 +319,7 @@ int FontFreeType::getBearingXForChar(unsigned short theChar) const
     return (_fontRef->glyph->metrics.horiBearingX >>6);
 }
 
-int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
+long  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
 {
     if (!_fontRef)
         return 0;
@@ -349,7 +349,7 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
     return (kerning.x >> 6);
 }
 
-int FontFreeType::getFontMaxHeight() const
+long FontFreeType::getFontMaxHeight() const
 {
     return (_fontRef->size->metrics.height >> 6);
 }
@@ -379,7 +379,7 @@ unsigned char *   FontFreeType::getGlyphBitmap(unsigned short theChar, int &outW
     return _fontRef->glyph->bitmap.buffer;
 }
 
-int FontFreeType::getLetterPadding() const
+long FontFreeType::getLetterPadding() const
 {
     return _letterPadding;
 }

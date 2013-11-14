@@ -257,7 +257,7 @@ public:
     static void setFontSize(long size);
     /** get default font size */
     static long getFontSize();
-    CC_DEPRECATED_ATTRIBUTE static unsigned int fontSize() { return MenuItemFont::getFontSize(); };
+    CC_DEPRECATED_ATTRIBUTE static long fontSize() { return MenuItemFont::getFontSize(); };
     /** set the default font name */
     static void setFontName(const std::string& name);
     /** get the default font name */
@@ -275,7 +275,7 @@ public:
      * @js getFontSize
      */
     long getFontSizeObj() const;
-    CC_DEPRECATED_ATTRIBUTE unsigned int fontSizeObj() const { return getFontSizeObj(); };
+    CC_DEPRECATED_ATTRIBUTE long fontSizeObj() const { return getFontSizeObj(); };
     
     /** set the font name 
      * c++ can not overload static and non-static member functions with the same parameter types

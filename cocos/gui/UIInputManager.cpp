@@ -71,8 +71,8 @@ void UIInputManager::registWidget(UIWidget* widget)
 bool UIInputManager::checkTouchEvent(UIWidget *root, const Point &touchPoint)
 {
     ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
-    for (int i=length-1; i >= 0; i--)
+    long length = arrayRootChildren->num;
+    for (long i=length-1; i >= 0; i--)
     {
         UIWidget* widget = (UIWidget*)(arrayRootChildren->arr[i]);
         if (checkTouchEvent(widget, touchPoint))
@@ -130,8 +130,8 @@ void UIInputManager::update(float dt)
         }
     }
     ccArray* arrayWidget = _checkedDoubleClickWidget->data;
-    int widgetCount = arrayWidget->num;
-    for (int i=0;i<widgetCount;i++)
+    long widgetCount = arrayWidget->num;
+    for (long i=0;i<widgetCount;i++)
     {
         UIWidget* widget = (UIWidget*)(arrayWidget->arr[i]);
         if (!widget->isVisible())
@@ -154,8 +154,8 @@ void UIInputManager::onTouchMoved(Touch* touch)
     _touchMovedPoint.x = touch->getLocation().x;
     _touchMovedPoint.y = touch->getLocation().y;
     ccArray* selectedWidgetArray = _selectedWidgets->data;
-    int length = selectedWidgetArray->num;
-    for (int i=0; i<length; ++i)
+    long length = selectedWidgetArray->num;
+    for (long i=0; i<length; ++i)
     {
         UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[i]);
         hitWidget->onTouchMoved(_touchMovedPoint);
@@ -173,8 +173,8 @@ void UIInputManager::onTouchEnd(Touch* touch)
     _touchEndedPoint.x = touch->getLocation().x;
     _touchEndedPoint.y = touch->getLocation().y;
     ccArray* selectedWidgetArray = _selectedWidgets->data;
-    int length = selectedWidgetArray->num;
-    for (int i=0; i<length; ++i)
+    long length = selectedWidgetArray->num;
+    for (long i=0; i<length; ++i)
     {
         UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[0]);
         _selectedWidgets->removeObject(hitWidget);
@@ -188,8 +188,8 @@ void UIInputManager::onTouchCancelled(Touch* touch)
     _touchEndedPoint.x = touch->getLocation().x;
     _touchEndedPoint.y = touch->getLocation().y;
     ccArray* selectedWidgetArray = _selectedWidgets->data;
-    int length = selectedWidgetArray->num;
-    for (int i=0; i<length; ++i)
+    long length = selectedWidgetArray->num;
+    for (long i=0; i<length; ++i)
     {
         UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[0]);
         _selectedWidgets->removeObject(hitWidget);

@@ -276,7 +276,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void textHandler(void *ctx, const char *ch, int len);
+    void textHandler(void *ctx, const char *ch, long len);
     
     inline const std::string& getCurrentString() const { return _currentString; }
     inline void setCurrentString(const std::string& currentString){ _currentString = currentString; }

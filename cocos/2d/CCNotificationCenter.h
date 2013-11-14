@@ -80,7 +80,7 @@ public:
      *  @param target The target of this notification.
      *  @returns the number of observers removed
      */
-    int removeAllObservers(Object *target);
+    long removeAllObservers(Object *target);
 
     /** @brief Registers one hander for script binding.
      *  @note Only supports Lua Binding now.

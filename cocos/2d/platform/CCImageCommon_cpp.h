@@ -348,8 +348,8 @@ namespace
     typedef struct 
     {
         const unsigned char * data;
-        int size;
-        int offset;
+        long size;
+        long offset;
     }tImageSource;
     
     static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
@@ -457,7 +457,7 @@ bool Image::initWithImageData(const unsigned char * data, long dataLen)
         CC_BREAK_IF(! data || dataLen <= 0);
         
         unsigned char* unpackedData = nullptr;
-        int unpackedLen = 0;
+        long unpackedLen = 0;
         
         //detecgt and unzip the compress file
         if (ZipUtils::ccIsCCZBuffer(data, dataLen))
@@ -516,7 +516,7 @@ bool Image::initWithImageData(const unsigned char * data, long dataLen)
     return ret;
 }
 
-bool Image::isPng(const unsigned char * data, int dataLen)
+bool Image::isPng(const unsigned char * data, long dataLen)
 {
     if (dataLen <= 8)
     {
@@ -529,13 +529,13 @@ bool Image::isPng(const unsigned char * data, int dataLen)
 }
 
 
-bool Image::isEtc(const unsigned char * data, int dataLen)
+bool Image::isEtc(const unsigned char * data, long dataLen)
 {
     return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
 }
 
 
-bool Image::isS3TC(const unsigned char * data, int dataLen)
+bool Image::isS3TC(const unsigned char * data, long dataLen)
 {
 
     S3TCTexHeader *header = (S3TCTexHeader *)data;
@@ -548,7 +548,7 @@ bool Image::isS3TC(const unsigned char * data, int dataLen)
     return true;
 }
 
-bool Image::isATITC(const unsigned char *data, int dataLen)
+bool Image::isATITC(const unsigned char *data, long dataLen)
 {
     ATITCTexHeader *header = (ATITCTexHeader *)data;
     
@@ -560,7 +560,7 @@ bool Image::isATITC(const unsigned char *data, int dataLen)
     return true;
 }
 
-bool Image::isJpg(const unsigned char * data, int dataLen)
+bool Image::isJpg(const unsigned char * data, long dataLen)
 {
     if (dataLen <= 4)
     {
@@ -572,7 +572,7 @@ bool Image::isJpg(const unsigned char * data, int dataLen)
     return memcmp(data, JPG_SOI, 2) == 0;
 }
 
-bool Image::isTiff(const unsigned char * data, int dataLen)
+bool Image::isTiff(const unsigned char * data, long dataLen)
 {
     if (dataLen <= 4)
     {
@@ -586,7 +586,7 @@ bool Image::isTiff(const unsigned char * data, int dataLen)
         (memcmp(data, TIFF_MM, 2) == 0 && *(static_cast<const unsigned char*>(data) + 2) == 0 && *(static_cast<const unsigned char*>(data) + 3) == 42);
 }
 
-bool Image::isWebp(const unsigned char * data, int dataLen)
+bool Image::isWebp(const unsigned char * data, long dataLen)
 {
     if (dataLen <= 12)
     {
@@ -600,7 +600,7 @@ bool Image::isWebp(const unsigned char * data, int dataLen)
         && memcmp(static_cast<const unsigned char*>(data) + 8, WEBP_WEBP, 4) == 0;
 }
 
-bool Image::isPvr(const unsigned char * data, int dataLen)
+bool Image::isPvr(const unsigned char * data, long dataLen)
 {
     if (static_cast<size_t>(dataLen) < sizeof(PVRv2TexHeader) || static_cast<size_t>(dataLen) < sizeof(PVRv3TexHeader))
     {
@@ -614,7 +614,7 @@ bool Image::isPvr(const unsigned char * data, int dataLen)
 }
 
 
-Image::Format Image::detectFormat(const unsigned char * data, int dataLen)
+Image::Format Image::detectFormat(const unsigned char * data, long dataLen)
 {
     if (isPng(data, dataLen))
     {
@@ -654,7 +654,7 @@ Image::Format Image::detectFormat(const unsigned char * data, int dataLen)
     }
 }
 
-int Image::getBitPerPixel()
+long Image::getBitPerPixel()
 {
     return Texture2D::getPixelFormatInfoMap().at(_renderFormat).bpp;
 }
@@ -726,7 +726,7 @@ namespace
     }
 }
 
-bool Image::initWithJpgData(const unsigned char * data, int dataLen)
+bool Image::initWithJpgData(const unsigned char * data, long dataLen)
 {
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
@@ -820,7 +820,7 @@ bool Image::initWithJpgData(const unsigned char * data, int dataLen)
     return bRet;
 }
 
-bool Image::initWithPngData(const unsigned char * data, int dataLen)
+bool Image::initWithPngData(const unsigned char * data, long dataLen)
 {
     // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
@@ -920,7 +920,7 @@ bool Image::initWithPngData(const unsigned char * data, int dataLen)
         }
 
         // read png data
-        png_uint_32 rowbytes;
+        png_size_t rowbytes;
         png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * _height );
 
         rowbytes = png_get_rowbytes(png_ptr, info_ptr);
@@ -1061,7 +1061,7 @@ namespace
     }
 }
 
-bool Image::initWithTiffData(const unsigned char * data, int dataLen)
+bool Image::initWithTiffData(const unsigned char * data, long dataLen)
 {
     bool bRet = false;
     do 
@@ -1155,10 +1155,10 @@ namespace
     }
 }
 
-bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
+bool Image::initWithPVRv2Data(const unsigned char * data, long dataLen)
 {
-    int dataLength = 0, dataOffset = 0, dataSize = 0;
-    int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
+    long dataLength = 0, dataOffset = 0, dataSize = 0;
+    long blockSize = 0, widthBlocks = 0, heightBlocks = 0;
     int width = 0, height = 0;
     
     //Cast first sizeof(PVRTexHeader) bytes of data stream as PVRTexHeader
@@ -1263,7 +1263,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
         }
 
         dataSize = widthBlocks * heightBlocks * ((blockSize  * it->second.bpp) / 8);
-        int packetLength = (dataLength - dataOffset);
+        long packetLength = (dataLength - dataOffset);
         packetLength = packetLength > dataSize ? dataSize : packetLength;
 
         //Make record to the mipmaps array and increment counter
@@ -1281,7 +1281,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
     return true;
 }
 
-bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
+bool Image::initWithPVRv3Data(const unsigned char * data, long dataLen)
 {
     if (static_cast<size_t>(dataLen) < sizeof(PVRv3TexHeader))
     {
@@ -1340,8 +1340,8 @@ bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
 	int height = CC_SWAP_INT32_LITTLE_TO_HOST(header->height);
 	_width = width;
 	_height = height;
-	int dataOffset = 0, dataSize = 0;
-	int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
+	long dataOffset = 0, dataSize = 0;
+	long blockSize = 0, widthBlocks = 0, heightBlocks = 0;
 	
     _dataLen = dataLen - (sizeof(PVRv3TexHeader) + header->metadataLength);
     _data = new unsigned char[_dataLen];
@@ -1350,7 +1350,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
 	_numberOfMipmaps = header->numberOfMipmaps;
 	CCAssert(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increate the CC_MIPMAP_MAX value");
     
-	for (int i = 0; i < _numberOfMipmaps; i++)
+	for (long i = 0; i < _numberOfMipmaps; i++)
     {
 		switch ((PVR3TexturePixelFormat)pixelFormat)
         {
@@ -1390,7 +1390,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
         }
 		
 		dataSize = widthBlocks * heightBlocks * ((blockSize  * it->second.bpp) / 8);
-		int packetLength = _dataLen - dataOffset;
+		long packetLength = _dataLen - dataOffset;
 		packetLength = packetLength > dataSize ? dataSize : packetLength;
 		
 		_mipmaps[i].address = _data + dataOffset;
@@ -1407,7 +1407,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
 	return true;
 }
 
-bool Image::initWithETCData(const unsigned char * data, int dataLen)
+bool Image::initWithETCData(const unsigned char * data, long dataLen)
 {
     const etc1_byte* header = static_cast<const etc1_byte*>(data);
     
@@ -1441,14 +1441,14 @@ bool Image::initWithETCData(const unsigned char * data, int dataLen)
         CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
 
          //if it is not gles or device do not support ETC, decode texture by software
-        int bytePerPixel = 3;
-        unsigned int stride = _width * bytePerPixel;
+        etc1_uint32 bytePerPixel = 3;
+        long stride = _width * bytePerPixel;
         _renderFormat = Texture2D::PixelFormat::RGB888;
         
         _dataLen =  _width * _height * bytePerPixel;
         _data = new unsigned char[_dataLen];
         
-        if (etc1_decode_image(static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, static_cast<etc1_byte*>(_data), _width, _height, bytePerPixel, stride) != 0)
+        if (etc1_decode_image(static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, static_cast<etc1_byte*>(_data), static_cast<etc1_uint32>(_width), static_cast<etc1_uint32>(_height), bytePerPixel, static_cast<etc1_uint32>(stride)) != 0)
         {
             _dataLen = 0;
             CC_SAFE_DELETE_ARRAY(_data);
@@ -1469,7 +1469,7 @@ namespace
     }
 }
 
-bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
+bool Image::initWithS3TCData(const unsigned char * data, long dataLen)
 {
     
     const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
@@ -1490,8 +1490,8 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     
     /* caculate the dataLen */
     
-    int width = _width;
-    int height = _height;
+    long width = _width;
+    long height = _height;
     
     if (Configuration::getInstance()->supportsS3TC())  //compressed data length
     {
@@ -1516,16 +1516,16 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     
     /* load the mipmaps */
     
-    int encodeOffset = 0;
-    int decodeOffset = 0;
+    long encodeOffset = 0;
+    long decodeOffset = 0;
     width = _width;  height = _height;
     
-    for (int i = 0; i < _numberOfMipmaps && (width || height); ++i)  
+    for (long i = 0; i < _numberOfMipmaps && (width || height); ++i)
     {
         if (width == 0) width = 1;
         if (height == 0) height = 1;
         
-        int size = ((width+3)/4)*((height+3)/4)*blockSize;
+        long size = ((width+3)/4)*((height+3)/4)*blockSize;
                 
         if (Configuration::getInstance()->supportsS3TC())
         {   //decode texture throught hardware
@@ -1551,22 +1551,22 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
             
             CCLOG("cocos2d: Hardware S3TC decoder not present. Using software decoder");
 
-            int bytePerPixel = 4;
-            unsigned int stride = width * bytePerPixel;
+            etc1_uint32 bytePerPixel = 4;
+            long stride = width * bytePerPixel;
             _renderFormat = Texture2D::PixelFormat::RGBA8888;
 
             std::vector<unsigned char> decodeImageData(stride * height);
             if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT1);
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], static_cast<etc1_uint32>(width), static_cast<etc1_uint32>(height), S3TCDecodeFlag::DXT1);
             }
             else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT3);
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], static_cast<etc1_uint32>(width), static_cast<etc1_uint32>(height), S3TCDecodeFlag::DXT3);
             }
             else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT5);
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], static_cast<etc1_uint32>(width), static_cast<etc1_uint32>(height), S3TCDecodeFlag::DXT5);
             }
             
             _mipmaps[i].address = (unsigned char *)_data + decodeOffset;
@@ -1588,7 +1588,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
 }
 
 
-bool Image::initWithATITCData(const unsigned char *data, int dataLen)
+bool Image::initWithATITCData(const unsigned char *data, long dataLen)
 {
     /* load the .ktx file */
     ATITCTexHeader *header = (ATITCTexHeader *)data;
@@ -1616,8 +1616,8 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
     unsigned char *pixelData = (unsigned char *)data + sizeof(ATITCTexHeader) + header->bytesOfKeyValueData + 4;
     
     /* caculate the dataLen */
-    int width = _width;
-    int height = _height;
+    long width = _width;
+    long height = _height;
     
     if (Configuration::getInstance()->supportsATITC())  //compressed data length
     {
@@ -1627,7 +1627,7 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
     }
     else                                               //decompressed data length
     {
-        for (int i = 0; i < _numberOfMipmaps && (width || height); ++i)
+        for (long i = 0; i < _numberOfMipmaps && (width || height); ++i)
         {
             if (width == 0) width = 1;
             if (height == 0) height = 1;
@@ -1645,12 +1645,12 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
     int decodeOffset = 0;
     width = _width;  height = _height;
     
-    for (int i = 0; i < _numberOfMipmaps && (width || height); ++i)
+    for (long i = 0; i < _numberOfMipmaps && (width || height); ++i)
     {
         if (width == 0) width = 1;
         if (height == 0) height = 1;
         
-        int size = ((width+3)/4)*((height+3)/4)*blockSize;
+        long size = ((width+3)/4)*((height+3)/4)*blockSize;
         
         if (Configuration::getInstance()->supportsATITC())
         {
@@ -1682,21 +1682,21 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
             
             CCLOG("cocos2d: Hardware ATITC decoder not present. Using software decoder");
             
-            int bytePerPixel = 4;
-            unsigned int stride = width * bytePerPixel;
+            etc1_uint32 bytePerPixel = 4;
+            long stride = width * bytePerPixel;
             _renderFormat = Texture2D::PixelFormat::RGBA8888;
             
             std::vector<unsigned char> decodeImageData(stride * height);
             switch (header->glInternalFormat)
             {
                 case CC_GL_ATC_RGB_AMD:
-                    atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_RGB);
+                    atitc_decode(pixelData + encodeOffset, &decodeImageData[0], static_cast<etc1_uint32>(width), static_cast<etc1_uint32>(height), ATITCDecodeFlag::ATC_RGB);
                     break;
                 case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
-                    atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_EXPLICIT_ALPHA);
+                    atitc_decode(pixelData + encodeOffset, &decodeImageData[0], static_cast<etc1_uint32>(width), static_cast<etc1_uint32>(height), ATITCDecodeFlag::ATC_EXPLICIT_ALPHA);
                     break;
                 case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
-                    atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_INTERPOLATED_ALPHA);
+                    atitc_decode(pixelData + encodeOffset, &decodeImageData[0], static_cast<etc1_uint32>(width), static_cast<etc1_uint32>(height), ATITCDecodeFlag::ATC_INTERPOLATED_ALPHA);
                     break;
                 default:
                     break;
@@ -1717,14 +1717,14 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
     return true;
 }
 
-bool Image::initWithPVRData(const unsigned char * data, int dataLen)
+bool Image::initWithPVRData(const unsigned char * data, long dataLen)
 {
     return initWithPVRv2Data(data, dataLen) || initWithPVRv3Data(data, dataLen);
 }
 
-bool Image::initWithWebpData(const unsigned char * data, int dataLen)
+bool Image::initWithWebpData(const unsigned char * data, long dataLen)
 {
-	bool bRet = false;
+	bool ret = false;
 	do
 	{
         WebPDecoderConfig config;
@@ -1741,8 +1741,8 @@ bool Image::initWithWebpData(const unsigned char * data, int dataLen)
         _data = new unsigned char[_dataLen];
         
         config.output.u.RGBA.rgba = static_cast<uint8_t*>(_data);
-        config.output.u.RGBA.stride = _width * 4;
-        config.output.u.RGBA.size = _dataLen;
+        config.output.u.RGBA.stride = static_cast<int>(_width * 4);
+        config.output.u.RGBA.size = static_cast<size_t>(_dataLen);
         config.output.is_external_memory = 1;
         
         if (WebPDecode(static_cast<const uint8_t*>(data), dataLen, &config) != VP8_STATUS_OK)
@@ -1752,9 +1752,9 @@ bool Image::initWithWebpData(const unsigned char * data, int dataLen)
             break;
         }
         
-        bRet = true;
+        ret = true;
 	} while (0);
-	return bRet;
+	return ret;
 }
 
 bool Image::initWithRawData(const unsigned char * data, long dataLen, long width, long height, long bitsPerComponent, bool preMulti)
@@ -1876,12 +1876,12 @@ bool Image::saveImageToPNG(const char * filePath, bool isToRGB)
 
         if (!isToRGB && hasAlpha())
         {
-            png_set_IHDR(png_ptr, info_ptr, _width, _height, 8, PNG_COLOR_TYPE_RGB_ALPHA,
+            png_set_IHDR(png_ptr, info_ptr, static_cast<png_uint_32>(_width), static_cast<png_uint_32>(_height), 8, PNG_COLOR_TYPE_RGB_ALPHA,
                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
         } 
         else
         {
-            png_set_IHDR(png_ptr, info_ptr, _width, _height, 8, PNG_COLOR_TYPE_RGB,
+            png_set_IHDR(png_ptr, info_ptr, static_cast<png_uint_32>(_width), static_cast<png_uint_32>(_height), 8, PNG_COLOR_TYPE_RGB,
                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
         }
 
@@ -1984,7 +1984,7 @@ bool Image::saveImageToJPG(const char * filePath)
         struct jpeg_error_mgr jerr;
         FILE * outfile;                 /* target file */
         JSAMPROW row_pointer[1];        /* pointer to JSAMPLE row[s] */
-        int     row_stride;          /* physical row width in image buffer */
+        long     row_stride;          /* physical row width in image buffer */
 
         cinfo.err = jpeg_std_error(&jerr);
         /* Now we can initialize the JPEG compression object. */
@@ -1994,8 +1994,8 @@ bool Image::saveImageToJPG(const char * filePath)
         
         jpeg_stdio_dest(&cinfo, outfile);
 
-        cinfo.image_width = _width;    /* image width and height, in pixels */
-        cinfo.image_height = _height;
+        cinfo.image_width = static_cast<JDIMENSION>(_width);    /* image width and height, in pixels */
+        cinfo.image_height = static_cast<JDIMENSION>(_height);
         cinfo.input_components = 3;       /* # of color components per pixel */
         cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
 

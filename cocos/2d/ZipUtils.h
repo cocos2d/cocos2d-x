@@ -64,7 +64,7 @@ namespace cocos2d
         *
         @since v0.8.1
         */
-        static int ccInflateMemory(unsigned char *in, long inLength, unsigned char **out);
+        static long ccInflateMemory(unsigned char *in, long inLength, unsigned char **out);
 
         /** 
         * Inflates either zlib or gzip deflated memory. The inflated memory is
@@ -76,7 +76,7 @@ namespace cocos2d
         *
         @since v1.0.0
         */
-        static int ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLenghtHint);
+        static long ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLenghtHint);
 
         /** inflates a GZip file into memory
         *

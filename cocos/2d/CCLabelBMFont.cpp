@@ -919,7 +919,7 @@ void LabelBMFont::updateLabel()
     {
         // Step 1: Make multiline
         vector<unsigned short> str_whole = cc_utf16_vec_from_utf16_str(_string);
-        unsigned int stringLength = str_whole.size();
+        long stringLength = str_whole.size();
         vector<unsigned short> multiline_string;
         multiline_string.reserve( stringLength );
         vector<unsigned short> last_word;
@@ -1070,7 +1070,7 @@ void LabelBMFont::updateLabel()
 
         multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
 
-        int size = multiline_string.size();
+        long size = multiline_string.size();
         unsigned short* str_new = new unsigned short[size + 1];
 
         for (int j = 0; j < size; ++j)
@@ -1093,22 +1093,22 @@ void LabelBMFont::updateLabel()
         int lineNumber = 0;
         int str_len = cc_wcslen(_string);
         vector<unsigned short> last_line;
-        for (int ctr = 0; ctr <= str_len; ++ctr)
+        for (long ctr = 0; ctr <= str_len; ++ctr)
         {
             if (_string[ctr] == '\n' || _string[ctr] == 0)
             {
                 float lineWidth = 0.0f;
-                unsigned int line_length = last_line.size();
+                long line_length = last_line.size();
 				// if last line is empty we must just increase lineNumber and work with next line
                 if (line_length == 0)
                 {
                     lineNumber++;
                     continue;
                 }
-                int index = i + line_length - 1 + lineNumber;
+                long index = i + line_length - 1 + lineNumber;
                 if (index < 0) continue;
 
-                Sprite* lastChar = static_cast<Sprite*>( getChildByTag(index) );
+                Sprite* lastChar = static_cast<Sprite*>( getChildByTag(static_cast<int>(index)) );
                 if ( lastChar == NULL )
                     continue;
 
@@ -1134,7 +1134,7 @@ void LabelBMFont::updateLabel()
                         index = i + j + lineNumber;
                         if (index < 0) continue;
 
-                        Sprite* characterSprite = static_cast<Sprite*>( getChildByTag(index) );
+                        Sprite* characterSprite = static_cast<Sprite*>( getChildByTag(static_cast<int>(index)) );
                         characterSprite->setPosition(characterSprite->getPosition() + Point(shift, 0.0f));
                     }
                 }

@@ -475,11 +475,11 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
 
     Vertex2F* vertices = new Vertex2F[segments + 1];
 
-    unsigned int p;
+    long p;
     float lt;
     float deltaT = 1.0f / config->count();
 
-    for( unsigned int i=0; i < segments+1;i++) {
+    for( long i=0; i < segments+1;i++) {
 
         float dt = (float)i / segments;
 

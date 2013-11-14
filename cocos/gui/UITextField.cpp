@@ -72,7 +72,7 @@ bool UICCTextField::onTextFieldAttachWithIME(cocos2d::TextFieldTTF *pSender)
     return false;
 }
 
-bool UICCTextField::onTextFieldInsertText(cocos2d::TextFieldTTF *pSender, const char *text, int nLen)
+bool UICCTextField::onTextFieldInsertText(cocos2d::TextFieldTTF *pSender, const char *text, long nLen)
 {
     if (nLen == 1 && strcmp(text, "\n") == 0)
     {
@@ -90,7 +90,7 @@ bool UICCTextField::onTextFieldInsertText(cocos2d::TextFieldTTF *pSender, const 
     return false;
 }
 
-bool UICCTextField::onTextFieldDeleteBackward(cocos2d::TextFieldTTF *pSender, const char *delText, int nLen)
+bool UICCTextField::onTextFieldDeleteBackward(cocos2d::TextFieldTTF *pSender, const char *delText, long nLen)
 {
     setDeleteBackward(true);
     return false;
@@ -102,10 +102,10 @@ bool UICCTextField::onTextFieldDetachWithIME(cocos2d::TextFieldTTF *pSender)
     return false;
 }
 
-void UICCTextField::insertText(const char * text, int len)
+void UICCTextField::insertText(const char * text, long len)
 {
     std::string str_text = text;
-    int str_len = cocos2d::TextFieldTTF::getString().size();
+    long str_len = cocos2d::TextFieldTTF::getString().size();
     
     if (strcmp(text, "\n") != 0)
     {

@@ -82,7 +82,7 @@ bool XmlSaxHander::VisitExit( const tinyxml2::XMLElement& element )
 bool XmlSaxHander::Visit( const tinyxml2::XMLText& text )
 {
 	//log("Visit %s",text.Value());
-	SAXParser::textHandler(_ccsaxParserImp, (const CC_XML_CHAR *)text.Value(), strlen(text.Value()));
+	SAXParser::textHandler(_ccsaxParserImp, (const CC_XML_CHAR *)text.Value(), static_cast<long>(strlen(text.Value())));
 	return true;
 }
 
@@ -102,10 +102,10 @@ bool SAXParser::init(const char *pszEncoding)
     return true;
 }
 
-bool SAXParser::parse(const char* pXMLData, unsigned int uDataLength)
+bool SAXParser::parse(const char* pXMLData, long dataLength)
 {
 	tinyxml2::XMLDocument tinyDoc;
-	tinyDoc.Parse(pXMLData, uDataLength);
+	tinyDoc.Parse(pXMLData, dataLength);
 	XmlSaxHander printer;
 	printer.setSAXParserImp(this);
 	
@@ -134,7 +134,7 @@ void SAXParser::endElement(void *ctx, const CC_XML_CHAR *name)
 {
     ((SAXParser*)(ctx))->_delegator->endElement(ctx, (char*)name);
 }
-void SAXParser::textHandler(void *ctx, const CC_XML_CHAR *name, int len)
+void SAXParser::textHandler(void *ctx, const CC_XML_CHAR *name, long len)
 {
     ((SAXParser*)(ctx))->_delegator->textHandler(ctx, (char*)name, len);
 }

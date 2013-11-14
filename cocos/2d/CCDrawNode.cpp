@@ -362,8 +362,8 @@ void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, f
 	
 	bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
 	
-	unsigned int triangle_count = 3*count - 2;
-	unsigned int vertex_count = 3*triangle_count;
+	long triangle_count = 3*count - 2;
+	long vertex_count = 3*triangle_count;
     ensureCapacity(vertex_count);
 	
 	V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);

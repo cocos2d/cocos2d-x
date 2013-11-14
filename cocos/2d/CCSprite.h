@@ -388,13 +388,13 @@ public:
     /**
      * Returns the index used on the TextureAtlas.
      */
-    inline int getAtlasIndex(void) const { return _atlasIndex; }
+    inline long getAtlasIndex(void) const { return _atlasIndex; }
 
     /**
      * Sets the index used on the TextureAtlas.
      * @warning Don't modify this value unless you know what you are doing
      */
-    inline void setAtlasIndex(int atlasIndex) { _atlasIndex = atlasIndex; }
+    inline void setAtlasIndex(long atlasIndex) { _atlasIndex = atlasIndex; }
 
     /**
      * Returns the rect of the Sprite in points
@@ -541,7 +541,7 @@ protected:
     // Data used when the sprite is rendered using a SpriteSheet
     //
     TextureAtlas*       _textureAtlas;      /// SpriteBatchNode texture atlas (weak reference)
-    int                 _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
+    long                 _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
     SpriteBatchNode*    _batchNode;         /// Used batch node (weak reference)
 
     bool                _dirty;             /// Whether the sprite needs to be updated

@@ -404,7 +404,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
 
     char *encodedData = 0;
     
-    base64Encode(value.getBytes(), value.getSize(), &encodedData);
+    base64Encode(value.getBytes(), static_cast<unsigned int>(value.getSize()), &encodedData);
         
     setValueForKey(pKey, encodedData);
     

@@ -43,7 +43,7 @@ Examples:
 @since v0.99.5
 */
 
-unsigned long ccNextPOT( unsigned long value );
+long ccNextPOT( long value );
 
 }
 

@@ -108,7 +108,7 @@ Array* Dictionary::allKeys()
     {
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
-            Integer* pOneKey = new Integer(pElement->_intKey);
+            Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
             pArray->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
@@ -143,7 +143,7 @@ Array* Dictionary::allKeysForObject(Object* object)
         {
             if (object == pElement->_object)
             {
-                Integer* pOneKey = new Integer(pElement->_intKey);
+                Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
                 pArray->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }

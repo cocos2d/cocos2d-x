@@ -343,8 +343,8 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
             tile->setAnchorPoint(Point::ZERO);
             tile->setOpacity(_opacity);
 
-            unsigned int indexForZ = atlasIndexForExistantZ(z);
-            this->addSpriteWithoutQuad(tile, indexForZ, z);
+            long indexForZ = atlasIndexForExistantZ(z);
+            this->addSpriteWithoutQuad(tile, static_cast<int>(indexForZ), z);
             tile->release();
         }
     }
@@ -383,7 +383,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
     setupTileSprite(tile, pos, gid);
 
     // get atlas index
-    unsigned int indexForZ = atlasIndexForNewZ(z);
+    long indexForZ = atlasIndexForNewZ(static_cast<int>(z));
 
     // Optimization: add the quad without adding a child
     this->insertQuadFromSprite(tile, indexForZ);
@@ -400,7 +400,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
             Sprite* child = static_cast<Sprite*>(pObject);
             if (child)
             {
-                unsigned int ai = child->getAtlasIndex();
+                long ai = child->getAtlasIndex();
                 if ( ai >= indexForZ )
                 {
                     child->setAtlasIndex(ai+1);
@@ -422,7 +422,7 @@ Sprite * TMXLayer::updateTileForGID(unsigned int gid, const Point& pos)
     setupTileSprite(tile ,pos ,gid);
 
     // get atlas index
-    unsigned int indexForZ = atlasIndexForExistantZ(z);
+    long indexForZ = atlasIndexForExistantZ(z);
     tile->setAtlasIndex(indexForZ);
     tile->setDirty(true);
     tile->updateTransform();
@@ -447,7 +447,7 @@ Sprite * TMXLayer::appendTileForGID(unsigned int gid, const Point& pos)
     // optimization:
     // The difference between appendTileForGID and insertTileforGID is that append is faster, since
     // it appends the tile at the end of the texture atlas
-    unsigned int indexForZ = _atlasIndexArray->num;
+    long indexForZ = _atlasIndexArray->num;
 
     // don't add it using the "standard" way.
     insertQuadFromSprite(tile, indexForZ);
@@ -463,23 +463,23 @@ static inline int compareInts(const void * a, const void * b)
 {
     return ((*(int*)a) - (*(int*)b));
 }
-unsigned int TMXLayer::atlasIndexForExistantZ(unsigned int z)
+long TMXLayer::atlasIndexForExistantZ(unsigned int z)
 {
     int key=z;
     int *item = (int*)bsearch((void*)&key, (void*)&_atlasIndexArray->arr[0], _atlasIndexArray->num, sizeof(void*), compareInts);
 
     CCASSERT(item, "TMX atlas index not found. Shall not happen");
 
-    int index = ((size_t)item - (size_t)_atlasIndexArray->arr) / sizeof(void*);
+    long index = ((size_t)item - (size_t)_atlasIndexArray->arr) / sizeof(void*);
     return index;
 }
-unsigned int TMXLayer::atlasIndexForNewZ(int z)
+long TMXLayer::atlasIndexForNewZ(int z)
 {
     // XXX: This can be improved with a sort of binary search
-    int i=0;
+    long i=0;
     for (i=0; i< _atlasIndexArray->num ; i++) 
     {
-        int val = (size_t) _atlasIndexArray->arr[i];
+        long val = (size_t) _atlasIndexArray->arr[i];
         if (z < val)
         {
             break;
@@ -562,8 +562,8 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
 
     CCASSERT(_children->containsObject(sprite), "Tile does not belong to TMXLayer");
 
-    unsigned int atlasIndex = sprite->getAtlasIndex();
-    unsigned int zz = (size_t)_atlasIndexArray->arr[atlasIndex];
+    long atlasIndex = sprite->getAtlasIndex();
+    long zz = (size_t)_atlasIndexArray->arr[atlasIndex];
     _tiles[zz] = 0;
     ccCArrayRemoveValueAtIndex(_atlasIndexArray, atlasIndex);
     SpriteBatchNode::removeChild(sprite, cleanup);
@@ -579,7 +579,7 @@ void TMXLayer::removeTileAt(const Point& pos)
     if (gid) 
     {
         unsigned int z = (unsigned int)(pos.x + pos.y * _layerSize.width);
-        unsigned int atlasIndex = atlasIndexForExistantZ(z);
+        long atlasIndex = atlasIndexForExistantZ(z);
 
         // remove tile from GID map
         _tiles[z] = 0;
@@ -606,7 +606,7 @@ void TMXLayer::removeTileAt(const Point& pos)
                     Sprite* child = static_cast<Sprite*>(pObject);
                     if (child)
                     {
-                        unsigned int ai = child->getAtlasIndex();
+                        long ai = child->getAtlasIndex();
                         if ( ai >= atlasIndex )
                         {
                             child->setAtlasIndex(ai-1);

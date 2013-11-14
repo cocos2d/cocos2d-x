@@ -404,7 +404,7 @@ float Tween::updateFrameData(float currentPercent)
          *  Get frame length, if _toIndex >= _length, then set _toIndex to 0, start anew.
          *  _toIndex is next index will play
          */
-        int length = _movementBoneData->frameList.count();
+        long length = _movementBoneData->frameList.count();
         FrameData **frames = (FrameData **)_movementBoneData->frameList.data->arr;
 
         FrameData *from = nullptr;

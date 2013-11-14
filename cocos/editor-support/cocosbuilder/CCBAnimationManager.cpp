@@ -622,7 +622,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
     
     Array *actions = Array::create();
     Array *keyframes = channel->getKeyframes();
-    int numKeyframes = keyframes->count();
+    long numKeyframes = keyframes->count();
 
     for (int i = 0; i < numKeyframes; ++i)
     {
@@ -696,7 +696,7 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
     
     Array *actions = Array::create();
     Array *keyframes = channel->getKeyframes();
-    int numKeyframes = keyframes->count();
+    long numKeyframes = keyframes->count();
 
     for (int i = 0; i < numKeyframes; ++i) {
 
@@ -737,7 +737,7 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
 void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration)
 {
     Array *keyframes = pSeqProp->getKeyframes();
-    int numKeyframes = keyframes->count();
+    long numKeyframes = keyframes->count();
     
     if (numKeyframes > 1)
     {
