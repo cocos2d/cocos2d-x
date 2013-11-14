@@ -64,6 +64,11 @@ public:
      * @lua NA
      */
     virtual ~TransitionPageTurn();
+    
+    //
+    // Overrides
+    //
+    virtual void draw() override;
 
     /**
     * Creates a base transition with duration and incoming scene.
@@ -83,8 +88,9 @@ protected:
     virtual void sceneOrder() override;
 
 protected:
-    bool    _back;
-
+    bool    _back;    
+    static float POLYGON_OFFSET_FACTOR;
+    static float POLYGON_OFFSET_UNITS;
 };
 
 // end of transition group
