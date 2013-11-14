@@ -6,7 +6,7 @@
 class GameOverLayer : public cocos2d::LayerColor
 {
 public:
-    GameOverLayer():_label(NULL) {};
+    GameOverLayer():_label(nullptr) {};
     virtual ~GameOverLayer();
     bool init();
     CREATE_FUNC(GameOverLayer);
@@ -19,7 +19,7 @@ public:
 class GameOverScene : public cocos2d::Scene
 {
 public:
-    GameOverScene():_layer(NULL) {};
+    GameOverScene():_layer(nullptr) {};
     ~GameOverScene();
     bool init();
     CREATE_FUNC(GameOverScene);
