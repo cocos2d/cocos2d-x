@@ -106,6 +106,8 @@ public:
      */
     void removePageAtIndex(int index);
     
+    void removeAllPages();
+    
     /**
      * scroll pageview to index.
      *
@@ -122,6 +124,8 @@ public:
     
     CCArray* getPages();
     
+    UILayout* getPage(int index);
+    
     // event
     void addEventListenerPageView(CCObject *target, SEL_PageViewEvent selector);
     /*******Compatible*******/
@@ -129,11 +133,7 @@ public:
     void addPageTurningEvent(CCObject *target, SEL_PageViewPageTurningEvent selector);
     /**************/
     
-    //override "removeChild" method of widget.
-    virtual bool removeChild(UIWidget* widget);
-    
-    //override "removeAllChildrenAndCleanUp" method of widget.
-    virtual void removeAllChildren();
+
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const CCPoint &touchPoint);
@@ -153,6 +153,24 @@ public:
     virtual void doLayout(){};
     
     /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    virtual void setLayoutType(LayoutType type){};
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    virtual LayoutType getLayoutType() const{return LAYOUT_ABSOLUTE;};
+    
+    /**
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
@@ -167,6 +185,8 @@ public:
     /************/
 protected:
     virtual bool addChild(UIWidget* widget);
+    virtual bool removeChild(UIWidget* widget);
+    virtual void removeAllChildren();
     virtual bool init();
     UILayout* createPage();
     float getPositionXByIndex(int idx);
