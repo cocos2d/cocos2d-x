@@ -412,7 +412,7 @@ bool CCUserDefault::createXMLFile()
     {  
         return false;  
     }  
-	tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration("1.0");  
+	tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration(NULL);  
 	if (NULL==pDeclaration)  
 	{  
 		return false;  
