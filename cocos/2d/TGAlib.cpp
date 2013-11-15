@@ -270,7 +270,7 @@ tImageTGA * tgaLoad(const char *filename)
         }
     } while(0);
 
-    CC_SAFE_DELETE_ARRAY(pBuffer);
+    free(pBuffer);
 
     return info;
 }

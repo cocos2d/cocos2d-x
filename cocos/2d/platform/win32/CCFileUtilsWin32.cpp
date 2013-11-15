@@ -139,7 +139,7 @@ unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mod
         
         *size = ::GetFileSize(fileHandle, NULL);
 
-        pBuffer = new unsigned char[*size];
+        pBuffer = (unsigned char*) malloc(*size);
         DWORD sizeRead = 0;
         BOOL successed = FALSE;
         successed = ::ReadFile(fileHandle, pBuffer, *size, &sizeRead, NULL);
@@ -147,7 +147,7 @@ unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mod
 
         if (!successed)
         {
-            CC_SAFE_DELETE_ARRAY(pBuffer);
+            free(pBuffer);
         }
     } while (0);
     

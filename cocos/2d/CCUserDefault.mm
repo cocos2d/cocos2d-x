@@ -74,7 +74,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
 		long size;
-		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &size);
+		char* pXmlBuffer = (char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &size);
 		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
 		{
@@ -82,7 +82,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
 			break;
 		}
 		xmlDoc->Parse(pXmlBuffer);
-        delete[] pXmlBuffer;
+        free(pXmlBuffer);
 		// get root node
 		rootNode = xmlDoc->RootElement();
 		if (NULL == rootNode)
@@ -394,7 +394,7 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
                 // set value in NSUserDefaults
                 setDataForKey(pKey, ret);
                 
-                delete decodedData;
+                free(decodedData);
                 
                 flush();
                 
