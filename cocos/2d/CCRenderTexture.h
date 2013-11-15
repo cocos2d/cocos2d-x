@@ -58,21 +58,6 @@ public:
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static RenderTexture * create(int w, int h);
-    /**
-     * @js ctor
-     */
-    RenderTexture();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~RenderTexture();
-    
-    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat);
-
-    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** starts grabbing */
     void begin();
@@ -167,10 +152,25 @@ public:
     virtual void visit() override;
     virtual void draw() override;
 
-private:
+protected:
+    /**
+     * @js ctor
+     */
+    RenderTexture();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~RenderTexture();
+
+    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat);
+
+    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
+
     void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
 
-protected:
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;
     GLint        _oldFBO;
@@ -192,6 +192,10 @@ protected:
      - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
      */
     Sprite* _sprite;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
+
 };
 
 // end of textures group
