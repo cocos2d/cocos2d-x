@@ -4,6 +4,7 @@
 
 
 #include "GroupCommand.h"
+#include "Renderer.h"
 
 NS_CC_BEGIN
 
@@ -50,7 +51,8 @@ int GroupCommandManager::getGroupID()
     }
 
     //Create new ID
-    int newID = _groupMapping.size();
+//    int newID = _groupMapping.size();
+    int newID = Renderer::getInstance()->createRenderQueue();
     _groupMapping[newID] = true;
 
     return newID;

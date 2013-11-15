@@ -14,6 +14,8 @@
 using namespace std;
 
 #define kTagSpriteBatchNode 100
+#define kTagClipperNode     101
+#define kTagContentNode     102
 
 class NewRendererTestScene : public TestScene
 {
@@ -67,7 +69,22 @@ public:
 
 };
 
+class NewClippingNodeTest : public MultiSceneTest
+{
+public:
+    NewClippingNodeTest();
+    virtual ~NewClippingNodeTest();
 
+    virtual string title();
+    virtual string subtitle();
 
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
+
+protected:
+    bool _scrolling;
+    Point _lastPoint;
+};
 
 #endif //__NewRendererTest_H_

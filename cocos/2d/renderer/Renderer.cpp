@@ -113,6 +113,13 @@ void Renderer::addCommand(RenderCommand *command, int renderQueue)
     _renderGroups[renderQueue].push_back(command);
 }
 
+int Renderer::createRenderQueue()
+{
+    RenderQueue newRenderQueue;
+    _renderGroups.push_back(newRenderQueue);
+    return _renderGroups.size() - 1;
+}
+
 bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
 {
     return a->getID() < b->getID();
