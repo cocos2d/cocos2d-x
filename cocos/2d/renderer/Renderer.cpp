@@ -16,7 +16,7 @@
 NS_CC_BEGIN
 using namespace std;
 
-static Renderer*s_instance;
+static Renderer* s_instance;
 
 Renderer *Renderer::getInstance()
 {
@@ -107,7 +107,7 @@ void Renderer::setupVBOAndVAO()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Renderer::addRenderCommand(RenderCommand *command, int renderQueue)
+void Renderer::addCommand(RenderCommand *command, int renderQueue)
 {
     command->generateID();
     _renderGroups[renderQueue].push_back(command);

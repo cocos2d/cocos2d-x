@@ -116,7 +116,7 @@ void NewSprite::draw(void)
     //TODO implement z order
     QuadCommand* renderCommand = new QuadCommand(0, 0,_texture->getName(), _shaderProgram, _blendFunc, &_quad, 1);
 
-    Renderer::getInstance()->addRenderCommand(renderCommand);
+    Renderer::getInstance()->addCommand(renderCommand);
 }
 
 NS_CC_END

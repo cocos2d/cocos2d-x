@@ -109,7 +109,7 @@ public:
     virtual void onExit() override;
     virtual void visit() override;
 
-private:
+protected:
     /**draw fullscreen quad to clear stencil bits
     */
     void drawFullScreenQuadClearStencil();
