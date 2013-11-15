@@ -103,6 +103,14 @@ int lua_print(lua_State * luastate)
 
 NS_CC_BEGIN
 
+LuaStack::~LuaStack()
+{
+    if (nullptr != _state)
+    {
+        lua_close(_state);
+    }
+}
+
 LuaStack *LuaStack::create(void)
 {
     LuaStack *stack = new LuaStack();
