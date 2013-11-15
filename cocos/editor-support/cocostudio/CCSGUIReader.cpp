@@ -34,7 +34,7 @@
 
 namespace cocostudio {
     
-static GUIReader* sharedReader = NULL;
+static GUIReader* sharedReader = nullptr;
 
 GUIReader::GUIReader():
 m_strFilePath("")
@@ -122,26 +122,26 @@ const cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
 UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 {
     DictionaryHelper* dicHelper = DICTOOL;
-    char *des = NULL;
+    const char *des = nullptr;
     std::string jsonpath;
-    JsonDictionary *jsonDict = NULL;
+    JsonDictionary *jsonDict = nullptr;
     jsonpath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
     int pos = jsonpath.find_last_of('/');
     m_strFilePath = jsonpath.substr(0,pos+1);
     long size = 0;
     des = (char*)(CCFileUtils::getInstance()->getFileData(jsonpath.c_str(),"r" , &size));
-    if(NULL == des || strcmp(des, "") == 0)
+    if(nullptr == des || strcmp(des, "") == 0)
     {
         printf("read json file[%s] error!\n", fileName);
-        return NULL;
+        return nullptr;
     }
     std::string strDes(des);
     jsonDict = new JsonDictionary();
     jsonDict->initWithDescription(strDes.c_str());
     
-    UIWidget* widget = NULL;
+    UIWidget* widget = nullptr;
     const char* fileVersion = dicHelper->getStringValue_json(jsonDict, "version");
-    WidgetPropertiesReader * pReader = NULL;
+    WidgetPropertiesReader * pReader = nullptr;
     if (fileVersion)
     {
         int versionInteger = getVersionInteger(fileVersion);
@@ -164,7 +164,7 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
     
     CC_SAFE_DELETE(pReader);
     CC_SAFE_DELETE(jsonDict);
-    free(des);
+    CC_SAFE_DELETE_ARRAY(des);
     return widget;
 }
 
@@ -221,7 +221,7 @@ UIWidget* WidgetPropertiesReader0250::createWidget(JsonDictionary* data, const c
 UIWidget* WidgetPropertiesReader0250::widgetFromJsonDictionary(JsonDictionary *data)
 {
     DictionaryHelper* dicHelper = DICTOOL;
-    UIWidget* widget = NULL;
+    UIWidget* widget = nullptr;
     const char* classname = dicHelper->getStringValue_json(data, "classname");
     JsonDictionary* uiOptions = dicHelper->getSubDictionary_json(data, "options");
     if (classname && strcmp(classname, "Button") == 0)
@@ -397,9 +397,9 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(UIWidget*wi
     const char* pressedFileName = dicHelper->getStringValue_json(options, "pressed");
     const char* disabledFileName = dicHelper->getStringValue_json(options, "disabled");
     
-    const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
-    const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
-    const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
+    const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():nullptr;
+    const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():nullptr;
+    const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
     bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
     if (scale9Enable)
     {
@@ -484,11 +484,11 @@ void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(UIWidget*
     std::string tp_bd = m_strFilePath;
     std::string tp_cd = m_strFilePath;
     
-    const char* backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))?tp_b.append(backGroundFileName).c_str():NULL;
-    const char* backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))?tp_bs.append(backGroundSelectedFileName).c_str():NULL;
-    const char* frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))?tp_c.append(frontCrossFileName).c_str():NULL;
-    const char* backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))?tp_bd.append(backGroundDisabledFileName).c_str():NULL;
-    const char* frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))?tp_cd.append(frontCrossDisabledFileName).c_str():NULL;
+    const char* backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))?tp_b.append(backGroundFileName).c_str():nullptr;
+    const char* backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))?tp_bs.append(backGroundSelectedFileName).c_str():nullptr;
+    const char* frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))?tp_c.append(frontCrossFileName).c_str():nullptr;
+    const char* backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))?tp_bd.append(backGroundDisabledFileName).c_str():nullptr;
+    const char* frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))?tp_cd.append(frontCrossDisabledFileName).c_str():nullptr;
     bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
     
     if (useMergedTexture)
@@ -519,7 +519,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(UIWidget
     imageView->setScale9Enabled(scale9Enable);
     
     std::string tp_i = m_strFilePath;
-    const char* imageFileName_tp = NULL;
+    const char* imageFileName_tp = nullptr;
     if (imageFileName && (strcmp(imageFileName, "") != 0))
     {
         imageFileName_tp = tp_i.append(imageFileName).c_str();
@@ -619,7 +619,7 @@ void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(UIWidge
     if (sv && cmf && iw && ih && scm && (strcmp(dicHelper->getStringValue_json(options, "charMapFile"), "") != 0))
     {
         std::string tp_c = m_strFilePath;
-        const char* cmf_tp = NULL;
+        const char* cmf_tp = nullptr;
         const char* cmft = dicHelper->getStringValue_json(options, "charMapFile");
         cmf_tp = tp_c.append(cmft).c_str();
         
@@ -668,7 +668,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(UIWidget*wi
     
     std::string tp_b = m_strFilePath;
     const char* imageFileName = dicHelper->getStringValue_json(options, "backGroundImage");
-    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
     bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
     if (backGroundScale9Enable)
     {
@@ -732,7 +732,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(UIWidget*wi
         {
             std::string tp_b = m_strFilePath;
             const char* imageFileName = dicHelper->getStringValue_json(options, "barFileName");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
             if (useMergedTexture)
             {
                 slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
@@ -747,7 +747,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(UIWidget*wi
         {
             std::string tp_b = m_strFilePath;
             const char* imageFileName = dicHelper->getStringValue_json(options, "barFileName");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
             if (useMergedTexture)
             {
                 slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
@@ -766,9 +766,9 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(UIWidget*wi
     const char* pressedFileName = dicHelper->getStringValue_json(options, "ballPressed");
     const char* disabledFileName = dicHelper->getStringValue_json(options, "ballDisabled");
     
-    const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
-    const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
-    const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
+    const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():nullptr;
+    const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():nullptr;
+    const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
     if (useMergedTexture)
     {
         slider->loadSlidBallTextures(normalFileName,pressedFileName,disabledFileName,UI_TEX_TYPE_PLIST);
@@ -781,7 +781,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(UIWidget*wi
     
     std::string tp_b = m_strFilePath;
     const char* imageFileName = dicHelper->getStringValue_json(options, "progressBarFileName");
-    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
     if (useMergedTexture)
     {
         slider->loadProgressBarTexture(imageFileName, UI_TEX_TYPE_PLIST);
@@ -852,7 +852,7 @@ void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(UIWidge
     bool useMergedTexture = dicHelper->getBooleanValue_json(options, "useMergedTexture");
     std::string tp_b = m_strFilePath;
     const char*imageFileName =  dicHelper->getStringValue_json(options, "texture");
-    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
     if (useMergedTexture)
     {
         loadingBar->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
@@ -875,7 +875,7 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(UIWidg
     UILabelBMFont* labelBMFont = (UILabelBMFont*)widget;
     
     std::string tp_c = m_strFilePath;
-    const char* cmf_tp = NULL;
+    const char* cmf_tp = nullptr;
     const char* cmft = dicHelper->getStringValue_json(options, "fileName");
     cmf_tp = tp_c.append(cmft).c_str();
     
@@ -940,7 +940,7 @@ UIWidget* WidgetPropertiesReader0300::createWidget(JsonDictionary* data, const c
 UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(JsonDictionary *data)
 {
     DictionaryHelper* dicHelper = DICTOOL;
-    UIWidget* widget = NULL;
+    UIWidget* widget = nullptr;
     const char* classname = dicHelper->getStringValue_json(data, "classname");
     JsonDictionary* uiOptions = dicHelper->getSubDictionary_json(data, "options");
     if (classname && strcmp(classname, "Button") == 0)
@@ -1099,7 +1099,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(UIWidget*wi
     if (layoutParameterDic)
     {
         int paramType = dicHelper->getIntValue_json(layoutParameterDic, "type");
-        UILayoutParameter* parameter = NULL;
+        UILayoutParameter* parameter = nullptr;
         switch (paramType)
         {
             case 0:
@@ -1178,7 +1178,7 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(UIWidget*wi
         {
             std::string tp_n = m_strFilePath;
             const char* normalFileName = dicHelper->getStringValue_json(normalDic, "path");
-            const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
+            const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():nullptr;
             button->loadTextureNormal(normalFileName_tp);
             break;
         }
@@ -1200,7 +1200,7 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(UIWidget*wi
         {
             std::string tp_p = m_strFilePath;
             const char* pressedFileName = dicHelper->getStringValue_json(pressedDic, "path");
-            const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
+            const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():nullptr;
             button->loadTexturePressed(pressedFileName_tp);
             break;
         }
@@ -1222,7 +1222,7 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(UIWidget*wi
         {
             std::string tp_d = m_strFilePath;
             const char* disabledFileName = dicHelper->getStringValue_json(disabledDic, "path");
-            const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
+            const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
             button->loadTextureDisabled(disabledFileName_tp);
             break;
         }
@@ -1297,7 +1297,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(UIWidget*
         {
             std::string tp_b = m_strFilePath;
             const char* backGroundFileName = dicHelper->getStringValue_json(backGroundDic, "path");
-            const char* backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))?tp_b.append(backGroundFileName).c_str():NULL;
+            const char* backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))?tp_b.append(backGroundFileName).c_str():nullptr;
             checkBox->loadTextureBackGround(backGroundFileName_tp);
             break;
         }
@@ -1320,7 +1320,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(UIWidget*
         {
             std::string tp_bs = m_strFilePath;
             const char* backGroundSelectedFileName = dicHelper->getStringValue_json(backGroundSelectedDic, "path");
-            const char* backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))?tp_bs.append(backGroundSelectedFileName).c_str():NULL;
+            const char* backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))?tp_bs.append(backGroundSelectedFileName).c_str():nullptr;
             checkBox->loadTextureBackGroundSelected(backGroundSelectedFileName_tp);
             break;
         }
@@ -1343,7 +1343,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(UIWidget*
         {
             std::string tp_c = m_strFilePath;
             const char* frontCrossFileName = dicHelper->getStringValue_json(frontCrossDic, "path");
-            const char* frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))?tp_c.append(frontCrossFileName).c_str():NULL;
+            const char* frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))?tp_c.append(frontCrossFileName).c_str():nullptr;
             checkBox->loadTextureFrontCross(frontCrossFileName_tp);
             break;
         }
@@ -1366,7 +1366,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(UIWidget*
         {
             std::string tp_bd = m_strFilePath;
             const char* backGroundDisabledFileName = dicHelper->getStringValue_json(backGroundDisabledDic, "path");
-            const char* backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))?tp_bd.append(backGroundDisabledFileName).c_str():NULL;
+            const char* backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))?tp_bd.append(backGroundDisabledFileName).c_str():nullptr;
             checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName_tp);
             break;
         }
@@ -1389,7 +1389,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(UIWidget*
         {
             std::string tp_cd = m_strFilePath;
             const char* frontCrossDisabledFileName = dicHelper->getStringValue_json(options, "path");
-            const char* frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))?tp_cd.append(frontCrossDisabledFileName).c_str():NULL;
+            const char* frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))?tp_cd.append(frontCrossDisabledFileName).c_str():nullptr;
             checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName_tp);
             break;
         }
@@ -1422,7 +1422,7 @@ void WidgetPropertiesReader0300::setPropsForImageViewFromJsonDictionary(UIWidget
         {
             std::string tp_i = m_strFilePath;
             const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
-            const char* imageFileName_tp = NULL;
+            const char* imageFileName_tp = nullptr;
             if (imageFileName && (strcmp(imageFileName, "") != 0))
             {
                 imageFileName_tp = tp_i.append(imageFileName).c_str();
@@ -1592,7 +1592,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(UIWidget*wi
         {
             std::string tp_b = m_strFilePath;
             const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
             panel->setBackGroundImage(imageFileName_tp);
             break;
         }
@@ -1656,7 +1656,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(UIWidget*wi
                 {
                     std::string tp_b = m_strFilePath;
                     const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
-                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
                     slider->loadBarTexture(imageFileName_tp);
                     break;
                 }
@@ -1683,7 +1683,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(UIWidget*wi
                 {
                     std::string tp_b = m_strFilePath;
                     const char*imageFileName =  dicHelper->getStringValue_json(imageFileNameDic, "path");
-                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
                     slider->loadBarTexture(imageFileName_tp);
                     break;
                 }
@@ -1708,7 +1708,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(UIWidget*wi
         {
             std::string tp_n = m_strFilePath;
             const char* normalFileName = dicHelper->getStringValue_json(normalDic, "path");
-            const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
+            const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():nullptr;
             slider->loadSlidBallTextureNormal(normalFileName_tp);
             break;
         }
@@ -1731,7 +1731,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(UIWidget*wi
         {
             std::string tp_p = m_strFilePath;
             const char* pressedFileName = dicHelper->getStringValue_json(pressedDic, "path");
-            const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
+            const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():nullptr;
             slider->loadSlidBallTexturePressed(pressedFileName_tp);
             break;
         }
@@ -1754,7 +1754,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(UIWidget*wi
         {
             std::string tp_d = m_strFilePath;
             const char* disabledFileName = dicHelper->getStringValue_json(disabledDic, "path");
-            const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
+            const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
             slider->loadSlidBallTextureDisabled(disabledFileName_tp);
             break;
         }
@@ -1779,7 +1779,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(UIWidget*wi
         {
             std::string tp_b = m_strFilePath;
             const char* imageFileName = dicHelper->getStringValue_json(progressBarDic, "path");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
             slider->loadProgressBarTexture(imageFileName_tp);
             break;
         }
@@ -1860,7 +1860,7 @@ void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(UIWidge
         {
             std::string tp_i = m_strFilePath;
             const char* imageFileName = dicHelper->getStringValue_json(imageFileNameDic, "path");
-            const char* imageFileName_tp = NULL;
+            const char* imageFileName_tp = nullptr;
             if (imageFileName && (strcmp(imageFileName, "") != 0))
             {
                 imageFileName_tp = tp_i.append(imageFileName).c_str();

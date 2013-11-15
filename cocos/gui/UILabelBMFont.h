@@ -59,19 +59,19 @@ public:
     
     /** get string value for labelbmfont*/
     const char* getStringValue();
-    virtual void setAnchorPoint(const cocos2d::Point &pt);
-    virtual const cocos2d::Size& getContentSize() const;
-    virtual cocos2d::Node* getVirtualRenderer();
+    virtual void setAnchorPoint(const cocos2d::Point &pt) override;
+    virtual const cocos2d::Size& getContentSize() const override;
+    virtual cocos2d::Node* getVirtualRenderer() override;
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
 protected:
-    virtual void initRenderer();
-    virtual void onSizeChanged();
+    virtual void initRenderer() override;
+    virtual void onSizeChanged() override;
     void labelBMFontScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual UIWidget* createCloneInstance() override;
+    virtual void copySpecialProperties(UIWidget* model) override;
 protected:
     cocos2d::LabelBMFont* _labelBMFontRenderer;
     bool _fntFileHasInit;

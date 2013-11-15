@@ -34,7 +34,7 @@ _normalScaleValueY(1.0f),
 _fontName("Thonburi"),
 _fontSize(10),
 _onSelectedScaleOffset(0.5),
-_labelRenderer(NULL)
+_labelRenderer(nullptr)
 {
 }
 
@@ -52,7 +52,7 @@ UILabel* UILabel::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UILabel::init()

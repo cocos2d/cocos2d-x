@@ -30,8 +30,8 @@
 namespace gui {
 
 UILayer::UILayer():
-_rootWidget(NULL),
-_inputManager(NULL)
+_rootWidget(nullptr),
+_inputManager(nullptr)
 {
     
 }
@@ -67,7 +67,7 @@ UILayer* UILayer::create(void)
     else
     {
         CC_SAFE_DELETE(pRet);
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -118,7 +118,7 @@ UIWidget* UILayer::getWidgetByTag(int tag)
 {
     if (!_rootWidget)
     {
-        return NULL;
+        return nullptr;
     }
     return UIHelper::seekWidgetByTag(_rootWidget, tag);
 }
@@ -127,7 +127,7 @@ UIWidget* UILayer::getWidgetByName(const char* name)
 {
     if (!_rootWidget)
     {
-        return NULL;
+        return nullptr;
     }
     return UIHelper::seekWidgetByName(_rootWidget, name);
 }

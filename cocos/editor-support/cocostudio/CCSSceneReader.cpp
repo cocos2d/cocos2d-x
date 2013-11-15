@@ -30,7 +30,7 @@ using namespace gui;
 
 namespace cocostudio {
 
-	SceneReader* SceneReader::s_sharedReader = NULL;
+	SceneReader* SceneReader::s_sharedReader = nullptr;
 
     SceneReader::SceneReader()
     {
@@ -48,19 +48,18 @@ namespace cocostudio {
     cocos2d::Node* SceneReader::createNodeWithSceneFile(const char* pszFileName)
     {
         long size = 0;
-        char* pData = 0;
-		cocos2d::Node *pNode = NULL;
+        const char* pData = 0;
+		cocos2d::Node *pNode = nullptr;
         do {
-            CC_BREAK_IF(pszFileName == NULL);
-            pData = (char*)cocos2d::FileUtils::getInstance()->getFileData(pszFileName, "r", &size);
-            CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
-            JsonDictionary *jsonDict = new JsonDictionary();
-            jsonDict->initWithDescription(pData);
-            pNode = createObject(jsonDict,NULL);
-            CC_SAFE_DELETE(jsonDict);
-            free(pData);
+			  CC_BREAK_IF(pszFileName == nullptr);
+              pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pszFileName, "r", &size));
+              CC_BREAK_IF(pData == nullptr || strcmp(pData, "") == 0);
+              JsonDictionary *jsonDict = new JsonDictionary();
+              jsonDict->initWithDescription(pData);
+              pNode = createObject(jsonDict,nullptr);
+              CC_SAFE_DELETE(jsonDict);
         } while (0);
-
+        
         return pNode;
 	}
 
@@ -69,8 +68,8 @@ namespace cocostudio {
         const char *className = inputFiles->getItemStringValue("classname"); 
         if(strcmp(className, "CCNode") == 0)
         {
-            Node* gb = NULL;
-            if(NULL == parenet)
+            Node* gb = nullptr;
+            if(nullptr == parenet)
             {
                 gb = Node::create();
             }
@@ -98,26 +97,26 @@ namespace cocostudio {
 				std::string pPath;
                 std::string pPlistFile;
 				int nResType = 0;
-				if (fileData != NULL)
+				if (fileData != nullptr)
                 {
 					const char *file = fileData->getItemStringValue("path");
 					nResType = fileData->getItemIntValue("resourceType", -1);
 					const char *plistFile = fileData->getItemStringValue("plistFile");
-					if (file != NULL)
+					if (file != nullptr)
 					{
 						pPath.append(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
 					}
 
-					if (plistFile != NULL)
+					if (plistFile != nullptr)
 					{
 						pPlistFile.append(cocos2d::FileUtils::getInstance()->fullPathForFilename(plistFile));
 					}
 					CC_SAFE_DELETE(fileData);
                 }
 
-                if (comName != NULL && strcmp(comName, "CCSprite") == 0)
+                if (comName != nullptr && strcmp(comName, "CCSprite") == 0)
                 {
-					cocos2d::Sprite *pSprite = NULL;
+					cocos2d::Sprite *pSprite = nullptr;
 
 					if (nResType == 0)
 					{
@@ -145,16 +144,16 @@ namespace cocostudio {
 					}
 					
                     ComRender *pRender = ComRender::create(pSprite, "CCSprite");
-                    if (pComName != NULL)
+                    if (pComName != nullptr)
                     {
                         pRender->setName(pComName);
                     }
                     
                     gb->addComponent(pRender);
                 }
-                else if(comName != NULL && strcmp(comName, "CCTMXTiledMap") == 0)
+                else if(comName != nullptr && strcmp(comName, "CCTMXTiledMap") == 0)
                 {
-					cocos2d::TMXTiledMap *pTmx = NULL;
+					cocos2d::TMXTiledMap *pTmx = nullptr;
 					if (nResType == 0)
 					{
 						if (pPath.find(".tmx") == pPath.npos)
@@ -169,13 +168,13 @@ namespace cocostudio {
 					}
 
                     ComRender *pRender = ComRender::create(pTmx, "CCTMXTiledMap");
-                    if (pComName != NULL)
+                    if (pComName != nullptr)
                     {
                         pRender->setName(pComName);
                     }
                     gb->addComponent(pRender);
                 }
-                else if(comName != NULL && strcmp(comName, "CCParticleSystemQuad") == 0)
+                else if(comName != nullptr && strcmp(comName, "CCParticleSystemQuad") == 0)
                 {
                     std::string::size_type pos =  pPath.find(".plist");
                     if (pos  == pPath.npos)
@@ -183,7 +182,7 @@ namespace cocostudio {
                         continue;
                     }
 
-					cocos2d::ParticleSystemQuad *pParticle = NULL;
+					cocos2d::ParticleSystemQuad *pParticle = nullptr;
 					if (nResType == 0)
 					{
 						pParticle = ParticleSystemQuad::create(pPath.c_str());
@@ -195,13 +194,13 @@ namespace cocostudio {
 
 					pParticle->setPosition(0, 0);
                     ComRender *pRender = ComRender::create(pParticle, "CCParticleSystemQuad");
-                    if (pComName != NULL)
+                    if (pComName != nullptr)
                     {
                         pRender->setName(pComName);
                     }
                     gb->addComponent(pRender);
                 }
-                else if(comName != NULL && strcmp(comName, "CCArmature") == 0)
+                else if(comName != nullptr && strcmp(comName, "CCArmature") == 0)
                 {
 					if (nResType != 0)
 					{
@@ -215,10 +214,10 @@ namespace cocostudio {
 						file_path = reDir.substr(0, pos+1);
 					}
 					long size = 0;
-                    char *des = (char*)cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(),"r" , &size);
+					const char *des = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(),"r" , &size));
 					JsonDictionary *jsonDict = new JsonDictionary();
 					jsonDict->initWithDescription(des);
-					if(des == NULL || strcmp(des, "") == 0)
+					if(nullptr == des || strcmp(des, "") == 0)
 					{
 						CCLOG("read json file[%s] error!\n", pPath.c_str());
 					}
@@ -248,25 +247,25 @@ namespace cocostudio {
 
 					Armature *pAr = Armature::create(name);
 					ComRender *pRender = ComRender::create(pAr, "CCArmature");
-					if (pComName != NULL)
+					if (pComName != nullptr)
 					{
 						pRender->setName(pComName);
 					}
 					gb->addComponent(pRender);
 
 					const char *actionName = subDict->getItemStringValue("selectedactionname");
-					if (actionName != NULL && pAr->getAnimation() != NULL)
+					if (actionName != nullptr && pAr->getAnimation() != nullptr)
 					{
 						pAr->getAnimation()->play(actionName);
 					}
 
 					CC_SAFE_DELETE(jsonDict);
 					CC_SAFE_DELETE(subData);
-					free(des);
+					CC_SAFE_DELETE_ARRAY(des);
                 }
-                else if(comName != NULL && strcmp(comName, "CCComAudio") == 0)
+                else if(comName != nullptr && strcmp(comName, "CCComAudio") == 0)
                 {
-					ComAudio *pAudio = NULL;
+					ComAudio *pAudio = nullptr;
 					if (nResType == 0)
 					{
 						pAudio = ComAudio::create();
@@ -278,19 +277,19 @@ namespace cocostudio {
                     pAudio->preloadEffect(pPath.c_str());
                     gb->addComponent(pAudio);
                 }
-                else if(comName != NULL && strcmp(comName, "CCComAttribute") == 0)
+                else if(comName != nullptr && strcmp(comName, "CCComAttribute") == 0)
                 {
-                    ComAttribute *pAttribute = NULL;
+                    ComAttribute *pAttribute = nullptr;
 					if (nResType == 0)
 					{
 						pAttribute = ComAttribute::create();
 						long size = 0;
-						char* pData = (char*)cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(), "r", &size);
-						if(pData != NULL && strcmp(pData, "") != 0)
+						const char* pData = 0;
+						pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(), "r", &size));
+						if(pData != nullptr && strcmp(pData, "") != 0)
 						{
 							pAttribute->getDict()->initWithDescription(pData);
 						}
-                        free(pData);
 					}
 					else
 					{
@@ -299,9 +298,9 @@ namespace cocostudio {
 					}
                     gb->addComponent(pAttribute);
                 }
-                else if (comName != NULL && strcmp(comName, "CCBackgroundAudio") == 0)
+                else if (comName != nullptr && strcmp(comName, "CCBackgroundAudio") == 0)
                 {
-					ComAudio *pAudio = NULL;
+					ComAudio *pAudio = nullptr;
 					if (nResType == 0)
 					{
 						pAudio = ComAudio::create();
@@ -317,14 +316,14 @@ namespace cocostudio {
                     gb->addComponent(pAudio);
 					pAudio->playBackgroundMusic(pPath.c_str(), bLoop);
                 }
-				else if(comName != NULL && strcmp(comName, "GUIComponent") == 0)
+				else if(comName != nullptr && strcmp(comName, "GUIComponent") == 0)
 				{
                     gui::UILayer *pLayer = gui::UILayer::create();
 					pLayer->scheduleUpdate();
 					UIWidget* widget= GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
 					pLayer->addWidget(widget);
 					ComRender *pRender = ComRender::create(pLayer, "GUIComponent");
-					if (pComName != NULL)
+					if (pComName != nullptr)
 					{
 					pRender->setName(pComName);
 					}
@@ -348,7 +347,7 @@ namespace cocostudio {
             return gb;
         }
         
-        return NULL;
+        return nullptr;
     }
 
 
@@ -378,7 +377,7 @@ namespace cocostudio {
 
 	SceneReader* SceneReader::getInstance()
 	{
-		if (s_sharedReader == NULL)
+		if (s_sharedReader == nullptr)
 		{
 			s_sharedReader = new SceneReader();
 		}
