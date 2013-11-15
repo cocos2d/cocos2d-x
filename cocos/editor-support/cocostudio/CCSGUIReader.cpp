@@ -122,7 +122,7 @@ const cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
 UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 {
     DictionaryHelper* dicHelper = DICTOOL;
-    const char *des = nullptr;
+    char *des = nullptr;
     std::string jsonpath;
     JsonDictionary *jsonDict = nullptr;
     jsonpath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
@@ -164,7 +164,7 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
     
     CC_SAFE_DELETE(pReader);
     CC_SAFE_DELETE(jsonDict);
-    CC_SAFE_DELETE_ARRAY(des);
+    free(des);
     return widget;
 }
 

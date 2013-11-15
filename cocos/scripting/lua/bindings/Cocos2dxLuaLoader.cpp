@@ -56,7 +56,7 @@ extern "C"
                 luaL_error(L, "error loading module %s from file %s :\n\t%s",
                     lua_tostring(L, 1), filename.c_str(), lua_tostring(L, -1));
             }
-            delete []codeBuffer;
+            free(codeBuffer);
         }
         else
         {

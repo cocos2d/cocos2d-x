@@ -13,24 +13,20 @@ local cocoStudioTestItemNames =
             runArmatureTestScene()
         end
     },
+
     {
         itemTitle = "CocoStudioGUITest",
         testScene =  function () 
             runCocosGUITestScene()
         end
     },
-    {
-        itemTitle = "CocoStudioComponentsTest",
-        testScene = function () 
-            --runComponentsTestLayer()
-        end
-    },
+
     {
         itemTitle = "CocoStudioSceneTest",
         testScene = function () 
             runCocosSceneTestScene()
         end
-    }
+    },
 } 
 
 local CocoStudioTestScene = class("CocoStudioTestScene")
