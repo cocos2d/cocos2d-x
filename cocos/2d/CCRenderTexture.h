@@ -99,12 +99,12 @@ public:
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const char *szFilePath);
+    bool saveToFile(const std::string& filename);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const char *name, Image::Format format);
+    bool saveToFile(const std::string& filename, Image::Format format);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.

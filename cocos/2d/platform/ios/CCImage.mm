@@ -380,11 +380,11 @@ bool Image::initWithStringShadowStroke(
     return true;
 }
 
-bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveToFile(const std::string& filename, bool bIsToRGB)
 {
     bool saveToPNG = false;
     bool needToCopyPixels = false;
-    std::string filePath(pszFilePath);
+
     if (std::string::npos != filePath.find(".png"))
     {
         saveToPNG = true;
