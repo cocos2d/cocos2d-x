@@ -72,7 +72,8 @@ bool CCEGLView::isOpenGLReady()
 
 void CCEGLView::end()
 {
-    terminateProcessJNI();
+	// *NOTE:palange - removed the call to terminate, so we can back out of cc2d to our app.
+    // terminateProcessJNI();
 }
 
 void CCEGLView::swapBuffers()
