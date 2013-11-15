@@ -369,12 +369,6 @@
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
@@ -407,9 +401,6 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
@@ -447,12 +438,6 @@
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp">
       <Filter>CocoStudio\Json\lib_json</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClCompile>
     <ClCompile Include="..\network\HttpClient.cpp">
       <Filter>network</Filter>
     </ClCompile>
@@ -461,6 +446,21 @@
     </ClCompile>
     <ClCompile Include="..\spine\CCSkeletonAnimation.cpp">
       <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayout.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -766,12 +766,6 @@
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\Layout.h">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutParameter.h">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClInclude>
@@ -807,9 +801,6 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\Compatible\CompatibleClasses.h">
       <Filter>CocoStudio\GUI\UIWidgets\Compatible</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.h">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
@@ -871,12 +862,6 @@
     <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h">
       <Filter>CocoStudio\Json\lib_json</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h">
-      <Filter>CocoStudio\Reader</Filter>
-    </ClInclude>
     <ClInclude Include="..\network\HttpClient.h">
       <Filter>network</Filter>
     </ClInclude>
@@ -891,6 +876,21 @@
     </ClInclude>
     <ClInclude Include="..\spine\CCSkeletonAnimation.h">
       <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayout.h">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.h">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\GUIReader.h">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\SceneReader.h">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

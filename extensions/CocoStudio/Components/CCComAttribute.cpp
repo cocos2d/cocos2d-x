@@ -44,6 +44,47 @@ bool CCComAttribute::init()
     return true;
 }
 
+void CCComAttribute::setInt(const char *key, int value)
+{
+    m_pJsonDict->insertItem(key, value);
+}
+
+void CCComAttribute::setFloat(const char *key, float value)
+{
+    m_pJsonDict->insertItem(key, value);
+}
+
+void CCComAttribute::setBool(const char *key, bool value)
+{
+    m_pJsonDict->insertItem(key, value);
+}
+
+void CCComAttribute::setCString(const char *key, const char *value)
+{
+    m_pJsonDict->insertItem(key, value);
+}
+
+
+int CCComAttribute::getInt(const char *key) const
+{
+    return m_pJsonDict->getItemIntValue(key, -1);
+}
+
+float CCComAttribute::getFloat(const char *key) const
+{
+    return m_pJsonDict->getItemFloatValue(key, -1.0f);
+}
+
+bool CCComAttribute::getBool(const char *key) const
+{
+	return m_pJsonDict->getItemBoolvalue(key, false);
+}
+
+const char* CCComAttribute::getCString(const char *key) const
+{
+   return m_pJsonDict->getItemStringValue(key);
+}
+
 CCComAttribute* CCComAttribute::create(void)
 {
     CCComAttribute * pRet = new CCComAttribute();
