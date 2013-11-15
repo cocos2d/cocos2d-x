@@ -674,7 +674,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                     }
                     else
                     {
-                        CallFuncN *callback = CallFuncN::create(target, selCallFunc);
+                        CallFuncN *callback = CallFuncN::create([target, selCallFunc](Node* node) { (target->*selCallFunc)(node); });
                         actions->addObject(callback);
                     }
                 }

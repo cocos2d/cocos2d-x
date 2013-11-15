@@ -88,8 +88,8 @@ public:
     // TextFieldDelegate
     virtual bool onTextFieldAttachWithIME(TextFieldTTF * sender);
     virtual bool onTextFieldDetachWithIME(TextFieldTTF * sender);
-    virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, int nLen);
-    virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, int nLen);
+    virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, long nLen);
+    virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, long nLen);
     virtual bool onDraw(TextFieldTTF * sender);
 };
 

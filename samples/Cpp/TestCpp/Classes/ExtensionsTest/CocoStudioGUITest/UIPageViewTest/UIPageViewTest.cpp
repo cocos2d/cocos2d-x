@@ -96,7 +96,7 @@ void UIPageViewTest::pageViewEvent(Object *pSender, PageViewEventType type)
         {
             UIPageView* pageView = dynamic_cast<UIPageView*>(pSender);
             
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("page = %d", pageView->getCurPageIndex() + 1)->getCString());
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
         }
             break;
             
