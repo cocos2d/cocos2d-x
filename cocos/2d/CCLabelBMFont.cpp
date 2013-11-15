@@ -1197,9 +1197,9 @@ float LabelBMFont::getLetterPosXRight( Sprite* sp )
 }
 
 // LabelBMFont - FntFile
-void LabelBMFont::setFntFile(const char* fntFile)
+void LabelBMFont::setFntFile(const std::string& fntFile)
 {
-    if (fntFile != NULL && strcmp(fntFile, _fntFile.c_str()) != 0 )
+    if (_fntFile.compare(fntFile) != 0)
     {
         CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
 
@@ -1216,9 +1216,9 @@ void LabelBMFont::setFntFile(const char* fntFile)
     }
 }
 
-const char* LabelBMFont::getFntFile()
+const std::string& LabelBMFont::getFntFile() const
 {
-    return _fntFile.c_str();
+    return _fntFile;
 }
 
 

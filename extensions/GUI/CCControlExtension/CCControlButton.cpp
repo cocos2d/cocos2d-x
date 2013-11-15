@@ -388,7 +388,7 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
     }
 }
 
-void ControlButton::setTitleTTFForState(const char * fntFile, State state)
+void ControlButton::setTitleTTFForState(const std::string& fntFile, State state)
 {
     String * title = this->getTitleForState(state);
     if (!title)
@@ -398,18 +398,17 @@ void ControlButton::setTitleTTFForState(const char * fntFile, State state)
     this->setTitleLabelForState(LabelTTF::create(title->getCString(), fntFile, 12), state);
 }
 
-const char * ControlButton::getTitleTTFForState(State state)
+const std::string& ControlButton::getTitleTTFForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getFontName().c_str();
+        return labelTTF->getFontName();
     }
-    else
-    {
-        return "";
-    }
+
+    static std::string ret("");
+    return ret;
 }
 
 void ControlButton::setTitleTTFSizeForState(float size, State state)
@@ -439,7 +438,7 @@ float ControlButton::getTitleTTFSizeForState(State state)
     }
 }
 
-void ControlButton::setTitleBMFontForState(const char * fntFile, State state)
+void ControlButton::setTitleBMFontForState(const std::string& fntFile, State state)
 {
     String * title = this->getTitleForState(state);
     if (!title)
@@ -449,7 +448,7 @@ void ControlButton::setTitleBMFontForState(const char * fntFile, State state)
     this->setTitleLabelForState(LabelBMFont::create(title->getCString(), fntFile), state);
 }
 
-const char * ControlButton::getTitleBMFontForState(State state)
+const std::string& ControlButton::getTitleBMFontForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     LabelBMFont* labelBMFont = dynamic_cast<LabelBMFont*>(label);
@@ -457,10 +456,9 @@ const char * ControlButton::getTitleBMFontForState(State state)
     {
         return labelBMFont->getFntFile();
     }
-    else
-    {
-        return "";
-    }
+
+    static std::string ret("");
+    return ret;
 }
 
 
