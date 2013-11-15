@@ -303,7 +303,7 @@ Atlas* Atlas_readAtlasFile (const char* path) {
 	data = _Util_readFile(path, &length);
 	if (data) atlas = Atlas_readAtlas(data, length, dir);
 
-	delete [] data;
+	FREE(data);
 	FREE(dir);
 	return atlas;
 }

@@ -81,15 +81,15 @@ NS_CC_BEGIN
 //
 
 ParticleSystem::ParticleSystem()
-: _configName("")
-, _isBlendAdditive(false)
+: _isBlendAdditive(false)
 , _isAutoRemoveOnFinish(false)
 , _plistFile("")
 , _elapsed(0)
-, _particles(NULL)
+, _particles(nullptr)
+, _configName("")
 , _emitCounter(0)
 , _particleIdx(0)
-, _batchNode(NULL)
+, _batchNode(nullptr)
 , _atlasIndex(0)
 , _transformSystemDirty(false)
 , _allocatedParticles(0)
@@ -113,11 +113,11 @@ ParticleSystem::ParticleSystem()
 , _endSpinVar(0)
 , _emissionRate(0)
 , _totalParticles(0)
-, _texture(NULL)
+, _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 , _opacityModifyRGB(false)
-, _positionType(PositionType::FREE)
 , _yCoordFlipped(0)
+, _positionType(PositionType::FREE)
 {
     modeA.gravity = Point::ZERO;
     modeA.speed = 0;
@@ -374,7 +374,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
                     // set not pop-up message box when load image failed
                     bool bNotify = FileUtils::getInstance()->isPopupNotify();
                     FileUtils::getInstance()->setPopupNotify(false);
-                    tex = TextureCache::getInstance()->addImage(textureName.c_str());
+                    tex = Director::getInstance()->getTextureCache()->addImage(textureName.c_str());
                     // reset the value of UIImage notify
                     FileUtils::getInstance()->setPopupNotify(bNotify);
                 }
@@ -396,17 +396,17 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
                         CCASSERT( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
                         CC_BREAK_IF(!buffer);
                         
-                        int deflatedLen = ZipUtils::ccInflateMemory(buffer, decodeLen, &deflated);
+                        int deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
                         CCASSERT( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
-                        // For android, we should retain it in VolatileTexture::addImage which invoked in TextureCache::getInstance()->addUIImage()
+                        // For android, we should retain it in VolatileTexture::addImage which invoked in Director::getInstance()->getTextureCache()->addUIImage()
                         image = new Image();
                         bool isOK = image->initWithImageData(deflated, deflatedLen);
                         CCASSERT(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(TextureCache::getInstance()->addImage(image, textureName.c_str()));
+                        setTexture(Director::getInstance()->getTextureCache()->addImage(image, textureName.c_str()));
 
                         image->release();
                     }
@@ -420,8 +420,8 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
             bRet = true;
         }
     } while (0);
-    CC_SAFE_DELETE_ARRAY(buffer);
-    CC_SAFE_DELETE_ARRAY(deflated);
+    free(buffer);
+    free(deflated);
     return bRet;
 }
 

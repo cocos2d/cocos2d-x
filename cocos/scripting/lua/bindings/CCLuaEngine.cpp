@@ -30,6 +30,7 @@
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 #include "LuaOpengl.h"
 #include "lua_cocos2dx_extension_manual.h"
+#include "lua_cocos2dx_coco_studio_manual.hpp"
 
 NS_CC_BEGIN
 
@@ -255,6 +256,16 @@ int LuaEngine::sendEvent(ScriptEvent* evt)
         case kAssetsManagerEvent:
             {
                 return handleAssetsManagerEvent(evt->data);
+            }
+            break;
+        case kCocoStudioEventListener:
+            {
+                return handleCocoStudioEventListener(evt->data);
+            }
+            break;
+        case kArmatureWrapper:
+            {
+                return handleArmatureWrapper(evt->data);
             }
             break;
         default:
@@ -816,6 +827,86 @@ int LuaEngine::handleAssetsManagerEvent(void* data)
     }
     
     return ret;
+}
+
+int LuaEngine::handleCocoStudioEventListener(void* data)
+{
+    
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
+    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+        return 0;
+    
+    LuaCocoStudioEventListenerData* listenerData = static_cast<LuaCocoStudioEventListenerData*>(eventData->value);
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+    
+    if (0 == handler)
+        return 0;
+    
+    _stack->pushObject(listenerData->objTarget, "Object");
+    _stack->pushInt(listenerData->eventType);
+    
+    _stack->executeFunctionByHandler(handler, 2);
+    _stack->clean();
+    
+    return 0;
+}
+
+int LuaEngine::handleArmatureWrapper(void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
+    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+        return 0;
+    
+    LuaArmatureWrapperEventData* wrapperData = static_cast<LuaArmatureWrapperEventData*>(eventData->value);
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
+    
+    if (0 == handler)
+        return 0;
+    
+    switch (wrapperData->eventType)
+    {
+        case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::MOVEMENT_EVENT:
+            {
+                LuaArmatureMovementEventData* movementData = static_cast<LuaArmatureMovementEventData*>(wrapperData->eventData);
+                
+                _stack->pushObject(movementData->objTarget, "Armature");
+                _stack->pushInt(movementData->movementType);
+                _stack->pushString(movementData->movementID.c_str());
+                _stack->executeFunctionByHandler(handler, 3);
+            }
+            break;
+        case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::FRAME_EVENT:
+            {
+                LuaArmatureFrameEventData* frameData = static_cast<LuaArmatureFrameEventData*>(wrapperData->eventData);
+                
+                _stack->pushObject(frameData->objTarget, "Bone");
+                _stack->pushString(frameData->frameEventName.c_str());
+                _stack->pushInt(frameData->originFrameIndex);
+                _stack->pushInt(frameData->currentFrameIndex);
+                _stack->executeFunctionByHandler(handler, 4);
+            }
+            break;
+        case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::FILE_ASYNC:
+            {
+                _stack->pushFloat(*(float*)wrapperData->eventData);
+                _stack->executeFunctionByHandler(handler, 1);
+            }
+            break;
+        default:
+            break;
+    }
+    
+    _stack->clean();
+    
+    return 0;
 }
 
 NS_CC_END

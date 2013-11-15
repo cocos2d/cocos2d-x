@@ -135,20 +135,15 @@ public:
     virtual void setTotalParticles(int tp) override;
 
 private:
-#if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();
-#else
     void setupVBO();
-#endif
     bool allocMemory();
     
 protected:
     V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
     GLushort            *_indices;    // indices
     
-#if CC_TEXTURE_ATLAS_USE_VAO
     GLuint                _VAOname;
-#endif
     
     GLuint                _buffersVBO[2]; //0: vertex  1: indices
 };

@@ -32,7 +32,9 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
+#include "CCDirector.h"
 #include "CCGL.h"
+#include "CCConfiguration.h"
 // support
 #include "CCTexture2D.h"
 #include "CCString.h"
@@ -60,10 +62,11 @@ TextureAtlas::~TextureAtlas()
 
     glDeleteBuffers(2, _buffersVBO);
 
-#if CC_TEXTURE_ATLAS_USE_VAO
-    glDeleteVertexArrays(1, &_VAOname);
-    GL::bindVAO(0);
-#endif
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glDeleteVertexArrays(1, &_VAOname);
+        GL::bindVAO(0);
+    }
     CC_SAFE_RELEASE(_texture);
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -71,12 +74,12 @@ TextureAtlas::~TextureAtlas()
 #endif
 }
 
-int TextureAtlas::getTotalQuads() const
+long TextureAtlas::getTotalQuads() const
 {
     return _totalQuads;
 }
 
-int TextureAtlas::getCapacity() const
+long TextureAtlas::getCapacity() const
 {
     return _capacity;
 }
@@ -134,7 +137,7 @@ TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, long capacity
 bool TextureAtlas::initWithFile(const char * file, long capacity)
 {
     // retained in property
-    Texture2D *texture = TextureCache::getInstance()->addImage(file);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(file);
 
     if (texture)
     {   
@@ -190,11 +193,14 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, long capacity)
     
     this->setupIndices();
 
-#if CC_TEXTURE_ATLAS_USE_VAO
-    setupVBOandVAO();    
-#else    
-    setupVBO();
-#endif
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        setupVBOandVAO();
+    }
+    else
+    {
+        setupVBO();
+    }
 
     _dirty = true;
 
@@ -203,11 +209,14 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, long capacity)
 
 void TextureAtlas::listenBackToForeground(Object *obj)
 {  
-#if CC_TEXTURE_ATLAS_USE_VAO
-    setupVBOandVAO();    
-#else    
-    setupVBO();
-#endif
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        setupVBOandVAO();
+    }
+    else
+    {
+        setupVBO();
+    }
     
     // set _dirty to true to force it rebinding buffer
     _dirty = true;
@@ -215,7 +224,7 @@ void TextureAtlas::listenBackToForeground(Object *obj)
 
 const char* TextureAtlas::description() const
 {
-    return String::createWithFormat("<TextureAtlas | totalQuads = %u>", _totalQuads)->getCString();
+    return String::createWithFormat("<TextureAtlas | totalQuads = %ld>", _totalQuads)->getCString();
 }
 
 
@@ -248,7 +257,6 @@ void TextureAtlas::setupIndices()
 
 //TextureAtlas - VAO / VBO specific
 
-#if CC_TEXTURE_ATLAS_USE_VAO
 void TextureAtlas::setupVBOandVAO()
 {
     glGenVertexArrays(1, &_VAOname);
@@ -283,14 +291,13 @@ void TextureAtlas::setupVBOandVAO()
 
     CHECK_GL_ERROR_DEBUG();
 }
-#else // CC_TEXTURE_ATLAS_USE_VAO
+
 void TextureAtlas::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
 
     mapBuffers();
 }
-#endif // ! // CC_TEXTURE_ATLAS_USE_VAO
 
 void TextureAtlas::mapBuffers()
 {
@@ -356,7 +363,7 @@ void TextureAtlas::insertQuads(V3F_C4B_T2F_Quad* quads, long index, long amount)
     CCASSERT( _totalQuads <= _capacity, "invalid totalQuads");
 
     // issue #575. index can be > totalQuads
-    int remaining = (_totalQuads-1) - index - amount;
+    long remaining = (_totalQuads-1) - index - amount;
 
     // last object doesn't need to be moved
     if( remaining > 0)
@@ -366,9 +373,9 @@ void TextureAtlas::insertQuads(V3F_C4B_T2F_Quad* quads, long index, long amount)
     }
 
 
-    int max = index + amount;
+    long max = index + amount;
     int j = 0;
-    for (int i = index; i < max ; i++)
+    for (long i = index; i < max ; i++)
     {
         _quads[index] = quads[j];
         index++;
@@ -389,9 +396,9 @@ void TextureAtlas::insertQuadFromIndex(long oldIndex, long newIndex)
     }
     // because it is ambiguous in iphone, so we implement abs ourselves
     // unsigned int howMany = abs( oldIndex - newIndex);
-    int howMany = (oldIndex - newIndex) > 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
-    int dst = oldIndex;
-    int src = oldIndex + 1;
+    long howMany = (oldIndex - newIndex) > 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
+    long dst = oldIndex;
+    long src = oldIndex + 1;
     if( oldIndex > newIndex)
     {
         dst = newIndex+1;
@@ -411,7 +418,7 @@ void TextureAtlas::removeQuadAtIndex(long index)
 {
     CCASSERT( index>=0 && index<_totalQuads, "removeQuadAtIndex: Invalid index");
 
-    int remaining = (_totalQuads-1) - index;
+    long remaining = (_totalQuads-1) - index;
 
     // last object doesn't need to be moved
     if( remaining ) 
@@ -430,7 +437,7 @@ void TextureAtlas::removeQuadsAtIndex(long index, long amount)
 {
     CCASSERT(index>=0 && amount>=0 && index+amount<=_totalQuads, "removeQuadAtIndex: index + amount out of bounds");
 
-    int remaining = (_totalQuads) - (index + amount);
+    long remaining = (_totalQuads) - (index + amount);
 
     _totalQuads -= amount;
 
@@ -455,7 +462,7 @@ bool TextureAtlas::resizeCapacity(long newCapacity)
     {
         return true;
     }
-    int oldCapactiy = _capacity;
+    long oldCapactiy = _capacity;
     // update capacity and totolQuads
     _totalQuads = MIN(_totalQuads, newCapacity);
     _capacity = newCapacity;
@@ -574,8 +581,8 @@ void TextureAtlas::fillWithEmptyQuadsFromIndex(long index, long amount)
     V3F_C4B_T2F_Quad quad;
     memset(&quad, 0, sizeof(quad));
 
-    int to = index + amount;
-    for (int i = index ; i < to ; i++)
+    long to = index + amount;
+    for (long i = index ; i < to ; i++)
     {
         _quads[i] = quad;
     }
@@ -603,90 +610,89 @@ void TextureAtlas::drawNumberOfQuads(long numberOfQuads, long start)
 
     GL::bindTexture2D(_texture->getName());
 
-#if CC_TEXTURE_ATLAS_USE_VAO
-
-    //
-    // Using VBO and VAO
-    //
-
-    // XXX: update is done in draw... perhaps it should be done in a timer
-    if (_dirty) 
+    if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-        // option 1: subdata
-        //glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
-		
-		// option 2: data
-        //		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
-		
-		// option 3: orphaning + glMapBuffer
-		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (numberOfQuads-start), NULL, GL_DYNAMIC_DRAW);
-		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-		memcpy(buf, _quads, sizeof(_quads[0])* (numberOfQuads-start));
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-		
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+        //
+        // Using VBO and VAO
+        //
 
-        _dirty = false;
-    }
+        // XXX: update is done in draw... perhaps it should be done in a timer
+        if (_dirty) 
+        {
+            glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+            // option 1: subdata
+            //glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+            
+            // option 2: data
+            //      glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+            
+            // option 3: orphaning + glMapBuffer
+            glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (numberOfQuads-start), NULL, GL_DYNAMIC_DRAW);
+            void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+            memcpy(buf, _quads, sizeof(_quads[0])* (numberOfQuads-start));
+            glUnmapBuffer(GL_ARRAY_BUFFER);
+            
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    GL::bindVAO(_VAOname);
+            _dirty = false;
+        }
+
+        GL::bindVAO(_VAOname);
 
 #if CC_REBIND_INDICES_BUFFER
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 #endif
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-    glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
+        glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
 #else
-    glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
+        glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
 #if CC_REBIND_INDICES_BUFFER
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif
 
 //    glBindVertexArray(0);
-
-#else // ! CC_TEXTURE_ATLAS_USE_VAO
-
-    //
-    // Using VBO without VAO
-    //
+    }
+    else
+    {
+        //
+        // Using VBO without VAO
+        //
 
 #define kQuadSize sizeof(_quads[0].bl)
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-    // XXX: update is done in draw... perhaps it should be done in a timer
-    if (_dirty) 
-    {
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * numberOfQuads , &_quads[start] );
-        _dirty = false;
-    }
+        // XXX: update is done in draw... perhaps it should be done in a timer
+        if (_dirty) 
+        {
+            glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * numberOfQuads , &_quads[start] );
+            _dirty = false;
+        }
 
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
-    // vertices
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
+        // vertices
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
 
-    // colors
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
+        // colors
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
 
-    // tex coords
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
+        // tex coords
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-    glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
+        glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
 #else
-    glDrawElements(GL_TRIANGLES, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
+        glDrawElements(GL_TRIANGLES, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-#endif // CC_TEXTURE_ATLAS_USE_VAO
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
 
     CC_INCREMENT_GL_DRAWS(1);
     CHECK_GL_ERROR_DEBUG();

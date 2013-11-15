@@ -99,8 +99,8 @@ void PhysicsTestScene::toggleDebug()
 
 PhysicsDemo::PhysicsDemo()
 : _scene(nullptr)
-, _ball(nullptr)
 , _spriteTexture(nullptr)
+, _ball(nullptr)
 {
 }
 
@@ -201,6 +201,11 @@ void PhysicsDemo::toggleDebugCallback(Object* sender)
 #endif
 }
 
+PhysicsDemoClickAdd::~PhysicsDemoClickAdd()
+{
+    Device::setAccelerometerEnabled(false);
+}
+
 void PhysicsDemoClickAdd::onEnter()
 {
     PhysicsDemo::onEnter();
@@ -211,6 +216,7 @@ void PhysicsDemoClickAdd::onEnter()
     touchListener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
+    Device::setAccelerometerEnabled(true);
     auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(PhysicsDemoClickAdd::onAcceleration, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     

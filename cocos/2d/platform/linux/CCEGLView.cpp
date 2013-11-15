@@ -284,8 +284,8 @@ EGLView* EGLView::s_pEglView = nullptr;
 
 EGLView::EGLView()
 : _captured(false)
-, _frameZoomFactor(1.0f)
 , _supportTouch(false)
+, _frameZoomFactor(1.0f)
 , _mainWindow(nullptr)
 {
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");

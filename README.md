@@ -97,10 +97,14 @@ $ open samples.xcodeproj
 * For Linux
 
 ```
-$ cd cocos2d-x
-$ cmake CMakeLists.txt
+$ cd cocos2d-x/build
+$ ./install-deps-linux.sh
+$ cmake ..
 $ make
 ```
+
+      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target, 
+      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run onece.
 
 * For Windows
 

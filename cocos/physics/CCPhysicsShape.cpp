@@ -539,7 +539,7 @@ bool PhysicsShapePolygon::init(const Point* points, int count, const PhysicsMate
         cpVect* vecs = new cpVect[count];
         PhysicsHelper::points2cpvs(points, vecs, count);
         cpShape* shape = cpPolyShapeNew(_info->getSharedBody(), count, vecs, PhysicsHelper::point2cpv(offset));
-        CC_SAFE_DELETE(vecs);
+        CC_SAFE_DELETE_ARRAY(vecs);
         
         CC_BREAK_IF(shape == nullptr);
         
@@ -563,7 +563,7 @@ float PhysicsShapePolygon::calculateArea(const Point* points, int count)
     cpVect* vecs = new cpVect[count];
     PhysicsHelper::points2cpvs(points, vecs, count);
     float area = PhysicsHelper::cpfloat2float(cpAreaForPoly(count, vecs));
-    CC_SAFE_DELETE(vecs);
+    CC_SAFE_DELETE_ARRAY(vecs);
     
     return area;
 }
@@ -574,7 +574,7 @@ float PhysicsShapePolygon::calculateMoment(float mass, const Point* points, int 
     PhysicsHelper::points2cpvs(points, vecs, count);
     float moment = mass == PHYSICS_INFINITY ? PHYSICS_INFINITY
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(mass, count, vecs, PhysicsHelper::point2cpv(offset)));
-    CC_SAFE_DELETE(vecs);
+    CC_SAFE_DELETE_ARRAY(vecs);
     
     return moment;
 }

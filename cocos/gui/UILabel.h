@@ -57,14 +57,14 @@ public:
      *
      * @param text  string value.
      */
-    void setText(const char* text);
+    void setText(const std::string& text);
     
     /**
      * Gets the string value of label.
      *
      * @return text  string value.
      */
-    const char* getStringValue();
+    const std::string& getStringValue();
     
     /**
      * Gets the string length of label.
@@ -85,7 +85,7 @@ public:
      *
      * @param  font name.
      */
-    void setFontName(const char* name);
+    void setFontName(const std::string& name);
     
     /**
      * Sets the touch scale enabled of label.
@@ -100,50 +100,79 @@ public:
      * @return  touch scale enabled of label.
      */
     bool isTouchScaleChangeEnabled();
+    
+    /**
+     * Changes both X and Y scale factor of the widget.
+     *
+     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
+     *
+     * @param scale     The scale factor for both X and Y axis.
+     */
+    virtual void setScale(float fScale) override;
+    
+    /**
+     * Changes the scale factor on X axis of this widget
+     *
+     * The deafult value is 1.0 if you haven't changed it before
+     *
+     * @param fScaleX   The scale factor on X axis.
+     */
+    virtual void setScaleX(float fScaleX) override;
+    
+    /**
+     * Changes the scale factor on Y axis of this widget
+     *
+     * The Default value is 1.0 if you haven't changed it before.
+     *
+     * @param fScaleY   The scale factor on Y axis.
+     */
+    virtual void setScaleY(float fScaleY) override;
+    
 
     //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX);
+    virtual void setFlipX(bool flipX) override;
     
     //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY);
+    virtual void setFlipY(bool flipY) override;
     
     //override "isFlipX" method of widget.
-    virtual bool isFlipX();
+    virtual bool isFlipX() override;
     
     //override "isFlipY" method of widget.
-    virtual bool isFlipY();
+    virtual bool isFlipY() override;
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const cocos2d::Point &pt);
+    virtual void setAnchorPoint(const cocos2d::Point &pt) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer();
+    virtual cocos2d::Node* getVirtualRenderer() override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
     
     void setTextAreaSize(const cocos2d::Size &size);
     void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
     void setTextVerticalAlignment(cocos2d::TextVAlignment alignment);    
 protected:
-    virtual bool init();
-    virtual void initRenderer();
-    virtual void onPressStateChangedToNormal();
-    virtual void onPressStateChangedToPressed();
-    virtual void onPressStateChangedToDisabled();
-    virtual void onSizeChanged();
-    void clickScale(float scale);
+    virtual bool init() override;
+    virtual void initRenderer() override;
+    virtual void onPressStateChangedToNormal() override;
+    virtual void onPressStateChangedToPressed() override;
+    virtual void onPressStateChangedToDisabled() override;
+    virtual void onSizeChanged() override;
+    void clickScale(float scaleX, float scaleY);
     void labelScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual UIWidget* createCloneInstance() override;
+    virtual void copySpecialProperties(UIWidget* model) override;
 protected:
     bool _touchScaleChangeEnabled;
-    float _normalScaleValue;
+    float _normalScaleValueX;
+    float _normalScaleValueY;
     std::string _fontName;
     int _fontSize;
     float _onSelectedScaleOffset;

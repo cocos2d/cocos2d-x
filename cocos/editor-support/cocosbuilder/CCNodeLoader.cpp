@@ -29,7 +29,11 @@ Dictionary* NodeLoader::getCustomProperties()
 Node * NodeLoader::loadNode(Node * pParent, CCBReader * ccbReader) {
     Node * ccNode = this->createNode(pParent, ccbReader);
 
-    //this->parseProperties(ccNode, pParent, ccbReader);
+    //clear _customProperties, ready for load next node.
+    if (_customProperties != nullptr)
+    {
+        _customProperties->removeAllObjects();
+    }
 
     return ccNode;
 }
@@ -577,7 +581,7 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
         if (spriteSheet.length() == 0)
         {
             spriteFile = ccbReader->getCCBRootPath() + spriteFile;
-            Texture2D * texture = TextureCache::getInstance()->addImage(spriteFile.c_str());
+            Texture2D * texture = Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
             if(texture != NULL) {
                 Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
                 spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
@@ -635,7 +639,7 @@ Texture2D * NodeLoader::parsePropTypeTexture(Node * pNode, Node * pParent, CCBRe
     
     if (spriteFile.length() > 0)
     {
-        return TextureCache::getInstance()->addImage(spriteFile.c_str());
+        return Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
     }
     else 
     {
@@ -926,7 +930,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     reader->getAnimationManager()->setRootContainerSize(pParent->getContentSize());
     
     Data *data = new Data(pBytes, size);
-    CC_SAFE_DELETE_ARRAY(pBytes);
+    free(pBytes);
 
     data->retain();
     reader->_data = data;

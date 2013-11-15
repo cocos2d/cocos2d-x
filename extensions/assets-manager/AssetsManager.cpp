@@ -308,6 +308,47 @@ bool AssetsManager::uncompress()
         }
         else
         {
+            //There are not directory entry in some case.
+            //So we need to test whether the file directory exists when uncompressing file entry
+            //, if does not exist then create directory
+            string fileNameStr(fileName);
+            
+            size_t startIndex=0;
+            
+            size_t index=fileNameStr.find("/",startIndex);
+            
+            while(index!=-1)
+            {
+                string dir=_storagePath+fileNameStr.substr(0,index);
+                
+                FILE *out = fopen(dir.c_str(), "r");
+                
+                if(!out)
+                {
+                    if (!createDirectory(dir.c_str()))
+                    {
+                        CCLOG("can not create directory %s", dir.c_str());
+                        unzClose(zipfile);
+                        return false;
+                    }
+                    else
+                    {
+                        CCLOG("create directory %s",dir.c_str());
+                    }
+                }
+                else
+                {
+                    fclose(out);
+                }
+                
+                startIndex=index+1;
+                
+                index=fileNameStr.find("/",startIndex);
+                
+            }
+            
+            
+            
             // Entry is a file, so extract it.
             
             // Open current file.
@@ -651,8 +692,8 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
     class DelegateProtocolImpl : public AssetsManagerDelegateProtocol 
     {
     public :
-        DelegateProtocolImpl(ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback)
-        : errorCallback(errorCallback), progressCallback(progressCallback), successCallback(successCallback)
+        DelegateProtocolImpl(ErrorCallback aErrorCallback, ProgressCallback aProgressCallback, SuccessCallback aSuccessCallback)
+        : errorCallback(aErrorCallback), progressCallback(aProgressCallback), successCallback(aSuccessCallback)
         {}
 
         virtual void onError(AssetsManager::ErrorCode errorCode) { errorCallback(int(errorCode)); }

@@ -14,8 +14,19 @@ cocos2d-x-3.0alpha1 @??? 2013
      [FIX]          When parsing XML using TinyXML, the data size has to be specified.
      [FIX]          Parameter type: const char* -> const string&
      [FIX]          Armature: many bug fixed, add more samples, add function to skip some frames when playing animation
+     [FIX]          Configuration of VAO in runtime
+     [FIX]          Webp Test Crashes.
+     [FIX]          TransitionScenePageTurn: z fighting
+     [FIX]          AssetsManager: Adding test whether the file directory exists when uncompressing file entry,if does not exist then create directory
+     [FIX]          CCBReader: To set anchor point to 0,0 when loading Scale9Sprite
      [NEW]          Arm64 support.
      [NEW]          Added Mouse Support For Desktop Platforms.
+     [NEW]          Point: Adds ANCHOR_XXX constants like ANCHOR_MIDDLE, ANCHOR_TOP_RIGHT, etc.
+     [NEW]          Sprite: Override setScale(float scaleX, float scaleY)
+     [NEW]          External: added | operator for Control::EventType
+     [NEW]          Android & iOS screen size change support
+     [NEW]          GLProgram: setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv
+     [NEW]          Color[3|4][B|F]: comparable and explicit convertible
 [Android]
      [FIX]          Added EGL_RENDERABLE_TYPE to OpenGL attributes
      [FIX]          Fixed application will crash when pause and resume.
@@ -30,6 +41,7 @@ cocos2d-x-3.0alpha1 @??? 2013
      [FIX]          Can't click the area that outside of keyboard to close keyboard when using EditBox.
 [Linux]
      [NEW]          Used CMake to build linux projects.
+     [FIX]          Closed X display after getting DPI on Linux.
 [Desktop]
      [FIX]          Trigger onKeyReleased only after the key has been released.
 [Javascript binding]
@@ -37,6 +49,8 @@ cocos2d-x-3.0alpha1 @??? 2013
      [FIX]          sys.localStorage.getItem() does not support non-ascii string.
      [FIX]          cc.Scheduler.schedule(target, func) without repeat argument couldn't repeat schedule forever on device.
      [FIX]          CCBReader can't play sequence automatically in JSB.
+     [NEW]          main.js -> cocos2d-jsb.js
+     [FIX]          Wrong convention to jsval in cccolor4f_to_jsval and cccolor3b_to_jsval
 [Lua Binding]
      [NEW]          Added Armature lua binding and added test samples.
 

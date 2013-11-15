@@ -29,10 +29,13 @@
 namespace gui {
 
 UIListView::UIListView():
-_model(NULL),
-_items(NULL),
+_model(nullptr),
+_items(nullptr),
 _gravity(LISTVIEW_GRAVITY_CENTER_HORIZONTAL),
-_itemsMargin(0.0f)
+_itemsMargin(0.0f),
+_listViewEventListener(nullptr),
+_listViewEventSelector(nullptr),
+_curSelectedIndex(0)
 {
     
 }
@@ -41,6 +44,8 @@ UIListView::~UIListView()
 {
     _items->removeAllObjects();
     CC_SAFE_RELEASE(_items);
+    _listViewEventListener = nullptr;
+    _listViewEventSelector = nullptr;
 }
 
 UIListView* UIListView::create()
@@ -52,7 +57,7 @@ UIListView* UIListView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UIListView::init()
@@ -298,7 +303,7 @@ UIWidget* UIListView::getItem(unsigned int index)
 {
     if ((int)index < 0 || index >= _items->count())
     {
-        return NULL;
+        return nullptr;
     }
     return (UIWidget*)(_items->data->arr[index]);
 }
@@ -376,7 +381,44 @@ void UIListView::refreshView()
         remedyLayoutParameter(item);
     }
     updateInnerContainerSize();
-    doLayout();
+}
+    
+void UIListView::addEventListenerListView(cocos2d::Object *target, SEL_ListViewEvent selector)
+{
+    _listViewEventListener = target;
+    _listViewEventSelector = selector;
+}
+    
+void UIListView::selectedItemEvent()
+{
+    if (_listViewEventListener && _listViewEventSelector)
+    {
+        (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM);
+    }
+}
+    
+void UIListView::interceptTouchEvent(int handleState, gui::UIWidget *sender, const cocos2d::Point &touchPoint)
+{
+    UIScrollView::interceptTouchEvent(handleState, sender, touchPoint);
+    if (handleState != 1)
+    {
+        UIWidget* parent = sender;
+        while (parent)
+        {
+            if (parent && parent->getParent() == _innerContainer)
+            {
+                _curSelectedIndex = getIndex(parent);
+                break;
+            }
+            parent = parent->getParent();
+        }
+        selectedItemEvent();
+    }
+}
+    
+int UIListView::getCurSelectedIndex() const
+{
+    return _curSelectedIndex;
 }
 
 void UIListView::onSizeChanged()

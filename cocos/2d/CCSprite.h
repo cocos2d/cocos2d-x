@@ -24,8 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __SPITE_NODE_CCSPRITE_H__
-#define __SPITE_NODE_CCSPRITE_H__
+#ifndef __SPRITE_NODE_CCSPRITE_H__
+#define __SPRITE_NODE_CCSPRITE_H__
 
 #include "CCNode.h"
 #include "CCProtocols.h"
@@ -54,7 +54,7 @@ struct transformValues_;
  * @{
  */
 
-/** 
+/**
  * Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
  *
  * Sprite can be created with an image, or with a sub-rectangle of an image.
@@ -88,14 +88,14 @@ public:
 
     /// @{
     /// @name Creators
-    
+
     /**
      * Creates an empty sprite without texture. You can call setTexture method subsequently.
      *
      * @return An empty sprite object that is marked as autoreleased.
      */
     static Sprite* create();
-    
+
     /**
      * Creates a sprite with an image filename.
      *
@@ -106,7 +106,7 @@ public:
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static Sprite* create(const std::string& filename);
-    
+
     /**
      * Creates a sprite with an image filename and a rect.
      *
@@ -115,7 +115,7 @@ public:
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static Sprite* create(const std::string& filename, const Rect& rect);
-    
+
     /**
      * Creates a sprite with an exsiting texture contained in a Texture2D object
      * After creation, the rect will be the size of the texture, and the offset will be (0,0).
@@ -124,7 +124,7 @@ public:
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static Sprite* createWithTexture(Texture2D *texture);
-    
+
     /**
      * Creates a sprite with a texture and a rect.
      *
@@ -136,7 +136,7 @@ public:
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static Sprite* createWithTexture(Texture2D *texture, const Rect& rect);
-    
+
     /**
      * Creates a sprite with an sprite frame.
      *
@@ -144,7 +144,7 @@ public:
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static Sprite* createWithSpriteFrame(SpriteFrame *pSpriteFrame);
-    
+
     /**
      * Creates a sprite with an sprite frame name.
      *
@@ -155,31 +155,31 @@ public:
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
-    
+
     /// @}  end of creators group
-    
-    
+
+
     /// @{
     /// @name Initializers
-    
+
     /**
      * Default constructor
      * @js ctor
      */
     Sprite(void);
-    
+
     /**
      * Default destructor
      * @js  NA
      * @lua NA
      */
     virtual ~Sprite(void);
-    
+
     /**
      * Initializes an empty sprite with nothing init.
      */
     virtual bool init(void);
-    
+
     /**
      * Initializes a sprite with a texture.
      *
@@ -190,7 +190,7 @@ public:
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithTexture(Texture2D *texture);
-    
+
     /**
      * Initializes a sprite with a texture and a rect.
      *
@@ -202,7 +202,7 @@ public:
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect);
-    
+
     /**
      * Initializes a sprite with a texture and a rect in points, optionally rotated.
      *
@@ -215,7 +215,7 @@ public:
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
-    
+
     /**
      * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite
      *
@@ -223,7 +223,7 @@ public:
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
-    
+
     /**
      * Initializes a sprite with an sprite frame name.
      *
@@ -234,7 +234,7 @@ public:
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
-    
+
     /**
      * Initializes a sprite with an image filename.
      *
@@ -248,7 +248,7 @@ public:
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename);
-    
+
     /**
      * Initializes a sprite with an image filename, and a rect.
      *
@@ -263,17 +263,17 @@ public:
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
-    
+
     /// @} end of initializers
 
     /// @{
     /// @name BatchNode methods
-    
+
     /**
-     * Updates the quad according the rotation, position, scale values. 
+     * Updates the quad according the rotation, position, scale values.
      */
     virtual void updateTransform(void);
-    
+
     /**
      * Returns the batch node object if this sprite is rendered by SpriteBatchNode
      *
@@ -292,26 +292,26 @@ public:
      * @endcode
      */
     virtual void setBatchNode(SpriteBatchNode *spriteBatchNode);
-     
+
     /// @} end of BatchNode methods
-    
-    
-    
+
+
+
     /// @{
     /// @name Texture methods
-    
+
     /**
      * Updates the texture rect of the Sprite in points.
      * It will call setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize) with \p rotated = false, and \p utrimmedSize = rect.size.
      */
     virtual void setTextureRect(const Rect& rect);
-    
+
     /**
      * Sets the texture rect, rectRotated and untrimmed size of the Sprite in points.
      * It will update the texture coordinates and the vertex rectangle.
      */
     virtual void setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize);
-    
+
     /**
      * Sets the vertex rect.
      * It will be called internally by setTextureRect.
@@ -319,34 +319,34 @@ public:
      * Do not call it manually. Use setTextureRect instead.
      */
     virtual void setVertexRect(const Rect& rect);
-    
-    /// @} end of texture methods
-    
 
-    
+    /// @} end of texture methods
+
+
+
     /// @{
     /// @name Frames methods
-    
+
     /**
      * Sets a new display frame to the Sprite.
      */
     virtual void setDisplayFrame(SpriteFrame *pNewFrame);
-    
+
     /**
      * Returns whether or not a SpriteFrame is being displayed
      */
     virtual bool isFrameDisplayed(SpriteFrame *pFrame) const;
-    
+
     /** @deprecated Use getDisplayFrame() instead */
     CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() { return getDisplayFrame(); };
-    
+
     /**
      * Returns the current displayed frame.
      */
     virtual SpriteFrame* getDisplayFrame();
-    
+
     /// @} End of frames methods
-    
+
 
     /// @{
     /// @name Animation methods
@@ -356,23 +356,23 @@ public:
      */
     virtual void setDisplayFrameWithAnimationName(const std::string& animationName, int frameIndex);
     /// @}
-    
-    
+
+
     /// @{
     /// @name Sprite Properties' setter/getters
-    
-    /** 
+
+    /**
      * Whether or not the Sprite needs to be updated in the Atlas.
      *
      * @return true if the sprite needs to be updated in the Atlas, false otherwise.
      */
     virtual bool isDirty(void) const { return _dirty; }
-    
-    /** 
+
+    /**
      * Makes the Sprite to be updated in the Atlas.
      */
     virtual void setDirty(bool bDirty) { _dirty = bDirty; }
-    
+
     /**
      * Returns the quad (tex coords, vertex coords and color) information.
      * @js  NA
@@ -380,24 +380,24 @@ public:
      */
     inline V3F_C4B_T2F_Quad getQuad(void) const { return _quad; }
 
-    /** 
+    /**
      * Returns whether or not the texture rectangle is rotated.
      */
     inline bool isTextureRectRotated(void) const { return _rectRotated; }
-    
-    /** 
-     * Returns the index used on the TextureAtlas. 
+
+    /**
+     * Returns the index used on the TextureAtlas.
      */
     inline int getAtlasIndex(void) const { return _atlasIndex; }
-    
-    /** 
+
+    /**
      * Sets the index used on the TextureAtlas.
      * @warning Don't modify this value unless you know what you are doing
      */
     inline void setAtlasIndex(int atlasIndex) { _atlasIndex = atlasIndex; }
 
-    /** 
-     * Returns the rect of the Sprite in points 
+    /**
+     * Returns the rect of the Sprite in points
      */
     inline const Rect& getTextureRect(void) { return _rect; }
 
@@ -405,19 +405,19 @@ public:
      * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
      */
     inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
-    
+
     /**
      * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
      */
     inline void setTextureAtlas(TextureAtlas *pobTextureAtlas) { _textureAtlas = pobTextureAtlas; }
 
-    /** 
+    /**
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
     inline const Point& getOffsetPosition(void) const { return _offsetPosition; }
 
 
-    /** 
+    /**
      * Returns the flag which indicates whether the sprite is flipped horizontally or not.
      *
      * It only flips the texture of the sprite, and not the texture of the sprite's children.
@@ -425,48 +425,48 @@ public:
      * If you want to flip the anchorPoint too, and/or to flip the children too use:
      * sprite->setScaleX(sprite->getScaleX() * -1);
      *
-     * @return true if the sprite is flipped horizaontally, false otherwise.
+     * @return true if the sprite is flipped horizontally, false otherwise.
      */
     bool isFlippedX(void) const;
     /**
      * Sets whether the sprite should be flipped horizontally or not.
      *
-     * @param bFlipX true if the sprite should be flipped horizaontally, false otherwise.
+     * @param flippedX true if the sprite should be flipped horizontally, false otherwise.
      */
     void setFlippedX(bool flippedX);
-    
-    /** @deprecated Use isFlippedX() instead 
+
+    /** @deprecated Use isFlippedX() instead
     * @js NA
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
     /** @deprecated Use setFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flippedX) {  setFlippedX(flippedX); };
-    
-    /** 
+    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flippedX) { setFlippedX(flippedX); };
+
+    /**
      * Return the flag which indicates whether the sprite is flipped vertically or not.
-     * 
+     *
      * It only flips the texture of the sprite, and not the texture of the sprite's children.
      * Also, flipping the texture doesn't alter the anchorPoint.
      * If you want to flip the anchorPoint too, and/or to flip the children too use:
      * sprite->setScaleY(sprite->getScaleY() * -1);
-     * 
-     * @return true if the sprite is flipped vertically, flase otherwise.
+     *
+     * @return true if the sprite is flipped vertically, false otherwise.
      */
     bool isFlippedY(void) const;
     /**
      * Sets whether the sprite should be flipped vertically or not.
      *
-     * @param bFlipY true if the sprite should be flipped vertically, flase otherwise.
+     * @param flippedY true if the sprite should be flipped vertically, false otherwise.
      */
     void setFlippedY(bool flippedY);
-    
+
     /// @} End of Sprite properties getter/setters
-    
+
     /** @deprecated Use isFlippedY() instead */
     CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
     /** @deprecated Use setFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) {  setFlippedY(flippedY); };
+    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
 
     //
     // Overrides
@@ -494,6 +494,7 @@ public:
     /// @name Functions inherited from Node
     virtual void setScaleX(float scaleX) override;
     virtual void setScaleY(float scaleY) override;
+    virtual void setScale(float scaleX, float scaleY) override;
     /**
     * @js  NA
     * @lua NA
@@ -542,13 +543,13 @@ protected:
     TextureAtlas*       _textureAtlas;      /// SpriteBatchNode texture atlas (weak reference)
     int                 _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
     SpriteBatchNode*    _batchNode;         /// Used batch node (weak reference)
-    
+
     bool                _dirty;             /// Whether the sprite needs to be updated
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
     bool                _hasChildren;       /// Whether the sprite contains children
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
     AffineTransform     _transformToBatch;
-    
+
     //
     // Data used when the sprite is self-rendered
     //
@@ -574,8 +575,8 @@ protected:
     bool _opacityModifyRGB;
 
     // image is flipped
-    bool _flippedX;                              /// Whether the sprite is flipped horizaontally or not.
-    bool _flippedY;                              /// Whether the sprite is flipped vertically or not.
+    bool _flippedX;                              /// Whether the sprite is flipped horizontally or not
+    bool _flippedY;                              /// Whether the sprite is flipped vertically or not
 };
 
 
@@ -584,4 +585,4 @@ protected:
 
 NS_CC_END
 
-#endif // __SPITE_NODE_CCSPRITE_H__
+#endif // __SPRITE_NODE_CCSPRITE_H__

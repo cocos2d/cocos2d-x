@@ -101,12 +101,12 @@ void Profiler::displayTimers()
 // implementation of ProfilingTimer
 
 ProfilingTimer::ProfilingTimer()
-: numberOfCalls(0)
-, _averageTime1(0)
+: _averageTime1(0)
 , _averageTime2(0)
-, totalTime(0)
 , minTime(100000000)
 , maxTime(0)
+, totalTime(0)
+, numberOfCalls(0)
 {
 }
 
@@ -166,7 +166,7 @@ void ProfilingEndTimingBlock(const char *timerName)
     CCASSERT(timer, "CCProfilingTimer  not found");
 
 
-    long duration = chrono::duration_cast<chrono::microseconds>(now - timer->_startTime).count();
+    long duration = static_cast<long>(chrono::duration_cast<chrono::microseconds>(now - timer->_startTime).count());
 
     timer->totalTime += duration;
     timer->_averageTime1 = (timer->_averageTime1 + duration) / 2.0f;

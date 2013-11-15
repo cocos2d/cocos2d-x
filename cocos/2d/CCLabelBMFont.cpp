@@ -202,7 +202,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const std::string
     {
         size_t pos = strLeft.find('\n');
 
-        if (pos != (int)std::string::npos)
+        if (pos != std::string::npos)
         {
             // the data is more than a line.get one line
             line = strLeft.substr(0, pos);
@@ -486,7 +486,7 @@ bool LabelBMFont::initWithString(const std::string& theString, const std::string
         
         _fntFile = fntFile;
         
-        texture = TextureCache::getInstance()->addImage(_configuration->getAtlasName());
+        texture = Director::getInstance()->getTextureCache()->addImage(_configuration->getAtlasName());
     }
     else 
     {
@@ -767,9 +767,9 @@ void LabelBMFont::setString(unsigned short *newString, bool needUpdateLabel)
     }
 }
 
-const char* LabelBMFont::getString(void) const
+const std::string& LabelBMFont::getString() const
 {
-    return _initialStringUTF8.c_str();
+    return _initialStringUTF8;
 }
 
 void LabelBMFont::setCString(const char *label)
@@ -1073,9 +1073,9 @@ void LabelBMFont::updateLabel()
         int size = multiline_string.size();
         unsigned short* str_new = new unsigned short[size + 1];
 
-        for (int i = 0; i < size; ++i)
+        for (int j = 0; j < size; ++j)
         {
-            str_new[i] = multiline_string[i];
+            str_new[j] = multiline_string[j];
         }
 
         str_new[size] = '\0';
@@ -1213,7 +1213,7 @@ void LabelBMFont::setFntFile(const char* fntFile)
         CC_SAFE_RELEASE(_configuration);
         _configuration = newConf;
 
-        this->setTexture(TextureCache::getInstance()->addImage(_configuration->getAtlasName()));
+        this->setTexture(Director::getInstance()->getTextureCache()->addImage(_configuration->getAtlasName()));
         this->createFontChars();
     }
 }

@@ -219,7 +219,7 @@ bool Sprite::initWithFile(const std::string& filename)
 {
     CCASSERT(filename.size()>0, "Invalid filename for sprite");
 
-    Texture2D *texture = TextureCache::getInstance()->addImage(filename);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
         Rect rect = Rect::ZERO;
@@ -237,7 +237,7 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
     CCASSERT(filename.size()>0, "Invalid filename");
 
-    Texture2D *texture = TextureCache::getInstance()->addImage(filename);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
         return initWithTexture(texture, rect);
@@ -284,7 +284,7 @@ Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
     CCASSERT(pImage != NULL);
 
     // XXX: possible bug. See issue #349. New API should be added
-    Texture2D *texture = TextureCache::getInstance()->addCGImage(pImage, pszKey);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addCGImage(pImage, pszKey);
 
     const Size& size = texture->getContentSize();
     Rect rect = Rect(0 ,0, size.width, size.height);
@@ -840,6 +840,12 @@ void Sprite::setScale(float fScale)
     SET_DIRTY_RECURSIVELY();
 }
 
+void Sprite::setScale(float scaleX, float scaleY)
+{
+    Node::setScale(scaleX, scaleY);
+    SET_DIRTY_RECURSIVELY();
+}
+
 void Sprite::setVertexZ(float fVertexZ)
 {
     Node::setVertexZ(fVertexZ);
@@ -1107,7 +1113,7 @@ void Sprite::setTexture(Texture2D *texture)
     if (NULL == texture)
     {
         // Gets the texture by key firstly.
-        texture = TextureCache::getInstance()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
+        texture = Director::getInstance()->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
         
         // If texture wasn't in cache, create it from RAW data.
         if (NULL == texture)
@@ -1116,7 +1122,7 @@ void Sprite::setTexture(Texture2D *texture)
             bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
-            texture = TextureCache::getInstance()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            texture = Director::getInstance()->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
     }

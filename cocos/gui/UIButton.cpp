@@ -33,10 +33,10 @@ namespace gui {
 #define TITLERENDERERZ (1)
     
 UIButton::UIButton():
-_buttonNormalRenderer(NULL),
-_buttonClickedRenderer(NULL),
-_buttonDisableRenderer(NULL),
-_titleRenderer(NULL),
+_buttonNormalRenderer(nullptr),
+_buttonClickedRenderer(nullptr),
+_buttonDisableRenderer(nullptr),
+_titleRenderer(nullptr),
 _normalFileName(""),
 _clickedFileName(""),
 _disabledFileName(""),
@@ -70,7 +70,7 @@ UIButton* UIButton::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UIButton::init()
@@ -109,9 +109,9 @@ void UIButton::setScale9Enabled(bool able)
     _renderer->removeChild(_buttonClickedRenderer, true);
     _renderer->removeChild(_buttonDisableRenderer, true);
     
-    _buttonNormalRenderer = NULL;
-    _buttonClickedRenderer = NULL;
-    _buttonDisableRenderer = NULL;
+    _buttonNormalRenderer = nullptr;
+    _buttonClickedRenderer = nullptr;
+    _buttonDisableRenderer = nullptr;
     if (_scale9Enabled)
     {
         _buttonNormalRenderer = cocos2d::extension::Scale9Sprite::create();
@@ -457,7 +457,7 @@ cocos2d::Node* UIButton::getVirtualRenderer()
             case BRIGHT_HIGHLIGHT:
                 return _buttonClickedRenderer;
             default:
-                return NULL;
+                return nullptr;
         }
     }
     else
@@ -565,12 +565,12 @@ void UIButton::setPressedActionEnabled(bool enabled)
     _pressedActionEnabled = enabled;
 }
 
-void UIButton::setTitleText(const char* text)
+void UIButton::setTitleText(const std::string& text)
 {
     _titleRenderer->setString(text);
 }
 
-const char* UIButton::getTitleText() const
+const std::string& UIButton::getTitleText() const
 {
     return _titleRenderer->getString();
 }

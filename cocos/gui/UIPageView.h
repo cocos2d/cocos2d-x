@@ -101,6 +101,8 @@ public:
      */
     void removePageAtIndex(int index);
     
+    void removeAllPages();
+    
     /**
      * scroll pageview to index.
      *
@@ -117,59 +119,78 @@ public:
     
     cocos2d::Array* getPages();
     
+    UILayout* getPage(int index);
+    
     // event
-    void addEventListener(cocos2d::Object *target, SEL_PageViewEvent selector);
+    void addEventListenerPageView(cocos2d::Object *target, SEL_PageViewEvent selector);
 
     
-    //override "removeChild" method of widget.
-    virtual bool removeChild(UIWidget* widget);
-    
-    //override "removeAllChildrenAndCleanUp" method of widget.
-    virtual void removeAllChildren();
+
     
     //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
+    virtual bool onTouchBegan(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const cocos2d::Point &touchPoint);
+    virtual void onTouchMoved(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const cocos2d::Point &touchPoint);
+    virtual void onTouchEnded(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const cocos2d::Point &touchPoint);
+    virtual void onTouchCancelled(const cocos2d::Point &touchPoint) override;
     
     //override "update" method of widget.
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     
-    virtual void doLayout(){};
+    virtual void doLayout() override{};
+    
+    /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    virtual void setLayoutType(LayoutType type) override{};
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    virtual LayoutType getLayoutType() const override{return LAYOUT_ABSOLUTE;};
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
     
 protected:
-    virtual bool addChild(UIWidget* widget);
-    virtual bool init();
+    virtual bool addChild(UIWidget* widget) override;
+    virtual bool removeChild(UIWidget* widget) override;
+    virtual void removeAllChildren() override;
+    virtual cocos2d::Array* getChildren() override{return UIWidget::getChildren();};
+    virtual bool init() override;
     UILayout* createPage();
     float getPositionXByIndex(int idx);
     void updateBoundaryPages();
-    virtual void handlePressLogic(const cocos2d::Point &touchPoint);
-    virtual void handleMoveLogic(const cocos2d::Point &touchPoint);
-    virtual void handleReleaseLogic(const cocos2d::Point &touchPoint);
-    virtual void interceptTouchEvent(int handleState, UIWidget* sender, const cocos2d::Point &touchPoint);
-    virtual void checkChildInfo(int handleState, UIWidget* sender, const cocos2d::Point &touchPoint);
+    virtual void handlePressLogic(const cocos2d::Point &touchPoint) override;
+    virtual void handleMoveLogic(const cocos2d::Point &touchPoint) override;
+    virtual void handleReleaseLogic(const cocos2d::Point &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState, UIWidget* sender, const cocos2d::Point &touchPoint) override;
+    virtual void checkChildInfo(int handleState, UIWidget* sender, const cocos2d::Point &touchPoint) override;
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
     void updateChildrenSize();
     void updateChildrenPosition();
-    virtual void onSizeChanged();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
-    virtual void copyClonedWidgetChildren(UIWidget* model);
-    virtual void setClippingEnabled(bool able){UILayout::setClippingEnabled(able);};
+    virtual void onSizeChanged() override;
+    virtual UIWidget* createCloneInstance() override;
+    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual void copyClonedWidgetChildren(UIWidget* model) override;
+    virtual void setClippingEnabled(bool enabled) override {UILayout::setClippingEnabled(enabled);};
 protected:
     int _curPageIdx;
     cocos2d::Array* _pages;
@@ -186,8 +207,8 @@ protected:
     float _autoScrollSpeed;
     int _autoScrollDir;
     float _childFocusCancelOffset;
-    cocos2d::Object* _eventListener;
-    SEL_PageViewEvent _eventSelector;
+    cocos2d::Object* _pageViewEventListener;
+    SEL_PageViewEvent _pageViewEventSelector;
 
 };
 

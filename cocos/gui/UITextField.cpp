@@ -57,7 +57,7 @@ UICCTextField * UICCTextField::create(const char *placeholder, const char *fontN
     }
     CC_SAFE_DELETE(pRet);
     
-    return NULL;
+    return nullptr;
 }
 
 void UICCTextField::onEnter()
@@ -105,7 +105,7 @@ bool UICCTextField::onTextFieldDetachWithIME(cocos2d::TextFieldTTF *pSender)
 void UICCTextField::insertText(const char * text, int len)
 {
     std::string str_text = text;
-    int str_len = strlen(cocos2d::TextFieldTTF::getString());
+    int str_len = cocos2d::TextFieldTTF::getString().size();
     
     if (strcmp(text, "\n") != 0)
     {
@@ -139,7 +139,7 @@ void UICCTextField::insertText(const char * text, int len)
     {
         if (cocos2d::TextFieldTTF::getCharCount() > 0)
         {
-            setPasswordText(_inputText->c_str());
+            setPasswordText(_inputText.c_str());
         }
     }
 }
@@ -153,7 +153,7 @@ void UICCTextField::deleteBackward()
         // password
         if (_passwordEnabled)
         {
-            setPasswordText(_inputText->c_str());
+            setPasswordText(_inputText.c_str());
         }
     }
 }
@@ -271,18 +271,20 @@ bool UICCTextField::getDeleteBackward()
 
     
 UITextField::UITextField():
-_textFieldRenderer(NULL),
+_textFieldRenderer(nullptr),
 _touchWidth(0.0f),
 _touchHeight(0.0f),
 _useTouchArea(false),
-_eventListener(NULL),
-_eventSelector(NULL),
+_textFieldEventListener(nullptr),
+_textFieldEventSelector(nullptr),
 _passwordStyleText("")
 {
 }
 
 UITextField::~UITextField()
 {
+    _textFieldEventListener = nullptr;
+    _textFieldEventSelector = nullptr;
 }
 
 UITextField* UITextField::create()
@@ -294,7 +296,7 @@ UITextField* UITextField::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UITextField::init()
@@ -321,18 +323,16 @@ void UITextField::setTouchSize(const cocos2d::Size &size)
     _touchHeight = size.height;
 }
 
-void UITextField::setText(const char* text)
+void UITextField::setText(const std::string& text)
 {
-	if (!text)
-	{
+	if (text.size()==0)
 		return;
-	}
-    std::string strText(text);
-    _textFieldRenderer->setString(strText.c_str());
+
+    _textFieldRenderer->setString(text);
     textfieldRendererScaleChangedWithSize();
 }
 
-void UITextField::setPlaceHolder(const char *value)
+void UITextField::setPlaceHolder(const std::string& value)
 {
     _textFieldRenderer->setPlaceHolder(value);
     textfieldRendererScaleChangedWithSize();
@@ -344,7 +344,7 @@ void UITextField::setFontSize(int size)
     textfieldRendererScaleChangedWithSize();
 }
 
-void UITextField::setFontName(const char *name)
+void UITextField::setFontName(const std::string& name)
 {
     _textFieldRenderer->setFontName(name);
     textfieldRendererScaleChangedWithSize();
@@ -355,7 +355,7 @@ void UITextField::didNotSelectSelf()
     _textFieldRenderer->detachWithIME();
 }
 
-const char* UITextField::getStringValue()
+const std::string& UITextField::getStringValue()
 {
     return _textFieldRenderer->getString();
 }
@@ -472,40 +472,40 @@ void UITextField::setDeleteBackward(bool deleteBackward)
 
 void UITextField::attachWithIMEEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
     }
 }
 
 void UITextField::detachWithIMEEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
     }
 }
 
 void UITextField::insertTextEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
     }
 }
 
 void UITextField::deleteBackwardEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
     }
 }
 
-void UITextField::addEventListener(cocos2d::Object *target, SEL_TextFieldEvent selecor)
+void UITextField::addEventListenerTextField(cocos2d::Object *target, SEL_TextFieldEvent selecor)
 {
-    _eventListener = target;
-    _eventSelector = selecor;
+    _textFieldEventListener = target;
+    _textFieldEventSelector = selecor;
 }
 
 void UITextField::setAnchorPoint(const cocos2d::Point &pt)
