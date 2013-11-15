@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
@@ -22,34 +22,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "CCPThreadWinRT.h"
 
-#ifndef __CCWINRT_UTILS_H__
-#define __CCWINRT_UTILS_H__
-
-#include "platform/CCPlatformMacros.h"
-#include "cocoa/CCDictionary.h"
-
-#include <wrl/client.h>
-#include <ppl.h>
-#include <ppltasks.h>
-
-#include <string>
 
 NS_CC_BEGIN
 
+void pthread_mutex_init(pthread_mutex_t* m, void* attributes) {
+	*m = CreateMutexEx(NULL,FALSE,0,NULL);
+}
 
+int pthread_mutex_lock(pthread_mutex_t* m) {
+	return WaitForSingleObjectEx(*m,INFINITE,FALSE);
+}
 
-std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
-std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
-std::string PlatformStringToString(Platform::String^ s);
+int pthread_mutex_unlock(pthread_mutex_t* m) {
+	return ReleaseMutex(*m);
+}
 
-// Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
-float ConvertDipsToPixels(float dips);
-float getScaledDPIValue(float v);
-
-Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path);
+void pthread_mutex_destroy(pthread_mutex_t* m) 
+{
+	if(m)
+	{
+		CloseHandle(*m);
+	}
+}
 
 
 NS_CC_END
-
-#endif // __CCWINRT_UTILS_H__

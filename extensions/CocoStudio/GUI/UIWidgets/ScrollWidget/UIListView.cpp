@@ -1469,7 +1469,7 @@ void UIListView::updateChildEvent()
     }
 }
 
-void UIListView::addEventListenterListView(CCObject *target, SEL_ListViewEvent selector)
+void UIListView::addEventListenerListView(CCObject *target, SEL_ListViewEvent selector)
 {
     m_pListViewEventListener = target;
     m_pfnListViewEventSelector = selector;
