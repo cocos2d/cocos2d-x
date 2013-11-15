@@ -2,7 +2,7 @@ ccb = ccb or {}
 
 function CCBReaderLoad(strFilePath,proxy,owner)
     if nil == proxy then
-        return
+        return nil
     end
 
     local ccbReader = proxy:createCCBReader()

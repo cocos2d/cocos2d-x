@@ -335,7 +335,6 @@
 		1A8C557E180E8B5100EF57C3 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C556A180E8B5100EF57C3 /* background.ogg */; };
 		1A8C557F180E8B5100EF57C3 /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C556B180E8B5100EF57C3 /* crop.png */; };
 		1A8C5580180E8B5100EF57C3 /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C556B180E8B5100EF57C3 /* crop.png */; };
-		1A8C5581180E8B5100EF57C3 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C556C180E8B5100EF57C3 /* development.icf */; };
 		1A8C5583180E8B5100EF57C3 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C556D180E8B5100EF57C3 /* dog.png */; };
 		1A8C5584180E8B5100EF57C3 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C556D180E8B5100EF57C3 /* dog.png */; };
 		1A8C5585180E8B5100EF57C3 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C556E180E8B5100EF57C3 /* effect1.wav */; };
@@ -6171,7 +6170,6 @@
 				1A8C557B180E8B5100EF57C3 /* background.mp3 in Resources */,
 				1A8C557D180E8B5100EF57C3 /* background.ogg in Resources */,
 				1A8C557F180E8B5100EF57C3 /* crop.png in Resources */,
-				1A8C5581180E8B5100EF57C3 /* development.icf in Resources */,
 				1A8C5583180E8B5100EF57C3 /* dog.png in Resources */,
 				1A8C5585180E8B5100EF57C3 /* effect1.wav in Resources */,
 				1A8C5587180E8B5100EF57C3 /* farm.jpg in Resources */,
