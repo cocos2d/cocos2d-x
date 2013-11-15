@@ -116,39 +116,23 @@ ccs.SliderEventType = {percent_changed: 0};
 
 ccs.LoadingBarType = { left: 0, right: 1};
 
-ccs.SCROLLVIEW_DIR = {
+ccs.ScrollViewDir = {
     none: 0,
     vertical: 1,
-    horizontal: 2
-};
-
-ccs.SCROLLVIEW_MOVE_DIR = {
-    none: 0,
-    up: 1,
-    down: 2,
-    left: 3,
-    right: 4
+    horizontal: 2,
+    both: 3
 };
 
 ccs.ScrollviewEventType = {
-    top: 0,
-    bottom: 1,
-    left: 2,
-    right: 3
-};
-
-ccs.ListViewDirection = {
-    none: 0,
-    vertical: 1,
-    horizontal: 2
-};
-
-ccs.ListViewMoveDirection = {
-    none: 0,
-    up: 1,
-    down: 2,
-    left: 3,
-    right: 4
+    scrollToTop: 0,
+    scrollToBottom: 1,
+    scrollToLeft: 2,
+    scrollToRight: 3,
+    scrolling: 4,
+    bounceTop: 5,
+    bounceBottom: 6,
+    bounceLeft: 7,
+    bounceRight: 8
 };
 
 ccs.ListViewEventType = {
