@@ -41,6 +41,8 @@ public:
     static LuaStack *create(void);
     static LuaStack *attach(lua_State *L);
     
+    virtual ~LuaStack();
+    
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
