@@ -9,8 +9,27 @@
 
 #include "CCPlatformMacros.h"
 #include "RenderCommand.h"
+#include <map>
 
 NS_CC_BEGIN
+using namespace std;
+
+class GroupCommandManager : public Object
+{
+public:
+    static GroupCommandManager* getInstance();
+
+    ~GroupCommandManager();
+
+    bool init();
+
+    int getGroupID();
+    void releaseGroupID(int groupID);
+
+protected:
+    GroupCommandManager();
+    map<int, bool> _groupMapping;
+};
 
 class GroupCommand : public RenderCommand
 {

@@ -52,7 +52,7 @@ void NewTextureAtlas::drawNumberOfQuads(long numberOfQuads, long start)
 //    updateTransform();
 //    QuadCommand* renderCommand = new QuadCommand(0, 0,_texture->getName(), _shaderProgram, _blendFunc, _quad);
 //
-//    Renderer::getInstance()->addRenderCommand(renderCommand);
+//    Renderer::getInstance()->addCommand(renderCommand);
 }
 
 NS_CC_END

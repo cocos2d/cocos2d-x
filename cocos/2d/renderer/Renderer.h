@@ -35,7 +35,7 @@ public:
     static void destroyInstance();
 
     //TODO support multiple viewport
-    void addRenderCommand(RenderCommand* command, int renderQueue = DEFAULT_RENDER_QUEUE);
+    void addCommand(RenderCommand *command, int renderQueue = DEFAULT_RENDER_QUEUE);
     void render();
 
 protected:

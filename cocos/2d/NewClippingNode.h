@@ -25,6 +25,19 @@ public:
 
 protected:
     NewClippingNode();
+
+    void beforeVisit();
+    void afterVisit();
+
+protected:
+    GLboolean currentStencilEnabled;
+    GLuint currentStencilWriteMask;
+    GLenum currentStencilFunc;
+    GLint currentStencilRef;
+    GLuint currentStencilValueMask;
+    GLenum currentStencilFail;
+    GLenum currentStencilPassDepthFail;
+    GLenum currentStencilPassDepthPass;
 };
 
 NS_CC_END
