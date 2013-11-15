@@ -32,7 +32,7 @@ extern "C" {
 }
 #endif
 
-std::map<int, std::string>  g_luaType;
+std::map<long, std::string>  g_luaType;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err)
@@ -280,6 +280,30 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
         outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
         lua_pop(L, 1);
     }
+    return ok;
+}
+
+bool luaval_to_long(lua_State* L,int lo, long* outValue)
+{
+    if (NULL == L || NULL == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_isnumber(L,lo,0,&tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        *outValue = (long)tolua_tonumber(L, lo, 0);
+    }
+    
     return ok;
 }
 

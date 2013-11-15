@@ -22,9 +22,6 @@ private:
 
 class PhysicsDemo : public BaseTest
 {
-protected:
-    PhysicsTestScene* _scene;
-    
 public:
     PhysicsDemo();
     virtual ~PhysicsDemo();
@@ -48,6 +45,7 @@ public:
     void onTouchEnded(Touch* touch, Event* event);
     
 protected:
+    PhysicsTestScene* _scene;
     Texture2D* _spriteTexture;    // weak ref
     SpriteBatchNode* _ball;
     std::map<int, Node*> _mouses;
@@ -56,6 +54,7 @@ protected:
 class PhysicsDemoClickAdd : public PhysicsDemo
 {
 public:
+    virtual ~PhysicsDemoClickAdd();
     void onEnter() override;
     std::string subtitle() override;
     

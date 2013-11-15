@@ -231,36 +231,36 @@ public:
     /**
      * Add call back function called scrollview event triggered
      */
-    void addEventListener(cocos2d::Object* target, SEL_ScrollViewEvent selector);
+    void addEventListenerScrollView(cocos2d::Object* target, SEL_ScrollViewEvent selector);
         
     //override "addChild" method of widget.
-    virtual bool addChild(UIWidget* widget);
+    virtual bool addChild(UIWidget* widget) override;
     
     //override "removeAllChildrenAndCleanUp" method of widget.
-    virtual void removeAllChildren();
+    virtual void removeAllChildren() override;
     
     //override "removeChild" method of widget.
-	virtual bool removeChild(UIWidget* child);
+	virtual bool removeChild(UIWidget* child) override;
     
     //override "getChildren" method of widget.
-    virtual cocos2d::Array* getChildren();
+    virtual cocos2d::Array* getChildren() override;
     
     //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
+    virtual bool onTouchBegan(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const cocos2d::Point &touchPoint);
+    virtual void onTouchMoved(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const cocos2d::Point &touchPoint);
+    virtual void onTouchEnded(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const cocos2d::Point &touchPoint);
+    virtual void onTouchCancelled(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchLongClicked" method of widget.
-    virtual void onTouchLongClicked(const cocos2d::Point &touchPoint);
+    virtual void onTouchLongClicked(const cocos2d::Point &touchPoint) override;
     
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     
     void setBounceEnabled(bool enabled);
     
@@ -277,7 +277,7 @@ public:
      *
      * @param LayoutType
      */
-    virtual void setLayoutType(LayoutType type);
+    virtual void setLayoutType(LayoutType type) override;
     
     /**
      * Gets LayoutType.
@@ -286,17 +286,17 @@ public:
      *
      * @return LayoutType
      */
-    virtual LayoutType getLayoutType() const;
+    virtual LayoutType getLayoutType() const override;
     
-    virtual void doLayout();
+    virtual void doLayout() override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
 protected:
-    virtual bool init();
-    virtual void initRenderer();
+    virtual bool init() override;
+    virtual void initRenderer() override;
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
     void bounceChildren(float dt);
@@ -313,11 +313,11 @@ protected:
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
-    virtual void handlePressLogic(const cocos2d::Point &touchPoint);
-    virtual void handleMoveLogic(const cocos2d::Point &touchPoint);
-    virtual void handleReleaseLogic(const cocos2d::Point &touchPoint);
-    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint);
-    virtual void checkChildInfo(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint);
+    virtual void handlePressLogic(const cocos2d::Point &touchPoint) override;
+    virtual void handleMoveLogic(const cocos2d::Point &touchPoint) override;
+    virtual void handleReleaseLogic(const cocos2d::Point &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint) override;
+    virtual void checkChildInfo(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint) override;
     void recordSlidTime(float dt);
     void scrollToTopEvent();
     void scrollToBottomEvent();
@@ -328,11 +328,11 @@ protected:
     void bounceBottomEvent();
     void bounceLeftEvent();
     void bounceRightEvent();
-    virtual void onSizeChanged();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
-    virtual void copyClonedWidgetChildren(UIWidget* model);
-    virtual void setClippingEnabled(bool able){UILayout::setClippingEnabled(able);};
+    virtual void onSizeChanged() override;
+    virtual UIWidget* createCloneInstance() override;
+    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual void copyClonedWidgetChildren(UIWidget* model) override;
+    virtual void setClippingEnabled(bool able) override{UILayout::setClippingEnabled(able);};
 protected:
     UILayout* _innerContainer;
     
@@ -382,8 +382,8 @@ protected:
 
 
     
-    cocos2d::Object* _eventListener;
-    SEL_ScrollViewEvent _eventSelector;
+    cocos2d::Object* _scrollViewEventListener;
+    SEL_ScrollViewEvent _scrollViewEventSelector;
 };
 
 }

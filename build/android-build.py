@@ -15,11 +15,12 @@ ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
 
 def usage():
 
-    print "%prog [-n ndk-build-parameter] target\n\
-    valid target are [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon\
-|crystalcraze|moonwarriors|testjavascript|watermelonwithme], of course you can use 'cpp'\
-to build all cpp samples, 'lua' to build all lua samples, 'jsb' to build all javascript samples,\
- and 'all' for all samples" 
+    print """%s [-n ndk-build-parameter] target.
+
+Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon
+                   |crystalcraze|moonwarriors|testjavascript|watermelonwithme]
+
+You can use [all|cpp|lua|jsb], to build all, or all the C++, or all the Lua, or all the JavaScript samples respectevely.""" % sys.argv[0]
 
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
@@ -95,7 +96,8 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param):
         command = '%s -C %s %s' % (ndk_path, app_android_root, ndk_module_path)
     else:
         command = '%s -C %s %s %s' % (ndk_path, app_android_root, ndk_build_param, ndk_module_path)
-    os.system(command)
+    if os.system(command) != 0:
+        raise Exception("Build project [ " + app_android_root + " ] fails!")
 
 def copy_files(src, dst):
 
@@ -131,13 +133,26 @@ def copy_resources(target, app_android_root):
             resources_dir = os.path.join(app_android_root, "../../Shared/games/CocosDragonJS/Published files Android")
         if target == "crystalcraze":
             resources_dir = os.path.join(app_android_root, "../../Shared/games/CrystalCraze/Published-Android")
-        if target == "moonwarriors":
-            resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors/res")
         if target == "testjavascript":
             resources_dir = os.path.join(app_android_root, "../../Shared/tests/")
         if target == "watermelonwithme":
             resources_dir = os.path.join(app_android_root, "../../Shared/games/WatermelonWithMe")
-        copy_files(resources_dir, assets_dir)
+        if target != "moonwarriors":
+            copy_files(resources_dir, assets_dir)
+        else:
+        	  resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors/res")
+        	  dst_dir = os.path.join(assets_dir, "res")
+        	  os.mkdir(dst_dir)
+        	  copy_files(resources_dir, dst_dir)
+        	  resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors/src")
+        	  dst_dir = os.path.join(assets_dir, "src")
+        	  os.mkdir(dst_dir)
+        	  copy_files(resources_dir, dst_dir)
+        	  resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors")
+        	  for item in os.listdir(resources_dir):
+        	  	  path = os.path.join(resources_dir, item)
+        	  	  if item.endswith('.js') and os.path.isfile(path):
+        	  	  	  shutil.copy(path, assets_dir)
 
     # AssetsManager test should also copy javascript files
     if target == "assetsmanager":
@@ -205,4 +220,8 @@ if __name__ == '__main__':
     if len(args) == 0:
         usage()
     else:
-        build_samples(args, opts.ndk_build_param)
+        try:
+            build_samples(args, opts.ndk_build_param)
+        except Exception as e:
+            print e
+            sys.exit(1)

@@ -29,11 +29,12 @@ namespace gui {
 
 UILabel::UILabel():
 _touchScaleChangeEnabled(false),
-_normalScaleValue(1.0f),
+_normalScaleValueX(1.0f),
+_normalScaleValueY(1.0f),
 _fontName("Thonburi"),
 _fontSize(10),
 _onSelectedScaleOffset(0.5),
-_labelRenderer(NULL)
+_labelRenderer(nullptr)
 {
 }
 
@@ -51,7 +52,7 @@ UILabel* UILabel::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UILabel::init()
@@ -70,26 +71,23 @@ void UILabel::initRenderer()
     _renderer->addChild(_labelRenderer);
 }
 
-void UILabel::setText(const char* text)
+void UILabel::setText(const std::string& text)
 {
-	if (!text)
-	{
+	if (text.size()==0)
 		return;
-	}
-    std::string strText(text);
-    _labelRenderer->setString(strText.c_str());
+
+    _labelRenderer->setString(text);
     labelScaleChangedWithSize();
 }
 
-const char* UILabel::getStringValue()
+const std::string& UILabel::getStringValue()
 {
     return _labelRenderer->getString();
 }
 
 int UILabel::getStringLength()
 {
-    const char* str = _labelRenderer->getString();
-    return strlen(str);
+    return _labelRenderer->getString().size();
 }
 
 void UILabel::setFontSize(int size)
@@ -99,7 +97,7 @@ void UILabel::setFontSize(int size)
     labelScaleChangedWithSize();
 }
 
-void UILabel::setFontName(const char* name)
+void UILabel::setFontName(const std::string& name)
 {
     _fontName = name;
     _labelRenderer->setFontName(name);
@@ -127,7 +125,26 @@ void UILabel::setTextVerticalAlignment(cocos2d::TextVAlignment alignment)
 void UILabel::setTouchScaleChangeEnabled(bool enable)
 {
     _touchScaleChangeEnabled = enable;
-    _normalScaleValue = getScale();
+    _normalScaleValueX = getScaleX();
+    _normalScaleValueY = getScaleY();
+}
+    
+void UILabel::setScale(float fScale)
+{
+    UIWidget::setScale(fScale);
+    _normalScaleValueX = _normalScaleValueY = fScale;
+}
+    
+void UILabel::setScaleX(float fScaleX)
+{
+    UIWidget::setScaleX(fScaleX);
+    _normalScaleValueX = fScaleX;
+}
+    
+void UILabel::setScaleY(float fScaleY)
+{
+    UIWidget::setScaleY(fScaleY);
+    _normalScaleValueY = fScaleY;
 }
 
 bool UILabel::isTouchScaleChangeEnabled()
@@ -141,7 +158,7 @@ void UILabel::onPressStateChangedToNormal()
     {
         return;
     }
-    clickScale(_normalScaleValue);
+    clickScale(_normalScaleValueX, _normalScaleValueY);
 }
 
 void UILabel::onPressStateChangedToPressed()
@@ -150,7 +167,7 @@ void UILabel::onPressStateChangedToPressed()
     {
         return;
     }
-    clickScale(_normalScaleValue + _onSelectedScaleOffset);
+    clickScale(_normalScaleValueX + _onSelectedScaleOffset, _normalScaleValueY + _onSelectedScaleOffset);
 }
 
 void UILabel::onPressStateChangedToDisabled()
@@ -158,9 +175,10 @@ void UILabel::onPressStateChangedToDisabled()
     
 }
 
-void UILabel::clickScale(float scale)
+void UILabel::clickScale(float scaleX, float scaleY)
 {
-    _renderer->setScale(scale);
+    _renderer->setScaleX(scaleX);
+    _renderer->setScaleY(scaleY);
 }
 
 void UILabel::setFlipX(bool flipX)

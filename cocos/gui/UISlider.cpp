@@ -28,13 +28,13 @@
 namespace gui {
 
 UISlider::UISlider():
-_barRenderer(NULL),
-_progressBarRenderer(NULL),
+_barRenderer(nullptr),
+_progressBarRenderer(nullptr),
 _progressBarTextureSize(cocos2d::Size::ZERO),
-_slidBallNormalRenderer(NULL),
-_slidBallPressedRenderer(NULL),
-_slidBallDisabledRenderer(NULL),
-_slidBallRenderer(NULL),
+_slidBallNormalRenderer(nullptr),
+_slidBallPressedRenderer(nullptr),
+_slidBallDisabledRenderer(nullptr),
+_slidBallRenderer(nullptr),
 _barLength(0.0),
 _percent(0),
 _scale9Enabled(false),
@@ -46,8 +46,8 @@ _slidBallPressedTextureFile(""),
 _slidBallDisabledTextureFile(""),
 _capInsetsBarRenderer(cocos2d::Rect::ZERO),
 _capInsetsProgressBarRenderer(cocos2d::Rect::ZERO),
-_slidPercentListener(NULL),
-_slidPercentSelector(NULL),
+_sliderEventListener(nullptr),
+_sliderEventSelector(nullptr),
 _barTexType(UI_TEX_TYPE_LOCAL),
 _progressBarTexType(UI_TEX_TYPE_LOCAL),
 _ballNTexType(UI_TEX_TYPE_LOCAL),
@@ -58,7 +58,8 @@ _ballDTexType(UI_TEX_TYPE_LOCAL)
 
 UISlider::~UISlider()
 {
-    
+    _sliderEventListener = nullptr;
+    _sliderEventSelector = nullptr;
 }
 
 UISlider* UISlider::create()
@@ -70,7 +71,7 @@ UISlider* UISlider::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 void UISlider::initRenderer()
@@ -197,8 +198,8 @@ void UISlider::setScale9Enabled(bool able)
     _scale9Enabled = able;
     _renderer->removeChild(_barRenderer, true);
     _renderer->removeChild(_progressBarRenderer, true);
-    _barRenderer = NULL;
-    _progressBarRenderer = NULL;
+    _barRenderer = nullptr;
+    _progressBarRenderer = nullptr;
     if (_scale9Enabled)
     {
         _barRenderer = cocos2d::extension::Scale9Sprite::create();
@@ -410,17 +411,17 @@ float UISlider::getPercentWithBallPos(float px)
     return (((px-(-_barLength/2.0f))/_barLength)*100.0f);
 }
 
-void UISlider::addEventListener(cocos2d::Object *target, SEL_SlidPercentChangedEvent selector)
+void UISlider::addEventListenerSlider(cocos2d::Object *target, SEL_SlidPercentChangedEvent selector)
 {
-    _slidPercentListener = target;
-    _slidPercentSelector = selector;
+    _sliderEventListener = target;
+    _sliderEventSelector = selector;
 }
 
 void UISlider::percentChangedEvent()
 {
-    if (_slidPercentListener && _slidPercentSelector)
+    if (_sliderEventListener && _sliderEventSelector)
     {
-        (_slidPercentListener->*_slidPercentSelector)(this,SLIDER_PERCENTCHANGED);
+        (_sliderEventListener->*_sliderEventSelector)(this,SLIDER_PERCENTCHANGED);
     }
 }
 

@@ -44,42 +44,50 @@ _touchPassedEnabled(false),
 _focus(false),
 _widgetZOrder(0),
 _anchorPoint(cocos2d::Point(0.5f, 0.5f)),
-_widgetParent(NULL),
+_widgetParent(nullptr),
 _brightStyle(BRIGHT_NONE),
 _updateEnabled(false),
-_renderer(NULL),
+_renderer(nullptr),
 _touchStartPos(cocos2d::Point::ZERO),
 _touchMovePos(cocos2d::Point::ZERO),
 _touchEndPos(cocos2d::Point::ZERO),
-_touchEventListener(NULL),
-_touchEventSelector(NULL),
+_touchEventListener(nullptr),
+_touchEventSelector(nullptr),
 _widgetTag(-1),
 _name("default"),
 _widgetType(WidgetTypeWidget),
 _actionTag(0),
 _size(cocos2d::Size::ZERO),
 _customSize(cocos2d::Size::ZERO),
-_layoutParameterDictionary(NULL),
+_layoutParameterDictionary(nullptr),
 _ignoreSize(false),
-_children(NULL),
+_children(nullptr),
 _affectByClipping(false),
-_scheduler(NULL),
+_scheduler(nullptr),
 _sizeType(SIZE_ABSOLUTE),
 _sizePercent(cocos2d::Point::ZERO),
 _positionType(POSITION_ABSOLUTE),
 _positionPercent(cocos2d::Point::ZERO),
-_isRunning(false)
+_isRunning(false),
+_userObject(nullptr)
 {
     
 }
 
 UIWidget::~UIWidget()
 {
-    releaseResoures();
-    setParent(NULL);
+    _touchEventListener = nullptr;
+    _touchEventSelector = nullptr;
+    removeAllChildren();
+    _children->release();
+    _renderer->removeAllChildrenWithCleanup(true);
+    _renderer->removeFromParentAndCleanup(true);
+    _renderer->release();
+    setParent(nullptr);
     _layoutParameterDictionary->removeAllObjects();
     CC_SAFE_RELEASE(_layoutParameterDictionary);
     CC_SAFE_RELEASE(_scheduler);
+    CC_SAFE_RELEASE(_userObject);
 }
 
 UIWidget* UIWidget::create()
@@ -91,7 +99,7 @@ UIWidget* UIWidget::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UIWidget::init()
@@ -116,15 +124,6 @@ bool UIWidget::init()
     return true;
 }
 
-void UIWidget::releaseResoures()
-{
-    removeAllChildren();
-    _children->release();
-    _renderer->removeAllChildrenWithCleanup(true);
-    _renderer->removeFromParentAndCleanup(true);
-    _renderer->release();
-}
-
 void UIWidget::onEnter()
 {
     arrayMakeObjectsPerformSelector(_children, onEnter, UIWidget*);
@@ -136,6 +135,13 @@ void UIWidget::onExit()
 {
     _isRunning = false;
     arrayMakeObjectsPerformSelector(_children, onExit, UIWidget*);
+}
+    
+void UIWidget::setUserObject(cocos2d::Object *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(_userObject);
+    _userObject = pUserObject;
 }
 
 bool UIWidget::addChild(UIWidget *child)
@@ -204,7 +210,7 @@ bool UIWidget::removeChild(UIWidget *child)
             child->onExit();    
         }
         child->setUpdateEnabled(false);
-        child->setParent(NULL);
+        child->setParent(nullptr);
         _renderer->removeChild(child->getRenderer());
         _children->removeObject(child);
         return true;
@@ -326,21 +332,33 @@ void UIWidget::setSize(const cocos2d::Size &size)
     {
         _size = size;
     }
-    if (_isRunning)
+    if (_isRunning && _widgetParent)
     {
-        _sizePercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(_customSize.width / _widgetParent->getSize().width, _customSize.height / _widgetParent->getSize().height);
+        cocos2d::Size pSize = _widgetParent->getSize();
+        float spx = 0.0f;
+        float spy = 0.0f;
+        if (pSize.width > 0.0f)
+        {
+            spx = _customSize.width / pSize.width;
+        }
+        if (pSize.height > 0.0f)
+        {
+            spy = _customSize.height / pSize.height;
+        }
+        _sizePercent = cocos2d::Point(spx, spy);
     }
+    
     onSizeChanged();
 }
 
 void UIWidget::setSizePercent(const cocos2d::Point &percent)
 {
     _sizePercent = percent;
-    if (!_isRunning)
+    cocos2d::Size cSize = _customSize;
+    if (_isRunning)
     {
-        return;
+        cSize = (_widgetParent == nullptr) ? cocos2d::Size::ZERO : cocos2d::Size(_widgetParent->getSize().width * percent.x , _widgetParent->getSize().height * percent.y);
     }
-    cocos2d::Size cSize = (_widgetParent == NULL) ? cocos2d::Size::ZERO : cocos2d::Size(_widgetParent->getSize().width * percent.x , _widgetParent->getSize().height * percent.y);
     if (_ignoreSize)
     {
         _size = getContentSize();
@@ -358,6 +376,7 @@ void UIWidget::updateSizeAndPosition()
     switch (_sizeType)
     {
         case SIZE_ABSOLUTE:
+        {
             if (_ignoreSize)
             {
                 _size = getContentSize();
@@ -366,8 +385,23 @@ void UIWidget::updateSizeAndPosition()
             {
                 _size = _customSize;
             }
-            _sizePercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(_customSize.width / _widgetParent->getSize().width, _customSize.height / _widgetParent->getSize().height);
+            if (_widgetParent)
+            {
+                cocos2d::Size pSize = _widgetParent->getSize();
+                float spx = 0.0f;
+                float spy = 0.0f;
+                if (pSize.width > 0.0f)
+                {
+                    spx = _customSize.width / pSize.width;
+                }
+                if (pSize.height > 0.0f)
+                {
+                    spy = _customSize.height / pSize.height;
+                }
+                _sizePercent = cocos2d::Point(spx, spy);
+            }
             break;
+        }
         case SIZE_PERCENT:
         {
             cocos2d::Size cSize = (_widgetParent == NULL) ? cocos2d::Size::ZERO : cocos2d::Size(_widgetParent->getSize().width * _sizePercent.x , _widgetParent->getSize().height * _sizePercent.y);
@@ -390,14 +424,38 @@ void UIWidget::updateSizeAndPosition()
     switch (_positionType)
     {
         case POSITION_ABSOLUTE:
-            _positionPercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(absPos.x / _widgetParent->getSize().width, absPos.y / _widgetParent->getSize().height);
+        {
+            if (_widgetParent)
+            {
+                cocos2d::Size pSize = _widgetParent->getSize();
+                if (pSize.width <= 0.0f || pSize.height <= 0.0f)
+                {
+                    _positionPercent = cocos2d::Point::ZERO;
+                }
+                else
+                {
+                    _positionPercent = cocos2d::Point(absPos.x / pSize.width, absPos.y / pSize.height);
+                }
+            }
+            else
+            {
+                _positionPercent = cocos2d::Point::ZERO;
+            }
             break;
+        }
         case POSITION_PERCENT:
         {
-            cocos2d::Size parentSize = _widgetParent->getSize();
-            absPos = cocos2d::Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
-        }
+            if (_widgetParent)
+            {
+                cocos2d::Size parentSize = _widgetParent->getSize();
+                absPos = cocos2d::Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
+            }
+            else
+            {
+                absPos = cocos2d::Point::ZERO;
+            }
             break;
+        }
         default:
             break;
     }
@@ -734,7 +792,7 @@ bool UIWidget::clippingParentAreaContainPoint(const cocos2d::Point &pt)
 {
     _affectByClipping = false;
     UIWidget* parent = getParent();
-    UIWidget* clippingParent = NULL;
+    UIWidget* clippingParent = nullptr;
     while (parent)
     {
         UILayout* layoutParent = dynamic_cast<UILayout*>(parent);
@@ -782,9 +840,17 @@ void UIWidget::checkChildInfo(int handleState, UIWidget *sender, const cocos2d::
 
 void UIWidget::setPosition(const cocos2d::Point &pos)
 {
-    if (_isRunning)
+    if (_isRunning && _widgetParent)
     {
-        _positionPercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(pos.x / _widgetParent->getSize().width, pos.y / _widgetParent->getSize().height);
+        cocos2d::Size pSize = _widgetParent->getSize();
+        if (pSize.width <= 0.0f || pSize.height <= 0.0f)
+        {
+            _positionPercent = cocos2d::Point::ZERO;
+        }
+        else
+        {
+            _positionPercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(pos.x / pSize.width, pos.y / pSize.height);
+        }
     }
     _renderer->setPosition(pos);
 }
@@ -792,7 +858,7 @@ void UIWidget::setPosition(const cocos2d::Point &pos)
 void UIWidget::setPositionPercent(const cocos2d::Point &percent)
 {
     _positionPercent = percent;
-    if (_isRunning)
+    if (_isRunning && _widgetParent)
     {
         cocos2d::Size parentSize = _widgetParent->getSize();
         cocos2d::Point absPos = cocos2d::Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
@@ -1109,6 +1175,10 @@ WidgetType UIWidget::getWidgetType() const
 
 void UIWidget::setLayoutParameter(UILayoutParameter *parameter)
 {
+    if (!parameter)
+    {
+        return;
+    }
     _layoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
 }
 

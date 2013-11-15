@@ -121,7 +121,7 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
-unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mode, unsigned long* size)
+unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mode, long* size)
 {
     unsigned char * pBuffer = NULL;
     CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
@@ -139,7 +139,7 @@ unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mod
         
         *size = ::GetFileSize(fileHandle, NULL);
 
-        pBuffer = new unsigned char[*size];
+        pBuffer = (unsigned char*) malloc(*size);
         DWORD sizeRead = 0;
         BOOL successed = FALSE;
         successed = ::ReadFile(fileHandle, pBuffer, *size, &sizeRead, NULL);
@@ -147,7 +147,7 @@ unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mod
 
         if (!successed)
         {
-            CC_SAFE_DELETE_ARRAY(pBuffer);
+            free(pBuffer);
         }
     } while (0);
     

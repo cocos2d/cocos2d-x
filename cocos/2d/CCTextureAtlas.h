@@ -197,10 +197,10 @@ public:
     const char* description() const;
 
     /** Gets the quantity of quads that are going to be drawn */
-    int getTotalQuads() const;
+    long getTotalQuads() const;
     
     /** Gets the quantity of quads that can be stored with the current texture atlas size */
-    int getCapacity() const;
+    long getCapacity() const;
     
     /** Gets the texture of the texture atlas */
     Texture2D* getTexture() const;
@@ -217,23 +217,18 @@ public:
 private:
     void setupIndices();
     void mapBuffers();
-#if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();
-#else
     void setupVBO();
-#endif
 
 protected:
     GLushort*           _indices;
-#if CC_TEXTURE_ATLAS_USE_VAO
     GLuint              _VAOname;
-#endif
     GLuint              _buffersVBO[2]; //0: vertex  1: indices
     bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
     /** quantity of quads that are going to be drawn */
-    int _totalQuads;
+    long _totalQuads;
     /** quantity of quads that can be stored with the current texture atlas size */
-    int _capacity;
+    long _capacity;
     /** Texture of the texture atlas */
     Texture2D* _texture;
     /** Quads that are going to be rendered */

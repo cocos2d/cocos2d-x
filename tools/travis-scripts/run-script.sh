@@ -76,6 +76,13 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cd linux-build
     cmake ../..
     make -j10
+    cd ../../template/multi-platform-cpp
+    cmake .
+    make -j10
+    cd ../multi-platform-lua
+    cmake .
+    make -j10
+
 elif [ "$PLATFORM"x = "emscripten"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."

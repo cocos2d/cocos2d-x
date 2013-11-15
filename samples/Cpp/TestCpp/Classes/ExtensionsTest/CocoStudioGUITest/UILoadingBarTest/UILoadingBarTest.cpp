@@ -67,20 +67,29 @@ void UILoadingBarTest_Left::update(float delta)
 
 void UILoadingBarTest_Left::previousCallback(Object* sender, TouchEventType type)
 {
-	unscheduleUpdate();
-	UIScene::previousCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::previousCallback(sender, type);
+    }
 }
 
 void UILoadingBarTest_Left::restartCallback(Object* sender, TouchEventType type)
 {
-	unscheduleUpdate();
-	UIScene::restartCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::restartCallback(sender, type);
+    }
 }
 
 void UILoadingBarTest_Left::nextCallback(Object* sender, TouchEventType type)
 {
-	unscheduleUpdate();
-	UIScene::nextCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::nextCallback(sender, type);
+    }
 }
 
 // UILoadingBarTest_Right
@@ -142,20 +151,29 @@ void UILoadingBarTest_Right::update(float delta)
 
 void UILoadingBarTest_Right::previousCallback(Object* sender, TouchEventType type)
 {
-	unscheduleUpdate();
-	UIScene::previousCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::previousCallback(sender, type);
+    }
 }
 
 void UILoadingBarTest_Right::restartCallback(Object* sender, TouchEventType type)
 {
-	unscheduleUpdate();
-	UIScene::restartCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::restartCallback(sender, type);
+    }
 }
 
 void UILoadingBarTest_Right::nextCallback(Object* sender, TouchEventType type)
 {
-	unscheduleUpdate();
-	UIScene::nextCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::nextCallback(sender, type);
+    }
 }
 
 // UILoadingBarTest_Left_Scale9
@@ -219,20 +237,29 @@ void UILoadingBarTest_Left_Scale9::update(float delta)
 
 void UILoadingBarTest_Left_Scale9::previousCallback(Object* sender, TouchEventType type)
 {
-	unscheduleUpdate();
-	UIScene::previousCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::previousCallback(sender, type);
+    }
 }
 
 void UILoadingBarTest_Left_Scale9::restartCallback(Object* sender, TouchEventType type)
 {
-	unscheduleUpdate();
-	UIScene::restartCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::restartCallback(sender, type);
+    }
 }
 
 void UILoadingBarTest_Left_Scale9::nextCallback(Object* sender, TouchEventType type)
 {
-	unscheduleUpdate();
-	UIScene::nextCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::nextCallback(sender, type);
+    }
 }
 
 // UILoadingBarTest_Right_Scale9
@@ -290,22 +317,34 @@ void UILoadingBarTest_Right_Scale9::update(float delta)
     {
         m_nCount = 0;
     }
-    
+    CCLOG("wocao");
     UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(m_pUiLayer->getWidgetByName("LoadingBar"));
     loadingBar->setPercent(m_nCount);
 }
 
 void UILoadingBarTest_Right_Scale9::previousCallback(Object* sender, TouchEventType type)
 {
-	UIScene::previousCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::previousCallback(sender, type);
+    }
 }
 
 void UILoadingBarTest_Right_Scale9::restartCallback(Object* sender, TouchEventType type)
 {
-	UIScene::restartCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::restartCallback(sender, type);
+    }
 }
 
 void UILoadingBarTest_Right_Scale9::nextCallback(Object* sender, TouchEventType type)
 {
-	UIScene::nextCallback(sender, type);
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        unscheduleUpdate();
+        UIScene::nextCallback(sender, type);
+    }
 }

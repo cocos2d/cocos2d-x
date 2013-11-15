@@ -130,7 +130,7 @@ TextFontPagesDef::~TextFontPagesDef()
     }
 }
 
-TextImage::TextImage(): _font(0), _fontPages(0)
+TextImage::TextImage(): _fontPages(0), _font(0)
 {
 }
 

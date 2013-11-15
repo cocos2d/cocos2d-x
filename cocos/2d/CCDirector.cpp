@@ -145,6 +145,8 @@ bool Director::init(void)
     _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
     _eventDispatcher = new EventDispatcher();
+    //init TextureCache
+    initTextureCache();
     
     // create autorelease pool
     PoolManager::sharedPoolManager()->push();
@@ -359,6 +361,29 @@ void Director::setOpenGLView(EGLView *pobOpenGLView)
     }
 }
 
+TextureCache* Director::getTextureCache() const
+{
+    return _textureCache;
+}
+
+void Director::initTextureCache()
+{
+#ifdef EMSCRIPTEN
+    _textureCache = new TextureCacheEmscripten();
+#else
+    _textureCache = new TextureCache();
+#endif // EMSCRIPTEN
+}
+
+void Director::destroyTextureCache()
+{
+    if (_textureCache)
+    {
+        _textureCache->waitForQuit();
+        CC_SAFE_RELEASE_NULL(_textureCache);
+    }
+}
+
 void Director::setViewport()
 {
     if (_openGLView)
@@ -437,7 +462,7 @@ void Director::purgeCachedData(void)
     if (s_SharedDirector->getOpenGLView())
     {
         SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
-        TextureCache::getInstance()->removeUnusedTextures();
+        _textureCache->removeUnusedTextures();
     }
     FileUtils::getInstance()->purgeCachedEntries();
 }
@@ -693,7 +718,6 @@ void Director::purgeDirector()
     DrawPrimitives::free();
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
-    TextureCache::destroyInstance();
     ShaderCache::destroyInstance();
     FileUtils::destroyInstance();
     Configuration::destroyInstance();
@@ -704,6 +728,8 @@ void Director::purgeDirector()
     
     GL::invalidateStateCache();
     
+    destroyTextureCache();
+
     CHECK_GL_ERROR_DEBUG();
     
     // OpenGL view
@@ -841,14 +867,13 @@ void Director::getFPSImageData(unsigned char** datapointer, long* length)
 void Director::createStatsLabel()
 {
     Texture2D *texture = nullptr;
-    TextureCache *textureCache = TextureCache::getInstance();
 
     if (_FPSLabel && _SPFLabel)
     {
         CC_SAFE_RELEASE_NULL(_FPSLabel);
         CC_SAFE_RELEASE_NULL(_SPFLabel);
         CC_SAFE_RELEASE_NULL(_drawsLabel);
-        textureCache->removeTextureForKey("/cc_fps_images");
+        _textureCache->removeTextureForKey("/cc_fps_images");
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
@@ -865,7 +890,7 @@ void Director::createStatsLabel()
         return;
     }
 
-    texture = textureCache->addImage(image, "/cc_fps_images");
+    texture = _textureCache->addImage(image, "/cc_fps_images");
     CC_SAFE_RELEASE(image);
 
     /*

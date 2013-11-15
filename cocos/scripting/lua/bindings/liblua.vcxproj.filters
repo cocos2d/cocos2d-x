@@ -84,6 +84,12 @@
     <ClCompile Include="lua_xml_http_request.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_studio_auto.cpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_cocos2dx_coco_studio_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.hpp">
@@ -153,6 +159,12 @@
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="lua_xml_http_request.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_studio_auto.hpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_cocos2dx_coco_studio_manual.hpp">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
   </ItemGroup>

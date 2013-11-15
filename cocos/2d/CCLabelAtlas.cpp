@@ -56,7 +56,7 @@ LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& cha
 
 bool LabelAtlas::initWithString(const std::string& string, const std::string& charMapFile, long itemWidth, long itemHeight, long startCharMap)
 {
-    Texture2D *texture = TextureCache::getInstance()->addImage(charMapFile);
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(charMapFile);
 	return initWithString(string, texture, itemWidth, itemHeight, startCharMap);
 }
 
@@ -127,9 +127,9 @@ void LabelAtlas::updateAtlasValues()
         itemHeightInPixels = _itemHeight;
     }
 
-    CCASSERT( n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
+    CCASSERT( static_cast<long>(n) <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
-    for(int i = 0; i < n; i++) {
+    for(long i = 0; i < static_cast<long>(n); i++) {
 
         unsigned char a = s[i] - _mapStartChar;
         float row = (float) (a % _itemsPerRow);
@@ -177,8 +177,8 @@ void LabelAtlas::updateAtlasValues()
     }
     if (n > 0 ){
         _textureAtlas->setDirty(true);
-        int totalQuads = _textureAtlas->getTotalQuads();
-        if (n > totalQuads) {
+        long totalQuads = _textureAtlas->getTotalQuads();
+        if (static_cast<long>(n) > totalQuads) {
             _textureAtlas->increaseTotalQuadsWith(n - totalQuads);
         }
     }
@@ -188,7 +188,7 @@ void LabelAtlas::updateAtlasValues()
 void LabelAtlas::setString(const std::string &label)
 {
     size_t len = label.size();
-    if (len > _textureAtlas->getTotalQuads())
+    if (static_cast<long>(len) > _textureAtlas->getTotalQuads())
     {
         _textureAtlas->resizeCapacity(len);
     }
@@ -203,9 +203,9 @@ void LabelAtlas::setString(const std::string &label)
     _quadsToDraw = len;
 }
 
-const char* LabelAtlas::getString(void) const
+const std::string& LabelAtlas::getString(void) const
 {
-    return _string.c_str();
+    return _string;
 }
 
 //CCLabelAtlas - draw

@@ -47,24 +47,20 @@ protected:
 public:
    virtual bool init();
    static ComAttribute* create(void);
-
+   
    void setInt(const char *key, int value);
-   void setDouble(const char *key, double value);
    void setFloat(const char *key, float value);
    void setBool(const char *key, bool value);
    void setCString(const char *key, const char *value);
-   void setObject(const char *key, Object *value);
    
    int    getInt(const char *key) const;
-   double getDouble(const char *key) const;
    float  getFloat(const char *key) const;
    bool   getBool(const char *key) const;
    const char* getCString(const char *key) const;
-   cocos2d::Object* getObject(const char *key) const;
    
    JsonDictionary* getDict() const;
+   
 private:
-   cocos2d::Dictionary *_attributes;  
    JsonDictionary *_jsonDict;
    
 };

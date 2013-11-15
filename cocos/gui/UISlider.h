@@ -162,46 +162,46 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addEventListener(cocos2d::Object* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListenerSlider(cocos2d::Object* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
+    virtual bool onTouchBegan(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const cocos2d::Point &touchPoint);
+    virtual void onTouchMoved(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const cocos2d::Point &touchPoint);
+    virtual void onTouchEnded(const cocos2d::Point &touchPoint) override;
     
     //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const cocos2d::Point &touchPoint);
+    virtual void onTouchCancelled(const cocos2d::Point &touchPoint) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer();
+    virtual cocos2d::Node* getVirtualRenderer() override;
     
     //override "ignoreContentAdaptWithSize" method of widget.
-    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
 
 protected:
-    virtual void initRenderer();
+    virtual void initRenderer() override;
     float getPercentWithBallPos(float location);
     void percentChangedEvent();
-    virtual void onPressStateChangedToNormal();
-    virtual void onPressStateChangedToPressed();
-    virtual void onPressStateChangedToDisabled();
-    virtual void onSizeChanged();
+    virtual void onPressStateChangedToNormal() override;
+    virtual void onPressStateChangedToPressed() override;
+    virtual void onPressStateChangedToDisabled() override;
+    virtual void onSizeChanged() override;
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual UIWidget* createCloneInstance() override;
+    virtual void copySpecialProperties(UIWidget* model) override;
 protected:
     cocos2d::Node*  _barRenderer;
     cocos2d::Node* _progressBarRenderer;
@@ -226,8 +226,8 @@ protected:
     cocos2d::Rect _capInsetsBarRenderer;
     cocos2d::Rect _capInsetsProgressBarRenderer;
 
-    cocos2d::Object*       _slidPercentListener;
-    SEL_SlidPercentChangedEvent    _slidPercentSelector;
+    cocos2d::Object*       _sliderEventListener;
+    SEL_SlidPercentChangedEvent    _sliderEventSelector;
     TextureResType _barTexType;
     TextureResType _progressBarTexType;
     TextureResType _ballNTexType;

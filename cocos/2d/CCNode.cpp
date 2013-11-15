@@ -237,11 +237,13 @@ void Node::_setZOrder(int z)
 
 void Node::setZOrder(int z)
 {
-    _setZOrder(z);
     if (_parent)
     {
         _parent->reorderChild(this, z);
     }
+    // should set "_ZOrder" after reorderChild, because the implementation of reorderChild subclass of Node, such as Sprite,
+    // will return when _ZOrder value is not changed
+    _setZOrder(z);
     
     _eventDispatcher->setDirtyForNode(this);
 }
