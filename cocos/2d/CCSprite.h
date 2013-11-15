@@ -196,6 +196,7 @@ public:
 
     /** Sets a new texture (from a filename) to the sprite.
      It will call `setTextureRect()` with the texture's content size.
+     TODO: The whole Sprite API needs to be reviewed.
      */
     virtual void setTexture(const std::string &filename );
 

@@ -77,18 +77,6 @@ public:
     
     /** creates a base transition with duration and incoming scene */
     static TransitionScene * create(float t, Scene *scene);
-    /**
-     * @js ctor
-     */
-    TransitionScene();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~TransitionScene();
-
-    /** initializes a transition with duration and incoming scene */
-    bool initWithDuration(float t,Scene* scene);
 
     /** called after the transition finishes */
     void finish(void);
@@ -113,17 +101,23 @@ public:
     virtual void cleanup() override;
 
 protected:
-    virtual void sceneOrder();
+    TransitionScene();
+    virtual ~TransitionScene();
 
-private:
+    /** initializes a transition with duration and incoming scene */
+    bool initWithDuration(float t,Scene* scene);
+
+    virtual void sceneOrder();
     void setNewScene(float dt);
 
-protected:
     Scene    * _inScene;
     Scene    * _outScene;
     float    _duration;
     bool    _isInSceneOnTop;
     bool    _isSendCleanupToScene;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TransitionScene);
 };
 
 /** @brief A Transition that supports orientation like.
@@ -134,21 +128,18 @@ class CC_DLL TransitionSceneOriented : public TransitionScene
 public:
     /** creates a base transition with duration and incoming scene */
     static TransitionSceneOriented * create(float t,Scene* scene, Orientation orientation);
-    /**
-     * @js ctor
-     */
+
+protected:
     TransitionSceneOriented();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~TransitionSceneOriented();
 
     /** initializes a transition with duration and incoming scene */
     bool initWithDuration(float t,Scene* scene,Orientation orientation);
 
-protected:
     Orientation _orientation;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TransitionSceneOriented);
 };
 
 /** @brief TransitionRotoZoom:
@@ -159,12 +150,6 @@ class CC_DLL TransitionRotoZoom : public TransitionScene
 public:
     static TransitionRotoZoom* create(float t, Scene* scene);
 
-    TransitionRotoZoom();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~TransitionRotoZoom();
 
     //
     // Overrides
@@ -174,6 +159,14 @@ public:
      * @lua NA
      */
     virtual void onEnter() override;
+
+protected:
+    TransitionRotoZoom();
+    virtual ~TransitionRotoZoom();
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TransitionRotoZoom);
+
 };
 
 /** @brief TransitionJumpZoom:
@@ -183,15 +176,6 @@ class CC_DLL TransitionJumpZoom : public TransitionScene
 {
 public:
     static TransitionJumpZoom* create(float t, Scene* scene);
-    /**
-     * @js ctor
-     */
-    TransitionJumpZoom();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~TransitionJumpZoom();
 
     //
     // Overrides
@@ -201,6 +185,13 @@ public:
      * @lua NA
      */
     virtual void onEnter() override;
+
+protected:
+    TransitionJumpZoom();
+    virtual ~TransitionJumpZoom();
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TransitionJumpZoom);
 };
 
 /** @brief TransitionMoveInL:
@@ -210,15 +201,7 @@ class CC_DLL TransitionMoveInL : public TransitionScene, public TransitionEaseSc
 {
 public:
     static TransitionMoveInL* create(float t, Scene* scene);
-    /**
-     * @js ctor
-     */
-    TransitionMoveInL();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~TransitionMoveInL();
+
     /** initializes the scenes */
     virtual void initScenes(void);
     /** returns the action that will be performed */
@@ -234,6 +217,13 @@ public:
      * @lua NA
      */
     virtual void onEnter() override;
+
+protected:
+    TransitionMoveInL();
+    virtual ~TransitionMoveInL();
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TransitionMoveInL);
 };
 
 /** @brief TransitionMoveInR:
@@ -243,16 +233,14 @@ class CC_DLL TransitionMoveInR : public TransitionMoveInL
 {
 public:
     static TransitionMoveInR* create(float t, Scene* scene);
-    /**
-     * @js ctor
-     */
-    TransitionMoveInR();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~TransitionMoveInR();
     virtual void initScenes();
+
+protected:
+    TransitionMoveInR();
+    virtual ~TransitionMoveInR();
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TransitionMoveInR);
 };
 
 /** @brief TransitionMoveInT:
@@ -262,16 +250,14 @@ class CC_DLL TransitionMoveInT : public TransitionMoveInL
 {
 public:
     static TransitionMoveInT* create(float t, Scene* scene);
-    /**
-     * @js ctor
-     */
-    TransitionMoveInT();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~TransitionMoveInT();
     virtual void initScenes();
+
+protected:
+    TransitionMoveInT();
+    virtual ~TransitionMoveInT();
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TransitionMoveInT);
 };
 
 /** @brief TransitionMoveInB:
@@ -281,6 +267,9 @@ class CC_DLL TransitionMoveInB : public TransitionMoveInL
 {
 public:
     static TransitionMoveInB* create(float t, Scene* scene);
+    virtual void initScenes();
+
+protected:
     /**
      * @js ctor
      */
@@ -290,7 +279,9 @@ public:
      * @lua NA
      */
     virtual ~TransitionMoveInB();
-    virtual void initScenes();
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TransitionMoveInB);
 };
 
 /** @brief TransitionSlideInL:
@@ -300,15 +291,6 @@ class CC_DLL TransitionSlideInL : public TransitionScene, public TransitionEaseS
 {
 public:
     static TransitionSlideInL* create(float t, Scene* scene);
-    /**
-     * @js ctor
-     */
-    TransitionSlideInL();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~TransitionSlideInL();
 
     virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
@@ -325,9 +307,22 @@ public:
      * @lua NA
      */
     virtual void onEnter() override;
-    
+
 protected:
+    /**
+     * @js ctor
+     */
+    TransitionSlideInL();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~TransitionSlideInL();
+
     virtual void sceneOrder() override;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TransitionSlideInL);
 };
 
 /** @brief TransitionSlideInR:
