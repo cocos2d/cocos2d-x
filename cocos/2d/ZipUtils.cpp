@@ -39,7 +39,7 @@ bool ZipUtils::s_bEncryptionKeyIsValid = false;
 
 // --------------------- ZipUtils ---------------------
 
-inline void ZipUtils::ccDecodeEncodedPvr(unsigned int *data, long len)
+inline void ZipUtils::decodeEncodedPvr(unsigned int *data, long len)
 {
     const int enclen = 1024;
     const int securelen = 512;
@@ -47,10 +47,10 @@ inline void ZipUtils::ccDecodeEncodedPvr(unsigned int *data, long len)
     
     // check if key was set
     // make sure to call caw_setkey_part() for all 4 key parts
-    CCASSERT(s_uEncryptedPvrKeyParts[0] != 0, "Cocos2D: CCZ file is encrypted but key part 0 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
-    CCASSERT(s_uEncryptedPvrKeyParts[1] != 0, "Cocos2D: CCZ file is encrypted but key part 1 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
-    CCASSERT(s_uEncryptedPvrKeyParts[2] != 0, "Cocos2D: CCZ file is encrypted but key part 2 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
-    CCASSERT(s_uEncryptedPvrKeyParts[3] != 0, "Cocos2D: CCZ file is encrypted but key part 3 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
+    CCASSERT(s_uEncryptedPvrKeyParts[0] != 0, "Cocos2D: CCZ file is encrypted but key part 0 is not set. Did you call ZipUtils::setPvrEncryptionKeyPart(...)?");
+    CCASSERT(s_uEncryptedPvrKeyParts[1] != 0, "Cocos2D: CCZ file is encrypted but key part 1 is not set. Did you call ZipUtils::setPvrEncryptionKeyPart(...)?");
+    CCASSERT(s_uEncryptedPvrKeyParts[2] != 0, "Cocos2D: CCZ file is encrypted but key part 2 is not set. Did you call ZipUtils::setPvrEncryptionKeyPart(...)?");
+    CCASSERT(s_uEncryptedPvrKeyParts[3] != 0, "Cocos2D: CCZ file is encrypted but key part 3 is not set. Did you call ZipUtils::setPvrEncryptionKeyPart(...)?");
     
     // create long key
     if(!s_bEncryptionKeyIsValid)
@@ -108,7 +108,7 @@ inline void ZipUtils::ccDecodeEncodedPvr(unsigned int *data, long len)
     }
 }
 
-inline unsigned int ZipUtils::ccChecksumPvr(const unsigned int *data, long len)
+inline unsigned int ZipUtils::checksumPvr(const unsigned int *data, long len)
 {
     unsigned int cs = 0;
     const int cslen = 128;
@@ -127,13 +127,13 @@ inline unsigned int ZipUtils::ccChecksumPvr(const unsigned int *data, long len)
 // Should buffer factor be 1.5 instead of 2 ?
 #define BUFFER_INC_FACTOR (2)
 
-int ZipUtils::ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long *outLength, long outLenghtHint)
+int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long *outLength, long outLenghtHint)
 {
     /* ret value */
     int err = Z_OK;
     
     long bufferSize = outLenghtHint;
-    *out = new unsigned char[bufferSize];
+    *out = (unsigned char*)malloc(bufferSize);
     
     z_stream d_stream; /* decompression stream */
     d_stream.zalloc = (alloc_func)0;
@@ -192,10 +192,10 @@ int ZipUtils::ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigned
     return err;
 }
 
-long ZipUtils::ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLengthHint)
+long ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLengthHint)
 {
     long outLength = 0;
-    int err = ccInflateMemoryWithHint(in, inLength, out, &outLength, outLengthHint);
+    int err = inflateMemoryWithHint(in, inLength, out, &outLength, outLengthHint);
     
     if (err != Z_OK || *out == NULL) {
         if (err == Z_MEM_ERROR)
@@ -214,22 +214,24 @@ long ZipUtils::ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigne
                 {
                     CCLOG("cocos2d: ZipUtils: Unknown error while decompressing map data!");
                 }
-        
-        delete[] *out;
-        *out = NULL;
+
+        if(*out) {
+            free(*out);
+            *out = NULL;
+        }
         outLength = 0;
     }
     
     return outLength;
 }
 
-long ZipUtils::ccInflateMemory(unsigned char *in, long inLength, unsigned char **out)
+long ZipUtils::inflateMemory(unsigned char *in, long inLength, unsigned char **out)
 {
     // 256k for hint
-    return ccInflateMemoryWithHint(in, inLength, out, 256 * 1024);
+    return inflateMemoryWithHint(in, inLength, out, 256 * 1024);
 }
 
-int ZipUtils::ccInflateGZipFile(const char *path, unsigned char **out)
+int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
 {
     int len;
     unsigned int offset = 0;
@@ -299,7 +301,7 @@ int ZipUtils::ccInflateGZipFile(const char *path, unsigned char **out)
     return offset;
 }
 
-bool ZipUtils::ccIsCCZFile(const char *path)
+bool ZipUtils::isCCZFile(const char *path)
 {
     // load file into memory
     unsigned char* compressed = NULL;
@@ -307,16 +309,19 @@ bool ZipUtils::ccIsCCZFile(const char *path)
     long fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
 
-    if(NULL == compressed || 0 == fileLen)
+    if(compressed == NULL || fileLen == 0)
     {
         CCLOG("cocos2d: ZipUtils: loading file failed");
         return false;
     }
 
-    return ccIsCCZBuffer(compressed, fileLen);
+    bool ret = isCCZBuffer(compressed, fileLen);
+    free(compressed);
+
+    return ret;
 }
 
-bool ZipUtils::ccIsCCZBuffer(const unsigned char *buffer, long len)
+bool ZipUtils::isCCZBuffer(const unsigned char *buffer, long len)
 {
     if (static_cast<size_t>(len) < sizeof(struct CCZHeader))
     {
@@ -328,7 +333,7 @@ bool ZipUtils::ccIsCCZBuffer(const unsigned char *buffer, long len)
 }
 
 
-bool ZipUtils::ccIsGZipFile(const char *path)
+bool ZipUtils::isGZipFile(const char *path)
 {
     // load file into memory
     unsigned char* compressed = NULL;
@@ -342,10 +347,12 @@ bool ZipUtils::ccIsGZipFile(const char *path)
         return false;
     }
 
-    return ccIsGZipBuffer(compressed, fileLen);
+    bool ret = isGZipBuffer(compressed, fileLen);
+    free(compressed);
+    return ret;
 }
 
-bool ZipUtils::ccIsGZipBuffer(const unsigned char *buffer, long len)
+bool ZipUtils::isGZipBuffer(const unsigned char *buffer, long len)
 {
     if (len < 2)
     {
@@ -356,7 +363,7 @@ bool ZipUtils::ccIsGZipBuffer(const unsigned char *buffer, long len)
 }
 
 
-int ZipUtils::ccInflateCCZBuffer(const unsigned char *buffer, long bufferLen, unsigned char **out)
+int ZipUtils::inflateCCZBuffer(const unsigned char *buffer, long bufferLen, unsigned char **out)
 {
     struct CCZHeader *header = (struct CCZHeader*) buffer;
 
@@ -402,11 +409,11 @@ int ZipUtils::ccInflateCCZBuffer(const unsigned char *buffer, long bufferLen, un
         unsigned int* ints = (unsigned int*)(buffer+12);
         long enclen = (bufferLen-12)/4;
 
-        ccDecodeEncodedPvr(ints, enclen);
+        decodeEncodedPvr(ints, enclen);
 
 #if COCOS2D_DEBUG > 0
         // verify checksum in debug mode
-        unsigned int calculated = ccChecksumPvr(ints, enclen);
+        unsigned int calculated = checksumPvr(ints, enclen);
         unsigned int required = CC_SWAP_INT32_BIG_TO_HOST( header->reserved );
 
         if(calculated != required)
@@ -446,7 +453,7 @@ int ZipUtils::ccInflateCCZBuffer(const unsigned char *buffer, long bufferLen, un
     return len;
 }
 
-int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
+int ZipUtils::inflateCCZFile(const char *path, unsigned char **out)
 {
     CCAssert(out, "");
     CCAssert(&*out, "");
@@ -463,10 +470,12 @@ int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
         return -1;
     }
     
-    return ccInflateCCZBuffer(compressed, fileLen, out);
+    int ret = inflateCCZBuffer(compressed, fileLen, out);
+    free(compressed);
+    return ret;
 }
 
-void ZipUtils::ccSetPvrEncryptionKeyPart(int index, unsigned int value)
+void ZipUtils::setPvrEncryptionKeyPart(int index, unsigned int value)
 {
     CCASSERT(index >= 0, "Cocos2d: key part index cannot be less than 0");
     CCASSERT(index <= 3, "Cocos2d: key part index cannot be greater than 3");
@@ -478,12 +487,12 @@ void ZipUtils::ccSetPvrEncryptionKeyPart(int index, unsigned int value)
     }
 }
 
-void ZipUtils::ccSetPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4)
+void ZipUtils::setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4)
 {
-    ccSetPvrEncryptionKeyPart(0, keyPart1);
-    ccSetPvrEncryptionKeyPart(1, keyPart2);
-    ccSetPvrEncryptionKeyPart(2, keyPart3);
-    ccSetPvrEncryptionKeyPart(3, keyPart4);
+    setPvrEncryptionKeyPart(0, keyPart1);
+    setPvrEncryptionKeyPart(1, keyPart2);
+    setPvrEncryptionKeyPart(2, keyPart3);
+    setPvrEncryptionKeyPart(3, keyPart4);
 }
 
 // --------------------- ZipFile ---------------------
@@ -582,14 +591,12 @@ bool ZipFile::fileExists(const std::string &fileName) const
     return ret;
 }
 
-unsigned char *ZipFile::getFileData(const std::string &fileName, long *pSize)
+unsigned char *ZipFile::getFileData(const std::string &fileName, long *size)
 {
-    unsigned char * pBuffer = NULL;
-    if (pSize)
-    {
-        *pSize = 0;
-    }
-    
+    unsigned char * buffer = NULL;
+    if (size)
+        *size = 0;
+
     do
     {
         CC_BREAK_IF(!_data->zipFile);
@@ -606,18 +613,18 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, long *pSize)
         nRet = unzOpenCurrentFile(_data->zipFile);
         CC_BREAK_IF(UNZ_OK != nRet);
         
-        pBuffer = new unsigned char[fileInfo.uncompressed_size];
-        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, pBuffer, static_cast<unsigned>(fileInfo.uncompressed_size));
+        buffer = (unsigned char*)malloc(fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, buffer, fileInfo.uncompressed_size);
         CCASSERT(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
         
-        if (pSize)
+        if (size)
         {
-            *pSize = fileInfo.uncompressed_size;
+            *size = fileInfo.uncompressed_size;
         }
         unzCloseCurrentFile(_data->zipFile);
     } while (0);
     
-    return pBuffer;
+    return buffer;
 }
 
 NS_CC_END

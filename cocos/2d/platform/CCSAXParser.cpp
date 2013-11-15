@@ -121,7 +121,7 @@ bool SAXParser::parse(const char *pszFile)
     {
         ret = parse(pBuffer, size);
     }
-    CC_SAFE_DELETE_ARRAY(pBuffer);
+    free(pBuffer);
     return ret;
 }
 

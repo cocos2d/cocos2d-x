@@ -136,7 +136,7 @@ FontFreeType::~FontFreeType()
     }
     if (_ttfData)
     {
-        delete _ttfData;
+        free(_ttfData);
         _ttfData = nullptr;
     }
 }

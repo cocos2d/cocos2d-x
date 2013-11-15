@@ -30,12 +30,12 @@
 namespace gui {
 
 UIInputManager::UIInputManager():
-_manageredWidget(NULL),
+_manageredWidget(nullptr),
 _touchDown(false),
 _longClickTime(0.0),
 _longClickRecordTime(0.0),
-_checkedDoubleClickWidget(NULL),
-_rootWidget(NULL)
+_checkedDoubleClickWidget(nullptr),
+_rootWidget(nullptr)
 {
     _manageredWidget = Array::create();
     _manageredWidget->retain();

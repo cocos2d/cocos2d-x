@@ -396,7 +396,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
                         CCASSERT( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
                         CC_BREAK_IF(!buffer);
                         
-                        long deflatedLen = ZipUtils::ccInflateMemory(buffer, decodeLen, &deflated);
+                        long deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
                         CCASSERT( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
@@ -420,8 +420,8 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
             bRet = true;
         }
     } while (0);
-    CC_SAFE_DELETE_ARRAY(buffer);
-    CC_SAFE_DELETE_ARRAY(deflated);
+    free(buffer);
+    free(deflated);
     return bRet;
 }
 

@@ -43,7 +43,7 @@ typedef enum
     
 typedef enum
 {
-    LISTVIEW_ONSELECEDTITEM
+    LISTVIEW_ONSELECTEDITEM
 }ListViewEventType;
 
 typedef void (cocos2d::Object::*SEL_ListViewEvent)(cocos2d::Object*,ListViewEventType);
@@ -164,20 +164,24 @@ public:
      *
      * @param SCROLLVIEW_DIR
      */
-    virtual void setDirection(SCROLLVIEW_DIR dir);
+    virtual void setDirection(SCROLLVIEW_DIR dir) override;
     
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
     
 protected:
-    virtual bool init();
+    virtual bool addChild(UIWidget* widget) override{return UIScrollView::addChild(widget);};
+    virtual bool removeChild(UIWidget* widget) override{return UIScrollView::removeChild(widget);};
+    virtual void removeAllChildren() override{UIScrollView::removeAllChildren();};
+    virtual cocos2d::Array* getChildren() override{return UIScrollView::getChildren();};
+    virtual bool init() override;
     void updateInnerContainerSize();
     void remedyLayoutParameter(UIWidget* item);
-    virtual void onSizeChanged();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
-    virtual void copyClonedWidgetChildren(UIWidget* model);
+    virtual void onSizeChanged() override;
+    virtual UIWidget* createCloneInstance() override;
+    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual void copyClonedWidgetChildren(UIWidget* model) override;
     void selectedItemEvent();
-    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint);
+    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint) override;
 protected:
     
     UIWidget* _model;

@@ -57,7 +57,7 @@ UICCTextField * UICCTextField::create(const char *placeholder, const char *fontN
     }
     CC_SAFE_DELETE(pRet);
     
-    return NULL;
+    return nullptr;
 }
 
 void UICCTextField::onEnter()
@@ -271,20 +271,20 @@ bool UICCTextField::getDeleteBackward()
 
     
 UITextField::UITextField():
-_textFieldRenderer(NULL),
+_textFieldRenderer(nullptr),
 _touchWidth(0.0f),
 _touchHeight(0.0f),
 _useTouchArea(false),
-_textFieldEventListener(NULL),
-_textFieldEventSelector(NULL),
+_textFieldEventListener(nullptr),
+_textFieldEventSelector(nullptr),
 _passwordStyleText("")
 {
 }
 
 UITextField::~UITextField()
 {
-    _textFieldEventListener = NULL;
-    _textFieldEventSelector = NULL;
+    _textFieldEventListener = nullptr;
+    _textFieldEventSelector = nullptr;
 }
 
 UITextField* UITextField::create()
@@ -296,7 +296,7 @@ UITextField* UITextField::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UITextField::init()

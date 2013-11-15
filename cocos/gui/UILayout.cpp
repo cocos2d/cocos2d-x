@@ -35,13 +35,13 @@ namespace gui {
 UILayout::UILayout():
 _clippingEnabled(false),
 _backGroundScale9Enabled(false),
-_backGroundImage(NULL),
+_backGroundImage(nullptr),
 _backGroundImageFileName(""),
 _backGroundImageCapInsets(cocos2d::Rect::ZERO),
 _colorType(LAYOUT_COLOR_NONE),
 _bgImageTexType(UI_TEX_TYPE_LOCAL),
-_colorRender(NULL),
-_gradientRender(NULL),
+_colorRender(nullptr),
+_gradientRender(nullptr),
 _cColor(cocos2d::Color3B::WHITE),
 _gStartColor(cocos2d::Color3B::WHITE),
 _gEndColor(cocos2d::Color3B::WHITE),
@@ -66,7 +66,7 @@ UILayout* UILayout::create()
         return layout;
     }
     CC_SAFE_DELETE(layout);
-    return NULL;
+    return nullptr;
 }
 
 bool UILayout::init()
@@ -165,7 +165,7 @@ void UILayout::setBackGroundImageScale9Enabled(bool able)
         return;
     }
     _renderer->removeChild(_backGroundImage, true);
-    _backGroundImage = NULL;
+    _backGroundImage = nullptr;
     _backGroundScale9Enabled = able;
     if (_backGroundScale9Enabled)
     {
@@ -188,7 +188,7 @@ void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
     {
         return;
     }
-    if (_backGroundImage == NULL)
+    if (_backGroundImage == nullptr)
     {
         addBackGroundImage();
     }
@@ -305,7 +305,7 @@ void UILayout::removeBackGroundImage()
         return;
     }
     _renderer->removeChild(_backGroundImage,  true);
-    _backGroundImage = NULL;
+    _backGroundImage = nullptr;
     _backGroundImageFileName = "";
     _backGroundImageTextureSize = cocos2d::Size::ZERO;
 }
@@ -322,26 +322,26 @@ void UILayout::setBackGroundColorType(LayoutBackGroundColorType type)
             if (_colorRender)
             {
                 _renderer->removeChild(_colorRender, true);
-                _colorRender = NULL;
+                _colorRender = nullptr;
             }
             if (_gradientRender)
             {
                 _renderer->removeChild(_gradientRender, true);
-                _gradientRender = NULL;
+                _gradientRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_SOLID:
             if (_colorRender)
             {
                 _renderer->removeChild(_colorRender, true);
-                _colorRender = NULL;
+                _colorRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_GRADIENT:
             if (_gradientRender)
             {
                 _renderer->removeChild(_gradientRender, true);
-                _gradientRender = NULL;
+                _gradientRender = nullptr;
             }
             break;
         default:
@@ -596,8 +596,8 @@ void UILayout::doLayout()
                         cocos2d::Size cs = child->getSize();
                         UIRelativeAlign align = layoutParameter->getAlign();
                         const char* relativeName = layoutParameter->getRelativeToWidgetName();
-                        UIWidget* relativeWidget = NULL;
-                        UIRelativeLayoutParameter* relativeWidgetLP = NULL;
+                        UIWidget* relativeWidget = nullptr;
+                        UIRelativeLayoutParameter* relativeWidgetLP = nullptr;
                         float finalPosX = 0.0f;
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))
@@ -927,7 +927,7 @@ void UILayout::copySpecialProperties(UIWidget *widget)
 }
 
 UIRectClippingNode::UIRectClippingNode():
-_innerStencil(NULL),
+_innerStencil(nullptr),
 _enabled(true),
 _clippingSize(cocos2d::Size(50.0f, 50.0f)),
 _clippingEnabled(false)

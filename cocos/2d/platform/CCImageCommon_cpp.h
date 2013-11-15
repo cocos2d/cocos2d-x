@@ -424,7 +424,7 @@ bool Image::initWithImageFile(const char * strPath)
         bRet = initWithImageData(buffer, bufferLen);
     }
 
-    CC_SAFE_DELETE_ARRAY(buffer);
+    free(buffer);
 #endif // EMSCRIPTEN
 
     return bRet;
@@ -444,7 +444,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath)
     {
         ret = initWithImageData(buffer, dataLen);
     }
-    CC_SAFE_DELETE_ARRAY(buffer);
+    free(buffer);
     return ret;
 }
 
@@ -460,13 +460,13 @@ bool Image::initWithImageData(const unsigned char * data, long dataLen)
         long unpackedLen = 0;
         
         //detecgt and unzip the compress file
-        if (ZipUtils::ccIsCCZBuffer(data, dataLen))
+        if (ZipUtils::isCCZBuffer(data, dataLen))
         {
-            unpackedLen = ZipUtils::ccInflateCCZBuffer(data, dataLen, &unpackedData);
+            unpackedLen = ZipUtils::inflateCCZBuffer(data, dataLen, &unpackedData);
         }
-        else if (ZipUtils::ccIsGZipBuffer(data, dataLen))
+        else if (ZipUtils::isGZipBuffer(data, dataLen))
         {
-            unpackedLen = ZipUtils::ccInflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
+            unpackedLen = ZipUtils::inflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
         }
         else
         {

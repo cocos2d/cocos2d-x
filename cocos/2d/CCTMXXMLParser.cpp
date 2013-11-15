@@ -66,7 +66,7 @@ TMXLayerInfo::~TMXLayerInfo()
     CC_SAFE_RELEASE(_properties);
     if( _ownTiles && _tiles )
     {
-        delete [] _tiles;
+        free(_tiles);
         _tiles = NULL;
     }
 }
@@ -757,12 +757,12 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
                 // int sizeHint = s.width * s.height * sizeof(uint32_t);
                 int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
                 
-                long inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+                long inflatedLen = ZipUtils::inflateMemoryWithHint(buffer, len, &deflated, sizeHint);
                 CCASSERT(inflatedLen == sizeHint, "");
                 
                 inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
                 
-                delete [] buffer;
+                free(buffer);
                 buffer = NULL;
                 
                 if( ! deflated )

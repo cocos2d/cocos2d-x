@@ -59,7 +59,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 		*doc = xmlDoc;
 		//CCFileData data(UserDefault::getInstance()->getXMLFilePath().c_str(),"rt");
 		long nSize;
-		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &nSize);
+		char* pXmlBuffer = (char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &nSize);
 		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
 		{
@@ -67,7 +67,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 			break;
 		}
 		xmlDoc->Parse(pXmlBuffer, nSize);
-        delete[] pXmlBuffer;
+        free(pXmlBuffer);
 		// get root node
 		*rootNode = xmlDoc->RootElement();
 		if (NULL == *rootNode)
@@ -323,7 +323,7 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
         if (decodedData) {
             ret = Data::create(decodedData, decodedDataLen);
         
-            delete decodedData;
+            free(decodedData);
         }
 	}
     
@@ -408,7 +408,8 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
         
     setValueForKey(pKey, encodedData);
     
-    if (encodedData) delete encodedData;
+    if (encodedData)
+        free(encodedData);
 }
 
 UserDefault* UserDefault::getInstance()

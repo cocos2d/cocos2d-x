@@ -622,7 +622,7 @@ void VolatileTextureMgr::reloadAllTextures()
                     Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
                 }
                 
-                CC_SAFE_DELETE_ARRAY(pBuffer);
+                free(pBuffer);
                 CC_SAFE_RELEASE(image);
             }
             break;

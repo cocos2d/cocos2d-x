@@ -47,7 +47,7 @@ UICCLabelAtlas* UICCLabelAtlas::create()
     }
     CC_SAFE_DELETE(pRet);
     
-    return NULL;
+    return nullptr;
 }
 
 void UICCLabelAtlas::setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
@@ -79,7 +79,7 @@ void UICCLabelAtlas::updateDisplayedOpacity(GLubyte opacity)
 
 
 UILabelAtlas::UILabelAtlas():
-_laberAtlasRenderer(NULL),
+_laberAtlasRenderer(nullptr),
 _stringValue(""),
 _charMapFileName(""),
 _itemWidth(0),
@@ -103,7 +103,7 @@ UILabelAtlas* UILabelAtlas::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 void UILabelAtlas::initRenderer()

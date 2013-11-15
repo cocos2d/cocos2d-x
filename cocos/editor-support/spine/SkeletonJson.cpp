@@ -240,7 +240,7 @@ SkeletonData* SkeletonJson_readSkeletonDataFile (SkeletonJson* self, const char*
 		return 0;
 	}
 	skeletonData = SkeletonJson_readSkeletonData(self, json);
-    delete [] json;
+    FREE(json);
 	return skeletonData;
 }
 
