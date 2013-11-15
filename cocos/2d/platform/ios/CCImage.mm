@@ -385,7 +385,7 @@ bool Image::saveToFile(const std::string& filename, bool bIsToRGB)
     bool saveToPNG = false;
     bool needToCopyPixels = false;
 
-    if (std::string::npos != filePath.find(".png"))
+    if (std::string::npos != filename.find(".png"))
     {
         saveToPNG = true;
     }
@@ -453,7 +453,7 @@ bool Image::saveToFile(const std::string& filename, bool bIsToRGB)
         data = UIImageJPEGRepresentation(image, 1.0f);
     }
     
-    [data writeToFile:[NSString stringWithUTF8String:pszFilePath] atomically:YES];
+    [data writeToFile:[NSString stringWithUTF8String:filename.c_str()] atomically:YES];
         
     [image release];
         
