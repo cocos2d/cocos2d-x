@@ -36,6 +36,7 @@ public:
 
     //TODO support multiple viewport
     void addCommand(RenderCommand *command, int renderQueue = DEFAULT_RENDER_QUEUE);
+    int createRenderQueue();
     void render();
 
 protected:

@@ -1875,7 +1875,9 @@
 		74AC80607344CF78FA01E586 /* CCNewSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8595CF5D51E2CD7D0D10 /* CCNewSpriteBatchNode.h */; };
 		74AC80B376893369090BDF41 /* NewClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC801B2DF1B67CABDC8618 /* NewClippingNode.cpp */; };
 		74AC80E3AEE80D0F3C2EA914 /* CCNewTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8B72E9E2CB68A32DFAD0 /* CCNewTextureAtlas.h */; };
+		74AC820121BC10EB2314A149 /* CCNewDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC84D8B35BF1DF77F87298 /* CCNewDrawNode.h */; };
 		74AC827ADE07ADF51EE8125E /* NewClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8058324B24E5E23D50AC /* NewClippingNode.h */; };
+		74AC82A4451AC3056CA00E28 /* CCNewDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8B565BC067E484C6112C /* CCNewDrawNode.cpp */; };
 		74AC82CA7ADF24CEBF003D35 /* CCNewSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC803F724104A2760727F4 /* CCNewSpriteBatchNode.cpp */; };
 		74AC84D6D85A7B2C5D7BF97D /* CCNewSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8595CF5D51E2CD7D0D10 /* CCNewSpriteBatchNode.h */; };
 		74AC84FD1818C324532298B9 /* CustomCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8EEBA128AF944335D0F5 /* CustomCommand.h */; };
@@ -1888,6 +1890,8 @@
 		74AC8AE774CED93AA3FEF3A6 /* CCNewSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC803F724104A2760727F4 /* CCNewSpriteBatchNode.cpp */; };
 		74AC8B561008C7E38B6B7CA8 /* GroupCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC81FFDAB7F67F59922A17 /* GroupCommand.cpp */; };
 		74AC8B9EECC47DDAAC58EEEB /* GroupCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC815F4829746578DBF736 /* GroupCommand.h */; };
+		74AC8BA20BFDF8D7531B1607 /* CCNewDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC84D8B35BF1DF77F87298 /* CCNewDrawNode.h */; };
+		74AC8BC03059D55C919A76C5 /* CCNewDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8B565BC067E484C6112C /* CCNewDrawNode.cpp */; };
 		74AC8E1404C49A9685F340D7 /* CustomCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8EEBA128AF944335D0F5 /* CustomCommand.h */; };
 		74AC8E5D13243404E16EC776 /* GroupCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC81FFDAB7F67F59922A17 /* GroupCommand.cpp */; };
 		74AC8F0E83F73FA15EF8AF2C /* CCNewTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC863530E6A014AF1A380B /* CCNewTextureAtlas.cpp */; };
@@ -3044,9 +3048,11 @@
 		74AC8058324B24E5E23D50AC /* NewClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewClippingNode.h; sourceTree = "<group>"; };
 		74AC815F4829746578DBF736 /* GroupCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupCommand.h; sourceTree = "<group>"; };
 		74AC81FFDAB7F67F59922A17 /* GroupCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GroupCommand.cpp; sourceTree = "<group>"; };
+		74AC84D8B35BF1DF77F87298 /* CCNewDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewDrawNode.h; sourceTree = "<group>"; };
 		74AC8595CF5D51E2CD7D0D10 /* CCNewSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewSpriteBatchNode.h; sourceTree = "<group>"; };
 		74AC863530E6A014AF1A380B /* CCNewTextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewTextureAtlas.cpp; sourceTree = "<group>"; };
 		74AC863874C3EBCD037CED6F /* CustomCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomCommand.cpp; sourceTree = "<group>"; };
+		74AC8B565BC067E484C6112C /* CCNewDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewDrawNode.cpp; sourceTree = "<group>"; };
 		74AC8B72E9E2CB68A32DFAD0 /* CCNewTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewTextureAtlas.h; sourceTree = "<group>"; };
 		74AC8EEBA128AF944335D0F5 /* CustomCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCommand.h; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5322,6 +5328,8 @@
 				74AC815F4829746578DBF736 /* GroupCommand.h */,
 				74AC801B2DF1B67CABDC8618 /* NewClippingNode.cpp */,
 				74AC8058324B24E5E23D50AC /* NewClippingNode.h */,
+				74AC8B565BC067E484C6112C /* CCNewDrawNode.cpp */,
+				74AC84D8B35BF1DF77F87298 /* CCNewDrawNode.h */,
 			);
 			name = renderer;
 			sourceTree = "<group>";
@@ -5697,6 +5705,7 @@
 				74AC80607344CF78FA01E586 /* CCNewSpriteBatchNode.h in Headers */,
 				74AC862F3CC78436F840C1B7 /* GroupCommand.h in Headers */,
 				74AC863FF267206E3196FF2B /* NewClippingNode.h in Headers */,
+				74AC820121BC10EB2314A149 /* CCNewDrawNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6274,6 +6283,7 @@
 				74AC84D6D85A7B2C5D7BF97D /* CCNewSpriteBatchNode.h in Headers */,
 				74AC8B9EECC47DDAAC58EEEB /* GroupCommand.h in Headers */,
 				74AC827ADE07ADF51EE8125E /* NewClippingNode.h in Headers */,
+				74AC8BA20BFDF8D7531B1607 /* CCNewDrawNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7024,6 +7034,7 @@
 				74AC82CA7ADF24CEBF003D35 /* CCNewSpriteBatchNode.cpp in Sources */,
 				74AC8E5D13243404E16EC776 /* GroupCommand.cpp in Sources */,
 				74AC80B376893369090BDF41 /* NewClippingNode.cpp in Sources */,
+				74AC8BC03059D55C919A76C5 /* CCNewDrawNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7544,6 +7555,7 @@
 				74AC8AE774CED93AA3FEF3A6 /* CCNewSpriteBatchNode.cpp in Sources */,
 				74AC8B561008C7E38B6B7CA8 /* GroupCommand.cpp in Sources */,
 				74AC89468D4F3F71EF699146 /* NewClippingNode.cpp in Sources */,
+				74AC82A4451AC3056CA00E28 /* CCNewDrawNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

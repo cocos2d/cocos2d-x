@@ -6,6 +6,7 @@
 #include "NewRendererTest.h"
 #include "CCNewSprite.h"
 #include "CCNewSpriteBatchNode.h"
+#include "NewClippingNode.h"
 
 static int sceneIdx = -1;
 
@@ -17,6 +18,7 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(NewSpriteTest),
     CL(NewSpriteBatchTest),
+    CL(NewClippingNodeTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -254,23 +256,83 @@ void NewSpriteBatchTest::addNewSpriteWithCoords(Point p)
     BatchNode->addChild(sprite);
 
     sprite->setPosition( Point( p.x, p.y) );
+}
 
-//    ActionInterval* action;
-//    float random = CCRANDOM_0_1();
-//
-//    if( random < 0.20 )
-//        action = ScaleBy::create(3, 2);
-//    else if(random < 0.40)
-//        action = RotateBy::create(3, 360);
-//    else if( random < 0.60)
-//        action = Blink::create(1, 3);
-//    else if( random < 0.8 )
-//        action = TintBy::create(2, 0, -255, -255);
-//    else
-//        action = FadeOut::create(2);
-//
-//    auto action_back = action->reverse();
-//    auto seq = Sequence::create(action, action_back, NULL);
-//
-//    sprite->runAction( RepeatForever::create(seq));
+NewClippingNodeTest::NewClippingNodeTest()
+{
+    auto clipper = NewClippingNode::create();
+    clipper->setTag( kTagClipperNode );
+    clipper->setContentSize(  Size(200, 200) );
+    clipper->setAnchorPoint(  Point(0.5, 0.5) );
+    clipper->setPosition( Point(this->getContentSize().width / 2, this->getContentSize().height / 2) );
+    clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
+    this->addChild(clipper);
+
+    auto stencil = DrawNode::create();
+    Point rectangle[4];
+    rectangle[0] = Point(0, 0);
+    rectangle[1] = Point(clipper->getContentSize().width, 0);
+    rectangle[2] = Point(clipper->getContentSize().width, clipper->getContentSize().height);
+    rectangle[3] = Point(0, clipper->getContentSize().height);
+
+    Color4F white(1, 1, 1, 1);
+    stencil->drawPolygon(rectangle, 4, white, 1, white);
+    clipper->setStencil(stencil);
+
+    auto content = NewSprite::create("Images/background2.png");
+    content->setTag( kTagContentNode );
+    content->setAnchorPoint(  Point(0.5, 0.5) );
+    content->setPosition( Point(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
+    clipper->addChild(content);
+
+    _scrolling = false;
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(NewClippingNodeTest::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(NewClippingNodeTest::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(NewClippingNodeTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+NewClippingNodeTest::~NewClippingNodeTest()
+{
+
+}
+
+string NewClippingNodeTest::title()
+{
+    return "New Render";
+}
+
+string NewClippingNodeTest::subtitle()
+{
+    return "ClipNode";
+}
+
+void NewClippingNodeTest::onTouchesBegan(const std::vector<Touch *> &touches, Event *event)
+{
+    Touch *touch = touches[0];
+    auto clipper = this->getChildByTag(kTagClipperNode);
+    Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+    auto rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
+    _scrolling = rect.containsPoint(point);
+    _lastPoint = point;
+}
+
+void NewClippingNodeTest::onTouchesMoved(const std::vector<Touch *> &touches, Event *event)
+{
+    if (!_scrolling) return;
+    Touch *touch = touches[0];
+    auto clipper = this->getChildByTag(kTagClipperNode);
+    auto point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+    Point diff = point - _lastPoint;
+    auto content = clipper->getChildByTag(kTagContentNode);
+    content->setPosition(content->getPosition() + diff);
+    _lastPoint = point;
+}
+
+void NewClippingNodeTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *event)
+{
+    if (!_scrolling) return;
+    _scrolling = false;
 }
