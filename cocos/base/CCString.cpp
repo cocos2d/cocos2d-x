@@ -146,7 +146,7 @@ const char* String::getCString() const
     return _string.c_str();
 }
 
-unsigned int String::length() const
+long String::length() const
 {
     return _string.length();
 }
@@ -182,8 +182,8 @@ Array* String::componentsSeparatedByString(const char *delimiter)
 {
     Array* result = Array::create();
     
-    int cutAt;
-    while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
+    std::size_t cutAt;
+    while( (cutAt = _string.find_first_of(delimiter)) != std::string::npos )
     {
         if(cutAt > 0)
         {
@@ -200,18 +200,18 @@ Array* String::componentsSeparatedByString(const char *delimiter)
     return result;
 }
 
-bool String::isEqual(const Object* pObject)
+bool String::isEqual(const Object* object)
 {
-    bool bRet = false;
-    const String* pStr = dynamic_cast<const String*>(pObject);
-    if (pStr != NULL)
+    bool ret = false;
+    const String* str = dynamic_cast<const String*>(object);
+    if (str != NULL)
     {
-        if (0 == _string.compare(pStr->_string))
+        if (0 == _string.compare(str->_string))
         {
-            bRet = true;
+            ret = true;
         }
     }
-    return bRet;
+    return ret;
 }
 
 String* String::create(const std::string& str)

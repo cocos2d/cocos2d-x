@@ -120,7 +120,7 @@ public:
     
     struct PixelFormatInfo {
 
-        PixelFormatInfo(GLenum anInternalFormat, GLenum aFormat, GLenum aType, int aBpp, bool aCompressed, bool anAlpha)
+        PixelFormatInfo(GLenum anInternalFormat, GLenum aFormat, GLenum aType, long aBpp, bool aCompressed, bool anAlpha)
             : internalFormat(anInternalFormat)
             , format(aFormat)
             , type(aType)
@@ -132,7 +132,7 @@ public:
         GLenum internalFormat;
         GLenum format;
         GLenum type;
-        int bpp;
+        long bpp;
         bool compressed;
         bool alpha;
     };
@@ -210,7 +210,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void* keepData(void *data, unsigned int length);
+    void* keepData(void *data, long length);
 
     /** Initializes with a texture2d with data 
      * @js NA
@@ -219,7 +219,7 @@ public:
     bool initWithData(const void *data, long dataLen, Texture2D::PixelFormat pixelFormat, long pixelsWide, long pixelsHigh, const Size& contentSize);
 
     /** Initializes with mipmaps */
-    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2D::PixelFormat pixelFormat, long pixelsWide, long pixelsHigh);
+    bool initWithMipmaps(MipmapInfo* mipmaps, long mipmapsNum, Texture2D::PixelFormat pixelFormat, long pixelsWide, long pixelsHigh);
 
     /**
     Drawing extensions to make it easy to draw basic quads using a Texture2D object.
@@ -307,14 +307,14 @@ public:
     /** returns the bits-per-pixel of the in-memory OpenGL texture
     @since v1.0
     */
-    unsigned int getBitsPerPixelForFormat() const;
-    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat() const { return getBitsPerPixelForFormat(); };
+    long getBitsPerPixelForFormat() const;
+    CC_DEPRECATED_ATTRIBUTE long bitsPerPixelForFormat() const { return getBitsPerPixelForFormat(); };
 
     /** Helper functions that returns bits per pixels for a given format.
      @since v2.0
      */
-    unsigned int getBitsPerPixelForFormat(Texture2D::PixelFormat format) const;
-    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat(Texture2D::PixelFormat format) const { return getBitsPerPixelForFormat(format); };
+    long getBitsPerPixelForFormat(Texture2D::PixelFormat format) const;
+    CC_DEPRECATED_ATTRIBUTE long bitsPerPixelForFormat(Texture2D::PixelFormat format) const { return getBitsPerPixelForFormat(format); };
 
     /** content size */
     const Size& getContentSizeInPixels();
@@ -360,12 +360,12 @@ private:
     Convert the format to the format param you specified, if the format is PixelFormat::Automatic, it will detect it automatically and convert to the closest format for you.
     It will return the converted format to you. if the outData != data, you must delete it manually.
     */
-    static PixelFormat convertDataToFormat(const unsigned char* data, long dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, int* outDataLen);
+    static PixelFormat convertDataToFormat(const unsigned char* data, long dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, long* outDataLen);
 
-    static PixelFormat convertI8ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, int* outDataLen);
-    static PixelFormat convertAI88ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, int* outDataLen);
-    static PixelFormat convertRGB888ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, int* outDataLen);
-    static PixelFormat convertRGBA8888ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, int* outDataLen);
+    static PixelFormat convertI8ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, long* outDataLen);
+    static PixelFormat convertAI88ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, long* outDataLen);
+    static PixelFormat convertRGB888ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, long* outDataLen);
+    static PixelFormat convertRGBA8888ToFormat(const unsigned char* data, long dataLen, PixelFormat format, unsigned char** outData, long* outDataLen);
 
     //I8 to XXX
     static void convertI8ToRGB888(const unsigned char* data, long dataLen, unsigned char* outData);

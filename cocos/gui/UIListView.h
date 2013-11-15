@@ -108,7 +108,7 @@ public:
      *
      * @param index of item.
      */
-    void removeItem(int index);
+    void removeItem(long index);
     
     /**
      * Returns a item whose index is same as the parameter.
@@ -117,7 +117,7 @@ public:
      *
      * @return the item widget.
      */
-    UIWidget* getItem(unsigned int index);
+    UIWidget* getItem(long index);
     
     /**
      * Returns the item container.
@@ -131,7 +131,7 @@ public:
      *
      * @return the index of item.
      */
-    unsigned int getIndex(UIWidget* item) const;
+    long getIndex(UIWidget* item) const;
     
     /**
      * Changes the gravity of listview.
@@ -153,7 +153,7 @@ public:
      */
     void refreshView();
     
-    int getCurSelectedIndex() const;
+    long getCurSelectedIndex() const;
     
     void addEventListenerListView(cocos2d::Object* target, SEL_ListViewEvent selector);
     
@@ -190,7 +190,7 @@ protected:
     float _itemsMargin;
     cocos2d::Object*       _listViewEventListener;
     SEL_ListViewEvent    _listViewEventSelector;
-    int _curSelectedIndex;
+    long _curSelectedIndex;
 };
 
 }

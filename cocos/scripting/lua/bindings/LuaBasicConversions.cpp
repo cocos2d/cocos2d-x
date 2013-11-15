@@ -719,7 +719,7 @@ bool luaval_to_array(lua_State* L,int lo, Array** outValue)
             if (NULL == arr)
                 return false;
             
-            for (int i = 0; i < len; i++)
+            for (long i = 0; i < static_cast<long>(len); i++)
             {
                 lua_pushnumber(L,i + 1);
                 lua_gettable(L,lo);
@@ -945,7 +945,7 @@ bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints
                 lua_pop(L, 1);
             }
             
-            *numPoints = len;
+            *numPoints = static_cast<int>(len);
             *points    = array;
         }
     }
@@ -1203,7 +1203,7 @@ void array_to_luaval(lua_State* L,Array* inValue)
         if (nullptr == obj)
             continue;
         
-        uint32_t typeId = typeid(*obj).hash_code();
+        uint32_t typeId = static_cast<uint32_t>(typeid(*obj).hash_code());
         auto iter = g_luaType.find(typeId);
         if (g_luaType.end() != iter)
         {
@@ -1292,7 +1292,7 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
         if (NULL == element)
             continue;
         
-        uint32_t typeId = typeid(element->getObject()).hash_code();
+        uint32_t typeId = static_cast<uint32_t>(typeid(element->getObject()).hash_code());
         
         auto iter = g_luaType.find(typeId);
         if (g_luaType.end() != iter)

@@ -207,7 +207,7 @@ TMXMapInfo::~TMXMapInfo()
 
 bool TMXMapInfo::parseXMLString(const std::string& xmlString)
 {
-    int len = xmlString.size();
+    long len = xmlString.size();
     if (len <= 0)
         return false;
 
@@ -757,7 +757,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
                 // int sizeHint = s.width * s.height * sizeof(uint32_t);
                 int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
                 
-                int inflatedLen = ZipUtils::inflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+                long inflatedLen = ZipUtils::inflateMemoryWithHint(buffer, len, &deflated, sizeHint);
                 CCASSERT(inflatedLen == sizeHint, "");
                 
                 inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
@@ -816,7 +816,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
     }
 }
 
-void TMXMapInfo::textHandler(void *ctx, const char *ch, int len)
+void TMXMapInfo::textHandler(void *ctx, const char *ch, long len)
 {
     CC_UNUSED_PARAM(ctx);
     TMXMapInfo *pTMXMapInfo = this;

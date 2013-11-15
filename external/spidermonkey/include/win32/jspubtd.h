@@ -351,6 +351,8 @@ struct ContextFriendFields
     friend JS::Zone *GetContextZone(const JSContext *cx);
 };
 
+typedef struct ContextFriendFields ContextFriendFields;
+
 class PerThreadData;
 
 struct PerThreadDataFriendFields

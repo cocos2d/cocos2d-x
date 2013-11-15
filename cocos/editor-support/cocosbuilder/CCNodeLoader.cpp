@@ -970,9 +970,9 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
             NULL != ownerCallbackNodes && ownerCallbackNodes->count() > 0)
         {
             CCASSERT(ownerCallbackNames->count() == ownerCallbackNodes->count(), "");
-            int nCount = ownerCallbackNames->count();
+            long count = ownerCallbackNames->count();
             
-            for (int i = 0 ; i < nCount; i++)
+            for (long i = 0 ; i < count; i++)
             {
                 pCCBReader->addOwnerCallbackName((dynamic_cast<String*>(ownerCallbackNames->getObjectAtIndex(i)))->getCString());
                 pCCBReader->addOwnerCallbackNode(dynamic_cast<Node*>(ownerCallbackNodes->getObjectAtIndex(i)) );
@@ -985,9 +985,9 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
             NULL != ownerOutletNodes && ownerOutletNodes->count() > 0)
         {
             CCASSERT(ownerOutletNames->count() == ownerOutletNodes->count(), "");
-            int nCount = ownerOutletNames->count();
+            long count = ownerOutletNames->count();
             
-            for (int i = 0 ; i < nCount; i++)
+            for (long i = 0 ; i < count; i++)
             {
                 pCCBReader->addOwnerOutletName((static_cast<String*>(ownerOutletNames->getObjectAtIndex(i)))->getCString());
                 pCCBReader->addOwnerOutletNode(static_cast<Node*>(ownerOutletNodes->getObjectAtIndex(i)));

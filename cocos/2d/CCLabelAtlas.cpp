@@ -112,7 +112,7 @@ bool LabelAtlas::initWithString(const std::string& theString, const std::string&
 //CCLabelAtlas - Atlas generation
 void LabelAtlas::updateAtlasValues()
 {
-    size_t n = _string.length();
+    long n = static_cast<long>(_string.length());
 
     const unsigned char *s = (unsigned char*)_string.c_str();
 
@@ -127,7 +127,7 @@ void LabelAtlas::updateAtlasValues()
         itemHeightInPixels = _itemHeight;
     }
 
-    CCASSERT( static_cast<long>(n) <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
+    CCASSERT( n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
     for(long i = 0; i < static_cast<long>(n); i++) {
 
@@ -178,7 +178,7 @@ void LabelAtlas::updateAtlasValues()
     if (n > 0 ){
         _textureAtlas->setDirty(true);
         long totalQuads = _textureAtlas->getTotalQuads();
-        if (static_cast<long>(n) > totalQuads) {
+        if (n > totalQuads) {
             _textureAtlas->increaseTotalQuadsWith(n - totalQuads);
         }
     }

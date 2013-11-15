@@ -83,10 +83,10 @@ public:
     
      // CCLabelTextFormat protocol implementation
     virtual std::vector<LetterInfo>     *getLettersInfo() override { return &_lettersInfo; };
-    virtual bool recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) override;
-    virtual bool recordPlaceholderInfo(int spriteIndex) override;
-    virtual float getLetterPosXLeft( int index ) const override;
-    virtual float getLetterPosXRight( int index ) const override;
+    virtual bool recordLetterInfo(const cocos2d::Point& point,unsigned short theChar, long spriteIndex) override;
+    virtual bool recordPlaceholderInfo(long spriteIndex) override;
+    virtual float getLetterPosXLeft( long index ) const override;
+    virtual float getLetterPosXRight( long index ) const override;
 
     virtual Sprite * getLetter(int ID) override;
     

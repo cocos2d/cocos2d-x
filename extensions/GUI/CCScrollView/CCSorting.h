@@ -39,8 +39,8 @@ public:
      * @lua NA
      */
     virtual ~SortableObject() {}
-    virtual void setObjectID(unsigned int objectID) = 0;
-    virtual unsigned int getObjectID() = 0;
+    virtual void setObjectID(long objectID) = 0;
+    virtual long getObjectID() = 0;
 };
 
 class ArrayForObjectSorting : public Array
@@ -79,9 +79,9 @@ public:
      * @param tag       The value to be set to.
      * @param object    The object which has the value.
      */
-    void setObjectID_ofSortedObject(unsigned int tag, SortableObject* object);
+    void setObjectID_ofSortedObject(int tag, SortableObject* object);
 
-    SortableObject* objectWithObjectID(unsigned int tag);
+    SortableObject* objectWithObjectID(int tag);
     /*!
      * Returns an object with given key and value.
      * 
@@ -91,7 +91,7 @@ public:
      * @param tag   The value to locate object
      * @return object found or nil.
      */
-    SortableObject* getObjectWithObjectID(unsigned int tag);
+    SortableObject* getObjectWithObjectID(int tag);
 
     /*!
      * Returns an index of the object with given key and value.
@@ -104,7 +104,7 @@ public:
      * @param obj   The object
      * @return index of the object
      */
-    unsigned int indexOfSortedObject(SortableObject* obj);
+    long indexOfSortedObject(SortableObject* obj);
 
 };
 

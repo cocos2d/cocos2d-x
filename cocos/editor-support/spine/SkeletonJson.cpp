@@ -61,10 +61,10 @@ void SkeletonJson_dispose (SkeletonJson* self) {
 
 void _SkeletonJson_setError (SkeletonJson* self, Json* root, const char* value1, const char* value2) {
 	char message[256];
-	int length;
+	long length;
 	FREE(self->error);
 	strcpy(message, value1);
-	length = strlen(value1);
+	length = static_cast<long>(strlen(value1));
 	if (value2) strncat(message + length, value2, 256 - length);
 	MALLOC_STR(self->error, message);
 	if (root) Json_dispose(root);
@@ -73,7 +73,7 @@ void _SkeletonJson_setError (SkeletonJson* self, Json* root, const char* value1,
 static float toColor (const char* value, int index) {
 	char digits[3];
 	char *error;
-	int color;
+	long color;
 
 	if (strlen(value) != 8) return -1;
 	value += index * 2;
@@ -81,9 +81,9 @@ static float toColor (const char* value, int index) {
 	digits[0] = *value;
 	digits[1] = *(value + 1);
 	digits[2] = '\0';
-	color = strtoul(digits, &error, 16);
+	color = static_cast<long>(strtoul(digits, &error, 16));
 	if (*error != 0) return -1;
-	return color / (float)255;
+	return color / 255.0f;
 }
 
 static void readCurve (CurveTimeline* timeline, int frameIndex, Json* frame) {
@@ -232,7 +232,7 @@ static Animation* _SkeletonJson_readAnimation (SkeletonJson* self, Json* root, S
 }
 
 SkeletonData* SkeletonJson_readSkeletonDataFile (SkeletonJson* self, const char* path) {
-	int length;
+	long length;
 	SkeletonData* skeletonData;
 	const char* json = _Util_readFile(path, &length);
 	if (!json) {

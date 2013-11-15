@@ -190,7 +190,7 @@ void FontDefinitionTTF::addLetterDefinition(const FontLetterDefinition &defToAdd
 
 FontAtlas * FontDefinitionTTF::createFontAtlas()
 {
-    int numTextures          = 0;
+    long numTextures          = 0;
     TextFontPagesDef *pages = _textImages->getPages();
     
     if (pages)

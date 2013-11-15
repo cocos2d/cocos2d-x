@@ -83,19 +83,19 @@ public:
     virtual ~ParticleBatchNode();
 
     /** initializes the particle system with Texture2D, a capacity of particles */
-    bool initWithTexture(Texture2D *tex, unsigned int capacity);
+    bool initWithTexture(Texture2D *tex, long capacity);
 
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
-    bool initWithFile(const char* fileImage, unsigned int capacity);
+    bool initWithFile(const char* fileImage, long capacity);
 
     /** Inserts a child into the ParticleBatchNode */
-    void insertChild(ParticleSystem* system, int index);
+    void insertChild(ParticleSystem* system, long index);
 
-    void removeChildAtIndex(unsigned int index, bool doCleanup);
+    void removeChildAtIndex(long index, bool doCleanup);
     void removeAllChildrenWithCleanup(bool doCleanup);
 
     /** disables a particle by inserting a 0'd quad into the texture atlas */
-    void disableParticle(unsigned int particleIndex);
+    void disableParticle(long particleIndex);
 
     /** Gets the texture atlas used for drawing the quads */
     inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; };
@@ -129,10 +129,10 @@ public:
 
 private:
     void updateAllAtlasIndexes();
-    void increaseAtlasCapacityTo(unsigned int quantity);
-    unsigned int searchNewPositionInChildrenForZ(int z);
-    void getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, Node* child, int z);
-    unsigned int addChildHelper(ParticleSystem* child, int z, int aTag);
+    void increaseAtlasCapacityTo(long quantity);
+    long searchNewPositionInChildrenForZ(int z);
+    void getCurrentIndex(long* oldIndex, long* newIndex, Node* child, int z);
+    long addChildHelper(ParticleSystem* child, int z, int aTag);
     void updateBlendFunc(void);
     /** the texture atlas used for drawing the quads */
     TextureAtlas* _textureAtlas;

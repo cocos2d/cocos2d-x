@@ -58,7 +58,7 @@ typedef struct sParticle {
 
     float        timeToLive;
 
-    unsigned int    atlasIndex;
+    long    atlasIndex;
 
     //! Mode A: gravity, direction, radial accel, tangential accel
     struct {
@@ -268,8 +268,8 @@ public:
     virtual void setBatchNode(ParticleBatchNode* batchNode);
     
     // index of system in batch node array
-    inline int getAtlasIndex() const { return _atlasIndex; };
-    inline void setAtlasIndex(int index) { _atlasIndex = index; };
+    inline long getAtlasIndex() const { return _atlasIndex; };
+    inline void setAtlasIndex(long index) { _atlasIndex = index; };
 
     /** Quantity of particles that are being simulated at the moment */
     inline unsigned int getParticleCount() const { return _particleCount; };
@@ -476,7 +476,7 @@ protected:
     ParticleBatchNode* _batchNode;
 
     // index of system in batch node array
-    int _atlasIndex;
+    long _atlasIndex;
 
     //true if scaled or rotated
     bool _transformSystemDirty;

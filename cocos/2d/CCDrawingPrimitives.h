@@ -89,7 +89,7 @@ namespace DrawPrimitives
     /** draws an array of points.
      @since v0.7.2
      */
-    void drawPoints( const Point *points, unsigned int numberOfPoints );
+    void drawPoints( const Point *points, long numberOfPoints );
 
     /** draws a line given the origin and destination point measured in points */
     void drawLine( const Point& origin, const Point& destination );
@@ -105,43 +105,43 @@ namespace DrawPrimitives
     /** draws a polygon given a pointer to Point coordinates and the number of vertices measured in points.
     The polygon can be closed or open
     */
-    void drawPoly( const Point *vertices, unsigned int numOfVertices, bool closePolygon );
+    void drawPoly( const Point *vertices, long numOfVertices, bool closePolygon );
 
     /** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
      */
-    void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color );
+    void drawSolidPoly( const Point *poli, long numberOfPoints, Color4F color );
 
     /** draws a circle given the center, radius and number of segments. */
-    void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
-    void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
+    void drawCircle( const Point& center, float radius, float angle, long segments, bool drawLineToCenter, float scaleX, float scaleY);
+    void drawCircle( const Point& center, float radius, float angle, long segments, bool drawLineToCenter);
 
     /** draws a solid circle given the center, radius and number of segments. */
-    void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY);
-    void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments);
+    void drawSolidCircle( const Point& center, float radius, float angle, long segments, float scaleX, float scaleY);
+    void drawSolidCircle( const Point& center, float radius, float angle, long segments);
 
     /** draws a quad bezier path
      @warning This function could be pretty slow. Use it only for debugging purposes.
      @since v0.8
      */
-    void drawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments);
+    void drawQuadBezier(const Point& origin, const Point& control, const Point& destination, long segments);
 
     /** draws a cubic bezier path
      @warning This function could be pretty slow. Use it only for debugging purposes.
      @since v0.8
      */
-    void drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments);
+    void drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, long segments);
 
     /** draws a Catmull Rom path.
      @warning This function could be pretty slow. Use it only for debugging purposes.
      @since v2.0
      */
-    void drawCatmullRom( PointArray *arrayOfControlPoints, unsigned int segments );
+    void drawCatmullRom( PointArray *arrayOfControlPoints, long segments );
 
     /** draws a Cardinal Spline path.
      @warning This function could be pretty slow. Use it only for debugging purposes.
      @since v2.0
      */
-    void drawCardinalSpline( PointArray *config, float tension,  unsigned int segments );
+    void drawCardinalSpline( PointArray *config, float tension,  long segments );
 
     /** set the drawing color with 4 unsigned bytes
      @since v2.0

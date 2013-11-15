@@ -37,7 +37,7 @@ struct LineBreakLine {
 	LineBreakLine() : lineWidth(0) {}
 
 	std::vector<LineBreakGlyph> glyphs;
-	int lineWidth;
+	long lineWidth;
 
 	void reset() {
 		glyphs.clear();
@@ -123,7 +123,7 @@ public:
     	return false;
     }
 
-	bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
+	bool divideString(FT_Face face, const char* sText, long iMaxWidth, long iMaxHeight) {
 		const char* pText = sText;
 		textLines.clear();
 		iMaxLineWidth = 0;
@@ -314,13 +314,13 @@ public:
     	return family_name;
     }
 
-	bool getBitmap(const char *text, int nWidth, int nHeight, Image::TextAlign eAlignMask, const char * pFontName, float fontSize) {
+	bool getBitmap(const char *text, long width, long height, Image::TextAlign eAlignMask, const char * fontName, float fontSize) {
 		if (libError) {
 			return false;
 		}
 
 		FT_Face face;
-		std::string fontfile = getFontFile(pFontName);
+		std::string fontfile = getFontFile(fontName);
 		if ( FT_New_Face(library, fontfile.c_str(), 0, &face) ) {
 			//no valid font found use default
 			if ( FT_New_Face(library, "/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 0, &face) ) {
@@ -339,13 +339,13 @@ public:
 			return false;
 		}
 
-		if ( divideString(face, text, nWidth, nHeight) == false ) {
+		if ( divideString(face, text, width, height) == false ) {
 			FT_Done_Face(face);
 			return false;
 		}
 
 		//compute the final line width
-		iMaxLineWidth = MAX(iMaxLineWidth, nWidth);
+		iMaxLineWidth = MAX(iMaxLineWidth, width);
 
 		//compute the final line height
 		iMaxLineHeight = ceilf(FT_MulFix( face->bbox.yMax - face->bbox.yMin, face->size->metrics.y_scale )/64.0f);
@@ -354,7 +354,7 @@ public:
 			iMaxLineHeight += (lineHeight * (textLines.size() -1));
 		}
 		int txtHeight = iMaxLineHeight;
-		iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
+		iMaxLineHeight = MAX(iMaxLineHeight, height);
 
 		_data = new unsigned char[iMaxLineWidth * iMaxLineHeight * 4];
 		memset(_data,0, iMaxLineWidth * iMaxLineHeight*4);
@@ -415,8 +415,8 @@ public:
 	unsigned char *_data;
 	int libError;
 	std::vector<LineBreakLine> textLines;
-	int iMaxLineWidth;
-	int iMaxLineHeight;
+	long iMaxLineWidth;
+	long iMaxLineHeight;
 };
 
 static BitmapDC& sharedBitmapDC()
@@ -426,23 +426,23 @@ static BitmapDC& sharedBitmapDC()
 }
 
 bool Image::initWithString(
-		const char * pText,
-		int nWidth/* = 0*/,
-		int nHeight/* = 0*/,
-		TextAlign eAlignMask/* = kAlignCenter*/,
-		const char * pFontName/* = nil*/,
-		int nSize/* = 0*/)
+		const char * text,
+		long width/* = 0*/,
+		long height/* = 0*/,
+		TextAlign alignMask/* = kAlignCenter*/,
+		const char * fontName/* = nil*/,
+		long size/* = 0*/)
 {
-	bool bRet = false;
+	bool ret = false;
 	do
 	{
-		CC_BREAK_IF(! pText);
+		CC_BREAK_IF(! text);
 
 		BitmapDC &dc = sharedBitmapDC();
 
 		//const char* pFullFontName = FileUtils::getInstance()->fullPathFromRelativePath(pFontName);
 
-		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
+		CC_BREAK_IF(! dc.getBitmap(text, width, height, alignMask, fontName, size));
 
 		// assign the dc._data to _data in order to save time
 		_data = dc._data;
@@ -454,13 +454,13 @@ bool Image::initWithString(
 		_preMulti = true;
         _dataLen = _width * _height * 4;
 
-		bRet = true;
+		ret = true;
 
 		dc.reset();
 	}while (0);
 
 	//do nothing
-	return bRet;
+	return ret;
 }
 
 NS_CC_END

@@ -1063,7 +1063,7 @@ Action * Node::getActionByTag(int tag)
     return _actionManager->getActionByTag(tag, this);
 }
 
-unsigned int Node::getNumberOfRunningActions() const
+long Node::getNumberOfRunningActions() const
 {
     return _actionManager->getNumberOfRunningActionsInTarget(this);
 }

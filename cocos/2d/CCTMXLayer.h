@@ -210,8 +210,8 @@ private:
     int getVertexZForPos(const Point& pos);
 
     // index
-    unsigned int atlasIndexForExistantZ(unsigned int z);
-    unsigned int atlasIndexForNewZ(int z);
+    long atlasIndexForExistantZ(unsigned int z);
+    long atlasIndexForNewZ(int z);
     
 protected:
     //! name of the layer

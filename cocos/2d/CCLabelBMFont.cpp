@@ -919,24 +919,24 @@ void LabelBMFont::updateLabel()
     {
         // Step 1: Make multiline
         vector<unsigned short> str_whole = cc_utf16_vec_from_utf16_str(_string);
-        unsigned int stringLength = str_whole.size();
+        long stringLength = str_whole.size();
         vector<unsigned short> multiline_string;
         multiline_string.reserve( stringLength );
         vector<unsigned short> last_word;
         last_word.reserve( stringLength );
 
-        unsigned int line = 1, i = 0;
+        long line = 1, i = 0;
         bool start_line = false, start_word = false;
         float startOfLine = -1, startOfWord = -1;
-        int skip = 0;
+        long skip = 0;
 
         Array* children = getChildren();
-        for (int j = 0; j < children->count(); j++)
+        for (long j = 0; j < children->count(); j++)
         {
             Sprite* characterSprite;
-            unsigned int justSkipped = 0;
+            long justSkipped = 0;
             
-            while (!(characterSprite = static_cast<Sprite*>( this->getChildByTag(j + skip + justSkipped))) )
+            while (!(characterSprite = static_cast<Sprite*>( this->getChildByTag(static_cast<int>(j + skip + justSkipped)))) )
             {
                 justSkipped++;
             }
@@ -1070,7 +1070,7 @@ void LabelBMFont::updateLabel()
 
         multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
 
-        int size = multiline_string.size();
+        long size = multiline_string.size();
         unsigned short* str_new = new unsigned short[size + 1];
 
         for (int j = 0; j < size; ++j)
@@ -1091,24 +1091,24 @@ void LabelBMFont::updateLabel()
         int i = 0;
 
         int lineNumber = 0;
-        int str_len = cc_wcslen(_string);
+        long str_len = cc_wcslen(_string);
         vector<unsigned short> last_line;
-        for (int ctr = 0; ctr <= str_len; ++ctr)
+        for (long ctr = 0; ctr <= str_len; ++ctr)
         {
             if (_string[ctr] == '\n' || _string[ctr] == 0)
             {
                 float lineWidth = 0.0f;
-                unsigned int line_length = last_line.size();
+                long line_length = last_line.size();
 				// if last line is empty we must just increase lineNumber and work with next line
                 if (line_length == 0)
                 {
                     lineNumber++;
                     continue;
                 }
-                int index = i + line_length - 1 + lineNumber;
+                long index = i + line_length - 1 + lineNumber;
                 if (index < 0) continue;
 
-                Sprite* lastChar = static_cast<Sprite*>( getChildByTag(index) );
+                Sprite* lastChar = static_cast<Sprite*>( getChildByTag(static_cast<int>(index)) );
                 if ( lastChar == NULL )
                     continue;
 
@@ -1129,12 +1129,12 @@ void LabelBMFont::updateLabel()
 
                 if (shift != 0)
                 {
-                    for (unsigned j = 0; j < line_length; j++)
+                    for (long j = 0; j < line_length; j++)
                     {
                         index = i + j + lineNumber;
                         if (index < 0) continue;
 
-                        Sprite* characterSprite = static_cast<Sprite*>( getChildByTag(index) );
+                        Sprite* characterSprite = static_cast<Sprite*>( getChildByTag(static_cast<int>(index)) );
                         characterSprite->setPosition(characterSprite->getPosition() + Point(shift, 0.0f));
                     }
                 }

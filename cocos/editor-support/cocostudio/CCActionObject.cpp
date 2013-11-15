@@ -42,7 +42,7 @@ ActionObject::ActionObject()
 	_actionNodeList = Array::create();
 	_actionNodeList->retain();
 	_pScheduler = new Scheduler();
-	Director::sharedDirector()->getScheduler()->scheduleUpdateForTarget(_pScheduler, 0, false);
+	Director::getInstance()->getScheduler()->scheduleUpdateForTarget(_pScheduler, 0, false);
 }
 
 ActionObject::~ActionObject()
@@ -73,8 +73,8 @@ bool ActionObject::getLoop()
 void ActionObject::setUnitTime(float fTime)
 {
 	_fUnitTime = fTime;
-	int nodeNum = _actionNodeList->count();
-	for ( int i = 0; i < nodeNum; i++ )
+	long nodeNum = _actionNodeList->count();
+	for ( long i = 0; i < nodeNum; i++ )
 	{
 		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 		actionNode->setUnitTime(_fUnitTime);
@@ -139,8 +139,8 @@ void ActionObject::play()
 {
     stop();
 	this->updateToFrameByTime(0.0f);
-	int frameNum = _actionNodeList->count();
-	for ( int i = 0; i < frameNum; i++ )
+	long frameNum = _actionNodeList->count();
+	for ( long i = 0; i < frameNum; i++ )
 	{
 		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 		actionNode->playAction();
@@ -158,9 +158,9 @@ void ActionObject::pause()
 
 void ActionObject::stop()
 {
-	int frameNum = _actionNodeList->count();
+	long frameNum = _actionNodeList->count();
 
-	for ( int i = 0; i < frameNum; i++ )
+	for ( long i = 0; i < frameNum; i++ )
 	{
 		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 		actionNode->stopAction();
@@ -174,9 +174,9 @@ void ActionObject::updateToFrameByTime(float fTime)
 {
 	_currentTime = fTime;
 
-	int nodeNum = _actionNodeList->count();
+	long nodeNum = _actionNodeList->count();
 
-	for ( int i = 0; i < nodeNum; i++ )
+	for ( long i = 0; i < nodeNum; i++ )
 	{
 		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 
@@ -189,11 +189,11 @@ void ActionObject::simulationActionUpdate(float dt)
 	if (_loop)
 	{
 		bool isEnd = true;
-		int nodeNum = _actionNodeList->count();
+		long nodeNum = _actionNodeList->count();
 
 		for ( int i = 0; i < nodeNum; i++ )
 		{
-			ActionNode* actionNode = (ActionNode*)_actionNodeList->objectAtIndex(i);
+			ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 
 			if (actionNode->isActionDoneOnce() == false)
 			{

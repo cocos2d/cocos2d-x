@@ -356,7 +356,7 @@ bool TextFieldTTFActionTest::onTextFieldDetachWithIME(TextFieldTTF * sender)
     return false;
 }
 
-bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * sender, const char * text, int nLen)
+bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * sender, const char * text, long nLen)
 {
     // if insert enter, treat as default to detach with ime
     if ('\n' == *text)
@@ -401,7 +401,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * sender, const 
     return false;
 }
 
-bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, int nLen)
+bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, long nLen)
 {
     // create a delete text sprite and do some action
     auto label = LabelTTF::create(delText, FONT_NAME, FONT_SIZE);

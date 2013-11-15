@@ -146,7 +146,7 @@ void drawPoint( const Point& point )
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void drawPoints( const Point *points, unsigned int numberOfPoints )
+void drawPoints( const Point *points, long numberOfPoints )
 {
     lazy_init();
 
@@ -172,7 +172,7 @@ void drawPoints( const Point *points, unsigned int numberOfPoints )
     else
     {
         // Mac on 64-bit
-        for( unsigned int i=0; i<numberOfPoints;i++) {
+        for( long i=0; i<numberOfPoints;i++) {
             newPoints[i].x = points[i].x;
             newPoints[i].y = points[i].y;
         }
@@ -239,7 +239,7 @@ void drawSolidRect( Point origin, Point destination, Color4F color )
     drawSolidPoly(vertices, 4, color );
 }
 
-void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon )
+void drawPoly( const Point *poli, long numberOfPoints, bool closePolygon )
 {
     lazy_init();
 
@@ -269,7 +269,7 @@ void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon
         // Mac on 64-bit
         // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
         Vertex2F* newPoli = new Vertex2F[numberOfPoints];
-        for( unsigned int i=0; i<numberOfPoints;i++) {
+        for( long i=0; i<numberOfPoints;i++) {
             newPoli[i].x = poli[i].x;
             newPoli[i].y = poli[i].y;
         }
@@ -291,7 +291,7 @@ void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
+void drawSolidPoly( const Point *poli, long numberOfPoints, Color4F color )
 {
     lazy_init();
 
@@ -317,7 +317,7 @@ void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F colo
     else
     {
         // Mac on 64-bit
-        for( unsigned int i=0; i<numberOfPoints;i++)
+        for( long i=0; i<numberOfPoints;i++)
         {
             newPoli[i] = Vertex2F( poli[i].x, poli[i].y );
         }
@@ -335,7 +335,7 @@ void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F colo
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
+void drawCircle( const Point& center, float radius, float angle, long segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     lazy_init();
 
@@ -349,7 +349,7 @@ void drawCircle( const Point& center, float radius, float angle, unsigned int se
     if( ! vertices )
         return;
 
-    for(unsigned int i = 0;i <= segments; i++) {
+    for(long i = 0;i <= segments; i++) {
         float rads = i*coef;
         GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
         GLfloat k = radius * sinf(rads + angle) * scaleY + center.y;
@@ -379,12 +379,12 @@ void drawCircle( const Point& center, float radius, float angle, unsigned int se
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void drawCircle( const Point& center, float radius, float angle, long segments, bool drawLineToCenter)
 {
     drawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
 }
 
-void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+void drawSolidCircle( const Point& center, float radius, float angle, long segments, float scaleX, float scaleY)
 {
     lazy_init();
     
@@ -394,7 +394,7 @@ void drawSolidCircle( const Point& center, float radius, float angle, unsigned i
     if( ! vertices )
         return;
     
-    for(unsigned int i = 0;i <= segments; i++) {
+    for(long i = 0;i <= segments; i++) {
         float rads = i*coef;
         GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
         GLfloat k = radius * sinf(rads + angle) * scaleY + center.y;
@@ -425,19 +425,19 @@ void drawSolidCircle( const Point& center, float radius, float angle, unsigned i
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
+void drawSolidCircle( const Point& center, float radius, float angle, long segments)
 {
     drawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
 }
 
-void drawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
+void drawQuadBezier(const Point& origin, const Point& control, const Point& destination, long segments)
 {
     lazy_init();
 
     Vertex2F* vertices = new Vertex2F[segments + 1];
 
     float t = 0.0f;
-    for(unsigned int i = 0; i < segments; i++)
+    for(long i = 0; i < segments; i++)
     {
         vertices[i].x = powf(1 - t, 2) * origin.x + 2.0f * (1 - t) * t * control.x + t * t * destination.x;
         vertices[i].y = powf(1 - t, 2) * origin.y + 2.0f * (1 - t) * t * control.y + t * t * destination.y;
@@ -464,22 +464,22 @@ void drawQuadBezier(const Point& origin, const Point& control, const Point& dest
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void drawCatmullRom( PointArray *points, unsigned int segments )
+void drawCatmullRom( PointArray *points, long segments )
 {
     drawCardinalSpline( points, 0.5f, segments );
 }
 
-void drawCardinalSpline( PointArray *config, float tension,  unsigned int segments )
+void drawCardinalSpline( PointArray *config, float tension,  long segments )
 {
     lazy_init();
 
     Vertex2F* vertices = new Vertex2F[segments + 1];
 
-    unsigned int p;
+    long p;
     float lt;
     float deltaT = 1.0f / config->count();
 
-    for( unsigned int i=0; i < segments+1;i++) {
+    for( long i=0; i < segments+1;i++) {
 
         float dt = (float)i / segments;
 
@@ -521,14 +521,14 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments)
+void drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, long segments)
 {
     lazy_init();
 
     Vertex2F* vertices = new Vertex2F[segments + 1];
 
     float t = 0;
-    for(unsigned int i = 0; i < segments; i++)
+    for(long i = 0; i < segments; i++)
     {
         vertices[i].x = powf(1 - t, 3) * origin.x + 3.0f * powf(1 - t, 2) * t * control1.x + 3.0f * (1 - t) * t * t * control2.x + t * t * t * destination.x;
         vertices[i].y = powf(1 - t, 3) * origin.y + 3.0f * powf(1 - t, 2) * t * control1.y + 3.0f * (1 - t) * t * t * control2.y + t * t * t * destination.y;

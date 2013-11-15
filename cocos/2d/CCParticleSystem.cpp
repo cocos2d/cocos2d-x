@@ -396,7 +396,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
                         CCASSERT( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
                         CC_BREAK_IF(!buffer);
                         
-                        int deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
+                        long deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
                         CCASSERT( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
@@ -787,7 +787,7 @@ void ParticleSystem::update(float dt)
             else 
             {
                 // life < 0
-                int currentIndex = p->atlasIndex;
+                long currentIndex = p->atlasIndex;
                 if( _particleIdx != _particleCount-1 )
                 {
                     _particles[_particleIdx] = _particles[_particleCount-1];

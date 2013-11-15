@@ -53,7 +53,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void textHandler(void *ctx, const char *s, int len) = 0;
+    virtual void textHandler(void *ctx, const char *s, long len) = 0;
 };
 
 class CC_DLL SAXParser
@@ -79,7 +79,7 @@ public:
      * @js NA
      * @lua NA
      */
-    bool parse(const char* pXMLData, unsigned int uDataLength);
+    bool parse(const char* pXMLData, long uDataLength);
     /**
      * @js NA
      * @lua NA
@@ -104,7 +104,7 @@ public:
      * @js NA
      * @lua NA
      */
-    static void textHandler(void *ctx, const CC_XML_CHAR *name, int len);
+    static void textHandler(void *ctx, const CC_XML_CHAR *name, long len);
 };
 
 // end of platform group

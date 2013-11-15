@@ -94,8 +94,8 @@ static EventListener::ListenerID getListenerID(Event* event)
 }
 
 EventDispatcher::EventListenerVector::EventListenerVector()
-: _sceneGraphListeners(nullptr)
-, _fixedListeners(nullptr)
+: _fixedListeners(nullptr)
+, _sceneGraphListeners(nullptr)
 , _gt0Index(0)
 {
 }
@@ -189,9 +189,9 @@ EventDispatcher::~EventDispatcher()
 
 void EventDispatcher::visitTarget(Node* node)
 {    
-    int i = 0;
+    long i = 0;
     Array* children = node->getChildren();
-    int childrenCount = children ? children->count() : 0;
+    long childrenCount = children ? children->count() : 0;
     
     if(childrenCount > 0)
     {
@@ -491,7 +491,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
     auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
     auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
     
-    int i = 0;
+    long i = 0;
     // priority < 0
     if (fixedPriorityListeners)
     {
@@ -527,7 +527,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
         if (!shouldStopPropagation)
         {
             // priority > 0
-            for (; i < fixedPriorityListeners->size(); ++i)
+            for (; i < static_cast<long>(fixedPriorityListeners->size()); ++i)
             {
                 auto l = fixedPriorityListeners->at(i);
                 
@@ -1080,7 +1080,7 @@ void EventDispatcher::removeCustomEventListeners(const std::string& customEventN
 
 void EventDispatcher::removeAllEventListeners()
 {
-    std::vector<int> types(_listeners.size());
+    std::vector<long> types(_listeners.size());
 
     for (auto iter = _listeners.begin(); iter != _listeners.end(); ++iter)
     {

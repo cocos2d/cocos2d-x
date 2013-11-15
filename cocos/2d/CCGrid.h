@@ -70,8 +70,8 @@ public:
     void setActive(bool bActive);
 
     /** number of times that the grid will be reused */
-    inline int getReuseGrid(void) const { return _reuseGrid; }
-    inline void setReuseGrid(int nReuseGrid) { _reuseGrid = nReuseGrid; }
+    inline long getReuseGrid(void) const { return _reuseGrid; }
+    inline void setReuseGrid(long nReuseGrid) { _reuseGrid = nReuseGrid; }
 
     /** size of the grid */
     inline const Size& getGridSize(void) const { return _gridSize; }

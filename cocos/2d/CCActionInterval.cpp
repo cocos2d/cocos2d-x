@@ -210,7 +210,7 @@ Sequence* Sequence::create(Array* arrayOfActions)
 
         if (count > 1)
         {
-            for (unsigned int i = 1; i < count; ++i)
+            for (long i = 1; i < count; ++i)
             {
                 prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
             }

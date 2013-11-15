@@ -228,16 +228,16 @@ namespace cocostudio {
                     JsonDictionary* subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
                     const char *name = DICTOOL->getStringValue_json(subData, "name");
 
-                    childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
-                    for (long j = 0; j < childrenCount; ++j)
-                    {
-                        const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", j);
-                        std::string plistpath;
-                        plistpath += file_path;
-                        plistpath.append(plist);
-                        cocos2d::Dictionary *root = Dictionary::createWithContentsOfFile(plistpath.c_str());
-                        Dictionary* metadata = DICTOOL->getSubDictionary(root, "metadata");
-                        const char* textureFileName = DICTOOL->getStringValue(metadata, "textureFileName");
+					childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
+					for (long j = 0; j < childrenCount; ++j)
+					{
+						const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", static_cast<int>(j));
+						std::string plistpath;
+						plistpath += file_path;
+						plistpath.append(plist);
+						cocos2d::Dictionary *root = Dictionary::createWithContentsOfFile(plistpath.c_str());
+						Dictionary* metadata = DICTOOL->getSubDictionary(root, "metadata");
+						const char* textureFileName = DICTOOL->getStringValue(metadata, "textureFileName");
 
                         std::string textupath;
                         textupath += file_path;

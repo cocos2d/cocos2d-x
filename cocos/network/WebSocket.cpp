@@ -243,7 +243,7 @@ bool WebSocket::init(const Delegate& delegate,
     bool ret = false;
     bool useSSL = false;
     std::string host = url;
-    int pos = 0;
+    std::size_t pos = 0;
     int port = 80;
     
     _delegate = const_cast<Delegate*>(&delegate);
@@ -260,16 +260,16 @@ bool WebSocket::init(const Delegate& delegate,
     }
     
     pos = host.find(":");
-    if (pos >= 0) port = atoi(host.substr(pos+1, host.size()).c_str());
+    if (pos != std::string::npos) port = atoi(host.substr(pos+1, host.size()).c_str());
     
     pos = host.find("/", 0);
     std::string path = "/";
-    if (pos >= 0) path += host.substr(pos + 1, host.size());
+    if (pos != std::string::npos) path += host.substr(pos + 1, host.size());
     
     pos = host.find(":");
-    if(pos >= 0){
+    if(pos != std::string::npos){
         host.erase(pos, host.size());
-    }else if((pos = host.find("/"))>=0) {
+    }else if((pos = host.find("/")) != std::string::npos) {
     	host.erase(pos, host.size());
     }
     
@@ -280,7 +280,7 @@ bool WebSocket::init(const Delegate& delegate,
     
     CCLOG("[WebSocket::init] _host: %s, _port: %d, _path: %s", _host.c_str(), _port, _path.c_str());
 
-    int protocolCount = 0;
+    long protocolCount = 0;
     if (protocols && protocols->size() > 0)
     {
         protocolCount = protocols->size();
@@ -329,7 +329,7 @@ void WebSocket::send(const std::string& message)
         Data* data = new Data();
         data->bytes = new char[message.length()+1];
         strcpy(data->bytes, message.c_str());
-        data->len = message.length();
+        data->len = static_cast<int>(message.length());
         msg->obj = data;
         _wsHelper->sendMessageToSubThread(msg);
     }
@@ -599,7 +599,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                     memcpy(bytes, in, len);
                     
                     data->bytes = bytes;
-                    data->len = len;
+                    data->len = static_cast<int>(len);
                     msg->obj = (void*)data;
                     
                     _wsHelper->sendMessageToUIThread(msg);

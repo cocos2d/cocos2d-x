@@ -1063,10 +1063,10 @@ public:
      *
      * @return The number of actions that are running plus the ones that are schedule to run
      */
-    unsigned int getNumberOfRunningActions() const;
+    long getNumberOfRunningActions() const;
 
     /** @deprecated Use getNumberOfRunningActions() instead */
-    CC_DEPRECATED_ATTRIBUTE unsigned int numberOfRunningActions() const { return getNumberOfRunningActions(); };
+    CC_DEPRECATED_ATTRIBUTE long numberOfRunningActions() const { return getNumberOfRunningActions(); };
 
     /// @} end of Actions
     

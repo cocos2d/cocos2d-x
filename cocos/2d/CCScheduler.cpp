@@ -685,7 +685,7 @@ unsigned int Scheduler::scheduleScriptFunc(unsigned int handler, float interval,
 
 void Scheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
 {
-    for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
+    for (long i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
     {
         SchedulerScriptHandlerEntry* pEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
         if (pEntry->getEntryId() == (int)uScheduleScriptEntryID)
@@ -907,7 +907,7 @@ void Scheduler::update(float dt)
     // Iterate over all the script callbacks
     if (_scriptHandlerEntries)
     {
-        for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
+        for (long i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
         {
             SchedulerScriptHandlerEntry* eachEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
             if (eachEntry->isMarkedForDeletion())

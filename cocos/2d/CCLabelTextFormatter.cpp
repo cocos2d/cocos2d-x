@@ -39,7 +39,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
     {
         // Step 1: Make multiline
         vector<unsigned short> strWhole = cc_utf16_vec_from_utf16_str(theLabel->getUTF8String());
-        unsigned int stringLength        = strWhole.size();
+        long stringLength        = strWhole.size();
         
         vector<unsigned short> multiline_string;
         multiline_string.reserve( stringLength );
@@ -47,18 +47,18 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         vector<unsigned short> last_word;
         last_word.reserve( stringLength );
         
-        unsigned int line = 1, i = 0;
+        long line = 1, i = 0;
         
         bool   isStartOfLine  = false, isStartOfWord = false;
         float  startOfLine = -1, startOfWord   = -1;
         
-        int skip = 0;
+        long skip = 0;
                 
-        int strLen = theLabel->getStringLenght();
+        long strLen = theLabel->getStringLenght();
         std::vector<LetterInfo>  *leterInfo = theLabel->getLettersInfo();
-        int tIndex = 0;
+        long tIndex = 0;
 
-        for (int j = 0; j < strLen; j++)
+        for (long j = 0; j < strLen; j++)
         {            
             LetterInfo* info = &leterInfo->at(j+skip);
 
@@ -197,7 +197,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         
         multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
         
-        int size = multiline_string.size();
+        long size = multiline_string.size();
         unsigned short* strNew = new unsigned short[size + 1];
         
         for (int j = 0; j < size; ++j)
@@ -231,7 +231,7 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
         if (currentChar == '\n' || currentChar == 0)
         {
             float lineWidth = 0.0f;
-            unsigned int lineLength = lastLine.size();
+            long lineLength = lastLine.size();
             
             // if last line is empty we must just increase lineNumber and work with next line
             if (lineLength == 0)
@@ -239,7 +239,7 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
                 lineNumber++;
                 continue;
             }
-            int index = i + lineLength - 1 + lineNumber;
+            long index = i + lineLength - 1 + lineNumber;
             if (index < 0) continue;
             
             if(currentChar == 0)
@@ -264,7 +264,7 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
             
             if (shift != 0)
             {
-                for (unsigned j = 0; j < lineLength; ++j)
+                for (long j = 0; j < lineLength; ++j)
                 {
                     index = i + j + lineNumber;
                     if (index < 0) continue;

@@ -85,7 +85,7 @@ const std::string& UILabel::getStringValue()
     return _labelRenderer->getString();
 }
 
-int UILabel::getStringLength()
+long UILabel::getStringLength()
 {
     return _labelRenderer->getString().size();
 }

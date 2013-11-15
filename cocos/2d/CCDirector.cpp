@@ -597,7 +597,7 @@ void Director::replaceScene(Scene *scene)
     CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
 
-    unsigned int index = _scenesStack->count();
+    long index = _scenesStack->count();
 
     _sendCleanupToScene = true;
     _scenesStack->replaceObjectAtIndex(index - 1, scene);
@@ -620,7 +620,7 @@ void Director::popScene(void)
     CCASSERT(_runningScene != nullptr, "running scene should not null");
 
     _scenesStack->removeLastObject();
-    unsigned int c = _scenesStack->count();
+    long c = _scenesStack->count();
 
     if (c == 0)
     {

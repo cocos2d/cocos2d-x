@@ -274,7 +274,7 @@ void SpriteBatchNode::sortAllChildren()
             //first sort all children recursively based on zOrder
             arrayMakeObjectsPerformSelector(_children, sortAllChildren, Sprite*);
 
-            int index=0;
+            long index=0;
 
             Object* obj = NULL;
             //fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
@@ -290,16 +290,16 @@ void SpriteBatchNode::sortAllChildren()
     }
 }
 
-void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
+void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, long* curIndex)
 {
-    int count = 0;
+    long count = 0;
     Array* array = sprite->getChildren();
     if (array != NULL)
     {
         count = array->count();
     }
     
-    int oldIndex = 0;
+    long oldIndex = 0;
 
     if( count == 0 )
     {
@@ -363,7 +363,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
     }
 }
 
-void SpriteBatchNode::swap(int oldIndex, int newIndex)
+void SpriteBatchNode::swap(long oldIndex, long newIndex)
 {
     CCASSERT(oldIndex>=0 && oldIndex < (int)_descendants.size() && newIndex >=0 && newIndex < (int)_descendants.size(), "Invalid index");
 
@@ -413,11 +413,11 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     // if we're going beyond the current TextureAtlas's capacity,
     // all the previously initialized sprites will need to redo their texture coords
     // this is likely computationally expensive
-    int quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
+    long quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
 
-    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
-        (long)_textureAtlas->getCapacity(),
-        (long)quantity);
+    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%ld] to [%ld].",
+        _textureAtlas->getCapacity(),
+        quantity);
 
     if (! _textureAtlas->resizeCapacity(quantity))
     {
@@ -427,7 +427,7 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     }
 }
 
-int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
+long SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, long index)
 {
     CCASSERT(index>=0 && index < _children->count(), "Invalid index");
 
@@ -469,7 +469,7 @@ int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
     return index;
 }
 
-int SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
+long SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
 {
     Array *children = sprite->getChildren();
 
@@ -483,7 +483,7 @@ int SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
     }
 }
 
-int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
+long SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
 {
     Array *children = sprite->getChildren();
 
@@ -497,10 +497,10 @@ int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
     }
 }
 
-int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
+long SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 {
     Array *siblings = sprite->getParent()->getChildren();
-    int childIndex = siblings->getIndexOfObject(sprite);
+    long childIndex = siblings->getIndexOfObject(sprite);
 
     // ignore parent Z if parent is spriteSheet
     bool ignoreParent = (SpriteBatchNode*)(sprite->getParent()) == this;
@@ -568,7 +568,7 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
     }
 
     _descendants.push_back(sprite);
-    int index = _descendants.size()-1;
+    long index = _descendants.size()-1;
 
     sprite->setAtlasIndex(index);
 
@@ -653,9 +653,9 @@ void SpriteBatchNode::setTexture(Texture2D *texture)
 // SpriteSheet Extension
 //implementation SpriteSheet (TMXTiledMapExtension)
 
-void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, int index)
+void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, long index)
 {
-    CCASSERT( sprite != NULL, "Argument must be non-NULL");
+    CCASSERT( sprite != nullptr, "Argument must be non-NULL");
     CCASSERT( dynamic_cast<Sprite*>(sprite), "CCSpriteBatchNode only supports Sprites as children");
 
     // make needed room
@@ -678,7 +678,7 @@ void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, int index)
     sprite->updateTransform();
 }
 
-void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, int index)
+void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, long index)
 {
     CCASSERT(sprite != NULL, "Argument must be non-nil");
     CCASSERT(dynamic_cast<Sprite*>(sprite) != NULL, "CCSpriteBatchNode only supports Sprites as children");

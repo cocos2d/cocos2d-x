@@ -90,7 +90,7 @@ ParticleBatchNode* ParticleBatchNode::create(const char* imageFile, unsigned int
 /*
  * init with Texture2D
  */
-bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
+bool ParticleBatchNode::initWithTexture(Texture2D *tex, long capacity)
 {
     _textureAtlas = new TextureAtlas();
     _textureAtlas->initWithTexture(tex, capacity);
@@ -109,7 +109,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
 /*
  * init with FileImage
  */
-bool ParticleBatchNode::initWithFile(const char* fileImage, unsigned int capacity)
+bool ParticleBatchNode::initWithFile(const char* fileImage, long capacity)
 {
     Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(tex, capacity);
@@ -179,10 +179,10 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
     CCASSERT( _blendFunc.src  == child->getBlendFunc().src && _blendFunc.dst  == child->getBlendFunc().dst, "Can't add a PaticleSystem that uses a different blending function");
 
     //no lazy sorting, so don't call super addChild, call helper instead
-    unsigned int pos = addChildHelper(child,zOrder,tag);
+    long pos = addChildHelper(child,zOrder,tag);
 
     //get new atlasIndex
-    int atlasIndex = 0;
+    long atlasIndex = 0;
 
     if (pos != 0) 
     {
@@ -205,7 +205,7 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
 // XXX research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster
 // XXX or possibly using vertexZ for reordering, that would be fastest
 // this helper is almost equivalent to Node's addChild, but doesn't make use of the lazy sorting
-unsigned int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
+long ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
 {
     CCASSERT( child != NULL, "Argument must be non-nil");
     CCASSERT( child->getParent() == NULL, "child already added. It can't be added again");
@@ -217,7 +217,7 @@ unsigned int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int
     }
 
     //don't use a lazy insert
-    unsigned int pos = searchNewPositionInChildrenForZ(z);
+    long pos = searchNewPositionInChildrenForZ(z);
 
     _children->insertObject(child, pos);
 
@@ -251,7 +251,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
     // no reordering if only 1 child
     if( _children->count() > 1)
     {
-        unsigned int newIndex = 0, oldIndex = 0;
+        long newIndex = 0, oldIndex = 0;
 
         getCurrentIndex(&oldIndex, &newIndex, child, zOrder);
 
@@ -265,14 +265,14 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
             child->release();
 
             // save old altasIndex
-            int oldAtlasIndex = child->getAtlasIndex();
+            long oldAtlasIndex = child->getAtlasIndex();
 
             // update atlas index
             updateAllAtlasIndexes();
 
             // Find new AtlasIndex
-            int newAtlasIndex = 0;
-            for( int i=0;i < _children->count();i++)
+            long newAtlasIndex = 0;
+            for( long i=0;i < _children->count();i++)
             {
                 ParticleSystem* pNode = (ParticleSystem*)_children->getObjectAtIndex(i);
                 if( pNode == child ) 
@@ -292,15 +292,15 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
     child->_setZOrder(zOrder);
 }
 
-void ParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, Node* child, int z)
+void ParticleBatchNode::getCurrentIndex(long* oldIndex, long* newIndex, Node* child, int z)
 {
     bool foundCurrentIdx = false;
     bool foundNewIdx = false;
 
-    int  minusOne = 0;
-    unsigned int count = _children->count();
+    long  minusOne = 0;
+    long count = _children->count();
 
-    for( unsigned int i=0; i < count; i++ ) 
+    for( long i=0; i < count; i++ )
     {
         Node* pNode = (Node *)_children->getObjectAtIndex(i);
 
@@ -343,11 +343,11 @@ void ParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* ne
     *newIndex += minusOne;
 }
 
-unsigned int ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
+long ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
 {
-    unsigned int count = _children->count();
+    long count = _children->count();
 
-    for( unsigned int i=0; i < count; i++ ) 
+    for( long i=0; i < count; i++ )
     {
         Node *child = (Node *)_children->getObjectAtIndex(i);
         if (child->getZOrder() > z)
@@ -383,7 +383,7 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
     updateAllAtlasIndexes();
 }
 
-void ParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
+void ParticleBatchNode::removeChildAtIndex(long index, bool doCleanup)
 {
     removeChild((ParticleSystem *)_children->getObjectAtIndex(index),doCleanup);
 }
@@ -417,11 +417,11 @@ void ParticleBatchNode::draw(void)
 
 
 
-void ParticleBatchNode::increaseAtlasCapacityTo(unsigned int quantity)
+void ParticleBatchNode::increaseAtlasCapacityTo(long quantity)
 {
     CCLOG("cocos2d: ParticleBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
-          (long)_textureAtlas->getCapacity(),
-          (long)quantity);
+          _textureAtlas->getCapacity(),
+          quantity);
 
     if( ! _textureAtlas->resizeCapacity(quantity) ) {
         // serious problems
@@ -431,7 +431,7 @@ void ParticleBatchNode::increaseAtlasCapacityTo(unsigned int quantity)
 }
 
 //sets a 0'd quad into the quads array
-void ParticleBatchNode::disableParticle(unsigned int particleIndex)
+void ParticleBatchNode::disableParticle(long particleIndex)
 {
     V3F_C4B_T2F_Quad* quad = &((_textureAtlas->getQuads())[particleIndex]);
     quad->br.vertices.x = quad->br.vertices.y = quad->tr.vertices.x = quad->tr.vertices.y = quad->tl.vertices.x = quad->tl.vertices.y = quad->bl.vertices.x = quad->bl.vertices.y = 0.0f;
@@ -440,7 +440,7 @@ void ParticleBatchNode::disableParticle(unsigned int particleIndex)
 // ParticleBatchNode - add / remove / reorder helper methods
 
 // add child helper
-void ParticleBatchNode::insertChild(ParticleSystem* system, int index)
+void ParticleBatchNode::insertChild(ParticleSystem* system, long index)
 {
     system->setAtlasIndex(index);
 

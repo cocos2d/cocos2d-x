@@ -141,9 +141,9 @@ int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned c
     d_stream.opaque = (voidpf)0;
     
     d_stream.next_in  = in;
-    d_stream.avail_in = inLength;
+    d_stream.avail_in = static_cast<uInt>(inLength);
     d_stream.next_out = *out;
-    d_stream.avail_out = bufferSize;
+    d_stream.avail_out = static_cast<uInt>(bufferSize);
     
     /* window size to hold 256k */
     if( (err = inflateInit2(&d_stream, 15 + 32)) != Z_OK )
@@ -182,7 +182,7 @@ int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned c
             }
             
             d_stream.next_out = *out + bufferSize;
-            d_stream.avail_out = bufferSize;
+            d_stream.avail_out = static_cast<uInt>(bufferSize);
             bufferSize *= BUFFER_INC_FACTOR;
         }
     }
@@ -192,7 +192,7 @@ int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned c
     return err;
 }
 
-int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLengthHint)
+long ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLengthHint)
 {
     long outLength = 0;
     int err = inflateMemoryWithHint(in, inLength, out, &outLength, outLengthHint);
@@ -225,7 +225,7 @@ int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned c
     return outLength;
 }
 
-int ZipUtils::inflateMemory(unsigned char *in, long inLength, unsigned char **out)
+long ZipUtils::inflateMemory(unsigned char *in, long inLength, unsigned char **out)
 {
     // 256k for hint
     return inflateMemoryWithHint(in, inLength, out, 256 * 1024);
@@ -407,7 +407,7 @@ int ZipUtils::inflateCCZBuffer(const unsigned char *buffer, long bufferLen, unsi
 
         // decrypt
         unsigned int* ints = (unsigned int*)(buffer+12);
-        int enclen = (bufferLen-12)/4;
+        long enclen = (bufferLen-12)/4;
 
         decodeEncodedPvr(ints, enclen);
 
@@ -614,7 +614,7 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, long *size)
         CC_BREAK_IF(UNZ_OK != nRet);
         
         buffer = (unsigned char*)malloc(fileInfo.uncompressed_size);
-        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, buffer, fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, buffer, static_cast<unsigned int>(fileInfo.uncompressed_size));
         CCASSERT(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
         
         if (size)

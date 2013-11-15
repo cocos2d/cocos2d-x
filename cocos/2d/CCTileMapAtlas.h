@@ -92,7 +92,7 @@ public:
 private:
     void loadTGAfile(const char *file);
     void calculateItemsToRender();
-    void updateAtlasValueAt(const Point& pos, const Color3B& value, int index);
+    void updateAtlasValueAt(const Point& pos, const Color3B& value, long index);
     void updateAtlasValues();
 
 protected:

@@ -248,10 +248,10 @@ public:
         }
     }
     
-    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx)
+    virtual Size tableCellSizeForIndex(TableView *table, long idx) override
     {
         jsval ret;
-        bool ok = callJSDelegate(table, idx, "tableCellSizeForIndex", ret);
+        bool ok = callJSDelegate(table, static_cast<int>(idx), "tableCellSizeForIndex", ret);
         if (!ok) 
         {
             ok = callJSDelegate(table, "cellSizeForTable", ret);
@@ -268,10 +268,10 @@ public:
         
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, long idx) override
     {
         jsval ret;
-        bool ok = callJSDelegate(table, idx, "tableCellAtIndex", ret);
+        bool ok = callJSDelegate(table, static_cast<int>(idx), "tableCellAtIndex", ret);
         if (ok)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -288,7 +288,7 @@ public:
         return NULL;
     }
     
-    virtual unsigned int numberOfCellsInTableView(TableView *table)
+    virtual long numberOfCellsInTableView(TableView *table) override
     {
         jsval ret;
         bool ok = callJSDelegate(table, "numberOfCellsInTableView", ret);
@@ -297,7 +297,7 @@ public:
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
             uint32_t count = 0;
             JSBool isSucceed = jsval_to_uint32(cx, ret, &count);
-            if (isSucceed) return count;
+            if (isSucceed) return static_cast<long>(count);
         }
         return 0;
     }

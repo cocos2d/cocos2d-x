@@ -57,10 +57,10 @@ void TableViewTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 
 void TableViewTestLayer::tableCellTouched(TableView* table, TableViewCell* cell)
 {
-    CCLOG("cell touched at index: %i", cell->getIdx());
+    CCLOG("cell touched at index: %ld", cell->getIdx());
 }
 
-Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, unsigned int idx)
+Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, long idx)
 {
     if (idx == 2) {
         return Size(100, 100);
@@ -68,9 +68,9 @@ Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, unsigned int id
     return Size(60, 60);
 }
 
-TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, unsigned int idx)
+TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, long idx)
 {
-    auto string = String::createWithFormat("%d", idx);
+    auto string = String::createWithFormat("%ld", idx);
     TableViewCell *cell = table->dequeueCell();
     if (!cell) {
         cell = new CustomTableViewCell();
@@ -96,7 +96,7 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, unsigned i
     return cell;
 }
 
-unsigned int TableViewTestLayer::numberOfCellsInTableView(TableView *table)
+long TableViewTestLayer::numberOfCellsInTableView(TableView *table)
 {
     return 20;
 }

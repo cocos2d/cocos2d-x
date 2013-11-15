@@ -99,7 +99,7 @@ public:
      *
      * @param index    index of page.
      */
-    void removePageAtIndex(int index);
+    void removePageAtIndex(long index);
     
     void removeAllPages();
     
@@ -108,14 +108,14 @@ public:
      *
      * @param idx    index of page.
      */
-    void scrollToPage(int idx);
+    void scrollToPage(long idx);
     
     /**
      * Gets current page index.
      *
      * @return current page index.
      */
-    int getCurPageIndex() const;
+    long getCurPageIndex() const;
     
     cocos2d::Array* getPages();
     
@@ -174,7 +174,7 @@ protected:
     virtual cocos2d::Array* getChildren() override{return UIWidget::getChildren();};
     virtual bool init() override;
     UILayout* createPage();
-    float getPositionXByIndex(int idx);
+    float getPositionXByIndex(long idx);
     void updateBoundaryPages();
     virtual void handlePressLogic(const cocos2d::Point &touchPoint) override;
     virtual void handleMoveLogic(const cocos2d::Point &touchPoint) override;
@@ -192,7 +192,7 @@ protected:
     virtual void copyClonedWidgetChildren(UIWidget* model) override;
     virtual void setClippingEnabled(bool enabled) override {UILayout::setClippingEnabled(enabled);};
 protected:
-    int _curPageIdx;
+    long _curPageIdx;
     cocos2d::Array* _pages;
     PVTouchDir _touchMoveDir;
     float _touchStartLocation;

@@ -116,7 +116,7 @@ public:
         return _array;
     }
 
-    void startElement(void *ctx, const char *name, const char **atts)
+    void startElement(void *ctx, const char *name, const char **atts) override
     {
         CC_UNUSED_PARAM(ctx);
         CC_UNUSED_PARAM(atts);
@@ -210,7 +210,7 @@ public:
         }
     }
 
-    void endElement(void *ctx, const char *name)
+    void endElement(void *ctx, const char *name) override
     {
         CC_UNUSED_PARAM(ctx);
         SAXState curState = _stateStack.empty() ? SAX_DICT : _stateStack.top();
@@ -279,7 +279,7 @@ public:
         _state = SAX_NONE;
     }
 
-    void textHandler(void *ctx, const char *ch, int len)
+    void textHandler(void *ctx, const char *ch, long len) override
     {
         CC_UNUSED_PARAM(ctx);
         if (_state == SAX_NONE)
@@ -544,7 +544,7 @@ unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char
         CC_BREAK_IF(UNZ_OK != nRet);
 
         buffer = (unsigned char*)malloc(FileInfo.uncompressed_size);
-        int CC_UNUSED nSize = unzReadCurrentFile(pFile, buffer, FileInfo.uncompressed_size);
+        long CC_UNUSED nSize = unzReadCurrentFile(pFile, buffer, static_cast<unsigned int>(FileInfo.uncompressed_size));
         CCASSERT(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
 
         *size = FileInfo.uncompressed_size;

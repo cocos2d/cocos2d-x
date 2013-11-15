@@ -60,10 +60,10 @@ public:
     }
 
     bool getBitmapFromJavaShadowStroke(	const char *text,
-    									int nWidth,
-    									int nHeight,
-    									Image::TextAlign eAlignMask,
-    									const char * pFontName,
+    									long width,
+    									long height,
+    									Image::TextAlign alignMask,
+    									const char * fontName,
     									float fontSize,
     									float textTintR 		= 1.0,
     									float textTintG 		= 1.0,
@@ -91,7 +91,7 @@ public:
         
            // Do a full lookup for the font path using FileUtils in case the given font name is a relative path to a font file asset,
            // or the path has been mapped to a different location in the app package:
-           std::string fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(pFontName);
+           std::string fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(fontName);
         
 		   // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
 		   // requires this portion of the path to be omitted for assets inside the app package.
@@ -110,7 +110,7 @@ public:
            jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
 
            if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID, jstrText,
-               jstrFont, (int)fontSize, textTintR, textTintG, textTintB, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, shadowOpacity, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize))
+               jstrFont, (int)fontSize, textTintR, textTintG, textTintB, alignMask, width, height, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, shadowOpacity, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize))
            {
                 return false;
            }
@@ -149,46 +149,46 @@ static BitmapDC& sharedBitmapDC()
 }
 
 bool Image::initWithString(
-                               const char *    pText, 
-                               int             nWidth/* = 0*/, 
-                               int             nHeight/* = 0*/,
-                               TextAlign      eAlignMask/* = kAlignCenter*/,
-                               const char *    pFontName/* = nil*/,
-                               int             nSize/* = 0*/)
+                               const char *    text,
+                               long            width/* = 0*/,
+                               long            height/* = 0*/,
+                               TextAlign      alignMask/* = kAlignCenter*/,
+                               const char *    fontName/* = nil*/,
+                               long            size/* = 0*/)
 {
-    bool bRet = false;
+    bool ret = false;
 
     do 
     {
-        CC_BREAK_IF(! pText);
+        CC_BREAK_IF(! text);
         
         BitmapDC &dc = sharedBitmapDC();
 
-        CC_BREAK_IF(! dc.getBitmapFromJava(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
+        CC_BREAK_IF(! dc.getBitmapFromJava(text, width, height, alignMask, fontName, size));
 
         // assign the dc._data to _data in order to save time
         _data = dc._data;
         CC_BREAK_IF(! _data);
 
-        _width    = (short)dc._width;
-        _height   = (short)dc._height;
+        _width    = static_cast<long>(dc._width);
+        _height   = static_cast<long>(dc._height);
         _preMulti = true;
         _renderFormat = Texture2D::PixelFormat::RGBA8888;
         _dataLen = _width * _height * 4;
 
-        bRet = true;
+        ret = true;
     } while (0);
 
-    return bRet;
+    return ret;
 }
 
 bool Image::initWithStringShadowStroke(
-                                         const char * pText,
-                                         int         nWidth ,
-                                         int         nHeight ,
-                                         TextAlign eAlignMask ,
-                                         const char * pFontName ,
-                                         int          nSize ,
+                                         const char * text,
+                                         long         width ,
+                                         long         height ,
+                                         TextAlign    alignMask ,
+                                         const char * fontName ,
+                                         long         size ,
                                          float        textTintR,
                                          float        textTintG,
                                          float        textTintB,
@@ -203,16 +203,16 @@ bool Image::initWithStringShadowStroke(
                                          float strokeB,
                                          float strokeSize)
 {
-	 bool bRet = false;
+	 bool ret = false;
 	    do
 	    {
-	        CC_BREAK_IF(! pText);
+	        CC_BREAK_IF(! text);
 
 	        BitmapDC &dc = sharedBitmapDC();
 
 
-	        CC_BREAK_IF(! dc.getBitmapFromJavaShadowStroke(pText, nWidth, nHeight, eAlignMask, pFontName,
-	        											   nSize, textTintR, textTintG, textTintB, shadow,
+	        CC_BREAK_IF(! dc.getBitmapFromJavaShadowStroke(text, width, height, alignMask, fontName,
+	        											   size, textTintR, textTintG, textTintB, shadow,
 	        											   shadowOffsetX, shadowOffsetY, shadowBlur, shadowOpacity,
 	        											   stroke, strokeR, strokeG, strokeB, strokeSize ));
 
@@ -222,8 +222,8 @@ bool Image::initWithStringShadowStroke(
 
 	        CC_BREAK_IF(! _data);
 
-	        _width    = (short)dc._width;
-	        _height   = (short)dc._height;
+	        _width    = static_cast<long>(dc._width);
+	        _height   = static_cast<long>(dc._height);
 	        _preMulti = true;
 		    _renderFormat = Texture2D::PixelFormat::RGBA8888;
             _dataLen = _width * _height * 4;
@@ -232,11 +232,11 @@ bool Image::initWithStringShadowStroke(
 	        swapAlphaChannel((unsigned int *)_data, (_width * _height) );
 
 	        // ok
-	        bRet = true;
+	        ret = true;
 
 	    } while (0);
 
-	    return bRet;
+	    return ret;
 }
 
 NS_CC_END

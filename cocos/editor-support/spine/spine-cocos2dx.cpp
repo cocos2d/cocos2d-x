@@ -46,7 +46,7 @@ void _AtlasPage_disposeTexture (AtlasPage* self) {
 	((TextureAtlas*)self->rendererObject)->release();
 }
 
-char* _Util_readFile (const char* path, int* length) {
+char* _Util_readFile (const char* path, long* length) {
 	long size;
     char* data = reinterpret_cast<char*>(FileUtils::getInstance()->getFileData(
 		FileUtils::getInstance()->fullPathForFilename(path).c_str(), "r", &size));

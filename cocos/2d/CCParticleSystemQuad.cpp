@@ -171,7 +171,7 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
     CC_SWAP( top, bottom, float);
 
     V3F_C4B_T2F_Quad *quads = NULL;
-    unsigned int start = 0, end = 0;
+    long start = 0, end = 0;
     if (_batchNode)
     {
         quads = _batchNode->getTextureAtlas()->getQuads();
@@ -185,7 +185,7 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
         end = _totalParticles;
     }
 
-    for(unsigned int i=start; i<end; i++) 
+    for(long i=start; i<end; i++)
     {
         // bottom-left vertex:
         quads[i].bl.texCoords.u = left;
