@@ -544,7 +544,7 @@ unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char
         CC_BREAK_IF(UNZ_OK != nRet);
 
         buffer = (unsigned char*)malloc(FileInfo.uncompressed_size);
-        long CC_UNUSED nSize = unzReadCurrentFile(pFile, buffer, FileInfo.uncompressed_size);
+        long CC_UNUSED nSize = unzReadCurrentFile(pFile, buffer, static_cast<unsigned int>(FileInfo.uncompressed_size));
         CCASSERT(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
 
         *size = FileInfo.uncompressed_size;
