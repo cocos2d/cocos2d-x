@@ -54,10 +54,10 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
 protected:
     //initializes state of widget.
-    virtual bool init();
+    virtual bool init() override;
 };
 
 }

@@ -132,7 +132,7 @@ namespace cocostudio {
     const char * JsonDictionary::getItemStringValue(const char *pszKey)
     {
         if (!isKeyValidate(pszKey, m_cValue) || !m_cValue[pszKey].isString())
-            return NULL;
+            return nullptr;
         
         return m_cValue[pszKey].asCString();
     }
@@ -154,7 +154,7 @@ namespace cocostudio {
                                                  !m_cValue[pszKey].isConvertibleTo(Json::arrayValue) &&
                                                  !m_cValue[pszKey].isConvertibleTo(Json::objectValue)))
         {
-            pNewDictionary = NULL;
+            pNewDictionary = nullptr;
         }
         else
         {
@@ -336,7 +336,7 @@ namespace cocostudio {
                 return (*arrayValue)[nIndex].asCString();
         }
         
-        return NULL;
+        return nullptr;
     }
     
     
@@ -353,7 +353,7 @@ namespace cocostudio {
             }
         }
         
-        return NULL;
+        return nullptr;
     }
     
     
@@ -379,9 +379,9 @@ namespace cocostudio {
     inline Json::Value * JsonDictionary::validateArrayItem(const char *pszArrayKey, int nIndex)
     {
         if (!isKeyValidate(pszArrayKey, m_cValue) && !m_cValue[pszArrayKey].isArray() && !m_cValue[pszArrayKey].isConvertibleTo(Json::arrayValue))
-            return NULL;
+            return nullptr;
         if (!m_cValue[pszArrayKey].isValidIndex(nIndex))
-            return NULL;
+            return nullptr;
         
         return &m_cValue[pszArrayKey];
     }

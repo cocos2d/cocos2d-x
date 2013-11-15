@@ -260,7 +260,7 @@ String* String::createWithContentsOfFile(const char* filename)
     String* ret = NULL;
     data = FileUtils::getInstance()->getFileData(filename, "rb", &size);
     ret = String::createWithData(data, size);
-    CC_SAFE_DELETE_ARRAY(data);
+    free(data);
     return ret;
 }
 
