@@ -46,10 +46,10 @@ void TextureAtlasEncryptionDemo::onEnter()
     // 1) Set the encryption keys or step 2 will fail
     // In this case the encryption key 0xaaaaaaaabbbbbbbbccccccccdddddddd is
     // split into four parts. See the header docs for more information.
-    ZipUtils::ccSetPvrEncryptionKeyPart(0, 0xaaaaaaaa);
-    ZipUtils::ccSetPvrEncryptionKeyPart(1, 0xbbbbbbbb);
-    ZipUtils::ccSetPvrEncryptionKeyPart(2, 0xcccccccc);
-    ZipUtils::ccSetPvrEncryptionKeyPart(3, 0xdddddddd);
+    ZipUtils::setPvrEncryptionKeyPart(0, 0xaaaaaaaa);
+    ZipUtils::setPvrEncryptionKeyPart(1, 0xbbbbbbbb);
+    ZipUtils::setPvrEncryptionKeyPart(2, 0xcccccccc);
+    ZipUtils::setPvrEncryptionKeyPart(3, 0xdddddddd);
     
     // Alternatively, you can call the function that accepts the key in a single
     // function call.
