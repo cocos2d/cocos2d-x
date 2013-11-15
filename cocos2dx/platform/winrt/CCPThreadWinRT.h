@@ -23,33 +23,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCWINRT_UTILS_H__
-#define __CCWINRT_UTILS_H__
+#ifndef __CCPTHREADWINRT_H__
+#define __CCPTHREADWINRT_H__
 
 #include "platform/CCPlatformMacros.h"
-#include "cocoa/CCDictionary.h"
 
-#include <wrl/client.h>
-#include <ppl.h>
-#include <ppltasks.h>
-
-#include <string>
+#include <Windows.h>
 
 NS_CC_BEGIN
 
+typedef HANDLE pthread_t;
+typedef HANDLE pthread_mutex_t;
+typedef int pthread_cond_t;
+#define pthread_cond_wait(x, y)
+
+void pthread_mutex_init(pthread_mutex_t* m, void* attributes);
+
+int pthread_mutex_lock(pthread_mutex_t* m);
+
+int pthread_mutex_unlock(pthread_mutex_t* m);
+
+void pthread_mutex_destroy(pthread_mutex_t* m);
+
+#define pthread_cond_destroy(x)
+#define pthread_cond_signal(x)
+#define pthread_cond_init(x, y)
 
 
-std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
-std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
-std::string PlatformStringToString(Platform::String^ s);
-
-// Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
-float ConvertDipsToPixels(float dips);
-float getScaledDPIValue(float v);
-
-Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path);
 
 
 NS_CC_END
 
-#endif // __CCWINRT_UTILS_H__
+#endif // __CCPTHREADWINRT_H__
