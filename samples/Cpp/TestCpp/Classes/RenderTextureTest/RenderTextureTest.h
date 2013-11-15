@@ -115,7 +115,7 @@ public:
         
 
     public:
-        RenderTexture *rt;
+        RenderTexture *_rt;
     };
         
 public:

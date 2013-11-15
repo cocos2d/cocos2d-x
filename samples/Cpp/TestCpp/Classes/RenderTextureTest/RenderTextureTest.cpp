@@ -568,7 +568,7 @@ string RenderTextureTargetNode::subtitle()
 
 // SpriteRenderTextureBug
 
-SpriteRenderTextureBug::SimpleSprite::SimpleSprite() : rt(NULL) {}
+SpriteRenderTextureBug::SimpleSprite::SimpleSprite() : _rt(nullptr) {}
 
 SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::create(const char* filename, const Rect &rect)
 {
@@ -587,14 +587,14 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
 
 void SpriteRenderTextureBug::SimpleSprite::draw()
 {
-    if (rt == NULL)
+    if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
-        rt = new RenderTexture();
-        rt->initWithWidthAndHeight(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+        _rt = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+        _rt->retain();
 	}
-	rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
-	rt->end();
+	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
+	_rt->end();
     
 	CC_NODE_DRAW_SETUP();
     
