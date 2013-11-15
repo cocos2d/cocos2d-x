@@ -365,7 +365,7 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/*
     if (shape == nullptr) return nullptr;
     
     // add shape to body
-    if (_shapes->getIndexOfObject(shape) == UINT_MAX)
+    if (_shapes->getIndexOfObject(shape) == CC_INVALID_INDEX)
     {
         shape->setBody(this);
         
@@ -633,7 +633,7 @@ void PhysicsBody::removeShape(int tag, bool reduceMassAndMoment/* = true*/)
 
 void PhysicsBody::removeShape(PhysicsShape* shape, bool reduceMassAndMoment/* = true*/)
 {
-    if (_shapes->getIndexOfObject(shape) != UINT_MAX)
+    if (_shapes->getIndexOfObject(shape) != CC_INVALID_INDEX)
     {
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.

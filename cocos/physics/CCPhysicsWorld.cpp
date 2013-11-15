@@ -236,7 +236,7 @@ bool PhysicsWorld::init(Scene& scene)
 
 void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
 {
-    if (_delayRemoveBodies->getIndexOfObject(body) != UINT_MAX)
+    if (_delayRemoveBodies->getIndexOfObject(body) != CC_INVALID_INDEX)
     {
         _delayRemoveBodies->removeObject(body);
         return;
@@ -244,7 +244,7 @@ void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
     
     if (_info->getSpace()->locked_private)
     {
-        if (_delayAddBodies->getIndexOfObject(body) == UINT_MAX)
+        if (_delayAddBodies->getIndexOfObject(body) == CC_INVALID_INDEX)
         {
             _delayAddBodies->addObject(body);
             _delayDirty = true;
@@ -257,7 +257,7 @@ void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
 
 void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
 {
-    if (_delayAddBodies->getIndexOfObject(body) != UINT_MAX)
+    if (_delayAddBodies->getIndexOfObject(body) != CC_INVALID_INDEX)
     {
         _delayAddBodies->removeObject(body);
         return;
@@ -265,7 +265,7 @@ void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
     
     if (_info->getSpace()->locked_private)
     {
-        if (_delayRemoveBodies->getIndexOfObject(body) == UINT_MAX)
+        if (_delayRemoveBodies->getIndexOfObject(body) == CC_INVALID_INDEX)
         {
             _delayRemoveBodies->addObject(body);
             _delayDirty = true;
