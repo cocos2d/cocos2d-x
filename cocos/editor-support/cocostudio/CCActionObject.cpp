@@ -189,7 +189,7 @@ void ActionObject::simulationActionUpdate(float dt)
 	if (_loop)
 	{
 		bool isEnd = true;
-		int nodeNum = _actionNodeList->count();
+		long nodeNum = _actionNodeList->count();
 
 		for ( int i = 0; i < nodeNum; i++ )
 		{

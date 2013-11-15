@@ -936,7 +936,7 @@ void LabelBMFont::updateLabel()
             Sprite* characterSprite;
             long justSkipped = 0;
             
-            while (!(characterSprite = static_cast<Sprite*>( this->getChildByTag(j + skip + justSkipped))) )
+            while (!(characterSprite = static_cast<Sprite*>( this->getChildByTag(static_cast<int>(j + skip + justSkipped)))) )
             {
                 justSkipped++;
             }
