@@ -34,7 +34,7 @@ const cocos2d::Point SCROLLDIR_LEFT = cocos2d::Point(-1.0f, 0.0f);
 const cocos2d::Point SCROLLDIR_RIGHT = cocos2d::Point(1.0f, 0.0f);
 
 UIScrollView::UIScrollView():
-_innerContainer(NULL),
+_innerContainer(nullptr),
 _direction(SCROLLVIEW_DIR_VERTICAL),
 _touchBeganPoint(cocos2d::Point::ZERO),
 _touchMovedPoint(cocos2d::Point::ZERO),
@@ -69,15 +69,15 @@ _bouncing(false),
 _bounceDir(cocos2d::Point::ZERO),
 _bounceOriginalSpeed(0.0f),
 _inertiaScrollEnabled(true),
-_scrollViewEventListener(NULL),
-_scrollViewEventSelector(NULL)
+_scrollViewEventListener(nullptr),
+_scrollViewEventSelector(nullptr)
 {
 }
 
 UIScrollView::~UIScrollView()
 {
-    _scrollViewEventListener = NULL;
-    _scrollViewEventSelector = NULL;
+    _scrollViewEventListener = nullptr;
+    _scrollViewEventSelector = nullptr;
 }
 
 UIScrollView* UIScrollView::create()
@@ -89,7 +89,7 @@ UIScrollView* UIScrollView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool UIScrollView::init()
