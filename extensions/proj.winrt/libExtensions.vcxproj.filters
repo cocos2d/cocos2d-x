@@ -351,27 +351,6 @@
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp">
       <Filter>CocoStudio\Json\lib.json</Filter>
     </ClCompile>
@@ -386,9 +365,6 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp">
       <Filter>CocoStudio\Json\lib.json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp">
-      <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
     <ClCompile Include="..\spine\CCSkeleton.cpp">
       <Filter>spine</Filter>
@@ -453,7 +429,32 @@
     <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
+    <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayout.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.cpp">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp">
       <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
   </ItemGroup>
@@ -754,32 +755,8 @@
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\Layout.h">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutParameter.h">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h">
-      <Filter>CocoStudio\GUI\Layouts</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\Compatible\CompatibleClasses.h">
       <Filter>CocoStudio\GUI\UIWidgets\Compatible</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.h">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.h">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollInterface.h">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.h">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\lib_json\autolink.h">
       <Filter>CocoStudio\Json\lib.json</Filter>
@@ -816,9 +793,6 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h">
       <Filter>CocoStudio\Json\lib.json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h">
-      <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
     <ClInclude Include="..\spine\CCSkeleton.h">
       <Filter>spine</Filter>
@@ -880,7 +854,35 @@
     <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h">
+    <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayout.h">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.h">
+      <Filter>CocoStudio\GUI\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.h">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollInterface.h">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.h">
+      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\GUIReader.h">
+      <Filter>CocoStudio\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\SceneReader.h">
       <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
   </ItemGroup>
