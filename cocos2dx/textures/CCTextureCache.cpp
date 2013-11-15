@@ -46,7 +46,9 @@ THE SOFTWARE.
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <pthread.h>
 #else
-#include "CCWinRTUtils.h"
+#include "CCPThreadWinRT.h"
+#include <ppl.h>
+#include <ppltasks.h>
 using namespace concurrency;
 #endif
 
