@@ -41,7 +41,7 @@ void LuaMinXmlHttpRequest::_gotHeader(string header)
     char * cstr = new char [header.length()+1];
     
     // check for colon.
-    unsigned found_header_field = header.find_first_of(":");
+    std::size_t found_header_field = header.find_first_of(":");
     
     if (found_header_field != std::string::npos)
     {
@@ -75,7 +75,7 @@ void LuaMinXmlHttpRequest::_gotHeader(string header)
             
             ss << pch;
             val = ss.str();
-            unsigned found_http = val.find("HTTP");
+            std::size_t found_http = val.find("HTTP");
             
             // Check for HTTP Header to set statusText
             if (found_http != std::string::npos) {
@@ -183,9 +183,9 @@ void LuaMinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, n
         CCLOG("%s completed", response->getHttpRequest()->getTag());
     }
     
-    int statusCode = response->getResponseCode();
+    long statusCode = response->getResponseCode();
     char statusString[64] = {};
-    sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
+    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
     
     if (!response->isSucceed())
     {
@@ -647,7 +647,6 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
             return 0;
         }
         
-        int nRet = 0;
         LuaValueArray array;
         
         uint8_t* tmpData = new uint8_t[self->getDataSize()];
@@ -802,7 +801,7 @@ static int lua_cocos2dx_XMLHttpRequest_send(lua_State* L)
         (self->getMethod().compare("post") == 0 || self->getMethod().compare("POST") == 0) &&
         nullptr != self->getHttpRequest())
     {
-        self->getHttpRequest()->setRequestData(data,size);
+        self->getHttpRequest()->setRequestData(data,static_cast<long>(size));
     }
     
     self->_setHttpRequestHeader();

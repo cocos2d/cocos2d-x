@@ -116,7 +116,7 @@ public:
     
     /** Option field. You can set your post data here
      */
-    inline void setRequestData(const char* buffer, unsigned int len)
+    inline void setRequestData(const char* buffer, long len)
     {
         _requestData.assign(buffer, buffer + len);
     };

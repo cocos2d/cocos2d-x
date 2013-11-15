@@ -329,7 +329,7 @@ static int tolua_Cocos2d_WebSocket_sendString00(lua_State* tolua_S)
 
         if (strlen(data) != size)
         {
-            self->send((const unsigned char*)data, size);
+            self->send((const unsigned char*)data, static_cast<unsigned int>(size));
         }
         else
         {

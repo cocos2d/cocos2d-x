@@ -5203,8 +5203,7 @@ static int tolua_bnd_cast_deprecated00(lua_State* tolua_S)
     void* v = nullptr;
     std::string strValue = "";
     strValue = tolua_tostring(tolua_S,2,NULL);
-    int pos = strValue.find("CC");
-    if (pos == 0 &&
+    if (0 == strValue.find("CC") &&
         std::string::npos == strValue.find("CCBAnimationManager") &&
         std::string::npos == strValue.find("CCString") &&
         std::string::npos == strValue.find("CCDictionary") &&
