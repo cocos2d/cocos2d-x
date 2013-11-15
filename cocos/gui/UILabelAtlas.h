@@ -52,8 +52,8 @@ public:
     static UICCLabelAtlas* create();
     void setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     void setProperty(const std::string& string, cocos2d::Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    virtual void updateDisplayedOpacity(GLubyte opacity);
-    virtual void draw(void);
+    virtual void updateDisplayedOpacity(GLubyte opacity) override;
+    virtual void draw(void) override;
 };
 /**
  *   @js NA
@@ -87,25 +87,25 @@ public:
     const std::string& getStringValue() const;
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const cocos2d::Point &pt);
+    virtual void setAnchorPoint(const cocos2d::Point &pt) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const;
+    virtual const cocos2d::Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer();
+    virtual cocos2d::Node* getVirtualRenderer() override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
     
 protected:
-    virtual void initRenderer();
-    virtual void onSizeChanged();
+    virtual void initRenderer() override;
+    virtual void onSizeChanged() override;
     void labelAtlasScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual UIWidget* createCloneInstance() override;
+    virtual void copySpecialProperties(UIWidget* model) override;
 protected:
     UICCLabelAtlas* _laberAtlasRenderer;
     std::string _stringValue;

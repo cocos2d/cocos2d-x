@@ -26,7 +26,7 @@
 
 namespace cocostudio {
     
-static DictionaryHelper* sharedHelper = NULL;
+static DictionaryHelper* sharedHelper = nullptr;
 
 DictionaryHelper::DictionaryHelper()
 {
@@ -54,11 +54,11 @@ void DictionaryHelper::purgeDictionaryHelper()
 cocos2d::Dictionary* DictionaryHelper::getSubDictionary(cocos2d::Dictionary* root,const char* key)
 {
     if (!root) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::Object* obj = root->objectForKey(key);
     if (!obj) {
-        return NULL;
+        return nullptr;
     }
     return (cocos2d::Dictionary*)(obj);
 }
@@ -93,11 +93,11 @@ float DictionaryHelper::getFloatValue(cocos2d::Dictionary* root,const char* key)
 const char* DictionaryHelper::getStringValue(cocos2d::Dictionary* root,const char* key)
 {
     if (!root) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::Object* obj = root->objectForKey(key);
     if (!obj) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::String* cstr = (cocos2d::String*)(obj);
     return cstr->_string.c_str();
@@ -111,11 +111,11 @@ bool DictionaryHelper::getBooleanValue(cocos2d::Dictionary* root,const char* key
 cocos2d::Array* DictionaryHelper::getArrayValue(cocos2d::Dictionary *root, const char *key)
 {
     if (!root) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::Object* obj = root->objectForKey(key);
     if (!obj) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::Array* array = (cocos2d::Array*)(obj);
     return array;
@@ -124,7 +124,7 @@ cocos2d::Array* DictionaryHelper::getArrayValue(cocos2d::Dictionary *root, const
 cocos2d::Object* DictionaryHelper::checkObjectExist(cocos2d::Dictionary *root, const char *key)
 {
     if (!root) {
-        return NULL;
+        return nullptr;
     }
     return root->objectForKey(key);
 }
@@ -153,7 +153,7 @@ const char* DictionaryHelper::objectToStringValue(cocos2d::Object *obj)
 {
     if (!obj)
     {
-        return NULL;
+        return nullptr;
     }
     cocos2d::String* cstr = (cocos2d::String*)(obj);
     return cstr->_string.c_str();
@@ -172,7 +172,7 @@ cocos2d::Array* DictionaryHelper::objectToCCArray(cocos2d::Object *obj)
 {
     if (!obj)
     {
-        return NULL;
+        return nullptr;
     }
     cocos2d::Array* array = (cocos2d::Array*)(obj);
     return array;
@@ -182,7 +182,7 @@ JsonDictionary* DictionaryHelper::getSubDictionary_json(JsonDictionary* root,con
 {
     if (!root)
     {
-        return NULL;
+        return nullptr;
     }
     return root->getSubDictionary(key);
 }
@@ -209,7 +209,7 @@ const char* DictionaryHelper::getStringValue_json(JsonDictionary* root,const cha
 {
     if (!root)
     {
-        return NULL;
+        return nullptr;
     }
     return root->getItemStringValue(key);
 }
@@ -263,7 +263,7 @@ const char* DictionaryHelper::getStringValueFromArray_json(JsonDictionary *root,
 {
     if (!root)
     {
-        return NULL;
+        return nullptr;
     }
     return root->getStringValueFromArray(arrayKey, idx);
 }
@@ -272,7 +272,7 @@ JsonDictionary* DictionaryHelper::getDictionaryFromArray_json(JsonDictionary* ro
 {
     if (!root)
     {
-        return NULL;
+        return nullptr;
     }
     return root->getSubItemFromArray(arrayKey, idx);
 }

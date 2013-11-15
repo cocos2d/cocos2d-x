@@ -37,7 +37,7 @@ UILayoutParameter* UILayoutParameter::create()
         return parameter;
     }
     CC_SAFE_DELETE(parameter);
-    return NULL;
+    return nullptr;
 }
 
 void UILayoutParameter::setMargin(const UIMargin &margin)
@@ -64,7 +64,7 @@ UILinearLayoutParameter* UILinearLayoutParameter::create()
         return parameter;
     }
     CC_SAFE_DELETE(parameter);
-    return NULL;
+    return nullptr;
 }
 
 void UILinearLayoutParameter::setGravity(UILinearGravity gravity)
@@ -86,7 +86,7 @@ UIRelativeLayoutParameter* UIRelativeLayoutParameter::create()
         return parameter;
     }
     CC_SAFE_DELETE(parameter);
-    return NULL;
+    return nullptr;
 }
 
 void UIRelativeLayoutParameter::setAlign(UIRelativeAlign align)
