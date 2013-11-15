@@ -853,26 +853,61 @@ void UILayout::doLayout()
                                 break;
                                 
                             case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
-                            case RELATIVE_LOCATION_ABOVE_CENTER:
+                                finalPosY += mg.bottom;
+                                finalPosY += relativeWidgetMargin.top;
+                                finalPosX += mg.left;
+                                break;
                             case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
                                 finalPosY += mg.bottom;
                                 finalPosY += relativeWidgetMargin.top;
+                                finalPosX -= mg.right;
                                 break;
+                            case RELATIVE_LOCATION_ABOVE_CENTER:
+                                finalPosY += mg.bottom;
+                                finalPosY += relativeWidgetMargin.top;
+                                break;
+                                
                             case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
-                            case RELATIVE_LOCATION_LEFT_OF_CENTER:
+                                finalPosX -= mg.right;
+                                finalPosX -= relativeWidgetMargin.left;
+                                finalPosY -= mg.top;
+                                break;
                             case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
                                 finalPosX -= mg.right;
                                 finalPosX -= relativeWidgetMargin.left;
+                                finalPosY += mg.bottom;
                                 break;
+                            case RELATIVE_LOCATION_LEFT_OF_CENTER:
+                                finalPosX -= mg.right;
+                                finalPosX -= relativeWidgetMargin.left;
+                                break;
+                                
                             case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
-                            case RELATIVE_LOCATION_RIGHT_OF_CENTER:
+                                finalPosX += mg.left;
+                                finalPosX += relativeWidgetMargin.right;
+                                finalPosY -= mg.top;
+                                break;
                             case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
                                 finalPosX += mg.left;
                                 finalPosX += relativeWidgetMargin.right;
+                                finalPosY += mg.bottom;
                                 break;
+                            case RELATIVE_LOCATION_RIGHT_OF_CENTER:
+                                finalPosX += mg.left;
+                                finalPosX += relativeWidgetMargin.right;
+                                break;
+                                
                             case RELATIVE_LOCATION_BELOW_LEFTALIGN:
-                            case RELATIVE_LOCATION_BELOW_CENTER:
+                                finalPosY -= mg.top;
+                                finalPosY -= relativeWidgetMargin.bottom;
+                                finalPosX += mg.left;
+                                break;
                             case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
+                                finalPosY -= mg.top;
+                                finalPosY -= relativeWidgetMargin.bottom;
+                                finalPosX -= mg.right;
+                                break;
+                            case RELATIVE_LOCATION_BELOW_CENTER:
                                 finalPosY -= mg.top;
                                 finalPosY -= relativeWidgetMargin.bottom;
                                 break;
