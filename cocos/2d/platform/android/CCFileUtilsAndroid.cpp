@@ -181,7 +181,7 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
 
         off_t fileSize = AAsset_getLength(asset);
 
-        data = new unsigned char[fileSize];
+        data = (unsigned char*) malloc(fileSize);
 
         int bytesread = AAsset_read(asset, (void*)data, fileSize);
         if (size)
@@ -204,7 +204,7 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
             fseek(fp,0,SEEK_END);
             fileSize = ftell(fp);
             fseek(fp,0,SEEK_SET);
-            data = new unsigned char[fileSize];
+            data = (unsigned char*) malloc(fileSize);
             fileSize = fread(data,sizeof(unsigned char), fileSize,fp);
             fclose(fp);
             
