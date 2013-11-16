@@ -54,20 +54,20 @@ public:
      * @js NA
      * @lua NA
      */
-    static Timer* createWithScriptHandler(int nHandler, float seconds);
+    static Timer* createWithScriptHandler(int handler, float seconds);
 
     CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector) { return Timer::create(target, selector); }
     CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector, float seconds) { return Timer::create(target, selector, seconds); }
-    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithScriptHandler(int nHandler, float seconds) { return Timer::createWithScriptHandler(nHandler, seconds); }
+    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithScriptHandler(int handler, float seconds) { return Timer::createWithScriptHandler(handler, seconds); }
 
     Timer(void);
 
     /** Initializes a timer with a target and a selector. */
     bool initWithTarget(Object *target, SEL_SCHEDULE selector);
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    bool initWithTarget(Object *target, SEL_SCHEDULE selector, float seconds, unsigned int nRepeat, float fDelay);
+    bool initWithTarget(Object *target, SEL_SCHEDULE selector, float seconds, unsigned int repeat, float delay);
     /** Initializes a timer with a script callback function and an interval in seconds. */
-    bool initWithScriptHandler(int nHandler, float seconds);
+    bool initWithScriptHandler(int handler, float seconds);
 
     /** get interval in seconds */
     float getInterval() const;
@@ -136,7 +136,7 @@ public:
      */
     ~Scheduler(void);
 
-    inline float getTimeScale(void) { return _timeScale; }
+    inline float getTimeScale() { return _timeScale; }
     /** Modifies the time of all scheduled callbacks.
     You can use this property to create a 'slow motion' or 'fast forward' effect.
     Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
@@ -144,7 +144,7 @@ public:
     @since v0.8
     @warning It will affect EVERY scheduled selector / action.
     */
-    inline void setTimeScale(float fTimeScale) { _timeScale = fTimeScale; }
+    inline void setTimeScale(float timeScale) { _timeScale = timeScale; }
 
     /** 'update' the scheduler.
      You should NEVER call this method, unless you know what you are doing.
@@ -162,16 +162,16 @@ public:
 
      @since v0.99.3, repeat and delay added in v1.1
      */
-    void scheduleSelector(SEL_SCHEDULE selector, Object *target, float fInterval, unsigned int repeat, float delay, bool bPaused);
+    void scheduleSelector(SEL_SCHEDULE selector, Object *target, float interval, unsigned int repeat, float delay, bool paused);
 
     /** calls scheduleSelector with kRepeatForever and a 0 delay */
-    void scheduleSelector(SEL_SCHEDULE selector, Object *target, float fInterval, bool bPaused);
+    void scheduleSelector(SEL_SCHEDULE selector, Object *target, float interval, bool paused);
     /** Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
      @since v0.99.3
      */
-    void scheduleUpdateForTarget(Object *target, int nPriority, bool bPaused);
+    void scheduleUpdateForTarget(Object *target, int priority, bool paused);
     
     /** Checks whether a selector for a given taget is scheduled.
      @since v3.0.0
@@ -206,17 +206,17 @@ public:
       You should only call this with kPriorityNonSystemMin or higher.
       @since v2.0.0
       */
-    void unscheduleAllWithMinPriority(int nMinPriority);
+    void unscheduleAllWithMinPriority(int minPriority);
 
     /** The scheduled script callback will be called every 'interval' seconds.
      If paused is true, then it won't be called until it is resumed.
      If 'interval' is 0, it will be called every frame.
      return schedule script entry ID, used for unscheduleScriptFunc().
      */
-    unsigned int scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused);
+    unsigned int scheduleScriptFunc(unsigned int handler, float interval, bool paused);
     
     /** Unschedule a script entry. */
-    void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
+    void unscheduleScriptEntry(unsigned int scheduleScriptEntryID);
 
     /** Pauses the target.
      All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
@@ -249,7 +249,7 @@ public:
       You should only call this with kPriorityNonSystemMin or higher.
       @since v2.0.0
       */
-    Set* pauseAllTargetsWithMinPriority(int nMinPriority);
+    Set* pauseAllTargetsWithMinPriority(int minPriority);
 
     /** Resume selectors on a set of targets.
      This can be useful for undoing a call to pauseAllSelectors.
@@ -258,13 +258,13 @@ public:
     void resumeTargets(Set* targetsToResume);
 
 private:
-    void removeHashElement(struct _hashSelectorEntry *pElement);
+    void removeHashElement(struct _hashSelectorEntry *element);
     void removeUpdateFromHash(struct _listEntry *entry);
 
     // update specific
 
-    void priorityIn(struct _listEntry **ppList, Object *target, int nPriority, bool bPaused);
-    void appendIn(struct _listEntry **ppList, Object *target, bool bPaused);
+    void priorityIn(struct _listEntry **list, Object *target, int priority, bool paused);
+    void appendIn(struct _listEntry **list, Object *target, bool paused);
 
 protected:
     float _timeScale;

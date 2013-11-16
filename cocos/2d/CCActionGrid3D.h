@@ -44,14 +44,14 @@ public:
     static Waves3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
     /** returns the amplitude of the effect */
-    inline float getAmplitude(void) const { return _amplitude; }
+    inline float getAmplitude() const { return _amplitude; }
     /** sets the amplitude to the effect */
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /** returns the amplitude rate */
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
     /** sets the ampliture rate */
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     /** initializes an action with duration, grid size, waves and amplitude */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
@@ -102,13 +102,13 @@ public:
     static Lens3D* create(float duration, const Size& gridSize, const Point& position, float radius);
 
     /** Get lens center position */
-    inline float getLensEffect(void) const { return _lensEffect; }
+    inline float getLensEffect() const { return _lensEffect; }
     /** Set lens center position */
-    inline void setLensEffect(float fLensEffect) { _lensEffect = fLensEffect; }
+    inline void setLensEffect(float lensEffect) { _lensEffect = lensEffect; }
     /** Set whether lens is concave */
-    inline void setConcave(bool bConcave) { _concave = bConcave; }
+    inline void setConcave(bool concave) { _concave = concave; }
   
-    inline const Point& getPosition(void) const { return _position; }
+    inline const Point& getPosition() const { return _position; }
     void setPosition(const Point& position);
 
     /** initializes the action with center position, radius, a grid size and duration */
@@ -138,14 +138,14 @@ public:
     static Ripple3D* create(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude);
 
     /** get center position */
-    inline const Point& getPosition(void) const { return _position; }
+    inline const Point& getPosition() const { return _position; }
     /** set center position */
     void setPosition(const Point& position);
 
-    inline float getAmplitude(void) const { return _amplitude; }
+    inline float getAmplitude() const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
@@ -190,11 +190,11 @@ public:
     /** creates the action with amplitude, a grid and duration */
     static Liquid* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
-    inline float getAmplitude(void) const { return _amplitude; }
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline float getAmplitude() const { return _amplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     /** initializes the action with amplitude, a grid and duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
@@ -216,11 +216,11 @@ public:
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
     static Waves* create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
-    inline float getAmplitude(void) const { return _amplitude; }
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline float getAmplitude() const { return _amplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
@@ -245,15 +245,15 @@ public:
     static Twirl* create(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
 
     /** get twirl center */
-    inline const Point& getPosition(void) const { return _position; }
+    inline const Point& getPosition() const { return _position; }
     /** set twirl center */
     void setPosition(const Point& position);
 
-    inline float getAmplitude(void) const { return _amplitude; }
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline float getAmplitude() const { return _amplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
     bool initWithDuration(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
