@@ -7,6 +7,7 @@
 #include "CCNewSprite.h"
 #include "CCNewSpriteBatchNode.h"
 #include "NewClippingNode.h"
+#include "CCNewDrawNode.h"
 
 static int sceneIdx = -1;
 
@@ -260,15 +261,17 @@ void NewSpriteBatchTest::addNewSpriteWithCoords(Point p)
 
 NewClippingNodeTest::NewClippingNodeTest()
 {
+    auto s = Director::getInstance()->getWinSize();
+
     auto clipper = NewClippingNode::create();
     clipper->setTag( kTagClipperNode );
     clipper->setContentSize(  Size(200, 200) );
     clipper->setAnchorPoint(  Point(0.5, 0.5) );
-    clipper->setPosition( Point(this->getContentSize().width / 2, this->getContentSize().height / 2) );
+    clipper->setPosition( Point(s.width / 2, s.height / 2) );
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
-    auto stencil = DrawNode::create();
+    auto stencil = NewDrawNode::create();
     Point rectangle[4];
     rectangle[0] = Point(0, 0);
     rectangle[1] = Point(clipper->getContentSize().width, 0);
@@ -278,6 +281,9 @@ NewClippingNodeTest::NewClippingNodeTest()
     Color4F white(1, 1, 1, 1);
     stencil->drawPolygon(rectangle, 4, white, 1, white);
     clipper->setStencil(stencil);
+
+//    auto stencil = NewSprite::create("Images/background2.png");
+//    clipper->setStencil(stencil);
 
     auto content = NewSprite::create("Images/background2.png");
     content->setTag( kTagContentNode );

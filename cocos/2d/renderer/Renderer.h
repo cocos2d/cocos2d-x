@@ -35,9 +35,12 @@ public:
     static void destroyInstance();
 
     //TODO support multiple viewport
-    void addCommand(RenderCommand *command, int renderQueue = DEFAULT_RENDER_QUEUE);
+    void addCommand(RenderCommand* command);
+    void addCommand(RenderCommand* command, int renderQueue);
     int createRenderQueue();
     void render();
+
+    inline void setCurrentRenderQueue(int renderQueueID) { _currRenderQueueID = renderQueueID; }
 
 protected:
     Renderer();
@@ -53,6 +56,8 @@ protected:
 protected:
     stack<RenderStackElement> _renderStack;
     vector<RenderQueue> _renderGroups;
+
+    int _currRenderQueueID;
 
     int _lastMaterialID;
 

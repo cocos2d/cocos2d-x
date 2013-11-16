@@ -34,7 +34,7 @@ NewDrawNode::~NewDrawNode()
 
 bool NewDrawNode::init()
 {
-    return false;
+    return DrawNode::init();
 }
 
 void NewDrawNode::draw()

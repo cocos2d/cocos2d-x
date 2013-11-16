@@ -72,20 +72,34 @@ NewClippingNode::NewClippingNode()
     currentStencilFail = GL_KEEP;
     currentStencilPassDepthFail = GL_KEEP;
     currentStencilPassDepthPass = GL_KEEP;
+    GLboolean currentDepthWriteMask = GL_TRUE;
 }
 
 void NewClippingNode::visit()
 {
     //Add group command
-    GroupCommand* groupCommand = new GroupCommand(0,0);
-    Renderer::getInstance()->addCommand(groupCommand, groupCommand->getRenderQueueID());
+    GroupCommand* groupCommand = new GroupCommand(0,_vertexZ);
+    Renderer::getInstance()->addCommand(groupCommand);
+
+    Renderer::getInstance()->setCurrentRenderQueue(groupCommand->getRenderQueueID());
+
+    CustomCommand* beforeVisitCmd = new CustomCommand(0,_vertexZ);
+    beforeVisitCmd->func = CC_CALLBACK_0(NewClippingNode::beforeVisit, this);
+    Renderer::getInstance()->addCommand(beforeVisitCmd, groupCommand->getRenderQueueID());
 
     _stencil->visit();
 
+    CustomCommand* afterDrawStencilCmd = new CustomCommand(0,_vertexZ);
+    afterDrawStencilCmd->func = CC_CALLBACK_0(NewClippingNode::afterDrawStencil, this);
+    Renderer::getInstance()->addCommand(afterDrawStencilCmd, groupCommand->getRenderQueueID());
+
     Node::visit();
 
-    CustomCommand* prepareStencil = new CustomCommand(0,0);
-    prepareStencil->func = CC_CALLBACK_0(NewClippingNode::beforeVisit, this);
+    CustomCommand* afterVisitCmd = new CustomCommand(0,_vertexZ);
+    afterVisitCmd->func = CC_CALLBACK_0(NewClippingNode::afterVisit, this);
+    Renderer::getInstance()->addCommand(afterVisitCmd, groupCommand->getRenderQueueID());
+
+    Renderer::getInstance()->setCurrentRenderQueue(DEFAULT_RENDER_QUEUE);
 }
 
 void NewClippingNode::beforeVisit()
@@ -106,7 +120,7 @@ void NewClippingNode::beforeVisit()
     // mask of all layers less than the current (ie: for layer 3: 00000011)
     GLint mask_layer_l = mask_layer - 1;
     // mask of all layers less than or equal to the current (ie: for layer 3: 00000111)
-    GLint mask_layer_le = mask_layer | mask_layer_l;
+    mask_layer_le = mask_layer | mask_layer_l;
 
     // manually save the stencil state
 
@@ -129,8 +143,7 @@ void NewClippingNode::beforeVisit()
     glStencilMask(mask_layer);
 
     // manually save the depth test state
-    //GLboolean currentDepthTestEnabled = GL_TRUE;
-    GLboolean currentDepthWriteMask = GL_TRUE;
+
     //currentDepthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
     glGetBooleanv(GL_DEPTH_WRITEMASK, &currentDepthWriteMask);
 
@@ -181,7 +194,10 @@ void NewClippingNode::beforeVisit()
     setProgram(_stencil, program);
 
     //Draw _stencil
+}
 
+void NewClippingNode::afterDrawStencil()
+{
     // restore the depth test state
     glDepthMask(currentDepthWriteMask);
     //if (currentDepthTestEnabled) {
@@ -202,6 +218,7 @@ void NewClippingNode::beforeVisit()
 
     // draw (according to the stencil test func) this node and its childs
 }
+
 
 void NewClippingNode::afterVisit()
 {
