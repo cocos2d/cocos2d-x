@@ -982,6 +982,7 @@ public:
     void setWidgetTag(int tag){setTag(tag);};
     int getWidgetTag(){return getTag();};
     void addCCNode(CCNode* node){addRenderer(node, 0);};
+    // this function call himself ????
     void removeCCNode(bool cleanup){removeCCNode(cleanup);};
     void addPushDownEvent(CCObject* target,SEL_PushEvent selector)
     {
