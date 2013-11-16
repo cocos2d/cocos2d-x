@@ -202,15 +202,18 @@ def main():
     parser = OptionParser("usage: %prog cpp-best-practise-formatter -d DIR_NAME [-s FILES_TO_SKIP]")
     parser.add_option("-t", "--type",
                       action="store", type="string", dest="type", default="all",
-                      help="replace member variable")
+                      help='''all: Replaces hungary naming of member variables and removing CC prefix for classes.
+                              remove_prefix: Only removes CC prefix for classes.
+                              replace_variable: Replaces hungary naming of member variables.
+                      ''')
 
     parser.add_option("-d", "--dir",
                       action="store", type="string", dest="dir_name", default=None,
-                      help="Cpp files in Directory to format")
+                      help="The directory which contains sources to format")
 
     parser.add_option("-s", "--skip",
                       action="append", type="string", dest="skips", default=None,
-                      help="Files to skip")
+                      help="Files or directories to skip")
 
 
     (options, args) = parser.parse_args(sys.argv)
