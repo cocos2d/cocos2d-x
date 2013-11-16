@@ -27,6 +27,7 @@ protected:
     NewClippingNode();
 
     void beforeVisit();
+    void afterDrawStencil();
     void afterVisit();
 
 protected:
@@ -38,6 +39,9 @@ protected:
     GLenum currentStencilFail;
     GLenum currentStencilPassDepthFail;
     GLenum currentStencilPassDepthPass;
+    GLboolean currentDepthWriteMask;
+
+    GLint mask_layer_le;
 };
 
 NS_CC_END

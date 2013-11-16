@@ -42,6 +42,8 @@ Renderer::Renderer()
 ,_firstCommand(0)
 ,_lastCommand(0)
 {
+    _currRenderQueueID = DEFAULT_RENDER_QUEUE;
+
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
     _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
@@ -107,7 +109,13 @@ void Renderer::setupVBOAndVAO()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Renderer::addCommand(RenderCommand *command, int renderQueue)
+void Renderer::addCommand(RenderCommand* command)
+{
+    command->generateID();
+    _renderGroups[_currRenderQueueID].push_back(command);
+}
+
+void Renderer::addCommand(RenderCommand* command, int renderQueue)
 {
     command->generateID();
     _renderGroups[renderQueue].push_back(command);
