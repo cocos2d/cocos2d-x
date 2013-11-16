@@ -76,6 +76,9 @@ public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void update(float delta) override;    
 
+    virtual void onResume() {}
+    virtual void onPause() {}
+
 protected:
     virtual void addChildToPhysicsWorld(Node* child);
     

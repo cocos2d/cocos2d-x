@@ -228,3 +228,13 @@ void SceneTestScene::runThisTest()
 
     Director::getInstance()->replaceScene(this);
 }
+
+void SceneTestScene::onResume()
+{
+  CCLOG("SceneTestScene::onResume");
+}
+
+void SceneTestScene::onPause()
+{
+  CCLOG("SceneTestScene::onPause");
+}
