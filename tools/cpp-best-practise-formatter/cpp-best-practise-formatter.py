@@ -225,8 +225,8 @@ def main():
     files_to_skip = options.skips
 
     if options.type == "all":
-        replace_type = "add_namespace"
-        do_add_namespace(options.dir_name)
+        #replace_type = "add_namespace"
+        #do_add_namespace(options.dir_name)
         replace_type = "replace_variable"
         do_member_varible_replace(options.dir_name)
         replace_type = "remove_prefix"
