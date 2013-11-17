@@ -393,6 +393,11 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape)
     return shape;
 }
 
+void PhysicsBody::resetForces()
+{
+    cpBodyResetForces(_info->getBody());
+}
+
 void PhysicsBody::applyForce(const Vect& force)
 {
     applyForce(force, Point::ZERO);
