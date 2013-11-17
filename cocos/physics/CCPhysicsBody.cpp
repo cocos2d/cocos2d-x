@@ -293,9 +293,10 @@ void PhysicsBody::setDynamic(bool dynamic)
         if (dynamic)
         {
             cpBodySetMass(_info->getBody(), _mass);
-            
+
             if (_world != nullptr)
             {
+                cpSpaceConvertBodyToDynamic(_world->_info->getSpace(), _info->getBody(), _mass, _moment);
                 cpSpaceAddBody(_world->_info->getSpace(), _info->getBody());
             }
         }else
@@ -305,6 +306,7 @@ void PhysicsBody::setDynamic(bool dynamic)
             if (_world != nullptr)
             {
                 cpSpaceRemoveBody(_world->_info->getSpace(), _info->getBody());
+                cpSpaceConvertBodyToStatic(_world->_info->getSpace(), _info->getBody());
             }
         }
         
@@ -389,6 +391,11 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape)
     }
     
     return shape;
+}
+
+void PhysicsBody::resetForces()
+{
+    cpBodyResetForces(_info->getBody());
 }
 
 void PhysicsBody::applyForce(const Vect& force)

@@ -90,6 +90,10 @@ public:
     virtual PhysicsShape* addShape(PhysicsShape* shape);
     
     /**
+     * @brief Zero both the forces and torques currently applied to the body.
+     */
+    virtual void resetForces();
+    /**
      * @brief Applies a immediate force to body.
      */
     virtual void applyForce(const Vect& force);
