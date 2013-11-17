@@ -100,8 +100,8 @@ public:
     virtual void removeAllBodies();
     
     void rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data);
-    void rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data);
-    void pointQuery(PhysicsPointQueryCallbackFunc func, const Point& point, void* data);
+    void queryRect(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data);
+    void queryPoint(PhysicsPointQueryCallbackFunc func, const Point& point, void* data);
     Array* getShapes(const Point& point) const;
     PhysicsShape* getShape(const Point& point) const;
     Array* getAllBodies() const;
