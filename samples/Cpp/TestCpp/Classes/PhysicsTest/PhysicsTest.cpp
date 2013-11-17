@@ -462,7 +462,7 @@ void PhysicsDemoLogoSmash::onEnter()
                 float y_jitter = 0.05*frand();
                 
                 Node* ball = makeBall(Point(2*(x - logo_width/2 + x_jitter) + VisibleRect::getVisibleRect().size.width/2,
-                                      2*(logo_height-y + y_jitter) + VisibleRect::getVisibleRect().size.height/2 - logo_height/2),
+                                            2*(logo_height-y + y_jitter) + VisibleRect::getVisibleRect().size.height/2 - logo_height/2),
                                       0.95f, PhysicsMaterial(0.01f, 0.0f, 0.0f));
                 
                 ball->getPhysicsBody()->setMass(1.0);
@@ -510,7 +510,7 @@ std::string PhysicsDemoLogoSmash::title()
     {
 		for(int j=0; j<=i; j++)
         {
-			auto sp = addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
+            auto sp = addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
             
             sp->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
 		}

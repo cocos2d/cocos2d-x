@@ -193,7 +193,7 @@ protected:
      * it will be call when two body have contact.
      * if return false, it will not invoke callbacks
      */
-    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB);
+    virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB);
     
 public:
     /*
@@ -231,7 +231,7 @@ class EventListenerPhysicsContactWithBodies : public EventListenerPhysicsContact
 public:
     static EventListenerPhysicsContactWithBodies* create(PhysicsBody* bodyA, PhysicsBody* bodyB);
     
-    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
+    virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
     virtual EventListenerPhysicsContactWithBodies* clone() override;
     
 protected:
@@ -249,7 +249,7 @@ class EventListenerPhysicsContactWithShapes : public EventListenerPhysicsContact
 public:
     static EventListenerPhysicsContactWithShapes* create(PhysicsShape* shapeA, PhysicsShape* shapeB);
     
-    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
+    virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
     virtual EventListenerPhysicsContactWithShapes* clone() override;
     
 protected:
@@ -267,7 +267,7 @@ class EventListenerPhysicsContactWithGroup : public EventListenerPhysicsContact
 public:
     static EventListenerPhysicsContactWithGroup* create(int group);
     
-    virtual bool test(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
+    virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
     virtual EventListenerPhysicsContactWithGroup* clone() override;
     
 protected:
