@@ -130,7 +130,7 @@ float PhysicsContactPreSolve::getElasticity() const
     return static_cast<cpArbiter*>(_contactInfo)->e;
 }
 
-float PhysicsContactPreSolve::getFriciton() const
+float PhysicsContactPreSolve::getFriction() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->u;
 }
@@ -177,7 +177,7 @@ float PhysicsContactPostSolve::getElasticity() const
     return static_cast<cpArbiter*>(_contactInfo)->e;
 }
 
-float PhysicsContactPostSolve::getFriciton() const
+float PhysicsContactPostSolve::getFriction() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->u;
 }

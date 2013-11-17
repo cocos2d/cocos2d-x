@@ -405,7 +405,6 @@ bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
     
     if (shape != nullptr)
     {
-        
         Node* mouse = Node::create();
         mouse->setPhysicsBody(PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY));
         mouse->getPhysicsBody()->setDynamic(false);
@@ -753,6 +752,37 @@ void PhysicsDemoJoints::onEnter()
                     sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
                     
                     PhysicsJointFixed* joint = PhysicsJointFixed::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), offset);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 2:
+                {
+                    
+                    auto sp1 = makeBall(offset - Point(30, 0), 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointDistance* joint = PhysicsJointDistance::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), Point::ZERO, Point::ZERO);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 3:
+                {
+                    auto sp1 = makeBall(offset - Point(30, 0), 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointLimit* joint = PhysicsJointLimit::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), Point::ZERO, Point::ZERO);
+                    joint->setMin(30.0f);
+                    joint->setMax(60.0f);
                     _scene->getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
