@@ -505,16 +505,15 @@ std::string PhysicsDemoLogoSmash::title()
     ball->setPhysicsBody(PhysicsBody::createCircle(10));
     ball->setPosition(VisibleRect::bottom() + Point(0, 60));
     this->addChild(ball);
-    
-	for(int i=0; i<14; i++)
+
+    for(int i=0; i<14; i++)
     {
-		for(int j=0; j<=i; j++)
+        for(int j=0; j<=i; j++)
         {
             auto sp = addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
-            
             sp->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
-		}
-	}
+        }
+    }
 }
 std::string PhysicsDemoPyramidStack::title()
 {
