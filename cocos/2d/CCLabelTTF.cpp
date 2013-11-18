@@ -328,6 +328,11 @@ bool LabelTTF::updateTexture()
 
 void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
 {
+    this->enableShadow(shadowOffset, shadowOpacity, shadowBlur, _shadowColor, updateTexture);
+}
+
+void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, Color3B shadowColor, bool updateTexture)
+{
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
         bool valueChanged = false;
@@ -355,6 +360,11 @@ void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float
         if (_shadowBlur != shadowBlur)
         {
             _shadowBlur = shadowBlur;
+            valueChanged = true;
+        }
+    
+        if (_shadowColor != shadowColor) {
+            _shadowColor = shadowColor;
             valueChanged = true;
         }
         
@@ -540,6 +550,8 @@ FontDefinition LabelTTF::_prepareTextDefinition(bool adjustForResolution)
             texDef._shadow._shadowOffset = CC_SIZE_POINTS_TO_PIXELS(_shadowOffset);
         else
             texDef._shadow._shadowOffset = _shadowOffset;
+        
+        texDef._shadow._shadowColor = _shadowColor;
     }
     else
     {

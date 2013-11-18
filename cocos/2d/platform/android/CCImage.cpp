@@ -73,6 +73,9 @@ public:
     									float shadowDeltaY 		= 0.0,
     									float shadowBlur 		= 0.0,
     									float shadowOpacity 	= 0.0,
+    									float shadowColorR 		= 0.0,
+    									float shadowColorG	 	= 0.0,
+    									float shadowColorB	 	= 0.0,
     									bool stroke 			= false,
     									float strokeColorR 		= 0.0,
     									float strokeColorG 		= 0.0,
@@ -81,7 +84,7 @@ public:
     {
            JniMethodInfo methodInfo;
            if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmapShadowStroke",
-               "(Ljava/lang/String;Ljava/lang/String;IFFFIIIZFFFFZFFFF)Z"))
+               "(Ljava/lang/String;Ljava/lang/String;IFFFIIIZFFFFFFFZFFFF)Z"))
            {
                CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
                return false;
@@ -110,7 +113,7 @@ public:
            jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
 
            if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID, jstrText,
-               jstrFont, (int)fontSize, textTintR, textTintG, textTintB, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, shadowOpacity, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize))
+               jstrFont, (int)fontSize, textTintR, textTintG, textTintB, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, shadowOpacity, shadowColorR, shadowColorG, shadowColorB, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize))
            {
                 return false;
            }
@@ -197,6 +200,9 @@ bool Image::initWithStringShadowStroke(
                                          float shadowOffsetY,
                                          float shadowOpacity,
                                          float shadowBlur,
+                                         float shadowColorR,
+                                         float shadowColorG,
+                                         float shadowColorB,
                                          bool  stroke,
                                          float strokeR,
                                          float strokeG,
@@ -214,6 +220,7 @@ bool Image::initWithStringShadowStroke(
 	        CC_BREAK_IF(! dc.getBitmapFromJavaShadowStroke(pText, nWidth, nHeight, eAlignMask, pFontName,
 	        											   nSize, textTintR, textTintG, textTintB, shadow,
 	        											   shadowOffsetX, shadowOffsetY, shadowBlur, shadowOpacity,
+	        											   shadowColorR, shadowColorG, shadowColorB,
 	        											   stroke, strokeR, strokeG, strokeB, strokeSize ));
 
 
@@ -229,7 +236,7 @@ bool Image::initWithStringShadowStroke(
             _dataLen = _width * _height * 4;
 
 	        // swap the alpha channel (ARGB to RGBA)
-	        swapAlphaChannel((unsigned int *)_data, (_width * _height) );
+	        // swapAlphaChannel((unsigned int *)_data, (_width * _height) );
 
 	        // ok
 	        bRet = true;
@@ -270,6 +277,7 @@ extern "C"
         env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC._data);
 
         // swap data
+        /*
         unsigned int *tempPtr = (unsigned int*)bitmapDC._data;
         unsigned int tempdata = 0;
         for (int i = 0; i < height; ++i)
@@ -277,8 +285,9 @@ extern "C"
             for (int j = 0; j < width; ++j)
             {
                 tempdata = *tempPtr;
-                *tempPtr++ = bitmapDC.swapAlpha(tempdata);
+                // *tempPtr++ = bitmapDC.swapAlpha(tempdata);
             }
         }
+        */
     }
 };

@@ -97,6 +97,7 @@ public class Cocos2dxBitmap {
 		createTextBitmapShadowStroke( string, fontName, fontSize, 1.0f, 1.0f, 1.0f,   	// text font and color
 									  alignment, width, height,							// alignment and size
 									  false, 0.0f, 0.0f, 0.0f, 0.0f,           				// no shadow
+									  0.0f, 0.0f, 0.0f,           							// no shadow
 									  false, 1.0f, 1.0f, 1.0f, 1.0f);						// no stroke
 									 
 	}
@@ -104,8 +105,9 @@ public class Cocos2dxBitmap {
 	public static boolean createTextBitmapShadowStroke(String string,  final String fontName, final int fontSize,
 													final float fontTintR, final float fontTintG, final float fontTintB,
 													final int alignment, final int width, final int height, final boolean shadow,
-													final float shadowDX, final float shadowDY, final float shadowBlur, final float shadowOpacity, final boolean stroke,
-													final float strokeR, final float strokeG, final float strokeB, final float strokeSize) {
+													final float shadowDX, final float shadowDY, final float shadowBlur, final float shadowOpacity,
+													final float shadowColorR, final float shadowColorG, final float shadowColorB,
+													final boolean stroke, final float strokeR, final float strokeG, final float strokeB, final float strokeSize) {
 
 		
 		final int horizontalAlignment = alignment & 0x0F;
@@ -128,7 +130,7 @@ public class Cocos2dxBitmap {
 
 		
 		// set the paint color
-		paint.setARGB(255, (int)(255.0 * fontTintR), (int)(255.0 * fontTintG), (int)(255.0 * fontTintB));
+		// paint.setARGB(255, (int)(255.0 * fontTintR), (int)(255.0 * fontTintG), (int)(255.0 * fontTintB));
 
 		final TextProperty textProperty = Cocos2dxBitmap.computeTextProperty(string, width, height, paint);
 		final int bitmapTotalHeight = (height == 0 ? textProperty.mTotalHeight: height);
@@ -140,9 +142,6 @@ public class Cocos2dxBitmap {
 		float renderTextDeltaY = 0.0f;
 		
 		if ( shadow ) {
-
-			int shadowColor = ((int)(255 * shadowOpacity) & 0xff) << 24;
-			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
 	
 			bitmapPaddingX = Math.abs(shadowDX);
 			bitmapPaddingY = Math.abs(shadowDY);
@@ -174,25 +173,23 @@ public class Cocos2dxBitmap {
 		final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
 		
 		int x = 0;
-		int y = Cocos2dxBitmap.computeY(fontMetricsInt, height, textProperty.mTotalHeight, verticalAlignment);
-		
-		final String[] lines = textProperty.mLines;
-		
-		for (final String line : lines) {
-			
-			x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-			canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
-			y += textProperty.mHeightPerLine;
-			
-		}
-		 
+		int y = 0; // Cocos2dxBitmap.computeY(fontMetricsInt, height, textProperty.mTotalHeight, verticalAlignment);
+	 
 		// draw again with stroke on if needed 
 		if ( stroke ) {
 			
 			final Paint paintStroke = Cocos2dxBitmap.newPaint(fontName, fontSize, horizontalAlignment);
 			paintStroke.setStyle(Paint.Style.STROKE);
-			paintStroke.setStrokeWidth(strokeSize * 0.5f);
+			paintStroke.setStrokeWidth(strokeSize * 2);
+			paintStroke.setStrokeJoin(Paint.Join.ROUND);
 			paintStroke.setARGB(255, (int) (strokeR * 255), (int) (strokeG * 255), (int) (strokeB * 255));
+
+			if (shadow) {
+
+				int shadowColor = Color.argb((int)(255 * shadowOpacity) & 0xff, (int)(255 * shadowColorR), (int)(255 * shadowColorG), (int)(255 * shadowColorB));
+				paintStroke.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
+
+			}
 			
 			x = 0;
 			y = Cocos2dxBitmap.computeY(fontMetricsInt, height, textProperty.mTotalHeight, verticalAlignment);
@@ -205,6 +202,27 @@ public class Cocos2dxBitmap {
 				y += textProperty.mHeightPerLine;
 				
 			}
+			
+		}
+
+		final String[] lines = textProperty.mLines;
+		
+		x = 0;
+		y = Cocos2dxBitmap.computeY(fontMetricsInt, height, textProperty.mTotalHeight, verticalAlignment);
+
+		paint.setARGB(255, (int)(255.0 * fontTintR), (int)(255.0 * fontTintG), (int)(255.0 * fontTintB));
+		if ( !stroke && shadow ) {
+
+			int shadowColor = Color.argb((int)(255 * shadowOpacity) & 0xff, (int)(255 * shadowColorR), (int)(255 * shadowColorG), (int)(255 * shadowColorB));
+			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
+
+		}
+
+		for (final String line : lines) {
+			
+			x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
+			canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
+			y += textProperty.mHeightPerLine;
 			
 		}
 		
