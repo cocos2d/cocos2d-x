@@ -618,7 +618,7 @@ void PhysicsWorld::update(float delta)
     
     cpSpaceStep(_info->getSpace(), delta);
     
-    if (_debugDrawMask != PHYSICS_DEBUGDRAW_NONE)
+    if (_debugDrawMask != DEBUGDRAW_NONE)
     {
         debugDraw();
     }
@@ -635,7 +635,7 @@ void PhysicsWorld::debugDraw()
     {
         if (_debugDraw->begin())
         {
-            if (_debugDrawMask & PHYSICS_DEBUGDRAW_SHAPE)
+            if (_debugDrawMask & DEBUGDRAW_SHAPE)
             {
                 for (Object* obj : *_bodies)
                 {
@@ -648,7 +648,7 @@ void PhysicsWorld::debugDraw()
                 }
             }
             
-            if (_debugDrawMask & PHYSICS_DEBUGDRAW_JOINT)
+            if (_debugDrawMask & DEBUGDRAW_JOINT)
             {
                 for (auto joint : _joints)
                 {
@@ -663,7 +663,7 @@ void PhysicsWorld::debugDraw()
 
 void PhysicsWorld::setDebugDrawMask(int mask)
 {
-    if (mask == PHYSICS_DEBUGDRAW_NONE)
+    if (mask == DEBUGDRAW_NONE)
     {
         CC_SAFE_DELETE(_debugDraw);
     }
@@ -1039,7 +1039,7 @@ PhysicsWorld::PhysicsWorld()
 , _scene(nullptr)
 , _delayDirty(false)
 , _debugDraw(nullptr)
-, _debugDrawMask(PHYSICS_DEBUGDRAW_NONE)
+, _debugDrawMask(DEBUGDRAW_NONE)
 , _delayAddBodies(nullptr)
 , _delayRemoveBodies(nullptr)
 {

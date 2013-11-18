@@ -50,13 +50,6 @@ class PhysicsDebugDraw;
 
 class PhysicsWorld;
 
-#define PHYSICS_DEBUGDRAW_NONE      0x00
-#define PHYSICS_DEBUGDRAW_SHAPE     0x01
-#define PHYSICS_DEBUGDRAW_JOINT     0x02
-#define PHYSICS_DEBUGDRAW_CONTACT   0x04
-#define PHYSICS_DEBUGDRAW_ALL       PHYSICS_DEBUGDRAW_SHAPE | PHYSICS_DEBUGDRAW_JOINT | PHYSICS_DEBUGDRAW_CONTACT
-
-
 typedef struct PhysicsRayCastInfo
 {
     PhysicsShape* shape;
@@ -87,6 +80,13 @@ typedef PhysicsRectQueryCallbackFunc PhysicsPointQueryCallbackFunc;
  */
 class PhysicsWorld
 {
+public:
+    static const long DEBUGDRAW_NONE = 0x00;
+    static const long DEBUGDRAW_SHAPE = 0x01;
+    static const long DEBUGDRAW_JOINT = 0x02;
+    static const long DEBUGDRAW_CONTACT = 0x04;
+    static const long DEBUGDRAW_ALL = DEBUGDRAW_SHAPE | DEBUGDRAW_JOINT | DEBUGDRAW_CONTACT;
+    
 public:
     /** Adds a joint to the physics world.*/
     virtual void addJoint(PhysicsJoint* joint);
