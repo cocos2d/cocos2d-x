@@ -81,6 +81,7 @@ protected:
     
     friend class PhysicsBody;
     friend class PhysicsWorld;
+    friend class PhysicsDebugDraw;
 };
 
 /*
@@ -100,44 +101,12 @@ protected:
 };
 
 /*
- * @brief A sliding joint allows the two bodies to slide along a chosen axis.
- */
-class PhysicsJointSliding : public PhysicsJoint
-{
-public:
-    static PhysicsJointSliding* construct(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
-    
-protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
-    
-protected:
-    PhysicsJointSliding();
-    virtual ~PhysicsJointSliding();
-};
-
-/*
- * @brief A spring joint connects the two bodies with a spring whose length is the initial distance between the two bodies.
- */
-class PhysicsJointSpring : public PhysicsJoint
-{
-public:
-    PhysicsJointSpring* construct();
-    
-protected:
-    bool init();
-    
-protected:
-    PhysicsJointSpring();
-    virtual ~PhysicsJointSpring();
-};
-
-/*
  * @brief A limit joint imposes a maximum distance between the two bodies, as if they were connected by a rope.
  */
 class PhysicsJointLimit : public PhysicsJoint
 {
 public:
-    PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
     float getMin() const;
     void setMin(float min);
@@ -173,7 +142,6 @@ protected:
 
 class PhysicsJointDistance : public PhysicsJoint
 {
-    
 public:
     static PhysicsJointDistance* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
