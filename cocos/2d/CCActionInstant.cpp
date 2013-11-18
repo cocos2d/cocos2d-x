@@ -358,9 +358,9 @@ bool CallFunc::initWithTarget(Object* target) {
         target->retain();
     }
 
-    if (target)
+    if (_selectorTarget)
     {
-        target->release();
+        _selectorTarget->release();
     }
 
     _selectorTarget = target;

@@ -404,7 +404,7 @@ void PhysicsBody::applyForce(const Vect& force, const Point& offset)
     cpBodyApplyForce(_info->getBody(), PhysicsHelper::point2cpv(force), PhysicsHelper::point2cpv(offset));
 }
 
-void PhysicsBody::resetForce()
+void PhysicsBody::resetForces()
 {
     cpBodyResetForces(_info->getBody());
     
