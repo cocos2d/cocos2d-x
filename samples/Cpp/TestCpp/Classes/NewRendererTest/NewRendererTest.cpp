@@ -268,6 +268,7 @@ NewClippingNodeTest::NewClippingNodeTest()
     clipper->setContentSize(  Size(200, 200) );
     clipper->setAnchorPoint(  Point(0.5, 0.5) );
     clipper->setPosition( Point(s.width / 2, s.height / 2) );
+
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
@@ -282,7 +283,9 @@ NewClippingNodeTest::NewClippingNodeTest()
 //    stencil->drawPolygon(rectangle, 4, white, 1, white);
 //    clipper->setStencil(stencil);
 
+    clipper->setAlphaThreshold(0.05f);
     auto stencil = NewSprite::create("Images/grossini.png");
+    stencil->setScale(2.0f);
     stencil->setPosition(s.width/2, s.height/2);
     clipper->setStencil(stencil);
 

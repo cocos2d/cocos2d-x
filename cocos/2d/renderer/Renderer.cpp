@@ -158,6 +158,7 @@ void Renderer::render()
         //Process RenderQueue
         for(size_t i = _renderStack.top().currentIndex; i < len; i++)
         {
+            _renderStack.top().currentIndex = _lastCommand = i;
             auto command = currRenderQueue[i];
 
             if(command->getType() == QUAD_COMMAND)
@@ -171,7 +172,7 @@ void Renderer::render()
                 {
                     memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
                     _numQuads += cmd->getQuadCount();
-                    _lastCommand = i;
+
                 }
                 else
                 {
@@ -202,8 +203,6 @@ void Renderer::render()
             {
                 flush();
             }
-
-            _renderStack.top().currentIndex = i;
         }
 
         //Draw the batched quads
@@ -232,14 +231,17 @@ void Renderer::render()
 
 void Renderer::drawBatchedQuads()
 {
-    //TODO we can improve the draw performance by inseart material switching command before hand.
+    //TODO we can improve the draw performance by insert material switching command before hand.
 
     int quadsToDraw = 0;
     int startQuad = 0;
 
     //Upload buffer to VBO
     if(_numQuads <= 0)
+    {
+        _firstCommand = _lastCommand;
         return;
+    }
 
     //Set VBO data
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
