@@ -326,6 +326,82 @@ cc.RectZero = function () {
     return cc.rect(0, 0, 0, 0);
 };
 
+cc.VisibleRect = {
+    _topLeft:cc.p(0,0),
+    _topRight:cc.p(0,0),
+    _top:cc.p(0,0),
+    _bottomLeft:cc.p(0,0),
+    _bottomRight:cc.p(0,0),
+    _bottom:cc.p(0,0),
+    _center:cc.p(0,0),
+    _left:cc.p(0,0),
+    _right:cc.p(0,0),
+    _width:0,
+    _height:0,
+    init:function(size){
+        this._width = size.width;
+        this._height = size.height;
+
+        var w = this._width;
+        var h = this._height;
+
+        //top
+        this._topLeft.y = h;
+        this._topRight.x = w;
+        this._topRight.y = h;
+        this._top.x = w/2;
+        this._top.y = h;
+
+        //bottom
+        this._bottomRight.x = w;
+        this._bottom.x = w/2;
+
+        //center
+        this._center.x = w/2;
+        this._center.y = h/2;
+
+        //left
+        this._left.y = h/2;
+
+        //right
+        this._right.x = w;
+        this._right.y = h/2;
+    },
+    getWidth:function(){
+        return this._width;
+    },
+    getHeight:function(){
+        return this._height;
+    },
+    topLeft:function(){
+        return this._topLeft;
+    },
+    topRight:function(){
+        return this._topRight;
+    },
+    top:function(){
+        return this._top;
+    },
+    bottomLeft:function(){
+        return this._bottomLeft;
+    },
+    bottomRight:function(){
+        return this._bottomRight;
+    },
+    bottom:function(){
+        return this._bottom;
+    },
+    center:function(){
+        return this._center;
+    },
+    left:function(){
+        return this._left;
+    },
+    right:function(){
+        return this._right;
+    }
+};
+
 //
 // Array: for cocos2d-html5 compatibility
 //
