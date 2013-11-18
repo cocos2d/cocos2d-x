@@ -62,13 +62,13 @@ ActionCamera * ActionCamera::reverse() const
 
 OrbitCamera * OrbitCamera::create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {
-    OrbitCamera * pRet = new OrbitCamera();
-    if(pRet->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
+    OrbitCamera * obitCamera = new OrbitCamera();
+    if(obitCamera->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
     {
-        pRet->autorelease();
-        return pRet;
+        obitCamera->autorelease();
+        return obitCamera;
     }
-    CC_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(obitCamera);
     return NULL;
 }
 
@@ -134,9 +134,9 @@ void OrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimut
     float r; // radius
     float s;
 
-    Camera* pCamera = _target->getCamera();
-    pCamera->getEye(&ex, &ey, &ez);
-    pCamera->getCenter(&cx, &cy, &cz);
+    Camera* camera = _target->getCamera();
+    camera->getEye(&ex, &ey, &ez);
+    camera->getCenter(&cx, &cy, &cz);
 
     x = ex-cx;
     y = ey-cy;
