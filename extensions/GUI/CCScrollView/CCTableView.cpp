@@ -57,7 +57,7 @@ bool TableView::initWithViewSize(Size size, Node* container/* = NULL*/)
         _cellsUsed->init();
         _cellsFreed     = new ArrayForObjectSorting();
         _cellsFreed->init();
-        _indices        = new std::set<unsigned int>();
+        _indices        = new std::set<long>();
         _vordering      = VerticalFillOrder::BOTTOM_UP;
         this->setDirection(Direction::VERTICAL);
 
@@ -134,7 +134,7 @@ void TableView::reloadData()
     }
 }
 
-TableViewCell *TableView::cellAtIndex(unsigned int idx)
+TableViewCell *TableView::cellAtIndex(long idx)
 {
     TableViewCell *found = NULL;
 
@@ -146,14 +146,14 @@ TableViewCell *TableView::cellAtIndex(unsigned int idx)
     return found;
 }
 
-void TableView::updateCellAtIndex(unsigned int idx)
+void TableView::updateCellAtIndex(long idx)
 {
     if (idx == CC_INVALID_INDEX)
     {
         return;
     }
-    unsigned int uCountOfItems = _dataSource->numberOfCellsInTableView(this);
-    if (0 == uCountOfItems || idx > uCountOfItems-1)
+    long countOfItems = _dataSource->numberOfCellsInTableView(this);
+    if (0 == countOfItems || idx > countOfItems-1)
     {
         return;
     }
@@ -168,27 +168,27 @@ void TableView::updateCellAtIndex(unsigned int idx)
     this->_addCellIfNecessary(cell);
 }
 
-void TableView::insertCellAtIndex(unsigned  int idx)
+void TableView::insertCellAtIndex(long idx)
 {
     if (idx == CC_INVALID_INDEX)
     {
         return;
     }
 
-    unsigned int uCountOfItems = _dataSource->numberOfCellsInTableView(this);
-    if (0 == uCountOfItems || idx > uCountOfItems-1)
+    long countOfItems = _dataSource->numberOfCellsInTableView(this);
+    if (0 == countOfItems || idx > countOfItems-1)
     {
         return;
     }
 
     TableViewCell* cell = NULL;
-    int newIdx = 0;
+    long newIdx = 0;
 
     cell = static_cast<TableViewCell*>(_cellsUsed->objectWithObjectID(idx));
     if (cell)
     {
         newIdx = _cellsUsed->indexOfSortedObject(cell);
-        for (int i=newIdx; i<_cellsUsed->count(); i++)
+        for (long i = newIdx; i<_cellsUsed->count(); i++)
         {
             cell = static_cast<TableViewCell*>(_cellsUsed->getObjectAtIndex(i));
             this->_setIndexForCell(cell->getIdx()+1, cell);
@@ -206,14 +206,14 @@ void TableView::insertCellAtIndex(unsigned  int idx)
     this->_updateContentSize();
 }
 
-void TableView::removeCellAtIndex(unsigned int idx)
+void TableView::removeCellAtIndex(long idx)
 {
     if (idx == CC_INVALID_INDEX)
     {
         return;
     }
 
-    unsigned int uCountOfItems = _dataSource->numberOfCellsInTableView(this);
+    long uCountOfItems = _dataSource->numberOfCellsInTableView(this);
     if (0 == uCountOfItems || idx > uCountOfItems-1)
     {
         return;
@@ -305,7 +305,7 @@ void TableView::_updateContentSize()
 
 }
 
-Point TableView::_offsetFromIndex(unsigned int index)
+Point TableView::_offsetFromIndex(long index)
 {
     Point offset = this->__offsetFromIndex(index);
 
@@ -317,7 +317,7 @@ Point TableView::_offsetFromIndex(unsigned int index)
     return offset;
 }
 
-Point TableView::__offsetFromIndex(unsigned int index)
+Point TableView::__offsetFromIndex(long index)
 {
     Point offset;
     Size  cellSize;
@@ -335,10 +335,10 @@ Point TableView::__offsetFromIndex(unsigned int index)
     return offset;
 }
 
-unsigned int TableView::_indexFromOffset(Point offset)
+long TableView::_indexFromOffset(Point offset)
 {
-    int index = 0;
-    const int maxIdx = _dataSource->numberOfCellsInTableView(this)-1;
+    long index = 0;
+    const long maxIdx = _dataSource->numberOfCellsInTableView(this) - 1;
 
     if (_vordering == VerticalFillOrder::TOP_DOWN)
     {
@@ -357,10 +357,10 @@ unsigned int TableView::_indexFromOffset(Point offset)
     return index;
 }
 
-int TableView::__indexFromOffset(Point offset)
+long TableView::__indexFromOffset(Point offset)
 {
-    int low = 0;
-    int high = _dataSource->numberOfCellsInTableView(this) - 1;
+    long low = 0;
+    long high = _dataSource->numberOfCellsInTableView(this) - 1;
     float search;
     switch (this->getDirection())
     {
@@ -374,7 +374,7 @@ int TableView::__indexFromOffset(Point offset)
 
     while (high >= low)
     {
-        int index = low + (high - low) / 2;
+        long index = low + (high - low) / 2;
         float cellStart = _vCellsPositions[index];
         float cellEnd = _vCellsPositions[index + 1];
 
@@ -415,7 +415,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
     }
 }
 
-void TableView::_setIndexForCell(unsigned int index, TableViewCell *cell)
+void TableView::_setIndexForCell(long index, TableViewCell *cell)
 {
     cell->setAnchorPoint(Point(0.0f, 0.0f));
     cell->setPosition(this->_offsetFromIndex(index));
@@ -461,7 +461,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
         _tableViewDelegate->scrollViewDidScroll(this);
     }
 
-    unsigned int startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
+    long startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
     Point offset = this->getContentOffset() * -1;
     maxIdx = MAX(uCountOfItems-1, 0);
 
@@ -551,7 +551,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
         }
     }
 
-    for (unsigned int i=startIdx; i <= endIdx; i++)
+    for (long i = startIdx; i <= endIdx; i++)
     {
         //if ([_indices containsIndex:i])
         if (_indices->find(i) != _indices->end())
