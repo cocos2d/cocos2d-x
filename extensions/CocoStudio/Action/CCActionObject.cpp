@@ -206,8 +206,6 @@ void ActionObject::simulationActionUpdate(float dt)
 		{
 			this->play();
 		}
-
-		CCLOG("ActionObject Update");
 	}
 }
 NS_CC_EXT_END
