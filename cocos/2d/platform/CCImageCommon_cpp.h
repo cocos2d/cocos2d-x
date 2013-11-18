@@ -1793,10 +1793,6 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
         return false;
     }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    assert(false);
-    return false;
-#else
     bool bRet = false;
 
     do 
@@ -1829,7 +1825,6 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     } while (0);
 
     return bRet;
-#endif
 }
 #endif
 

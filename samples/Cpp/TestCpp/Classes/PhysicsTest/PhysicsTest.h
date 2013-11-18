@@ -11,13 +11,18 @@
 class PhysicsTestScene : public TestScene
 {
 public:
-    virtual bool initTest() override;
+    PhysicsTestScene()
+    :TestScene(false, true)
+    , _debugDraw(false)
+    {}
+    
+public:
     virtual void runThisTest();
     
     void toggleDebug();
     
 private:
-    static bool _debugDraw;
+    bool _debugDraw;
 };
 
 class PhysicsDemo : public BaseTest
@@ -69,7 +74,7 @@ public:
     std::string title() override;
 };
 
-class PhysicsDemoPlink : public PhysicsDemo
+class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
     void onEnter() override;

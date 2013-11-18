@@ -33,9 +33,11 @@ def gen_android_mk(mkfile, pathes, suffix = ("c", "cpp",), exclude = ()):
 
     # generate file list string
     filestrio = cStringIO.StringIO()
+    mkfilepath = os.path.dirname(os.path.join(COCOS_ROOT, mkfile))
     for filename in filelst:
         filestrio.write(' \\\n')
-        filestrio.write(os.path.relpath(filename, os.path.dirname(os.path.join(COCOS_ROOT, mkfile))))
+        filepath = os.path.relpath(filename, mkfilepath)
+        filestrio.write(filepath.replace('\\', '/'))
     filestrio.write('\n')
     
     # read mk file

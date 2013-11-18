@@ -1233,7 +1233,8 @@ local function ExtensionsMainLayer()
         item:setPosition(s.width / 2, s.height - i * LINE_SPACE)
         menu:addChild(item, kItemTagBasic + i)
         if ((i == ExtensionTestEnum.TEST_WEBSOCKET + 1) and (false == bSupportWebSocket))
-        or ((i == ExtensionTestEnum.TEST_EDITBOX + 1) and (false == bSupportEdit)) then
+        or ((i == ExtensionTestEnum.TEST_EDITBOX + 1) and (false == bSupportEdit)) 
+        or (i == ExtensionTestEnum.TEST_NOTIFICATIONCENTER + 1)then
             item:setEnabled(false)
         end
 	end
