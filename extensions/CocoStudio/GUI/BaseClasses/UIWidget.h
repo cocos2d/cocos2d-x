@@ -982,7 +982,6 @@ public:
     void setWidgetTag(int tag){setTag(tag);};
     int getWidgetTag(){return getTag();};
     void addCCNode(CCNode* node){addRenderer(node, 0);};
-    void removeCCNode(bool cleanup){removeCCNode(cleanup);};
     void addPushDownEvent(CCObject* target,SEL_PushEvent selector)
     {
         m_pPushListener = target;
