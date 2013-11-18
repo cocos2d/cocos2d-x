@@ -142,6 +142,29 @@ public class Cocos2dxHelper {
 				});	
             }
             	
+            @Override
+            public void openIMEKeyboard() {
+            	sActivity.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						Cocos2dxEditText.getInstance(sActivity).openIMEKeyboard();
+					}
+            		
+            	});
+            }
+            
+            @Override
+            public void closeIMEKeyboard() {
+            	sActivity.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						Cocos2dxEditText.getInstance(sActivity).closeIMEKeyboard();
+					}
+            		
+            	});
+            }
             
             @Override
             public void showDialog(final String title, final String message) {
@@ -309,6 +332,14 @@ public class Cocos2dxHelper {
 			/* Nothing. */
 		}
 	}
+	
+	private static void openIMEKeyboard() {
+		sCocos2dxHelperListener.openIMEKeyboard();
+	}
+	
+	private static void closeIMEKeyboard() {
+		sCocos2dxHelperListener.closeIMEKeyboard();
+	}
 
     public static int getDPI()
     {
@@ -394,6 +425,8 @@ public class Cocos2dxHelper {
     	editor.putString(key, value);
     	editor.commit();
     }
+    
+    public static native void nativeRequestFocus();
 	
 	// ===========================================================
 	// Inner and Anonymous Classes
@@ -402,5 +435,7 @@ public class Cocos2dxHelper {
 	public static interface Cocos2dxHelperListener {
 		public void showDialog(final String title, final String message);
 		public void showEditTextDialog(final String title, final String message, final int inputMode, final int inputFlag, final int returnType, final int maxLength);
+		public void openIMEKeyboard();
+		public void closeIMEKeyboard();
 	}
 }

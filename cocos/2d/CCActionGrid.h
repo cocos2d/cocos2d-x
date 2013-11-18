@@ -65,7 +65,7 @@ class CC_DLL Grid3DAction : public GridAction
 public:
 
     /** returns the grid */
-    virtual GridBase* getGrid(void);
+    virtual GridBase* getGrid();
     /** returns the vertex than belongs to certain position in the grid 
      * @js NA
      * @lua NA
@@ -141,7 +141,7 @@ public:
     void setTile(const Point& position, const Quad3& coords);
 
     /** returns the grid */
-    virtual GridBase* getGrid(void);
+    virtual GridBase* getGrid();
 
     // Override
     virtual TiledGrid3DAction * clone() const override = 0;
@@ -152,12 +152,12 @@ class CC_DLL AccelDeccelAmplitude : public ActionInterval
 {
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static AccelDeccelAmplitude* create(Action *pAction, float duration);
+    static AccelDeccelAmplitude* create(Action *action, float duration);
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~AccelDeccelAmplitude(void);
+    virtual ~AccelDeccelAmplitude();
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(Action *pAction, float duration);
 
@@ -185,20 +185,20 @@ class CC_DLL AccelAmplitude : public ActionInterval
 {
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static AccelAmplitude* create(Action *pAction, float duration);
+    static AccelAmplitude* create(Action *action, float duration);
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~AccelAmplitude(void);
+    virtual ~AccelAmplitude();
 
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(Action *pAction, float duration);
+    bool initWithAction(Action *action, float duration);
 
     /** get amplitude rate */
-    inline float getRate(void) const { return _rate; }
+    inline float getRate() const { return _rate; }
     /** set amplitude rate */
-    inline void setRate(float fRate) { _rate = fRate; }
+    inline void setRate(float rate) { _rate = rate; }
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
@@ -216,19 +216,19 @@ class CC_DLL DeccelAmplitude : public ActionInterval
 {
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static DeccelAmplitude* create(Action *pAction, float duration);
+    static DeccelAmplitude* create(Action *action, float duration);
     /**
      * @js NA
      * @lua NA
      */
     virtual ~DeccelAmplitude();
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(Action *pAction, float duration);
+    bool initWithAction(Action *action, float duration);
 
     /** get amplitude rate */
     inline float getRate(void) const { return _rate; }
     /** set amplitude rate */
-    inline void setRate(float fRate) { _rate = fRate; }
+    inline void setRate(float rate) { _rate = rate; }
 
     // overrides
     virtual void startWithTarget(Node *target) override;
@@ -250,7 +250,7 @@ class CC_DLL StopGrid : public ActionInstant
 {
 public:
     /** Allocates and initializes the action */
-    static StopGrid* create(void);
+    static StopGrid* create();
 
     // Overrides
     virtual void startWithTarget(Node *target) override;

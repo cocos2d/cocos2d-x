@@ -691,7 +691,7 @@ int register_cocos2dx_extension_CCBProxy(lua_State* tolua_S)
     tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     
-    uint32_t typeId = typeid(CCBProxy).hash_code();
+    long typeId = typeid(CCBProxy).hash_code();
     g_luaType[typeId] = "CCBProxy";
     return 1;
 }
@@ -1021,7 +1021,7 @@ public:
     LUA_TableViewDataSource(){}
     virtual ~LUA_TableViewDataSource(){}
     
-    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx)
+    virtual Size tableCellSizeForIndex(TableView *table, long idx)
     {
         if (nullptr != table )
         {
@@ -1047,7 +1047,7 @@ public:
         return Size::ZERO;
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, long idx)
     {
         if (nullptr != table )
         {
@@ -1073,7 +1073,7 @@ public:
         return NULL;
     }
     
-    virtual unsigned int numberOfCellsInTableView(TableView *table)
+    virtual long numberOfCellsInTableView(TableView *table)
     {
         if (nullptr != table )
         {
@@ -1089,7 +1089,7 @@ public:
                 Double* numbers  = dynamic_cast<Double*>(resultArray.getObjectAtIndex(0));
                 if (NULL != numbers)
                 {
-                    return (int)numbers->getValue();
+                    return (long)numbers->getValue();
                 }
             }
         }

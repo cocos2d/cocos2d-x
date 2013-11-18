@@ -143,7 +143,7 @@ void UILayout::onSizeChanged()
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(cocos2d::Point(_size.width/2.0f, _size.height/2.0f));
-        if (_backGroundScale9Enabled)
+        if (_backGroundScale9Enabled && _backGroundImage)
         {
             dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
         }
@@ -240,7 +240,7 @@ void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
 void UILayout::setBackGroundImageCapInsets(const cocos2d::Rect &capInsets)
 {
     _backGroundImageCapInsets = capInsets;
-    if (_backGroundScale9Enabled)
+    if (_backGroundScale9Enabled && _backGroundImage)
     {
         dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
