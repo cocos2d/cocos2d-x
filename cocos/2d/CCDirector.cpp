@@ -333,11 +333,11 @@ float Director::getDeltaTime() const
 {
 	return _deltaTime;
 }
-void Director::setOpenGLView(EGLView *pobOpenGLView)
+void Director::setOpenGLView(EGLView *openGLView)
 {
-    CCASSERT(pobOpenGLView, "opengl view should not be null");
+    CCASSERT(openGLView, "opengl view should not be null");
 
-    if (_openGLView != pobOpenGLView)
+    if (_openGLView != openGLView)
     {
 		// Configuration. Gather GPU info
 		Configuration *conf = Configuration::getInstance();
@@ -346,7 +346,7 @@ void Director::setOpenGLView(EGLView *pobOpenGLView)
 
         // EAGLView is not a Object
         delete _openGLView; // [openGLView_ release]
-        _openGLView = pobOpenGLView;
+        _openGLView = openGLView;
 
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();
@@ -1055,9 +1055,9 @@ void DisplayLinkDirector::stopAnimation()
     _invalid = true;
 }
 
-void DisplayLinkDirector::setAnimationInterval(double value)
+void DisplayLinkDirector::setAnimationInterval(double interval)
 {
-    _animationInterval = value;
+    _animationInterval = interval;
     if (! _invalid)
     {
         stopAnimation();

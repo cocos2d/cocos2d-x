@@ -103,6 +103,7 @@ public:
     virtual void clean(void);
     virtual void pushInt(int intValue);
     virtual void pushFloat(float floatValue);
+    virtual void pushLong(long longValue);
     virtual void pushBoolean(bool boolValue);
     virtual void pushString(const char* stringValue);
     virtual void pushString(const char* stringValue, int length);

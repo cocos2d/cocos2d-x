@@ -159,7 +159,7 @@ void TestController::menuCallback(Object * sender)
     // create the test scene and run it
     auto scene = g_aTestNames[idx].callback();
 
-    if (scene && scene->initTest())
+    if (scene)
     {
         scene->runThisTest();
         scene->release();

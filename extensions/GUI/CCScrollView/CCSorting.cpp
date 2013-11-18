@@ -33,10 +33,10 @@ class SortedObject : public Object, public SortableObject
 {
 public:
     SortedObject() : objectID(0) {}
-    virtual void setObjectID(unsigned int id) { this->objectID = id; }
-    virtual unsigned int getObjectID() { return objectID; }
+    virtual void setObjectID(long id) { this->objectID = id; }
+    virtual long getObjectID() { return objectID; }
 private:
-    unsigned int objectID;
+    long objectID;
 };
 
 #if 0
@@ -62,10 +62,9 @@ static int _compareObject(const void * val1, const void * val2)
 
 void ArrayForObjectSorting::insertSortedObject(SortableObject* object)
 {
-    unsigned int idx;
     Object* pObj = dynamic_cast<Object*>(object);
     CCASSERT(pObj, "Invalid parameter.");
-    idx = this->indexOfSortedObject(object);
+    long idx = this->indexOfSortedObject(object);
     
     this->insertObject(pObj, idx);
 }
@@ -75,9 +74,9 @@ void ArrayForObjectSorting::removeSortedObject(SortableObject* object)
     if (this->count() == 0) {
         return;
     }
-    int idx;
-    SortableObject* foundObj;
-    idx = this->indexOfSortedObject(object);
+
+    SortableObject* foundObj = nullptr;
+    long idx = this->indexOfSortedObject(object);
     
     if (idx < this->count() && idx != CC_INVALID_INDEX) {
         foundObj = dynamic_cast<SortableObject*>(this->getObjectAtIndex(idx));
@@ -90,10 +89,10 @@ void ArrayForObjectSorting::removeSortedObject(SortableObject* object)
 
 void ArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, SortableObject* object)
 {
-    SortableObject* foundObj;
-    int  idx;
+    SortableObject* foundObj = nullptr;
     
-    idx = this->indexOfSortedObject(object);
+    long  idx = this->indexOfSortedObject(object);
+    
     if (idx < this->count() && idx != CC_INVALID_INDEX)
     {
         foundObj = dynamic_cast<SortableObject*>(this->getObjectAtIndex(idx));
@@ -111,19 +110,16 @@ void ArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, Sortabl
     }
 }
 
-SortableObject* ArrayForObjectSorting::objectWithObjectID(unsigned int tag)
+SortableObject* ArrayForObjectSorting::objectWithObjectID(long tag)
 {
     if (this->count() == 0) {
         return NULL;
     }
     
-    int  idx;
-    SortableObject* foundObj;
-    
-    foundObj = new SortedObject();
+    SortableObject* foundObj = new SortedObject();
     foundObj->setObjectID(tag);
     
-    idx      = this->indexOfSortedObject(foundObj);
+    long idx  = this->indexOfSortedObject(foundObj);
     
     ((SortedObject*)foundObj)->release();
     foundObj = NULL;
@@ -139,28 +135,28 @@ SortableObject* ArrayForObjectSorting::objectWithObjectID(unsigned int tag)
     return foundObj;
 }
 
-unsigned int ArrayForObjectSorting::indexOfSortedObject(SortableObject* object)
+long ArrayForObjectSorting::indexOfSortedObject(SortableObject* object)
 {
-    unsigned int  idx = 0;
+    long  idx = 0;
     if (object)
     {
  //       Object* pObj = (Object*)bsearch((Object*)&object, data->arr, data->num, sizeof(Object*), _compareObject);
         // FIXME: need to use binary search to improve performance
-        Object* pObj = NULL;
-        unsigned int uPrevObjectID = 0;
-        unsigned int uOfSortObjectID = object->getObjectID();
+        Object* obj = NULL;
+        long prevObjectID = 0;
+        long ofSortObjectID = object->getObjectID();
 
-        CCARRAY_FOREACH(this, pObj)
+        CCARRAY_FOREACH(this, obj)
         {
-            SortableObject* pSortableObj = dynamic_cast<SortableObject*>(pObj);
-            unsigned int uCurObjectID = pSortableObj->getObjectID();
-            if (  (uOfSortObjectID == uCurObjectID)
-                  || (uOfSortObjectID >= uPrevObjectID && uOfSortObjectID < uCurObjectID))
+            SortableObject* sortableObj = dynamic_cast<SortableObject*>(obj);
+            long curObjectID = sortableObj->getObjectID();
+            if (  (ofSortObjectID == curObjectID)
+                  || (ofSortObjectID >= prevObjectID && ofSortObjectID < curObjectID))
             {
                 break;
             }
             
-            uPrevObjectID = uCurObjectID;
+            prevObjectID = curObjectID;
             idx++;
         }
     }

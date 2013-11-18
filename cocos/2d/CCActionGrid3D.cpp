@@ -90,21 +90,21 @@ void Waves3D::update(float time)
 
 FlipX3D* FlipX3D::create(float duration)
 {
-    FlipX3D *pAction = new FlipX3D();
+    FlipX3D *action = new FlipX3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration))
+        if (action->initWithDuration(duration))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool FlipX3D::initWithDuration(float duration)
@@ -148,7 +148,7 @@ void FlipX3D::update(float time)
 
     float    x0 = v0.x;
     float    x1 = v1.x;
-    float x;
+    float    x;
     Point    a, b, c, d;
 
     if ( x0 > x1 )
@@ -211,21 +211,21 @@ FlipY3D* FlipY3D::clone() const
 
 FlipY3D* FlipY3D::create(float duration)
 {
-    FlipY3D *pAction = new FlipY3D();
+    FlipY3D *action = new FlipY3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration))
+        if (action->initWithDuration(duration))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 void FlipY3D::update(float time)
@@ -297,21 +297,21 @@ void FlipY3D::update(float time)
 
 Lens3D* Lens3D::create(float duration, const Size& gridSize, const Point& position, float radius)
 {
-    Lens3D *pAction = new Lens3D();
+    Lens3D *action = new Lens3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, position, radius))
+        if (action->initWithDuration(duration, gridSize, position, radius))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool Lens3D::initWithDuration(float duration, const Size& gridSize, const Point& position, float radius)
@@ -396,21 +396,21 @@ void Lens3D::update(float time)
 
 Ripple3D* Ripple3D::create(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude)
 {
-    Ripple3D *pAction = new Ripple3D();
+    Ripple3D *action = new Ripple3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, position, radius, waves, amplitude))
+        if (action->initWithDuration(duration, gridSize, position, radius, waves, amplitude))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool Ripple3D::initWithDuration(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude)
@@ -472,21 +472,21 @@ void Ripple3D::update(float time)
 
 Shaky3D* Shaky3D::create(float duration, const Size& gridSize, int range, bool shakeZ)
 {
-    Shaky3D *pAction = new Shaky3D();
+    Shaky3D *action = new Shaky3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, range, shakeZ))
+        if (action->initWithDuration(duration, gridSize, range, shakeZ))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool Shaky3D::initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ)
@@ -537,21 +537,21 @@ void Shaky3D::update(float time)
 
 Liquid* Liquid::create(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    Liquid *pAction = new Liquid();
+    Liquid *action = new Liquid();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, waves, amplitude))
+        if (action->initWithDuration(duration, gridSize, waves, amplitude))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool Liquid::initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude)
@@ -597,21 +597,21 @@ void Liquid::update(float time)
 
 Waves* Waves::create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical)
 {
-    Waves *pAction = new Waves();
+    Waves *action = new Waves();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, waves, amplitude, horizontal, vertical))
+        if (action->initWithDuration(duration, gridSize, waves, amplitude, horizontal, vertical))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool Waves::initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical)
@@ -668,21 +668,21 @@ void Waves::update(float time)
 
 Twirl* Twirl::create(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude)
 {
-    Twirl *pAction = new Twirl();
+    Twirl *action = new Twirl();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, position, twirls, amplitude))
+        if (action->initWithDuration(duration, gridSize, position, twirls, amplitude))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool Twirl::initWithDuration(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude)

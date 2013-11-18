@@ -138,7 +138,8 @@ static JSBool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *
         jsval *argv = JS_ARGV(cx, vp);
 
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
-        tmpObj->autorelease();
+        cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -162,7 +163,8 @@ static JSBool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx,
         jsval *argv = JS_ARGV(cx, vp);
 
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
-        tmpObj->autorelease();
+        cobj->setUserObject(tmpObj);
+        tmpObj->release();
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -188,8 +190,8 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         tmpObj->autorelease();
 
-        tmpObj->setJSCallbackFunc(argv[2]);
-        tmpObj->setJSCallbackThis(argv[1]);
+        tmpObj->setJSCallbackFunc(argv[1]);
+        tmpObj->setJSCallbackThis(argv[2]);
 
         std::string ret;
         jsval_to_std_string(cx, argv[0], &ret);
@@ -205,8 +207,8 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         tmpObj->autorelease();
 
-        tmpObj->setJSCallbackFunc(argv[4]);
-        tmpObj->setJSCallbackThis(argv[3]);
+        tmpObj->setJSCallbackFunc(argv[3]);
+        tmpObj->setJSCallbackThis(argv[4]);
 
         std::string imagePath;
         jsval_to_std_string(cx ,argv[0] , &imagePath);

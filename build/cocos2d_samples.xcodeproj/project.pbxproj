@@ -1000,6 +1000,8 @@
 		1AAF5400180E39D4000584C8 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		1AAF5401180E39D4000584C8 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC01807A4F9005B8026 /* libcocos2dx-extensions iOS.a */; };
 		1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
+		3EEF8C3D183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
+		3EEF8C3E183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
 		460E44BB1807DDC2000CDD6D /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		460E44FD1807E413000CDD6D /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
 		460E45691807E767000CDD6D /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460E452E1807E712000CDD6D /* AppController.mm */; };
@@ -2778,6 +2780,7 @@
 		1AAF53AD180E363C000584C8 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../samples/Cpp/TestCpp/Resources/TileMaps; sourceTree = "<group>"; };
 		1AAF53AE180E363C000584C8 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../samples/Cpp/TestCpp/Resources/zwoptex; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CocoStudioTest; path = ../samples/Javascript/Shared/tests/CocoStudioTest; sourceTree = "<group>"; };
 		460E452D1807E712000CDD6D /* AppController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		460E452E1807E712000CDD6D /* AppController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		460E452F1807E712000CDD6D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -3943,6 +3946,7 @@
 		1A9DC2D7180E66BB007A3AD4 /* JS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */,
 				1A9DC941180E66FE007A3AD4 /* ActionManagerTest */,
 				1A9DC942180E66FE007A3AD4 /* ActionsTest */,
 				1A9DC943180E66FE007A3AD4 /* AdvanceCompiler */,
@@ -6332,6 +6336,7 @@
 				1A3B1DA9180E7A9700497A22 /* tests-boot-jsb.js in Resources */,
 				1A3B1DAA180E7A9700497A22 /* tests-main.js in Resources */,
 				1A9DC2C9180E668B007A3AD4 /* Default-568h@2x.png in Resources */,
+				3EEF8C3E183A01B5005E8A6C /* CocoStudioTest in Resources */,
 				1A9DC2CA180E668B007A3AD4 /* Default.png in Resources */,
 				1A9DC2CB180E668B007A3AD4 /* Default@2x.png in Resources */,
 				1A9DC2CC180E668B007A3AD4 /* Icon-114.png in Resources */,
@@ -6510,6 +6515,7 @@
 				1A9DC98C180E66FF007A3AD4 /* CurrentLanguageTest in Resources */,
 				1A9DC98E180E66FF007A3AD4 /* DrawPrimitivesTest in Resources */,
 				1A9DC990180E66FF007A3AD4 /* EaseActionsTest in Resources */,
+				3EEF8C3D183A01B5005E8A6C /* CocoStudioTest in Resources */,
 				1A9DC992180E66FF007A3AD4 /* EffectsAdvancedTest in Resources */,
 				1A9DC994180E66FF007A3AD4 /* EffectsTest in Resources */,
 				1A9DC996180E66FF007A3AD4 /* EventTest in Resources */,

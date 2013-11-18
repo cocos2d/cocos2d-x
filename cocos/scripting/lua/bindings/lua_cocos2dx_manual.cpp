@@ -547,6 +547,7 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
     auto touchListenerOneByOne = static_cast<EventListenerTouchOneByOne*>(dict->objectForKey("touchListenerOneByOne"));
     auto touchMode = static_cast<Integer*>(dict->objectForKey("touchMode"));
     auto swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+    auto priority  = static_cast<Integer*>(dict->objectForKey("priority"));
     
     auto dispatcher = layer->getEventDispatcher();
     if (nullptr != dispatcher)
@@ -573,7 +574,14 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
                 executeScriptTouchesHandler(layer, EventTouch::EventCode::CANCELLED, touches);
             };
             
-            dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+            if (nullptr != priority && 0 != priority->getValue())
+            {
+                dispatcher->addEventListenerWithFixedPriority(listener, priority->getValue());
+            }
+            else
+            {
+                dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+            }
             
             dict->setObject(listener, "touchListenerAllAtOnce");
         }
@@ -594,7 +602,14 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
                 executeScriptTouchHandler(layer, EventTouch::EventCode::CANCELLED, touch);
             };
             
-            dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+            if (nullptr != priority && 0 != priority->getValue())
+            {
+                dispatcher->addEventListenerWithFixedPriority(listener, priority->getValue());
+            }
+            else
+            {
+                dispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+            }
             
             dict->setObject(listener, "touchListenerOneByOne");
         }
@@ -1249,7 +1264,6 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         bool isMultiTouches  = false;
-        //Note:priority is useless
         int  priority        = 0;
         bool swallowTouches  = true;
         
@@ -1291,14 +1305,27 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
             self->setUserObject(dict);
         }
         
-        auto touchModeobj = static_cast<Integer*>(dict->objectForKey("touchMode"));
+        auto touchModeValue = static_cast<Integer*>(dict->objectForKey("touchMode"));
         auto swallowTouchesValue = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+        auto priorityValue = static_cast<Integer*>(dict->objectForKey("priority"));
         
         //touch model
-        int32_t mode = touchModeobj?touchModeobj->getValue() : 0;
+        int32_t mode = touchModeValue?touchModeValue->getValue() : 0;
         if (mode != (int)touchesMode)
         {
             dict->setObject(Integer::create((int)touchesMode), "touchMode");
+            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            if (enabled && enabled->getValue())
+            {
+                setTouchEnabledForLayer(self, false);
+                setTouchEnabledForLayer(self, true);
+            }
+        }
+        
+        int oldPriorityValue = priorityValue?priorityValue->getValue() : 0;
+        if (priority != oldPriorityValue)
+        {
+            dict->setObject(Integer::create(priority), "priority");
             Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
             if (enabled && enabled->getValue())
             {
