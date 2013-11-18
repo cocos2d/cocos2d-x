@@ -333,6 +333,14 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
 #endif
 }
 
+
+
+bool CCTextureCache::isAsyncLoading()
+{
+	return s_nAsyncRefCount != 0;
+}
+
+
 void CCTextureCache::addImageAsyncCallBack(float dt)
 {
     // the image is generated in loading thread

@@ -113,6 +113,12 @@ public:
     
     void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
 
+    /* Returns whether there are active background image loading processes.
+    * @since v2.2.1
+    * @lua NA
+    */
+	bool isAsyncLoading();
+
     /* Returns a Texture2D object given an CGImageRef image
     * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
     * Otherwise it will return a reference of a previously loaded image
