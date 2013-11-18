@@ -163,6 +163,11 @@ void BatchNode::visit()
 
 void BatchNode::draw()
 {
+    if (_children == nullptr)
+    {
+        return;
+    }
+
     CC_NODE_DRAW_SETUP();
 
     for(auto object : *_children)

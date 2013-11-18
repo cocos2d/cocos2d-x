@@ -622,9 +622,9 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
     
     Array *actions = Array::create();
     Array *keyframes = channel->getKeyframes();
-    int numKeyframes = keyframes->count();
+    long numKeyframes = keyframes->count();
 
-    for (int i = 0; i < numKeyframes; ++i)
+    for (long i = 0; i < numKeyframes; ++i)
     {
 
         CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->getObjectAtIndex(i);
@@ -640,10 +640,14 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
 	
         if(_jsControlled) {
             String* callbackName = String::createWithFormat("%d:%s", selectorTarget, selectorName.c_str());
-            CallFunc *callback = ((CallFunc*)(_keyframeCallFuncs->objectForKey(callbackName->getCString())))->clone();
-
-            if(callback != NULL) {
-                actions->addObject(callback);
+            Object* callback = _keyframeCallFuncs->objectForKey(callbackName->getCString());
+            if (nullptr != callback)
+            {
+                CallFunc *callbackClone = (static_cast<CallFunc*>(callback))->clone();
+    
+                if(callbackClone != NULL) {
+                    actions->addObject(callbackClone);
+                }
             }
         }
         else
@@ -674,6 +678,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                     }
                     else
                     {
+                        // XXX: how to fix this warning?
                         CallFuncN *callback = CallFuncN::create(target, selCallFunc);
                         actions->addObject(callback);
                     }

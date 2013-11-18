@@ -11,15 +11,18 @@
 class PhysicsTestScene : public TestScene
 {
 public:
-    CREATE_FUNC(PhysicsTestScene);
-
-    virtual bool initTest() override;
+    PhysicsTestScene()
+    :TestScene(false, true)
+    , _debugDraw(false)
+    {}
+    
+public:
     virtual void runThisTest();
     
     void toggleDebug();
     
 private:
-    static bool _debugDraw;
+    bool _debugDraw;
 };
 
 class PhysicsDemo : public BaseTest
@@ -77,10 +80,10 @@ public:
     std::string title() override;
 };
 
-class PhysicsDemoPlink : public PhysicsDemo
+class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoPlink);
+    CREATE_FUNC(PhysicsDemoPyramidStack);
 
     void onEnter() override;
     std::string title() override;

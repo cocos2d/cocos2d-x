@@ -282,6 +282,11 @@ void LuaStack::pushFloat(float floatValue)
     lua_pushnumber(_state, floatValue);
 }
 
+void LuaStack::pushLong(long longValue)
+{
+    lua_pushnumber(_state, longValue);
+}
+
 void LuaStack::pushBoolean(bool boolValue)
 {
     lua_pushboolean(_state, boolValue);

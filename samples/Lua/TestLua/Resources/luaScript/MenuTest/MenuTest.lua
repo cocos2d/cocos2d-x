@@ -546,15 +546,15 @@ local function BugsTest()
     local ret = cc.Layer:create()
     local function issue1410MenuCallback(tag, pSender)
         local menu = tolua.cast(pSender:getParent(), "Menu")
-        menu:setTouchEnabled(false)
-        menu:setTouchEnabled(true)
+        menu:setEnabled(false)
+        menu:setEnabled(true)
         cclog("NO CRASHES")
     end
 
     local function issue1410v2MenuCallback(tag, pSender)
         local menu = tolua.cast(pSender:getParent(), "Menu")
-        menu:setTouchEnabled(true)
-        menu:setTouchEnabled(false)
+        menu:setEnabled(true)
+        menu:setEnabled(false)
         cclog("NO CRASHES. AND MENU SHOULD STOP WORKING")
     end
 

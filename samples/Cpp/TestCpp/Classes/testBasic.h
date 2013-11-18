@@ -11,8 +11,7 @@ using namespace std;
 class TestScene : public Scene
 {
 public: 
-    TestScene(bool bPortrait = false);
-    virtual bool initTest();
+    TestScene(bool bPortrait = false, bool physics = false);
     virtual void onEnter();
 
     virtual void runThisTest() = 0;
