@@ -106,7 +106,7 @@ public:
      * @param idx the index of a cell to get a size
      * @return size of a cell at given index
      */
-    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx) {
+    virtual Size tableCellSizeForIndex(TableView *table, long idx) {
         return cellSizeForTable(table);
     };
     /**
@@ -124,13 +124,13 @@ public:
      * @param idx index to search for a cell
      * @return cell found at idx
      */
-    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx) = 0;
+    virtual TableViewCell* tableCellAtIndex(TableView *table, long idx) = 0;
     /**
      * Returns number of cells in a given table view.
      *
      * @return number of cells
      */
-    virtual unsigned int numberOfCellsInTableView(TableView *table) = 0;
+    virtual long numberOfCellsInTableView(TableView *table) = 0;
 
 };
 
@@ -229,19 +229,19 @@ public:
      *
      * @param idx index to find a cell
      */
-    void updateCellAtIndex(unsigned int idx);
+    void updateCellAtIndex(long idx);
     /**
      * Inserts a new cell at a given index
      *
      * @param idx location to insert
      */
-    void insertCellAtIndex(unsigned int idx);
+    void insertCellAtIndex(long idx);
     /**
      * Removes a cell at a given index
      *
      * @param idx index to find a cell
      */
-    void removeCellAtIndex(unsigned int idx);
+    void removeCellAtIndex(long idx);
     /**
      * reloads data from data source.  the view will be refreshed.
      */
@@ -259,7 +259,7 @@ public:
      * @param idx index
      * @return a cell at a given index
      */
-    TableViewCell *cellAtIndex(unsigned int idx);
+    TableViewCell *cellAtIndex(long idx);
 
     // Overrides
     virtual void scrollViewDidScroll(ScrollView* view) override;
@@ -280,7 +280,7 @@ protected:
     /**
      * index set to query the indexes of the cells used.
      */
-    std::set<unsigned int>* _indices;
+    std::set<long>* _indices;
 
     /**
      * vector with all cell positions
@@ -306,13 +306,13 @@ protected:
 
 	Direction _oldDirection;
 
-    int __indexFromOffset(Point offset);
-    unsigned int _indexFromOffset(Point offset);
-    Point __offsetFromIndex(unsigned int index);
-    Point _offsetFromIndex(unsigned int index);
+    long __indexFromOffset(Point offset);
+    long _indexFromOffset(Point offset);
+    Point __offsetFromIndex(long index);
+    Point _offsetFromIndex(long index);
 
     void _moveCellOutOfSight(TableViewCell *cell);
-    void _setIndexForCell(unsigned int index, TableViewCell *cell);
+    void _setIndexForCell(long index, TableViewCell *cell);
     void _addCellIfNecessary(TableViewCell * cell);
 
     void _updateCellPositions();
