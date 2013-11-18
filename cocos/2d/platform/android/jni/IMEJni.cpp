@@ -43,7 +43,7 @@ extern "C" {
     void openKeyboardJNI() {
         JniMethodInfo t;
 
-        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "openIMEKeyboard", "()V")) {
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "openIMEKeyboard", "()V")) {
             t.env->CallStaticVoidMethod(t.classID, t.methodID);
             t.env->DeleteLocalRef(t.classID);
         }
@@ -52,9 +52,29 @@ extern "C" {
     void closeKeyboardJNI() {
         JniMethodInfo t;
 
-        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "closeIMEKeyboard", "()V")) {
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "closeIMEKeyboard", "()V")) {
             t.env->CallStaticVoidMethod(t.classID, t.methodID);
             t.env->DeleteLocalRef(t.classID);
         }
+    }
+
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxTextInputWraper_nativeInsertText(JNIEnv* env, jobject thiz, jstring text) {
+        const char*  tmpText = env->GetStringUTFChars(text, nullptr);
+        cocos2d::IMEDispatcher::sharedDispatcher()->dispatchInsertText(tmpText, strlen(tmpText));
+        env->ReleaseStringUTFChars(text, tmpText);
+    }
+
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxTextInputWraper_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
+        cocos2d::IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+    }
+
+    JNIEXPORT jstring JNICALL Java_org_cocos2dx_lib_Cocos2dxEditText_nativeGetContent() {
+        JNIEnv * env = 0;
+
+        if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
+            return 0;
+        }
+        const char * text = cocos2d::IMEDispatcher::sharedDispatcher()->getContentText();
+        return env->NewStringUTF(text);
     }
 }
