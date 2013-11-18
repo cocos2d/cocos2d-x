@@ -72,7 +72,11 @@ NewClippingNode::NewClippingNode()
     currentStencilFail = GL_KEEP;
     currentStencilPassDepthFail = GL_KEEP;
     currentStencilPassDepthPass = GL_KEEP;
-    GLboolean currentDepthWriteMask = GL_TRUE;
+    currentDepthWriteMask = GL_TRUE;
+
+    currentAlphaTestEnabled = GL_FALSE;
+    currentAlphaTestFunc = GL_ALWAYS;
+    currentAlphaTestRef = 1;
 }
 
 void NewClippingNode::visit()
@@ -104,11 +108,6 @@ void NewClippingNode::visit()
 
 void NewClippingNode::beforeVisit()
 {
-    // store the current stencil layer (position in the stencil buffer),
-    // this will allow nesting up to n ClippingNode,
-    // where n is the number of bits of the stencil buffer.
-    static GLint layer = -1;
-
     ///////////////////////////////////
     // INIT
 
@@ -182,22 +181,60 @@ void NewClippingNode::beforeVisit()
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(!_inverted ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP);
 
-    // since glAlphaTest do not exists in OES, use a shader that writes
-    // pixel only if greater than an alpha threshold
-    GLProgram *program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
-    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-    // set our alphaThreshold
-    program->use();
-    program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    // we need to recursively apply this shader to all the nodes in the stencil node
-    // XXX: we should have a way to apply shader to all nodes without having to do this
-    setProgram(_stencil, program);
+    // enable alpha test only if the alpha threshold < 1,
+    // indeed if alpha threshold == 1, every pixel will be drawn anyways
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+//    GLboolean currentAlphaTestEnabled = GL_FALSE;
+//    GLenum currentAlphaTestFunc = GL_ALWAYS;
+//    GLclampf currentAlphaTestRef = 1;
+#endif
+    if (_alphaThreshold < 1) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+        // manually save the alpha test state
+        currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
+        glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&currentAlphaTestFunc);
+        glGetFloatv(GL_ALPHA_TEST_REF, &currentAlphaTestRef);
+        // enable alpha testing
+        glEnable(GL_ALPHA_TEST);
+        // check for OpenGL error while enabling alpha test
+        CHECK_GL_ERROR_DEBUG();
+        // pixel will be drawn only if greater than an alpha threshold
+        glAlphaFunc(GL_GREATER, _alphaThreshold);
+#else
+        // since glAlphaTest do not exists in OES, use a shader that writes
+        // pixel only if greater than an alpha threshold
+        GLProgram *program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+        // set our alphaThreshold
+        program->use();
+        program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
+        // we need to recursively apply this shader to all the nodes in the stencil node
+        // XXX: we should have a way to apply shader to all nodes without having to do this
+        setProgram(_stencil, program);
+
+#endif
+    }
 
     //Draw _stencil
 }
 
 void NewClippingNode::afterDrawStencil()
 {
+    // restore alpha test state
+    if (_alphaThreshold < 1)
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+        // manually restore the alpha test state
+        glAlphaFunc(currentAlphaTestFunc, currentAlphaTestRef);
+        if (!currentAlphaTestEnabled)
+        {
+            glDisable(GL_ALPHA_TEST);
+        }
+#else
+// XXX: we need to find a way to restore the shaders of the stencil node and its childs
+#endif
+    }
+
     // restore the depth test state
     glDepthMask(currentDepthWriteMask);
     //if (currentDepthTestEnabled) {
