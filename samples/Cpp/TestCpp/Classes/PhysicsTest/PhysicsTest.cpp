@@ -368,26 +368,25 @@ bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
     auto location = touch->getLocation();
     Array* arr = _scene->getPhysicsWorld()->getShapes(location);
     
-    PhysicsShape* shape = nullptr;
+    PhysicsBody* body = nullptr;
     for (Object* obj : *arr)
     {
-        shape = dynamic_cast<PhysicsShape*>(obj);
-        
-        if ((shape->getTag() & DRAG_BODYS_TAG) != 0)
+        if ((dynamic_cast<PhysicsShape*>(obj)->getBody()->getTag() & DRAG_BODYS_TAG) != 0)
         {
+            body = dynamic_cast<PhysicsShape*>(obj)->getBody();
             break;
         }
     }
     
-    if (shape != nullptr)
+    if (body != nullptr)
     {
         Node* mouse = Node::create();
         mouse->setPhysicsBody(PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY));
         mouse->getPhysicsBody()->setDynamic(false);
         mouse->setPosition(location);
         this->addChild(mouse);
-        PhysicsJointPin* joint = PhysicsJointPin::construct(mouse->getPhysicsBody(), shape->getBody(), location);
-        joint->setMaxForce(5000.0f * shape->getBody()->getMass());
+        PhysicsJointPin* joint = PhysicsJointPin::construct(mouse->getPhysicsBody(), body, location);
+        joint->setMaxForce(5000.0f * body->getMass());
         _scene->getPhysicsWorld()->addJoint(joint);
         _mouses.insert(std::make_pair(touch->getID(), mouse));
         
