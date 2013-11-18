@@ -130,7 +130,7 @@ float PhysicsContactPreSolve::getElasticity() const
     return static_cast<cpArbiter*>(_contactInfo)->e;
 }
 
-float PhysicsContactPreSolve::getFriciton() const
+float PhysicsContactPreSolve::getFriction() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->u;
 }
@@ -177,7 +177,7 @@ float PhysicsContactPostSolve::getElasticity() const
     return static_cast<cpArbiter*>(_contactInfo)->e;
 }
 
-float PhysicsContactPostSolve::getFriciton() const
+float PhysicsContactPostSolve::getFriction() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->u;
 }
@@ -216,7 +216,7 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             bool ret = true;
             
             if (onContactBegin != nullptr
-                && test(contact.getShapeA(), contact.getShapeB()))
+                && hitTest(contact.getShapeA(), contact.getShapeB()))
             {
                 contact._begin = true;
                 contact.generateContactData();
@@ -240,7 +240,7 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             bool ret = true;
             
             if (onContactPreSolve != nullptr
-                && test(contact.getShapeA(), contact.getShapeB()))
+                && hitTest(contact.getShapeA(), contact.getShapeB()))
             {
                 PhysicsContactPreSolve solve(contact._begin ? nullptr : contact._contactData, contact._contactInfo);
                 contact._begin = false;
@@ -255,7 +255,7 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
         case PhysicsContact::EventCode::POSTSOLVE:
         {
             if (onContactPostSolve != nullptr
-                && test(contact.getShapeA(), contact.getShapeB()))
+                && hitTest(contact.getShapeA(), contact.getShapeB()))
             {
                 PhysicsContactPostSolve solve(contact._contactInfo);
                 onContactPostSolve(event, contact, solve);
@@ -265,7 +265,7 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
         case PhysicsContact::EventCode::SEPERATE:
         {
             if (onContactSeperate != nullptr
-                && test(contact.getShapeA(), contact.getShapeB()))
+                && hitTest(contact.getShapeA(), contact.getShapeB()))
             {
                 onContactSeperate(event, contact);
             }
@@ -295,7 +295,7 @@ EventListenerPhysicsContact* EventListenerPhysicsContact::create()
     return nullptr;
 }
 
-bool EventListenerPhysicsContact::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+bool EventListenerPhysicsContact::hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB)
 {
     CC_UNUSED_PARAM(shapeA);
     CC_UNUSED_PARAM(shapeB);
@@ -361,7 +361,7 @@ EventListenerPhysicsContactWithBodies::~EventListenerPhysicsContactWithBodies()
 }
 
 
-bool EventListenerPhysicsContactWithBodies::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+bool EventListenerPhysicsContactWithBodies::hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB)
 {
     if ((shapeA->getBody() == _a && shapeB->getBody() == _b)
         || (shapeA->getBody() == _b && shapeB->getBody() == _a))
@@ -416,7 +416,7 @@ EventListenerPhysicsContactWithShapes* EventListenerPhysicsContactWithShapes::cr
     return nullptr;
 }
 
-bool EventListenerPhysicsContactWithShapes::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+bool EventListenerPhysicsContactWithShapes::hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB)
 {
     if ((shapeA == _a && shapeB == _b)
         || (shapeA == _b && shapeB == _a))
@@ -469,7 +469,7 @@ EventListenerPhysicsContactWithGroup* EventListenerPhysicsContactWithGroup::crea
     return nullptr;
 }
 
-bool EventListenerPhysicsContactWithGroup::test(PhysicsShape* shapeA, PhysicsShape* shapeB)
+bool EventListenerPhysicsContactWithGroup::hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB)
 {
     if (shapeA->getGroup() == _group || shapeB->getGroup() == _group)
     {

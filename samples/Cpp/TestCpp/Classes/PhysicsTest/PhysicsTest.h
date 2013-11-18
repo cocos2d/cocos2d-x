@@ -71,7 +71,7 @@ public:
     std::string title() override;
 };
 
-class PhysicsDemoPlink : public PhysicsDemo
+class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
     void onEnter() override;
