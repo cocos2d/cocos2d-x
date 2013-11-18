@@ -11,7 +11,9 @@
 class PhysicsTestScene : public TestScene
 {
 public:
-    virtual bool initTest() override;
+    PhysicsTestScene():TestScene(false, true){}
+    
+public:
     virtual void runThisTest();
     
     void toggleDebug();

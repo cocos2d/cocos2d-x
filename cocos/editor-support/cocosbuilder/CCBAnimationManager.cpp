@@ -674,6 +674,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                     }
                     else
                     {
+                        // XXX: how to fix this warning?
                         CallFuncN *callback = CallFuncN::create(target, selCallFunc);
                         actions->addObject(callback);
                     }
