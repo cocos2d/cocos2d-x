@@ -691,7 +691,7 @@ int register_cocos2dx_extension_CCBProxy(lua_State* tolua_S)
     tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     
-    uint32_t typeId = typeid(CCBProxy).hash_code();
+    long typeId = typeid(CCBProxy).hash_code();
     g_luaType[typeId] = "CCBProxy";
     return 1;
 }
