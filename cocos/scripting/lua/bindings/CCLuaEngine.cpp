@@ -763,14 +763,14 @@ int LuaEngine::handleTableViewEventReturnArray(void* data,int numResults,Array& 
         case ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX:
             {
                 _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
-                _stack->pushInt(*((int*)tableViewEventData->value));
+                _stack->pushLong(*((long*)tableViewEventData->value));
                 ret = _stack->executeFunctionReturnArray(handler, 2, 2, resultArray);
             }
             break;
         case ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX:
             {
                 _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
-                _stack->pushInt(*((int*)tableViewEventData->value));
+                _stack->pushLong(*((long*)tableViewEventData->value));
                 ret = _stack->executeFunctionReturnArray(handler, 2, 1, resultArray);
             }
             break;
