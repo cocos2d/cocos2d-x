@@ -69,7 +69,7 @@ bool PhysicsTestScene::initTest()
     {
         if (_debugDraw)
         {
-            getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PHYSICS_DEBUGDRAW_ALL : PHYSICS_DEBUGDRAW_NONE);
+            getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE);
         }
         return true;
     }
@@ -94,7 +94,7 @@ void PhysicsTestScene::runThisTest()
 void PhysicsTestScene::toggleDebug()
 {
     _debugDraw = !_debugDraw;
-    getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PHYSICS_DEBUGDRAW_ALL : PHYSICS_DEBUGDRAW_NONE);
+    getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE);
 }
 
 PhysicsDemo::PhysicsDemo()
