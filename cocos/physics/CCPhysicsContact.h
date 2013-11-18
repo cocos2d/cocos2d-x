@@ -85,7 +85,7 @@ public:
     EventCode getEventCode() const { return _eventCode; };
     
 private:
-    static PhysicsContact* create(PhysicsShape* a, PhysicsShape* b);
+    static PhysicsContact* construct(PhysicsShape* a, PhysicsShape* b);
     bool init(PhysicsShape* a, PhysicsShape* b);
     
     void setEventCode(EventCode eventCode) { _eventCode = eventCode; };
