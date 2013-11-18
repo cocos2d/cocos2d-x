@@ -207,7 +207,7 @@ void ActionObject::simulationActionUpdate(float dt)
 			this->play();
 		}
 
-		CCLOG("ActionObject Update");
+		//CCLOG("ActionObject Update");
 	}
 }
 }

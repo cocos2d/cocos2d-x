@@ -59,9 +59,6 @@ namespace
     static const int DRAG_BODYS_TAG = 0x80;
 }
 
-
-bool PhysicsTestScene::_debugDraw = false;
-
 void PhysicsTestScene::runThisTest()
 {
 #ifdef CC_USE_PHYSICS
@@ -371,26 +368,25 @@ bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
     auto location = touch->getLocation();
     Array* arr = _scene->getPhysicsWorld()->getShapes(location);
     
-    PhysicsShape* shape = nullptr;
+    PhysicsBody* body = nullptr;
     for (Object* obj : *arr)
     {
-        shape = dynamic_cast<PhysicsShape*>(obj);
-        
-        if ((shape->getTag() & DRAG_BODYS_TAG) != 0)
+        if ((dynamic_cast<PhysicsShape*>(obj)->getBody()->getTag() & DRAG_BODYS_TAG) != 0)
         {
+            body = dynamic_cast<PhysicsShape*>(obj)->getBody();
             break;
         }
     }
     
-    if (shape != nullptr)
+    if (body != nullptr)
     {
         Node* mouse = Node::create();
         mouse->setPhysicsBody(PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY));
         mouse->getPhysicsBody()->setDynamic(false);
         mouse->setPosition(location);
         this->addChild(mouse);
-        PhysicsJointPin* joint = PhysicsJointPin::construct(mouse->getPhysicsBody(), shape->getBody(), location);
-        joint->setMaxForce(5000.0f * shape->getBody()->getMass());
+        PhysicsJointPin* joint = PhysicsJointPin::construct(mouse->getPhysicsBody(), body, location);
+        joint->setMaxForce(5000.0f * body->getMass());
         _scene->getPhysicsWorld()->addJoint(joint);
         _mouses.insert(std::make_pair(touch->getID(), mouse));
         
@@ -678,6 +674,7 @@ std::string PhysicsDemoRayCast::title()
 void PhysicsDemoJoints::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->toggleDebug();
     
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoJoints::onTouchBegan, this);
@@ -820,6 +817,7 @@ std::string PhysicsDemoActions::title()
 void PhysicsDemoPump::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->toggleDebug();
     
     _distance = 0.0f;
     _rotationV = 0.0f;
@@ -977,7 +975,7 @@ std::string PhysicsDemoPump::title()
 
 std::string PhysicsDemoPump::subtitle()
 {
-    return "open debug to see it";
+    return "touch screen on left or right";
 }
 
 void PhysicsDemoOneWayPlatform::onEnter()
@@ -1022,6 +1020,7 @@ std::string PhysicsDemoOneWayPlatform::title()
 void PhysicsDemoSlice::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->toggleDebug();
     
     _sliceTag = 1;
     
@@ -1120,5 +1119,5 @@ std::string PhysicsDemoSlice::title()
 
 std::string PhysicsDemoSlice::subtitle()
 {
-    return "click and drag to slice up the block, open debug to see it";
+    return "click and drag to slice up the block";
 }

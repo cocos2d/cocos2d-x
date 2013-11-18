@@ -120,7 +120,7 @@ int PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSp
     auto itb = PhysicsShapeInfo::getMap().find(b);
     CC_ASSERT(ita != PhysicsShapeInfo::getMap().end() && itb != PhysicsShapeInfo::getMap().end());
     
-    PhysicsContact* contact = PhysicsContact::create(ita->second->getShape(), itb->second->getShape());
+    PhysicsContact* contact = PhysicsContact::construct(ita->second->getShape(), itb->second->getShape());
     arb->data = contact;
     contact->_contactInfo = arb;
     
