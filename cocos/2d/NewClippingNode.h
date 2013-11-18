@@ -21,7 +21,7 @@ public:
 
     virtual ~NewClippingNode();
 
-    void visit();
+    virtual void visit() override;
 
 protected:
     NewClippingNode();
@@ -40,6 +40,10 @@ protected:
     GLenum currentStencilPassDepthFail;
     GLenum currentStencilPassDepthPass;
     GLboolean currentDepthWriteMask;
+
+    GLboolean currentAlphaTestEnabled;
+    GLenum currentAlphaTestFunc;
+    GLclampf currentAlphaTestRef;
 
     GLint mask_layer_le;
 };

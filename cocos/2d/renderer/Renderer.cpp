@@ -171,7 +171,7 @@ void Renderer::render()
                 {
                     memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
                     _numQuads += cmd->getQuadCount();
-                    _renderStack.top().currentIndex = _lastCommand = i;
+                    _lastCommand = i;
                 }
                 else
                 {
@@ -202,11 +202,15 @@ void Renderer::render()
             {
                 flush();
             }
+
+            _renderStack.top().currentIndex = i;
         }
 
         //Draw the batched quads
         drawBatchedQuads();
 
+        currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
+        len = currRenderQueue.size();
         //If pop the render stack if we already processed all the commands
         if(_renderStack.top().currentIndex + 1 >= len)
         {

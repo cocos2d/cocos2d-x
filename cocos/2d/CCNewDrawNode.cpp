@@ -4,6 +4,7 @@
 
 
 #include "CCNewDrawNode.h"
+#include "QuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -39,7 +40,9 @@ bool NewDrawNode::init()
 
 void NewDrawNode::draw()
 {
+    updateTransform();
 
+//    QuadCommand* quadCommand = new QuadCommand(0, _vertexZ, 0, _shaderProgram, _blendFunc, )
 }
 
 NS_CC_END
