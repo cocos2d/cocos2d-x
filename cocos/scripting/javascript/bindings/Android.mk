@@ -38,3 +38,4 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,spidermonkey/prebuilt/android)
 $(call import-module,2d)
+$(call import-module,audio/android)
