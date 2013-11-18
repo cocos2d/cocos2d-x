@@ -59,9 +59,6 @@ namespace
     static const int DRAG_BODYS_TAG = 0x80;
 }
 
-
-bool PhysicsTestScene::_debugDraw = false;
-
 void PhysicsTestScene::runThisTest()
 {
 #ifdef CC_USE_PHYSICS
@@ -678,6 +675,7 @@ std::string PhysicsDemoRayCast::title()
 void PhysicsDemoJoints::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->toggleDebug();
     
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoJoints::onTouchBegan, this);
@@ -820,6 +818,7 @@ std::string PhysicsDemoActions::title()
 void PhysicsDemoPump::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->toggleDebug();
     
     _distance = 0.0f;
     _rotationV = 0.0f;
@@ -977,7 +976,7 @@ std::string PhysicsDemoPump::title()
 
 std::string PhysicsDemoPump::subtitle()
 {
-    return "open debug to see it";
+    return "touch screen on left or right";
 }
 
 void PhysicsDemoOneWayPlatform::onEnter()
@@ -1022,6 +1021,7 @@ std::string PhysicsDemoOneWayPlatform::title()
 void PhysicsDemoSlice::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->toggleDebug();
     
     _sliceTag = 1;
     
@@ -1120,5 +1120,5 @@ std::string PhysicsDemoSlice::title()
 
 std::string PhysicsDemoSlice::subtitle()
 {
-    return "click and drag to slice up the block, open debug to see it";
+    return "click and drag to slice up the block";
 }
