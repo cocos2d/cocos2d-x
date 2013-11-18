@@ -144,6 +144,7 @@ protected:
     friend class PhysicsWorld;
     friend class PhysicsBody;
     friend class PhysicsJoint;
+    friend class PhysicsDebugDraw;
 };
 
 /** A circle shape */

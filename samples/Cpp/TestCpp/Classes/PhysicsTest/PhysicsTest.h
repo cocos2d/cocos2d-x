@@ -11,7 +11,9 @@
 class PhysicsTestScene : public TestScene
 {
 public:
-    virtual bool initTest() override;
+    PhysicsTestScene():TestScene(false, true){}
+    
+public:
     virtual void runThisTest();
     
     void toggleDebug();
@@ -69,7 +71,7 @@ public:
     std::string title() override;
 };
 
-class PhysicsDemoPlink : public PhysicsDemo
+class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
     void onEnter() override;

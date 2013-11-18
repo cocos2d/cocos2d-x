@@ -130,16 +130,6 @@ PhysicsJointFixed::~PhysicsJointFixed()
     
 }
 
-PhysicsJointSliding::PhysicsJointSliding()
-{
-    
-}
-
-PhysicsJointSliding::~PhysicsJointSliding()
-{
-    
-}
-
 PhysicsJointLimit::PhysicsJointLimit()
 {
     
@@ -296,41 +286,6 @@ float PhysicsJointPin::getMaxForce() const
     return PhysicsHelper::cpfloat2float(_info->getJoints().front()->maxForce);
 }
 
-PhysicsJointSliding* PhysicsJointSliding::construct(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr)
-{
-    PhysicsJointSliding* joint = new PhysicsJointSliding();
-    
-    if (joint && joint->init(a, b, grooveA, grooveB, anchr))
-    {
-        return joint;
-    }
-    
-    CC_SAFE_DELETE(joint);
-    return nullptr;
-}
-
-bool PhysicsJointSliding::init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr)
-{
-    do
-    {
-        CC_BREAK_IF(!PhysicsJoint::init(a, b));
-        
-        cpConstraint* joint = cpGrooveJointNew(getBodyInfo(a)->getBody(), getBodyInfo(b)->getBody(),
-                                       PhysicsHelper::point2cpv(grooveA),
-                                       PhysicsHelper::point2cpv(grooveB),
-                                       PhysicsHelper::point2cpv(anchr));
-        
-        CC_BREAK_IF(joint == nullptr);
-        
-        _info->add(joint);
-        
-        return true;
-    } while (false);
-    
-    return false;
-}
-
-
 PhysicsJointLimit* PhysicsJointLimit::construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
 {
     PhysicsJointLimit* joint = new PhysicsJointLimit();
@@ -354,7 +309,7 @@ bool PhysicsJointLimit::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1
                                        PhysicsHelper::point2cpv(anchr1),
                                        PhysicsHelper::point2cpv(anchr2),
                                        0,
-                                       PhysicsHelper::float2cpfloat(anchr1.getDistance(anchr2)));
+                                       PhysicsHelper::float2cpfloat(_bodyA->local2World(anchr1).getDistance(_bodyB->local2World(anchr2))));
         
         CC_BREAK_IF(joint == nullptr);
         
@@ -407,7 +362,8 @@ bool PhysicsJointDistance::init(PhysicsBody* a, PhysicsBody* b, const Point& anc
         
         cpConstraint* joint = cpPinJointNew(getBodyInfo(a)->getBody(),
                                             getBodyInfo(b)->getBody(),
-                                            PhysicsHelper::point2cpv(anchr1), PhysicsHelper::point2cpv(anchr2));
+                                            PhysicsHelper::point2cpv(anchr1),
+                                            PhysicsHelper::point2cpv(anchr2));
         
         CC_BREAK_IF(joint == nullptr);
         
