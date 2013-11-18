@@ -113,7 +113,7 @@ public:
     /** Applies a immediate force to body. */
     virtual void applyForce(const Vect& force, const Point& offset);
     /** reset all the force applied to body. */
-    virtual void resetForce();
+    virtual void resetForces();
     /** Applies a continuous force to body. */
     virtual void applyImpulse(const Vect& impulse);
     /** Applies a continuous force to body. */
