@@ -11,7 +11,10 @@
 class PhysicsTestScene : public TestScene
 {
 public:
-    PhysicsTestScene():TestScene(false, true){}
+    PhysicsTestScene()
+    :TestScene(false, true)
+    , _debugDraw(false)
+    {}
     
 public:
     virtual void runThisTest();
@@ -19,7 +22,7 @@ public:
     void toggleDebug();
     
 private:
-    static bool _debugDraw;
+    bool _debugDraw;
 };
 
 class PhysicsDemo : public BaseTest
