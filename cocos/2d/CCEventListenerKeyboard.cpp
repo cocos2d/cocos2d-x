@@ -31,7 +31,11 @@ NS_CC_BEGIN
 
 bool EventListenerKeyboard::checkAvailable()
 {
-    CCASSERT(onKeyPressed && onKeyReleased, "");
+    if (onKeyPressed == nullptr && onKeyReleased == nullptr)
+    {
+        CCASSERT(false, "Invalid EventListenerKeyboard!");
+        return false;
+    }
     
     return true;
 }
