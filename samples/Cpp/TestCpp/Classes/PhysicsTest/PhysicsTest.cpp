@@ -62,24 +62,6 @@ namespace
 
 bool PhysicsTestScene::_debugDraw = false;
 
-bool PhysicsTestScene::initTest()
-{
-#ifdef CC_USE_PHYSICS
-    if(TestScene::initWithPhysics())
-    {
-        if (_debugDraw)
-        {
-            getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE);
-        }
-        return true;
-    }
-#else
-    return TestScene::init();
-#endif
-    
-    return false;
-}
-
 void PhysicsTestScene::runThisTest()
 {
 #ifdef CC_USE_PHYSICS
@@ -122,7 +104,6 @@ std::string PhysicsDemo::subtitle()
 void PhysicsDemo::restartCallback(Object* sender)
 {
     auto s = new PhysicsTestScene();
-    s->initTest();
     s->addChild( restart() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -131,7 +112,6 @@ void PhysicsDemo::restartCallback(Object* sender)
 void PhysicsDemo::nextCallback(Object* sender)
 {
     auto s = new PhysicsTestScene();
-    s->initTest();
     s->addChild( next() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -140,7 +120,6 @@ void PhysicsDemo::nextCallback(Object* sender)
 void PhysicsDemo::backCallback(Object* sender)
 {
     auto s = new PhysicsTestScene();
-    s->initTest();
     s->addChild( back() );
     Director::getInstance()->replaceScene(s);
     s->release();

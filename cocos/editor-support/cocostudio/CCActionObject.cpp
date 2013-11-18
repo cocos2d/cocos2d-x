@@ -42,7 +42,7 @@ ActionObject::ActionObject()
 	_actionNodeList = Array::create();
 	_actionNodeList->retain();
 	_pScheduler = new Scheduler();
-	Director::sharedDirector()->getScheduler()->scheduleUpdateForTarget(_pScheduler, 0, false);
+	Director::getInstance()->getScheduler()->scheduleUpdateForTarget(_pScheduler, 0, false);
 }
 
 ActionObject::~ActionObject()
@@ -193,7 +193,7 @@ void ActionObject::simulationActionUpdate(float dt)
 
 		for ( int i = 0; i < nodeNum; i++ )
 		{
-			ActionNode* actionNode = (ActionNode*)_actionNodeList->objectAtIndex(i);
+			ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
 
 			if (actionNode->isActionDoneOnce() == false)
 			{

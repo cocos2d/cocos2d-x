@@ -51,8 +51,8 @@ public:
     // Overrides
     //
 	virtual ActionInstant* clone() const override = 0;
-    virtual ActionInstant * reverse(void) const override = 0;
-    virtual bool isDone(void) const override;
+    virtual ActionInstant * reverse() const override = 0;
+    virtual bool isDone() const override;
     virtual void step(float dt) override;
     virtual void update(float time) override;
 };
@@ -71,7 +71,7 @@ public:
     // Overrides
     //
     virtual void update(float time) override;
-    virtual ActionInstant* reverse(void) const override;
+    virtual ActionInstant* reverse() const override;
 	virtual Show* clone() const override;
 };
 
@@ -238,7 +238,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Object* pSelectorTarget, SEL_CallFunc selector);
+    CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Object* target, SEL_CallFunc selector);
 
 public:
     /**
@@ -260,7 +260,7 @@ public:
     typedef void (Object::*SEL_CallFunc)();
     @deprecated Use the std::function API instead.
     */
-    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget);
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* target);
 
 	/** initializes the action with the std::function<void()>
      * @js NK
@@ -276,13 +276,13 @@ public:
         return _selectorTarget;
     }
 
-    inline void setTargetCallback(Object* pSel)
+    inline void setTargetCallback(Object* sel)
     {
-        if (pSel != _selectorTarget)
+        if (sel != _selectorTarget)
         {
-            CC_SAFE_RETAIN(pSel);
+            CC_SAFE_RETAIN(sel);
             CC_SAFE_RELEASE(_selectorTarget);
-            _selectorTarget = pSel; 
+            _selectorTarget = sel;
         }
     }
     //
@@ -323,7 +323,7 @@ public:
     typedef void (Object::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
     */
-    CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Object* pSelectorTarget, SEL_CallFuncN selector);
+    CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Object* target, SEL_CallFuncN selector);
 public:
     CallFuncN():_functionN(nullptr){}
 
@@ -336,7 +336,7 @@ public:
     typedef void (Object::*SEL_CallFuncN)(Node*);
     @deprecated Use the std::function API instead.
     */
-    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* target, SEL_CallFuncN selector);
 
     //
     // Overrides
@@ -359,11 +359,11 @@ class CC_DLL  __CCCallFuncND : public CallFunc
 {
 public:
     /** creates the action with the callback and the data to pass as an argument */
-    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Object* target, SEL_CallFuncND selector, void* d);
     
 protected:
     /** initializes the action with the callback and the data to pass as an argument */
-    bool initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    bool initWithTarget(Object* target, SEL_CallFuncND selector, void* d);
     
 public:
     //
@@ -392,7 +392,7 @@ public:
      
      typedef void (Object::*SEL_CallFuncO)(Object*);
      */
-    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Object* target, SEL_CallFuncO selector, Object* object);
     /**
      * @js ctor
      */
@@ -408,7 +408,7 @@ protected:
      
      typedef void (Object::*SEL_CallFuncO)(Object*);
      */
-    bool initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    bool initWithTarget(Object* target, SEL_CallFuncO selector, Object* object);
     
 public:
     //
