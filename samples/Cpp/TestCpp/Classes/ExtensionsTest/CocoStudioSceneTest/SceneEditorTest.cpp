@@ -60,6 +60,8 @@ bool SceneEditorTestLayer::init()
 	return bRet;
 }
 
+static ActionObject* actionObject = nullptr;
+
 cocos2d::Node* SceneEditorTestLayer::createGameScene()
 {
     Node *pNode = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/FishJoy2.json");
@@ -79,12 +81,16 @@ cocos2d::Node* SceneEditorTestLayer::createGameScene()
     pNode->addChild(menuBack);
     
     //ui action
-	ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	actionObject = ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 
 void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 {
+	if (actionObject)
+	{
+		actionObject->stop();
+	}
     ComAudio *pBackMusic = (ComAudio*)(_curNode->getComponent("CCBackgroundAudio"));
     pBackMusic->stopBackgroundMusic();
 	ExtensionsTestScene *pScene = new ExtensionsTestScene();
