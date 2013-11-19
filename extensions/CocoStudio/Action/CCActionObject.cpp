@@ -40,8 +40,8 @@ NS_CC_EXT_BEGIN
 	m_ActionNodeList = CCArray::create();
 	m_ActionNodeList->retain();
 
-	m_pScheduler = new CCScheduler();
-	CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget(m_pScheduler, 0, false);
+	m_pScheduler = CCDirector::sharedDirector()->getScheduler();
+	CC_SAFE_RETAIN(m_pScheduler);
 }
 
 ActionObject::~ActionObject()
@@ -49,7 +49,7 @@ ActionObject::~ActionObject()
 	m_ActionNodeList->removeAllObjects();
 	m_ActionNodeList->release();
 
-	CC_SAFE_DELETE(m_pScheduler);
+	CC_SAFE_RELEASE(m_pScheduler);
 }
 
 void ActionObject::setName(const char* name)
