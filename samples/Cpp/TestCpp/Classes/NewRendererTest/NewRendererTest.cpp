@@ -20,6 +20,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NewSpriteTest),
     CL(NewSpriteBatchTest),
     CL(NewClippingNodeTest),
+    CL(NewDrawNodeTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -345,4 +346,42 @@ void NewClippingNodeTest::onTouchesEnded(const std::vector<Touch *> &touches, Ev
 {
     if (!_scrolling) return;
     _scrolling = false;
+}
+
+/**
+* NewDrawNode
+*/
+NewDrawNodeTest::NewDrawNodeTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto parent = Node::create();
+    parent->setPosition(s.width/2, s.height/2);
+    addChild(parent);
+
+    auto rectNode = NewDrawNode::create();
+    Point rectangle[4];
+    rectangle[0] = Point(-50, -50);
+    rectangle[1] = Point(50, -50);
+    rectangle[2] = Point(50, 50);
+    rectangle[3] = Point(-50, 50);
+
+    Color4F white(1, 1, 1, 1);
+    rectNode->drawPolygon(rectangle, 4, white, 1, white);
+    parent->addChild(rectNode);
+}
+
+NewDrawNodeTest::~NewDrawNodeTest()
+{
+
+}
+
+string NewDrawNodeTest::title()
+{
+    return "New Render";
+}
+
+string NewDrawNodeTest::subtitle()
+{
+    return "DrawNode";
 }
