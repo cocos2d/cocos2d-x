@@ -108,7 +108,6 @@ protected:
     long         _bufferCapacity;
     GLsizei     _bufferCount;
     V2F_C4B_T2F *_buffer;
-    V2F_C4B_T2F *_finalBuffer;
 
     BlendFunc   _blendFunc;
 

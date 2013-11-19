@@ -21,11 +21,14 @@ public:
 
     virtual bool init();
 
-    void updateTransform();
     void draw();
+
+    void onDraw();
 
 protected:
     NewDrawNode();
+
+    kmMat4 _matrixMV;
 };
 
 NS_CC_END

@@ -87,4 +87,17 @@ protected:
     Point _lastPoint;
 };
 
+class NewDrawNodeTest : public MultiSceneTest
+{
+public:
+    NewDrawNodeTest();
+    virtual ~NewDrawNodeTest();
+
+    virtual string title();
+    virtual string subtitle();
+
+protected:
+
+};
+
 #endif //__NewRendererTest_H_
