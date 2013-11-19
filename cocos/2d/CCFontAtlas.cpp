@@ -152,6 +152,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 
             if (_currentPageOrigX + glyphWidth > 1024)
             {
+                _currentPageOrigX = 0;
                 _currentPageOrigY += _currentPageLineHeight;
                 if(_currentPageOrigY >= 1024)
                 {             
