@@ -118,7 +118,6 @@ void CCSkeleton::update (float deltaTime) {
 
 void CCSkeleton::draw () {
 	CC_NODE_DRAW_SETUP();
-
 	GL::blendFunc(blendFunc.src, blendFunc.dst);
 	Color3B color = getColor();
 	skeleton->r = color.r / (float)255;
@@ -144,6 +143,14 @@ void CCSkeleton::draw () {
 		TextureAtlas* regionTextureAtlas = getTextureAtlas(attachment);
 		if (regionTextureAtlas != textureAtlas) {
 			if (textureAtlas) {
+                if(textureAtlas->getTexture() && textureAtlas->getTexture()->hasPremultipliedAlpha())
+                {
+                    GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
+                }
+                else
+                {
+                    GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
+                }
 				textureAtlas->drawQuads();
 				textureAtlas->removeAllQuads();
 			}
@@ -155,6 +162,14 @@ void CCSkeleton::draw () {
 		textureAtlas->updateQuad(&quad, textureAtlas->getTotalQuads());
 	}
 	if (textureAtlas) {
+        if(textureAtlas->getTexture() && textureAtlas->getTexture()->hasPremultipliedAlpha())
+        {
+            GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
+        }
+        else
+        {
+            GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
+        }
 		textureAtlas->drawQuads();
 		textureAtlas->removeAllQuads();
 	}
