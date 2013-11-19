@@ -475,7 +475,7 @@ float Tween::updateFrameData(float currentPercent)
      *  If frame tween easing equal to TWEEN_EASING_MAX, then it will not do tween.
      */
     TweenType tweenType = (_frameTweenEasing != Linear) ? _frameTweenEasing : _tweenEasing;
-    if (tweenType != TWEEN_EASING_MAX && tweenType != Linear)
+    if (tweenType != TWEEN_EASING_MAX && tweenType != Linear && !_passLastFrame)
     {
         currentPercent = TweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
     }
