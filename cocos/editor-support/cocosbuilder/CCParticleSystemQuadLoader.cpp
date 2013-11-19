@@ -127,6 +127,10 @@ void ParticleSystemQuadLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pP
 
 void ParticleSystemQuadLoader::onHandlePropTypeTexture(Node * pNode, Node * pParent, const char * pPropertyName, Texture2D * pTexture2D, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_TEXTURE) == 0) {
+        if(pTexture2D)
+        {
+            ((ParticleSystemQuad *)pNode)->setBlendAdditive(true);
+        }
         ((ParticleSystemQuad *)pNode)->setTexture(pTexture2D);
     } else {
         NodeLoader::onHandlePropTypeTexture(pNode, pParent, pPropertyName, pTexture2D, ccbReader);
