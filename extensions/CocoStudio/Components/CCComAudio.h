@@ -30,7 +30,6 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 /**
- *  @js NA
  *  @lua NA
  */
 class CCComAudio : public cocos2d::CCComponent

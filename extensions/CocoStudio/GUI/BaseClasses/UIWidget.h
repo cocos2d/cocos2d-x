@@ -85,19 +85,20 @@ typedef void (CCObject::*SEL_CancelEvent)(CCObject*);
 #define coco_cancelselector(_SELECTOR) (cocos2d::extension::SEL_CancelEvent)(&_SELECTOR)
 /************************/
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class UIWidget : public CCObject
 {
 public:    
     /**
      * Default constructor
+     * @js ctor
      */
     UIWidget(void);
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UIWidget();
     
@@ -911,6 +912,7 @@ public:
      * The UserObject will be released in CCNode's destructure.
      *
      * @param A user assigned CCObject
+     * @js NA
      */
     virtual void setUserObject(CCObject *pUserObject);
     
