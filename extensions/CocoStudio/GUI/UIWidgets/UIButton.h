@@ -29,19 +29,20 @@
 
 NS_CC_EXT_BEGIN
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class UIButton : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UIButton();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UIButton();
     

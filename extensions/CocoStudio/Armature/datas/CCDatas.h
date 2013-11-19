@@ -58,16 +58,21 @@ public: \
 NS_CC_EXT_BEGIN
 
 /**
-* The base node include a lot of attributes.
-* @js NA
-* @lua NA
-*/
+ * The base node include a lot of attributes.
+ * @lua NA
+ */
 class  CCBaseData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCBaseData)
 public:
+    /**
+     *  @js ctor
+     */
     CCBaseData();
+    /**
+     *  @js NA
+     */
     ~CCBaseData(void);
 
     /*

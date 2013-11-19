@@ -32,15 +32,26 @@ NS_CC_EXT_BEGIN
 
 #define kCCSVersion 1.0
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class GUIReader : public CCObject
 {
 public:
+    /**
+     *  @js ctor
+     */
     GUIReader();
+    /**
+     *  @js NA
+     */
     ~GUIReader();
+    /**
+     *  @js getInstance
+     */
     static GUIReader* shareReader();
+    /**
+     *  @js pure
+     */
 	static void purgeGUIReader();
     
     UIWidget* widgetFromJsonFile(const char* fileName);
@@ -61,7 +72,10 @@ protected:
     std::string m_strFilePath;
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class WidgetPropertiesReader0250 : public WidgetPropertiesReader
 {
     
@@ -89,6 +103,10 @@ public:
     virtual void setPropsForScrollViewFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options);
 };
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class WidgetPropertiesReader0300 : public WidgetPropertiesReader
 {
     
