@@ -315,7 +315,7 @@ void Bone::addChildBone(Bone *child)
         _children->retain();
     }
 
-    if (_children->getIndexOfObject(child) == UINT_MAX)
+    if (_children->getIndexOfObject(child) == CC_INVALID_INDEX)
     {
         _children->addObject(child);
         child->setParentBone(this);
@@ -324,7 +324,7 @@ void Bone::addChildBone(Bone *child)
 
 void Bone::removeChildBone(Bone *bone, bool recursion)
 {
-    if (_children && _children->getIndexOfObject(bone) != UINT_MAX )
+    if (_children && _children->getIndexOfObject(bone) != CC_INVALID_INDEX )
     {
         if(recursion)
         {

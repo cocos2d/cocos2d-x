@@ -41,15 +41,15 @@ ActionObject::ActionObject()
 {
 	_actionNodeList = Array::create();
 	_actionNodeList->retain();
-	_pScheduler = new Scheduler();
-	Director::getInstance()->getScheduler()->scheduleUpdateForTarget(_pScheduler, 0, false);
+	_pScheduler = Director::getInstance()->getScheduler();
+	CC_SAFE_RETAIN(_pScheduler);
 }
 
 ActionObject::~ActionObject()
 {
 	_actionNodeList->removeAllObjects();
 	_actionNodeList->release();
-	CC_SAFE_DELETE(_pScheduler);
+	CC_SAFE_RELEASE(_pScheduler);
 }
 
 void ActionObject::setName(const char* name)
