@@ -151,8 +151,6 @@ public:
     bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
     void clipPoly(PhysicsShapePolygon* shape, Point normal, float distance);
     
-    bool onTouchBegan(Touch *touch, Event *event);
-    void onTouchMoved(Touch *touch, Event *event);
     void onTouchEnded(Touch *touch, Event *event);
     
 private:
