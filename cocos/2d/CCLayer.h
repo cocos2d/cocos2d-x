@@ -86,18 +86,6 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     
-    // default implements are used to call script callback if exist
-    virtual bool onTouchBegan(Touch *touch, Event *event);
-    virtual void onTouchMoved(Touch *touch, Event *event);
-    virtual void onTouchEnded(Touch *touch, Event *event);
-    virtual void onTouchCancelled(Touch *touch, Event *event);
-
-    //    // default implements are used to call script callback if exist
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *event);
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
-    virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *event);
-    
     /** @deprecated Please override onAcceleration */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
@@ -164,24 +152,9 @@ public:
     //
     // Overrides
     //
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void onEnter() override;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void onExit() override;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual void onEnterTransitionDidFinish() override;
 
 protected:      
-    CC_DEPRECATED_ATTRIBUTE void addTouchListener();
+    CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
 
     bool _touchEnabled;
     bool _accelerometerEnabled;
@@ -190,11 +163,12 @@ protected:
     EventListenerKeyboard* _keyboardListener;
     EventListenerAcceleration* _accelerationListener;
 private:
+    //add the api for avoid use deprecated api  
+    void _addTouchListener();
+
     Touch::DispatchMode _touchMode;
     bool _swallowsTouches;
 
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
 };
 
 #ifdef __apple__
