@@ -30,6 +30,7 @@ cocos2d-x-3.0alpha1 Nov.19 2013
      [FIX]          EventListner: cann't be removed sometimes
      [FIX]          UserDefault: didn't set data size when parsing XML using TinyXML
      [FIX]          Webp test crashed
+     [FIX]          CCHttpClient: The subthread of CCHttpClient interrupts main thread if timeout signal comes.
      [NEW]          Arm64 support.
      [NEW]          Added Mouse Support For Desktop Platforms.
      [NEW]          Point: Adds ANCHOR_XXX constants like ANCHOR_MIDDLE, ANCHOR_TOP_RIGHT, etc.
