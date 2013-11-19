@@ -237,6 +237,9 @@ WebSocket::WebSocket()
 , _delegate(NULL)
 , _SSLConnection(0)
 , _wsProtocols(NULL)
+, _pending_frame_data_len(0)
+, _current_data_len(0)
+, _current_data(NULL)
 {
 }
 
@@ -258,7 +261,7 @@ bool WebSocket::init(const Delegate& delegate,
     bool ret = false;
     bool useSSL = false;
     std::string host = url;
-    int pos = 0;
+    size_t pos = 0;
     int port = 80;
     
     _delegate = const_cast<Delegate*>(&delegate);
@@ -277,18 +280,18 @@ bool WebSocket::init(const Delegate& delegate,
     }
     
     pos = host.find(":");
-    if(pos >= 0){
+    if(pos != host.npos) {
         port = atoi(host.substr(pos+1, host.size()).c_str());
     }
     
     pos = host.find("/", pos);
     std::string path = "/";
-    if(pos >= 0){
+    if(pos != host.npos){
         path += host.substr(pos + 1, host.size());
     }
     
     pos = host.find(":");
-    if(pos >= 0){
+    if(pos != host.npos){
         host.erase(pos, host.size());
     }
 
@@ -298,7 +301,7 @@ bool WebSocket::init(const Delegate& delegate,
     _path = path;
     _SSLConnection = useSSL ? 1 : 0;
     
-    int protocolCount = 0;
+    size_t protocolCount = 0;
     if (protocols && protocols->size() > 0)
     {
         protocolCount = protocols->size();
@@ -346,7 +349,7 @@ void WebSocket::send(const std::string& message)
         Data* data = new Data();
         data->bytes = new char[message.length()+1];
         strcpy(data->bytes, message.c_str());
-        data->len = message.length();
+        data->len = (int)message.length();
         msg->obj = data;
         _wsHelper->sendMessageToSubThread(msg);
     }
@@ -592,32 +595,66 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
             {
                 if (in && len > 0)
                 {
-                    WsMessage* msg = new WsMessage();
-                    msg->what = WS_MSG_TO_UITHREAD_MESSAGE;
-                    
-                    char* bytes = NULL;
-                    Data* data = new Data();
-                    
-                    if (lws_frame_is_binary(wsi))
+                    // Data can arrive in chunks of 4096 (by default).  Check for any pending chunks,
+                    // and if there is more to come, save the data and wait for the remaining
+
+                    // Accumulate the data (increasing the buffer as we go)
+                    if (_current_data_len == 0)
                     {
-                        
-                        bytes = new char[len];
-                        data->isBinary = true;
+                        _current_data = new char[len];
+                        memcpy (_current_data, in, len);
+                        _current_data_len = len;
                     }
                     else
                     {
-                        bytes = new char[len+1];
-                        bytes[len] = '\0';
-                        data->isBinary = false;
+                        char *new_data = new char [_current_data_len + len];
+                        memcpy (new_data, _current_data, _current_data_len);
+                        memcpy (new_data + _current_data_len, in, len);
+                        CC_SAFE_DELETE_ARRAY(_current_data);
+                        _current_data = new_data;
+                        _current_data_len = _current_data_len + len;
                     }
 
-                    memcpy(bytes, in, len);
-                    
-                    data->bytes = bytes;
-                    data->len = len;
-                    msg->obj = (void*)data;
-                    
-                    _wsHelper->sendMessageToUIThread(msg);
+                    _pending_frame_data_len = libwebsockets_remaining_packet_payload (wsi);
+
+                    if (_pending_frame_data_len > 0)
+                    {
+                        //CCLOG("%ld bytes of pending data to receive, consider increasing the libwebsocket rx_buffer_size value.", _pending_frame_data_len);
+                    }
+
+                    // If no more data pending, send it to the client thread
+                    if (_pending_frame_data_len == 0)
+                    {
+                        WsMessage* msg = new WsMessage();
+                        msg->what = WS_MSG_TO_UITHREAD_MESSAGE;
+
+                        char* bytes = NULL;
+                        Data* data = new Data();
+
+                        if (lws_frame_is_binary(wsi))
+                        {
+                            bytes = new char[_current_data_len];
+                            data->isBinary = true;
+                        }
+                        else
+                        {
+                            bytes = new char[_current_data_len+1];
+                            bytes[_current_data_len] = '\0';
+                            data->isBinary = false;
+                        }
+                        
+                        memcpy(bytes, _current_data, _current_data_len);
+                        
+                        data->bytes = bytes;
+                        data->len = _current_data_len;
+                        msg->obj = (void*)data;
+                        
+                        CC_SAFE_DELETE_ARRAY (_current_data);
+                        _current_data = NULL;
+                        _current_data_len = 0;
+                        
+                        _wsHelper->sendMessageToUIThread(msg);
+                    }
                 }
             }
             break;
