@@ -72,8 +72,10 @@ public:
 	 * @param jsonName  UI file name
      *
      * @param actionName  action name in teh UIfile.
+	 *
+	 * @return  ActionObject which named as the param name
      */
-	void playActionByName(const char* jsonName,const char* actionName);
+	ActionObject* playActionByName(const char* jsonName,const char* actionName);
     
     /*init properties with json dictionay*/
     void initWithDictionary(const char* jsonName,JsonDictionary* dic,cocos2d::Object* root);
