@@ -5,7 +5,6 @@
 #include "../UILabel.h"
 #include "../../Layouts/UILayout.h"
 #include "../UIButton.h"
-#include "../ScrollWidget/UIScrollView.h"
 
 NS_CC_EXT_BEGIN
 

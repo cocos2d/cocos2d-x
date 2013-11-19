@@ -24,23 +24,22 @@ THE SOFTWARE.
 
 #include "CCActionNode.h"
 #include "CCActionFrameEasing.h"
-#include "CCActionObject.h"
 #include "../GUI/BaseClasses/UIWidget.h"
 #include "../GUI/System/UIHelper.h"
 #include "../Json/DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
 
-	ActionNode::ActionNode()
-	: currentFrameIndex(0)
-	, destFrameIndex(0)
-	, m_fUnitTime(0.1f)
-	, m_ActionTag(0)
-	, m_Object(NULL)
-	, m_actionSpawn(NULL)
-	, m_action(NULL)
-	, m_FrameArray(NULL)
-	, frameArrayNum(0)
+ActionNode::ActionNode()
+: currentFrameIndex(0)
+, destFrameIndex(0)
+, m_fUnitTime(0.1f)
+, m_ActionTag(0)
+, m_Object(NULL)
+, m_actionSpawn(NULL)
+, m_action(NULL)
+, m_FrameArray(NULL)
+, frameArrayNum(0)
 {
 	m_FrameArray = CCArray::create();
 	m_FrameArray->retain();
@@ -321,7 +320,7 @@ CCSpawn * ActionNode::refreshActionProperty()
 	return m_actionSpawn;
 }
 
-void ActionNode::playAction()
+void ActionNode::playAction(bool bloop)
 {
 	if ( m_Object == NULL || m_actionSpawn == NULL)
 	{
@@ -332,8 +331,14 @@ void ActionNode::playAction()
 	{
 		m_action->release();
 	}
-
-	m_action = CCSequence::create(m_actionSpawn,NULL);
+	if (bloop)
+	{
+		m_action = CCRepeatForever::create(m_actionSpawn);
+	}
+	else
+	{
+		m_action = CCSequence::create(m_actionSpawn, NULL);
+	}
 	m_action->retain();
 
 	this->runAction();
@@ -474,13 +479,4 @@ void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* destF
 	cAction->update(delayTime);
 }
 
-
-bool ActionNode::isActionDoneOnce()
-{
-	if (m_action == NULL)
-	{
-		return true;
-	}
-	return m_action->isDone();
-}
 NS_CC_EXT_END

@@ -12,6 +12,13 @@ ccs.MovementEventType = {
     complete: 1,
     loopComplete: 2
 };
+// Armature
+ccs.Armature.prototype.setBody = function( body ) {
+    var b = body;
+    if( body.handle !== undefined )
+        b = body.handle;
+    return this._setCPBody( b );
+};
 
 ccs.BrightStyle = {
     none: -1,
@@ -205,15 +212,5 @@ ccs.UIMargin = cc.Class.extend({
     }
 });
 
-// Armature
-if(ccs.Armature){
-	ccs.Armature.prototype.setBody = function( body ) {
-    var b = body;
-    if( body.handle !== undefined )
-        b = body.handle;
-    return this._setCPBody( b );
-  };
-  
-  ccs.ComController.extend = cc.Class.extend;
-  ccs.Armature.extend = cc.Class.extend;
-}
+ccs.ComController.extend = cc.Class.extend;
+ccs.Armature.extend = cc.Class.extend;

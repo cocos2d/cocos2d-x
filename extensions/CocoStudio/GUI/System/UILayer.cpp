@@ -46,6 +46,7 @@ bool UILayer::init()
     {
         m_pRootWidget = UIRootWidget::create();
         m_pRootWidget->retain();
+        m_pRootWidget->onEnter();
         addChild(m_pRootWidget->getRenderer());
         m_pInputManager = new UIInputManager();
         m_pInputManager->setRootWidget(m_pRootWidget);
@@ -74,13 +75,12 @@ void UILayer::onEnter()
     setTouchMode(kCCTouchesOneByOne);
     setTouchEnabled(true);
     CCLayer::onEnter();
-    m_pRootWidget->onEnter();
+    
 }
 
 void UILayer::onExit()
 {
     setTouchEnabled(false);
-    m_pRootWidget->onExit();
     CCLayer::onExit();
 }
 

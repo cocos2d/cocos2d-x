@@ -213,7 +213,7 @@ static JSBool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t ar
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
 
-        cobj->addEventListenerListView(tmpObj, listvieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
+        cobj->addEventListenterListView(tmpObj, listvieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
         return JS_TRUE;
     }
@@ -372,7 +372,7 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         tmpObj->autorelease();
         
-        tmpObj->setJSCallbackFunc(argv[3]);
+        tmpObj->setJSCallbackFunc(argv[5]);
         tmpObj->setJSCallbackThis(argv[4]);
         
         std::string imagePath;

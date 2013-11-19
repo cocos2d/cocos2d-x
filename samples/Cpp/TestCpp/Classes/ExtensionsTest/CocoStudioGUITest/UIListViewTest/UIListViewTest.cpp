@@ -90,7 +90,7 @@ bool UIListViewTest_Vertical::init()
             
             listView->addChild(layout);
         }
-        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Vertical::listViewEvent));
+        listView->addEventListenterListView(this, listvieweventselector(UIListViewTest_Vertical::listViewEvent));
         listView->initChildWithDataLength(m_array->count());
         m_pUiLayer->addWidget(listView);
         
@@ -222,7 +222,7 @@ bool UIListViewTest_Horizontal::init()
             
             listView->addChild(layout);
         }
-        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Horizontal::listViewEvent));
+        listView->addEventListenterListView(this, listvieweventselector(UIListViewTest_Horizontal::listViewEvent));
         listView->initChildWithDataLength(m_array->count());
         m_pUiLayer->addWidget(listView);
         

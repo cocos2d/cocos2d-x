@@ -137,7 +137,7 @@ public:
     /**
      *  add event
      */
-    void addEventListenerListView(cocos2d::CCObject* target, SEL_ListViewEvent selector);
+    void addEventListenterListView(cocos2d::CCObject* target, SEL_ListViewEvent selector);
     /*******Compatible*******/
     /**
      *  add init child event
