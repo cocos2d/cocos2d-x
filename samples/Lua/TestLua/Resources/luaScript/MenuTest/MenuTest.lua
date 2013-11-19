@@ -98,42 +98,35 @@ local function MenuLayerMainMenu()
     -- Testing issue #500
     item5:setScale( 0.8 )
 
-    local function menuCallbackPriorityTest(pSender)
+    -- Events
+    cc.MenuItemFont:setFontName("Marker Felt")
+    local function menuCallbackBugsTest(pSender)
         tolua.cast(ret:getParent(), "LayerMultiplex"):switchTo(4)
     end
 
-    -- Events
-    cc.MenuItemFont:setFontName("Marker Felt")
-    local item6 = cc.MenuItemFont:create("Priority Test")
-    item6:registerScriptTapHandler(menuCallbackPriorityTest)
-
-    local function menuCallbackBugsTest(pSender)
-        tolua.cast(ret:getParent(), "LayerMultiplex"):switchTo(5)
-    end
-
     -- Bugs Item
-    local item7 = cc.MenuItemFont:create("Bugs")
-    item7:registerScriptTapHandler(menuCallbackBugsTest)
+    local item6 = cc.MenuItemFont:create("Bugs")
+    item6:registerScriptTapHandler(menuCallbackBugsTest)
 
     local function onQuit(sender)
         cclog("onQuit item is clicked.")
     end
 
     -- Font Item
-    local  item8 = cc.MenuItemFont:create("Quit")
-    item8:registerScriptTapHandler(onQuit)
+    local  item7 = cc.MenuItemFont:create("Quit")
+    item7:registerScriptTapHandler(onQuit)
 
     local function menuMovingCallback(pSender)
-        tolua.cast(ret:getParent(), "LayerMultiplex"):switchTo(6)
+        tolua.cast(ret:getParent(), "LayerMultiplex"):switchTo(5)
     end
 
-    local  item9 = cc.MenuItemFont:create("Remove menu item when moving")
-    item9:registerScriptTapHandler(menuMovingCallback)
+    local  item8 = cc.MenuItemFont:create("Remove menu item when moving")
+    item8:registerScriptTapHandler(menuMovingCallback)
 
     local  color_action = cc.TintBy:create(0.5, 0, -255, -255)
     local  color_back = color_action:reverse()
     local  seq = cc.Sequence:create(color_action, color_back)
-    item8:runAction(cc.RepeatForever:create(seq))
+    item7:runAction(cc.RepeatForever:create(seq))
 
     local  menu = cc.Menu:create()
 
@@ -145,7 +138,6 @@ local function MenuLayerMainMenu()
     menu:addChild(item6)
     menu:addChild(item7)
     menu:addChild(item8)
-    menu:addChild(item9)
 
     menu:alignItemsVertically()
 
@@ -481,80 +473,20 @@ local function MenuLayer4()
     return ret
 end
 
-local function MenuLayerPriorityTest()
-    local ret = cc.Layer:create()
-    local m_bPriority = false
-    -- Testing empty menu
-    local m_pMenu1 = cc.Menu:create()
-    local m_pMenu2 = cc.Menu:create()
-
-    local function menuCallback(tag, pSender)
-        tolua.cast(ret:getParent(), "LayerMultiplex"):switchTo(0)
-    end
-
-    local function enableMenuCallback()
-        m_pMenu1:setEnabled(true)
-    end
-
-    local function disableMenuCallback(tag, pSender)
-        m_pMenu1:setEnabled(false)
-        local wait = cc.DelayTime:create(5)
-        local enable = cc.CallFunc:create(enableMenuCallback)
-        local  seq = cc.Sequence:create(wait, enable)
-        m_pMenu1:runAction(seq)
-    end
-
-    local function togglePriorityCallback(tag, pSender)
-        if m_bPriority then
-            m_pMenu2:setHandlerPriority(cc.MENU_HANDLER_PRIORITY  + 20)
-            m_bPriority = false
-        else
-            m_pMenu2:setHandlerPriority(cc.MENU_HANDLER_PRIORITY  - 20)
-            m_bPriority = true
-        end
-    end
-
-    -- Menu 1
-    cc.MenuItemFont:setFontName("Marker Felt")
-    cc.MenuItemFont:setFontSize(18)
-    local item1 = cc.MenuItemFont:create("Return to Main Menu")
-    item1:registerScriptTapHandler(menuCallback)
-    local item2 = cc.MenuItemFont:create("Disable menu for 5 seconds")
-    item2:registerScriptTapHandler(disableMenuCallback)
-
-    m_pMenu1:addChild(item1)
-    m_pMenu1:addChild(item2)
-
-    m_pMenu1:alignItemsVerticallyWithPadding(20)
-
-    ret:addChild(m_pMenu1)
-
-    -- Menu 2
-    m_bPriority = true
-    cc.MenuItemFont:setFontSize(48)
-    item1 = cc.MenuItemFont:create("Toggle priority")
-    item2:registerScriptTapHandler(togglePriorityCallback)
-    item1:setColor(cc.c3b(0,0,255))
-    m_pMenu2:addChild(item1)
-    ret:addChild(m_pMenu2)
-    return ret
-end
-
-
 -- BugsTest
 local function BugsTest()
     local ret = cc.Layer:create()
     local function issue1410MenuCallback(tag, pSender)
         local menu = tolua.cast(pSender:getParent(), "Menu")
-        menu:setTouchEnabled(false)
-        menu:setTouchEnabled(true)
+        menu:setEnabled(false)
+        menu:setEnabled(true)
         cclog("NO CRASHES")
     end
 
     local function issue1410v2MenuCallback(tag, pSender)
         local menu = tolua.cast(pSender:getParent(), "Menu")
-        menu:setTouchEnabled(true)
-        menu:setTouchEnabled(false)
+        menu:setEnabled(true)
+        menu:setEnabled(false)
         cclog("NO CRASHES. AND MENU SHOULD STOP WORKING")
     end
 
@@ -648,17 +580,15 @@ function MenuTestMain()
 
     local  pLayer3 = MenuLayer3()
     local  pLayer4 = MenuLayer4()
-    local  pLayer5 = MenuLayerPriorityTest()
-    local  pLayer6 = BugsTest()
-    local  pLayer7 = RemoveMenuItemWhenMove()
+    local  pLayer5 = BugsTest()
+    local  pLayer6 = RemoveMenuItemWhenMove()
 
     local  layer = cc.LayerMultiplex:create(pLayer1,
                                             pLayer2,
                                             pLayer3,
                                             pLayer4,
                                             pLayer5,
-                                            pLayer6,
-                                            pLayer7)
+                                            pLayer6 )
 
     scene:addChild(layer, 0)
     scene:addChild(CreateBackMenuItem())
