@@ -293,19 +293,32 @@ void PhysicsBody::setDynamic(bool dynamic)
         if (dynamic)
         {
             cpBodySetMass(_info->getBody(), _mass);
+            cpBodySetMoment(_info->getBody(), _moment);
             
             if (_world != nullptr)
             {
+                // reset the gravity enable
+                if (isGravityEnabled())
+                {
+                    _gravityEnable = false;
+                    setGravityEnable(true);
+                }
+                
                 cpSpaceAddBody(_world->_info->getSpace(), _info->getBody());
             }
-        }else
+        }
+        else
         {
-            cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
-            
             if (_world != nullptr)
             {
                 cpSpaceRemoveBody(_world->_info->getSpace(), _info->getBody());
             }
+            
+            // avoid incorrect collion simulation.
+            cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
+            cpBodySetMoment(_info->getBody(), PHYSICS_INFINITY);
+            cpBodySetVel(_info->getBody(), cpvzero);
+            cpBodySetAngVel(_info->getBody(), 0.0f);
         }
         
     }
@@ -432,7 +445,8 @@ void PhysicsBody::applyTorque(float torque)
 
 void PhysicsBody::setMass(float mass)
 {
-    if (mass <= 0)
+    // cann't set mass for static body manually
+    if (mass <= 0 || !_dynamic)
     {
         return;
     }
@@ -461,6 +475,12 @@ void PhysicsBody::setMass(float mass)
 
 void PhysicsBody::addMass(float mass)
 {
+    // cann't set mass for static body manually
+    if (!_dynamic)
+    {
+        return;
+    }
+    
     if (mass == PHYSICS_INFINITY)
     {
         _mass = PHYSICS_INFINITY;
@@ -503,6 +523,12 @@ void PhysicsBody::addMass(float mass)
 
 void PhysicsBody::addMoment(float moment)
 {
+    // cann't set moment for static body manually
+    if (!_dynamic)
+    {
+        return;
+    }
+    
     if (moment == PHYSICS_INFINITY)
     {
         // if moment is INFINITY, the moment of the body will become INFINITY
@@ -545,6 +571,12 @@ void PhysicsBody::addMoment(float moment)
 
 void PhysicsBody::setVelocity(const Point& velocity)
 {
+    // cann't set velocity for a static body
+    if (!_dynamic)
+    {
+        return;
+    }
+    
     cpBodySetVel(_info->getBody(), PhysicsHelper::point2cpv(velocity));
 }
 
@@ -565,6 +597,12 @@ Point PhysicsBody::getVelocityAtWorldPoint(const Point& point)
 
 void PhysicsBody::setAngularVelocity(float velocity)
 {
+    // cann't set angular velocity for a static body
+    if (!_dynamic)
+    {
+        return;
+    }
+    
     cpBodySetAngVel(_info->getBody(), PhysicsHelper::float2cpfloat(velocity));
 }
 
@@ -595,6 +633,12 @@ float PhysicsBody::getAngularVelocityLimit()
 
 void PhysicsBody::setMoment(float moment)
 {
+    // cann't set moment for static body manually
+    if (!_dynamic)
+    {
+        return;
+    }
+    
     _moment = moment;
     _momentDefault = false;
     
