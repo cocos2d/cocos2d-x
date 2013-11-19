@@ -69,8 +69,10 @@ private:
 	void OnLogicalDpiChanged(Platform::Object^ sender);
 	void OnOrientationChanged(Platform::Object^ sender);
 	void OnDisplayContentsInvalidated(Platform::Object^ sender);
-	void OnRendering(Platform::Object^ sender, Platform::Object^ args);
-	void ResizeWindow();
+    void OnRendering(Platform::Object^ sender, Platform::Object^ args);
+    void OnSuspending();
+    void ResizeWindow();
+    
 
 	void ShowKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
 	void HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
@@ -81,6 +83,7 @@ private:
 	Windows::Foundation::EventRegistrationToken m_eventToken;
 	bool m_lastPointValid;
 	bool m_textInputEnabled;
+	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
 	ESContext m_esContext;
 	Windows::UI::Xaml::Controls::TextBox^ m_textBox;
 	Windows::UI::Xaml::Controls::Button^ m_dummy;
@@ -104,6 +107,7 @@ public:
     virtual bool Create(Windows::UI::Core::CoreWindow^ window, Windows::UI::Xaml::Controls::SwapChainBackgroundPanel^ panel);
 	void UpdateForWindowSizeChange();
 	void OnRendering();
+    void OnSuspending();
 
 private:
 	Windows::Foundation::EventRegistrationToken m_eventToken;
