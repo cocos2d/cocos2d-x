@@ -33,239 +33,265 @@ using std::max;
 namespace spine {
 
 CCSkeleton* CCSkeleton::createWithData (SkeletonData* skeletonData, bool ownsSkeletonData) {
-	CCSkeleton* node = new CCSkeleton(skeletonData, ownsSkeletonData);
-	node->autorelease();
-	return node;
+    CCSkeleton* node = new CCSkeleton(skeletonData, ownsSkeletonData);
+    node->autorelease();
+    return node;
 }
 
 CCSkeleton* CCSkeleton::createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale) {
-	CCSkeleton* node = new CCSkeleton(skeletonDataFile, atlas, scale);
-	node->autorelease();
-	return node;
+    CCSkeleton* node = new CCSkeleton(skeletonDataFile, atlas, scale);
+    node->autorelease();
+    return node;
 }
 
 CCSkeleton* CCSkeleton::createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale) {
-	CCSkeleton* node = new CCSkeleton(skeletonDataFile, atlasFile, scale);
-	node->autorelease();
-	return node;
+    CCSkeleton* node = new CCSkeleton(skeletonDataFile, atlasFile, scale);
+    node->autorelease();
+    return node;
 }
 
 void CCSkeleton::initialize () {
-	atlas = 0;
-	debugSlots = false;
-	debugBones = false;
-	timeScale = 1;
+    atlas = 0;
+    debugSlots = false;
+    debugBones = false;
+    timeScale = 1;
 
-	blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-	setOpacityModifyRGB(true);
+    blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    setOpacityModifyRGB(true);
 
-	setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-	scheduleUpdate();
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    scheduleUpdate();
 }
 
 void CCSkeleton::setSkeletonData (SkeletonData *skeletonData, bool isOwnsSkeletonData) {
-	skeleton = Skeleton_create(skeletonData);
-	rootBone = skeleton->bones[0];
-	this->ownsSkeletonData = isOwnsSkeletonData;
+    skeleton = Skeleton_create(skeletonData);
+    rootBone = skeleton->bones[0];
+    this->ownsSkeletonData = isOwnsSkeletonData;
 }
 
 CCSkeleton::CCSkeleton () {
-	initialize();
+    initialize();
 }
 
 CCSkeleton::CCSkeleton (SkeletonData *skeletonData, bool isOwnsSkeletonData) {
-	initialize();
+    initialize();
 
-	setSkeletonData(skeletonData, isOwnsSkeletonData);
+    setSkeletonData(skeletonData, isOwnsSkeletonData);
 }
 
 CCSkeleton::CCSkeleton (const char* skeletonDataFile, Atlas* aAtlas, float scale) {
-	initialize();
+    initialize();
 
-	SkeletonJson* json = SkeletonJson_create(aAtlas);
-	json->scale = scale;
-	SkeletonData* skeletonData = SkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
-	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data.");
-	SkeletonJson_dispose(json);
+    SkeletonJson* json = SkeletonJson_create(aAtlas);
+    json->scale = scale;
+    SkeletonData* skeletonData = SkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
+    CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data.");
+    SkeletonJson_dispose(json);
 
-	setSkeletonData(skeletonData, true);
+    setSkeletonData(skeletonData, true);
 }
 
 CCSkeleton::CCSkeleton (const char* skeletonDataFile, const char* atlasFile, float scale) {
-	initialize();
+    initialize();
 
-	atlas = Atlas_readAtlasFile(atlasFile);
-	CCASSERT(atlas, "Error reading atlas file.");
+    atlas = Atlas_readAtlasFile(atlasFile);
+    CCASSERT(atlas, "Error reading atlas file.");
 
-	SkeletonJson* json = SkeletonJson_create(atlas);
-	json->scale = scale;
-	SkeletonData* skeletonData = SkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
-	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
-	SkeletonJson_dispose(json);
+    SkeletonJson* json = SkeletonJson_create(atlas);
+    json->scale = scale;
+    SkeletonData* skeletonData = SkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
+    CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
+    SkeletonJson_dispose(json);
 
-	setSkeletonData(skeletonData, true);
+    setSkeletonData(skeletonData, true);
 }
 
 CCSkeleton::~CCSkeleton () {
-	if (ownsSkeletonData) SkeletonData_dispose(skeleton->data);
-	if (atlas) Atlas_dispose(atlas);
-	Skeleton_dispose(skeleton);
+    if (ownsSkeletonData) SkeletonData_dispose(skeleton->data);
+    if (atlas) Atlas_dispose(atlas);
+    Skeleton_dispose(skeleton);
 }
 
 void CCSkeleton::update (float deltaTime) {
-	Skeleton_update(skeleton, deltaTime * timeScale);
+    Skeleton_update(skeleton, deltaTime * timeScale);
 }
 
-void CCSkeleton::draw () {
-	CC_NODE_DRAW_SETUP();
+void CCSkeleton::draw () 
+{
+    CC_NODE_DRAW_SETUP();
+    GL::blendFunc(blendFunc.src, blendFunc.dst);
+    Color3B color = getColor();
+    skeleton->r = color.r / (float)255;
+    skeleton->g = color.g / (float)255;
+    skeleton->b = color.b / (float)255;
+    skeleton->a = getOpacity() / (float)255;
+    if (premultipliedAlpha) 
+    {
+        skeleton->r *= skeleton->a;
+        skeleton->g *= skeleton->a;
+        skeleton->b *= skeleton->a;
+    }
 
-	GL::blendFunc(blendFunc.src, blendFunc.dst);
-	Color3B color = getColor();
-	skeleton->r = color.r / (float)255;
-	skeleton->g = color.g / (float)255;
-	skeleton->b = color.b / (float)255;
-	skeleton->a = getOpacity() / (float)255;
-	if (premultipliedAlpha) {
-		skeleton->r *= skeleton->a;
-		skeleton->g *= skeleton->a;
-		skeleton->b *= skeleton->a;
-	}
+    TextureAtlas* textureAtlas = 0;
+    V3F_C4B_T2F_Quad quad;
+    quad.tl.vertices.z = 0;
+    quad.tr.vertices.z = 0;
+    quad.bl.vertices.z = 0;
+    quad.br.vertices.z = 0;
+    for (int i = 0, n = skeleton->slotCount; i < n; i++) 
+    {
+        Slot* slot = skeleton->slots[i];
+        if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
+        RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
+        TextureAtlas* regionTextureAtlas = getTextureAtlas(attachment);
+        if (regionTextureAtlas != textureAtlas) 
+        {
+            if (textureAtlas) 
+            {
+                if(textureAtlas->getTexture() && textureAtlas->getTexture()->hasPremultipliedAlpha())
+                {
+                    GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
+                }
+                else
+                {
+                    GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
+                }
+                textureAtlas->drawQuads();
+                textureAtlas->removeAllQuads();
+            }
+        }
+        textureAtlas = regionTextureAtlas;
+        if (textureAtlas->getCapacity() == textureAtlas->getTotalQuads() &&
+            !textureAtlas->resizeCapacity(textureAtlas->getCapacity() * 2)) return;
+        RegionAttachment_updateQuad(attachment, slot, &quad, premultipliedAlpha);
+        textureAtlas->updateQuad(&quad, textureAtlas->getTotalQuads());
+    }
+    if (textureAtlas) 
+    {
+        if(textureAtlas->getTexture() && textureAtlas->getTexture()->hasPremultipliedAlpha())
+        {
+            GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
+        }
+        else
+        {
+            GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
+        }
+        textureAtlas->drawQuads();
+        textureAtlas->removeAllQuads();
+    }
 
-	TextureAtlas* textureAtlas = 0;
-	V3F_C4B_T2F_Quad quad;
-	quad.tl.vertices.z = 0;
-	quad.tr.vertices.z = 0;
-	quad.bl.vertices.z = 0;
-	quad.br.vertices.z = 0;
-	for (int i = 0, n = skeleton->slotCount; i < n; i++) {
-		Slot* slot = skeleton->slots[i];
-		if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
-		RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
-		TextureAtlas* regionTextureAtlas = getTextureAtlas(attachment);
-		if (regionTextureAtlas != textureAtlas) {
-			if (textureAtlas) {
-				textureAtlas->drawQuads();
-				textureAtlas->removeAllQuads();
-			}
-		}
-		textureAtlas = regionTextureAtlas;
-		if (textureAtlas->getCapacity() == textureAtlas->getTotalQuads() &&
-			!textureAtlas->resizeCapacity(textureAtlas->getCapacity() * 2)) return;
-		RegionAttachment_updateQuad(attachment, slot, &quad, premultipliedAlpha);
-		textureAtlas->updateQuad(&quad, textureAtlas->getTotalQuads());
-	}
-	if (textureAtlas) {
-		textureAtlas->drawQuads();
-		textureAtlas->removeAllQuads();
-	}
-
-	if (debugSlots) {
-		// Slots.
-		DrawPrimitives::setDrawColor4B(0, 0, 255, 255);
-		glLineWidth(1);
-		Point points[4];
-		V3F_C4B_T2F_Quad tmpQuad;
-		for (int i = 0, n = skeleton->slotCount; i < n; i++) {
-			Slot* slot = skeleton->slots[i];
-			if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
-			RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
-			RegionAttachment_updateQuad(attachment, slot, &tmpQuad);
-			points[0] = Point(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y);
-			points[1] = Point(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y);
-			points[2] = Point(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y);
-			points[3] = Point(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y);
-			DrawPrimitives::drawPoly(points, 4, true);
-		}
-	}
-	if (debugBones) {
-		// Bone lengths.
-		glLineWidth(2);
-		DrawPrimitives::setDrawColor4B(255, 0, 0, 255);
-		for (int i = 0, n = skeleton->boneCount; i < n; i++) {
-			Bone *bone = skeleton->bones[i];
-			float x = bone->data->length * bone->m00 + bone->worldX;
-			float y = bone->data->length * bone->m10 + bone->worldY;
-			DrawPrimitives::drawLine(Point(bone->worldX, bone->worldY), Point(x, y));
-		}
-		// Bone origins.
-		DrawPrimitives::setPointSize(4);
-		DrawPrimitives::setDrawColor4B(0, 0, 255, 255); // Root bone is blue.
-		for (int i = 0, n = skeleton->boneCount; i < n; i++) {
-			Bone *bone = skeleton->bones[i];
-			DrawPrimitives::drawPoint(Point(bone->worldX, bone->worldY));
-			if (i == 0) DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
-		}
-	}
+    if (debugSlots) 
+    {
+        // Slots.
+        DrawPrimitives::setDrawColor4B(0, 0, 255, 255);
+        glLineWidth(1);
+        Point points[4];
+        V3F_C4B_T2F_Quad tmpQuad;
+        for (int i = 0, n = skeleton->slotCount; i < n; i++) 
+        {
+            Slot* slot = skeleton->slots[i];
+            if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
+            RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
+            RegionAttachment_updateQuad(attachment, slot, &tmpQuad);
+            points[0] = Point(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y);
+            points[1] = Point(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y);
+            points[2] = Point(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y);
+            points[3] = Point(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y);
+            DrawPrimitives::drawPoly(points, 4, true);
+        }
+    }
+    if (debugBones) 
+    {
+        // Bone lengths.
+        glLineWidth(2);
+        DrawPrimitives::setDrawColor4B(255, 0, 0, 255);
+        for (int i = 0, n = skeleton->boneCount; i < n; i++) 
+        {
+            Bone *bone = skeleton->bones[i];
+            float x = bone->data->length * bone->m00 + bone->worldX;
+            float y = bone->data->length * bone->m10 + bone->worldY;
+            DrawPrimitives::drawLine(Point(bone->worldX, bone->worldY), Point(x, y));
+        }
+        // Bone origins.
+        DrawPrimitives::setPointSize(4);
+        DrawPrimitives::setDrawColor4B(0, 0, 255, 255); // Root bone is blue.
+        for (int i = 0, n = skeleton->boneCount; i < n; i++) 
+        {
+            Bone *bone = skeleton->bones[i];
+            DrawPrimitives::drawPoint(Point(bone->worldX, bone->worldY));
+            if (i == 0) DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
+        }
+    }
 }
 
 TextureAtlas* CCSkeleton::getTextureAtlas (RegionAttachment* regionAttachment) const {
-	return (TextureAtlas*)((AtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
+    return (TextureAtlas*)((AtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
 }
 
 Rect CCSkeleton::getBoundingBox() const {
-	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
-	float scaleX = getScaleX();
-	float scaleY = getScaleY();
-	float vertices[8];
-	for (int i = 0; i < skeleton->slotCount; ++i) {
-		Slot* slot = skeleton->slots[i];
-		if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
-		RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
-		RegionAttachment_computeVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone, vertices);
-		minX = min(minX, vertices[VERTEX_X1] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y1] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X1] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y1] * scaleY);
-		minX = min(minX, vertices[VERTEX_X4] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y4] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X4] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y4] * scaleY);
-		minX = min(minX, vertices[VERTEX_X2] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y2] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X2] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y2] * scaleY);
-		minX = min(minX, vertices[VERTEX_X3] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y3] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X3] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
-	}
-	Point position = getPosition();
-	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
+    float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
+    float scaleX = getScaleX();
+    float scaleY = getScaleY();
+    float vertices[8];
+    for (int i = 0; i < skeleton->slotCount; ++i) {
+        Slot* slot = skeleton->slots[i];
+        if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
+        RegionAttachment* attachment = (RegionAttachment*)slot->attachment;
+        RegionAttachment_computeVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone, vertices);
+        minX = min(minX, vertices[VERTEX_X1] * scaleX);
+        minY = min(minY, vertices[VERTEX_Y1] * scaleY);
+        maxX = max(maxX, vertices[VERTEX_X1] * scaleX);
+        maxY = max(maxY, vertices[VERTEX_Y1] * scaleY);
+        minX = min(minX, vertices[VERTEX_X4] * scaleX);
+        minY = min(minY, vertices[VERTEX_Y4] * scaleY);
+        maxX = max(maxX, vertices[VERTEX_X4] * scaleX);
+        maxY = max(maxY, vertices[VERTEX_Y4] * scaleY);
+        minX = min(minX, vertices[VERTEX_X2] * scaleX);
+        minY = min(minY, vertices[VERTEX_Y2] * scaleY);
+        maxX = max(maxX, vertices[VERTEX_X2] * scaleX);
+        maxY = max(maxY, vertices[VERTEX_Y2] * scaleY);
+        minX = min(minX, vertices[VERTEX_X3] * scaleX);
+        minY = min(minY, vertices[VERTEX_Y3] * scaleY);
+        maxX = max(maxX, vertices[VERTEX_X3] * scaleX);
+        maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
+    }
+    Point position = getPosition();
+    return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
 }
 
 // --- Convenience methods for Skeleton_* functions.
 
 void CCSkeleton::updateWorldTransform () {
-	Skeleton_updateWorldTransform(skeleton);
+    Skeleton_updateWorldTransform(skeleton);
 }
 
 void CCSkeleton::setToSetupPose () {
-	Skeleton_setToSetupPose(skeleton);
+    Skeleton_setToSetupPose(skeleton);
 }
 void CCSkeleton::setBonesToSetupPose () {
-	Skeleton_setBonesToSetupPose(skeleton);
+    Skeleton_setBonesToSetupPose(skeleton);
 }
 void CCSkeleton::setSlotsToSetupPose () {
-	Skeleton_setSlotsToSetupPose(skeleton);
+    Skeleton_setSlotsToSetupPose(skeleton);
 }
 
 Bone* CCSkeleton::findBone (const char* boneName) const {
-	return Skeleton_findBone(skeleton, boneName);
+    return Skeleton_findBone(skeleton, boneName);
 }
 
 Slot* CCSkeleton::findSlot (const char* slotName) const {
-	return Skeleton_findSlot(skeleton, slotName);
+    return Skeleton_findSlot(skeleton, slotName);
 }
 
 bool CCSkeleton::setSkin (const char* skinName) {
-	return Skeleton_setSkinByName(skeleton, skinName) ? true : false;
+    return Skeleton_setSkinByName(skeleton, skinName) ? true : false;
 }
 
 Attachment* CCSkeleton::getAttachment (const char* slotName, const char* attachmentName) const {
-	return Skeleton_getAttachmentForSlotName(skeleton, slotName, attachmentName);
+    return Skeleton_getAttachmentForSlotName(skeleton, slotName, attachmentName);
 }
 bool CCSkeleton::setAttachment (const char* slotName, const char* attachmentName) {
-	return Skeleton_setAttachment(skeleton, slotName, attachmentName) ? true : false;
+    return Skeleton_setAttachment(skeleton, slotName, attachmentName) ? true : false;
 }
 
 // --- BlendProtocol
@@ -280,11 +306,11 @@ void CCSkeleton::setBlendFunc( const BlendFunc &aBlendFunc) {
 }
 
 void CCSkeleton::setOpacityModifyRGB (bool value) {
-	premultipliedAlpha = value;
+    premultipliedAlpha = value;
 }
 
 bool CCSkeleton::isOpacityModifyRGB () const {
-	return premultipliedAlpha;
+    return premultipliedAlpha;
 }
 
 } // namespace spine {

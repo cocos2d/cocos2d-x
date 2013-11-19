@@ -66,7 +66,7 @@ PhysicsContact::~PhysicsContact()
     CC_SAFE_DELETE(_contactData);
 }
 
-PhysicsContact* PhysicsContact::create(PhysicsShape* a, PhysicsShape* b)
+PhysicsContact* PhysicsContact::construct(PhysicsShape* a, PhysicsShape* b)
 {
     PhysicsContact * contact = new PhysicsContact();
     if(contact && contact->init(a, b))
