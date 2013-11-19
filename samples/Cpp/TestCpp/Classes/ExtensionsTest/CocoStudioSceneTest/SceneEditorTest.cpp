@@ -57,7 +57,7 @@ bool SceneEditorTestLayer::init()
 	return bRet;
 }
 
-static ActionObject* actionObject = nullptr;
+static ActionObject* actionObject = NULL;
 
 cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
 {
