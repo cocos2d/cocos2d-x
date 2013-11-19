@@ -140,8 +140,10 @@ public:
 
     /**
      * Play the action.
+     *
+     * @param bloop   true the
      */
-	virtual void playAction();
+	virtual void playAction(bool bloop);
     
     /**
      * Stop the action.
@@ -150,13 +152,6 @@ public:
 	
     /*init properties with a json dictionary*/
     virtual void initWithDictionary(cs::CSJsonDictionary* dic,CCObject* root);
-
-    /**
-     * Gets if the action is done once time.
-     *
-	 * @return   that if the action is done once time
-     */
-	virtual bool isActionDoneOnce();
 protected:
 	int currentFrameIndex;
 	int destFrameIndex;
@@ -169,7 +164,7 @@ protected:
 	CCAction* m_action;
 	CCArray* m_FrameArray;
 	int frameArrayNum;
-
+    
 protected:
 	virtual CCNode* getActionNode();
 	virtual CCSpawn * refreshActionProperty();

@@ -226,11 +226,6 @@ void UIPageView::removePageAtIndex(int index)
     }
 }
 
-void UIPageView::removeAllPages()
-{
-    removeAllChildren();
-}
-
 void UIPageView::updateBoundaryPages()
 {
     if (m_pages->count() <= 0)
@@ -258,8 +253,9 @@ bool UIPageView::removeChild(UIWidget* widget)
     if (m_pages->containsObject(widget))
     {
         m_pages->removeObject(widget);
+        return UILayout::removeChild(widget);
     }
-    return UILayout::removeChild(widget);
+    return false;
 }
 
 void UIPageView::onSizeChanged()
@@ -609,15 +605,6 @@ int UIPageView::getCurPageIndex() const
 CCArray* UIPageView::getPages()
 {
     return m_pages;
-}
-
-UILayout* UIPageView::getPage(int index)
-{
-    if (index < 0 || index >= (int)(m_pages->count()))
-    {
-        return NULL;
-    }
-    return (UILayout*)m_pages->objectAtIndex(index);
 }
 
 const char* UIPageView::getDescription() const
