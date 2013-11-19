@@ -107,7 +107,7 @@ void Layer::_addTouchListener()
         // Register Touch Event
         auto listener = EventListenerTouchAllAtOnce::create();
 
-        listener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event){
+        listener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* unused_event){
 
             if (kScriptTypeNone != _scriptType)
             {
@@ -117,11 +117,10 @@ void Layer::_addTouchListener()
                 return;
             }
 
-            CC_UNUSED_PARAM(touches);
-            CC_UNUSED_PARAM(event);
+            CC_UNUSED_PARAM(unused_event);
         };
 
-        listener->onTouchesMoved = [=](const std::vector<Touch*>& touches, Event* event){
+        listener->onTouchesMoved = [=](const std::vector<Touch*>& touches, Event* unused_event){
 
             if (kScriptTypeNone != _scriptType)
             {
@@ -131,11 +130,10 @@ void Layer::_addTouchListener()
                 return;
             }
 
-            CC_UNUSED_PARAM(touches);
-            CC_UNUSED_PARAM(event);
+            CC_UNUSED_PARAM(unused_event);
         };
         
-        listener->onTouchesEnded = [=](const std::vector<Touch*>& touches, Event* event){
+        listener->onTouchesEnded = [=](const std::vector<Touch*>& touches, Event* unused_event){
 
             if (kScriptTypeNone != _scriptType)
             {
@@ -145,10 +143,9 @@ void Layer::_addTouchListener()
                 return;
             }
 
-            CC_UNUSED_PARAM(touches);
-            CC_UNUSED_PARAM(event);
+            CC_UNUSED_PARAM(unused_event);
         };
-        listener->onTouchesCancelled = [=](const std::vector<Touch*>& touches, Event* event){
+        listener->onTouchesCancelled = [=](const std::vector<Touch*>& touches, Event* unused_event){
 
             if (kScriptTypeNone != _scriptType)
             {
@@ -158,8 +155,7 @@ void Layer::_addTouchListener()
                 return;
             }
 
-            CC_UNUSED_PARAM(touches);
-            CC_UNUSED_PARAM(event);
+            CC_UNUSED_PARAM(unused_event);
         };
 
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -171,7 +167,7 @@ void Layer::_addTouchListener()
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(_swallowsTouches);
 
-        listener->onTouchBegan = [=](Touch* touch, Event* event){
+        listener->onTouchBegan = [=](Touch* touch, Event* unused_event){
 
             if (kScriptTypeNone != _scriptType)
             {
@@ -182,9 +178,10 @@ void Layer::_addTouchListener()
                 else
                     return false;
             }
+            CC_UNUSED_PARAM(unused_event);
             return false;
         };
-        listener->onTouchMoved = [=](Touch* touch, Event* event){
+        listener->onTouchMoved = [=](Touch* touch, Event* unused_event){
 
             if (kScriptTypeNone != _scriptType)
             {
@@ -192,8 +189,9 @@ void Layer::_addTouchListener()
                 ScriptEvent event(kTouchEvent, &data);
                 ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
             }
+            CC_UNUSED_PARAM(unused_event);
         };
-        listener->onTouchEnded = [=](Touch* touch, Event* event){
+        listener->onTouchEnded = [=](Touch* touch, Event* unused_event){
 
             if (kScriptTypeNone != _scriptType)
             {
@@ -201,8 +199,9 @@ void Layer::_addTouchListener()
                 ScriptEvent event(kTouchEvent, &data);
                 ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
             }
+            CC_UNUSED_PARAM(unused_event);
         };
-        listener->onTouchCancelled = [=](Touch* touch, Event* event){
+        listener->onTouchCancelled = [=](Touch* touch, Event* unused_event){
 
             if (kScriptTypeNone != _scriptType)
             {
@@ -210,6 +209,7 @@ void Layer::_addTouchListener()
                 ScriptEvent event(kTouchEvent, &data);
                 ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
             }
+            CC_UNUSED_PARAM(unused_event);
         };
 
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -305,7 +305,7 @@ void Layer::setAccelerometerEnabled(bool enabled)
             if (enabled)
             {
                 //Not to use onAcceleration for avoid warn from deprecated api    
-                _accelerationListener = EventListenerAcceleration::create([=](Acceleration* acc, Event* event){
+                _accelerationListener = EventListenerAcceleration::create([=](Acceleration* acc, Event* unused_event){
                     CC_UNUSED_PARAM(acc);
 
                     if(kScriptTypeNone != _scriptType)
@@ -314,6 +314,7 @@ void Layer::setAccelerometerEnabled(bool enabled)
                         ScriptEvent event(kAccelerometerEvent,&data);
                         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                     }
+                    CC_UNUSED_PARAM(unused_event);
                 });
                 _eventDispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
             }
@@ -333,7 +334,7 @@ void Layer::setAccelerometerInterval(double interval) {
 }
 
 
-void Layer::onAcceleration(Acceleration* pAccelerationValue, Event* event)
+void Layer::onAcceleration(Acceleration* pAccelerationValue, Event* unused_event)
 {
     CC_UNUSED_PARAM(pAccelerationValue);
 
@@ -351,9 +352,9 @@ void Layer::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     CC_UNUSED_PARAM(event);
 }
 
-void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* unused_event)
 {
-    CC_UNUSED_PARAM(event);
+    CC_UNUSED_PARAM(unused_event);
     if(kScriptTypeNone != _scriptType)
     {
         KeypadScriptData data(keyCode, this);
@@ -384,8 +385,8 @@ void Layer::setKeyboardEnabled(bool enabled)
                 CC_UNUSED_PARAM(keyCode);
                 CC_UNUSED_PARAM(event);
             };            
-            listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event){
-                CC_UNUSED_PARAM(event);
+            listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* unused_event){
+                CC_UNUSED_PARAM(unused_event);
                 if(kScriptTypeNone != _scriptType)
                 {
                     KeypadScriptData data(keyCode, this);
@@ -416,8 +417,8 @@ void Layer::setKeypadEnabled(bool enabled)
                 CC_UNUSED_PARAM(keyCode);
                 CC_UNUSED_PARAM(event);
             };
-            listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event){
-                CC_UNUSED_PARAM(event);
+            listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* unused_event){
+                CC_UNUSED_PARAM(unused_event);
                 if(kScriptTypeNone != _scriptType)
                 {
                     KeypadScriptData data(keyCode, this);
