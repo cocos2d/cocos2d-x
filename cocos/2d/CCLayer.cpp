@@ -304,6 +304,7 @@ void Layer::setAccelerometerEnabled(bool enabled)
 
             if (enabled)
             {
+                //Not to use onAcceleration for avoid warn from deprecated api    
                 _accelerationListener = EventListenerAcceleration::create([=](Acceleration* acc, Event* event){
                     CC_UNUSED_PARAM(acc);
 
@@ -383,7 +384,15 @@ void Layer::setKeyboardEnabled(bool enabled)
                 CC_UNUSED_PARAM(keyCode);
                 CC_UNUSED_PARAM(event);
             };            
-            listener->onKeyReleased = CC_CALLBACK_2(Layer::onKeyReleased, this);
+            listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event){
+                CC_UNUSED_PARAM(event);
+                if(kScriptTypeNone != _scriptType)
+                {
+                    KeypadScriptData data(keyCode, this);
+                    ScriptEvent event(kKeypadEvent,&data);
+                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                }
+            };
 
             _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
             _keyboardListener = listener;
@@ -407,7 +416,15 @@ void Layer::setKeypadEnabled(bool enabled)
                 CC_UNUSED_PARAM(keyCode);
                 CC_UNUSED_PARAM(event);
             };
-            listener->onKeyReleased = CC_CALLBACK_2(Layer::onKeyReleased, this);
+            listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event){
+                CC_UNUSED_PARAM(event);
+                if(kScriptTypeNone != _scriptType)
+                {
+                    KeypadScriptData data(keyCode, this);
+                    ScriptEvent event(kKeypadEvent,&data);
+                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                }
+            };
 
             _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
             _keyboardListener = listener;
