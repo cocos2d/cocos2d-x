@@ -45,19 +45,20 @@ typedef void (CCObject::*SEL_UnSelectEvent)(CCObject*);
 #define coco_unselectselector(_SELECTOR) (cocos2d::extension::SEL_UnSelectEvent)(&_SELECTOR)
 /************************/
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class UICheckBox : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UICheckBox();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UICheckBox();
     
