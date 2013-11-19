@@ -48,6 +48,14 @@ NS_CC_BEGIN
 
 // Layer
 Layer::Layer()
+: _touchEnabled(false)
+, _accelerometerEnabled(false)
+, _keyboardEnabled(false)
+, _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
+, _swallowsTouches(true)
+, _touchListener(nullptr)
+, _keyboardListener(nullptr)
+, _accelerationListener(nullptr)
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Point(0.5f, 0.5f));
@@ -84,6 +92,343 @@ Layer *Layer::create()
     {
         CC_SAFE_DELETE(pRet);
         return NULL;
+    }
+}
+
+/// Touch and Accelerometer related
+
+void Layer::_addTouchListener()
+{
+    if (_touchListener != nullptr)
+        return;
+
+    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE )
+    {
+        // Register Touch Event
+        auto listener = EventListenerTouchAllAtOnce::create();
+
+        listener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event){
+
+            if (kScriptTypeNone != _scriptType)
+            {
+                TouchesScriptData data(EventTouch::EventCode::BEGAN, this, touches);
+                ScriptEvent event(kTouchesEvent, &data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                return;
+            }
+
+            CC_UNUSED_PARAM(touches);
+            CC_UNUSED_PARAM(event);
+        };
+
+        listener->onTouchesMoved = [=](const std::vector<Touch*>& touches, Event* event){
+
+            if (kScriptTypeNone != _scriptType)
+            {
+                TouchesScriptData data(EventTouch::EventCode::MOVED, this, touches);
+                ScriptEvent event(kTouchesEvent, &data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                return;
+            }
+
+            CC_UNUSED_PARAM(touches);
+            CC_UNUSED_PARAM(event);
+        };
+        
+        listener->onTouchesEnded = [=](const std::vector<Touch*>& touches, Event* event){
+
+            if (kScriptTypeNone != _scriptType)
+            {
+                TouchesScriptData data(EventTouch::EventCode::ENDED, this, touches);
+                ScriptEvent event(kTouchesEvent, &data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                return;
+            }
+
+            CC_UNUSED_PARAM(touches);
+            CC_UNUSED_PARAM(event);
+        };
+        listener->onTouchesCancelled = [=](const std::vector<Touch*>& touches, Event* event){
+
+            if (kScriptTypeNone != _scriptType)
+            {
+                TouchesScriptData data(EventTouch::EventCode::CANCELLED, this, touches);
+                ScriptEvent event(kTouchesEvent, &data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                return;
+            }
+
+            CC_UNUSED_PARAM(touches);
+            CC_UNUSED_PARAM(event);
+        };
+
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        _touchListener = listener;
+    }
+    else
+    {
+        // Register Touch Event
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->setSwallowTouches(_swallowsTouches);
+
+        listener->onTouchBegan = [=](Touch* touch, Event* event){
+
+            if (kScriptTypeNone != _scriptType)
+            {
+                TouchScriptData data(EventTouch::EventCode::BEGAN, this, touch);
+                ScriptEvent event(kTouchEvent, &data);
+                if(ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event))
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        };
+        listener->onTouchMoved = [=](Touch* touch, Event* event){
+
+            if (kScriptTypeNone != _scriptType)
+            {
+                TouchScriptData data(EventTouch::EventCode::MOVED, this, touch);
+                ScriptEvent event(kTouchEvent, &data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+            }
+        };
+        listener->onTouchEnded = [=](Touch* touch, Event* event){
+
+            if (kScriptTypeNone != _scriptType)
+            {
+                TouchScriptData data(EventTouch::EventCode::ENDED, this, touch);
+                ScriptEvent event(kTouchEvent, &data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+            }
+        };
+        listener->onTouchCancelled = [=](Touch* touch, Event* event){
+
+            if (kScriptTypeNone != _scriptType)
+            {
+                TouchScriptData data(EventTouch::EventCode::CANCELLED, this, touch);
+                ScriptEvent event(kTouchEvent, &data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+            }
+        };
+
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        _touchListener = listener;
+    }
+}
+
+/// isTouchEnabled getter
+bool Layer::isTouchEnabled() const
+{
+    return _touchEnabled;
+}
+
+/// isTouchEnabled setter
+void Layer::setTouchEnabled(bool enabled)
+{
+    if (_touchEnabled != enabled)
+    {
+        _touchEnabled = enabled;
+        if (enabled)
+        {
+            this->_addTouchListener();
+        }
+        else
+        {
+            _eventDispatcher->removeEventListener(_touchListener);
+            _touchListener = nullptr;
+        }
+    }
+}
+
+void Layer::setTouchMode(Touch::DispatchMode mode)
+{
+    if(_touchMode != mode)
+    {
+        _touchMode = mode;
+
+        if( _touchEnabled)
+        {
+            _eventDispatcher->removeEventListener(_touchListener);
+            _touchListener = nullptr;
+            this->_addTouchListener();
+        }
+    }
+}
+
+void Layer::setSwallowsTouches(bool swallowsTouches)
+{
+    if (_swallowsTouches != swallowsTouches)
+    {
+        _swallowsTouches = swallowsTouches;
+
+        if( _touchEnabled)
+        {
+            _eventDispatcher->removeEventListener(_touchListener);
+            _touchListener = nullptr;
+            this->_addTouchListener();
+        }
+    }
+}
+
+Touch::DispatchMode Layer::getTouchMode() const
+{
+    return _touchMode;
+}
+
+bool Layer::isSwallowsTouches() const
+{
+    return _swallowsTouches;
+}
+
+
+
+/// isAccelerometerEnabled getter
+bool Layer::isAccelerometerEnabled() const
+{
+    return _accelerometerEnabled;
+}
+/// isAccelerometerEnabled setter
+void Layer::setAccelerometerEnabled(bool enabled)
+{
+    if (enabled != _accelerometerEnabled)
+    {
+        _accelerometerEnabled = enabled;
+
+        Device::setAccelerometerEnabled(enabled);
+
+        if (_running)
+        {
+            _eventDispatcher->removeEventListener(_accelerationListener);
+            _accelerationListener = nullptr;
+
+            if (enabled)
+            {
+                //Not to use onAcceleration for avoid warn from deprecated api    
+                _accelerationListener = EventListenerAcceleration::create([=](Acceleration* acc, Event* event){
+                    CC_UNUSED_PARAM(acc);
+
+                    if(kScriptTypeNone != _scriptType)
+                    {
+                        BasicScriptData data(this,(void*)acc);
+                        ScriptEvent event(kAccelerometerEvent,&data);
+                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                    }
+                });
+                _eventDispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
+            }
+        }
+    }
+}
+
+
+void Layer::setAccelerometerInterval(double interval) {
+    if (_accelerometerEnabled)
+    {
+        if (_running)
+        {
+            Device::setAccelerometerInterval(interval);
+        }
+    }
+}
+
+
+void Layer::onAcceleration(Acceleration* pAccelerationValue, Event* event)
+{
+    CC_UNUSED_PARAM(pAccelerationValue);
+
+    if(kScriptTypeNone != _scriptType)
+    {
+        BasicScriptData data(this,(void*)pAccelerationValue);
+        ScriptEvent event(kAccelerometerEvent,&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+}
+
+void Layer::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(keyCode);
+    CC_UNUSED_PARAM(event);
+}
+
+void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    CC_UNUSED_PARAM(event);
+    if(kScriptTypeNone != _scriptType)
+    {
+        KeypadScriptData data(keyCode, this);
+        ScriptEvent event(kKeypadEvent,&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+}
+
+/// isKeyboardEnabled getter
+bool Layer::isKeyboardEnabled() const
+{
+    return _keyboardEnabled;
+}
+/// isKeyboardEnabled setter
+void Layer::setKeyboardEnabled(bool enabled)
+{
+    if (enabled != _keyboardEnabled)
+    {
+        _keyboardEnabled = enabled;
+
+        _eventDispatcher->removeEventListener(_keyboardListener);
+        _keyboardListener = nullptr;
+
+        if (enabled)
+        {
+            auto listener = EventListenerKeyboard::create();
+            listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event){
+                CC_UNUSED_PARAM(keyCode);
+                CC_UNUSED_PARAM(event);
+            };            
+            listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event){
+                CC_UNUSED_PARAM(event);
+                if(kScriptTypeNone != _scriptType)
+                {
+                    KeypadScriptData data(keyCode, this);
+                    ScriptEvent event(kKeypadEvent,&data);
+                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                }
+            };
+
+            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+            _keyboardListener = listener;
+        }
+    }
+}
+
+void Layer::setKeypadEnabled(bool enabled)
+{
+    if (enabled != _keyboardEnabled)
+    {
+        _keyboardEnabled = enabled;
+
+        _eventDispatcher->removeEventListener(_keyboardListener);
+        _keyboardListener = nullptr;
+
+        if (enabled)
+        {
+            auto listener = EventListenerKeyboard::create();
+            listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event){
+                CC_UNUSED_PARAM(keyCode);
+                CC_UNUSED_PARAM(event);
+            };
+            listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event){
+                CC_UNUSED_PARAM(event);
+                if(kScriptTypeNone != _scriptType)
+                {
+                    KeypadScriptData data(keyCode, this);
+                    ScriptEvent event(kKeypadEvent,&data);
+                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                }
+            };
+
+            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+            _keyboardListener = listener;
+        }
     }
 }
 
