@@ -12,6 +12,7 @@
 
 NS_CC_BEGIN
 
+#define CC_NO_TEXTURE 0
 
 class QuadCommand : public RenderCommand
 {

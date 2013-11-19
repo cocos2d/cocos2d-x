@@ -21,6 +21,7 @@ public:
 
     virtual bool init();
 
+    void updateTransform();
     void draw();
 
 protected:

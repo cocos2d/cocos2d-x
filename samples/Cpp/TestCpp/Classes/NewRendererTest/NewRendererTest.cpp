@@ -283,9 +283,9 @@ NewClippingNodeTest::NewClippingNodeTest()
 //    stencil->drawPolygon(rectangle, 4, white, 1, white);
 //    clipper->setStencil(stencil);
 
+    //Test with alpha Test
     clipper->setAlphaThreshold(0.05f);
     auto stencil = NewSprite::create("Images/grossini.png");
-    stencil->setScale(2.0f);
     stencil->setPosition(s.width/2, s.height/2);
     clipper->setStencil(stencil);
 

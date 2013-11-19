@@ -102,6 +102,7 @@ DrawNode::DrawNode()
 , _bufferCapacity(0)
 , _bufferCount(0)
 , _buffer(NULL)
+, _finalBuffer(NULL)
 , _dirty(false)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -111,6 +112,8 @@ DrawNode::~DrawNode()
 {
     free(_buffer);
     _buffer = NULL;
+    free(_finalBuffer);
+    _finalBuffer = NULL;
     
     glDeleteBuffers(1, &_vbo);
     _vbo = 0;
@@ -150,6 +153,7 @@ void DrawNode::ensureCapacity(long count)
     {
 		_bufferCapacity += MAX(_bufferCapacity, count);
 		_buffer = (V2F_C4B_T2F*)realloc(_buffer, _bufferCapacity*sizeof(V2F_C4B_T2F));
+        _finalBuffer = (V2F_C4B_T2F*)realloc(_buffer, _bufferCapacity*sizeof(V2F_C4B_T2F));
 	}
 }
 
