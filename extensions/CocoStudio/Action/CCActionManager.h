@@ -77,7 +77,7 @@ public:
      *
      * @param actionName  action name in teh UIfile.
      */
-	void playActionByName(const char* jsonName,const char* actionName);
+	ActionObject* playActionByName(const char* jsonName,const char* actionName);
     
     /*init properties with json dictionay*/
     void initWithDictionary(const char* jsonName,cs::CSJsonDictionary* dic,CCObject* root);
