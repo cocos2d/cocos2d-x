@@ -87,21 +87,20 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     
     // Deprecated touch callbacks.There not have add CC_DEPRECATED_ATTRIBUTE because of menu still use these api
-    virtual bool onTouchBegan(Touch *touch, Event *event) {CC_UNUSED_PARAM(touch); CC_UNUSED_PARAM(event); return false;}
-    virtual void onTouchMoved(Touch *touch, Event *event) {CC_UNUSED_PARAM(touch); CC_UNUSED_PARAM(event);}
-    virtual void onTouchEnded(Touch *touch, Event *event) {CC_UNUSED_PARAM(touch); CC_UNUSED_PARAM(event);}
-    virtual void onTouchCancelled(Touch *touch, Event *event) {CC_UNUSED_PARAM(touch); CC_UNUSED_PARAM(event);}
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
+    virtual void onTouchMoved(Touch *touch, Event *unused_event); 
+    virtual void onTouchEnded(Touch *touch, Event *unused_event); 
+    virtual void onTouchCancelled(Touch *touch, Event *unused_event);
 
     // Deprecated touch callbacks.
-    CC_DEPRECATED_ATTRIBUTE virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *event) {CC_UNUSED_PARAM(touches); CC_UNUSED_PARAM(event);}
-    CC_DEPRECATED_ATTRIBUTE virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *event) {CC_UNUSED_PARAM(touches); CC_UNUSED_PARAM(event);}
-    CC_DEPRECATED_ATTRIBUTE virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *event) {CC_UNUSED_PARAM(touches); CC_UNUSED_PARAM(event);}
-    CC_DEPRECATED_ATTRIBUTE virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *event) {CC_UNUSED_PARAM(touches); CC_UNUSED_PARAM(event);}
-
+    CC_DEPRECATED_ATTRIBUTE virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
+    CC_DEPRECATED_ATTRIBUTE virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
+    CC_DEPRECATED_ATTRIBUTE virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
+    CC_DEPRECATED_ATTRIBUTE virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
     /** @deprecated Please override onAcceleration */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
-    CC_DEPRECATED_ATTRIBUTE virtual void onAcceleration(Acceleration* acc, Event* event);
+    CC_DEPRECATED_ATTRIBUTE virtual void onAcceleration(Acceleration* acc, Event* unused_event);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
@@ -155,7 +154,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
     CC_DEPRECATED_ATTRIBUTE virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
-    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; };
+    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; }
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);
 
     /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
@@ -166,21 +165,18 @@ public:
     //
 
 protected:      
-    CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
-
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
     EventListener* _touchListener;
     EventListenerKeyboard* _keyboardListener;
     EventListenerAcceleration* _accelerationListener;
-private:
-    //add the api for avoid use deprecated api  
-    void _addTouchListener();
-
+private:   
     Touch::DispatchMode _touchMode;
     bool _swallowsTouches;
 
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
 };
 
 #ifdef __apple__
