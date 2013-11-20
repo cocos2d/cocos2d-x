@@ -346,7 +346,7 @@ void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, f
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
 	memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
 	
-	for(unsigned int i = 0; i < count; i++)
+	for (long i = 0; i < count; i++)
     {
 		Vertex2F v0 = __v2f(verts[(i-1+count)%count]);
 		Vertex2F v1 = __v2f(verts[i]);
@@ -370,7 +370,7 @@ void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, f
 	V2F_C4B_T2F_Triangle *cursor = triangles;
 	
 	float inset = (outline == false ? 0.5 : 0.0);
-	for(unsigned int i = 0; i < count-2; i++)
+	for (long i = 0; i < count-2; i++)
     {
 		Vertex2F v0 = v2fsub(__v2f(verts[0  ]), v2fmult(extrude[0  ].offset, inset));
 		Vertex2F v1 = v2fsub(__v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
