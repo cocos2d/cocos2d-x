@@ -72,20 +72,20 @@ typedef enum
 
 typedef void (cocos2d::Object::*SEL_TouchEvent)(cocos2d::Object*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
-/**
-*   @js NA
-*   @lua NA
-*/
+
 class UIWidget : public cocos2d::Object
 {
 public:    
     /**
      * Default constructor
+     * @js ctor
      */
     UIWidget(void);
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UIWidget();
     
@@ -877,12 +877,22 @@ public:
     virtual const char* getDescription() const;
     
     UIWidget* clone();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
     
     void updateSizeAndPosition();
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual Object* getUserObject() { return _userObject; }
     /**
      * @js NA
@@ -899,6 +909,8 @@ public:
      * The UserObject will be released in Node's destructure.
      *
      * @param userObject    A user assigned Object
+     * @js NA
+     * @lua NA
      */
     virtual void setUserObject(Object *userObject);
     /*temp action*/

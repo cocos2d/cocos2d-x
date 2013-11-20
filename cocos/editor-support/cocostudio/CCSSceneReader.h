@@ -45,6 +45,10 @@ public:
 
 public:
     static SceneReader* getInstance();
+    /**
+     *  @js purge
+     *  @lua destroySceneReader
+     */
     void purgeSceneReader();
     static const char* sceneReaderVersion();
     cocos2d::Node* createNodeWithSceneFile(const char *pszFileName);
