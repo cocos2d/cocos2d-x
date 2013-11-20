@@ -272,7 +272,7 @@ void UIPageView::updateChildrenSize()
     }
     
     cocos2d::Size selfSize = getSize();
-    for (unsigned int i=0; i<_pages->count(); i++)
+    for (long i=0; i<_pages->count(); i++)
     {
         UILayout* page = dynamic_cast<UILayout*>(_pages->getObjectAtIndex(i));
         page->setSize(selfSize);
