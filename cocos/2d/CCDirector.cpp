@@ -602,12 +602,12 @@ void Director::replaceScene(Scene *scene)
     _sendCleanupToScene = true;
     auto oldScene = (Scene*)_scenesStack->getObjectAtIndex(index - 1);
     if (oldScene != nullptr) {
-      oldScene->onPause();
+      oldScene->onPauseTransitionDidFinish();
     }
     _scenesStack->replaceObjectAtIndex(index - 1, scene);
 
     _nextScene = scene;
-    _nextScene->onResume();
+    _nextScene->onResumeTransitionDidFinish();
 }
 
 void Director::pushScene(Scene *scene)
@@ -617,12 +617,12 @@ void Director::pushScene(Scene *scene)
     _sendCleanupToScene = false;
     auto oldScene = (Scene*)_scenesStack->getLastObject();
     if (oldScene != nullptr) {
-      oldScene->onPause();
+      oldScene->onPauseTransitionDidFinish();
     }
 
     _scenesStack->addObject(scene);
     _nextScene = scene;
-    _nextScene->onResume();
+    _nextScene->onResumeTransitionDidFinish();
 }
 
 void Director::popScene(void)
@@ -630,7 +630,7 @@ void Director::popScene(void)
     CCASSERT(_runningScene != nullptr, "running scene should not null");
   
     auto lastScene = (Scene*)_scenesStack->getLastObject();
-    lastScene->onPause();
+    lastScene->onPauseTransitionDidFinish();
 
     _scenesStack->removeLastObject();
     unsigned int c = _scenesStack->count();
@@ -643,7 +643,7 @@ void Director::popScene(void)
     {
         _sendCleanupToScene = true;
         _nextScene = (Scene*)_scenesStack->getObjectAtIndex(c - 1);
-        _nextScene->onResume();
+        _nextScene->onResumeTransitionDidFinish();
     }
 }
 
@@ -670,7 +670,7 @@ void Director::popToSceneStackLevel(int level)
 
   
     auto lastScene = (Scene*)_scenesStack->getLastObject();
-    lastScene->onPause();
+    lastScene->onPauseTransitionDidFinish();
   
 	// pop stack until reaching desired level
 	while (c > level)
@@ -689,7 +689,7 @@ void Director::popToSceneStackLevel(int level)
 	}
 
     _nextScene = (Scene*)_scenesStack->getLastObject();
-    _nextScene->onResume();
+    _nextScene->onResumeTransitionDidFinish();
 	_sendCleanupToScene = false;
 }
 
@@ -812,7 +812,7 @@ void Director::pause()
     setAnimationInterval(1 / 4.0);
     _paused = true;
     auto currentScene = getRunningScene();
-    currentScene->onPause();
+    currentScene->onPauseTransitionDidFinish();
 }
 
 void Director::resume()
@@ -833,7 +833,7 @@ void Director::resume()
     _deltaTime = 0;
   
     auto currentScene = getRunningScene();
-    currentScene->onResume();
+    currentScene->onResumeTransitionDidFinish();
 }
 
 // display the FPS using a LabelAtlas

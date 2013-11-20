@@ -229,12 +229,12 @@ void SceneTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
-void SceneTestScene::onResume()
+void SceneTestScene::onResumeTransitionDidFinish()
 {
-  CCLOG("SceneTestScene::onResume");
+  CCLOG("SceneTestScene::onResumeTransitionDidFinish");
 }
 
-void SceneTestScene::onPause()
+void SceneTestScene::onPauseTransitionDidFinish()
 {
-  CCLOG("SceneTestScene::onPause");
+  CCLOG("SceneTestScene::onPauseTransitionDidFinish");
 }
