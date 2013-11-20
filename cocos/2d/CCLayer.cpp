@@ -127,6 +127,12 @@ int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const st
 #pragma warning (disable: 4996)
 #endif
 
+/// isTouchEnabled getter
+bool Layer::isTouchEnabled() const
+{
+    return _touchEnabled;
+}
+
 /// isTouchEnabled setter
 void Layer::setTouchEnabled(bool enabled)
 {
