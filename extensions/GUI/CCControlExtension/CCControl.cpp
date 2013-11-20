@@ -68,8 +68,6 @@ bool Control::init()
 {
     if (Layer::init())
     {
-        //this->setTouchEnabled(true);
-        //_isTouchEnabled=true;
         // Initialise instance variables
         _state=Control::State::NORMAL;
         setEnabled(true);

@@ -40,6 +40,8 @@ class TextFieldTTF;
 class CC_DLL TextFieldDelegate
 {
 public:
+    virtual ~TextFieldDelegate() {}
+
     /**
     @brief    If the sender doesn't want to attach to the IME, return true;
     */

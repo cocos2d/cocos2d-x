@@ -210,7 +210,7 @@ Sequence* Sequence::create(Array* arrayOfActions)
 
         if (count > 1)
         {
-            for (unsigned int i = 1; i < count; ++i)
+            for (long i = 1; i < count; ++i)
             {
                 prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
             }
@@ -220,7 +220,7 @@ Sequence* Sequence::create(Array* arrayOfActions)
             // If only one action is added to Sequence, make up a Sequence by adding a simplest finite time action.
             prev = createWithTwoActions(prev, ExtraAction::create());
         }
-        pRet = (Sequence*)prev;
+        pRet = static_cast<Sequence*>(prev);
     }while (0);
     return pRet;
 }

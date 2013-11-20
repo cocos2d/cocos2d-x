@@ -38,7 +38,9 @@ NS_CC_BEGIN
 class CC_DLL RGBAProtocol
 {
 public:
-    /** 
+    virtual ~RGBAProtocol() {}
+
+    /**
      * Changes the color with R,G,B bytes
      *
      * @param color Example: Color3B(255,100,0) means R=255, G=100, B=0
@@ -165,6 +167,8 @@ public:
 class CC_DLL BlendProtocol
 {
 public:
+    virtual ~BlendProtocol() {}
+
     /**
      * Sets the source blending function.
      *
@@ -197,6 +201,7 @@ public:
 class CC_DLL TextureProtocol : public BlendProtocol
 {
 public:
+    virtual ~TextureProtocol() {}
     /**
      * Returns the currently used texture
      *
@@ -222,6 +227,8 @@ public:
 class CC_DLL LabelProtocol
 {
 public:
+    virtual ~LabelProtocol() {}
+
     /**
      * Sets a new label using a string
      *
@@ -247,7 +254,9 @@ public:
 class CC_DLL DirectorDelegate
 {
 public:
-    /** 
+    virtual ~DirectorDelegate() {}
+
+    /**
      * Will be called by Director when the projection is updated, and "custom" projection is used
      * @js NA
      * @lua NA
