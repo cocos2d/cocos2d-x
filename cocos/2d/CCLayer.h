@@ -185,10 +185,6 @@ private:
 
 };
 
-#ifdef __apple__
-#pragma mark -
-#pragma mark LayerRGBA
-#endif
 
 /** LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
  
