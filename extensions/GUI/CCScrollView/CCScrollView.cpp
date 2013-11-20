@@ -177,10 +177,16 @@ void ScrollView::resume(Object* sender)
     _container->resume();
 }
 
+bool ScrollView::isTouchEnabled() const
+{
+	return _touchListener != nullptr;
+}
+
 void ScrollView::setTouchEnabled(bool enabled)
 {
     _eventDispatcher->removeEventListener(_touchListener);
-    
+    _touchListener = nullptr;
+
     if (enabled)
     {
         _touchListener = EventListenerTouchOneByOne::create();
