@@ -58,8 +58,10 @@ public: \
 namespace cocostudio {
 
 /**
-* The base node include a lot of attributes.
-*/
+ * The base node include a lot of attributes.
+ * @js NA
+ * @lua NA
+ */
 class  BaseData : public cocos2d::Object
 {
 public:
@@ -125,7 +127,10 @@ enum DisplayType
 
     CS_DISPLAY_MAX
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  DisplayData : public cocos2d::Object
 {
 public:
@@ -147,7 +152,10 @@ public:
 };
 
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  SpriteDisplayData : public DisplayData
 {
 public:
@@ -179,7 +187,10 @@ public:
     BaseData skinData;
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  ArmatureDisplayData  : public DisplayData
 {
 public:
@@ -209,7 +220,10 @@ public:
 
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  ParticleDisplayData : public DisplayData
 {
 public:
@@ -238,6 +252,8 @@ public:
 * BoneData used to init a Bone.
 * BoneData keeps a DisplayData list, a Bone can have many display to change.
 * The display information saved in the DisplayData
+* @js NA
+* @lua NA
 */
 class  BoneData : public BaseData
 {
@@ -270,6 +286,8 @@ public:
 * ArmatureData saved the Armature name and Bonedata needed for the CCBones in this Armature
 * When we create a Armature, we need to get each Bone's BoneData as it's init information.
 * So we can get a BoneData from the Dictionary saved in the ArmatureData.
+* @js NA
+* @lua NA
 */
 class  ArmatureData : public cocos2d::Object
 {
@@ -313,7 +331,10 @@ enum BlendType
     BLEND_ERASE
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  FrameData : public BaseData
 {
 public:
@@ -353,7 +374,10 @@ public:
     std::string strSoundEffect;
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  MovementBoneData : public cocos2d::Object
 {
 public:
@@ -382,7 +406,10 @@ public:
     cocos2d::Array frameList;
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  MovementData : public cocos2d::Object
 {
 public:
@@ -442,6 +469,8 @@ public:
 *  AnimationData include all movement infomation for the Armature
 *  The struct is AnimationData -> MovementData -> MovementBoneData -> FrameData
 *                                              -> MovementFrameData
+*  @js NA
+*  @lua NA
 */
 class  AnimationData : public cocos2d::Object
 {
@@ -482,6 +511,8 @@ struct ContourVertex2 : public cocos2d::Object
 
 /*
 * ContourData include a contour vertex information
+* @js NA
+* @lua NA
 */
 class  ContourData : public cocos2d::Object
 {
@@ -509,6 +540,8 @@ public:
 
 /*
 * TextureData include a texture's information
+* @js NA
+* @lua NA
 */
 class  TextureData : public cocos2d::Object
 {

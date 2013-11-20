@@ -39,11 +39,14 @@ class UILayer : public cocos2d::Layer
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILayer();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UILayer();
     
@@ -54,14 +57,36 @@ public:
     
     //initializes state of uilayer.
     virtual bool init() override;
-    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit() override;
     virtual void onEnterTransitionDidFinish() override;
-    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual bool onTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onTouchEnded(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onTouchCancelled(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
     
     /**
@@ -109,6 +134,8 @@ public:
      * UIInputManager is the touch manager of UILayer.
      *
      * @return UIInputManager.
+     * @js NA
+     * @lua NA
      */
     UIInputManager* getInputManager();
     
