@@ -481,8 +481,24 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     // destory the body's joints
     for (auto joint : body->_joints)
     {
-        removeJoint(joint, true);
+        // set destroy param to false to keep the iterator available
+        removeJoint(joint, false);
+        
+        PhysicsBody* other = (joint->getBodyA() == body ? joint->getBodyB() : body);
+        other->removeJoint(joint);
+        
+        // test the distraction is delaied or not
+        if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+        {
+            joint->_destoryMark = true;
+        }
+        else
+        {
+            delete joint;
+        }
     }
+    
+    body->_joints.clear();
     
     removeBodyOrDelay(body);
     _bodies->removeObject(body);
