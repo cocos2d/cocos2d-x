@@ -123,8 +123,8 @@ public:
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
     */
-    CC_DEPRECATED_ATTRIBUTE virtual bool isTouchEnabled() const;
-    CC_DEPRECATED_ATTRIBUTE virtual void setTouchEnabled(bool value);
+    CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
+    CC_DEPRECATED_ATTRIBUTE void setTouchEnabled(bool value);
     
     CC_DEPRECATED_ATTRIBUTE virtual void setTouchMode(Touch::DispatchMode mode);
     CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
