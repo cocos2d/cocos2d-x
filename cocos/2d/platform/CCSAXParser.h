@@ -39,6 +39,8 @@ typedef unsigned char CC_XML_CHAR;
 class CC_DLL SAXDelegator
 {
 public:
+    virtual ~SAXDelegator() {}
+
     /**
      * @js NA
      * @lua NA
