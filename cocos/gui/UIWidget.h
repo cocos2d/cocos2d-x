@@ -613,6 +613,10 @@ public:
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     virtual bool isCascadeColorEnabled();
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     void setBlendFunc(cocos2d::BlendFunc blendFunc);
     
     //cocos action

@@ -51,6 +51,10 @@ public:
     virtual void addChild(cocos2d::Node *pChild, int zOrder) override;
     virtual void addChild(cocos2d::Node *pChild, int zOrder, int tag) override;
     virtual void removeChild(cocos2d::Node* child, bool cleanup) override;
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void visit() override;
     /**
      *  @js NA
