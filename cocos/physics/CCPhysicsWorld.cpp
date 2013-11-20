@@ -484,7 +484,7 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
         // set destroy param to false to keep the iterator available
         removeJoint(joint, false);
         
-        PhysicsBody* other = (joint->getBodyA() == body ? body : joint->getBodyB());
+        PhysicsBody* other = (joint->getBodyA() == body ? joint->getBodyB() : body);
         other->removeJoint(joint);
         
         // test the distraction is delaied or not
