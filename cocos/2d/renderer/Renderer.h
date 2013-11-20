@@ -37,10 +37,11 @@ public:
     //TODO support multiple viewport
     void addCommand(RenderCommand* command);
     void addCommand(RenderCommand* command, int renderQueue);
+    void pushGroup(int renderQueueID);
+    void popGroup();
+    
     int createRenderQueue();
     void render();
-
-    inline void setCurrentRenderQueue(int renderQueueID) { _currRenderQueueID = renderQueueID; }
 
 protected:
     Renderer();
@@ -54,10 +55,10 @@ protected:
     void flush();
 
 protected:
+    stack<int> _commandGroupStack;
+    
     stack<RenderStackElement> _renderStack;
     vector<RenderQueue> _renderGroups;
-
-    int _currRenderQueueID;
 
     int _lastMaterialID;
 

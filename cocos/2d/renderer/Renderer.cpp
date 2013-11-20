@@ -3,13 +3,11 @@
 //
 
 
-#include <OpenGL/OpenGL.h>
 #include "Renderer.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CustomCommand.h"
 #include "QuadCommand.h"
-#include "CCGL.h"
 #include "GroupCommand.h"
 
 
@@ -42,8 +40,8 @@ Renderer::Renderer()
 ,_firstCommand(0)
 ,_lastCommand(0)
 {
-    _currRenderQueueID = DEFAULT_RENDER_QUEUE;
-
+    _commandGroupStack.push(DEFAULT_RENDER_QUEUE);
+    
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
     _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
@@ -112,7 +110,7 @@ void Renderer::setupVBOAndVAO()
 void Renderer::addCommand(RenderCommand* command)
 {
     command->generateID();
-    _renderGroups[_currRenderQueueID].push_back(command);
+    _renderGroups[_commandGroupStack.top()].push_back(command);
 }
 
 void Renderer::addCommand(RenderCommand* command, int renderQueue)
@@ -121,11 +119,21 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     _renderGroups[renderQueue].push_back(command);
 }
 
+void Renderer::pushGroup(int renderQueueID)
+{
+    _commandGroupStack.push(renderQueueID);
+}
+
+void Renderer::popGroup()
+{
+    _commandGroupStack.pop();
+}
+
 int Renderer::createRenderQueue()
 {
     RenderQueue newRenderQueue;
     _renderGroups.push_back(newRenderQueue);
-    return _renderGroups.size() - 1;
+    return (int)_renderGroups.size() - 1;
 }
 
 bool compareRenderCommand(RenderCommand* a, RenderCommand* b)

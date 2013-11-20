@@ -82,28 +82,31 @@ NewClippingNode::NewClippingNode()
 void NewClippingNode::visit()
 {
     //Add group command
+    
+    Renderer* renderer = Renderer::getInstance();
+    
     GroupCommand* groupCommand = new GroupCommand(0,_vertexZ);
-    Renderer::getInstance()->addCommand(groupCommand);
+    renderer->addCommand(groupCommand);
 
-    Renderer::getInstance()->setCurrentRenderQueue(groupCommand->getRenderQueueID());
+    renderer->pushGroup(groupCommand->getRenderQueueID());
 
     CustomCommand* beforeVisitCmd = new CustomCommand(0,_vertexZ);
     beforeVisitCmd->func = CC_CALLBACK_0(NewClippingNode::beforeVisit, this);
-    Renderer::getInstance()->addCommand(beforeVisitCmd, groupCommand->getRenderQueueID());
+    renderer->addCommand(beforeVisitCmd, groupCommand->getRenderQueueID());
 
     _stencil->visit();
 
     CustomCommand* afterDrawStencilCmd = new CustomCommand(0,_vertexZ);
     afterDrawStencilCmd->func = CC_CALLBACK_0(NewClippingNode::afterDrawStencil, this);
-    Renderer::getInstance()->addCommand(afterDrawStencilCmd, groupCommand->getRenderQueueID());
+    renderer->addCommand(afterDrawStencilCmd, groupCommand->getRenderQueueID());
 
     Node::visit();
 
     CustomCommand* afterVisitCmd = new CustomCommand(0,_vertexZ);
     afterVisitCmd->func = CC_CALLBACK_0(NewClippingNode::afterVisit, this);
-    Renderer::getInstance()->addCommand(afterVisitCmd, groupCommand->getRenderQueueID());
+    renderer->addCommand(afterVisitCmd, groupCommand->getRenderQueueID());
 
-    Renderer::getInstance()->setCurrentRenderQueue(DEFAULT_RENDER_QUEUE);
+    renderer->popGroup();
 }
 
 void NewClippingNode::beforeVisit()
