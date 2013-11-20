@@ -445,8 +445,7 @@ void PhysicsBody::applyTorque(float torque)
 
 void PhysicsBody::setMass(float mass)
 {
-    // cann't set mass for static body manually
-    if (mass <= 0 || !_dynamic)
+    if (mass <= 0)
     {
         return;
     }
@@ -470,17 +469,15 @@ void PhysicsBody::setMass(float mass)
         }
     }
     
-    cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+    // the static body's mass and moment is always infinity
+    if (_dynamic)
+    {
+        cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+    }
 }
 
 void PhysicsBody::addMass(float mass)
 {
-    // cann't set mass for static body manually
-    if (!_dynamic)
-    {
-        return;
-    }
-    
     if (mass == PHYSICS_INFINITY)
     {
         _mass = PHYSICS_INFINITY;
@@ -518,17 +515,15 @@ void PhysicsBody::addMass(float mass)
         }
     }
     
-    cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+    // the static body's mass and moment is always infinity
+    if (_dynamic)
+    {
+        cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+    }
 }
 
 void PhysicsBody::addMoment(float moment)
 {
-    // cann't set moment for static body manually
-    if (!_dynamic)
-    {
-        return;
-    }
-    
     if (moment == PHYSICS_INFINITY)
     {
         // if moment is INFINITY, the moment of the body will become INFINITY
@@ -563,7 +558,8 @@ void PhysicsBody::addMoment(float moment)
         }
     }
     
-    if (_rotationEnable)
+    // the static body's mass and moment is always infinity
+    if (_rotationEnable && _dynamic)
     {
         cpBodySetMoment(_info->getBody(), PhysicsHelper::float2cpfloat(_moment));
     }
@@ -571,9 +567,9 @@ void PhysicsBody::addMoment(float moment)
 
 void PhysicsBody::setVelocity(const Point& velocity)
 {
-    // cann't set velocity for a static body
     if (!_dynamic)
     {
+        CCLOG("physics warning: your cann't set velocity for a static body.");
         return;
     }
     
@@ -597,9 +593,9 @@ Point PhysicsBody::getVelocityAtWorldPoint(const Point& point)
 
 void PhysicsBody::setAngularVelocity(float velocity)
 {
-    // cann't set angular velocity for a static body
     if (!_dynamic)
     {
+        CCLOG("physics warning: your cann't set angular velocity for a static body.");
         return;
     }
     
@@ -633,16 +629,11 @@ float PhysicsBody::getAngularVelocityLimit()
 
 void PhysicsBody::setMoment(float moment)
 {
-    // cann't set moment for static body manually
-    if (!_dynamic)
-    {
-        return;
-    }
-    
     _moment = moment;
     _momentDefault = false;
     
-    if (_rotationEnable)
+    // the static body's mass and moment is always infinity
+    if (_rotationEnable && _dynamic)
     {
         cpBodySetMoment(_info->getBody(), PhysicsHelper::float2cpfloat(_moment));
     }
