@@ -50,6 +50,8 @@ class Node;
 class CC_DLL TransitionEaseScene// : public Object
 {
 public:
+    virtual ~TransitionEaseScene() {}
+
     /** returns the Ease action that will be performed on a linear action.
     @since v0.8.2
     */
