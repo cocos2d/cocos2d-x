@@ -38,20 +38,19 @@ typedef enum
 typedef void (cocos2d::Object::*SEL_SelectedStateEvent)(cocos2d::Object*,CheckBoxEventType);
 #define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
 
-/**
-*   @js NA
-*   @lua NA
-*/
 class UICheckBox : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UICheckBox();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UICheckBox();
     
@@ -152,7 +151,10 @@ public:
     //override "isFlipY" method of widget.
     virtual bool isFlipY() override;
     
-    //override "onTouchEnded" method of widget.
+    /** override "onTouchEnded" method of widget.
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onTouchEnded(const cocos2d::Point &touchPoint) override;
     
     //override "getContentSize" method of widget.

@@ -34,7 +34,10 @@ class Skin;
 class Bone;
 class DecorativeDisplay;
 class DisplayData;
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class DisplayFactory
 {
 public:
