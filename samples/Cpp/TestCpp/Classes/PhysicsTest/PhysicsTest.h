@@ -55,7 +55,7 @@ protected:
     PhysicsTestScene* _scene;
     Texture2D* _spriteTexture;    // weak ref
     SpriteBatchNode* _ball;
-    std::map<int, Node*> _mouses;
+    std::unordered_map<int, Node*> _mouses;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo

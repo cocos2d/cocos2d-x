@@ -21,7 +21,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 #include "CCEGLView.h"
+
+#include <unordered_map>
+
 #include "EAGLView.h"
 #include "CCDirector.h"
 #include "CCSet.h"
@@ -34,7 +38,7 @@
 NS_CC_BEGIN
 
 
-static std::map<int, EventKeyboard::KeyCode> g_keyCodeMap = {
+static std::unordered_map<int, EventKeyboard::KeyCode> g_keyCodeMap = {
     /* The unknown key */
     { GLFW_KEY_UNKNOWN         , EventKeyboard::KeyCode::KEY_NONE          },
     
