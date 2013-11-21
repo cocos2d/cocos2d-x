@@ -35,10 +35,8 @@ NS_CC_EXT_BEGIN
  */
 class CCComController : public cocos2d::CCComponent, public CCInputDelegate
 {
-protected:
-    CCComController(void);
-    
 public:
+   CCComController(void);
    virtual ~CCComController(void);
    virtual bool init();
    virtual void onEnter();
