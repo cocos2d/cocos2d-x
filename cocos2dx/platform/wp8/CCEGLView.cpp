@@ -477,14 +477,14 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 	{
 		case DisplayOrientations::Landscape:
 		case DisplayOrientations::LandscapeFlipped:
-            glViewport((GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
-                       (GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+            glScissor((GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
+                       (GLint)((m_obViewPortRect.size.width - ((x + w) * m_fScaleX)) + m_obViewPortRect.origin.x),
                        (GLsizei)(h * m_fScaleY),
                        (GLsizei)(w * m_fScaleX));
 			break;
 
         default:
-            glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+            glScissor((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
                        (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
                        (GLsizei)(w * m_fScaleX),
                        (GLsizei)(h * m_fScaleY));
