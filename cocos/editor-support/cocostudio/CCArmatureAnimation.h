@@ -236,16 +236,22 @@ protected:
 
     /**
      * Update(float dt) will call this handler, you can handle your logic here
+     * @js NA
+     * @lua NA
      */
     void updateHandler();
 
     /**
      * Update current key frame, and process auto stop, pause
+     * @js NA
+     * @lua NA
      */
     void updateFrameData(float currentPercent);
 
     /**
      * Emit a frame event
+     * @js NA
+     * @lua NA
      */
     void frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 

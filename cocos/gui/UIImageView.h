@@ -29,20 +29,19 @@
 
 namespace gui {
 
-/**
-*   @js NA
-*   @lua NA
-*/
 class UIImageView : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UIImageView();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UIImageView();
     
@@ -95,10 +94,16 @@ public:
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const cocos2d::Point &pt) override;
     
-    //override "onTouchBegan" method of widget.
+    /** override "onTouchBegan" method of widget.
+     *  @js NA
+     *  @lua NA
+     */
     virtual bool onTouchBegan(const cocos2d::Point &touchPoint) override;
     
-    //override "onTouchEnded" method of widget.
+    /** override "onTouchEnded" method of widget.
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onTouchEnded(const cocos2d::Point &touchPoint) override;
     
     //override "ignoreContentAdaptWithSize" method of widget.
@@ -110,7 +115,14 @@ public:
     virtual const char* getDescription() const override;
     
     void setDoubleClickEnabled(bool able);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     void doubleClickEvent();
+    /**
+     *  @js NA
+     */
     void checkDoubleClick(float dt);
     virtual const cocos2d::Size& getContentSize() const override;
     virtual cocos2d::Node* getVirtualRenderer() override;

@@ -37,20 +37,19 @@ typedef enum
 typedef void (cocos2d::Object::*SEL_SlidPercentChangedEvent)(cocos2d::Object*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
-/**
-*   @js NA
-*   @lua NA
-*/
 class UISlider : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UISlider();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UISlider();
     

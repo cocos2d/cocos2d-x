@@ -29,20 +29,19 @@
 
 namespace gui{
 
-/**
-*   @js NA
-*   @lua NA
-*/
 class UIButton : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UIButton();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UIButton();
     
