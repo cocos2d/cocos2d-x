@@ -154,11 +154,4 @@ Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path)
 #endif
 
 
-
-
-
-
-
-
-
 NS_CC_END

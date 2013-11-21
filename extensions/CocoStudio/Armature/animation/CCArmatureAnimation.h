@@ -76,7 +76,13 @@ public:
      */
     static CCArmatureAnimation *create(CCArmature *armature);
 public:
+    /**
+     *  @js ctor
+     */
     CCArmatureAnimation();
+    /**
+     *  @js NA
+     */
     virtual ~CCArmatureAnimation(void);
 
     /**
@@ -201,7 +207,6 @@ public:
      * Returns a user assigned CCObject
      *
      * @return A user assigned CCObject
-     * @js NA
      */
     virtual CCObject* getUserObject();
     /**

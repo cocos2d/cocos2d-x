@@ -45,7 +45,10 @@ struct b2Filter;
 NS_CC_EXT_BEGIN
 
 class CCBone;
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCColliderFilter
 {
 public:

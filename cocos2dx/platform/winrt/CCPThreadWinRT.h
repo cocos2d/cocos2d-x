@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2010 cocos2d-x.org
+Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,43 +23,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCDECORATIVEDISPLAY_H__
-#define __CCDECORATIVEDISPLAY_H__
+#ifndef __CCPTHREADWINRT_H__
+#define __CCPTHREADWINRT_H__
 
-#include "../utils/CCArmatureDefine.h"
-#include "CCDisplayFactory.h"
-#include "../datas/CCDatas.h"
+#include "platform/CCPlatformMacros.h"
+
+#include <Windows.h>
+
+NS_CC_BEGIN
+
+typedef HANDLE pthread_t;
+typedef HANDLE pthread_mutex_t;
+typedef int pthread_cond_t;
+#define pthread_cond_wait(x, y)
+
+void pthread_mutex_init(pthread_mutex_t* m, void* attributes);
+
+int pthread_mutex_lock(pthread_mutex_t* m);
+
+int pthread_mutex_unlock(pthread_mutex_t* m);
+
+void pthread_mutex_destroy(pthread_mutex_t* m);
+
+#define pthread_cond_destroy(x)
+#define pthread_cond_signal(x)
+#define pthread_cond_init(x, y)
 
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-#include "../physics/CCColliderDetector.h"
-#endif
 
-NS_CC_EXT_BEGIN
-/**
- *  @js NA
- *  @lua NA
- */
-class  CCDecorativeDisplay: public CCObject
-{
-public:
-    static CCDecorativeDisplay *create();
-public:
-    CCDecorativeDisplay(void);
-    ~CCDecorativeDisplay(void);
 
-    virtual bool init();
+NS_CC_END
 
-protected:
-
-    CC_SYNTHESIZE_RETAIN(CCNode *, m_pDisplay, Display);
-    CC_SYNTHESIZE_RETAIN(CCDisplayData *, m_pDisplayData, DisplayData);
-
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_SYNTHESIZE_RETAIN(CCColliderDetector *, m_pColliderDetector, ColliderDetector);
-#endif
-};
-
-NS_CC_EXT_END
-
-#endif /*__CCDECORATIVEDISPLAY_H__*/
+#endif // __CCPTHREADWINRT_H__

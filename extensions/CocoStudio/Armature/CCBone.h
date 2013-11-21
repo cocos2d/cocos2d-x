@@ -35,8 +35,8 @@ NS_CC_EXT_BEGIN
 
 class CCArmature;
 /**
-*   @lua NA
-*/
+ * @lua NA
+ */
 class CCBone : public CCNodeRGBA
 {
 public:
@@ -54,7 +54,13 @@ public:
     static CCBone *create(const char *name);
 
 public:
+    /**
+     *  @js ctor
+     */
     CCBone();
+    /**
+     *  @js NA
+     */
     virtual ~CCBone(void);
 
     /**
