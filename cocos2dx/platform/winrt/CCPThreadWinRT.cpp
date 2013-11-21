@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,44 +22,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CCDECORATIVEDISPLAY_H__
-#define __CCDECORATIVEDISPLAY_H__
-
-#include "../utils/CCArmatureDefine.h"
-#include "CCDisplayFactory.h"
-#include "../datas/CCDatas.h"
+#include "CCPThreadWinRT.h"
 
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-#include "../physics/CCColliderDetector.h"
-#endif
+NS_CC_BEGIN
 
-NS_CC_EXT_BEGIN
-/**
- *  @js NA
- *  @lua NA
- */
-class  CCDecorativeDisplay: public CCObject
+void pthread_mutex_init(pthread_mutex_t* m, void* attributes) {
+	*m = CreateMutexEx(NULL,FALSE,0,NULL);
+}
+
+int pthread_mutex_lock(pthread_mutex_t* m) {
+	return WaitForSingleObjectEx(*m,INFINITE,FALSE);
+}
+
+int pthread_mutex_unlock(pthread_mutex_t* m) {
+	return ReleaseMutex(*m);
+}
+
+void pthread_mutex_destroy(pthread_mutex_t* m) 
 {
-public:
-    static CCDecorativeDisplay *create();
-public:
-    CCDecorativeDisplay(void);
-    ~CCDecorativeDisplay(void);
+	if(m)
+	{
+		CloseHandle(*m);
+	}
+}
 
-    virtual bool init();
 
-protected:
-
-    CC_SYNTHESIZE_RETAIN(CCNode *, m_pDisplay, Display);
-    CC_SYNTHESIZE_RETAIN(CCDisplayData *, m_pDisplayData, DisplayData);
-
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_SYNTHESIZE_RETAIN(CCColliderDetector *, m_pColliderDetector, ColliderDetector);
-#endif
-};
-
-NS_CC_EXT_END
-
-#endif /*__CCDECORATIVEDISPLAY_H__*/
+NS_CC_END

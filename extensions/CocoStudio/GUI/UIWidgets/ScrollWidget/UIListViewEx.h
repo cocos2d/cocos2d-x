@@ -32,7 +32,7 @@ NS_CC_EXT_BEGIN
 
 typedef enum
 {
-    LISTVIEWEX_ONSELECEDTITEM
+    LISTVIEWEX_ONSELECTEDITEM
 }ListViewExEventType;
 
 typedef void (cocos2d::CCObject::*SEL_ListViewExEvent)(cocos2d::CCObject*,ListViewExEventType);
@@ -49,6 +49,10 @@ typedef enum
     LISTVIEW_GRAVITY_CENTER_VERTICAL,
 }ListViewGravity;
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class UIListViewEx : public UIScrollView
 {
     
@@ -169,6 +173,10 @@ public:
     virtual const char* getDescription() const;
 
 protected:
+    virtual bool addChild(UIWidget* widget){return UIScrollView::addChild(widget);};
+    virtual bool removeChild(UIWidget* widget){return UIScrollView::removeChild(widget);};
+    virtual void removeAllChildren(){UIScrollView::removeAllChildren();};
+    virtual CCArray* getChildren(){return UIScrollView::getChildren();};
     virtual bool init();
     void updateInnerContainerSize();
     void remedyLayoutParameter(UIWidget* item);

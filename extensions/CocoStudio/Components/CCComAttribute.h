@@ -32,36 +32,39 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class CCComAttribute : public cocos2d::CCComponent
 {
 protected:
+    /**
+     *  @js ctor
+     */
     CCComAttribute(void);
+    /**
+     *  @js NA
+     */
     virtual ~CCComAttribute(void);
     
 public:
    virtual bool init();
    static CCComAttribute* create(void);
-
+   
    void setInt(const char *key, int value);
-   void setDouble(const char *key, double value);
    void setFloat(const char *key, float value);
    void setBool(const char *key, bool value);
    void setCString(const char *key, const char *value);
-   void setObject(const char *key, CCObject *value);
    
    int    getInt(const char *key) const;
-   double getDouble(const char *key) const;
    float  getFloat(const char *key) const;
    bool   getBool(const char *key) const;
    const char* getCString(const char *key) const;
-   CCObject* getObject(const char *key) const;
-   
+   /**
+    *  @js NA
+    */
    cs::CSJsonDictionary* getDict();
+
 private:
-   CCDictionary *m_pAttributes;  
    cs::CSJsonDictionary *m_pJsonDict;
 };
 
