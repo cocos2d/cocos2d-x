@@ -32,14 +32,18 @@ namespace gui {
 
 /**
  *  @js NA
- *  @lua NA
  */
 class UICCTextField: public cocos2d::TextFieldTTF, public cocos2d::TextFieldDelegate
 {
 public:
     UICCTextField();
+    /**
+     *  @lua NA
+     */
     ~UICCTextField();
-    
+    /**
+     *  @lua NA
+     */
     virtual void onEnter();
     
     // static
@@ -97,13 +101,18 @@ typedef void (cocos2d::Object::*SEL_TextFieldEvent)(cocos2d::Object*, TextFiledE
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
 /** class UITextField : public UIWidget
-*   @js NA
-*   @lua NA
-*/
+ */
 class UITextField : public UIWidget
 {
 public:
+    /**
+     *  @js ctor
+     */
     UITextField();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~UITextField();
     static UITextField* create();
     virtual bool init() override;

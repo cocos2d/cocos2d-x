@@ -27,10 +27,6 @@
 
 namespace gui {
 
-/**
-*   @js NA
-*   @lua NA
-*/
 class UIHelper
 {
 public:
