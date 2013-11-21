@@ -74,11 +74,11 @@ static char *_js_log_buf = NULL;
 static std::vector<sc_register_sth> registrationList;
 
 // name ~> JSScript map
-static std::map<std::string, JSScript*> filename_script;
+static std::unordered_map<std::string, JSScript*> filename_script;
 // port ~> socket map
-static std::map<int,int> ports_sockets;
+static std::unordered_map<int,int> ports_sockets;
 // name ~> globals
-static std::map<std::string, js::RootedObject*> globals;
+static std::unordered_map<std::string, js::RootedObject*> globals;
 
 static void ReportException(JSContext *cx)
 {
