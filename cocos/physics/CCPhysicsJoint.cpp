@@ -71,19 +71,15 @@ bool PhysicsJoint::init(cocos2d::PhysicsBody *a, cocos2d::PhysicsBody *b)
 {
     do
     {
+        CCASSERT(a != nullptr && b != nullptr, "the body passed in is nil");
+        CCASSERT(a != b, "the two bodies are equal");
+        
         CC_BREAK_IF(!(_info = new PhysicsJointInfo(this)));
         
-        if (a != nullptr)
-        {
-            _bodyA = a;
-            _bodyA->_joints.push_back(this);
-        }
-        
-        if (b != nullptr)
-        {
-            _bodyB = b;
-            _bodyB->_joints.push_back(this);
-        }
+        _bodyA = a;
+        _bodyA->_joints.push_back(this);
+        _bodyB = b;
+        _bodyB->_joints.push_back(this);
         
         return true;
     } while (false);
