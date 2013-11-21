@@ -32,6 +32,9 @@ namespace cocostudio {
 class ComRender : public cocos2d::Component
 {
 protected:
+    /**
+     *  @js ctor
+     */
     ComRender(void);
     ComRender(cocos2d::Node *node, const char *comName);
     /**

@@ -35,20 +35,16 @@ THE SOFTWARE.
 #endif
 
 namespace cocostudio {
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  DecorativeDisplay: public cocos2d::Object
 {
 public:
     static DecorativeDisplay *create();
 public:
-	/**
-     * @js ctor
-     */
     DecorativeDisplay(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
     ~DecorativeDisplay(void);
 
     virtual bool init();

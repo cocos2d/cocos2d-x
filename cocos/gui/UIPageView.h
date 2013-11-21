@@ -49,11 +49,14 @@ class UIPageView : public UILayout , public UIScrollInterface
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UIPageView();
     
     /**
      * Default destructor
+     * @lua NA
+     * @js NA
      */
     virtual ~UIPageView();
     
@@ -127,16 +130,28 @@ public:
     
 
     
-    //override "onTouchBegan" method of widget.
+    /**override "onTouchBegan" method of widget.
+     *  @js NA
+     *  @lua NA
+     */
     virtual bool onTouchBegan(const cocos2d::Point &touchPoint) override;
     
-    //override "onTouchMoved" method of widget.
+    /**override "onTouchMoved" method of widget.
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onTouchMoved(const cocos2d::Point &touchPoint) override;
     
-    //override "onTouchEnded" method of widget.
+    /**override "onTouchEnded" method of widget.
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onTouchEnded(const cocos2d::Point &touchPoint) override;
     
-    //override "onTouchCancelled" method of widget.
+    /**override "onTouchCancelled" method of widget.
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onTouchCancelled(const cocos2d::Point &touchPoint) override;
     
     //override "update" method of widget.

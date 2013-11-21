@@ -46,18 +46,14 @@ enum AnimationType
 
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  ProcessBase : public cocos2d::Object
 {
 public:
-	/**
-     * @js ctor
-     */
     ProcessBase(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ProcessBase(void);
 
     /**
