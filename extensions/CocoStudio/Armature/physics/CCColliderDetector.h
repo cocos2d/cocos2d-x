@@ -83,6 +83,8 @@ public:
     CC_SYNTHESIZE(b2Fixture *, m_pFixture, B2Fixture)
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SYNTHESIZE(cpShape *, m_pShape, Shape)
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    CC_SYNTHESIZE_READONLY(CCArray *, m_pCalculatedVertexList, CalculatedVertexList);
 #endif
 
 public:
@@ -91,15 +93,15 @@ public:
 
     inline CCContourData *getContourData() { return m_pContourData; }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     void setColliderFilter(CCColliderFilter *filter);
     CCColliderFilter *getColliderFilter();
 private:
-    CCContourData *m_pContourData;
     CCColliderFilter *m_pFilter;
-
-#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    CC_SYNTHESIZE_READONLY(CCArray *, m_pCalculatedVertexList, CalculatedVertexList);
 #endif
+
+private:
+    CCContourData *m_pContourData;
 };
 
 /*
@@ -132,11 +134,14 @@ public:
 
     CCArray *getColliderBodyList();
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(CCColliderFilter *filter);
     virtual CCColliderFilter *getColliderFilter();
 protected:
-    CCArray *m_pColliderBodyList;
     CCColliderFilter *m_pFilter;
+#endif
+protected:
+    CCArray *m_pColliderBodyList;
 
     CC_SYNTHESIZE(CCBone *, m_pBone, Bone);
 

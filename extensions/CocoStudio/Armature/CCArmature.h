@@ -147,8 +147,11 @@ public:
 
     virtual CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
 
-
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(CCColliderFilter *filter);
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    virtual void drawContour();
+#endif
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     /**
