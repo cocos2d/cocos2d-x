@@ -33,21 +33,17 @@ namespace cocostudio {
 
 class Bone;
 
-//! DisplayManager manages Bone's display
+/**! DisplayManager manages Bone's display
+ *  @js NA
+ *  @lua NA
+ */
 class  DisplayManager : public cocos2d::Object
 {
 public:
     static DisplayManager *create(Bone *bone);
 
 public:
-	/**
-     * @js ctor
-     */
     DisplayManager();
-    /**
-     * @js NA
-     * @lua NA
-     */
     ~DisplayManager();
 
     bool init(Bone *bone);

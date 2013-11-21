@@ -31,7 +31,10 @@
 #define DICTOOL DictionaryHelper::shareHelper()
 
 namespace cocostudio {
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class DictionaryHelper
 {
 public:
