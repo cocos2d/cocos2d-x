@@ -1,0 +1,6 @@
+HelloCpp for Tizen
+==================
+
+   * Create Tizen IDE workspace in cocos2d-x/samples/Cpp/HelloCpp
+   * Import proj.tizen
+   * Copy cocos2d-x/samples/Cpp/HelloCpp/Resources/*.* to cocos2d-x/samples/Cpp/HelloCpp/proj.tizen/res
