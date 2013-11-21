@@ -276,13 +276,17 @@ void Renderer::drawBatchedQuads()
                 //Draw quads
                 if(quadsToDraw > 0)
                 {
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
                     glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//                    GL::bindVAO(0);
                     startQuad += quadsToDraw;
                     quadsToDraw = 0;
                 }
 
                 //Use new material
                 cmd->useMaterial();
+//                GL::bindVAO(_VAOname);
                 _lastMaterialID = cmd->getMaterialID();
             }
 
@@ -293,9 +297,13 @@ void Renderer::drawBatchedQuads()
     //Draw any remaining quad
     if(quadsToDraw > 0)
     {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
         glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
+    GL::bindVAO(0);
+    
     _firstCommand = _lastCommand;
     _numQuads = 0;
 }
