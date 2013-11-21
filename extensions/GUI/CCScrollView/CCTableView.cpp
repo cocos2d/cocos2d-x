@@ -392,7 +392,7 @@ int TableView::__indexFromOffset(Point offset)
         }
     }
 
-    if (low <= 0) {
+    if (low <= 0 && high >= 0) {
         return 0;
     }
 
@@ -472,7 +472,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     startIdx = this->_indexFromOffset(offset);
 	if (startIdx == CC_INVALID_INDEX)
 	{
-		startIdx = uCountOfItems - 1;
+		startIdx = 0;
 	}
 
     if (_vordering == VerticalFillOrder::TOP_DOWN)
