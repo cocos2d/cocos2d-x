@@ -11,10 +11,7 @@
 class PhysicsTestScene : public TestScene
 {
 public:
-    PhysicsTestScene()
-    :TestScene(false, true)
-    , _debugDraw(false)
-    {}
+    PhysicsTestScene();
     
 public:
     virtual void runThisTest();
@@ -24,6 +21,14 @@ public:
 private:
     bool _debugDraw;
 };
+
+#ifndef CC_USE_PHYSICS
+class PhysicsDemoDisabled : public BaseTest
+{
+public:
+    virtual void onEnter() override;
+};
+#else
 
 class PhysicsDemo : public BaseTest
 {
@@ -159,4 +164,5 @@ private:
     int _sliceTag;
 };
 
+#endif
 #endif
