@@ -35,20 +35,20 @@ typedef enum
     LAYOUT_PARAMETER_LINEAR,
     LAYOUT_PARAMETER_RELATIVE
 }LayoutParameterType;
-/**
-*   @js NA
-*   @lua NA
-*/
+
 class UILayoutParameter : public cocos2d::Object
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILayoutParameter() : _margin(UIMargin()){_layoutParameterType = LAYOUT_PARAMETER_NONE;};
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UILayoutParameter(){};
     
@@ -64,6 +64,8 @@ public:
      * @see UIMargin
      *
      * @param margin
+     * @js NA
+     * @lua NA
      */
     void setMargin(const UIMargin& margin);
     
@@ -73,6 +75,8 @@ public:
      * @see UIMargin
      *
      * @return const UIMargin&
+     * @js NA
+     * @lua NA
      */
     const UIMargin& getMargin() const;
     

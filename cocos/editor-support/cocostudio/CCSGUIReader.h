@@ -34,14 +34,34 @@ namespace cocostudio {
 class GUIReader : public cocos2d::Object
 {
 public:
+    /**
+     *  @js ctor
+     */
     GUIReader();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     ~GUIReader();
+    /**
+     *  @js getInstance
+     *  @lua getInstance
+     */
     static GUIReader* shareReader();
+    /**
+     *  @js purge
+     */
     static void purgeGUIReader();
     
     gui::UIWidget* widgetFromJsonFile(const char* fileName);
     int getVersionInteger(const char* str);
+    /**
+     *  @js NA
+     */
     void storeFileDesignSize(const char* fileName, const cocos2d::Size &size);
+    /**
+     *  @js NA
+     */
     const cocos2d::Size getFileDesignSize(const char* fileName) const;
 protected:
     std::string m_strFilePath;

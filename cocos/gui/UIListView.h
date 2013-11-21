@@ -56,11 +56,14 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     UIListView();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UIListView();
     

@@ -46,7 +46,10 @@ namespace cocostudio {
 
 class Bone;
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ColliderFilter
 {
 public:
@@ -124,6 +127,8 @@ private:
 
 /*
  *  @brief  ContourSprite used to draw the contour of the display
+ *  @js NA
+ *  @lua NA
  */
 class ColliderDetector : public cocos2d::Object
 {
