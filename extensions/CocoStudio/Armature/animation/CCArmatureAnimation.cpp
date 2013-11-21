@@ -225,7 +225,6 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
         else
         {
             m_eLoopType = ANIMATION_NO_LOOP;
-            m_iRawDuration --;
         }
         m_iDurationTween = durationTween;
     }
@@ -297,7 +296,7 @@ void CCArmatureAnimation::gotoAndPlay(int frameIndex)
     m_bIsComplete = m_bIsPause = false;
 
     CCProcessBase::gotoFrame(frameIndex);
-    m_fCurrentPercent = (float)m_iCurFrameIndex / (float)m_pMovementData->duration;
+    m_fCurrentPercent = (float)m_iCurFrameIndex / ((float)m_pMovementData->duration - 1);
     m_fCurrentFrame = m_iNextFrameIndex * m_fCurrentPercent;
 
     CCObject *object = NULL;
