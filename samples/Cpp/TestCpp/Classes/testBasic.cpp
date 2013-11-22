@@ -33,7 +33,7 @@ void TestScene::onEnter()
         /*
             ******    GCC Compiler issue on Android and Linux (CLANG compiler is ok)   ******
         We couldn't use 'Scene::create' directly since gcc will trigger
-        an error called "error: 'this' was not captured for this lambda function".
+        an error called "error: 'this' was not captured for this lambda function".
         This is because 'Scene' is the super class of TestScene, if we invoke 'Scene::create'
         directly in this lambda expression, gcc compiler found 'Scene::create' and it think
         that was the member function of 'TestScene' 's super class, but this lambda function doesn't
