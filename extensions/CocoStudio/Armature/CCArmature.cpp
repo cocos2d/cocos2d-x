@@ -758,7 +758,7 @@ void CCArmature::drawContour()
                 points[i].x = vertex->x;
                 points[i].y = vertex->y;
             }
-            ccDrawSolidPoly( points, length, ccc4f(0,1,0,0.5f) );
+            ccDrawPoly( points, length, true );
         }
     }
 }
