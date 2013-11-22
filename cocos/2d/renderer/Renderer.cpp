@@ -39,6 +39,7 @@ Renderer::Renderer()
 ,_numQuads(0)
 ,_firstCommand(0)
 ,_lastCommand(0)
+,_glViewAssigned(false)
 {
     _commandGroupStack.push(DEFAULT_RENDER_QUEUE);
     
@@ -50,15 +51,28 @@ Renderer::Renderer()
 Renderer::~Renderer()
 {
     _renderGroups.clear();
+    
+    glDeleteBuffers(2, _buffersVBO);
+    
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+        glDeleteVertexArrays(1, &_VAOname);
+        GL::bindVAO(0);
+//    }
 }
 
 bool Renderer::init()
 {
-    setupIndices();
-
-    setupVBOAndVAO();
-
     return true;
+}
+
+void Renderer::initGLView()
+{
+    setupIndices();
+    
+    setupVBOAndVAO();
+    
+    _glViewAssigned = true;
 }
 
 void Renderer::setupIndices()
@@ -148,80 +162,83 @@ void Renderer::render()
 
     //TODO setup camera or MVP
 
-    //Process render commands
-    //1. Sort render commands based on ID
-    for (auto it = _renderGroups.begin(); it != _renderGroups.end(); ++it)
+    if (_glViewAssigned)
     {
-        stable_sort((*it).begin(), (*it).end(), compareRenderCommand);
-    }
-
-    while(!_renderStack.empty())
-    {
-        RenderQueue currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
-        size_t len = currRenderQueue.size();
-
-        //Refresh the batch command index in case the renderStack has changed.
-        _firstCommand = _lastCommand = _renderStack.top().currentIndex;
-
-        //Process RenderQueue
-        for(size_t i = _renderStack.top().currentIndex; i < len; i++)
+        //Process render commands
+        //1. Sort render commands based on ID
+        for (auto it = _renderGroups.begin(); it != _renderGroups.end(); ++it)
         {
-            _renderStack.top().currentIndex = _lastCommand = i;
-            auto command = currRenderQueue[i];
-
-            if(command->getType() == QUAD_COMMAND)
+            stable_sort((*it).begin(), (*it).end(), compareRenderCommand);
+        }
+        
+        while(!_renderStack.empty())
+        {
+            RenderQueue currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
+            size_t len = currRenderQueue.size();
+            
+            //Refresh the batch command index in case the renderStack has changed.
+            _firstCommand = _lastCommand = _renderStack.top().currentIndex;
+            
+            //Process RenderQueue
+            for(size_t i = _renderStack.top().currentIndex; i < len; i++)
             {
-                QuadCommand* cmd = static_cast<QuadCommand*>(command);
-
-                CCASSERT(cmd->getQuadCount()<VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
-
-                //Batch quads
-                if(_numQuads + cmd->getQuadCount() < VBO_SIZE)
+                _renderStack.top().currentIndex = _lastCommand = i;
+                auto command = currRenderQueue[i];
+                
+                if(command->getType() == QUAD_COMMAND)
                 {
-                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-                    _numQuads += cmd->getQuadCount();
-
+                    QuadCommand* cmd = static_cast<QuadCommand*>(command);
+                    
+                    CCASSERT(cmd->getQuadCount()<VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+                    
+                    //Batch quads
+                    if(_numQuads + cmd->getQuadCount() < VBO_SIZE)
+                    {
+                        memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
+                        _numQuads += cmd->getQuadCount();
+                        
+                    }
+                    else
+                    {
+                        //Draw batched quads if VBO is full
+                        drawBatchedQuads();
+                    }
+                }
+                else if(command->getType() == CUSTOM_COMMAND)
+                {
+                    flush();
+                    CustomCommand* cmd = static_cast<CustomCommand*>(command);
+                    cmd->execute();
+                }
+                else if(command->getType() == GROUP_COMMAND)
+                {
+                    flush();
+                    GroupCommand* cmd = static_cast<GroupCommand*>(command);
+                    
+                    _renderStack.top().currentIndex = i + 1;
+                    
+                    //push new renderQueue to renderStack
+                    _renderStack.push({cmd->getRenderQueueID(), 0});
+                    
+                    //Exit current loop
+                    break;
                 }
                 else
                 {
-                    //Draw batched quads if VBO is full
-                    drawBatchedQuads();
+                    flush();
                 }
             }
-            else if(command->getType() == CUSTOM_COMMAND)
+            
+            //Draw the batched quads
+            drawBatchedQuads();
+            
+            currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
+            len = currRenderQueue.size();
+            //If pop the render stack if we already processed all the commands
+            if(_renderStack.top().currentIndex + 1 >= len)
             {
-                flush();
-                CustomCommand* cmd = static_cast<CustomCommand*>(command);
-                cmd->execute();
+                _renderStack.pop();
             }
-            else if(command->getType() == GROUP_COMMAND)
-            {
-                flush();
-                GroupCommand* cmd = static_cast<GroupCommand*>(command);
-
-                _renderStack.top().currentIndex = i + 1;
-
-                //push new renderQueue to renderStack
-                _renderStack.push({cmd->getRenderQueueID(), 0});
-
-                //Exit current loop
-                break;
-            }
-            else
-            {
-                flush();
-            }
-        }
-
-        //Draw the batched quads
-        drawBatchedQuads();
-
-        currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
-        len = currRenderQueue.size();
-        //If pop the render stack if we already processed all the commands
-        if(_renderStack.top().currentIndex + 1 >= len)
-        {
-            _renderStack.pop();
         }
     }
 
@@ -231,7 +248,12 @@ void Renderer::render()
         for_each(_renderGroups[j].begin(), _renderGroups[j].end(), [](RenderCommand* cmd){delete cmd;});
         _renderGroups[j].clear();
     }
-
+    
+    //Clear the stack incase gl view hasn't been initialized yet
+    while(!_renderStack.empty())
+    {
+        _renderStack.pop();
+    }
     _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
     _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
@@ -276,17 +298,17 @@ void Renderer::drawBatchedQuads()
                 //Draw quads
                 if(quadsToDraw > 0)
                 {
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+                    
                     glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//                    GL::bindVAO(0);
+//                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
                     startQuad += quadsToDraw;
                     quadsToDraw = 0;
                 }
 
                 //Use new material
                 cmd->useMaterial();
-//                GL::bindVAO(_VAOname);
                 _lastMaterialID = cmd->getMaterialID();
             }
 
@@ -297,11 +319,13 @@ void Renderer::drawBatchedQuads()
     //Draw any remaining quad
     if(quadsToDraw > 0)
     {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        
         glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
+    //Unbind VAO
     GL::bindVAO(0);
     
     _firstCommand = _lastCommand;

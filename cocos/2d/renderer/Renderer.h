@@ -33,7 +33,10 @@ class Renderer : public Object
 public:
     static Renderer* getInstance();
     static void destroyInstance();
-
+    
+    //TODO manage GLView inside Render itself
+    void initGLView();
+    
     //TODO support multiple viewport
     void addCommand(RenderCommand* command);
     void addCommand(RenderCommand* command, int renderQueue);
@@ -48,9 +51,10 @@ protected:
     ~Renderer();
 
     bool init();
+    
     void setupIndices();
     void setupVBOAndVAO();
-
+    void drawBatchedQuads();
     //Draw the previews queued quads and flush previous context
     void flush();
 
@@ -71,8 +75,8 @@ protected:
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
     int _numQuads;
-
-    void drawBatchedQuads();
+    
+    bool _glViewAssigned;
 };
 
 NS_CC_END

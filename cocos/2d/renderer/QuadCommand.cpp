@@ -75,10 +75,11 @@ int64_t QuadCommand::generateID()
 void QuadCommand::useMaterial()
 {
     _shader->use();
-    //TODO once everything is using world coordinate, we can reduce the uniforms for shaders
+
     _shader->setUniformsForBuiltins();
 
-    //TODO set blend mode
+    //set blend mode
+    GL::blendFunc(_blendType.src, _blendType.dst);
 
     //Set texture
     GL::bindTexture2D(_textureID);
