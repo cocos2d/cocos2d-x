@@ -358,6 +358,8 @@ void Director::setOpenGLView(EGLView *openGLView)
             setGLDefaultValues();
         }  
         
+        Renderer::getInstance()->initGLView();
+        
         CHECK_GL_ERROR_DEBUG();
 
 //        _touchDispatcher->setDispatchEvents(true);
