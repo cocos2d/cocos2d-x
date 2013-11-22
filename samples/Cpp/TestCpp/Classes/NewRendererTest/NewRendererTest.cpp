@@ -249,15 +249,34 @@ void NewSpriteBatchTest::addNewSpriteWithCoords(Point p)
 {
     auto BatchNode = static_cast<NewSpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
 
-    int idx = CCRANDOM_0_1() * 1400 / 100;
+    int idx = (int) (CCRANDOM_0_1() * 1400 / 100);
     int x = (idx%5) * 85;
     int y = (idx/5) * 121;
 
 
-    auto sprite = Sprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
+    auto sprite = NewSprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
     BatchNode->addChild(sprite);
 
     sprite->setPosition( Point( p.x, p.y) );
+
+    ActionInterval* action;
+    float random = CCRANDOM_0_1();
+
+    if( random < 0.20 )
+        action = ScaleBy::create(3, 2);
+    else if(random < 0.40)
+        action = RotateBy::create(3, 360);
+    else if( random < 0.60)
+        action = Blink::create(1, 3);
+    else if( random < 0.8 )
+        action = TintBy::create(2, 0, -255, -255);
+    else
+        action = FadeOut::create(2);
+
+    auto action_back = action->reverse();
+    auto seq = Sequence::create(action, action_back, NULL);
+
+    sprite->runAction( RepeatForever::create(seq));
 }
 
 NewClippingNodeTest::NewClippingNodeTest()
@@ -273,6 +292,7 @@ NewClippingNodeTest::NewClippingNodeTest()
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
+    //TODO Fix draw node as clip node
 //    auto stencil = NewDrawNode::create();
 //    Point rectangle[4];
 //    rectangle[0] = Point(0, 0);
