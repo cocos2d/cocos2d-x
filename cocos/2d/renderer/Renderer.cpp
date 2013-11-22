@@ -56,7 +56,7 @@ Renderer::~Renderer()
     
 //    if (Configuration::getInstance()->supportsShareableVAO())
 //    {
-        glDeleteVertexArrays(1, &_VAOname);
+        glDeleteVertexArrays(1, &_quadVAO);
         GL::bindVAO(0);
 //    }
 }
@@ -90,8 +90,8 @@ void Renderer::setupIndices()
 
 void Renderer::setupVBOAndVAO()
 {
-    glGenVertexArrays(1, &_VAOname);
-    GL::bindVAO(_VAOname);
+    glGenVertexArrays(1, &_quadVAO);
+    GL::bindVAO(_quadVAO);
 
     glGenBuffers(2, &_buffersVBO[0]);
 
@@ -284,7 +284,7 @@ void Renderer::drawBatchedQuads()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     //Bind VAO
-    GL::bindVAO(_VAOname);
+    GL::bindVAO(_quadVAO);
 
     //Start drawing verties in batch
     for(size_t i = _firstCommand; i <= _lastCommand; i++)
@@ -298,10 +298,7 @@ void Renderer::drawBatchedQuads()
                 //Draw quads
                 if(quadsToDraw > 0)
                 {
-//                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-                    
                     glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
-//                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
                     startQuad += quadsToDraw;
                     quadsToDraw = 0;
@@ -319,10 +316,7 @@ void Renderer::drawBatchedQuads()
     //Draw any remaining quad
     if(quadsToDraw > 0)
     {
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-        
         glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     //Unbind VAO
