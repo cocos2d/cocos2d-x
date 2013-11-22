@@ -71,7 +71,7 @@ protected:
 
     V3F_C4B_T2F_Quad _quads[VBO_SIZE];
     GLushort _indices[6 * VBO_SIZE];
-    GLuint _VAOname;
+    GLuint _quadVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
     int _numQuads;
