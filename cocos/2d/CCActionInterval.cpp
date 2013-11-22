@@ -149,13 +149,13 @@ void ActionInterval::startWithTarget(Node *target)
 // Sequence
 //
 
-Sequence* Sequence::createWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo)
+Sequence* Sequence::createWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction *actionTwo)
 {
-    Sequence *pSequence = new Sequence();
-    pSequence->initWithTwoActions(pActionOne, pActionTwo);
-    pSequence->autorelease();
+    Sequence *sequence = new Sequence();
+    sequence->initWithTwoActions(actionOne, actionTwo);
+    sequence->autorelease();
 
-    return pSequence;
+    return sequence;
 }
 
 Sequence* Sequence::create(FiniteTimeAction *pAction1, ...)
@@ -597,13 +597,13 @@ Spawn* Spawn::create(Array *arrayOfActions)
     return pRet;
 }
 
-Spawn* Spawn::createWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction *pAction2)
+Spawn* Spawn::createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2)
 {
-    Spawn *pSpawn = new Spawn();
-    pSpawn->initWithTwoActions(pAction1, pAction2);
-    pSpawn->autorelease();
+    Spawn *spawn = new Spawn();
+    spawn->initWithTwoActions(action1, action2);
+    spawn->autorelease();
 
-    return pSpawn;
+    return spawn;
 }
 
 bool Spawn:: initWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction *pAction2)
