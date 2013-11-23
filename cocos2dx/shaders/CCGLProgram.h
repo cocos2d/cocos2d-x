@@ -69,6 +69,7 @@ enum {
 #define kCCShader_PositionTextureA8Color            "ShaderPositionTextureA8Color"
 #define kCCShader_Position_uColor                   "ShaderPosition_uColor"
 #define kCCShader_PositionLengthTexureColor         "ShaderPositionLengthTextureColor"
+#define kCCShader_ControlSwitch                     "Shader_ControlSwitch"
 
 // uniform names
 #define kCCUniformPMatrix_s				"CC_PMatrix"
@@ -100,17 +101,42 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 class CC_DLL CCGLProgram : public CCObject
 {
 public:
+    /**
+     * @js  ctor
+     * @lua NA
+     */
     CCGLProgram();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCGLProgram();
-    /** Initializes the CCGLProgram with a vertex and fragment with bytes array */
+    /** Initializes the CCGLProgram with a vertex and fragment with bytes array 
+     * @js  initWithString
+     * @lua NA
+     */
     bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    /** Initializes the CCGLProgram with a vertex and fragment with contents of filenames */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    /** Initializes the CCGLProgram with precompiled shader program */
+    bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+#endif
+    /** Initializes the CCGLProgram with a vertex and fragment with contents of filenames 
+     * @js  init
+     * @lua NA
+     */
     bool initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename);
-    /**  It will add a new attribute to the shader */
+    /**  It will add a new attribute to the shader 
+     * @lua NA
+     */
     void addAttribute(const char* attributeName, GLuint index);
-    /** links the glProgram */
+    /** links the glProgram 
+     * @lua NA
+     */
     bool link();
-    /** it will call glUseProgram() */
+    /** it will call glUseProgram() 
+     * @lua NA
+     */
     void use();
 /** It will create 4 uniforms:
     - kCCUniformPMatrix
@@ -119,73 +145,129 @@ public:
     - kCCUniformSampler
 
  And it will bind "kCCUniformSampler" to 0
-
+ * @lua NA
  */
     void updateUniforms();
     
-    /** calls retrieves the named uniform location for this shader program. */
+    /** calls retrieves the named uniform location for this shader program. 
+     * @lua NA
+     */
     GLint getUniformLocationForName(const char* name);
     
-    /** calls glUniform1i only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform1i only if the values are different than the previous call for this same shader program. 
+     *  @js  setUniformLocationI32
+     *  @lua NA
+     */
     void setUniformLocationWith1i(GLint location, GLint i1);
     
-    /** calls glUniform2i only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform2i only if the values are different than the previous call for this same shader program. 
+     * @lua NA
+     */
     void setUniformLocationWith2i(GLint location, GLint i1, GLint i2);
     
-    /** calls glUniform3i only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform3i only if the values are different than the previous call for this same shader program. 
+     * @lua NA
+     */
     void setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLint i3);
     
-    /** calls glUniform4i only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform4i only if the values are different than the previous call for this same shader program.
+     * @lua NA
+     */
     void setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLint i3, GLint i4);
     
-    /** calls glUniform2iv only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform2iv only if the values are different than the previous call for this same shader program. 
+     * @lua NA
+     */
     void setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays);
     
-    /** calls glUniform3iv only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform3iv only if the values are different than the previous call for this same shader program.
+     * @lua NA
+     */
     void setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays);
     
-    /** calls glUniform4iv only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform4iv only if the values are different than the previous call for this same shader program. 
+     * @lua NA
+     */
     
     void setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays);
 
-    /** calls glUniform1f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform1f only if the values are different than the previous call for this same shader program. 
+     *  @js  setUniformLocationF32
+     *  @lua NA
+     */
     void setUniformLocationWith1f(GLint location, GLfloat f1);
 
-    /** calls glUniform2f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform2f only if the values are different than the previous call for this same shader program. 
+     *  @js  setUniformLocationF32
+     *  @lua NA
+     */
     void setUniformLocationWith2f(GLint location, GLfloat f1, GLfloat f2);
 
-    /** calls glUniform3f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform3f only if the values are different than the previous call for this same shader program. 
+     *  @js  setUniformLocationF32
+     *  @lua NA
+     */
     void setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3);
 
-    /** calls glUniform4f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform4f only if the values are different than the previous call for this same shader program. 
+     *  @js  setUniformLocationF32
+     *  @lua NA
+     */
     void setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4);
 
-    /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform2fv only if the values are different than the previous call for this same shader program. 
+     *  @js  NA
+     *  @lua NA
+     */
     void setUniformLocationWith2fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
 
-    /** calls glUniform3fv only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform3fv only if the values are different than the previous call for this same shader program. 
+     *  @js  NA
+     *  @lua NA
+     */
     void setUniformLocationWith3fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
 
-    /** calls glUniform4fv only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform4fv only if the values are different than the previous call for this same shader program. 
+     *  @js  NA
+     *  @lua NA
+     */
     void setUniformLocationWith4fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
 
-    /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
+    /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. 
+     *  @js  NA
+     *  @lua NA
+     */
     void setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices);
     
-    /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
+    /** will update the builtin uniforms if they are different than the previous call for this same shader program. 
+     *  @lua NA
+     */
     void setUniformsForBuiltins();
 
-    /** returns the vertexShader error log */
+    /** returns the vertexShader error log 
+     *  @js  getVertexShaderLog
+     *  @lua NA
+     */
     const char* vertexShaderLog();
-    /** returns the fragmentShader error log */
+    /** returns the fragmentShader error log 
+     *  @js  getFragmentShaderLog
+     *  @lua NA
+     */
     const char* fragmentShaderLog();
-    /** returns the program error log */
+    /** returns the program error log 
+     *  @js  getProgramLog
+     *  @lua NA
+     */
     const char* programLog();
     
-    // reload all shaders, this function is designed for android
-    // when opengl context lost, so don't call it.
+    /** reload all shaders, this function is designed for android
+     *  when opengl context lost, so don't call it.
+     *  @lua NA
+     */
     void reset();
-    
+    /**
+     * @lua NA
+     */
     inline const GLuint getProgram() { return m_uProgram; }
 
 private:
@@ -201,6 +283,11 @@ private:
     GLint             m_uUniforms[kCCUniform_MAX];
     struct _hashUniformEntry* m_pHashForUniforms;
     bool              m_bUsesTime;
+    bool              m_hasShaderCompiler;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    std::string       m_shaderId;
+#endif
 };
 
 // end of shaders group

@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/zip_support/unzip.h"
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 
@@ -654,6 +655,7 @@ const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
     bool bExistDefault = false;
+    m_fullPathCache.clear();
     m_searchResolutionsOrderArray.clear();
     for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
     {
@@ -694,7 +696,8 @@ const std::vector<std::string>& CCFileUtils::getSearchPaths()
 void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool bExistDefaultRootPath = false;
-    
+
+    m_fullPathCache.clear();
     m_searchPathArray.clear();
     for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
     {
@@ -739,8 +742,30 @@ void CCFileUtils::addSearchPath(const char* path_)
     m_searchPathArray.push_back(path);
 }
 
+void CCFileUtils::removeSearchPath(const char *path_)
+{
+	std::string strPrefix;
+	std::string path(path_);
+	if (!isAbsolutePath(path))
+	{ // Not an absolute path
+		strPrefix = m_strDefaultResRootPath;
+	}
+	path = strPrefix + path;
+	if (path.length() > 0 && path[path.length()-1] != '/')
+	{
+		path += "/";
+	}
+	std::vector<std::string>::iterator iter = std::find(m_searchPathArray.begin(), m_searchPathArray.end(), path);
+	m_searchPathArray.erase(iter);
+}
+
+void CCFileUtils::removeAllPaths()
+{
+	m_searchPathArray.clear();
+}
 void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
 {
+    m_fullPathCache.clear();
     CC_SAFE_RELEASE(m_pFilenameLookupDict);
     m_pFilenameLookupDict = pFilenameLookupDict;
     CC_SAFE_RETAIN(m_pFilenameLookupDict);

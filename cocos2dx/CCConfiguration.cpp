@@ -328,6 +328,8 @@ void CCConfiguration::loadConfigFile( const char *filename )
 		else
 			CCLOG("Key already present. Ignoring '%s'", element->getStrKey() );
     }
+    
+    CCDirector::sharedDirector()->setDefaultValues();
 }
 
 NS_CC_END

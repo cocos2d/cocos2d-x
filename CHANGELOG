@@ -1,3 +1,51 @@
+cocos2d-x-2.2.1 @Nov.19 2013
+[All platforms]
+     [NEW]    Supports CocoStudio v1.1
+     [NEW]    CCUserDefault: pass size to XMLDocument::Parse()
+[Javascript binding]
+     [NEW]    Supports CocoStudio v1.1
+[Lua binding]
+     [FIX]    Clean up peertable after object is deleted
+[WinPhone8 & Windows8]
+     [FIX]    Use "PMingLiu" to show Chinese characters
+     [NEW]    Add "SimpleGame" project
+     [NEW]    Add VS2013 project
+     [FIX]    Many bugs fixed
+
+cocos2d-x-2.2.0 @Sep.25 2013
+[All platforms]
+     [NEW]    CocoStudio GUI
+     [NEW]    CocoStudio parser
+[Android]
+     [FIX]    Cocos2dxBitmap.java: divideStringWithMaxWidth method index out of range
+[iOS]
+     [FIX]    Can not hide status bar on iOS 7
+     [FIX]    Missing iOS 7 icons
+[Javascript binding]
+     [NEW]    XMLHttpRequest support reading binary data
+     [NEW]    Binded CCControlColourPicker  CCControlHuePicker CCControlPotentiometer CCControlSlider CCControlStepper CCControlSwitch CCControlUtils 
+              CCControlSaturationBrightnessPicker  CCTextFieldTTF
+     [NEW]    Binded these functions: CCNode::setScale(float, float) CCBAnimationManager::addDocumentCallbackControlEvents/getDocumentCallbackControlEvents
+              CCBReader::getOwnerCallbackControlEvents/addDocumentCallbackControlEvents
+     [NEW]    Supported Armature
+[Lua binding]
+     [NEW]    Binded CCTableView and CCScrollView
+[Windows8]
+     [NEW]    Initial version of Windows8
+[WinPhone8]
+     [NEW]    Initial version of WinPhone8
+
+cocos2d-x-2.1.5 @Aug.23 2013 hotfix for v2.1.4
+[All platforms]
+     [FIX]    CCLabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads sometimes
+     [FIX]    Crash caused by improper deletion of VBOs and VAO in ParticleSystemQuad
+     [FIX]    Sprite becomes white block in CCControlSwitchTest
+[Android]
+     [FIX]    Black screen when application resumes from background
+[Javascript binding]
+     [FIX]    EditBox doesn't show any text in TestJavascript/ExtensionsTest/EditBoxTest on iOS
+     [FIX]    Crash appears when extending cc.ScrollView in JS
+
 2.1rc0-x-2.1.4 @Jnue.12 2013
 [all platforms]
      Bug      #2098: fix TouchPriority issue of CCScrollView

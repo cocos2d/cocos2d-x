@@ -54,68 +54,91 @@ files
     "*.h"
     "*.cpp"
     
-    ["Components"]
-    ("../Components")
+	["CocoStudio/Armature"]
+    ("../CocoStudio/Armature")
     "*.h"
     "*.cpp"
 
-	["CCArmature/Animation"]
-    ("../CCArmature/animation")
+	["CocoStudio/Armature/animation"]
+    ("../CocoStudio/Armature/animation")
     "*.h"
     "*.cpp"
 
-	["CCArmature"]
-    ("../CCArmature")
+	["CocoStudio/Armature/datas"]
+    ("../CocoStudio/Armature/datas")
     "*.h"
     "*.cpp"
 
-	["CCArmature/Animation"]
-    ("../CCArmature/animation")
+	["CocoStudio/Armature/display"]
+    ("../CocoStudio/Armature/display")
     "*.h"
     "*.cpp"
 
-	["CCArmature/Animation"]
-    ("../CCArmature/animation")
+	["CocoStudio/Armature/physics"]
+    ("../CocoStudio/Armature/physics")
     "*.h"
     "*.cpp"
 
-	["CCArmature/Datas"]
-    ("../CCArmature/datas")
+	["CocoStudio/Armature/utils"]
+    ("../CocoStudio/Armature/utils")
     "*.h"
     "*.cpp"
 
-	["CCArmature/Display"]
-    ("../CCArmature/display")
+	["CocoStudio/Armature/external_tool"]
+    ("../CocoStudio/Armature/external_tool")
+    "*.h"
+	
+    ["CocoStudio/Components"]
+    ("../CocoStudio/Components")
+    "*.h"
+    "*.cpp"
+		
+	["CocoStudio/GUI/BaseClasses"]
+    ("../CocoStudio/GUI/BaseClasses")
     "*.h"
     "*.cpp"
 
-	["CCArmature/Physics"]
-    ("../CCArmature/physics")
+	["CocoStudio/GUI/Layouts"]
+    ("../CocoStudio/GUI/Layouts")
+    "*.h"
+    "*.cpp"
+	
+    ["CocoStudio/GUI/System"]
+    ("../CocoStudio/GUI/System")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/GUI/UIWidgets"]
+    ("../CocoStudio/GUI/UIWidgets")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/GUI/UIWidgets/Compatible"]
+    ("../CocoStudio/GUI/UIWidgets/Compatible")
+    "*.h"
+	
+	["CocoStudio/GUI/UIWidgets/ScrollWidget"]
+    ("../CocoStudio/GUI/UIWidgets/ScrollWidget")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/Json"]
+    ("../CocoStudio/Json")
     "*.h"
     "*.cpp"
 
-	["CCArmature/Utils"]
-    ("../CCArmature/utils")
+    ["CocoStudio/Json/lib_json"]
+    ("../CocoStudio/Json/lib_json")
     "*.h"
     "*.cpp"
 
-	["CCArmature/External_tool"]
-    ("../CCArmature/external_tool")
+	["CocoStudio/Reader"]
+    ("../CocoStudio/Reader")
     "*.h"
     "*.cpp"
-
-	["CCArmature/External_tool/Json"]
-    ("../CCArmature/external_tool/Json")
-    "*.h"
-    "*.cpp"
-
-	["CCArmature/External_tool/Json"]
-    ("../CCArmature/external_tool/Json")
-    "*.h"
-    "*.cpp"
-
-	["CCArmature/External_tool/Json/lib_json"]
-    ("../CCArmature/external_tool/Json/lib_json")
+	
+	["CocoStudio/Action"]
+    ("../CocoStudio/Action")
     "*.h"
     "*.cpp"
 }

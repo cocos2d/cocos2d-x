@@ -43,6 +43,8 @@ typedef struct
 
 /**
 @brief    Input method editor delegate.
+@js NA
+@lua NA
 */
 class CC_DLL CCIMEDelegate
 {

@@ -39,7 +39,14 @@ NS_CC_BEGIN
 class CC_DLL CCParticleFire : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleFire(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleFire(){}
     bool init(){ return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -52,7 +59,14 @@ public:
 class CC_DLL CCParticleFireworks : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleFireworks(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleFireworks(){}
     bool init(){ return initWithTotalParticles(1500); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -65,7 +79,14 @@ public:
 class CC_DLL CCParticleSun : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleSun(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleSun(){}
     bool init(){ return initWithTotalParticles(350); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -78,7 +99,14 @@ public:
 class CC_DLL CCParticleGalaxy : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleGalaxy(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleGalaxy(){}
     bool init(){ return initWithTotalParticles(200); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -91,7 +119,14 @@ public:
 class CC_DLL CCParticleFlower : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleFlower(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleFlower(){}
     bool init(){ return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -104,7 +139,14 @@ public:
 class CC_DLL CCParticleMeteor : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleMeteor(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleMeteor(){}
     bool init(){ return initWithTotalParticles(150); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -117,7 +159,14 @@ public:
 class CC_DLL CCParticleSpiral : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleSpiral(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleSpiral(){}
     bool init(){ return initWithTotalParticles(500); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -130,7 +179,14 @@ public:
 class CC_DLL CCParticleExplosion : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleExplosion(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleExplosion(){}
     bool init(){ return initWithTotalParticles(700); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -143,7 +199,14 @@ public:
 class CC_DLL CCParticleSmoke : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleSmoke(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleSmoke(){}
     bool init(){ return initWithTotalParticles(200); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -156,7 +219,14 @@ public:
 class CC_DLL CCParticleSnow : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleSnow(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleSnow(){}
     bool init(){ return initWithTotalParticles(700); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -169,7 +239,14 @@ public:
 class CC_DLL CCParticleRain : public CCParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     CCParticleRain(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCParticleRain(){}
     bool init(){ return initWithTotalParticles(1000); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);

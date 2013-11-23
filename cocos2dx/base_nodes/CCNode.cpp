@@ -257,6 +257,14 @@ void CCNode::setScale(float scale)
     m_bTransformDirty = m_bInverseDirty = true;
 }
 
+/// scale setter
+void CCNode::setScale(float fScaleX,float fScaleY)
+{
+    m_fScaleX = fScaleX;
+    m_fScaleY = fScaleY;
+    m_bTransformDirty = m_bInverseDirty = true;
+}
+
 /// scaleX getter
 float CCNode::getScaleX()
 {
@@ -503,16 +511,16 @@ void CCNode::setGLServerState(ccGLServerState glServerState)
 
 void CCNode::setUserObject(CCObject *pUserObject)
 {
-    CC_SAFE_RELEASE(m_pUserObject);
     CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(m_pUserObject);
     m_pUserObject = pUserObject;
 }
 
 void CCNode::setShaderProgram(CCGLProgram *pShaderProgram)
 {
+    CC_SAFE_RETAIN(pShaderProgram);
     CC_SAFE_RELEASE(m_pShaderProgram);
     m_pShaderProgram = pShaderProgram;
-    CC_SAFE_RETAIN(m_pShaderProgram);
 }
 
 CCRect CCNode::boundingBox()
@@ -1319,6 +1327,20 @@ bool CCNodeRGBA::init()
         return true;
     }
     return false;
+}
+
+CCNodeRGBA * CCNodeRGBA::create(void)
+{
+	CCNodeRGBA * pRet = new CCNodeRGBA();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
 }
 
 GLubyte CCNodeRGBA::getOpacity(void)

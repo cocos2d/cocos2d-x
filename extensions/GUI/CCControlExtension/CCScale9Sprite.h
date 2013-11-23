@@ -106,6 +106,9 @@ protected:
 public:
     
     virtual void setContentSize(const CCSize & size);
+    /**
+     *  @js NA
+     */
     virtual void visit();
     
     virtual bool init();
@@ -315,6 +318,9 @@ public:
     virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
 
     virtual void setSpriteFrame(CCSpriteFrame * spriteFrame);
+    
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual void updateDisplayedColor(const cocos2d::ccColor3B& parentColor);
 };
 
 // end of GUI group

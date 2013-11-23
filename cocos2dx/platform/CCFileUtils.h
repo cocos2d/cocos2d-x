@@ -50,6 +50,8 @@ public:
      *  Returns an unique ID for this class.
      *  @note It's only used for JSBindings now.
      *  @return The unique ID for this class.
+     *  @js NA
+     *  @lua NA
      */
     virtual long getClassTypeInfo() {
 		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCFileUtils).name());
@@ -58,6 +60,7 @@ public:
     
     /**
      *  Gets the instance of CCFileUtils.
+     *  @js getInstance
      */
     static CCFileUtils* sharedFileUtils();
     
@@ -68,6 +71,8 @@ public:
     
     /**
      *  The destructor of CCFileUtils.
+     *  @js NA
+     *  @lua NA
      */
     virtual ~CCFileUtils();
     
@@ -89,6 +94,7 @@ public:
      *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+     *  @js NA
      */
     virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
 
@@ -99,6 +105,7 @@ public:
      *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+     *  @js NA
      */
     virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
 
@@ -179,7 +186,8 @@ public:
      * @endcode
      * @param filename The plist file name.
      *
-     @since v2.1
+     * @since v2.1
+     * @loadFilenameLookup
      */
     virtual void loadFilenameLookupDictionaryFromFile(const char* filename);
     
@@ -188,6 +196,7 @@ public:
      *
      *  @param pFilenameLookupDict The dictionary for replacing filename.
      *  @since v2.1
+     *  @lua NA
      */
     virtual void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
     
@@ -208,6 +217,8 @@ public:
      *  @param searchResolutionsOrder The source array that contains the search order of the resources.
      *  @see getSearchResolutionsOrder(void), fullPathForFilename(const char*).
      *  @since v2.1
+     *  @js NA
+     *  @lua NA
      */
     virtual void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
 
@@ -224,6 +235,8 @@ public:
      *
      *  @see setSearchResolutionsOrder(const std::vector<std::string>&), fullPathForFilename(const char*).
      *  @since v2.1
+     *  @js NA
+     *  @lua NA
      */
     virtual const std::vector<std::string>& getSearchResolutionsOrder();
     
@@ -243,27 +256,48 @@ public:
      *  @param searchPaths The array contains search paths.
      *  @see fullPathForFilename(const char*)
      *  @since v2.1
+     *  @js NA
+     *  @lua NA
      */
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
-      * Add search path.
-      *
-      * @since v2.1
+      * Adds a path to search paths.
+	  *
+	  * @since v2.2
       */
-     void addSearchPath(const char* path);
+     virtual void addSearchPath(const char* path);
+
+    /**
+      * Removes a path from search paths.
+      *
+      * @since v2.2
+      * @lua NA
+      */
+	 virtual void removeSearchPath(const char *path);
+
+    /**
+      * Removes all paths.
+      *
+      * @since v2.2
+      * @lua NA
+      */
+	 void removeAllPaths();
     
     /**
      *  Gets the array of search paths.
      *  
      *  @return The array of search paths.
      *  @see fullPathForFilename(const char*).
+     *  @js NA
+     *  @lua NA
      */
     virtual const std::vector<std::string>& getSearchPaths();
 
     /**
      *  Gets the writable path.
      *  @return  The path that can be write/read a file in
+     *  @lua NA
      */
     virtual std::string getWritablePath() = 0;
     
@@ -273,6 +307,7 @@ public:
      *  @note If a relative path was passed in, it will be inserted a default root path at the beginning.
      *  @param strFilePath The path of the file, it could be a relative or absolute path.
      *  @return true if the file exists, otherwise it will return false.
+     *  @lua NA
      */
     virtual bool isFileExist(const std::string& strFilePath) = 0;
     
@@ -284,6 +319,7 @@ public:
      *
      *  @param strPath The path that needs to be checked.
      *  @return true if it's an absolute path, otherwise it will return false.
+     *  @lua NA
      */
     virtual bool isAbsolutePath(const std::string& strPath);
     

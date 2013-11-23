@@ -317,26 +317,137 @@ files
 	TableViewTestScene.cpp
 	TableViewTestScene.h
 
+	[Test/ExtensionsTest/ArmatureTest]
+	(../Classes/ExtensionsTest/CocoStudioArmatureTest)
+	ArmatureScene.cpp
+	ArmatureScene.h
+	
 	[Test/ExtensionsTest/ComponentsTest]
-	(../Classes/ExtensionsTest/ComponentsTest)
+	(../Classes/ExtensionsTest/CocoStudioComponentsTest)
 	ComponentsTestScene.cpp
 	ComponentsTestScene.h
 	EnemyController.cpp
 	EnemyController.h
 	GameOverScene.cpp
-        GameOverScene.h
-        PlayerController.cpp
-        PlayerController.h
-        ProjectileController.cpp
+    GameOverScene.h
+    PlayerController.cpp
+    PlayerController.h
+    ProjectileController.cpp
  	ProjectileController.h
 	SceneController.cpp
 	SceneController.h
 
-	[Test/ExtensionsTest/ArmatureTest]
-	(../Classes/ExtensionsTest/ArmatureTest)
-	ArmatureScene.cpp
-	ArmatureScene.h
-
+	[Test/ExtensionsTest/CocoStudioGUITest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest)
+	CocosGUIExamplesEquipScene.cpp
+	CocosGUIExamplesEquipScene.h
+	CocosGUIExamplesMapScene.cpp
+	CocosGUIExamplesMapScene.h
+	CocosGUIExamplesPageScene.cpp
+	CocosGUIExamplesPageScene.h
+	CocosGUIExamplesRegisterScene.cpp
+	CocosGUIExamplesRegisterScene.h
+	CocosGUIExamplesScene.cpp
+	CocosGUIExamplesScene.h
+	CocosGUIExamplesWeaponScene.cpp
+	CocosGUIExamplesWeaponScene.h
+	CocosGUIScene.cpp
+	CocosGUIScene.h
+	UIScene.cpp
+	UIScene.h
+	UISceneManager.cpp
+	UISceneManager.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UIButtonTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest)
+	UIButtonTest.cpp
+	UIButtonTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest)
+	UICheckBoxTest.cpp
+	UICheckBoxTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest)
+	UIDragPanelTest.cpp
+	UIDragPanelTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UIImageViewTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest)
+	UIImageViewTest.cpp
+	UIImageViewTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest)
+	UILabelAtlasTest.cpp
+	UILabelAtlasTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest)
+	UILabelBMFontTest.cpp
+	UILabelBMFontTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UILabelTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest)
+	UILabelTest.cpp
+	UILabelTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UIListViewTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest)
+	UIListViewTest.cpp
+	UIListViewTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest)
+	UILoadingBarTest.cpp
+	UILoadingBarTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest)
+	UINodeContainerTest.cpp
+	UINodeContainerTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UIPageViewTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest)
+	UIPageViewTest.cpp
+	UIPageViewTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UIPanelTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest)
+	UIPanelTest.cpp
+	UIPanelTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest)
+	UIScrollViewTest.cpp
+	UIScrollViewTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UISliderTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest)
+	UISliderTest.cpp
+	UISliderTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UITextAreaTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest)
+	UITextAreaTest.cpp
+	UITextAreaTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UITextButtonTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest)
+	UITextButtonTest.cpp
+	UITextButtonTest.h
+	
+	[Test/ExtensionsTest/CocoStudioGUITest/UITextFieldTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest)
+	UITextFieldTest.cpp
+	UITextFieldTest.h
+	
+	[Test/ExtensionsTest/CocoStudioSceneTest]
+	(../Classes/ExtensionsTest/CocoStudioSceneTest)
+	SceneEditorTest.cpp
+	SceneEditorTest.h
+	
 	[Test/FontTest]
 	(../Classes/FontTest)
 	FontTest.cpp
@@ -392,20 +503,10 @@ files
 	ParticleTest.cpp
 	ParticleTest.h
 
-	[Test/PerformanceTest]
-	(../Classes/PerformanceTest)
-	PerformanceNodeChildrenTest.cpp
-	PerformanceNodeChildrenTest.h
-	PerformanceParticleTest.cpp
-	PerformanceParticleTest.h
-	PerformanceSpriteTest.cpp
-	PerformanceSpriteTest.h
-	PerformanceTest.cpp
-	PerformanceTest.h
-	PerformanceTextureTest.cpp
-	PerformanceTextureTest.h
-	PerformanceTouchesTest.cpp
-	PerformanceTouchesTest.h
+	["Test/PerformanceTest"]
+	("../Classes/PerformanceTest")
+	"*.cpp"
+	"*.h"
 
 	[Test/RenderTextureTest]
 	(../Classes/RenderTextureTest)

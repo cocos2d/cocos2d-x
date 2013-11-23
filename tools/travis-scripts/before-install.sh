@@ -18,12 +18,16 @@ install_android_ndk()
     else
         HOST_NAME="linux"
     fi
-    echo "Download android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2 ..."
-    curl -O http://dl.google.com/android/ndk/android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2
-    echo "Decompress android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2 ..."
-    tar xjf android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2
+
+    NDK_VERSION="android-ndk-r9"
+    NDK_PACKAGE_NAME="${NDK_VERSION}-${HOST_NAME}-x86_64.tar.bz2"
+
+    echo "Download ${NDK_PACKAGE_NAME} ..."
+    curl -O http://dl.google.com/android/ndk/${NDK_PACKAGE_NAME}
+    echo "Decompress ${NDK_PACKAGE_NAME} ..."
+    tar xjf $NDK_PACKAGE_NAME
     # Rename ndk
-    mv android-ndk-r8e android-ndk
+    mv ${NDK_VERSION} android-ndk
 }
 
 install_llvm()
@@ -67,6 +71,7 @@ if [ "$GEN_JSB"x = "YES"x ]; then
 fi
 
 if [ "$PLATFORM"x = "linux"x ]; then
+    sudo apt-get update
     bash $COCOS2DX_ROOT/install-deps-linux.sh
 fi
 

@@ -54,7 +54,10 @@ public:
      The stencil node will be retained.
      */
     static CCClippingNode* create(CCNode *pStencil);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCClippingNode();
     
     /** Initializes a clipping node without a stencil.
@@ -65,10 +68,25 @@ public:
      The stencil node will be retained, and its parent will be set to this clipping node.
      */
     virtual bool init(CCNode *pStencil);
-    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnterTransitionDidFinish();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExitTransitionDidStart();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
     virtual void visit();
     
@@ -94,7 +112,7 @@ public:
     bool isInverted() const;
     void setInverted(bool bInverted);
     
-private:
+protected:
     CCClippingNode();
 };
 

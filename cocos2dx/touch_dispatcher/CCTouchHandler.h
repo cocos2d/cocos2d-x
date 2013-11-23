@@ -41,6 +41,8 @@ NS_CC_BEGIN
 /**
  CCTouchHandler
  Object than contains the delegate and priority of the event handler.
+ @js NA
+ @lua NA
 */
 class CC_DLL  CCTouchHandler : public CCObject
 {
@@ -74,6 +76,8 @@ protected:
 
 /** CCStandardTouchHandler
  It forwards each event to the delegate.
+ @js NA
+ @lua NA
  */
 class CC_DLL  CCStandardTouchHandler : public CCTouchHandler
 {
@@ -90,6 +94,8 @@ public:
  CCTargetedTouchHandler
  Object than contains the claimed touches and if it swallows touches.
  Used internally by TouchDispatcher
+ @js NA
+ @lua NA
  */
 class CC_DLL  CCTargetedTouchHandler : public CCTouchHandler
 {

@@ -7,13 +7,16 @@
 #include "NetworkTest/HttpClientTest.h"
 #endif
 #include "TableViewTest/TableViewTestScene.h"
-#include "ArmatureTest/ArmatureScene.h"
-#include "ComponentsTest/ComponentsTestScene.h"
+#include "CocoStudioArmatureTest/ArmatureScene.h"
+#include "CocoStudioComponentsTest/ComponentsTestScene.h"
+#include "CocoStudioSceneTest/SceneEditorTest.h"
+#include "CocoStudioGUITest/CocosGUIScene.h"
+#include "CocoStudioGUITest/UISceneManager.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NetworkTest/WebSocketTest.h"
 #endif
-
+ 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 #include "EditBoxTest/EditBoxTest.h"
 #endif
@@ -39,6 +42,8 @@ enum
 	TEST_TABLEVIEW,
 	TEST_COMPONENTS,
 	TEST_ARMATURE,
+    TEST_SCENEEDITOR,
+    TEST_COCOSGUI,
     TEST_MAX_COUNT,
 };
 
@@ -57,8 +62,10 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "EditBoxTest",
 #endif
 	"TableViewTest",
-    "ComponentsTest",
-	"ArmatureTest"
+    "CocoStudioComponentsTest",
+	"CocoStudioArmatureTest",
+    "CocoStudioSceneTest",
+    "CocoStudioGUITest"
 };
 
 ////////////////////////////////////////////////////////
@@ -121,7 +128,7 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             }
         }
         break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     case TEST_HTTPCLIENT:
         {
             runHttpClientTest();
@@ -162,6 +169,22 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 			}
 		}
 		break;
+    case TEST_SCENEEDITOR:
+       {
+            runSceneEditorTestLayer();
+       }
+            break;
+        case TEST_COCOSGUI:
+        {
+			/*UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+			CCScene* pScene = pManager->currentUIScene();
+			CCDirector::sharedDirector()->replaceScene(pScene);*/ 
+
+			CocosGUITestScene *pScene = new CocosGUITestScene();
+			pScene->runThisTest();
+			pScene->release();
+		}
+            break;
     default:
         break;
     }

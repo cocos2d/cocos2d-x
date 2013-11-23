@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "cocoa/CCAffineTransform.h"
 #include "support/TransformUtils.h"
 #include "support/CCProfiling.h"
+#include "platform/CCImage.h"
 // external
 #include "kazmath/GL/matrix.h"
 #include <string.h>
@@ -181,6 +182,9 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
         m_sQuad.br.colors = tmpColor;
         m_sQuad.tl.colors = tmpColor;
         m_sQuad.tr.colors = tmpColor;
+
+        // shader program
+        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
         
         // update texture (calls updateBlendFunc)
         setTexture(pTexture);
@@ -551,16 +555,8 @@ void CCSprite::draw(void)
 
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
 
-    if (m_pobTexture != NULL)
-    {
-        ccGLBindTexture2D( m_pobTexture->getName() );
-        ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-    }
-    else
-    {
-        ccGLBindTexture2D(0);
-        ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
-    }
+    ccGLBindTexture2D( m_pobTexture->getName() );
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
 #define kQuadSize sizeof(m_sQuad.bl)
 #ifdef EMSCRIPTEN
@@ -574,13 +570,10 @@ void CCSprite::draw(void)
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
     glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
-    if (m_pobTexture != NULL)
-    {
-        // texCoods
-        diff = offsetof( ccV3F_C4B_T2F, texCoords);
-        glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    }
-    
+    // texCoods
+    diff = offsetof( ccV3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+
     // color
     diff = offsetof( ccV3F_C4B_T2F, colors);
     glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
@@ -1075,6 +1068,26 @@ void CCSprite::updateBlendFunc(void)
     }
 }
 
+/*
+ * This array is the data of a white image with 2 by 2 dimension.
+ * It's used for creating a default texture when sprite's texture is set to NULL.
+ * Supposing codes as follows:
+ *
+ *   CCSprite* sp = new CCSprite();
+ *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *
+ * The test is in "TestCpp/SpriteTest/Sprite without texture".
+ */
+static unsigned char cc_2x2_white_image[] = {
+    // RGBA8888
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF
+};
+
+#define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
+
 void CCSprite::setTexture(CCTexture2D *texture)
 {
     // If batchnode, then texture id should be the same
@@ -1082,16 +1095,23 @@ void CCSprite::setTexture(CCTexture2D *texture)
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
 
-    // shader program
-    if (texture)
+    if (NULL == texture)
     {
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+        // Gets the texture by key firstly.
+        texture = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
+
+        // If texture wasn't in cache, create it from RAW data.
+        if (NULL == texture)
+        {
+            CCImage* image = new CCImage();
+            bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), CCImage::kFmtRawData, 2, 2, 8);
+            CCAssert(isOK, "The 2x2 empty texture was created unsuccessfully.");
+
+            texture = CCTextureCache::sharedTextureCache()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            CC_SAFE_RELEASE(image);
+        }
     }
-    else
-    {
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor));
-    }
-    
+
     if (!m_pobBatchNode && m_pobTexture != texture)
     {
         CC_SAFE_RETAIN(texture);
