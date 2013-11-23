@@ -288,6 +288,8 @@ public:
     // Overrides
     //
     virtual void draw() override;
+    virtual void onDraw();
+
     virtual void setColor(const Color3B &color) override;
     virtual void setOpacity(GLubyte opacity) override;
     virtual void setContentSize(const Size & var) override;
@@ -312,6 +314,8 @@ protected:
     BlendFunc _blendFunc;
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
+
+    kmMat4 _matrixMV;
 };
 
 //
