@@ -24,6 +24,8 @@ public:
     NewSprite(void);
     ~NewSprite();
 
+    virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
+
     virtual void updateTransform();
     virtual void draw(void) override;
     

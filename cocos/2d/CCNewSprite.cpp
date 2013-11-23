@@ -10,6 +10,7 @@
 #include "RenderCommand.h"
 #include "Renderer.h"
 #include "QuadCommand.h"
+#include "CCMenuItem.h"
 
 NS_CC_BEGIN
 
@@ -53,10 +54,19 @@ NewSprite::~NewSprite(void)
 {
 }
 
+bool NewSprite::initWithTexture(Texture2D *texture, const Rect &rect, bool rotated)
+{
+    bool result = Sprite::initWithTexture(texture, rect, rotated);
+    _recursiveDirty = true;
+    setDirty(true);
+    return result;
+}
+
 void NewSprite::updateTransform()
 {
-    if(_dirty)
-    {
+    //TODO optimize the performance cache affineTransformation
+//    if(_dirty)
+//    {
         if(!_visible)
         {
             _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vertex3F(0,0,0);
@@ -104,9 +114,9 @@ void NewSprite::updateTransform()
             _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
             _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
         }
-    }
+//    }
 
-    _recursiveDirty = false;
+//    _recursiveDirty = false;
     setDirty(false);
 }
 
