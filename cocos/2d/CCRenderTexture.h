@@ -152,23 +152,18 @@ public:
     virtual void visit() override;
     virtual void draw() override;
 
-protected:
-    /**
-     * @js ctor
-     */
+public:
+    // XXX should be procted.
+    // but due to a bug in PowerVR + Android,
+    // the constructor is public again
     RenderTexture();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~RenderTexture();
-
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat);
-
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
+protected:
     void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
 
     GLuint       _FBO;
