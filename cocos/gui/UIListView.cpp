@@ -301,7 +301,8 @@ void UIListView::removeLastItem()
 
 UIWidget* UIListView::getItem(unsigned int index)
 {
-    if ((int)index < 0 || index >= _items->count())
+    // @todo Signed/unsigned mishmash. Index is must be unsigned int always. Yes?
+    if ( ((int)index < 0) || ((int)index >= _items->count()) )
     {
         return nullptr;
     }
