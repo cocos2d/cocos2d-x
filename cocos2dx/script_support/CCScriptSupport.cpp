@@ -49,7 +49,11 @@ CCScriptHandlerEntry* CCScriptHandlerEntry::create(int nHandler)
 
 CCScriptHandlerEntry::~CCScriptHandlerEntry(void)
 {
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
+	if (m_nHandler != 0)
+	{
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
+        m_nHandler = 0;
+    }
 }
 
 // #pragma mark -
@@ -97,8 +101,12 @@ CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::create(int nHandler,
 
 CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
 {
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
-    LUALOG("[LUA] Remove touch event handler: %d", m_nHandler);
+    if (m_nHandler != 0)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
+        LUALOG("[LUA] Remove touch event handler: %d", m_nHandler);
+        m_nHandler = 0;
+    }
 }
 
 bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)

@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "effects/CCGrid.h"
 // extern
 #include "kazmath/GL/matrix.h"
+#include "CCEGLView.h"
 
 NS_CC_BEGIN
 
@@ -69,7 +70,7 @@ CCRenderTexture::CCRenderTexture()
     
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                   callfuncO_selector(CCRenderTexture::listenToForeground),
-                                                                  EVNET_COME_TO_FOREGROUND, // this is misspelt
+                                                                  EVENT_COME_TO_FOREGROUND, // this is misspelt
                                                                   NULL);
 #endif
 }
@@ -88,7 +89,7 @@ CCRenderTexture::~CCRenderTexture()
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
 #endif
 }
 
@@ -368,6 +369,15 @@ void CCRenderTexture::begin()
     
     CCDirector *director = CCDirector::sharedDirector();
     director->setProjection(director->getProjection());
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    kmMat4 modifiedProjection;
+    kmGLGetMatrix(KM_GL_PROJECTION, &modifiedProjection);
+    kmMat4Multiply(&modifiedProjection, CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix(), &modifiedProjection);
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLLoadMatrix(&modifiedProjection);
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+#endif
 
     const CCSize& texSize = m_pTexture->getContentSizeInPixels();
 

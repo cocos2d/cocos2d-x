@@ -34,6 +34,7 @@ NS_CC_BEGIN
 
 /**
  * RGBA protocol that affects CCNode's color and opacity
+ * @js NA
  */
 class CC_DLL CCRGBAProtocol
 {
@@ -129,6 +130,8 @@ public:
  * Specify the blending function according glBlendFunc
  * Please refer to glBlendFunc in OpenGL ES Manual
  * http://www.khronos.org/opengles/sdk/docs/man/xhtml/glBlendFunc.xml for more details.
+ * @js NA
+ * @lua NA
  */
 class CC_DLL CCBlendProtocol
 {
@@ -158,6 +161,7 @@ public:
  * else
  *   src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
  * But you can change the blending function at any time.
+ * @js NA
  */
 class CC_DLL CCTextureProtocol : public CCBlendProtocol
 {
@@ -166,6 +170,7 @@ public:
      * Returns the currently used texture
      *
      * @return  The texture that is currenlty being used.
+     * @lua NA
      */
     virtual CCTexture2D* getTexture(void) = 0;
 
@@ -173,12 +178,15 @@ public:
      * Sets a new texuture. It will be retained.
      *
      * @param   texture A valid CCTexture2D object, which will be applied to this sprite object.
+     * @lua NA
      */
     virtual void setTexture(CCTexture2D *texture) = 0;
 };
 
 /**
  * Common interface for Labels
+ * @js NA
+ * @lua NA
  */
 class CC_DLL CCLabelProtocol
 {
@@ -200,6 +208,8 @@ public:
 
 /** 
  * OpenGL projection protocol 
+ * @js NA
+ * @lua NA
  */
 class CC_DLL CCDirectorDelegate
 {

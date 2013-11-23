@@ -23,13 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-/**
- * This file contains the Tizen C++ application entry point.
- */
+//
+// This file contains the Tizen application entry point.
+//
 #include "../../Classes/AppDelegate.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
+
 using namespace Tizen::Base;
 using namespace Tizen::Base::Collection;
 
@@ -37,36 +38,6 @@ using namespace Tizen::Base::Collection;
 extern "C"
 {
 #endif // __cplusplus
-
-_EXPORT_ int OspMain(int argc, char* pArgv[]);
-void ApplicationInitialized(void);
-
-/**
- * The entry function of Tizen C++ application called by the operating system.
- */
-int
-OspMain(int argc, char* pArgv[])
-{
-    AppLog("Application started.");
-    ArrayList args;
-    args.Construct();
-
-    for (int i = 0; i < argc; i++)
-    {
-        args.Add(*(new (std::nothrow) String(pArgv[i])));
-    }
-
-    CCOspApplication::SetApplicationInitializedCallback(ApplicationInitialized);
-    CCOspApplication::SetScreenOrientation(Tizen::Ui::ORIENTATION_LANDSCAPE);
-    result r = Tizen::App::Application::Execute(CCOspApplication::CreateInstance, &args);
-
-    TryLog(r == E_SUCCESS, "[%s] Application execution failed", GetErrorMessage(r));
-
-    args.RemoveAll(true);
-    AppLog("Application finished.");
-
-    return static_cast<int>(r);
-}
 
 void
 ApplicationInitialized(void)
@@ -79,7 +50,28 @@ ApplicationInitialized(void)
     CCApplication::sharedApplication()->run();
 }
 
+//
+// The entry function of Tizen application called by the operating system.
+//
+_EXPORT_ int
+OspMain(int argc, char *pArgv[])
+{
+    AppLog("Application started.");
+    ArrayList args(SingleObjectDeleter);
+    args.Construct();
+    for (int i = 0; i < argc; i++)
+    {
+        args.Add(new (std::nothrow) String(pArgv[i]));
+    }
 
+    CCOspApplication::SetApplicationInitializedCallback(ApplicationInitialized);
+    CCOspApplication::SetScreenOrientation(Tizen::Ui::ORIENTATION_LANDSCAPE);
+    result r = Tizen::App::Application::Execute(CCOspApplication::CreateInstance, &args);
+    TryLog(r == E_SUCCESS, "[%s] Application execution failed", GetErrorMessage(r));
+    AppLog("Application finished.");
+
+    return static_cast<int>(r);
+}
 #ifdef __cplusplus
 }
 #endif // __cplusplus

@@ -40,6 +40,7 @@ NS_CC_BEGIN
  Faster than the "drawing primitives" since they it draws everything in one single batch.
  
  @since v2.1
+ @lua NA
  */
 class CC_DLL CCDrawNode : public CCNode
 {
@@ -68,17 +69,34 @@ public:
     /** draw a segment with a radius and color */
     void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color);
     
-    /** draw a polygon with a fill color and line color */
+    /** draw a polygon with a fill color and line color 
+     * @code
+     * when this funciton bound to js,the input params are changed
+     * js:var drawPolygon(var verts, var fillColor,var borderWidth,var borderColor)
+     * @endcode
+     */
     void drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
-    
+    /**
+     * @js NA
+     */
     ccBlendFunc getBlendFunc() const;
+    /**
+     * @code
+     * when this function bound to js ,the input param is change
+     * js:var setBlendFunc(var src,var dst)
+     * @endcode
+     */
     void setBlendFunc(const ccBlendFunc &blendFunc);
     
     CCDrawNode();
-    
+
+    /** listen the event that coming to foreground on Android  
+     * @js NA
+     */
+    void listenBackToForeground(CCObject *obj);
 private:
     void ensureCapacity(unsigned int count);
     void render();

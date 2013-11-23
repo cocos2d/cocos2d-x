@@ -331,7 +331,7 @@ void OpenSLEngine::createEngine(void* pHandle)
 	const char* errorInfo = dlerror();
 	if (errorInfo)
 	{
-		LOGD(errorInfo);
+		LOGD("%s", errorInfo);
 		return;
 	}
 
@@ -400,7 +400,7 @@ void OpenSLEngine::closeEngine()
 		s_pEngineEngine = NULL;
 	}
 
-	LOGD("engine destory");
+	LOGD("%s", "engine destory");
 }
 
 
@@ -483,7 +483,7 @@ bool OpenSLEngine::recreatePlayer(const char* filename)
 	AudioPlayer* newPlayer = new AudioPlayer();
 	if (!initAudioPlayer(newPlayer, filename))
 	{
-		LOGD("failed to recreate");
+		LOGD("%s", "failed to recreate");
 		return false;
 	}
 	vec->push_back(newPlayer);

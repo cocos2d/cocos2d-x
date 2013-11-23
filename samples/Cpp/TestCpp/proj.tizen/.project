@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>TestCpp</name>
+	<name>proj.tizen</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -30,7 +30,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/TestCpp/Debug-Tizen-Emulator}</value>
+					<value>${workspace_loc:/${ProjName}/Debug-Tizen-Device}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
@@ -94,12 +94,12 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1370770766165</id>
-			<name>src/Classes/ExtensionsTest/NetworkTest</name>
-			<type>6</type>
+			<id>1372993495655</id>
+			<name></name>
+			<type>26</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-WebSocket*</arguments>
+				<arguments>1.0-projectRelativePath-matches-false-false-*/.tpk</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

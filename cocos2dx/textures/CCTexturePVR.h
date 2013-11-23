@@ -86,6 +86,8 @@ enum {
     are only supported if all individual sprites are of _square_ size. 
     To use mipmaps with non-square textures, instead call CCTexture2D#generateMipmap on the sheet texture itself
     (and to save space, save the PVR sprite sheet without mip maps included).
+ @js NA
+ @lua NA
 */
 class CCTexturePVR : public CCObject
 {

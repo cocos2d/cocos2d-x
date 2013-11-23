@@ -7,7 +7,10 @@
 #include "CCBSequenceProperty.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBSequence : public CCObject
 {
 private:

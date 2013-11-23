@@ -45,7 +45,7 @@ extern bool CC_DLL cc_assert_script_compatible(const char *msg);
       } \
     } while (0)
 #else
-#define CCAssert(cond, msg)
+#define CCAssert(cond, msg) ((void)(cond))
 #endif
 #endif  // CCAssert
 

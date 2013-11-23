@@ -1,10 +1,33 @@
+/****************************************************************************
+Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) Microsoft Open Technologies, Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "AppDelegate.h"
 
 #include "cocos2d.h"
 #include "controller.h"
 #include "SimpleAudioEngine.h"
 #include "cocos-ext.h"
-#include "CCArmature/utils/CCArmatureDataManager.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -16,7 +39,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
-	cocos2d::extension::CCArmatureDataManager::purgeArmatureSystem();
+	cocos2d::extension::CCArmatureDataManager::purge();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -35,17 +58,26 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize designSize = CCSizeMake(480, 320);
 
     CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    std::vector<std::string> searchPaths;
     
-    if (screenSize.height > 320)
+	if (screenSize.height > 320)
     {
         CCSize resourceSize = CCSizeMake(960, 640);
-        std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
-        pFileUtils->setSearchPaths(searchPaths);
+		searchPaths.push_back("hd/scenetest");
         pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
     }
+	else
+	{
+		searchPaths.push_back("scenetest");
+	}
+	pFileUtils->setSearchPaths(searchPaths);
 
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+#else
+	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+#endif
 
     CCScene * pScene = CCScene::create();
     CCLayer * pLayer = new TestController();

@@ -87,6 +87,9 @@
 								<option id="com.qnx.qcc.option.compiler.ccoptions.182296748" name="Compiler Options (-Wc,)" superClass="com.qnx.qcc.option.compiler.ccoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="-std=c99"/>
 								</option>
+								<option id="com.qnx.qcc.option.compiler.qccoptions.1555832227" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-fPIC"/>
+								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.541626312" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
 							<tool id="com.qnx.qcc.tool.assembler.791662823" name="QCC Assembler" superClass="com.qnx.qcc.tool.assembler">
@@ -418,4 +421,5 @@
 	<storageModule moduleId="refreshScope" versionNumber="1">
 		<resource resourceType="PROJECT" workspacePath="/chipmunk"/>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

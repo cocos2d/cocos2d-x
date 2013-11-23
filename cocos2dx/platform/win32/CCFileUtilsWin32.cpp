@@ -66,28 +66,35 @@ bool CCFileUtilsWin32::init()
 
 bool CCFileUtilsWin32::isFileExist(const std::string& strFilePath)
 {
-    if (0 == strFilePath.length())
-    {
-        return false;
-    }
-    
-    std::string strPath = strFilePath;
-    if (!isAbsolutePath(strPath))
-    { // Not absolute path, add the default root path at the beginning.
-        strPath.insert(0, m_strDefaultResRootPath);
-    }
-    return GetFileAttributesA(strPath.c_str()) != -1 ? true : false;
+	std::string strFilePathAscii = utf8Togbk(strFilePath.c_str());
+	if (0 == strFilePathAscii.length())
+	{
+		return false;
+	}
+
+	std::string strPath = strFilePathAscii;
+	if (!isAbsolutePath(strPath))
+	{ // Not absolute path, add the default root path at the beginning.
+		strPath.insert(0, m_strDefaultResRootPath);
+	}
+	return GetFileAttributesA(strPath.c_str()) != -1 ? true : false;
 }
 
 bool CCFileUtilsWin32::isAbsolutePath(const std::string& strPath)
 {
-    if (   strPath.length() > 2 
-        && ( (strPath[0] >= 'a' && strPath[0] <= 'z') || (strPath[0] >= 'A' && strPath[0] <= 'Z') )
-        && strPath[1] == ':')
-    {
-        return true;
-    }
-    return false;
+	std::string strPathAscii = utf8Togbk(strPath.c_str());
+	if (strPathAscii.length() > 2 
+		&& ( (strPathAscii[0] >= 'a' && strPathAscii[0] <= 'z') || (strPathAscii[0] >= 'A' && strPathAscii[0] <= 'Z') )
+		&& strPathAscii[1] == ':')
+	{
+		return true;
+	}
+	return false;
+}
+std::string CCFileUtilsWin32::fullPathForFilename(const char* pszFileName)
+{
+	std::string pszFileNameAscii = utf8Togbk(pszFileName);
+	return CCFileUtils::fullPathForFilename(pszFileNameAscii.c_str());
 }
 
 string CCFileUtilsWin32::getWritablePath()
@@ -136,4 +143,45 @@ string CCFileUtilsWin32::getWritablePath()
     return ret;
 }
 
+void CCFileUtilsWin32::addSearchPath(const char* path)
+{
+	std::string strDes = utf8Togbk(path);
+	CCFileUtils::addSearchPath(strDes.c_str());
+}
+
+void CCFileUtilsWin32::removeSearchPath(const char *path)
+{
+	std::string strDes = utf8Togbk(path);
+	CCFileUtils::removeSearchPath(strDes.c_str());
+}
+
+std::string CCFileUtilsWin32::utf8Togbk(const char *src)
+{
+	int len = MultiByteToWideChar(CP_UTF8, 0, src, -1, NULL, 0);
+	unsigned short * wszGBK = new unsigned short[len + 1];
+	memset(wszGBK, 0, len * 2 + 2);
+	MultiByteToWideChar(CP_UTF8, 0, (LPCSTR)src, -1, (LPWSTR)wszGBK, len);
+
+	len = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wszGBK, -1, NULL, 0, NULL, NULL);
+	char *szGBK = new char[len + 1];
+	memset(szGBK, 0, len + 1);
+	WideCharToMultiByte(CP_ACP,0, (LPCWSTR)wszGBK, -1, szGBK, len, NULL, NULL);
+	std::string strTemp(szGBK);
+	if (strTemp.find('?') != std::string::npos)
+	{
+		strTemp.assign(src);
+	}
+	delete[]szGBK;
+	delete[]wszGBK;
+	return strTemp;
+}
+
+std::string CCFileUtilsWin32::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
+{
+	std::string filenameAscii =  utf8Togbk(filename.c_str());
+	std::string resolutionDirectoryAscii =  utf8Togbk(resolutionDirectory.c_str());
+	std::string rearchPathAscii = utf8Togbk(searchPath.c_str());
+
+	return CCFileUtils::getPathForFilename(filenameAscii, resolutionDirectoryAscii, rearchPathAscii);
+}
 NS_CC_END

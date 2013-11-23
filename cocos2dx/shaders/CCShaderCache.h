@@ -45,10 +45,18 @@ class CCGLProgram;
 class CC_DLL CCShaderCache : public CCObject 
 {
 public:
+    /**
+     * @js ctor
+     */
     CCShaderCache();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCShaderCache();
-    /** returns the shared instance */
+    /** returns the shared instance 
+     *  @js getInstance
+     */
     static CCShaderCache* sharedShaderCache();
 
     /** purges the cache. It releases the retained instance. */
@@ -60,7 +68,11 @@ public:
     /** reload the default shaders */
     void reloadDefaultShaders();
 
-    /** returns a GL program for a given key */
+
+
+    /** returns a GL program for a given key 
+     *  @js getProgram
+     */
     CCGLProgram * programForKey(const char* key);
 
     /** adds a CCGLProgram to the cache for a given name */

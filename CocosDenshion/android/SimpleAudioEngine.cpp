@@ -74,7 +74,7 @@ SimpleAudioEngine::SimpleAudioEngine()
 	
 	const char* deviceModel = methodInfo.env->GetStringUTFChars(jstr, NULL);
     
-	LOGD(deviceModel);
+	LOGD("%s", deviceModel);
     
 	if (strcmp(I9100_MODEL, deviceModel) == 0)
 	{

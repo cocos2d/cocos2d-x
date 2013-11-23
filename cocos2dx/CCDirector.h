@@ -97,9 +97,20 @@ and when to execute the Scenes.
 class CC_DLL CCDirector : public CCObject, public TypeInfo
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCDirector(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCDirector(void);
     virtual bool init(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual long getClassTypeInfo() {
 		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCDirector).name());
 		return id;
@@ -123,7 +134,9 @@ public:
     /** seconds per frame */
     inline float getSecondsPerFrame() { return m_fSecondsPerFrame; }
 
-    /** Get the CCEGLView, where everything is rendered */
+    /** Get the CCEGLView, where everything is rendered
+     * @js NA
+     */
     inline CCEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
     void setOpenGLView(CCEGLView *pobOpenGLView);
 
@@ -138,9 +151,12 @@ public:
     
     /** Sets an OpenGL projection
      @since v0.8.2
+     @js NA
      */
     inline ccDirectorProjection getProjection(void) { return m_eProjection; }
     void setProjection(ccDirectorProjection kProjection);
+     /** reshape projection matrix when canvas has been change"*/
+    void reshapeProjection(const CCSize& newWindowSize);
     
     /** Sets the glViewport*/
     void setViewport();
@@ -332,6 +348,8 @@ public:
 
     /** CCAccelerometer associated with this director
      @since v2.0
+     @js NA
+     @lua NA
      */
     CC_PROPERTY(CCAccelerometer*, m_pAccelerometer, Accelerometer);
 
@@ -339,7 +357,9 @@ public:
 	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
 	
 public:
-    /** returns a shared instance of the director */
+    /** returns a shared instance of the director 
+     *  @js getInstance
+     */
     static CCDirector* sharedDirector(void);
 
 protected:
@@ -431,6 +451,8 @@ protected:
   - Only supports animation intervals of 1/60 1/30 & 1/15
  
  @since v0.8.2
+ @js NA
+ @lua NA
  */
 class CCDisplayLinkDirector : public CCDirector
 {

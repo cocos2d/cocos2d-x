@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "libcocos2d.vcxproj", "{871AADCE-3905-48EF-AC2B-C67C335B0DCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|Win32 = Debug|Win32
+		Release|ARM = Release|ARM
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Debug|ARM.ActiveCfg = Debug|ARM
+		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Debug|ARM.Build.0 = Debug|ARM
+		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Debug|Win32.Build.0 = Debug|Win32
+		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Release|ARM.ActiveCfg = Release|ARM
+		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Release|ARM.Build.0 = Release|ARM
+		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Release|Win32.ActiveCfg = Release|Win32
+		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

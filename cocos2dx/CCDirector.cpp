@@ -283,7 +283,7 @@ void CCDirector::drawScene(void)
     {
         showStats();
     }
-
+    
     kmGLPopMatrix();
 
     m_uTotalFrames++;
@@ -394,6 +394,9 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
         {
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+            kmGLMultMatrix(CCEGLView::sharedOpenGLView()->getOrientationMatrix());
+#endif
             kmMat4 orthoMatrix;
             kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
             kmGLMultMatrix(&orthoMatrix);
@@ -410,7 +413,11 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
-
+            
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+            //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
+            kmGLMultMatrix(CCEGLView::sharedOpenGLView()->getOrientationMatrix());
+#endif
             // issue #1334
             kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
             // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
@@ -473,6 +480,17 @@ void CCDirector::setAlphaBlending(bool bOn)
     CHECK_GL_ERROR_DEBUG();
 }
 
+void CCDirector::reshapeProjection(const CCSize& newWindowSize)
+{
+	CC_UNUSED_PARAM(newWindowSize);
+	if (m_pobOpenGLView)
+	{
+		m_obWinSizeInPoints = CCSizeMake(newWindowSize.width * m_fContentScaleFactor,
+			newWindowSize.height * m_fContentScaleFactor);
+		setProjection(m_eProjection);       
+	}
+
+}
 void CCDirector::setDepthTest(bool bOn)
 {
     if (bOn)
@@ -494,7 +512,12 @@ GLToClipTransform(kmMat4 *transformOut)
 {
 	kmMat4 projection;
 	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-	
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
+	kmMat4Multiply(&projection, CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix(), &projection);
+#endif
+
 	kmMat4 modelview;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
 	

@@ -40,7 +40,7 @@ CCLayer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    28
+#define MAX_LAYER    29
 
 CCLayer* createAtlasLayer(int nIndex)
 {
@@ -76,6 +76,7 @@ CCLayer* createAtlasLayer(int nIndex)
         case 25: return new LabelTTFAlignment();
         case 26: return new LabelBMFontBounds();
         case 27: return new TTFFontShadowAndStroke();
+        case 28: return new LabelBMFontCrashTest();
     }
 
     return NULL;
@@ -1123,7 +1124,14 @@ string LabelTTFMultiline::subtitle()
 LabelTTFChinese::LabelTTFChinese()
 {
     CCSize size = CCDirector::sharedDirector()->getWinSize();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // Marker Felt is missing Chinese characters
+    CCLabelTTF *pLable = CCLabelTTF::create("中国", "PMingLiU", 30);
+#else
     CCLabelTTF *pLable = CCLabelTTF::create("中国", "Marker Felt", 30);
+#endif
+
+    
     pLable->setPosition(ccp(size.width / 2, size.height /2));
     this->addChild(pLable);
 }
@@ -1653,4 +1661,38 @@ void LabelBMFontBounds::draw()
     };
     ccDrawPoly(vertices, 4, true);
 }
+
+// LabelBMFontCrashTest
+void LabelBMFontCrashTest::onEnter()
+{
+    AtlasDemo::onEnter();
+    
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    //Create a label and add it
+    CCLabelBMFont *label1 = new CCLabelBMFont();
+    label1->initWithString("test", "fonts/bitmapFontTest2.fnt");
+    this->addChild(label1);
+    // Visit will call draw where the function "ccGLBindVAO(m_uVAOname);" will be invoked.
+    label1->visit();
+    
+    // Remove this label
+    label1->removeFromParentAndCleanup(true);
+    label1->release();
+    
+    // Create a new label and add it (then crashes)
+    CCLabelBMFont *label2 = CCLabelBMFont::create("test 2", "fonts/bitmapFontTest.fnt");
+    label2->setPosition(ccp(winSize.width/2, winSize.height/2));
+    this->addChild(label2);
+}
+
+std::string LabelBMFontCrashTest::title()
+{
+    return "LabelBMFont Crash Test";
+}
+
+std::string LabelBMFontCrashTest::subtitle()
+{
+    return "Should not crash.";
+}
+
 

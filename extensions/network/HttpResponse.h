@@ -35,6 +35,8 @@ NS_CC_EXT_BEGIN
  @brief defines the object which users will receive at onHttpCompleted(sender, HttpResponse) callback
  Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
+ @js NA
+ @lua NA
  */
 class CCHttpResponse : public CCObject
 {
