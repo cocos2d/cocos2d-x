@@ -299,6 +299,7 @@ void Renderer::drawBatchedQuads()
                 if(quadsToDraw > 0)
                 {
                     glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+                    CC_INCREMENT_GL_DRAWS(1);
 
                     startQuad += quadsToDraw;
                     quadsToDraw = 0;
@@ -317,6 +318,7 @@ void Renderer::drawBatchedQuads()
     if(quadsToDraw > 0)
     {
         glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+        CC_INCREMENT_GL_DRAWS(1);
     }
 
     //Unbind VAO
