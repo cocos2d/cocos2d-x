@@ -138,14 +138,15 @@ public:
      *         2  : fade in and out
      *
      */
-    void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
     /**
      * Play animation by index, the other param is the same to play.
      * @param  animationIndex  the animation index you want to play
      */
-    void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
+    virtual void play(bool loop, const char *animationName, ...);
     /**
      * Go to specified frame and play current movement.
      * You need first switch to the movement you want to play, then call this function.
@@ -244,6 +245,8 @@ protected:
      */
     void movementEvent(CCArmature *armature, MovementEventType movementType, const char *movementID);
 
+    void updateMovementList();
+
     inline bool isIgnoreFrameEvent() { return m_bIgnoreFrameEvent; }
 
     friend class CCTween;
@@ -268,6 +271,12 @@ protected:
 
     std::queue<CCFrameEvent*> m_sFrameEventQueue;
     std::queue<CCMovementEvent*> m_sMovementEventQueue;
+
+    std::vector<std::string> m_sMovementList;
+
+    bool m_bOnMovementList;
+    bool m_bMovementListLoop;
+    int m_iMovementIndex;
 
     CCObject *m_pUserObject;
 protected:
