@@ -259,11 +259,11 @@ bool Configuration::supportsDiscardFramebuffer() const
 
 bool Configuration::supportsShareableVAO() const
 {
-#if CC_TEXTURE_ATLAS_USE_VAO
-	return _supportsShareableVAO;
-#else
-    return false;
-#endif
+	#if CC_TEXTURE_ATLAS_USE_VAO
+    	return _supportsShareableVAO;
+ 	#else
+ 		return false;
+ 	#endif
 }
 
 //

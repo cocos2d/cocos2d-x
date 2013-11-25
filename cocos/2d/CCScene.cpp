@@ -102,7 +102,7 @@ bool Scene::initWithPhysics()
         Director * pDirector;
         CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
         this->setContentSize(pDirector->getWinSize());
-        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::create(*this)));
+        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
         
         this->scheduleUpdate();
         // success
@@ -161,7 +161,11 @@ void Scene::update(float delta)
 {
     Node::update(delta);
     
-    _physicsWorld->update(delta);
+    if (nullptr != _physicsWorld)
+    {
+        _physicsWorld->update(delta);
+    }
+    
 }
 #endif
 

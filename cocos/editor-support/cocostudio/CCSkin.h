@@ -37,6 +37,9 @@ public:
     static Skin *createWithSpriteFrameName(const char *pszSpriteFrameName);
     static Skin *create(const char *pszFileName);
 public:
+    /**
+     *  @js ctor
+     */
     Skin();
 
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName) override;
@@ -47,8 +50,15 @@ public:
 
     cocos2d::AffineTransform getNodeToWorldTransform() const override;
     cocos2d::AffineTransform getNodeToWorldTransformAR() const;
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void setSkinData(const BaseData &data);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual const BaseData &getSkinData() const;
 
     virtual void setBone(Bone *bone);

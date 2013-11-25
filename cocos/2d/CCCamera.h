@@ -71,53 +71,53 @@ public:
     /**
      * @js ctor
      */
-    Camera(void);
+    Camera();
     /**
      * @js NA
      * @lua NA
      */
-    ~Camera(void);
+    ~Camera();
 
-    void init(void);
+    void init();
     /**
      * @js NA
      * @lua NA
      */
-    const char* description(void) const;
+    const char* description() const;
 
     /** sets the dirty value */
-    inline void setDirty(bool bValue) { _dirty = bValue; }
+    inline void setDirty(bool value) { _dirty = value; }
     /** get the dirty value */
-    inline bool isDirty(void) const { return _dirty; }
+    inline bool isDirty() const { return _dirty; }
 
     /** sets the camera in the default position */
-    void restore(void);
+    void restore();
     /** Sets the camera using gluLookAt using its eye, center and up_vector */
-    void locate(void);
+    void locate();
     /** sets the eye values in points */
-    void setEye(float fEyeX, float fEyeY, float fEyeZ);
+    void setEye(float eyeX, float eyeY, float eyeZ);
     /**
      @deprecated. Use setEye() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ){ setEye(fEyeX, fEyeY, fEyeZ);}
+    CC_DEPRECATED_ATTRIBUTE void setEyeXYZ(float eyeX, float eyeY, float eyeZ){ setEye(eyeX, eyeY, eyeZ);}
     /** sets the center values in points */
-    void setCenter(float fCenterX, float fCenterY, float fCenterZ);
+    void setCenter(float centerX, float centerY, float centerZ);
     /**
      @deprecated. Use setCenter() instead
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ){ setCenter(fCenterX,fCenterY,fCenterZ);}
+    CC_DEPRECATED_ATTRIBUTE void setCenterXYZ(float centerX, float centerY, float centerZ){ setCenter(centerX,centerY,centerZ);}
     /** sets the up values */
-    void setUp(float fUpX, float fUpY, float fUpZ);
+    void setUp(float upX, float upY, float upZ);
     /**
      @deprecated. Use setUp() instead
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void setUpXYZ(float fUpX, float fUpY, float fUpZ){ setUp(fUpX,fUpY,fUpZ); }
+    CC_DEPRECATED_ATTRIBUTE void setUpXYZ(float upX, float upY, float upZ){ setUp(upX,upY,upZ); }
 
     /** get the eye vector values in points 
      * @code
@@ -126,37 +126,37 @@ public:
      * in lua:local getEye()
      * @endcode
      */
-    void getEye(float *pEyeX, float *pEyeY, float *pEyeZ) const;
+    void getEye(float *eyeX, float *eyeY, float *eyeZ) const;
     /**
      @deprecated. Use getEye() instead
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ) const { getEye(pEyeX, pEyeY, pEyeZ); }
+    CC_DEPRECATED_ATTRIBUTE void getEyeXYZ(float *eyeX, float *eyeY, float *eyeZ) const { getEye(eyeX, eyeY, eyeZ); }
     /** get the center vector values int points 
      * when this function bound to js or lua,the input params are changed
      * in js: var getCenter()
      * in lua:local getCenter()
      */
-    void getCenter(float *pCenterX, float *pCenterY, float *pCenterZ) const;
+    void getCenter(float *centerX, float *centerY, float *centerZ) const;
     /**
      @deprecated. Use getCenter() instead
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ) const{ getCenter(pCenterX,pCenterY,pCenterZ); }
+    CC_DEPRECATED_ATTRIBUTE void getCenterXYZ(float *centerX, float *centerY, float *centerZ) const{ getCenter(centerX,centerY,centerZ); }
     /** get the up vector values 
      * when this function bound to js or lua,the input params are changed
      * in js: var getUp()
      * in lua:local getUp()
      */
-    void getUp(float *pUpX, float *pUpY, float *pUpZ) const;
+    void getUp(float *upX, float *upY, float *upZ) const;
     /**
      @deprecated. Use getUp() instead
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ) const{ getUp(pUpX, pUpY, pUpZ); }
+    CC_DEPRECATED_ATTRIBUTE void getUpXYZ(float *upX, float *upY, float *upZ) const{ getUp(upX, upY, upZ); }
 
 protected:
     float _eyeX;

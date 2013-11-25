@@ -80,17 +80,17 @@ GridAction* GridAction::reverse() const
 	return (GridAction*)ReverseTime::create( this->clone() );
 }
 
-GridBase* GridAction::getGrid(void)
+GridBase* GridAction::getGrid()
 {
     // Abstract class needs implementation
     CCASSERT(0, "");
 
-    return NULL;
+    return nullptr;
 }
 
 // implementation of Grid3DAction
 
-GridBase* Grid3DAction::getGrid(void)
+GridBase* Grid3DAction::getGrid()
 {
     return Grid3D::create(_gridSize);
 }
@@ -140,31 +140,31 @@ void TiledGrid3DAction::setTile(const Point& pos, const Quad3& coords)
 
 // implementation AccelDeccelAmplitude
 
-AccelDeccelAmplitude* AccelDeccelAmplitude::create(Action *pAction, float duration)
+AccelDeccelAmplitude* AccelDeccelAmplitude::create(Action *action, float duration)
 {
-    AccelDeccelAmplitude *pRet = new AccelDeccelAmplitude();
-    if (pRet)
+    AccelDeccelAmplitude *ret = new AccelDeccelAmplitude();
+    if (ret)
     {
-        if (pRet->initWithAction(pAction, duration))
+        if (ret->initWithAction(action, duration))
         {
-            pRet->autorelease();
+            ret->autorelease();
         }
         else
         {
-            CC_SAFE_DELETE(pRet);
+            CC_SAFE_DELETE(ret);
         }
     }
 
-    return pRet;
+    return ret;
 }
 
-bool AccelDeccelAmplitude::initWithAction(Action *pAction, float duration)
+bool AccelDeccelAmplitude::initWithAction(Action *action, float duration)
 {
     if (ActionInterval::initWithDuration(duration))
     {
         _rate = 1.0f;
-        _other = (ActionInterval*)(pAction);
-        pAction->retain();
+        _other = (ActionInterval*)(action);
+        action->retain();
 
         return true;
     }
@@ -181,7 +181,7 @@ AccelDeccelAmplitude* AccelDeccelAmplitude::clone() const
 	return a;
 }
 
-AccelDeccelAmplitude::~AccelDeccelAmplitude(void)
+AccelDeccelAmplitude::~AccelDeccelAmplitude()
 {
     CC_SAFE_RELEASE(_other);
 }
@@ -212,31 +212,31 @@ AccelDeccelAmplitude* AccelDeccelAmplitude::reverse() const
 
 // implementation of AccelAmplitude
 
-AccelAmplitude* AccelAmplitude::create(Action *pAction, float duration)
+AccelAmplitude* AccelAmplitude::create(Action *action, float duration)
 {
-    AccelAmplitude *pRet = new AccelAmplitude();
-    if (pRet)
+    AccelAmplitude *ret = new AccelAmplitude();
+    if (ret)
     {
-        if (pRet->initWithAction(pAction, duration))
+        if (ret->initWithAction(action, duration))
         {
-            pRet->autorelease();
+            ret->autorelease();
         }
         else
         {
-            CC_SAFE_DELETE(pRet);
+            CC_SAFE_DELETE(ret);
         }
     }
 
-    return pRet;
+    return ret;
 }
 
-bool AccelAmplitude::initWithAction(Action *pAction, float duration)
+bool AccelAmplitude::initWithAction(Action *action, float duration)
 {
     if (ActionInterval::initWithDuration(duration))
     {
         _rate = 1.0f;
-        _other = (ActionInterval*)(pAction);
-        pAction->retain();
+        _other = (ActionInterval*)(action);
+        action->retain();
 
         return true;
     }
@@ -277,31 +277,31 @@ AccelAmplitude* AccelAmplitude::reverse() const
 
 // DeccelAmplitude
 
-DeccelAmplitude* DeccelAmplitude::create(Action *pAction, float duration)
+DeccelAmplitude* DeccelAmplitude::create(Action *action, float duration)
 {
-    DeccelAmplitude *pRet = new DeccelAmplitude();
-    if (pRet)
+    DeccelAmplitude *ret = new DeccelAmplitude();
+    if (ret)
     {
-        if (pRet->initWithAction(pAction, duration))
+        if (ret->initWithAction(action, duration))
         {
-            pRet->autorelease();
+            ret->autorelease();
         }
         else
         {
-            CC_SAFE_DELETE(pRet);
+            CC_SAFE_DELETE(ret);
         }
     }
 
-    return pRet;
+    return ret;
 }
 
-bool DeccelAmplitude::initWithAction(Action *pAction, float duration)
+bool DeccelAmplitude::initWithAction(Action *action, float duration)
 {
     if (ActionInterval::initWithDuration(duration))
     {
         _rate = 1.0f;
-        _other = (ActionInterval*)(pAction);
-        pAction->retain();
+        _other = (ActionInterval*)(action);
+        action->retain();
 
         return true;
     }
@@ -309,7 +309,7 @@ bool DeccelAmplitude::initWithAction(Action *pAction, float duration)
     return false;
 }
 
-DeccelAmplitude::~DeccelAmplitude(void)
+DeccelAmplitude::~DeccelAmplitude()
 {
     CC_SAFE_RELEASE(_other);
 }
@@ -346,14 +346,14 @@ void StopGrid::startWithTarget(Node *target)
 {
     ActionInstant::startWithTarget(target);
 
-    GridBase *pGrid = _target->getGrid();
-    if (pGrid && pGrid->isActive())
+    GridBase *grid = _target->getGrid();
+    if (grid && grid->isActive())
     {
-        pGrid->setActive(false);
+        grid->setActive(false);
     }
 }
 
-StopGrid* StopGrid::create(void)
+StopGrid* StopGrid::create()
 {
     StopGrid* pAction = new StopGrid();
     pAction->autorelease();
@@ -376,20 +376,20 @@ StopGrid* StopGrid::reverse() const
 
 ReuseGrid* ReuseGrid::create(int times)
 {
-    ReuseGrid *pAction = new ReuseGrid();
-    if (pAction)
+    ReuseGrid *action = new ReuseGrid();
+    if (action)
     {
-        if (pAction->initWithTimes(times))
+        if (action->initWithTimes(times))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_DELETE(pAction);
+            CC_SAFE_DELETE(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool ReuseGrid::initWithTimes(int times)

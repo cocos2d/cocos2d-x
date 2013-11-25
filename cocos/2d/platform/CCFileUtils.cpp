@@ -503,7 +503,7 @@ unsigned char* FileUtils::getFileData(const char* filename, const char* mode, lo
         fseek(fp,0,SEEK_END);
         *size = ftell(fp);
         fseek(fp,0,SEEK_SET);
-        buffer = new unsigned char[*size];
+        buffer = (unsigned char*)malloc(*size);
         *size = fread(buffer,sizeof(unsigned char), *size,fp);
         fclose(fp);
     } while (0);
@@ -543,7 +543,7 @@ unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char
         nRet = unzOpenCurrentFile(pFile);
         CC_BREAK_IF(UNZ_OK != nRet);
 
-        buffer = new unsigned char[FileInfo.uncompressed_size];
+        buffer = (unsigned char*)malloc(FileInfo.uncompressed_size);
         int CC_UNUSED nSize = unzReadCurrentFile(pFile, buffer, FileInfo.uncompressed_size);
         CCASSERT(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
 

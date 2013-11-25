@@ -46,6 +46,10 @@ NS_CC_BEGIN
 
 class TouchScriptHandlerEntry;
 
+class EventListenerTouch;
+class EventListenerKeyboard;
+class EventListenerAcceleration;
+
 //
 // Layer
 //
@@ -82,9 +86,25 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     
-    
+	/* Callback function should not be deprecated, it will generate lots of warnings.
+	Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
+    */
+	virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
+    virtual void onTouchMoved(Touch *touch, Event *unused_event); 
+    virtual void onTouchEnded(Touch *touch, Event *unused_event); 
+    virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
+    virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
     /** @deprecated Please override onAcceleration */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
+
+	/* Callback function should not be deprecated, it will generate lots of warnings.
+	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
+    */
+    virtual void onAcceleration(Acceleration* acc, Event* unused_event);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
@@ -98,26 +118,71 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
 
+    /** whether or not it will receive Touch events.
+    You can enable / disable touch events with this property.
+    Only the touches of this node will be affected. This "method" is not propagated to it's children.
+    @since v0.8.1
+    */
+    CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
+    CC_DEPRECATED_ATTRIBUTE void setTouchEnabled(bool value);
     
+    CC_DEPRECATED_ATTRIBUTE virtual void setTouchMode(Touch::DispatchMode mode);
+    CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
+
+    /** swallowsTouches of the touch events. Default is true */
+    CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
+    CC_DEPRECATED_ATTRIBUTE virtual bool isSwallowsTouches() const;
+
+    /** whether or not it will receive Accelerometer events
+    You can enable / disable accelerometer events with this property.
+    @since v0.8.1
+    */
+    CC_DEPRECATED_ATTRIBUTE virtual bool isAccelerometerEnabled() const;
+    CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerEnabled(bool value);
+    CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerInterval(double interval);
+
+    /** whether or not it will receive keyboard or keypad events
+    You can enable / disable accelerometer events with this property.
+    it's new in cocos2d-x
+    */
+
+    CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
+    CC_DEPRECATED_ATTRIBUTE virtual void setKeyboardEnabled(bool value);
+
     /** Please use onKeyPressed instead. */
-    virtual void keyPressed(int keyCode) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
     
     /** Please use onKeyReleased instead. */
-    virtual void keyReleased(int keyCode) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
 
+	/* Callback function should not be deprecated, it will generate lots of warnings.
+	Since 'setKeyboardEnabled' was deprecated, it will make warnings if developer overrides onKeyXXX and invokes setKeyboardEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
+    */
+    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+
+    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; }
+    CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);
 
     /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
-    //
-    // Overrides
-    //
+
+protected:      
+    bool _touchEnabled;
+    bool _accelerometerEnabled;
+    bool _keyboardEnabled;
+    EventListener* _touchListener;
+    EventListenerKeyboard* _keyboardListener;
+    EventListenerAcceleration* _accelerationListener;
+private:   
+    Touch::DispatchMode _touchMode;
+    bool _swallowsTouches;
+
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
 };
 
-#ifdef __apple__
-#pragma mark -
-#pragma mark LayerRGBA
-#endif
 
 /** LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
  

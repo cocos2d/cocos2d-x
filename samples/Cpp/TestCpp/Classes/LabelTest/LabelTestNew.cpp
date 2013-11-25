@@ -1096,7 +1096,7 @@ LabelTTFFontsTestNew::LabelTTFFontsTestNew()
 
     auto size = Director::getInstance()->getWinSize();
 
-    for(int i=0;i < arraysize(ttfpaths); ++i) {
+    for(size_t i=0;i < arraysize(ttfpaths); ++i) {
         auto label = Label::createWithTTF( ttfpaths[i], ttfpaths[i], 40, 0, TextHAlignment::CENTER, GlyphCollection::NEHE);
         if( label ) {
             

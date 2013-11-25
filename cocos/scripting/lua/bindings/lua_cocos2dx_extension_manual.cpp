@@ -186,7 +186,7 @@ static int tolua_cocos2d_ScrollView_unregisterScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("'unregisterScriptHandler' function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterScriptHandler' function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -313,7 +313,7 @@ static int tolua_cocos2d_control_unregisterControlEventHandler(lua_State* tolua_
         return 0;
     }
     
-    CCLOG("'unregisterControlEventHandler' function of Control  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterControlEventHandler' function of Control  has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -691,7 +691,7 @@ int register_cocos2dx_extension_CCBProxy(lua_State* tolua_S)
     tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     
-    uint32_t typeId = typeid(CCBProxy).hash_code();
+    long typeId = typeid(CCBProxy).hash_code();
     g_luaType[typeId] = "CCBProxy";
     return 1;
 }
@@ -1021,7 +1021,7 @@ public:
     LUA_TableViewDataSource(){}
     virtual ~LUA_TableViewDataSource(){}
     
-    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx)
+    virtual Size tableCellSizeForIndex(TableView *table, long idx)
     {
         if (nullptr != table )
         {
@@ -1047,7 +1047,7 @@ public:
         return Size::ZERO;
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, long idx)
     {
         if (nullptr != table )
         {
@@ -1073,7 +1073,7 @@ public:
         return NULL;
     }
     
-    virtual unsigned int numberOfCellsInTableView(TableView *table)
+    virtual long numberOfCellsInTableView(TableView *table)
     {
         if (nullptr != table )
         {
@@ -1089,7 +1089,7 @@ public:
                 Double* numbers  = dynamic_cast<Double*>(resultArray.getObjectAtIndex(0));
                 if (NULL != numbers)
                 {
-                    return (int)numbers->getValue();
+                    return (long)numbers->getValue();
                 }
             }
         }
@@ -1190,7 +1190,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
 #if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(L,3,"Node",0,&tolua_err)) goto tolua_lerror;
 #endif
-            Node* node = static_cast<Node*>(tolua_tousertype(L, 2, nullptr));
+            Node* node = static_cast<Node*>(tolua_tousertype(L, 3, nullptr));
             ret = TableView::create(dataSource, size, node);
         }
         
@@ -1495,7 +1495,14 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
     argc = lua_gettop(L) - 1;
     
     if (2 == argc)
-    {
+    {        
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L, 2, "LUA_FUNCTION", 0, &tolua_err) ||
+                !tolua_isnumber(L, 3, 0, &tolua_err) )
+        {
+                goto tolua_lerror;
+        }
+#endif
         LuaAssetsManagerDelegateProtocol* delegate = dynamic_cast<LuaAssetsManagerDelegateProtocol*>( self->getDelegate());
         if (nullptr == delegate)
         {
@@ -1508,21 +1515,11 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
             delegate->release();
         }
         
-        if (2 == argc)
-        {
-#if COCOS2D_DEBUG >= 1
-            if (!toluafix_isfunction(L, 2, "LUA_FUNCTION", 0, &tolua_err) ||
-                !tolua_isnumber(L, 3, 0, &tolua_err) )
-            {
-                goto tolua_lerror;
-            }
-#endif
-            LUA_FUNCTION handler = toluafix_ref_function(L, 2, 0);
-            ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(L,3,0) + (int)ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
+        LUA_FUNCTION handler = toluafix_ref_function(L, 2, 0);
+        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(L,3,0) + (int)ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
             
-            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)delegate, handler, handlerType);
-            return 0;
-        }
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)delegate, handler, handlerType);
+        return 0;
     }
     
     CCLOG("'setDelegate' function of AssetsManager has wrong number of arguments: %d, was expecting %d\n", argc, 2);

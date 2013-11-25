@@ -46,11 +46,14 @@ namespace cocostudio {
 
 class Bone;
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ColliderFilter
 {
 public:
-    ~ColliderFilter() { }
+    virtual ~ColliderFilter() { }
 #if ENABLE_PHYSICS_BOX2D_DETECT
 public:
     ColliderFilter(unsigned short categoryBits = 0x0001, unsigned short maskBits = 0xFFFF, signed short groupIndex = 0);
@@ -124,6 +127,8 @@ private:
 
 /*
  *  @brief  ContourSprite used to draw the contour of the display
+ *  @js NA
+ *  @lua NA
  */
 class ColliderDetector : public cocos2d::Object
 {

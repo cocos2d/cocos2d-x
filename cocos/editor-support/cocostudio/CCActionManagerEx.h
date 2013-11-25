@@ -37,21 +37,28 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     ActionManagerEx();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~ActionManagerEx();
     
     /**
      * Gets the static instance of ActionManager.
+     * @js getInstance
+     * @lua getInstance
      */
     static ActionManagerEx* shareManager();
 
 	 /**
      * Purges ActionManager point.
+     * @js purge
+     * @lua destroyActionManager
      */
 	static void purgeActionManager();
 
@@ -72,8 +79,10 @@ public:
 	 * @param jsonName  UI file name
      *
      * @param actionName  action name in teh UIfile.
+	 *
+	 * @return  ActionObject which named as the param name
      */
-	void playActionByName(const char* jsonName,const char* actionName);
+	ActionObject* playActionByName(const char* jsonName,const char* actionName);
     
     /*init properties with json dictionay*/
     void initWithDictionary(const char* jsonName,JsonDictionary* dic,cocos2d::Object* root);

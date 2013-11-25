@@ -101,6 +101,9 @@ public:
         ASSETSMANAGER_PROGRESS,
         ASSETSMANAGER_SUCCESS,
         ASSETSMANAGER_ERROR,
+        
+        EVENT_LISTENER,
+        ARMATURE_EVENT,
     };
     
     typedef int Handler;

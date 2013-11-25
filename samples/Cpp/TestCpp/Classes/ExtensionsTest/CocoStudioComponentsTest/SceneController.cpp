@@ -11,8 +11,8 @@ using namespace cocostudio;
 SceneController::SceneController(void)
 : _fAddTargetTime(0.0f)
 , _fElapsedTime(0.0f)
-, _targets(NULL)
-, _projectiles(NULL)
+, _targets(nullptr)
+, _projectiles(nullptr)
 {
     _name = "SceneController";
 }
@@ -40,6 +40,7 @@ void SceneController::onEnter()
    
     ((ComAudio*)(_owner->getComponent("Audio")))->playBackgroundMusic("background-music-aac.wav", true);
     ((ComAttribute*)(_owner->getComponent("ComAttribute")))->setInt("KillCount", 0);
+
 }
 
 void SceneController::onExit()

@@ -41,6 +41,8 @@ public:
     static LuaStack *create(void);
     static LuaStack *attach(lua_State *L);
     
+    virtual ~LuaStack();
+    
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
@@ -101,6 +103,7 @@ public:
     virtual void clean(void);
     virtual void pushInt(int intValue);
     virtual void pushFloat(float floatValue);
+    virtual void pushLong(long longValue);
     virtual void pushBoolean(bool boolValue);
     virtual void pushString(const char* stringValue);
     virtual void pushString(const char* stringValue, int length);

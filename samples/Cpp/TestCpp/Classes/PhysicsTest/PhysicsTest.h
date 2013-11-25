@@ -11,20 +11,22 @@
 class PhysicsTestScene : public TestScene
 {
 public:
-    virtual bool initTest() override;
+    PhysicsTestScene()
+    :TestScene(false, true)
+    , _debugDraw(false)
+    {}
+    
+public:
     virtual void runThisTest();
     
     void toggleDebug();
     
 private:
-    static bool _debugDraw;
+    bool _debugDraw;
 };
 
 class PhysicsDemo : public BaseTest
 {
-protected:
-    PhysicsTestScene* _scene;
-    
 public:
     PhysicsDemo();
     virtual ~PhysicsDemo();
@@ -48,6 +50,7 @@ public:
     void onTouchEnded(Touch* touch, Event* event);
     
 protected:
+    PhysicsTestScene* _scene;
     Texture2D* _spriteTexture;    // weak ref
     SpriteBatchNode* _ball;
     std::map<int, Node*> _mouses;
@@ -71,7 +74,7 @@ public:
     std::string title() override;
 };
 
-class PhysicsDemoPlink : public PhysicsDemo
+class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
     void onEnter() override;
@@ -148,8 +151,6 @@ public:
     bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
     void clipPoly(PhysicsShapePolygon* shape, Point normal, float distance);
     
-    bool onTouchBegan(Touch *touch, Event *event);
-    void onTouchMoved(Touch *touch, Event *event);
     void onTouchEnded(Touch *touch, Event *event);
     
 private:

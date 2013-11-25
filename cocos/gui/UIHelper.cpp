@@ -30,7 +30,7 @@ UIWidget* UIHelper::seekWidgetByTag(UIWidget* root, int tag)
 {
     if (!root)
     {
-        return NULL;
+        return nullptr;
     }
     if (root->getTag() == tag)
     {
@@ -42,19 +42,19 @@ UIWidget* UIHelper::seekWidgetByTag(UIWidget* root, int tag)
     {
         UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
         UIWidget* res = seekWidgetByTag(child,tag);
-        if (res != NULL)
+        if (res != nullptr)
         {
             return res;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 UIWidget* UIHelper::seekWidgetByName(UIWidget* root, const char *name)
 {
     if (!root)
     {
-        return NULL;
+        return nullptr;
     }
     if (strcmp(root->getName(), name) == 0)
     {
@@ -66,19 +66,19 @@ UIWidget* UIHelper::seekWidgetByName(UIWidget* root, const char *name)
     {
         UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
         UIWidget* res = seekWidgetByName(child,name);
-        if (res != NULL)
+        if (res != nullptr)
         {
             return res;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 UIWidget* UIHelper::seekWidgetByRelativeName(UIWidget *root, const char *name)
 {
     if (!root)
     {
-        return NULL;
+        return nullptr;
     }
     cocos2d::ccArray* arrayRootChildren = root->getChildren()->data;
     int length = arrayRootChildren->num;
@@ -91,7 +91,7 @@ UIWidget* UIHelper::seekWidgetByRelativeName(UIWidget *root, const char *name)
             return child;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 /*temp action*/
@@ -99,7 +99,7 @@ UIWidget* UIHelper::seekActionWidgetByActionTag(UIWidget* root, int tag)
 {
 	if (!root)
 	{
-		return NULL;
+		return nullptr;
 	}
 	if (root->getActionTag() == tag)
 	{
@@ -111,12 +111,12 @@ UIWidget* UIHelper::seekActionWidgetByActionTag(UIWidget* root, int tag)
 	{
 		UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
 		UIWidget* res = seekActionWidgetByActionTag(child,tag);
-		if (res != NULL)
+		if (res != nullptr)
 		{
 			return res;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 }
