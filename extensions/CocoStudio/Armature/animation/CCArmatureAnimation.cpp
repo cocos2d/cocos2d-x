@@ -284,23 +284,37 @@ void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int du
     play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);
 }
 
-void CCArmatureAnimation::play(bool loop, const char *animationName, ...)
+void CCArmatureAnimation::play(bool loop, const std::string *movementNames, int movementNumber)
 {
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
     m_bOnMovementList = true;
     m_iMovementIndex = 0;
 
-    va_list params;
-    va_start(params, animationName);
-
-    while (animationName)
+    for (int i = 0; i<movementNumber; i++)
     {
-        const char *name = va_arg(params, const char*);
+        m_sMovementList.push_back(movementNames[i]);
+    }
+
+    updateMovementList();
+}
+
+void CCArmatureAnimation::playByIndex(bool loop, const int *movementIndexes, int movementNumber)
+{
+    m_sMovementList.clear();
+    m_bMovementListLoop = loop;
+    m_bOnMovementList = true;
+    m_iMovementIndex = 0;
+
+    std::vector<std::string> &movName = m_pAnimationData->movementNames;
+
+    for (int i = 0; i<movementNumber; i++)
+    {
+        std::string name = movName.at(movementIndexes[i]);
         m_sMovementList.push_back(name);
     }
 
-    va_end(params);
+    updateMovementList();
 }
 
 void CCArmatureAnimation::gotoAndPlay(int frameIndex)
@@ -415,6 +429,7 @@ void CCArmatureAnimation::updateHandler()
                 movementEvent(m_pArmature, COMPLETE, m_strMovementID.c_str());
             }
 
+            updateMovementList();
         }
         break;
         case ANIMATION_TO_LOOP_FRONT:
@@ -514,15 +529,25 @@ void CCArmatureAnimation::updateMovementList()
         {
             play(m_sMovementList.at(m_iMovementIndex).c_str(), -1, -1, 0);
             m_iMovementIndex++;
+            if (m_iMovementIndex >= m_sMovementList.size())
+            {
+                m_iMovementIndex = 0;
+            }
         }
         else
         {
-            if (m_iMovementIndex <= m_sMovementList.size())
+            if (m_iMovementIndex < m_sMovementList.size())
             {
                 play(m_sMovementList.at(m_iMovementIndex).c_str(), -1, -1, 0);
                 m_iMovementIndex++;
             }
+            else
+            {
+                m_bOnMovementList = false;
+            }
         }
+
+        m_bOnMovementList = true;
     }
 }
 
