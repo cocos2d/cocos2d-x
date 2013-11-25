@@ -31,18 +31,27 @@
 #include "CCPlatformMacros.h"
 NS_CC_BEGIN
 class PhysicsBodyInfo;
+class PhysicsJointInfo;
+class PhysicsShapeInfo;
 
 class PhysicsWorldInfo
 {
 public:
-    void setGravity(const Vect& gravity);
     inline b2World* getWorld() { return _world; }
+    void addShape(PhysicsShapeInfo& shape);
+    void removeShape(PhysicsShapeInfo& shape);
     void addBody(PhysicsBodyInfo& body);
     void removeBody(PhysicsBodyInfo& body);
+    void addJoint(PhysicsJointInfo& joint);
+    void removeJoint(PhysicsJointInfo& joint);
+    void setGravity(const Vect& gravity);
     inline bool isLocked() { return _world->IsLocked(); }
+    inline void step(float delta) { _world->Step(delta, VELOCITY_ITERRATIONS, POSITION_ITERRATIONS); }
     
 private:
     b2World* _world;
+    static const int32 VELOCITY_ITERRATIONS = 8;
+    static const int32 POSITION_ITERRATIONS = 1;
 
 private:
     PhysicsWorldInfo();
