@@ -1896,6 +1896,10 @@
 		B37510841823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104D1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h */; };
 		B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B375104E1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp */; };
 		B37510861823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */; };
+		B3AF01A01842FBA400A98B85 /* b2MotorJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */; };
+		B3AF01A11842FBA400A98B85 /* b2MotorJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */; };
+		B3AF01A21842FBA400A98B85 /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */; };
+		B3AF01A31842FBA400A98B85 /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
 /* End PBXBuildFile section */
@@ -3024,6 +3028,8 @@
 		B37510581823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsShapeInfo_box2d.h; path = ../box2d/CCPhysicsShapeInfo_box2d.h; sourceTree = "<group>"; };
 		B37510591823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsWorldInfo_box2d.cpp; path = ../box2d/CCPhysicsWorldInfo_box2d.cpp; sourceTree = "<group>"; };
 		B375105A1823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsWorldInfo_box2d.h; path = ../box2d/CCPhysicsWorldInfo_box2d.h; sourceTree = "<group>"; };
+		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
+		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4823,6 +4829,8 @@
 		46A168FC1807AF9C005B8026 /* Joints */ = {
 			isa = PBXGroup;
 			children = (
+				B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */,
+				B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */,
 				46A168FD1807AF9C005B8026 /* b2DistanceJoint.cpp */,
 				46A168FE1807AF9C005B8026 /* b2DistanceJoint.h */,
 				46A168FF1807AF9C005B8026 /* b2FrictionJoint.cpp */,
@@ -5724,6 +5732,7 @@
 				1AAF52CA180E2EEF000584C8 /* b2GrowableStack.h in Headers */,
 				1AAF52CC180E2EEF000584C8 /* b2Math.h in Headers */,
 				1AAF52CE180E2EEF000584C8 /* b2Settings.h in Headers */,
+				B3AF01A21842FBA400A98B85 /* b2MotorJoint.h in Headers */,
 				1AAF52D0180E2EEF000584C8 /* b2StackAllocator.h in Headers */,
 				1AAF52D2180E2EEF000584C8 /* b2Timer.h in Headers */,
 				1AAF52D4180E2EF5000584C8 /* b2Body.h in Headers */,
@@ -6268,6 +6277,7 @@
 				1AAF52BD180E2EEE000584C8 /* b2GrowableStack.h in Headers */,
 				1AAF52BF180E2EEE000584C8 /* b2Math.h in Headers */,
 				1AAF52C1180E2EEE000584C8 /* b2Settings.h in Headers */,
+				B3AF01A31842FBA400A98B85 /* b2MotorJoint.h in Headers */,
 				1AAF52C3180E2EEE000584C8 /* b2StackAllocator.h in Headers */,
 				1AAF52C5180E2EEE000584C8 /* b2Timer.h in Headers */,
 				1AAF52E1180E2EF6000584C8 /* b2Body.h in Headers */,
@@ -7052,6 +7062,7 @@
 				1AAF5305180E2EFE000584C8 /* b2Contact.cpp in Sources */,
 				1AAF5307180E2EFE000584C8 /* b2ContactSolver.cpp in Sources */,
 				1AAF5309180E2EFE000584C8 /* b2EdgeAndCircleContact.cpp in Sources */,
+				B3AF01A01842FBA400A98B85 /* b2MotorJoint.cpp in Sources */,
 				1AAF530B180E2EFE000584C8 /* b2EdgeAndPolygonContact.cpp in Sources */,
 				1AAF530D180E2EFE000584C8 /* b2PolygonAndCircleContact.cpp in Sources */,
 				1AAF530F180E2EFE000584C8 /* b2PolygonContact.cpp in Sources */,
@@ -7532,6 +7543,7 @@
 				1AAF52F3180E2EFC000584C8 /* b2Contact.cpp in Sources */,
 				1AAF52F5180E2EFC000584C8 /* b2ContactSolver.cpp in Sources */,
 				1AAF52F7180E2EFC000584C8 /* b2EdgeAndCircleContact.cpp in Sources */,
+				B3AF01A11842FBA400A98B85 /* b2MotorJoint.cpp in Sources */,
 				1AAF52F9180E2EFC000584C8 /* b2EdgeAndPolygonContact.cpp in Sources */,
 				1AAF52FB180E2EFC000584C8 /* b2PolygonAndCircleContact.cpp in Sources */,
 				1AAF52FD180E2EFC000584C8 /* b2PolygonContact.cpp in Sources */,
@@ -7697,7 +7709,7 @@
 					"DEBUG=1",
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
-					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"CC_ENABLE_BOX2D_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -7936,6 +7948,12 @@
 		A03F2E90178141C1006731B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"COCOS2D_DEBUG=1",
+					USE_FILE32API,
+					"CC_ENABLE_BOX2D_INTEGRATION=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
