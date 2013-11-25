@@ -57,6 +57,13 @@ struct CCFrameEvent
     int currentFrameIndex;
 };
 
+struct CCMovementEvent
+{
+    CCArmature *armature;
+    MovementEventType movementType;
+    const char *movementID;
+};
+
 /**
  *  @lua NA
  */
@@ -69,7 +76,13 @@ public:
      */
     static CCArmatureAnimation *create(CCArmature *armature);
 public:
+    /**
+     *  @js ctor
+     */
     CCArmatureAnimation();
+    /**
+     *  @js NA
+     */
     virtual ~CCArmatureAnimation(void);
 
     /**
@@ -194,7 +207,6 @@ public:
      * Returns a user assigned CCObject
      *
      * @return A user assigned CCObject
-     * @js NA
      */
     virtual CCObject* getUserObject();
     /**
@@ -227,6 +239,11 @@ protected:
      */
     void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
+    /**
+     * Emit a movement event
+     */
+    void movementEvent(CCArmature *armature, MovementEventType movementType, const char *movementID);
+
     inline bool isIgnoreFrameEvent() { return m_bIgnoreFrameEvent; }
 
     friend class CCTween;
@@ -250,6 +267,7 @@ protected:
     bool m_bIgnoreFrameEvent;
 
     std::queue<CCFrameEvent*> m_sFrameEventQueue;
+    std::queue<CCMovementEvent*> m_sMovementEventQueue;
 
     CCObject *m_pUserObject;
 protected:

@@ -143,7 +143,7 @@ void UILayout::onSizeChanged()
     if (m_pBackGroundImage)
     {
         m_pBackGroundImage->setPosition(ccp(m_size.width/2.0f, m_size.height/2.0f));
-        if (m_bBackGroundScale9Enabled)
+        if (m_bBackGroundScale9Enabled && m_pBackGroundImage)
         {
             dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setPreferredSize(m_size);
         }
@@ -240,7 +240,7 @@ void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
 void UILayout::setBackGroundImageCapInsets(const CCRect &capInsets)
 {
     m_backGroundImageCapInsets = capInsets;
-    if (m_bBackGroundScale9Enabled)
+    if (m_bBackGroundScale9Enabled && m_pBackGroundImage)
     {
         dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setCapInsets(capInsets);
     }

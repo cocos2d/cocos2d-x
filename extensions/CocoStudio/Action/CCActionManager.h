@@ -32,20 +32,21 @@
 
 NS_CC_EXT_BEGIN
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class ActionManager:public CCObject
 {
 public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     ActionManager();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~ActionManager();
     
@@ -77,7 +78,7 @@ public:
      *
      * @param actionName  action name in teh UIfile.
      */
-	void playActionByName(const char* jsonName,const char* actionName);
+	ActionObject* playActionByName(const char* jsonName,const char* actionName);
     
     /*init properties with json dictionay*/
     void initWithDictionary(const char* jsonName,cs::CSJsonDictionary* dic,CCObject* root);

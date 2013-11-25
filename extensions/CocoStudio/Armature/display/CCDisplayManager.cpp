@@ -241,7 +241,7 @@ void CCDisplayManager::changeDisplayByIndex(int index, bool force)
 
 void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay)
 {
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (m_pCurrentDecoDisplay && m_pCurrentDecoDisplay->getColliderDetector())
     {
         m_pCurrentDecoDisplay->getColliderDetector()->setActive(false);
@@ -250,7 +250,7 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
     m_pCurrentDecoDisplay = decoDisplay;
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (m_pCurrentDecoDisplay && m_pCurrentDecoDisplay->getColliderDetector())
     {
         m_pCurrentDecoDisplay->getColliderDetector()->setActive(true);

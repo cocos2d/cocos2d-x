@@ -35,8 +35,8 @@ NS_CC_EXT_BEGIN
 
 class CCArmature;
 /**
-*   @lua NA
-*/
+ * @lua NA
+ */
 class CCBone : public CCNodeRGBA
 {
 public:
@@ -54,7 +54,13 @@ public:
     static CCBone *create(const char *name);
 
 public:
+    /**
+     *  @js ctor
+     */
     CCBone();
+    /**
+     *  @js NA
+     */
     virtual ~CCBone(void);
 
     /**
@@ -158,8 +164,11 @@ public:
      */
     virtual CCArray *getColliderBodyList();
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(CCColliderFilter *filter);
     virtual CCColliderFilter *getColliderFilter();
+#endif
+
 public:
     /*
      *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
