@@ -149,6 +149,8 @@ private:
     float m_fFrameZoomFactor;
 
 	ESContext m_esContext;
+	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
+
 	bool m_textInputEnabled;
     WP8Keyboard^ mKeyboard;
     WP8Window^ m_wp8Window;
