@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="E4A2CC60-D3B0-43D5-B514-53CF589CEDEB" Publisher="CN=dalestam" Version="2.1.0.3" />
+  <Identity Name="E4A2CC60-D3B0-43D5-B514-53CF589CEDEB" Publisher="CN=dalestam" Version="2.1.0.4" />
   <Properties>
     <DisplayName>TestCpp</DisplayName>
     <PublisherDisplayName>dalestam</PublisherDisplayName>
