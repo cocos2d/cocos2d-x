@@ -265,6 +265,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Object* target, SEL_CallFunc selector);
 
+public:
     /** executes the callback */
     virtual void execute();
 
@@ -294,7 +295,8 @@ protected:
     : _selectorTarget(NULL)
     , _callFunc(NULL)
     , _function(nullptr)
-    {}
+    {
+    }
     virtual ~CallFunc();
 
 	/** initializes the action with the callback
@@ -304,8 +306,8 @@ protected:
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* target);
 
 	/** initializes the action with the std::function<void()>
-     * @js NK
-     * @lua NK
+     * @js NA
+     * @lua NA
 	 */
     bool initWithFunction(const std::function<void()>& func);
 
