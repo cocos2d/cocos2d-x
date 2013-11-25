@@ -27,14 +27,23 @@
 
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
 #include "CCPlatformMacros.h"
+#include "Box2D.h"
 
 NS_CC_BEGIN
 
 class PhysicsBodyInfo
 {
 public:
+    inline b2BodyDef& getBodyDef() { return _bodyDef; }
+    inline b2Body* getBody() { return _body; }
+    inline void setBody(b2Body* body) { _body = body; }
+    
+private:
+    b2Body* _body;
+    b2BodyDef _bodyDef;
+    
+private:
     PhysicsBodyInfo();
     ~PhysicsBodyInfo();
 };

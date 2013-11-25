@@ -28,21 +28,25 @@
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 
+#include <vector>
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
-#include <vector>
+#include "CCGeometry.h"
 NS_CC_BEGIN
+class PhysicsBodyInfo;
 
 class PhysicsWorldInfo
 {
 public:
-    cpSpace* getSpace() const { return _space; }
+    cpSpace* getWorld() const { return _space; }
     void addShape(cpShape* shape);
     void removeShape(cpShape* shape);
-    void addBody(cpBody* body);
-    void removeBody(cpBody* body);
+    void addBody(PhysicsBodyInfo& body);
+    void removeBody(PhysicsBodyInfo& body);
     void addJoint(cpConstraint* joint);
     void removeJoint(cpConstraint* joint);
+    void setGravity(const Vect& gravity);
+    inline bool isLocked() { return static_cast<bool>(_space->locked_private); }
     
 private:
     PhysicsWorldInfo();

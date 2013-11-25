@@ -25,9 +25,10 @@
 #include "CCPhysicsContactInfo_box2d.h"
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+#include "CCPhysicsContact.h"
 NS_CC_BEGIN
 
-PhysicsContactInfo::PhysicsContactInfo()
+PhysicsContactInfo::PhysicsContactInfo(PhysicsContact* contact)
 {
 }
 

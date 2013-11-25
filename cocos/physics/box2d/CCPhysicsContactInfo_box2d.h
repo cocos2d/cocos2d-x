@@ -30,11 +30,12 @@
 
 #include "CCPlatformMacros.h"
 NS_CC_BEGIN
+class PhysicsContact;
 
 class PhysicsContactInfo
 {
 public:
-    PhysicsContactInfo();
+    PhysicsContactInfo(PhysicsContact* contact);
     ~PhysicsContactInfo();
 };
 

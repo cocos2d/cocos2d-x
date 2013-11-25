@@ -25,9 +25,11 @@
 #include "CCPhysicsJointInfo_box2d.h"
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+#include "CCPhysicsJoint.h"
+
 NS_CC_BEGIN
 
-PhysicsJointInfo::PhysicsJointInfo()
+PhysicsJointInfo::PhysicsJointInfo(PhysicsJoint* joint)
 {
 }
 

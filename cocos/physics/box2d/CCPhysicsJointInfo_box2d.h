@@ -31,10 +31,12 @@
 #include "CCPlatformMacros.h"
 NS_CC_BEGIN
 
+class PhysicsJoint;
+
 class PhysicsJointInfo
 {
 public:
-    PhysicsJointInfo();
+    PhysicsJointInfo(PhysicsJoint* joint);
     ~PhysicsJointInfo();
 };
 

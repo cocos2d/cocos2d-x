@@ -25,9 +25,10 @@
 #include "CCPhysicsShapeInfo_box2d.h"
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+#include "CCPhysicsShape.h"
 NS_CC_BEGIN
 
-PhysicsShapeInfo::PhysicsShapeInfo()
+PhysicsShapeInfo::PhysicsShapeInfo(PhysicsShape* shape)
 {
 }
 

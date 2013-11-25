@@ -27,15 +27,18 @@
 
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
 #include "CCPlatformMacros.h"
 NS_CC_BEGIN
+class PhysicsShape;
 
 class PhysicsShapeInfo
 {
 public:
-    PhysicsShapeInfo();
+    PhysicsShapeInfo(PhysicsShape* shape);
     ~PhysicsShapeInfo();
+    
+public:
+    PhysicsShape* shape;
 };
 
 NS_CC_END
