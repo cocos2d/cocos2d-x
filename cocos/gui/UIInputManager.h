@@ -29,7 +29,10 @@
 #include "gui/UILayout.h"
 
 namespace gui {
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class UIInputManager
 {
 public:

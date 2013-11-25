@@ -248,7 +248,7 @@ public:
         }
     }
     
-    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx)
+    virtual Size tableCellSizeForIndex(TableView *table, long idx)
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellSizeForIndex", ret);
@@ -268,7 +268,7 @@ public:
         
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, long idx)
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellAtIndex", ret);
@@ -288,15 +288,15 @@ public:
         return NULL;
     }
     
-    virtual unsigned int numberOfCellsInTableView(TableView *table)
+    virtual long numberOfCellsInTableView(TableView *table)
     {
         jsval ret;
         bool ok = callJSDelegate(table, "numberOfCellsInTableView", ret);
         if (ok)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            uint32_t count = 0;
-            JSBool isSucceed = jsval_to_uint32(cx, ret, &count);
+            long count = 0;
+            JSBool isSucceed = jsval_to_long(cx, ret, &count);
             if (isSucceed) return count;
         }
         return 0;
@@ -350,7 +350,7 @@ private:
         return false;
     }
     
-    bool callJSDelegate(TableView* table, int idx, std::string jsFunctionName, jsval& retVal)
+    bool callJSDelegate(TableView* table, long idx, std::string jsFunctionName, jsval& retVal)
     {
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
@@ -360,7 +360,7 @@ private:
         JS::RootedValue temp_retval(cx);
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(p->obj);
-        dataVal[1] = INT_TO_JSVAL(idx);
+        dataVal[1] = long_to_jsval(cx,idx);
         
         JSObject* obj = _JSTableViewDataSource;
         JSAutoCompartment ac(cx, obj);

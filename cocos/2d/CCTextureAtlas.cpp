@@ -62,7 +62,8 @@ TextureAtlas::~TextureAtlas()
 
     glDeleteBuffers(2, _buffersVBO);
 
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         glDeleteVertexArrays(1, &_VAOname);
         GL::bindVAO(0);
     }
@@ -192,13 +193,15 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, long capacity)
     
     this->setupIndices();
 
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         setupVBOandVAO();
     }
-    else {
+    else
+    {
         setupVBO();
     }
-    
+
     _dirty = true;
 
     return true;
@@ -206,10 +209,12 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, long capacity)
 
 void TextureAtlas::listenBackToForeground(Object *obj)
 {  
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         setupVBOandVAO();
     }
-    else {
+    else
+    {
         setupVBO();
     }
     
@@ -605,7 +610,8 @@ void TextureAtlas::drawNumberOfQuads(long numberOfQuads, long start)
 
     GL::bindTexture2D(_texture->getName());
 
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         //
         // Using VBO and VAO
         //
@@ -618,7 +624,7 @@ void TextureAtlas::drawNumberOfQuads(long numberOfQuads, long start)
             //glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
             
             // option 2: data
-            //		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+            //      glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
             
             // option 3: orphaning + glMapBuffer
             glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (numberOfQuads-start), NULL, GL_DYNAMIC_DRAW);
@@ -649,7 +655,8 @@ void TextureAtlas::drawNumberOfQuads(long numberOfQuads, long start)
 
 //    glBindVertexArray(0);
     }
-    else {
+    else
+    {
         //
         // Using VBO without VAO
         //

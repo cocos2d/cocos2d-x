@@ -1,8 +1,8 @@
-# cocos2d C++ coding style
+# ![][1] C++ coding style
 
-v0.2 - Last updated November 8 , 2013
+_v0.2 - Last updated November 8, 2013_
 
-C++ coding style was based on [Google's C++ coding style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml) rev. 3.274
+_Forked from [Google's C++ coding style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml) rev. 3.274_
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -1629,6 +1629,11 @@ C++11 features may be used unless specified otherwise. In addition to what's des
 * Compile-time rational numbers (`<ratio>`), because of concerns that it's tied to a more template-heavy interface style.
 * The `<cfenv>` and `<fenv.h>` headers, because many compilers do not support those features reliably.
 
+Additionaly, any C++11 features that is used, must work on the following compilers:
+
+* Xcode 5.0.2 or newer
+* gcc 4.8 or newer
+* VS 2012 or newer
 
 ## General Naming Rules
 
@@ -1659,13 +1664,12 @@ Filenames should be all in CamelCasel, and for cocos2d specific files, they shou
 
 Examples of acceptable file names:
 
-<pre>
-CCSprite.cpp
-CCTextureCache.cpp
-CCTexture2D.cpp
-</pre>
 
-C++ files should end in .cpp and header files should end in .h.
+	CCSprite.cpp
+	CCTextureCache.cpp
+	CCTexture2D.cpp
+
+C++ files should end in `.cpp` and header files should end in `.h`.
 
 Do not use filenames that already exist in /usr/include, such as db.h.
 
@@ -1683,7 +1687,7 @@ See also the section -inl.h Files
 
 ## Type Names
 
-Type names start with a capital letter and have a capital letter for each new word, with no underscores: MyExcitingClass, MyExcitingEnum.
+Type names start with a capital letter and have a capital letter for each new word, with no underscores: `MyExcitingClass`, `MyExcitingEnum`.
 
 The names of all types — classes, structs, typedefs, and enums — have the same naming convention. Type names should start with a capital letter and have a capital letter for each new word. No underscores. For example:
 
@@ -1866,29 +1870,26 @@ When writing your comments, write for your audience: the next contributor who wi
 
 ## Doxygen
 
-Use Doxygen strings in the header files. Do NOT add Doxygen comments on the implementation file.
-
-All public `class` objects MUST have a Doxygen comment that explains what it does.
-
-All `public` methods of the class, with the exception of overridden methods, MUST be documented using Doxygen comments.
-
-`protected` and `private` methods are suggested to have Doxygen comments, but are not mandatory.
-
-Instance variables should NOT have Doxygen comments, unless they are public.
+* Use Doxygen strings in the header files. Doxygen comments on the implementation file are not required.
+* All public `class` objects MUST have a Doxygen comment that explains what it does.
+* All `public` methods of the class, with the exception of overridden methods, MUST be documented using Doxygen comments.
+* `protected` and `private` methods are suggested to have Doxygen comments, but are not mandatory.
+* Instance variables should NOT have Doxygen comments, unless they are public.
+* Markdown systax is allowed within your Doxygen comments
 
 Example:
 ```cpp
-/** WorldPeace extends Node by adding enough power to create world peace.
+/** `WorldPeace` extends `Node` by adding enough power to create world peace.
  *
- * WorldPeace should be used only when the world is about to collapse.
- * Do not create an instance of WorldPeace if the Scene has a peace level of 5.
+ * `WorldPeace` should be used only when the world is about to collapse.
+ * Do not create an instance of `WorldPeace` if the `Scene` has a peace level of 5.
  * 
  */
 class WorldPeace : public Node
 {
 
 public:
-    /** creates a WorldPeace with a predefined number of preachers
+    /** creates a `WorldPeace` with a predefined number of preachers
      */
     static WorldPeace* create(int numberOfPreachers);
 
@@ -1897,7 +1898,9 @@ public:
     */
     void setNumberOfPreachers(int numberOfPreachers);
 
-    /** displays an aura around the WorldPeace object */
+    /** displays an aura around the WorldPeace object 
+    @see See all `displaySuperAura()`
+    */
     void displayAura();
 
     // Overrides
@@ -1915,9 +1918,9 @@ protected:
 
 ## Comment Style
 
-Use either the // or /* */ syntax, as long as you are consistent.
+Use either the `//` or `/* */` syntax, as long as you are consistent.
 
-You can use either the // or the /* */ syntax; however, // is much more common. Be consistent with how you comment and what style you use where.
+You can use either the `//` or the `/* */` syntax; however, `//` is much more common. Be consistent with how you comment and what style you use where.
 
 ## File Comments
 
@@ -2840,3 +2843,7 @@ If you are editing code, take a few minutes to look at the code around you and d
 The point of having style guidelines is to have a common vocabulary of coding so people can concentrate on what you are saying, rather than on how you are saying it. We present global style rules here so people know the vocabulary. But local style is also important. If code you add to a file looks drastically different from the existing code around it, the discontinuity throws readers out of their rhythm when they go to read it. Try to avoid this.
 
 OK, enough writing about writing code; the code itself is much more interesting. Have fun!
+
+
+[1]: https://lh3.googleusercontent.com/-glwwzmFyUmk/UQgPnlx40uI/AAAAAAAArzg/WPRW10kkecM/s144/cocos2d-x-logo.png
+

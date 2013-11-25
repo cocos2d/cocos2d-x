@@ -41,10 +41,14 @@ public:
      * @js NA
      * @lua NA
      */
-    ~SceneReader(void);
+    virtual ~SceneReader(void);
 
 public:
     static SceneReader* getInstance();
+    /**
+     *  @js purge
+     *  @lua destroySceneReader
+     */
     void purgeSceneReader();
     static const char* sceneReaderVersion();
     cocos2d::Node* createNodeWithSceneFile(const char *pszFileName);

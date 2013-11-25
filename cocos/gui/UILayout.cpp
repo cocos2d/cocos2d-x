@@ -35,13 +35,13 @@ namespace gui {
 UILayout::UILayout():
 _clippingEnabled(false),
 _backGroundScale9Enabled(false),
-_backGroundImage(NULL),
+_backGroundImage(nullptr),
 _backGroundImageFileName(""),
 _backGroundImageCapInsets(cocos2d::Rect::ZERO),
 _colorType(LAYOUT_COLOR_NONE),
 _bgImageTexType(UI_TEX_TYPE_LOCAL),
-_colorRender(NULL),
-_gradientRender(NULL),
+_colorRender(nullptr),
+_gradientRender(nullptr),
 _cColor(cocos2d::Color3B::WHITE),
 _gStartColor(cocos2d::Color3B::WHITE),
 _gEndColor(cocos2d::Color3B::WHITE),
@@ -66,7 +66,7 @@ UILayout* UILayout::create()
         return layout;
     }
     CC_SAFE_DELETE(layout);
-    return NULL;
+    return nullptr;
 }
 
 bool UILayout::init()
@@ -143,7 +143,7 @@ void UILayout::onSizeChanged()
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(cocos2d::Point(_size.width/2.0f, _size.height/2.0f));
-        if (_backGroundScale9Enabled)
+        if (_backGroundScale9Enabled && _backGroundImage)
         {
             dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
         }
@@ -165,7 +165,7 @@ void UILayout::setBackGroundImageScale9Enabled(bool able)
         return;
     }
     _renderer->removeChild(_backGroundImage, true);
-    _backGroundImage = NULL;
+    _backGroundImage = nullptr;
     _backGroundScale9Enabled = able;
     if (_backGroundScale9Enabled)
     {
@@ -188,7 +188,7 @@ void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
     {
         return;
     }
-    if (_backGroundImage == NULL)
+    if (_backGroundImage == nullptr)
     {
         addBackGroundImage();
     }
@@ -240,7 +240,7 @@ void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
 void UILayout::setBackGroundImageCapInsets(const cocos2d::Rect &capInsets)
 {
     _backGroundImageCapInsets = capInsets;
-    if (_backGroundScale9Enabled)
+    if (_backGroundScale9Enabled && _backGroundImage)
     {
         dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
@@ -305,7 +305,7 @@ void UILayout::removeBackGroundImage()
         return;
     }
     _renderer->removeChild(_backGroundImage,  true);
-    _backGroundImage = NULL;
+    _backGroundImage = nullptr;
     _backGroundImageFileName = "";
     _backGroundImageTextureSize = cocos2d::Size::ZERO;
 }
@@ -322,26 +322,26 @@ void UILayout::setBackGroundColorType(LayoutBackGroundColorType type)
             if (_colorRender)
             {
                 _renderer->removeChild(_colorRender, true);
-                _colorRender = NULL;
+                _colorRender = nullptr;
             }
             if (_gradientRender)
             {
                 _renderer->removeChild(_gradientRender, true);
-                _gradientRender = NULL;
+                _gradientRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_SOLID:
             if (_colorRender)
             {
                 _renderer->removeChild(_colorRender, true);
-                _colorRender = NULL;
+                _colorRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_GRADIENT:
             if (_gradientRender)
             {
                 _renderer->removeChild(_gradientRender, true);
-                _gradientRender = NULL;
+                _gradientRender = nullptr;
             }
             break;
         default:
@@ -596,8 +596,8 @@ void UILayout::doLayout()
                         cocos2d::Size cs = child->getSize();
                         UIRelativeAlign align = layoutParameter->getAlign();
                         const char* relativeName = layoutParameter->getRelativeToWidgetName();
-                        UIWidget* relativeWidget = NULL;
-                        UIRelativeLayoutParameter* relativeWidgetLP = NULL;
+                        UIWidget* relativeWidget = nullptr;
+                        UIRelativeLayoutParameter* relativeWidgetLP = nullptr;
                         float finalPosX = 0.0f;
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))
@@ -813,9 +813,9 @@ void UILayout::doLayout()
                         }
                         UIMargin relativeWidgetMargin;
                         UIMargin mg = layoutParameter->getMargin();
-                        if (relativeWidget)
+                        if (relativeWidgetLP)
                         {
-                            relativeWidgetMargin = relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE)->getMargin();
+                            relativeWidgetMargin = relativeWidgetLP->getMargin();
                         }
                         //handle margin
                         switch (align)
@@ -853,28 +853,129 @@ void UILayout::doLayout()
                                 break;
                                 
                             case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
-                            case RELATIVE_LOCATION_ABOVE_CENTER:
+                                finalPosY += mg.bottom;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT)
+                                {
+                                    finalPosY += relativeWidgetMargin.top;
+                                }
+                                finalPosX += mg.left;
+                                break;
                             case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
                                 finalPosY += mg.bottom;
-                                finalPosY += relativeWidgetMargin.top;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT)
+                                {
+                                    finalPosY += relativeWidgetMargin.top;
+                                }
+                                finalPosX -= mg.right;
                                 break;
+                            case RELATIVE_LOCATION_ABOVE_CENTER:
+                                finalPosY += mg.bottom;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT)
+                                {
+                                    finalPosY += relativeWidgetMargin.top;
+                                }
+                                break;
+                                
                             case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
-                            case RELATIVE_LOCATION_LEFT_OF_CENTER:
+                                finalPosX -= mg.right;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL)
+                                {
+                                    finalPosX -= relativeWidgetMargin.left;
+                                }
+                                finalPosY -= mg.top;
+                                break;
                             case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
                                 finalPosX -= mg.right;
-                                finalPosX -= relativeWidgetMargin.left;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL)
+                                {
+                                    finalPosX -= relativeWidgetMargin.left;
+                                }
+                                finalPosY += mg.bottom;
                                 break;
+                            case RELATIVE_LOCATION_LEFT_OF_CENTER:
+                                finalPosX -= mg.right;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL)
+                                {
+                                    finalPosX -= relativeWidgetMargin.left;
+                                }
+                                break;
+                                
                             case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
-                            case RELATIVE_LOCATION_RIGHT_OF_CENTER:
+                                finalPosX += mg.left;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL)
+                                {
+                                    finalPosX += relativeWidgetMargin.right;
+                                }
+                                finalPosY -= mg.top;
+                                break;
                             case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
                                 finalPosX += mg.left;
-                                finalPosX += relativeWidgetMargin.right;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL)
+                                {
+                                    finalPosX += relativeWidgetMargin.right;
+                                }
+                                finalPosY += mg.bottom;
                                 break;
+                            case RELATIVE_LOCATION_RIGHT_OF_CENTER:
+                                finalPosX += mg.left;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL)
+                                {
+                                    finalPosX += relativeWidgetMargin.right;
+                                }
+                                break;
+                                
                             case RELATIVE_LOCATION_BELOW_LEFTALIGN:
-                            case RELATIVE_LOCATION_BELOW_CENTER:
+                                finalPosY -= mg.top;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL)
+                                {
+                                    finalPosY -= relativeWidgetMargin.bottom;
+                                }
+                                finalPosX += mg.left;
+                                break;
                             case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
                                 finalPosY -= mg.top;
-                                finalPosY -= relativeWidgetMargin.bottom;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL)
+                                {
+                                    finalPosY -= relativeWidgetMargin.bottom;
+                                }
+                                finalPosX -= mg.right;
+                                break;
+                            case RELATIVE_LOCATION_BELOW_CENTER:
+                                finalPosY -= mg.top;
+                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
+                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL)
+                                {
+                                    finalPosY -= relativeWidgetMargin.bottom;
+                                }
                                 break;
                             default:
                                 break;
@@ -927,7 +1028,7 @@ void UILayout::copySpecialProperties(UIWidget *widget)
 }
 
 UIRectClippingNode::UIRectClippingNode():
-_innerStencil(NULL),
+_innerStencil(nullptr),
 _enabled(true),
 _clippingSize(cocos2d::Size(50.0f, 50.0f)),
 _clippingEnabled(false)

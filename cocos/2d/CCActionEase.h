@@ -51,7 +51,7 @@ public:
     virtual ~ActionEase(void);
 
     /** initializes the action */
-    bool initWithAction(ActionInterval *pAction);
+    bool initWithAction(ActionInterval *action);
 
     virtual ActionInterval* getInnerAction();
 
@@ -61,7 +61,7 @@ public:
 	virtual ActionEase* clone() const override = 0;
     virtual ActionEase* reverse() const override = 0;
     virtual void startWithTarget(Node *target) override;
-    virtual void stop(void) override;
+    virtual void stop() override;
     virtual void update(float time) override;
 
 protected:
@@ -80,7 +80,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~EaseRateAction(void);
+    virtual ~EaseRateAction();
 
     /** Initializes the action with the inner action and the rate parameter */
     bool initWithAction(ActionInterval *pAction, float fRate);
@@ -88,7 +88,7 @@ public:
     /** set rate value for the actions */
     inline void setRate(float rate) { _rate = rate; }
     /** get rate value for the actions */
-    inline float getRate(void) const { return _rate; }
+    inline float getRate() const { return _rate; }
 
     //
     // Overrides
@@ -108,7 +108,7 @@ class CC_DLL EaseIn : public EaseRateAction
 {
 public:
     /** Creates the action with the inner action and the rate parameter */
-    static EaseIn* create(ActionInterval* pAction, float fRate);
+    static EaseIn* create(ActionInterval* action, float rate);
 
     // Overrides
     virtual void update(float time) override;
@@ -124,7 +124,7 @@ class CC_DLL EaseOut : public EaseRateAction
 {
 public:
     /** Creates the action with the inner action and the rate parameter */
-    static EaseOut* create(ActionInterval* pAction, float fRate);
+    static EaseOut* create(ActionInterval* action, float rate);
 
     // Overrides
     virtual void update(float time) override;
@@ -140,7 +140,7 @@ class CC_DLL EaseInOut : public EaseRateAction
 {
 public:
     /** Creates the action with the inner action and the rate parameter */
-    static EaseInOut* create(ActionInterval* pAction, float fRate);
+    static EaseInOut* create(ActionInterval* action, float rate);
 
     // Overrides
     virtual void update(float time) override;
@@ -156,7 +156,7 @@ class CC_DLL EaseExponentialIn : public ActionEase
 {
 public:
     /** creates the action */
-    static EaseExponentialIn* create(ActionInterval* pAction);
+    static EaseExponentialIn* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -172,7 +172,7 @@ class CC_DLL EaseExponentialOut : public ActionEase
 {
 public:
     /** creates the action */
-    static EaseExponentialOut* create(ActionInterval* pAction);
+    static EaseExponentialOut* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -188,7 +188,7 @@ class CC_DLL EaseExponentialInOut : public ActionEase
 {
 public:
     /** creates the action */
-    static EaseExponentialInOut* create(ActionInterval* pAction);
+    static EaseExponentialInOut* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -204,7 +204,7 @@ class CC_DLL EaseSineIn : public ActionEase
 {
 public:
     /** creates the action */
-    static EaseSineIn* create(ActionInterval* pAction);
+    static EaseSineIn* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -220,7 +220,7 @@ class CC_DLL EaseSineOut : public ActionEase
 {
 public:
     /** creates the action */
-    static EaseSineOut* create(ActionInterval* pAction);
+    static EaseSineOut* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -236,7 +236,7 @@ class CC_DLL EaseSineInOut : public ActionEase
 {
 public:
     /** creates the action */
-    static EaseSineInOut* create(ActionInterval* pAction);
+    static EaseSineInOut* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -253,10 +253,10 @@ class CC_DLL EaseElastic : public ActionEase
 {
 public:
     /** Initializes the action with the inner action and the period in radians (default is 0.3) */
-    bool initWithAction(ActionInterval *pAction, float fPeriod = 0.3f);
+    bool initWithAction(ActionInterval *action, float period = 0.3f);
 
     /** get period of the wave in radians. default is 0.3 */
-    inline float getPeriod(void) const { return _period; }
+    inline float getPeriod() const { return _period; }
     /** set period of the wave in radians. */
     inline void setPeriod(float fPeriod) { _period = fPeriod; }
 
@@ -280,8 +280,8 @@ class CC_DLL EaseElasticIn : public EaseElastic
 {
 public:
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static EaseElasticIn* create(ActionInterval *pAction, float fPeriod);
-    static EaseElasticIn* create(ActionInterval *pAction);
+    static EaseElasticIn* create(ActionInterval *action, float period);
+    static EaseElasticIn* create(ActionInterval *action);
 
     // Overrides
     virtual void update(float time) override;
@@ -299,8 +299,8 @@ class CC_DLL EaseElasticOut : public EaseElastic
 {
 public:
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static EaseElasticOut* create(ActionInterval *pAction, float fPeriod);
-    static EaseElasticOut* create(ActionInterval *pAction);
+    static EaseElasticOut* create(ActionInterval *action, float period);
+    static EaseElasticOut* create(ActionInterval *action);
 
     // Overrides
     virtual void update(float time) override;
@@ -318,8 +318,8 @@ class CC_DLL EaseElasticInOut : public EaseElastic
 {
 public:
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static EaseElasticInOut* create(ActionInterval *pAction, float fPeriod);
-    static EaseElasticInOut* create(ActionInterval *pAction);
+    static EaseElasticInOut* create(ActionInterval *action, float period);
+    static EaseElasticInOut* create(ActionInterval *action);
 
     // Overrides
     virtual void update(float time) override;
@@ -352,7 +352,7 @@ class CC_DLL EaseBounceIn : public EaseBounce
 {
 public:
     /** creates the action */
-    static EaseBounceIn* create(ActionInterval* pAction);
+    static EaseBounceIn* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -370,7 +370,7 @@ class CC_DLL EaseBounceOut : public EaseBounce
 {
 public:
     /** creates the action */
-    static EaseBounceOut* create(ActionInterval* pAction);
+    static EaseBounceOut* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -388,7 +388,7 @@ class CC_DLL EaseBounceInOut : public EaseBounce
 {
 public:
     /** creates the action */
-    static EaseBounceInOut* create(ActionInterval* pAction);
+    static EaseBounceInOut* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -406,7 +406,7 @@ class CC_DLL EaseBackIn : public ActionEase
 {
 public:
     /** creates the action */
-    static EaseBackIn* create(ActionInterval* pAction);
+    static EaseBackIn* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -424,7 +424,7 @@ class CC_DLL EaseBackOut : public ActionEase
 {
 public:
     /** creates the action */
-    static EaseBackOut* create(ActionInterval* pAction);
+    static EaseBackOut* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;
@@ -442,7 +442,7 @@ class CC_DLL EaseBackInOut : public ActionEase
 {
 public:
     /** creates the action */
-    static EaseBackInOut* create(ActionInterval* pAction);
+    static EaseBackInOut* create(ActionInterval* action);
 
     // Overrides
     virtual void update(float time) override;

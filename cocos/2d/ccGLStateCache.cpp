@@ -184,7 +184,8 @@ void deleteTextureN(GLuint textureUnit, GLuint textureId)
 
 void bindVAO(GLuint vaoId)
 {
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
     
 #if CC_ENABLE_GL_STATE_CACHE
         if (s_uVAO != vaoId)

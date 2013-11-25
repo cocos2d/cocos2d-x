@@ -30,9 +30,8 @@
 namespace gui {
     
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @js NA
+ */
 class UIRootWidget : public UILayout
 {
 public:
@@ -43,6 +42,7 @@ public:
     
     /**
      * Default destructor
+     * @lua NA
      */
     virtual ~UIRootWidget();
     
@@ -54,10 +54,10 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual const char* getDescription() const override;
 protected:
     //initializes state of widget.
-    virtual bool init();
+    virtual bool init() override;
 };
 
 }

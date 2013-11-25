@@ -237,11 +237,11 @@ static CCEAGLView *__view = 0;
     
     context_ = [renderer_ context];
     
-#if GL_EXT_discard_framebuffer == 1
-    discardFramebufferSupported_ = YES;
-#else
-    discardFramebufferSupported_ = NO;
-#endif
+    #if GL_EXT_discard_framebuffer == 1
+        discardFramebufferSupported_ = YES;
+    #else
+        discardFramebufferSupported_ = NO;
+    #endif
     
     CHECK_GL_ERROR();
     
@@ -478,8 +478,7 @@ static CCEAGLView *__view = 0;
     cocos2d::EGLView::getInstance()->handleTouchesCancel(i, (long*)ids, xs, ys);
 }
 
-#pragma mark -
-#pragma mark UIView - Responder
+#pragma mark - UIView - Responder
 
 - (BOOL)canBecomeFirstResponder
 {
@@ -506,8 +505,7 @@ static CCEAGLView *__view = 0;
     return [super resignFirstResponder];
 }
 
-#pragma mark -
-#pragma mark UIKeyInput protocol
+#pragma mark - UIKeyInput protocol
 
 
 - (BOOL)hasText
@@ -534,16 +532,14 @@ static CCEAGLView *__view = 0;
     cocos2d::IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 }
 
-#pragma mark -
-#pragma mark UITextInputTrait protocol
+#pragma mark - UITextInputTrait protocol
 
 -(UITextAutocapitalizationType) autocapitalizationType
 {
     return UITextAutocapitalizationTypeNone;
 }
 
-#pragma mark -
-#pragma mark UITextInput protocol
+#pragma mark - UITextInput protocol
 
 #pragma mark UITextInput - properties
 
@@ -727,8 +723,7 @@ static CCEAGLView *__view = 0;
     return nil;
 }
 
-#pragma mark -
-#pragma mark UIKeyboard notification
+#pragma mark - UIKeyboard notification
 
 - (void)onUIKeyboardNotification:(NSNotification *)notif;
 {

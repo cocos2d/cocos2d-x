@@ -29,7 +29,11 @@ Dictionary* NodeLoader::getCustomProperties()
 Node * NodeLoader::loadNode(Node * pParent, CCBReader * ccbReader) {
     Node * ccNode = this->createNode(pParent, ccbReader);
 
-    //this->parseProperties(ccNode, pParent, ccbReader);
+    //clear _customProperties, ready for load next node.
+    if (_customProperties != nullptr)
+    {
+        _customProperties->removeAllObjects();
+    }
 
     return ccNode;
 }
@@ -926,7 +930,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     reader->getAnimationManager()->setRootContainerSize(pParent->getContentSize());
     
     Data *data = new Data(pBytes, size);
-    CC_SAFE_DELETE_ARRAY(pBytes);
+    free(pBytes);
 
     data->retain();
     reader->_data = data;

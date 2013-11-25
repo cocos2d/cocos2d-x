@@ -167,6 +167,7 @@ public:
     void resume(Object* sender);
 
     void setTouchEnabled(bool enabled);
+	bool isTouchEnabled() const;
     bool isDragging() const {return _dragging;}
     bool isTouchMoved() const { return _touchMoved; }
     bool isBounceable() const { return _bounceable; }

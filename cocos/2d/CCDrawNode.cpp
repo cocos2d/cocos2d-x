@@ -115,7 +115,8 @@ DrawNode::~DrawNode()
     glDeleteBuffers(1, &_vbo);
     _vbo = 0;
     
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         glDeleteVertexArrays(1, &_vao);
         GL::bindVAO(0);
         _vao = 0;
@@ -160,7 +161,8 @@ bool DrawNode::init()
     
     ensureCapacity(512);
     
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         glGenVertexArrays(1, &_vao);
         GL::bindVAO(_vao);
     }
@@ -180,7 +182,8 @@ bool DrawNode::init()
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         GL::bindVAO(0);
     }
     
@@ -207,10 +210,12 @@ void DrawNode::render()
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
         _dirty = false;
     }
-    if (Configuration::getInstance()->supportsShareableVAO()) {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         GL::bindVAO(_vao);
     }
-    else {
+    else
+    {
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -341,7 +346,7 @@ void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, f
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
 	memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
 	
-	for(unsigned int i = 0; i < count; i++)
+	for (long i = 0; i < count; i++)
     {
 		Vertex2F v0 = __v2f(verts[(i-1+count)%count]);
 		Vertex2F v1 = __v2f(verts[i]);
@@ -365,7 +370,7 @@ void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, f
 	V2F_C4B_T2F_Triangle *cursor = triangles;
 	
 	float inset = (outline == false ? 0.5 : 0.0);
-	for(unsigned int i = 0; i < count-2; i++)
+	for (long i = 0; i < count-2; i++)
     {
 		Vertex2F v0 = v2fsub(__v2f(verts[0  ]), v2fmult(extrude[0  ].offset, inset));
 		Vertex2F v1 = v2fsub(__v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));

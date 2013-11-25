@@ -46,9 +46,9 @@ class Array;
 class Sprite;
 class Scene;
 class DrawNode;
+class PhysicsDebugDraw;
 
 class PhysicsWorld;
-
 
 typedef struct PhysicsRayCastInfo
 {
@@ -73,12 +73,20 @@ typedef struct PhysicsRayCastInfo
  */
 typedef std::function<bool(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data)> PhysicsRayCastCallbackFunc;
 typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsRectQueryCallbackFunc;
+typedef PhysicsRectQueryCallbackFunc PhysicsPointQueryCallbackFunc;
 
 /**
  * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
  */
 class PhysicsWorld
 {
+public:
+    static const long DEBUGDRAW_NONE = 0x00;
+    static const long DEBUGDRAW_SHAPE = 0x01;
+    static const long DEBUGDRAW_JOINT = 0x02;
+    static const long DEBUGDRAW_CONTACT = 0x04;
+    static const long DEBUGDRAW_ALL = DEBUGDRAW_SHAPE | DEBUGDRAW_JOINT | DEBUGDRAW_CONTACT;
+    
 public:
     /** Adds a joint to the physics world.*/
     virtual void addJoint(PhysicsJoint* joint);
@@ -92,7 +100,8 @@ public:
     virtual void removeAllBodies();
     
     void rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data);
-    void rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data);
+    void queryRect(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data);
+    void queryPoint(PhysicsPointQueryCallbackFunc func, const Point& point, void* data);
     Array* getShapes(const Point& point) const;
     PhysicsShape* getShape(const Point& point) const;
     Array* getAllBodies() const;
@@ -109,13 +118,12 @@ public:
     /** set the gravity value */
     void setGravity(const Vect& gravity);
     
-    /** test the debug draw is enabled */
-    inline bool isDebugDraw() const { return _debugDraw; }
     /** set the debug draw */
-    inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
+    void setDebugDrawMask(int mask);
+    inline int getDebugDrawMask() { return _debugDrawMask; }
     
 protected:
-    static PhysicsWorld* create(Scene& scene);
+    static PhysicsWorld* construct(Scene& scene);
     bool init(Scene& scene);
     
     virtual void addBody(PhysicsBody* body);
@@ -124,8 +132,6 @@ protected:
     virtual void update(float delta);
     
     virtual void debugDraw();
-    virtual void drawWithShape(DrawNode* node, PhysicsShape* shape);
-    virtual void drawWithJoint(DrawNode* node, PhysicsJoint* joint);
     
     virtual int collisionBeginCallback(PhysicsContact& contact);
     virtual int collisionPreSolveCallback(PhysicsContact& contact);
@@ -153,8 +159,9 @@ protected:
     Scene* _scene;
     
     bool _delayDirty;
-    bool _debugDraw;
-    DrawNode* _drawNode;
+    PhysicsDebugDraw* _debugDraw;
+    int _debugDrawMask;
+    
     
     Array* _delayAddBodies;
     Array* _delayRemoveBodies;
@@ -171,6 +178,28 @@ protected:
     friend class PhysicsShape;
     friend class PhysicsJoint;
     friend class PhysicsWorldCallback;
+    friend class PhysicsDebugDraw;
+};
+
+
+class PhysicsDebugDraw
+{
+protected:
+    virtual bool begin();
+    virtual void end();
+    virtual void drawShape(PhysicsShape& shape);
+    virtual void drawJoint(PhysicsJoint& joint);
+    virtual void drawContact();
+    
+protected:
+    PhysicsDebugDraw(PhysicsWorld& world);
+    virtual ~PhysicsDebugDraw();
+    
+protected:
+    DrawNode* _drawNode;
+    PhysicsWorld& _world;
+    
+    friend class PhysicsWorld;
 };
 
 NS_CC_END
