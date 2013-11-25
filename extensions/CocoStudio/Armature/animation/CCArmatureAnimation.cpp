@@ -54,6 +54,8 @@ CCArmatureAnimation::CCArmatureAnimation()
     , m_iToIndex(0)
     , m_pTweenList(NULL)
     , m_bIgnoreFrameEvent(false)
+    , m_bOnMovementList(false)
+    , m_bMovementListLoop(false)
     , m_pUserObject(NULL)
 
     , m_sMovementEventCallFunc(NULL)
@@ -208,6 +210,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
     tweenEasing	= (tweenEasing == TWEEN_EASING_MAX) ? m_pMovementData->tweenEasing : tweenEasing;
     loop = (loop < 0) ? m_pMovementData->loop : loop;
 
+    m_bOnMovementList = false;
 
     CCProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
@@ -279,6 +282,25 @@ void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int du
 
     std::string animationName = movName.at(animationIndex);
     play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);
+}
+
+void CCArmatureAnimation::play(bool loop, const char *animationName, ...)
+{
+    m_sMovementList.clear();
+    m_bMovementListLoop = loop;
+    m_bOnMovementList = true;
+    m_iMovementIndex = 0;
+
+    va_list params;
+    va_start(params, animationName);
+
+    while (animationName)
+    {
+        const char *name = va_arg(params, const char*);
+        m_sMovementList.push_back(name);
+    }
+
+    va_end(params);
 }
 
 void CCArmatureAnimation::gotoAndPlay(int frameIndex)
@@ -392,6 +414,7 @@ void CCArmatureAnimation::updateHandler()
             {
                 movementEvent(m_pArmature, COMPLETE, m_strMovementID.c_str());
             }
+
         }
         break;
         case ANIMATION_TO_LOOP_FRONT:
@@ -480,6 +503,26 @@ void CCArmatureAnimation::movementEvent(CCArmature *armature, MovementEventType 
         movementEvent->movementID = movementID;
 
         m_sMovementEventQueue.push(movementEvent);
+    }
+}
+
+void CCArmatureAnimation::updateMovementList()
+{
+    if (m_bOnMovementList)
+    {
+        if (m_bMovementListLoop)
+        {
+            play(m_sMovementList.at(m_iMovementIndex).c_str(), -1, -1, 0);
+            m_iMovementIndex++;
+        }
+        else
+        {
+            if (m_iMovementIndex <= m_sMovementList.size())
+            {
+                play(m_sMovementList.at(m_iMovementIndex).c_str(), -1, -1, 0);
+                m_iMovementIndex++;
+            }
+        }
     }
 }
 
