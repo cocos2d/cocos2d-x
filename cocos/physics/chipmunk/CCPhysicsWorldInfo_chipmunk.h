@@ -34,19 +34,22 @@
 #include "CCGeometry.h"
 NS_CC_BEGIN
 class PhysicsBodyInfo;
+class PhysicsJointInfo;
+class PhysicsShapeInfo;
 
 class PhysicsWorldInfo
 {
 public:
-    cpSpace* getWorld() const { return _space; }
-    void addShape(cpShape* shape);
-    void removeShape(cpShape* shape);
+    cpSpace* getSpace() const { return _space; }
+    void addShape(PhysicsShapeInfo& shape);
+    void removeShape(PhysicsShapeInfo& shape);
     void addBody(PhysicsBodyInfo& body);
     void removeBody(PhysicsBodyInfo& body);
-    void addJoint(cpConstraint* joint);
-    void removeJoint(cpConstraint* joint);
+    void addJoint(PhysicsJointInfo& joint);
+    void removeJoint(PhysicsJointInfo& joint);
     void setGravity(const Vect& gravity);
     inline bool isLocked() { return static_cast<bool>(_space->locked_private); }
+    inline void step(float delta) { cpSpaceStep(_space, delta); }
     
 private:
     PhysicsWorldInfo();

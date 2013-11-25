@@ -27,6 +27,8 @@
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 #include "CCPhysicsHelper_box2d.h"
 #include "CCPhysicsBodyInfo_box2d.h"
+#include "CCPhysicsShapeInfo_box2d.h"
+#include "CCPhysicsJointInfo_box2d.h"
 NS_CC_BEGIN
 
 PhysicsWorldInfo::PhysicsWorldInfo()
@@ -61,6 +63,26 @@ void PhysicsWorldInfo::removeBody(PhysicsBodyInfo& body)
         _world->DestroyBody(body.getBody());
         body.setBody(nullptr);
     }
+}
+
+void PhysicsWorldInfo::addShape(PhysicsShapeInfo& shape)
+{
+    
+}
+
+void PhysicsWorldInfo::removeShape(PhysicsShapeInfo& shape)
+{
+    
+}
+
+void PhysicsWorldInfo::addJoint(PhysicsJointInfo& joint)
+{
+    
+}
+
+void PhysicsWorldInfo::removeJoint(PhysicsJointInfo& joint)
+{
+    
 }
 
 NS_CC_END

@@ -201,257 +201,6 @@ void PhysicsWorldCallback::queryPointFunc(cpShape *shape, cpFloat distance, cpVe
     PhysicsWorldCallback::continues = info->func(*info->world, *it->second->getShape(), info->data);
 }
 
-void PhysicsWorld::addJointOrDelay(PhysicsJoint* joint)
-{
-    auto it = std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint);
-    if (it != _delayRemoveJoints.end())
-    {
-        _delayRemoveJoints.erase(it);
-        return;
-    }
-    
-    if (_info->getSpace()->locked_private)
-    {
-        if (std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint) == _delayAddJoints.end())
-        {
-            _delayAddJoints.push_back(joint);
-            _delayDirty = true;
-        }
-    }else
-    {
-        doAddJoint(joint);
-    }
-}
-
-void PhysicsWorld::removeJointOrDelay(PhysicsJoint* joint)
-{
-    auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
-    if (it != _delayAddJoints.end())
-    {
-        _delayAddJoints.erase(it);
-        return;
-    }
-    
-    if (_info->getSpace()->locked_private)
-    {
-        if (std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint) == _delayRemoveJoints.end())
-        {
-            _delayRemoveJoints.push_back(joint);
-            _delayDirty = true;
-        }
-    }else
-    {
-        doRemoveJoint(joint);
-    }
-}
-
-void PhysicsWorld::addJoint(PhysicsJoint* joint)
-{
-    if (joint->getWorld() != nullptr && joint->getWorld() != this)
-    {
-        joint->removeFormWorld();
-    }
-    
-    addJointOrDelay(joint);
-    _joints.push_back(joint);
-    joint->_world = this;
-}
-
-void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
-{
-    if (joint->getWorld() != this)
-    {
-        if (destroy)
-        {
-            CCLOG("physics warnning: the joint is not in this world, it won't be destoried utill the body it conntect is destoried");
-        }
-        return;
-    }
-    
-    removeJointOrDelay(joint);
-    
-    _joints.remove(joint);
-    joint->_world = nullptr;
-    
-    // clean the connection to this joint
-    if (destroy)
-    {
-        if (joint->getBodyA() != nullptr)
-        {
-            joint->getBodyA()->removeJoint(joint);
-        }
-        
-        if (joint->getBodyB() != nullptr)
-        {
-            joint->getBodyB()->removeJoint(joint);
-        }
-        
-        // test the distraction is delaied or not
-        if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
-        {
-            joint->_destoryMark = true;
-        }
-        else
-        {
-            delete joint;
-        }
-    }
-}
-
-void PhysicsWorld::removeAllJoints(bool destroy)
-{
-    for (auto joint : _joints)
-    {
-        removeJointOrDelay(joint);
-        joint->_world = nullptr;
-        
-        // clean the connection to this joint
-        if (destroy)
-        {
-            if (joint->getBodyA() != nullptr)
-            {
-                joint->getBodyA()->removeJoint(joint);
-            }
-            
-            if (joint->getBodyB() != nullptr)
-            {
-                joint->getBodyB()->removeJoint(joint);
-            }
-            
-            // test the distraction is delaied or not
-            if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
-            {
-                joint->_destoryMark = true;
-            }
-            else
-            {
-                delete joint;
-            }
-        }
-    }
-    
-    _joints.clear();
-}
-
-void PhysicsWorld::addShape(PhysicsShape* shape)
-{
-    for (auto cps : shape->_info->getShapes())
-    {
-        _info->addShape(cps);
-    }
-    
-    return;
-}
-
-void PhysicsWorld::doAddJoint(PhysicsJoint *joint)
-{
-    for (auto subjoint : joint->_info->getJoints())
-    {
-        _info->addJoint(subjoint);
-    }
-}
-
-void PhysicsWorld::doRemoveBody(PhysicsBody* body)
-{
-    CCASSERT(body != nullptr, "the body can not be nullptr");
-    
-    // reset the gravity
-    if (!body->isGravityEnabled())
-    {
-        body->applyForce(-_gravity);
-    }
-    
-    // remove shaps
-    for (auto shape : *body->getShapes())
-    {
-        removeShape(dynamic_cast<PhysicsShape*>(shape));
-    }
-    
-    // remove body
-    _info->removeBody(*body->_info);
-}
-
-void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
-{
-    for (auto subjoint : joint->_info->getJoints())
-    {
-        _info->removeJoint(subjoint);
-    }
-}
-
-void PhysicsWorld::removeAllBodies()
-{
-    for (Object* obj : *_bodies)
-    {
-        PhysicsBody* child = dynamic_cast<PhysicsBody*>(obj);
-        removeBodyOrDelay(child);
-        child->_world = nullptr;
-    }
-
-    _bodies->removeAllObjects();
-    CC_SAFE_RELEASE(_bodies);
-}
-
-void PhysicsWorld::removeShape(PhysicsShape* shape)
-{
-    for (auto cps : shape->_info->getShapes())
-    {
-        if (cpSpaceContainsShape(_info->getSpace(), cps))
-        {
-            cpSpaceRemoveShape(_info->getSpace(), cps);
-        }
-    }
-}
-
-void PhysicsWorld::updateJoints()
-{
-    if (_info->getSpace()->locked_private)
-    {
-        return;
-    }
-    
-    for (auto joint : _delayAddJoints)
-    {
-        doAddJoint(joint);
-    }
-    
-    for (auto joint : _delayRemoveJoints)
-    {
-        doRemoveJoint(joint);
-        
-        if (joint->_destoryMark)
-        {
-            delete joint;
-        }
-    }
-    
-    _delayAddJoints.clear();
-    _delayRemoveJoints.clear();
-}
-
-void PhysicsWorld::update(float delta)
-{
-    if (_delayDirty)
-    {
-        // the updateJoints must run before the updateBodies.
-        updateJoints();
-        updateBodies();
-        _delayDirty = !(_delayAddBodies->count() == 0 && _delayRemoveBodies->count() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
-    }
-    
-    for (auto body : *_bodies)
-    {
-        body->update(delta);
-    }
-    
-    cpSpaceStep(_info->getSpace(), delta);
-    
-    if (_debugDrawMask != DEBUGDRAW_NONE)
-    {
-        debugDraw();
-    }
-}
-
 void PhysicsWorld::debugDraw()
 {
     if (_debugDraw == nullptr)
@@ -487,16 +236,6 @@ void PhysicsWorld::debugDraw()
             _debugDraw->end();
         }
     }
-}
-
-void PhysicsWorld::setDebugDrawMask(int mask)
-{
-    if (mask == DEBUGDRAW_NONE)
-    {
-        CC_SAFE_DELETE(_debugDraw);
-    }
-    
-    _debugDrawMask = mask;
 }
 
 int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
@@ -603,28 +342,6 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     _scene->getEventDispatcher()->dispatchEvent(&event);
 }
 
-void PhysicsWorld::setGravity(const Vect& gravity)
-{
-    if (_bodies != nullptr)
-    {
-        for (auto child : *_bodies)
-        {
-            PhysicsBody* body = dynamic_cast<PhysicsBody*>(child);
-            
-            // reset gravity for body
-            if (!body->isGravityEnabled())
-            {
-                body->applyForce(-_gravity);
-                body->applyForce(gravity);
-            }
-        }
-    }
-    
-    _gravity = gravity;
-    cpSpaceSetGravity(_info->getSpace(), PhysicsHelper::point2cpv(gravity));
-}
-
-
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
@@ -707,26 +424,6 @@ PhysicsShape* PhysicsWorld::getShape(const Point& point) const
     
     return shape == nullptr ? nullptr : PhysicsShapeInfo::getMap().find(shape)->second->getShape();
 }
-
-Array* PhysicsWorld::getAllBodies() const
-{
-    return _bodies;
-}
-
-PhysicsBody* PhysicsWorld::getBody(int tag) const
-{
-    for (auto body : *_bodies)
-    {
-        if (((PhysicsBody*)body)->getTag() == tag)
-        {
-            return (PhysicsBody*)body;
-        }
-    }
-    
-    return nullptr;
-}
-
-
 
 void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
 {
@@ -1049,6 +746,300 @@ void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
     }else
     {
         doRemoveBody(body);
+    }
+}
+
+void PhysicsWorld::doAddJoint(PhysicsJoint *joint)
+{
+    if (joint == nullptr || joint->_info == nullptr)
+    {
+        return;
+    }
+    
+    _info->addJoint(*joint->_info);
+}
+
+void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
+{
+    if (joint->getWorld() != this)
+    {
+        if (destroy)
+        {
+            CCLOG("physics warnning: the joint is not in this world, it won't be destoried utill the body it conntect is destoried");
+        }
+        return;
+    }
+    
+    removeJointOrDelay(joint);
+    
+    _joints.remove(joint);
+    joint->_world = nullptr;
+    
+    // clean the connection to this joint
+    if (destroy)
+    {
+        if (joint->getBodyA() != nullptr)
+        {
+            joint->getBodyA()->removeJoint(joint);
+        }
+        
+        if (joint->getBodyB() != nullptr)
+        {
+            joint->getBodyB()->removeJoint(joint);
+        }
+        
+        // test the distraction is delaied or not
+        if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+        {
+            joint->_destoryMark = true;
+        }
+        else
+        {
+            delete joint;
+        }
+    }
+}
+
+void PhysicsWorld::updateJoints()
+{
+    if (_info->isLocked())
+    {
+        return;
+    }
+    
+    for (auto joint : _delayAddJoints)
+    {
+        doAddJoint(joint);
+    }
+    
+    for (auto joint : _delayRemoveJoints)
+    {
+        doRemoveJoint(joint);
+        
+        if (joint->_destoryMark)
+        {
+            delete joint;
+        }
+    }
+    
+    _delayAddJoints.clear();
+    _delayRemoveJoints.clear();
+}
+
+void PhysicsWorld::removeShape(PhysicsShape* shape)
+{
+    if (shape != nullptr)
+    {
+        _info->removeShape(*shape->_info);
+    }
+}
+
+void PhysicsWorld::addJointOrDelay(PhysicsJoint* joint)
+{
+    auto it = std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint);
+    if (it != _delayRemoveJoints.end())
+    {
+        _delayRemoveJoints.erase(it);
+        return;
+    }
+    
+    if (_info->isLocked())
+    {
+        if (std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint) == _delayAddJoints.end())
+        {
+            _delayAddJoints.push_back(joint);
+            _delayDirty = true;
+        }
+    }else
+    {
+        doAddJoint(joint);
+    }
+}
+
+void PhysicsWorld::removeJointOrDelay(PhysicsJoint* joint)
+{
+    auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
+    if (it != _delayAddJoints.end())
+    {
+        _delayAddJoints.erase(it);
+        return;
+    }
+    
+    if (_info->isLocked())
+    {
+        if (std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint) == _delayRemoveJoints.end())
+        {
+            _delayRemoveJoints.push_back(joint);
+            _delayDirty = true;
+        }
+    }else
+    {
+        doRemoveJoint(joint);
+    }
+}
+
+void PhysicsWorld::addJoint(PhysicsJoint* joint)
+{
+    if (joint->getWorld() != nullptr && joint->getWorld() != this)
+    {
+        joint->removeFormWorld();
+    }
+    
+    addJointOrDelay(joint);
+    _joints.push_back(joint);
+    joint->_world = this;
+}
+
+void PhysicsWorld::removeAllJoints(bool destroy)
+{
+    for (auto joint : _joints)
+    {
+        removeJointOrDelay(joint);
+        joint->_world = nullptr;
+        
+        // clean the connection to this joint
+        if (destroy)
+        {
+            if (joint->getBodyA() != nullptr)
+            {
+                joint->getBodyA()->removeJoint(joint);
+            }
+            
+            if (joint->getBodyB() != nullptr)
+            {
+                joint->getBodyB()->removeJoint(joint);
+            }
+            
+            // test the distraction is delaied or not
+            if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+            {
+                joint->_destoryMark = true;
+            }
+            else
+            {
+                delete joint;
+            }
+        }
+    }
+    
+    _joints.clear();
+}
+
+void PhysicsWorld::addShape(PhysicsShape* shape)
+{
+    if (shape != nullptr)
+    {
+        _info->addShape(*shape->_info);
+    }
+}
+
+void PhysicsWorld::doRemoveBody(PhysicsBody* body)
+{
+    CCASSERT(body != nullptr, "the body can not be nullptr");
+    
+    // reset the gravity
+    if (!body->isGravityEnabled())
+    {
+        body->applyForce(-_gravity);
+    }
+    
+    // remove shaps
+    for (auto shape : *body->getShapes())
+    {
+        removeShape(dynamic_cast<PhysicsShape*>(shape));
+    }
+    
+    // remove body
+    _info->removeBody(*body->_info);
+}
+
+void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
+{
+    _info->removeJoint(*joint->_info);
+}
+
+void PhysicsWorld::removeAllBodies()
+{
+    for (Object* obj : *_bodies)
+    {
+        PhysicsBody* child = dynamic_cast<PhysicsBody*>(obj);
+        removeBodyOrDelay(child);
+        child->_world = nullptr;
+    }
+    
+    _bodies->removeAllObjects();
+    CC_SAFE_RELEASE(_bodies);
+}
+
+void PhysicsWorld::setDebugDrawMask(int mask)
+{
+    if (mask == DEBUGDRAW_NONE)
+    {
+        CC_SAFE_DELETE(_debugDraw);
+    }
+    
+    _debugDrawMask = mask;
+}
+
+Array* PhysicsWorld::getAllBodies() const
+{
+    return _bodies;
+}
+
+PhysicsBody* PhysicsWorld::getBody(int tag) const
+{
+    for (auto body : *_bodies)
+    {
+        if (((PhysicsBody*)body)->getTag() == tag)
+        {
+            return (PhysicsBody*)body;
+        }
+    }
+    
+    return nullptr;
+}
+
+void PhysicsWorld::setGravity(const Vect& gravity)
+{
+    if (_bodies != nullptr)
+    {
+        for (auto child : *_bodies)
+        {
+            PhysicsBody* body = dynamic_cast<PhysicsBody*>(child);
+            
+            // reset gravity for body
+            if (!body->isGravityEnabled())
+            {
+                body->applyForce(-_gravity);
+                body->applyForce(gravity);
+            }
+        }
+    }
+    
+    _gravity = gravity;
+    _info->setGravity(gravity);
+}
+
+void PhysicsWorld::update(float delta)
+{
+    if (_delayDirty)
+    {
+        // the updateJoints must run before the updateBodies.
+        updateJoints();
+        updateBodies();
+        _delayDirty = !(_delayAddBodies->count() == 0 && _delayRemoveBodies->count() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
+    }
+    
+    for (auto body : *_bodies)
+    {
+        body->update(delta);
+    }
+    
+    _info->step(delta);
+    
+    if (_debugDrawMask != DEBUGDRAW_NONE)
+    {
+        debugDraw();
     }
 }
 
