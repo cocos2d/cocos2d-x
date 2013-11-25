@@ -356,7 +356,46 @@ namespace cs {
         return NULL;
     }
     
-    
+	vector< vector<int> > CSJsonDictionary::get2ArrayValueFromArray( const char *pszKey )
+	{
+		vector< vector<int> > array2;
+		const CSJson::Value arrayObj = m_cValue[pszKey]; 
+
+		if (!arrayObj.isArray())
+		{
+			return array2;
+		}
+
+		const int row = arrayObj.size();
+		const int col = arrayObj[0].size();
+
+
+		for (int i = 0; i < row ; i++)
+		{
+			vector<int> array;
+			for (int j = 0; j < col ; j++)
+			{
+				array.push_back(arrayObj[i][j].asInt());
+			}
+
+			array2.push_back(array);
+		}
+		// 		int **p;
+		// 		p = new int*[row]; 
+		// 		for(int i=0;i<row;i++) { p[i] = new int[col];  }
+		// 
+		// 		for(int j=0;j<row;j++)
+		// 		{
+		// 			for(int k=0;k<col;k++)
+		// 			{
+		// 				p[k][j]=arrayObj[k][j].asInt(); 
+		// 			}
+		// 		}
+		// 		return 	
+
+		return array2;
+	}
+
     DicItemType CSJsonDictionary::getItemTypeFromArray(const char *pszArrayKey, int nIndex)
     {
         CSJson::Value * arrayValue = validateArrayItem(pszArrayKey, nIndex);

@@ -31,8 +31,9 @@
 
 NS_CC_EXT_BEGIN
 /**
- *  @lua NA
- */
+*   @js NA
+*   @lua NA
+*/
 class SceneReader
 {
 public:
@@ -40,13 +41,7 @@ public:
 	virtual ~SceneReader(void);
 
 public:
-    /**
-     * @js getInstance
-     */
 	static SceneReader* sharedSceneReader();
-    /**
-     * @js purge
-     */
 	void purgeSceneReader();
 	static const char* sceneReaderVersion();
 	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);

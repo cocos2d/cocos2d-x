@@ -28,7 +28,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "ExtensionMacros.h"
-
+#include "rapidjson/document.h"
 #define DICTOOL DictionaryHelper::shareHelper()
 
 NS_CC_EXT_BEGIN
@@ -57,17 +57,40 @@ public:
     cocos2d::CCArray* objectToCCArray(cocos2d::CCObject* obj);
     
     cs::CSJsonDictionary* getSubDictionary_json(cs::CSJsonDictionary* root,const char* key);
+	const rapidjson::Value &getSubDictionary_json(const rapidjson::Value &root, const char* key);
+
     int getIntValue_json(cs::CSJsonDictionary* root,const char* key);
+	int getIntValue_json(const rapidjson::Value& root, const char* key);
+
     float getFloatValue_json(cs::CSJsonDictionary* root,const char* key);
+	float getFloatValue_json(const rapidjson::Value& root,const char* key);
+
     const char* getStringValue_json(cs::CSJsonDictionary* root,const char* key);
+	const char* getStringValue_json(const rapidjson::Value& root,const char* key);
+
     bool getBooleanValue_json(cs::CSJsonDictionary* root,const char* key);
+	bool getBooleanValue_json(const rapidjson::Value& root,const char* key);
+
     int getArrayCount_json(cs::CSJsonDictionary* root,const char* key);
+	int getArrayCount_json(const rapidjson::Value& root,const char* key);
+
     int getIntValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
+	int getIntValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx);
+
     float getFloatValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
+	float getFloatValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx);
+
     bool getBoolValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
+	bool getBoolValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx);
+
     const char* getStringValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
+	const char* getStringValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx);
+
     cs::CSJsonDictionary* getDictionaryFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
+	const rapidjson::Value &getDictionaryFromArray_json(const rapidjson::Value &root, const char* key,int idx);
+
     bool checkObjectExist_json(cs::CSJsonDictionary* root,const char* key);
+	bool checkObjectExist_json(const rapidjson::Value &root,const char* key);
 };
 
 NS_CC_EXT_END

@@ -31,6 +31,7 @@
 #include "lib_json/json_lib.h"
 #include <vector>
 #include <string>
+using namespace std;
 
 namespace cs {
 
@@ -81,7 +82,30 @@ namespace cs {
         double getFloatValueFromArray(const char *pszArrayKey, int nIndex, double fDefaultValue);
         bool getBoolValueFromArray(const char *pszArrayKey, int nIndex, bool bDefaultValue);
         const char * getStringValueFromArray(const char *pszArrayKey, int nIndex);
+
+		//************************************************************************
+		// Description:	 [{},{}]
+		// Method:    	getSubItemFromArray
+		// FullName:  	cs::CSJsonDictionary::getSubItemFromArray
+		// Access:    	public 
+		// Returns:   	CSJsonDictionary *
+		// Qualifier: 	
+		// Parameter: 	const char * pszArrayKey	
+		// Parameter: 	int nIndex	
+		//************************************************************************
         CSJsonDictionary *getSubItemFromArray(const char *pszArrayKey, int nIndex);
+
+		//************************************************************************
+		// Description:	[[],[]]
+		// Method:    	getItemArray2Value
+		// FullName:  	cs::CSJsonDictionary::get2ArrayValueFromArray
+		// Access:    	public 
+		// Returns:   	int**
+		// Qualifier: 	
+		// Parameter: 	const char * pszKey	
+		//************************************************************************
+		vector< vector<int> >	get2ArrayValueFromArray(const char *pszKey);
+
         DicItemType getItemTypeFromArray(const char *pszArrayKey, int nIndex);
 
         int         getItemCount();
