@@ -27,15 +27,28 @@
 
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
+#include "Box2D.h"
 #include "CCPlatformMacros.h"
 NS_CC_BEGIN
+class PhysicsBodyInfo;
 
 class PhysicsWorldInfo
 {
 public:
+    void setGravity(const Vect& gravity);
+    inline b2World* getWorld() { return _world; }
+    void addBody(PhysicsBodyInfo& body);
+    void removeBody(PhysicsBodyInfo& body);
+    inline bool isLocked() { return _world->IsLocked(); }
+    
+private:
+    b2World* _world;
+
+private:
     PhysicsWorldInfo();
     ~PhysicsWorldInfo();
+
+    friend class PhysicsWorld;
 };
 
 NS_CC_END

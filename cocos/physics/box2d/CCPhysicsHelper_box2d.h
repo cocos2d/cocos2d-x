@@ -27,6 +27,7 @@
 
 #include "../CCPhysicsSetting.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+#include "Box2D.h"
 #include "CCPlatformMacros.h"
 #include "CCGeometry.h"
 
@@ -34,6 +35,9 @@ NS_CC_BEGIN
 
 class PhysicsHelper
 {
+public:
+    static b2Vec2 point2Vec2(const Point& point) { return b2Vec2(point.x, point.y); }
+    static Point vec22Point(const b2Vec2& vec) { return Point(vec.x, vec.y); }
 };
 
 NS_CC_END

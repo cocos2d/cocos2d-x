@@ -24,6 +24,8 @@
 
 #include "CCPhysicsWorldInfo_chipmunk.h"
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#include "CCPhysicsHelper_chipmunk.h"
+#include "CCPhysicsBodyInfo_chipmunk.h"
 NS_CC_BEGIN
 
 #define PHYSICS_WORLD_INFO_FUNCTION_IMPLEMENTS(name, type) \
@@ -38,7 +40,6 @@ void PhysicsWorldInfo::remove##name(cp##type* data) \
 } \
 
 PHYSICS_WORLD_INFO_FUNCTION_IMPLEMENTS(Shape, Shape)
-PHYSICS_WORLD_INFO_FUNCTION_IMPLEMENTS(Body, Body)
 PHYSICS_WORLD_INFO_FUNCTION_IMPLEMENTS(Joint, Constraint)
 
 PhysicsWorldInfo::PhysicsWorldInfo()
@@ -49,6 +50,19 @@ PhysicsWorldInfo::PhysicsWorldInfo()
 PhysicsWorldInfo::~PhysicsWorldInfo()
 {
     cpSpaceFree(_space);
+}
+
+void PhysicsWorldInfo::setGravity(const Vect& gravity)
+{
+    cpSpaceSetGravity(_space, PhysicsHelper::point2cpv(gravity));
+}
+
+void PhysicsWorldInfo::addBody(PhysicsBodyInfo& body)
+{
+    if (cpSpaceContainsBody(_space, body.getBody()))
+    {
+        cpSpaceAddBody(_space, body.getBody());
+    }
 }
 
 NS_CC_END

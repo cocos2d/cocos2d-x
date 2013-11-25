@@ -29,7 +29,7 @@
 #define CC_PHYSICS_BOX2D    1
 #define CC_PHYSICS_CHIPMUNK 2
 
-#define CC_USE_CHIPMUNK
+#define CC_USE_BOX2D
 
 #ifdef CC_USE_BOX2D
 #define CC_PHYSICS_ENGINE CC_PHYSICS_BOX2D
@@ -51,8 +51,9 @@ namespace cocos2d
     typedef Point Vect;
     
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-    static const int   PHYSICS_CONTACT_POINT_MAX = 4;
+    static const long   PHYSICS_CONTACT_POINT_MAX = 4;
 #else
+    static const long   PHYSICS_CONTACT_POINT_MAX = 2;
 #endif
 }
 

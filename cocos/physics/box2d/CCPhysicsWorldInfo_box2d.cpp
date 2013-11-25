@@ -25,14 +25,42 @@
 #include "CCPhysicsWorldInfo_box2d.h"
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+#include "CCPhysicsHelper_box2d.h"
+#include "CCPhysicsBodyInfo_box2d.h"
 NS_CC_BEGIN
 
 PhysicsWorldInfo::PhysicsWorldInfo()
 {
+    _world = new b2World(b2Vec2(0.0f, 0.0f));
 }
 
 PhysicsWorldInfo::~PhysicsWorldInfo()
 {
+    CC_SAFE_DELETE(_world);
+}
+
+void PhysicsWorldInfo::setGravity(const Vect& gravity)
+{
+    _world->SetGravity(PhysicsHelper::point2Vec2(gravity));
+}
+
+void PhysicsWorldInfo::addBody(PhysicsBodyInfo& body)
+{
+    if (body.getBody() != nullptr)
+    {
+        removeBody(body);
+    }
+    
+    body.setBody(_world->CreateBody(&body.getBodyDef()));
+}
+
+void PhysicsWorldInfo::removeBody(PhysicsBodyInfo& body)
+{
+    if (body.getBody() != nullptr)
+    {
+        _world->DestroyBody(body.getBody());
+        body.setBody(nullptr);
+    }
 }
 
 NS_CC_END
