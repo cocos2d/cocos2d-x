@@ -397,11 +397,15 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
         cx = _cx;
     if (global == NULL)
         global = _global;
+    
+    JSAutoCompartment ac(cx, global);
+    
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
-    if (script) {
-        JSAutoCompartment ac(cx, global);
+    if (script)
+    {
         JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
-        if (JS_FALSE == evaluatedOK) {
+        if (JS_FALSE == evaluatedOK)
+        {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
         return evaluatedOK;
