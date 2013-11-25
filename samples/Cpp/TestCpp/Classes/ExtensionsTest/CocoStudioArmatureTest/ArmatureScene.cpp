@@ -1042,7 +1042,6 @@ void TestColliderDetector::update(float delta)
 
             float minx, miny, maxx, maxy = 0;
             int length = vertexList->count();
-            CCPoint *points = new CCPoint[length];
             for (int i = 0; i<length; i++)
             {
                 CCContourVertex2 *vertex = static_cast<CCContourVertex2*>(vertexList->objectAtIndex(i));
