@@ -114,7 +114,7 @@ void MinXmlHttpRequest::_setRequestHeader(const char* field, const char* value)
     stringstream value_s;
     string header;
     
-    map<string, string>::iterator iter = _requestHeader.find(field);
+    auto iter = _requestHeader.find(field);
     
     // Concatenate values when header exists.
     if (iter != _requestHeader.end())
