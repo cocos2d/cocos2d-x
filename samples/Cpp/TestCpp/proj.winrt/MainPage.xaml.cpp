@@ -51,6 +51,7 @@ using namespace Windows::UI::Xaml::Controls;
 MainPage::MainPage()
 {
 	InitializeComponent();
+
 	// Note AppDelegate is in MainPage.xaml.h
     CCEGLView* eglView = new CCEGLView();
 	eglView->Create(Window::Current->CoreWindow, SwapChainPanel);
@@ -70,7 +71,7 @@ void MainPage::OnNextPressed(Object^ sender, RoutedEventArgs^ args)
 
 void MainPage::SaveInternalState(IPropertySet^ state)
 {
-	//m_renderer->SaveInternalState(state);
+    CCEGLView::sharedOpenGLView()->OnSuspending();
 }
 
 void MainPage::LoadInternalState(IPropertySet^ state)
