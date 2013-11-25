@@ -835,6 +835,15 @@ local function ActionCallFuncND()
 
 	centerSprites(1)
 
+    local function doRemoveFromParentAndCleanup(sender,table)
+        grossini:removeFromParentAndCleanup(table[1])
+    end
+
+    local action = cc.Sequence:create(
+        cc.MoveBy:create(2, cc.p(200,0)),
+        cc.CallFunc:create(doRemoveFromParentAndCleanup,{true}))
+
+    grossini:runAction(action)
 
 	Helper.titleLabel:setString("CallFuncND + auto remove")
 	Helper.subtitleLabel:setString("CallFuncND + removeFromParent. Grossini dissapears in 2s")
