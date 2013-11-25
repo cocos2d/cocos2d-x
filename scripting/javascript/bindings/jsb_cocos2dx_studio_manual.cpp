@@ -392,6 +392,7 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
     return JS_FALSE;
 }
 
+#if ENABLE_PHYSICS_CHIPMUNK_DETECT
 static JSBool jsb_CCArmature_setCPBody(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -446,6 +447,7 @@ static JSBool jsb_CCArmature_getShapeList(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
     return JS_FALSE;
 }
+#endif //ENABLE_PHYSICS_CHIPMUNK_DETECT
 
 static JSBool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -544,7 +546,9 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
     
     JS_DefineFunction(cx, jsb_CCArmatureDataManager_prototype, "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     
+#if ENABLE_PHYSICS_CHIPMUNK_DETECT
     JS_DefineFunction(cx, jsb_CCArmature_prototype, "_setCPBody", jsb_CCArmature_setCPBody, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, jsb_CCArmature_prototype, "getShapeList", jsb_CCArmature_getShapeList, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+#endif
 }
