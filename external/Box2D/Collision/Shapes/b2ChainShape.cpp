@@ -20,6 +20,7 @@
 #include <Box2D/Collision/Shapes/b2EdgeShape.h>
 #include <new>
 #include <memory.h>
+#include <string.h>
 
 b2ChainShape::~b2ChainShape()
 {
