@@ -46,7 +46,6 @@ bool UILayer::init()
     {
         m_pRootWidget = UIRootWidget::create();
         m_pRootWidget->retain();
-        m_pRootWidget->onEnter();
         addChild(m_pRootWidget->getRenderer());
         m_pInputManager = new UIInputManager();
         m_pInputManager->setRootWidget(m_pRootWidget);
@@ -75,12 +74,13 @@ void UILayer::onEnter()
     setTouchMode(kCCTouchesOneByOne);
     setTouchEnabled(true);
     CCLayer::onEnter();
-    
+    m_pRootWidget->onEnter();
 }
 
 void UILayer::onExit()
 {
     setTouchEnabled(false);
+    m_pRootWidget->onExit();
     CCLayer::onExit();
 }
 
@@ -111,7 +111,7 @@ UIWidget* UILayer::getWidgetByTag(int tag)
     {
         return NULL;
     }
-    return CCUIHELPER->seekWidgetByTag(m_pRootWidget, tag);
+    return UIHelper::seekWidgetByTag(m_pRootWidget, tag);
 }
 
 UIWidget* UILayer::getWidgetByName(const char* name)
@@ -120,7 +120,7 @@ UIWidget* UILayer::getWidgetByName(const char* name)
     {
         return NULL;
     }
-    return CCUIHELPER->seekWidgetByName(m_pRootWidget, name);
+    return UIHelper::seekWidgetByName(m_pRootWidget, name);
 }
 
 UIRootWidget* UILayer::getRootWidget()

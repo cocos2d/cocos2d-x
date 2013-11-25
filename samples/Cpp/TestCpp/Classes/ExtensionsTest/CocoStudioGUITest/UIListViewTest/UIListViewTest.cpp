@@ -45,7 +45,7 @@ bool UIListViewTest_Vertical::init()
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the list view
         m_nCount = 0;
@@ -78,7 +78,7 @@ bool UIListViewTest_Vertical::init()
             textButton->setTouchEnable(true);
             textButton->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
             
-            Layout *layout = Layout::create();
+            UILayout *layout = UILayout::create();
             layout->setName(CCString::createWithFormat("panel_%i", i)->getCString());
             layout->setSize(CCSizeMake(textButton->getRect().size.width, textButton->getRect().size.height));
             textButton->setPosition(ccp(layout->getRect().size.width / 2, layout->getRect().size.height / 2));            
@@ -90,7 +90,7 @@ bool UIListViewTest_Vertical::init()
             
             listView->addChild(layout);
         }
-        listView->addEventListenter(this, listvieweventselector(UIListViewTest_Vertical::listViewEvent));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Vertical::listViewEvent));
         listView->initChildWithDataLength(m_array->count());
         m_pUiLayer->addWidget(listView);
         
@@ -109,7 +109,7 @@ void UIListViewTest_Vertical::listViewEvent(CCObject *pSender, ListViewEventType
             CCString* ccstr = static_cast<CCString*>(m_array->objectAtIndex(m_nCount));
             UIListView* list = dynamic_cast<UIListView*>(pSender);
             
-            Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
+            UILayout* layout = dynamic_cast<UILayout*>(list->getUpdateChild());
             UITextButton* textButton = dynamic_cast<UITextButton*>(layout->getChildByName("TextButton"));
             textButton->setText(ccstr->getCString());
             
@@ -129,7 +129,7 @@ void UIListViewTest_Vertical::listViewEvent(CCObject *pSender, ListViewEventType
             }
             
             CCString* ccstr = static_cast<CCString*>(m_array->objectAtIndex(index));
-            Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
+            UILayout* layout = dynamic_cast<UILayout*>(list->getUpdateChild());
             UITextButton* textButton = dynamic_cast<UITextButton*>(layout->getChildByName("TextButton"));
             textButton->setText(ccstr->getCString());
             list->setUpdateSuccess(true);
@@ -177,7 +177,7 @@ bool UIListViewTest_Horizontal::init()
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the list view
         m_nCount = 0;
@@ -210,7 +210,7 @@ bool UIListViewTest_Horizontal::init()
             textButton->setTouchEnabled(true);
             textButton->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
             
-            Layout *layout = Layout::create();
+            UILayout *layout = UILayout::create();
             layout->setName(CCString::createWithFormat("panel_%i", i)->getCString());
             layout->setSize(CCSizeMake(textButton->getRect().size.width, textButton->getRect().size.height));
             textButton->setPosition(ccp(layout->getRect().size.width / 2, layout->getRect().size.height / 2));
@@ -222,7 +222,7 @@ bool UIListViewTest_Horizontal::init()
             
             listView->addChild(layout);
         }
-        listView->addEventListenter(this, listvieweventselector(UIListViewTest_Horizontal::listViewEvent));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Horizontal::listViewEvent));
         listView->initChildWithDataLength(m_array->count());
         m_pUiLayer->addWidget(listView);
         
@@ -241,7 +241,7 @@ void UIListViewTest_Horizontal::listViewEvent(CCObject *pSender, ListViewEventTy
             CCString* ccstr = static_cast<CCString*>(m_array->objectAtIndex(m_nCount));
             UIListView* list = dynamic_cast<UIListView*>(pSender);
             
-            Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
+            UILayout* layout = dynamic_cast<UILayout*>(list->getUpdateChild());
             UITextButton* textButton = dynamic_cast<UITextButton*>(layout->getChildByName("TextButton"));
             textButton->setText(ccstr->getCString());
             
@@ -260,7 +260,7 @@ void UIListViewTest_Horizontal::listViewEvent(CCObject *pSender, ListViewEventTy
             }
             
             CCString* ccstr = static_cast<CCString*>(m_array->objectAtIndex(index));
-            Layout* layout = dynamic_cast<Layout*>(list->getUpdateChild());
+            UILayout* layout = dynamic_cast<UILayout*>(list->getUpdateChild());
             UITextButton* textButton = dynamic_cast<UITextButton*>(layout->getChildByName("TextButton"));
             textButton->setText(ccstr->getCString());
             list->setUpdateSuccess(true);

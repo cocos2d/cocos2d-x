@@ -88,7 +88,7 @@ typedef enum
 {
     TEXTFIELD_EVENT_ATTACH_WITH_IME,
     TEXTFIELD_EVENT_DETACH_WITH_IME,
-    TEXTFIELD_EVENT_INDERT_TEXT,
+    TEXTFIELD_EVENT_INSERT_TEXT,
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
@@ -142,7 +142,7 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addEventListener(CCObject* target, SEL_TextFieldEvent selecor);
+    void addEventListenerTextField(CCObject* target, SEL_TextFieldEvent selecor);
 
     /*******Compatible*******/
     void addAttachWithIMEEvent(CCObject* target, SEL_TextFieldAttachWithIMEEvent selecor);
@@ -158,7 +158,6 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
-    
     /*compatibel*/
     /**
      * These methods will be removed
@@ -168,6 +167,7 @@ public:
     /************/
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
+    void attachWithIME();
 protected:
     // event
     void attachWithIMEEvent();
@@ -176,6 +176,8 @@ protected:
     void deleteBackwardEvent();
     virtual void onSizeChanged();
     void textfieldRendererScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     UICCTextField* m_pTextFieldRenderer;
 
@@ -183,8 +185,10 @@ protected:
     float m_fTouchHeight;
     bool m_bUseTouchArea;
     
-    CCObject* m_pEventListener;
-    SEL_TextFieldEvent m_pfnEventSelector;
+    CCObject* m_pTextFieldEventListener;
+    SEL_TextFieldEvent m_pfnTextFieldEventSelector;
+    
+    std::string m_strPasswordStyleText;
 
     /*******Compatible*******/
     CCObject* m_pAttachWithIMEListener;

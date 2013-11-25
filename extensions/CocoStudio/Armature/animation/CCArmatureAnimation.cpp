@@ -52,6 +52,9 @@ CCArmatureAnimation::CCArmatureAnimation()
     , m_pArmature(NULL)
     , m_strMovementID("")
     , m_iToIndex(0)
+    , m_pTweenList(NULL)
+    , m_bIgnoreFrameEvent(false)
+    , m_pUserObject(NULL)
 
     , m_sMovementEventCallFunc(NULL)
     , m_sFrameEventCallFunc(NULL)
@@ -66,8 +69,7 @@ CCArmatureAnimation::~CCArmatureAnimation(void)
     CC_SAFE_RELEASE_NULL(m_pTweenList);
     CC_SAFE_RELEASE_NULL(m_pAnimationData);
 
-    CC_SAFE_RELEASE_NULL(m_sMovementEventTarget);
-    CC_SAFE_RELEASE_NULL(m_sFrameEventTarget);
+    CC_SAFE_RELEASE_NULL(m_pUserObject);
 }
 
 bool CCArmatureAnimation::init(CCArmature *armature)
@@ -207,7 +209,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
     loop = (loop < 0) ? m_pMovementData->loop : loop;
 
 
-    CCProcessBase::play((void *)animationName, durationTo, durationTween, loop, tweenEasing);
+    CCProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
 
     if (m_iRawDuration == 0)
@@ -223,7 +225,6 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
         else
         {
             m_eLoopType = ANIMATION_NO_LOOP;
-            m_iRawDuration --;
         }
         m_iDurationTween = durationTween;
     }
@@ -266,6 +267,8 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
 
         }
     }
+
+    m_pArmature->update(0);
 }
 
 
@@ -278,7 +281,40 @@ void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int du
     play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);
 }
 
+void CCArmatureAnimation::gotoAndPlay(int frameIndex)
+{
+    if (!m_pMovementData || frameIndex < 0 || frameIndex >= m_pMovementData->duration)
+    {
+        CCLOG("Please ensure you have played a movement, and the frameIndex is in the range.");
+        return;
+    }
 
+    bool ignoreFrameEvent = m_bIgnoreFrameEvent;
+    m_bIgnoreFrameEvent = true;
+
+    m_bIsPlaying = true;
+    m_bIsComplete = m_bIsPause = false;
+
+    CCProcessBase::gotoFrame(frameIndex);
+    m_fCurrentPercent = (float)m_iCurFrameIndex / ((float)m_pMovementData->duration - 1);
+    m_fCurrentFrame = m_iNextFrameIndex * m_fCurrentPercent;
+
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(m_pTweenList, object)
+    {
+        ((CCTween *)object)->gotoAndPlay(frameIndex);
+    }
+
+    m_pArmature->update(0);
+
+    m_bIgnoreFrameEvent = ignoreFrameEvent;
+}
+
+void CCArmatureAnimation::gotoAndPause(int frameIndex)
+{
+    gotoAndPlay(frameIndex);
+    pause();
+}
 
 int CCArmatureAnimation::getMovementCount()
 {
@@ -292,6 +328,18 @@ void CCArmatureAnimation::update(float dt)
     CCARRAY_FOREACH(m_pTweenList, object)
     {
         ((CCTween *)object)->update(dt);
+    }
+
+    while (m_sFrameEventQueue.size() > 0)
+    {
+        CCFrameEvent *frameEvent = m_sFrameEventQueue.front();
+        m_sFrameEventQueue.pop();
+
+        m_bIgnoreFrameEvent = true;
+        (m_sFrameEventTarget->*m_sFrameEventCallFunc)(frameEvent->bone, frameEvent->frameEventName, frameEvent->originFrameIndex, frameEvent->currentFrameIndex);
+        m_bIgnoreFrameEvent = false;
+
+        CC_SAFE_DELETE(frameEvent);
     }
 }
 
@@ -376,31 +424,39 @@ std::string CCArmatureAnimation::getCurrentMovementID()
 
 void CCArmatureAnimation::setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc)
 {
-    if (target != m_sMovementEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(m_sMovementEventTarget);
-        m_sMovementEventTarget = target;
-    }
+    m_sMovementEventTarget = target;
     m_sMovementEventCallFunc = callFunc;
 }
 
 void CCArmatureAnimation::setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc)
 {
-    if (target != m_sFrameEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(m_sFrameEventTarget);
-        m_sFrameEventTarget = target;
-    }
+    m_sFrameEventTarget = target;
     m_sFrameEventCallFunc = callFunc;
+}
+
+void CCArmatureAnimation::setUserObject(CCObject *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(m_pUserObject);
+    m_pUserObject = pUserObject;
+}
+
+CCObject* CCArmatureAnimation::getUserObject()
+{
+    return m_pUserObject;
 }
 
 void CCArmatureAnimation::frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)
 {
     if (m_sFrameEventTarget && m_sFrameEventCallFunc)
     {
-        (m_sFrameEventTarget->*m_sFrameEventCallFunc)(bone, frameEventName, originFrameIndex, currentFrameIndex);
+        CCFrameEvent *frameEvent = new CCFrameEvent();
+        frameEvent->bone = bone;
+        frameEvent->frameEventName = frameEventName;
+        frameEvent->originFrameIndex = originFrameIndex;
+        frameEvent->currentFrameIndex = currentFrameIndex;
+
+        m_sFrameEventQueue.push(frameEvent);
     }
 }
 NS_CC_EXT_END

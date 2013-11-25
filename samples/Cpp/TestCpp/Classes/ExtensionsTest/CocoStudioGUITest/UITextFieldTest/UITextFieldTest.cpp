@@ -51,7 +51,7 @@ bool UITextFieldTest::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        textField->addEventListener(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -82,7 +82,7 @@ void UITextFieldTest::textFieldEvent(CCObject *pSender, TextFiledEventType type)
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words")->getCString());
             break;
             
@@ -139,7 +139,7 @@ bool UITextFieldTest_MaxLength::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addEventListener(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -170,7 +170,7 @@ void UITextFieldTest_MaxLength::textFieldEvent(CCObject *pSender, TextFiledEvent
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words max length %d", textField->getMaxLength())->getCString());
@@ -233,7 +233,7 @@ bool UITextFieldTest_Password::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input password here");
         textField->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addEventListener(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -264,7 +264,7 @@ void UITextFieldTest_Password::textFieldEvent(CCObject *pSender, TextFiledEventT
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words password")->getCString());
             break;
             

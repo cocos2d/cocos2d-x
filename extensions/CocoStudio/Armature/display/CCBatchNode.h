@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 /**
- *  @js NA
  *  @lua NA
  */
 class CCBatchNode : public CCNode
@@ -37,15 +36,32 @@ class CCBatchNode : public CCNode
 public:
     static CCBatchNode *create();
 public:
+    /**
+     *  @js ctor
+     */
     CCBatchNode();
-
+    /**
+     *  @js NA
+     */
+    ~CCBatchNode();
+    /**
+     *  @js NA
+     */
     virtual bool init();
-    virtual void addChild(CCNode *child, int zOrder, int tag);
+    virtual void addChild(CCNode *pChild);
+    virtual void addChild(CCNode *pChild, int zOrder);
+    virtual void addChild(CCNode *pChild, int zOrder, int tag);
+    virtual void removeChild(CCNode* child, bool cleanup);
     virtual void visit();
+    /**
+     *  @js NA
+     */
     void draw();
 
+    virtual CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
 protected:
     CCTextureAtlas *m_pAtlas;
+    CCDictionary *m_pTextureAtlasDic;
 };
 
 NS_CC_EXT_END

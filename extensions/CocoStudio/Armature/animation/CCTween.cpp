@@ -61,6 +61,7 @@ CCTween::CCTween()
     , m_iFromIndex(0)
     , m_iToIndex(0)
     , m_pAnimation(NULL)
+    , m_bPassLastFrame(false)
 {
 
 }
@@ -97,11 +98,11 @@ bool CCTween::init(CCBone *bone)
 
 void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    CCProcessBase::play(NULL, durationTo, durationTween, loop, tweenEasing);
+    CCProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
     if (loop)
     {
-        m_eLoopType = ANIMATION_TO_LOOP_BACK;
+        m_eLoopType = ANIMATION_TO_LOOP_FRONT;
     }
     else
     {
@@ -164,6 +165,28 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
     tweenNodeTo(0);
 }
 
+
+void CCTween::gotoAndPlay(int frameIndex)
+{
+    CCProcessBase::gotoFrame(frameIndex);
+
+    m_iTotalDuration = 0;
+    m_iBetweenDuration = 0;
+    m_iFromIndex = m_iToIndex = 0;
+
+    m_bIsPlaying = true;
+    m_bIsComplete = m_bIsPause = false;
+
+    m_fCurrentPercent = (float)m_iCurFrameIndex / ((float)m_iRawDuration - 1);
+    m_fCurrentFrame = m_iNextFrameIndex * m_fCurrentPercent;
+}
+
+void CCTween::gotoAndPause(int frameIndex)
+{
+    gotoAndPlay(frameIndex);
+    pause();
+}
+
 void CCTween::updateHandler()
 {
     if (m_fCurrentPercent >= 1)
@@ -209,9 +232,9 @@ void CCTween::updateHandler()
             }
         }
         break;
-        case ANIMATION_TO_LOOP_BACK:
+        case ANIMATION_TO_LOOP_FRONT:
         {
-            m_eLoopType = ANIMATION_LOOP_BACK;
+            m_eLoopType = ANIMATION_LOOP_FRONT;
 
             m_iNextFrameIndex = m_iDurationTween > 0 ? m_iDurationTween : 1;
 
@@ -242,10 +265,6 @@ void CCTween::updateHandler()
         default:
         {
             m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
-
-            m_iTotalDuration = 0;
-            m_iBetweenDuration = 0;
-            m_iFromIndex = m_iToIndex = 0;
         }
         break;
         }
@@ -376,7 +395,7 @@ float CCTween::updateFrameData(float currentPercent)
         currentPercent = fmodf(currentPercent, 1);
     }
 
-    float playedTime = (float)m_iRawDuration * currentPercent;
+    float playedTime = (float)(m_iRawDuration - 1) * currentPercent;
 
 
     //! If play to current frame's front or back, then find current frame again
@@ -396,36 +415,46 @@ float CCTween::updateFrameData(float currentPercent)
         {
             from = to = frames[0];
             setBetween(from, to);
-            return currentPercent;
+            return m_fCurrentPercent;
         }
-        else if(playedTime >= frames[length - 1]->frameID)
+        
+        if(playedTime >= frames[length - 1]->frameID)
         {
-            from = to = frames[length - 1];
-            setBetween(from, to);
-            return currentPercent;
+            if (m_bPassLastFrame)
+            {
+                from = to = frames[length - 1];
+                setBetween(from, to);
+                return m_fCurrentPercent;
+            }
+            m_bPassLastFrame = true;
+        }
+        else
+        {
+            m_bPassLastFrame = false;
         }
 
 
         do
         {
+            m_iFromIndex = m_iToIndex;
             from = frames[m_iFromIndex];
             m_iTotalDuration  = from->frameID;
 
-            if (++m_iToIndex >= length)
+            m_iToIndex = m_iFromIndex + 1;
+            if (m_iToIndex >= length)
             {
-                m_iToIndex = 0;
+                m_iToIndex= 0;
             }
 
-            m_iFromIndex = m_iToIndex;
             to = frames[m_iToIndex];
 
             //! Guaranteed to trigger frame event
-            if(from->strEvent.length() != 0)
+            if(from->strEvent.length() != 0 && !m_pAnimation->isIgnoreFrameEvent())
             {
                 m_pAnimation->frameEvent(m_pBone, from->strEvent.c_str(), from->frameID, playedTime);
             }
 
-            if (playedTime == from->frameID)
+            if (playedTime == from->frameID || (m_bPassLastFrame && m_iFromIndex == length-1))
             {
                 break;
             }
@@ -446,15 +475,10 @@ float CCTween::updateFrameData(float currentPercent)
      *  If frame tween easing equal to TWEEN_EASING_MAX, then it will not do tween.
      */
 
-    CCTweenType tweenType;
-
-    if ( m_eFrameTweenEasing != TWEEN_EASING_MAX)
+    CCTweenType tweenType = (m_eFrameTweenEasing != Linear) ? m_eFrameTweenEasing : m_eTweenEasing;
+    if (tweenType != TWEEN_EASING_MAX && tweenType != Linear && !m_bPassLastFrame)
     {
-        tweenType = (m_eTweenEasing == TWEEN_EASING_MAX) ? m_eFrameTweenEasing : m_eTweenEasing;
-        if (tweenType != TWEEN_EASING_MAX && tweenType != Linear)
-        {
-            currentPercent = CCTweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
-        }
+        currentPercent = CCTweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
     }
 
     return currentPercent;

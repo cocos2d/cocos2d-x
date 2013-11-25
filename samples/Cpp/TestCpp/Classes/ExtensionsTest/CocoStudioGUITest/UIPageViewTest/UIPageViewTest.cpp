@@ -44,7 +44,7 @@ bool UIPageViewTest::init()
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the page view
         UIPageView* pageView = UIPageView::create();
@@ -58,7 +58,7 @@ bool UIPageViewTest::init()
         
         for (int i = 0; i < 3; ++i)
         {
-            Layout* layout = Layout::create();
+            UILayout* layout = UILayout::create();
             layout->setSize(CCSizeMake(240, 130));
             
             UIImageView* imageView = UIImageView::create();
@@ -79,7 +79,7 @@ bool UIPageViewTest::init()
             
             pageView->addPage(layout);
         }        
-        pageView->addEventListener(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
+        pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
         
         m_pUiLayer->addWidget(pageView);
         

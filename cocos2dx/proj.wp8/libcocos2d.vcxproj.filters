@@ -498,6 +498,15 @@
     <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp">
       <Filter>platform\wp8</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\sha1.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\actions\CCAction.h">
@@ -957,6 +966,15 @@
     </ClInclude>
     <ClInclude Include="..\platform\wp8\WP8Keyboard.h">
       <Filter>platform\wp8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\sha1.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCPThreadWinRT.h">
+      <Filter>platform\winrt</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

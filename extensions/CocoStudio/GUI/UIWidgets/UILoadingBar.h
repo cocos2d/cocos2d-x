@@ -35,19 +35,20 @@ typedef enum
     LoadingBarTypeRight
 }LoadingBarType;
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class UILoadingBar : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILoadingBar();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UILoadingBar();
     
@@ -124,7 +125,6 @@ public:
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const;
-    
     /*Compatible*/
     /**
      * These methods will be removed
@@ -138,6 +138,8 @@ protected:
     virtual void onSizeChanged();
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     LoadingBarType m_nBarType;
     int m_nPercent;

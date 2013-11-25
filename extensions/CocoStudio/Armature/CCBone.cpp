@@ -74,6 +74,8 @@ CCBone::CCBone()
     m_bBoneTransformDirty = true;
     m_eBlendType = BLEND_NORMAL;
     m_tWorldInfo = NULL;
+    m_pArmatureParentBone = NULL;
+    m_fDataVersion = 0;
 }
 
 
@@ -85,10 +87,7 @@ CCBone::~CCBone(void)
     CC_SAFE_DELETE(m_pDisplayManager);
     CC_SAFE_DELETE(m_tWorldInfo);
 
-    if(m_pBoneData)
-    {
-        m_pBoneData->release();
-    }
+    CC_SAFE_RELEASE_NULL(m_pBoneData);
 
     CC_SAFE_RELEASE(m_pChildArmature);
 }
@@ -124,6 +123,9 @@ bool CCBone::init(const char *name)
         CC_SAFE_DELETE(m_tWorldInfo);
         m_tWorldInfo = new CCBaseData();
 
+        CC_SAFE_DELETE(m_pBoneData);
+        m_pBoneData  = new CCBoneData();
+
         bRet = true;
     }
     while (0);
@@ -135,8 +137,12 @@ void CCBone::setBoneData(CCBoneData *boneData)
 {
     CCAssert(NULL != boneData, "_boneData must not be NULL");
 
-    m_pBoneData = boneData;
-    m_pBoneData->retain();
+    if (m_pBoneData != boneData)
+    {
+        CC_SAFE_RETAIN(boneData);
+        CC_SAFE_RELEASE(m_pBoneData);
+        m_pBoneData = boneData;
+    }
 
     m_strName = m_pBoneData->name;
     m_nZOrder = m_pBoneData->zOrder;
@@ -155,6 +161,12 @@ void CCBone::setArmature(CCArmature *armature)
     if (m_pArmature)
     {
         m_pTween->setAnimation(m_pArmature->getAnimation());
+        m_fDataVersion = m_pArmature->getArmatureData()->dataVersion;
+        m_pArmatureParentBone = m_pArmature->getParentBone();
+    }
+    else
+    {
+        m_pArmatureParentBone = NULL;
     }
 }
 
@@ -169,29 +181,26 @@ void CCBone::update(float delta)
     if (m_pParentBone)
         m_bBoneTransformDirty = m_bBoneTransformDirty || m_pParentBone->isTransformDirty();
 
-    CCBone *armatureParentBone = m_pArmature->getParentBone();
-    if (armatureParentBone && !m_bBoneTransformDirty)
+    if (m_pArmatureParentBone && !m_bBoneTransformDirty)
     {
-        m_bBoneTransformDirty = armatureParentBone->isTransformDirty();
+        m_bBoneTransformDirty = m_pArmatureParentBone->isTransformDirty();
     }
 
     if (m_bBoneTransformDirty)
     {
-        if (m_pArmature->getArmatureData()->dataVersion >= VERSION_COMBINED)
+        if (m_fDataVersion >= VERSION_COMBINED)
         {
             CCTransformHelp::nodeConcat(*m_pTweenData, *m_pBoneData);
             m_pTweenData->scaleX -= 1;
             m_pTweenData->scaleY -= 1;
         }
 
-        m_tWorldInfo->copy(m_pTweenData);
-
-        m_tWorldInfo->x += m_obPosition.x;
-        m_tWorldInfo->y += m_obPosition.y;
-        m_tWorldInfo->scaleX *= m_fScaleX;
-        m_tWorldInfo->scaleY *= m_fScaleY;
-        m_tWorldInfo->skewX += m_fSkewX + m_fRotationX;
-        m_tWorldInfo->skewY += m_fSkewY - m_fRotationY;
+        m_tWorldInfo->x = m_pTweenData->x + m_obPosition.x;
+        m_tWorldInfo->y = m_pTweenData->y + m_obPosition.y;
+        m_tWorldInfo->scaleX = m_pTweenData->scaleX * m_fScaleX;
+        m_tWorldInfo->scaleY = m_pTweenData->scaleY * m_fScaleY;
+        m_tWorldInfo->skewX = m_pTweenData->skewX + m_fSkewX + m_fRotationX;
+        m_tWorldInfo->skewY = m_pTweenData->skewY + m_fSkewY - m_fRotationY;
 
         if(m_pParentBone)
         {
@@ -199,21 +208,21 @@ void CCBone::update(float delta)
         }
         else
         {
-            if (armatureParentBone)
+            if (m_pArmatureParentBone)
             {
-                applyParentTransform(armatureParentBone);
+                applyParentTransform(m_pArmatureParentBone);
             }
         }
 
         CCTransformHelp::nodeToMatrix(*m_tWorldInfo, m_tWorldTransform);
 
-        if (armatureParentBone)
+        if (m_pArmatureParentBone)
         {
             m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pArmature->nodeToParentTransform());
         }
     }
 
-    CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty || m_pArmature->getArmatureTransformDirty());
+    CCDisplayFactory::updateDisplay(this, delta, m_bBoneTransformDirty || m_pArmature->getArmatureTransformDirty());
 
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pChildren, object)
@@ -276,7 +285,7 @@ void CCBone::updateColor()
 
 void CCBone::updateZOrder()
 {
-    if (m_pArmature->getArmatureData()->dataVersion >= VERSION_COMBINED)
+    if (m_fDataVersion >= VERSION_COMBINED)
     {
         int zorder = m_pTweenData->zOrder + m_pBoneData->zOrder;
         setZOrder(zorder);
@@ -377,15 +386,6 @@ void CCBone::setZOrder(int zOrder)
         CCNode::setZOrder(zOrder);
 }
 
-void CCBone::setTransformDirty(bool dirty)
-{
-    m_bBoneTransformDirty = dirty;
-}
-
-bool CCBone::isTransformDirty()
-{
-    return m_bBoneTransformDirty;
-}
 
 CCAffineTransform CCBone::nodeToArmatureTransform()
 {
@@ -400,6 +400,11 @@ CCAffineTransform CCBone::nodeToWorldTransform()
 CCNode *CCBone::getDisplayRenderNode()
 {
     return m_pDisplayManager->getDisplayRenderNode();
+}
+
+DisplayType CCBone::getDisplayRenderNodeType()
+{
+    return m_pDisplayManager->getDisplayRenderNodeType();
 }
 
 void CCBone::addDisplay(CCDisplayData *displayData, int index)
@@ -429,6 +434,31 @@ CCArray *CCBone::getColliderBodyList()
         if (CCColliderDetector *detector = decoDisplay->getColliderDetector())
         {
             return detector->getColliderBodyList();
+        }
+    }
+    return NULL;
+}
+
+void CCBone::setColliderFilter(CCColliderFilter *filter)
+{
+    CCArray *array = m_pDisplayManager->getDecorativeDisplayList();
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(array, object)
+    {
+        CCDecorativeDisplay *decoDisplay = static_cast<CCDecorativeDisplay *>(object);
+        if (CCColliderDetector *detector = decoDisplay->getColliderDetector())
+        {
+            detector->setColliderFilter(filter);
+        }
+    }
+}
+CCColliderFilter *CCBone::getColliderFilter()
+{
+    if (CCDecorativeDisplay *decoDisplay = m_pDisplayManager->getCurrentDecorativeDisplay())
+    {
+        if (CCColliderDetector *detector = decoDisplay->getColliderDetector())
+        {
+            return detector->getColliderFilter();
         }
     }
     return NULL;

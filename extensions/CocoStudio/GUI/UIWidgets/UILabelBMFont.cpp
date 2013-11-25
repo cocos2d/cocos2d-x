@@ -28,7 +28,9 @@ NS_CC_EXT_BEGIN
     
 UILabelBMFont::UILabelBMFont():
 m_pLabelBMFontRenderer(NULL),
-m_bFntFileHasInit(false)
+m_bFntFileHasInit(false),
+m_strFntFileName(""),
+m_strStringValue("")
 {
 }
 
@@ -62,25 +64,32 @@ void UILabelBMFont::setFntFile(const char *fileName)
     {
         return;
     }
+    m_strFntFileName = fileName;
     m_pLabelBMFontRenderer->initWithString("", fileName);
     updateAnchorPoint();
     labelBMFontScaleChangedWithSize();
     m_bFntFileHasInit = true;
+    setText(m_strStringValue.c_str());
 }
 
 void UILabelBMFont::setText(const char* value)
 {
-	if (!value || !m_bFntFileHasInit)
+    if (!value)
 	{
 		return;
 	}
-	m_pLabelBMFontRenderer->setString(value);
+    m_strStringValue = value;
+    if (!m_bFntFileHasInit)
+    {
+        return;
+    }
+    m_pLabelBMFontRenderer->setString(value);
     labelBMFontScaleChangedWithSize();
 }
 
 const char* UILabelBMFont::getStringValue()
 {
-    return m_pLabelBMFontRenderer->getString();
+    return m_strStringValue.c_str();
 }
 
 void UILabelBMFont::setAnchorPoint(const CCPoint &pt)
@@ -129,6 +138,21 @@ void UILabelBMFont::labelBMFontScaleChangedWithSize()
 const char* UILabelBMFont::getDescription() const
 {
     return "LabelBMFont";
+}
+
+UIWidget* UILabelBMFont::createCloneInstance()
+{
+    return UILabelBMFont::create();
+}
+
+void UILabelBMFont::copySpecialProperties(UIWidget *widget)
+{
+    UILabelBMFont* labelBMFont = dynamic_cast<UILabelBMFont*>(widget);
+    if (labelBMFont)
+    {
+        setFntFile(labelBMFont->m_strFntFileName.c_str());
+        setText(labelBMFont->m_strStringValue.c_str());
+    }
 }
 
 NS_CC_EXT_END

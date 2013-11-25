@@ -78,8 +78,14 @@ void UICCLabelAtlas::updateDisplayedOpacity(GLubyte opacity)
 
 
 UILabelAtlas::UILabelAtlas():
-m_pLaberAtlasRenderer(NULL)
+m_pLaberAtlasRenderer(NULL),
+m_strStringValue(""),
+m_strCharMapFileName(""),
+m_nItemWidth(0),
+m_nItemHeight(0),
+m_strStartCharMap("")
 {
+    
 }
 
 UILabelAtlas::~UILabelAtlas()
@@ -106,8 +112,13 @@ void UILabelAtlas::initRenderer()
     m_pRenderer->addChild(m_pLaberAtlasRenderer);
 }
 
-void UILabelAtlas::setProperty(const char *stringValue, const char *charMapFile, int itemWidth, int itemHeight, const char *startCharMap,bool useSpriteFrame)
+void UILabelAtlas::setProperty(const char *stringValue, const char *charMapFile, int itemWidth, int itemHeight, const char *startCharMap)
 {
+    m_strStringValue = stringValue;
+    m_strCharMapFileName = charMapFile;
+    m_nItemWidth = itemWidth;
+    m_nItemHeight = itemHeight;
+    m_strStartCharMap = startCharMap;
     m_pLaberAtlasRenderer->setProperty(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
     updateAnchorPoint();
     labelAtlasScaleChangedWithSize();
@@ -115,6 +126,7 @@ void UILabelAtlas::setProperty(const char *stringValue, const char *charMapFile,
 
 void UILabelAtlas::setStringValue(const char *value)
 {
+    m_strStringValue = value;
     m_pLaberAtlasRenderer->setString(value);
     labelAtlasScaleChangedWithSize();
 }
@@ -169,7 +181,21 @@ void UILabelAtlas::labelAtlasScaleChangedWithSize()
 
 const char* UILabelAtlas::getDescription() const
 {
-    return "LabelAtlase";
+    return "LabelAtlas";
+}
+
+UIWidget* UILabelAtlas::createCloneInstance()
+{
+    return UILabelAtlas::create();
+}
+
+void UILabelAtlas::copySpecialProperties(UIWidget *widget)
+{
+    UILabelAtlas* labelAtlas = dynamic_cast<UILabelAtlas*>(widget);
+    if (labelAtlas)
+    {
+        setProperty(labelAtlas->m_strStringValue.c_str(), labelAtlas->m_strCharMapFileName.c_str(), labelAtlas->m_nItemWidth, labelAtlas->m_nItemHeight, labelAtlas->m_strStartCharMap.c_str());
+    }
 }
 
 NS_CC_EXT_END

@@ -19,6 +19,10 @@ public:
     void nextCallback(CCObject* pSender);
     void backCallback(CCObject* pSender);
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    static void precompileShaders();
+#endif
+
     CREATE_FUNC(ShaderTestDemo);
 };
 

@@ -33,12 +33,6 @@ THE SOFTWARE.
 #include <agile.h>
 
 #include <wrl/client.h>
-#include <d3d11_1.h>
-#include "platform/winrt/DirectXBase.h"
-#include <d2d1_1.h>
-#include <d2d1effects.h>
-#include <dwrite_1.h>
-#include <wincodec.h>
 
 #include <agile.h>
 #include <DirectXMath.h>
@@ -50,25 +44,16 @@ NS_CC_BEGIN
 class CCEGL;
 class CCEGLView;
 
-ref class DirectXView sealed : public DirectXBase
+ref class WinRTWindow sealed
 {
 
 public:
-   DirectXView(Windows::UI::Core::CoreWindow^ window);
+   WinRTWindow(Windows::UI::Core::CoreWindow^ window);
 
 	void Initialize(Windows::UI::Core::CoreWindow^ window, Windows::UI::Xaml::Controls::SwapChainBackgroundPanel^ panel);
 	void setIMEKeyboardState(bool bOpen);
     void swapBuffers();
 
-private:
-	// DirectX 
-	Microsoft::WRL::ComPtr<ID2D1Factory1> getD2D1Factory1(){return m_d2dFactory;};
-	Microsoft::WRL::ComPtr<IDWriteFactory1> getDWriteFactory2(){return m_dwriteFactory;};
-	Microsoft::WRL::ComPtr<ID2D1Device> getD2D1Device(){return m_d2dDevice;};
-	Microsoft::WRL::ComPtr<ID2D1DeviceContext> getD2D1DeviceContext(){return m_d2dContext;};
-	Microsoft::WRL::ComPtr<IWICImagingFactory2> getWICImagingFactory2(){return m_wicFactory;};
-	Microsoft::WRL::ComPtr<ID3D11Device1> getD3D11Device1(){return m_d3dDevice;};
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext1> getD3D11DeviceContext1(){return m_d3dContext;};
 
 private:
 	CCPoint GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
@@ -84,16 +69,21 @@ private:
 	void OnLogicalDpiChanged(Platform::Object^ sender);
 	void OnOrientationChanged(Platform::Object^ sender);
 	void OnDisplayContentsInvalidated(Platform::Object^ sender);
-	void OnRendering(Platform::Object^ sender, Platform::Object^ args);
-	void ResizeWindow();
+    void OnRendering(Platform::Object^ sender, Platform::Object^ args);
+    void OnSuspending();
+    void ResizeWindow();
+    
 
 	void ShowKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
 	void HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
+
+	Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
 
 	Windows::Foundation::Point m_lastPoint;
 	Windows::Foundation::EventRegistrationToken m_eventToken;
 	bool m_lastPointValid;
 	bool m_textInputEnabled;
+	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
 	ESContext m_esContext;
 	Windows::UI::Xaml::Controls::TextBox^ m_textBox;
 	Windows::UI::Xaml::Controls::Button^ m_dummy;
@@ -114,26 +104,16 @@ public:
     virtual void setIMEKeyboardState(bool bOpen);
 	void ShowKeyboard(Windows::Foundation::Rect r);
 	void HideKeyboard(Windows::Foundation::Rect r);
-	// DirectX 
     virtual bool Create(Windows::UI::Core::CoreWindow^ window, Windows::UI::Xaml::Controls::SwapChainBackgroundPanel^ panel);
-
-	Microsoft::WRL::ComPtr<ID2D1Factory1> getD2D1Factory1(){return m_directXView ?  m_directXView->m_d2dFactory : nullptr;};
-	Microsoft::WRL::ComPtr<IDWriteFactory1> getDWriteFactory2(){return m_directXView ?  m_directXView->m_dwriteFactory : nullptr;};
-	Microsoft::WRL::ComPtr<IWICImagingFactory2> getWICImagingFactory2(){return m_directXView ?  m_directXView->m_wicFactory : nullptr;};
-	Microsoft::WRL::ComPtr<ID2D1Device> getD2D1Device(){return m_directXView ?  m_directXView->m_d2dDevice : nullptr;};
-	Microsoft::WRL::ComPtr<ID2D1DeviceContext> getD2D1DeviceContext(){return m_directXView ?  m_directXView->m_d2dContext : nullptr;};
-	Microsoft::WRL::ComPtr<ID3D11Device1> getD3D11Device1(){return m_directXView ?  m_directXView->m_d3dDevice : nullptr;};
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext1> getD3D11DeviceContext1(){return m_directXView ?  m_directXView->m_d3dContext : nullptr;};
+	void UpdateForWindowSizeChange();
+	void OnRendering();
+    void OnSuspending();
 
 private:
-	private:
-		void OnRendering();
-		void UpdateForWindowSizeChange();
-		void ValidateDevice();
+	Windows::Foundation::EventRegistrationToken m_eventToken;
+	Windows::Foundation::Point m_lastPoint;
+	bool m_lastPointValid;
 
-		Windows::Foundation::EventRegistrationToken m_eventToken;
-		Windows::Foundation::Point m_lastPoint;
-		bool m_lastPointValid;
 public:
 
     // winrt platform functions
@@ -164,9 +144,8 @@ private:
 	bool m_initialized;
     bool m_bSupportTouch;
     float m_fFrameZoomFactor;
-	DirectXView^ m_directXView;
+	WinRTWindow^ m_winRTWindow;
 	Windows::Foundation::Rect m_keyboardRect;
-	friend DirectXView;
 };
 
 NS_CC_END

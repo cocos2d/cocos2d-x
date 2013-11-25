@@ -29,19 +29,20 @@
 
 NS_CC_EXT_BEGIN
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class UIImageView : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UIImageView();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UIImageView();
     
@@ -109,6 +110,9 @@ public:
     virtual const char* getDescription() const;
     
     void setDoubleClickEnabled(bool able);
+    /**
+     *  @js NA
+     */
     void doubleClickEvent();
     void checkDoubleClick(float dt);
     /*Compatible*/
@@ -125,6 +129,8 @@ protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void imageTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     int m_nClickCount;
     float m_fClickTimeInterval;

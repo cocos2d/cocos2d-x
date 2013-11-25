@@ -21,7 +21,7 @@ void main(void)
 
 	float w = cos(3.1415927*time-r*2.0);
 	float h = 0.5+0.5*cos(12.0*a-w*7.0+r*8.0);
-	float d = 0.25+0.75*pow(h,1.0*r)*(0.7+0.3*w);
+	float d = 0.25+0.75*pow(abs(h),1.0*r)*(0.7+0.3*w);
 
 	float col = u( d-r ) * sqrt(1.0-r/d)*r*2.5;
 	col *= 1.25+0.25*cos((12.0*a-w*7.0+r*8.0)/2.0);

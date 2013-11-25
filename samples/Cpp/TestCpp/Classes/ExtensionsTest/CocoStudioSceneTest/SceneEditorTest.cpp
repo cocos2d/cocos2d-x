@@ -9,9 +9,8 @@ using namespace cocos2d::extension;
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
 	CCArmatureDataManager::purge();
-	CCSSceneReader::sharedSceneReader()->purgeSceneReader();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
 }
 
 SceneEditorTestLayer::SceneEditorTestLayer()
@@ -58,9 +57,11 @@ bool SceneEditorTestLayer::init()
 	return bRet;
 }
 
+static ActionObject* actionObject = NULL;
+
 cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
 {
-    CCNode *pNode = CCSSceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -77,14 +78,17 @@ cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
     pNode->addChild(menuBack);
     
 	//ui action
-	cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	actionObject = cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
 
     return pNode;
 }
 
 void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::CCObject *sender)
 {
-
+	if (actionObject)
+	{
+		actionObject->stop();
+	}
 	ExtensionsTestScene *pScene = new ExtensionsTestScene();
 	pScene->runThisTest();
 	pScene->release();

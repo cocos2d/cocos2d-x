@@ -27,7 +27,7 @@
 
 
 #include "../BaseClasses/UIWidget.h"
-#include "../Layouts/Layout.h"
+#include "../Layouts/UILayout.h"
 #include "../BaseClasses/UIRootWidget.h"
 #include "../UIWidgets/UIButton.h"
 #include "../UIWidgets/UICheckBox.h"
@@ -39,11 +39,11 @@
 #include "../UIWidgets/UISlider.h"
 #include "../UIWidgets/UITextField.h"
 #include "../UIWidgets/ScrollWidget/UIListView.h"
-#include "../UIWidgets/ScrollWidget/UIDragPanel.h"
+#include "../UIWidgets/ScrollWidget/UIListViewEx.h"
 #include "../UIWidgets/UILabelBMFont.h"
 #include "../UIWidgets/ScrollWidget/UIPageView.h"
 #include "UIHelper.h"
-#include "../../Reader/CCSGUIReader.h"
+#include "../../Reader/GUIReader.h"
 #include "UILayer.h"
 #include "../UIWidgets/Compatible/CompatibleClasses.h"
 

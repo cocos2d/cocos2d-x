@@ -29,19 +29,20 @@
 
 NS_CC_EXT_BEGIN
 /**
-*   @js NA
-*   @lua NA
-*/    
+ *  @lua NA
+ */
 class UILabelBMFont : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILabelBMFont();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UILabelBMFont();
     
@@ -69,9 +70,13 @@ protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void labelBMFontScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     CCLabelBMFont* m_pLabelBMFontRenderer;
     bool m_bFntFileHasInit;
+    std::string m_strFntFileName;
+    std::string m_strStringValue;
 };
     
 NS_CC_EXT_END

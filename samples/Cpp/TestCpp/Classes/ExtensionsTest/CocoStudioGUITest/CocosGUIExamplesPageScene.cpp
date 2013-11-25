@@ -55,8 +55,7 @@ void CocosGUIExamplesPageScene::onExit()
 {
     m_pUILayer->removeFromParent();
     
-    CCSSceneReader::sharedSceneReader()->purgeSceneReader();
-    UIHelper::purgeUIHelper();
+    SceneReader::sharedSceneReader()->purgeSceneReader();
     ActionManager::purgeActionManager();
     
     CCScene::onExit();
@@ -77,11 +76,11 @@ void CocosGUIExamplesPageScene::toCocosGUIExamplesMapScene(CCObject *pSender)
 void CocosGUIExamplesPageScene::PageInit()
 {
     // page root from json
-    Layout* page_root = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/gui_examples/page_1/page_1.json"));
+    UILayout* page_root = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/gui_examples/page_1/page_1.json"));
     m_pUILayer->addWidget(page_root);
     
     // page layout
-    Layout* page_layout = dynamic_cast<Layout*>(page_root->getChildByName("page_panel"));
+    UILayout* page_layout = dynamic_cast<UILayout*>(page_root->getChildByName("page_panel"));
     
     // page view add to page layout
     UIPageView* pageView = UIPageView::create();
@@ -91,7 +90,7 @@ void CocosGUIExamplesPageScene::PageInit()
     // layout add to page view
     for (int i = 0; i < 4; ++i)
     {
-        Layout* layout = Layout::create();
+        UILayout* layout = UILayout::create();
         layout->setSize(pageView->getContentSize());
         
         UIImageView* imageView = UIImageView::create();
@@ -111,14 +110,14 @@ void CocosGUIExamplesPageScene::pageTurningEvent(CCObject* pSender)
     UIPageView* pageView = dynamic_cast<UIPageView*>(pSender);
     int page = pageView->getPage() + 1;
     
-    Layout* page_root = dynamic_cast<Layout*>(m_pUILayer->getWidgetByName("page_root"));
+    UILayout* page_root = dynamic_cast<UILayout*>(m_pUILayer->getWidgetByName("page_root"));
     
     // set current page number for text
     UILabel* page_alert_label = dynamic_cast<UILabel*>(page_root->getChildByName("page_alert_label"));
     page_alert_label->setText(CCString::createWithFormat("page %d", page)->getCString());
     
     // set current page for image
-    Layout* page_alert_bottom_layout = dynamic_cast<Layout*>(page_root->getChildByName("page_alert_bottom_panel"));
+    UILayout* page_alert_bottom_layout = dynamic_cast<UILayout*>(page_root->getChildByName("page_alert_bottom_panel"));
     int count = page_alert_bottom_layout->getChildren()->count();
     for (int i = count / 2; i < count; ++i)
     {

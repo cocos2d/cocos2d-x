@@ -46,6 +46,7 @@ CCDisplayManager *CCDisplayManager::create(CCBone *bone)
 CCDisplayManager::CCDisplayManager()
     : m_pDecoDisplayList(NULL)
     , m_pDisplayRenderNode(NULL)
+    , m_eDisplayType(CS_DISPLAY_MAX)
     , m_pCurrentDecoDisplay(NULL)
     , m_iDisplayIndex(-1)
     , m_bForceChangeDisplay(false)
@@ -73,7 +74,6 @@ bool CCDisplayManager::init(CCBone *bone)
 
     do
     {
-
         m_pBone = bone;
 
         initDisplayList(bone->getBoneData());
@@ -139,13 +139,38 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
         }
         else
         {
-            CCBaseData baseData;
-            skin->setSkinData(baseData);
+            bool find = false;
+            for (int i = m_pDecoDisplayList->count()-2; i>=0; i--)
+            {
+                CCDecorativeDisplay *dd = static_cast<CCDecorativeDisplay*>(m_pDecoDisplayList->objectAtIndex(i));
+                CCSpriteDisplayData *sdd = static_cast<CCSpriteDisplayData *>(dd->getDisplayData());
+                if (sdd)
+                {
+                    find = true;
+                    skin->setSkinData(sdd->skinData);
+                    (static_cast<CCSpriteDisplayData *>(displayData))->skinData = sdd->skinData;
+                    break;
+                }
+            }
+
+            if (!find)
+            {
+                CCBaseData baseData;
+                skin->setSkinData(baseData);
+            }
         }
     }
     else if (dynamic_cast<CCParticleSystemQuad *>(display))
     {
         displayData = CCParticleDisplayData::create();
+
+        display->removeFromParent();
+
+        CCArmature *armature = m_pBone->getArmature();
+        if (armature)
+        {
+            display->setParent(armature);
+        }
     }
     else if(CCArmature *armature = dynamic_cast<CCArmature *>(display))
     {
@@ -264,6 +289,12 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
         m_pDisplayRenderNode->retain();
         m_pDisplayRenderNode->setVisible(m_bVisible);
+
+        m_eDisplayType = m_pCurrentDecoDisplay->getDisplayData()->displayType;
+    }
+    else
+    {
+        m_eDisplayType =  CS_DISPLAY_MAX;
     }
 }
 
@@ -271,6 +302,12 @@ CCNode *CCDisplayManager::getDisplayRenderNode()
 {
     return m_pDisplayRenderNode;
 }
+
+DisplayType CCDisplayManager::getDisplayRenderNodeType()
+{
+    return m_eDisplayType;
+}
+
 
 int CCDisplayManager::getCurrentDisplayIndex()
 {

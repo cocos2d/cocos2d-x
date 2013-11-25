@@ -35,6 +35,11 @@ THE SOFTWARE.
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
 
+#if (_MSC_VER >= 1800)
+#include <d3d11_2.h>
+#endif
+
+
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -57,23 +62,40 @@ static CCEGLView* s_pEglView = NULL;
 //////////////////////////////////////////////////////////////////////////
 
 // Initialize the DirectX resources required to run.
-void DirectXView::Initialize(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
+void WinRTWindow::Initialize(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
 {
-	DirectXBase::Initialize(window, panel, DisplayProperties::LogicalDpi);
+	m_window = window;
 
  	esInitContext ( &m_esContext );
-	m_esContext.hWnd = WINRT_EGL_WINDOW(panel);
+
+    ANGLE_D3D_FEATURE_LEVEL featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_1;
+
+#if (_MSC_VER >= 1800)
+    // WinRT on Windows 8.1 can compile shaders at run time so we don't care about the DirectX feature level
+    featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_ANY;
+#endif
+
+
+    HRESULT result = CreateWinrtEglWindow(WINRT_EGL_IUNKNOWN(panel), featureLevel, m_eglWindow.GetAddressOf());
+	
+	if (!SUCCEEDED(result))
+	{
+		CCLOG("Unable to create Angle EGL Window: %d", result);
+		return;
+	}
+
+	m_esContext.hWnd = m_eglWindow;
     // width and height are ignored and determined from the CoreWindow the SwapChainBackgroundPanel is in.
     esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
 
 	m_window->PointerPressed +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &DirectXView::OnPointerPressed);
+        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerPressed);
     m_window->PointerReleased +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &DirectXView::OnPointerReleased);
+        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerReleased);
     m_window->PointerMoved +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &DirectXView::OnPointerMoved);
+        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerMoved);
     m_window->PointerWheelChanged +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &DirectXView::OnPointerWheelChanged);
+        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerWheelChanged);
 
 	m_dummy = ref new Button();
 	m_dummy->Opacity = 0.0;
@@ -89,47 +111,62 @@ void DirectXView::Initialize(CoreWindow^ window, SwapChainBackgroundPanel^ panel
 	m_textBox->MaxLength = 1;
 
 	panel->Children->Append(m_textBox);
-	m_textBox->AddHandler(UIElement::KeyDownEvent, ref new KeyEventHandler(this, &DirectXView::OnTextKeyDown), true);
-	m_textBox->AddHandler(UIElement::KeyUpEvent, ref new KeyEventHandler(this, &DirectXView::OnTextKeyUp), true);
+	m_textBox->AddHandler(UIElement::KeyDownEvent, ref new KeyEventHandler(this, &WinRTWindow::OnTextKeyDown), true);
+	m_textBox->AddHandler(UIElement::KeyUpEvent, ref new KeyEventHandler(this, &WinRTWindow::OnTextKeyUp), true);
 	m_textBox->IsEnabled = false;
 
 	auto keyboard = InputPane::GetForCurrentView();
-	keyboard->Showing += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &DirectXView::ShowKeyboard);
-	keyboard->Hiding += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &DirectXView::HideKeyboard);
+	keyboard->Showing += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &WinRTWindow::ShowKeyboard);
+	keyboard->Hiding += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &WinRTWindow::HideKeyboard);
 	setIMEKeyboardState(false);
 }
 
-DirectXView::DirectXView(CoreWindow^ window) :
+WinRTWindow::WinRTWindow(CoreWindow^ window) :
 	m_lastPointValid(false),
 	m_textInputEnabled(false)
 {
 	window->SizeChanged += 
-	ref new TypedEventHandler<CoreWindow^, WindowSizeChangedEventArgs^>(this, &DirectXView::OnWindowSizeChanged);
+	ref new TypedEventHandler<CoreWindow^, WindowSizeChangedEventArgs^>(this, &WinRTWindow::OnWindowSizeChanged);
 
 	DisplayProperties::LogicalDpiChanged +=
-		ref new DisplayPropertiesEventHandler(this, &DirectXView::OnLogicalDpiChanged);
+		ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnLogicalDpiChanged);
 
 	DisplayProperties::OrientationChanged +=
-        ref new DisplayPropertiesEventHandler(this, &DirectXView::OnOrientationChanged);
+        ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnOrientationChanged);
 
 	DisplayProperties::DisplayContentsInvalidated +=
-		ref new DisplayPropertiesEventHandler(this, &DirectXView::OnDisplayContentsInvalidated);
+		ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnDisplayContentsInvalidated);
 	
-	m_eventToken = CompositionTarget::Rendering::add(ref new EventHandler<Object^>(this, &DirectXView::OnRendering));
+	m_eventToken = CompositionTarget::Rendering::add(ref new EventHandler<Object^>(this, &WinRTWindow::OnRendering));
 }
 
 
-void DirectXView::swapBuffers()
+void WinRTWindow::swapBuffers()
 {
 	eglSwapBuffers(m_esContext.eglDisplay, m_esContext.eglSurface);  
 }
 
-void DirectXView::ResizeWindow()
+
+
+void WinRTWindow::OnSuspending()
 {
-    UpdateForWindowSizeChange();
+#if (_MSC_VER >= 1800)
+    Microsoft::WRL::ComPtr<IDXGIDevice3> dxgiDevice;
+    HRESULT result = m_eglWindow->GetAngleD3DDevice().As(&dxgiDevice);
+    if (SUCCEEDED(result))
+    {
+        dxgiDevice->Trim();
+    }
+#endif
 }
 
-CCPoint DirectXView::GetCCPoint(PointerEventArgs^ args) {
+
+void WinRTWindow::ResizeWindow()
+{
+     CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
+}
+
+CCPoint WinRTWindow::GetCCPoint(PointerEventArgs^ args) {
 	auto p = args->CurrentPoint;
 	float x = getScaledDPIValue(p->Position.X);
 	float y = getScaledDPIValue(p->Position.Y);
@@ -144,17 +181,17 @@ CCPoint DirectXView::GetCCPoint(PointerEventArgs^ args) {
 	return pt;
 }
 
-void DirectXView::ShowKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
+void WinRTWindow::ShowKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
 {
     CCEGLView::sharedOpenGLView()->ShowKeyboard(args->OccludedRect);
 }
 
-void DirectXView::HideKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
+void WinRTWindow::HideKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
 {
     CCEGLView::sharedOpenGLView()->HideKeyboard(args->OccludedRect);
 }
 
-void DirectXView::setIMEKeyboardState(bool bOpen)
+void WinRTWindow::setIMEKeyboardState(bool bOpen)
 {
 	m_textInputEnabled = bOpen;
 	if(m_textInputEnabled)
@@ -171,7 +208,7 @@ void DirectXView::setIMEKeyboardState(bool bOpen)
 
 
 
-void DirectXView::OnTextKeyDown(Object^ sender, KeyRoutedEventArgs^ args)
+void WinRTWindow::OnTextKeyDown(Object^ sender, KeyRoutedEventArgs^ args)
 {
 #if 0
 	if(!m_textInputEnabled)
@@ -189,7 +226,7 @@ void DirectXView::OnTextKeyDown(Object^ sender, KeyRoutedEventArgs^ args)
 #endif
 }
 
-void DirectXView::OnTextKeyUp(Object^ sender, KeyRoutedEventArgs^ args)
+void WinRTWindow::OnTextKeyUp(Object^ sender, KeyRoutedEventArgs^ args)
 {
 	if(!m_textInputEnabled)
 	{
@@ -223,7 +260,7 @@ void DirectXView::OnTextKeyUp(Object^ sender, KeyRoutedEventArgs^ args)
 }
 
 
-void DirectXView::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
+void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
 {
     float direction = (float)args->CurrentPoint->Properties->MouseWheelDelta;
     int id = 0;
@@ -235,14 +272,14 @@ void DirectXView::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ ar
 }
 
 
-void DirectXView::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
+void WinRTWindow::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
     CCPoint pt = GetCCPoint(args);
     CCEGLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
 
-void DirectXView::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
+void WinRTWindow::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 {
 	auto currentPoint = args->CurrentPoint;
 	if (currentPoint->IsInContact)
@@ -262,36 +299,36 @@ void DirectXView::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 	}
 }
 
-void DirectXView::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
+void WinRTWindow::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
     CCPoint pt = GetCCPoint(args);
     CCEGLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &pt.x, &pt.y);
 }
 
-void DirectXView::OnWindowSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
+void WinRTWindow::OnWindowSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
 {
 	ResizeWindow();
 	CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
-void DirectXView::OnLogicalDpiChanged(Object^ sender)
+void WinRTWindow::OnLogicalDpiChanged(Object^ sender)
 {
-	SetDpi(DisplayProperties::LogicalDpi);
+	CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
-void DirectXView::OnOrientationChanged(Object^ sender)
+void WinRTWindow::OnOrientationChanged(Object^ sender)
 {
 	ResizeWindow();
 	CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
-void DirectXView::OnDisplayContentsInvalidated(Object^ sender)
+void WinRTWindow::OnDisplayContentsInvalidated(Object^ sender)
 {
-	CCEGLView::sharedOpenGLView()->ValidateDevice();
+	CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
-void DirectXView::OnRendering(Object^ sender, Object^ args)
+void WinRTWindow::OnRendering(Object^ sender, Object^ args)
 {
 	CCEGLView::sharedOpenGLView()->OnRendering();
 }
@@ -303,7 +340,7 @@ CCEGLView::CCEGLView()
 	, m_bSupportTouch(false)
 	, m_lastPointValid(false)
 	, m_running(false)
-	, m_directXView(nullptr)
+	, m_winRTWindow(nullptr)
 	, m_initialized(false)
 {
 	s_pEglView = this;
@@ -324,8 +361,8 @@ bool CCEGLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
 	m_window = window;
 
 	m_bSupportTouch = true;
-	m_directXView = ref new DirectXView(window);
-	m_directXView->Initialize(window, panel);
+	m_winRTWindow = ref new WinRTWindow(window);
+	m_winRTWindow->Initialize(window, panel);
     m_initialized = false;
 	UpdateForWindowSizeChange();
     return bRet;
@@ -345,15 +382,15 @@ void CCEGLView::end()
 
 void CCEGLView::swapBuffers()
 {
-	m_directXView->swapBuffers();
+	m_winRTWindow->swapBuffers();
 }
 
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
-	if(m_directXView) 
+	if(m_winRTWindow) 
 	{
-		m_directXView->setIMEKeyboardState(bOpen);
+		m_winRTWindow->setIMEKeyboardState(bOpen);
 	}
 }
 
@@ -388,7 +425,13 @@ void CCEGLView::centerWindow()
 	// not implemented in WinRT. Window is always full screen
 }
 
-
+void CCEGLView::OnSuspending()
+{
+    if (m_winRTWindow)
+    {
+        m_winRTWindow->OnSuspending();
+    }
+}
 
 CCEGLView* CCEGLView::sharedOpenGLView()
 {
@@ -448,11 +491,6 @@ void CCEGLView::ShowKeyboard(Rect r)
 	m_keyboardRect = r;
 }
 
-
-void CCEGLView::ValidateDevice()
-{
-
-}
 
 void CCEGLView::UpdateForWindowSizeChange()
 {

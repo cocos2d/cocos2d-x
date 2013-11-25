@@ -30,15 +30,18 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 /**
- *  @js NA
  *  @lua NA
  */
 class CCComController : public cocos2d::CCComponent, public CCInputDelegate
 {
-protected:
-    CCComController(void);
-    
 public:
+   /**
+    *  @js ctor
+    */
+   CCComController(void);
+   /**
+    *  @js NA
+    */
    virtual ~CCComController(void);
    virtual bool init();
    virtual void onEnter();

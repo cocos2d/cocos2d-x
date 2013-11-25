@@ -58,16 +58,21 @@ public: \
 NS_CC_EXT_BEGIN
 
 /**
-* The base node include a lot of attributes.
-* @js NA
-* @lua NA
-*/
+ * The base node include a lot of attributes.
+ * @lua NA
+ */
 class  CCBaseData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCBaseData)
 public:
+    /**
+     *  @js ctor
+     */
     CCBaseData();
+    /**
+     *  @js NA
+     */
     ~CCBaseData(void);
 
     /*
@@ -150,10 +155,7 @@ public:
     CCSpriteDisplayData();
     virtual ~CCSpriteDisplayData();
 
-    inline void setParam(const char *displayName)
-    {
-        this->displayName = displayName;
-    }
+    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
     void copy(CCSpriteDisplayData *displayData);
 public:
     /**
@@ -180,10 +182,7 @@ public:
     CCArmatureDisplayData();
     virtual ~CCArmatureDisplayData();
 
-    inline void setParam(const char *displayName)
-    {
-        this->displayName = displayName;
-    }
+    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
     void copy(CCArmatureDisplayData *displayData);
 public:
     /**
@@ -209,10 +208,7 @@ public:
     CCParticleDisplayData();
     virtual ~CCParticleDisplayData() {};
 
-    void setParam(const char *plist)
-    {
-        this->plist = plist;
-    }
+    void setParam(const char *pszPlist) { this->plist = pszPlist; }
 
     void copy(CCParticleDisplayData *displayData);
 public:
@@ -430,10 +426,10 @@ public:
 
 struct CCContourVertex2 : public CCObject
 {
-    CCContourVertex2(float x, float y)
+    CCContourVertex2(float xx, float yy)
     {
-        this->x = x;
-        this->y = y;
+        this->x = xx;
+        this->y = yy;
     }
 
     float x;

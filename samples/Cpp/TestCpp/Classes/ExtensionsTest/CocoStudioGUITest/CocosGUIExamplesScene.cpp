@@ -49,8 +49,7 @@ CocosGUIExamplesScene::~CocosGUIExamplesScene()
 {
     m_pUILayer->removeFromParent();
     
-    CCSSceneReader::sharedSceneReader()->purgeSceneReader();
-    UIHelper::purgeUIHelper();
+    SceneReader::sharedSceneReader()->purgeSceneReader();
 	ActionManager::purgeActionManager();
 }
 
@@ -95,7 +94,7 @@ void CocosGUIExamplesScene::toCocosGUIExamplesRegisterScene(CCObject *pSender)
 void CocosGUIExamplesScene::ExamplesInit()
 {
     // example root
-    UIWidget* example_root = CCUIHELPER->createWidgetFromJsonFile("cocosgui/examples/examples.json");
+    UIWidget* example_root = GUIReader::shareReader()->widgetFromJsonFile("cocosgui/examples/examples.json");
     example_root->setWidgetTag(EXAMPLE_PANEL_TAG_ROOT);
     m_pUILayer->addWidget(example_root);
     
@@ -1017,7 +1016,7 @@ void CocosGUIExamplesScene::WeaponCreate()
                 break;
             }            
             
-            UIPanel* item = dynamic_cast<UIPanel*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/examples/weapon_introduce/weapon_item_1/weapon_item_1.json"));
+            UIPanel* item = dynamic_cast<UIPanel*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/examples/weapon_introduce/weapon_item_1/weapon_item_1.json"));
             item->setWidgetTag(WEAPON_ITEM_PANEL_TAG + i * columnMax + j);
             
             float width = item->getRect().size.width;

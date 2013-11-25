@@ -45,19 +45,20 @@ typedef void (CCObject::*SEL_UnSelectEvent)(CCObject*);
 #define coco_unselectselector(_SELECTOR) (cocos2d::extension::SEL_UnSelectEvent)(&_SELECTOR)
 /************************/
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class UICheckBox : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UICheckBox();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UICheckBox();
     
@@ -144,7 +145,7 @@ public:
     virtual void setAnchorPoint(const CCPoint &pt);
     
     //add a call back function would called when checkbox is selected or unselected.
-    void addEventListener(CCObject* target,SEL_SelectedStateEvent selector);
+    void addEventListenerCheckBox(CCObject* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
@@ -208,6 +209,8 @@ protected:
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
+    virtual UIWidget* createCloneInstance();
+    virtual void copySpecialProperties(UIWidget* model);
 protected:
     CCSprite* m_pBackGroundBoxRenderer;
     CCSprite* m_pBackGroundSelectedBoxRenderer;
@@ -216,14 +219,20 @@ protected:
     CCSprite* m_pFrontCrossDisabledRenderer;
     bool m_bIsSelected;
 
-    CCObject*       m_pSelectedStateEventListener;
-    SEL_SelectedStateEvent    m_pfnSelectedStateEventSelector;
+    CCObject*       m_pCheckBoxEventListener;
+    SEL_SelectedStateEvent    m_pfnCheckBoxEventSelector;
     
     TextureResType m_eBackGroundTexType;
     TextureResType m_eBackGroundSelectedTexType;
     TextureResType m_eFrontCrossTexType;
     TextureResType m_eBackGroundDisabledTexType;
     TextureResType m_eFrontCrossDisabledTexType;
+    
+    std::string m_strBackGroundFileName;
+    std::string m_strBackGroundSelectedFileName;
+    std::string m_strFrontCrossFileName;
+    std::string m_strBackGroundDisabledFileName;
+    std::string m_strFrontCrossDisabledFileName;
     
     /*Compatible*/
     CCObject*       m_pSelectListener;

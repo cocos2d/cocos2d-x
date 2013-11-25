@@ -86,6 +86,7 @@ CCArmature::CCArmature()
     , m_pBoneDic(NULL)
     , m_pTopBoneList(NULL)
     , m_pAnimation(NULL)
+    , m_pTextureAtlasDic(NULL)
 {
 }
 
@@ -103,6 +104,7 @@ CCArmature::~CCArmature(void)
         CC_SAFE_DELETE(m_pTopBoneList);
     }
     CC_SAFE_DELETE(m_pAnimation);
+    CC_SAFE_RELEASE_NULL(m_pTextureAtlasDic);
 }
 
 
@@ -130,6 +132,8 @@ bool CCArmature::init(const char *name)
         m_pTopBoneList = new CCArray();
         m_pTopBoneList->init();
 
+        CC_SAFE_DELETE(m_pTextureAtlasDic);
+        m_pTextureAtlasDic = new CCDictionary();
 
         m_sBlendFunc.src = CC_BLEND_SRC;
         m_sBlendFunc.dst = CC_BLEND_DST;
@@ -453,7 +457,7 @@ void CCArmature::update(float dt)
 
 void CCArmature::draw()
 {
-    if (m_pParentBone == NULL)
+    if (m_pParentBone == NULL && m_pBatchNode == NULL)
     {
         CC_NODE_DRAW_SETUP();
         ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
@@ -464,13 +468,12 @@ void CCArmature::draw()
     {
         if (CCBone *bone = dynamic_cast<CCBone *>(object))
         {
-            CCDisplayManager *displayManager = bone->getDisplayManager();
-            CCNode *node = displayManager->getDisplayRenderNode();
+            CCNode *node = bone->getDisplayRenderNode();
 
             if (NULL == node)
                 continue;
 
-            switch (displayManager->getCurrentDecorativeDisplay()->getDisplayData()->displayType)
+            switch (bone->getDisplayRenderNodeType())
             {
             case CS_DISPLAY_SPRITE:
             {
@@ -663,7 +666,7 @@ CCRect CCArmature::boundingBox()
         }
     }
 
-    return boundingBox;
+    return CCRectApplyAffineTransform(boundingBox, nodeToParentTransform());
 }
 
 CCBone *CCArmature::getBoneAtPoint(float x, float y)
@@ -680,6 +683,56 @@ CCBone *CCArmature::getBoneAtPoint(float x, float y)
     }
     return NULL;
 }
+
+CCTextureAtlas *CCArmature::getTexureAtlasWithTexture(CCTexture2D *texture)
+{
+    int key = texture->getName();
+
+    if (m_pParentBone && m_pParentBone->getArmature())
+    {
+        return m_pParentBone->getArmature()->getTexureAtlasWithTexture(texture);
+    }
+    else if (m_pBatchNode)
+    {
+        m_pBatchNode->getTexureAtlasWithTexture(texture);
+    }
+
+    CCTextureAtlas *atlas = (CCTextureAtlas *)m_pTextureAtlasDic->objectForKey(key);
+    if (atlas == NULL)
+    {
+        atlas = CCTextureAtlas::createWithTexture(texture, 4);
+        m_pTextureAtlasDic->setObject(atlas, key);
+    }
+    return atlas;
+}
+
+void CCArmature::setParentBone(CCBone *parentBone)
+{
+    m_pParentBone = parentBone;
+
+    CCDictElement *element = NULL;
+    CCDICT_FOREACH(m_pBoneDic, element)
+    {
+        CCBone *bone = (CCBone*)element->getObject();
+        bone->setArmature(this);
+    }
+}
+
+CCBone *CCArmature::getParentBone()
+{
+    return m_pParentBone;
+}
+
+void CCArmature::setColliderFilter(CCColliderFilter *filter)
+{
+    CCDictElement *element = NULL;
+    CCDICT_FOREACH(m_pBoneDic, element)
+    {
+        CCBone *bone = static_cast<CCBone*>(element->getObject());
+        bone->setColliderFilter(filter);
+    }
+}
+
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 b2Body *CCArmature::getBody()
