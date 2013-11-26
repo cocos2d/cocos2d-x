@@ -25,9 +25,9 @@
 #ifndef __CCPHYSICS_BODY_H__
 #define __CCPHYSICS_BODY_H__
 
-#include "CCPhysicsSetting.h"
 #ifdef CC_USE_PHYSICS
 
+#include "ccConfig.h"
 #include "CCObject.h"
 #include "CCGeometry.h"
 #include "CCArray.h"

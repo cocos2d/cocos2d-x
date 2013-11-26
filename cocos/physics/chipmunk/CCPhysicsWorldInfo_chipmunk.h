@@ -25,14 +25,14 @@
 #ifndef __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#ifdef CC_USE_PHYSICS
 
 #include <vector>
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
 #include "CCGeometry.h"
 NS_CC_BEGIN
+class Vect;
 class PhysicsBodyInfo;
 class PhysicsJointInfo;
 class PhysicsShapeInfo;
@@ -63,5 +63,5 @@ private:
 
 NS_CC_END
 
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_USE_PHYSICS
 #endif // __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__

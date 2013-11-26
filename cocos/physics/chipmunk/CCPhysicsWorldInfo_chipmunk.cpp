@@ -22,8 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifdef CC_USE_PHYSICS
+#include "ccConfig.h"
 #include "CCPhysicsWorldInfo_chipmunk.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "CCPhysicsHelper_chipmunk.h"
 #include "CCPhysicsBodyInfo_chipmunk.h"
 #include "CCPhysicsShapeInfo_chipmunk.h"
@@ -97,4 +98,4 @@ void PhysicsWorldInfo::removeJoint(PhysicsJointInfo& joint)
 }
 
 NS_CC_END
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_USE_PHYSICS
