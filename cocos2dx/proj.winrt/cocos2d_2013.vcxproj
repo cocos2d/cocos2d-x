@@ -539,7 +539,7 @@
       <AdditionalIncludeDirectories>../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/winrt/zlib;../platform/third_party/winrt/libpng;../platform/third_party/winrt/libjpeg;../platform/third_party/winrt/libtiff;../platform/third_party/winrt/freetype/include;../platform/third_party/winrt/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <PreprocessorDefinitions>_USRDLL;WINRT;_WINRT;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USRDLL;WINRT;_WINRT;COCOS2D_DEBUG=1;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -573,7 +573,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalIncludeDirectories>../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/winrt/zlib;../platform/third_party/winrt/libpng;../platform/third_party/winrt/libjpeg;../platform/third_party/winrt/libtiff;../platform/third_party/winrt/freetype/include;../platform/third_party/winrt/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <PreprocessorDefinitions>_USRDLL;WINRT;_WINRT;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USRDLL;WINRT;_WINRT;COCOS2D_DEBUG=1;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -607,7 +607,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalIncludeDirectories>../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/winrt/zlib;../platform/third_party/winrt/libpng;../platform/third_party/winrt/libjpeg;../platform/third_party/winrt/libtiff;../platform/third_party/winrt/freetype/include;../platform/third_party/winrt/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <PreprocessorDefinitions>_USRDLL;WINRT;_WINRT;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USRDLL;WINRT;_WINRT;COCOS2D_DEBUG=1;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
