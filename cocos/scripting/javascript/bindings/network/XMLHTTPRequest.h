@@ -93,7 +93,7 @@ private:
     JSContext*                        _cx;
     std::string                       _meth;
     std::string                       _type;
-    std::stringstream                 _data;
+    char*                             _data;
     size_t                            _dataSize;
     JSObject*                         _onreadystateCallback;
     int                               _readyState;
