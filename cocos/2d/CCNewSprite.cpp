@@ -62,7 +62,7 @@ bool NewSprite::initWithTexture(Texture2D *texture, const Rect &rect, bool rotat
     return result;
 }
 
-void NewSprite::updateTransform()
+void NewSprite::updateQuadVerties()
 {
 
 #ifdef CC_USE_PHYSICS
@@ -75,91 +75,63 @@ void NewSprite::updateTransform()
     // recalculate matrix only if it is dirty
     if(isDirty())
     {
-        if( !_visible || ( _parent && _parent != (Node*)_batchNode && static_cast<NewSprite*>(_parent)->_shouldBeHidden) )
-        {
-            _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vertex3F(0,0,0);
-            _shouldBeHidden = true;
-        }
-        else
-        {
-            _shouldBeHidden = false;
 
-//            if( ! _parent || _parent == (Node*)_batchNode )
-//            {
-//                _transformToBatch = getNodeToParentTransform();
-//            }
-//            else
-//            {
-//                CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-//                _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<NewSprite*>(_parent)->_transformToBatch );
-//            }
-
-            //TODO optimize this transformation, should use parent's transformation instead
-            _transformToBatch = getNodeToWorldTransform();
-
-            //
-            // calculate the Quad based on the Affine Matrix
-            //
-
-            Size size = _rect.size;
-
-            float x1 = _offsetPosition.x;
-            float y1 = _offsetPosition.y;
-
-            float x2 = x1 + size.width;
-            float y2 = y1 + size.height;
-            float x = _transformToBatch.tx;
-            float y = _transformToBatch.ty;
-
-            float cr = _transformToBatch.a;
-            float sr = _transformToBatch.b;
-            float cr2 = _transformToBatch.d;
-            float sr2 = -_transformToBatch.c;
-            float ax = x1 * cr - y1 * sr2 + x;
-            float ay = x1 * sr + y1 * cr2 + y;
-
-            float bx = x2 * cr - y1 * sr2 + x;
-            float by = x2 * sr + y1 * cr2 + y;
-
-            float cx = x2 * cr - y2 * sr2 + x;
-            float cy = x2 * sr + y2 * cr2 + y;
-
-            float dx = x1 * cr - y2 * sr2 + x;
-            float dy = x1 * sr + y2 * cr2 + y;
-
-            _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-            _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-            _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-            _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
-        }
-
-        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
-        if (_textureAtlas)
-        {
-            _textureAtlas->updateQuad(&_quad, _atlasIndex);
-        }
+//        if( ! _parent || _parent == (Node*)_batchNode )
+//        {
+//            _transformToBatch = getNodeToParentTransform();
+//        }
+//        else
+//        {
+//            CCASSERT( dynamic_cast<NewSprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
+//            _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<NewSprite*>(_parent)->_transformToBatch );
+//        }
+        
+        //TODO optimize this transformation, should use parent's transformation instead
+        _transformToBatch = getNodeToWorldTransform();
+        
+        //
+        // calculate the Quad based on the Affine Matrix
+        //
+        
+        Size size = _rect.size;
+        
+        float x1 = _offsetPosition.x;
+        float y1 = _offsetPosition.y;
+        
+        float x2 = x1 + size.width;
+        float y2 = y1 + size.height;
+        float x = _transformToBatch.tx;
+        float y = _transformToBatch.ty;
+        
+        float cr = _transformToBatch.a;
+        float sr = _transformToBatch.b;
+        float cr2 = _transformToBatch.d;
+        float sr2 = -_transformToBatch.c;
+        float ax = x1 * cr - y1 * sr2 + x;
+        float ay = x1 * sr + y1 * cr2 + y;
+        
+        float bx = x2 * cr - y1 * sr2 + x;
+        float by = x2 * sr + y1 * cr2 + y;
+        
+        float cx = x2 * cr - y2 * sr2 + x;
+        float cy = x2 * sr + y2 * cr2 + y;
+        
+        float dx = x1 * cr - y2 * sr2 + x;
+        float dy = x1 * sr + y2 * cr2 + y;
+        
+        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
+        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
+        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
+        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
 
         _recursiveDirty = false;
         setDirty(false);
     }
-
-    Node::updateTransform();
-
-#if CC_SPRITE_DEBUG_DRAW
-    // draw bounding box
-    Point vertices[4] = {
-        Point( _quad.bl.vertices.x, _quad.bl.vertices.y ),
-        Point( _quad.br.vertices.x, _quad.br.vertices.y ),
-        Point( _quad.tr.vertices.x, _quad.tr.vertices.y ),
-        Point( _quad.tl.vertices.x, _quad.tl.vertices.y ),
-    };
-    ccDrawPoly(vertices, 4, true);
-#endif // CC_SPRITE_DEBUG_DRAW
 }
 
 void NewSprite::draw(void)
 {
-    updateTransform();
+    updateQuadVerties();
     //TODO implement z order
     QuadCommand* renderCommand = new QuadCommand(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1);
 
