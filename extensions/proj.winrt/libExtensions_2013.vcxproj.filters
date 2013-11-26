@@ -457,6 +457,9 @@
       <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDefine.cpp">
+      <Filter>CocoStudio\Armature\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
