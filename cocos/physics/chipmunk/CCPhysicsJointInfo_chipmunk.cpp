@@ -23,11 +23,14 @@
  ****************************************************************************/
 
 #include "CCPhysicsJointInfo_chipmunk.h"
+
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include <algorithm>
+#include <unordered_map>
+
 NS_CC_BEGIN
 
-std::map<cpConstraint*, PhysicsJointInfo*> PhysicsJointInfo::_map;
+std::unordered_map<cpConstraint*, PhysicsJointInfo*> PhysicsJointInfo::_map;
 
 PhysicsJointInfo::PhysicsJointInfo(PhysicsJoint* joint)
 : _joint(joint)

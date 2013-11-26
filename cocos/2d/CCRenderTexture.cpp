@@ -543,20 +543,20 @@ void RenderTexture::draw()
 	}
 }
 
-bool RenderTexture::saveToFile(const char *szFilePath)
+bool RenderTexture::saveToFile(const std::string& filename)
 {
     bool ret = false;
 
     Image *image = newImage(true);
     if (image)
     {
-        ret = image->saveToFile(szFilePath);
+        ret = image->saveToFile(filename);
     }
 
     CC_SAFE_DELETE(image);
     return ret;
 }
-bool RenderTexture::saveToFile(const char *fileName, Image::Format format)
+bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format)
 {
     bool bRet = false;
     CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
