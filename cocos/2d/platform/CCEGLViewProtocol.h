@@ -129,11 +129,10 @@ public:
     /**
      * Get the current scissor rectangle
      */
-    virtual Rect getScissorRect();
+    virtual Rect getScissorRect() const;
 
-    virtual void setViewName(const char* pszViewName);
-
-    const char* getViewName();
+    virtual void setViewName(const std::string& viewname);
+    const std::string& getViewName() const;
 
     /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
     virtual void handleTouchesBegin(int num, long ids[], float xs[], float ys[]);
@@ -155,10 +154,11 @@ public:
      * Get scale factor of the vertical direction.
      */
     float getScaleY() const;
-private:
-    void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, long ids[], float xs[], float ys[]);
+
 
 protected:
+    void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, long ids[], float xs[], float ys[]);
+
     EGLTouchDelegate* _delegate;
 
     // real screen size
@@ -168,7 +168,7 @@ protected:
     // the view port size
     Rect _viewPortRect;
     // the view name
-    char   _viewName[50];
+    std::string _viewName;
 
     float  _scaleX;
     float  _scaleY;

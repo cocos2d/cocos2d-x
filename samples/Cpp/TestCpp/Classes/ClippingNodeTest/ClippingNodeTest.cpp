@@ -16,36 +16,21 @@ enum {
 	kTagContentNode = 102,
 };
 
-TESTLAYER_CREATE_FUNC(ScrollViewDemo);
-TESTLAYER_CREATE_FUNC(HoleDemo);
-TESTLAYER_CREATE_FUNC(ShapeTest);
-TESTLAYER_CREATE_FUNC(ShapeInvertedTest);
-TESTLAYER_CREATE_FUNC(SpriteTest);
-TESTLAYER_CREATE_FUNC(SpriteNoAlphaTest);
-TESTLAYER_CREATE_FUNC(SpriteInvertedTest);
-TESTLAYER_CREATE_FUNC(NestedTest);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest2);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest3);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest4);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest5);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest6);
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(ScrollViewDemo),
-    CF(HoleDemo),
-    CF(ShapeTest),
-    CF(ShapeInvertedTest),
-    CF(SpriteTest),
-    CF(SpriteNoAlphaTest),
-    CF(SpriteInvertedTest),
-    CF(NestedTest),
-    CF(RawStencilBufferTest),
-    CF(RawStencilBufferTest2),
-    CF(RawStencilBufferTest3),
-    CF(RawStencilBufferTest4),
-    CF(RawStencilBufferTest5),
-    CF(RawStencilBufferTest6)
+static std::function<Layer*()> createFunctions[] = {
+    CL(ScrollViewDemo),
+    CL(HoleDemo),
+    CL(ShapeTest),
+    CL(ShapeInvertedTest),
+    CL(SpriteTest),
+    CL(SpriteNoAlphaTest),
+    CL(SpriteInvertedTest),
+    CL(NestedTest),
+    CL(RawStencilBufferTest),
+    CL(RawStencilBufferTest2),
+    CL(RawStencilBufferTest3),
+    CL(RawStencilBufferTest4),
+    CL(RawStencilBufferTest5),
+    CL(RawStencilBufferTest6)
 };
 
 static int sceneIdx=-1;
@@ -57,8 +42,6 @@ static Layer* nextAction()
     sceneIdx = sceneIdx % MAX_LAYER;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
 
     return layer;
 }
@@ -71,8 +54,6 @@ static Layer* backAction()
         sceneIdx += total;    
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
 
     return layer;
 }
@@ -80,8 +61,6 @@ static Layer* backAction()
 static Layer* restartAction()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
 
     return layer;
 } 
