@@ -81,7 +81,9 @@ THE SOFTWARE.
 #endif
 
 #define _WINSOCKAPI_
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
 // Structure timeval has define in winsock.h, include windows.h for it.
 #include <Windows.h>
 
