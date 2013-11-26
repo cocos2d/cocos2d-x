@@ -78,6 +78,12 @@ bool Configuration::init()
 	_valueDict->setObject(Bool::create(true), "cocos2d.x.compiled_with_gl_state_cache");
 #endif
 
+#ifdef DEBUG
+	_valueDict->setObject(String::create("DEBUG"), "cocos2d.x.build_type");
+#else
+	_valueDict->setObject(String::create("RELEASE"), "cocos2d.x.build_type");
+#endif
+
 	return true;
 }
 
