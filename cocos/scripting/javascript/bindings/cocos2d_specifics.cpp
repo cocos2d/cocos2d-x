@@ -541,39 +541,38 @@ JSBool js_cocos2dx_CCMenuItemFont_create(JSContext *cx, uint32_t argc, jsval *vp
 
 JSBool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
-  if (argc >= 1) {
-    jsval *argv = JS_ARGV(cx, vp);
-    cocos2d::MenuItemToggle* ret = cocos2d::MenuItemToggle::create();
+    if (argc >= 1) {
+        jsval *argv = JS_ARGV(cx, vp);
+        cocos2d::MenuItemToggle* ret = cocos2d::MenuItemToggle::create();
 
-    for (uint32_t i=0; i < argc; i++) {
-      js_proxy_t *proxy;
-      JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
-      proxy = jsb_get_js_proxy(tmpObj);
-      cocos2d::MenuItem* item = (cocos2d::MenuItem*)(proxy ? proxy->ptr : NULL);
-      TEST_NATIVE_OBJECT(cx, item)
-	if(i == 0) ret->initWithItem(item);
-	else ret->addSubItem(item);
-    }
+        for (uint32_t i=0; i < argc; i++) {
+            js_proxy_t *proxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
+            proxy = jsb_get_js_proxy(tmpObj);
+            cocos2d::MenuItem* item = (cocos2d::MenuItem*)(proxy ? proxy->ptr : NULL);
+            TEST_NATIVE_OBJECT(cx, item)
+            ret->addSubItem(item);
+        }
         
-    jsval jsret;
-    if (ret) {
-      js_proxy_t *proxy = jsb_get_native_proxy(ret);
-      if (proxy) {
-	jsret = OBJECT_TO_JSVAL(proxy->obj);
-      } else {
-	// create a new js obj of that class
-	proxy = js_get_or_create_proxy<cocos2d::MenuItemToggle>(cx, ret);
-	jsret = OBJECT_TO_JSVAL(proxy->obj);
-      }
-    } else {
-      jsret = JSVAL_NULL;
-    }
+        jsval jsret;
+        if (ret) {
+            js_proxy_t *proxy = jsb_get_native_proxy(ret);
+            if (proxy) {
+                jsret = OBJECT_TO_JSVAL(proxy->obj);
+            } else {
+                // create a new js obj of that class
+                proxy = js_get_or_create_proxy<cocos2d::MenuItemToggle>(cx, ret);
+                jsret = OBJECT_TO_JSVAL(proxy->obj);
+            }
+        } else {
+            jsret = JSVAL_NULL;
+        }
         
-    JS_SET_RVAL(cx, vp, jsret);
-    return JS_TRUE;
-  }
-  JS_ReportError(cx, "wrong number of arguments");
-  return JS_FALSE;
+        JS_SET_RVAL(cx, vp, jsret);
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments");
+    return JS_FALSE;
 }
 
 // "setCallback" in JS

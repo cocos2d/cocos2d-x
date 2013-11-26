@@ -33,9 +33,7 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
+    auto layer = (createFunctions[sceneIdx])();    
     return layer;
 }
 
@@ -47,16 +45,12 @@ static Layer* backAction()
         sceneIdx += total;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
     return layer;
 }
 
 static Layer* restartAction()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
     return layer;
 }
 
@@ -156,23 +150,22 @@ void LayerTestCascadingOpacityA::onEnter()
     label->setPosition( Point( s.width/2, s.height/2));
     
     layer1->runAction(
-     RepeatForever::create(
-      Sequence::create(
-       FadeTo::create(4, 0),
-       FadeTo::create(4, 255),
-       DelayTime::create(1),
-       NULL)));
-    
+        RepeatForever::create(
+            Sequence::create(
+                FadeTo::create(4, 0),
+                FadeTo::create(4, 255),
+                DelayTime::create(1),
+                NULL)));
+
     sister1->runAction(
-     RepeatForever::create(
-      Sequence::create(
-       FadeTo::create(2, 0),
-       FadeTo::create(2, 255),
-       FadeTo::create(2, 0),
-       FadeTo::create(2, 255),
-       DelayTime::create(1),
-       NULL)));
-    
+        RepeatForever::create(
+            Sequence::create(
+                FadeTo::create(2, 0),
+                FadeTo::create(2, 255),
+                FadeTo::create(2, 0),
+                FadeTo::create(2, 255),
+                DelayTime::create(1),
+                NULL)));
     
     // Enable cascading in scene
     setEnableRecursiveCascading(this, true);
