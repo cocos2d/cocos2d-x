@@ -94,7 +94,7 @@ private:
     std::string                       _meth;
     std::string                       _type;
     char*                             _data;
-    size_t                            _dataSize;
+    uint32_t                          _dataSize;
     JSObject*                         _onreadystateCallback;
     int                               _readyState;
     int                               _status;
