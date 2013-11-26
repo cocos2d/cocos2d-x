@@ -116,19 +116,12 @@ public:
 	static CCAnimationData *decodeAnimation(const rapidjson::Value &json, DataInfo *dataInfo);
 	static CCMovementData *decodeMovement(const rapidjson::Value &json, DataInfo *dataInfo);
     
-    
-    static CCMovementBoneData *decodeMovementBone(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 	static CCMovementBoneData *decodeMovementBone(const rapidjson::Value &json, DataInfo *dataInfo);
-    static CCFrameData *decodeFrame(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 	static CCFrameData *decodeFrame(const rapidjson::Value &json, DataInfo *dataInfo);
 
-    static CCTextureData *decodeTexture(cs::CSJsonDictionary &json);
 	static CCTextureData *decodeTexture(const rapidjson::Value &json);
-
-    static CCContourData *decodeContour(cs::CSJsonDictionary &json);
 	static CCContourData *decodeContour(const rapidjson::Value &json);
 
-    static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json, DataInfo *dataInfo);
 	static void decodeNode(CCBaseData *node, const rapidjson::Value &json, DataInfo *dataInfo);
 private:
     static std::vector<std::string> s_arrConfigFileList;

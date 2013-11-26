@@ -316,6 +316,17 @@ const rapidjson::Value &DictionaryHelper::getDictionaryFromArray_json(const rapi
 	return root[key][idx];
 }
 
+bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root)
+{
+    bool bRet = false;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        bRet = true;
+    } while (0);
+    
+    return bRet;
+}
+
 bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root,const char* key)
 {
     bool bRet = false;
