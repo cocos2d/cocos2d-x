@@ -98,7 +98,7 @@ void PhysicsContact::generateContactData()
     cpArbiter* arb = static_cast<cpArbiter*>(_contactInfo);
     _contactData = new PhysicsContactData();
     _contactData->count = cpArbiterGetCount(arb);
-    for (int i=0; i<_contactData->count; ++i)
+    for (int i=0; i<_contactData->count && i<PhysicsContactData::POINT_MAX; ++i)
     {
         _contactData->points[i] = PhysicsHelper::cpv2point(cpArbiterGetPoint(arb, i));
     }
