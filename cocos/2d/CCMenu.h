@@ -73,17 +73,6 @@ public:
     
     /** creates a Menu with MenuItem objects */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
-    /**
-     * @js ctor
-     */
-    Menu() : _selectedItem(NULL) {}
-    virtual ~Menu();
-
-    /** initializes an empty Menu */
-    bool init();
-
-    /** initializes a Menu with a NSArray of MenuItem objects */
-    bool initWithArray(Array* pArrayOfItems);
 
     /** align items vertically */
     void alignItemsVertically();
@@ -130,12 +119,27 @@ public:
     virtual bool isOpacityModifyRGB(void) const override { return false;}
 
 protected:
+    /**
+     * @js ctor
+     */
+    Menu() : _selectedItem(NULL) {}
+    virtual ~Menu();
+
+    /** initializes an empty Menu */
+    bool init();
+
+    /** initializes a Menu with a NSArray of MenuItem objects */
+    bool initWithArray(Array* pArrayOfItems);
+
     /** whether or not the menu will receive events */
     bool _enabled;
 
     MenuItem* itemForTouch(Touch * touch);
     State _state;
     MenuItem *_selectedItem;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Menu);
 };
 
 // end of GUI group

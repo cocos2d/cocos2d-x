@@ -49,6 +49,8 @@ protected:
 class NodeCreateTest : public PerformceAllocScene
 {
 public:
+    CREATE_FUNC(NodeCreateTest);
+
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt);
@@ -61,6 +63,8 @@ public:
 class NodeDeallocTest : public PerformceAllocScene
 {
 public:
+    CREATE_FUNC(NodeDeallocTest);
+
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt);
@@ -73,6 +77,8 @@ public:
 class SpriteCreateEmptyTest : public PerformceAllocScene
 {
 public:
+    CREATE_FUNC(SpriteCreateEmptyTest);
+
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt);
@@ -85,6 +91,8 @@ public:
 class SpriteCreateTest : public PerformceAllocScene
 {
 public:
+    CREATE_FUNC(SpriteCreateTest);
+
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt);
@@ -97,6 +105,8 @@ public:
 class SpriteDeallocTest : public PerformceAllocScene
 {
 public:
+    CREATE_FUNC(SpriteDeallocTest);
+
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt);

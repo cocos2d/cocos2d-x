@@ -408,15 +408,9 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
             }
 #endif
             MenuItem* item = static_cast<MenuItem*>(tolua_tousertype(tolua_S, i + 2,0));
-            if (0 == i)
-            {
-                tolua_ret->initWithItem(item);
-            }
-            else
-            {
-                tolua_ret->addSubItem(item);
-            }
+            tolua_ret->addSubItem(item);
         }
+        tolua_ret->setSelectedIndex(0);
         
         int  nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;

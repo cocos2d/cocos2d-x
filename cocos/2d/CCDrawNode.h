@@ -46,17 +46,6 @@ class CC_DLL DrawNode : public Node
 public:
     /** creates and initialize a DrawNode node */
     static DrawNode* create();
-    /**
-     * @js ctor
-     */
-    DrawNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~DrawNode();
-    
-    virtual bool init();
 
     /** draw a dot at a position, with a given radius and color */
     void drawDot(const Point &pos, float radius, const Color4F &color);
@@ -99,6 +88,10 @@ public:
     virtual void draw() override;
 
 protected:
+    DrawNode();
+    virtual ~DrawNode();
+    virtual bool init();
+
     void ensureCapacity(long count);
     void render();
 
@@ -112,6 +105,9 @@ protected:
     BlendFunc   _blendFunc;
 
     bool        _dirty;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };
 
 NS_CC_END
