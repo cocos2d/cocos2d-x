@@ -151,13 +151,13 @@ ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite
     return pRet;
 }
 
-bool ControlButton::initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
+bool ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize)
 {
-    LabelTTF *label = LabelTTF::create(title.c_str(), fontName, fontSize);
+    LabelTTF *label = LabelTTF::create(title, fontName, fontSize);
     return initWithLabelAndBackgroundSprite(label, Scale9Sprite::create());
 }
 
-ControlButton* ControlButton::create(string title, const char * fontName, float fontSize)
+ControlButton* ControlButton::create(const std::string& title, const std::string& fontName, float fontSize)
 {
     ControlButton *pRet = new ControlButton();
     pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize);
@@ -237,7 +237,7 @@ bool ControlButton::getZoomOnTouchDown()
     return _zoomOnTouchDown;
 }
 
-void ControlButton::setPreferredSize(Size size)
+void ControlButton::setPreferredSize(const Size& size)
 {
     if(size.width == 0 && size.height == 0)
     {
@@ -258,7 +258,7 @@ void ControlButton::setPreferredSize(Size size)
     needsLayout();
 }
 
-Size ControlButton::getPreferredSize()
+const Size& ControlButton::getPreferredSize() const
 {
     return _preferredSize;
 }
@@ -274,12 +274,12 @@ bool ControlButton::doesAdjustBackgroundImage()
     return _doesAdjustBackgroundImage;
 }
 
-Point ControlButton::getLabelAnchorPoint()
+const Point& ControlButton::getLabelAnchorPoint() const
 {
     return this->_labelAnchorPoint;
 }
 
-void ControlButton::setLabelAnchorPoint(Point labelAnchorPoint)
+void ControlButton::setLabelAnchorPoint(const Point& labelAnchorPoint)
 {
     this->_labelAnchorPoint = labelAnchorPoint;
     if (_titleLabel != NULL)
@@ -292,12 +292,12 @@ String* ControlButton::getTitleForState(State state)
 {
     if (_titleDispatchTable != NULL)
     {
-        String* title=(String*)_titleDispatchTable->objectForKey((int)state);
+        String* title = static_cast<String*>(_titleDispatchTable->objectForKey((int)state));
         if (title)
         {
             return title;
         }
-        return (String*)_titleDispatchTable->objectForKey((int)Control::State::NORMAL);
+        return static_cast<String*>(_titleDispatchTable->objectForKey((int)Control::State::NORMAL));
     }
     return String::create("");
 }
@@ -342,7 +342,7 @@ Color3B ControlButton::getTitleColorForState(State state) const
     return returnColor;
 }
 
-void ControlButton::setTitleColorForState(Color3B color, State state)
+void ControlButton::setTitleColorForState(const Color3B& color, State state)
 {
     //Color3B* colorValue=&color;
     _titleColorDispatchTable->removeObjectForKey((int)state);
@@ -359,7 +359,7 @@ void ControlButton::setTitleColorForState(Color3B color, State state)
 
 Node* ControlButton::getTitleLabelForState(State state)
 {
-    Node* titleLabel = (Node*)_titleLabelDispatchTable->objectForKey((int)state);
+    Node* titleLabel = static_cast<Node*>(_titleLabelDispatchTable->objectForKey((int)state));
     if (titleLabel)
     {
         return titleLabel;
@@ -369,7 +369,7 @@ Node* ControlButton::getTitleLabelForState(State state)
 
 void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
 {
-    Node* previousLabel = (Node*)_titleLabelDispatchTable->objectForKey((int)state);
+    Node* previousLabel = static_cast<Node*>(_titleLabelDispatchTable->objectForKey((int)state));
     if (previousLabel)
     {
         removeChild(previousLabel, true);
@@ -388,7 +388,7 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
     }
 }
 
-void ControlButton::setTitleTTFForState(const char * fntFile, State state)
+void ControlButton::setTitleTTFForState(const std::string& fntFile, State state)
 {
     String * title = this->getTitleForState(state);
     if (!title)
@@ -398,18 +398,17 @@ void ControlButton::setTitleTTFForState(const char * fntFile, State state)
     this->setTitleLabelForState(LabelTTF::create(title->getCString(), fntFile, 12), state);
 }
 
-const char * ControlButton::getTitleTTFForState(State state)
+const std::string& ControlButton::getTitleTTFForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getFontName().c_str();
+        return labelTTF->getFontName();
     }
-    else
-    {
-        return "";
-    }
+
+    static std::string ret("");
+    return ret;
 }
 
 void ControlButton::setTitleTTFSizeForState(float size, State state)
@@ -439,7 +438,7 @@ float ControlButton::getTitleTTFSizeForState(State state)
     }
 }
 
-void ControlButton::setTitleBMFontForState(const char * fntFile, State state)
+void ControlButton::setTitleBMFontForState(const std::string& fntFile, State state)
 {
     String * title = this->getTitleForState(state);
     if (!title)
@@ -449,7 +448,7 @@ void ControlButton::setTitleBMFontForState(const char * fntFile, State state)
     this->setTitleLabelForState(LabelBMFont::create(title->getCString(), fntFile), state);
 }
 
-const char * ControlButton::getTitleBMFontForState(State state)
+const std::string& ControlButton::getTitleBMFontForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     LabelBMFont* labelBMFont = dynamic_cast<LabelBMFont*>(label);
@@ -457,10 +456,9 @@ const char * ControlButton::getTitleBMFontForState(State state)
     {
         return labelBMFont->getFntFile();
     }
-    else
-    {
-        return "";
-    }
+
+    static std::string ret("");
+    return ret;
 }
 
 
