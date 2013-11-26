@@ -63,18 +63,8 @@ class CC_DLL Layer : public Node
 {
 public:    
     /** creates a fullscreen black layer */
-    static Layer *create(void);
-    /**
-     * @js ctor
-     */
-    Layer();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~Layer();
-    virtual bool init();
-    
+    static Layer *create();
+
     // Deprecated touch callbacks.
     CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
@@ -169,18 +159,30 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
 
 protected:      
+    Layer();
+    virtual ~Layer();
+    virtual bool init();
+
+    //add the api for avoid use deprecated api
+    void _addTouchListener();
+
+    CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
+
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
     EventListener* _touchListener;
     EventListenerKeyboard* _keyboardListener;
     EventListenerAcceleration* _accelerationListener;
-private:   
+
     Touch::DispatchMode _touchMode;
     bool _swallowsTouches;
 
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Layer);
+
 };
 
 
@@ -195,17 +197,7 @@ class CC_DLL LayerRGBA : public Layer, public RGBAProtocol
 {
 public:
     CREATE_FUNC(LayerRGBA);
-    /**
-     * @js ctor
-     */
-    LayerRGBA();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerRGBA();
-    
-    virtual bool init();
+
 
     //
     // Overrides
@@ -226,10 +218,18 @@ public:
     
     virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB() const override { return false; }
+
 protected:
+    LayerRGBA();
+    virtual ~LayerRGBA();
+    virtual bool init();
+
 	GLubyte		_displayedOpacity, _realOpacity;
 	Color3B	    _displayedColor, _realColor;
 	bool		_cascadeOpacityEnabled, _cascadeColorEnabled;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(LayerRGBA);
 };
 
 //
@@ -253,27 +253,6 @@ public:
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
     static LayerColor * create(const Color4B& color);
-    /**
-     * @js ctor
-     */
-    LayerColor();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerColor();
-
-    virtual bool init();
-    /** initializes a Layer with color, width and height in Points 
-     * @js init
-     * @lua init
-     */
-    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
-    /** initializes a Layer with color. Width and height are the window size. 
-     * @js init
-     * @lua init
-     */
-    bool initWithColor(const Color4B& color);
 
     /** change width in Points*/
     void changeWidth(GLfloat w);
@@ -307,11 +286,21 @@ public:
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
 protected:
+    LayerColor();
+    virtual ~LayerColor();
+    virtual bool init();
+    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
+    bool initWithColor(const Color4B& color);
+
     virtual void updateColor();
 
     BlendFunc _blendFunc;
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
+
 };
 
 //

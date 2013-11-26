@@ -511,8 +511,8 @@ bool LabelBMFont::initWithString(const std::string& theString, const std::string
         
         _imageOffset = imageOffset;
         
-        _reusedChar = new Sprite();
-        _reusedChar->initWithTexture(_textureAtlas->getTexture(), Rect(0, 0, 0, 0), false);
+        _reusedChar = Sprite::createWithTexture(_textureAtlas->getTexture(), Rect(0, 0, 0, 0));
+        _reusedChar->retain();
         _reusedChar->setBatchNode(this);
         
         this->setString(theString, true);
@@ -663,10 +663,8 @@ void LabelBMFont::createFontChars()
 			}
             else
             {
-                fontChar = new Sprite();
-                fontChar->initWithTexture(_textureAtlas->getTexture(), rect);
+                fontChar = Sprite::createWithTexture(_textureAtlas->getTexture(), rect);
                 addChild(fontChar, i, i);
-                fontChar->release();
 			}
             
             // Apply label properties
@@ -1199,9 +1197,9 @@ float LabelBMFont::getLetterPosXRight( Sprite* sp )
 }
 
 // LabelBMFont - FntFile
-void LabelBMFont::setFntFile(const char* fntFile)
+void LabelBMFont::setFntFile(const std::string& fntFile)
 {
-    if (fntFile != NULL && strcmp(fntFile, _fntFile.c_str()) != 0 )
+    if (_fntFile.compare(fntFile) != 0)
     {
         CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
 
@@ -1218,9 +1216,9 @@ void LabelBMFont::setFntFile(const char* fntFile)
     }
 }
 
-const char* LabelBMFont::getFntFile()
+const std::string& LabelBMFont::getFntFile() const
 {
-    return _fntFile.c_str();
+    return _fntFile;
 }
 
 

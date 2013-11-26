@@ -11,40 +11,23 @@ Layer* nextSchedulerTest();
 Layer* backSchedulerTest();
 Layer* restartSchedulerTest();
 
-TESTLAYER_CREATE_FUNC(SchedulerTimeScale)
-TESTLAYER_CREATE_FUNC(TwoSchedulers)
-TESTLAYER_CREATE_FUNC(SchedulerAutoremove)
-TESTLAYER_CREATE_FUNC(SchedulerPauseResume)
-TESTLAYER_CREATE_FUNC(SchedulerPauseResumeAll)
-TESTLAYER_CREATE_FUNC(SchedulerPauseResumeAllUser)
-TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAll)
-TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAllHard)
-TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAllUserLevel)
-TESTLAYER_CREATE_FUNC(SchedulerSchedulesAndRemove)
-TESTLAYER_CREATE_FUNC(SchedulerUpdate)
-TESTLAYER_CREATE_FUNC(SchedulerUpdateAndCustom)
-TESTLAYER_CREATE_FUNC(SchedulerUpdateFromCustom)
-TESTLAYER_CREATE_FUNC(RescheduleSelector)
-TESTLAYER_CREATE_FUNC(SchedulerDelayAndRepeat)
-TESTLAYER_CREATE_FUNC(SchedulerIssue2268)
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(SchedulerTimeScale),
-    CF(TwoSchedulers),
-    CF(SchedulerAutoremove),
-    CF(SchedulerPauseResume),
-    CF(SchedulerPauseResumeAll),
-    CF(SchedulerPauseResumeAllUser),
-    CF(SchedulerUnscheduleAll),
-    CF(SchedulerUnscheduleAllHard),
-    CF(SchedulerUnscheduleAllUserLevel),
-    CF(SchedulerSchedulesAndRemove),
-    CF(SchedulerUpdate),
-    CF(SchedulerUpdateAndCustom),
-    CF(SchedulerUpdateFromCustom),
-    CF(RescheduleSelector),
-    CF(SchedulerDelayAndRepeat),
-    CF(SchedulerIssue2268)
+static std::function<Layer*()> createFunctions[] = {
+    CL(SchedulerTimeScale),
+    CL(TwoSchedulers),
+    CL(SchedulerAutoremove),
+    CL(SchedulerPauseResume),
+    CL(SchedulerPauseResumeAll),
+    CL(SchedulerPauseResumeAllUser),
+    CL(SchedulerUnscheduleAll),
+    CL(SchedulerUnscheduleAllHard),
+    CL(SchedulerUnscheduleAllUserLevel),
+    CL(SchedulerSchedulesAndRemove),
+    CL(SchedulerUpdate),
+    CL(SchedulerUpdateAndCustom),
+    CL(SchedulerUpdateFromCustom),
+    CL(RescheduleSelector),
+    CL(SchedulerDelayAndRepeat),
+    CL(SchedulerIssue2268)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -55,9 +38,6 @@ Layer* nextSchedulerTest()
     sceneIdx = sceneIdx % MAX_LAYER;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -69,18 +49,12 @@ Layer* backSchedulerTest()
         sceneIdx += total;    
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-
     return layer;
 }
 
 Layer* restartSchedulerTest()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -1098,6 +1072,8 @@ std::string TwoSchedulers::subtitle()
 class TestNode2 : public Node
 {
 public:
+    CREATE_FUNC(TestNode2);
+
 	~TestNode2() {
 		cocos2d::log("Delete TestNode (should not crash)");
 		this->unscheduleAllSelectors();
@@ -1111,9 +1087,7 @@ void SchedulerIssue2268::onEnter()
 {
 	SchedulerTestLayer::onEnter();
 
-	testNode = new TestNode2();
-	testNode->init();
-	testNode->autorelease();
+	testNode = TestNode2::create();
 	testNode->retain();
 	testNode->schedule(SEL_SCHEDULE(&TestNode::update));
 	this->addChild(testNode);
