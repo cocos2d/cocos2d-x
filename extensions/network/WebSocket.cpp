@@ -442,9 +442,12 @@ void WebSocket::onSubThreadStarted()
 	info.gid = -1;
 	info.uid = -1;
     info.user = (void*)this;
-    info.ssl_cipher_list = "AES256-SHA";
     
-    lws_set_log_level(1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256 | 512, NULL);
+//	   set this for specific cipher suites    
+//     info.ssl_cipher_list = "AES256-SHA";
+    
+//     libwebsocket debugging info
+//     lws_set_log_level(1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256 | 512, NULL);
     
 	_wsContext = libwebsocket_create_context(&info);
     
@@ -461,7 +464,7 @@ void WebSocket::onSubThreadStarted()
         
         _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
                                                   _path.c_str(), _host.c_str(), _host.c_str(),
-                                                  NULL, -1);
+                                                  name.c_str(), -1);
 	}
 }
 
@@ -635,6 +638,9 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
             
         case LWS_CALLBACK_OPENSSL_LOAD_EXTRA_CLIENT_VERIFY_CERTS:
             {
+                //load the ssl certificate chain so that the client can authenticate the connection
+                //this implementation assumes that the pem file is embedded as a resource in the app
+                
                 unsigned long size = 0;
                 unsigned char* pData = CCFileUtils::sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathForFilename("certificate-chain-development.pem").c_str(), "rb", &size);
                 const char* returnString = (CCString::createWithData(pData, size))->getCString();
