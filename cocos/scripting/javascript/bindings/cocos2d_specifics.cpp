@@ -553,6 +553,8 @@ JSBool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *
             TEST_NATIVE_OBJECT(cx, item)
             ret->addSubItem(item);
         }
+
+        ret->setSelectedIndex(0);
         
         jsval jsret;
         if (ret) {
