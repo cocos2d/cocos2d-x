@@ -64,10 +64,18 @@ bool NewSprite::initWithTexture(Texture2D *texture, const Rect &rect, bool rotat
 
 void NewSprite::updateTransform()
 {
+
+#ifdef CC_USE_PHYSICS
+    updatePhysicsTransform();
+    setDirty(true);
+#endif
+
     //TODO optimize the performance cache affineTransformation
-//    if(_dirty)
-//    {
-        if(!_visible)
+
+    // recalculate matrix only if it is dirty
+    if(isDirty())
+    {
+        if( !_visible || ( _parent && _parent != (Node*)_batchNode && static_cast<NewSprite*>(_parent)->_shouldBeHidden) )
         {
             _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vertex3F(0,0,0);
             _shouldBeHidden = true;
@@ -75,6 +83,16 @@ void NewSprite::updateTransform()
         else
         {
             _shouldBeHidden = false;
+
+//            if( ! _parent || _parent == (Node*)_batchNode )
+//            {
+//                _transformToBatch = getNodeToParentTransform();
+//            }
+//            else
+//            {
+//                CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
+//                _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<NewSprite*>(_parent)->_transformToBatch );
+//            }
 
             //TODO optimize this transformation, should use parent's transformation instead
             _transformToBatch = getNodeToWorldTransform();
@@ -114,10 +132,29 @@ void NewSprite::updateTransform()
             _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
             _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
         }
-//    }
 
-//    _recursiveDirty = false;
-    setDirty(false);
+        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+        if (_textureAtlas)
+        {
+            _textureAtlas->updateQuad(&_quad, _atlasIndex);
+        }
+
+        _recursiveDirty = false;
+        setDirty(false);
+    }
+
+    Node::updateTransform();
+
+#if CC_SPRITE_DEBUG_DRAW
+    // draw bounding box
+    Point vertices[4] = {
+        Point( _quad.bl.vertices.x, _quad.bl.vertices.y ),
+        Point( _quad.br.vertices.x, _quad.br.vertices.y ),
+        Point( _quad.tr.vertices.x, _quad.tr.vertices.y ),
+        Point( _quad.tl.vertices.x, _quad.tl.vertices.y ),
+    };
+    ccDrawPoly(vertices, 4, true);
+#endif // CC_SPRITE_DEBUG_DRAW
 }
 
 void NewSprite::draw(void)
