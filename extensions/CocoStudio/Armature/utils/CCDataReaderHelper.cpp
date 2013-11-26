@@ -1242,7 +1242,6 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     if (json.HasParseError()) {
         CCLOG("GetParseError %s\n",json.GetParseError());
     }
-	//CCAssert(!json.HasParseError(),"GetParseError %s\n",json.GetParseError());
 	
 	dataInfo->contentScale = json[CONTENT_SCALE].IsNull()? 1.0f : json[CONTENT_SCALE].GetDouble();
 	
@@ -1338,89 +1337,30 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 }
 
-CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json, DataInfo *dataInfo)
-{
-    CCArmatureData *armatureData = new CCArmatureData();
-    armatureData->init();
-
-    const char *name = json.getItemStringValue(A_NAME);
-    if(name != NULL)
-    {
-        armatureData->name = name;
-    }
-
-    dataInfo->cocoStudioVersion = armatureData->dataVersion = json.getItemFloatValue(VERSION, 0.1f);
-
-    int length = json.getArrayItemCount(BONE_DATA);
-    for (int i = 0; i < length; i++)
-    {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(BONE_DATA, i);
-        CCBoneData *boneData = decodeBone(*dic, dataInfo);
-        armatureData->addBoneData(boneData);
-        boneData->release();
-
-        delete dic;
-    }
-
-    return armatureData;
-}
 
 CCArmatureData *CCDataReaderHelper::decodeArmature(const rapidjson::Value &json, DataInfo *dataInfo)
 {
 	CCArmatureData *armatureData = new CCArmatureData();
     armatureData->init();
-
-	const char *name = json[A_NAME].IsNull()? NULL : json[A_NAME].GetString();
+    
+    
+	const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != NULL)
     {
         armatureData->name = name;
     }
 
-	dataInfo->cocoStudioVersion = armatureData->dataVersion = json[VERSION].IsNull()? 0.1f : (float)json[VERSION].GetDouble();
+	dataInfo->cocoStudioVersion = armatureData->dataVersion = DICTOOL->getFloatValue_json(json, VERSION, 0.1f);
 
-	int length = json[BONE_DATA].IsNull()? 0 : json[BONE_DATA].Size();
-	for (rapidjson::SizeType i = 0; i < length; i++)
+	int length = DICTOOL->getArrayCount_json(json, BONE_DATA, 0); 
+	for (int i = 0; i < length; i++)
     {
-        const rapidjson::Value &dic = json[BONE_DATA][i];
+        const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, BONE_DATA, i); //json[BONE_DATA][i];
         CCBoneData *boneData = decodeBone(dic,dataInfo);
         armatureData->addBoneData(boneData);       
     }
 
     return armatureData;
-}
-
-CCBoneData *CCDataReaderHelper::decodeBone(cs::CSJsonDictionary &json, DataInfo *dataInfo)
-{
-    CCBoneData *boneData = new CCBoneData();
-    boneData->init();
-
-    decodeNode(boneData, json, dataInfo);
-
-    const char *str = json.getItemStringValue(A_NAME);
-    if(str != NULL)
-    {
-        boneData->name = str;
-    }
-
-    str = json.getItemStringValue(A_PARENT);
-    if(str != NULL)
-    {
-        boneData->parentName = str;
-    }
-
-    int length = json.getArrayItemCount(DISPLAY_DATA);
-
-    for (int i = 0; i < length; i++)
-    {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(DISPLAY_DATA, i);
-        CCDisplayData *displayData = decodeBoneDisplay(*dic, dataInfo);
-        boneData->addDisplayData(displayData);
-        displayData->release();
-
-        delete dic;
-    }
-
-    return boneData;
 }
 
 CCBoneData *CCDataReaderHelper::decodeBone(const rapidjson::Value &json, DataInfo *dataInfo)
@@ -1430,23 +1370,23 @@ CCBoneData *CCDataReaderHelper::decodeBone(const rapidjson::Value &json, DataInf
 
     decodeNode(boneData, json, dataInfo);
 
-	const char *str = json[A_NAME].IsNull() ? NULL : json[A_NAME].GetString();
+	const char *str = DICTOOL->getStringValue_json(json, A_NAME);
     if(str != NULL)
     {
         boneData->name = str;
     }
 	
-    str = json[A_PARENT].IsNull() ? NULL : json[A_PARENT].GetString();
+    str = DICTOOL->getStringValue_json(json, A_PARENT);
     if(str != NULL)
     {
         boneData->parentName = str;
     }
 
-	int length = json[DISPLAY_DATA].IsNull() ? 0 : json[DISPLAY_DATA].Size();
+	int length = DICTOOL->getArrayCount_json(json, DISPLAY_DATA);
 
-	for (rapidjson::SizeType i = 0; i < length; i++)
+	for (rapidjson::SizeType i = 0; i < length; ++i)
     {
-        const rapidjson::Value &dic = json[DISPLAY_DATA][i];
+        const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, DISPLAY_DATA, i); 
         CCDisplayData *displayData = decodeBoneDisplay(dic, dataInfo);
         boneData->addDisplayData(displayData);
         displayData->release();
@@ -1455,86 +1395,10 @@ CCBoneData *CCDataReaderHelper::decodeBone(const rapidjson::Value &json, DataInf
     return boneData;
 }
 
-CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json, DataInfo *dataInfo)
-{
-    DisplayType displayType = (DisplayType)json.getItemIntValue(A_DISPLAY_TYPE, CS_DISPLAY_SPRITE);
-
-    CCDisplayData *displayData = NULL;
-
-    switch (displayType)
-    {
-    case CS_DISPLAY_SPRITE:
-    {
-        displayData = new CCSpriteDisplayData();
-
-        const char *name = json.getItemStringValue(A_NAME);
-        if(name != NULL)
-        {
-            ((CCSpriteDisplayData *)displayData)->displayName = name;
-        }
-
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(SKIN_DATA, 0);
-        if (dic != NULL)
-        {
-            CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
-            sdd->skinData.x = dic->getItemFloatValue(A_X, 0) * s_PositionReadScale;
-            sdd->skinData.y = dic->getItemFloatValue(A_Y, 0) * s_PositionReadScale;
-            sdd->skinData.scaleX = dic->getItemFloatValue(A_SCALE_X, 1);
-            sdd->skinData.scaleY = dic->getItemFloatValue(A_SCALE_Y, 1);
-            sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);
-            sdd->skinData.skewY = dic->getItemFloatValue(A_SKEW_Y, 0);
-
-            sdd->skinData.x *= dataInfo->contentScale;
-            sdd->skinData.y *= dataInfo->contentScale;
-            delete dic;
-        }
-    }
-
-    break;
-    case CS_DISPLAY_ARMATURE:
-    {
-        displayData = new CCArmatureDisplayData();
-
-        const char *name = json.getItemStringValue(A_NAME);
-        if(name != NULL)
-        {
-            ((CCArmatureDisplayData *)displayData)->displayName = name;
-        }
-    }
-    break;
-    case CS_DISPLAY_PARTICLE:
-    {
-        displayData = new CCParticleDisplayData();
-
-        const char *plist = json.getItemStringValue(A_PLIST);
-        if(plist != NULL)
-        {
-            if (dataInfo->asyncStruct)
-            {
-                ((CCParticleDisplayData *)displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
-            }
-            else
-            {
-                ((CCParticleDisplayData *)displayData)->plist = dataInfo->baseFilePath + plist;
-            }
-        }
-    }
-    break;
-    default:
-        displayData = new CCSpriteDisplayData();
-
-        break;
-    }
-
-
-    displayData->displayType = displayType;
-
-    return displayData;
-}
 
 CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &json, DataInfo *dataInfo)
 {
-	DisplayType displayType = (DisplayType)(json[A_DISPLAY_TYPE].IsNull() ? CS_DISPLAY_SPRITE : json[A_DISPLAY_TYPE].GetInt());
+	DisplayType displayType =  (DisplayType)(DICTOOL->getIntValue_json(json, A_DISPLAY_TYPE, CS_DISPLAY_SPRITE));
 
     CCDisplayData *displayData = NULL;
 
@@ -1544,25 +1408,25 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &jso
     {
         displayData = new CCSpriteDisplayData();
 
-		const char *name = json[A_NAME].IsNull() ? NULL : json[A_NAME].GetString();
+		const char *name =  DICTOOL->getStringValue_json(json, A_NAME);
         if(name != NULL)
         {
             ((CCSpriteDisplayData *)displayData)->displayName = name;
         }
-		const rapidjson::Value &dicArray = json[SKIN_DATA];
+		const rapidjson::Value &dicArray = DICTOOL->getSubDictionary_json(json, SKIN_DATA);
 		if(!dicArray.IsNull())
 		{
 			rapidjson::SizeType index = 0;
-			const rapidjson::Value &dic = dicArray[index];
+			const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(dicArray, index);
 			if (!dic.IsNull())
 			{
 				CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
-				sdd->skinData.x = (dic[A_X].IsNull()? 0 : (float)dic[A_X].GetDouble()) * s_PositionReadScale;
-				sdd->skinData.y = (dic[A_Y].IsNull()? 0 : (float)dic[A_Y].GetDouble()) * s_PositionReadScale;
-				sdd->skinData.scaleX = dic[A_SCALE_X].IsNull()? 1 : (float)dic[A_SCALE_X].GetDouble();
-				sdd->skinData.scaleY = dic[A_SCALE_Y].IsNull()? 1 : (float)dic[A_SCALE_Y].GetDouble();
-				sdd->skinData.skewX = dic[A_SKEW_X].IsNull()? 1 : (float)dic[A_SKEW_X].GetDouble(); 
-				sdd->skinData.skewY = dic[A_SKEW_Y].IsNull()? 1 : (float)dic[A_SKEW_Y].GetDouble();
+				sdd->skinData.x = DICTOOL->getFloatValue_json(dic, A_X) * s_PositionReadScale;
+				sdd->skinData.y = DICTOOL->getFloatValue_json(dic, A_Y) * s_PositionReadScale;
+				sdd->skinData.scaleX = DICTOOL->getFloatValue_json(dic, A_SCALE_X, 1.0f);
+				sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
+				sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
+				sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
 			}
 		}
     }
@@ -1572,7 +1436,7 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &jso
     {
         displayData = new CCArmatureDisplayData();
 
-        const char *name = json[A_NAME].IsNull() ? NULL : json[A_NAME].GetString();
+        const char *name = DICTOOL->getStringValue_json(json, A_NAME);
         if(name != NULL)
         {
             ((CCArmatureDisplayData *)displayData)->displayName = name;
@@ -1583,7 +1447,7 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &jso
     {
         displayData = new CCParticleDisplayData();
 
-        const char *plist = json[A_PLIST].IsNull() ? NULL : json[A_PLIST].GetString();
+        const char *plist = DICTOOL->getStringValue_json(json, A_PLIST);
         if(plist != NULL)
         {
             ((CCParticleDisplayData *)displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
@@ -1601,46 +1465,22 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &jso
 
     return displayData;
 }
-CCAnimationData *CCDataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json, DataInfo *dataInfo)
-{
-    CCAnimationData *aniData = new CCAnimationData();
-
-    const char *name = json.getItemStringValue(A_NAME);
-    if(name != NULL)
-    {
-        aniData->name = name;
-    }
-
-    int length = json.getArrayItemCount(MOVEMENT_DATA);
-
-    for (int i = 0; i < length; i++)
-    {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_DATA, i);
-        CCMovementData *movementData = decodeMovement(*dic, dataInfo);
-        aniData->addMovement(movementData);
-        movementData->release();
-
-        delete dic;
-    }
-
-    return aniData;
-}
 
 CCAnimationData *CCDataReaderHelper::decodeAnimation(const rapidjson::Value &json, DataInfo *dataInfo)
 {
 	CCAnimationData *aniData = new CCAnimationData();
 
-    const char *name = json[A_NAME].IsNull() ? NULL : json[A_NAME].GetString();
+    const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != NULL)
     {
         aniData->name = name;
     }
 	
-    int length = json[MOVEMENT_DATA].IsNull() ? 0 : json[MOVEMENT_DATA].Size();
+    int length =  DICTOOL->getArrayCount_json(json, MOVEMENT_DATA);
 
-	for (rapidjson::SizeType i = 0; i < length; i++)
+	for (int i = 0; i < length; ++i)
     {
-        const rapidjson::Value &dic = json[MOVEMENT_DATA][i];
+        const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, MOVEMENT_DATA, i);
         CCMovementData *movementData = decodeMovement(dic,dataInfo);
         aniData->addMovement(movementData);
         movementData->release();
@@ -1650,85 +1490,42 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(const rapidjson::Value &jso
     return aniData;
 }
 
-CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json, DataInfo *dataInfo)
-{
-    CCMovementData *movementData = new CCMovementData();
-
-    movementData->loop = json.getItemBoolvalue(A_LOOP, true);
-    movementData->durationTween = json.getItemIntValue(A_DURATION_TWEEN, 0);
-    movementData->durationTo = json.getItemIntValue(A_DURATION_TO, 0);
-    movementData->duration = json.getItemIntValue(A_DURATION, 0);
-    movementData->scale = json.getItemFloatValue(A_MOVEMENT_SCALE, 1);
-    movementData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
-
-    const char *name = json.getItemStringValue(A_NAME);
-    if(name != NULL)
-    {
-        movementData->name = name;
-    }
-
-    int length = json.getArrayItemCount(MOVEMENT_BONE_DATA);
-    for (int i = 0; i < length; i++)
-    {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_BONE_DATA, i);
-        CCMovementBoneData *movementBoneData = decodeMovementBone(*dic, dataInfo);
-        movementData->addMovementBoneData(movementBoneData);
-        movementBoneData->release();
-
-        delete dic;
-    }
-
-    return movementData;
-}
-
 CCMovementData *CCDataReaderHelper::decodeMovement(const rapidjson::Value &json, DataInfo *dataInfo)
 {
 	CCMovementData *movementData = new CCMovementData();
 
-	movementData->loop = json[A_LOOP].IsNull()? true : json[A_LOOP].GetBool();
-	movementData->durationTween = json[A_DURATION_TWEEN].IsNull()? 0 : json[A_DURATION_TWEEN].GetInt(); 
-    movementData->durationTo = json[A_DURATION_TO].IsNull()? 0 : json[A_DURATION_TO].GetInt();  
-    movementData->duration = json[A_DURATION].IsNull()? 0 : json[A_DURATION].GetInt();
-    
-    if (json[A_DURATION].IsNull())
+	movementData->loop = DICTOOL->getBooleanValue_json(json, A_LOOP, true);
+	movementData->durationTween = DICTOOL->getIntValue_json(json, A_DURATION_TWEEN, 0);
+    movementData->durationTo = DICTOOL->getIntValue_json(json, A_DURATION_TO, 0);
+    movementData->duration = DICTOOL->getIntValue_json(json, A_DURATION, 0);
+    if (!DICTOOL->checkObjectExist_json(json, A_DURATION))
     {
         movementData->scale = 1.0f;
     }
     else
     {
-        if (json[A_MOVEMENT_SCALE].IsNull())
-        {
-            movementData->scale = 1.0f;
-        }
-        else
-        {
-            movementData->scale = (float)json[A_MOVEMENT_SCALE].GetDouble();
-        }
+        movementData->scale = DICTOOL->getFloatValue_json(json, A_MOVEMENT_SCALE, 1.0f);
     }
-
-//        
-//	movementData->scale = json[A_DURATION].IsNull()? 1.0f : (float)json[A_MOVEMENT_SCALE].GetDouble();
-
-	movementData->tweenEasing = (CCTweenType)(json[A_TWEEN_EASING].IsNull()? Linear : json[A_TWEEN_EASING].GetInt());
-
-	const char *name = json[A_NAME].IsNull()? NULL : json[A_NAME].GetString(); 
+    
+	movementData->tweenEasing =  (CCTweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
+    const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != NULL)
     {
         movementData->name = name;
     }
 
-	int length = json[MOVEMENT_BONE_DATA].IsNull() ? 0 : json[MOVEMENT_BONE_DATA].Size();
+	int length = DICTOOL->getArrayCount_json(json, MOVEMENT_BONE_DATA);
     for (int i = 0; i < length; i++)
     {
-		const rapidjson::Value &dic = json[MOVEMENT_BONE_DATA][i];
+		const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, MOVEMENT_BONE_DATA, i);
         CCMovementBoneData *movementBoneData = decodeMovementBone(dic,dataInfo);
         movementData->addMovementBoneData(movementBoneData);
         movementBoneData->release();
-
     }
 
     return movementData;
 }
+
 CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary &json, DataInfo *dataInfo)
 {
     CCMovementBoneData *movementBoneData = new CCMovementBoneData();

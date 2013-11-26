@@ -200,66 +200,66 @@ NS_CC_EXT_BEGIN
                 }
                 else if(comName != NULL && strcmp(comName, "CCArmature") == 0)
                 {
-					if (nResType != 0)
-					{
-						continue;
-					}
-                    std::string reDir = pPath;
-                    std::string file_path = "";
-                    size_t pos = reDir.find_last_of('/');
-                    if (pos != std::string::npos)
-                    {
-                        file_path = reDir.substr(0, pos+1);
-                    }
-                    unsigned long size = 0;
-                    const char *des = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pPath.c_str(),"r" , &size));
-			        cs::CSJsonDictionary *jsonDict = new cs::CSJsonDictionary();
-			        jsonDict->initWithDescription(des);
-                    if(NULL == des || strcmp(des, "") == 0)
-                    {
-                        CCLog("read json file[%s] error!\n", pPath.c_str());
-                    }
-                    
-                    int childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
-                    cs::CSJsonDictionary* subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
-                    const char *name = DICTOOL->getStringValue_json(subData, "name");
-
-                    childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
-                    for (int i = 0; i < childrenCount; ++i)
-                    {
-                        const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", i);
-                        std::string plistpath;
-                        plistpath += file_path;
-                        plistpath.append(plist);
-                        cocos2d::CCDictionary *root = CCDictionary::createWithContentsOfFile(plistpath.c_str());
-                        CCDictionary* metadata = DICTOOL->getSubDictionary(root, "metadata");
-                        const char* textureFileName = DICTOOL->getStringValue(metadata, "textureFileName");
-
-                        std::string textupath;
-                        textupath += file_path;
-                        textupath.append(textureFileName);
-
-                        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
-                        
-                    }
-                    
-                    CCArmature *pAr = CCArmature::create(name);
-                    CCComRender *pRender = CCComRender::create(pAr, "CCArmature");
-                    if (pComName != NULL)
-                    {
-                        pRender->setName(pComName);
-                    }
-                    gb->addComponent(pRender);
-
-					const char *actionName = subDict->getItemStringValue("selectedactionname");
-					if (actionName != NULL && pAr->getAnimation() != NULL)
-					{
-						pAr->getAnimation()->play(actionName);
-					}
-					
-                    CC_SAFE_DELETE(jsonDict);
-					CC_SAFE_DELETE(subData);
-					CC_SAFE_DELETE_ARRAY(des);
+//					if (nResType != 0)
+//					{
+//						continue;
+//					}
+//                    std::string reDir = pPath;
+//                    std::string file_path = "";
+//                    size_t pos = reDir.find_last_of('/');
+//                    if (pos != std::string::npos)
+//                    {
+//                        file_path = reDir.substr(0, pos+1);
+//                    }
+//                    unsigned long size = 0;
+//                    const char *des = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pPath.c_str(),"r" , &size));
+//			        cs::CSJsonDictionary *jsonDict = new cs::CSJsonDictionary();
+//			        jsonDict->initWithDescription(des);
+//                    if(NULL == des || strcmp(des, "") == 0)
+//                    {
+//                        CCLog("read json file[%s] error!\n", pPath.c_str());
+//                    }
+//                    
+//                    int childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
+//                    cs::CSJsonDictionary* subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
+//                    const char *name = DICTOOL->getStringValue_json(subData, "name");
+//
+//                    childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
+//                    for (int i = 0; i < childrenCount; ++i)
+//                    {
+//                        const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", i);
+//                        std::string plistpath;
+//                        plistpath += file_path;
+//                        plistpath.append(plist);
+//                        cocos2d::CCDictionary *root = CCDictionary::createWithContentsOfFile(plistpath.c_str());
+//                        CCDictionary* metadata = DICTOOL->getSubDictionary(root, "metadata");
+//                        const char* textureFileName = DICTOOL->getStringValue(metadata, "textureFileName");
+//
+//                        std::string textupath;
+//                        textupath += file_path;
+//                        textupath.append(textureFileName);
+//
+//                        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
+//                        
+//                    }
+//                    
+//                    CCArmature *pAr = CCArmature::create(name);
+//                    CCComRender *pRender = CCComRender::create(pAr, "CCArmature");
+//                    if (pComName != NULL)
+//                    {
+//                        pRender->setName(pComName);
+//                    }
+//                    gb->addComponent(pRender);
+//
+//					const char *actionName = subDict->getItemStringValue("selectedactionname");
+//					if (actionName != NULL && pAr->getAnimation() != NULL)
+//					{
+//						pAr->getAnimation()->play(actionName);
+//					}
+//					
+//                    CC_SAFE_DELETE(jsonDict);
+//					CC_SAFE_DELETE(subData);
+//					CC_SAFE_DELETE_ARRAY(des);
                 }
                 else if(comName != NULL && strcmp(comName, "CCComAudio") == 0)
                 {

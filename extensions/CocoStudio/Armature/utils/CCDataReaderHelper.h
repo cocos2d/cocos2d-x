@@ -28,8 +28,11 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 #include "../CCArmature.h"
+
 #include "../../Json/CSContentJsonDictionary.h"
+#include "../../Json/DictionaryHelper.h"
 #include "../../Json/rapidjson/document.h"
+
 namespace tinyxml2
 {
     class XMLElement;
@@ -107,17 +110,13 @@ public:
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
 
-    static CCArmatureData *decodeArmature(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 	static CCArmatureData *decodeArmature(const rapidjson::Value &json, DataInfo *dataInfo);
-    static CCBoneData *decodeBone(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 	static CCBoneData *decodeBone(const rapidjson::Value &json, DataInfo *dataInfo);
-    static CCDisplayData *decodeBoneDisplay(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 	static CCDisplayData *decodeBoneDisplay(const rapidjson::Value &json, DataInfo *dataInfo);
-
-    static CCAnimationData *decodeAnimation(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 	static CCAnimationData *decodeAnimation(const rapidjson::Value &json, DataInfo *dataInfo);
-    static CCMovementData *decodeMovement(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 	static CCMovementData *decodeMovement(const rapidjson::Value &json, DataInfo *dataInfo);
+    
+    
     static CCMovementBoneData *decodeMovementBone(cs::CSJsonDictionary &json, DataInfo *dataInfo);
 	static CCMovementBoneData *decodeMovementBone(const rapidjson::Value &json, DataInfo *dataInfo);
     static CCFrameData *decodeFrame(cs::CSJsonDictionary &json, DataInfo *dataInfo);
