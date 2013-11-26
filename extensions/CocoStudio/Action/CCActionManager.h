@@ -82,7 +82,6 @@ public:
 	ActionObject* playActionByName(const char* jsonName,const char* actionName, CCCallFunc* func);
 
     /*init properties with json dictionay*/
-    void initWithDictionary(const char* jsonName,cs::CSJsonDictionary* dic,CCObject* root);
 	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic,CCObject* root);
 	/**
      * Release all actions.

@@ -153,7 +153,6 @@ public:
 	void updateToFrameByTime(float fTime);
 
     /*init properties with a json dictionary*/
-    void initWithDictionary(cs::CSJsonDictionary* dic,CCObject* root);
 	void initWithDictionary(const rapidjson::Value& dic,CCObject* root);
     
 	void simulationActionUpdate(float dt);

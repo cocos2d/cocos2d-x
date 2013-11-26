@@ -178,217 +178,126 @@ cocos2d::CCArray* DictionaryHelper::objectToCCArray(cocos2d::CCObject *obj)
     return array;
 }
 
-cs::CSJsonDictionary* DictionaryHelper::getSubDictionary_json(cs::CSJsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return NULL;
-    }
-    return root->getSubDictionary(key);
-}
 
 const rapidjson::Value &DictionaryHelper::getSubDictionary_json(const rapidjson::Value &root, const char* key)
 {
 	return root[key];
 }
 
-int DictionaryHelper::getIntValue_json(cs::CSJsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return 0;
-    }
-    return root->getItemIntValue(key, 0);
-}
 
 int DictionaryHelper::getIntValue_json(const rapidjson::Value& root, const char* key)
 {
-	if(root.IsNull())
-		return 0;
-	if(root[key].IsNull())
-		return 0;
-	return root[key].GetInt();
+    int nRet = 0;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        nRet = root[key].GetInt();
+    } while (0);
+    
+    return nRet;
 }
 
-float DictionaryHelper::getFloatValue_json(cs::CSJsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return 0.0f;
-    }
-    return root->getItemFloatValue(key, 0.0);
-}
 
 float DictionaryHelper::getFloatValue_json(const rapidjson::Value& root,const char* key)
 {
-	if(root.IsNull())
-		return 0.0f;
-
-	if(root[key].IsNull())
-		return 0.0f;
-
-	return (float)root[key].GetDouble();
-}
-
-const char* DictionaryHelper::getStringValue_json(cs::CSJsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return NULL;
-    }
-    return root->getItemStringValue(key);
+	float fRet = 0.0f;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        fRet = (float)root[key].GetDouble();
+    } while (0);
+    
+    return fRet;
 }
 
 const char* DictionaryHelper::getStringValue_json(const rapidjson::Value& root,const char* key)
 {
-	if(root.IsNull())
-		return NULL;
-
-	if(root[key].IsNull())
-		return NULL;
-
-	return root[key].GetString();
-}
-
-bool DictionaryHelper::getBooleanValue_json(cs::CSJsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return 0;
-    }
-    return root->getItemBoolvalue(key, false);
+    const char* sRet = NULL;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        sRet = root[key].GetString();
+    } while (0);
+    
+    return sRet;
 }
 
 bool DictionaryHelper::getBooleanValue_json(const rapidjson::Value& root,const char* key)
 {
-	if(root.IsNull())
-		return false;
-
-	if(root[key].IsNull())
-		return false;
-
-	return root[key].GetBool();
-}
-
-int DictionaryHelper::getArrayCount_json(cs::CSJsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return 0;
-    }
-    return root->getArrayItemCount(key);
+    bool bRet = false;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        bRet = root[key].GetBool();
+    } while (0);
+    
+    return bRet;
 }
 
 int DictionaryHelper::getArrayCount_json(const rapidjson::Value& root,const char* key)
 {
-	if(root.IsNull())
-		return 0;
-
-	if(root[key].IsNull())
-		return 0;
-
-	return root[key].Size();
+    int nRet = 0;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        nRet = root[key].Size();
+    } while (0);
+    
+    return nRet;
 }
 
-int DictionaryHelper::getIntValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx)
-{
-    if (!root)
-    {
-        return 0;
-    }
-    return root->getIntValueFromArray(arrayKey, idx, 0);
-}
 
 int DictionaryHelper::getIntValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx)
 {
-	if(root.IsNull())
-		return 0;
-
-	if(root[arrayKey].IsNull())
-		return 0;
-
-	if(root[arrayKey][idx].IsNull())
-		return 0;
-
-	return root[arrayKey][idx].GetInt();
+    int nRet = 0;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[arrayKey].IsNull());
+        CC_BREAK_IF(root[arrayKey][idx].IsNull());
+        nRet = root[arrayKey][idx].GetInt();
+    } while (0);
+    
+    return nRet;
 }
 
-float DictionaryHelper::getFloatValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx)
-{
-    if (!root)
-    {
-        return 0.0f;
-    }
-    return root->getFloatValueFromArray(arrayKey, idx, 0.0);
-}
 
 float DictionaryHelper::getFloatValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx)
 {
-	if(root.IsNull())
-		return 0.0f;
-
-	if(root[arrayKey].IsNull())
-		return 0.0f;
-
-	if(root[arrayKey][idx].IsNull())
-		return 0.0f;
-
-	return (float)root[arrayKey][idx].GetDouble();
-}
-
-bool DictionaryHelper::getBoolValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx)
-{
-    if (!root)
-    {
-        return false;
-    }
-    return root->getBoolValueFromArray(arrayKey, idx, false);
+    float fRet = 0.0f;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[arrayKey].IsNull());
+        CC_BREAK_IF(root[arrayKey][idx].IsNull());
+        fRet = (float)root[arrayKey][idx].GetDouble();
+    } while (0);
+    
+    return fRet;
 }
 
 bool DictionaryHelper::getBoolValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx)
 {
-	if(root.IsNull())
-		return false;
-
-	if(root[arrayKey].IsNull())
-		return false;
-
-	if(root[arrayKey][idx].IsNull())
-		return false;
-
-	return root[arrayKey][idx].GetBool();
-}
-
-const char* DictionaryHelper::getStringValueFromArray_json(cs::CSJsonDictionary *root, const char *arrayKey, int idx)
-{
-    if (!root)
-    {
-        return NULL;
-    }
-    return root->getStringValueFromArray(arrayKey, idx);
+	bool bRet = false;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[arrayKey].IsNull());
+        CC_BREAK_IF(root[arrayKey][idx].IsNull());
+        bRet = root[arrayKey][idx].GetBool();
+    } while (0);
+    
+    return bRet;
 }
 
 const char* DictionaryHelper::getStringValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx)
 {
-	if(root.IsNull())
-		return NULL;
-
-	if(root[arrayKey].IsNull())
-		return NULL;
-
-	if(root[arrayKey][idx].IsNull())
-		return NULL;
-
-	return root[arrayKey][idx].GetString();
-}
-
-cs::CSJsonDictionary* DictionaryHelper::getDictionaryFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx)
-{
-    if (!root)
-    {
-        return NULL;
-    }
-    return root->getSubItemFromArray(arrayKey, idx);
+    const char *sRet = NULL;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[arrayKey].IsNull());
+        CC_BREAK_IF(root[arrayKey][idx].IsNull());
+        sRet = root[arrayKey][idx].GetString();
+    } while (0);
+    
+    return NULL;
 }
 
 const rapidjson::Value &DictionaryHelper::getDictionaryFromArray_json(const rapidjson::Value &root, const char* key,int idx)
@@ -396,22 +305,15 @@ const rapidjson::Value &DictionaryHelper::getDictionaryFromArray_json(const rapi
 	return root[key][idx];
 }
 
-bool DictionaryHelper::checkObjectExist_json(cs::CSJsonDictionary *root, const char *key)
-{
-    if (!root)
-    {
-        return false;
-    }
-    return root->isKeyValidate(key);
-}
-
 bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root,const char* key)
 {
-	if (root.IsNull())
-    {
-        return false;
-    }
-	return root.HasMember(key);
+    bool bRet = false;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        bRet = root.HasMember(key);
+    } while (0);
+    
+    return bRet;
 }
 
 NS_CC_EXT_END

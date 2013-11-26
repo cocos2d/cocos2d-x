@@ -1688,8 +1688,26 @@ CCMovementData *CCDataReaderHelper::decodeMovement(const rapidjson::Value &json,
 	movementData->loop = json[A_LOOP].IsNull()? true : json[A_LOOP].GetBool();
 	movementData->durationTween = json[A_DURATION_TWEEN].IsNull()? 0 : json[A_DURATION_TWEEN].GetInt(); 
     movementData->durationTo = json[A_DURATION_TO].IsNull()? 0 : json[A_DURATION_TO].GetInt();  
-    movementData->duration = json[A_DURATION].IsNull()? 0 : json[A_DURATION].GetInt(); 
-	movementData->scale = json[A_DURATION].IsNull()? 1.0f : (float)json[A_MOVEMENT_SCALE].GetDouble();
+    movementData->duration = json[A_DURATION].IsNull()? 0 : json[A_DURATION].GetInt();
+    
+    if (json[A_DURATION].IsNull())
+    {
+        movementData->scale = 1.0f;
+    }
+    else
+    {
+        if (json[A_MOVEMENT_SCALE].IsNull())
+        {
+            movementData->scale = 1.0f;
+        }
+        else
+        {
+            movementData->scale = (float)json[A_MOVEMENT_SCALE].GetDouble();
+        }
+    }
+
+//        
+//	movementData->scale = json[A_DURATION].IsNull()? 1.0f : (float)json[A_MOVEMENT_SCALE].GetDouble();
 
 	movementData->tweenEasing = (CCTweenType)(json[A_TWEEN_EASING].IsNull()? Linear : json[A_TWEEN_EASING].GetInt());
 

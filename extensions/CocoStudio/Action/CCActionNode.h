@@ -151,7 +151,6 @@ public:
 	virtual void stopAction();
 	
     /*init properties with a json dictionary*/
-    virtual void initWithDictionary(cs::CSJsonDictionary* dic,CCObject* root);
 	virtual void initWithDictionary(const rapidjson::Value& dic,CCObject* root);
     /**
      * Gets if the action is done once time.
