@@ -266,8 +266,4 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_LUA_ENGINE_DEBUG 0
 #endif
 
-#ifdef CC_USE_PHYSICS
-#define PHYSICS_CONTACT_POINT_MAX 4
-#endif
-
 #endif // __CCCONFIG_H__
