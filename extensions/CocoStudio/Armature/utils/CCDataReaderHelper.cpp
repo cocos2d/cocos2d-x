@@ -1243,13 +1243,13 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         CCLOG("GetParseError %s\n",json.GetParseError());
     }
 	
-	dataInfo->contentScale = json[CONTENT_SCALE].IsNull()? 1.0f : json[CONTENT_SCALE].GetDouble();
+	dataInfo->contentScale = DICTOOL->getFloatValue_json(json, CONTENT_SCALE, 1.0f); //json[CONTENT_SCALE].IsNull()? 1.0f : json[CONTENT_SCALE].GetDouble();
 	
     // Decode armatures
-	int length = json[ARMATURE_DATA].IsNull() ? 0 : json[ARMATURE_DATA].Size();
-	for (rapidjson::SizeType i = 0; i < length; i++)
+	int length = DICTOOL->getArrayCount_json(json, ARMATURE_DATA); //json[ARMATURE_DATA].IsNull() ? 0 : json[ARMATURE_DATA].Size();
+	for (int i = 0; i < length; i++)
     {
-		const rapidjson::Value &armatureDic = json[ARMATURE_DATA][i];
+		const rapidjson::Value &armatureDic = DICTOOL->getSubDictionary_json(json, ARMATURE_DATA, i); //json[ARMATURE_DATA][i];
         CCArmatureData *armatureData = decodeArmature(armatureDic, dataInfo);
 
         if (dataInfo->asyncStruct)
@@ -1266,11 +1266,11 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 
     // Decode animations
-	length = json[ANIMATION_DATA].IsNull() ? 0 : json[ANIMATION_DATA].Size();
+	length = DICTOOL->getArrayCount_json(json, ANIMATION_DATA); //json[ANIMATION_DATA].IsNull() ? 0 : json[ANIMATION_DATA].Size();
     for (int i = 0; i < length; i++)
     {
-		rapidjson::Value &animationDic = json[ANIMATION_DATA][i];
-         CCAnimationData *animationData = decodeAnimation(animationDic, dataInfo);
+		const rapidjson::Value &animationDic = DICTOOL->getSubDictionary_json(json, ANIMATION_DATA, i);
+        CCAnimationData *animationData = decodeAnimation(animationDic, dataInfo);
 
         if (dataInfo->asyncStruct)
         {
@@ -1282,14 +1282,13 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
-        //delete animationDic;
     }
 
     // Decode textures
-    length = json[TEXTURE_DATA].IsNull() ? 0 : json[TEXTURE_DATA].Size();
+    length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA); // json[TEXTURE_DATA].IsNull() ? 0 : json[TEXTURE_DATA].Size();
     for (int i = 0; i < length; i++)
     {
-        rapidjson::Value &textureDic = json[TEXTURE_DATA][i];
+        const rapidjson::Value &textureDic =  DICTOOL->getSubDictionary_json(json, TEXTURE_DATA, i); // json[TEXTURE_DATA][i];
         CCTextureData *textureData = decodeTexture(textureDic);
 
         if (dataInfo->asyncStruct)
@@ -1309,10 +1308,10 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
     if (autoLoad)
     {
-        length = json[CONFIG_FILE_PATH].IsNull() ? 0 : json[CONFIG_FILE_PATH].Size();
+        length =  DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); // json[CONFIG_FILE_PATH].IsNull() ? 0 : json[CONFIG_FILE_PATH].Size();
         for (int i = 0; i < length; i++)
         {
-			const char *path = json[CONFIG_FILE_PATH][i].IsNull() ? NULL : json[CONFIG_FILE_PATH][i].GetString();
+			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); // json[CONFIG_FILE_PATH][i].IsNull() ? NULL : json[CONFIG_FILE_PATH][i].GetString();
             if (path == NULL)
             {
                 CCLOG("load CONFIG_FILE_PATH error.");

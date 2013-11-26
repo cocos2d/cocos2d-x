@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "../datas/CCDatas.h"
 #include "../CCArmature.h"
 
-#include "../../Json/CSContentJsonDictionary.h"
 #include "../../Json/DictionaryHelper.h"
 #include "../../Json/rapidjson/document.h"
 

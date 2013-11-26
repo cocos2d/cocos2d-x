@@ -27,10 +27,11 @@
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "CCActionNode.h"
-#include "../Json/CSContentJsonDictionary.h"
 #include "../Json/rapidjson/document.h"
+
 NS_CC_EXT_BEGIN
+
+class ActionNode;
 /**
 *   @js NA
 *   @lua NA

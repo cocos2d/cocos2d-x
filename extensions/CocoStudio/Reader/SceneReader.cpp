@@ -298,7 +298,7 @@ NS_CC_EXT_BEGIN
 						pData = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pPath.c_str(), "r", &size));
 						if(pData != NULL && strcmp(pData, "") != 0)
 						{
-							pAttribute->getDict()->initWithDescription(pData);
+                            pAttribute->parse(pData);
 						}
 					}
 					else
@@ -330,7 +330,7 @@ NS_CC_EXT_BEGIN
 #endif
                     pAudio->preloadBackgroundMusic(pPath.c_str());
 					pAudio->setFile(pPath.c_str());
-					bool bLoop = (bool)(DICTOOL->getIntValue_json(subDict, "loop")); //subDict->getItemIntValue("loop", 0);
+					bool bLoop = (bool)(DICTOOL->getIntValue_json(subDict, "loop"));
 					pAudio->setLoop(bLoop);
                     gb->addComponent(pAudio);
 					pAudio->playBackgroundMusic(pPath.c_str(), bLoop);
@@ -370,26 +370,26 @@ NS_CC_EXT_BEGIN
 
     void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node)
     {
-		float x = DICTOOL->getFloatValue_json(root, "x"); //dict->getItemIntValue("x", 0);
-		float y = DICTOOL->getFloatValue_json(root, "y"); //dict->getItemIntValue("y", 0);
+		float x = DICTOOL->getFloatValue_json(root, "x");
+		float y = DICTOOL->getFloatValue_json(root, "y");
         
 		node->setPosition(ccp(x, y));
 		
-		bool bVisible = (bool)(DICTOOL->getIntValue_json(root, "visible", 1));//(bool)(dict->getItemIntValue("visible", 1));
+		bool bVisible = (bool)(DICTOOL->getIntValue_json(root, "visible", 1));
 		node->setVisible(bVisible);
 		
-		int nTag = DICTOOL->getIntValue_json(root, "objecttag", -1); //dict->getItemIntValue("objecttag", -1);
+		int nTag = DICTOOL->getIntValue_json(root, "objecttag", -1);
         node->setTag(nTag);
 		
-		int nZorder = DICTOOL->getIntValue_json(root, "zorder"); //dict->getItemIntValue("zorder", 0);
+		int nZorder = DICTOOL->getIntValue_json(root, "zorder");
 		node->setZOrder(nZorder);
 		
-		float fScaleX = DICTOOL->getFloatValue_json(root, "scalex", 1.0); //dict->getItemFloatValue("scalex", 1.0);
-		float fScaleY = DICTOOL->getFloatValue_json(root, "scaley", 1.0); //dict->getItemFloatValue("scaley", 1.0);
+		float fScaleX = DICTOOL->getFloatValue_json(root, "scalex", 1.0);
+		float fScaleY = DICTOOL->getFloatValue_json(root, "scaley", 1.0);
         node->setScaleX(fScaleX);
         node->setScaleY(fScaleY);
         
-		float fRotationZ = DICTOOL->getFloatValue_json(root, "rotation"); // dict->getItemIntValue("rotation", 0);
+		float fRotationZ = DICTOOL->getFloatValue_json(root, "rotation"); 
         node->setRotation(fRotationZ);
     }
 
