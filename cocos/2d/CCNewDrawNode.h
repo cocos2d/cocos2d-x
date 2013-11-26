@@ -28,7 +28,7 @@ public:
 protected:
     NewDrawNode();
 
-    kmMat4 _matrixMV;
+    kmMat4 _transformMatrix;
 };
 
 NS_CC_END

@@ -315,7 +315,7 @@ protected:
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
 
-    kmMat4 _matrixMV;
+    kmMat4 _transformMatrix;
 };
 
 //
