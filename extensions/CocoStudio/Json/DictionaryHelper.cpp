@@ -308,7 +308,7 @@ const char* DictionaryHelper::getStringValueFromArray_json(const rapidjson::Valu
         sRet = root[arrayKey][idx].GetString();
     } while (0);
     
-    return NULL;
+    return sRet;
 }
 
 const rapidjson::Value &DictionaryHelper::getDictionaryFromArray_json(const rapidjson::Value &root, const char* key,int idx)
