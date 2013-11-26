@@ -34,6 +34,11 @@
 #include <queue>
 #include <signal.h>
 #include <errno.h>
+#include <openssl/ssl.h>
+
+
+#include "cocos2d.h"
+
 
 #include "libwebsockets.h"
 
@@ -417,6 +422,9 @@ void WebSocket::onSubThreadStarted()
 	info.gid = -1;
 	info.uid = -1;
     info.user = (void*)this;
+    info.ssl_cipher_list = "AES256-SHA";
+    
+    lws_set_log_level(1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256 | 512, NULL);
     
 	_wsContext = libwebsocket_create_context(&info);
     
@@ -430,9 +438,10 @@ void WebSocket::onSubThreadStarted()
             
             if (_wsProtocols[i+1].callback != nullptr) name += ", ";
         }
+        
         _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
-                                             _path.c_str(), _host.c_str(), _host.c_str(),
-                                             name.c_str(), -1);
+                                                  _path.c_str(), _host.c_str(), _host.c_str(),
+                                                  NULL, -1);
 	}
 }
 
@@ -480,6 +489,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
             break;
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
             {
+                CCLOG("websockets open!! FUCK YEAH!!!!");
+                
                 WsMessage* msg = new WsMessage();
                 msg->what = WS_MSG_TO_UITHREAD_OPEN;
                 _readyState = State::OPEN;
@@ -604,6 +615,42 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                 }
             }
             break;
+            
+        case LWS_CALLBACK_OPENSSL_LOAD_EXTRA_CLIENT_VERIFY_CERTS:
+            {
+                unsigned long size = 0;
+                unsigned char* pData = CCFileUtils::sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathForFilename("certificate-chain-development.pem").c_str(), "rb", &size);
+                const char* returnString = (CCString::createWithData(pData, size))->getCString();
+                CC_SAFE_DELETE_ARRAY(pData);
+                
+                BIO *mem = BIO_new(BIO_s_mem());
+                BIO_puts(mem, returnString);
+                
+                X509_INFO *itmp;
+                X509_STORE *certStore = SSL_CTX_get_cert_store((SSL_CTX*)user);
+
+                STACK_OF(X509_INFO) *inf = PEM_X509_INFO_read_bio(mem, NULL, NULL, NULL);
+                
+                BIO_free(mem);
+                
+                if (!inf)
+                {
+                    CCLog("Error loading data from PEM file");
+                    return 0;
+                }
+
+                for(int i = 0; i < sk_X509_INFO_num(inf); i++)
+                {
+                    itmp = sk_X509_INFO_value(inf, i);
+                    
+                    if(itmp->x509)
+                        X509_STORE_add_cert(certStore, itmp->x509);
+                }
+                
+                sk_X509_INFO_pop_free(inf, X509_INFO_free);
+            }
+            break;
+            
         default:
             break;
         
@@ -617,6 +664,7 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
     switch (msg->what) {
         case WS_MSG_TO_UITHREAD_OPEN:
             {
+                CCLog("opened on thread");
                 _delegate->onOpen(this);
             }
             break;
