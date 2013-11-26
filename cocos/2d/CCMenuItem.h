@@ -246,7 +246,7 @@ class CC_DLL MenuItemFont : public MenuItemLabel
 {
 public:
     /** creates a menu item from a string without target/selector. To be used with MenuItemToggle */
-    static MenuItemFont * create(const std::string& value);
+    static MenuItemFont * create(const std::string& value = "");
     /** creates a menu item from a string with a target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const char *value, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string with a target/selector */
