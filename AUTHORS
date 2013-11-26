@@ -662,6 +662,9 @@ Developers:
     lajos
         FontTest isn't rendered correctly with custom TTF font on Mac platform.
         
+    hulefei
+        Added gui namespace before SEL_TouchEvent.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
