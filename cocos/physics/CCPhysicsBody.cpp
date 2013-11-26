@@ -315,8 +315,8 @@ void PhysicsBody::setDynamic(bool dynamic)
             }
             
             // avoid incorrect collion simulation.
-            cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
-            cpBodySetMoment(_info->getBody(), PHYSICS_INFINITY);
+            cpBodySetMass(_info->getBody(), INFINITY);
+            cpBodySetMoment(_info->getBody(), INFINITY);
             cpBodySetVel(_info->getBody(), cpvzero);
             cpBodySetAngVel(_info->getBody(), 0.0f);
         }
@@ -328,7 +328,7 @@ void PhysicsBody::setRotationEnable(bool enable)
 {
     if (_rotationEnable != enable)
     {
-        cpBodySetMoment(_info->getBody(), enable ? _moment : PHYSICS_INFINITY);
+        cpBodySetMoment(_info->getBody(), enable ? _moment : INFINITY);
         _rotationEnable = enable;
     }
 }
@@ -454,9 +454,9 @@ void PhysicsBody::setMass(float mass)
     _massDefault = false;
     
     // update density
-    if (_mass == PHYSICS_INFINITY)
+    if (_mass == INFINITY)
     {
-        _density = PHYSICS_INFINITY;
+        _density = INFINITY;
     }
     else
     {
@@ -478,17 +478,17 @@ void PhysicsBody::setMass(float mass)
 
 void PhysicsBody::addMass(float mass)
 {
-    if (mass == PHYSICS_INFINITY)
+    if (mass == INFINITY)
     {
-        _mass = PHYSICS_INFINITY;
+        _mass = INFINITY;
         _massDefault = false;
-        _density = PHYSICS_INFINITY;
+        _density = INFINITY;
     }
-    else if (mass == -PHYSICS_INFINITY)
+    else if (mass == -INFINITY)
     {
         return;
     }
-    else if (_mass != PHYSICS_INFINITY)
+    else if (_mass != INFINITY)
     {
         if (_massDefault)
         {
@@ -524,13 +524,13 @@ void PhysicsBody::addMass(float mass)
 
 void PhysicsBody::addMoment(float moment)
 {
-    if (moment == PHYSICS_INFINITY)
+    if (moment == INFINITY)
     {
         // if moment is INFINITY, the moment of the body will become INFINITY
-        _moment = PHYSICS_INFINITY;
+        _moment = INFINITY;
         _momentDefault = false;
     }
-    else if (moment == -PHYSICS_INFINITY)
+    else if (moment == -INFINITY)
     {
         // if moment is -INFINITY, it won't change
         return;
@@ -538,7 +538,7 @@ void PhysicsBody::addMoment(float moment)
     else
     {
         // if moment of the body is INFINITY is has no effect
-        if (_moment != PHYSICS_INFINITY)
+        if (_moment != INFINITY)
         {
             if (_momentDefault)
             {
