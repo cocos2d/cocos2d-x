@@ -40,6 +40,7 @@ class PhysicsWorld;
 
 class PhysicsContactInfo;
 
+typedef Point Vect;
 
 typedef struct PhysicsContactData
 {
