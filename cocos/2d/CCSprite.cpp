@@ -267,32 +267,6 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
     }
 }
 
-// XXX: deprecated
-/*
-Sprite* Sprite::initWithCGImage(CGImageRef pImage)
-{
-    // todo
-    // because it is deprecated, so we do not implement it
-
-    return NULL;
-}
-*/
-
-/*
-Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
-{
-    CCASSERT(pImage != NULL);
-
-    // XXX: possible bug. See issue #349. New API should be added
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addCGImage(pImage, pszKey);
-
-    const Size& size = texture->getContentSize();
-    Rect rect = Rect(0 ,0, size.width, size.height);
-
-    return initWithTexture(texture, rect);
-}
-*/
-
 Sprite::Sprite(void)
 : _shouldBeHidden(false)
 , _texture(nullptr)
@@ -685,16 +659,6 @@ void Sprite::draw(void)
 
 // Node overrides
 
-void Sprite::addChild(Node* child)
-{
-    Node::addChild(child);
-}
-
-void Sprite::addChild(Node *child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
     CCASSERT(child != NULL, "Argument must be non-NULL");
@@ -744,7 +708,6 @@ void Sprite::removeChild(Node *child, bool cleanup)
     }
 
     Node::removeChild(child, cleanup);
-    
 }
 
 void Sprite::removeAllChildrenWithCleanup(bool cleanup)
