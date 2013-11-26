@@ -268,11 +268,6 @@ To enable set it to a value different than 0. Disabled by default.
 
 #ifdef CC_USE_PHYSICS
 #define PHYSICS_CONTACT_POINT_MAX 4
-namespace cocos2d
-{
-    class Point;
-    typedef Point Vect;
-}
 #endif
 
 #endif // __CCCONFIG_H__

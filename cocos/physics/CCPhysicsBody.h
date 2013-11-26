@@ -40,8 +40,9 @@ NS_CC_BEGIN
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
-
 class PhysicsBodyInfo;
+
+typedef Point Vect;
 
 
 const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);

@@ -32,7 +32,7 @@
 #include "CCPlatformMacros.h"
 #include "CCGeometry.h"
 NS_CC_BEGIN
-class Vect;
+typedef Point Vect;
 class PhysicsBodyInfo;
 class PhysicsJointInfo;
 class PhysicsShapeInfo;

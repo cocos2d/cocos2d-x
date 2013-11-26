@@ -42,6 +42,8 @@ class PhysicsShape;
 class PhysicsContact;
 class Array;
 
+typedef Point Vect;
+
 class Sprite;
 class Scene;
 class DrawNode;
