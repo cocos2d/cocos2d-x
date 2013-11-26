@@ -384,7 +384,7 @@ bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
     if (body != nullptr)
     {
         Node* mouse = Node::create();
-        mouse->setPhysicsBody(PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY));
+        mouse->setPhysicsBody(PhysicsBody::create(INFINITY, INFINITY));
         mouse->getPhysicsBody()->setDynamic(false);
         mouse->setPosition(location);
         this->addChild(mouse);
@@ -444,7 +444,7 @@ void PhysicsDemoLogoSmash::onEnter()
                                       0.95f, PhysicsMaterial(0.01f, 0.0f, 0.0f));
                 
                 ball->getPhysicsBody()->setMass(1.0);
-                ball->getPhysicsBody()->setMoment(PHYSICS_INFINITY);
+                ball->getPhysicsBody()->setMoment(INFINITY);
                 
                 _ball->addChild(ball);
                 
@@ -453,7 +453,7 @@ void PhysicsDemoLogoSmash::onEnter()
     }
     
     
-    auto bullet = makeBall(Point(400, 0), 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
+    auto bullet = makeBall(Point(400, 0), 10, PhysicsMaterial(INFINITY, 0, 0));
     bullet->getPhysicsBody()->setVelocity(Point(400, 0));
     
     bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));
@@ -835,7 +835,7 @@ void PhysicsDemoPump::onEnter()
     auto body = PhysicsBody::create();
     body->setDynamic(false);
     
-    PhysicsMaterial staticMaterial(PHYSICS_INFINITY, 0, 0.5f);
+    PhysicsMaterial staticMaterial(INFINITY, 0, 0.5f);
     body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(50, 0), VisibleRect::leftTop() + Point(50, -130), staticMaterial, 2.0f));
     body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(190, 0), VisibleRect::leftTop() + Point(100, -50), staticMaterial, 2.0f));
     body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Point(100, -50), VisibleRect::leftTop() + Point(100, -90), staticMaterial, 2.0f));

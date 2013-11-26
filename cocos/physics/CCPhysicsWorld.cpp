@@ -65,9 +65,6 @@ NS_CC_BEGIN
 extern const char* PHYSICSCONTACT_EVENT_NAME;
 
 #if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
-
-const float PHYSICS_INFINITY = INFINITY;
-
 namespace
 {
     typedef struct RayCastCallbackInfo

@@ -205,16 +205,16 @@ public:
     
     /**
      * @brief set the body mass.
-     * @note if you need add/subtract mass to body, don't use setMass(getMass() +/- mass), because the mass of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMass() instead.
+     * @note if you need add/subtract mass to body, don't use setMass(getMass() +/- mass), because the mass of body may be equal to INFINITY, it will cause some unexpected result, please use addMass() instead.
      */
     void setMass(float mass);
     /** get the body mass. */
     inline float getMass() const { return _mass; }
     /**
      * @brief add mass to body.
-     * if _mass(mass of the body) == PHYSICS_INFINITY, it remains.
-     * if mass == PHYSICS_INFINITY, _mass will be PHYSICS_INFINITY.
-     * if mass == -PHYSICS_INFINITY, _mass will not change.
+     * if _mass(mass of the body) == INFINITY, it remains.
+     * if mass == INFINITY, _mass will be INFINITY.
+     * if mass == -INFINITY, _mass will not change.
      * if mass + _mass <= 0, _mass will equal to MASS_DEFAULT(1.0)
      * other wise, mass = mass + _mass;
      */
@@ -222,16 +222,16 @@ public:
     
     /**
      * @brief set the body moment of inertia.
-     * @note if you need add/subtract moment to body, don't use setMoment(getMoment() +/- moment), because the moment of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMoment() instead.
+     * @note if you need add/subtract moment to body, don't use setMoment(getMoment() +/- moment), because the moment of body may be equal to INFINITY, it will cause some unexpected result, please use addMoment() instead.
      */
     void setMoment(float moment);
     /** get the body moment of inertia. */
     inline float getMoment(float moment) const { return _moment; }
     /**
      * @brief add moment of inertia to body.
-     * if _moment(moment of the body) == PHYSICS_INFINITY, it remains.
-     * if moment == PHYSICS_INFINITY, _moment will be PHYSICS_INFINITY.
-     * if moment == -PHYSICS_INFINITY, _moment will not change.
+     * if _moment(moment of the body) == INFINITY, it remains.
+     * if moment == INFINITY, _moment will be INFINITY.
+     * if moment == -INFINITY, _moment will not change.
      * if moment + _moment <= 0, _moment will equal to MASS_DEFAULT(1.0)
      * other wise, moment = moment + _moment;
      */

@@ -29,7 +29,7 @@
 #define CC_PHYSICS_BOX2D    1
 #define CC_PHYSICS_CHIPMUNK 2
 
-#define CC_USE_BOX2D
+#define CC_USE_CHIPMUNK
 
 #ifdef CC_USE_BOX2D
 #define CC_PHYSICS_ENGINE CC_PHYSICS_BOX2D
@@ -45,8 +45,6 @@
 
 namespace cocos2d
 {
-    extern const float PHYSICS_INFINITY;
-    
     class Point;
     typedef Point Vect;
     
