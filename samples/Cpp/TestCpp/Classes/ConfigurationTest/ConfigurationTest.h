@@ -35,6 +35,8 @@ public:
 class ConfigurationLoadConfig : public ConfigurationBase
 {
 public:
+    CREATE_FUNC(ConfigurationLoadConfig);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -42,6 +44,8 @@ public:
 class ConfigurationQuery : public ConfigurationBase
 {
 public:
+    CREATE_FUNC(ConfigurationQuery);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -49,6 +53,8 @@ public:
 class ConfigurationInvalid : public ConfigurationBase
 {
 public:
+    CREATE_FUNC(ConfigurationInvalid);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -56,6 +62,8 @@ public:
 class ConfigurationDefault : public ConfigurationBase
 {
 public:
+    CREATE_FUNC(ConfigurationDefault);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -63,6 +71,8 @@ public:
 class ConfigurationSet : public ConfigurationBase
 {
 public:
+    CREATE_FUNC(ConfigurationSet);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };

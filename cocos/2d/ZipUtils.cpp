@@ -511,7 +511,7 @@ public:
     unzFile zipFile;
     
     // std::unordered_map is faster if available on the platform
-    typedef std::map<std::string, struct ZipEntryInfo> FileListContainer;
+    typedef std::unordered_map<std::string, struct ZipEntryInfo> FileListContainer;
     FileListContainer fileList;
 };
 

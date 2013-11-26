@@ -40,6 +40,8 @@ public:
 class ActionManual : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionManual);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -47,6 +49,8 @@ public:
 class ActionMove : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionMove);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -54,6 +58,8 @@ public:
 class ActionScale : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionScale);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -61,6 +67,8 @@ public:
 class ActionSkew : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionSkew);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -68,6 +76,8 @@ public:
 class ActionRotationalSkew : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionRotationalSkew);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -75,6 +85,8 @@ public:
 class ActionRotationalSkewVSStandardSkew : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionRotationalSkewVSStandardSkew);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -82,6 +94,8 @@ public:
 class ActionSkewRotateScale : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionSkewRotateScale);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -89,6 +103,8 @@ public:
 class ActionRotate : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionRotate);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -96,6 +112,8 @@ public:
 class ActionJump : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionJump);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -103,6 +121,8 @@ public:
 class ActionBezier : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionBezier);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -110,6 +130,8 @@ public:
 class ActionBlink : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionBlink);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -117,6 +139,8 @@ public:
 class ActionFade : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionFade);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -124,6 +148,8 @@ public:
 class ActionTint : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionTint);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -131,6 +157,8 @@ public:
 class ActionAnimate : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionAnimate);
+
     virtual void onEnter();
     virtual void onExit();
     virtual std::string title();
@@ -140,6 +168,8 @@ public:
 class ActionSequence : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionSequence);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -147,6 +177,8 @@ public:
 class ActionSequence2 : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionSequence2);
+
     virtual void onEnter();
     virtual std::string subtitle();
 
@@ -158,6 +190,8 @@ public:
 class ActionSpawn : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionSpawn);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -165,6 +199,8 @@ public:
 class ActionReverse : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionReverse);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -172,6 +208,8 @@ public:
 class ActionRepeat : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionRepeat);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -179,6 +217,8 @@ public:
 class ActionDelayTime : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionDelayTime);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -186,6 +226,8 @@ public:
 class ActionReverseSequence : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionReverseSequence);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -193,6 +235,8 @@ public:
 class ActionReverseSequence2 : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionReverseSequence2);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -200,6 +244,8 @@ public:
 class ActionOrbit : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionOrbit);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -207,6 +253,8 @@ public:
 class ActionRemoveSelf : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionRemoveSelf);
+
 	virtual void onEnter();
 	virtual std::string subtitle();
 };
@@ -214,6 +262,8 @@ public:
 class ActionRepeatForever : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionRepeatForever);
+
     virtual void onEnter();
     virtual std::string subtitle();
 
@@ -223,6 +273,8 @@ public:
 class ActionRotateToRepeat : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionRotateToRepeat);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -230,6 +282,8 @@ public:
 class ActionRotateJerk : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionRotateJerk);
+
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -237,6 +291,8 @@ public:
 class ActionCallFuncN : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionCallFuncN);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -246,6 +302,8 @@ public:
 class ActionCallFuncND : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionCallFuncND);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -255,6 +313,8 @@ public:
 class ActionCallFuncO : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionCallFuncO);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -264,6 +324,8 @@ public:
 class ActionCallFunction : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionCallFunction);
+
     virtual void onEnter();
     virtual std::string subtitle();
 
@@ -276,6 +338,8 @@ public:
 class ActionFollow : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionFollow);
+
     virtual void onEnter();
     virtual void draw();
     virtual std::string subtitle();
@@ -284,6 +348,8 @@ public:
 class ActionTargeted : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionTargeted);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -292,6 +358,8 @@ public:
 class ActionTargetedReverse : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionTargetedReverse);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -300,6 +368,8 @@ public:
 class ActionStacked : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionStacked);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -311,6 +381,8 @@ public:
 class ActionMoveStacked : public ActionStacked
 {
 public:
+    CREATE_FUNC(ActionMoveStacked);
+
     virtual std::string title();
     virtual void runActionsInSprite(Sprite* sprite);
 };
@@ -318,6 +390,8 @@ public:
 class ActionMoveJumpStacked : public ActionStacked
 {
 public:
+    CREATE_FUNC(ActionMoveJumpStacked);
+
     virtual std::string title();
     virtual void runActionsInSprite(Sprite* sprite);
 };
@@ -325,6 +399,8 @@ public:
 class ActionMoveBezierStacked : public ActionStacked
 {
 public:
+    CREATE_FUNC(ActionMoveBezierStacked);
+
     virtual std::string title();
     virtual void runActionsInSprite(Sprite* sprite);
 };
@@ -332,6 +408,8 @@ public:
 class ActionCatmullRomStacked : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionCatmullRomStacked);
+
     virtual ~ActionCatmullRomStacked();
     virtual void draw();
     virtual void onEnter();
@@ -345,6 +423,8 @@ private:
 class ActionCardinalSplineStacked : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionCardinalSplineStacked);
+
     virtual ~ActionCardinalSplineStacked();
     virtual void draw();
     virtual void onEnter();
@@ -357,6 +437,8 @@ private:
 class Issue1305 : public ActionsDemo
 {
 public:
+    CREATE_FUNC(Issue1305);
+
     virtual void onEnter();
     virtual void onExit();
     void log(Node* sender);
@@ -370,6 +452,8 @@ private:
 class Issue1305_2 : public ActionsDemo
 {
 public:
+    CREATE_FUNC(Issue1305_2);
+
     virtual void onEnter();
     void printLog1();
     void printLog2();
@@ -382,6 +466,8 @@ public:
 class Issue1288 : public ActionsDemo
 {
 public:
+    CREATE_FUNC(Issue1288);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -390,6 +476,8 @@ public:
 class Issue1288_2 : public ActionsDemo
 {
 public:
+    CREATE_FUNC(Issue1288_2);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -398,6 +486,8 @@ public:
 class Issue1327 : public ActionsDemo
 {
 public:
+    CREATE_FUNC(Issue1327);
+
     virtual void onEnter();
     virtual std::string subtitle();
     virtual std::string title();
@@ -407,6 +497,8 @@ public:
 class Issue1398 : public ActionsDemo
 {
 public:
+    CREATE_FUNC(Issue1398);
+
     void incrementInteger();
     void incrementIntegerCallback(void* data);
     virtual void onEnter();
@@ -419,6 +511,8 @@ private:
 class ActionCatmullRom : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionCatmullRom);
+
     ~ActionCatmullRom();
     
     virtual void onEnter();
@@ -433,6 +527,8 @@ private:
 class ActionCardinalSpline : public ActionsDemo
 {
 public:
+    CREATE_FUNC(ActionCardinalSpline);
+
     ~ActionCardinalSpline();
     
     virtual void onEnter();
@@ -446,6 +542,8 @@ private:
 class PauseResumeActions : public ActionsDemo
 {
 public:
+    CREATE_FUNC(PauseResumeActions);
+
     PauseResumeActions();
     virtual ~PauseResumeActions();
     virtual void onEnter();
