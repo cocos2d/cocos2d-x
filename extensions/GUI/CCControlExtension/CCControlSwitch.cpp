@@ -35,7 +35,7 @@ class ControlSwitchSprite : public Sprite, public ActionTweenDelegate
 {
 public:
     /** creates an autorelease instance of ControlSwitchSprite */
-    static ControlSwitchSprite* createWithMaskSprite(
+    static ControlSwitchSprite* create(
                             Sprite *maskSprite,
                             Sprite *onSprite,
                             Sprite *offSprite,
@@ -121,7 +121,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ControlSwitchSprite);
 };
 
-ControlSwitchSprite* ControlSwitchSprite::createWithMaskSprite(Sprite *maskSprite,
+ControlSwitchSprite* ControlSwitchSprite::create(Sprite *maskSprite,
                                             Sprite *onSprite,
                                             Sprite *offSprite,
                                             Sprite *thumbSprite,
@@ -376,7 +376,7 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
         
         _on = true;
 
-        _switchSprite = ControlSwitchSprite::createWithMaskSprite(maskSprite,
+        _switchSprite = ControlSwitchSprite::create(maskSprite,
                                         onSprite,
                                         offSprite,
                                         thumbSprite,
