@@ -24,24 +24,15 @@
 
 #include "CCPhysicsJoint.h"
 #ifdef CC_USE_PHYSICS
-
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
-#elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
-#include "Box2D.h"
-#endif
 
 #include "CCPhysicsBody.h"
 #include "CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsJointInfo_chipmunk.h"
-#include "box2d/CCPhysicsJointInfo_box2d.h"
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
-#include "box2d/CCPhysicsBodyInfo_box2d.h"
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
-#include "box2d/CCPhysicsShapeInfo_box2d.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
-#include "box2d/CCPhysicsHelper_box2d.h"
 #include "CCNode.h"
 
 NS_CC_BEGIN
@@ -146,7 +137,6 @@ PhysicsJointDistance::~PhysicsJointDistance()
     
 }
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 PhysicsBodyInfo* PhysicsJoint::getBodyInfo(PhysicsBody* body) const
 {
     return body->_info;
@@ -370,10 +360,6 @@ bool PhysicsJointDistance::init(PhysicsBody* a, PhysicsBody* b, const Point& anc
     
     return false;
 }
-
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
-#endif
 
 NS_CC_END
 #endif // CC_USE_PHYSICS

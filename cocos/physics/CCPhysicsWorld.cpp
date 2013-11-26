@@ -27,11 +27,7 @@
 
 #include <climits>
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
-#elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
-#include "Box2D.h"
-#endif
 
 #include "CCPhysicsBody.h"
 #include "CCPhysicsShape.h"
@@ -40,15 +36,10 @@
 #include "CCPhysicsContact.h"
 
 #include "chipmunk/CCPhysicsWorldInfo_chipmunk.h"
-#include "box2d/CCPhysicsWorldInfo_box2d.h"
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
-#include "box2d/CCPhysicsBodyInfo_box2d.h"
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
-#include "box2d/CCPhysicsShapeInfo_box2d.h"
 #include "chipmunk/CCPhysicsContactInfo_chipmunk.h"
-#include "box2d/CCPhysicsContactInfo_box2d.h"
 #include "chipmunk/CCPhysicsJointInfo_chipmunk.h"
-#include "box2d/CCPhysicsJointInfo_box2d.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
 #include "CCDrawNode.h"
@@ -64,7 +55,6 @@ NS_CC_BEGIN
 
 extern const char* PHYSICSCONTACT_EVENT_NAME;
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 namespace
 {
     typedef struct RayCastCallbackInfo
@@ -537,10 +527,6 @@ void PhysicsDebugDraw::drawContact()
     
 }
 
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
-#endif
-
 PhysicsWorld* PhysicsWorld::construct(Scene& scene)
 {
     PhysicsWorld * world = new PhysicsWorld();
@@ -573,15 +559,12 @@ bool PhysicsWorld::init(Scene& scene)
         
         _info->setGravity(_gravity);
         
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
         cpSpaceSetDefaultCollisionHandler(_info->getSpace(),
                                           (cpCollisionBeginFunc)PhysicsWorldCallback::collisionBeginCallbackFunc,
                                           (cpCollisionPreSolveFunc)PhysicsWorldCallback::collisionPreSolveCallbackFunc,
                                           (cpCollisionPostSolveFunc)PhysicsWorldCallback::collisionPostSolveCallbackFunc,
                                           (cpCollisionSeparateFunc)PhysicsWorldCallback::collisionSeparateCallbackFunc,
                                           this);
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-#endif
         
         return true;
     } while (false);

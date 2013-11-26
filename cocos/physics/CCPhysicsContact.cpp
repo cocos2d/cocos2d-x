@@ -23,19 +23,12 @@
  ****************************************************************************/
 #include "CCPhysicsContact.h"
 #ifdef CC_USE_PHYSICS
-
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
-#elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
-#include "Box2D.h"
-#endif
 
 #include "CCPhysicsBody.h"
 
 #include "chipmunk/CCPhysicsContactInfo_chipmunk.h"
-#include "box2d/CCPhysicsContactInfo_box2d.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
-#include "box2d/CCPhysicsHelper_box2d.h"
 
 #include "CCEventCustom.h"
 
@@ -95,7 +88,6 @@ bool PhysicsContact::init(PhysicsShape* a, PhysicsShape* b)
     return false;
 }
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 void PhysicsContact::generateContactData()
 {
     if (_contactInfo == nullptr)
@@ -497,8 +489,6 @@ EventListenerPhysicsContactWithGroup* EventListenerPhysicsContactWithGroup::clon
     CC_SAFE_DELETE(obj);
     return nullptr;
 }
-#else
-#endif
 
 NS_CC_END
 #endif // CC_USE_PHYSICS

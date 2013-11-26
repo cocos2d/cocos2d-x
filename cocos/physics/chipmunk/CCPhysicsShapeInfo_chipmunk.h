@@ -25,8 +25,7 @@
 #ifndef __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#if CC_USE_PHYSICS
 
 #include <vector>
 #include <map>
@@ -71,5 +70,5 @@ private:
 
 NS_CC_END
 
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_USE_PHYSICS
 #endif // __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__

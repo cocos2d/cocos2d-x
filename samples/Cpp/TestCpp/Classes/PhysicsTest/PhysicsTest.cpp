@@ -91,7 +91,7 @@ void PhysicsTestScene::toggleDebug()
 #ifndef CC_USE_PHYSICS
 void PhysicsDemoDisabled::onEnter()
 {
-    auto label = LabelTTF::create("Should define CC_USE_BOX2D or CC_USE_CHIPMUNK\n to run this test case",
+    auto label = LabelTTF::create("Should define CC_USE_PHYSICS\n to run this test case",
                                   "Arial",
                                   18);
     auto size = Director::getInstance()->getWinSize();
