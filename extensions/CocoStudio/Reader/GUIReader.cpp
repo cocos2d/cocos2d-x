@@ -1371,7 +1371,6 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(UIWidget*
 
 void WidgetPropertiesReader0300::setPropsForImageViewFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
 {
-    DictionaryHelper* dicHelper = DICTOOL;
     setPropsForWidgetFromJsonDictionary(widget, options);
     
     UIImageView* imageView = (UIImageView*)widget;
