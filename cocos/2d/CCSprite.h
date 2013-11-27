@@ -421,6 +421,7 @@ public:
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
+    virtual void updateQuadVertices();
     virtual void draw(void) override;
     /// @}
 
