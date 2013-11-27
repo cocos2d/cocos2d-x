@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCGEMETRY_H__
 #define __CCGEMETRY_H__
 
-#include <math.h>
+#include "CCStdC.h"
 #include <functional>
 
 #include "CCPlatformMacros.h"

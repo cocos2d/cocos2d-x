@@ -1,4 +1,5 @@
 #include "MciPlayer.h"
+#include <tchar.h>
 
 #define WIN_CLASS_NAME        "CocosDenshionCallbackWnd"
 #define BREAK_IF(cond)      if (cond) break;
@@ -8,7 +9,7 @@ namespace CocosDenshion {
 static HINSTANCE s_hInstance;
 static MCIERROR  s_mciError;
 
-static LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 
 MciPlayer::MciPlayer()
 : _wnd(NULL)
@@ -21,7 +22,7 @@ MciPlayer::MciPlayer()
     {
         s_hInstance = GetModuleHandle( NULL );            // Grab An Instance For Our Window
 
-        WNDCLASS  wc;        // Windows Class Structure
+        WNDCLASSA  wc;        // Windows Class Structure
 
         // Redraw On Size, And Own DC For Window.
         wc.style          = 0;  
@@ -35,14 +36,14 @@ MciPlayer::MciPlayer()
         wc.lpszMenuName   = NULL;                           // We Don't Want A Menu
         wc.lpszClassName  = WIN_CLASS_NAME;                 // Set The Class Name
 
-        if (! RegisterClass(&wc)
+        if (! RegisterClassA(&wc)
             && 1410 != GetLastError())
         {
             return;
         }
     }
 
-    _wnd = CreateWindowEx(
+    _wnd = CreateWindowExA(
         WS_EX_APPWINDOW,                                    // Extended Style For The Window
         WIN_CLASS_NAME,                                        // Class Name
         NULL,                                        // Window Title
@@ -80,9 +81,9 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
 
         Close();
 
-        MCI_OPEN_PARMS mciOpen = {0};
+        MCI_OPEN_PARMSA mciOpen = {0};
         MCIERROR mciError;
-        mciOpen.lpstrDeviceType = (LPCTSTR)MCI_ALL_DEVICE_ID;
+        mciOpen.lpstrDeviceType = (LPCSTR)MCI_ALL_DEVICE_ID;
         mciOpen.lpstrElementName = pFileName;
 
         mciError = mciSendCommand(0,MCI_OPEN, MCI_OPEN_ELEMENT, (DWORD)&mciOpen);

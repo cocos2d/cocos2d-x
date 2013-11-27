@@ -1,0 +1,12 @@
+
+# This file can be used to configure cocos2d in your local cocos2dx tweak.
+# Default settings are fine, but some indie developers or teams may prefer to
+# change them.
+
+# By default we use Chipmunk physics engine since Box2D is unmaintained.
+CONFIG += cocos2d_chipmunk
+# CONFIG += cocos2d_box2d
+
+# Qt5 port is not implemented, this option reserved for future.
+CONFIG += cocos2d_native_api
+#CONFIG += cocos2d_qt_api

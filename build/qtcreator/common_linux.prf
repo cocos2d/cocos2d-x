@@ -1,0 +1,27 @@
+
+# Linux-specific definitions for cococ2d and your game.
+
+*linux-* {
+    INCLUDEPATH += /usr/include/freetype2/
+    DEFINES += LINUX CC_KEYBOARD_SUPPORT ENABLE_MPG123
+}
+
+cocos2d_native_api {
+    *linux-* {
+        exists(/usr/local/include/GLFW/) {
+            INCLUDEPATH += /usr/local/include/GLFW/
+        } else {
+            INCLUDEPATH += /usr/include/GLFW/
+        }
+
+        CC_EXTERNAL_LIBS += \
+            -lrt -lz  \
+            -ljpeg -ltiff -lpng \
+            -lfontconfig -lfreetype -lcurl \
+            -lGLEW -lX11 -lfontconfig -lpthread -lGL -lglfw \
+            -lmpg123 -logg -lvorbis -lvorbisfile -lopenal -lalut \
+            $$cc_prebuilt_library(webp)
+
+        export(CC_EXTERNAL_LIBS)
+    }
+}

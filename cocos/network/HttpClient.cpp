@@ -28,6 +28,10 @@
 #include <queue>
 #include <errno.h>
 
+#ifdef __MINGW32__
+  #include "winsock2.h"
+#endif
+
 #include "curl/curl.h"
 
 #include "platform/CCFileUtils.h"

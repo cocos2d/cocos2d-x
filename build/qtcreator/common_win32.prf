@@ -1,0 +1,31 @@
+
+# Windows-specific definitions for cococ2d and your game.
+
+win32 {
+    QMAKE_CXXFLAGS += /TP
+    export(QMAKE_CXXFLAGS)
+    QMAKE_CFLAGS += /TP
+    export(QMAKE_CFLAGS)
+
+    DEFINES += WIN32 _WINDOWS CC_KEYBOARD_SUPPORT CURL_STATICLIB _CRT_SECURE_NO_WARNINGS
+    INCLUDEPATH += \
+        $${CC_ROOT}external/win32-specific/gles/include/OGLES \
+        $${CC_ROOT}external/win32-specific/zlib/include
+
+    CC_EXTERNAL_LIBS += \
+        -lopengl32 -lglu32 -lwinmm -luser32 -lgdi32 -ladvapi32 \
+        -L$$clean_path($${CC_ROOT}external/win32-specific/gles/prebuilt) -lglew32 \
+        -L$$clean_path($${CC_ROOT}external/win32-specific/zlib/prebuilt) -l$$quote(libzlib) \
+        $$cc_prebuilt_library(png, libpng) \
+        $$cc_prebuilt_library(curl, libcurl_imp) \
+        $$cc_prebuilt_library(glfw3) \
+        $$cc_prebuilt_library(tiff, libtiff) \
+        $$cc_prebuilt_library(jpeg, libjpeg) \
+        $$cc_prebuilt_library(webp, libwebp) \
+        $$cc_prebuilt_library(websockets) \
+        $$cc_prebuilt_library(freetype2, freetype250)
+
+    export(DEFINES)
+    export(INCLUDEPATH)
+    export(CC_EXTERNAL_LIBS)
+}
