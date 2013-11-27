@@ -1285,7 +1285,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 
     // Decode textures
-    int length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA); // json[TEXTURE_DATA].IsNull() ? 0 : json[TEXTURE_DATA].Size();
+    length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA); // json[TEXTURE_DATA].IsNull() ? 0 : json[TEXTURE_DATA].Size();
     for (int i = 0; i < length; i++)
     {
         const rapidjson::Value &textureDic =  DICTOOL->getSubDictionary_json(json, TEXTURE_DATA, i); // json[TEXTURE_DATA][i];
@@ -1657,7 +1657,7 @@ CCContourData *CCDataReaderHelper::decodeContour(const rapidjson::Value &json)
 	CCContourData *contourData = new CCContourData();
     contourData->init();
 
-	int length = (int)(DICTOOL->getArrayCount_json(json, VERTEX_POINT);
+	int length = DICTOOL->getArrayCount_json(json, VERTEX_POINT);
     
 	for (int i = length - 1; i >= 0; --i)
     {
