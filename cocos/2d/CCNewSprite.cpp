@@ -11,6 +11,8 @@
 #include "Renderer.h"
 #include "QuadCommand.h"
 #include "CCMenuItem.h"
+#include "Frustum.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -132,10 +134,46 @@ void NewSprite::updateQuadVertices()
 void NewSprite::draw(void)
 {
     updateQuadVertices();
+    if(false == culling())
+    {
+        //static int count =0;
+        //CCLOG("culling Sprite New to not visible %d ",++count);
+        return;
+    }
+
     //TODO implement z order
     QuadCommand* renderCommand = new QuadCommand(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1);
 
     Renderer::getInstance()->addCommand(renderCommand);
 }
+
+bool NewSprite::culling() const
+{
+    Frustum* frustum = Director::getInstance()->getFrustum();
+    AffineTransform worldTM = getNodeToWorldTransform();
+    //generate aabb
+    Point lowLeft(0,0);
+    Point topRight = lowLeft + Point(getContentSize());
+    Point lowRight(topRight.x,0);
+    Point topLeft(0, topRight.y);
+    
+    lowLeft = PointApplyAffineTransform(lowLeft,worldTM);
+    lowRight = PointApplyAffineTransform(lowRight,worldTM);
+    topRight = PointApplyAffineTransform(topRight,worldTM);
+    topLeft = PointApplyAffineTransform(topLeft,worldTM);
+    
+    kmVec3 point = {lowLeft.x, lowLeft.y, _vertexZ};
+    
+    AABB aabb(point,point);
+    point = {lowRight.x, lowRight.y, _vertexZ};
+    aabb.expand(point);
+    point = {topLeft.x, topLeft.y, _vertexZ};
+    aabb.expand(point);
+    point = {topRight.x, topRight.y, _vertexZ};
+    aabb.expand(point);
+    
+    return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);
+}
+
 
 NS_CC_END
