@@ -26,7 +26,6 @@
 #define __CCSGUIREADER_H__
 
 #include "../GUI/BaseClasses/UIWidget.h"
-#include "../Json/CSContentJsonDictionary.h"
 #include "../Json/rapidjson/document.h"
 
 NS_CC_EXT_BEGIN

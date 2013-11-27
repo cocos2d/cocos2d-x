@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionObject.h"
+#include "CCActionNode.h"
 #include "../Json//DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
@@ -104,23 +105,6 @@ float ActionObject::getTotalTime()
 bool ActionObject::isPlaying()
 {
 	return m_bPlaying;
-}
-
-void ActionObject::initWithDictionary(cs::CSJsonDictionary *dic,CCObject* root)
-{
-	setName(DICTOOL->getStringValue_json(dic, "name"));
-	setLoop(DICTOOL->getBooleanValue_json(dic, "loop"));
-	setUnitTime(DICTOOL->getFloatValue_json(dic, "unittime"));
-	int actionNodeCount = DICTOOL->getArrayCount_json(dic, "actionnodelist");
-	for (int i=0; i<actionNodeCount; i++) {
-		ActionNode* actionNode = new ActionNode();
-		actionNode->autorelease();
-		cs::CSJsonDictionary* actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
-		actionNode->initWithDictionary(actionNodeDic,root);
-		actionNode->setUnitTime(getUnitTime());
-		m_ActionNodeList->addObject(actionNode);
-		CC_SAFE_DELETE(actionNodeDic);
-	}
 }
 
 void ActionObject::initWithDictionary(const rapidjson::Value& dic,CCObject* root)

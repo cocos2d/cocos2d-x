@@ -55,25 +55,6 @@ ActionManager::~ActionManager()
     m_pActionDic->release();
 }
 
-void ActionManager::initWithDictionary(const char* jsonName,cs::CSJsonDictionary *dic,CCObject* root)
-{
-	std::string path = jsonName;
-	int pos = path.find_last_of("/");
-	std::string fileName = path.substr(pos+1,path.length());
-	CCLOG("filename == %s",fileName.c_str());
-	CCArray* actionList = CCArray::create();
-	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
-    for (int i=0; i<actionCount; i++) {
-        ActionObject* action = new ActionObject();
-		action->autorelease();
-        cs::CSJsonDictionary* actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
-        action->initWithDictionary(actionDic,root);
-        actionList->addObject(action);
-		CC_SAFE_DELETE(actionDic);
-    }
-	m_pActionDic->setObject(actionList, fileName);
-}
-
 void ActionManager::initWithDictionary(const char* jsonName,const rapidjson::Value &dic,CCObject* root)
 {
 	std::string path = jsonName;
