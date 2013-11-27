@@ -491,7 +491,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
     auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
     auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
     
-    int i = 0;
+    long i = 0;
     // priority < 0
     if (fixedPriorityListeners)
     {
@@ -527,7 +527,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
         if (!shouldStopPropagation)
         {
             // priority > 0
-            for (; i < fixedPriorityListeners->size(); ++i)
+            for (; i < static_cast<long>(fixedPriorityListeners->size()); ++i)
             {
                 auto l = fixedPriorityListeners->at(i);
                 
@@ -976,7 +976,7 @@ void EventDispatcher::sortEventListenersOfFixedPriority(EventListener::ListenerI
     });
     
     // FIXME: Should use binary search
-    int index = 0;
+    long index = 0;
     for (auto& listener : *fixedlisteners)
     {
         if (listener->getFixedPriority() >= 0)

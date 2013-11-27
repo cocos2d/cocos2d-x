@@ -33,6 +33,9 @@ namespace cocostudio {
 class ComController : public cocos2d::Component, public InputDelegate
 {
 public:
+    /**
+     *  @js ctor
+     */
     ComController(void);
     
 public:

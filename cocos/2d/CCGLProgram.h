@@ -251,7 +251,7 @@ private:
     GLint             _uniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
 
-	struct flag_struct {
+    struct flag_struct {
         unsigned int usesTime:1;
         unsigned int usesMVP:1;
         unsigned int usesMV:1;

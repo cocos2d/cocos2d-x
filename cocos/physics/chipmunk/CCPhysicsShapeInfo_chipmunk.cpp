@@ -25,9 +25,11 @@
 #ifdef CC_USE_PHYSICS
 #include "CCPhysicsShapeInfo_chipmunk.h"
 #include <algorithm>
+#include <unordered_map>
+
 NS_CC_BEGIN
 
-std::map<cpShape*, PhysicsShapeInfo*> PhysicsShapeInfo::_map;
+std::unordered_map<cpShape*, PhysicsShapeInfo*> PhysicsShapeInfo::_map;
 cpBody* PhysicsShapeInfo::_sharedBody = nullptr;
 
 PhysicsShapeInfo::PhysicsShapeInfo(PhysicsShape* shape)

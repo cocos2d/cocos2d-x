@@ -292,8 +292,7 @@ void NodeDeallocTest::update(float dt)
     Node **nodes = new Node*[quantityOfNodes];
 
     for( int i=0; i<quantityOfNodes; ++i) {
-        nodes[i] = new Node;
-        nodes[i]->init();
+        nodes[i] = Node::create();
     }
 
     CC_PROFILER_START(this->profilerName());
@@ -445,8 +444,8 @@ void SpriteDeallocTest::update(float dt)
     Sprite **sprites = new Sprite*[quantityOfNodes];
 
     for( int i=0; i<quantityOfNodes; ++i) {
-        sprites[i] = new Sprite;
-        sprites[i]->init();
+        sprites[i] = Sprite::create();
+        sprites[i]->retain();
     }
 
     CC_PROFILER_START(this->profilerName());

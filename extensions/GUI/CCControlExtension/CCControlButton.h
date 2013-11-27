@@ -56,21 +56,7 @@ public:
     static ControlButton* create();
     static ControlButton* create(Scale9Sprite* sprite);
     static ControlButton* create(Node* label, Scale9Sprite* backgroundSprite);
-    static ControlButton* create(std::string title, const char * fontName, float fontSize);
-    /**
-     * @js ctor
-     */
-    ControlButton();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ControlButton();
-
-    virtual bool init();
-    virtual bool initWithLabelAndBackgroundSprite(Node* label, Scale9Sprite* backgroundSprite);
-    virtual bool initWithBackgroundSprite(Scale9Sprite* sprite);
-    virtual bool initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
+    static ControlButton* create(const std::string& title, const std::string& fontName, float fontSize);
 
     virtual void needsLayout(void);
 
@@ -119,7 +105,7 @@ public:
      * @param state The state that uses the specified color. The values are described
      * in "CCControlState".
      */
-    virtual void setTitleColorForState(Color3B color, State state);
+    virtual void setTitleColorForState(const Color3B& color, State state);
 
     /**
      * Returns the title label used for a state.
@@ -140,8 +126,8 @@ public:
      */
     virtual void setTitleLabelForState(Node* label, State state);
 
-    virtual void setTitleTTFForState(const char * fntFile, State state);
-    virtual const char * getTitleTTFForState(State state);
+    virtual void setTitleTTFForState(const std::string& fntFile, State state);
+    virtual const std::string& getTitleTTFForState(State state);
 
     virtual void setTitleTTFSizeForState(float size, State state);
     virtual float getTitleTTFSizeForState(State state);
@@ -152,8 +138,8 @@ public:
      * @param state The state that uses the specified fntFile. The values are described
      * in "CCControlState".
      */
-    virtual void setTitleBMFontForState(const char * fntFile, State state);
-    virtual const char * getTitleBMFontForState(State state);
+    virtual void setTitleBMFontForState(const std::string& fntFile, State state);
+    virtual const std::string& getTitleBMFontForState(State state);
 
     /**
      * Returns the background sprite used for a state.
@@ -184,31 +170,38 @@ public:
     //set the margins at once (so we only have to do one call of needsLayout)
     virtual void setMargins(int marginH, int marginV);
 
+    /** Adjust the background image. YES by default. If the property is set to NO, the
+     background will use the prefered size of the background image. */
+    bool doesAdjustBackgroundImage();
+    void setAdjustBackgroundImage(bool adjustBackgroundImage);
+
+    // Overrides
     virtual bool onTouchBegan(Touch *touch, Event *event) override;
     virtual void onTouchMoved(Touch *touch, Event *event) override;
     virtual void onTouchEnded(Touch *touch, Event *event) override;
     virtual void onTouchCancelled(Touch *touch, Event *event) override;
-    
-    // Overrides
-//    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
     virtual GLubyte getOpacity(void) const override;
     virtual void setOpacity(GLubyte var) override;
 	virtual const Color3B& getColor(void) const override;
 	virtual void setColor(const Color3B&) override;
 
-//protected:
-    // RGBAProtocol
-    //bool _isOpacityModifyRGB;
-
-    /** Adjust the background image. YES by default. If the property is set to NO, the 
-    background will use the prefered size of the background image. */
-    bool doesAdjustBackgroundImage();
-    void setAdjustBackgroundImage(bool adjustBackgroundImage);
 
 protected:
+    /**
+     * @js ctor
+     */
+    ControlButton();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ControlButton();
+
+    virtual bool init();
+    virtual bool initWithLabelAndBackgroundSprite(Node* label, Scale9Sprite* backgroundSprite);
+    virtual bool initWithBackgroundSprite(Scale9Sprite* sprite);
+    virtual bool initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize);
+
     bool _isPushed;
     bool _parentInited;
     bool _doesAdjustBackgroundImage;
@@ -226,12 +219,12 @@ protected:
     CC_SYNTHESIZE_RETAIN(Scale9Sprite*, _backgroundSprite, BackgroundSprite);
 
     /** The prefered size of the button, if label is larger it will be expanded. */
-    CC_PROPERTY(Size, _preferredSize, PreferredSize);
+    CC_PROPERTY_PASS_BY_REF(Size, _preferredSize, PreferredSize);
 
     /** Adjust the button zooming on touchdown. Default value is YES. */
     CC_PROPERTY(bool, _zoomOnTouchDown, ZoomOnTouchDown);
 
-    CC_PROPERTY(Point, _labelAnchorPoint, LabelAnchorPoint);
+    CC_PROPERTY_PASS_BY_REF(Point, _labelAnchorPoint, LabelAnchorPoint);
 
     // <ControlState, String*>
     CC_SYNTHESIZE_RETAIN(Dictionary*, _titleDispatchTable, TitleDispatchTable);
@@ -246,6 +239,9 @@ protected:
     CC_SYNTHESIZE_READONLY(int, _marginV, VerticalMargin);
     /* Define the button margin for Left/Right edge */
     CC_SYNTHESIZE_READONLY(int, _marginH, HorizontalOrigin);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ControlButton);
 };
 
 // end of GUI group

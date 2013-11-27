@@ -57,26 +57,11 @@ public:
     /** creates a Particle Emitter */
     static ParticleSystemQuad * create();
     /** creates a Particle Emitter with a number of particles */
-    static ParticleSystemQuad * createWithTotalParticles(unsigned int numberOfParticles);
+    static ParticleSystemQuad * createWithTotalParticles(int numberOfParticles);
     /** creates an initializes a ParticleSystemQuad from a plist file.
      This plist files can be created manually or with Particle Designer:
      */
-    static ParticleSystemQuad * create(const char *plistFile);
-    /**
-     * @js ctor
-     */
-    ParticleSystemQuad();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ParticleSystemQuad();
-
-    /** initializes the indices for the vertices*/
-    void initIndices();
-
-    /** initializes the texture with a rectangle measured Points */
-    void initTexCoordsWithRect(const Rect& rect);
+    static ParticleSystemQuad * create(const std::string& filename);
 
     /** Sets a new SpriteFrame as particle.
     WARNING: this method is experimental. Use setTextureWithRect instead.
@@ -102,7 +87,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles) override;
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
     /**
      * @js NA
      * @lua NA
@@ -134,18 +119,36 @@ public:
      */
     virtual void setTotalParticles(int tp) override;
 
-private:
+protected:
+    /**
+     * @js ctor
+     */
+    ParticleSystemQuad();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ParticleSystemQuad();
+
+    /** initializes the indices for the vertices*/
+    void initIndices();
+
+    /** initializes the texture with a rectangle measured Points */
+    void initTexCoordsWithRect(const Rect& rect);
+
     void setupVBOandVAO();
     void setupVBO();
     bool allocMemory();
-    
-protected:
+
     V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
     GLushort            *_indices;    // indices
     
     GLuint                _VAOname;
     
     GLuint                _buffersVBO[2]; //0: vertex  1: indices
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);
 };
 
 // end of particle_nodes group

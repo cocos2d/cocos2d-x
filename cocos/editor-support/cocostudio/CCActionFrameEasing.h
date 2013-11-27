@@ -53,6 +53,10 @@ enum FrameEasingType
 	kframeEasingBackInOut,
 };
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ActionFrameEasing:public cocos2d::Object
 {
 protected:

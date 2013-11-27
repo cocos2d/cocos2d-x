@@ -48,31 +48,35 @@ void ScheduleHandlerDelegate::update(float elapse)
 }
 
 
-LuaCallFunc * LuaCallFunc::create(int nHandler)
+LuaCallFunc * LuaCallFunc::create(const std::function<void(void* ,Node*)>& func)
 {
-    LuaCallFunc *ret = new LuaCallFunc();
-    if (NULL != ret )
-    {
+    auto ret = new LuaCallFunc();
+    
+    if (ret && ret->initWithFunction(func) ) {
         ret->autorelease();
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)ret, nHandler, ScriptHandlerMgr::HandlerType::CALLFUNC);
         return ret;
+    }
+    
+    CC_SAFE_DELETE(ret);
+    return NULL;
+}
+
+void LuaCallFunc::execute()
+{
+    if (_functionLua)
+    {
+        _functionLua((void*)this,_target);
     }
     else
     {
-        CC_SAFE_DELETE(ret);
-        return NULL;
+        CallFuncN::execute();
     }
 }
-void LuaCallFunc::execute()
+
+bool LuaCallFunc::initWithFunction(const std::function<void (void*, Node*)> &func)
 {
-    int handler =  ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::CALLFUNC);
-    
-    if (0 == handler)
-        return ;
-    
-    BasicScriptData data((void*)this,(void*)_target);
-    ScriptEvent event(kCallFuncEvent,(void*)&data);
-    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    _functionLua = func;
+    return true;
 }
 
 LuaCallFunc* LuaCallFunc::clone() const
@@ -83,13 +87,18 @@ LuaCallFunc* LuaCallFunc::clone() const
         return NULL;
     
     auto ret = new LuaCallFunc();
+    
+    if( _functionLua )
+    {
+        ret->initWithFunction(_functionLua);
+    }
+    
+    ret->autorelease();
 
     int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
     
     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)ret, newscriptHandler, ScriptHandlerMgr::HandlerType::CALLFUNC);
-    
-    ret->autorelease();
-    
+        
     return ret;
 }
 

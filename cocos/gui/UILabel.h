@@ -30,20 +30,19 @@
 
 namespace gui {
 
-/**
-*   @js NA
-*   @lua NA
-*/
 class UILabel : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILabel();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UILabel();
     

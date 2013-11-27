@@ -1,18 +1,11 @@
 #include "FileUtilsTest.h"
 
-
-TESTLAYER_CREATE_FUNC(TestResolutionDirectories);
-TESTLAYER_CREATE_FUNC(TestSearchPath);
-TESTLAYER_CREATE_FUNC(TestFilenameLookup);
-TESTLAYER_CREATE_FUNC(TestIsFileExist);
-TESTLAYER_CREATE_FUNC(TextWritePlist);
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(TestResolutionDirectories),
-    CF(TestSearchPath),
-    CF(TestFilenameLookup),
-    CF(TestIsFileExist),
-    CF(TextWritePlist),
+static std::function<Layer*()> createFunctions[] = {
+    CL(TestResolutionDirectories),
+    CL(TestSearchPath),
+    CL(TestFilenameLookup),
+    CL(TestIsFileExist),
+    CL(TextWritePlist),
 };
 
 static int sceneIdx=-1;
@@ -24,9 +17,6 @@ static Layer* nextAction()
     sceneIdx = sceneIdx % MAX_LAYER;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
@@ -38,18 +28,12 @@ static Layer* backAction()
         sceneIdx += total;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
 static Layer* restartAction()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 

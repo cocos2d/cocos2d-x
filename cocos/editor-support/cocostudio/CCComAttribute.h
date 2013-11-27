@@ -57,7 +57,9 @@ public:
    float  getFloat(const char *key) const;
    bool   getBool(const char *key) const;
    const char* getCString(const char *key) const;
-   
+   /**
+    *   @js NA
+    */
    JsonDictionary* getDict() const;
    
 private:

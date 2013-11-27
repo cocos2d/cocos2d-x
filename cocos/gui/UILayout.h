@@ -44,21 +44,19 @@ typedef enum
     LAYOUT_RELATIVE
 }LayoutType;
 
-
-/**
- *  @js NA
- *  @lua NA
- */
 class UILayout : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILayout();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UILayout();
     

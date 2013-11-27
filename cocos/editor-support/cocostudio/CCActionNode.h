@@ -31,6 +31,10 @@
 
 namespace cocostudio {
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ActionNode:public cocos2d::Object
 {
 public:
