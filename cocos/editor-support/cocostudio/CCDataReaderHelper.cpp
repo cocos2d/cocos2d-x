@@ -155,8 +155,7 @@ void DataReaderHelper::loadData()
     while (true)
     {
         // create autorelease pool for iOS
-        Thread thread;
-        thread.createAutoreleasePool();
+        auto autoreleasePool = ThreadHelper::createAutoreleasePool();
 
         std::queue<AsyncStruct *> *pQueue = _asyncStructQueue;
         _asyncStructQueueMutex.lock(); // get async struct from queue
@@ -200,6 +199,8 @@ void DataReaderHelper::loadData()
         _dataInfoMutex.lock();
         _dataQueue->push(pDataInfo);
         _dataInfoMutex.unlock();
+        
+        ThreadHelper::releaseAutoreleasePool(autoreleasePool);
     }
 
     if( _asyncStructQueue != nullptr )
