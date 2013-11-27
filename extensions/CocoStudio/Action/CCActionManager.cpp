@@ -55,7 +55,7 @@ ActionManager::~ActionManager()
     m_pActionDic->release();
 }
 
-void ActionManager::initWithDictionary(const char* jsonName,cs::CSJsonDictionary *dic,CCObject* root)
+void ActionManager::initWithDictionary(const char* jsonName,const rapidjson::Value &dic,CCObject* root)
 {
 	std::string path = jsonName;
 	int pos = path.find_last_of("/");
@@ -66,10 +66,9 @@ void ActionManager::initWithDictionary(const char* jsonName,cs::CSJsonDictionary
     for (int i=0; i<actionCount; i++) {
         ActionObject* action = new ActionObject();
 		action->autorelease();
-        cs::CSJsonDictionary* actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
+		const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
         action->initWithDictionary(actionDic,root);
         actionList->addObject(action);
-		CC_SAFE_DELETE(actionDic);
     }
 	m_pActionDic->setObject(actionList, fileName);
 }
@@ -99,6 +98,16 @@ ActionObject* ActionManager::playActionByName(const char* jsonName,const char* a
 	if (action)
 	{
 		action->play();
+	}
+	return action;
+}
+
+ActionObject* ActionManager::playActionByName(const char* jsonName,const char* actionName, CCCallFunc* func)
+{
+	ActionObject* action = getActionByName(jsonName,actionName);
+	if (action)
+	{
+		action->play(func);
 	}
 	return action;
 }
