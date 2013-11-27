@@ -19,7 +19,7 @@ install_android_ndk()
         HOST_NAME="linux"
     fi
 
-    NDK_VERSION="android-ndk-r9"
+    NDK_VERSION="android-ndk-r9b"
     NDK_PACKAGE_NAME="${NDK_VERSION}-${HOST_NAME}-x86_64.tar.bz2"
 
     echo "Download ${NDK_PACKAGE_NAME} ..."
