@@ -93,34 +93,6 @@ JSBool jsval_to_int( JSContext *cx, jsval vp, int *ret )
 	return jsval_to_int32(cx, vp, (int32_t*)ret);
 }
 
-// XXX: sizeof(long) == 8 in 64 bits on OS X... apparently on Windows it is 32 bits (???)
-JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
-{
-#ifdef __LP64__
-	// compatibility check
-	assert( sizeof(long)==8);
-	JSString *jsstr = JS_ValueToString(cx, vp);
-	JSB_PRECONDITION2(jsstr, cx, JS_FALSE, "Error converting value to string");
-
-	char *str = JS_EncodeString(cx, jsstr);
-	JSB_PRECONDITION2(str, cx, JS_FALSE, "Error encoding string");
-
-	char *endptr;
-	long ret = strtol(str, &endptr, 10);
-
-	*r = ret;
-	return JS_TRUE;
-
-#else
-	// compatibility check
-	assert( sizeof(int)==4);
-	long ret = JSVAL_TO_INT(vp);
-#endif
-	
-	*r = ret;
-	return JS_TRUE;
-}
-
 jsval opaque_to_jsval( JSContext *cx, void *opaque )
 {
 #ifdef __LP64__
@@ -188,6 +160,21 @@ jsval long_to_jsval( JSContext *cx, long number )
 #else
 	CCASSERT( sizeof(int)==4, "Error!");
 	return INT_TO_JSVAL(number);
+#endif
+}
+
+jsval ulong_to_jsval( JSContext *cx, unsigned long number )
+{
+#ifdef __LP64__
+	assert( sizeof(unsigned long)==8);
+    
+	char chr[128];
+	snprintf(chr, sizeof(chr)-1, "%lu", number);
+	JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
+	return STRING_TO_JSVAL(ret_obj);
+#else
+	CCASSERT( sizeof(int)==4, "Error!");
+	return UINT_TO_JSVAL(number);
 #endif
 }
 
@@ -367,7 +354,52 @@ JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
     return ok;
 }
 
-JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
+// XXX: sizeof(long) == 8 in 64 bits on OS X... apparently on Windows it is 32 bits (???)
+JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
+{
+#ifdef __LP64__
+	// compatibility check
+	assert( sizeof(long)==8);
+	JSString *jsstr = JS_ValueToString(cx, vp);
+	JSB_PRECONDITION2(jsstr, cx, JS_FALSE, "Error converting value to string");
+    
+	char *str = JS_EncodeString(cx, jsstr);
+	JSB_PRECONDITION2(str, cx, JS_FALSE, "Error encoding string");
+    
+	char *endptr;
+	long ret = strtol(str, &endptr, 10);
+    
+	*r = ret;
+	return JS_TRUE;
+    
+#else
+	// compatibility check
+	assert( sizeof(int)==4);
+	long ret = JSVAL_TO_INT(vp);
+#endif
+	
+	*r = ret;
+	return JS_TRUE;
+}
+
+
+JSBool jsval_to_ulong( JSContext *cx, jsval vp, unsigned long *out)
+{
+    if (out == nullptr)
+        return JS_FALSE;
+    
+    long rval = 0;
+    JSBool ret = JS_FALSE;
+    ret = jsval_to_long(cx, vp, &rval);
+    if (ret)
+    {
+        *out = (unsigned long)rval;
+    }
+    return ret;
+}
+
+JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r)
+{
 	JSObject *tmp_arg;
 	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
 	JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
