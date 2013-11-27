@@ -26,7 +26,7 @@ public:
 
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
 
-    virtual void updateQuadVerties();
+    virtual void updateQuadVertices();
     virtual void draw(void) override;
     
 protected:

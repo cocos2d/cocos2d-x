@@ -62,7 +62,7 @@ bool NewSprite::initWithTexture(Texture2D *texture, const Rect &rect, bool rotat
     return result;
 }
 
-void NewSprite::updateQuadVerties()
+void NewSprite::updateQuadVertices()
 {
 
 #ifdef CC_USE_PHYSICS
@@ -131,7 +131,7 @@ void NewSprite::updateQuadVerties()
 
 void NewSprite::draw(void)
 {
-    updateQuadVerties();
+    updateQuadVertices();
     //TODO implement z order
     QuadCommand* renderCommand = new QuadCommand(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1);
 
