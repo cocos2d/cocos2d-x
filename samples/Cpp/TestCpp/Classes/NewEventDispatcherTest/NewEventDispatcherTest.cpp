@@ -28,13 +28,7 @@ unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[
 int sceneIdx=-1;
 Layer* createTest(int index)
 {
-    auto layer = (createFunctions[index])();;
-    
-    if (layer)
-    {
-        layer->autorelease();
-    }
-    
+    auto layer = (createFunctions[index])();;    
     return layer;
 }
 
@@ -227,6 +221,9 @@ std::string TouchableSpriteTest::subtitle()
 class TouchableSpriteWithFixedPriority : public Sprite
 {
 public:
+
+    CREATE_FUNC(TouchableSpriteWithFixedPriority);
+    
     TouchableSpriteWithFixedPriority()
     : _listener(nullptr)
     , _fixedPriority(0)
@@ -297,23 +294,20 @@ void FixedPriorityTest::onEnter()
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
-    auto sprite1 = new TouchableSpriteWithFixedPriority();
-    sprite1->initWithFile("Images/CyanSquare.png");
-    sprite1->autorelease();
+    auto sprite1 = TouchableSpriteWithFixedPriority::create();
+    sprite1->setTexture("Images/CyanSquare.png");
     sprite1->setPriority(30);
     sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 40));
     addChild(sprite1, 10);
     
-    auto sprite2 = new TouchableSpriteWithFixedPriority();
-    sprite2->initWithFile("Images/MagentaSquare.png");
-    sprite2->autorelease();
+    auto sprite2 = TouchableSpriteWithFixedPriority::create();
+    sprite2->setTexture("Images/MagentaSquare.png");
     sprite2->setPriority(20);
     sprite2->setPosition(origin+Point(size.width/2, size.height/2));
     addChild(sprite2, 20);
     
-    auto sprite3 = new TouchableSpriteWithFixedPriority();
-    sprite3->initWithFile("Images/YellowSquare.png");
-    sprite3->autorelease();
+    auto sprite3 = TouchableSpriteWithFixedPriority::create();
+    sprite3->setTexture("Images/YellowSquare.png");
     sprite3->setPriority(10);
     sprite3->setPosition(Point(0, 0));
     sprite2->addChild(sprite3, 1);

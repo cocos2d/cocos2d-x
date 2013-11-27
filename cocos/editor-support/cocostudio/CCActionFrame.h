@@ -39,6 +39,10 @@ enum FrameType
 	kKeyframeMax
 };
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ActionFrame:public cocos2d::Object
 {
 
@@ -125,6 +129,10 @@ protected:
 	float _fTime;
 };
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ActionMoveFrame:public ActionFrame
 {
 public:
@@ -165,6 +173,10 @@ protected:
 	cocos2d::Point _position;
 };
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ActionScaleFrame:public ActionFrame
 {
 public:
@@ -219,7 +231,10 @@ protected:
 	float _scaleX;
 	float _scaleY;
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ActionRotationFrame:public ActionFrame
 {
 public:
@@ -259,7 +274,10 @@ public:
 protected:
 	float _rotation;
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ActionFadeFrame:public ActionFrame
 {
 public:
@@ -299,7 +317,10 @@ public:
 protected:
 	float _opacity;
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class ActionTintFrame:public ActionFrame
 {
 

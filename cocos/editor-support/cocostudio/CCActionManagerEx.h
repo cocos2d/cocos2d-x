@@ -37,21 +37,28 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     ActionManagerEx();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~ActionManagerEx();
     
     /**
      * Gets the static instance of ActionManager.
+     * @js getInstance
+     * @lua getInstance
      */
     static ActionManagerEx* shareManager();
 
 	 /**
      * Purges ActionManager point.
+     * @js purge
+     * @lua destroyActionManager
      */
 	static void purgeActionManager();
 

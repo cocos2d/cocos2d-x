@@ -196,7 +196,7 @@ public:
      @param    filePath        the file's absolute path, including file suffix.
      @param    isToRGB        whether the image is saved as RGB format.
      */
-    bool saveToFile(const char *filePath, bool isToRGB = true);
+    bool saveToFile(const std::string &filename, bool isToRGB = true);
 
 protected:
     bool initWithJpgData(const unsigned char *  data, int dataLen);
@@ -210,8 +210,8 @@ protected:
     bool initWithS3TCData(const unsigned char * data, int dataLen);
     bool initWithATITCData(const unsigned char *data, int dataLen);
 
-    bool saveImageToPNG(const char *filePath, bool isToRGB = true);
-    bool saveImageToJPG(const char *filePath);
+    bool saveImageToPNG(const std::string& filePath, bool isToRGB = true);
+    bool saveImageToJPG(const std::string& filePath);
     
 private:
     /**

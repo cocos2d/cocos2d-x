@@ -59,7 +59,7 @@ ParticleBatchNode::~ParticleBatchNode()
  * creation with Texture2D
  */
 
-ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, unsigned int capacity/* = kParticleDefaultCapacity*/)
+ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, int capacity/* = kParticleDefaultCapacity*/)
 {
     ParticleBatchNode * p = new ParticleBatchNode();
     if( p && p->initWithTexture(tex, capacity))
@@ -75,7 +75,7 @@ ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, unsigned
  * creation with File Image
  */
 
-ParticleBatchNode* ParticleBatchNode::create(const char* imageFile, unsigned int capacity/* = kParticleDefaultCapacity*/)
+ParticleBatchNode* ParticleBatchNode::create(const std::string& imageFile, int capacity/* = kParticleDefaultCapacity*/)
 {
     ParticleBatchNode * p = new ParticleBatchNode();
     if( p && p->initWithFile(imageFile, capacity))
@@ -90,7 +90,7 @@ ParticleBatchNode* ParticleBatchNode::create(const char* imageFile, unsigned int
 /*
  * init with Texture2D
  */
-bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
+bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
     _textureAtlas = new TextureAtlas();
     _textureAtlas->initWithTexture(tex, capacity);
@@ -109,7 +109,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
 /*
  * init with FileImage
  */
-bool ParticleBatchNode::initWithFile(const char* fileImage, unsigned int capacity)
+bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 {
     Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(tex, capacity);

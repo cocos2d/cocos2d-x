@@ -78,9 +78,6 @@ struct transformValues_;
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */
 class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
-#ifdef EMSCRIPTEN
-, public GLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
 
@@ -133,9 +130,10 @@ public:
      * @param   texture    A pointer to an existing Texture2D object.
      *                      You can use a Texture2D object for many sprites.
      * @param   rect        Only the contents inside the rect of this texture will be applied for this sprite.
+     * @param   rotated     Whether or not the rect is rotated
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static Sprite* createWithTexture(Texture2D *texture, const Rect& rect);
+    static Sprite* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated=false);
 
     /**
      * Creates a sprite with an sprite frame.
@@ -158,113 +156,6 @@ public:
 
     /// @}  end of creators group
 
-
-    /// @{
-    /// @name Initializers
-
-    /**
-     * Default constructor
-     * @js ctor
-     */
-    Sprite(void);
-
-    /**
-     * Default destructor
-     * @js  NA
-     * @lua NA
-     */
-    virtual ~Sprite(void);
-
-    /**
-     * Initializes an empty sprite with nothing init.
-     */
-    virtual bool init(void);
-
-    /**
-     * Initializes a sprite with a texture.
-     *
-     * After initialization, the rect used will be the size of the texture, and the offset will be (0,0).
-     *
-     * @param   texture    A pointer to an existing Texture2D object.
-     *                      You can use a Texture2D object for many sprites.
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithTexture(Texture2D *texture);
-
-    /**
-     * Initializes a sprite with a texture and a rect.
-     *
-     * After initialization, the offset will be (0,0).
-     *
-     * @param   texture    A pointer to an exisiting Texture2D object.
-     *                      You can use a Texture2D object for many sprites.
-     * @param   rect        Only the contents inside rect of this texture will be applied for this sprite.
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithTexture(Texture2D *texture, const Rect& rect);
-
-    /**
-     * Initializes a sprite with a texture and a rect in points, optionally rotated.
-     *
-     * After initialization, the offset will be (0,0).
-     * @note    This is the designated initializer.
-     *
-     * @param   texture    A Texture2D object whose texture will be applied to this sprite.
-     * @param   rect        A rectangle assigned the contents of texture.
-     * @param   rotated     Whether or not the texture rectangle is rotated.
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
-
-    /**
-     * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite
-     *
-     * @param   pSpriteFrame  A SpriteFrame object. It should includes a valid texture and a rect
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
-
-    /**
-     * Initializes a sprite with an sprite frame name.
-     *
-     * A SpriteFrame will be fetched from the SpriteFrameCache by name.
-     * If the SpriteFrame doesn't exist it will raise an exception.
-     *
-     * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
-
-    /**
-     * Initializes a sprite with an image filename.
-     *
-     * This method will find filename from local file system, load its content to Texture2D,
-     * then use Texture2D to create a sprite.
-     * After initialization, the rect used will be the size of the image. The offset will be (0,0).
-     *
-     * @param   filename The path to an image file in local file system
-     * @return  true if the sprite is initialized properly, false otherwise.
-     * @js      init
-     * @lua     init
-     */
-    virtual bool initWithFile(const std::string& filename);
-
-    /**
-     * Initializes a sprite with an image filename, and a rect.
-     *
-     * This method will find filename from local file system, load its content to Texture2D,
-     * then use Texture2D to create a sprite.
-     * After initialization, the offset will be (0,0).
-     *
-     * @param   filename The path to an image file in local file system.
-     * @param   rect        The rectangle assigned the content area from texture.
-     * @return  true if the sprite is initialized properly, false otherwise.
-     * @js      init
-     * @lua     init
-     */
-    virtual bool initWithFile(const std::string& filename, const Rect& rect);
-
-    /// @} end of initializers
 
     /// @{
     /// @name BatchNode methods
@@ -298,7 +189,21 @@ public:
 
 
     /// @{
-    /// @name Texture methods
+    /// @name Texture / Frame methods
+
+    /** Sets a new texture (from a filename) to the sprite.
+     It will call `setTextureRect()` with the texture's content size.
+     TODO: The whole Sprite API needs to be reviewed.
+     */
+    virtual void setTexture(const std::string &filename );
+
+    /** Sets a new texture to the sprite.
+     The Texture's rect is not changed.
+     */
+    virtual void setTexture(Texture2D *texture) override;
+
+    /** returns the Texture2D object used by the sprite */
+    virtual Texture2D* getTexture() const override;
 
     /**
      * Updates the texture rect of the Sprite in points.
@@ -320,30 +225,28 @@ public:
      */
     virtual void setVertexRect(const Rect& rect);
 
-    /// @} end of texture methods
-
-
-
-    /// @{
-    /// @name Frames methods
-
     /**
-     * Sets a new display frame to the Sprite.
+     * Sets a new SpriteFrame to the Sprite.
      */
-    virtual void setDisplayFrame(SpriteFrame *pNewFrame);
+    virtual void setSpriteFrame(SpriteFrame* newFrame);
+    virtual void setSpriteFrame(const std::string &spriteFrameName);
+
+    /** @deprecated Use `setSpriteFrame()` instead. */
+    CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
 
     /**
      * Returns whether or not a SpriteFrame is being displayed
      */
     virtual bool isFrameDisplayed(SpriteFrame *pFrame) const;
 
-    /** @deprecated Use getDisplayFrame() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() { return getDisplayFrame(); };
-
     /**
      * Returns the current displayed frame.
      */
-    virtual SpriteFrame* getDisplayFrame();
+    virtual SpriteFrame* getSpriteFrame() const;
+    /** @deprecated Use `getSpriteFrame()` instead */
+    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* getDisplayFrame() const { return getSpriteFrame(); }
+    /** @deprecated Use `getSpriteFrame()` instead */
+    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() const { return getSpriteFrame(); };
 
     /// @} End of frames methods
 
@@ -473,8 +376,6 @@ public:
     //
     /// @{
     /// @name Functions inherited from TextureProtocol
-    virtual void setTexture(Texture2D *texture) override;
-    virtual Texture2D* getTexture() const override;
     /**
     *@code
     *When this function bound into js or lua,the parameter will be changed
@@ -508,8 +409,10 @@ public:
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void reorderChild(Node *child, int zOrder) override;
-    virtual void addChild(Node *child) override;
-    virtual void addChild(Node *child, int zOrder) override;
+    // Should also override addChild(Node*) and addChild(Node*, int), or binding generator will only
+    // bind addChild(Node*, int, int);
+    virtual void addChild(Node* child) override;
+    virtual void addChild(Node* child, int zOrder) override;
     virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
@@ -531,6 +434,97 @@ public:
     /// @}
 
 protected:
+
+    Sprite(void);
+    virtual ~Sprite(void);
+
+    /* Initializes an empty sprite with nothing init. */
+    virtual bool init(void);
+
+    /**
+     * Initializes a sprite with a texture.
+     *
+     * After initialization, the rect used will be the size of the texture, and the offset will be (0,0).
+     *
+     * @param   texture    A pointer to an existing Texture2D object.
+     *                      You can use a Texture2D object for many sprites.
+     * @return  true if the sprite is initialized properly, false otherwise.
+     */
+    virtual bool initWithTexture(Texture2D *texture);
+
+    /**
+     * Initializes a sprite with a texture and a rect.
+     *
+     * After initialization, the offset will be (0,0).
+     *
+     * @param   texture    A pointer to an exisiting Texture2D object.
+     *                      You can use a Texture2D object for many sprites.
+     * @param   rect        Only the contents inside rect of this texture will be applied for this sprite.
+     * @return  true if the sprite is initialized properly, false otherwise.
+     */
+    virtual bool initWithTexture(Texture2D *texture, const Rect& rect);
+
+    /**
+     * Initializes a sprite with a texture and a rect in points, optionally rotated.
+     *
+     * After initialization, the offset will be (0,0).
+     * @note    This is the designated initializer.
+     *
+     * @param   texture    A Texture2D object whose texture will be applied to this sprite.
+     * @param   rect        A rectangle assigned the contents of texture.
+     * @param   rotated     Whether or not the texture rectangle is rotated.
+     * @return  true if the sprite is initialized properly, false otherwise.
+     */
+    virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
+
+    /**
+     * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite
+     *
+     * @param   pSpriteFrame  A SpriteFrame object. It should includes a valid texture and a rect
+     * @return  true if the sprite is initialized properly, false otherwise.
+     */
+    virtual bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
+
+    /**
+     * Initializes a sprite with an sprite frame name.
+     *
+     * A SpriteFrame will be fetched from the SpriteFrameCache by name.
+     * If the SpriteFrame doesn't exist it will raise an exception.
+     *
+     * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache
+     * @return  true if the sprite is initialized properly, false otherwise.
+     */
+    virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
+
+    /**
+     * Initializes a sprite with an image filename.
+     *
+     * This method will find filename from local file system, load its content to Texture2D,
+     * then use Texture2D to create a sprite.
+     * After initialization, the rect used will be the size of the image. The offset will be (0,0).
+     *
+     * @param   filename The path to an image file in local file system
+     * @return  true if the sprite is initialized properly, false otherwise.
+     * @js      init
+     * @lua     init
+     */
+    virtual bool initWithFile(const std::string& filename);
+
+    /**
+     * Initializes a sprite with an image filename, and a rect.
+     *
+     * This method will find filename from local file system, load its content to Texture2D,
+     * then use Texture2D to create a sprite.
+     * After initialization, the offset will be (0,0).
+     *
+     * @param   filename The path to an image file in local file system.
+     * @param   rect        The rectangle assigned the content area from texture.
+     * @return  true if the sprite is initialized properly, false otherwise.
+     * @js      init
+     * @lua     init
+     */
+    virtual bool initWithFile(const std::string& filename, const Rect& rect);
+
     void updateColor(void);
     virtual void setTextureCoords(Rect rect);
     virtual void updateBlendFunc(void);
@@ -575,8 +569,11 @@ protected:
     bool _opacityModifyRGB;
 
     // image is flipped
-    bool _flippedX;                              /// Whether the sprite is flipped horizontally or not
-    bool _flippedY;                              /// Whether the sprite is flipped vertically or not
+    bool _flippedX;                         /// Whether the sprite is flipped horizontally or not
+    bool _flippedY;                         /// Whether the sprite is flipped vertically or not
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };
 
 

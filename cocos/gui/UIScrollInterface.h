@@ -31,6 +31,9 @@ namespace gui {
 
 class UIScrollInterface
 {
+public:
+    virtual ~UIScrollInterface() {}
+
 protected:
     virtual void handlePressLogic(const cocos2d::Point &touchPoint) = 0;
     virtual void handleMoveLogic(const cocos2d::Point &touchPoint) = 0;

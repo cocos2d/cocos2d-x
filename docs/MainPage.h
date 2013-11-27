@@ -13,7 +13,7 @@ This project is based on the famous <A HREF="http://www.cocos2d-iphone.org">"coc
 - twitter:                          http://twitter.com/cocos2dx/
 - weibo:                            http://weibo.com/cocos2dx/
 - wiki:                             http://wiki.cocos2d-x.org/
-- show cases:                       http://www.cocos2d-x.org/projects/cocos2d-x/apps
+- show cases:                       http://www.cocos2d-x.org/games
 
 - <A HREF="http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Tutorials">Tutorials of Cocos2dxSimpleGame</A>
 - <A HREF="http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Installation_and_First_run">Installation and First run</A>

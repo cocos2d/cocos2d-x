@@ -102,6 +102,8 @@ void JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc(float percent)
 
 void JSArmatureWrapper::frameCallbackFunc(cocostudio::Bone *pBone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)
 {
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JSObject *thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);
     js_proxy_t *proxy = js_get_or_create_proxy(cx, pBone);
@@ -119,8 +121,6 @@ void JSArmatureWrapper::frameCallbackFunc(cocostudio::Bone *pBone, const char *f
         valArr[3] = currentIndexVal;
 
         JS_AddValueRoot(cx, valArr);
-        
-        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         
         JS_CallFunctionValue(cx, thisObj, _jsCallback, 4, valArr, &retval);
         JS_RemoveValueRoot(cx, valArr);
@@ -232,9 +232,9 @@ extern JSObject* jsb_ArmatureDataManager_prototype;
 
 void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
 {
-    JS_DefineFunction(cx, jsb_ArmatureAnimation_prototype, "setMovementEventCallFunc", js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_ArmatureAnimation_prototype, "setMovementEventCallFunc", js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_ArmatureAnimation_prototype, "setFrameEventCallFunc", js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_ArmatureAnimation_prototype, "setFrameEventCallFunc", js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_ArmatureDataManager_prototype, "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_ArmatureDataManager_prototype, "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }

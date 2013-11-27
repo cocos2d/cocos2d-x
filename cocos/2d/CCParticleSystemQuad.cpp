@@ -46,7 +46,7 @@ NS_CC_BEGIN
 
 //implementation ParticleSystemQuad
 // overriding the init method
-bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 {
     // base initialization
     if( ParticleSystem::initWithTotalParticles(numberOfParticles) ) 
@@ -111,27 +111,27 @@ ParticleSystemQuad::~ParticleSystemQuad()
 
 // implementation ParticleSystemQuad
 
-ParticleSystemQuad * ParticleSystemQuad::create(const char *plistFile)
+ParticleSystemQuad * ParticleSystemQuad::create(const std::string& filename)
 {
-    ParticleSystemQuad *pRet = new ParticleSystemQuad();
-    if (pRet && pRet->initWithFile(plistFile))
+    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    if (ret && ret->initWithFile(filename))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return pRet;
+    CC_SAFE_DELETE(ret);
+    return ret;
 }
 
-ParticleSystemQuad * ParticleSystemQuad::createWithTotalParticles(unsigned int numberOfParticles) {
-    ParticleSystemQuad *pRet = new ParticleSystemQuad();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+ParticleSystemQuad * ParticleSystemQuad::createWithTotalParticles(int numberOfParticles) {
+    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return pRet;
+    CC_SAFE_DELETE(ret);
+    return ret;
 }
 
 
@@ -328,22 +328,22 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Point
 void ParticleSystemQuad::postStep()
 {
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-	
-	// Option 1: Sub Data
+    
+    // Option 1: Sub Data
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0])*_totalParticles, _quads);
-	
-	// Option 2: Data
-    //	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * particleCount, quads_, GL_DYNAMIC_DRAW);
-	
-	// Option 3: Orphaning + glMapBuffer
-	// glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0])*_totalParticles, NULL, GL_STREAM_DRAW);
-	// void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	// memcpy(buf, _quads, sizeof(_quads[0])*_totalParticles);
-	// glUnmapBuffer(GL_ARRAY_BUFFER);
     
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // Option 2: Data
+    //  glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * particleCount, quads_, GL_DYNAMIC_DRAW);
     
-	CHECK_GL_ERROR_DEBUG();
+    // Option 3: Orphaning + glMapBuffer
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0])*_totalParticles, NULL, GL_STREAM_DRAW);
+    // void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+    // memcpy(buf, _quads, sizeof(_quads[0])*_totalParticles);
+    // glUnmapBuffer(GL_ARRAY_BUFFER);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    CHECK_GL_ERROR_DEBUG();
 }
 
 // overriding draw method

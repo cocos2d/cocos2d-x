@@ -31,6 +31,10 @@ using namespace std;
 
 namespace cocostudio {
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  SpriteFrameCacheHelper
 {
 public:
@@ -48,14 +52,7 @@ public:
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
 private:
-	/**
-     * @js ctor
-     */
     SpriteFrameCacheHelper();
-    /**
-     * @js NA
-     * @lua NA
-     */
     ~SpriteFrameCacheHelper();
 
     static SpriteFrameCacheHelper *_spriteFrameCacheHelper;

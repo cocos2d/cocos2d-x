@@ -30,9 +30,8 @@
 namespace gui {
     
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @js NA
+ */
 class UIRootWidget : public UILayout
 {
 public:
@@ -43,6 +42,7 @@ public:
     
     /**
      * Default destructor
+     * @lua NA
      */
     virtual ~UIRootWidget();
     
