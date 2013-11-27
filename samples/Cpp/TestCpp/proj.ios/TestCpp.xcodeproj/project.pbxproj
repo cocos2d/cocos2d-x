@@ -969,16 +969,6 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
-		3751F6F918458B5E00AC94F2 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
-		3751F6FA18458B5E00AC94F2 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
-		3751F6FC18458B5E00AC94F2 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
-		3751F6FD18458B5E00AC94F2 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
-		3751F6FE18458B5E00AC94F2 /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
-		3751F6FF18458B5E00AC94F2 /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
-		3751F70018458B5E00AC94F2 /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
-		3751F70118458B5E00AC94F2 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
-		3751F70218458B5E00AC94F2 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
-		3751F70318458B5E00AC94F2 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3751F70518458B7E00AC94F2 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		3751F70618458B7E00AC94F2 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
 		3751F70818458B7E00AC94F2 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
@@ -2689,32 +2679,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3751F6F818458B5E00AC94F2 /* rapidjson */ = {
-			isa = PBXGroup;
-			children = (
-				3751F6F918458B5E00AC94F2 /* document.h */,
-				3751F6FA18458B5E00AC94F2 /* filestream.h */,
-				3751F6FB18458B5E00AC94F2 /* internal */,
-				3751F6FF18458B5E00AC94F2 /* prettywriter.h */,
-				3751F70018458B5E00AC94F2 /* rapidjson.h */,
-				3751F70118458B5E00AC94F2 /* reader.h */,
-				3751F70218458B5E00AC94F2 /* stringbuffer.h */,
-				3751F70318458B5E00AC94F2 /* writer.h */,
-			);
-			name = rapidjson;
-			path = Json/rapidjson;
-			sourceTree = "<group>";
-		};
-		3751F6FB18458B5E00AC94F2 /* internal */ = {
-			isa = PBXGroup;
-			children = (
-				3751F6FC18458B5E00AC94F2 /* pow10.h */,
-				3751F6FD18458B5E00AC94F2 /* stack.h */,
-				3751F6FE18458B5E00AC94F2 /* strfunc.h */,
-			);
-			path = internal;
-			sourceTree = "<group>";
-		};
 		3751F70418458B7E00AC94F2 /* rapidjson */ = {
 			isa = PBXGroup;
 			children = (
@@ -2760,7 +2724,6 @@
 		37CA1B8117D87A3300A649D0 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
-				3751F6F818458B5E00AC94F2 /* rapidjson */,
 				37BB5ADD17E86BF1002746B4 /* Action */,
 				37CA1B8217D87A3300A649D0 /* Armature */,
 				37CA1BAF17D87A3300A649D0 /* Components */,
