@@ -13,6 +13,7 @@ namespace cocosbuilder {
 class CCBAnimationManagerDelegate
 {
 public:
+    virtual ~CCBAnimationManagerDelegate() {}
     virtual void completedAnimationSequenceNamed(const char *name) = 0;
 };
 

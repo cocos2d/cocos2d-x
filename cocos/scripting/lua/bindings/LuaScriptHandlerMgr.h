@@ -44,14 +44,20 @@ private:
 class LuaCallFunc:public cocos2d::CallFuncN
 {
 public:
-    LuaCallFunc()
+    LuaCallFunc():_functionLua(nullptr)
     {}
     virtual ~LuaCallFunc()
     {}
     
-    static LuaCallFunc * create(int nHandler);
-    virtual void execute();
+    static LuaCallFunc* create(const std::function<void(void* self,Node*)>& func);
+    bool initWithFunction(const std::function<void(void* self,Node*)>& func);
     virtual LuaCallFunc* clone() const;
+    virtual void execute() override;
+protected:
+    /**
+     */
+    std::function<void(void* self,Node*)> _functionLua;
+    
 };
 
 class ScriptHandlerMgr

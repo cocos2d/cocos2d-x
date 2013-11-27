@@ -60,11 +60,14 @@ class UIScrollView : public UILayout , public UIScrollInterface
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UIScrollView();
     
     /**
      * Default destructor
+     * @lua NA
+     * @js NA
      */
     virtual ~UIScrollView();
     

@@ -79,7 +79,10 @@ enum TweenType
 
     TWEEN_EASING_MAX = 10000
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  TweenFunction
 {
 public:

@@ -15,7 +15,7 @@ public:
     AccelerometerTest(void);
     ~AccelerometerTest(void);
 
-    virtual void onAcceleration(Acceleration* acc, Event* event);
+    void onAcceleration(Acceleration* acc, Event* event);
 
     virtual std::string title();
     virtual void onEnter();

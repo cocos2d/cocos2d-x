@@ -89,6 +89,9 @@ public:
     static Armature *create(const char *name, Bone *parentBone);
 
 public:
+    /**
+     *  @js ctor
+     */
     Armature();
     /**
      * @js NA
@@ -159,8 +162,15 @@ public:
     virtual void draw() override;
 
     virtual const cocos2d::AffineTransform& getNodeToParentTransform() const override;
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     inline void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     inline const cocos2d::BlendFunc &getBlendFunc(void) const override{ return _blendFunc; }
 	
 
@@ -199,13 +209,31 @@ public:
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     virtual b2Fixture *getShapeList();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void setBody(b2Body *body);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual b2Body *getBody() const;
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual cpShape *getShapeList();
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void setBody(cpBody *body);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual cpBody *getBody() const;
 #endif
 
@@ -213,10 +241,15 @@ protected:
 
     /*
      * Used to create Bone internal
+     * @js NA
+     * @lua NA
      */
     Bone *createBone(const char *boneName );
 
-    //! Update blend function
+    /**! Update blend function
+     *  @js NA
+     *  @lua NA
+     */
     void updateBlendType(BlendType blendType);
 
 protected:

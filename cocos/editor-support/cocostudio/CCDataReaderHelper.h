@@ -43,7 +43,10 @@ namespace tinyxml2
 
 namespace cocostudio {
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  DataReaderHelper : cocos2d::Object
 {
 protected:
