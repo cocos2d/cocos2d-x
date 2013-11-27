@@ -78,9 +78,17 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
             if (ccbNode->getCCBFileNode() && isExtraProp)
             {
                 pNode = ccbNode->getCCBFileNode();
+
+                // avoid user object conflict with other implementation
+                auto dict = static_cast<Dictionary*>(pNode->getUserObject());
+                if (dict == nullptr)
+                {
+                    dict = Dictionary::create();
+                    pNode->setUserObject(dict);
+                }
                 
                 // Skip properties that doesn't have a value to override
-                Array *extraPropsNames = (Array*)pNode->getUserObject();
+                Array *extraPropsNames = (Array*)dict->objectForKey("extraProps");
                 Object* pObj = NULL;
                 bool bFound = false;
                 CCARRAY_FOREACH(extraPropsNames, pObj)
@@ -97,12 +105,21 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
         }
         else if (isExtraProp && pNode == ccbReader->getAnimationManager()->getRootNode())
         {
-            Array *extraPropsNames = static_cast<Array*>(pNode->getUserObject());
+            // avoid user object conflict with other implementation
+            auto dict = static_cast<Dictionary*>(pNode->getUserObject());
+            if (dict == nullptr)
+            {
+                dict = Dictionary::create();
+                pNode->setUserObject(dict);
+            }
+            
+            Array *extraPropsNames = static_cast<Array*>(dict->objectForKey("extraProps"));
             if (! extraPropsNames)
             {
                 extraPropsNames = Array::create();
-                pNode->setUserObject(extraPropsNames);
+                dict->setObject(extraPropsNames, "extraProps");
             }
+            // add extra props array to dict
             
             extraPropsNames->addObject(String::create(propertyName));
         }
