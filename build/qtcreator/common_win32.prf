@@ -10,6 +10,9 @@ win32 {
     }
 
     DEFINES += WIN32 _WINDOWS CC_KEYBOARD_SUPPORT CURL_STATICLIB _CRT_SECURE_NO_WARNINGS
+    # Leaved for tweaks.
+    DEFINES += CC_QTCREATOR_ON_WINDOWS
+
     INCLUDEPATH += \
         $${CC_ROOT}external/win32-specific/gles/include/OGLES \
         $${CC_ROOT}external/win32-specific/zlib/include

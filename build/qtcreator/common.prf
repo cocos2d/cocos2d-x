@@ -7,6 +7,17 @@ CC_OS_TYPE = linux
 win32: CC_OS_TYPE = win32
 macx: CC_OS_TYPE = mac
 
+# @return Path for $TARGET variable rebased to given directory
+# @param dir Directory to put executable file
+defineReplace(cc_get_target_path) {
+    dir = $$1
+    result = $$relative_path($${dir}, $$shadowed($$PWD))
+    win32 {
+        result = ../$${result}
+    }
+    return($$result)
+}
+
 # @return Add include paths to search external library in cocos distribution.
 # @param name Name of library to link with.
 defineReplace(cc_include_library) {

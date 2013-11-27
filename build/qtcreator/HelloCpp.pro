@@ -7,7 +7,7 @@ RCC_DIR = $$shadowed($PWD)/rcc/$${TARGET}
 UI_DIR = $$shadowed($$PWD)/ui/$${TARGET}
 
 CC_GAME_ROOT = $${PWD}/../../samples/Cpp/HelloCpp
-TARGET = $$relative_path($${CC_GAME_ROOT}/$${TARGET}, $$shadowed($$PWD))
+TARGET = $$cc_get_target_path($${CC_GAME_ROOT}/$${TARGET})
 
 HEADERS += $$files($${CC_GAME_ROOT}/Classes/*.h)
 SOURCES += $$files($${CC_GAME_ROOT}/Classes/*.cpp)
