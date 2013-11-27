@@ -135,7 +135,10 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 	std::string load_str = std::string((const char *)data->getBytes(), data->getSize() ); 
 	CC_SAFE_DELETE(data);
 	jsonDict.Parse<0>(load_str.c_str());
-    
+    if (jsonDict.HasParseError())
+    {
+        CCLOG("GetParseError %s\n",jsonDict.GetParseError());
+    }
     UIWidget* widget = NULL;
     const char* fileVersion = DICTOOL->getStringValue_json(jsonDict, "version");
     WidgetPropertiesReader * pReader = NULL;

@@ -28,7 +28,7 @@
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include "CCActionFrame.h"
-#include "../Json/CSContentJsonDictionary.h"
+#include "../Json/DictionaryHelper.h"
 #include "../Json/rapidjson/document.h"
 NS_CC_EXT_BEGIN
 /**
@@ -151,7 +151,6 @@ public:
 	virtual void stopAction();
 	
     /*init properties with a json dictionary*/
-    virtual void initWithDictionary(cs::CSJsonDictionary* dic,CCObject* root);
 	virtual void initWithDictionary(const rapidjson::Value& dic,CCObject* root);
     /**
      * Gets if the action is done once time.
