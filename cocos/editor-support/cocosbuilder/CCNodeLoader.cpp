@@ -80,7 +80,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
                 pNode = ccbNode->getCCBFileNode();
 
                 // avoid user object conflict with other implementation
-                auto dict = static_cast<Dictionary*>(pNode->getUserObject());
+                auto dict = dynamic_cast<Dictionary*>(pNode->getUserObject());
                 if (dict == nullptr)
                 {
                     dict = Dictionary::create();
@@ -106,7 +106,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
         else if (isExtraProp && pNode == ccbReader->getAnimationManager()->getRootNode())
         {
             // avoid user object conflict with other implementation
-            auto dict = static_cast<Dictionary*>(pNode->getUserObject());
+            auto dict = dynamic_cast<Dictionary*>(pNode->getUserObject());
             if (dict == nullptr)
             {
                 dict = Dictionary::create();

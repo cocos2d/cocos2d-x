@@ -295,7 +295,7 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
         CCBAnimationManager* manager = static_cast<CCBAnimationManager*>(animationManagers->objectForKey((intptr_t)pNode));
         
         // avoid user object conflict with other implementation
-        auto dict = static_cast<Dictionary*>(pNode->getUserObject());
+        auto dict = dynamic_cast<Dictionary*>(pNode->getUserObject());
         if (dict == nullptr)
         {
             dict = Dictionary::create();
@@ -336,7 +336,7 @@ Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, Obj
 void CCBReader::cleanUpNodeGraph(Node *pNode)
 {
     // avoid user object conflict with other implementation
-    auto dict = static_cast<Dictionary*>(pNode->getUserObject());
+    auto dict = dynamic_cast<Dictionary*>(pNode->getUserObject());
     if (dict != nullptr)
     {
         dict->removeObjectForKey("ccbmanager");
