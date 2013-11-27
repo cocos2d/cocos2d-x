@@ -34,13 +34,11 @@ THE SOFTWARE.
 
 
 #if ENABLE_PHYSICS_CHIPMUNK_DETECT
-struct cpBody;
-struct cpShape;
+#include "chipmunk.h"
 #elif ENABLE_PHYSICS_BOX2D_DETECT
-class b2Body;
-class b2Fixture;
-struct b2Filter;
+#include "Box2D/Box2D.h"
 #endif
+
 
 namespace cocostudio {
 
@@ -53,34 +51,34 @@ public:
     virtual ~ColliderFilter() { }
 #if ENABLE_PHYSICS_BOX2D_DETECT
 public:
-    ColliderFilter(unsigned short categoryBits = 0x0001, unsigned short maskBits = 0xFFFF, signed short groupIndex = 0);
+    ColliderFilter(uint16 categoryBits = 0x0001, uint16 maskBits = 0xFFFF, int16 groupIndex = 0);
     void updateShape(b2Fixture *fixture);
 
-    virtual void setCategoryBits(unsigned short categoryBits) { _categoryBits = categoryBits; }
-    virtual unsigned short getCategoryBits() const { return _categoryBits; }
+    virtual void setCategoryBits(uint16 categoryBits) { _categoryBits = categoryBits; }
+    virtual uint16 getCategoryBits() const { return _categoryBits; }
 
-    virtual void setMaskBits(unsigned short maskBits) { _maskBits = maskBits; }
-    virtual unsigned short getMaskBits() const { return _maskBits; }
+    virtual void setMaskBits(uint16 maskBits) { _maskBits = maskBits; }
+    virtual uint16 getMaskBits() const { return _maskBits; }
 
-    virtual void setGroupIndex(signed short groupIndex) { _groupIndex = groupIndex; }
-    virtual signed short getGroupIndex() const { return _groupIndex; }
+    virtual void setGroupIndex(int16 groupIndex) { _groupIndex = groupIndex; }
+    virtual int16 getGroupIndex() const { return _groupIndex; }
 protected:
-    unsigned short _categoryBits;
-    unsigned short _maskBits;
-    signed short _groupIndex;
+    uint16 _categoryBits;
+    uint16 _maskBits;
+    int16 _groupIndex;
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 public:
-    ColliderFilter(uintptr_t collisionType = 0, uintptr_t group = 0);
+    ColliderFilter(cpCollisionType collisionType = 0, cpGroup group = 0);
     void updateShape(cpShape *shape);
 
-    virtual void setCollisionType(uintptr_t collisionType) { _collisionType = collisionType; }
-    virtual uintptr_t getCollisionType() const { return _collisionType; }
+    virtual void setCollisionType(cpCollisionType collisionType) { _collisionType = collisionType; }
+    virtual cpCollisionType getCollisionType() const { return _collisionType; }
 
-    virtual void setGroup(uintptr_t group) { _group = group; }
-    virtual uintptr_t getGroup() const { return _group; }
+    virtual void setGroup(cpGroup group) { _group = group; }
+    virtual cpGroup getGroup() const { return _group; }
 protected:
-    uintptr_t _collisionType;
-    uintptr_t _group;
+    cpCollisionType _collisionType;
+    cpGroup _group;
 #endif
 };
 
