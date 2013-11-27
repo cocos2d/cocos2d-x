@@ -21,6 +21,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NewSpriteBatchTest),
     CL(NewClippingNodeTest),
     CL(NewDrawNodeTest),
+    CL(NewCullingTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -401,3 +402,36 @@ string NewDrawNodeTest::subtitle()
 {
     return "DrawNode";
 }
+
+NewCullingTest::NewCullingTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto parent = Node::create();
+    parent->setPosition(s.width/2, s.height/2);
+    addChild(parent);
+    auto parent2 = Node::create();
+    parent2->setPosition(0,0);
+    parent->addChild(parent2);
+    parent2->runAction(RepeatForever::create((JumpBy::create(2, Point(0,0), 300, 1))));
+    NewSprite* sprite = NewSprite::create("Images/grossini.png");
+    sprite->setPosition(Point(0,0));
+    sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
+    parent2->addChild(sprite);
+}
+
+NewCullingTest::~NewCullingTest()
+{
+    
+}
+
+string NewCullingTest::title()
+{
+    return "New Render";
+}
+
+string NewCullingTest::subtitle()
+{
+    return "Culling";
+}
+
