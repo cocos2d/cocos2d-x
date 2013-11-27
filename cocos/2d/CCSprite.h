@@ -409,7 +409,7 @@ public:
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void reorderChild(Node *child, int zOrder) override;
-    // Shoul also override addChild(Node*) and addChild(Node*, int), or binding generator will only
+    // Should also override addChild(Node*) and addChild(Node*, int), or binding generator will only
     // bind addChild(Node*, int, int);
     virtual void addChild(Node* child) override;
     virtual void addChild(Node* child, int zOrder) override;
