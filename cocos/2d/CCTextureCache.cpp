@@ -163,9 +163,8 @@ void TextureCache::loadImage()
     while (true)
     {
         // create autorelease pool for iOS
-        Thread thread;
-        thread.createAutoreleasePool();
-
+        auto autolreasePool = ThreadHelper::createAutoreleasePool();
+        
         std::queue<AsyncStruct*> *pQueue = _asyncStructQueue;
         _asyncStructQueueMutex.lock();
         if (pQueue->empty())
@@ -207,6 +206,8 @@ void TextureCache::loadImage()
         _imageInfoMutex.lock();
         _imageInfoQueue->push(imageInfo);
         _imageInfoMutex.unlock();
+        
+        ThreadHelper::releaseAutoreleasePool(autolreasePool);
     }
     
 	if(_asyncStructQueue != nullptr)

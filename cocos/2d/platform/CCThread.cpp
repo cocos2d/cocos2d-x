@@ -24,23 +24,62 @@ THE SOFTWARE.
 
 #include "CCThread.h"
 
+NS_CC_BEGIN
+
 // iOS and Mac already has a Thread.mm
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
-NS_CC_BEGIN
+std::list<std::function<void(void)>>* ThreadHelper::_callbackList = new std::list<std::function<void(void)>>();
+std::mutex* ThreadHelper::_mutex = new std::mutex;
+long ThreadHelper::_callbackNumberPerFrame = 5;
 
-Thread::~Thread()
+
+void* ThreadHelper::createAutoreleasePool()
 {
-    // To prevent warning: private field '_autoreasePool' is not
-    // used [-Wunused-private-field] by CLANG.
-    _autoReleasePool = nullptr;
+    return nullptr;
 }
 
-void Thread::createAutoreleasePool()
+void ThreadHelper::releaseAutoreleasePool(void* autoreleasePool)
 {
-
+    
 }
 
-NS_CC_END
+void ThreadHelper::runOnGLThread(std::function<void(void)> f)
+{
+    // Insert call back function
+    _mutex->lock();
+    _callbackList->push_back(f);
+    _mutex->unlock();
+}
+
+void ThreadHelper::doCallback()
+{
+    _mutex->lock();
+    auto iter = _callbackList->begin();
+    long i = 0;
+    while (iter != _callbackList->end())
+    {
+        auto f = *iter;
+        f();
+        
+        ++i;
+        if (i >= _callbackNumberPerFrame)
+        {
+            break;
+        }
+        else
+        {
+            iter = _callbackList->erase(iter);
+        }
+    }
+    _mutex->unlock();
+}
+
+void ThreadHelper::setCallbackNumberPerFrame(long callbackNumberPerFrame)
+{
+    _callbackNumberPerFrame = callbackNumberPerFrame;
+}
 
 #endif
+
+NS_CC_END
