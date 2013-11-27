@@ -407,18 +407,52 @@ NewCullingTest::NewCullingTest()
 {
     auto s = Director::getInstance()->getWinSize();
     
+    std::vector<string> images;
+    images.push_back("Images/grossini_dance_01.png");
+    images.push_back("Images/grossini_dance_02.png");
+    images.push_back("Images/grossini_dance_03.png");
+    images.push_back("Images/grossini_dance_04.png");
+    images.push_back("Images/grossini_dance_05.png");
+    images.push_back("Images/grossini_dance_06.png");
+    images.push_back("Images/grossini_dance_07.png");
+    images.push_back("Images/grossini_dance_08.png");
+    images.push_back("Images/grossini_dance_09.png");
+    images.push_back("Images/grossini_dance_10.png");
+    images.push_back("Images/grossini_dance_11.png");
+    images.push_back("Images/grossini_dance_12.png");
+    images.push_back("Images/grossini_dance_13.png");
+    images.push_back("Images/grossini_dance_14.png");
+    images.push_back("Images/grossini.png");
     auto parent = Node::create();
     parent->setPosition(s.width/2, s.height/2);
     addChild(parent);
-    auto parent2 = Node::create();
-    parent2->setPosition(0,0);
-    parent->addChild(parent2);
-    parent2->runAction(RepeatForever::create((JumpBy::create(2, Point(0,0), 300, 1))));
-    NewSprite* sprite = NewSprite::create("Images/grossini.png");
-    sprite->setPosition(Point(0,0));
-    //sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
-    sprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(2, 2), ScaleBy::create(2,0.5))));
-    parent2->addChild(sprite);
+    for(int index = 0; index < 500; ++index)
+    {
+        auto parent2 = Node::create();
+        parent2->setPosition(0,0);
+        parent->addChild(parent2);
+        parent2->setPosition(-50,0);
+        parent2->runAction(RepeatForever::create((JumpBy::create(10, Point(0,0), 400, 1))));
+        NewSprite* sprite = NewSprite::create(images[index % images.size()].c_str());
+        sprite->setPosition(Point(0,0));
+        //sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
+        sprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(2, 2), ScaleBy::create(2,0.5))));
+        parent2->addChild(sprite);
+    }
+    
+    for(int index = 0; index < 500; ++index)
+    {
+        auto parent2 = Node::create();
+        parent->addChild(parent2);
+        parent2->setPosition(50,0);
+        parent2->runAction(RepeatForever::create((JumpBy::create(7, Point(0,0), 400, 1))));
+        NewSprite* sprite = NewSprite::create(images[index % images.size()].c_str());
+        sprite->setPosition(Point(0,0));
+        //sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
+        sprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(2, 2), ScaleBy::create(2,0.5))));
+        parent2->addChild(sprite);
+    }
+
 }
 
 NewCullingTest::~NewCullingTest()
