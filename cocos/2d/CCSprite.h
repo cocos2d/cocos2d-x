@@ -78,9 +78,6 @@ struct transformValues_;
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */
 class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
-#ifdef EMSCRIPTEN
-, public GLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
 
@@ -412,7 +409,10 @@ public:
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void reorderChild(Node *child, int zOrder) override;
-    using Node::addChild;
+    // Should also override addChild(Node*) and addChild(Node*, int), or binding generator will only
+    // bind addChild(Node*, int, int);
+    virtual void addChild(Node* child) override;
+    virtual void addChild(Node* child, int zOrder) override;
     virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
