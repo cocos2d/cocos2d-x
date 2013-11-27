@@ -31,8 +31,6 @@ Layer* nextTest()
     sceneIdx = sceneIdx % MAX_LAYER;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -44,7 +42,6 @@ Layer* prevTest()
         sceneIdx += total;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
 
     return layer;
 }
@@ -52,7 +49,6 @@ Layer* prevTest()
 Layer* restartTest()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
 
     return layer;
 }

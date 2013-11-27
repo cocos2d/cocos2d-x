@@ -26,9 +26,7 @@ public:
 class MultiSceneTest : public BaseTest
 {
 public:
-    MultiSceneTest();
-    virtual ~MultiSceneTest();
-
+    CREATE_FUNC(MultiSceneTest);
     virtual string title();
     virtual string subtitle();
     virtual void onEnter();
@@ -36,13 +34,17 @@ public:
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
+
+protected:
+    MultiSceneTest();
+    virtual ~MultiSceneTest();
+
 };
 
 class NewSpriteTest : public MultiSceneTest
 {
 public:
-    NewSpriteTest();
-    virtual ~NewSpriteTest();
+    CREATE_FUNC(NewSpriteTest);
 
     virtual string title();
     virtual string subtitle();
@@ -52,29 +54,31 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 protected:
-
+    NewSpriteTest();
+    virtual ~NewSpriteTest();
 };
 
 class NewSpriteBatchTest : public MultiSceneTest
 {
 public:
-    NewSpriteBatchTest();
-    virtual ~NewSpriteBatchTest();
 
+    CREATE_FUNC(NewSpriteBatchTest);
     virtual string title();
     virtual string subtitle();
 
     void onTouchesEnded(const vector<Touch*>& touches, Event* event);
     void addNewSpriteWithCoords(Point p);
 
+protected:
+    NewSpriteBatchTest();
+    virtual ~NewSpriteBatchTest();
 };
 
 class NewClippingNodeTest : public MultiSceneTest
 {
 public:
-    NewClippingNodeTest();
-    virtual ~NewClippingNodeTest();
 
+    CREATE_FUNC(NewClippingNodeTest);
     virtual string title();
     virtual string subtitle();
 
@@ -83,6 +87,9 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
 
 protected:
+    NewClippingNodeTest();
+    virtual ~NewClippingNodeTest();
+
     bool _scrolling;
     Point _lastPoint;
 };
@@ -90,14 +97,14 @@ protected:
 class NewDrawNodeTest : public MultiSceneTest
 {
 public:
-    NewDrawNodeTest();
-    virtual ~NewDrawNodeTest();
 
+    CREATE_FUNC(NewDrawNodeTest)
     virtual string title();
     virtual string subtitle();
 
 protected:
-
+    NewDrawNodeTest();
+    virtual ~NewDrawNodeTest();
 };
 
 #endif //__NewRendererTest_H_
