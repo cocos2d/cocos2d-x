@@ -659,6 +659,16 @@ void Sprite::draw(void)
 
 // Node overrides
 
+void Sprite::addChild(Node *child)
+{
+    Node::addChild(child);
+}
+
+void Sprite::addChild(Node *child, int zOrder)
+{
+    Node::addChild(child, zOrder);
+}
+
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
     CCASSERT(child != NULL, "Argument must be non-NULL");
