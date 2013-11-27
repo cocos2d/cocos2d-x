@@ -416,7 +416,8 @@ NewCullingTest::NewCullingTest()
     parent2->runAction(RepeatForever::create((JumpBy::create(2, Point(0,0), 300, 1))));
     NewSprite* sprite = NewSprite::create("Images/grossini.png");
     sprite->setPosition(Point(0,0));
-    sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
+    //sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
+    sprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(2, 2), ScaleBy::create(2,0.5))));
     parent2->addChild(sprite);
 }
 
