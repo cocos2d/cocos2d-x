@@ -75,7 +75,7 @@ ActionNode::~ActionNode()
 void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 {
 	setActionTag(DICTOOL->getIntValue_json(dic, "ActionTag"));
-	rapidjson::SizeType actionFrameCount = DICTOOL->getArrayCount_json(dic, "actionframelist");
+	int actionFrameCount = DICTOOL->getArrayCount_json(dic, "actionframelist");
 	for (int i=0; i<actionFrameCount; i++) {
 
 		const rapidjson::Value& actionFrameDic = DICTOOL->getDictionaryFromArray_json(dic, "actionframelist", i);

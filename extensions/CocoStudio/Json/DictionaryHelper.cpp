@@ -251,7 +251,7 @@ int DictionaryHelper::getArrayCount_json(const rapidjson::Value& root, const cha
     do {
         CC_BREAK_IF(root.IsNull());
         CC_BREAK_IF(root[key].IsNull());
-        nRet = root[key].Size();
+        nRet = (int)(root[key].Size());
     } while (0);
     
     return nRet;

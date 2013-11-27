@@ -112,7 +112,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic,CCObject* root
     setName(DICTOOL->getStringValue_json(dic, "name"));
     setLoop(DICTOOL->getBooleanValue_json(dic, "loop"));
 	setUnitTime(DICTOOL->getFloatValue_json(dic, "unittime"));
-    rapidjson::SizeType actionNodeCount = DICTOOL->getArrayCount_json(dic, "actionnodelist");
+    int actionNodeCount = DICTOOL->getArrayCount_json(dic, "actionnodelist");
 
 	int maxLength = 0;
     for (int i=0; i<actionNodeCount; i++) {
