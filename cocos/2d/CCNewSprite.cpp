@@ -136,8 +136,8 @@ void NewSprite::draw(void)
     updateQuadVertices();
     if(false == culling())
     {
-        static int count =0;
-        CCLOG("culling Sprite New to not visible %d ",++count);
+        //static int count =0;
+        //CCLOG("culling Sprite New to not visible %d ",++count);
         return;
     }
 

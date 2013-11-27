@@ -1951,6 +1951,7 @@
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
 		ED4F643418458F640055B093 /* Frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED4F643218458AD00055B093 /* Frustum.cpp */; };
+		ED4F643518459D480055B093 /* Frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED4F643218458AD00055B093 /* Frustum.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -6784,7 +6785,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED4F643418458F640055B093 /* Frustum.cpp in Sources */,
 				46A170501807CC1C005B8026 /* CCApplication.mm in Sources */,
 				46A1705A1807CC1C005B8026 /* CCImage.mm in Sources */,
 				46A170CC1807CEBB005B8026 /* ray2.c in Sources */,
@@ -7072,6 +7072,7 @@
 				74AC80B376893369090BDF41 /* NewClippingNode.cpp in Sources */,
 				74AC8BC03059D55C919A76C5 /* CCNewDrawNode.cpp in Sources */,
 				74AC8E1D1ADECD4169FDFD6D /* CCNewParticleSystemQuad.cpp in Sources */,
+				ED4F643418458F640055B093 /* Frustum.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7309,6 +7310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED4F643518459D480055B093 /* Frustum.cpp in Sources */,
 				46A1703C1807CC07005B8026 /* CCApplication.mm in Sources */,
 				46A170471807CC07005B8026 /* CCImage.mm in Sources */,
 				46A170D61807CEBC005B8026 /* ray2.c in Sources */,
