@@ -107,4 +107,17 @@ protected:
     virtual ~NewDrawNodeTest();
 };
 
+class NewCullingTest : public MultiSceneTest
+{
+public:
+    
+    CREATE_FUNC(NewCullingTest)
+    virtual string title();
+    virtual string subtitle();
+    
+protected:
+    NewCullingTest();
+    virtual ~NewCullingTest();
+};
+
 #endif //__NewRendererTest_H_

@@ -55,6 +55,7 @@ class Scheduler;
 class ActionManager;
 class EventDispatcher;
 class TextureCache;
+class Frustum;
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -330,6 +331,12 @@ public:
     */
     void setContentScaleFactor(float scaleFactor);
     float getContentScaleFactor() const;
+    
+    /**
+     Get the Culling Frustum
+     */
+    
+    Frustum* getFrustum() const { return _cullingFrustum; }
 
 public:
     /** Gets the Scheduler associated with this director
@@ -434,6 +441,8 @@ protected:
     unsigned int _totalFrames;
     unsigned int _frames;
     float _secondsPerFrame;
+    
+    Frustum* _cullingFrustum;
      
     /* The running scene */
     Scene *_runningScene;
