@@ -27,7 +27,6 @@
 
 #ifdef CC_USE_PHYSICS
 
-#include "ccConfig.h"
 #include "CCObject.h"
 #include "CCGeometry.h"
 #include "CCArray.h"
