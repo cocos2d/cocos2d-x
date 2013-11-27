@@ -62,7 +62,7 @@ THE SOFTWARE.
 #include "CCEventDispatcher.h"
 #include "CCFontFreeType.h"
 #include "Renderer.h"
-
+#include "renderer/Frustum.h"
 /**
  Position of the FPS
  
@@ -136,7 +136,9 @@ bool Director::init(void)
     _winSizeInPoints = Size::ZERO;    
 
     _openGLView = nullptr;
-
+    
+    _cullingFrustum = new Frustum();
+    
     _contentScaleFactor = 1.0f;
 
     // scheduler
@@ -260,7 +262,17 @@ void Director::drawScene()
     }
 
     kmGLPushMatrix();
-
+    
+    //construct the frustum
+    {
+        kmMat4 view;
+        kmMat4 projection;
+        kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+        kmGLGetMatrix(KM_GL_MODELVIEW, &view);
+        
+        _cullingFrustum->setupFromMatrix(view, projection);
+    }
+    
     // draw the scene
     if (_runningScene)
     {
@@ -713,6 +725,7 @@ void Director::purgeDirector()
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_SPFLabel);
     CC_SAFE_RELEASE_NULL(_drawsLabel);
+    CC_SAFE_DELETE(_cullingFrustum);
 
     // purge bitmap cache
     LabelBMFont::purgeCachedData();
