@@ -40,6 +40,7 @@
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
 NS_CC_BEGIN
+extern const float PHYSICS_INFINITY;
 
 namespace
 {
@@ -303,8 +304,8 @@ void PhysicsBody::setDynamic(bool dynamic)
             }
             
             // avoid incorrect collion simulation.
-            cpBodySetMass(_info->getBody(), INFINITY);
-            cpBodySetMoment(_info->getBody(), INFINITY);
+            cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
+            cpBodySetMoment(_info->getBody(), PHYSICS_INFINITY);
             cpBodySetVel(_info->getBody(), cpvzero);
             cpBodySetAngVel(_info->getBody(), 0.0f);
         }
@@ -316,7 +317,7 @@ void PhysicsBody::setRotationEnable(bool enable)
 {
     if (_rotationEnable != enable)
     {
-        cpBodySetMoment(_info->getBody(), enable ? _moment : INFINITY);
+        cpBodySetMoment(_info->getBody(), enable ? _moment : PHYSICS_INFINITY);
         _rotationEnable = enable;
     }
 }
@@ -442,9 +443,9 @@ void PhysicsBody::setMass(float mass)
     _massDefault = false;
     
     // update density
-    if (_mass == INFINITY)
+    if (_mass == PHYSICS_INFINITY)
     {
-        _density = INFINITY;
+        _density = PHYSICS_INFINITY;
     }
     else
     {
@@ -466,17 +467,17 @@ void PhysicsBody::setMass(float mass)
 
 void PhysicsBody::addMass(float mass)
 {
-    if (mass == INFINITY)
+    if (mass == PHYSICS_INFINITY)
     {
-        _mass = INFINITY;
+        _mass = PHYSICS_INFINITY;
         _massDefault = false;
-        _density = INFINITY;
+        _density = PHYSICS_INFINITY;
     }
-    else if (mass == -INFINITY)
+    else if (mass == -PHYSICS_INFINITY)
     {
         return;
     }
-    else if (_mass != INFINITY)
+    else if (_mass != PHYSICS_INFINITY)
     {
         if (_massDefault)
         {
@@ -512,21 +513,21 @@ void PhysicsBody::addMass(float mass)
 
 void PhysicsBody::addMoment(float moment)
 {
-    if (moment == INFINITY)
+    if (moment == PHYSICS_INFINITY)
     {
-        // if moment is INFINITY, the moment of the body will become INFINITY
-        _moment = INFINITY;
+        // if moment is PHYSICS_INFINITY, the moment of the body will become PHYSICS_INFINITY
+        _moment = PHYSICS_INFINITY;
         _momentDefault = false;
     }
-    else if (moment == -INFINITY)
+    else if (moment == -PHYSICS_INFINITY)
     {
-        // if moment is -INFINITY, it won't change
+        // if moment is -PHYSICS_INFINITY, it won't change
         return;
     }
     else
     {
-        // if moment of the body is INFINITY is has no effect
-        if (_moment != INFINITY)
+        // if moment of the body is PHYSICS_INFINITY is has no effect
+        if (_moment != PHYSICS_INFINITY)
         {
             if (_momentDefault)
             {

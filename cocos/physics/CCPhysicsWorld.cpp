@@ -52,7 +52,7 @@
 #include <algorithm>
 
 NS_CC_BEGIN
-
+const float PHYSICS_INFINITY = INFINITY;
 extern const char* PHYSICSCONTACT_EVENT_NAME;
 
 namespace

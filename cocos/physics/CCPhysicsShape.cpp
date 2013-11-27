@@ -37,6 +37,7 @@
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
 NS_CC_BEGIN
+extern const float PHYSICS_INFINITY;
 
 PhysicsShape::PhysicsShape()
 : _body(nullptr)
@@ -198,9 +199,9 @@ void PhysicsShape::setDensity(float density)
     
     _material.density = density;
     
-    if (_material.density == INFINITY)
+    if (_material.density == PHYSICS_INFINITY)
     {
-        setMass(INFINITY);
+        setMass(PHYSICS_INFINITY);
     }else if (_area > 0)
     {
         setMass(PhysicsHelper::float2cpfloat(_material.density * _area));
@@ -306,7 +307,7 @@ bool PhysicsShapeCircle::init(float radius, const PhysicsMaterial& material/* = 
         _info->add(shape);
         
         _area = calculateDefaultArea();
-        _mass = material.density == INFINITY ? INFINITY : material.density * _area;
+        _mass = material.density == PHYSICS_INFINITY ? PHYSICS_INFINITY : material.density * _area;
         _moment = calculateDefaultMoment();
         
         setMaterial(material);
@@ -323,7 +324,7 @@ float PhysicsShapeCircle::calculateArea(float radius)
 
 float PhysicsShapeCircle::calculateMoment(float mass, float radius, const Point& offset)
 {
-    return mass == INFINITY ? INFINITY
+    return mass == PHYSICS_INFINITY ? PHYSICS_INFINITY
     : PhysicsHelper::cpfloat2float(cpMomentForCircle(PhysicsHelper::float2cpfloat(mass),
                                                      0,
                                                      PhysicsHelper::float2cpfloat(radius),
@@ -339,7 +340,7 @@ float PhysicsShapeCircle::calculateDefaultMoment()
 {
     cpShape* shape = _info->getShapes().front();
     
-    return _mass == INFINITY ? INFINITY
+    return _mass == PHYSICS_INFINITY ? PHYSICS_INFINITY
     : PhysicsHelper::cpfloat2float(cpMomentForCircle(PhysicsHelper::float2cpfloat(_mass),
                                                      0,
                                                      cpCircleShapeGetRadius(shape),
@@ -385,8 +386,8 @@ bool PhysicsShapeEdgeSegment::init(const Point& a, const Point& b, const Physics
         
         _info->add(shape);
         
-        _mass = INFINITY;
-        _moment = INFINITY;
+        _mass = PHYSICS_INFINITY;
+        _moment = PHYSICS_INFINITY;
         _center = a.getMidpoint(b);
         
         
@@ -447,7 +448,7 @@ bool PhysicsShapeBox::init(const Size& size, const PhysicsMaterial& material/* =
         
         _offset = offset;
         _area = calculateDefaultArea();
-        _mass = material.density == INFINITY ? INFINITY : material.density * _area;
+        _mass = material.density == PHYSICS_INFINITY ? PHYSICS_INFINITY : material.density * _area;
         _moment = calculateDefaultMoment();
         
         setMaterial(material);
@@ -476,7 +477,7 @@ float PhysicsShapeBox::calculateMoment(float mass, const Size& size, const Point
         {-wh.x/2.0f, -wh.y/2.0f}, {-wh.x/2.0f, wh.y/2.0f}, {wh.x/2.0f, wh.y/2.0f}, {wh.x/2.0f, -wh.y/2.0f}
     };
     
-    return mass == INFINITY ? INFINITY
+    return mass == PHYSICS_INFINITY ? PHYSICS_INFINITY
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(PhysicsHelper::float2cpfloat(mass),
                                                    4,
                                                    vec,
@@ -492,7 +493,7 @@ float PhysicsShapeBox::calculateDefaultArea()
 float PhysicsShapeBox::calculateDefaultMoment()
 {
     cpShape* shape = _info->getShapes().front();
-    return _mass == INFINITY ? INFINITY
+    return _mass == PHYSICS_INFINITY ? PHYSICS_INFINITY
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, cpvzero));
 }
 
@@ -539,7 +540,7 @@ bool PhysicsShapePolygon::init(const Point* points, int count, const PhysicsMate
         _info->add(shape);
         
         _area = calculateDefaultArea();
-        _mass = material.density == INFINITY ? INFINITY : material.density * _area;
+        _mass = material.density == PHYSICS_INFINITY ? PHYSICS_INFINITY : material.density * _area;
         _moment = calculateDefaultMoment();
         _center = PhysicsHelper::cpv2point(cpCentroidForPoly(((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts));
         
@@ -565,7 +566,7 @@ float PhysicsShapePolygon::calculateMoment(float mass, const Point* points, int 
 {
     cpVect* vecs = new cpVect[count];
     PhysicsHelper::points2cpvs(points, vecs, count);
-    float moment = mass == INFINITY ? INFINITY
+    float moment = mass == PHYSICS_INFINITY ? PHYSICS_INFINITY
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(mass, count, vecs, PhysicsHelper::point2cpv(offset)));
     CC_SAFE_DELETE_ARRAY(vecs);
     
@@ -581,7 +582,7 @@ float PhysicsShapePolygon::calculateDefaultArea()
 float PhysicsShapePolygon::calculateDefaultMoment()
 {
     cpShape* shape = _info->getShapes().front();
-    return _mass == INFINITY ? INFINITY
+    return _mass == PHYSICS_INFINITY ? PHYSICS_INFINITY
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(_mass, ((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts, cpvzero));
 }
 
@@ -643,8 +644,8 @@ bool PhysicsShapeEdgeBox::init(const Size& size, const PhysicsMaterial& material
         CC_BREAK_IF(i < 4);
         
         _offset = offset;
-        _mass = INFINITY;
-        _moment = INFINITY;
+        _mass = PHYSICS_INFINITY;
+        _moment = PHYSICS_INFINITY;
         
         setMaterial(material);
         
@@ -693,8 +694,8 @@ bool PhysicsShapeEdgePolygon::init(const Point* points, int count, const Physics
         
         CC_BREAK_IF(i < count);
         
-        _mass = INFINITY;
-        _moment = INFINITY;
+        _mass = PHYSICS_INFINITY;
+        _moment = PHYSICS_INFINITY;
         
         setMaterial(material);
         
@@ -754,8 +755,8 @@ bool PhysicsShapeEdgeChain::init(const Point* points, int count, const PhysicsMa
         CC_SAFE_DELETE_ARRAY(vec);
         CC_BREAK_IF(i < count);
         
-        _mass = INFINITY;
-        _moment = INFINITY;
+        _mass = PHYSICS_INFINITY;
+        _moment = PHYSICS_INFINITY;
         
         setMaterial(material);
         

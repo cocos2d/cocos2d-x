@@ -202,6 +202,7 @@ protected:
     
     friend class PhysicsWorld;
 };
+extern const float PHYSICS_INFINITY;
 
 NS_CC_END
 
