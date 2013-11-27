@@ -172,7 +172,7 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 UIWidget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, const char* fullPath, const char* fileName)
 {
     m_strFilePath = fullPath;
-    int texturesCount = DICTOOL->getArrayCount_json(data, "textures");
+    rapidjson::SizeType texturesCount = DICTOOL->getArrayCount_json(data, "textures");
 
     for (int i=0; i<texturesCount; i++)
     {
@@ -288,7 +288,7 @@ UIWidget* WidgetPropertiesReader0250::widgetFromJsonDictionary(const rapidjson::
         setPropsForScrollViewFromJsonDictionary(widget, uiOptions);
     }
     
-    int childrenCount = DICTOOL->getArrayCount_json(data, "children");
+    rapidjson::SizeType childrenCount = DICTOOL->getArrayCount_json(data, "children");
     for (int i=0;i<childrenCount;i++)
     {
         const rapidjson::Value& subData = DICTOOL->getDictionaryFromArray_json(data, "children", i);
@@ -870,7 +870,7 @@ UIWidget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data,
 {
     m_strFilePath = fullPath;
 
-    int texturesCount = DICTOOL->getArrayCount_json(data, "textures");
+    rapidjson::SizeType texturesCount = DICTOOL->getArrayCount_json(data, "textures");
     
     for (int i=0; i<texturesCount; i++)
     {
@@ -996,7 +996,7 @@ UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::
         setPropsForPageViewFromJsonDictionary(widget, uiOptions);
     }
     
-    int childrenCount = DICTOOL->getArrayCount_json(data, "children");
+    rapidjson::SizeType childrenCount = DICTOOL->getArrayCount_json(data, "children");
     for (int i=0;i<childrenCount;i++)
     {
         const rapidjson::Value& subData = DICTOOL->getDictionaryFromArray_json(data, "children", i);

@@ -1246,7 +1246,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
 	dataInfo->contentScale = DICTOOL->getFloatValue_json(json, CONTENT_SCALE, 1.0f); //json[CONTENT_SCALE].IsNull()? 1.0f : json[CONTENT_SCALE].GetDouble();
 	
     // Decode armatures
-	int length = DICTOOL->getArrayCount_json(json, ARMATURE_DATA); //json[ARMATURE_DATA].IsNull() ? 0 : json[ARMATURE_DATA].Size();
+	rapidjson::SizeType length = DICTOOL->getArrayCount_json(json, ARMATURE_DATA); //json[ARMATURE_DATA].IsNull() ? 0 : json[ARMATURE_DATA].Size();
 	for (int i = 0; i < length; i++)
     {
 		const rapidjson::Value &armatureDic = DICTOOL->getSubDictionary_json(json, ARMATURE_DATA, i); //json[ARMATURE_DATA][i];
@@ -1285,7 +1285,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 
     // Decode textures
-    length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA); // json[TEXTURE_DATA].IsNull() ? 0 : json[TEXTURE_DATA].Size();
+    rapidjson::SizeType length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA); // json[TEXTURE_DATA].IsNull() ? 0 : json[TEXTURE_DATA].Size();
     for (int i = 0; i < length; i++)
     {
         const rapidjson::Value &textureDic =  DICTOOL->getSubDictionary_json(json, TEXTURE_DATA, i); // json[TEXTURE_DATA][i];
@@ -1351,7 +1351,7 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(const rapidjson::Value &json,
 
 	dataInfo->cocoStudioVersion = armatureData->dataVersion = DICTOOL->getFloatValue_json(json, VERSION, 0.1f);
 
-	int length = DICTOOL->getArrayCount_json(json, BONE_DATA, 0); 
+	rapidjson::SizeType length = DICTOOL->getArrayCount_json(json, BONE_DATA, 0); 
 	for (int i = 0; i < length; i++)
     {
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, BONE_DATA, i); //json[BONE_DATA][i];
@@ -1381,9 +1381,9 @@ CCBoneData *CCDataReaderHelper::decodeBone(const rapidjson::Value &json, DataInf
         boneData->parentName = str;
     }
 
-	int length = DICTOOL->getArrayCount_json(json, DISPLAY_DATA);
+	rapidjson::SizeType length = DICTOOL->getArrayCount_json(json, DISPLAY_DATA);
 
-	for (rapidjson::SizeType i = 0; i < length; ++i)
+	for (int i = 0; i < length; ++i)
     {
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, DISPLAY_DATA, i); 
         CCDisplayData *displayData = decodeBoneDisplay(dic, dataInfo);
@@ -1475,7 +1475,7 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(const rapidjson::Value &jso
         aniData->name = name;
     }
 	
-    int length =  DICTOOL->getArrayCount_json(json, MOVEMENT_DATA);
+    rapidjson::SizeType length =  DICTOOL->getArrayCount_json(json, MOVEMENT_DATA);
 
 	for (int i = 0; i < length; ++i)
     {
@@ -1513,7 +1513,7 @@ CCMovementData *CCDataReaderHelper::decodeMovement(const rapidjson::Value &json,
         movementData->name = name;
     }
 
-	int length = DICTOOL->getArrayCount_json(json, MOVEMENT_BONE_DATA);
+	rapidjson::SizeType length = DICTOOL->getArrayCount_json(json, MOVEMENT_BONE_DATA);
     for (int i = 0; i < length; i++)
     {
 		const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, MOVEMENT_BONE_DATA, i);
@@ -1537,7 +1537,7 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(const rapidjson::Valu
         movementBoneData->name = name;
     }
 
-	int length = DICTOOL->getArrayCount_json(json, FRAME_DATA);
+	rapidjson::SizeType length = DICTOOL->getArrayCount_json(json, FRAME_DATA);
     for (int i = 0; i < length; i++)
     {
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, FRAME_DATA, i);
@@ -1639,7 +1639,7 @@ CCTextureData *CCDataReaderHelper::decodeTexture(const rapidjson::Value &json)
     textureData->pivotX = DICTOOL->getFloatValue_json(json, A_PIVOT_X);
     textureData->pivotY = DICTOOL->getFloatValue_json(json, A_PIVOT_Y);
 
-	int length = DICTOOL->getArrayCount_json(json, CONTOUR_DATA);
+	rapidjson::SizeType length = DICTOOL->getArrayCount_json(json, CONTOUR_DATA);
 	for (int i = 0; i < length; i++)
     {
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CONTOUR_DATA, i);
