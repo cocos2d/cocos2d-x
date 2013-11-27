@@ -3,11 +3,13 @@
 
 *linux-* {
     INCLUDEPATH += /usr/include/freetype2/
-    DEFINES += LINUX CC_KEYBOARD_SUPPORT ENABLE_MPG123
 }
 
 cocos2d_native_api {
+
     *linux-* {
+        DEFINES += LINUX ENABLE_MPG123
+
         exists(/usr/local/include/GLFW/) {
             INCLUDEPATH += /usr/local/include/GLFW/
         } else {

@@ -7,9 +7,7 @@ RCC_DIR = $$shadowed($PWD)/rcc/$${TARGET}
 UI_DIR = $$shadowed($$PWD)/ui/$${TARGET}
 
 CC_GAME_ROOT = $${PWD}/../../samples/Cpp/TestCpp
-TARGET = TestCpp/TestCpp
-
-cc_copy_directory($${CC_GAME_ROOT}/Resources, TestCpp/Resources)
+TARGET = $$relative_path($${CC_GAME_ROOT}/$${TARGET}, $$shadowed($$PWD))
 
 INCLUDEPATH += $${CC_GAME_ROOT}/Classes
 
@@ -35,6 +33,7 @@ TESTCPP_FOLDERS = \
     ExtensionsTest \
     FileUtilsTest \
     FontTest \
+    InputTest \
     IntervalTest \
     KeyboardTest \
     KeypadTest \

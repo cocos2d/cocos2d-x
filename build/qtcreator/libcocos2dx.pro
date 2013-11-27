@@ -12,7 +12,7 @@ defineReplace(cc_files) {
     return($$files(../../$$1))
 }
 
-TARGET = ../$$relative_path($${CC_ROOT}/lib/$${CC_OS_TYPE}/$${CC_BUILD_TYPE}/cocos2dx)
+TARGET = $$relative_path($${CC_LIB_LOCATION}/cocos2dx, $$shadowed($$PWD))
 
 OBJECTS_DIR = obj/cocos2dx/$${BUILD_TYPE}
 MOC_DIR = obj/cocos2dx/$${BUILD_TYPE}

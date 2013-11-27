@@ -7,9 +7,7 @@ RCC_DIR = $$shadowed($PWD)/rcc/$${TARGET}
 UI_DIR = $$shadowed($$PWD)/ui/$${TARGET}
 
 CC_GAME_ROOT = $${PWD}/../../samples/Cpp/SimpleGame
-TARGET = SimpleGame/SimpleGame
-
-cc_copy_directory($${CC_GAME_ROOT}/Resources, SimpleGame/Resources)
+TARGET = $$relative_path($${CC_GAME_ROOT}/$${TARGET}, $$shadowed($$PWD))
 
 HEADERS += $$files($${CC_GAME_ROOT}/Classes/*.h)
 SOURCES += $$files($${CC_GAME_ROOT}/Classes/*.cpp)
