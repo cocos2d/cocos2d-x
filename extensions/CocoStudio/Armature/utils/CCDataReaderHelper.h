@@ -108,7 +108,7 @@ public:
 
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
-
+private:
 	static CCArmatureData *decodeArmature(const rapidjson::Value &json, DataInfo *dataInfo);
 	static CCBoneData *decodeBone(const rapidjson::Value &json, DataInfo *dataInfo);
 	static CCDisplayData *decodeBoneDisplay(const rapidjson::Value &json, DataInfo *dataInfo);
