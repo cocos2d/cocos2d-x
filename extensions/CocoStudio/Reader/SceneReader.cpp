@@ -92,7 +92,7 @@ NS_CC_EXT_BEGIN
             
             setPropertyFromJsonDict(root, gb);
     
-            rapidjson::SizeType count = DICTOOL->getArrayCount_json(root, "components");
+            int count = DICTOOL->getArrayCount_json(root, "components");
             for (int i = 0; i < count; i++)
             {
                 const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "components", i);
@@ -232,7 +232,7 @@ NS_CC_EXT_BEGIN
                     }
                     
                     
-                    rapidjson::SizeType childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
+                    int childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
                     const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
                     const char *name = DICTOOL->getStringValue_json(subData, "name");
 
@@ -350,7 +350,7 @@ NS_CC_EXT_BEGIN
 				}
             }
 
-            rapidjson::SizeType length = DICTOOL->getArrayCount_json(root, "gameobjects");
+            int length = DICTOOL->getArrayCount_json(root, "gameobjects");
             for (int i = 0; i < length; ++i)
             {
                 const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "gameobjects", i);

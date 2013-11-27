@@ -62,8 +62,8 @@ void ActionManager::initWithDictionary(const char* jsonName,const rapidjson::Val
 	std::string fileName = path.substr(pos+1,path.length());
 	CCLOG("filename == %s",fileName.c_str());
 	CCArray* actionList = CCArray::create();
-	rapidjson::SizeType actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
-    for (int i=0; i<actionCount; i++) {
+	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
+    for (int i=0; i< actionCount; i++) {
         ActionObject* action = new ActionObject();
 		action->autorelease();
 		const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
