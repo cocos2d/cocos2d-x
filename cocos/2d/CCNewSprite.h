@@ -25,9 +25,11 @@ public:
     ~NewSprite();
 
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
-
+    
     virtual void updateQuadVertices();
     virtual void draw(void) override;
+    
+    bool culling() const;
     
 protected:
 };

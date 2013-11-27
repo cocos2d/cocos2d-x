@@ -1950,6 +1950,8 @@
 		B37510861823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
+		ED4F643418458F640055B093 /* Frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED4F643218458AD00055B093 /* Frustum.cpp */; };
+		ED4F643518459D480055B093 /* Frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED4F643218458AD00055B093 /* Frustum.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3102,6 +3104,8 @@
 		B37510581823AC9200B3BA6A /* CCPhysicsShapeInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsShapeInfo_box2d.h; path = ../box2d/CCPhysicsShapeInfo_box2d.h; sourceTree = "<group>"; };
 		B37510591823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsWorldInfo_box2d.cpp; path = ../box2d/CCPhysicsWorldInfo_box2d.cpp; sourceTree = "<group>"; };
 		B375105A1823AC9200B3BA6A /* CCPhysicsWorldInfo_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsWorldInfo_box2d.h; path = ../box2d/CCPhysicsWorldInfo_box2d.h; sourceTree = "<group>"; };
+		ED4F643218458AD00055B093 /* Frustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Frustum.cpp; path = renderer/Frustum.cpp; sourceTree = "<group>"; };
+		ED4F643318458AD00055B093 /* Frustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Frustum.h; path = renderer/Frustum.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5332,6 +5336,8 @@
 		599121BD182C726700CE785B /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				ED4F643218458AD00055B093 /* Frustum.cpp */,
+				ED4F643318458AD00055B093 /* Frustum.h */,
 				599121C1182C72BF00CE785B /* MaterialManager.cpp */,
 				599121C2182C72BF00CE785B /* MaterialManager.h */,
 				599121C3182C72BF00CE785B /* QuadCommand.cpp */,
@@ -7066,6 +7072,7 @@
 				74AC80B376893369090BDF41 /* NewClippingNode.cpp in Sources */,
 				74AC8BC03059D55C919A76C5 /* CCNewDrawNode.cpp in Sources */,
 				74AC8E1D1ADECD4169FDFD6D /* CCNewParticleSystemQuad.cpp in Sources */,
+				ED4F643418458F640055B093 /* Frustum.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7303,6 +7310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED4F643518459D480055B093 /* Frustum.cpp in Sources */,
 				46A1703C1807CC07005B8026 /* CCApplication.mm in Sources */,
 				46A170471807CC07005B8026 /* CCImage.mm in Sources */,
 				46A170D61807CEBC005B8026 /* ray2.c in Sources */,
