@@ -1,4 +1,4 @@
-//#include "main.h"
+#include "main.h"
 #include "../Classes/AppDelegate.h"
 #include "CCEGLView.h"
 
