@@ -341,10 +341,10 @@ bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root,const 
 bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root, int index)
 {
     bool bRet = false;
-    do {
+    do {   
         CC_BREAK_IF(root.IsNull());
         CC_BREAK_IF(!root.IsArray());
-        CC_BREAK_IF(root.Size() <= index);
+        CC_BREAK_IF(index < 0 || root.Size() <= (unsigned int )index);
         bRet = true;
     } while (0);
 
