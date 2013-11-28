@@ -338,4 +338,17 @@ bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root,const 
     return bRet;
 }
 
+bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root, int index)
+{
+    bool bRet = false;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(!root.IsArray());
+        CC_BREAK_IF(root.Size() <= index);
+        bRet = true;
+    } while (0);
+
+    return bRet;
+}
+
 NS_CC_EXT_END

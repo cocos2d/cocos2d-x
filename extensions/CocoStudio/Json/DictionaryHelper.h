@@ -73,7 +73,8 @@ public:
 	const char* getStringValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, const char *def = NULL);
 	const rapidjson::Value &getDictionaryFromArray_json(const rapidjson::Value &root, const char* key,int idx);
 	bool checkObjectExist_json(const rapidjson::Value &root);
-    bool checkObjectExist_json(const rapidjson::Value &root,const char* key);
+    bool checkObjectExist_json(const rapidjson::Value &root, const char* key);
+    bool checkObjectExist_json(const rapidjson::Value &root, int index);
 };
 
 NS_CC_EXT_END

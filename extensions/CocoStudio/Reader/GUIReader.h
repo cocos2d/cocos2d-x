@@ -38,9 +38,21 @@ NS_CC_EXT_BEGIN
 class GUIReader : public CCObject
 {
 public:
+	/**
+     *  @js ctor
+     */
     GUIReader();
+	/**
+     *  @js NA
+     */
     ~GUIReader();
+	/**
+      *  @js getInstance
+      */
     static GUIReader* shareReader();
+	 /**
+      *  @js pure
+      */
 	static void purgeGUIReader();
     
     UIWidget* widgetFromJsonFile(const char* fileName);
@@ -62,6 +74,11 @@ protected:
 };
 
 
+
+/**
+  *  @js NA
+  *  @lua NA
+  */
 class WidgetPropertiesReader0250 : public WidgetPropertiesReader
 {
     
@@ -89,6 +106,10 @@ public:
     virtual void setPropsForScrollViewFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options);
 };
 
+/**
+  *  @js NA
+  *  @lua NA
+  */
 class WidgetPropertiesReader0300 : public WidgetPropertiesReader
 {
     
