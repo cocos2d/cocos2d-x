@@ -499,7 +499,7 @@ void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        _children.makeObjectsPerformCallback([this](Node* obj){
+        _children.forEach([this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
@@ -517,7 +517,7 @@ void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        _children.makeObjectsPerformCallback([this](Node* obj){
+        _children.forEach([this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {

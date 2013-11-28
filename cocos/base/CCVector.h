@@ -117,6 +117,11 @@ public:
         return _data.size();
     }
     
+    bool empty() const
+    {
+        return _data.empty();
+    }
+    
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
     long getIndexOfObject(T object) const
     {
@@ -297,7 +302,7 @@ public:
         _data.shrink_to_fit();
     }
     
-    void makeObjectsPerformCallback(std::function<void(T)> callback)
+    void forEach(std::function<void(T)> callback)
     {
         if (count() <= 0)
             return;

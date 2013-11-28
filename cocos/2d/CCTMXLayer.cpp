@@ -391,7 +391,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
 
     // update possible children
     
-    _children.makeObjectsPerformCallback([&indexForZ](Node* child){
+    _children.forEach([&indexForZ](Node* child){
         Sprite* sp = static_cast<Sprite*>(child);
         if (child)
         {
@@ -593,7 +593,7 @@ void TMXLayer::removeTileAt(const Point& pos)
             _textureAtlas->removeQuadAtIndex(atlasIndex);
 
             // update possible children
-            _children.makeObjectsPerformCallback([&atlasIndex](Node* obj){
+            _children.forEach([&atlasIndex](Node* obj){
                 Sprite* child = static_cast<Sprite*>(obj);
                 if (child)
                 {

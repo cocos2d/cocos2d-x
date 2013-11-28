@@ -328,7 +328,7 @@ void CCBReader::cleanUpNodeGraph(Node *node)
 {
     node->setUserObject(nullptr);
     
-    node->getChildren().makeObjectsPerformCallback([this](Node* obj){
+    node->getChildren().forEach([this](Node* obj){
         cleanUpNodeGraph(obj);
     });
 }

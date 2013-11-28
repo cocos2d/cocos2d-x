@@ -140,7 +140,7 @@ void Scene::addChildToPhysicsWorld(Node* child)
                 _physicsWorld->addBody(node->getPhysicsBody());
             }
             
-            node->getChildren().makeObjectsPerformCallback([addToPhysicsWorldFunc](Node* n){
+            node->getChildren().forEach([addToPhysicsWorldFunc](Node* n){
                 addToPhysicsWorldFunc(n);
             });
         };

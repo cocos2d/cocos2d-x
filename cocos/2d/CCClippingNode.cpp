@@ -40,7 +40,7 @@ static void setProgram(Node *n, GLProgram *p)
 {
     n->setShaderProgram(p);
     
-    n->getChildren().makeObjectsPerformCallback([p](Node* child){
+    n->getChildren().forEach([p](Node* child){
         setProgram(child, p);
     });
 }

@@ -1528,17 +1528,16 @@ void MultipleParticleSystems::update(float dt)
 {
     auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
-    unsigned int count = 0;
-
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(getChildren(), pObj)
-    {
-        auto item = dynamic_cast<ParticleSystem*>(pObj);
+    unsigned int count = 0; 
+    
+    getChildren().forEach([&count](Node* child){
+        auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    }
+    });
+
     char str[100] = {0};
     sprintf(str, "%4d", count);
     atlas->setString(str);
