@@ -39,21 +39,50 @@ public:
     Vector<T>(long capacity=7)
     : _data()
     {
+        CCLOG("In the constructor of Vector.");
         init(capacity);
     }
 
     virtual ~Vector<T>() {
-        for( auto it=std::begin(_data); it != std::end(_data); ++it )
-            (*it)->release();
+        CCLOG("In the destructor of Vector.");
+        removeAllObjects();
     }
 
+    Vector<T>(const Vector<T>& other)
+    {
+        CCLOG("In the copy constructor!");
+        copy(other);
+    }
+    
+    const Vector<T>& operator=(const Vector<T>& other)
+    {
+        CCLOG("In the assignment operator!");
+        copy(other);
+        return *this;
+    }
+    
+    T operator[](long index) const
+    {
+        return getObjectAtIndex(index);
+    }
+    
     /** Initializes an array with capacity */
     bool init(long capacity)
     {
         _data.reserve(capacity);
         return true;
     }
-
+    
+    void copy(const Vector<T>& other)
+    {
+        if (this == &other)
+            return;
+        
+        removeAllObjects();
+        init(other.count());
+        addObjectsFromArray(other);
+    }
+    
     // Querying an Array
 
     /** Returns element count of the array */
@@ -131,9 +160,9 @@ public:
     }
 
     /** Add all elements of an existing array */
-    void addObjectsFromArray(T otherArray)
+    void addObjectsFromArray(const Vector<T>& otherArray)
     {
-        for( auto it = std::begin(otherArray); it != std::end(otherArray); ++it ) {
+        for( auto it = otherArray.begin(); it != otherArray.end(); ++it ) {
             _data.push_back( *it );
             (*it)->retain();
         }
@@ -180,17 +209,17 @@ public:
     void removeObjectAtIndex(long index)
     {
         auto it = std::next( begin(), index );
-        _data.erase(it);
         (*it)->release();
+        _data.erase(it);
     }
 
     /** Removes all objects */
     void removeAllObjects()
     {
         for( auto it = std::begin(_data); it != std::end(_data); ++it ) {
-            _data.erase(it);
             (*it)->release();
         }
+        _data.clear();
     }
 
     /** Fast way to remove a certain object */
@@ -254,9 +283,16 @@ public:
     typedef typename std::vector<T>::const_iterator const_iterator;
 
     iterator begin() { return _data.begin(); }
+    const_iterator begin() const { return _data.begin(); }
+    
     iterator end() { return _data.end(); }
-    const_iterator cbegin() { return _data.cbegin(); }
-    const_iterator cend() { return _data.cend(); }
+    const_iterator end() const { return _data.end(); }
+    
+    iterator cbegin() { return _data.cbegin(); }
+    const_iterator cbegin() const { return _data.cbegin(); }
+    
+    iterator cend() { return _data.cend(); }
+    const_iterator cend() const { return _data.cend(); }
 
 protected:
     std::vector<T> _data;

@@ -198,21 +198,21 @@ Sequence* Sequence::createWithVariableList(FiniteTimeAction *pAction1, va_list a
     return ((Sequence*)pPrev);
 }
 
-Sequence* Sequence::create(Array* arrayOfActions)
+Sequence* Sequence::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
     Sequence* pRet = NULL;
     do 
     {
-        long count = arrayOfActions->count();
+        long count = arrayOfActions.count();
         CC_BREAK_IF(count == 0);
 
-        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
+        auto prev = arrayOfActions[0];
 
         if (count > 1)
         {
             for (long i = 1; i < count; ++i)
             {
-                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
+                prev = createWithTwoActions(prev, arrayOfActions[i]);
             }
         }
         else
@@ -571,19 +571,19 @@ Spawn* Spawn::createWithVariableList(FiniteTimeAction *pAction1, va_list args)
     return ((Spawn*)pPrev);
 }
 
-Spawn* Spawn::create(Array *arrayOfActions)
+Spawn* Spawn::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
     Spawn* pRet = NULL;
     do 
     {
-        long count = arrayOfActions->count();
+        long count = arrayOfActions.count();
         CC_BREAK_IF(count == 0);
-        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
+        auto prev = arrayOfActions[0];
         if (count > 1)
         {
-            for (int i = 1; i < arrayOfActions->count(); ++i)
+            for (int i = 1; i < arrayOfActions.count(); ++i)
             {
-                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
+                prev = createWithTwoActions(prev, arrayOfActions[i]);
             }
         }
         else
@@ -591,7 +591,7 @@ Spawn* Spawn::create(Array *arrayOfActions)
             // If only one action is added to Spawn, make up a Spawn by adding a simplest finite time action.
             prev = createWithTwoActions(prev, ExtraAction::create());
         }
-        pRet = (Spawn*)prev;
+        pRet = static_cast<Spawn*>(prev);
     }while (0);
 
     return pRet;
