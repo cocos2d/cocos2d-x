@@ -40,11 +40,13 @@ public:
     
     /**
      * Default constructor
+	 * @js ctor
      */
     ActionManager();
     
     /**
      * Default destructor
+	 * @js NA
      */
     virtual ~ActionManager();
     

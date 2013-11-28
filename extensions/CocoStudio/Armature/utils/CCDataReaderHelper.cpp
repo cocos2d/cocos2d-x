@@ -1426,6 +1426,9 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &jso
 				sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
 				sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
 				sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
+
+                sdd->skinData.x *= dataInfo->contentScale;
+                sdd->skinData.y *= dataInfo->contentScale;
 			}
 		}
     }
@@ -1449,7 +1452,14 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &jso
         const char *plist = DICTOOL->getStringValue_json(json, A_PLIST);
         if(plist != NULL)
         {
-            ((CCParticleDisplayData *)displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
+            if (dataInfo->asyncStruct)
+            {
+                ((CCParticleDisplayData *)displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
+            }
+            else
+            {
+                ((CCParticleDisplayData *)displayData)->plist = dataInfo->baseFilePath + plist;
+            }
         }
     }
     break;
@@ -1683,21 +1693,33 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, const rapidjson::Value &js
     node->skewY = DICTOOL->getFloatValue_json(json, A_SKEW_Y);
     node->scaleX = DICTOOL->getFloatValue_json(json, A_SCALE_X, 1.0f);
     node->scaleY = DICTOOL->getFloatValue_json(json, A_SCALE_Y, 1.0f);
-    const rapidjson::Value &colorDicArray = DICTOOL->getSubDictionary_json(json, COLOR_INFO);
-	if(DICTOOL->checkObjectExist_json(colorDicArray))
-	{
-		rapidjson::SizeType index = 0;
-		const rapidjson::Value &colorDic = DICTOOL->getSubDictionary_json(colorDicArray, index);
-		if (DICTOOL->checkObjectExist_json(colorDic))
-		{
-			node->a = DICTOOL->getIntValue_json(json, A_ALPHA, 255);
-			node->r = DICTOOL->getIntValue_json(json, A_RED, 255);
-			node->g = DICTOOL->getIntValue_json(json, A_GREEN, 255);
-			node->b = DICTOOL->getIntValue_json(json, A_BLUE, 255);
-			node->isUseColorInfo = true;
-		}
-	}
 
+    if (dataInfo->cocoStudioVersion < VERSION_COLOR_READING)
+    {
+        if (DICTOOL->checkObjectExist_json(json, 0))
+        {
+            const rapidjson::Value &colorDic = DICTOOL->getSubDictionary_json(json, 0); 
+            node->a = DICTOOL->getIntValue_json(colorDic, A_ALPHA, 255);   
+            node->r = DICTOOL->getIntValue_json(colorDic, A_RED, 255);  
+            node->g = DICTOOL->getIntValue_json(colorDic, A_GREEN, 255); 
+            node->b = DICTOOL->getIntValue_json(colorDic, A_BLUE, 255); 
+
+            node->isUseColorInfo = true;
+        }
+    }
+    else
+    {
+        if (DICTOOL->checkObjectExist_json(json, COLOR_INFO))
+        {
+            const rapidjson::Value &colorDic =  DICTOOL->getSubDictionary_json(json, COLOR_INFO); //json.getSubDictionary(COLOR_INFO);
+            node->a = DICTOOL->getIntValue_json(colorDic, A_ALPHA, 255);   
+            node->r = DICTOOL->getIntValue_json(colorDic, A_RED, 255);  
+            node->g = DICTOOL->getIntValue_json(colorDic, A_GREEN, 255); 
+            node->b = DICTOOL->getIntValue_json(colorDic, A_BLUE, 255); 
+
+            node->isUseColorInfo = true;
+        }
+    }
 }
 
 NS_CC_EXT_END
