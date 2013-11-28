@@ -2869,6 +2869,11 @@
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		A07A53811784AC9B0073F6A7 /* Hello cpp iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello cpp iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3AF01A8184313DE00A98B85 /* ConvexHull.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvexHull.h; sourceTree = "<group>"; };
+		B3AF01A9184313DE00A98B85 /* ConveyorBelt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConveyorBelt.h; sourceTree = "<group>"; };
+		B3AF01AA184313DE00A98B85 /* Mobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mobile.h; sourceTree = "<group>"; };
+		B3AF01AB184313DE00A98B85 /* MobileBalanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileBalanced.h; sourceTree = "<group>"; };
+		B3AF01AC184313DE00A98B85 /* MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotorJoint.h; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -4164,6 +4169,11 @@
 		1AAF4FC4180E2C17000584C8 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B3AF01A8184313DE00A98B85 /* ConvexHull.h */,
+				B3AF01A9184313DE00A98B85 /* ConveyorBelt.h */,
+				B3AF01AA184313DE00A98B85 /* Mobile.h */,
+				B3AF01AB184313DE00A98B85 /* MobileBalanced.h */,
+				B3AF01AC184313DE00A98B85 /* MotorJoint.h */,
 				1AAF4FC5180E2C17000584C8 /* AddPair.h */,
 				1AAF4FC6180E2C17000584C8 /* ApplyForce.h */,
 				1AAF4FC7180E2C17000584C8 /* BodyTypes.h */,
