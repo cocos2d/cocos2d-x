@@ -620,7 +620,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
   
     float lastKeyframeTime = 0;
     
-    Array *actions = Array::create();
+    Vector<FiniteTimeAction*> actions;
     Array *keyframes = channel->getKeyframes();
     long numKeyframes = keyframes->count();
 
@@ -631,7 +631,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
         float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
         lastKeyframeTime = keyframe->getTime();
         if(timeSinceLastKeyframe > 0) {
-            actions->addObject(DelayTime::create(timeSinceLastKeyframe));
+            actions.addObject(DelayTime::create(timeSinceLastKeyframe));
         }
 	
         Array* keyVal = static_cast<Array *>(keyframe->getValue());
@@ -646,7 +646,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                 CallFunc *callbackClone = (static_cast<CallFunc*>(callback))->clone();
     
                 if(callbackClone != NULL) {
-                    actions->addObject(callbackClone);
+                    actions.addObject(callbackClone);
                 }
             }
         }
@@ -680,7 +680,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                     {
                         // XXX: how to fix this warning?
                         CallFuncN *callback = CallFuncN::create(target, selCallFunc);
-                        actions->addObject(callback);
+                        actions.addObject(callback);
                     }
                 }
                 else
@@ -690,7 +690,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
             }
         }
     }
-    if(actions->count() < 1) return NULL;
+    if(actions.count() < 1) return NULL;
     
     return (Object *) Sequence::create(actions);
 }
@@ -699,9 +699,9 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
     
     float lastKeyframeTime = 0;
     
-    Array *actions = Array::create();
+    Vector<FiniteTimeAction*> actions;
     Array *keyframes = channel->getKeyframes();
-    int numKeyframes = keyframes->count();
+    long numKeyframes = keyframes->count();
 
     for (int i = 0; i < numKeyframes; ++i) {
 
@@ -709,7 +709,7 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
         float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
         lastKeyframeTime = keyframe->getTime();
         if(timeSinceLastKeyframe > 0) {
-            actions->addObject(DelayTime::create(timeSinceLastKeyframe));
+            actions.addObject(DelayTime::create(timeSinceLastKeyframe));
         }
 	
         stringstream ss (stringstream::in | stringstream::out);
@@ -729,12 +729,12 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
         ss >> gain;
         ss.flush();
         
-        actions->addObject(CCBSoundEffect::actionWithSoundFile(soundFile, pitch, pan, gain));
+        actions.addObject(CCBSoundEffect::actionWithSoundFile(soundFile, pitch, pan, gain));
     }
 
-    if(actions->count() < 1) return NULL;
+    if(actions.count() < 1) return NULL;
     
-    return (Object *) Sequence::create(actions);    
+    return Sequence::create(actions);
 }
 
 
@@ -742,19 +742,19 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
 void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration)
 {
     Array *keyframes = pSeqProp->getKeyframes();
-    int numKeyframes = keyframes->count();
+    long numKeyframes = keyframes->count();
     
     if (numKeyframes > 1)
     {
         // Make an animation!
-        Array *actions = Array::create();
+        Vector<FiniteTimeAction*> actions;
         
         CCBKeyframe *keyframeFirst = (CCBKeyframe*)keyframes->getObjectAtIndex(0);
         float timeFirst = keyframeFirst->getTime() + fTweenDuration;
         
         if (timeFirst > 0)
         {
-            actions->addObject(DelayTime::create(timeFirst));
+            actions.addObject(DelayTime::create(timeFirst));
         }
         
         for (int i = 0; i < numKeyframes - 1; ++i)
@@ -768,11 +768,11 @@ void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, 
                 // Apply easing
                 action = getEaseAction(action, kf0->getEasingType(), kf0->getEasingOpt());
                 
-                actions->addObject(action);
+                actions.addObject(action);
             }
         }
         
-        FiniteTimeAction *seq = Sequence::create(actions);
+        auto seq = Sequence::create(actions);
         pNode->runAction(seq);
     }
 }

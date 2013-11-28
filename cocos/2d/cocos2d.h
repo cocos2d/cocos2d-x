@@ -60,6 +60,7 @@ THE SOFTWARE.
 #include "CCDictionary.h"
 #include "CCObject.h"
 #include "CCArray.h"
+#include "CCVector.h"
 #include "CCGeometry.h"
 #include "CCSet.h"
 #include "CCAutoreleasePool.h"
