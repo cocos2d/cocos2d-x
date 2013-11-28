@@ -92,11 +92,8 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, long capacity)
 
     updateBlendFunc();
 
-    // no lazy alloc in this node
-    if (_children.count() == 0)
-    {
-        _children.init(capacity);
-    }
+    _children.setCapacity(capacity);
+
     _descendants.reserve(capacity);
 
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));

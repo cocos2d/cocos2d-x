@@ -35,15 +35,19 @@ template<class T>
 class CC_DLL Vector
 {
 public:
-    
-    static const long DEFAULT_CAPACTIY = 7;
-    
-    /** creates an emptry Vector */
-    explicit Vector<T>(long capacity=DEFAULT_CAPACTIY)
+
+    Vector<T>()
     : _data()
     {
-        CCLOG("In the default constructor of Vector.");
-        init(capacity);
+        
+    }
+    
+    /** creates an emptry Vector */
+    explicit Vector<T>(long capacity)
+    : _data()
+    {
+        CCLOG("In the default constructor with capacity of Vector.");
+        setCapacity(capacity);
     }
 
     virtual ~Vector<T>() {
@@ -83,11 +87,16 @@ public:
         return getObjectAtIndex(index);
     }
     
-    /** Initializes an array with capacity */
-    bool init(long capacity)
+    /** Sets capacity of current array */
+    void setCapacity(long capacity)
     {
         _data.reserve(capacity);
-        return true;
+    }
+    
+    /** Returns capacity of the array */
+    long getCapacity() const
+    {
+        return _data.capacity();
     }
     
     void copy(const Vector<T>& other)
@@ -96,7 +105,7 @@ public:
             return;
         
         removeAllObjects();
-        init(other.count());
+        setCapacity(other.count());
         addObjectsFromArray(other);
     }
     
@@ -106,12 +115,6 @@ public:
     long count() const
     {
         return _data.size();
-    }
-    
-    /** Returns capacity of the array */
-    long capacity() const
-    {
-        return _data.capacity();
     }
     
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
@@ -238,7 +241,6 @@ public:
             (*it)->release();
         }
         _data.clear();
-        _data.reserve(DEFAULT_CAPACTIY);
     }
 
     /** Fast way to remove a certain object */
