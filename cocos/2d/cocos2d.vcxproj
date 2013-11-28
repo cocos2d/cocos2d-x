@@ -74,7 +74,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;CC_USE_PHYSICS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -121,7 +121,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     </PreBuildEvent>
     <ClCompile>
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;CC_USE_PHYSICS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -192,11 +192,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\math\kazmath\src\vec2.c" />
     <ClCompile Include="..\math\kazmath\src\vec3.c" />
     <ClCompile Include="..\math\kazmath\src\vec4.c" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.cpp" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsContactInfo_box2d.cpp" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsJointInfo_box2d.cpp" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.cpp" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.cpp" />
     <ClCompile Include="..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
@@ -361,16 +356,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\math\kazmath\include\kazmath\vec2.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\vec3.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\vec4.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsContactInfo_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsHelper_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsJointInfo_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.h" />
     <ClInclude Include="..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\physics\CCPhysicsJoint.h" />
-    <ClInclude Include="..\physics\CCPhysicsSetting.h" />
     <ClInclude Include="..\physics\CCPhysicsShape.h" />
     <ClInclude Include="..\physics\CCPhysicsWorld.h" />
     <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h" />

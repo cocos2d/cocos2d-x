@@ -193,7 +193,7 @@ void ActionObject::simulationActionUpdate(float dt)
 
 		for ( int i = 0; i < nodeNum; i++ )
 		{
-			ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
+			ActionNode* actionNode = static_cast<ActionNode*>(_actionNodeList->getObjectAtIndex(i));
 
 			if (actionNode->isActionDoneOnce() == false)
 			{

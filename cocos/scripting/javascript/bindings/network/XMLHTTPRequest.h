@@ -93,8 +93,8 @@ private:
     JSContext*                        _cx;
     std::string                       _meth;
     std::string                       _type;
-    std::stringstream                 _data;
-    size_t                            _dataSize;
+    char*                             _data;
+    uint32_t                          _dataSize;
     JSObject*                         _onreadystateCallback;
     int                               _readyState;
     int                               _status;
@@ -105,8 +105,8 @@ private:
     network::HttpRequest*             _httpRequest;
     bool                              _isNetwork;
     bool                              _withCredentialsValue;
-    std::map<std::string, std::string>          _httpHeader;
-    std::map<std::string, std::string>          _requestHeader;
+    std::unordered_map<std::string, std::string>          _httpHeader;
+    std::unordered_map<std::string, std::string>          _requestHeader;
 };
 
 #endif

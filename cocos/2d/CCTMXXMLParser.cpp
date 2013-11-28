@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include <map>
+#include <unordered_map>
 #include <sstream>
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
@@ -38,11 +38,11 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static const char* valueForKey(const char *key, std::map<std::string, std::string>* dict)
+static const char* valueForKey(const char *key, std::unordered_map<std::string, std::string>* dict)
 {
     if (dict)
     {
-        std::map<std::string, std::string>::iterator it = dict->find(key);
+        std::unordered_map<std::string, std::string>::iterator it = dict->find(key);
         return it!=dict->end() ? it->second.c_str() : "";
     }
     return "";
@@ -244,7 +244,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     CC_UNUSED_PARAM(ctx);
     TMXMapInfo *pTMXMapInfo = this;
     std::string elementName = (char*)name;
-    std::map<std::string, std::string> *attributeDict = new std::map<std::string, std::string>();
+    std::unordered_map<std::string, std::string> *attributeDict = new std::unordered_map<std::string, std::string>();
     if (atts && atts[0])
     {
         for(int i = 0; atts[i]; i += 2) 
