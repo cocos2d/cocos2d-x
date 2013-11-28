@@ -427,6 +427,12 @@ void CCBone::changeDisplayByIndex(int index, bool force)
     m_pDisplayManager->changeDisplayByIndex(index, force);
 }
 
+void CCBone::changeDisplayByName(const char *name, bool force)
+{
+    m_pDisplayManager->changeDisplayByName(name, force);
+}
+
+
 CCArray *CCBone::getColliderBodyList()
 {
     if (CCDecorativeDisplay *decoDisplay = m_pDisplayManager->getCurrentDecorativeDisplay())

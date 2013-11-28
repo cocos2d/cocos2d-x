@@ -1446,11 +1446,11 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json,
         {
             if (dataInfo->asyncStruct)
             {
-                ((CCParticleDisplayData *)displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
+                ((CCParticleDisplayData *)displayData)->displayName = dataInfo->asyncStruct->baseFilePath + plist;
             }
             else
             {
-                ((CCParticleDisplayData *)displayData)->plist = dataInfo->baseFilePath + plist;
+                ((CCParticleDisplayData *)displayData)->displayName = dataInfo->baseFilePath + plist;
             }
         }
     }
