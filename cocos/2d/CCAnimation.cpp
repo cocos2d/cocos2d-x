@@ -32,6 +32,20 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+AnimationFrame* AnimationFrame::create(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo)
+{
+    auto ret = new AnimationFrame();
+    if (ret && ret->initWithSpriteFrame(spriteFrame, delayUnits, userInfo))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
 AnimationFrame::AnimationFrame()
 : _spriteFrame(NULL)
 , _delayUnits(0.0f)
@@ -80,7 +94,7 @@ Animation* Animation::create(void)
     return pAnimation;
 } 
 
-Animation* Animation::createWithSpriteFrames(Array *frames, float delay/* = 0.0f*/)
+Animation* Animation::createWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay/* = 0.0f*/)
 {
     Animation *pAnimation = new Animation();
     pAnimation->initWithSpriteFrames(frames, delay);
@@ -89,7 +103,7 @@ Animation* Animation::createWithSpriteFrames(Array *frames, float delay/* = 0.0f
     return pAnimation;
 }
 
-Animation* Animation::create(Array* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops /* = 1 */)
+Animation* Animation::create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops /* = 1 */)
 {
     Animation *pAnimation = new Animation();
     pAnimation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
@@ -99,49 +113,36 @@ Animation* Animation::create(Array* arrayOfAnimationFrameNames, float delayPerUn
 
 bool Animation::init()
 {
-    return initWithSpriteFrames(NULL, 0.0f);
+    _loops = 1;
+    _delayPerUnit = 0.0f;
+    
+    return true;
 }
 
-bool Animation::initWithSpriteFrames(Array *pFrames, float delay/* = 0.0f*/)
+bool Animation::initWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay/* = 0.0f*/)
 {
-    CCARRAY_VERIFY_TYPE(pFrames, SpriteFrame*);
-
     _loops = 1;
     _delayPerUnit = delay;
-    Array* pTmpFrames = Array::create();
-    setFrames(pTmpFrames);
 
-    if (pFrames != NULL)
+    for (auto& spriteFrame : frames)
     {
-        Object* pObj = NULL;
-        CCARRAY_FOREACH(pFrames, pObj)
-        {
-            SpriteFrame* frame = static_cast<SpriteFrame*>(pObj);
-            AnimationFrame *animFrame = new AnimationFrame();
-            animFrame->initWithSpriteFrame(frame, 1, NULL);
-            _frames->addObject(animFrame);
-            animFrame->release();
-
-            _totalDelayUnits++;
-        }
+        auto animFrame = AnimationFrame::create(spriteFrame, 1, nullptr);
+        _frames.addObject(animFrame);
+        _totalDelayUnits++;
     }
 
     return true;
 }
 
-bool Animation::initWithAnimationFrames(Array* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops)
+bool Animation::initWithAnimationFrames(const Vector<AnimationFrame*>& arrayOfAnimationFrames, float delayPerUnit, unsigned int loops)
 {
-    CCARRAY_VERIFY_TYPE(arrayOfAnimationFrames, AnimationFrame*);
-
     _delayPerUnit = delayPerUnit;
     _loops = loops;
 
-    setFrames(Array::createWithArray(arrayOfAnimationFrames));
+    setFrames(arrayOfAnimationFrames);
 
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_frames, pObj)
+    for (auto& animFrame : _frames)
     {
-        AnimationFrame* animFrame = static_cast<AnimationFrame*>(pObj);
         _totalDelayUnits += animFrame->getDelayUnits();
     }
     return true;
@@ -151,7 +152,6 @@ Animation::Animation()
 : _totalDelayUnits(0.0f)
 , _delayPerUnit(0.0f)
 , _duration(0.0f)
-, _frames(NULL)
 , _restoreOriginalFrame(false)
 , _loops(0)
 {
@@ -161,15 +161,12 @@ Animation::Animation()
 Animation::~Animation(void)
 {
     CCLOGINFO("deallocing Animation: %p", this);
-    CC_SAFE_RELEASE(_frames);
 }
 
-void Animation::addSpriteFrame(SpriteFrame *pFrame)
+void Animation::addSpriteFrame(SpriteFrame* spriteFrame)
 {
-    AnimationFrame *animFrame = new AnimationFrame();
-    animFrame->initWithSpriteFrame(pFrame, 1.0f, NULL);
-    _frames->addObject(animFrame);
-    animFrame->release();
+    AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, 1.0f, nullptr);
+    _frames.addObject(animFrame);
 
     // update duration
     _totalDelayUnits++;

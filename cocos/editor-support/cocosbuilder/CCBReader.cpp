@@ -324,15 +324,13 @@ Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, Obj
     return pScene;
 }
 
-void CCBReader::cleanUpNodeGraph(Node *pNode)
+void CCBReader::cleanUpNodeGraph(Node *node)
 {
-    pNode->setUserObject(NULL);
+    node->setUserObject(nullptr);
     
-    Object *pChild = NULL;
-    CCARRAY_FOREACH(pNode->getChildren(), pChild)
-    {
-        cleanUpNodeGraph(static_cast<Node*>(pChild));
-    }
+    node->getChildren().makeObjectsPerformCallback([this](Node* obj){
+        cleanUpNodeGraph(obj);
+    });
 }
 
 Node* CCBReader::readFileWithCleanUp(bool bCleanUp, Dictionary* am)

@@ -2003,31 +2003,28 @@ Animate::~Animate()
     CC_SAFE_DELETE(_splitTimes);
 }
 
-bool Animate::initWithAnimation(Animation *pAnimation)
+bool Animate::initWithAnimation(Animation* animation)
 {
-    CCASSERT( pAnimation!=NULL, "Animate: argument Animation must be non-NULL");
+    CCASSERT( animation!=NULL, "Animate: argument Animation must be non-NULL");
 
-    float singleDuration = pAnimation->getDuration();
+    float singleDuration = animation->getDuration();
 
-    if ( ActionInterval::initWithDuration(singleDuration * pAnimation->getLoops() ) ) 
+    if ( ActionInterval::initWithDuration(singleDuration * animation->getLoops() ) )
     {
         _nextFrame = 0;
-        setAnimation(pAnimation);
+        setAnimation(animation);
         _origFrame = NULL;
         _executedLoops = 0;
 
-        _splitTimes->reserve(pAnimation->getFrames()->count());
+        _splitTimes->reserve(animation->getFrames().count());
 
         float accumUnitsOfTime = 0;
-        float newUnitOfTimeValue = singleDuration / pAnimation->getTotalDelayUnits();
+        float newUnitOfTimeValue = singleDuration / animation->getTotalDelayUnits();
 
-        Array* pFrames = pAnimation->getFrames();
-        CCARRAY_VERIFY_TYPE(pFrames, AnimationFrame*);
+        auto frames = animation->getFrames();
 
-        Object* pObj = NULL;
-        CCARRAY_FOREACH(pFrames, pObj)
+        for (auto& frame : frames)
         {
-            AnimationFrame* frame = static_cast<AnimationFrame*>(pObj);
             float value = (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration;
             accumUnitsOfTime += frame->getDelayUnits();
             _splitTimes->push_back(value);
@@ -2099,15 +2096,15 @@ void Animate::update(float t)
         t = fmodf(t, 1.0f);
     }
 
-    Array* frames = _animation->getFrames();
-    long numberOfFrames = frames->count();
+    auto frames = _animation->getFrames();
+    long numberOfFrames = frames.count();
     SpriteFrame *frameToDisplay = NULL;
 
     for( int i=_nextFrame; i < numberOfFrames; i++ ) {
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
-            AnimationFrame* frame = static_cast<AnimationFrame*>(frames->getObjectAtIndex(i));
+            AnimationFrame* frame = frames[i];
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setDisplayFrame(frameToDisplay);
 
@@ -2127,27 +2124,24 @@ void Animate::update(float t)
 
 Animate* Animate::reverse() const
 {
-    Array* pOldArray = _animation->getFrames();
-    Array* pNewArray = Array::createWithCapacity(pOldArray->count());
+    auto oldArray = _animation->getFrames();
+    Vector<AnimationFrame*> newArray(oldArray.count());
    
-    CCARRAY_VERIFY_TYPE(pOldArray, AnimationFrame*);
-
-    if (pOldArray->count() > 0)
+    if (oldArray.count() > 0)
     {
-        Object* pObj = NULL;
-        CCARRAY_FOREACH_REVERSE(pOldArray, pObj)
+        for (auto iter = oldArray.rcbegin(); iter != oldArray.rcend(); ++iter)
         {
-            AnimationFrame* pElement = static_cast<AnimationFrame*>(pObj);
-            if (! pElement)
+            AnimationFrame* animFrame = *iter;
+            if (!animFrame)
             {
                 break;
             }
 
-            pNewArray->addObject(pElement->clone());
+            newArray.addObject(animFrame->clone());
         }
     }
 
-    Animation *newAnim = Animation::create(pNewArray, _animation->getDelayPerUnit(), _animation->getLoops());
+    Animation *newAnim = Animation::create(newArray, _animation->getDelayPerUnit(), _animation->getLoops());
     newAnim->setRestoreOriginalFrame(_animation->getRestoreOriginalFrame());
     return Animate::create(newAnim);
 }

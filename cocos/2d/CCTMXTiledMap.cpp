@@ -210,10 +210,10 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
 {
     CCASSERT(layerName.size() > 0, "Invalid layer name!");
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_children, pObj) 
+    
+    for (auto& child : _children)
     {
-        TMXLayer* layer = dynamic_cast<TMXLayer*>(pObj);
+        TMXLayer* layer = dynamic_cast<TMXLayer*>(child);
         if(layer)
         {
             if(layerName.compare( layer->getLayerName()) == 0)
@@ -224,7 +224,7 @@ TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
     }
 
     // layer not found
-    return NULL;
+    return nullptr;
 }
 
 TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const

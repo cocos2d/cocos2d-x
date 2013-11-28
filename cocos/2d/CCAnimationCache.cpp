@@ -107,8 +107,7 @@ void AnimationCache::parseVersion1(Dictionary* animations)
             continue;
         }
 
-        Array* frames = Array::createWithCapacity(frameNames->count());
-        frames->retain();
+        Vector<AnimationFrame*> frames(frameNames->count());
 
         Object* pObj = NULL;
         CCARRAY_FOREACH(frameNames, pObj)
@@ -122,24 +121,21 @@ void AnimationCache::parseVersion1(Dictionary* animations)
                 continue;
             }
 
-            AnimationFrame* animFrame = new AnimationFrame();
-            animFrame->initWithSpriteFrame(spriteFrame, 1, NULL);
-            frames->addObject(animFrame);
-            animFrame->release();
+            AnimationFrame* animFrame = AnimationFrame::create(spriteFrame, 1, nullptr);
+            frames.addObject(animFrame);
         }
 
-        if ( frames->count() == 0 ) {
+        if ( frames.count() == 0 ) {
             CCLOG("cocos2d: AnimationCache: None of the frames for animation '%s' were found in the SpriteFrameCache. Animation is not being added to the Animation Cache.", element->getStrKey());
             continue;
-        } else if ( frames->count() != frameNames->count() ) {
+        } else if ( frames.count() != frameNames->count() ) {
             CCLOG("cocos2d: AnimationCache: An animation in your dictionary refers to a frame which is not in the SpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", element->getStrKey());
         }
 
         animation = Animation::create(frames, delay, 1);
 
         AnimationCache::getInstance()->addAnimation(animation, element->getStrKey());
-        frames->release();
-    }    
+    }
 }
 
 void AnimationCache::parseVersion2(Dictionary* animations)
@@ -163,8 +159,7 @@ void AnimationCache::parseVersion2(Dictionary* animations)
         }
 
         // Array of AnimationFrames
-        Array* array = Array::createWithCapacity(frameArray->count());
-        array->retain();
+        Vector<AnimationFrame*> array(frameArray->count());
 
         Object* pObj = NULL;
         CCARRAY_FOREACH(frameArray, pObj)
@@ -183,22 +178,17 @@ void AnimationCache::parseVersion2(Dictionary* animations)
             float delayUnits = entry->valueForKey("delayUnits")->floatValue();
             Dictionary* userInfo = (Dictionary*)entry->objectForKey("notification");
 
-            AnimationFrame *animFrame = new AnimationFrame();
-            animFrame->initWithSpriteFrame(spriteFrame, delayUnits, userInfo);
+            AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, delayUnits, userInfo);
 
-            array->addObject(animFrame);
-            animFrame->release();
+            array.addObject(animFrame);
         }
 
         float delayPerUnit = animationDict->valueForKey("delayPerUnit")->floatValue();
-        Animation *animation = new Animation();
-        animation->initWithAnimationFrames(array, delayPerUnit, 0 != loops->length() ? loops->intValue() : 1);
-        array->release();
+        Animation *animation = Animation::create(array, delayPerUnit, 0 != loops->length() ? loops->intValue() : 1);
 
         animation->setRestoreOriginalFrame(restoreOriginalFrame);
 
         AnimationCache::getInstance()->addAnimation(animation, name);
-        animation->release();
     }
 }
 

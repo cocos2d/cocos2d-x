@@ -390,22 +390,19 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
     ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
 
     // update possible children
-    if (_children && _children->count()>0)
-    {
-        Object* pObject = nullptr;
-        CCARRAY_FOREACH(_children, pObject)
+    
+    _children.makeObjectsPerformCallback([&indexForZ](Node* child){
+        Sprite* sp = static_cast<Sprite*>(child);
+        if (child)
         {
-            Sprite* child = static_cast<Sprite*>(pObject);
-            if (child)
+            unsigned int ai = sp->getAtlasIndex();
+            if ( ai >= indexForZ )
             {
-                unsigned int ai = child->getAtlasIndex();
-                if ( ai >= indexForZ )
-                {
-                    child->setAtlasIndex(ai+1);
-                }
+                sp->setAtlasIndex(ai+1);
             }
         }
-    }
+    });
+
     _tiles[z] = gid;
     return tile;
 }
@@ -558,7 +555,7 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
         return;
     }
 
-    CCASSERT(_children->containsObject(sprite), "Tile does not belong to TMXLayer");
+    CCASSERT(_children.containsObject(sprite), "Tile does not belong to TMXLayer");
 
     unsigned int atlasIndex = sprite->getAtlasIndex();
     unsigned int zz = (size_t)_atlasIndexArray->arr[atlasIndex];
@@ -596,22 +593,17 @@ void TMXLayer::removeTileAt(const Point& pos)
             _textureAtlas->removeQuadAtIndex(atlasIndex);
 
             // update possible children
-            if (_children && _children->count()>0)
-            {
-                Object* pObject = nullptr;
-                CCARRAY_FOREACH(_children, pObject)
+            _children.makeObjectsPerformCallback([&atlasIndex](Node* obj){
+                Sprite* child = static_cast<Sprite*>(obj);
+                if (child)
                 {
-                    Sprite* child = static_cast<Sprite*>(pObject);
-                    if (child)
+                    unsigned int ai = child->getAtlasIndex();
+                    if ( ai >= atlasIndex )
                     {
-                        unsigned int ai = child->getAtlasIndex();
-                        if ( ai >= atlasIndex )
-                        {
-                            child->setAtlasIndex(ai-1);
-                        }
+                        child->setAtlasIndex(ai-1);
                     }
                 }
-            }
+            });
         }
     }
 }
