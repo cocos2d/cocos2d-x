@@ -84,11 +84,11 @@ THE SOFTWARE.
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
-// Structure timeval has define in winsock.h, include windows.h for it.
-#include <Windows.h>
 
 #ifndef __MINGW32__
 
+// Structure timeval has define in winsock.h, include windows.h for it.
+#include <Windows.h>
 #include <WinSock2.h>
 
 NS_CC_BEGIN
@@ -106,6 +106,8 @@ NS_CC_END
 #else
 
 #include <winsock.h>
+#include <winsock2.h>
+#include <windows.h>
 
 #endif // __MINGW32__
 

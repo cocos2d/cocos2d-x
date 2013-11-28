@@ -2,10 +2,6 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-#ifdef __MINGW32__
-  #include "winsock2.h"
-#endif
-
 #include "curl/curl.h"
 
 CurlTest::CurlTest()

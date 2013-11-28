@@ -24,10 +24,6 @@
 #include "AssetsManager.h"
 #include "cocos2d.h"
 
-#ifdef __MINGW32__
-  #include "winsock2.h"
-#endif
-
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include <stdio.h>
