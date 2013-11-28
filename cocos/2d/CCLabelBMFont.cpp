@@ -746,7 +746,7 @@ void LabelBMFont::setString(unsigned short *newString, bool needUpdateLabel)
         CC_SAFE_DELETE_ARRAY(tmp);
     }
     
-    _children.makeObjectsPerformCallback([](Node* child){
+    _children.forEach([](Node* child){
         child->setVisible(false);
     });
 
@@ -822,7 +822,7 @@ void LabelBMFont::setOpacity(GLubyte opacity)
 void LabelBMFont::setOpacityModifyRGB(bool var)
 {
     _isOpacityModifyRGB = var;
-    _children.makeObjectsPerformCallback([this](Node* child){
+    _children.forEach([this](Node* child){
         if (child)
         {
             RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(child);
@@ -842,7 +842,7 @@ void LabelBMFont::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0f;
     
-    _children.makeObjectsPerformCallback([this](Node* child){
+    _children.forEach([this](Node* child){
         Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedOpacity(_displayedOpacity);
     });
@@ -854,7 +854,7 @@ void LabelBMFont::updateDisplayedColor(const Color3B& parentColor)
 	_displayedColor.g = _realColor.g * parentColor.g/255.0f;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0f;
     
-    _children.makeObjectsPerformCallback([this](Node* child){
+    _children.forEach([this](Node* child){
         Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedColor(_displayedColor);
     });

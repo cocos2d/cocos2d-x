@@ -47,15 +47,10 @@ void Bug422Layer::reset()
 
 void Bug422Layer::check(Node* t)
 {
-    auto array = t->getChildren();
-    Object* pChild = NULL;
-    CCARRAY_FOREACH(array, pChild)
-    {
-        CC_BREAK_IF(! pChild);
-        auto node = static_cast<Node*>(pChild);
-        log("%p, rc: %d", node, node->retainCount());
-        check(node);
-    }
+    t->getChildren().forEach([this](Node* child){
+        log("%p, rc: %d", child, child->retainCount());
+        check(child);
+    });
 }
 
 void Bug422Layer::menuCallback(Object* sender)

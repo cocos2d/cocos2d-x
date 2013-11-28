@@ -250,7 +250,7 @@ void Label::alignText()
   
     int strLen = cc_wcslen(_currentUTF16String);
     
-    _children.makeObjectsPerformCallback([this, &strLen](Node* child){
+    _children.forEach([this, &strLen](Node* child){
         if (child)
         {
             int tag = child->getTag();
@@ -592,7 +592,7 @@ void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
 {
     _isOpacityModifyRGB = isOpacityModifyRGB;
     
-    _children.makeObjectsPerformCallback([this](Node* child){
+    _children.forEach([this](Node* child){
         if (child)
         {
             RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(child);
@@ -634,7 +634,7 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _displayedOpacity = _realOpacity * parentOpacity/255.0;
     
-    _children.makeObjectsPerformCallback([this](Node* child){
+    _children.forEach([this](Node* child){
         Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedOpacity(_displayedOpacity);
     });
@@ -700,7 +700,7 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
     
-    _children.makeObjectsPerformCallback([this](Node* child){
+    _children.forEach([this](Node* child){
         Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedColor(_displayedColor);
     });

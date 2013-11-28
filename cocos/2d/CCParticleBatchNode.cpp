@@ -169,7 +169,7 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
     CCASSERT( child->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
     // If this is the 1st children, then copy blending function
-    if( _children.count() == 0 )
+    if (_children.empty())
     {
         setBlendFunc(child->getBlendFunc());
     }
@@ -242,7 +242,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
     }
 
     // no reordering if only 1 child
-    if( _children.count() > 1)
+    if (!_children.empty())
     {
         long newIndex = 0, oldIndex = 0;
 
@@ -383,7 +383,7 @@ void ParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
 
 void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-    _children.makeObjectsPerformCallback([](Node* child){
+    _children.forEach([](Node* child){
         static_cast<ParticleSystem*>(child)->setBatchNode(nullptr);
     });
 
@@ -464,7 +464,7 @@ void ParticleBatchNode::updateAllAtlasIndexes()
 {
     unsigned int index = 0;
     
-    _children.makeObjectsPerformCallback([&index](Node* child){
+    _children.forEach([&index](Node* child){
         ParticleSystem* partiSys = static_cast<ParticleSystem*>(child);
         partiSys->setAtlasIndex(index);
         index += partiSys->getTotalParticles();

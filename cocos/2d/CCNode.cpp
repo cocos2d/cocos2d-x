@@ -575,7 +575,7 @@ void Node::cleanup()
     }
     
     // timers
-    _children.makeObjectsPerformCallback([](Node* child){
+    _children.forEach([](Node* child){
         child->cleanup();
     });
 }
@@ -613,7 +613,7 @@ void Node::addChild(Node *child, int zOrder, int tag)
     CCASSERT( child != NULL, "Argument must be non-nil");
     CCASSERT( child->_parent == NULL, "child already added. It can't be added again");
 
-    if (_children.count() == 0)
+    if (_children.empty())
     {
         this->childrenAlloc();
     }
@@ -678,7 +678,7 @@ void Node::removeFromParentAndCleanup(bool cleanup)
 void Node::removeChild(Node* child, bool cleanup /* = true */)
 {
     // explicit nil handling
-    if (_children.count() == 0)
+    if (_children.empty())
     {
         return;
     }
@@ -712,7 +712,7 @@ void Node::removeAllChildren()
 void Node::removeAllChildrenWithCleanup(bool cleanup)
 {
     // not using detachChild improves speed here
-    if ( _children.count() > 0 )
+    if (!_children.empty())
     {
         for (auto& child : _children)
         {
@@ -854,7 +854,7 @@ void Node::visit()
     this->transform();
     int i = 0;
 
-    if(_children.count() > 0)
+    if(!_children.empty())
     {
         sortAllChildren();
         // draw children zOrder < 0
@@ -940,7 +940,7 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
-    _children.makeObjectsPerformCallback([](Node* child){
+    _children.forEach([](Node* child){
         child->onEnter();
     });
 
@@ -961,7 +961,7 @@ void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
 
-    _children.makeObjectsPerformCallback([](Node* child){
+    _children.forEach([](Node* child){
         child->onEnterTransitionDidFinish();
     });
     
@@ -976,7 +976,7 @@ void Node::onEnterTransitionDidFinish()
 
 void Node::onExitTransitionDidStart()
 {
-    _children.makeObjectsPerformCallback([](Node* child){
+    _children.forEach([](Node* child){
         child->onExitTransitionDidStart();
     });
     
@@ -1002,7 +1002,7 @@ void Node::onExit()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
-    _children.makeObjectsPerformCallback([](Node* child){
+    _children.forEach([](Node* child){
         child->onExit();
     });
 }
@@ -1352,7 +1352,7 @@ bool Node::updatePhysicsTransform()
 void Node::updateTransform()
 {
     // Recursively iterate over children
-    _children.makeObjectsPerformCallback([](Node* child){
+    _children.forEach([](Node* child){
         child->updateTransform();
     });
 }
@@ -1463,7 +1463,7 @@ void NodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 	
     if (_cascadeOpacityEnabled)
     {
-        _children.makeObjectsPerformCallback([this](Node* child){
+        _children.forEach([this](Node* child){
             RGBAProtocol* item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {
@@ -1518,7 +1518,7 @@ void NodeRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        _children.makeObjectsPerformCallback([this](Node* child){
+        _children.forEach([this](Node* child){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {

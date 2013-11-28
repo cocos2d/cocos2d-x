@@ -163,7 +163,7 @@ void BatchNode::visit()
 
 void BatchNode::draw()
 {
-    if (_children.count() == 0)
+    if (_children.empty())
     {
         return;
     }

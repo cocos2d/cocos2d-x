@@ -267,10 +267,10 @@ void SpriteBatchNode::sortAllChildren()
 #endif
 
         //sorted now check all children
-        if (_children.count() > 0)
+        if (!_children.empty())
         {
             //first sort all children recursively based on zOrder
-            _children.makeObjectsPerformCallback([](Node* child){
+            _children.forEach([](Node* child){
                 child->sortAllChildren();
             });
 
@@ -278,7 +278,7 @@ void SpriteBatchNode::sortAllChildren()
 
             //fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
             // and at the same time reorder descendants and the quads to the right index
-            _children.makeObjectsPerformCallback([this, &index](Node* child){
+            _children.forEach([this, &index](Node* child){
                 Sprite* sp = static_cast<Sprite*>(child);
                 updateAtlasIndex(sp, &index);
             });
@@ -324,7 +324,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
             needNewIndex = false;
         }
 
-        array.makeObjectsPerformCallback([&](Node* child){
+        array.forEach([&](Node* child){
             Sprite* sp = static_cast<Sprite*>(child);
             if (needNewIndex && sp->getZOrder() >= 0)
             {
@@ -390,7 +390,7 @@ void SpriteBatchNode::draw(void)
 
     CC_NODE_DRAW_SETUP();
 
-    _children.makeObjectsPerformCallback([](Node* child){
+    _children.forEach([](Node* child){
         child->updateTransform();
     });
 
@@ -426,7 +426,7 @@ int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
 
     auto children = parent->getChildren();
 
-    children.makeObjectsPerformCallback([this, &index](Node* child){
+    children.forEach([this, &index](Node* child){
         Sprite* sp = static_cast<Sprite*>(child);
         if (sp && (sp->getZOrder() < 0))
         {
@@ -441,7 +441,7 @@ int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
         index++;
     }
 
-    children.makeObjectsPerformCallback([this, &index](Node* child){
+    children.forEach([this, &index](Node* child){
         Sprite* sp = static_cast<Sprite*>(child);
         if (sp && (sp->getZOrder() >= 0))
         {
@@ -559,7 +559,7 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
     _textureAtlas->insertQuad(&quad, index);
 
     // add children recursively
-    sprite->getChildren().makeObjectsPerformCallback([this](Node* child){
+    sprite->getChildren().forEach([this](Node* child){
         appendChild(static_cast<Sprite*>(child));
     });
 }
@@ -586,7 +586,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
 
     // remove children recursively
     auto children = sprite->getChildren();
-    children.makeObjectsPerformCallback([this](Node* obj){
+    children.forEach([this](Node* obj){
         Sprite* child = static_cast<Sprite*>(obj);
         if (child)
         {

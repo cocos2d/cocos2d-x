@@ -227,7 +227,7 @@ void Bone::update(float delta)
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    _children.makeObjectsPerformCallback([&delta](Node* obj){
+    _children.forEach([&delta](Node* obj){
         Bone *childBone = static_cast<Bone*>(obj);
         childBone->update(delta);
     });
@@ -303,7 +303,7 @@ void Bone::addChildBone(Bone *child)
     CCASSERT( nullptr != child, "Argument must be non-nil");
     CCASSERT( nullptr == child->_parentBone, "child already added. It can't be added again");
 
-    if(_children.count() == 0)
+    if(_children.empty())
     {
         _children.setCapacity(4);
     }
@@ -317,7 +317,7 @@ void Bone::addChildBone(Bone *child)
 
 void Bone::removeChildBone(Bone *bone, bool recursion)
 {
-    if (_children.count() > 0 && _children.getIndexOfObject(bone) != CC_INVALID_INDEX )
+    if (!_children.empty() && _children.getIndexOfObject(bone) != CC_INVALID_INDEX )
     {
         if(recursion)
         {

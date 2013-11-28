@@ -726,7 +726,7 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
     if (_batchNode)
     {
-        _children.makeObjectsPerformCallback([this](Node* child){
+        _children.forEach([this](Node* child){
             Sprite* sprite = dynamic_cast<Sprite*>(child);
             if (sprite)
             {
@@ -772,7 +772,7 @@ void Sprite::sortAllChildren()
 
         if ( _batchNode)
         {
-            _children.makeObjectsPerformCallback([](Node* child){
+            _children.forEach([](Node* child){
                 child->sortAllChildren();
             });
         }
@@ -809,7 +809,7 @@ void Sprite::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (_hasChildren)
     {
-        _children.makeObjectsPerformCallback([](Node* child){
+        _children.forEach([](Node* child){
             Sprite* sp = dynamic_cast<Sprite*>(child);
             if (sp)
             {

@@ -2,9 +2,9 @@
 #include "AppMacros.h"
 
 #include "CCEventListenerTouch.h"
+#include "CCVector.h"
 
 USING_NS_CC;
-
 
 Scene* HelloWorld::scene()
 {
@@ -21,9 +21,61 @@ Scene* HelloWorld::scene()
     return scene;
 }
 
+void showSprites(const Vector<Sprite*>& sprites)
+{
+    log("container size = %ld", sprites.count());
+    for (auto& sp : sprites)
+    {
+        log("sp tag: %d, ref count = %d", sp->getTag(), sp->retainCount());
+    }
+}
+
+Vector<Sprite*> createAllSprites()
+{
+    Vector<Sprite*> ret;
+    ret.addObject(Sprite::create());
+    ret.addObject(Sprite::create());
+    return ret;
+}
+
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
+    
+//    Vector<Sprite*> container;
+//    
+//    for (int i = 0; i < 10; ++i)
+//    {
+//        auto sp = Sprite::create();
+//        sp->setTag(i);
+//        container.addObject(sp);
+//    }
+//    
+//    showSprites(container);
+//    
+//    Vector<Sprite*> containerCopy = container;
+//    
+//    showSprites(containerCopy);
+//    
+//    containerCopy = container;
+//    
+//    showSprites(containerCopy);
+    
+//    Vector<Sprite*> moveVector(createAllSprites());
+//    showSprites(moveVector);
+//    
+//    CCLOG("-------------  2  ----------");
+//    moveVector = createAllSprites();
+//    showSprites(moveVector);
+//    
+//    CCLOG("-------------  3  ----------");
+//    Vector<Sprite*> aaa;
+//    aaa.addObject(Sprite::create());
+//    moveVector = aaa;
+//    showSprites(moveVector);
+    
+    log("size of Vector = %ld", sizeof(Vector<Sprite*>));
+    
     //////////////////////////////
     // 1. super init first
     if ( !Layer::init() )
@@ -74,6 +126,10 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(sprite);
+    
+    this->getChildren().forEach([](Node* node){
+        log("node = %p, name = %s", node, typeid(*node).name());
+    });
     
     return true;
 }

@@ -528,7 +528,7 @@ void RenderTexture::draw()
 		//! make sure all children are drawn
         sortAllChildren();
 		
-        _children.makeObjectsPerformCallback([this](Node* child){
+        _children.forEach([this](Node* child){
             if (child != _sprite)
             {
                 child->visit();
