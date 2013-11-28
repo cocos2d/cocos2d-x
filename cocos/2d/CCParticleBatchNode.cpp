@@ -95,11 +95,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
     _textureAtlas = new TextureAtlas();
     _textureAtlas->initWithTexture(tex, capacity);
 
-    // no lazy alloc in this node
-    if (_children.count() == 0)
-    {
-        _children.init(capacity);
-    }
+    _children.setCapacity(capacity);
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
@@ -211,10 +207,7 @@ long ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
     CCASSERT( child != NULL, "Argument must be non-nil");
     CCASSERT( child->getParent() == NULL, "child already added. It can't be added again");
 
-    if (_children.count() == 0 )
-    {
-        _children.init(4);
-    }
+    _children.setCapacity(4);
 
     //don't use a lazy insert
     long pos = searchNewPositionInChildrenForZ(z);

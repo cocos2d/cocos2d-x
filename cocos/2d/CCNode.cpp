@@ -586,6 +586,12 @@ const char* Node::description() const
     return String::createWithFormat("<Node | Tag = %d>", _tag)->getCString();
 }
 
+// lazy allocs
+void Node::childrenAlloc(void)
+{
+    _children.setCapacity(4);
+}
+
 Node* Node::getChildByTag(int aTag)
 {
     CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
@@ -606,6 +612,11 @@ void Node::addChild(Node *child, int zOrder, int tag)
 {    
     CCASSERT( child != NULL, "Argument must be non-nil");
     CCASSERT( child->_parent == NULL, "child already added. It can't be added again");
+
+    if (_children.count() == 0)
+    {
+        this->childrenAlloc();
+    }
 
     this->insertChild(child, zOrder);
     

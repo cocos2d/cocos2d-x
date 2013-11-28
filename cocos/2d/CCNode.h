@@ -1394,6 +1394,9 @@ protected:
     Node();
     virtual ~Node();
     virtual bool init();
+
+    /// lazy allocs
+    void childrenAlloc(void);
     
     /// helper that reorder a child
     void insertChild(Node* child, int z);

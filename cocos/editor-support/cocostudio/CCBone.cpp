@@ -305,7 +305,7 @@ void Bone::addChildBone(Bone *child)
 
     if(_children.count() == 0)
     {
-        _children.init(4);
+        _children.setCapacity(4);
     }
 
     if (_children.getIndexOfObject(child) == CC_INVALID_INDEX)
