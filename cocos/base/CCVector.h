@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include <vector>
 #include <algorithm>
 #include "ccMacros.h"
-//#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -37,7 +36,7 @@ class CC_DLL Vector
 {
 public:
     /** creates an emptry Vector */
-    Vector<T>(int capacity=7)
+    Vector<T>(long capacity=7)
     : _data()
     {
         init(capacity);
@@ -49,7 +48,7 @@ public:
     }
 
     /** Initializes an array with capacity */
-    bool init(int capacity)
+    bool init(long capacity)
     {
         _data.reserve(capacity);
         return true;
@@ -58,21 +57,21 @@ public:
     // Querying an Array
 
     /** Returns element count of the array */
-    int count() const
+    long count() const
     {
         return _data.size();
     }
     
     /** Returns capacity of the array */
-    int capacity() const
+    long capacity() const
     {
         return _data.capacity();
     }
     
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    int getIndexOfObject(T object) const
+    long getIndexOfObject(T object) const
     {
-        int i=0;
+        long i=0;
         for (auto it = _data.begin(); it != _data.end(); ++it, ++i)
         {
             if (*it == object)
@@ -85,7 +84,7 @@ public:
     }
 
     /** Returns an element with a certain index */
-    T getObjectAtIndex(int index) const
+    T getObjectAtIndex(long index) const
     {
         CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
         return _data[index];
@@ -112,7 +111,7 @@ public:
     /** returns true if the the arrays are equal */
     bool isEqualToArray(const Vector<T> &otherArray)
     {
-        for (int i = 0; i< this->count(); i++)
+        for (long i = 0; i< this->count(); i++)
         {
             if (!this->getObjectAtIndex(i)->isEqual(otherArray.getObjectAtIndex(i)))
             {
@@ -141,20 +140,20 @@ public:
     }
 
     /** Insert a certain object at a certain index */
-    void insertObject(T object, int index)
+    void insertObject(T object, long index)
     {
         _data.insert( std::next( std::begin(_data, index), object ) );
         object->retain();
     }
 
     /** sets a certain object at a certain index */
-    void setObject(T object, int index)
+    void setObject(T object, long index)
     {
         _data[index] = object;
         object->retain();
     }
     /** sets a certain object at a certain index without retaining. Use it with caution */
-    void fastSetObject(T object, int index)
+    void fastSetObject(T object, long index)
     {
         _data[index] = object;
     }
@@ -178,7 +177,7 @@ public:
     }
 
     /** Removes an element with a certain index */
-    void removeObjectAtIndex(int index)
+    void removeObjectAtIndex(long index)
     {
         auto it = std::next( begin(), index );
         _data.erase(it);
@@ -200,7 +199,7 @@ public:
     }
 
     /** Fast way to remove an element with a certain index */
-    void fastRemoveObjectAtIndex(int index)
+    void fastRemoveObjectAtIndex(long index)
     {
         removeObjectAtIndex(index);
     }
@@ -210,8 +209,8 @@ public:
     /** Swap two elements */
     void swapObjects(T object1, T object2)
     {
-        int idx1 = getIndexOfObject(object1);
-        int idx2 = getIndexOfObject(object2);
+        long idx1 = getIndexOfObject(object1);
+        long idx2 = getIndexOfObject(object2);
 
         CCASSERT(idx1>=0 && idx2>=2, "invalid object index");
 
@@ -219,7 +218,7 @@ public:
     }
     
     /** Swap two elements with certain indexes */
-    void swap(int index1, int index2)
+    void swap(long index1, long index2)
     {
         CCASSERT(index1 >=0 && index1 < count() && index2 >= 0 && index2 < count(), "Invalid indices");
 
@@ -227,7 +226,7 @@ public:
     }
 
     /** Replace object at index with another object. */
-    void replaceObjectAtIndex(int index, T object)
+    void replaceObjectAtIndex(long index, T object)
     {
         if( object != _data[index] ) {
             object->retain();

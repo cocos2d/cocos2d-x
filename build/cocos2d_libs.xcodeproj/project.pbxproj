@@ -744,6 +744,8 @@
 		1A570547180BD9C40088DEC7 /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570544180BD9C40088DEC7 /* CCTouch.cpp */; };
 		1A570548180BD9C40088DEC7 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570545180BD9C40088DEC7 /* CCTouch.h */; };
 		1A570549180BD9C40088DEC7 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570545180BD9C40088DEC7 /* CCTouch.h */; };
+		1A85BA0D1845F31700260FC0 /* CCVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A85BA0C1845F31700260FC0 /* CCVector.h */; };
+		1A85BA0E1845F31700260FC0 /* CCVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A85BA0C1845F31700260FC0 /* CCVector.h */; };
 		1A8C5646180E8D0D00EF57C3 /* tolua++.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C563F180E8D0D00EF57C3 /* tolua++.h */; };
 		1A8C5647180E8D0D00EF57C3 /* tolua++.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C563F180E8D0D00EF57C3 /* tolua++.h */; };
 		1A8C5648180E8D0D00EF57C3 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5640180E8D0D00EF57C3 /* tolua_event.c */; };
@@ -2361,6 +2363,7 @@
 		1A570545180BD9C40088DEC7 /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
 		1A57FFF7180BC5160088DEC7 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CHANGELOG; path = ../CHANGELOG; sourceTree = "<group>"; };
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A85BA0C1845F31700260FC0 /* CCVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCVector.h; path = ../base/CCVector.h; sourceTree = "<group>"; };
 		1A8C563F180E8D0D00EF57C3 /* tolua++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "tolua++.h"; sourceTree = "<group>"; };
 		1A8C5640180E8D0D00EF57C3 /* tolua_event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_event.c; sourceTree = "<group>"; };
 		1A8C5641180E8D0D00EF57C3 /* tolua_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_event.h; sourceTree = "<group>"; };
@@ -3458,6 +3461,7 @@
 				1A5700BE180BC6060088DEC7 /* CCSet.h */,
 				1A5700BF180BC6060088DEC7 /* CCString.cpp */,
 				1A5700C0180BC6060088DEC7 /* CCString.h */,
+				1A85BA0C1845F31700260FC0 /* CCVector.h */,
 				1A5700C1180BC6060088DEC7 /* etc1.cpp */,
 				1A5700C2180BC6060088DEC7 /* etc1.h */,
 				1A5700C3180BC6060088DEC7 /* s3tc.cpp */,
@@ -5470,6 +5474,7 @@
 				1AD71F09180E28C400808F54 /* autolink.h in Headers */,
 				1AD71F0B180E28C400808F54 /* config.h in Headers */,
 				1AD71F0D180E28C400808F54 /* features.h in Headers */,
+				1A85BA0D1845F31700260FC0 /* CCVector.h in Headers */,
 				1AD71F0F180E28C400808F54 /* forwards.h in Headers */,
 				1AD71F11180E28C400808F54 /* json.h in Headers */,
 				1AD71F13180E28C400808F54 /* json_batchallocator.h in Headers */,
@@ -6021,6 +6026,7 @@
 				1AD71ED4180E26E600808F54 /* SkeletonData.h in Headers */,
 				1AD71ED8180E26E600808F54 /* SkeletonJson.h in Headers */,
 				1AD71EDC180E26E600808F54 /* Skin.h in Headers */,
+				1A85BA0E1845F31700260FC0 /* CCVector.h in Headers */,
 				1AD71EE0180E26E600808F54 /* Slot.h in Headers */,
 				1AD71EE4180E26E600808F54 /* SlotData.h in Headers */,
 				1AD71EE8180E26E600808F54 /* spine-cocos2dx.h in Headers */,
