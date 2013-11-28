@@ -129,10 +129,10 @@ public:
 
 private:
     void updateAllAtlasIndexes();
-    void increaseAtlasCapacityTo(unsigned int quantity);
-    unsigned int searchNewPositionInChildrenForZ(int z);
-    void getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, Node* child, int z);
-    unsigned int addChildHelper(ParticleSystem* child, int z, int aTag);
+    void increaseAtlasCapacityTo(long quantity);
+    long searchNewPositionInChildrenForZ(int z);
+    void getCurrentIndex(long* oldIndex, long* newIndex, Node* child, int z);
+    long addChildHelper(ParticleSystem* child, int z, int aTag);
     void updateBlendFunc(void);
     /** the texture atlas used for drawing the quads */
     TextureAtlas* _textureAtlas;

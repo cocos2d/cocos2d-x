@@ -35,11 +35,14 @@ template<class T>
 class CC_DLL Vector
 {
 public:
+    
+    static const long DEFAULT_CAPACTIY = 7;
+    
     /** creates an emptry Vector */
-    Vector<T>(long capacity=7)
+    explicit Vector<T>(long capacity=DEFAULT_CAPACTIY)
     : _data()
     {
-        CCLOG("In the constructor of Vector.");
+        CCLOG("In the default constructor of Vector.");
         init(capacity);
     }
 
@@ -54,10 +57,24 @@ public:
         copy(other);
     }
     
-    const Vector<T>& operator=(const Vector<T>& other)
+    /** Move constructor */
+    Vector<T>(Vector<T>&& other)
     {
-        CCLOG("In the assignment operator!");
+        CCLOG("In the move constructor of Vector!");
+        _data = std::move(other._data);
+    }
+    
+    Vector<T>& operator=(const Vector<T>& other)
+    {
+        CCLOG("In the copy assignment operator!");
         copy(other);
+        return *this;
+    }
+    
+    Vector<T>& operator=(Vector<T>&& other)
+    {
+        CCLOG("In the move assignment operator!");
+        _data = std::move(other._data);
         return *this;
     }
     
@@ -171,7 +188,8 @@ public:
     /** Insert a certain object at a certain index */
     void insertObject(T object, long index)
     {
-        _data.insert( std::next( std::begin(_data, index), object ) );
+        CCASSERT(index >= 0 && index < count(), "Invalid index!");
+        _data.insert((std::begin(_data) + index), object);
         object->retain();
     }
 
@@ -220,6 +238,7 @@ public:
             (*it)->release();
         }
         _data.clear();
+        _data.reserve(DEFAULT_CAPACTIY);
     }
 
     /** Fast way to remove a certain object */
@@ -275,6 +294,16 @@ public:
     {
         _data.shrink_to_fit();
     }
+    
+    void makeObjectsPerformCallback(std::function<void(T)> callback)
+    {
+        if (count() <= 0)
+            return;
+        
+        std::for_each(_data.begin(), _data.end(), [&callback](T obj){
+            callback(obj);
+        });
+    }
   
     // ------------------------------------------
     // Iterators
@@ -282,18 +311,26 @@ public:
     typedef typename std::vector<T>::iterator iterator;
     typedef typename std::vector<T>::const_iterator const_iterator;
 
+    typedef typename std::vector<T>::reverse_iterator reverse_iterator;
+    typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
+    
     iterator begin() { return _data.begin(); }
     const_iterator begin() const { return _data.begin(); }
     
     iterator end() { return _data.end(); }
     const_iterator end() const { return _data.end(); }
     
-    iterator cbegin() { return _data.cbegin(); }
     const_iterator cbegin() const { return _data.cbegin(); }
-    
-    iterator cend() { return _data.cend(); }
     const_iterator cend() const { return _data.cend(); }
-
+    
+    reverse_iterator rbegin() { return _data.rbegin(); }
+    const_reverse_iterator rbegin() const { return _data.rbegin(); }
+    
+    reverse_iterator rend() { return _data.rend(); }
+    const_reverse_iterator rend() const { return _data.rend(); }
+    
+    const_reverse_iterator rcbegin() const { return _data.crbegin(); }
+    const_reverse_iterator rcend() const { return _data.crend(); }
 protected:
     std::vector<T> _data;
 

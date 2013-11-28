@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCMenuItem.h"
 #include "CCLayer.h"
-
+#include "CCVector.h"
 #include "CCEventTouch.h"
 
 NS_CC_BEGIN
@@ -63,7 +63,7 @@ public:
     static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** creates a Menu with a Array of MenuItem objects */
-    static Menu* createWithArray(Array* pArrayOfItems);
+    static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
 
     /** creates a Menu with it's item, then use addChild() to add 
       * other items. It is used for script, it can't init with undetermined
@@ -129,7 +129,7 @@ protected:
     bool init();
 
     /** initializes a Menu with a NSArray of MenuItem objects */
-    bool initWithArray(Array* pArrayOfItems);
+    bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
 
     /** whether or not the menu will receive events */
     bool _enabled;

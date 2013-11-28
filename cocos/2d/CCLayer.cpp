@@ -499,15 +499,13 @@ void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        Object *obj = NULL;
-        CCARRAY_FOREACH(_children, obj)
-        {
+        _children.makeObjectsPerformCallback([this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
                 item->updateDisplayedOpacity(_displayedOpacity);
             }
-        }
+        });
     }
 }
 
@@ -519,15 +517,13 @@ void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        Object *obj = NULL;
-        CCARRAY_FOREACH(_children, obj)
-        {
+        _children.makeObjectsPerformCallback([this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
                 item->updateDisplayedColor(_displayedColor);
             }
-        }
+        });
     }
 }
 
