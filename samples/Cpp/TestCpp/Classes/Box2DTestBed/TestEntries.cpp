@@ -15,12 +15,10 @@
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
-
-#include "Test.h"
-
 #include <cstring>
 using namespace std;
 
+#include "Test.h"
 #include "Tests/AddPair.h"
 #include "Tests/ApplyForce.h"
 #include "Tests/BodyTypes.h"
@@ -36,6 +34,8 @@ using namespace std;
 #include "Tests/CollisionProcessing.h"
 #include "Tests/CompoundShapes.h"
 #include "Tests/Confined.h"
+#include "Tests/ConvexHull.h"
+#include "Tests/ConveyorBelt.h"
 #include "Tests/DistanceTest.h"
 #include "Tests/Dominos.h"
 #include "Tests/DumpShell.h"
@@ -43,6 +43,9 @@ using namespace std;
 #include "Tests/EdgeShapes.h"
 #include "Tests/EdgeTest.h"
 #include "Tests/Gears.h"
+#include "Tests/Mobile.h"
+#include "Tests/MobileBalanced.h"
+#include "Tests/MotorJoint.h"
 #include "Tests/OneSidedPlatform.h"
 #include "Tests/Pinball.h"
 #include "Tests/PolyCollision.h"
@@ -52,7 +55,6 @@ using namespace std;
 #include "Tests/Pyramid.h"
 #include "Tests/RayCast.h"
 #include "Tests/Revolute.h"
-//#include "Tests/Rope.h"
 #include "Tests/RopeJoint.h"
 #include "Tests/SensorTest.h"
 #include "Tests/ShapeEditing.h"
@@ -69,52 +71,56 @@ using namespace std;
 
 TestEntry g_testEntries[] =
 {
-    {"Tumbler", Tumbler::Create},
-    {"Tiles", Tiles::Create},
-    {"Dump Shell", DumpShell::Create},
-    {"Gears", Gears::Create},
-    {"Cantilever", Cantilever::Create},
-    {"Varying Restitution", VaryingRestitution::Create},
-    {"Character Collision", CharacterCollision::Create},
-    {"Edge Test", EdgeTest::Create},
-    {"Body Types", BodyTypes::Create},
-    {"Shape Editing", ShapeEditing::Create},
-    {"Car", Car::Create},
-    {"Apply Force", ApplyForce::Create},
-    {"Prismatic", Prismatic::Create},
-    {"Vertical Stack", VerticalStack::Create},
-    {"SphereStack", SphereStack::Create},
-    {"Revolute", Revolute::Create},
-    {"Pulleys", Pulleys::Create},
-    {"Polygon Shapes", PolyShapes::Create},
-    //{"Rope", Rope::Create},
-    {"Web", Web::Create},
-    {"RopeJoint", RopeJoint::Create},
-    {"One-Sided Platform", OneSidedPlatform::Create},
-    {"Pinball", Pinball::Create},
-    {"Bullet Test", BulletTest::Create},
-    {"Continuous Test", ContinuousTest::Create},
-    {"Time of Impact", TimeOfImpact::Create},
-    {"Ray-Cast", RayCast::Create},
-    {"Confined", Confined::Create},
-    {"Pyramid", Pyramid::Create},
-    {"Theo Jansen's Walker", TheoJansen::Create},
-    {"Edge Shapes", EdgeShapes::Create},
-    {"PolyCollision", PolyCollision::Create},
-    {"Bridge", Bridge::Create},
-    {"Breakable", Breakable::Create},
-    {"Chain", Chain::Create},
-    {"Collision Filtering", CollisionFiltering::Create},
-    {"Collision Processing", CollisionProcessing::Create},
-    {"Compound Shapes", CompoundShapes::Create},
-    {"Distance Test", DistanceTest::Create},
-    {"Dominos", Dominos::Create},
-    {"Dynamic Tree", DynamicTreeTest::Create},
-    {"Sensor Test", SensorTest::Create},
-    {"Slider Crank", SliderCrank::Create},
-    {"Varying Friction", VaryingFriction::Create},
-    {"Add Pair Stress Test", AddPair::Create},
-//    {NULL, NULL}
+	{"Ray-Cast", RayCast::Create},
+	{"Dump Shell", DumpShell::Create},
+	{"Convex Hull", ConvexHull::Create},
+	{"Apply Force", ApplyForce::Create},
+	{"Continuous Test", ContinuousTest::Create},
+	{"Time of Impact", TimeOfImpact::Create},
+	{"Motor Joint", MotorJoint::Create},
+	{"One-Sided Platform", OneSidedPlatform::Create},
+	{"Mobile", Mobile::Create},
+	{"MobileBalanced", MobileBalanced::Create},
+	{"Conveyor Belt", ConveyorBelt::Create},
+	{"Gears", Gears::Create},
+	{"Varying Restitution", VaryingRestitution::Create},
+	{"Tumbler", Tumbler::Create},
+	{"Tiles", Tiles::Create},
+	{"Cantilever", Cantilever::Create},
+	{"Character Collision", CharacterCollision::Create},
+	{"Edge Test", EdgeTest::Create},
+	{"Body Types", BodyTypes::Create},
+	{"Shape Editing", ShapeEditing::Create},
+	{"Car", Car::Create},
+	{"Prismatic", Prismatic::Create},
+	{"Vertical Stack", VerticalStack::Create},
+	{"SphereStack", SphereStack::Create},
+	{"Revolute", Revolute::Create},
+	{"Pulleys", Pulleys::Create},
+	{"Polygon Shapes", PolyShapes::Create},
+	{"Web", Web::Create},
+	{"RopeJoint", RopeJoint::Create},
+	{"Pinball", Pinball::Create},
+	{"Bullet Test", BulletTest::Create},
+	{"Confined", Confined::Create},
+	{"Pyramid", Pyramid::Create},
+	{"Theo Jansen's Walker", TheoJansen::Create},
+	{"Edge Shapes", EdgeShapes::Create},
+	{"PolyCollision", PolyCollision::Create},
+	{"Bridge", Bridge::Create},
+	{"Breakable", Breakable::Create},
+	{"Chain", Chain::Create},
+	{"Collision Filtering", CollisionFiltering::Create},
+	{"Collision Processing", CollisionProcessing::Create},
+	{"Compound Shapes", CompoundShapes::Create},
+	{"Distance Test", DistanceTest::Create},
+	{"Dominos", Dominos::Create},
+	{"Dynamic Tree", DynamicTreeTest::Create},
+	{"Sensor Test", SensorTest::Create},
+	{"Slider Crank", SliderCrank::Create},
+	{"Varying Friction", VaryingFriction::Create},
+	{"Add Pair Stress Test", AddPair::Create},
+	{NULL, NULL}
 };
 
 int g_totalEntries = sizeof(g_testEntries) / sizeof(g_testEntries[0]);
