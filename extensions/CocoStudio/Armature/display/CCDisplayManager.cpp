@@ -175,6 +175,7 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
     else if(CCArmature *armature = dynamic_cast<CCArmature *>(display))
     {
         displayData = CCArmatureDisplayData::create();
+        displayData->displayName = armature->getName();
         armature->setParentBone(m_pBone);
     }
     else
@@ -237,6 +238,18 @@ void CCDisplayManager::changeDisplayByIndex(int index, bool force)
     CCDecorativeDisplay *decoDisplay = (CCDecorativeDisplay *)m_pDecoDisplayList->objectAtIndex(m_iDisplayIndex);
 
     setCurrentDecorativeDisplay(decoDisplay);
+}
+
+void CCDisplayManager::changeDisplayByName(const char *name, bool force)
+{
+    for (int i = 0; i<m_pDecoDisplayList->count(); i++)
+    {
+        if (static_cast<CCDecorativeDisplay*>(m_pDecoDisplayList->objectAtIndex(i))->getDisplayData()->displayName == name)
+        {
+            changeDisplayByIndex(i, force);
+            break;
+        }
+    }
 }
 
 void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay)
