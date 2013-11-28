@@ -258,8 +258,8 @@ public:
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
 
-    void setFntFile(const char* fntFile);
-    const char* getFntFile();
+    void setFntFile(const std::string& fntFile);
+    const std::string& getFntFile() const;
 #if CC_LABELBMFONT_DEBUG_DRAW
     virtual void draw();
 #endif // CC_LABELBMFONT_DEBUG_DRAW

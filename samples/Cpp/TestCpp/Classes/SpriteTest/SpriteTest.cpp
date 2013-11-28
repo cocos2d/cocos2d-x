@@ -114,8 +114,6 @@ Layer* nextSpriteTestAction()
     sceneIdx = sceneIdx % MAX_LAYER;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -127,16 +125,12 @@ Layer* backSpriteTestAction()
         sceneIdx += total;    
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 }
 
 Layer* restartSpriteTestAction()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 } 
 
@@ -3188,23 +3182,19 @@ SpriteNilTexture::SpriteNilTexture()
     
     // TEST: If no texture is given, then Opacity + Color should work.
 
-    sprite = new Sprite();
-    sprite->init();
+    sprite = Sprite::create();
     sprite->setTextureRect( Rect(0, 0, 300,300) );
     sprite->setColor(Color3B::RED);
     sprite->setOpacity(128);
     sprite->setPosition(Point(3*s.width/4, s.height/2));
     addChild(sprite, 100);
-    sprite->release();
 
-    sprite = new Sprite();
-    sprite->init();
+    sprite = Sprite::create();
     sprite->setTextureRect(Rect(0, 0, 300,300));
     sprite->setColor(Color3B::BLUE);
     sprite->setOpacity(128);
     sprite->setPosition(Point(1*s.width/4, s.height/2));
     addChild(sprite, 100);
-    sprite->release();
 }
 
 std::string SpriteNilTexture::title()
@@ -3220,15 +3210,13 @@ std::string SpriteNilTexture::subtitle()
 class MySprite1 : public Sprite
 {
 public:
+    CREATE_FUNC(MySprite1);
     MySprite1() : ivar(10) {}
-    static MySprite1* createWithSpriteFrameName(const char *pszSpriteFrameName)
+    static MySprite1* createWithSpriteFrameName(const std::string& spriteFrameName)
     {
-        auto pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
-        MySprite1 *pobSprite = new MySprite1();
-        pobSprite->initWithSpriteFrame(pFrame);
-        pobSprite->autorelease();
-
-        return pobSprite;
+        auto sprite = MySprite1::create();
+        sprite->setSpriteFrame(spriteFrameName);
+        return sprite;
     }
 
 private:
@@ -3238,14 +3226,13 @@ private:
 class MySprite2 : public Sprite
 {
 public:
+    CREATE_FUNC(MySprite2);
     MySprite2() : ivar(10) {}
-    static MySprite2* create(const char *pszName)
+    static MySprite2* create(const std::string& name)
     {
-        MySprite2 *pobSprite = new MySprite2();
-        pobSprite->initWithFile(pszName);
-        pobSprite->autorelease();
-
-        return pobSprite;
+        auto sprite = MySprite2::create();
+        sprite ->setTexture(name);
+        return sprite;
     }
 
 private:
@@ -3297,16 +3284,16 @@ public:
     // rect used only for the vertex. Called everytime the vertex needs to be updated.
     virtual void setVertexRect(const Rect& rect);
 
-    static DoubleSprite* create(const char* pszFileName);
+    static DoubleSprite* create(const std::string& filename);
     bool _HD;
 };
 
-DoubleSprite* DoubleSprite::create(const char* pszFileName)
+DoubleSprite* DoubleSprite::create(const std::string& filename)
 {
-    auto pSp = new DoubleSprite();
-    pSp->initWithFile(pszFileName);
-    pSp->autorelease();
-    return pSp;
+    auto sprite = new DoubleSprite;
+    sprite->initWithFile(filename);
+    sprite->autorelease();
+    return sprite;
 }
 
 bool DoubleSprite::initWithTexture(Texture2D* texture, const Rect& rect)

@@ -2,13 +2,12 @@
 #define __CCDEVICE_H__
 
 #include "CCPlatformMacros.h"
+#include "ccMacros.h"
 
 NS_CC_BEGIN
 
 class CC_DLL Device
 {
-private:
-    Device();
 public:
     /**
      *  Gets the DPI of device
@@ -24,6 +23,9 @@ public:
      *  Sets the interval of accelerometer.
      */
     static void setAccelerometerInterval(float interval);
+
+private:
+    CC_DISALLOW_IMPLICIT_CONSTRUCTORS(Device);
 };
 
 

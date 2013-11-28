@@ -91,9 +91,6 @@
     <Filter Include="physics\chipmunk">
       <UniqueIdentifier>{aeadfa95-9c89-4212-98ae-89ad57db596a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="physics\Box2D">
-      <UniqueIdentifier>{b9880458-36e5-4f28-a34b-d01d9512a395}</UniqueIdentifier>
-    </Filter>
     <Filter Include="kazmath\include">
       <UniqueIdentifier>{05e27e68-7574-4a8b-af68-553dd3bafdfa}</UniqueIdentifier>
     </Filter>
@@ -548,21 +545,6 @@
     <ClCompile Include="CCEventMouse.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsContactInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsJointInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
     <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp">
       <Filter>physics\chipmunk</Filter>
     </ClCompile>
@@ -587,9 +569,6 @@
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsJoint.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\CCPhysicsSetting.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsShape.h">
@@ -1127,24 +1106,6 @@
     </ClInclude>
     <ClInclude Include="CCEventMouse.h">
       <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsContactInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsHelper_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsJointInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h">
       <Filter>physics\chipmunk</Filter>
