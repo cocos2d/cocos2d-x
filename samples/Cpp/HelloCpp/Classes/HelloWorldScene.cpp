@@ -42,15 +42,16 @@ Vector<Sprite*> createAllSprites()
 bool HelloWorld::init()
 {
     
-//    Vector<Sprite*> container;
-//    
-//    for (int i = 0; i < 10; ++i)
-//    {
-//        auto sp = Sprite::create();
-//        sp->setTag(i);
-//        container.addObject(sp);
-//    }
-//    
+    Vector<Sprite*> container;
+    
+    for (int i = 0; i < 10; ++i)
+    {
+        auto sp = Sprite::create();
+        sp->setTag(i);
+        container.addObject(sp);
+    }
+
+//
 //    showSprites(container);
 //    
 //    Vector<Sprite*> containerCopy = container;
@@ -76,7 +77,37 @@ bool HelloWorld::init()
     
     log("size of Vector = %ld", sizeof(Vector<Sprite*>));
     
+    Map<std::string, Sprite*> map;
+    map.setObject(Sprite::create(), "1");
+    map.setObject(Sprite::create(), "2");
+    map.setObject(Sprite::create(), "3");
+
+    auto showMap = [](const Map<std::string, Sprite*>& map)
+    {
+        for (auto iter = map.begin(); iter != map.end(); ++iter)
+        {
+            log("key = %s, value = %p, ref = %d", iter->first.c_str(), iter->second, iter->second ? iter->second->retainCount() : 0);
+        }
+    };
     
+    showMap(map);
+    
+//    auto iter = std::find(map.begin(), map.end(), std::string("111"));
+//    if (iter != map.end())
+//    {
+//        log("found!");
+//    }
+//    else
+//    {
+//        log("not found!");
+//    }
+    
+//    map["111"];
+//    log("key[1]=%p", map["1"]);
+//    log("----------------------");
+//    map["11"]->setPosition(Point(100, 100));
+    
+    showMap(map);
     
     //////////////////////////////
     // 1. super init first
