@@ -1,0 +1,45 @@
+class UIButton : public UIWidget
+{
+    UIButton();
+    virtual ~UIButton();
+    static UIButton* create();
+    void loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureNormal(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTexturePressed(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureDisabled(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setCapInsets(const CCRect &capInsets);
+    void setCapInsetsNormalRenderer(const CCRect &capInsets);
+    void setCapInsetsPressedRenderer(const CCRect &capInsets);
+    void setCapInsetsDisabledRenderer(const CCRect &capInsets);
+    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual void setScale9Enabled(bool able);
+    virtual void setFlipX(bool flipX);
+    virtual void setFlipY(bool flipY);
+    virtual bool isFlipX();
+    virtual bool isFlipY();
+    void setPressedActionEnabled(bool enabled);
+
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    virtual void setColor(const ccColor3B &color);
+    virtual const char* getDescription() const;
+    void setTitleText(const char* text);
+    const char* getTitleText() const;
+    void setTitleColor(const ccColor3B& color);
+    const ccColor3B& getTitleColor() const;
+    void setTitleFontSize(float size);
+    float getTitleFontSize() const;
+    void setTitleFontName(const char* fontName);
+    const char* getTitleFontName() const;
+    void setText(const char* text);
+    void setTextColor(int r,int g,int b);
+    void setFontSize(int size);
+    void setFontName(const char* fontName);
+    void setTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setScale9Enable(bool able);
+    void setScale9Size(const CCSize& size);
+};

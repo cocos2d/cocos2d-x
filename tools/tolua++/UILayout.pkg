@@ -1,0 +1,45 @@
+typedef enum
+{
+    LAYOUT_COLOR_NONE,
+    LAYOUT_COLOR_SOLID,
+    LAYOUT_COLOR_GRADIENT
+}LayoutBackGroundColorType;
+
+typedef enum
+{
+    LAYOUT_ABSOLUTE,
+    LAYOUT_LINEAR_VERTICAL,
+    LAYOUT_LINEAR_HORIZONTAL,
+    LAYOUT_RELATIVE
+}LayoutType;
+
+class UILayout : public UIWidget
+{
+    UILayout();
+    virtual ~UILayout();
+    static UILayout* create();
+    virtual bool hitTest(const CCPoint &pt);
+    void setBackGroundImage(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setBackGroundImageCapInsets(const CCRect& capInsets);
+    void setBackGroundColorType(LayoutBackGroundColorType type);
+    void setBackGroundImageScale9Enabled(bool enabled);
+    void setBackGroundColor(const ccColor3B &color);
+    void setBackGroundColor(const ccColor3B &startColor, const ccColor3B &endColor);
+    void setBackGroundColorOpacity(int opacity);
+    void setBackGroundColorVector(const CCPoint &vector);
+    virtual void setColor(const ccColor3B &color);
+    virtual void setOpacity(int opacity);
+    void removeBackGroundImage();
+    const CCSize& getBackGroundImageTextureSize() const;
+    virtual void setClippingEnabled(bool able);
+    virtual bool isClippingEnabled();
+    virtual const CCSize& getContentSize() const;
+    virtual const char* getDescription() const;
+    virtual void setLayoutType(LayoutType type);
+    virtual LayoutType getLayoutType() const;
+    
+    virtual void doLayout();
+    virtual bool addChild(UIWidget* child);
+    void setBackGroundImageScale9Enable(bool is);
+    virtual void setClippingEnable(bool is);
+};

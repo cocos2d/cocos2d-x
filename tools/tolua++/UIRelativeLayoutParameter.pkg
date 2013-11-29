@@ -1,0 +1,12 @@
+class UIRelativeLayoutParameter : public UILayoutParameter
+{
+    UIRelativeLayoutParameter();
+    virtual ~UIRelativeLayoutParameter();
+    static UIRelativeLayoutParameter* create();
+    void setAlign(UIRelativeAlign align);
+    UIRelativeAlign getAlign() const;
+    void setRelativeToWidgetName(const char* name);
+    const char* getRelativeToWidgetName() const;
+    void setRelativeName(const char* name);
+    const char* getRelativeName() const;
+};

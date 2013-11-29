@@ -1,0 +1,37 @@
+
+typedef enum
+{
+    SLIDER_PERCENTCHANGED
+}SliderEventType;
+
+class UISlider : public UIWidget
+{
+    UISlider();
+    virtual ~UISlider();
+    static UISlider* create();
+    void loadBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setScale9Enabled(bool able);
+    void setCapInsets(const CCRect &capInsets);
+    void setCapInsetsBarRenderer(const CCRect &capInsets);
+    void setCapInsetProgressBarRebderer(const CCRect &capInsets);
+    void loadSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureNormal(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTexturePressed(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureDisabled(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setPercent(int percent);
+    int getPercent();
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual const char* getDescription() const;
+    void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setSlidBallPercent(int percent);
+    void setScale9Size(const CCSize& size);
+    void setScale9Enable(bool is);
+};

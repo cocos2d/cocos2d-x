@@ -1,0 +1,14 @@
+
+class UILabelBMFont : public UIWidget
+{
+    UILabelBMFont();
+    virtual ~UILabelBMFont();
+    static UILabelBMFont* create();
+    void setFntFile(const char* fileName);
+    void setText(const char* value);
+    const char* getStringValue();
+    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    virtual const char* getDescription() const;
+};

@@ -1,0 +1,27 @@
+
+typedef enum
+{
+    LoadingBarTypeLeft,
+    LoadingBarTypeRight
+}LoadingBarType;
+
+class UILoadingBar : public UIWidget
+{
+    UILoadingBar();
+    virtual ~UILoadingBar();
+    static UILoadingBar* create();
+    void setDirection(LoadingBarType dir);
+    int getDirection();
+    void loadTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setPercent(int percent);
+    int getPercent();
+    void setScale9Enabled(bool enabled);
+    void setCapInsets(const CCRect &capInsets);
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    virtual const char* getDescription() const;
+    void setTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setScale9Size(const CCSize& size);
+    void setScale9Enable(bool is);
+};

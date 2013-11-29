@@ -1,0 +1,13 @@
+
+class CCComController : public CCComponent, public CCInputDelegate
+{
+
+   CCComController(void);
+   virtual ~CCComController(void);
+   virtual bool init();
+   virtual void update(float delta);
+   virtual bool isEnabled() const;
+   virtual void setEnabled(bool b);
+   
+   static CCComController* create(void);
+};

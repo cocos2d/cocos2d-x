@@ -119,6 +119,7 @@ class CCNode : public CCObject
     void unregisterScriptHandler(void);
 
     static CCNode * create(void);
+    virtual void setZOrder(int zOrder);
 };
 
 class CCNodeRGBA : public CCNode, public CCRGBAProtocol

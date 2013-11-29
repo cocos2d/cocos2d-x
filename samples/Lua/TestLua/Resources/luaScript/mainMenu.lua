@@ -35,6 +35,7 @@ require "luaScript/BugsTest/BugsTest"
 require "luaScript/ExtensionTest/ExtensionTest"
 require "luaScript/AccelerometerTest/AccelerometerTest"
 require "luaScript/KeypadTest/KeypadTest"
+require "luaScript/CocoStudioTest/CocoStudioTest"
 
 
 local LINE_SPACE = 40
@@ -44,6 +45,7 @@ local BeginPos = {x = 0, y = 0}
 
 
 local _allTests = {
+    { isSupported = true,  name = "CocoStudioTest"         , create_func   =            CocoStudioTest      },
     { isSupported = true,  name = "ActionsTest"            , create_func   =               ActionsTest      },
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },
     { isSupported = true,  name = "ActionsProgressTest"    , create_func   =       ProgressActionsTest      },

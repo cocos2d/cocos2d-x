@@ -1,0 +1,13 @@
+class  CCArmatureDataManager : public CCObject
+{
+    static CCArmatureDataManager *sharedArmatureDataManager();
+
+    static void purge();
+
+    virtual bool init(); 
+    void addArmatureFileInfo(const char *configFilePath);
+    void addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath);
+    virtual void removeArmatureFileInfo(const char *configFilePath);
+    void addSpriteFrameFromFile(const char *plistPath, const char *imagePath, const char *configFilePath = "");
+    bool isAutoLoadSpriteFile();
+};

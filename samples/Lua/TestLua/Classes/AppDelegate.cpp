@@ -46,8 +46,18 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_web_socket_open(tolua_s);
 #endif
     
+    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");
+    if (screenSize.height > 320)
+    {
+        searchPaths.insert(searchPaths.begin(), "hd/scenetest");
+    }
+    else
+    {
+        searchPaths.insert(searchPaths.begin(), "scenetest");
+    }
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");
