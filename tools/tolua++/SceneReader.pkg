@@ -1,0 +1,11 @@
+
+class SceneReader
+{
+    SceneReader(void);
+    virtual ~SceneReader(void);
+
+    static SceneReader* sharedSceneReader();
+    void purgeSceneReader();
+    static const char* sceneReaderVersion();
+    CCNode* createNodeWithSceneFile(const char *pszFileName);
+};

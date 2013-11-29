@@ -1,0 +1,12 @@
+
+class CCBatchNode : public CCNode
+{
+    static CCBatchNode *create();
+    CCBatchNode();
+    ~CCBatchNode();
+    virtual void addChild(CCNode *pChild);
+    virtual void addChild(CCNode *pChild, int zOrder);
+    virtual void addChild(CCNode *pChild, int zOrder, int tag);
+    virtual void removeChild(CCNode* child, bool cleanup);
+    virtual CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
+};
