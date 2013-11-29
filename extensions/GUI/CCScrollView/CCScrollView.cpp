@@ -564,7 +564,7 @@ void ScrollView::visit()
 		// draw children zOrder < 0
 		for( ; i < _children.count(); i++ )
         {
-			Node *child = _children[i];
+			Node *child = _children.getObjectAtIndex(i);
 			if ( child->getZOrder() < 0 )
             {
 				child->visit();
@@ -581,7 +581,7 @@ void ScrollView::visit()
 		// draw children zOrder >= 0
 		for( ; i < _children.count(); i++ )
         {
-			Node *child = _children[i];
+			Node *child = _children.getObjectAtIndex(i);
 			child->visit();
 		}
         
