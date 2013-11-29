@@ -18,6 +18,11 @@ function SceneEditorTestLayer:createGameScene()
     end
     self._curNode = node
 
+    local winSize = CCDirector:sharedDirector():getWinSize()
+    local scale = winSize.height / 320
+    self._curNode:setScale(scale)
+    self._curNode:setPosition(ccp((winSize.width - 480 * scale) / 2, (winSize.height - 320 * scale) / 2))
+
     local function menuCloseCallback( sender )
         SceneReader:sharedSceneReader():purgeSceneReader()
         ActionManager:purgeActionManager()

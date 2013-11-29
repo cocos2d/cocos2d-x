@@ -47,17 +47,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    CCSize designSize = CCSizeMake(480, 320);
     
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");
-    if (screenSize.height > 320)
-    {
-        searchPaths.insert(searchPaths.begin(), "hd/scenetest");
-    }
-    else
-    {
-        searchPaths.insert(searchPaths.begin(), "scenetest");
-    }
+    searchPaths.insert(searchPaths.begin(), "scenetest");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");
