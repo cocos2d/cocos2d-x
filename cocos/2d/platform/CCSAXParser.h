@@ -81,7 +81,7 @@ public:
      * @js NA
      * @lua NA
      */
-    bool parse(const char* pXMLData, unsigned int uDataLength);
+    bool parse(const char* pXMLData, size_t uDataLength);
     /**
      * @js NA
      * @lua NA

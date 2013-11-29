@@ -42,7 +42,7 @@ TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
         return ret;
     }
     CC_SAFE_DELETE(ret);
-    return NULL;
+    return nullptr;
 }
 
 TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std::string& resourcePath)
@@ -54,7 +54,7 @@ TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std:
         return ret;
     }
     CC_SAFE_DELETE(ret);
-    return NULL;
+    return nullptr;
 }
 
 bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
@@ -69,7 +69,7 @@ bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
     {
         return false;
     }
-    CCASSERT( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+    CCASSERT( !mapInfo->getTilesets().empty(), "TMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo);
 
     return true;
@@ -81,7 +81,7 @@ bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& r
 
     TMXMapInfo *mapInfo = TMXMapInfo::createWithXML(tmxString, resourcePath);
 
-    CCASSERT( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+    CCASSERT( !mapInfo->getTilesets().empty(), "TMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo);
 
     return true;
@@ -90,15 +90,13 @@ bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& r
 TMXTiledMap::TMXTiledMap()
     :_mapSize(Size::ZERO)
     ,_tileSize(Size::ZERO)        
-    ,_objectGroups(NULL)
-    ,_properties(NULL)
-    ,_tileProperties(NULL)
+    ,_properties(nullptr)
+    ,_tileProperties(nullptr)
 {
 }
 TMXTiledMap::~TMXTiledMap()
 {
     CC_SAFE_RELEASE(_properties);
-    CC_SAFE_RELEASE(_objectGroups);
     CC_SAFE_RELEASE(_tileProperties);
 }
 
@@ -118,14 +116,13 @@ TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
     Size size = layerInfo->_layerSize;
-    Array* tilesets = mapInfo->getTilesets();
-    if (tilesets && tilesets->count()>0)
+    auto& tilesets = mapInfo->getTilesets();
+    if (tilesets.count()>0)
     {
-        TMXTilesetInfo* tileset = NULL;
-        Object* pObj = NULL;
-        CCARRAY_FOREACH_REVERSE(tilesets, pObj)
+        TMXTilesetInfo* tileset = nullptr;
+        for (auto iter = tilesets.crbegin(); iter != tilesets.crend(); ++iter)
         {
-            tileset = static_cast<TMXTilesetInfo*>(pObj);
+            tileset = *iter;
             if (tileset)
             {
                 for( unsigned int y=0; y < size.height; y++ )
@@ -157,7 +154,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
 
     // If all the tiles are 0, return empty tileset
     CCLOG("cocos2d: Warning: TMX Layer '%s' has no tiles", layerInfo->_name.c_str());
-    return NULL;
+    return nullptr;
 }
 
 void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
@@ -166,9 +163,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
     _tileSize = mapInfo->getTileSize();
     _mapOrientation = mapInfo->getOrientation();
 
-    CC_SAFE_RELEASE(_objectGroups);
     _objectGroups = mapInfo->getObjectGroups();
-    CC_SAFE_RETAIN(_objectGroups);
 
     CC_SAFE_RELEASE(_properties);
     _properties = mapInfo->getProperties();
@@ -180,30 +175,22 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 
     int idx=0;
 
-    Array* layers = mapInfo->getLayers();
-    if (layers && layers->count()>0)
-    {
-        TMXLayerInfo* layerInfo = NULL;
-        Object* pObj = NULL;
-        CCARRAY_FOREACH(layers, pObj)
+    mapInfo->getLayers().forEach([&idx, this, &mapInfo](TMXLayerInfo* layerInfo){
+        if (layerInfo && layerInfo->_visible)
         {
-            layerInfo = static_cast<TMXLayerInfo*>(pObj);
-            if (layerInfo && layerInfo->_visible)
-            {
-                TMXLayer *child = parseLayer(layerInfo, mapInfo);
-                addChild((Node*)child, idx, idx);
-
-                // update content size with the max size
-                const Size& childSize = child->getContentSize();
-                Size currentSize = this->getContentSize();
-                currentSize.width = std::max( currentSize.width, childSize.width );
-                currentSize.height = std::max( currentSize.height, childSize.height );
-                this->setContentSize(currentSize);
-
-                idx++;
-            }
+            TMXLayer *child = parseLayer(layerInfo, mapInfo);
+            addChild((Node*)child, idx, idx);
+            
+            // update content size with the max size
+            const Size& childSize = child->getContentSize();
+            Size currentSize = this->getContentSize();
+            currentSize.width = std::max( currentSize.width, childSize.width );
+            currentSize.height = std::max( currentSize.height, childSize.height );
+            this->setContentSize(currentSize);
+            
+            idx++;
         }
-    }
+    });
 }
 
 // public
@@ -231,13 +218,12 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
 {
     CCASSERT(groupName.size() > 0, "Invalid group name!");
 
-    if (_objectGroups && _objectGroups->count()>0)
+    if (_objectGroups.count()>0)
     {
-        TMXObjectGroup* objectGroup = NULL;
-        Object* pObj = NULL;
-        CCARRAY_FOREACH(_objectGroups, pObj)
+        TMXObjectGroup* objectGroup = nullptr;
+        for (auto iter = _objectGroups.cbegin(); iter != _objectGroups.cend(); ++iter)
         {
-            objectGroup = static_cast<TMXObjectGroup*>(pObj);
+            objectGroup = *iter;
             if (objectGroup && objectGroup->getGroupName() == groupName)
             {
                 return objectGroup;
@@ -246,7 +232,7 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
     }
 
     // objectGroup not found
-    return NULL;
+    return nullptr;
 }
 
 String* TMXTiledMap::getProperty(const std::string& propertyName) const

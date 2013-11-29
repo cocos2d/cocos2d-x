@@ -102,7 +102,7 @@ bool SAXParser::init(const char *pszEncoding)
     return true;
 }
 
-bool SAXParser::parse(const char* pXMLData, unsigned int uDataLength)
+bool SAXParser::parse(const char* pXMLData, size_t uDataLength)
 {
 	tinyxml2::XMLDocument tinyDoc;
 	tinyDoc.Parse(pXMLData, uDataLength);

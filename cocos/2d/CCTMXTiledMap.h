@@ -156,10 +156,9 @@ public:
     inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
 
     /** object groups */
-    inline Array* getObjectGroups() const { return _objectGroups; };
-    inline void setObjectGroups(Array* groups) {
-        CC_SAFE_RETAIN(groups);
-        CC_SAFE_RELEASE(_objectGroups);
+    inline const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; };
+    inline Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; };
+    inline void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
     };
     
@@ -199,7 +198,7 @@ protected:
     /** map orientation */
     int _mapOrientation;
     /** object groups */
-    Array* _objectGroups;
+    Vector<TMXObjectGroup*> _objectGroups;
     /** properties */
     Dictionary* _properties;
     
