@@ -35,6 +35,8 @@ public:
 class SchedulerAutoremove : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerAutoremove);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -48,6 +50,8 @@ private:
 class SchedulerPauseResume : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerPauseResume);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -60,6 +64,8 @@ public:
 class SchedulerPauseResumeAll : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerPauseResumeAll);
+
     SchedulerPauseResumeAll();
     virtual ~SchedulerPauseResumeAll();
     virtual void onEnter();
@@ -79,6 +85,8 @@ private:
 class SchedulerPauseResumeAllUser : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerPauseResumeAllUser);
+
     SchedulerPauseResumeAllUser();
     virtual ~SchedulerPauseResumeAllUser();
     virtual void onEnter();
@@ -97,6 +105,8 @@ private:
 class SchedulerUnscheduleAll : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerUnscheduleAll);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -111,6 +121,8 @@ public:
 class SchedulerUnscheduleAllHard : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerUnscheduleAllHard);
+
     virtual void onEnter();
     virtual void onExit();
     virtual std::string title();
@@ -128,6 +140,8 @@ private:
 class SchedulerUnscheduleAllUserLevel : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerUnscheduleAllUserLevel);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -142,6 +156,8 @@ public:
 class SchedulerSchedulesAndRemove : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerSchedulesAndRemove);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -156,6 +172,8 @@ public:
 class SchedulerUpdate : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerUpdate);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -166,6 +184,8 @@ public:
 class SchedulerUpdateAndCustom : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerUpdateAndCustom);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -178,6 +198,8 @@ public:
 class SchedulerUpdateFromCustom : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerUpdateFromCustom);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -190,6 +212,8 @@ public:
 class TestNode : public Node
 {
 public:
+    CREATE_FUNC(TestNode);
+
     ~TestNode();
 
     void initWithString(String* pStr, int priority);
@@ -201,6 +225,8 @@ private:
 class RescheduleSelector : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(RescheduleSelector);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -214,6 +240,8 @@ private:
 class SchedulerDelayAndRepeat : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerDelayAndRepeat);
+
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -223,6 +251,8 @@ public:
 class SchedulerTimeScale : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(SchedulerTimeScale);
+
     void onEnter();
     void onExit();
     virtual std::string title();
@@ -236,6 +266,8 @@ public:
 class TwoSchedulers : public SchedulerTestLayer
 {
 public:
+    CREATE_FUNC(TwoSchedulers);
+
     virtual ~TwoSchedulers();
     virtual std::string title();
     virtual std::string subtitle();
@@ -253,19 +285,24 @@ public:
 
 class SchedulerIssue2268 : public SchedulerTestLayer
 {
-	public:
-		~SchedulerIssue2268();
-		std::string title();
-		std::string subtitle();
-		void onEnter();
-		void update(float dt);
-	private:
-		Node *testNode;
+public:
+    CREATE_FUNC(SchedulerIssue2268);
+
+    ~SchedulerIssue2268();
+    std::string title();
+    std::string subtitle();
+    void onEnter();
+    void update(float dt);
+
+private:
+    Node *testNode;
 };
 
 class SchedulerTestScene : public TestScene
 {
 public:
+    CREATE_FUNC(SchedulerTestScene);
+
     virtual void runThisTest();
 };
 

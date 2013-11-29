@@ -42,7 +42,7 @@ public:
      * @lua NA
      */
     virtual ~ActionTweenDelegate() {}
-    virtual void updateTweenAction(float value, const char* key) = 0;
+    virtual void updateTweenAction(float value, const std::string& key) = 0;
 };
 
 /** ActionTween
@@ -69,9 +69,9 @@ class CC_DLL ActionTween : public ActionInterval
 {
 public:
     /** creates an initializes the action with the property name (key), and the from and to parameters. */
-    static ActionTween* create(float duration, const char* key, float from, float to);
+    static ActionTween* create(float duration, const std::string& key, float from, float to);
     /** initializes the action with the property name (key), and the from and to parameters. */
-    bool initWithDuration(float duration, const char* key, float from, float to);
+    bool initWithDuration(float duration, const std::string& key, float from, float to);
 
     // Overrides
     void startWithTarget(Node *target) override;

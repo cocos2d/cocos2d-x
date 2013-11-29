@@ -68,10 +68,10 @@ class CC_DLL ParticleBatchNode : public Node, public TextureProtocol
 {
 public:
     /** initializes the particle system with Texture2D, a capacity of particles, which particle system to use */
-    static ParticleBatchNode* createWithTexture(Texture2D *tex, unsigned int capacity = kParticleDefaultCapacity);
+    static ParticleBatchNode* createWithTexture(Texture2D *tex, int capacity = kParticleDefaultCapacity);
 
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
-    static ParticleBatchNode* create(const char* fileImage, unsigned int capacity = kParticleDefaultCapacity);
+    static ParticleBatchNode* create(const std::string& fileImage, int capacity = kParticleDefaultCapacity);
     /**
      * @js ctor
      */
@@ -83,10 +83,10 @@ public:
     virtual ~ParticleBatchNode();
 
     /** initializes the particle system with Texture2D, a capacity of particles */
-    bool initWithTexture(Texture2D *tex, unsigned int capacity);
+    bool initWithTexture(Texture2D *tex, int capacity);
 
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
-    bool initWithFile(const char* fileImage, unsigned int capacity);
+    bool initWithFile(const std::string& fileImage, int capacity);
 
     /** Inserts a child into the ParticleBatchNode */
     void insertChild(ParticleSystem* system, int index);

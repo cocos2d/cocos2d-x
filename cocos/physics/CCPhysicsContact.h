@@ -25,7 +25,6 @@
 #ifndef __CCPHYSICS_CONTACT_H__
 #define __CCPHYSICS_CONTACT_H__
 
-#include "CCPhysicsSetting.h"
 #ifdef CC_USE_PHYSICS
 
 #include "CCObject.h"
@@ -41,10 +40,12 @@ class PhysicsWorld;
 
 class PhysicsContactInfo;
 
+typedef Point Vect;
 
 typedef struct PhysicsContactData
 {
-    Point points[PHYSICS_CONTACT_POINT_MAX];
+    static const long POINT_MAX = 4;
+    Point points[POINT_MAX];
     int   count;
     Point normal;
     

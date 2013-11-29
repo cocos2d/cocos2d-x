@@ -92,7 +92,7 @@ void UIImageView::loadTexture(const char *fileName, TextureResType texType)
             }
             else
             {
-                DYNAMIC_CAST_CCSPRITE->initWithFile(fileName);
+                DYNAMIC_CAST_CCSPRITE->setTexture(fileName);
                 DYNAMIC_CAST_CCSPRITE->setColor(getColor());
                 DYNAMIC_CAST_CCSPRITE->setOpacity(getOpacity());
             }
@@ -107,7 +107,7 @@ void UIImageView::loadTexture(const char *fileName, TextureResType texType)
             }
             else
             {
-                DYNAMIC_CAST_CCSPRITE->initWithSpriteFrameName(fileName);
+                DYNAMIC_CAST_CCSPRITE->setSpriteFrame(fileName);
                 DYNAMIC_CAST_CCSPRITE->setColor(getColor());
                 DYNAMIC_CAST_CCSPRITE->setOpacity(getOpacity());
             }
