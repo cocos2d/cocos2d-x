@@ -4109,7 +4109,7 @@ void NodeSort::reorderSprite(float dt)
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     });
     //z-4
-    _node->reorderChild( _node->getChildren()[0], -6);
+    _node->reorderChild( _node->getChildren().getObjectAtIndex(0), -6);
 
     _node->sortAllChildren();
     
