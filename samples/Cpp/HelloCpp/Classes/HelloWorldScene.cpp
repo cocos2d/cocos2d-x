@@ -76,6 +76,8 @@ bool HelloWorld::init()
     
     log("size of Vector = %ld", sizeof(Vector<Sprite*>));
     
+    
+    
     //////////////////////////////
     // 1. super init first
     if ( !Layer::init() )
