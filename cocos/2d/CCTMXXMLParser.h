@@ -32,12 +32,15 @@ THE SOFTWARE.
 #include "CCDictionary.h"
 #include "CCGeometry.h"
 #include "platform/CCSAXParser.h"
+#include "CCVector.h"
 
 #include <string>
 
 NS_CC_BEGIN
 
+class TMXLayerInfo;
 class TMXObjectGroup;
+class TMXTilesetInfo;
 
 /** @file
 * Internal TMX parser
@@ -213,26 +216,23 @@ public:
     inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
     
     /// Layers
-    inline Array* getLayers() const { return _layers; };
-    inline void setLayers(Array* layers) {
-        CC_SAFE_RETAIN(layers);
-        CC_SAFE_RELEASE(_layers);
+    inline const Vector<TMXLayerInfo*>& getLayers() const { return _layers; };
+    inline Vector<TMXLayerInfo*>& getLayers() { return _layers; };
+    inline void setLayers(const Vector<TMXLayerInfo*>& layers) {
         _layers = layers;
     };
 
     /// tilesets
-    inline Array* getTilesets() const { return _tilesets; };
-    inline void setTilesets(Array* tilesets) {
-        CC_SAFE_RETAIN(tilesets);
-        CC_SAFE_RELEASE(_tilesets);
+    inline const Vector<TMXTilesetInfo*>& getTilesets() const { return _tilesets; };
+    inline Vector<TMXTilesetInfo*>& getTilesets() { return _tilesets; };
+    inline void setTilesets(const Vector<TMXTilesetInfo*>& tilesets) {
         _tilesets = tilesets;
     };
 
     /// ObjectGroups
-    inline Array* getObjectGroups() const { return _objectGroups; };
-    inline void setObjectGroups(Array* groups) {
-        CC_SAFE_RETAIN(groups);
-        CC_SAFE_RELEASE(_objectGroups);
+    inline const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; };
+    inline Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; };
+    inline void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
     };
 
@@ -293,11 +293,11 @@ protected:
     /// tiles width & height
     Size _tileSize;
     /// Layers
-    Array* _layers;
+    Vector<TMXLayerInfo*> _layers;
     /// tilesets
-    Array* _tilesets;
+    Vector<TMXTilesetInfo*> _tilesets;
     /// ObjectGroups
-    Array* _objectGroups;
+    Vector<TMXObjectGroup*> _objectGroups;
     /// parent element
     int _parentElement;
     /// parent GID

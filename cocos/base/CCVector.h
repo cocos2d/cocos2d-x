@@ -346,8 +346,8 @@ public:
     reverse_iterator rend() { return _data.rend(); }
     const_reverse_iterator rend() const { return _data.rend(); }
     
-    const_reverse_iterator rcbegin() const { return _data.crbegin(); }
-    const_reverse_iterator rcend() const { return _data.crend(); }
+    const_reverse_iterator crbegin() const { return _data.crbegin(); }
+    const_reverse_iterator crend() const { return _data.crend(); }
 protected:
     std::vector<T> _data;
 

@@ -50,7 +50,7 @@ static const char* valueForKey(const char *key, std::unordered_map<std::string, 
 // implementation TMXLayerInfo
 TMXLayerInfo::TMXLayerInfo()
 : _name("")
-, _tiles(NULL)
+, _tiles(nullptr)
 , _ownTiles(true)
 , _minGID(100000)
 , _maxGID(0)        
@@ -67,7 +67,7 @@ TMXLayerInfo::~TMXLayerInfo()
     if( _ownTiles && _tiles )
     {
         free(_tiles);
-        _tiles = NULL;
+        _tiles = nullptr;
     }
 }
 
@@ -121,7 +121,7 @@ TMXMapInfo * TMXMapInfo::create(const std::string& tmxFile)
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 TMXMapInfo * TMXMapInfo::createWithXML(const std::string& tmxString, const std::string& resourcePath)
@@ -133,17 +133,11 @@ TMXMapInfo * TMXMapInfo::createWithXML(const std::string& tmxString, const std::
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 void TMXMapInfo::internalInit(const std::string& tmxFileName, const std::string& resourcePath)
 {
-    _tilesets = Array::create();
-    _tilesets->retain();
-
-    _layers = Array::create();
-    _layers->retain();
-
     if (tmxFileName.size() > 0)
     {
         _TMXFileName = FileUtils::getInstance()->fullPathForFilename(tmxFileName);
@@ -154,8 +148,7 @@ void TMXMapInfo::internalInit(const std::string& tmxFileName, const std::string&
         _resources = resourcePath;
     }
     
-    _objectGroups = Array::createWithCapacity(4);
-    _objectGroups->retain();
+    _objectGroups.setCapacity(4);
 
     _properties = new Dictionary();
     _properties->init();
@@ -184,13 +177,10 @@ bool TMXMapInfo::initWithTMXFile(const std::string& tmxFile)
 TMXMapInfo::TMXMapInfo()
 : _mapSize(Size::ZERO)    
 , _tileSize(Size::ZERO)
-, _layers(NULL)
-, _tilesets(NULL)
-, _objectGroups(NULL)
 , _layerAttribs(0)
 , _storingCharacters(false)
-, _properties(NULL)
-, _tileProperties(NULL)
+, _properties(nullptr)
+, _tileProperties(nullptr)
 , _currentFirstGID(0)
 {
 }
@@ -198,16 +188,13 @@ TMXMapInfo::TMXMapInfo()
 TMXMapInfo::~TMXMapInfo()
 {
     CCLOGINFO("deallocing TMXMapInfo: %p", this);
-    CC_SAFE_RELEASE(_tilesets);
-    CC_SAFE_RELEASE(_layers);
     CC_SAFE_RELEASE(_properties);
     CC_SAFE_RELEASE(_tileProperties);
-    CC_SAFE_RELEASE(_objectGroups);
 }
 
 bool TMXMapInfo::parseXMLString(const std::string& xmlString)
 {
-    int len = xmlString.size();
+    size_t len = xmlString.size();
     if (len <= 0)
         return false;
 
@@ -325,7 +312,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             s.height = (float)atof(valueForKey("tileheight", attributeDict));
             tileset->_tileSize = s;
 
-            pTMXMapInfo->getTilesets()->addObject(tileset);
+            pTMXMapInfo->getTilesets().addObject(tileset);
             tileset->release();
         }
     }
@@ -333,7 +320,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     {
         if (pTMXMapInfo->getParentElement() == TMXPropertyLayer)
         {
-            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
             Size layerSize = layer->_layerSize;
             unsigned int gid = (unsigned int)atoi(valueForKey("gid", attributeDict));
             int tilesAmount = layerSize.width*layerSize.height;
@@ -367,7 +354,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         }
         else
         {
-            TMXTilesetInfo* info = (TMXTilesetInfo*)pTMXMapInfo->getTilesets()->getLastObject();
+            TMXTilesetInfo* info = pTMXMapInfo->getTilesets().getLastObject();
             Dictionary *dict = new Dictionary();
             dict->init();
             pTMXMapInfo->setParentGID(info->_firstGid + atoi(valueForKey("id", attributeDict)));
@@ -404,7 +391,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         float y = (float)atof(valueForKey("y", attributeDict));
         layer->_offset = Point(x,y);
 
-        pTMXMapInfo->getLayers()->addObject(layer);
+        pTMXMapInfo->getLayers().addObject(layer);
         layer->release();
 
         // The parent element is now "layer"
@@ -420,7 +407,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         positionOffset.y = (float)atof(valueForKey("y", attributeDict)) * pTMXMapInfo->getTileSize().height;
         objectGroup->setPositionOffset(positionOffset);
 
-        pTMXMapInfo->getObjectGroups()->addObject(objectGroup);
+        pTMXMapInfo->getObjectGroups().addObject(objectGroup);
         objectGroup->release();
 
         // The parent element is now "objectgroup"
@@ -429,7 +416,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "image")
     {
-        TMXTilesetInfo* tileset = (TMXTilesetInfo*)pTMXMapInfo->getTilesets()->getLastObject();
+        TMXTilesetInfo* tileset = pTMXMapInfo->getTilesets().getLastObject();
 
         // build full path
         std::string imagename = valueForKey("source", attributeDict);
@@ -453,7 +440,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             pTMXMapInfo->setLayerAttribs(pTMXMapInfo->getLayerAttribs() | TMXLayerAttribNone);
             
-            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
             Size layerSize = layer->_layerSize;
             int tilesAmount = layerSize.width*layerSize.height;
 
@@ -499,7 +486,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "object")
     {
         char buffer[32] = {0};
-        TMXObjectGroup* objectGroup = (TMXObjectGroup*)pTMXMapInfo->getObjectGroups()->getLastObject();
+        TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().getLastObject();
 
         // The value for "type" was blank or not a valid class name
         // Create an instance of TMXObjectInfo to store the object and its properties
@@ -572,7 +559,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyLayer )
         {
             // The parent element is the last layer
-            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
             String *value = new String(valueForKey("value", attributeDict));
             std::string key = valueForKey("name", attributeDict);
             // Add the property to the layer
@@ -583,7 +570,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyObjectGroup ) 
         {
             // The parent element is the last object group
-            TMXObjectGroup* objectGroup = (TMXObjectGroup*)pTMXMapInfo->getObjectGroups()->getLastObject();
+            TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().getLastObject();
             String *value = new String(valueForKey("value", attributeDict));
             const char* key = valueForKey("name", attributeDict);
             objectGroup->getProperties()->setObject(value, key);
@@ -593,7 +580,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyObject )
         {
             // The parent element is the last object
-            TMXObjectGroup* objectGroup = (TMXObjectGroup*)pTMXMapInfo->getObjectGroups()->getLastObject();
+            TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().getLastObject();
             Dictionary* dict = (Dictionary*)objectGroup->getObjects()->getLastObject();
 
             const char* propertyName = valueForKey("name", attributeDict);
@@ -614,7 +601,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polygon") 
     {
         // find parent object's dict and add polygon-points to it
-        TMXObjectGroup* objectGroup = (TMXObjectGroup*)_objectGroups->getLastObject();
+        TMXObjectGroup* objectGroup = _objectGroups.getLastObject();
         Dictionary* dict = (Dictionary*)objectGroup->getObjects()->getLastObject();
 
         // get points value string
@@ -667,7 +654,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polyline")
     {
         // find parent object's dict and add polyline-points to it
-        TMXObjectGroup* objectGroup = (TMXObjectGroup*)_objectGroups->getLastObject();
+        TMXObjectGroup* objectGroup = _objectGroups.getLastObject();
         Dictionary* dict = (Dictionary*)objectGroup->getObjects()->getLastObject();
         
         // get points value string
@@ -739,7 +726,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
         {
             pTMXMapInfo->setStoringCharacters(false);
             
-            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
             
             std::string currentString = pTMXMapInfo->getCurrentString();
             unsigned char *buffer;
@@ -763,7 +750,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
                 inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
                 
                 free(buffer);
-                buffer = NULL;
+                buffer = nullptr;
                 
                 if( ! deflated )
                 {
@@ -782,7 +769,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
         }
         else if (pTMXMapInfo->getLayerAttribs() & TMXLayerAttribNone)
         {
-            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
             Size layerSize = layer->_layerSize;
             int tilesAmount = layerSize.width * layerSize.height;
             

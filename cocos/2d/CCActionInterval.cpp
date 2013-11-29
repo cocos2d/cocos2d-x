@@ -2129,7 +2129,7 @@ Animate* Animate::reverse() const
    
     if (oldArray.count() > 0)
     {
-        for (auto iter = oldArray.rcbegin(); iter != oldArray.rcend(); ++iter)
+        for (auto iter = oldArray.crbegin(); iter != oldArray.crend(); ++iter)
         {
             AnimationFrame* animFrame = *iter;
             if (!animFrame)

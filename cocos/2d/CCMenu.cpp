@@ -564,7 +564,7 @@ MenuItem* Menu::itemForTouch(Touch *touch)
 
     if (!_children.empty())
     {
-        for (auto iter = _children.rcbegin(); iter != _children.rcend(); ++iter)
+        for (auto iter = _children.crbegin(); iter != _children.crend(); ++iter)
         {
             MenuItem* child = dynamic_cast<MenuItem*>(*iter);
             if (child && child->isVisible() && child->isEnabled())
