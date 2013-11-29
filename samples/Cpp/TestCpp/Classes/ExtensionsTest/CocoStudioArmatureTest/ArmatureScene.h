@@ -41,6 +41,7 @@ enum {
 	TEST_ANCHORPOINT,
 	TEST_ARMATURE_NESTING,
     TEST_ARMATURE_NESTING_2,
+    TEST_PLAY_SEVERAL_MOVEMENT,
 
 	TEST_LAYER_COUNT
 };
@@ -351,4 +352,13 @@ public:
 
     bool touchedMenu;
 };
+
+class TestPlaySeveralMovement : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 #endif  // __HELLOWORLD_SCENE_H__

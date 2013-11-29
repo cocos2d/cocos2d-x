@@ -146,7 +146,10 @@ public:
      */
     virtual void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
-    virtual void play(bool loop, const char *animationName, ...);
+    virtual void play(bool loop, const std::string *movementNames, int movementNumber);
+
+    virtual void playByIndex(bool loop, const int *movementIndexes, int movementNumber);
+
     /**
      * Go to specified frame and play current movement.
      * You need first switch to the movement you want to play, then call this function.
