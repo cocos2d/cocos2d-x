@@ -64,6 +64,9 @@ CCLayer *CreateLayer(int index)
     case TEST_ARMATURE_NESTING_2:
         pLayer = new TestArmatureNesting2();
         break;
+    case TEST_PLAY_SEVERAL_MOVEMENT:
+        pLayer = new TestPlaySeveralMovement();
+        break;
     default:
         break;
     }
@@ -1358,3 +1361,28 @@ CCArmature * TestArmatureNesting2::createMount(const char *name, CCPoint positio
     return armature;
 }
 
+void TestPlaySeveralMovement::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+
+    std::string names[] = {"Walk", "FireMax", "Fire"};
+    //int indexes[] = {0, 1, 2};
+
+    cocos2d::extension::CCArmature *armature = NULL;
+    armature = cocos2d::extension::CCArmature::create("Cowboy");
+    armature->getAnimation()->play(true, names, 3);
+    //armature->getAnimation()->playByIndex(true, indexes, 3);
+    armature->setScale(0.2f);
+
+    armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
+    addChild(armature);
+}
+std::string TestPlaySeveralMovement::title()
+{
+    return "Test play several movement";
+}
+
+std::string TestPlaySeveralMovement::subtitle()
+{
+    return "Movement is played one by one";
+}
