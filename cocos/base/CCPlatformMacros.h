@@ -243,8 +243,8 @@ public: virtual void set##funName(varType var)   \
     TypeName &operator =(const TypeName &) = delete;
 #else
 #define CC_DISALLOW_COPY_AND_ASSIGN(TypeName) \
-    Class(const TypeName &); \
-    Class &operator =(const TypeName &);
+    TypeName(const TypeName &); \
+    TypeName &operator =(const TypeName &);
 #endif
 
 // A macro to disallow all the implicit constructors, namely the
