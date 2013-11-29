@@ -148,7 +148,6 @@ function UIScene:init()
     middle_button:addTouchEventListener(restartCallback)
 
     local function nextCallback(sender, eventType)
-        print("come in")
         if eventType == ccs.TouchEventType.ended then
             self._uiLayer:removeFromParentAndCleanup(true)
             CCDirector:sharedDirector():replaceScene(guiSceneManager.nextUIScene())
@@ -167,6 +166,12 @@ function UIScene:init()
             end
         end
     end
+
+    local winSize = CCDirector:sharedDirector():getWinSize()
+    local scale   = winSize.height / 320
+    self._uiLayer:setAnchorPoint(ccp(0,0))
+    self._uiLayer:setScale(scale)
+    self._uiLayer:setPosition(ccp((winSize.width - 480 * scale) / 2, (winSize.height - 320 * scale) / 2))
 
     local backMenuLabel = UILabel:create()
     backMenuLabel:setText("Back")
@@ -798,9 +803,15 @@ function UILoadingBarLeftTest.extend(target)
 end
 
 function UILoadingBarLeftTest:initExtend()
-
+    
     self._uiLayer = UILayer:create()
     self:addChild(self._uiLayer)
+
+    local winSize = CCDirector:sharedDirector():getWinSize()
+    local scale   = winSize.height / 320
+    self._uiLayer:setAnchorPoint(ccp(0,0))
+    self._uiLayer:setScale(scale)
+    self._uiLayer:setPosition(ccp((winSize.width - 480 * scale) / 2, (winSize.height - 320 * scale) / 2))
 
     self._widget = GUIReader:shareReader():widgetFromJsonFile("cocosgui/UITest/UITest.json")
     self._uiLayer:addWidget(self._widget)
@@ -928,6 +939,12 @@ end
 function UILoadingBarRightTest:initExtend()
 
     self._uiLayer = UILayer:create()
+    local winSize = CCDirector:sharedDirector():getWinSize()
+    local scale   = winSize.height / 320
+    self._uiLayer:setAnchorPoint(ccp(0,0))
+    self._uiLayer:setScale(scale)
+    self._uiLayer:setPosition(ccp((winSize.width - 480 * scale) / 2, (winSize.height - 320 * scale) / 2))
+
     self:addChild(self._uiLayer)
 
     self._widget = GUIReader:shareReader():widgetFromJsonFile("cocosgui/UITest/UITest.json")
@@ -1057,6 +1074,13 @@ end
 function UILoadingBarLeftScale9Test:initExtend()
 
     self._uiLayer = UILayer:create()
+
+    local winSize = CCDirector:sharedDirector():getWinSize()
+    local scale   = winSize.height / 320
+    self._uiLayer:setAnchorPoint(ccp(0,0))
+    self._uiLayer:setScale(scale)
+    self._uiLayer:setPosition(ccp((winSize.width - 480 * scale) / 2, (winSize.height - 320 * scale) / 2))
+
     self:addChild(self._uiLayer)
 
     self._widget = GUIReader:shareReader():widgetFromJsonFile("cocosgui/UITest/UITest.json")
@@ -1188,6 +1212,13 @@ end
 function UILoadingBarRightScale9Test:initExtend()
 
     self._uiLayer = UILayer:create()
+
+    local winSize = CCDirector:sharedDirector():getWinSize()
+    local scale   = winSize.height / 320
+    self._uiLayer:setAnchorPoint(ccp(0,0))
+    self._uiLayer:setScale(scale)
+    self._uiLayer:setPosition(ccp((winSize.width - 480 * scale) / 2, (winSize.height - 320 * scale) / 2))
+    
     self:addChild(self._uiLayer)
 
     self._widget = GUIReader:shareReader():widgetFromJsonFile("cocosgui/UITest/UITest.json")
