@@ -218,7 +218,7 @@ void SpriteBatchNode::removeChild(Node *child, bool cleanup)
 void SpriteBatchNode::removeChildAtIndex(int index, bool doCleanup)
 {
     CCASSERT(index>=0 && index < _children.count(), "Invalid index");
-    removeChild(_children[index], doCleanup);
+    removeChild(_children.getObjectAtIndex(index), doCleanup);
 }
 
 void SpriteBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
@@ -309,7 +309,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
     {
         bool needNewIndex=true;
 
-        if (array[0]->getZOrder() >= 0)
+        if (array.getObjectAtIndex(0)->getZOrder() >= 0)
         {
             //all children are in front of the parent
             oldIndex = sprite->getAtlasIndex();
@@ -476,7 +476,7 @@ int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
     }
     else
     {
-        return lowestAtlasIndexInChild(static_cast<Sprite*>(children[0]));
+        return lowestAtlasIndexInChild(static_cast<Sprite*>(children.getObjectAtIndex(0)));
     }
 }
 
@@ -490,7 +490,7 @@ int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
     Sprite *prev = NULL;
     if (childIndex > 0 && childIndex != -1)
     {
-        prev = static_cast<Sprite*>(siblings[childIndex - 1]);
+        prev = static_cast<Sprite*>(siblings.getObjectAtIndex(childIndex - 1));
     }
 
     // first child of the sprite sheet

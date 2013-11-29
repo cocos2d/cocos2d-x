@@ -177,14 +177,14 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
     CCASSERT( _blendFunc.src  == child->getBlendFunc().src && _blendFunc.dst  == child->getBlendFunc().dst, "Can't add a ParticleSystem that uses a different blending function");
 
     //no lazy sorting, so don't call super addChild, call helper instead
-    unsigned int pos = addChildHelper(child,zOrder,tag);
+    long pos = addChildHelper(child,zOrder,tag);
 
     //get new atlasIndex
     int atlasIndex = 0;
 
     if (pos != 0)
     {
-        ParticleSystem* p = static_cast<ParticleSystem*>(_children[pos-1]);
+        ParticleSystem* p = static_cast<ParticleSystem*>(_children.getObjectAtIndex(pos-1));
         atlasIndex = p->getAtlasIndex() + p->getTotalParticles();
     }
     else
@@ -267,7 +267,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
             int newAtlasIndex = 0;
             for( int i=0;i < _children.count();i++)
             {
-                ParticleSystem* node = static_cast<ParticleSystem*>(_children[i]);
+                ParticleSystem* node = static_cast<ParticleSystem*>(_children.getObjectAtIndex(i));
                 if( node == child )
                 {
                     newAtlasIndex = child->getAtlasIndex();
@@ -295,7 +295,7 @@ void ParticleBatchNode::getCurrentIndex(long* oldIndex, long* newIndex, Node* ch
 
     for( long i=0; i < count; i++ )
     {
-        Node* pNode = _children[i];
+        Node* pNode = _children.getObjectAtIndex(i);
 
         // new index
         if( pNode->getZOrder() > z &&  ! foundNewIdx )
@@ -342,7 +342,7 @@ long ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
 
     for( long i=0; i < count; i++ )
     {
-        Node *child = _children[i];
+        Node *child = _children.getObjectAtIndex(i);
         if (child->getZOrder() > z)
         {
             return i;
@@ -378,7 +378,7 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
 
 void ParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
 {
-    removeChild(_children[index],doCleanup);
+    removeChild(_children.getObjectAtIndex(index), doCleanup);
 }
 
 void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
