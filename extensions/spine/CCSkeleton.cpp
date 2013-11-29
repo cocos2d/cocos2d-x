@@ -25,6 +25,9 @@
 
 #include <spine/CCSkeleton.h>
 #include <spine/spine-cocos2dx.h>
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 && _MSC_VER >= 1800) // Visual Studio 2013
+#include <algorithm>
+#endif
 
 USING_NS_CC;
 using std::min;

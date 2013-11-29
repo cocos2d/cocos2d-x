@@ -31,8 +31,9 @@
 
 NS_CC_EXT_BEGIN
 /**
- *  @lua NA
- */
+*   @js NA
+*   @lua NA
+*/
 class SceneReader
 {
 public:
@@ -40,19 +41,14 @@ public:
 	virtual ~SceneReader(void);
 
 public:
-    /**
-     * @js getInstance
-     */
 	static SceneReader* sharedSceneReader();
-    /**
-     * @js purge
-     */
 	void purgeSceneReader();
 	static const char* sceneReaderVersion();
 	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
 private:
-    cocos2d::CCNode* createObject(cs::CSJsonDictionary * inputFiles, cocos2d::CCNode* parent);
-    void setPropertyFromJsonDict(cocos2d::CCNode *node, cs::CSJsonDictionary* dict);
+    cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent);
+    void setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node);
+    bool readJson(const char *pszFileName, rapidjson::Document &doc);
 
 private:
 	static SceneReader* s_sharedReader;
