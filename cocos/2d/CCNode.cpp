@@ -852,7 +852,7 @@ void Node::visit()
      }
 
     this->transform();
-    int i = 0;
+    long i = 0;
 
     if(!_children.empty())
     {
@@ -860,7 +860,7 @@ void Node::visit()
         // draw children zOrder < 0
         for( ; i < _children.count(); i++ )
         {
-            auto node = _children[i];
+            auto node = _children.getObjectAtIndex(i);
 
             if ( node && node->_ZOrder < 0 )
                 node->visit();
@@ -870,12 +870,17 @@ void Node::visit()
         // self draw
         this->draw();
 
-        for( ; i < _children.count(); i++ )
-        {
-            auto node = _children[i];
-            if (node)
-                node->visit();
-        }
+        // Uses std::for_each to improve performance.
+        std::for_each(_children.cbegin()+i, _children.cend(), [](Node* node){
+            node->visit();
+        });
+        
+//        for( ; i < _children.count(); i++ )
+//        {
+//            auto node = _children[i];
+//            if (node)
+//                node->visit();
+//        }
     }
     else
     {

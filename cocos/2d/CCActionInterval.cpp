@@ -206,13 +206,13 @@ Sequence* Sequence::create(const Vector<FiniteTimeAction*>& arrayOfActions)
         long count = arrayOfActions.count();
         CC_BREAK_IF(count == 0);
 
-        auto prev = arrayOfActions[0];
+        auto prev = arrayOfActions.getObjectAtIndex(0);
 
         if (count > 1)
         {
             for (long i = 1; i < count; ++i)
             {
-                prev = createWithTwoActions(prev, arrayOfActions[i]);
+                prev = createWithTwoActions(prev, arrayOfActions.getObjectAtIndex(i));
             }
         }
         else
@@ -578,12 +578,12 @@ Spawn* Spawn::create(const Vector<FiniteTimeAction*>& arrayOfActions)
     {
         long count = arrayOfActions.count();
         CC_BREAK_IF(count == 0);
-        auto prev = arrayOfActions[0];
+        auto prev = arrayOfActions.getObjectAtIndex(0);
         if (count > 1)
         {
             for (int i = 1; i < arrayOfActions.count(); ++i)
             {
-                prev = createWithTwoActions(prev, arrayOfActions[i]);
+                prev = createWithTwoActions(prev, arrayOfActions.getObjectAtIndex(i));
             }
         }
         else
@@ -2104,7 +2104,7 @@ void Animate::update(float t)
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
-            AnimationFrame* frame = frames[i];
+            AnimationFrame* frame = frames.getObjectAtIndex(i);
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setDisplayFrame(frameToDisplay);
 

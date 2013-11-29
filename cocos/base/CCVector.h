@@ -35,7 +35,6 @@ template<class T>
 class CC_DLL Vector
 {
 public:
-
     Vector<T>()
     : _data()
     {
@@ -50,7 +49,8 @@ public:
         setCapacity(capacity);
     }
 
-    virtual ~Vector<T>() {
+    virtual ~Vector<T>()
+    {
         CCLOG("In the destructor of Vector.");
         removeAllObjects();
     }
@@ -58,34 +58,42 @@ public:
     Vector<T>(const Vector<T>& other)
     {
         CCLOG("In the copy constructor!");
-        copy(other);
+        _data = other._data;
+        addRefForAllObjects();
     }
     
     /** Move constructor */
     Vector<T>(Vector<T>&& other)
     {
         CCLOG("In the move constructor of Vector!");
-        _data = std::move(other._data);
+        _data = other._data;
     }
     
     Vector<T>& operator=(const Vector<T>& other)
     {
         CCLOG("In the copy assignment operator!");
-        copy(other);
+        removeAllObjects();
+        _data = other._data;
+        addRefForAllObjects();
         return *this;
     }
     
     Vector<T>& operator=(Vector<T>&& other)
     {
         CCLOG("In the move assignment operator!");
-        _data = std::move(other._data);
+        _data = other._data;
         return *this;
     }
     
-    T operator[](long index) const
-    {
-        return getObjectAtIndex(index);
-    }
+//    T& operator[](long index)
+//    {
+//        return _data[index];
+//    }
+//    
+//    const T& operator[](long index) const
+//    {
+//        return _data[index];
+//    }
     
     /** Sets capacity of current array */
     void setCapacity(long capacity)
@@ -97,16 +105,6 @@ public:
     long getCapacity() const
     {
         return _data.capacity();
-    }
-    
-    void copy(const Vector<T>& other)
-    {
-        if (this == &other)
-            return;
-        
-        removeAllObjects();
-        setCapacity(other.count());
-        addObjectsFromArray(other);
     }
     
     // Querying an Array
@@ -153,7 +151,12 @@ public:
     /** Returns a random element */
     T getRandomObject() const
     {
-        return *_data.begin();
+        if (!_data.empty())
+        {
+            int randIdx = rand() % _data.size();
+            return *(_data.begin() + randIdx);
+        }
+        return nullptr;
     }
 
     /** Returns a Boolean value that indicates whether object is present in array. */
@@ -204,6 +207,8 @@ public:
     /** sets a certain object at a certain index */
     void setObject(T object, long index)
     {
+        CCASSERT(index >= 0 && index < count(), "Invalid index!");
+        _data[index]->release();
         _data[index] = object;
         object->retain();
     }
@@ -348,9 +353,17 @@ public:
     
     const_reverse_iterator crbegin() const { return _data.crbegin(); }
     const_reverse_iterator crend() const { return _data.crend(); }
+    
 protected:
+    
+    void addRefForAllObjects()
+    {
+        std::for_each(_data.begin(), _data.end(), [](T obj){
+            obj->retain();
+        });
+    }
+    
     std::vector<T> _data;
-
 };
 
 // end of data_structure group

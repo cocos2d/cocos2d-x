@@ -942,7 +942,7 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
             currentItem->removeFromParentAndCleanup(false);
         }
 
-        MenuItem* item = _subItems[_selectedIndex];
+        MenuItem* item = _subItems.getObjectAtIndex(_selectedIndex);
         this->addChild(item, 0, kCurrentItem);
         Size s = item->getContentSize();
         this->setContentSize(s);
@@ -953,13 +953,13 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
 void MenuItemToggle::selected()
 {
     MenuItem::selected();
-    _subItems[_selectedIndex]->selected();
+    _subItems.getObjectAtIndex(_selectedIndex)->selected();
 }
 
 void MenuItemToggle::unselected()
 {
     MenuItem::unselected();
-    _subItems[_selectedIndex]->unselected();
+    _subItems.getObjectAtIndex(_selectedIndex)->unselected();
 }
 
 void MenuItemToggle::activate()
@@ -986,7 +986,7 @@ void MenuItemToggle::setEnabled(bool enabled)
 
 MenuItem* MenuItemToggle::getSelectedItem()
 {
-    return _subItems[_selectedIndex];
+    return _subItems.getObjectAtIndex(_selectedIndex);
 }
 
 NS_CC_END

@@ -677,7 +677,7 @@ Bone *Armature::getBoneAtPoint(float x, float y) const
 
     for(long i = length - 1; i >= 0; i--)
     {
-        bs = static_cast<Bone*>( _children[i] );
+        bs = static_cast<Bone*>( _children.getObjectAtIndex(i) );
         if(bs->getDisplayManager()->containPoint(x, y))
         {
             return bs;
