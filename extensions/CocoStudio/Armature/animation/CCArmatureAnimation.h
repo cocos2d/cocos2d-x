@@ -279,7 +279,7 @@ protected:
 
     bool m_bOnMovementList;
     bool m_bMovementListLoop;
-    int m_iMovementIndex;
+    unsigned int m_uMovementIndex;
 
     CCObject *m_pUserObject;
 protected:

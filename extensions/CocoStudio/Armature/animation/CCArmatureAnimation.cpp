@@ -289,7 +289,7 @@ void CCArmatureAnimation::play(bool loop, const std::string *movementNames, int 
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
     m_bOnMovementList = true;
-    m_iMovementIndex = 0;
+    m_uMovementIndex = 0;
 
     for (int i = 0; i<movementNumber; i++)
     {
@@ -304,7 +304,7 @@ void CCArmatureAnimation::playByIndex(bool loop, const int *movementIndexes, int
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
     m_bOnMovementList = true;
-    m_iMovementIndex = 0;
+    m_uMovementIndex = 0;
 
     std::vector<std::string> &movName = m_pAnimationData->movementNames;
 
@@ -527,19 +527,19 @@ void CCArmatureAnimation::updateMovementList()
     {
         if (m_bMovementListLoop)
         {
-            play(m_sMovementList.at(m_iMovementIndex).c_str(), -1, -1, 0);
-            m_iMovementIndex++;
-            if (m_iMovementIndex >= m_sMovementList.size())
+            play(m_sMovementList.at(m_uMovementIndex).c_str(), -1, -1, 0);
+            m_uMovementIndex++;
+            if (m_uMovementIndex >= m_sMovementList.size())
             {
-                m_iMovementIndex = 0;
+                m_uMovementIndex = 0;
             }
         }
         else
         {
-            if (m_iMovementIndex < m_sMovementList.size())
+            if (m_uMovementIndex < m_sMovementList.size())
             {
-                play(m_sMovementList.at(m_iMovementIndex).c_str(), -1, -1, 0);
-                m_iMovementIndex++;
+                play(m_sMovementList.at(m_uMovementIndex).c_str(), -1, -1, 0);
+                m_uMovementIndex++;
             }
             else
             {
