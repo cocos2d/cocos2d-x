@@ -7,6 +7,8 @@
 class BaseClippingNodeTest : public BaseTest
 {
 public:
+    CREATE_FUNC(BaseClippingNodeTest);
+
     ~BaseClippingNodeTest();
     virtual bool init();
 
@@ -22,6 +24,8 @@ public:
 class BasicTest : public BaseClippingNodeTest
 {
 public:
+    CREATE_FUNC(BasicTest);
+
     virtual std::string title();
     virtual std::string subtitle();
     virtual void setup();
@@ -40,6 +44,8 @@ public:
 class ShapeTest : public BasicTest
 {
 public:
+    CREATE_FUNC(ShapeTest);
+
     virtual std::string title();
     virtual std::string subtitle();
 
@@ -50,6 +56,8 @@ public:
 class ShapeInvertedTest : public ShapeTest
 {
 public:
+    CREATE_FUNC(ShapeInvertedTest);
+
     virtual std::string title();
     virtual std::string subtitle();
     virtual ClippingNode* clipper();
@@ -58,6 +66,8 @@ public:
 class SpriteTest : public BasicTest
 {
 public:
+    CREATE_FUNC(SpriteTest);
+
     virtual std::string title();
     virtual std::string subtitle();
 
@@ -69,6 +79,8 @@ public:
 class SpriteNoAlphaTest : public SpriteTest
 {
 public:
+    CREATE_FUNC(SpriteNoAlphaTest);
+
     virtual std::string title();
     virtual std::string subtitle();
     virtual ClippingNode* clipper();
@@ -77,6 +89,8 @@ public:
 class SpriteInvertedTest : public SpriteTest
 {
 public:
+    CREATE_FUNC(SpriteInvertedTest);
+
     virtual std::string title();
     virtual std::string subtitle();
     virtual ClippingNode* clipper();
@@ -85,6 +99,8 @@ public:
 class NestedTest : public BaseClippingNodeTest
 {
 public:
+    CREATE_FUNC(NestedTest);
+
     virtual std::string title();
     virtual std::string subtitle();
     virtual void setup();
@@ -93,6 +109,8 @@ public:
 class HoleDemo : public BaseClippingNodeTest
 {
 public:
+    CREATE_FUNC(HoleDemo);
+
     ~HoleDemo();
     virtual void setup();
     virtual std::string title();
@@ -108,6 +126,8 @@ private:
 class ScrollViewDemo : public BaseClippingNodeTest
 {
 public:
+    CREATE_FUNC(ScrollViewDemo);
+
     virtual std::string title();
     virtual std::string subtitle();
     virtual void setup();
@@ -124,6 +144,8 @@ private:
 class RawStencilBufferTest : public BaseClippingNodeTest
 {
 public:
+    CREATE_FUNC(RawStencilBufferTest);
+
     ~RawStencilBufferTest();
 
     virtual std::string title();
@@ -141,6 +163,8 @@ protected:
 class RawStencilBufferTest2 : public RawStencilBufferTest
 {
 public:
+    CREATE_FUNC(RawStencilBufferTest2);
+
     virtual std::string subtitle();
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
@@ -149,6 +173,8 @@ public:
 class RawStencilBufferTest3 : public RawStencilBufferTest
 {
 public:
+    CREATE_FUNC(RawStencilBufferTest3);
+
     virtual std::string subtitle();
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
@@ -157,6 +183,8 @@ public:
 class RawStencilBufferTest4 : public RawStencilBufferTest
 {
 public:
+    CREATE_FUNC(RawStencilBufferTest4);
+
     virtual std::string subtitle();
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
@@ -165,6 +193,8 @@ public:
 class RawStencilBufferTest5 : public RawStencilBufferTest
 {
 public:
+    CREATE_FUNC(RawStencilBufferTest5);
+
     virtual std::string subtitle();
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
@@ -173,6 +203,8 @@ public:
 class RawStencilBufferTest6 : public RawStencilBufferTest
 {
 public:
+    CREATE_FUNC(RawStencilBufferTest6);
+
     virtual std::string subtitle();
     virtual void setup();
     virtual void setupStencilForClippingOnPlane(GLint plane);
@@ -184,6 +216,8 @@ public:
 class ClippingNodeTestScene : public TestScene
 {
 public:
+    CREATE_FUNC(ClippingNodeTestScene);
+
     virtual void runThisTest();
 };
 

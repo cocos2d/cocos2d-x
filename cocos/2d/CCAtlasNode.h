@@ -53,22 +53,7 @@ class CC_DLL AtlasNode : public NodeRGBA, public TextureProtocol
 public:
 	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 	static AtlasNode * create(const std::string& filename, long tileWidth, long tileHeight, long itemsToRender);
-    /**
-     * @js ctor
-     */
-    AtlasNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~AtlasNode();
 
-    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-    bool initWithTileFile(const std::string& tile, long tileWidth, long tileHeight, long itemsToRender);
-
-    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
-    bool initWithTexture(Texture2D* texture, long tileWidth, long tileHeight, long itemsToRender);
-    
     /** updates the Atlas (indexed vertex array).
     * Shall be overridden in subclasses
     */
@@ -104,15 +89,24 @@ public:
     */
     virtual const BlendFunc& getBlendFunc() const override;
 
-private :
+
+protected:
+    AtlasNode();
+    virtual ~AtlasNode();
+
+    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+    bool initWithTileFile(const std::string& tile, long tileWidth, long tileHeight, long itemsToRender);
+
+    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+    bool initWithTexture(Texture2D* texture, long tileWidth, long tileHeight, long itemsToRender);
+
     void calculateMaxItems();
     void updateBlendFunc();
     void updateOpacityModifyRGB();
-    
+
     friend class Director;
     void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
 
-protected:
     //! chars per row
     long    _itemsPerRow;
     //! chars per column
@@ -136,6 +130,10 @@ protected:
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
     bool _ignoreContentScaleFactor;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(AtlasNode);
+
 };
 
 // end of base_node group

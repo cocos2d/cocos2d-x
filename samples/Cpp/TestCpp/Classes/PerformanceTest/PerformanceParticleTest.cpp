@@ -170,7 +170,7 @@ void ParticleMainScene::step(float dt)
 
 void ParticleMainScene::createParticleSystem()
 {
-    ParticleSystem *particleSystem = NULL;
+    ParticleSystemQuad *particleSystem = nullptr;
 
     /*
     * Tests:
@@ -196,7 +196,7 @@ void ParticleMainScene::createParticleSystem()
 //     }
 //     else
     {
-        particleSystem = new ParticleSystemQuad();
+        particleSystem = ParticleSystemQuad::create();
     }
     
     switch( subtestNumber)

@@ -294,9 +294,9 @@ Sprite* TMXLayer::reusedTileWithRect(Rect rect)
 {
     if (! _reusedTile) 
     {
-        _reusedTile = new Sprite();
-        _reusedTile->initWithTexture(_textureAtlas->getTexture(), rect, false);
+        _reusedTile = Sprite::createWithTexture(_textureAtlas->getTexture(), rect);
         _reusedTile->setBatchNode(this);
+        _reusedTile->retain();
     }
     else
     {
@@ -335,8 +335,7 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
             Rect rect = _tileSet->rectForGID(gid);
             rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
-            tile = new Sprite();
-            tile->initWithTexture(this->getTexture(), rect);
+            tile = Sprite::createWithTexture(this->getTexture(), rect);
             tile->setBatchNode(this);
             tile->setPosition(getPositionAt(pos));
             tile->setVertexZ((float)getVertexZForPos(pos));
@@ -345,7 +344,6 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
 
             unsigned int indexForZ = atlasIndexForExistantZ(z);
             this->addSpriteWithoutQuad(tile, indexForZ, z);
-            tile->release();
         }
     }
     

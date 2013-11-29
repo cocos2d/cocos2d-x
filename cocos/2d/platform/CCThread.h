@@ -25,8 +25,12 @@ THE SOFTWARE.
 #ifndef __CC_PLATFORM_THREAD_H__
 #define __CC_PLATFORM_THREAD_H__
 
+#include <functional>
+#include <list>
+#include <mutex>
 #include "platform/CCCommon.h"
 #include "CCPlatformMacros.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -39,27 +43,45 @@ NS_CC_BEGIN
  * and release it when the thread end.
  */
 
-class CC_DLL Thread
+class CC_DLL ThreadHelper
 {
 public:
-    /**
+    friend DisplayLinkDirector;
+
+    /** Create an autorelease pool for objective-c codes.
      * @js NA
      * @lua NA
      */
-    Thread() : _autoReleasePool(nullptr) {}
+    static void* createAutoreleasePool();
+    
     /**
      * @js NA
      * @lua NA
-     */
-    ~Thread();
-    /**
+    */
+    static void releaseAutoreleasePool(void *autoreleasePool);
+
+    /** To run a function in gl thread.
      * @js NA
      * @lua NA
+     @since v3.0
      */
-    void createAutoreleasePool();
+    static void runOnGLThread(std::function<void(void)> f);
+    
+    /** Set how many callback functions being invoked per frame. Default value is 5.
+     * @js NA
+     * @lua NA
+     @since v3.0
+     */
+    static void setCallbackNumberPerFrame(long callbackNumberPerFrame);
 
 private:
-    void *_autoReleasePool;
+    // This function will be call by Director to call some call back function on gl thread
+    static void doCallback();
+    
+    static std::list<std::function<void(void)>> *_callbackList;
+    static std::mutex *_mutex;
+    // How many callback functions invoked per frame
+    static long _callbackNumberPerFrame;
 };
 
 // end of platform group
