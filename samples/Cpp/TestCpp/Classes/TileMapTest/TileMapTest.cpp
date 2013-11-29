@@ -128,18 +128,12 @@ TMXOrthoTest::TMXOrthoTest()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
-    auto pChildrenArray = map->getChildren();
-    SpriteBatchNode* child = NULL;
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(pChildrenArray, pObject)
-    {
-        child = static_cast<SpriteBatchNode*>(pObject);
+    auto& pChildrenArray = map->getChildren();
 
-        if(!child)
-            break;
-
+    pChildrenArray.forEach([](Node* obj){
+        auto child = static_cast<SpriteBatchNode*>(obj);
         child->getTexture()->setAntiAliasTexParameters();
-    }
+    });
 
     float x, y, z;
     map->getCamera()->getEye(&x, &y, &z);
@@ -177,18 +171,13 @@ TMXOrthoTest2::TMXOrthoTest2()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 
-    auto pChildrenArray = map->getChildren();
+    auto& pChildrenArray = map->getChildren();
     SpriteBatchNode* child = NULL;
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(pChildrenArray, pObject)
-    {
-        child = static_cast<SpriteBatchNode*>(pObject);
 
-        if(!child)
-            break;
-
+    pChildrenArray.forEach([&child](Node* obj){
+        child = static_cast<SpriteBatchNode*>(obj);
         child->getTexture()->setAntiAliasTexParameters();
-    }
+    });
 
     map->runAction( ScaleBy::create(2, 0.5f) ) ;
 }
@@ -211,18 +200,13 @@ TMXOrthoTest3::TMXOrthoTest3()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
-    auto pChildrenArray = map->getChildren();
+    auto& children = map->getChildren();
     SpriteBatchNode* child = NULL;
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(pChildrenArray, pObject)
-    {
-        child = static_cast<SpriteBatchNode*>(pObject);
 
-        if(!child)
-            break;
-
+    children.forEach([&child](Node* node){
+        child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    }
+    });
     
     map->setScale(0.2f);
     map->setAnchorPoint( Point(0.5f, 0.5f) );
@@ -245,19 +229,12 @@ TMXOrthoTest4::TMXOrthoTest4()
     
     Size CC_UNUSED s1 = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
-    
-    auto pChildrenArray = map->getChildren();
-    SpriteBatchNode* child = NULL;
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(pChildrenArray, pObject)
-    {
-        child = static_cast<SpriteBatchNode*>(pObject);
 
-        if(!child)
-            break;
-
+    SpriteBatchNode* child = nullptr;
+    map->getChildren().forEach([&child](Node* node){
+        child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    }
+    });
     
     map->setAnchorPoint(Point(0, 0));
 
@@ -551,18 +528,11 @@ TMXUncompressedTest::TMXUncompressedTest()
     map->runAction(MoveTo::create(1.0f, Point( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ));
     
     // testing release map
-    auto pChildrenArray = map->getChildren();
     TMXLayer* layer;
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(pChildrenArray, pObject)
-    {
-        layer= static_cast<TMXLayer*>(pObject);
-
-        if(!layer)
-            break;
-
+    map->getChildren().forEach([&layer](Node* node){
+        layer= static_cast<TMXLayer*>(node);
         layer->releaseMap();
-    }
+    });
 
 }
 
@@ -809,7 +779,7 @@ TMXIsoZorder::TMXIsoZorder()
     map->setPosition(Point(-s.width/2,0));
     
     _tamara = Sprite::create(s_pathSister1);
-    map->addChild(_tamara, map->getChildren()->count() );
+    map->addChild(_tamara, map->getChildren().count() );
     _tamara->retain();
     int mapWidth = map->getMapSize().width * map->getTileSize().width;
     _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Point( mapWidth/2,0)));
@@ -877,7 +847,7 @@ TMXOrthoZorder::TMXOrthoZorder()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
     _tamara = Sprite::create(s_pathSister1);
-    map->addChild(_tamara,  map->getChildren()->count());
+    map->addChild(_tamara,  map->getChildren().count());
     _tamara->retain();
     _tamara->setAnchorPoint(Point(0.5f,0));
 
@@ -1154,12 +1124,10 @@ TMXOrthoFlipTest::TMXOrthoFlipTest()
     Size CC_UNUSED s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
 
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(map->getChildren(), pObj)
-    {
-        auto child = static_cast<SpriteBatchNode*>(pObj);
+    map->getChildren().forEach([](Node* node){
+        auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    }
+    });
 
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
@@ -1184,12 +1152,10 @@ TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
     auto s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
 
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(map->getChildren(), pObj)
-    {
-        auto child = static_cast<SpriteBatchNode*>(pObj);
+    map->getChildren().forEach([](Node* node){
+        auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    }
+    });
 
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
@@ -1263,12 +1229,10 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     auto s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
 
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(map->getChildren(), pObj)
-    {
-        auto child = static_cast<SpriteBatchNode*>(pObj);
+    map->getChildren().forEach([](Node* node){
+        auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    }
+    });
 
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
@@ -1292,15 +1256,10 @@ TMXBug987::TMXBug987()
     Size CC_UNUSED s1 = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
-    auto childs = map->getChildren();
-    TMXLayer* node;
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(childs, pObject)
-    {
-        node = static_cast<TMXLayer*>(pObject);
-        CC_BREAK_IF(!node);
+    map->getChildren().forEach([](Node* child){
+        auto node = static_cast<TMXLayer*>(child);
         node->getTexture()->setAntiAliasTexParameters();
-    }
+    });
 
     map->setAnchorPoint(Point(0, 0));
     auto layer = map->getLayer("Tile Layer 1");

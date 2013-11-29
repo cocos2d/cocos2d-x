@@ -190,7 +190,7 @@ EventDispatcher::~EventDispatcher()
 void EventDispatcher::visitTarget(Node* node)
 {    
     long i = 0;
-    const Vector<Node*>& children = node->getChildren();
+    auto& children = node->getChildren();
     
     long childrenCount = children.count();
     

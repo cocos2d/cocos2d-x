@@ -290,7 +290,7 @@ void SpriteBatchNode::sortAllChildren()
 
 void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 {
-    auto array = sprite->getChildren();
+    auto& array = sprite->getChildren();
     long count = array.count();
     
     int oldIndex = 0;
@@ -424,7 +424,7 @@ int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
 {
     CCASSERT(index>=0 && index < _children.count(), "Invalid index");
 
-    auto children = parent->getChildren();
+    auto& children = parent->getChildren();
 
     children.forEach([this, &index](Node* child){
         Sprite* sp = static_cast<Sprite*>(child);
@@ -454,7 +454,7 @@ int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
 
 int SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
 {
-    auto children = sprite->getChildren();
+    auto& children = sprite->getChildren();
 
     if (children.count() == 0)
     {
@@ -468,7 +468,7 @@ int SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
 
 int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
 {
-    auto children = sprite->getChildren();
+    auto& children = sprite->getChildren();
 
     if (children.count() == 0)
     {
@@ -482,7 +482,7 @@ int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
 
 int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 {
-    auto siblings = sprite->getParent()->getChildren();
+    auto& siblings = sprite->getParent()->getChildren();
     long childIndex = siblings.getIndexOfObject(sprite);
 
     // ignore parent Z if parent is spriteSheet
@@ -585,7 +585,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     }
 
     // remove children recursively
-    auto children = sprite->getChildren();
+    auto& children = sprite->getChildren();
     children.forEach([this](Node* obj){
         Sprite* child = static_cast<Sprite*>(obj);
         if (child)

@@ -307,11 +307,21 @@ public:
         if (count() <= 0)
             return;
         
-        std::for_each(_data.begin(), _data.end(), [&callback](T obj){
+        std::for_each(_data.cbegin(), _data.cend(), [&callback](T obj){
             callback(obj);
         });
     }
   
+    void forEachReverse(std::function<void(T)> callback)
+    {
+        if (count() <= 0)
+            return;
+        
+        std::for_each(_data.crbegin(), _data.crend(), [&callback](T obj){
+            callback(obj);
+        });
+    }
+    
     // ------------------------------------------
     // Iterators
     // ------------------------------------------

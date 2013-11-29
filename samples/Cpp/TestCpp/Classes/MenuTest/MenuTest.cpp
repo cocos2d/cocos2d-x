@@ -88,27 +88,18 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     auto s = Director::getInstance()->getWinSize();
     
     int i=0;
-    Node* child;
-    auto pArray = menu->getChildren();
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(pArray, pObject)
-    {
-        if(pObject == NULL)
-            break;
-
-        child = static_cast<Node*>(pObject);
-
+    menu->getChildren().forEach([&i, &s](Node* child){
         auto dstPoint = child->getPosition();
         int offset = (int) (s.width/2 + 50);
         if( i % 2 == 0)
             offset = -offset;
         
         child->setPosition( Point( dstPoint.x + offset, dstPoint.y) );
-        child->runAction( 
-                          EaseElasticOut::create(MoveBy::create(2, Point(dstPoint.x - offset,0)), 0.35f) 
-                        );
+        child->runAction(
+                         EaseElasticOut::create(MoveBy::create(2, Point(dstPoint.x - offset,0)), 0.35f)
+                         );
         i++;
-    }
+    });
 
     _disabledItem = item3; item3->retain();
     _disabledItem->setEnabled( false );
