@@ -155,5 +155,75 @@ TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])
 
       replace('\t', '    ')
 
+      replace([[static int tolua_collect_CCPoint (lua_State* tolua_S)
+{
+ CCPoint* self = (CCPoint*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[static int tolua_collect_UIRelativeAlign (lua_State* tolua_S)
+{
+ UIRelativeAlign* self = (UIRelativeAlign*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[static int tolua_collect_CCRect (lua_State* tolua_S)
+{
+ CCRect* self = (CCRect*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[static int tolua_collect_DisplayType (lua_State* tolua_S)
+{
+ DisplayType* self = (DisplayType*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[static int tolua_collect_CCSize (lua_State* tolua_S)
+{
+ CCSize* self = (CCSize*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[static int tolua_collect_ccColor4B (lua_State* tolua_S)
+{
+ ccColor4B* self = (ccColor4B*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[static int tolua_collect_UILinearGravity (lua_State* tolua_S)
+{
+ UILinearGravity* self = (UILinearGravity*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[static int tolua_collect_CCAffineTransform (lua_State* tolua_S)
+{
+ CCAffineTransform* self = (CCAffineTransform*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[static int tolua_collect_ccBlendFunc (lua_State* tolua_S)
+{
+ ccBlendFunc* self = (ccBlendFunc*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[static int tolua_collect_CCBlendType (lua_State* tolua_S)
+{
+ CCBlendType* self = (CCBlendType*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
     WRITE(result)
 end

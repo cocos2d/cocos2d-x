@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Wed Nov 27 23:35:16 2013.
+** Generated automatically by tolua++-1.0.92 on Fri Nov 29 11:42:12 2013.
 */
 
 /****************************************************************************
@@ -49,12 +49,7 @@ using namespace CocosDenshion;
 /* function to release collected object via destructor */
 #ifdef __cplusplus
 
-static int tolua_collect_CCPoint (lua_State* tolua_S)
-{
- CCPoint* self = (CCPoint*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_UILayout (lua_State* tolua_S)
 {
@@ -112,12 +107,7 @@ static int tolua_collect_UIRootWidget (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_UIRelativeAlign (lua_State* tolua_S)
-{
- UIRelativeAlign* self = (UIRelativeAlign*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_CCTween (lua_State* tolua_S)
 {
@@ -140,19 +130,9 @@ static int tolua_collect_UIListView (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_CCRect (lua_State* tolua_S)
-{
- CCRect* self = (CCRect*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
 
-static int tolua_collect_DisplayType (lua_State* tolua_S)
-{
- DisplayType* self = (DisplayType*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
+
 
 static int tolua_collect_ActionManager (lua_State* tolua_S)
 {
@@ -189,12 +169,7 @@ static int tolua_collect_UIButton (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_CCSize (lua_State* tolua_S)
-{
- CCSize* self = (CCSize*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_UILinearLayoutParameter (lua_State* tolua_S)
 {
@@ -203,12 +178,7 @@ static int tolua_collect_UILinearLayoutParameter (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_ccColor4B (lua_State* tolua_S)
-{
- ccColor4B* self = (ccColor4B*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_CCSkin (lua_State* tolua_S)
 {
@@ -224,12 +194,7 @@ static int tolua_collect_CCArmature (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_UILinearGravity (lua_State* tolua_S)
-{
- UILinearGravity* self = (UILinearGravity*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_UIImageView (lua_State* tolua_S)
 {
@@ -252,12 +217,7 @@ static int tolua_collect_UIPageView (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_CCAffineTransform (lua_State* tolua_S)
-{
- CCAffineTransform* self = (CCAffineTransform*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_UITextField (lua_State* tolua_S)
 {
@@ -266,12 +226,7 @@ static int tolua_collect_UITextField (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_ccBlendFunc (lua_State* tolua_S)
-{
- ccBlendFunc* self = (ccBlendFunc*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_CCArmatureAnimation (lua_State* tolua_S)
 {
@@ -336,12 +291,7 @@ static int tolua_collect_CCDisplayManager (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_CCBlendType (lua_State* tolua_S)
-{
- CCBlendType* self = (CCBlendType*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 #endif
 
 
