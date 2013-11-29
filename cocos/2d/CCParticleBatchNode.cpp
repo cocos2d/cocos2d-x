@@ -102,7 +102,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-    
+
     return true;
 }
 
@@ -144,7 +144,7 @@ void ParticleBatchNode::visit()
     transform();
 
     draw();
-    
+
     if ( _grid && _grid->isActive())
     {
         _grid->afterDraw(this);
@@ -171,12 +171,12 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
     CCASSERT( child->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
     // If this is the 1st children, then copy blending function
-    if( _children->count() == 0 ) 
+    if( _children->count() == 0 )
     {
         setBlendFunc(child->getBlendFunc());
     }
 
-    CCASSERT( _blendFunc.src  == child->getBlendFunc().src && _blendFunc.dst  == child->getBlendFunc().dst, "Can't add a PaticleSystem that uses a different blending function");
+    CCASSERT( _blendFunc.src  == child->getBlendFunc().src && _blendFunc.dst  == child->getBlendFunc().dst, "Can't add a ParticleSystem that uses a different blending function");
 
     //no lazy sorting, so don't call super addChild, call helper instead
     unsigned int pos = addChildHelper(child,zOrder,tag);
@@ -184,7 +184,7 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
     //get new atlasIndex
     int atlasIndex = 0;
 
-    if (pos != 0) 
+    if (pos != 0)
     {
         ParticleSystem* p = (ParticleSystem*)_children->getObjectAtIndex(pos-1);
         atlasIndex = p->getAtlasIndex() + p->getTotalParticles();
@@ -210,7 +210,7 @@ unsigned int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int
     CCASSERT( child != NULL, "Argument must be non-nil");
     CCASSERT( child->getParent() == NULL, "child already added. It can't be added again");
 
-    if( ! _children ) 
+    if( ! _children )
     {
         _children = new Array();
         _children->initWithCapacity(4);
@@ -226,7 +226,7 @@ unsigned int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int
 
     child->setParent(this);
 
-    if( _running ) 
+    if( _running )
     {
         child->onEnter();
         child->onEnterTransitionDidFinish();
@@ -243,7 +243,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
 
-    if( zOrder == child->getZOrder() ) 
+    if( zOrder == child->getZOrder() )
     {
         return;
     }
@@ -275,7 +275,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
             for( int i=0;i < _children->count();i++)
             {
                 ParticleSystem* pNode = (ParticleSystem*)_children->getObjectAtIndex(i);
-                if( pNode == child ) 
+                if( pNode == child )
                 {
                     newAtlasIndex = child->getAtlasIndex();
                     break;
@@ -300,12 +300,12 @@ void ParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* ne
     int  minusOne = 0;
     unsigned int count = _children->count();
 
-    for( unsigned int i=0; i < count; i++ ) 
+    for( unsigned int i=0; i < count; i++ )
     {
         Node* pNode = (Node *)_children->getObjectAtIndex(i);
 
         // new index
-        if( pNode->getZOrder() > z &&  ! foundNewIdx ) 
+        if( pNode->getZOrder() > z &&  ! foundNewIdx )
         {
             *newIndex = i;
             foundNewIdx = true;
@@ -317,7 +317,7 @@ void ParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* ne
         }
 
         // current index
-        if( child == pNode ) 
+        if( child == pNode )
         {
             *oldIndex = i;
             foundCurrentIdx = true;
@@ -347,7 +347,7 @@ unsigned int ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
 {
     unsigned int count = _children->count();
 
-    for( unsigned int i=0; i < count; i++ ) 
+    for( unsigned int i=0; i < count; i++ )
     {
         Node *child = (Node *)_children->getObjectAtIndex(i);
         if (child->getZOrder() > z)
@@ -364,7 +364,7 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
     // explicit nil handling
     if (aChild == NULL)
         return;
-    
+
     CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
     CCASSERT(_children->containsObject(aChild), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
