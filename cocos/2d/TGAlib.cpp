@@ -191,67 +191,63 @@ void tgaFlipImage( tImageTGA *psInfo )
     free(row);
     psInfo->flipped = 0;
 }
-
-// this is the function to call when we want to load an image
-tImageTGA * tgaLoad(const char *filename)
+    
+tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size)
 {
     int mode,total;
-    tImageTGA *info = NULL;
+    tImageTGA *info = nullptr;
     
-    long size = 0;
-    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(filename, "rb", &size);
-
     do
     {
-        CC_BREAK_IF(! pBuffer);
+        CC_BREAK_IF(! buffer);
         info = (tImageTGA *)malloc(sizeof(tImageTGA));
-
+        
         // get the file header info
-        if (! tgaLoadHeader(pBuffer, size, info))
+        if (! tgaLoadHeader(buffer, size, info))
         {
             info->status = TGA_ERROR_MEMORY;
             break;
         }
-
+        
         // check if the image is color indexed
         if (info->type == 1)
         {
             info->status = TGA_ERROR_INDEXED_COLOR;
             break;
         }
-
+        
         // check for other types (compressed images)
         if ((info->type != 2) && (info->type !=3) && (info->type !=10) )
         {
             info->status = TGA_ERROR_COMPRESSED_FILE;
             break;
         }
-
+        
         // mode equals the number of image components
         mode = info->pixelDepth / 8;
         // total is the number of unsigned chars to read
         total = info->height * info->width * mode;
         // allocate memory for image pixels
         info->imageData = (unsigned char *)malloc(sizeof(unsigned char) * total);
-
+        
         // check to make sure we have the memory required
         if (info->imageData == NULL)
         {
             info->status = TGA_ERROR_MEMORY;
             break;
         }
-
+        
         bool bLoadImage = false;
         // finally load the image pixels
         if ( info->type == 10 )
         {
-            bLoadImage = tgaLoadRLEImageData(pBuffer, size, info);
+            bLoadImage = tgaLoadRLEImageData(buffer, size, info);
         }
         else
         {
-            bLoadImage = tgaLoadImageData(pBuffer, size, info);
+            bLoadImage = tgaLoadImageData(buffer, size, info);
         }
-
+        
         // check for errors when reading the pixels
         if (! bLoadImage)
         {
@@ -259,7 +255,7 @@ tImageTGA * tgaLoad(const char *filename)
             break;
         }
         info->status = TGA_OK;
-
+        
         if ( info->flipped )
         {
             tgaFlipImage( info );
@@ -269,10 +265,25 @@ tImageTGA * tgaLoad(const char *filename)
             }
         }
     } while(0);
-
-    free(pBuffer);
-
+    
     return info;
+}
+
+// this is the function to call when we want to load an image
+tImageTGA * tgaLoad(const char *filename)
+{
+    long size = 0;
+    unsigned char* buffer = FileUtils::getInstance()->getFileData(filename, "rb", &size);
+
+    if (buffer != nullptr)
+    {
+        tImageTGA* data = tgaLoadBuffer(buffer, size);
+        free(buffer);
+        
+        return data;
+    }
+    
+    return nullptr;
 }
 
 // converts RGB to grayscale
