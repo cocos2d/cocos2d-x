@@ -27,7 +27,7 @@
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "../Json/CSContentJsonDictionary.h"
+#include "../Json/DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
 

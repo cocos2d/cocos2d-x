@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "ExtensionMacros.h"
+#include "../Json/rapidjson/document.h"
 #include <string>
 
 NS_CC_EXT_BEGIN
@@ -55,17 +56,16 @@ public:
    void setBool(const char *key, bool value);
    void setCString(const char *key, const char *value);
    
-   int    getInt(const char *key) const;
-   float  getFloat(const char *key) const;
-   bool   getBool(const char *key) const;
-   const char* getCString(const char *key) const;
+   int    getInt(const char *key, int def = 0) const;
+   float  getFloat(const char *key, float def = 0.0f) const;
+   bool   getBool(const char *key, bool def = false) const;
+   const char* getCString(const char *key, const char *def = NULL) const;
    /**
     *  @js NA
     */
-   cs::CSJsonDictionary* getDict();
-
+   void parse(const char *data);
 private:
-   cs::CSJsonDictionary *m_pJsonDict;
+   cocos2d::CCDictionary *_dict;
 };
 
 NS_CC_EXT_END

@@ -508,11 +508,12 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
     unsigned long length = 0;
-    void *data = futil->getFileData(byteCodePath.c_str(),
+    unsigned char* data = futil->getFileData(byteCodePath.c_str(),
                                     "rb",
                                     &length);
     if (data) {
         script = JS_DecodeScript(cx, data, length, NULL, NULL);
+        CC_SAFE_DELETE_ARRAY(data);
     }
     
     // b) no jsc file, check js file
