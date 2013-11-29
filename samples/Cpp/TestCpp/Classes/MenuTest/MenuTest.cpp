@@ -397,15 +397,10 @@ MenuLayer4::MenuLayer4()
                                                                 MenuItemFont::create( "Off" ), 
                                                                 NULL );
     
-    //auto more_items = UxArray::arrayWithObjects(
-    //                                                 MenuItemFont::create( "33%" ),
-    //                                                 MenuItemFont::create( "66%" ),
-    //                                                 MenuItemFont::create( "100%" ),
-    //                                                 NULL );
     // TIP: you can manipulate the items like any other MutableArray
-    item4->getSubItems()->addObject( MenuItemFont::create( "33%" ) ); 
-    item4->getSubItems()->addObject( MenuItemFont::create( "66%" ) ); 
-    item4->getSubItems()->addObject( MenuItemFont::create( "100%" ) ); 
+    item4->getSubItems().addObject( MenuItemFont::create( "33%" ) );
+    item4->getSubItems().addObject( MenuItemFont::create( "66%" ) );
+    item4->getSubItems().addObject( MenuItemFont::create( "100%" ) );
     
     // you can change the one of the items by doing this
     item4->setSelectedIndex( 2 );
