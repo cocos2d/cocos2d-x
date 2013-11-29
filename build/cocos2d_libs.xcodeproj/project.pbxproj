@@ -1029,6 +1029,8 @@
 		1A9DCA4C180E6DE3007A3AD4 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA48180E6DE3007A3AD4 /* ccTypes.h */; };
 		1A9DCA4D180E6E3C007A3AD4 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5421180E4047000584C8 /* libjs_static.a */; };
 		1A9DCA4E180E6E42007A3AD4 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5424180E405B000584C8 /* libjs_static.a */; };
+		1AA2063F1848437900053418 /* CCMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA2063E1848437900053418 /* CCMap.h */; };
+		1AA206401848437A00053418 /* CCMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA2063E1848437900053418 /* CCMap.h */; };
 		1AAF528B180E2ECC000584C8 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168B61807AF9C005B8026 /* b2BroadPhase.cpp */; };
 		1AAF528C180E2ECC000584C8 /* b2BroadPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168B71807AF9C005B8026 /* b2BroadPhase.h */; };
 		1AAF528D180E2ECC000584C8 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168B81807AF9C005B8026 /* b2CollideCircle.cpp */; };
@@ -2504,6 +2506,7 @@
 		1A9DCA42180E6D90007A3AD4 /* CCDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeprecated.h; sourceTree = "<group>"; };
 		1A9DCA47180E6DE3007A3AD4 /* ccTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccTypes.cpp; sourceTree = "<group>"; };
 		1A9DCA48180E6DE3007A3AD4 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
+		1AA2063E1848437900053418 /* CCMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMap.h; path = ../base/CCMap.h; sourceTree = "<group>"; };
 		1AAF5351180E3060000584C8 /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
 		1AAF5352180E3060000584C8 /* AssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManager.h; sourceTree = "<group>"; };
 		1AAF5362180E3374000584C8 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
@@ -2997,7 +3000,7 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
-		/* End PBXFileReference section */
+/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		1551A33C158F2AB200E66CFE /* Frameworks */ = {
@@ -3451,6 +3454,7 @@
 				1A5700B4180BC6060088DEC7 /* CCGeometry.cpp */,
 				1A5700B5180BC6060088DEC7 /* CCGeometry.h */,
 				1A5700B6180BC6060088DEC7 /* CCInteger.h */,
+				1AA2063E1848437900053418 /* CCMap.h */,
 				1A5700B7180BC6060088DEC7 /* CCNS.cpp */,
 				1A5700B8180BC6060088DEC7 /* CCNS.h */,
 				1A5700B9180BC6060088DEC7 /* CCObject.cpp */,
@@ -5241,6 +5245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46A170B01807CEA3005B8026 /* neon_matrix_impl.h in Headers */,
+				1AA2063F1848437900053418 /* CCMap.h in Headers */,
 				46A170191807CBFC005B8026 /* CCCommon.h in Headers */,
 				46A170571807CC1C005B8026 /* CCEventDispatcherMac.h in Headers */,
 				46A170E71807CECA005B8026 /* CCPhysicsBody.h in Headers */,
@@ -5872,6 +5877,7 @@
 				1A5700F4180BC6060088DEC7 /* CCObject.h in Headers */,
 				1A5700F6180BC6060088DEC7 /* CCPlatformConfig.h in Headers */,
 				1A5700F8180BC6060088DEC7 /* CCPlatformMacros.h in Headers */,
+				1AA206401848437A00053418 /* CCMap.h in Headers */,
 				1A5700FC180BC6060088DEC7 /* CCSet.h in Headers */,
 				1A570100180BC6060088DEC7 /* CCString.h in Headers */,
 				1A570104180BC6060088DEC7 /* etc1.h in Headers */,

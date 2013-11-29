@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "CCArray.h"
 #include "CCVector.h"
+#include "CCMap.h"
 #include "CCGeometry.h"
 #include "CCSet.h"
 #include "CCAutoreleasePool.h"
