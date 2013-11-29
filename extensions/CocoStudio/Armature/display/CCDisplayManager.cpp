@@ -242,7 +242,7 @@ void CCDisplayManager::changeDisplayByIndex(int index, bool force)
 
 void CCDisplayManager::changeDisplayByName(const char *name, bool force)
 {
-    for (int i = 0; i<m_pDecoDisplayList->count(); i++)
+    for (unsigned int i = 0; i<m_pDecoDisplayList->count(); i++)
     {
         if (static_cast<CCDecorativeDisplay*>(m_pDecoDisplayList->objectAtIndex(i))->getDisplayData()->displayName == name)
         {
