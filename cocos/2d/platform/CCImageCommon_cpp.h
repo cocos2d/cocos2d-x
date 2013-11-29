@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #include "CCImage.h"
 
+#include <cstring>
 #include <string>
 #include <ctype.h>
 
@@ -42,6 +43,7 @@ extern "C"
 }
 #include "s3tc.h"
 #include "atitc.h"
+#include "TGAlib.h"
 
 #include "decode.h"
 
@@ -394,7 +396,7 @@ Image::~Image()
 bool Image::initWithImageFile(const char * strPath)
 {
     bool bRet = false;
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(strPath);
+    _filePath = FileUtils::getInstance()->fullPathForFilename(strPath);
 
 #ifdef EMSCRIPTEN
     // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
@@ -417,7 +419,7 @@ bool Image::initWithImageFile(const char * strPath)
     SDL_FreeSurface(iSurf);
 #else
     long bufferLen = 0;
-    unsigned char* buffer = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &bufferLen);
+    unsigned char* buffer = FileUtils::getInstance()->getFileData(_filePath.c_str(), "rb", &bufferLen);
 
     if (buffer != nullptr && bufferLen > 0)
     {
@@ -434,6 +436,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath)
 {
     bool ret = false;
     long dataLen = 0;
+    _filePath = fullpath;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     FileUtilsAndroid *fileUitls = (FileUtilsAndroid*)FileUtils::getInstance();
     unsigned char *buffer = fileUitls->getFileDataForAsync(fullpath, "rb", &dataLen);
@@ -503,8 +506,22 @@ bool Image::initWithImageData(const unsigned char * data, long dataLen)
             ret = initWithATITCData(unpackedData, unpackedLen);
             break;
         default:
-            CCAssert(false, "unsupport image format!");
-            break;
+            {
+                // load and detect image format
+                tImageTGA* tgaData = tgaLoadBuffer(unpackedData, unpackedLen);
+                
+                if (tgaData != nullptr && tgaData->status == TGA_OK)
+                {
+                    ret = initWithTGAData(tgaData);
+                }
+                else
+                {
+                    CCAssert(false, "unsupport image format!");
+                }
+                
+                free(tgaData);
+                break;
+            }
         }
         
         if(unpackedData != data)
@@ -612,7 +629,6 @@ bool Image::isPvr(const unsigned char * data, int dataLen)
     
     return memcmp(&headerv2->pvrTag, gPVRTexIdentifier, strlen(gPVRTexIdentifier)) == 0 || CC_SWAP_INT32_BIG_TO_HOST(headerv3->version) == 0x50565203;
 }
-
 
 Image::Format Image::detectFormat(const unsigned char * data, int dataLen)
 {
@@ -1458,6 +1474,85 @@ bool Image::initWithETCData(const unsigned char * data, int dataLen)
         return true;
     }
     return false;
+}
+
+bool Image::initWithTGAData(tImageTGA* tgaData)
+{
+    bool ret = false;
+    
+    do
+    {
+        CC_BREAK_IF(tgaData == nullptr);
+        
+        // tgaLoadBuffer only support type 2, 3, 10
+        if (2 == tgaData->type || 10 == tgaData->type)
+        {
+            // true color
+            // unsupport RGB555
+            if (tgaData->pixelDepth == 16)
+            {
+                _renderFormat = Texture2D::PixelFormat::RGB5A1;
+            }
+            else if(tgaData->pixelDepth == 24)
+            {
+                _renderFormat = Texture2D::PixelFormat::RGB888;
+            }
+            else if(tgaData->pixelDepth == 32)
+            {
+                _renderFormat = Texture2D::PixelFormat::RGBA8888;
+            }
+            else
+            {
+                CCLOG("Image WARNING: unsupport true color tga data pixel format. FILE: %s", _filePath.c_str());
+                break;
+            }
+        }
+        else if(3 == tgaData->type)
+        {
+            // gray
+            if (8 == tgaData->pixelDepth)
+            {
+                _renderFormat = Texture2D::PixelFormat::I8;
+            }
+            else
+            {
+                // actually this won't happen, if it happens, maybe the image file is not a tga
+                CCLOG("Image WARNING: unsupport gray tga data pixel format. FILE: %s", _filePath.c_str());
+                break;
+            }
+        }
+        
+        _width = tgaData->width;
+        _height = tgaData->height;
+        _data = tgaData->imageData;
+        _dataLen = _width * _height * tgaData->pixelDepth / 8;
+        _fileType = Format::TGA;
+        _preMulti = false;
+        ret = true;
+        
+    }while(false);
+    
+    if (!ret)
+    {
+        const unsigned char tgaSuffix[] = ".tga";
+        for(int i = 0; i < 4; ++i)
+        {
+            if (std::tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
+            {
+                CCLOG("Image WARNING: the image file suffix is not tga, but parsed as a tga image file. FILE: %s", _filePath.c_str());
+                break;
+            };
+        }
+    }
+    else
+    {
+        if (tgaData->imageData != nullptr)
+        {
+            free(tgaData->imageData);
+        }
+    }
+    
+    return ret;
 }
 
 namespace

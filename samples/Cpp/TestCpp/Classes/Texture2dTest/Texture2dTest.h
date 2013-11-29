@@ -26,6 +26,15 @@ public:
     virtual void onEnter();
 };
 
+
+class TextureTGA : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureTGA);
+    virtual std::string title();
+    virtual void onEnter();
+};
+
 class TexturePNG : public TextureDemo
 {
 public:
