@@ -390,7 +390,10 @@ Image::Image()
 
 Image::~Image()
 {
-    CC_SAFE_DELETE_ARRAY(_data);
+    if (_data != nullptr)
+    {
+        free(_data);
+    }
 }
 
 bool Image::initWithImageFile(const char * strPath)
@@ -803,11 +806,11 @@ bool Image::initWithJpgData(const unsigned char * data, int dataLen)
         _width  = cinfo.output_width;
         _height = cinfo.output_height;
         _preMulti = false;
-        row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
+        row_pointer[0] = static_cast<unsigned char*>(malloc(cinfo.output_width*cinfo.output_components * sizeof(unsigned char)));
         CC_BREAK_IF(! row_pointer[0]);
 
         _dataLen = cinfo.output_width*cinfo.output_height*cinfo.output_components;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         CC_BREAK_IF(! _data);
 
         /* now actually read the jpeg into the raw buffer */
@@ -832,7 +835,10 @@ bool Image::initWithJpgData(const unsigned char * data, int dataLen)
         bRet = true;
     } while (0);
 
-    CC_SAFE_DELETE_ARRAY(row_pointer[0]);
+    if (row_pointer[0] != nullptr)
+    {
+        free(row_pointer[0]);
+    };
     return bRet;
 }
 
@@ -942,7 +948,7 @@ bool Image::initWithPngData(const unsigned char * data, int dataLen)
         rowbytes = png_get_rowbytes(png_ptr, info_ptr);
 
         _dataLen = rowbytes * _height;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         CC_BREAK_IF(!_data);
 
         for (unsigned short i = 0; i < _height; ++i)
@@ -955,7 +961,10 @@ bool Image::initWithPngData(const unsigned char * data, int dataLen)
 
         _preMulti = false;
 
-        CC_SAFE_FREE(row_pointers);
+        if (row_pointers != nullptr)
+        {
+            free(row_pointers);
+        };
 
         bRet = true;
     } while (0);
@@ -1113,7 +1122,7 @@ bool Image::initWithTiffData(const unsigned char * data, int dataLen)
         _height = h;
 
         _dataLen = npixels * sizeof (uint32);
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
 
         uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
         if (raster != NULL) 
@@ -1238,7 +1247,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
 
     //Move by size of header
     _dataLen = dataLen - sizeof(PVRv2TexHeader);
-    _data = new unsigned char[_dataLen];
+    _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     memcpy(_data, (unsigned char*)data + sizeof(PVRv2TexHeader), _dataLen);
 
     // Calculate the data size for each texture level and respect the minimum number of blocks
@@ -1360,7 +1369,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
 	int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
 	
     _dataLen = dataLen - (sizeof(PVRv3TexHeader) + header->metadataLength);
-    _data = new unsigned char[_dataLen];
+    _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     memcpy(_data, static_cast<const unsigned char*>(data) + sizeof(PVRv3TexHeader) + header->metadataLength, _dataLen);
 	
 	_numberOfMipmaps = header->numberOfMipmaps;
@@ -1447,7 +1456,7 @@ bool Image::initWithETCData(const unsigned char * data, int dataLen)
 #ifdef GL_ETC1_RGB8_OES
         _renderFormat = Texture2D::PixelFormat::ETC;
         _dataLen = dataLen - ETC_PKM_HEADER_SIZE;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         memcpy(_data, static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, _dataLen);
         return true;
 #endif
@@ -1462,12 +1471,15 @@ bool Image::initWithETCData(const unsigned char * data, int dataLen)
         _renderFormat = Texture2D::PixelFormat::RGB888;
         
         _dataLen =  _width * _height * bytePerPixel;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         
         if (etc1_decode_image(static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, static_cast<etc1_byte*>(_data), _width, _height, bytePerPixel, stride) != 0)
         {
             _dataLen = 0;
-            CC_SAFE_DELETE_ARRAY(_data);
+            if (_data != nullptr)
+            {
+                free(_data);
+            }
             return false;
         }
         
@@ -1574,7 +1586,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     /* load the .dds file */
     
     S3TCTexHeader *header = (S3TCTexHeader *)data;
-    unsigned char *pixelData = new unsigned char [dataLen - sizeof(S3TCTexHeader)];
+    unsigned char *pixelData = static_cast<unsigned char*>(malloc((dataLen - sizeof(S3TCTexHeader)) * sizeof(unsigned char)));
     memcpy((void *)pixelData, data + sizeof(S3TCTexHeader), dataLen - sizeof(S3TCTexHeader));
     
     _width = header->ddsd.width;
@@ -1591,7 +1603,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     if (Configuration::getInstance()->supportsS3TC())  //compressed data length
     {
         _dataLen = dataLen - sizeof(S3TCTexHeader);
-        _data = new unsigned char [_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         memcpy((void *)_data,(void *)pixelData , _dataLen);
     }
     else                                               //decompressed data length
@@ -1606,7 +1618,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
             width >>= 1;
             height >>= 1;
         }
-        _data = new unsigned char [_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     }
     
     /* load the mipmaps */
@@ -1677,7 +1689,10 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     
     /* end load the mipmaps */
     
-    CC_SAFE_DELETE_ARRAY(pixelData);
+    if (pixelData != nullptr)
+    {
+        free(pixelData);
+    };
     
     return true;
 }
@@ -1717,7 +1732,7 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
     if (Configuration::getInstance()->supportsATITC())  //compressed data length
     {
         _dataLen = dataLen - sizeof(ATITCTexHeader) - header->bytesOfKeyValueData - 4;
-        _data = new unsigned char [_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         memcpy((void *)_data,(void *)pixelData , _dataLen);
     }
     else                                               //decompressed data length
@@ -1732,7 +1747,7 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
             width >>= 1;
             height >>= 1;
         }
-        _data = new unsigned char [_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     }
     
     /* load the mipmaps */
@@ -1833,7 +1848,7 @@ bool Image::initWithWebpData(const unsigned char * data, int dataLen)
         _height   = config.input.height;
         
         _dataLen = _width * _height * 4;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         
         config.output.u.RGBA.rgba = static_cast<uint8_t*>(_data);
         config.output.u.RGBA.stride = _width * 4;
@@ -1842,7 +1857,7 @@ bool Image::initWithWebpData(const unsigned char * data, int dataLen)
         
         if (WebPDecode(static_cast<const uint8_t*>(data), dataLen, &config) != VP8_STATUS_OK)
         {
-            delete []_data;
+            free(_data);
             _data = NULL;
             break;
         }
@@ -1867,7 +1882,7 @@ bool Image::initWithRawData(const unsigned char * data, long dataLen, long width
         // only RGBA8888 supported
         int bytesPerComponent = 4;
         _dataLen = height * width * bytesPerComponent;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         CC_BREAK_IF(! _data);
         memcpy(_data, data, _dataLen);
 
@@ -2002,7 +2017,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         {
             if (isToRGB)
             {
-                unsigned char *pTempData = new unsigned char[_width * _height * 3];
+                unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char*)));
                 if (NULL == pTempData)
                 {
                     fclose(fp);
@@ -2030,7 +2045,10 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
                 free(row_pointers);
                 row_pointers = NULL;
 
-                CC_SAFE_DELETE_ARRAY(pTempData);
+                if (pTempData != nullptr)
+                {
+                    free(pTempData);
+                }
             } 
             else
             {
@@ -2091,7 +2109,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
 
         if (hasAlpha())
         {
-            unsigned char *pTempData = new unsigned char[_width * _height * 3];
+            unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char)));
             if (NULL == pTempData)
             {
                 jpeg_finish_compress(&cinfo);
@@ -2116,7 +2134,10 @@ bool Image::saveImageToJPG(const std::string& filePath)
                 (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
             }
 
-            CC_SAFE_DELETE_ARRAY(pTempData);
+            if (pTempData != nullptr)
+            {
+                free(pTempData);
+            }
         } 
         else
         {
