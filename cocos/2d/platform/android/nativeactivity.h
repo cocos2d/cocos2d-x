@@ -5,8 +5,8 @@
  * This is the interface to the Android native activity
  */
 
-void enableAccelerometer_native(void);
-void disableAccelerometer_native(void);
-void setAccelerometerInterval_native(float interval);
+void enableAccelerometerJni(void);
+void disableAccelerometerJni(void);
+void setAccelerometerIntervalJni(float interval);
 
 #endif // __COCOSNATIVEACTIVITY_H__

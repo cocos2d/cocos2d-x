@@ -18,17 +18,17 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 {
     if (isEnabled)
     {
-        enableAccelerometer_native();
+        enableAccelerometerJni();
     }
     else
     {
-        disableAccelerometer_native();
+        disableAccelerometerJni();
     }
 }
 
 void Device::setAccelerometerInterval(float interval)
 {
-	setAccelerometerInterval_native(interval);
+	setAccelerometerIntervalJni(interval);
 }
 
 NS_CC_END
