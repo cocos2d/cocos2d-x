@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "TGAlib.h"
 #include "platform/CCFileUtils.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 static bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo);
 void tgaFlipImage( tImageTGA *info );
@@ -201,42 +201,42 @@ tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size)
     {
         CC_BREAK_IF(! buffer);
         info = (tImageTGA *)malloc(sizeof(tImageTGA));
-        
+
         // get the file header info
         if (! tgaLoadHeader(buffer, size, info))
         {
             info->status = TGA_ERROR_MEMORY;
             break;
         }
-        
+
         // check if the image is color indexed
         if (info->type == 1)
         {
             info->status = TGA_ERROR_INDEXED_COLOR;
             break;
         }
-        
+
         // check for other types (compressed images)
         if ((info->type != 2) && (info->type !=3) && (info->type !=10) )
         {
             info->status = TGA_ERROR_COMPRESSED_FILE;
             break;
         }
-        
+
         // mode equals the number of image components
         mode = info->pixelDepth / 8;
         // total is the number of unsigned chars to read
         total = info->height * info->width * mode;
         // allocate memory for image pixels
         info->imageData = (unsigned char *)malloc(sizeof(unsigned char) * total);
-        
+
         // check to make sure we have the memory required
         if (info->imageData == NULL)
         {
             info->status = TGA_ERROR_MEMORY;
             break;
         }
-        
+
         bool bLoadImage = false;
         // finally load the image pixels
         if ( info->type == 10 )
@@ -247,7 +247,7 @@ tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size)
         {
             bLoadImage = tgaLoadImageData(buffer, size, info);
         }
-        
+
         // check for errors when reading the pixels
         if (! bLoadImage)
         {
@@ -255,7 +255,7 @@ tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size)
             break;
         }
         info->status = TGA_OK;
-        
+
         if ( info->flipped )
         {
             tgaFlipImage( info );
@@ -265,7 +265,7 @@ tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size)
             }
         }
     } while(0);
-    
+
     return info;
 }
 
@@ -337,4 +337,4 @@ void tgaDestroy(tImageTGA *psInfo) {
         free(psInfo);
     }
 }
-}//namespace   cocos2d 
+NS_CC_END
