@@ -1,3 +1,34 @@
+if(WIN32)
+
+ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
+
+set(PLATFORM_SRC
+  platform/win32/CCStdC.cpp
+  platform/win32/CCFileUtilsWin32.cpp
+  platform/win32/CCCommon.cpp
+  platform/win32/CCApplication.cpp
+  platform/win32/CCEGLView.cpp
+  platform/win32/CCImage.cpp
+  platform/win32/CCDevice.cpp
+)
+
+elseif(APPLE)
+
+else()
+
+set(PLATFORM_SRC
+  platform/linux/CCStdC.cpp
+  platform/linux/CCFileUtilsLinux.cpp
+  platform/linux/CCCommon.cpp
+  platform/linux/CCApplication.cpp
+  platform/linux/CCEGLView.cpp
+  platform/linux/CCImage.cpp
+  platform/linux/CCDevice.cpp
+)
+
+endif()
+
+
 set(COCOS2D_SRC
   CCAction.cpp
   CCActionCamera.cpp
@@ -107,40 +138,57 @@ set(COCOS2D_SRC
   platform/CCThread.cpp
   platform/CCEGLViewProtocol.cpp
   platform/CCFileUtils.cpp
-  platform/linux/CCStdC.cpp
-  platform/linux/CCFileUtilsLinux.cpp
-  platform/linux/CCCommon.cpp
-  platform/linux/CCApplication.cpp
-  platform/linux/CCEGLView.cpp
-  platform/linux/CCImage.cpp
-  platform/linux/CCDevice.cpp
 )
 
 include(../physics/CMakeLists.txt)
 
 add_library(cocos2d STATIC
   ${COCOS2D_SRC}
+  ${PLATFORM_SRC}
   ${COCOS_PHYSICS_SRC}
 )
+
+if(WIN32)
+set(COCOS_LINK
+  libjpeg
+  libpng
+  libwebp
+  libtiff
+  freetype250
+  glfw3
+  glew32
+  opengl32
+  libiconv
+  libzlib
+  )
+elseif(APPLE)
+
+else()
+set(COCOS_LINK
+  jpeg
+  png
+  webp
+  tiff
+  freetype
+  pthread
+  fontconfig
+  glfw
+  gles
+  GLEW
+  GL
+  X11
+  rt
+  z
+)
+endif()
+
 target_link_libraries(cocos2d
   cocosbase
   chipmunk_static
   tinyxml2
   kazmath
   unzip
-  jpeg
-  webp
-  tiff
-  freetype
-  fontconfig
-  png
-  pthread
-  glfw
-  GLEW
-  GL
-  X11
-  rt
-  z
+  ${COCOS_LINK}
 )
 
 set_target_properties(cocos2d

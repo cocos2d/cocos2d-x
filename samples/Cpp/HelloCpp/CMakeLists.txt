@@ -1,15 +1,30 @@
 set(APP_NAME hellocpp)
 
+if(WIN32)
+set(SAMPLE_SRC
+  proj.win32/main.cpp
+  Classes/AppDelegate.cpp
+  Classes/HelloWorldScene.cpp
+)
+
+else()
 set(SAMPLE_SRC
   proj.linux/main.cpp
   Classes/AppDelegate.cpp
   Classes/HelloWorldScene.cpp
 )
 
+endif()
+
 # add the executable
 add_executable(${APP_NAME}
   ${SAMPLE_SRC}
 )
+
+if(WIN32)
+set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
+set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+endif(WIN32)
 
 target_link_libraries(${APP_NAME} audio cocos2d)
 
