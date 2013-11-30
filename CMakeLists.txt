@@ -41,7 +41,7 @@ if(WIN32)
 					-D_SCL_SECURE_NO_WARNINGS 
 					-wd4251 -wd4244 -wd4334 
 					-wd4005 -wd4820 -wd4710
-					-wd4514)
+					-wd4514 -wd4056 -wd4996 -wd4099)
   else(MSVC)#MINGW
   
   endif(MSVC)
