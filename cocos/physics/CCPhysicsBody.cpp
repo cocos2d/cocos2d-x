@@ -27,31 +27,20 @@
 #include <climits>
 #include <algorithm>
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
-#elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
-#include "Box2D.h"
-#endif
 
 #include "CCPhysicsShape.h"
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
-#include "box2d/CCPhysicsBodyInfo_box2d.h"
 #include "chipmunk/CCPhysicsJointInfo_chipmunk.h"
-#include "box2d/CCPhysicsJointInfo_box2d.h"
 #include "chipmunk/CCPhysicsWorldInfo_chipmunk.h"
-#include "box2d/CCPhysicsWorldInfo_box2d.h"
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
-#include "box2d/CCPhysicsShapeInfo_box2d.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
-#include "box2d/CCPhysicsHelper_box2d.h"
 
 NS_CC_BEGIN
-
-
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+extern const float PHYSICS_INFINITY;
 
 namespace
 {
@@ -526,18 +515,18 @@ void PhysicsBody::addMoment(float moment)
 {
     if (moment == PHYSICS_INFINITY)
     {
-        // if moment is INFINITY, the moment of the body will become INFINITY
+        // if moment is PHYSICS_INFINITY, the moment of the body will become PHYSICS_INFINITY
         _moment = PHYSICS_INFINITY;
         _momentDefault = false;
     }
     else if (moment == -PHYSICS_INFINITY)
     {
-        // if moment is -INFINITY, it won't change
+        // if moment is -PHYSICS_INFINITY, it won't change
         return;
     }
     else
     {
-        // if moment of the body is INFINITY is has no effect
+        // if moment of the body is PHYSICS_INFINITY is has no effect
         if (_moment != PHYSICS_INFINITY)
         {
             if (_momentDefault)
@@ -810,11 +799,6 @@ Point PhysicsBody::local2World(const Point& point)
 {
     return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->getBody(), PhysicsHelper::point2cpv(point)));
 }
-
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
-
-#endif
 
 NS_CC_END
 

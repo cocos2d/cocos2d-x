@@ -31,6 +31,7 @@ set(BOX2D_SRC
   Dynamics/Joints/b2GearJoint.cpp
   Dynamics/Joints/b2Joint.cpp
   Dynamics/Joints/b2MouseJoint.cpp
+  Dynamics/Joints/b2MotorJoint.cpp
   Dynamics/Joints/b2PrismaticJoint.cpp
   Dynamics/Joints/b2PulleyJoint.cpp
   Dynamics/Joints/b2RevoluteJoint.cpp

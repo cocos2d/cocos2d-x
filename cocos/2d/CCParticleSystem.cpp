@@ -148,7 +148,7 @@ ParticleSystem * ParticleSystem::create(const std::string& plistFile)
     return pRet;
 }
 
-ParticleSystem* ParticleSystem::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleSystem* ParticleSystem::createWithTotalParticles(int numberOfParticles)
 {
     ParticleSystem *pRet = new ParticleSystem();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -425,7 +425,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
     return bRet;
 }
 
-bool ParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
 {
     _totalParticles = numberOfParticles;
 

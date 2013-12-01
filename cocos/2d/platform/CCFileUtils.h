@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 
@@ -399,7 +399,7 @@ protected:
      *  The full path cache. When a file is found, it will be added into this cache. 
      *  This variable is used for improving the performance of file search.
      */
-    std::map<std::string, std::string> _fullPathCache;
+    std::unordered_map<std::string, std::string> _fullPathCache;
     
     /**
      *  The singleton pointer of FileUtils.

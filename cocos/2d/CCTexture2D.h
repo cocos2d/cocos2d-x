@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <map>
+#include <map>
 
 #include "CCObject.h"
 #include "CCGeometry.h"

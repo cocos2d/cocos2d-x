@@ -12,6 +12,7 @@ extern "C" {
 #include "LuaBasicConversions.h"
 #include "LuaScriptHandlerMgr.h"
 #include "CCLuaValue.h"
+#include "CCLuaEngine.h"
 
 static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
 {
@@ -407,15 +408,9 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
             }
 #endif
             MenuItem* item = static_cast<MenuItem*>(tolua_tousertype(tolua_S, i + 2,0));
-            if (0 == i)
-            {
-                tolua_ret->initWithItem(item);
-            }
-            else
-            {
-                tolua_ret->addSubItem(item);
-            }
+            tolua_ret->addSubItem(item);
         }
+        tolua_ret->setSelectedIndex(0);
         
         int  nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
@@ -1776,15 +1771,67 @@ static int tolua_cocos2d_CallFunc_create(lua_State* tolua_S)
     
     argc = lua_gettop(tolua_S) - 1;
     
-    if (argc == 1)
+    if (argc == 1 || argc == 2)
     {
 #if COCOS2D_DEBUG >= 1
         if(!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
             goto tolua_lerror;
 #endif
         
-        LUA_FUNCTION funcID = (  toluafix_ref_function(tolua_S,2,0));
-        LuaCallFunc* tolua_ret = (LuaCallFunc*)  LuaCallFunc::create(funcID);
+        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
+        
+        bool hasExtraData = false;
+        int  ref  = 0;
+        if (argc == 2)
+        {
+#if COCOS2D_DEBUG >= 1
+            if(!tolua_istable(tolua_S, 3, 0, &tolua_err))
+                goto tolua_lerror;
+#endif
+            lua_pushvalue(tolua_S, 3);
+            ref = luaL_ref(tolua_S, LUA_REGISTRYINDEX);
+            hasExtraData = true;
+        }
+        LuaCallFunc* tolua_ret = new LuaCallFunc();
+        tolua_ret->initWithFunction([=](void* self,Node* target){
+            int callbackHandler =  ScriptHandlerMgr::getInstance()->getObjectHandler((void*)tolua_ret, ScriptHandlerMgr::HandlerType::CALLFUNC);
+            
+            if (0 != callbackHandler)
+            {
+                LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+                int argNums = 1;
+                if (nullptr != target)
+                {
+                    stack->pushObject(target, "Node");
+                }
+                else
+                {
+                    stack->pushNil();
+                }
+                
+                if (hasExtraData)
+                {
+                    lua_rawgeti(tolua_S, LUA_REGISTRYINDEX,ref);
+                    if (lua_istable(tolua_S, -1))
+                    {
+                        argNums += 1;
+                    }
+                    else
+                    {
+                        lua_pop(tolua_S, 1);
+                    }
+                }
+                stack->executeFunctionByHandler(callbackHandler, argNums);
+                if (hasExtraData)
+                {
+                    luaL_unref(tolua_S, LUA_REGISTRYINDEX,ref);
+                }
+                stack->clean();
+            }
+        });
+        tolua_ret->autorelease();
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)tolua_ret, handler, ScriptHandlerMgr::HandlerType::CALLFUNC);
+        
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
         toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CallFunc");

@@ -131,6 +131,7 @@
     <ClCompile Include="..\Dynamics\Joints\b2FrictionJoint.cpp" />
     <ClCompile Include="..\Dynamics\Joints\b2GearJoint.cpp" />
     <ClCompile Include="..\Dynamics\Joints\b2Joint.cpp" />
+    <ClCompile Include="..\Dynamics\Joints\b2MotorJoint.cpp" />
     <ClCompile Include="..\Dynamics\Joints\b2MouseJoint.cpp" />
     <ClCompile Include="..\Dynamics\Joints\b2PrismaticJoint.cpp" />
     <ClCompile Include="..\Dynamics\Joints\b2PulleyJoint.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="..\Dynamics\Joints\b2FrictionJoint.h" />
     <ClInclude Include="..\Dynamics\Joints\b2GearJoint.h" />
     <ClInclude Include="..\Dynamics\Joints\b2Joint.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2MotorJoint.h" />
     <ClInclude Include="..\Dynamics\Joints\b2MouseJoint.h" />
     <ClInclude Include="..\Dynamics\Joints\b2PrismaticJoint.h" />
     <ClInclude Include="..\Dynamics\Joints\b2PulleyJoint.h" />

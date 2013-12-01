@@ -16,6 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
+#ifndef B2_TIMER_H
+#define B2_TIMER_H
+
 #include <Box2D/Common/b2Settings.h>
 
 /// Timer for profiling. This has platform specific code and may
@@ -24,22 +27,24 @@ class b2Timer
 {
 public:
 
-    /// Constructor
-    b2Timer();
+	/// Constructor
+	b2Timer();
 
-    /// Reset the timer.
-    void Reset();
+	/// Reset the timer.
+	void Reset();
 
-    /// Get the time since construction or the last reset.
-    float32 GetMilliseconds() const;
+	/// Get the time since construction or the last reset.
+	float32 GetMilliseconds() const;
 
 private:
 
 #if defined(_WIN32)
-    float64 m_start;
-    static float64 s_invFrequency;
+	float64 m_start;
+	static float64 s_invFrequency;
 #elif defined(__linux__) || defined (__APPLE__)
-    unsigned long m_start_sec;
-    unsigned long m_start_msec;
+	unsigned long m_start_sec;
+	unsigned long m_start_usec;
 #endif
 };
+
+#endif

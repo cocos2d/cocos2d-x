@@ -25,7 +25,6 @@
 #ifndef __CCPHYSICS_BODY_H__
 #define __CCPHYSICS_BODY_H__
 
-#include "CCPhysicsSetting.h"
 #ifdef CC_USE_PHYSICS
 
 #include "CCObject.h"
@@ -40,8 +39,9 @@ NS_CC_BEGIN
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
-
 class PhysicsBodyInfo;
+
+typedef Point Vect;
 
 
 const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
@@ -50,7 +50,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * A body affect by physics.
  * it can attach one or more shapes.
  * if you create body with createXXX, it will automatically compute mass and moment with density your specified(which is PHYSICSBODY_MATERIAL_DEFAULT by default, and the density value is 0.1f), and it based on the formular: mass = density * area.
- * if you create body with createEdgeXXX, the mass and moment will be INFINITY by default. and it's a static body.
+ * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
  * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
 class PhysicsBody : public Object

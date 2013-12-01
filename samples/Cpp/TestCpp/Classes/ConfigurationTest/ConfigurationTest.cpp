@@ -3,18 +3,12 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-TESTLAYER_CREATE_FUNC(ConfigurationLoadConfig);
-TESTLAYER_CREATE_FUNC(ConfigurationQuery);
-TESTLAYER_CREATE_FUNC(ConfigurationInvalid);
-TESTLAYER_CREATE_FUNC(ConfigurationDefault);
-TESTLAYER_CREATE_FUNC(ConfigurationSet);
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(ConfigurationLoadConfig),
-	CF(ConfigurationQuery),
-	CF(ConfigurationInvalid),
-	CF(ConfigurationDefault),
-	CF(ConfigurationSet)
+static std::function<Layer*()> createFunctions[] = {
+    CL(ConfigurationLoadConfig),
+	CL(ConfigurationQuery),
+	CL(ConfigurationInvalid),
+	CL(ConfigurationDefault),
+	CL(ConfigurationSet)
 };
 
 static int sceneIdx=-1;
@@ -26,9 +20,6 @@ static Layer* nextAction()
     sceneIdx = sceneIdx % MAX_LAYER;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
@@ -40,18 +31,12 @@ static Layer* backAction()
         sceneIdx += total;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
 static Layer* restartAction()
 {
-    auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
+    auto layer = (createFunctions[sceneIdx])();    
     return layer;
 }
 
