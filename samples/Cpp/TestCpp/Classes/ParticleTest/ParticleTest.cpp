@@ -135,9 +135,8 @@ void DemoBigFlower::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _emitter = new ParticleSystemQuad();
-    _emitter->initWithTotalParticles(50);
-    //_emitter->autorelease();
+    _emitter = ParticleSystemQuad::createWithTotalParticles(50);
+    _emitter->retain();
 
     _background->addChild(_emitter, 10);
     ////_emitter->release();    // win32 :  use this line or remove this line and use autorelease()
@@ -219,9 +218,8 @@ void DemoRotFlower::onEnter()
 {
     ParticleDemo::onEnter();
 
-    _emitter = new ParticleSystemQuad();
-    _emitter->initWithTotalParticles(300);
-    //_emitter->autorelease();
+    _emitter = ParticleSystemQuad::createWithTotalParticles(300);
+    _emitter->retain();
 
     _background->addChild(_emitter, 10);
     ////_emitter->release();    // win32 : Remove this line
@@ -477,10 +475,8 @@ void DemoModernArt::onEnter()
 
 //FIXME: If use ParticleSystemPoint, bada 1.0 device will crash. 
 //  Crash place: ParticleSystemPoint.cpp Line 149, function: glDrawArrays(GL_POINTS, 0, _particleIdx);
-//  _emitter = new ParticleSystemPoint();
-    _emitter = new ParticleSystemQuad();
-    _emitter->initWithTotalParticles(1000);
-    //_emitter->autorelease();
+    _emitter = ParticleSystemQuad::createWithTotalParticles(1000);
+    _emitter->retain();
 
     _background->addChild(_emitter, 10);
     ////_emitter->release();
@@ -638,8 +634,8 @@ void RadiusMode1::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    _emitter = new ParticleSystemQuad();
-    _emitter->initWithTotalParticles(200);
+    _emitter = ParticleSystemQuad::createWithTotalParticles(200);
+    _emitter->retain();
     addChild(_emitter, 10);
     _emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/stars-grayscale.png"));
 
@@ -722,8 +718,8 @@ void RadiusMode2::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    _emitter = new ParticleSystemQuad();
-    _emitter->initWithTotalParticles(200);
+    _emitter = ParticleSystemQuad::createWithTotalParticles(200);
+    _emitter->retain();
     addChild(_emitter, 10);
     _emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/stars-grayscale.png"));
 
@@ -806,8 +802,8 @@ void Issue704::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    _emitter = new ParticleSystemQuad();
-    _emitter->initWithTotalParticles(100);
+    _emitter = ParticleSystemQuad::createWithTotalParticles(100);
+    _emitter->retain();
     addChild(_emitter, 10);
     _emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
 
@@ -898,11 +894,10 @@ void Issue870::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    auto system = new ParticleSystemQuad();
-    system->initWithFile("Particles/SpinningPeas.plist");
-    system->setTextureWithRect(Director::getInstance()->getTextureCache()->addImage("Images/particles.png"), Rect(0,0,32,32));
-    addChild(system, 10);
-    _emitter = system;
+    _emitter = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
+    _emitter->setTextureWithRect(Director::getInstance()->getTextureCache()->addImage("Images/particles.png"), Rect(0,0,32,32));
+    addChild(_emitter, 10);
+    _emitter->retain();
 
     _index = 0;
     schedule(schedule_selector(Issue870::updateQuads), 2.0f);
@@ -939,9 +934,9 @@ void DemoParticleFromFile::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    _emitter = new ParticleSystemQuad();
     std::string filename = "Particles/" + _title + ".plist";
-    _emitter->initWithFile(filename.c_str());
+    _emitter = ParticleSystemQuad::create(filename);
+    _emitter->retain();
     addChild(_emitter, 10);
 
     setEmitterPosition();
@@ -1384,8 +1379,8 @@ class RainbowEffect : public ParticleSystemQuad
 {
 public:
     bool init();
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    virtual void update(float dt);
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
+    virtual void update(float dt) override;
 };
 
 bool RainbowEffect::init()
@@ -1393,7 +1388,7 @@ bool RainbowEffect::init()
     return initWithTotalParticles(150);
 }
 
-bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
+bool RainbowEffect::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
@@ -1717,8 +1712,8 @@ void ReorderParticleSystems::onEnter()
 
     for (int i = 0; i<3; i++) {
 
-        auto particleSystem = new ParticleSystemQuad();
-        particleSystem->initWithTotalParticles(200);
+        auto particleSystem = ParticleSystemQuad::createWithTotalParticles(200);
+        particleSystem->retain();
         particleSystem->setTexture(_batchNode->getTexture());
 
         // duration

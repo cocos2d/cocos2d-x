@@ -1784,7 +1784,7 @@ bool Image::initWithRawData(const unsigned char * data, long dataLen, long width
 
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveToFile(const std::string& filename, bool bIsToRGB)
 {
     //only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data
     if (isCompressed() || (_renderFormat != Texture2D::PixelFormat::RGB888 && _renderFormat != Texture2D::PixelFormat::RGBA8888))
@@ -1797,24 +1797,22 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 
     do 
     {
-        CC_BREAK_IF(NULL == pszFilePath);
 
-        std::string strFilePath(pszFilePath);
-        CC_BREAK_IF(strFilePath.size() <= 4);
+        CC_BREAK_IF(filename.size() <= 4);
 
-        std::string strLowerCasePath(strFilePath);
+        std::string strLowerCasePath(filename);
         for (unsigned int i = 0; i < strLowerCasePath.length(); ++i)
         {
-            strLowerCasePath[i] = tolower(strFilePath[i]);
+            strLowerCasePath[i] = tolower(filename[i]);
         }
 
         if (std::string::npos != strLowerCasePath.find(".png"))
         {
-            CC_BREAK_IF(!saveImageToPNG(pszFilePath, bIsToRGB));
+            CC_BREAK_IF(!saveImageToPNG(filename, bIsToRGB));
         }
         else if (std::string::npos != strLowerCasePath.find(".jpg"))
         {
-            CC_BREAK_IF(!saveImageToJPG(pszFilePath));
+            CC_BREAK_IF(!saveImageToJPG(filename));
         }
         else
         {
@@ -1828,20 +1826,18 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 }
 #endif
 
-bool Image::saveImageToPNG(const char * filePath, bool isToRGB)
+bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 {
     bool bRet = false;
     do 
     {
-        CC_BREAK_IF(NULL == filePath);
-
         FILE *fp;
         png_structp png_ptr;
         png_infop info_ptr;
         png_colorp palette;
         png_bytep *row_pointers;
 
-        fp = fopen(filePath, "wb");
+        fp = fopen(filePath.c_str(), "wb");
         CC_BREAK_IF(NULL == fp);
 
         png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
@@ -1968,13 +1964,11 @@ bool Image::saveImageToPNG(const char * filePath, bool isToRGB)
     } while (0);
     return bRet;
 }
-bool Image::saveImageToJPG(const char * filePath)
+bool Image::saveImageToJPG(const std::string& filePath)
 {
     bool bRet = false;
     do 
     {
-        CC_BREAK_IF(NULL == filePath);
-
         struct jpeg_compress_struct cinfo;
         struct jpeg_error_mgr jerr;
         FILE * outfile;                 /* target file */
@@ -1985,7 +1979,7 @@ bool Image::saveImageToJPG(const char * filePath)
         /* Now we can initialize the JPEG compression object. */
         jpeg_create_compress(&cinfo);
 
-        CC_BREAK_IF((outfile = fopen(filePath, "wb")) == NULL);
+        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == NULL);
         
         jpeg_stdio_dest(&cinfo, outfile);
 

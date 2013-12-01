@@ -74,11 +74,11 @@ static char *_js_log_buf = NULL;
 static std::vector<sc_register_sth> registrationList;
 
 // name ~> JSScript map
-static std::map<std::string, JSScript*> filename_script;
+static std::unordered_map<std::string, JSScript*> filename_script;
 // port ~> socket map
-static std::map<int,int> ports_sockets;
+static std::unordered_map<int,int> ports_sockets;
 // name ~> globals
-static std::map<std::string, js::RootedObject*> globals;
+static std::unordered_map<std::string, js::RootedObject*> globals;
 
 static void ReportException(JSContext *cx)
 {
@@ -397,11 +397,15 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
         cx = _cx;
     if (global == NULL)
         global = _global;
+    
+    JSAutoCompartment ac(cx, global);
+    
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
-    if (script) {
-        JSAutoCompartment ac(cx, global);
+    if (script)
+    {
         JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
-        if (JS_FALSE == evaluatedOK) {
+        if (JS_FALSE == evaluatedOK)
+        {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
         return evaluatedOK;

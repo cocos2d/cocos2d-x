@@ -1279,5 +1279,20 @@
     <ClInclude Include="..\Classes\InputTest\MouseTest.h">
       <Filter>Classes\InputTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConvexHull.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConveyorBelt.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Mobile.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\MobileBalanced.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\MotorJoint.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
