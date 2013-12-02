@@ -149,6 +149,26 @@ add_library(cocos2d STATIC
 )
 
 if(WIN32)
+
+if(MINGW)
+
+set(COCOS_LINK
+  z
+  jpeg
+  png
+  webp
+  tiff
+  glfw3
+  glew32
+  opengl32
+  iconv
+  freetype
+  bz2
+  )
+
+else()
+
+
 set(COCOS_LINK
   libjpeg
   libpng
@@ -161,19 +181,21 @@ set(COCOS_LINK
   libiconv
   libzlib
   )
+
+endif()
+
 elseif(APPLE)
 
 else()
 set(COCOS_LINK
   jpeg
-  png
   webp
   tiff
   freetype
-  pthread
   fontconfig
+  png
+  pthread
   glfw
-  gles
   GLEW
   GL
   X11
