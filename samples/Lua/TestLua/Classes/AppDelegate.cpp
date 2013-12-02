@@ -45,9 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_s = pStack->getLuaState();
     tolua_web_socket_open(tolua_s);
 #endif
-    
-    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
-    
+        
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");
     searchPaths.insert(searchPaths.begin(), "scenetest");
