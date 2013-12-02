@@ -1,0 +1,73 @@
+
+enum SCROLLVIEW_DIR
+{
+    SCROLLVIEW_DIR_NONE,
+    SCROLLVIEW_DIR_VERTICAL,
+    SCROLLVIEW_DIR_HORIZONTAL,
+    SCROLLVIEW_DIR_BOTH
+};
+
+typedef enum
+{
+    SCROLLVIEW_EVENT_SCROLL_TO_TOP,
+    SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
+    SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
+    SCROLLVIEW_EVENT_SCROLL_TO_RIGHT,
+    SCROLLVIEW_EVENT_SCROLLING,
+    SCROLLVIEW_EVENT_BOUNCE_TOP,
+    SCROLLVIEW_EVENT_BOUNCE_BOTTOM,
+    SCROLLVIEW_EVENT_BOUNCE_LEFT,
+    SCROLLVIEW_EVENT_BOUNCE_RIGHT
+}ScrollviewEventType;
+
+class UIScrollView : public UILayout , public UIScrollInterface
+{
+    UIScrollView();
+    virtual ~UIScrollView();
+    static UIScrollView* create();
+    virtual void setDirection(SCROLLVIEW_DIR dir);
+    SCROLLVIEW_DIR getDirection();
+    UILayout* getInnerContainer();
+    void scrollToBottom(float time, bool attenuated);
+    void scrollToTop(float time, bool attenuated);
+    void scrollToLeft(float time, bool attenuated);
+    void scrollToRight(float time, bool attenuated);
+    void scrollToTopLeft(float time, bool attenuated);
+    void scrollToTopRight(float time, bool attenuated);
+    void scrollToBottomLeft(float time, bool attenuated);
+    void scrollToBottomRight(float time, bool attenuated);
+    void scrollToPercentVertical(float percent, float time, bool attenuated);
+    void scrollToPercentHorizontal(float percent, float time, bool attenuated);
+    void scrollToPercentBothDirection(const CCPoint& percent, float time, bool attenuated);
+    void jumpToBottom();
+    void jumpToTop();
+    void jumpToLeft();
+    void jumpToRight();
+    void jumpToTopLeft();
+    void jumpToTopRight();
+    void jumpToBottomLeft();
+    void jumpToBottomRight();
+    void jumpToPercentVertical(float percent);
+    void jumpToPercentHorizontal(float percent);
+    void jumpToPercentBothDirection(const CCPoint& percent);
+    void setInnerContainerSize(const CCSize &size);
+    const CCSize& getInnerContainerSize() const;
+    virtual bool addChild(UIWidget* widget);
+    virtual void removeAllChildren();
+    virtual bool removeChild(UIWidget* child);
+    virtual CCArray* getChildren();
+    virtual void update(float dt);
+    
+    void setBounceEnabled(bool enabled);
+    
+    bool isBounceEnabled() const;
+    
+    void setInertiaScrollEnabled(bool enabled);
+    
+    bool isInertiaScrollEnabled() const;
+    virtual void setLayoutType(LayoutType type);
+    virtual LayoutType getLayoutType() const;
+    
+    virtual void doLayout();
+    virtual const char* getDescription() const;
+};

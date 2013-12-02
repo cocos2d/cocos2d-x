@@ -1,0 +1,26 @@
+
+class UIImageView : public UIWidget
+{
+    UIImageView();
+    virtual ~UIImageView();
+    static UIImageView* create();
+    void loadTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setTextureRect(const CCRect& rect);
+    void setScale9Enabled(bool able);
+    void setCapInsets(const CCRect &capInsets);
+    virtual void setFlipX(bool flipX);
+    virtual void setFlipY(bool flipY);
+    virtual bool isFlipX();
+    virtual bool isFlipY();
+    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual const char* getDescription() const;
+    void setDoubleClickEnabled(bool able);
+    void doubleClickEvent();
+    void checkDoubleClick(float dt);
+    void setTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setScale9Size(const CCSize& size);
+    void setScale9Enable(bool is);
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+};
