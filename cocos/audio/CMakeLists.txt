@@ -10,7 +10,7 @@ if(WIN32)
     win32/SimpleAudioEngine.cpp
     win32/MciPlayer.cpp
   )
-else(APPLE)
+elseif(APPLE)
 
 else()
   set(AUDIO_SRC
