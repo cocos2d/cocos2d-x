@@ -156,58 +156,46 @@ const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 
 CCDisplayData::CCDisplayData(void)
     : displayType(CS_DISPLAY_MAX)
+    , displayName("")
 {
 }
 
-CCDisplayData::~CCDisplayData(void)
+
+void CCDisplayData::copy(CCDisplayData *displayData)
 {
+    displayName = displayData->displayName;
+    displayType = displayData->displayType;
 }
 
 CCSpriteDisplayData::CCSpriteDisplayData(void)
-    : displayName("")
 {
     displayType = CS_DISPLAY_SPRITE;
 }
 
-CCSpriteDisplayData::~CCSpriteDisplayData()
-{
-}
 
-void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
+void CCSpriteDisplayData::copy(CCDisplayData *displayData)
 {
-    displayName = displayData->displayName;
-    displayType = displayData->displayType;
+    CCDisplayData::copy(displayData);
 
-    skinData = displayData->skinData;
+    if (CCSpriteDisplayData *sdd = dynamic_cast<CCSpriteDisplayData*>(displayData))
+    {
+        skinData = sdd->skinData;
+    }
 }
 
 CCArmatureDisplayData::CCArmatureDisplayData(void)
-    : displayName("")
 {
     displayType = CS_DISPLAY_ARMATURE;
 }
 
-CCArmatureDisplayData::~CCArmatureDisplayData()
-{
-}
 
-void CCArmatureDisplayData::copy(CCArmatureDisplayData *displayData)
-{
-    displayName = displayData->displayName;
-    displayType = displayData->displayType;
-}
 
 CCParticleDisplayData::CCParticleDisplayData(void)
-    : plist("")
 {
     displayType = CS_DISPLAY_PARTICLE;
 }
 
-void CCParticleDisplayData::copy(CCParticleDisplayData *displayData)
-{
-    plist = displayData->plist;
-    displayType = displayData->displayType;
-}
+
 
 
 CCBoneData::CCBoneData(void)
