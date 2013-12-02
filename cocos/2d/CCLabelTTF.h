@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCLABELTTF_H__
 #define __CCLABELTTF_H__
 
-#include "CCNewSprite.h"
+#include "renderer/CCNewSprite.h"
 #include "CCTexture2D.h"
 
 NS_CC_BEGIN

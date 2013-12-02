@@ -4,10 +4,10 @@
 
 
 #include "NewRendererTest.h"
-#include "CCNewSprite.h"
-#include "CCNewSpriteBatchNode.h"
-#include "NewClippingNode.h"
-#include "CCNewDrawNode.h"
+#include "renderer/CCNewSprite.h"
+#include "renderer/CCNewSpriteBatchNode.h"
+#include "renderer/NewClippingNode.h"
+#include "renderer/CCNewDrawNode.h"
 
 static int sceneIdx = -1;
 

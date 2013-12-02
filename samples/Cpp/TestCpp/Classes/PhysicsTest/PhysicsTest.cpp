@@ -6,6 +6,7 @@ USING_NS_CC;
 namespace
 {
     static std::function<Layer*()> createFunctions[] = {
+#ifdef CC_USE_PHYSICS
         CL(PhysicsDemoLogoSmash),
         CL(PhysicsDemoPyramidStack),
         CL(PhysicsDemoClickAdd),
@@ -15,6 +16,9 @@ namespace
         CL(PhysicsDemoPump),
         CL(PhysicsDemoOneWayPlatform),
         CL(PhysicsDemoSlice),
+#else
+        CL(PhysicsDemoDisabled),
+#endif
     };
     
     static int sceneIdx=-1;
@@ -50,22 +54,43 @@ namespace
     static const int DRAG_BODYS_TAG = 0x80;
 }
 
+PhysicsTestScene::PhysicsTestScene()
+#ifdef CC_USE_PHYSICS
+: TestScene(false, true)
+#else
+: TestScene()
+#endif
+, _debugDraw(false)
+{}
+
 void PhysicsTestScene::runThisTest()
 {
-#ifdef CC_USE_PHYSICS
     sceneIdx = -1;
     addChild(next());
     
     Director::getInstance()->replaceScene(this);
-#else
-#endif
 }
 
 void PhysicsTestScene::toggleDebug()
 {
+#ifdef CC_USE_PHYSICS
     _debugDraw = !_debugDraw;
     getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE);
+#endif
 }
+
+#ifndef CC_USE_PHYSICS
+void PhysicsDemoDisabled::onEnter()
+{
+    auto label = LabelTTF::create("Should define CC_USE_PHYSICS\n to run this test case",
+                                  "Arial",
+                                  18);
+    auto size = Director::getInstance()->getWinSize();
+    label->setPosition(Point(size.width/2, size.height/2));
+    
+    addChild(label);
+}
+#else
 
 PhysicsDemo::PhysicsDemo()
 : _scene(nullptr)
@@ -121,8 +146,6 @@ void PhysicsDemo::onEnter()
     
     _spriteTexture = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100)->getTexture();
     
-#ifdef CC_USE_PHYSICS
-    
     // menu for debug layer
     MenuItemFont::setFontSize(18);
     auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(PhysicsDemo::toggleDebugCallback, this));
@@ -130,13 +153,10 @@ void PhysicsDemo::onEnter()
     auto menu = Menu::create(item, NULL);
     this->addChild(menu);
     menu->setPosition(Point(VisibleRect::right().x-50, VisibleRect::top().y-10));
-#else
-#endif
 }
 
 Sprite* PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
 {
-#ifdef CC_USE_PHYSICS
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
     
     int posx, posy;
@@ -154,18 +174,15 @@ Sprite* PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
     sp->setPosition(p);
     
     return sp;
-#endif
 }
 
 
 void PhysicsDemo::toggleDebugCallback(Object* sender)
 {
-#ifdef CC_USE_PHYSICS
     if (_scene != nullptr)
     {
         _scene->toggleDebug();
     }
-#endif
 }
 
 PhysicsDemoClickAdd::~PhysicsDemoClickAdd()
@@ -176,8 +193,6 @@ PhysicsDemoClickAdd::~PhysicsDemoClickAdd()
 void PhysicsDemoClickAdd::onEnter()
 {
     PhysicsDemo::onEnter();
-    
-#ifdef CC_USE_PHYSICS
     
     auto touchListener = EventListenerTouchAllAtOnce::create();
     touchListener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchesEnded, this);
@@ -193,16 +208,6 @@ void PhysicsDemoClickAdd::onEnter()
     this->addChild(node);
     
     addGrossiniAtPosition(VisibleRect::center());
-    
-#else
-    auto label = LabelTTF::create("Should define CC_USE_BOX2D or CC_USE_CHIPMUNK\n to run this test case",
-                                  "Arial",
-                                  18);
-    auto size = Director::getInstance()->getWinSize();
-    label->setPosition(Point(size.width/2, size.height/2));
-    
-    addChild(label);
-#endif
 }
 
 std::string PhysicsDemoClickAdd::subtitle()
@@ -224,7 +229,6 @@ void PhysicsDemoClickAdd::onTouchesEnded(const std::vector<Touch*>& touches, Eve
 
 void PhysicsDemoClickAdd::onAcceleration(Acceleration* acc, Event* event)
 {
-#ifdef CC_USE_PHYSICS
     static float prevX=0, prevY=0;
     
 #define kFilterFactor 0.05f
@@ -242,7 +246,6 @@ void PhysicsDemoClickAdd::onAcceleration(Acceleration* acc, Event* event)
     {
         _scene->getPhysicsWorld()->setGravity(v);
     }
-#endif
 }
 
 namespace
@@ -1112,3 +1115,5 @@ std::string PhysicsDemoSlice::subtitle()
 {
     return "click and drag to slice up the block";
 }
+
+#endif // ifndef CC_USE_PHYSICS
