@@ -73,7 +73,7 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, float dt, bool dirty)
     CCNode *display = bone->getDisplayRenderNode();
     CS_RETURN_IF(!display);
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (dirty)
     {
         CCDecorativeDisplay *decoDisplay = bone->getDisplayManager()->getCurrentDecorativeDisplay();
@@ -199,7 +199,7 @@ void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *deco
     }
 
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (textureData && textureData->contourDataList.count() > 0)
     {
 
@@ -252,7 +252,8 @@ void CCDisplayFactory::addParticleDisplay(CCBone *bone, CCDecorativeDisplay *dec
 void CCDisplayFactory::createParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay)
 {
     CCParticleDisplayData *displayData = (CCParticleDisplayData *)decoDisplay->getDisplayData();
-    CCParticleSystem *system = CCParticleSystemQuad::create(displayData->plist.c_str());
+
+    CCParticleSystem *system = CCParticleSystemQuad::create(displayData->displayName.c_str());
     
     system->removeFromParent();
     

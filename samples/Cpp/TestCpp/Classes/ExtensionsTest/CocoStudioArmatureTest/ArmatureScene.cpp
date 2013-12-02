@@ -49,7 +49,7 @@ CCLayer *CreateLayer(int index)
     case TEST_USE_DIFFERENT_PICTURE:
         pLayer = new TestUseMutiplePicture();
         break;
-    case TEST_BCOLLIDER_DETECTOR:
+    case TEST_COLLIDER_DETECTOR:
         pLayer = new TestColliderDetector();
         break;
     case TEST_BOUDINGBOX:
@@ -63,6 +63,9 @@ CCLayer *CreateLayer(int index)
         break;
     case TEST_ARMATURE_NESTING_2:
         pLayer = new TestArmatureNesting2();
+        break;
+    case TEST_PLAY_SEVERAL_MOVEMENT:
+        pLayer = new TestPlaySeveralMovement();
         break;
     default:
         break;
@@ -766,7 +769,11 @@ void TestColliderDetector::onEnter()
     armature2->setPosition(ccp(VisibleRect::right().x - 60, VisibleRect::left().y));
     addChild(armature2);
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     bullet = CCPhysicsSprite::createWithSpriteFrameName("25.png");
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    bullet = CCSprite::createWithSpriteFrameName("25.png");
+#endif
     addChild(bullet);
 
     initWorld();
@@ -1014,6 +1021,60 @@ void TestColliderDetector::initWorld()
 
     cpSpaceAddCollisionHandler(space, eEnemyTag, eBulletTag, beginHit, NULL, NULL, endHit, NULL);
 }
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+void TestColliderDetector::update(float delta)
+{
+    armature2->setVisible(true);
+
+    CCRect rect = bullet->boundingBox();
+
+    // This code is just telling how to get the vertex.
+    // For a more accurate collider detection, you need to implemente yourself.
+    CCDictElement *element = NULL;
+    CCDictionary *dict = armature2->getBoneDic();
+    CCDICT_FOREACH(dict, element)
+    {
+        CCBone *bone = static_cast<CCBone*>(element->getObject());
+        CCArray *bodyList = bone->getColliderBodyList();
+
+        CCObject *object = NULL;
+        CCARRAY_FOREACH(bodyList, object)
+        {
+            ColliderBody *body = static_cast<ColliderBody*>(object);
+            CCArray *vertexList = body->getCalculatedVertexList();
+
+            float minx, miny, maxx, maxy = 0;
+            int length = vertexList->count();
+            for (int i = 0; i<length; i++)
+            {
+                CCContourVertex2 *vertex = static_cast<CCContourVertex2*>(vertexList->objectAtIndex(i));
+                if (i == 0)
+                {
+                  minx = maxx = vertex->x;
+                  miny = maxy = vertex->y;
+                }
+                else
+                {
+                    minx = vertex->x < minx ? vertex->x : minx;
+                    miny = vertex->y < miny ? vertex->y : miny;
+                    maxx = vertex->x > maxx ? vertex->x : maxx;
+                    maxy = vertex->y > maxy ? vertex->y : maxy;
+                }
+            }
+            CCRect temp = CCRectMake(minx, miny, maxx - minx, maxy - miny);
+
+            if (temp.intersectsRect(rect))
+            {
+                armature2->setVisible(false);
+            }
+        }
+    }
+}
+void TestColliderDetector::draw()
+{
+    armature2->drawContour();
+}
+
 #endif
 
 
@@ -1300,3 +1361,28 @@ CCArmature * TestArmatureNesting2::createMount(const char *name, CCPoint positio
     return armature;
 }
 
+void TestPlaySeveralMovement::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+
+    std::string names[] = {"Walk", "FireMax", "Fire"};
+    //int indexes[] = {0, 1, 2};
+
+    cocos2d::extension::CCArmature *armature = NULL;
+    armature = cocos2d::extension::CCArmature::create("Cowboy");
+    armature->getAnimation()->play(true, names, 3);
+    //armature->getAnimation()->playByIndex(true, indexes, 3);
+    armature->setScale(0.2f);
+
+    armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
+    addChild(armature);
+}
+std::string TestPlaySeveralMovement::title()
+{
+    return "Test play several movement";
+}
+
+std::string TestPlaySeveralMovement::subtitle()
+{
+    return "Movement is played one by one";
+}

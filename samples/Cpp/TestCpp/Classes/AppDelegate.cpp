@@ -40,6 +40,7 @@ AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
 	cocos2d::extension::CCArmatureDataManager::purge();
+    cocos2d::extension::DictionaryHelper::purgeDictionaryHelper();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()

@@ -36,11 +36,12 @@ enum {
     TEST_FRAME_EVENT,
 	TEST_PARTICLE_DISPLAY,
 	TEST_USE_DIFFERENT_PICTURE,
-	TEST_BCOLLIDER_DETECTOR,
+	TEST_COLLIDER_DETECTOR,
 	TEST_BOUDINGBOX,
 	TEST_ANCHORPOINT,
 	TEST_ARMATURE_NESTING,
     TEST_ARMATURE_NESTING_2,
+    TEST_PLAY_SEVERAL_MOVEMENT,
 
 	TEST_LAYER_COUNT
 };
@@ -259,6 +260,26 @@ public:
 
 	void destroyCPBody(cpBody *body);
 };
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+class TestColliderDetector : public ArmatureTestLayer
+{
+public:
+    ~TestColliderDetector();
+
+    virtual void onEnter();
+    virtual std::string title();
+    virtual void update(float delta);
+    virtual void draw();
+
+    void onFrameEvent(cocos2d::extension::CCBone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+
+    void initWorld() {};
+
+    cocos2d::extension::CCArmature *armature;
+    cocos2d::extension::CCArmature *armature2;
+
+    cocos2d::CCSprite *bullet;
+};
 #endif
 
 
@@ -331,4 +352,13 @@ public:
 
     bool touchedMenu;
 };
+
+class TestPlaySeveralMovement : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 #endif  // __HELLOWORLD_SCENE_H__
