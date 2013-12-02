@@ -52,6 +52,31 @@ void Console::cancel()
 }
 
 
+ssize_t net_readline( int fd, void *vptr, size_t maxlen )
+{
+	ssize_t n, rc;
+	char c, *ptr;
+
+	ptr = (char*)vptr ;
+
+	for( n=1; n<maxlen; n++ ) {
+		if( (rc = read(fd, &c, 1 )) ==1 ) {
+			*ptr++ = c;
+			if( c=='\n' )
+				break;
+		} else if( rc == 0 ) {
+			return 0;
+		} else if( errno == EINTR ) {
+            continue;
+        } else {
+            return -1;
+        }
+	}
+
+	*ptr = 0;
+	return n;
+}
+
 void Console::loop()
 {
     fd_set read_set;
@@ -63,8 +88,8 @@ void Console::loop()
 
 		int nready = select( _fd+1, &read_set, NULL, NULL, NULL );
 
-		/* error ?*/
 		if( nready == -1 ) {
+            /* error ?*/
 			if(errno != EINTR) {
 				log("Abnormal error in select()\n");
 			}
@@ -74,6 +99,7 @@ void Console::loop()
             /* timeout ? */
 			continue;
 		} else {
+            /* info */
             
 		}
 	}
