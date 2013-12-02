@@ -27,10 +27,11 @@
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "CCActionNode.h"
-#include "../Json/CSContentJsonDictionary.h"
+#include "../Json/rapidjson/document.h"
 
 NS_CC_EXT_BEGIN
+
+class ActionNode;
 /**
 *   @js NA
 *   @lua NA
@@ -104,7 +105,13 @@ public:
 	 * @return fTime   the current time of frame
      */
 	float getCurrentTime();
-	
+
+	 /**
+     * Gets the total time of frame.
+     *
+	 * @return fTime   the current time of frame
+     */
+	float getTotalTime();
     /**
      * Return if the action is playing.
      *
@@ -116,6 +123,8 @@ public:
      * Play the action.
      */
 	void play();
+
+	void play(CCCallFunc* func);
 
     /**
      * Pause the action.
@@ -145,7 +154,7 @@ public:
 	void updateToFrameByTime(float fTime);
 
     /*init properties with a json dictionary*/
-    void initWithDictionary(cs::CSJsonDictionary* dic,CCObject* root);
+	void initWithDictionary(const rapidjson::Value& dic,CCObject* root);
     
 	void simulationActionUpdate(float dt);
 
@@ -158,6 +167,7 @@ protected:
 	float m_fUnitTime;
 	float m_CurrentTime;
 	CCScheduler *m_pScheduler;
+	float m_fTotalTime;
 };
 
 NS_CC_EXT_END
