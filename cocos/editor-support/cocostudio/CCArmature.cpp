@@ -135,9 +135,7 @@ bool Armature::init(const char *name)
         CC_SAFE_DELETE(_textureAtlasDic);
         _textureAtlasDic = new Dictionary();
 
-        _blendFunc.src = CC_BLEND_SRC;
-        _blendFunc.dst = CC_BLEND_DST;
-
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
         _name = name == nullptr ? "" : name;
 
@@ -569,8 +567,7 @@ void Armature::updateBlendType(BlendType blendType)
     {
     case BLEND_NORMAL:
     {
-        blendFunc.src = CC_BLEND_SRC;
-        blendFunc.dst = CC_BLEND_DST;
+        blendFunc = _blendFunc;
     }
     break;
     case BLEND_ADD:
