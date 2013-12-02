@@ -25,7 +25,6 @@
 #ifndef __CCPHYSICS_WORLD_H__
 #define __CCPHYSICS_WORLD_H__
 
-#include "CCPhysicsSetting.h"
 #ifdef CC_USE_PHYSICS
 
 #include <list>
@@ -42,6 +41,8 @@ class PhysicsWorldInfo;
 class PhysicsShape;
 class PhysicsContact;
 class Array;
+
+typedef Point Vect;
 
 class Sprite;
 class Scene;
@@ -201,6 +202,7 @@ protected:
     
     friend class PhysicsWorld;
 };
+extern const float PHYSICS_INFINITY;
 
 NS_CC_END
 
