@@ -47,7 +47,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
-    CCSize designSize = CCSizeMake(480, 320);
     
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");

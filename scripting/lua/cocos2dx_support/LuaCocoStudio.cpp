@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Fri Nov 29 11:42:12 2013.
+** Generated automatically by tolua++-1.0.92 on Mon Dec  2 10:22:19 2013.
 */
 
 /****************************************************************************
@@ -334,7 +334,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCBlendProtocol");
  tolua_usertype(tolua_S,"UIButton");
  tolua_usertype(tolua_S,"CCBaseData");
- tolua_usertype(tolua_S,"cs::CSJsonDictionary");
+ tolua_usertype(tolua_S,"UILayoutParameter");
  tolua_usertype(tolua_S,"CCArmatureDataManager");
  tolua_usertype(tolua_S,"UIListView");
  tolua_usertype(tolua_S,"SceneReader");
@@ -359,7 +359,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCArray");
  tolua_usertype(tolua_S,"UIImageView");
  tolua_usertype(tolua_S,"UILabel");
- tolua_usertype(tolua_S,"UILayoutParameter");
+ tolua_usertype(tolua_S,"rapidjson::Value");
  tolua_usertype(tolua_S,"CCArmatureAnimation");
  tolua_usertype(tolua_S,"ccColor4B");
  tolua_usertype(tolua_S,"UIScrollInterface");
@@ -26233,7 +26233,7 @@ static int tolua_CocoStudio_ActionObject_initWithDictionary00(lua_State* tolua_S
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"ActionObject",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cs::CSJsonDictionary",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const rapidjson::Value",0,&tolua_err)) ||
      !tolua_isusertype(tolua_S,3,"CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
@@ -26242,13 +26242,13 @@ static int tolua_CocoStudio_ActionObject_initWithDictionary00(lua_State* tolua_S
 #endif
  {
   ActionObject* self = (ActionObject*)  tolua_tousertype(tolua_S,1,0);
-  cs::CSJsonDictionary* dic = ((cs::CSJsonDictionary*)  tolua_tousertype(tolua_S,2,0));
+  const rapidjson::Value* dic = ((const rapidjson::Value*)  tolua_tousertype(tolua_S,2,0));
   CCObject* root = ((CCObject*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithDictionary'", NULL);
 #endif
   {
-   self->initWithDictionary(dic,root);
+   self->initWithDictionary(*dic,root);
   }
  }
  return 0;
