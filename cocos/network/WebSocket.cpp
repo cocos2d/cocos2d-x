@@ -156,7 +156,6 @@ void WsThreadHelper::wsThreadEntryFunc()
         }
     }
     
-    _ws->onSubThreadEnded();
 }
 
 void WsThreadHelper::sendMessageToUIThread(WsMessage *msg)
