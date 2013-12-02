@@ -38,9 +38,13 @@ THE SOFTWARE.
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
+#include "CustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
+#include "Renderer.h"
+#include "QuadCommand.h"
+#include "CustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -347,9 +351,86 @@ void ParticleSystemQuad::postStep()
 }
 
 // overriding draw method
+//void ParticleSystemQuad::draw()
+//{
+//    CCASSERT(!_batchNode,"draw should not be called when added to a particleBatchNode");
+//
+//    CC_NODE_DRAW_SETUP();
+//
+//    GL::bindTexture2D( _texture->getName() );
+//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//    CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
+//
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        //
+//        // Using VBO and VAO
+//        //
+//        GL::bindVAO(_VAOname);
+//
+//#if CC_REBIND_INDICES_BUFFER
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//#endif
+//
+//        glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
+//
+//#if CC_REBIND_INDICES_BUFFER
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//#endif
+//    }
+//    else
+//    {
+//        //
+//        // Using VBO without VAO
+//        //
+//
+//        #define kQuadSize sizeof(_quads[0].bl)
+//
+//        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+//
+//        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+//        // vertices
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
+//        // colors
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
+//        // tex coords
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
+//
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//
+//        glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
+//
+//        glBindBuffer(GL_ARRAY_BUFFER, 0);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//    }
+//
+//    CC_INCREMENT_GL_DRAWS(1);
+//    CHECK_GL_ERROR_DEBUG();
+//}
+
+
 void ParticleSystemQuad::draw()
-{    
+{
+    CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
+
+    CustomCommand* cmd = new CustomCommand(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(ParticleSystemQuad::onDraw, this);
+    Renderer::getInstance()->addCommand(cmd);
+
+    //TODO render particle using quad command
+//    QuadCommand* cmd = new QuadCommand(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, _quads, _particleIdx);
+//    Renderer::getInstance()->addCommand(cmd);
+}
+
+void ParticleSystemQuad::onDraw()
+{
     CCASSERT(!_batchNode,"draw should not be called when added to a particleBatchNode");
+
+    kmMat4 prevMatrix;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &prevMatrix);
+    kmGLLoadMatrix(&_transformMatrix);
 
     CC_NODE_DRAW_SETUP();
 
@@ -381,7 +462,7 @@ void ParticleSystemQuad::draw()
         // Using VBO without VAO
         //
 
-        #define kQuadSize sizeof(_quads[0].bl)
+#define kQuadSize sizeof(_quads[0].bl)
 
         GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
@@ -392,7 +473,7 @@ void ParticleSystemQuad::draw()
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
         // tex coords
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
-        
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
         glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
@@ -403,6 +484,8 @@ void ParticleSystemQuad::draw()
 
     CC_INCREMENT_GL_DRAWS(1);
     CHECK_GL_ERROR_DEBUG();
+
+    kmGLLoadMatrix(&prevMatrix);
 }
 
 void ParticleSystemQuad::setTotalParticles(int tp)

@@ -78,11 +78,11 @@ void QuadCommand::useMaterial()
 
     _shader->setUniformsForBuiltins();
 
-    //set blend mode
-    GL::blendFunc(_blendType.src, _blendType.dst);
-
     //Set texture
     GL::bindTexture2D(_textureID);
+
+    //set blend mode
+    GL::blendFunc(_blendType.src, _blendType.dst);
 }
 
 NS_CC_END
