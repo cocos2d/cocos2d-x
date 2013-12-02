@@ -28,7 +28,7 @@ namespace cocostudio {
 
 const char *armatureVersion()
 {
-    return "1.0.0.0";
+    return "1.1.0.0";
 }
 
 }

@@ -26,11 +26,7 @@ THE SOFTWARE.
 #include "cocostudio/CCBone.h"
 #include "cocostudio/CCTransformHelp.h"
 
-#if ENABLE_PHYSICS_BOX2D_DETECT
-#include "Box2D/Box2D.h"
-#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-#include "chipmunk.h"
-#endif
+
 
 using namespace cocos2d;
 
@@ -38,7 +34,7 @@ namespace cocostudio {
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-ColliderFilter::ColliderFilter(unsigned short categoryBits, unsigned short maskBits, signed short groupIndex)
+ColliderFilter::ColliderFilter(uint16 categoryBits, uint16 maskBits, int16 groupIndex)
     : _categoryBits(categoryBits)
     , _maskBits(maskBits)
     , _groupIndex(groupIndex)
@@ -56,7 +52,7 @@ void ColliderFilter::updateShape(b2Fixture *fixture)
 }
 
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-ColliderFilter::ColliderFilter(uintptr_t collisionType, uintptr_t group)
+ColliderFilter::ColliderFilter(cpCollisionType collisionType, cpGroup group)
     : _collisionType(collisionType)
     , _group(group)
 {
