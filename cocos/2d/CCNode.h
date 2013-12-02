@@ -38,7 +38,6 @@
 #include "CCScriptSupport.h"
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
-#include "CCPhysicsSetting.h"
 
 #include <vector>
 

@@ -58,6 +58,9 @@ bool tgaLoadHeader(unsigned char *Buffer, unsigned long bufSize, tImageTGA *psIn
 /// loads the image pixels. You shouldn't call this function directly
 bool tgaLoadImageData(unsigned char *Buffer, unsigned long bufSize, tImageTGA *psInfo);
 
+/// this is the function to call when we want to load an image buffer.
+tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size);
+
 /// this is the function to call when we want to load an image
 tImageTGA * tgaLoad(const char *filename);
 

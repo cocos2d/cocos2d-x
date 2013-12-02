@@ -22,9 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifdef CC_USE_PHYSICS
 #include "CCPhysicsShapeInfo_chipmunk.h"
-
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include <algorithm>
 #include <unordered_map>
 
@@ -116,4 +115,4 @@ void PhysicsShapeInfo::removeAll()
 }
 
 NS_CC_END
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_USE_PHYSICS

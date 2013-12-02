@@ -25,7 +25,6 @@
 #ifndef __CCPHYSICS_JOINT_H__
 #define __CCPHYSICS_JOINT_H__
 
-#include "CCPhysicsSetting.h"
 #ifdef CC_USE_PHYSICS
 
 #include "CCObject.h"
