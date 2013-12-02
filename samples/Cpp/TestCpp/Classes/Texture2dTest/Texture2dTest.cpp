@@ -52,6 +52,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(TexturePNG),
     CL(TextureJPEG),
     CL(TextureTIFF),
+    CL(TextureTGA),
     CL(TextureWEBP),
     CL(TexturePixelFormat),
     CL(TextureBlend),
@@ -188,6 +189,29 @@ void TextureTIFF::onEnter()
 std::string TextureTIFF::title()
 {
     return "TIFF Test";
+}
+
+
+//------------------------------------------------------------------
+//
+// TextureTGA
+//
+//------------------------------------------------------------------
+
+void TextureTGA::onEnter()
+{
+    TextureDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto img = Sprite::create("TileMaps/levelmap.tga");
+    img->setPosition(Point( s.width/2.0f, s.height/2.0f));
+    this->addChild(img);
+    Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
+}
+
+std::string TextureTGA::title()
+{
+    return "TGA Test";
 }
 
 //------------------------------------------------------------------
