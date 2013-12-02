@@ -35,8 +35,8 @@ NS_CC_BEGIN
 
 class Value;
 
-typedef std::vector<Value> ArrayValue;
-typedef std::unordered_map<std::string, Value> DictValue;
+typedef std::vector<Value> ValueArray;
+typedef std::unordered_map<std::string, Value> ValueDict;
 
 class Value
 {
@@ -71,12 +71,12 @@ public:
         _strData = v;
         _type = Type::STRING;
     }
-    explicit Value(const ArrayValue& v)
+    explicit Value(const ValueArray& v)
     {
         _arrData = v;
         _type = Type::ARRAY;
     }
-    explicit Value(const DictValue& v)
+    explicit Value(const ValueDict& v)
     {
         _dictData = v;
         _type = Type::DICTIONARY;
@@ -184,12 +184,12 @@ public:
         CCASSERT(_type == Type::STRING, "");
         return _strData;
     }
-    ArrayValue asArray()
+    ValueArray asArray()
     {
         CCASSERT(_type == Type::ARRAY, "");
         return _arrData;
     }
-    DictValue asDict()
+    ValueDict asDict()
     {
         CCASSERT(_type == Type::DICTIONARY, "");
         return _dictData;
@@ -219,8 +219,8 @@ private:
     }_baseData;
     
     std::string _strData;
-    ArrayValue _arrData;
-    DictValue _dictData;
+    ValueArray _arrData;
+    ValueDict _dictData;
     
 
     Type _type;
