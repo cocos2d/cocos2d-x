@@ -141,8 +141,8 @@ public:
 
     virtual void copy(CCDisplayData *displayData);
 
-    std::string displayName;
     DisplayType displayType;	//! mark which type your display is
+    std::string displayName;
 };
 
 
