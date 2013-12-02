@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		150E36F417F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150E36F217F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp */; };
+		1515AC291847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1515AC251847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp */; };
+		1515AC2A1847277400E1CD27 /* LuaCocoStudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1515AC271847277400E1CD27 /* LuaCocoStudio.cpp */; };
 		15A3DB9F1682FB86002FB0C5 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DB3A1682FB86002FB0C5 /* CDAudioManager.m */; };
 		15A3DBA01682FB86002FB0C5 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DB3D1682FB86002FB0C5 /* CDOpenALSupport.m */; };
 		15A3DBA11682FB86002FB0C5 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DB3F1682FB86002FB0C5 /* CocosDenshion.m */; };
@@ -194,15 +196,7 @@
 		ED53145B183311CE008CD8A5 /* UISlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED531408183311CE008CD8A5 /* UISlider.cpp */; };
 		ED53145C183311CE008CD8A5 /* UISwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED53140A183311CE008CD8A5 /* UISwitch.cpp */; };
 		ED53145D183311CE008CD8A5 /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED53140C183311CE008CD8A5 /* UITextField.cpp */; };
-		ED53145E183311CE008CD8A5 /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED53140F183311CE008CD8A5 /* CSContentJsonDictionary.cpp */; };
 		ED53145F183311CE008CD8A5 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED531411183311CE008CD8A5 /* DictionaryHelper.cpp */; };
-		ED531460183311CE008CD8A5 /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = ED531419183311CE008CD8A5 /* json_internalarray.inl */; };
-		ED531461183311CE008CD8A5 /* json_internalmap.inl in Resources */ = {isa = PBXBuildFile; fileRef = ED53141A183311CE008CD8A5 /* json_internalmap.inl */; };
-		ED531462183311CE008CD8A5 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED53141C183311CE008CD8A5 /* json_reader.cpp */; };
-		ED531463183311CE008CD8A5 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED53141E183311CE008CD8A5 /* json_value.cpp */; };
-		ED531464183311CE008CD8A5 /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = ED53141F183311CE008CD8A5 /* json_valueiterator.inl */; };
-		ED531465183311CE008CD8A5 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED531420183311CE008CD8A5 /* json_writer.cpp */; };
-		ED531466183311CE008CD8A5 /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = ED531422183311CE008CD8A5 /* sconscript */; };
 		ED531467183311CE008CD8A5 /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED531426183311CE008CD8A5 /* GUIReader.cpp */; };
 		ED531468183311CE008CD8A5 /* SceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED531428183311CE008CD8A5 /* SceneReader.cpp */; };
 /* End PBXBuildFile section */
@@ -227,6 +221,10 @@
 /* Begin PBXFileReference section */
 		150E36F217F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extensions_manual.cpp; sourceTree = "<group>"; };
 		150E36F317F27AB60021A6EA /* lua_cocos2dx_extensions_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_extensions_manual.h; sourceTree = "<group>"; };
+		1515AC251847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_cocostudio_manual.cpp; sourceTree = "<group>"; };
+		1515AC261847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_cocostudio_manual.h; sourceTree = "<group>"; };
+		1515AC271847277400E1CD27 /* LuaCocoStudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaCocoStudio.cpp; sourceTree = "<group>"; };
+		1515AC281847277400E1CD27 /* LuaCocoStudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCocoStudio.h; sourceTree = "<group>"; };
 		15A3DB161682FB66002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15A3DB361682FB86002FB0C5 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		15A3DB371682FB86002FB0C5 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
@@ -247,6 +245,16 @@
 		15A3DC1D1682FC3C002FB0C5 /* tolua_map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_map.c; sourceTree = "<group>"; };
 		15A3DC1E1682FC3C002FB0C5 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		15A3DC1F1682FC3C002FB0C5 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
+		15DB6521184C2778002905B6 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
+		15DB6522184C2778002905B6 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
+		15DB6524184C2778002905B6 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
+		15DB6525184C2778002905B6 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		15DB6526184C2778002905B6 /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
+		15DB6527184C2778002905B6 /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
+		15DB6528184C2778002905B6 /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
+		15DB6529184C2778002905B6 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		15DB652A184C2778002905B6 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
+		15DB652B184C2778002905B6 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		1AA88BB9171E32410023E7B2 /* lauxlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
 		1AA88BBA171E32410023E7B2 /* lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
 		1AA88BBB171E32410023E7B2 /* luaconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
@@ -579,27 +587,8 @@
 		ED53140B183311CE008CD8A5 /* UISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISwitch.h; sourceTree = "<group>"; };
 		ED53140C183311CE008CD8A5 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
 		ED53140D183311CE008CD8A5 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
-		ED53140F183311CE008CD8A5 /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
-		ED531410183311CE008CD8A5 /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		ED531411183311CE008CD8A5 /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
 		ED531412183311CE008CD8A5 /* DictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryHelper.h; sourceTree = "<group>"; };
-		ED531414183311CE008CD8A5 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
-		ED531415183311CE008CD8A5 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		ED531416183311CE008CD8A5 /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
-		ED531417183311CE008CD8A5 /* forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forwards.h; sourceTree = "<group>"; };
-		ED531418183311CE008CD8A5 /* json_batchallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
-		ED531419183311CE008CD8A5 /* json_internalarray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
-		ED53141A183311CE008CD8A5 /* json_internalmap.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
-		ED53141B183311CE008CD8A5 /* json_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_lib.h; sourceTree = "<group>"; };
-		ED53141C183311CE008CD8A5 /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
-		ED53141D183311CE008CD8A5 /* json_tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_tool.h; sourceTree = "<group>"; };
-		ED53141E183311CE008CD8A5 /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
-		ED53141F183311CE008CD8A5 /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
-		ED531420183311CE008CD8A5 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
-		ED531421183311CE008CD8A5 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
-		ED531422183311CE008CD8A5 /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
-		ED531423183311CE008CD8A5 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
-		ED531424183311CE008CD8A5 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		ED531426183311CE008CD8A5 /* GUIReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIReader.cpp; sourceTree = "<group>"; };
 		ED531427183311CE008CD8A5 /* GUIReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIReader.h; sourceTree = "<group>"; };
 		ED531428183311CE008CD8A5 /* SceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneReader.cpp; sourceTree = "<group>"; };
@@ -688,6 +677,10 @@
 		15A3DBC81682FC3C002FB0C5 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				1515AC251847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp */,
+				1515AC261847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.h */,
+				1515AC271847277400E1CD27 /* LuaCocoStudio.cpp */,
+				1515AC281847277400E1CD27 /* LuaCocoStudio.h */,
 				150E36F217F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp */,
 				150E36F317F27AB60021A6EA /* lua_cocos2dx_extensions_manual.h */,
 				46C1007216BF62DA00F74D54 /* platform */,
@@ -721,6 +714,31 @@
 				15A3DC1F1682FC3C002FB0C5 /* tolua_to.c */,
 			);
 			path = tolua;
+			sourceTree = "<group>";
+		};
+		15DB6520184C2778002905B6 /* rapidjson */ = {
+			isa = PBXGroup;
+			children = (
+				15DB6521184C2778002905B6 /* document.h */,
+				15DB6522184C2778002905B6 /* filestream.h */,
+				15DB6523184C2778002905B6 /* internal */,
+				15DB6527184C2778002905B6 /* prettywriter.h */,
+				15DB6528184C2778002905B6 /* rapidjson.h */,
+				15DB6529184C2778002905B6 /* reader.h */,
+				15DB652A184C2778002905B6 /* stringbuffer.h */,
+				15DB652B184C2778002905B6 /* writer.h */,
+			);
+			path = rapidjson;
+			sourceTree = "<group>";
+		};
+		15DB6523184C2778002905B6 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				15DB6524184C2778002905B6 /* pow10.h */,
+				15DB6525184C2778002905B6 /* stack.h */,
+				15DB6526184C2778002905B6 /* strfunc.h */,
+			);
+			path = internal;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -1385,37 +1403,11 @@
 		ED53140E183311CE008CD8A5 /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				ED53140F183311CE008CD8A5 /* CSContentJsonDictionary.cpp */,
-				ED531410183311CE008CD8A5 /* CSContentJsonDictionary.h */,
+				15DB6520184C2778002905B6 /* rapidjson */,
 				ED531411183311CE008CD8A5 /* DictionaryHelper.cpp */,
 				ED531412183311CE008CD8A5 /* DictionaryHelper.h */,
-				ED531413183311CE008CD8A5 /* lib_json */,
 			);
 			path = Json;
-			sourceTree = "<group>";
-		};
-		ED531413183311CE008CD8A5 /* lib_json */ = {
-			isa = PBXGroup;
-			children = (
-				ED531414183311CE008CD8A5 /* autolink.h */,
-				ED531415183311CE008CD8A5 /* config.h */,
-				ED531416183311CE008CD8A5 /* features.h */,
-				ED531417183311CE008CD8A5 /* forwards.h */,
-				ED531418183311CE008CD8A5 /* json_batchallocator.h */,
-				ED531419183311CE008CD8A5 /* json_internalarray.inl */,
-				ED53141A183311CE008CD8A5 /* json_internalmap.inl */,
-				ED53141B183311CE008CD8A5 /* json_lib.h */,
-				ED53141C183311CE008CD8A5 /* json_reader.cpp */,
-				ED53141D183311CE008CD8A5 /* json_tool.h */,
-				ED53141E183311CE008CD8A5 /* json_value.cpp */,
-				ED53141F183311CE008CD8A5 /* json_valueiterator.inl */,
-				ED531420183311CE008CD8A5 /* json_writer.cpp */,
-				ED531421183311CE008CD8A5 /* reader.h */,
-				ED531422183311CE008CD8A5 /* sconscript */,
-				ED531423183311CE008CD8A5 /* value.h */,
-				ED531424183311CE008CD8A5 /* writer.h */,
-			);
-			path = lib_json;
 			sourceTree = "<group>";
 		};
 		ED531425183311CE008CD8A5 /* Reader */ = {
@@ -1500,14 +1492,11 @@
 			files = (
 				78947C6D14EBB9B100DBD5A6 /* background.mp3 in Resources */,
 				78947C6E14EBB9B100DBD5A6 /* crop.png in Resources */,
-				ED531464183311CE008CD8A5 /* json_valueiterator.inl in Resources */,
 				78947C7014EBB9B100DBD5A6 /* dog.png in Resources */,
-				ED531461183311CE008CD8A5 /* json_internalmap.inl in Resources */,
 				78947C7114EBB9B100DBD5A6 /* effect1.wav in Resources */,
 				78947C7214EBB9B100DBD5A6 /* farm.jpg in Resources */,
 				78947C7414EBB9B100DBD5A6 /* hello.lua in Resources */,
 				78947C7514EBB9B100DBD5A6 /* hello2.lua in Resources */,
-				ED531460183311CE008CD8A5 /* json_internalarray.inl in Resources */,
 				78947C7714EBB9B100DBD5A6 /* land.png in Resources */,
 				78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */,
 				78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */,
@@ -1516,7 +1505,6 @@
 				D4EF94D915BD311A00D803EB /* Icon-114.png in Resources */,
 				D4EF94DB15BD311E00D803EB /* Icon-72.png in Resources */,
 				D4EF94DD15BD312100D803EB /* Icon-144.png in Resources */,
-				ED531466183311CE008CD8A5 /* sconscript in Resources */,
 				D41A0AA2160F13F8004552AE /* Default-568h@2x.png in Resources */,
 				D446FD3B16102085000ADA7B /* Default@2x.png in Resources */,
 				464EA454175DC6D5004C192B /* LICENSE.txt in Resources */,
@@ -1587,7 +1575,6 @@
 				464EA3AC175DC602004C192B /* CCLabelBMFontLoader.cpp in Sources */,
 				464EA3AD175DC602004C192B /* CCLabelTTFLoader.cpp in Sources */,
 				464EA3AE175DC602004C192B /* CCLayerColorLoader.cpp in Sources */,
-				ED531463183311CE008CD8A5 /* json_value.cpp in Sources */,
 				ED531458183311CE008CD8A5 /* UILabelAtlas.cpp in Sources */,
 				464EA3AF175DC602004C192B /* CCLayerGradientLoader.cpp in Sources */,
 				ED531432183311CE008CD8A5 /* CCArmature.cpp in Sources */,
@@ -1606,7 +1593,6 @@
 				464EA3B8175DC602004C192B /* CCScrollViewLoader.cpp in Sources */,
 				464EA3B9175DC602004C192B /* CCSpriteLoader.cpp in Sources */,
 				464EA3BA175DC602004C192B /* CCControl.cpp in Sources */,
-				ED531465183311CE008CD8A5 /* json_writer.cpp in Sources */,
 				ED531451183311CE008CD8A5 /* UIListViewEx.cpp in Sources */,
 				464EA3BB175DC602004C192B /* CCControlButton.cpp in Sources */,
 				464EA3BC175DC602004C192B /* CCControlColourPicker.cpp in Sources */,
@@ -1656,9 +1642,7 @@
 				ED531456183311CE008CD8A5 /* UIImageView.cpp in Sources */,
 				ED531449183311CE008CD8A5 /* UILayout.cpp in Sources */,
 				464EA46B175DC6D5004C192B /* cpPivotJoint.c in Sources */,
-				ED531462183311CE008CD8A5 /* json_reader.cpp in Sources */,
 				464EA46C175DC6D5004C192B /* cpRatchetJoint.c in Sources */,
-				ED53145E183311CE008CD8A5 /* CSContentJsonDictionary.cpp in Sources */,
 				464EA46D175DC6D5004C192B /* cpRotaryLimitJoint.c in Sources */,
 				464EA46E175DC6D5004C192B /* cpSimpleMotor.c in Sources */,
 				ED53144C183311CE008CD8A5 /* CocosGUI.cpp in Sources */,
@@ -1693,6 +1677,8 @@
 				464EA480175DC6D5004C192B /* cpVect.c in Sources */,
 				ED53143D183311CE008CD8A5 /* CCDataReaderHelper.cpp in Sources */,
 				150E36F417F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp in Sources */,
+				1515AC291847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp in Sources */,
+				1515AC2A1847277400E1CD27 /* LuaCocoStudio.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
