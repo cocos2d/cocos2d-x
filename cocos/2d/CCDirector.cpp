@@ -1026,9 +1026,6 @@ void DisplayLinkDirector::startAnimation()
     }
 
     _invalid = false;
-#ifndef EMSCRIPTEN
-    Application::getInstance()->setAnimationInterval(_animationInterval);
-#endif // EMSCRIPTEN
 }
 
 void DisplayLinkDirector::mainLoop()
@@ -1040,6 +1037,9 @@ void DisplayLinkDirector::mainLoop()
     }
     else if (! _invalid)
     {
+        // invoke call back from other thread
+        ThreadHelper::doCallback();
+        
         drawScene();
      
         // release the objects

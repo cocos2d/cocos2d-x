@@ -33,7 +33,6 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
-#include "CCPhysicsSetting.h"
 
 #include "CCEventKeyboard.h"
 

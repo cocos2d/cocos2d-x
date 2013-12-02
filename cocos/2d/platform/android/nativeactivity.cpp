@@ -471,8 +471,8 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
     return 0;
 }
 
-void enableAccelerometer(void) {
-    LOGI("enableAccelerometer()");
+void enableAccelerometerJni(void) {
+    LOGI("enableAccelerometerJni()");
 
     if (engine.accelerometerSensor != NULL) {
         ASensorEventQueue_enableSensor(engine.sensorEventQueue,
@@ -485,8 +485,8 @@ void enableAccelerometer(void) {
     }
 }
 
-void disableAccelerometer(void) {
-    LOGI("disableAccelerometer()");
+void disableAccelerometerJni(void) {
+    LOGI("disableAccelerometerJni()");
 
     if (engine.accelerometerSensor != NULL) {
         ASensorEventQueue_disableSensor(engine.sensorEventQueue,
@@ -494,8 +494,8 @@ void disableAccelerometer(void) {
     }
 }
 
-void setAccelerometerInterval(float interval) {
-    LOGI("setAccelerometerInterval(%f)", interval);
+void setAccelerometerIntervalJni(float interval) {
+    LOGI("setAccelerometerIntervalJni(%f)", interval);
         // We'd like to get 60 events per second (in us).
         ASensorEventQueue_setEventRate(engine.sensorEventQueue,
                                        engine.accelerometerSensor, interval * 1000000L);
