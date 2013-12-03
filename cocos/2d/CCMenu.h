@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "CCVector.h"
 #include "CCEventTouch.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
@@ -91,12 +92,12 @@ public:
     /** align items in rows of columns */
     void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInColumns(int columns, va_list args);
-    void alignItemsInColumnsWithArray(Array* rows);
+    void alignItemsInColumnsWithArray(const ValueArray& rows);
 
     /** align items in columns of rows */
     void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInRows(int rows, va_list args);
-    void alignItemsInRowsWithArray(Array* columns);
+    void alignItemsInRowsWithArray(const ValueArray& columns);
 
     virtual bool isEnabled() const { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };
@@ -134,7 +135,7 @@ protected:
     /** whether or not the menu will receive events */
     bool _enabled;
 
-    MenuItem* itemForTouch(Touch * touch);
+    MenuItem* getItemForTouch(Touch * touch);
     State _state;
     MenuItem *_selectedItem;
 
