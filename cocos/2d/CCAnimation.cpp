@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-AnimationFrame* AnimationFrame::create(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo)
+AnimationFrame* AnimationFrame::create(SpriteFrame* spriteFrame, float delayUnits, const ValueDict& userInfo)
 {
     auto ret = new AnimationFrame();
     if (ret && ret->initWithSpriteFrame(spriteFrame, delayUnits, userInfo))
@@ -54,7 +54,7 @@ AnimationFrame::AnimationFrame()
 
 }
 
-bool AnimationFrame::initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo)
+bool AnimationFrame::initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueDict& userInfo)
 {
     setSpriteFrame(spriteFrame);
     setDelayUnits(delayUnits);
@@ -68,7 +68,6 @@ AnimationFrame::~AnimationFrame()
     CCLOGINFO( "deallocing AnimationFrame: %p", this);
 
     CC_SAFE_RELEASE(_spriteFrame);
-    CC_SAFE_RELEASE(_userInfo);
 }
 
 AnimationFrame* AnimationFrame::clone() const
@@ -77,7 +76,7 @@ AnimationFrame* AnimationFrame::clone() const
 	auto frame = new AnimationFrame();
     frame->initWithSpriteFrame(_spriteFrame->clone(),
 							   _delayUnits,
-							   _userInfo != NULL ? _userInfo->clone() : NULL);
+							   _userInfo);
 
 	frame->autorelease();
 	return frame;
@@ -126,7 +125,7 @@ bool Animation::initWithSpriteFrames(const Vector<SpriteFrame*>& frames, float d
 
     for (auto& spriteFrame : frames)
     {
-        auto animFrame = AnimationFrame::create(spriteFrame, 1, nullptr);
+        auto animFrame = AnimationFrame::create(spriteFrame, 1, ValueDict());
         _frames.addObject(animFrame);
         _totalDelayUnits++;
     }
@@ -165,7 +164,7 @@ Animation::~Animation(void)
 
 void Animation::addSpriteFrame(SpriteFrame* spriteFrame)
 {
-    AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, 1.0f, nullptr);
+    AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, 1.0f, ValueDict());
     _frames.addObject(animFrame);
 
     // update duration

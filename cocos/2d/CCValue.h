@@ -28,6 +28,7 @@
 #include "CCPlatformMacros.h"
 #include "ccMacros.h"
 #include <string>
+#include <sstream>
 #include <vector>
 #include <unordered_map>
 
@@ -37,6 +38,7 @@ class Value;
 
 typedef std::vector<Value> ValueArray;
 typedef std::unordered_map<std::string, Value> ValueDict;
+typedef std::unordered_map<int, Value> IntValueDict;
 
 class Value
 {
@@ -158,42 +160,189 @@ public:
         return *this;
     }
     
-    int asInt()
+    int asInt() const
     {
-        CCASSERT(_type == Type::INTEGER, "");
-        return _baseData.intVal;
+        CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+        if (_type == Type::INTEGER)
+        {
+            return _baseData.intVal;
+        }
+        
+        if (_type == Type::STRING)
+        {
+            return atoi(_strData.c_str());
+        }
+        
+        if (_type == Type::FLOAT)
+        {
+            return _baseData.floatVal;
+        }
+        
+        if (_type == Type::DOUBLE)
+        {
+            return _baseData.doubleVal;
+        }
+        
+        if (_type == Type::BOOLEAN)
+        {
+            return _baseData.boolVal;
+        }
+        
+        return 0;
     }
     
-    float asFloat()
+    float asFloat() const
     {
-        CCASSERT(_type == Type::FLOAT, "");
-        return _baseData.floatVal;
+        CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+        if (_type == Type::FLOAT)
+        {
+            return _baseData.floatVal;
+        }
+        
+        if (_type == Type::STRING)
+        {
+            return atof(_strData.c_str());
+        }
+        
+        if (_type == Type::INTEGER)
+        {
+            return _baseData.intVal;
+        }
+        
+        if (_type == Type::DOUBLE)
+        {
+            return _baseData.doubleVal;
+        }
+        
+        if (_type == Type::BOOLEAN)
+        {
+            return _baseData.boolVal;
+        }
+        
+        return 0.0f;
     }
-    double asDouble()
+    double asDouble() const
     {
-        CCASSERT(_type == Type::DOUBLE, "");
-        return _baseData.doubleVal;
+        CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+        if (_type == Type::DOUBLE)
+        {
+            return _baseData.doubleVal;
+        }
+        
+        if (_type == Type::STRING)
+        {
+            return (float)atof(_strData.c_str());
+        }
+        
+        if (_type == Type::INTEGER)
+        {
+            return _baseData.intVal;
+        }
+        
+        if (_type == Type::FLOAT)
+        {
+            return _baseData.floatVal;
+        }
+        
+        if (_type == Type::BOOLEAN)
+        {
+            return _baseData.boolVal;
+        }
+        
+        return 0.0;
     }
-    bool asBool()
+    bool asBool() const
     {
-        CCASSERT(_type == Type::BOOLEAN, "");
-        return _baseData.boolVal;
+        CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+        if (_type == Type::BOOLEAN)
+        {
+            return _baseData.boolVal;
+        }
+        
+        if (_type == Type::STRING)
+        {
+            return (_strData == "0" || _strData == "false") ? false : true;
+        }
+        
+        if (_type == Type::INTEGER)
+        {
+            return _baseData.intVal == 0 ? false : true;
+        }
+        
+        if (_type == Type::FLOAT)
+        {
+            return _baseData.floatVal == 0.0f ? false : true;
+        }
+        
+        if (_type == Type::DOUBLE)
+        {
+            return _baseData.doubleVal == 0.0 ? false : true;
+        }
+        
+        return true;
     }
-    std::string asString()
+    
+    std::string asString() const
     {
-        CCASSERT(_type == Type::STRING, "");
-        return _strData;
+        CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+        
+        if (_type == Type::STRING)
+        {
+            return _strData;
+        }
+
+        std::stringstream ret;
+        
+        switch (_type) {
+            case Type::INTEGER:
+                ret << _baseData.intVal;
+                break;
+            case Type::FLOAT:
+                ret << _baseData.floatVal;
+                break;
+            case Type::DOUBLE:
+                ret << _baseData.doubleVal;
+                break;
+            case Type::BOOLEAN:
+                ret << _baseData.boolVal;
+                break;
+            default:
+                break;
+        }
+        return ret.str();
     }
-    ValueArray asArray()
+    
+    ValueArray& asArray()
     {
         CCASSERT(_type == Type::ARRAY, "");
         return _arrData;
     }
-    ValueDict asDict()
+    
+    const ValueArray& asArray() const
+    {
+        CCASSERT(_type == Type::ARRAY, "");
+        return _arrData;
+    }
+    
+    ValueDict& asDict()
     {
         CCASSERT(_type == Type::DICTIONARY, "");
         return _dictData;
     }
+    
+    const ValueDict& asDict() const
+    {
+        CCASSERT(_type == Type::DICTIONARY, "");
+        return _dictData;
+    }
+    
+    IntValueDict& asIntKeyDict()
+    {
+        CCASSERT(_type == Type::INT_KEY_DICT, "");
+        return _intKeyDictData;
+    }
+    
+    bool isNull() const { return _type == Type::NONE; }
     
     enum class Type
     {
@@ -204,10 +353,11 @@ public:
         BOOLEAN,
         STRING,
         ARRAY,
-        DICTIONARY
+        DICTIONARY,
+        INT_KEY_DICT
     };
 
-    inline Type getType() { return _type; };
+    inline Type getType() const { return _type; };
     
 private:
     union
@@ -221,12 +371,14 @@ private:
     std::string _strData;
     ValueArray _arrData;
     ValueDict _dictData;
-    
+    IntValueDict _intKeyDictData;
 
     Type _type;
 };
 
 
+
 NS_CC_END
+
 
 #endif /* defined(__cocos2d_libs__CCValue__) */

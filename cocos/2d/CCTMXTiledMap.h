@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCTMXObjectGroup.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
@@ -132,16 +133,16 @@ public:
     CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const char *groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
-    String *getProperty(const std::string& propertyName) const;
+    Value getProperty(const std::string& propertyName) const;
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
+    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
 
     /** return properties dictionary for tile GID */
-    Dictionary* getPropertiesForGID(int GID) const;
-    CC_DEPRECATED_ATTRIBUTE Dictionary* propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
+    Value getPropertiesForGID(int GID) const;
+    CC_DEPRECATED_ATTRIBUTE Value propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
     /** the map's size property measured in tiles */
     inline const Size& getMapSize() const { return _mapSize; };
@@ -163,10 +164,8 @@ public:
     };
     
     /** properties */
-    inline Dictionary* getProperties() const { return _properties; };
-    inline void setProperties(Dictionary* properties) {
-        CC_SAFE_RETAIN(properties);
-        CC_SAFE_RELEASE(_properties);
+    inline ValueDict& getProperties() { return _properties; };
+    inline void setProperties(const ValueDict& properties) {
         _properties = properties;
     };
     
@@ -200,10 +199,10 @@ protected:
     /** object groups */
     Vector<TMXObjectGroup*> _objectGroups;
     /** properties */
-    Dictionary* _properties;
+    ValueDict _properties;
     
     //! tile properties
-    Dictionary* _tileProperties;
+    IntValueDict _tileProperties;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);

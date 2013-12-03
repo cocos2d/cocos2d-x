@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "CCDirector.h"
 #include "CCDictionary.h"
-#include "CCString.h"
 #include "CCSAXParser.h"
 #include "tinyxml2.h"
 #include "unzip.h"
@@ -59,16 +58,16 @@ class DictMaker : public SAXDelegator
 {
 public:
     SAXResult _resultType;
-    Array* _rootArray;
-    Dictionary *_rootDict;
-    Dictionary *_curDict;
-    std::stack<Dictionary*> _dictStack;
+    ValueArray _rootArray;
+    ValueDict _rootDict;
+    ValueDict _curDict;
+    std::stack<ValueDict> _dictStack;
     std::string _curKey;   ///< parsed key
     std::string _curValue; // parsed value
     SAXState _state;
-    Array* _array;
+    ValueArray _array;
 
-    std::stack<Array*> _arrayStack;
+    std::stack<ValueArray> _arrayStack;
     std::stack<SAXState>  _stateStack;
 
 public:
@@ -450,9 +449,9 @@ static tinyxml2::XMLElement* generateElementForArray(cocos2d::Array *array, tiny
 NS_CC_BEGIN
 
 /* The subclass FileUtilsApple should override these two method. */
-Dictionary* FileUtils::createDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
-bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPath) {return false;}
-Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename) {return NULL;}
+ValueDict FileUtils::fileToValueDict(const std::string& filename) {return ValueDict();}
+ValueArray FileUtils::fileToValueArray(const std::string& filename) {return ValueArray();}
+bool FileUtils::writeToFile(ValueDict dict, const std::string &fullPath) {return false;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
@@ -472,7 +471,6 @@ FileUtils::FileUtils()
 
 FileUtils::~FileUtils()
 {
-    CC_SAFE_RELEASE(_filenameLookupDict);
 }
 
 
@@ -564,12 +562,15 @@ std::string FileUtils::getNewFilename(const std::string &filename)
     std::string newFileName;
     
     // in Lookup Filename dictionary ?
-    String* fileNameFound = _filenameLookupDict ? (String*)_filenameLookupDict->objectForKey(filename) : NULL;
-    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+    auto iter = _filenameLookupDict.find(filename);
+
+    if (iter == _filenameLookupDict.end())
+    {
         newFileName = filename;
     }
-    else {
-        newFileName = fileNameFound->getCString();
+    else
+    {
+        newFileName = iter->second.asString();
     }
     return newFileName;
 }
@@ -731,12 +732,10 @@ void FileUtils::addSearchPath(const std::string &searchpath)
     _searchPathArray.push_back(path);
 }
 
-void FileUtils::setFilenameLookupDictionary(Dictionary* pFilenameLookupDict)
+void FileUtils::setFilenameLookupDictionary(const ValueDict& filenameLookupDict)
 {
     _fullPathCache.clear();    
-    CC_SAFE_RELEASE(_filenameLookupDict);
-    _filenameLookupDict = pFilenameLookupDict;
-    CC_SAFE_RETAIN(_filenameLookupDict);
+    _filenameLookupDict = filenameLookupDict;
 }
 
 void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename)
@@ -744,17 +743,17 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename
     std::string fullPath = fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
-        Dictionary* dict = Dictionary::createWithContentsOfFile(fullPath.c_str());
-        if (dict)
+        ValueDict dict = FileUtils::getInstance()->fileToValueDict(fullPath);
+        if (!dict.empty())
         {
-            Dictionary* metadata = static_cast<Dictionary*>( dict->objectForKey("metadata") );
-            int version = static_cast<String*>( metadata->objectForKey("version"))->intValue();
+            ValueDict& metadata =  dict["metadata"].asDict();
+            int version = metadata["version"].asInt();
             if (version != 1)
             {
                 CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename.c_str());
                 return;
             }
-            setFilenameLookupDictionary( static_cast<Dictionary*>( dict->objectForKey("filenames")) );
+            setFilenameLookupDictionary( dict["filenames"].asDict());
         }
     }
 }

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #include "CCObject.h"
 #include "CCArray.h"
-#include "CCDictionary.h"
+#include "CCValue.h"
 #include "CCGeometry.h"
 #include "CCSpriteFrame.h"
 #include "CCVector.h"
@@ -61,7 +61,7 @@ public:
      * Creates the animation frame with a spriteframe, number of delay units and a notification user info
      * @since 3.0
      */
-    static AnimationFrame* create(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo);
+    static AnimationFrame* create(SpriteFrame* spriteFrame, float delayUnits, const ValueDict& userInfo);
 
     SpriteFrame* getSpriteFrame() const { return _spriteFrame; };
     
@@ -81,13 +81,12 @@ public:
     /** @brief Gets user infomation
         A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast.
      */
-    Dictionary* getUserInfo() const { return _userInfo; };
+    const ValueDict& getUserInfo() const { return _userInfo; };
+    ValueDict& getUserInfo() { return _userInfo; };
     
     /** Sets user infomation */
-    void setUserInfo(Dictionary* userInfo)
+    void setUserInfo(const ValueDict& userInfo)
     {
-        CC_SAFE_RETAIN(userInfo);
-        CC_SAFE_RELEASE(_userInfo);
         _userInfo = userInfo;
     }
     
@@ -107,7 +106,7 @@ protected:
     virtual ~AnimationFrame();
     
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
-    bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo);
+    bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueDict& userInfo);
     
     /** SpriteFrameName to be used */
     SpriteFrame* _spriteFrame;
@@ -116,7 +115,7 @@ protected:
     float _delayUnits;
 
     /**  A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast. */
-    Dictionary* _userInfo;
+    ValueDict _userInfo;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(AnimationFrame);

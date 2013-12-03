@@ -377,9 +377,73 @@ Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
     return srcDict->clone();
 }
 
+static Array* visitArray(const ValueArray& array);
+
+static Dictionary* visitDict(const ValueDict& dict)
+{
+    Dictionary* ret = new Dictionary();
+    ret->init();
+    
+    for (auto iter = dict.begin(); iter != dict.end(); ++iter)
+    {
+        if (iter->second.getType() == Value::Type::DICTIONARY)
+        {
+            const ValueDict& subDict = iter->second.asDict();
+            auto sub = visitDict(subDict);
+            ret->setObject(sub, iter->first);
+            sub->release();
+        }
+        else if (iter->second.getType() == Value::Type::ARRAY)
+        {
+            const ValueArray& arr = iter->second.asArray();
+            auto sub = visitArray(arr);
+            ret->setObject(sub, iter->first);
+            sub->release();
+        }
+        else
+        {
+            auto str = new String(iter->second.asString());
+            ret->setObject(str, iter->first);
+            str->release();
+        }
+    }
+    return ret;
+}
+
+static Array* visitArray(const ValueArray& array)
+{
+    Array* ret = new Array();
+    ret->init();
+    
+    std::for_each(array.begin(), array.end(), [&ret](const Value& value){
+        if (value.getType() == Value::Type::DICTIONARY)
+        {
+            const ValueDict& subDict = value.asDict();
+            auto sub = visitDict(subDict);
+            ret->addObject(sub);
+            sub->release();
+        }
+        else if (value.getType() == Value::Type::ARRAY)
+        {
+            const ValueArray& arr = value.asArray();
+            auto sub = visitArray(arr);
+            ret->addObject(sub);
+            sub->release();
+        }
+        else
+        {
+            auto str = new String(value.asString());
+            ret->addObject(str);
+            str->release();
+        }
+    });
+    
+    return ret;
+}
+
 Dictionary* Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return FileUtils::getInstance()->createDictionaryWithContentsOfFile(pFileName);
+    return visitDict(FileUtils::getInstance()->fileToValueDict(pFileName));
 }
 
 void Dictionary::acceptVisitor(DataVisitor &visitor)
@@ -399,7 +463,7 @@ Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 
 bool Dictionary::writeToFile(const char *fullPath)
 {
-    return FileUtils::getInstance()->writeToFile(this, fullPath);
+    return false;//FIXME: XXX FileUtils::getInstance()->writeToFile(this, fullPath);
 }
 
 Dictionary* Dictionary::clone() const

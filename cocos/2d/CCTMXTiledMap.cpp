@@ -90,14 +90,11 @@ bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& r
 TMXTiledMap::TMXTiledMap()
     :_mapSize(Size::ZERO)
     ,_tileSize(Size::ZERO)        
-    ,_properties(nullptr)
-    ,_tileProperties(nullptr)
 {
 }
+
 TMXTiledMap::~TMXTiledMap()
 {
-    CC_SAFE_RELEASE(_properties);
-    CC_SAFE_RELEASE(_tileProperties);
 }
 
 // private
@@ -165,13 +162,9 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 
     _objectGroups = mapInfo->getObjectGroups();
 
-    CC_SAFE_RELEASE(_properties);
     _properties = mapInfo->getProperties();
-    CC_SAFE_RETAIN(_properties);
 
-    CC_SAFE_RELEASE(_tileProperties);
     _tileProperties = mapInfo->getTileProperties();
-    CC_SAFE_RETAIN(_tileProperties);
 
     int idx=0;
 
@@ -235,14 +228,20 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
     return nullptr;
 }
 
-String* TMXTiledMap::getProperty(const std::string& propertyName) const
+Value TMXTiledMap::getProperty(const std::string& propertyName) const
 {
-    return static_cast<String*>(_properties->objectForKey(propertyName));
+    if (_properties.find(propertyName) != _properties.end())
+        return _properties.at(propertyName);
+    
+    return Value();
 }
 
-Dictionary* TMXTiledMap::getPropertiesForGID(int GID) const
+Value TMXTiledMap::getPropertiesForGID(int GID) const
 {
-    return static_cast<Dictionary*>(_tileProperties->objectForKey(GID));
+    if (_tileProperties.find(GID) != _tileProperties.end())
+        return _tileProperties.at(GID);
+    
+    return Value();
 }
         
 

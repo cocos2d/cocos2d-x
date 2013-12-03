@@ -585,17 +585,11 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     
     ////----CCLOG("----> Iterating over all the group objets");
     auto group = map->getObjectGroup("Object Group 1");
-    auto objects = group->getObjects();
+    auto& objects = group->getObjects();
 
-    Dictionary* dict = NULL;
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(objects, pObj)
+    for (auto& obj : objects)
     {
-        dict = static_cast<Dictionary*>(pObj);
-
-        if(!dict)
-            break;
-
+        ValueDict& dict = obj.asDict();
         ////----CCLOG("object: %x", dict);
     }
     
@@ -609,30 +603,23 @@ void TMXOrthoObjectsTest::draw()
     auto map = static_cast<TMXTiledMap*>( getChildByTag(kTagTileMap) );
     auto group = map->getObjectGroup("Object Group 1");
 
-    auto objects = group->getObjects();
-    Dictionary* dict = NULL;
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(objects, pObj)
+    auto& objects = group->getObjects();
+
+    for (auto& obj : objects)
     {
-        dict = static_cast<Dictionary*>(pObj);
+        ValueDict& dict = obj.asDict();
         
-        if(!dict)
-            break;
-        const char* key = "x";
-        int x = ((String*)dict->objectForKey(key))->intValue();
-        key = "y";
-        int y = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
-        key = "width";
-        int width = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
-        key = "height";
-        int height = ((String*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
+        float x = dict["x"].asFloat();
+        float y = dict["y"].asFloat();
+        float width = dict["width"].asFloat();
+        float height = dict["height"].asFloat();
         
         glLineWidth(3);
         
-        DrawPrimitives::drawLine( Point((float)x, (float)y), Point((float)(x+width), (float)y) );
-        DrawPrimitives::drawLine( Point((float)(x+width), (float)y), Point((float)(x+width), (float)(y+height)) );
-        DrawPrimitives::drawLine( Point((float)(x+width), (float)(y+height)), Point((float)x, (float)(y+height)) );
-        DrawPrimitives::drawLine( Point((float)x, (float)(y+height)), Point((float)x, (float)y) );
+        DrawPrimitives::drawLine( Point(x, y), Point((x+width), y) );
+        DrawPrimitives::drawLine( Point((x+width), y), Point((x+width), (y+height)) );
+        DrawPrimitives::drawLine( Point((x+width), (y+height)), Point(x, (y+height)) );
+        DrawPrimitives::drawLine( Point(x, (y+height)), Point(x, y) );
         
         glLineWidth(1);
     }
@@ -666,16 +653,11 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
     auto group = map->getObjectGroup("Object Group 1");
 
     //auto objects = group->objects();
-    auto objects = group->getObjects();
+    auto& objects = group->getObjects();
     //UxMutableDictionary<std::string>* dict;
-    Dictionary* dict;
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(objects, pObj)
+    for (auto& obj : objects)
     {
-        dict = static_cast<Dictionary*>(pObj);
-
-        if(!dict)
-            break;
+        ValueDict& dict = obj.asDict();
 
         ////----CCLOG("object: %x", dict);
     }        
@@ -686,23 +668,14 @@ void TMXIsoObjectsTest::draw()
     auto map = (TMXTiledMap*) getChildByTag(kTagTileMap);
     auto group = map->getObjectGroup("Object Group 1");
 
-    auto objects = group->getObjects();
-    Dictionary* dict;
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(objects, pObj)
+    auto& objects = group->getObjects();
+    for (auto& obj : objects)
     {
-        dict = static_cast<Dictionary*>(pObj);
-
-        if(!dict)
-            break;
-        const char* key = "x";
-        int x = static_cast<String*>(dict->objectForKey(key))->intValue();
-        key = "y";
-        int y = static_cast<String*>(dict->objectForKey(key))->intValue();
-        key = "width";
-        int width = static_cast<String*>(dict->objectForKey(key))->intValue();
-        key = "height";
-        int height = static_cast<String*>(dict->objectForKey(key))->intValue();
+        ValueDict& dict = obj.asDict();
+        float x = dict["x"].asFloat();
+        float y = dict["y"].asFloat();
+        float width = dict["width"].asFloat();
+        float height = dict["height"].asFloat();
         
         glLineWidth(3);
         
@@ -1096,7 +1069,7 @@ TMXTilePropertyTest::TMXTilePropertyTest()
     addChild(map ,0 ,kTagTileMap);
 
     for(int i=1;i<=20;i++){
-        log("GID:%i, Properties:%p", i, map->getPropertiesForGID(i));
+        log("GID:%i, Properties:%s", i, map->getPropertiesForGID(i).asString().c_str());
     }
 }
 
@@ -1479,25 +1452,15 @@ void TMXGIDObjectsTest::draw()
     auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
     auto group = map->getObjectGroup("Object Layer 1");
 
-    auto array = group->getObjects();
-    Dictionary* dict;
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(array, pObj)
+    auto& objects = group->getObjects();
+    for (auto& obj : objects)
     {
-        dict = static_cast<Dictionary*>(pObj);
-        if(!dict)
-        {
-            break;
-        }
-
-        const char* key = "x";
-        int x = ((String*)dict->objectForKey(key))->intValue();
-        key = "y";
-        int y = ((String*)dict->objectForKey(key))->intValue();
-        key = "width";
-        int width = ((String*)dict->objectForKey(key))->intValue();
-        key = "height";
-        int height = ((String*)dict->objectForKey(key))->intValue();
+        ValueDict& dict = obj.asDict();
+        
+        float x = dict["x"].asFloat();
+        float y = dict["y"].asFloat();
+        float width = dict["width"].asFloat();
+        float height = dict["height"].asFloat();
 
         glLineWidth(3);
 

@@ -29,11 +29,10 @@ THE SOFTWARE.
 #define __CC_TM_XML_PARSER__
 
 #include "CCArray.h"
-#include "CCDictionary.h"
 #include "CCGeometry.h"
 #include "platform/CCSAXParser.h"
 #include "CCVector.h"
-
+#include "CCValue.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -102,10 +101,10 @@ public:
      */
     virtual ~TMXLayerInfo();
 
-    void setProperties(Dictionary *properties);
-    Dictionary* getProperties();
+    void setProperties(ValueDict properties);
+    ValueDict getProperties();
 
-    Dictionary          *_properties;
+    ValueDict           _properties;
     std::string         _name;
     Size                _layerSize;
     unsigned int        *_tiles;
@@ -196,10 +195,8 @@ public:
     /* initializes parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
     bool parseXMLString(const std::string& xmlString);
 
-    Dictionary* getTileProperties() { return _tileProperties; };
-    void setTileProperties(Dictionary* tileProperties) {
-        CC_SAFE_RETAIN(tileProperties);
-        CC_SAFE_RELEASE(_tileProperties);
+    IntValueDict& getTileProperties() { return _tileProperties; };
+    void setTileProperties(const IntValueDict& tileProperties) {
         _tileProperties = tileProperties;
     };
 
@@ -254,10 +251,8 @@ public:
     inline void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; };
 
     /// properties
-    inline Dictionary* getProperties() const { return _properties; };
-    inline void setProperties(Dictionary* properties) {
-        CC_SAFE_RETAIN(properties);
-        CC_SAFE_RELEASE(_properties);
+    inline ValueDict getProperties() const { return _properties; };
+    inline void setProperties(ValueDict properties) {
         _properties = properties;
     };
     
@@ -307,7 +302,7 @@ protected:
     /// is storing characters?
     bool _storingCharacters;
     /// properties
-    Dictionary* _properties;
+    ValueDict _properties;
     
     //! tmx filename
     std::string _TMXFileName;
@@ -316,7 +311,7 @@ protected:
     //! current string
     std::string _currentString;
     //! tile properties
-    Dictionary* _tileProperties;
+    IntValueDict _tileProperties;
     unsigned int _currentFirstGID;
 };
 
