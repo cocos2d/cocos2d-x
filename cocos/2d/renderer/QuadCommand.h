@@ -9,6 +9,7 @@
 
 #include "RenderCommand.h"
 #include "CCGLProgram.h"
+#include "RenderCommandPool.h"
 
 NS_CC_BEGIN
 
@@ -16,10 +17,12 @@ NS_CC_BEGIN
 
 class QuadCommand : public RenderCommand
 {
-public:
+protected:
     QuadCommand();
-    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount);
     ~QuadCommand();
+    
+public:
+    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount);
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
@@ -44,6 +47,8 @@ public:
     inline GLProgram* getShader() { return _shader; }
 
     inline BlendFunc getBlendType() { return _blendType; }
+    
+    virtual void releaseToCommandPool() override;
 
 protected:
     int32_t _materialID;
@@ -64,6 +69,11 @@ protected:
 
     V3F_C4B_T2F_Quad* _quad;
     int _quadCount;
+public:
+    friend class RenderCommandPool<QuadCommand>;
+    static RenderCommandPool<QuadCommand>& getCommandPool() { return _commandPool; }
+protected:
+    static RenderCommandPool<QuadCommand> _commandPool;
 };
 
 NS_CC_END

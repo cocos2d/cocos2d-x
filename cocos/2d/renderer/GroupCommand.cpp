@@ -7,6 +7,7 @@
 #include "Renderer.h"
 
 NS_CC_BEGIN
+RenderCommandPool<GroupCommand> GroupCommand::_commandPool;
 
 static GroupCommandManager* s_instance;
 GroupCommandManager *GroupCommandManager::getInstance()
@@ -94,6 +95,11 @@ int64_t GroupCommand::generateID()
             | (int64_t)_depth << 36;
 
     return _id;
+}
+
+void GroupCommand::releaseToCommandPool()
+{
+    getCommandPool().pushBackCommand(this);
 }
 
 
