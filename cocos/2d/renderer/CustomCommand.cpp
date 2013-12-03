@@ -7,13 +7,19 @@
 
 NS_CC_BEGIN
 
-CustomCommand::CustomCommand(int viewport, int32_t depth)
+CustomCommand::CustomCommand()
 :RenderCommand()
-, _viewport(viewport)
-, _depth(depth)
+, _viewport(0)
+, _depth(0)
 , func(nullptr)
 {
     _type = CUSTOM_COMMAND;
+}
+
+void CustomCommand::init(int viewport, int32_t depth)
+{
+    _viewport = viewport;
+    _depth = depth;
 }
 
 CustomCommand::~CustomCommand()
