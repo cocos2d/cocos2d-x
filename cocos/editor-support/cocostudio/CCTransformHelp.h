@@ -32,6 +32,8 @@ namespace cocostudio {
 
 /*
  * use to calculate the matrix of node from parent node
+ * @js NA
+ * @lua NA
  */
 class  TransformHelp
 {

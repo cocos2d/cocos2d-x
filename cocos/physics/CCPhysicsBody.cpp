@@ -26,32 +26,22 @@
 
 #include <climits>
 #include <algorithm>
+#include <cmath>
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
-#elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
-#include "Box2D.h"
-#endif
 
 #include "CCPhysicsShape.h"
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
-#include "box2d/CCPhysicsBodyInfo_box2d.h"
 #include "chipmunk/CCPhysicsJointInfo_chipmunk.h"
-#include "box2d/CCPhysicsJointInfo_box2d.h"
 #include "chipmunk/CCPhysicsWorldInfo_chipmunk.h"
-#include "box2d/CCPhysicsWorldInfo_box2d.h"
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
-#include "box2d/CCPhysicsShapeInfo_box2d.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
-#include "box2d/CCPhysicsHelper_box2d.h"
 
 NS_CC_BEGIN
-
-
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+extern const float PHYSICS_INFINITY;
 
 namespace
 {
@@ -293,19 +283,32 @@ void PhysicsBody::setDynamic(bool dynamic)
         if (dynamic)
         {
             cpBodySetMass(_info->getBody(), _mass);
+            cpBodySetMoment(_info->getBody(), _moment);
             
             if (_world != nullptr)
             {
+                // reset the gravity enable
+                if (isGravityEnabled())
+                {
+                    _gravityEnable = false;
+                    setGravityEnable(true);
+                }
+                
                 cpSpaceAddBody(_world->_info->getSpace(), _info->getBody());
             }
-        }else
+        }
+        else
         {
-            cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
-            
             if (_world != nullptr)
             {
                 cpSpaceRemoveBody(_world->_info->getSpace(), _info->getBody());
             }
+            
+            // avoid incorrect collion simulation.
+            cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
+            cpBodySetMoment(_info->getBody(), PHYSICS_INFINITY);
+            cpBodySetVel(_info->getBody(), cpvzero);
+            cpBodySetAngVel(_info->getBody(), 0.0f);
         }
         
     }
@@ -346,7 +349,7 @@ void PhysicsBody::setPosition(Point position)
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_info->getBody(), PhysicsHelper::float2cpfloat(rotation));
+    cpBodySetAngle(_info->getBody(), PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
 }
 
 Point PhysicsBody::getPosition() const
@@ -357,7 +360,7 @@ Point PhysicsBody::getPosition() const
 
 float PhysicsBody::getRotation() const
 {
-    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) / 3.14f * 180.0f);
+    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) / M_PI * 180.0f);
 }
 
 PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/* = true*/)
@@ -456,7 +459,11 @@ void PhysicsBody::setMass(float mass)
         }
     }
     
-    cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+    // the static body's mass and moment is always infinity
+    if (_dynamic)
+    {
+        cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+    }
 }
 
 void PhysicsBody::addMass(float mass)
@@ -498,25 +505,29 @@ void PhysicsBody::addMass(float mass)
         }
     }
     
-    cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+    // the static body's mass and moment is always infinity
+    if (_dynamic)
+    {
+        cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+    }
 }
 
 void PhysicsBody::addMoment(float moment)
 {
     if (moment == PHYSICS_INFINITY)
     {
-        // if moment is INFINITY, the moment of the body will become INFINITY
+        // if moment is PHYSICS_INFINITY, the moment of the body will become PHYSICS_INFINITY
         _moment = PHYSICS_INFINITY;
         _momentDefault = false;
     }
     else if (moment == -PHYSICS_INFINITY)
     {
-        // if moment is -INFINITY, it won't change
+        // if moment is -PHYSICS_INFINITY, it won't change
         return;
     }
     else
     {
-        // if moment of the body is INFINITY is has no effect
+        // if moment of the body is PHYSICS_INFINITY is has no effect
         if (_moment != PHYSICS_INFINITY)
         {
             if (_momentDefault)
@@ -537,7 +548,8 @@ void PhysicsBody::addMoment(float moment)
         }
     }
     
-    if (_rotationEnable)
+    // the static body's mass and moment is always infinity
+    if (_rotationEnable && _dynamic)
     {
         cpBodySetMoment(_info->getBody(), PhysicsHelper::float2cpfloat(_moment));
     }
@@ -545,6 +557,12 @@ void PhysicsBody::addMoment(float moment)
 
 void PhysicsBody::setVelocity(const Point& velocity)
 {
+    if (!_dynamic)
+    {
+        CCLOG("physics warning: your cann't set velocity for a static body.");
+        return;
+    }
+    
     cpBodySetVel(_info->getBody(), PhysicsHelper::point2cpv(velocity));
 }
 
@@ -565,6 +583,12 @@ Point PhysicsBody::getVelocityAtWorldPoint(const Point& point)
 
 void PhysicsBody::setAngularVelocity(float velocity)
 {
+    if (!_dynamic)
+    {
+        CCLOG("physics warning: your cann't set angular velocity for a static body.");
+        return;
+    }
+    
     cpBodySetAngVel(_info->getBody(), PhysicsHelper::float2cpfloat(velocity));
 }
 
@@ -598,7 +622,8 @@ void PhysicsBody::setMoment(float moment)
     _moment = moment;
     _momentDefault = false;
     
-    if (_rotationEnable)
+    // the static body's mass and moment is always infinity
+    if (_rotationEnable && _dynamic)
     {
         cpBodySetMoment(_info->getBody(), PhysicsHelper::float2cpfloat(_moment));
     }
@@ -775,11 +800,6 @@ Point PhysicsBody::local2World(const Point& point)
 {
     return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->getBody(), PhysicsHelper::point2cpv(point)));
 }
-
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
-
-#endif
 
 NS_CC_END
 

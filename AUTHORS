@@ -93,6 +93,7 @@ Developers:
     martell
         use tinyxml2 to replace libxml2
         Added Mingw-crt Support without breaking VS SDK
+        CMake support for windows.
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -658,6 +659,12 @@ Developers:
         
     bopohaa
         Fixed a bug that Webp test crashes.
+        
+    lajos
+        FontTest isn't rendered correctly with custom TTF font on Mac platform.
+        
+    hulefei
+        Added gui namespace before SEL_TouchEvent.
         
 Retired Core Developers:
     WenSheng Yang

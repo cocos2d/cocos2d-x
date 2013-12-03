@@ -53,6 +53,9 @@ public:
     static Bone *create(const char *name);
 
 public:
+    /**
+     *  @js ctor
+     */
     Bone();
     /**
      * @js NA
@@ -173,12 +176,15 @@ public:
     virtual Armature *getChildArmature() const;
 
     virtual DisplayManager *getDisplayManager() const { return _displayManager; }
-
+    /**
+     *  @lua NA
+     */
     virtual void setIgnoreMovementBoneData(bool ignore) { _ignoreMovementBoneData = ignore; }
     virtual bool isIgnoreMovementBoneData() const { return _ignoreMovementBoneData; }
 
     /*
      * This function is deprecated, please use isIgnoreMovementBoneData()
+     * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual bool getIgnoreMovementBoneData() const { return isIgnoreMovementBoneData(); }
 

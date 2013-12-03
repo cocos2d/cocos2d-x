@@ -85,6 +85,8 @@ public:
         S3TC,
         //! ATITC
         ATITC,
+        //! TGA
+        TGA,
         //! Raw Data
         RAW_DATA,
         //! Unknown format
@@ -193,7 +195,7 @@ public:
      @param    filePath        the file's absolute path, including file suffix.
      @param    isToRGB        whether the image is saved as RGB format.
      */
-    bool saveToFile(const char *filePath, bool isToRGB = true);
+    bool saveToFile(const std::string &filename, bool isToRGB = true);
 
 protected:
     bool initWithJpgData(const unsigned char *  data, int dataLen);
@@ -206,9 +208,11 @@ protected:
     bool initWithETCData(const unsigned char * data, int dataLen);
     bool initWithS3TCData(const unsigned char * data, int dataLen);
     bool initWithATITCData(const unsigned char *data, int dataLen);
+    typedef struct sImageTGA tImageTGA;
+    bool initWithTGAData(tImageTGA* tgaData);
 
-    bool saveImageToPNG(const char *filePath, bool isToRGB = true);
-    bool saveImageToJPG(const char *filePath);
+    bool saveImageToPNG(const std::string& filePath, bool isToRGB = true);
+    bool saveImageToJPG(const std::string& filePath);
     
 private:
     /**
@@ -227,6 +231,7 @@ private:
     int _numberOfMipmaps;
     // false if we cann't auto detect the image is premultiplied or not.
     bool _hasPremultipliedAlpha;
+    std::string _filePath;
 
 
 private:

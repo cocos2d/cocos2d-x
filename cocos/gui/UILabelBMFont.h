@@ -29,20 +29,19 @@
 
 namespace gui {
     
-/**
-*   @js NA
-*   @lua NA
-*/    
 class UILabelBMFont : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILabelBMFont();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~UILabelBMFont();
     

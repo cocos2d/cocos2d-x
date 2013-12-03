@@ -319,7 +319,7 @@ void SpriteFrameCache::removeUnusedSpriteFrames(void)
 void SpriteFrameCache::removeSpriteFrameByName(const std::string& name)
 {
     // explicit nil handling
-    if( ! name.size()>0 )
+    if( !(name.size()>0) )
         return;
 
     // Is this an alias ?

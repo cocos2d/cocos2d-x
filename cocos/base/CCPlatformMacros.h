@@ -234,18 +234,28 @@ public: virtual void set##funName(varType var)   \
 #define LUALOG(format, ...)     cocos2d::log(format, ##__VA_ARGS__)
 #endif // Lua engine debug
 
+// A macro to disallow the copy constructor and operator= functions
+// This should be used in the private: declarations for a class
 #if defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUG__ == 4) && (__GNUC_MINOR__ >= 4))) \
-    || (defined(__clang__) && (__clang_major__ >= 3))
-#define CC_DISABLE_COPY(Class) \
-private: \
-    Class(const Class &) = delete; \
-    Class &operator =(const Class &) = delete;
+	|| (defined(__clang__) && (__clang_major__ >= 3)) || (_MSC_VER >= 1800)
+#define CC_DISALLOW_COPY_AND_ASSIGN(TypeName) \
+    TypeName(const TypeName &) = delete; \
+    TypeName &operator =(const TypeName &) = delete;
 #else
-#define CC_DISABLE_COPY(Class) \
-private: \
-    Class(const Class &); \
-    Class &operator =(const Class &);
+#define CC_DISALLOW_COPY_AND_ASSIGN(TypeName) \
+    Class(const TypeName &); \
+    Class &operator =(const TypeName &);
 #endif
+
+// A macro to disallow all the implicit constructors, namely the
+// default constructor, copy constructor and operator= functions.
+//
+// This should be used in the private: declarations for a class
+// that wants to prevent anyone from instantiating it. This is
+// especially useful for classes containing only static methods.
+#define CC_DISALLOW_IMPLICIT_CONSTRUCTORS(TypeName)    \
+    TypeName();                                        \
+    CC_DISALLOW_COPY_AND_ASSIGN(TypeName)
 
 /*
  * only certain compilers support __attribute__((deprecated))

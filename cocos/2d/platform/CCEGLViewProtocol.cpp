@@ -177,7 +177,7 @@ bool EGLViewProtocol::isScissorEnabled()
 	return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
 }
 
-Rect EGLViewProtocol::getScissorRect()
+Rect EGLViewProtocol::getScissorRect() const
 {
 	GLfloat params[4];
 	glGetFloatv(GL_SCISSOR_BOX, params);
@@ -188,15 +188,12 @@ Rect EGLViewProtocol::getScissorRect()
 	return Rect(x, y, w, h);
 }
 
-void EGLViewProtocol::setViewName(const char* pszViewName)
+void EGLViewProtocol::setViewName(const std::string& viewname )
 {
-    if (pszViewName != NULL && strlen(pszViewName) > 0)
-    {
-        strncpy(_viewName, pszViewName, sizeof(_viewName));
-    }
+    _viewName = viewname;
 }
 
-const char* EGLViewProtocol::getViewName()
+const std::string& EGLViewProtocol::getViewName() const
 {
     return _viewName;
 }
