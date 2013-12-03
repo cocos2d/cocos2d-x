@@ -85,7 +85,8 @@ void NewClippingNode::visit()
     
     Renderer* renderer = Renderer::getInstance();
     
-    GroupCommand* groupCommand = new GroupCommand(0,_vertexZ);
+    GroupCommand* groupCommand = new GroupCommand();
+    groupCommand->init(0,_vertexZ);
     renderer->addCommand(groupCommand);
 
     renderer->pushGroup(groupCommand->getRenderQueueID());
