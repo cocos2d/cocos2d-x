@@ -199,7 +199,7 @@ public:
     /** Insert a certain object at a certain index */
     void insertObject(T object, long index)
     {
-        CCASSERT(index >= 0 && index < count(), "Invalid index!");
+        CCASSERT(index >= 0 && index <= count(), "Invalid index!");
         _data.insert((std::begin(_data) + index), object);
         object->retain();
     }
