@@ -30,25 +30,12 @@ THE SOFTWARE.
 #include "CCInteger.h"
 #include "CCEventListenerTouch.h"
 
-
 #include <vector>
 #include <stdarg.h>
 
 using namespace std;
 
 NS_CC_BEGIN
-
-static std::vector<unsigned int> ccarray_to_std_vector(Array* pArray)
-{
-    std::vector<unsigned int> ret;
-    Object* pObj;
-    CCARRAY_FOREACH(pArray, pObj)
-    {
-        Integer* pInteger = static_cast<Integer*>(pObj);
-        ret.push_back((unsigned int)pInteger->getValue());
-    }
-    return ret;
-}
 
 enum 
 {
@@ -238,7 +225,7 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
         }
     }
     
-    _selectedItem = this->itemForTouch(touch);
+    _selectedItem = this->getItemForTouch(touch);
     if (_selectedItem)
     {
         _state = Menu::State::TRACKING_TOUCH;
@@ -278,7 +265,7 @@ void Menu::onTouchCancelled(Touch* touch, Event* event)
 void Menu::onTouchMoved(Touch* touch, Event* event)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
-    MenuItem *currentItem = this->itemForTouch(touch);
+    MenuItem *currentItem = this->getItemForTouch(touch);
     if (currentItem != _selectedItem)
     {
         if (_selectedItem)
@@ -360,31 +347,29 @@ void Menu::alignItemsInColumns(int columns, ...)
 void Menu::alignItemsInColumns(int columns, va_list args)
 {
     CCASSERT(columns >= 0, "Columns must be >= 0");
-    Array* rows = Array::create();
+    ValueArray rows;
     while (columns)
     {
-        rows->addObject(Integer::create(columns));
+        rows.push_back(Value(columns));
         columns = va_arg(args, int);
     }
     alignItemsInColumnsWithArray(rows);
 }
 
-void Menu::alignItemsInColumnsWithArray(Array* rowsArray)
+void Menu::alignItemsInColumnsWithArray(const ValueArray& rows)
 {
-    vector<unsigned int> rows = ccarray_to_std_vector(rowsArray);
-
     int height = -5;
-    unsigned int row = 0;
-    unsigned int rowHeight = 0;
-    unsigned int columnsOccupied = 0;
-    unsigned int rowColumns;
+    int row = 0;
+    int rowHeight = 0;
+    int columnsOccupied = 0;
+    int rowColumns = 0;
 
     _children.forEach([&](Node* child){
         if (child)
         {
             CCASSERT(row < rows.size(), "");
             
-            rowColumns = rows[row];
+            rowColumns = rows[row].asInt();
             // can not have zero columns on a row
             CCASSERT(rowColumns, "");
             
@@ -422,7 +407,7 @@ void Menu::alignItemsInColumnsWithArray(Array* rowsArray)
             {
                 if (rowColumns == 0)
                 {
-                    rowColumns = rows[row];
+                    rowColumns = rows[row].asInt();
                     w = winSize.width / (1 + rowColumns);
                     x = w;
                 }
@@ -462,28 +447,26 @@ void Menu::alignItemsInRows(int rows, ...)
 
 void Menu::alignItemsInRows(int rows, va_list args)
 {
-    Array* pArray = Array::create();
+    ValueArray array;
     while (rows)
     {
-        pArray->addObject(Integer::create(rows));
+        array.push_back(Value(rows));
         rows = va_arg(args, int);
     }
-    alignItemsInRowsWithArray(pArray);
+    alignItemsInRowsWithArray(array);
 }
 
-void Menu::alignItemsInRowsWithArray(Array* columnArray)
+void Menu::alignItemsInRowsWithArray(const ValueArray& columns)
 {
-    vector<unsigned int> columns = ccarray_to_std_vector(columnArray);
-
-    vector<unsigned int> columnWidths;
-    vector<unsigned int> columnHeights;
+    vector<int> columnWidths;
+    vector<int> columnHeights;
 
     int width = -10;
     int columnHeight = -5;
-    unsigned int column = 0;
-    unsigned int columnWidth = 0;
-    unsigned int rowsOccupied = 0;
-    unsigned int columnRows;
+    int column = 0;
+    int columnWidth = 0;
+    int rowsOccupied = 0;
+    int columnRows;
 
     _children.forEach([&](Node* child){
         if (child)
@@ -491,7 +474,7 @@ void Menu::alignItemsInRowsWithArray(Array* columnArray)
             // check if too many menu items for the amount of rows/columns
             CCASSERT(column < columns.size(), "");
 
-            columnRows = columns[column];
+            columnRows = columns[column].asInt();
             // can't have zero rows on a column
             CCASSERT(columnRows, "");
 
@@ -532,7 +515,7 @@ void Menu::alignItemsInRowsWithArray(Array* columnArray)
         {
             if (columnRows == 0)
             {
-                columnRows = columns[column];
+                columnRows = columns[column].asInt();
                 y = (float) columnHeights[column];
             }
 
@@ -558,7 +541,7 @@ void Menu::alignItemsInRowsWithArray(Array* columnArray)
     });
 }
 
-MenuItem* Menu::itemForTouch(Touch *touch)
+MenuItem* Menu::getItemForTouch(Touch *touch)
 {
     Point touchLocation = touch->getLocation();
 
