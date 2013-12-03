@@ -245,7 +245,7 @@ void Renderer::render()
     //TODO give command back to command pool
     for (size_t j = 0 ; j < _renderGroups.size(); j++)
     {
-        for_each(_renderGroups[j].begin(), _renderGroups[j].end(), [](RenderCommand* cmd){delete cmd;});
+        for_each(_renderGroups[j].begin(), _renderGroups[j].end(), [](RenderCommand* cmd){ cmd->releaseToCommandPool(); });
         _renderGroups[j].clear();
     }
     
