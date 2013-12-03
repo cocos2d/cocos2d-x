@@ -929,7 +929,7 @@ LayerMultiplex::~LayerMultiplex()
     {
         for (auto& item : *_layers)
         {
-            static_cast<Layer*>(item)->cleanup();
+            dynamic_cast<Layer*>(static_cast<Object*>(item))->cleanup();
         }
         _layers->release();
     }

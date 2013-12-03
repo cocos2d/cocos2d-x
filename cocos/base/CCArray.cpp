@@ -196,7 +196,7 @@ bool Array::initWithArray(Array* otherArray)
     return true;
 }
 
-int Array::getIndexOfObject(Object* object) const
+long Array::getIndexOfObject(Object* object) const
 {
     auto it = data.begin();
 
@@ -258,12 +258,12 @@ void Array::addObjectsFromArray(Array* otherArray)
     data.insert(data.end(), otherArray->data.begin(), otherArray->data.end());
 }
 
-void Array::insertObject(Object* object, int index)
+void Array::insertObject(Object* object, long index)
 {
     data.insert( std::begin(data) + index, RCPtr<Object>(object) );
 }
 
-void Array::setObject(Object* object, int index)
+void Array::setObject(Object* object, long index)
 {
     data[index] = RCPtr<Object>(object);
 }

@@ -43,6 +43,7 @@
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
 #include "CCDrawNode.h"
+#include "ccCArray.h"
 #include "CCArray.h"
 #include "CCScene.h"
 #include "CCDirector.h"
@@ -201,13 +202,13 @@ void PhysicsWorld::debugDraw()
         {
             if (_debugDrawMask & DEBUGDRAW_SHAPE)
             {
-                for (Object* obj : *_bodies)
+                for (auto object : *_bodies)
                 {
-                    PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
+                    PhysicsBody* body = dynamic_cast<PhysicsBody*>(static_cast<Object*>(object));
                     
                     for (auto shape : *body->getShapes())
                     {
-                        _debugDraw->drawShape(*dynamic_cast<PhysicsShape*>(shape));
+                        _debugDraw->drawShape(*dynamic_cast<PhysicsShape*>(static_cast<Object*>(shape)));
                     }
                 }
             }
@@ -621,9 +622,9 @@ void PhysicsWorld::doAddBody(PhysicsBody* body)
         }
         
         // add shapes to space
-        for (auto shape : *body->getShapes())
+        for (auto object : *body->getShapes())
         {
-            addShape(dynamic_cast<PhysicsShape*>(shape));
+            addShape(dynamic_cast<PhysicsShape*>(static_cast<Object*>(object)));
         }
     }
 }
@@ -657,14 +658,14 @@ void PhysicsWorld::updateBodies()
         return;
     }
     
-    for (auto body : *_delayAddBodies)
+    for (auto object : *_delayAddBodies)
     {
-        doAddBody(dynamic_cast<PhysicsBody*>(body));
+        doAddBody(dynamic_cast<PhysicsBody*>(static_cast<Object*>(object)));
     }
     
-    for (auto body : *_delayRemoveBodies)
+    for (auto object : *_delayRemoveBodies)
     {
-        doRemoveBody(dynamic_cast<PhysicsBody*>(body));
+        doRemoveBody(dynamic_cast<PhysicsBody*>(static_cast<Object*>(object)));
     }
     
     _delayAddBodies->removeAllObjects();
@@ -673,9 +674,9 @@ void PhysicsWorld::updateBodies()
 
 void PhysicsWorld::removeBody(int tag)
 {
-    for (Object* obj : *_bodies)
+    for (auto object : *_bodies)
     {
-        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
+        PhysicsBody* body = dynamic_cast<PhysicsBody*>(static_cast<Object*>(object));
         if (body->getTag() == tag)
         {
             removeBody(body);
@@ -937,9 +938,9 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
     }
     
     // remove shaps
-    for (auto shape : *body->getShapes())
+    for (auto object : *body->getShapes())
     {
-        removeShape(dynamic_cast<PhysicsShape*>(shape));
+        removeShape(dynamic_cast<PhysicsShape*>(static_cast<Object*>(object)));
     }
     
     // remove body
@@ -953,9 +954,9 @@ void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
 
 void PhysicsWorld::removeAllBodies()
 {
-    for (Object* obj : *_bodies)
+    for (auto object : *_bodies)
     {
-        PhysicsBody* child = dynamic_cast<PhysicsBody*>(obj);
+        PhysicsBody* child = dynamic_cast<PhysicsBody*>(static_cast<Object*>(object));
         removeBodyOrDelay(child);
         child->_world = nullptr;
     }
@@ -981,11 +982,12 @@ Array* PhysicsWorld::getAllBodies() const
 
 PhysicsBody* PhysicsWorld::getBody(int tag) const
 {
-    for (auto body : *_bodies)
+    for (auto object : *_bodies)
     {
-        if (((PhysicsBody*)body)->getTag() == tag)
+        auto body = dynamic_cast<PhysicsBody*>(static_cast<Object*>(object));
+        if (body->getTag() == tag)
         {
-            return (PhysicsBody*)body;
+            return body;
         }
     }
     
@@ -996,9 +998,9 @@ void PhysicsWorld::setGravity(const Vect& gravity)
 {
     if (_bodies != nullptr)
     {
-        for (auto child : *_bodies)
+        for (auto object : *_bodies)
         {
-            PhysicsBody* body = dynamic_cast<PhysicsBody*>(child);
+            PhysicsBody* body = dynamic_cast<PhysicsBody*>(static_cast<Object*>(object));
             
             // reset gravity for body
             if (!body->isGravityEnabled())
