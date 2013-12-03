@@ -255,13 +255,14 @@ CCFrameData::CCFrameData(void)
     , tweenEasing(Linear)
     , isTween(true)
     , displayIndex(0)
-    , blendType(BLEND_NORMAL)
 
     , strEvent("")
     , strMovement("")
     , strSound("")
     , strSoundEffect("")
 {
+    blendFunc.src = CC_BLEND_SRC;
+    blendFunc.dst = CC_BLEND_DST;
 }
 
 CCFrameData::~CCFrameData(void)
@@ -277,7 +278,7 @@ void CCFrameData::copy(const CCBaseData *node)
 		duration = frameData->duration;
 		displayIndex = frameData->displayIndex;
 		tweenEasing = frameData->tweenEasing;
-		blendType = frameData->blendType;
+		blendFunc = frameData->blendFunc;
 		isTween = frameData->isTween;
 	}
 }
