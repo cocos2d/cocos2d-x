@@ -633,7 +633,7 @@ void PhysicsBody::setMoment(float moment)
 
 PhysicsShape* PhysicsBody::getShape(int tag) const
 {
-    for (auto object : *_shapes)
+    for (auto& object : *_shapes)
     {
         PhysicsShape* shape = dynamic_cast<PhysicsShape*>(static_cast<Object*>(object));
         if (shape->getTag() == tag)
@@ -647,7 +647,7 @@ PhysicsShape* PhysicsBody::getShape(int tag) const
 
 void PhysicsBody::removeShape(int tag, bool reduceMassAndMoment/* = true*/)
 {
-    for (auto object : *_shapes)
+    for (auto& object : *_shapes)
     {
         PhysicsShape* shape = dynamic_cast<PhysicsShape*>(static_cast<Object*>(object));
         if (shape->getTag() == tag)
@@ -686,7 +686,7 @@ void PhysicsBody::removeShape(PhysicsShape* shape, bool reduceMassAndMoment/* = 
 
 void PhysicsBody::removeAllShapes(bool reduceMassAndMoment/* = true*/)
 {
-    for (auto object : *_shapes)
+    for (auto& object : *_shapes)
     {
         PhysicsShape* shape = dynamic_cast<PhysicsShape*>(static_cast<Object*>(object));
         
@@ -759,7 +759,7 @@ void PhysicsBody::setCategoryBitmask(int bitmask)
 {
     _categoryBitmask = bitmask;
     
-    for (const auto object : *_shapes)
+    for (auto& object : *_shapes)
     {
         dynamic_cast<PhysicsShape*>(static_cast<Object*>(object))->setCategoryBitmask(bitmask);
     }
@@ -769,7 +769,7 @@ void PhysicsBody::setContactTestBitmask(int bitmask)
 {
     _contactTestBitmask = bitmask;
     
-    for (const auto object : *_shapes)
+    for (auto& object : *_shapes)
     {
         dynamic_cast<PhysicsShape*>(static_cast<Object*>(object))->setContactTestBitmask(bitmask);
     }
@@ -779,7 +779,7 @@ void PhysicsBody::setCollisionBitmask(int bitmask)
 {
     _collisionBitmask = bitmask;
     
-    for (const auto object : *_shapes)
+    for (auto& object : *_shapes)
     {
         dynamic_cast<PhysicsShape*>(static_cast<Object*>(object))->setCollisionBitmask(bitmask);
     }
@@ -787,7 +787,7 @@ void PhysicsBody::setCollisionBitmask(int bitmask)
 
 void PhysicsBody::setGroup(int group)
 {
-    for (auto object : *_shapes)
+    for (auto& object : *_shapes)
     {
         dynamic_cast<PhysicsShape*>(static_cast<Object*>(object))->setGroup(group);
     }
