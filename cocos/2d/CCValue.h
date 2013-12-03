@@ -321,31 +321,26 @@ public:
     
     ValueArray& asArray()
     {
-        CCASSERT(_type == Type::ARRAY, "");
         return _arrData;
     }
     
     const ValueArray& asArray() const
     {
-        CCASSERT(_type == Type::ARRAY, "");
         return _arrData;
     }
     
     ValueDict& asDict()
     {
-        CCASSERT(_type == Type::DICTIONARY, "");
         return _dictData;
     }
     
     const ValueDict& asDict() const
     {
-        CCASSERT(_type == Type::DICTIONARY, "");
         return _dictData;
     }
     
     IntValueDict& asIntKeyDict()
     {
-        CCASSERT(_type == Type::INT_KEY_DICT, "");
         return _intKeyDictData;
     }
     
