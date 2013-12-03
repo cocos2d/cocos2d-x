@@ -1648,8 +1648,8 @@ CCFrameData *CCDataReaderHelper::decodeFrame(const rapidjson::Value &json, DataI
 
 	frameData->tweenEasing = (CCTweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
 	frameData->displayIndex = DICTOOL->getIntValue_json(json, A_DISPLAY_INDEX);
-    frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC));
-    frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST));
+    frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, CC_BLEND_SRC));
+    frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, CC_BLEND_DST));
 	frameData->isTween = DICTOOL->getBooleanValue_json(json, A_TWEEN_FRAME, true);
 	const char *event =  DICTOOL->getStringValue_json(json, A_EVENT);
     
