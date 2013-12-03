@@ -105,11 +105,7 @@
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISwitch.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\CSContentJsonDictionary.cpp" />
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_value.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
@@ -240,18 +236,17 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISwitch.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h" />
-    <ClInclude Include="..\CocoStudio\Json\CSContentJsonDictionary.h" />
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\autolink.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\config.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\features.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\forwards.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_batchallocator.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_lib.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_tool.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\reader.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\value.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\document.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\filestream.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\pow10.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\stack.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\prettywriter.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\rapidjson.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\reader.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\stringbuffer.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\writer.h" />
     <ClInclude Include="..\CocoStudio\Reader\GUIReader.h" />
     <ClInclude Include="..\CocoStudio\Reader\SceneReader.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
@@ -298,12 +293,6 @@
     <ClInclude Include="..\spine\SlotData.h" />
     <ClInclude Include="..\spine\spine-cocos2dx.h" />
     <ClInclude Include="..\spine\spine.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\CocoStudio\Json\lib_json\json_internalarray.inl" />
-    <None Include="..\CocoStudio\Json\lib_json\json_internalmap.inl" />
-    <None Include="..\CocoStudio\Json\lib_json\json_valueiterator.inl" />
-    <None Include="..\CocoStudio\Json\lib_json\sconscript" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{f8a69a16-14eb-4e5c-8f99-4cbfc5a6e089}</ProjectGuid>
