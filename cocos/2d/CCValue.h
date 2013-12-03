@@ -68,6 +68,13 @@ public:
         _baseData.boolVal = v;
         _type = Type::BOOLEAN;
     }
+    
+    explicit Value(const char* v)
+    {
+        _strData = v;
+        _type = Type::STRING;
+    }
+    
     explicit Value(const std::string& v)
     {
         _strData = v;
