@@ -40,6 +40,8 @@
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
+#include "ccCArray.h"
+
 NS_CC_BEGIN
 extern const float PHYSICS_INFINITY;
 
@@ -631,9 +633,9 @@ void PhysicsBody::setMoment(float moment)
 
 PhysicsShape* PhysicsBody::getShape(int tag) const
 {
-    for (auto child : *_shapes)
+    for (auto& object : *_shapes)
     {
-        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
+        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(static_cast<Object*>(object));
         if (shape->getTag() == tag)
         {
             return shape;
@@ -645,9 +647,9 @@ PhysicsShape* PhysicsBody::getShape(int tag) const
 
 void PhysicsBody::removeShape(int tag, bool reduceMassAndMoment/* = true*/)
 {
-    for (auto child : *_shapes)
+    for (auto& object : *_shapes)
     {
-        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
+        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(static_cast<Object*>(object));
         if (shape->getTag() == tag)
         {
             removeShape(shape, reduceMassAndMoment);
@@ -684,9 +686,9 @@ void PhysicsBody::removeShape(PhysicsShape* shape, bool reduceMassAndMoment/* = 
 
 void PhysicsBody::removeAllShapes(bool reduceMassAndMoment/* = true*/)
 {
-    for (auto child : *_shapes)
+    for (auto& object : *_shapes)
     {
-        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
+        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(static_cast<Object*>(object));
         
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
@@ -757,9 +759,9 @@ void PhysicsBody::setCategoryBitmask(int bitmask)
 {
     _categoryBitmask = bitmask;
     
-    for (auto shape : *_shapes)
+    for (auto& object : *_shapes)
     {
-        ((PhysicsShape*)shape)->setCategoryBitmask(bitmask);
+        dynamic_cast<PhysicsShape*>(static_cast<Object*>(object))->setCategoryBitmask(bitmask);
     }
 }
 
@@ -767,9 +769,9 @@ void PhysicsBody::setContactTestBitmask(int bitmask)
 {
     _contactTestBitmask = bitmask;
     
-    for (auto shape : *_shapes)
+    for (auto& object : *_shapes)
     {
-        ((PhysicsShape*)shape)->setContactTestBitmask(bitmask);
+        dynamic_cast<PhysicsShape*>(static_cast<Object*>(object))->setContactTestBitmask(bitmask);
     }
 }
 
@@ -777,17 +779,17 @@ void PhysicsBody::setCollisionBitmask(int bitmask)
 {
     _collisionBitmask = bitmask;
     
-    for (auto shape : *_shapes)
+    for (auto& object : *_shapes)
     {
-        ((PhysicsShape*)shape)->setCollisionBitmask(bitmask);
+        dynamic_cast<PhysicsShape*>(static_cast<Object*>(object))->setCollisionBitmask(bitmask);
     }
 }
 
 void PhysicsBody::setGroup(int group)
 {
-    for (auto shape : *_shapes)
+    for (auto& object : *_shapes)
     {
-        ((PhysicsShape*)shape)->setGroup(group);
+        dynamic_cast<PhysicsShape*>(static_cast<Object*>(object))->setGroup(group);
     }
 }
 

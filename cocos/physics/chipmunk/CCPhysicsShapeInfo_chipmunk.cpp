@@ -46,7 +46,7 @@ PhysicsShapeInfo::PhysicsShapeInfo(PhysicsShape* shape)
 
 PhysicsShapeInfo::~PhysicsShapeInfo()
 {
-    for (auto shape : _shapes)
+    for (auto& shape : _shapes)
     {
         auto it = _map.find(shape);
         if (it != _map.end()) _map.erase(shape);

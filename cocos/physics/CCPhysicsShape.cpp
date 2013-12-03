@@ -782,7 +782,7 @@ void PhysicsShape::setGroup(int group)
 {
     if (group < 0)
     {
-        for (auto shape : _info->getShapes())
+        for (auto& shape : _info->getShapes())
         {
             cpShapeSetGroup(shape, (cpGroup)group);
         }
@@ -793,7 +793,7 @@ void PhysicsShape::setGroup(int group)
 
 bool PhysicsShape::containsPoint(const Point& point) const
 {
-    for (auto shape : _info->getShapes())
+    for (auto& shape : _info->getShapes())
     {
         if (cpShapePointQuery(shape, PhysicsHelper::point2cpv(point)))
         {

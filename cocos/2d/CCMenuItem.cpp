@@ -936,7 +936,7 @@ MenuItemToggle::~MenuItemToggle()
     {
         for (auto& item : *_subItems)
         {
-            static_cast<MenuItem*>(item)->cleanup();
+            dynamic_cast<MenuItem*>(static_cast<Object*>(item))->cleanup();
         }
         _subItems->release();
     }

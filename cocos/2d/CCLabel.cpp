@@ -251,9 +251,9 @@ void Label::alignText()
     int strLen = cc_wcslen(_currentUTF16String);  
     if (_children && _children->count() != 0)
     {
-        for (auto child: *_children)
+        for (const auto& child: *_children)
         {
-            Node* pNode = static_cast<Node*>( child );
+            Node* pNode = dynamic_cast<Node*>( static_cast<Object*>(child) );
             if (pNode)
             {
                 int tag = pNode->getTag();
@@ -596,9 +596,9 @@ void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
     _isOpacityModifyRGB = isOpacityModifyRGB;
     if (_children && _children->count() != 0)
     {
-        for (auto child: *_children)
+        for (const auto& child: *_children)
         {
-            Node* pNode = static_cast<Node*>( child );
+            Node* pNode = dynamic_cast<Node*>( static_cast<Object*>(child) );
             if (pNode)
             {
                 RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(pNode);
@@ -640,9 +640,9 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _displayedOpacity = _realOpacity * parentOpacity/255.0;
     
-    for (auto child: *_children)
+    for (const auto& child: *_children)
     {
-        Sprite *item = static_cast<Sprite*>( child );
+        Sprite *item = dynamic_cast<Sprite*>( static_cast<Object*>(child) );
 		item->updateDisplayedOpacity(_displayedOpacity);
 	}
     V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
@@ -706,9 +706,9 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
     
-	for (auto child: *_children)
+	for (const auto& child: *_children)
     {
-        Sprite *item = static_cast<Sprite*>( child );
+        Sprite *item = dynamic_cast<Sprite*>( static_cast<Object*>(child) );
 		item->updateDisplayedColor(_displayedColor);
 	}
 
