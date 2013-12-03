@@ -478,7 +478,7 @@ Array* Array::createWithContentsOfFile(const char* fileName)
 
 Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
 {
-    return FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
+    return nullptr;//FIXME:XXX  FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
 }
 
 bool Array::init()

@@ -70,7 +70,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         _minGID = layerInfo->_minGID;
         _maxGID = layerInfo->_maxGID;
         _opacity = layerInfo->_opacity;
-        setProperties(Dictionary::createWithDictionary(layerInfo->getProperties()));
+        setProperties(layerInfo->getProperties());
         _contentScaleFactor = Director::getInstance()->getContentScaleFactor(); 
 
         // tilesetInfo
@@ -119,7 +119,6 @@ TMXLayer::~TMXLayer()
 {
     CC_SAFE_RELEASE(_tileSet);
     CC_SAFE_RELEASE(_reusedTile);
-    CC_SAFE_RELEASE(_properties);
 
     if (_atlasIndexArray)
     {
@@ -193,28 +192,28 @@ void TMXLayer::setupTiles()
 }
 
 // TMXLayer - Properties
-String* TMXLayer::getProperty(const char *propertyName) const
+Value TMXLayer::getProperty(const std::string& propertyName) const
 {
-    return static_cast<String*>(_properties->objectForKey(propertyName));
+    if (_properties.find(propertyName) != _properties.end())
+        return _properties.at(propertyName);
+    
+    return Value();
 }
 
 void TMXLayer::parseInternalProperties()
 {
     // if cc_vertex=automatic, then tiles will be rendered using vertexz
 
-    String *vertexz = getProperty("cc_vertexz");
-    if (vertexz) 
+    auto vertexz = getProperty("cc_vertexz");
+    if (!vertexz.isNull())
     {
+        std::string vertexZStr = vertexz.asString();
         // If "automatic" is on, then parse the "cc_alpha_func" too
-        if (vertexz->_string == "automatic")
+        if (vertexZStr == "automatic")
         {
             _useAutomaticVertexZ = true;
-            String *alphaFuncVal = getProperty("cc_alpha_func");
-            float alphaFuncValue = 0.0f;
-            if (alphaFuncVal != NULL)
-            {
-                alphaFuncValue = alphaFuncVal->floatValue();
-            }
+            auto alphaFuncVal = getProperty("cc_alpha_func");
+            float alphaFuncValue = alphaFuncVal.asFloat();
             setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
 
             GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
@@ -228,7 +227,7 @@ void TMXLayer::parseInternalProperties()
         }
         else
         {
-            _vertexZvalue = vertexz->intValue();
+            _vertexZvalue = vertexz.asInt();
         }
     }
 }
@@ -395,7 +394,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
         Sprite* sp = static_cast<Sprite*>(child);
         if (child)
         {
-            unsigned int ai = sp->getAtlasIndex();
+            int ai = sp->getAtlasIndex();
             if ( ai >= indexForZ )
             {
                 sp->setAtlasIndex(ai+1);
@@ -406,6 +405,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
     _tiles[z] = gid;
     return tile;
 }
+
 Sprite * TMXLayer::updateTileForGID(unsigned int gid, const Point& pos)    
 {
     Rect rect = _tileSet->rectForGID(gid);
@@ -458,6 +458,7 @@ static inline int compareInts(const void * a, const void * b)
 {
     return ((*(int*)a) - (*(int*)b));
 }
+
 unsigned int TMXLayer::atlasIndexForExistantZ(unsigned int z)
 {
     int key=z;
@@ -468,6 +469,7 @@ unsigned int TMXLayer::atlasIndexForExistantZ(unsigned int z)
     int index = ((size_t)item - (size_t)_atlasIndexArray->arr) / sizeof(void*);
     return index;
 }
+
 unsigned int TMXLayer::atlasIndexForNewZ(int z)
 {
     // XXX: This can be improved with a sort of binary search

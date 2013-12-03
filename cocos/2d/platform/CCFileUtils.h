@@ -29,11 +29,10 @@ THE SOFTWARE.
 #include <unordered_map>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
-class Dictionary;
-class Array;
 /**
  * @addtogroup platform
  * @{
@@ -42,10 +41,7 @@ class Array;
 //! @brief  Helper class to handle file operations
 class CC_DLL FileUtils
 {
-    friend class Array;
-    friend class Dictionary;
 public:
-    
     /**
      *  Gets the instance of FileUtils.
      */
@@ -189,7 +185,7 @@ public:
      *  @param pFilenameLookupDict The dictionary for replacing filename.
      *  @since v2.1
      */
-    virtual void setFilenameLookupDictionary(Dictionary* filenameLookupDict);
+    virtual void setFilenameLookupDictionary(const ValueDict& filenameLookupDict);
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
@@ -300,6 +296,24 @@ public:
     virtual void setPopupNotify(bool notify);
     virtual bool isPopupNotify();
 
+    /**
+     *  Converts the contents of a file to a ValueDict.
+     *  @note This method is used internally.
+     */
+    virtual ValueDict fileToValueDict(const std::string& filename);
+    
+    /**
+     *  Write a ValueDict to a plist file.
+     *  @note This method is used internally.
+     */
+    virtual bool writeToFile(ValueDict dict, const std::string& fullPath);
+    
+    /**
+     *  Converts the contents of a file to a ValueArray.
+     *  @note This method is used internally.
+     */
+    virtual ValueArray fileToValueArray(const std::string& filename);
+    
 protected:
     /**
      *  The default constructor.
@@ -347,23 +361,6 @@ protected:
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename);
     
-    /**
-     *  Creates a dictionary by the contents of a file.
-     *  @note This method is used internally.
-     */
-    virtual Dictionary* createDictionaryWithContentsOfFile(const std::string& filename);
-    
-    /**
-     *  Write a dictionary to a plist file.
-     *  @note This method is used internally.
-     */
-    virtual bool writeToFile(Dictionary *dict, const std::string& fullPath);
-    
-    /**
-     *  Creates an array by the contents of a file.
-     *  @note This method is used internally.
-     */
-    virtual Array* createArrayWithContentsOfFile(const std::string& filename);
     
     /** Dictionary used to lookup filenames based on a key.
      *  It is used internally by the following methods:
@@ -372,7 +369,7 @@ protected:
      *
      *  @since v2.1
      */
-    Dictionary* _filenameLookupDict;
+    ValueDict _filenameLookupDict;
     
     /** 
      *  The vector contains resolution folders.
