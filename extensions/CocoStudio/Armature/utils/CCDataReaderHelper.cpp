@@ -1722,8 +1722,8 @@ CCContourData *CCDataReaderHelper::decodeContour(const rapidjson::Value &json)
 
 void CCDataReaderHelper::decodeNode(CCBaseData *node, const rapidjson::Value &json, DataInfo *dataInfo)
 {
-	node->x =  DICTOOL->getFloatValue_json(json, A_X) * s_PositionReadScale;
-    node->y = DICTOOL->getFloatValue_json(json, A_Y) * s_PositionReadScale;
+	node->x =  DICTOOL->getFloatValue_json(json, A_X) * dataInfo->contentScale;
+    node->y = DICTOOL->getFloatValue_json(json, A_Y) * dataInfo->contentScale;
 	node->zOrder = DICTOOL->getIntValue_json(json, A_Z);
 
     node->skewX = DICTOOL->getFloatValue_json(json, A_SKEW_X);
