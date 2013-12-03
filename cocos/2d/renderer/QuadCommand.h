@@ -17,7 +17,8 @@ NS_CC_BEGIN
 class QuadCommand : public RenderCommand
 {
 public:
-    QuadCommand(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount);
+    QuadCommand();
+    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount);
     ~QuadCommand();
 
     // +----------+----------+-----+-----------------------------------+

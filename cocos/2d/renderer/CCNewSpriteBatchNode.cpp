@@ -60,7 +60,8 @@ void NewSpriteBatchNode::draw()
 
     arrayMakeObjectsPerformSelector(_children, updateTransform, NewSprite*);
 
-    QuadCommand* cmd = new QuadCommand(0, _vertexZ, _textureAtlas->getTexture()->getName(), _shaderProgram, _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads());
+    QuadCommand* cmd = new QuadCommand();
+    cmd->init(0, _vertexZ, _textureAtlas->getTexture()->getName(), _shaderProgram, _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads());
     Renderer::getInstance()->addCommand(cmd);
 }
 
