@@ -1386,7 +1386,7 @@ public:
     /**
      *   update rotation and position from physics body
      */
-    virtual void updatePhysicsTransform();
+    virtual bool updatePhysicsTransform();
 
 #endif
     
