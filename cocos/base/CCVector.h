@@ -312,7 +312,7 @@ public:
         if (count() <= 0)
             return;
         
-        std::for_each(_data.cbegin(), _data.cend(), [&callback](T obj){
+        std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
             callback(obj);
         });
     }
@@ -322,7 +322,7 @@ public:
         if (count() <= 0)
             return;
         
-        std::for_each(_data.crbegin(), _data.crend(), [&callback](T obj){
+        std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
             callback(obj);
         });
     }

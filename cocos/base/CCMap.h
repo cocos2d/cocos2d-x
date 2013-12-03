@@ -150,7 +150,7 @@ public:
     
     void removeObjectsForKeys(const std::vector<K>& keys)
     {
-        std::for_each(keys.cbegin(), keys.cend(), [this](K key){
+        std::for_each(keys.cbegin(), keys.cend(), [this](const K& key){
             removeObjectForKey(key);
         });
     }
