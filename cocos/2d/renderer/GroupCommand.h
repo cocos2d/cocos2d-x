@@ -35,7 +35,8 @@ class GroupCommand : public RenderCommand
 {
 
 public:
-    GroupCommand(int viewport, int32_t depth);
+    GroupCommand();
+    void init(int viewport, int32_t depth);
     ~GroupCommand();
 
     // +----------+----------+-----+-----------------------------------+
