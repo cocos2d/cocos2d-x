@@ -15,7 +15,8 @@ using namespace std;
 class CustomCommand : public RenderCommand
 {
 public:
-    CustomCommand(int viewport, int32_t depth);
+    CustomCommand();
+    void init(int viewport, int32_t depth);
     ~CustomCommand();
 
     // +----------+----------+-----+-----------------------------------+
