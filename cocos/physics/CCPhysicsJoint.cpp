@@ -234,11 +234,11 @@ bool PhysicsJointPin::init(PhysicsBody *a, PhysicsBody *b, const Point& anchr)
     return false;
 }
 
-PhysicsJointLimit* PhysicsJointLimit::construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
+PhysicsJointLimit* PhysicsJointLimit::construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max)
 {
     PhysicsJointLimit* joint = new PhysicsJointLimit();
     
-    if (joint && joint->init(a, b, anchr1, anchr2))
+    if (joint && joint->init(a, b, anchr1, anchr2, min, max))
     {
         return joint;
     }
@@ -247,7 +247,12 @@ PhysicsJointLimit* PhysicsJointLimit::construct(PhysicsBody* a, PhysicsBody* b, 
     return nullptr;
 }
 
-bool PhysicsJointLimit::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
+PhysicsJointLimit* PhysicsJointLimit::construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2)
+{
+    return construct(a, b, anchr1, anchr2, 0, b->local2World(anchr1).getDistance(a->local2World(anchr2)));
+}
+
+bool PhysicsJointLimit::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max)
 {
     do
     {
@@ -256,8 +261,8 @@ bool PhysicsJointLimit::init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1
         cpConstraint* joint = cpSlideJointNew(getBodyInfo(a)->getBody(), getBodyInfo(b)->getBody(),
                                        PhysicsHelper::point2cpv(anchr1),
                                        PhysicsHelper::point2cpv(anchr2),
-                                       0,
-                                       PhysicsHelper::float2cpfloat(_bodyB->local2World(anchr1).getDistance(_bodyA->local2World(anchr2))));
+                                       PhysicsHelper::float2cpfloat(min),
+                                       PhysicsHelper::float2cpfloat(max));
         
         CC_BREAK_IF(joint == nullptr);
         
@@ -439,6 +444,40 @@ void PhysicsJointSpring::setDamping(float damping)
     cpDampedSpringSetDamping(_info->getJoints().front(), PhysicsHelper::float2cpfloat(damping));
 }
 
+PhysicsJointGroove* PhysicsJointGroove::construct(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr2)
+{
+    PhysicsJointGroove* joint = new PhysicsJointGroove();
+    
+    if (joint && joint->init(a, b, grooveA, grooveB, anchr2))
+    {
+        return joint;
+    }
+    
+    CC_SAFE_DELETE(joint);
+    return nullptr;
+}
+
+bool PhysicsJointGroove::init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr2)
+{
+    do {
+        CC_BREAK_IF(!PhysicsJoint::init(a, b));
+        
+        cpConstraint* joint = cpGrooveJointNew(getBodyInfo(a)->getBody(),
+                                               getBodyInfo(b)->getBody(),
+                                               PhysicsHelper::point2cpv(grooveA),
+                                               PhysicsHelper::point2cpv(grooveB),
+                                               PhysicsHelper::point2cpv(anchr2));
+        
+        CC_BREAK_IF(joint == nullptr);
+        
+        _info->add(joint);
+        
+        return true;
+    } while (false);
+    
+    return false;
+}
+
 Point PhysicsJointGroove::getGrooveA() const
 {
     return PhysicsHelper::cpv2point(cpGrooveJointGetGrooveA(_info->getJoints().front()));
@@ -533,11 +572,11 @@ void PhysicsJointRotarySpring::setDamping(float damping)
     cpDampedRotarySpringSetDamping(_info->getJoints().front(), PhysicsHelper::float2cpfloat(damping));
 }
 
-PhysicsJointRotaryLimit* PhysicsJointRotaryLimit::construct(PhysicsBody* a, PhysicsBody* b)
+PhysicsJointRotaryLimit* PhysicsJointRotaryLimit::construct(PhysicsBody* a, PhysicsBody* b, float min, float max)
 {
     PhysicsJointRotaryLimit* joint = new PhysicsJointRotaryLimit();
     
-    if (joint && joint->init(a, b))
+    if (joint && joint->init(a, b, min, max))
     {
         return joint;
     }
@@ -546,7 +585,12 @@ PhysicsJointRotaryLimit* PhysicsJointRotaryLimit::construct(PhysicsBody* a, Phys
     return nullptr;
 }
 
-bool PhysicsJointRotaryLimit::init(PhysicsBody* a, PhysicsBody* b)
+PhysicsJointRotaryLimit* PhysicsJointRotaryLimit::construct(PhysicsBody* a, PhysicsBody* b)
+{
+    return construct(a, b, 0.0f, 0.0f);
+}
+
+bool PhysicsJointRotaryLimit::init(PhysicsBody* a, PhysicsBody* b, float min, float max)
 {
     do
     {
@@ -554,8 +598,8 @@ bool PhysicsJointRotaryLimit::init(PhysicsBody* a, PhysicsBody* b)
         
         cpConstraint* joint = cpRotaryLimitJointNew(getBodyInfo(a)->getBody(),
                                                     getBodyInfo(b)->getBody(),
-                                                    0,
-                                                    PhysicsHelper::float2cpfloat(_bodyB->getRotation() - _bodyA->getRotation()));
+                                                    PhysicsHelper::float2cpfloat(min),
+                                                    PhysicsHelper::float2cpfloat(max));
         
         CC_BREAK_IF(joint == nullptr);
         
@@ -673,7 +717,7 @@ bool PhysicsJointGear::init(PhysicsBody* a, PhysicsBody* b, float phase, float r
         cpConstraint* joint = cpGearJointNew(getBodyInfo(a)->getBody(),
                                              getBodyInfo(b)->getBody(),
                                              PhysicsHelper::float2cpfloat(phase),
-                                             PhysicsHelper::cpfloat2float(ratio));
+                                             PhysicsHelper::float2cpfloat(ratio));
         
         CC_BREAK_IF(joint == nullptr);
         
