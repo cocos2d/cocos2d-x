@@ -198,9 +198,9 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary)
 bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::string& dirname)
 {
     bool bRet = false;
-    unsigned char *buffer = NULL;
-    unsigned char *deflated = NULL;
-    Image *image = NULL;
+    unsigned char *buffer = nullptr;
+    unsigned char *deflated = nullptr;
+    Image *image = nullptr;
     do 
     {
         int maxParticles = dictionary->valueForKey("maxParticles")->intValue();
@@ -393,11 +393,11 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
                     {
                         // if it fails, try to get it from the base64-gzipped data    
                         int decodeLen = base64Decode((unsigned char*)textureData, (unsigned int)dataLen, &buffer);
-                        CCASSERT( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
+                        CCASSERT( buffer != nullptr, "CCParticleSystem: error decoding textureImageData");
                         CC_BREAK_IF(!buffer);
                         
                         int deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
-                        CCASSERT( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
+                        CCASSERT( deflated != nullptr, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
                         // For android, we should retain it in VolatileTexture::addImage which invoked in Director::getInstance()->getTextureCache()->addUIImage()
