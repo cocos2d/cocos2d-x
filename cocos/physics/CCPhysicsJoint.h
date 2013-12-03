@@ -109,6 +109,7 @@ class PhysicsJointLimit : public PhysicsJoint
 {
 public:
     static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
     
     Point getAnchr1() const;
     void setAnchr1(const Point& anchr1);
@@ -120,7 +121,7 @@ public:
     void setMax(float max);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
     
 protected:
     PhysicsJointLimit() {}
@@ -225,6 +226,7 @@ protected:
 class PhysicsJointRotaryLimit : public PhysicsJoint
 {
 public:
+    static PhysicsJointRotaryLimit* construct(PhysicsBody* a, PhysicsBody* b, float min, float max);
     static PhysicsJointRotaryLimit* construct(PhysicsBody* a, PhysicsBody* b);
     
     float getMin() const;
@@ -233,7 +235,7 @@ public:
     void setMax(float max);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b);
+    bool init(PhysicsBody* a, PhysicsBody* b, float min, float max);
     
 protected:
     PhysicsJointRotaryLimit() {}
