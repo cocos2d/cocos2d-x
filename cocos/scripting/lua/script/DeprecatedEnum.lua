@@ -1,5 +1,6 @@
 require "Cocos2dConstants.lua"
 require "OpenglConstants.lua"
+require "StudioConstants.lua"
 --Enums will be deprecated,begin
 _G.kCCTextAlignmentLeft              = cc.TEXT_ALIGNMENT_LEFT
 _G.kCCTextAlignmentRight             = cc.TEXT_ALIGNMENT_RIGHT
@@ -479,3 +480,7 @@ _G.LAYOUT_PARAMETER_NONE                   = ccs.UILayoutParameterType.none
 _G.LAYOUT_PARAMETER_LINEAR                 = ccs.UILayoutParameterType.linear
 _G.LAYOUT_PARAMETER_RELATIVE               = ccs.UILayoutParameterType.relative
 
+_G.kCCScrollViewDirectionHorizontal        = cc.SCROLLVIEW_DIRECTION_HORIZONTAL
+_G.kCCScrollViewDirectionVertical          = cc.SCROLLVIEW_DIRECTION_VERTICAL
+_G.kCCTableViewFillTopDown                 = cc.TABLEVIEW_FILL_TOPDOWN
+_G.kCCTableViewFillBottomUp                = cc.TABLEVIEW_FILL_BOTTOMUP

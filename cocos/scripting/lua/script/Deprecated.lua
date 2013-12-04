@@ -725,24 +725,6 @@ local function tex2(u,v)
 end
 rawset(_G,"tex2",tex2) 
 
-local function CCPoint( x, y)
-    deprecatedTip("CCPoint(x,y)","cc.p(x,y)")
-    return cc.p(x,y)
-end
-rawset(_G,"CCPoint",CCPoint)
-
-local function CCSize( width, height)
-    deprecatedTip("CCSize(width,height)","cc.size(width,height)")
-    return cc.size(width,height)
-end
-rawset(_G,"CCSize",CCSize)
-
-local function CCRect( x,y, width, height)
-    deprecatedTip("CCRect(x,y,width,height)","cc.rect(x,y,width,height)")
-    return cc.rect(x,y,width,height)
-end
-rawset(_G,"CCRect",CCRect)
-
 --functions of CCControl will be deprecated end
 local CCControlDeprecated = { }
 function CCControlDeprecated.addHandleOfControlEvent(self,func,controlEvent)
@@ -1160,4 +1142,26 @@ end
 rawset(ActionManager,"purgeActionManager",ActionManagerDeprecated.purgeActionManager)
 --functions of ActionManager will be deprecated end
 
+--functions of CCEGLView will be deprecated begin
+local CCEGLViewDeprecated = { }
+function CCEGLViewDeprecated.sharedOpenGLView()
+    deprecatedTip("CCEGLView:sharedOpenGLView","cc.EGLView:getInstance")
+    return cc.EGLView:getInstance()
+end
+rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
+--functions of CCEGLView will be deprecated end
+
+--Enums of CCTableView will be deprecated begin
+rawset(CCTableView, "kTableViewScroll",cc.SCROLLVIEW_SCRIPT_SCROLL)
+rawset(CCTableView,"kTableViewZoom",cc.SCROLLVIEW_SCRIPT_ZOOM)
+rawset(CCTableView,"kTableCellTouched",cc.TABLECELL_TOUCHED)
+rawset(CCTableView,"kTableCellSizeForIndex",cc.TABLECELL_SIZE_FOR_INDEX)
+rawset(CCTableView,"kTableCellSizeAtIndex",cc.TABLECELL_SIZE_AT_INDEX)
+rawset(CCTableView,"kNumberOfCellsInTableView",cc.NUMBER_OF_CELLS_IN_TABLEVIEW)
+--Enums of CCTableView will be deprecated end
+
+--Enums of CCScrollView will be deprecated begin
+rawset(CCScrollView, "kScrollViewScroll",cc.SCROLLVIEW_SCRIPT_SCROLL)
+rawset(CCScrollView,"kScrollViewZoom",cc.SCROLLVIEW_SCRIPT_ZOOM)
+--Enums of CCScrollView will be deprecated end
 

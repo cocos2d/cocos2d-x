@@ -2110,3 +2110,29 @@ function DeprecatedClass.ActionObject()
 end
 _G["ActionObject"] = DeprecatedClass.ActionObject()
 --ActionObject class will be Deprecated,end
+
+--CCEGLViewProtocol class will be Deprecated,begin
+function DeprecatedClass.CCEGLViewProtocol()
+    deprecatedTip("CCEGLViewProtocol","cc.EGLViewProtocol")
+    return cc.EGLViewProtocol
+end
+_G["CCEGLViewProtocol"] = DeprecatedClass.CCEGLViewProtocol()
+--CCEGLViewProtocol class will be Deprecated,end
+
+--CCEGLView class will be Deprecated,begin
+function DeprecatedClass.CCEGLView()
+    deprecatedTip("CCEGLView","cc.EGLView")
+    return cc.EGLView
+end
+_G["CCEGLView"] = DeprecatedClass.CCEGLView()
+--CCEGLView class will be Deprecated,end
+
+--CCBProxy class will be Deprecated,begin
+function DeprecatedClass.CCBProxy()
+    deprecatedTip("CCBProxy","cc.CCBProxy")
+    return cc.CCBProxy
+end
+_G["CCBProxy"] = DeprecatedClass.CCBProxy()
+--CCBProxy class will be Deprecated,end
+
+
