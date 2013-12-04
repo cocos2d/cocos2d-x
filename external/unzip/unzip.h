@@ -398,9 +398,7 @@ int CC_DLL unzCloseCurrentFile OF((unzFile file));
   Return UNZ_CRCERROR if all the file was read but the CRC is not good
 */
 
-int CC_DLL unzReadCurrentFile OF((unzFile file,
-                      voidp buf,
-                      unsigned len));
+int CC_DLL unzReadCurrentFile OF((unzFile file,voidp buf, int len));
 /*
   Read bytes from the current file (opened by unzOpenCurrentFile)
   buf contain buffer where data must be copied

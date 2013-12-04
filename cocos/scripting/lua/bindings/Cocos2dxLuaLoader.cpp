@@ -46,7 +46,7 @@ extern "C"
         }
         filename.append(".lua");
         
-        long codeBufferSize = 0;
+        size_t codeBufferSize = 0;
         unsigned char* codeBuffer = FileUtils::getInstance()->getFileData(filename.c_str(), "rb", &codeBufferSize);
         
         if (codeBuffer)

@@ -221,7 +221,7 @@ String* String::create(const std::string& str)
     return ret;
 }
 
-String* String::createWithData(const unsigned char* data, unsigned long nLen)
+String* String::createWithData(const unsigned char* data, size_t nLen)
 {
     String* ret = NULL;
     if (data != NULL)
@@ -255,7 +255,7 @@ String* String::createWithFormat(const char* format, ...)
 
 String* String::createWithContentsOfFile(const char* filename)
 {
-    long size = 0;
+    size_t size = 0;
     unsigned char* data = 0;
     String* ret = NULL;
     data = FileUtils::getInstance()->getFileData(filename, "rb", &size);

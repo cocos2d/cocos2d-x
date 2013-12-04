@@ -404,7 +404,7 @@ void Node::setPositionY(float y)
     setPosition(Point(_position.x, y));
 }
 
-long Node::getChildrenCount() const
+size_t Node::getChildrenCount() const
 {
     return _children ? _children->count() : 0;
 }
@@ -756,7 +756,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
     
 }
 
-void Node::detachChild(Node *child, long childIndex, bool doCleanup)
+void Node::detachChild(Node *child, int childIndex, bool doCleanup)
 {
     // IMPORTANT:
     //  -1st do onExit

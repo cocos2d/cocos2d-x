@@ -622,7 +622,7 @@ public:
      *
      * @return The amount of children.
      */
-    long getChildrenCount() const;
+    size_t getChildrenCount() const;
 
     /**
      * Sets the parent node
@@ -1403,7 +1403,7 @@ protected:
     void insertChild(Node* child, int z);
 
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
-    void detachChild(Node *child, long index, bool doCleanup);
+    void detachChild(Node *child, int index, bool doCleanup);
 
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;

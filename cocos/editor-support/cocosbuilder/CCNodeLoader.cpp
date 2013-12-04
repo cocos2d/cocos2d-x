@@ -922,7 +922,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     
     // Load sub file
     std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName.c_str());
-    long size = 0;
+    size_t size = 0;
     unsigned char * pBytes = FileUtils::getInstance()->getFileData(path.c_str(), "rb", &size);
 
     CCBReader * reader = new CCBReader(pCCBReader);

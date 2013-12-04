@@ -446,7 +446,7 @@ void TextureCache::dumpCachedTextureInfo() const
         Texture2D* tex = it->second;
         unsigned int bpp = tex->getBitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
-        long bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
+        int bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
         totalBytes += bytes;
         count++;
         log("cocos2d: \"%s\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB",
@@ -607,7 +607,7 @@ void VolatileTextureMgr::reloadAllTextures()
         case VolatileTexture::kImageFile:
             {
                 Image* image = new Image();
-                long size = 0;
+                size_t size = 0;
                 unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &size);
                 
                 if (image && image->initWithImageData(pBuffer, size))

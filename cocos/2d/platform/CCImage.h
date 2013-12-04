@@ -121,10 +121,10 @@ public:
     * @js NA
     * @lua NA
     */
-    bool initWithImageData(const unsigned char * data, long dataLen);
+    bool initWithImageData(const unsigned char * data, size_t dataLen);
 
     // @warning kFmtRawData only support RGBA8888
-    bool initWithRawData(const unsigned char * data, long dataLen, long width, long height, long bitsPerComponent, bool preMulti = false);
+    bool initWithRawData(const unsigned char * data, size_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
     /**
     @brief Create image with specified string.
@@ -198,16 +198,16 @@ public:
     bool saveToFile(const std::string &filename, bool isToRGB = true);
 
 protected:
-    bool initWithJpgData(const unsigned char *  data, int dataLen);
-    bool initWithPngData(const unsigned char * data, int dataLen);
-    bool initWithTiffData(const unsigned char * data, int dataLen);
-    bool initWithWebpData(const unsigned char * data, int dataLen);
-    bool initWithPVRData(const unsigned char * data, int dataLen);
-    bool initWithPVRv2Data(const unsigned char * data, int dataLen);
-    bool initWithPVRv3Data(const unsigned char * data, int dataLen);
-    bool initWithETCData(const unsigned char * data, int dataLen);
-    bool initWithS3TCData(const unsigned char * data, int dataLen);
-    bool initWithATITCData(const unsigned char *data, int dataLen);
+    bool initWithJpgData(const unsigned char *  data, size_t dataLen);
+    bool initWithPngData(const unsigned char * data, size_t dataLen);
+    bool initWithTiffData(const unsigned char * data, size_t dataLen);
+    bool initWithWebpData(const unsigned char * data, size_t dataLen);
+    bool initWithPVRData(const unsigned char * data, size_t dataLen);
+    bool initWithPVRv2Data(const unsigned char * data, size_t dataLen);
+    bool initWithPVRv3Data(const unsigned char * data, size_t dataLen);
+    bool initWithETCData(const unsigned char * data, size_t dataLen);
+    bool initWithS3TCData(const unsigned char * data, size_t dataLen);
+    bool initWithATITCData(const unsigned char *data, size_t dataLen);
     typedef struct sImageTGA tImageTGA;
     bool initWithTGAData(tImageTGA* tgaData);
 
@@ -248,15 +248,15 @@ private:
      */
     bool initWithImageFileThreadSafe(const char *fullpath);
     
-    Format detectFormat(const unsigned char * data, int dataLen);
-    bool isPng(const unsigned char * data, int dataLen);
-    bool isJpg(const unsigned char * data, int dataLen);
-    bool isTiff(const unsigned char * data, int dataLen);
-    bool isWebp(const unsigned char * data, int dataLen);
-    bool isPvr(const unsigned char * data, int dataLen);
-    bool isEtc(const unsigned char * data, int dataLen);
-    bool isS3TC(const unsigned char * data,int dataLen);
-    bool isATITC(const unsigned char *data, int dataLen);
+    Format detectFormat(const unsigned char * data, size_t dataLen);
+    bool isPng(const unsigned char * data, size_t dataLen);
+    bool isJpg(const unsigned char * data, size_t dataLen);
+    bool isTiff(const unsigned char * data, size_t dataLen);
+    bool isWebp(const unsigned char * data, size_t dataLen);
+    bool isPvr(const unsigned char * data, size_t dataLen);
+    bool isEtc(const unsigned char * data, size_t dataLen);
+    bool isS3TC(const unsigned char * data,size_t dataLen);
+    bool isATITC(const unsigned char *data, size_t dataLen);
 };
 
 // end of platform group

@@ -115,7 +115,7 @@ bool SAXParser::parse(const char* pXMLData, unsigned int uDataLength)
 bool SAXParser::parse(const char *pszFile)
 {
     bool ret = false;
-    long size = 0;
+    size_t size = 0;
     char* pBuffer = (char*)FileUtils::getInstance()->getFileData(pszFile, "rt", &size);
     if (pBuffer != NULL && size > 0)
     {

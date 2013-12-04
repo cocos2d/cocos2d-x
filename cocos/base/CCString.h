@@ -164,7 +164,7 @@ public:
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
-    static String* createWithData(const unsigned char* pData, unsigned long nLen);
+    static String* createWithData(const unsigned char* pData, size_t nLen);
 
     /** create a string with a file, 
      *  @return A String pointer which is an autorelease object pointer,

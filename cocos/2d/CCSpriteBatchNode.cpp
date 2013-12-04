@@ -64,7 +64,7 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, int capacity
 * creation with File Image
 */
 
-SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, long capacity/* = DEFAULT_CAPACITY*/)
+SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, int capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
@@ -76,7 +76,7 @@ SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, long capacity/* 
 /*
 * init with Texture2D
 */
-bool SpriteBatchNode::initWithTexture(Texture2D *tex, long capacity)
+bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
@@ -112,7 +112,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const char* fileImage, long capacity)
+bool SpriteBatchNode::initWithFile(const char* fileImage, int capacity)
 {
     Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
@@ -408,7 +408,7 @@ void SpriteBatchNode::draw(void)
     CC_PROFILER_STOP("CCSpriteBatchNode - draw");
 }
 
-void SpriteBatchNode::increaseAtlasCapacity(void)
+void SpriteBatchNode::increaseAtlasCapacity()
 {
     // if we're going beyond the current TextureAtlas's capacity,
     // all the previously initialized sprites will need to redo their texture coords
