@@ -237,14 +237,14 @@ public: virtual void set##funName(varType var)   \
 // A macro to disallow the copy constructor and operator= functions
 // This should be used in the private: declarations for a class
 #if defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUG__ == 4) && (__GNUC_MINOR__ >= 4))) \
-|| (defined(__clang__) && (__clang_major__ >= 3))
+	|| (defined(__clang__) && (__clang_major__ >= 3)) || (_MSC_VER >= 1800)
 #define CC_DISALLOW_COPY_AND_ASSIGN(TypeName) \
     TypeName(const TypeName &) = delete; \
     TypeName &operator =(const TypeName &) = delete;
 #else
 #define CC_DISALLOW_COPY_AND_ASSIGN(TypeName) \
-    Class(const TypeName &); \
-    Class &operator =(const TypeName &);
+    TypeName(const TypeName &); \
+    TypeName &operator =(const TypeName &);
 #endif
 
 // A macro to disallow all the implicit constructors, namely the
