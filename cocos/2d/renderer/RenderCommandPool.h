@@ -27,27 +27,25 @@ public:
 //        {
 //            CCLOG("All RenderCommand should not be used when Pool is released!");
 //        }
-        for (typename std::list<T*>::iterator iter = _freePool.begin(); iter != _freePool.end(); ++iter)
+        _freePool.clear();
+        for (typename std::list<T*>::iterator iter = _allocatedPoolBlocks.begin(); iter != _allocatedPoolBlocks.end(); ++iter)
         {
-            delete *iter;
+            delete[] *iter;
             *iter = nullptr;
         }
-        _freePool.clear();
+        _allocatedPoolBlocks.clear();
     }
     
 public:
     T* generateCommand()
     {
         T* result = nullptr;
-        if(0 == _freePool.size())
+        if(_freePool.empty())
         {
-            result = new T();
+            AllocateCommands();
         }
-        else
-        {
-            result = _freePool.front();
-            _freePool.pop_front();
-        }
+        result = _freePool.front();
+        _freePool.pop_front();
         //_usedPool.insert(result);
         return result;
     }
@@ -64,8 +62,19 @@ public:
         //_usedPool.erase(ptr);
         
     }
-    
 private:
+    void AllocateCommands()
+    {
+        static const int COMMANDS_ALLOCATE_BLOCK_SIZE = 32;
+        T* commands = new T[COMMANDS_ALLOCATE_BLOCK_SIZE];
+        _allocatedPoolBlocks.push_back(commands);
+        for(int index = 0; index < COMMANDS_ALLOCATE_BLOCK_SIZE; ++index)
+        {
+            _freePool.push_back(commands+index);
+        }
+    }
+private:
+    std::list<T*> _allocatedPoolBlocks;
     std::list<T*> _freePool;
     //std::set<T*> _usedPool;
 };
