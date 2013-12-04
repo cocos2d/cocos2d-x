@@ -10,6 +10,7 @@
 #define __cocos2d_libs__CCConsole__
 
 #include <thread>
+#include <vector>
 
 #include "ccMacros.h"
 #include "base/CCObject.h"
@@ -49,8 +50,10 @@ protected:
 
     // file descriptor: socket, console, etc.
     int _listenfd;
-    int _max_fd;
+    int _maxfd;
+    std::vector<int> _fds;
     std::thread _thread;
+
     bool _running;
     bool _endThread;
 
