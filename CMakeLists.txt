@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 project (Cocos2dx)
 
 # The version number
@@ -6,6 +6,26 @@ set(Cocos2dxSamples_VERSION_MAJOR 3)
 set(Cocos2dxSamples_VERSION_MINOR 0)
 
 include(build/BuildHelpers.CMakeLists.txt)
+
+if(WIN32 OR APPLE)
+
+option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
+option(USE_BOX2D "Use box2d for physics library" OFF)
+option(DEBUG_MODE "Debug or release?" ON)
+option(BUILD_LIBS_LUA "Build lua libraries" OFF)
+option(BUILD_GUI "Build GUI library" OFF)
+option(BUILD_NETWORK "Build network library" OFF)
+option(BUILD_EXTENSIONS "Build extension library" OFF)
+option(BUILD_EDITOR_SPINE "Build editor support for spine" OFF)
+option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" OFF)
+option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" OFF)
+
+option(BUILD_HelloCpp "Only build HelloCpp sample" ON)
+option(BUILD_TestCpp "Only build TestCpp sample" OFF)
+option(BUILD_HelloLua "Only build HelloLua sample" OFF)
+option(BUILD_TestLua "Only build TestLua sample" OFF)
+
+else()#temp
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
@@ -24,6 +44,8 @@ option(BUILD_TestCpp "Only build TestCpp sample" ON)
 option(BUILD_HelloLua "Only build HelloLua sample" ON)
 option(BUILD_TestLua "Only build TestLua sample" ON)
 
+endif()#temp
+
 
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
@@ -31,18 +53,47 @@ else(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE RELEASE)
 endif(DEBUG_MODE)
 
-set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
+set(CMAKE_C_FLAGS_DEBUG "-DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
+if(WIN32)
+  ADD_DEFINITIONS (-D_USRDLL -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
+
+  if(MSVC)
+    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS 
+					-D_SCL_SECURE_NO_WARNINGS 
+					-wd4251 -wd4244 -wd4334 
+					-wd4005 -wd4820 -wd4710
+					-wd4514 -wd4056 -wd4996 -wd4099)
+  else(MSVC)#MINGW
+  
+  endif(MSVC)
+elseif(APPLE)
+
+
+else()#Linux
+ADD_DEFINITIONS(-DLINUX)
+endif()
+
+
+if(NOT MSVC)# all gcc
+set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
+set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-std=c99")
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11")
+endif()
+
+if(MINGW)
+  add_definitions(-DGLEW_STATIC)
+endif()
+
 
 if(USE_CHIPMUNK)
   message("Using chipmunk ...")
-  add_definitions(-DLINUX -DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
+  add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
 elseif(USE_BOX2D)
   message("Using box2d ...")
-  add_definitions(-DLINUX -DCC_ENABLE_BOX2D_INTEGRATION=1)
+  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
 else(USE_CHIPMUNK)
   message(FATAL_ERROR "Must choose a physics library.")
 endif(USE_CHIPMUNK)
@@ -54,40 +105,93 @@ else()
 set(ARCH_DIR "32-bit")
 endif()
 
+if(WIN32) # Win32
+  set(PLATFORM_FOLDER win32)
+elseif(APPLE)# osx or ios
+  set(PLATFORM_FOLDER mac)
+else() # Assume Linux
+  set(PLATFORM_FOLDER linux)
+endif()
+
 include_directories(
-  .
-  cocos
-  cocos/audio/include
-  cocos/2d
-  cocos/2d/platform
-  cocos/2d/platform/linux
-  cocos/base
-  cocos/physics
-  cocos/editor-support
-  cocos/math/kazmath/include
-  extensions
-  external
-  external/jpeg/include/linux
-  external/tiff/include/linux
-  external/webp/include/linux
-  external/glfw3/include/linux
-  external/curl/include/linux/${ARCH_DIR}
-  external/tinyxml2
-  external/unzip
-  external/chipmunk/include/chipmunk
-  external/freetype2/include/linux
-  external/linux-specific/fmod/include/${ARCH_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/audio/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/physics
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/editor-support
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/math/kazmath/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/extensions
+  ${CMAKE_CURRENT_SOURCE_DIR}/external
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
 )
 
-link_directories(
-  /usr/local/lib
-  ${CMAKE_SOURCE_DIR}/external/jpeg/prebuilt/linux/${ARCH_DIR}
-  ${CMAKE_SOURCE_DIR}/external/tiff/prebuilt/linux/${ARCH_DIR}
-  ${CMAKE_SOURCE_DIR}/external/webp/prebuilt/linux/${ARCH_DIR}
-  ${CMAKE_SOURCE_DIR}/external/freetype2/prebuilt/linux/${ARCH_DIR}
-  ${CMAKE_SOURCE_DIR}/external/curl/prebuilt/linux/${ARCH_DIR}
-  ${CMAKE_SOURCE_DIR}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
-)
+if(WIN32)
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/icon/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/zlib/include
+	external/curl/include/${PLATFORM_FOLDER}
+  )
+elseif(APPLE)
+  include_directories(
+  	${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
+  )
+else()
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/fmod/include/${ARCH_DIR}
+	  ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}/${ARCH_DIR}
+  )
+endif()
+
+
+if(WIN32)
+
+  if(NOT MINGW)
+  link_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER}
+	${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/icon/prebuilt
+	${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/zlib/prebuilt
+  )
+  endif()
+
+  link_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/gles/prebuilt
+  )
+
+elseif(APPLE)
+
+else()
+
+  link_directories(
+    /usr/local/lib
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/fmod/prebuilt/${ARCH_DIR}
+  )
+
+endif()
 
 
 # kazmath
