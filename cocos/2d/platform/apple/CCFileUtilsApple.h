@@ -47,7 +47,7 @@ public:
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) override;
     
     virtual ValueDict fileToValueDict(const std::string& filename) override;
-    virtual bool writeToFile(ValueDict dict, const std::string& fullPath) override;
+    virtual bool writeToFile(ValueDict& dict, const std::string& fullPath) override;
     
     virtual ValueArray fileToValueArray(const std::string& filename) override;
 };

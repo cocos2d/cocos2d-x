@@ -327,7 +327,7 @@ ValueDict FileUtilsApple::fileToValueDict(const std::string& filename)
     return ret;
 }
 
-bool FileUtilsApple::writeToFile(ValueDict dict, const std::string &fullPath)
+bool FileUtilsApple::writeToFile(ValueDict& dict, const std::string &fullPath)
 {
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];

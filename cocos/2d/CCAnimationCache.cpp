@@ -59,7 +59,6 @@ bool AnimationCache::init()
 }
 
 AnimationCache::AnimationCache()
-: _animations(NULL)
 {
 }
 

@@ -511,7 +511,6 @@ protected:
      */
     MenuItemToggle()
     : _selectedIndex(0)
-    , _subItems(NULL)
     {}
     /**
      * @js NA

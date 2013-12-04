@@ -306,7 +306,7 @@ public:
      *  Write a ValueDict to a plist file.
      *  @note This method is used internally.
      */
-    virtual bool writeToFile(ValueDict dict, const std::string& fullPath);
+    virtual bool writeToFile(ValueDict& dict, const std::string& fullPath);
     
     /**
      *  Converts the contents of a file to a ValueArray.

@@ -72,7 +72,7 @@ public:
 
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-    SpriteFrameCache() : _spriteFrames(NULL), _spriteFramesAliases(NULL){}
+    SpriteFrameCache(){}
 
 public:
     /**

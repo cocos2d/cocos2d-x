@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "CCSAXParser.h"
-#include "CCDictionary.h"
 #include "CCFileUtils.h"
 #include "tinyxml2.h"
 

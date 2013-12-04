@@ -72,6 +72,7 @@ THE SOFTWARE.
 #include "CCString.h"
 #include "CCNS.h"
 #include "CCData.h"
+#include "CCValue.h"
 
 // draw nodes
 #include "CCDrawingPrimitives.h"

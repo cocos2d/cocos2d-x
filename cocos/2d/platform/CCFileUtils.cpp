@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCFileUtils.h"
+#include "ccMacros.h"
 #include "CCDirector.h"
-#include "CCDictionary.h"
 #include "CCSAXParser.h"
 #include "tinyxml2.h"
 #include "unzip.h"
@@ -72,12 +72,7 @@ public:
 
 public:
     DictMaker()        
-        : _resultType(SAX_RESULT_NONE),
-          _rootArray(NULL), 
-          _rootDict(NULL),
-          _curDict(NULL),
-          _state(SAX_NONE),
-          _array(NULL)
+        : _resultType(SAX_RESULT_NONE)
     {
     }
 
@@ -85,30 +80,24 @@ public:
     {
     }
 
-    Dictionary* dictionaryWithContentsOfFile(const char *pFileName)
+    ValueDict& dictionaryWithContentsOfFile(const char *pFileName)
     {
         _resultType = SAX_RESULT_DICT;
         SAXParser parser;
 
-        if (false == parser.init("UTF-8"))
-        {
-            return NULL;
-        }
+        CCASSERT(parser.init("UTF-8"), "The file format isn't UTF-8");
         parser.setDelegator(this);
 
         parser.parse(pFileName);
         return _rootDict;
     }
 
-    Array* arrayWithContentsOfFile(const char* pFileName)
+    ValueArray& arrayWithContentsOfFile(const char* pFileName)
     {
         _resultType = SAX_RESULT_ARRAY;
         SAXParser parser;
 
-        if (false == parser.init("UTF-8"))
-        {
-            return NULL;
-        }
+        CCASSERT(parser.init("UTF-8"), "The file format isn't UTF-8");
         parser.setDelegator(this);
 
         parser.parse(pFileName);
@@ -122,12 +111,9 @@ public:
         std::string sName((char*)name);
         if( sName == "dict" )
         {
-            _curDict = new Dictionary();
-            if(_resultType == SAX_RESULT_DICT && _rootDict == NULL)
+            if(_resultType == SAX_RESULT_DICT && _rootDict.empty())
             {
-                // Because it will call _curDict->release() later, so retain here.
                 _rootDict = _curDict;
-                _rootDict->retain();
             }
             _state = SAX_DICT;
 
@@ -140,18 +126,15 @@ public:
             if (SAX_ARRAY == preState)
             {
                 // add the dictionary into the array
-                _array->addObject(_curDict);
+                _array.push_back(Value(_curDict));
             }
             else if (SAX_DICT == preState)
             {
                 // add the dictionary into the pre dictionary
                 CCASSERT(! _dictStack.empty(), "The state is wrong!");
-                Dictionary* pPreDict = _dictStack.top();
-                pPreDict->setObject(_curDict, _curKey.c_str());
+                ValueDict& pPreDict = _dictStack.top();
+                pPreDict[_curKey] = Value(_curDict);
             }
-
-            _curDict->release();
-
             // record the dict state
             _stateStack.push(_state);
             _dictStack.push(_curDict);
@@ -175,12 +158,10 @@ public:
         else if (sName == "array")
         {
             _state = SAX_ARRAY;
-            _array = new Array();
-            _array->init();
-            if (_resultType == SAX_RESULT_ARRAY && _rootArray == NULL)
+
+            if (_resultType == SAX_RESULT_ARRAY && _rootArray.empty())
             {
                 _rootArray = _array;
-                _rootArray->retain();
             }
             SAXState preState = SAX_NONE;
             if (! _stateStack.empty())
@@ -190,15 +171,14 @@ public:
 
             if (preState == SAX_DICT)
             {
-                _curDict->setObject(_array, _curKey.c_str());
+                _curDict[_curKey] = Value(_array);
             }
             else if (preState == SAX_ARRAY)
             {
                 CCASSERT(! _arrayStack.empty(), "The state is wrong!");
-                Array* pPreArray = _arrayStack.top();
-                pPreArray->addObject(_array);
+                ValueArray& pPreArray = _arrayStack.top();
+                pPreArray.push_back(Value(_array));
             }
-            _array->release();
             // record the array state
             _stateStack.push(_state);
             _arrayStack.push(_array);
@@ -234,44 +214,47 @@ public:
         }
         else if (sName == "true")
         {
-            String *str = new String("1");
             if (SAX_ARRAY == curState)
             {
-                _array->addObject(str);
+                _array.push_back(Value(true));
             }
             else if (SAX_DICT == curState)
             {
-                _curDict->setObject(str, _curKey.c_str());
+                _curDict[_curKey] = Value(true);
             }
-            str->release();
         }
         else if (sName == "false")
         {
-            String *str = new String("0");
             if (SAX_ARRAY == curState)
             {
-                _array->addObject(str);
+                _array.push_back(Value(false));
             }
             else if (SAX_DICT == curState)
             {
-                _curDict->setObject(str, _curKey.c_str());
+                _curDict[_curKey] = Value(false);
             }
-            str->release();
         }
         else if (sName == "string" || sName == "integer" || sName == "real")
         {
-            String* pStrValue = new String(_curValue);
-
             if (SAX_ARRAY == curState)
             {
-                _array->addObject(pStrValue);
+                if (sName == "string")
+                    _array.push_back(Value(_curValue));
+                else if (sName == "integer")
+                    _array.push_back(Value(atoi(_curValue.c_str())));
+                else
+                    _array.push_back(Value(atof(_curValue.c_str())));
             }
             else if (SAX_DICT == curState)
             {
-                _curDict->setObject(pStrValue, _curKey.c_str());
+                if (sName == "string")
+                    _curDict[_curKey] = Value(_curValue);
+                else if (sName == "integer")
+                    _curDict[_curKey] = Value(atoi(_curValue.c_str()));
+                else
+                    _curDict[_curKey] = Value(atof(_curValue.c_str()));
             }
 
-            pStrValue->release();
             _curValue.clear();
         }
         
@@ -287,12 +270,12 @@ public:
         }
 
         SAXState curState = _stateStack.empty() ? SAX_DICT : _stateStack.top();
-        String *pText = new String(std::string((char*)ch,0,len));
+        std::string text = std::string((char*)ch,0,len);
 
         switch(_state)
         {
         case SAX_KEY:
-            _curKey = pText->getCString();
+            _curKey = text;
             break;
         case SAX_INT:
         case SAX_REAL:
@@ -303,49 +286,48 @@ public:
                     CCASSERT(!_curKey.empty(), "key not found : <integer/real>");
                 }
                 
-                _curValue.append(pText->getCString());
+                _curValue.append(text);
             }
             break;
         default:
             break;
         }
-        pText->release();
     }
 };
 
-Dictionary* FileUtils::createDictionaryWithContentsOfFile(const std::string& filename)
+ValueDict FileUtils::fileToValueDict(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
-    return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
+    return std::move(tMaker.dictionaryWithContentsOfFile(fullPath.c_str()));
 }
 
-Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename)
+ValueArray FileUtils::fileToValueArray(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
-    return tMaker.arrayWithContentsOfFile(fullPath.c_str());
+    return std::move(tMaker.arrayWithContentsOfFile(fullPath.c_str()));
 }
 
 
 /*
  * forward statement
  */
-static tinyxml2::XMLElement* generateElementForArray(cocos2d::Array *array, tinyxml2::XMLDocument *pDoc);
-static tinyxml2::XMLElement* generateElementForDict(cocos2d::Dictionary *dict, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForArray(ValueArray& array, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForDict(ValueDict& dict, tinyxml2::XMLDocument *pDoc);
 
 /*
  * Use tinyxml2 to write plist files
  */
-bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPath)
+bool FileUtils::writeToFile(ValueDict& dict, const std::string &fullPath)
 {
     //CCLOG("tinyxml2 Dictionary %d writeToFile %s", dict->_ID, fullPath.c_str());
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
-    if (NULL == pDoc)
+    if (nullptr == pDoc)
         return false;
     
     tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");
-    if (NULL == pDeclaration)
+    if (nullptr == pDeclaration)
     {
         delete pDoc;
         return false;
@@ -357,7 +339,7 @@ bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPa
     
     tinyxml2::XMLElement *pRootEle = pDoc->NewElement("plist");
     pRootEle->SetAttribute("version", "1.0");
-    if (NULL == pRootEle)
+    if (nullptr == pRootEle)
     {
         delete pDoc;
         return false;
@@ -365,7 +347,7 @@ bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPa
     pDoc->LinkEndChild(pRootEle);
     
     tinyxml2::XMLElement *innerDict = generateElementForDict(dict, pDoc);
-    if (NULL == innerDict )
+    if (nullptr == innerDict )
     {
         delete pDoc;
         return false;
@@ -381,46 +363,64 @@ bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPa
 /*
  * Generate tinyxml2::XMLElement for Object through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForObject(cocos2d::Object *object, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XMLDocument *pDoc)
 {
     // object is String
-    if (String *str = dynamic_cast<String *>(object))
+    if (value.getType() == Value::Type::STRING)
     {
         tinyxml2::XMLElement* node = pDoc->NewElement("string");
-        tinyxml2::XMLText* content = pDoc->NewText(str->getCString());
+        tinyxml2::XMLText* content = pDoc->NewText(value.asString().c_str());
         node->LinkEndChild(content);
         return node;
     }
     
+    // object is integer
+    if (value.getType() == Value::Type::INTEGER)
+    {
+        tinyxml2::XMLElement* node = pDoc->NewElement("integer");
+        tinyxml2::XMLText* content = pDoc->NewText(value.asString().c_str());
+        node->LinkEndChild(content);
+        return node;
+    }
+
+    // object is real
+    if (value.getType() == Value::Type::FLOAT || value.getType() == Value::Type::DOUBLE)
+    {
+        tinyxml2::XMLElement* node = pDoc->NewElement("real");
+        tinyxml2::XMLText* content = pDoc->NewText(value.asString().c_str());
+        node->LinkEndChild(content);
+        return node;
+    }
+
+    //FIXME:XXX How to deal with Boolean ??
+
     // object is Array
-    if (Array *array = dynamic_cast<Array *>(object))
-        return generateElementForArray(array, pDoc);
+    if (value.getType() == Value::Type::ARRAY)
+        return generateElementForArray(value.asArray(), pDoc);
     
     // object is Dictionary
-    if (Dictionary *innerDict = dynamic_cast<Dictionary *>(object))
-        return generateElementForDict(innerDict, pDoc);
+    if (value.getType() == Value::Type::DICTIONARY)
+        return generateElementForDict(value.asDict(), pDoc);
     
     CCLOG("This type cannot appear in property list");
-    return NULL;
+    return nullptr;
 }
 
 /*
  * Generate tinyxml2::XMLElement for Dictionary through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForDict(cocos2d::Dictionary *dict, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForDict(ValueDict& dict, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
     
-    DictElement *dictElement = NULL;
-    CCDICT_FOREACH(dict, dictElement)
+    for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
         tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
         rootNode->LinkEndChild(tmpNode);
-        tinyxml2::XMLText* content = pDoc->NewText(dictElement->getStrKey());
+        tinyxml2::XMLText* content = pDoc->NewText(iter->first.c_str());
         tmpNode->LinkEndChild(content);
         
-        Object *object = dictElement->getObject();
-        tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
+        tinyxml2::XMLElement *element = generateElementForObject(iter->second, pDoc);
         if (element)
             rootNode->LinkEndChild(element);
     }
@@ -430,17 +430,16 @@ static tinyxml2::XMLElement* generateElementForDict(cocos2d::Dictionary *dict, t
 /*
  * Generate tinyxml2::XMLElement for Array through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForArray(cocos2d::Array *array, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForArray(ValueArray& array, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
     
-    Object *object = NULL;
-    CCARRAY_FOREACH(array, object)
-    {
-        tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
+    std::for_each(array.begin(), array.end(), [=](Value& value){
+        tinyxml2::XMLElement *element = generateElementForObject(value, pDoc);
         if (element)
             rootNode->LinkEndChild(element);
-    }
+
+    });
     return rootNode;
 }
 
@@ -451,12 +450,12 @@ NS_CC_BEGIN
 /* The subclass FileUtilsApple should override these two method. */
 ValueDict FileUtils::fileToValueDict(const std::string& filename) {return ValueDict();}
 ValueArray FileUtils::fileToValueArray(const std::string& filename) {return ValueArray();}
-bool FileUtils::writeToFile(ValueDict dict, const std::string &fullPath) {return false;}
+bool FileUtils::writeToFile(ValueDict& dict, const std::string &fullPath) {return false;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
 
-FileUtils* FileUtils::s_sharedFileUtils = NULL;
+FileUtils* FileUtils::s_sharedFileUtils = nullptr;
 
 
 void FileUtils::destroyInstance()
@@ -465,7 +464,6 @@ void FileUtils::destroyInstance()
 }
 
 FileUtils::FileUtils()
-: _filenameLookupDict(NULL)
 {
 }
 
@@ -488,8 +486,8 @@ void FileUtils::purgeCachedEntries()
 
 unsigned char* FileUtils::getFileData(const char* filename, const char* mode, long *size)
 {
-    unsigned char * buffer = NULL;
-    CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
+    unsigned char * buffer = nullptr;
+    CCASSERT(filename != nullptr && size != nullptr && mode != nullptr, "Invalid parameters.");
     *size = 0;
     do
     {
@@ -518,8 +516,8 @@ unsigned char* FileUtils::getFileData(const char* filename, const char* mode, lo
 
 unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, long *size)
 {
-    unsigned char * buffer = NULL;
-    unzFile pFile = NULL;
+    unsigned char * buffer = nullptr;
+    unzFile pFile = nullptr;
     *size = 0;
 
     do 
@@ -535,7 +533,7 @@ unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char
 
         char szFilePathA[260];
         unz_file_info FileInfo;
-        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
+        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), nullptr, 0, nullptr, 0);
         CC_BREAK_IF(UNZ_OK != nRet);
 
         nRet = unzOpenCurrentFile(pFile);

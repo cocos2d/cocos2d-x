@@ -112,7 +112,6 @@ TMXLayer::TMXLayer()
 ,_tiles(NULL)
 ,_tileSet(NULL)
 ,_layerOrientation(TMXOrientationOrtho)
-,_properties(NULL)
 {}
 
 TMXLayer::~TMXLayer()
