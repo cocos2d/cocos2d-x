@@ -43,32 +43,32 @@ public:
     Map<K, V>()
     : _data()
     {
-        CCLOG("In the default constructor of Map!");
+        CCLOGINFO("In the default constructor of Map!");
     }
     
     explicit Map<K, V>(long capacity)
     : _data()
     {
-        CCLOG("In the constructor with capacity of Map!");
+        CCLOGINFO("In the constructor with capacity of Map!");
         _data.reserve(capacity);
     }
 
     Map<K, V>(const Map<K, V>& other)
     {
-        CCLOG("In the copy constructor of Map!");
+        CCLOGINFO("In the copy constructor of Map!");
         _data = other;
         addRefForAllObjects();
     }
     
     Map<K, V>(Map<K, V>&& other)
     {
-        CCLOG("In the move constructor of Map!");
+        CCLOGINFO("In the move constructor of Map!");
         _data = other;
     }
     
     ~Map<K, V>()
     {
-        CCLOG("In the destructor of Map!");
+        CCLOGINFO("In the destructor of Map!");
         removeAllObjects();
     }
 

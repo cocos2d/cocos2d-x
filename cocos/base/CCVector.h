@@ -45,19 +45,19 @@ public:
     explicit Vector<T>(long capacity)
     : _data()
     {
-        CCLOG("In the default constructor with capacity of Vector.");
+        CCLOGINFO("In the default constructor with capacity of Vector.");
         setCapacity(capacity);
     }
 
     virtual ~Vector<T>()
     {
-        CCLOG("In the destructor of Vector.");
+        CCLOGINFO("In the destructor of Vector.");
         removeAllObjects();
     }
 
     Vector<T>(const Vector<T>& other)
     {
-        CCLOG("In the copy constructor!");
+        CCLOGINFO("In the copy constructor!");
         _data = other._data;
         addRefForAllObjects();
     }
@@ -65,13 +65,13 @@ public:
     /** Move constructor */
     Vector<T>(Vector<T>&& other)
     {
-        CCLOG("In the move constructor of Vector!");
+        CCLOGINFO("In the move constructor of Vector!");
         _data = other._data;
     }
     
     Vector<T>& operator=(const Vector<T>& other)
     {
-        CCLOG("In the copy assignment operator!");
+        CCLOGINFO("In the copy assignment operator!");
         removeAllObjects();
         _data = other._data;
         addRefForAllObjects();
@@ -80,7 +80,7 @@ public:
     
     Vector<T>& operator=(Vector<T>&& other)
     {
-        CCLOG("In the move assignment operator!");
+        CCLOGINFO("In the move assignment operator!");
         _data = other._data;
         return *this;
     }
