@@ -99,6 +99,15 @@ Value::Value(const ValueArray& v)
     *_arrData = v;
 }
 
+Value::Value(ValueArray&& v)
+: _arrData(new ValueArray())
+, _dictData(nullptr)
+, _intKeyDictData(nullptr)
+, _type(Type::ARRAY)
+{
+    *_arrData = std::move(v);
+}
+
 Value::Value(const ValueDict& v)
 : _arrData(nullptr)
 , _dictData(new ValueDict())
@@ -124,6 +133,15 @@ Value::Value(const IntValueDict& v)
 , _type(Type::INT_KEY_DICT)
 {
     *_intKeyDictData = v;
+}
+
+Value::Value(IntValueDict&& v)
+: _arrData(nullptr)
+, _dictData(nullptr)
+, _intKeyDictData(new IntValueDict())
+, _type(Type::INT_KEY_DICT)
+{
+    *_intKeyDictData = std::move(v);
 }
 
 Value::Value(const Value& other)
