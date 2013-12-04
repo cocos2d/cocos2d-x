@@ -59,7 +59,7 @@ void NewRenderTexture::draw()
         begin();
 
         //clear screen
-        CustomCommand* clearCmd = new CustomCommand();
+        CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
         clearCmd->init(0, _vertexZ);
         clearCmd->func = CC_CALLBACK_0(NewRenderTexture::onClear, this);
         Renderer::getInstance()->addCommand(clearCmd);
@@ -111,7 +111,7 @@ void NewRenderTexture::beginWithClear(float r, float g, float b, float a, float 
     this->begin();
 
     //clear screen
-    CustomCommand* clearCmd = new CustomCommand();
+    CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
     clearCmd->init(0, _vertexZ);
     clearCmd->func = CC_CALLBACK_0(NewRenderTexture::onClear, this);
     Renderer::getInstance()->addCommand(clearCmd);
@@ -127,13 +127,13 @@ void NewRenderTexture::begin()
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
 
-    GroupCommand* groupCommand = new GroupCommand();
+    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
     groupCommand->init(0, _vertexZ);
 
     Renderer::getInstance()->addCommand(groupCommand);
     Renderer::getInstance()->pushGroup(groupCommand->getRenderQueueID());
 
-    CustomCommand* beginCmd = new CustomCommand();
+    CustomCommand* beginCmd = CustomCommand::getCommandPool().generateCommand();
     beginCmd->init(0, _vertexZ);
     beginCmd->func = CC_CALLBACK_0(NewRenderTexture::onBegin, this);
 
@@ -142,7 +142,7 @@ void NewRenderTexture::begin()
 
 void NewRenderTexture::end()
 {
-    CustomCommand* endCmd = new CustomCommand();
+    CustomCommand* endCmd = CustomCommand::getCommandPool().generateCommand();
     endCmd->init(0, _vertexZ);
     endCmd->func = CC_CALLBACK_0(NewRenderTexture::onEnd, this);
 
@@ -264,7 +264,7 @@ void NewRenderTexture::clearDepth(float depthValue)
 
     this->begin();
 
-    CustomCommand* cmd = new CustomCommand();
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(NewRenderTexture::onClearDepth, this);
 
