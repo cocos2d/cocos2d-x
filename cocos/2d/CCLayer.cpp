@@ -695,7 +695,7 @@ void LayerColor::updateColor()
 void LayerColor::draw()
 {
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
-    CustomCommand* cmd = new CustomCommand();
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(LayerColor::onDraw, this);
     Renderer::getInstance()->addCommand(cmd);
