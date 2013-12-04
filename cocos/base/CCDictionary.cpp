@@ -26,6 +26,7 @@
 #include "CCString.h"
 #include "CCInteger.h"
 #include "platform/CCFileUtils.h"
+#include <algorithm>    // std::for_each
 
 using namespace std;
 

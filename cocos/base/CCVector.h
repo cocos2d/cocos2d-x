@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCVECTOR_H__
 
 #include <vector>
-#include <algorithm>
+#include <algorithm>    // std::for_each
 #include "ccMacros.h"
 
 NS_CC_BEGIN
