@@ -186,12 +186,18 @@ Value& Value::operator= (const Value& other)
             _strData = other._strData;
             break;
         case Type::ARRAY:
+            if (_arrData == nullptr)
+                _arrData = new ValueArray();
             *_arrData = *other._arrData;
             break;
         case Type::DICTIONARY:
+            if (_dictData == nullptr)
+                _dictData = new ValueDict();
             *_dictData = *other._dictData;
             break;
         case Type::INT_KEY_DICT:
+            if (_intKeyDictData == nullptr)
+                _intKeyDictData = new IntValueDict();
             *_intKeyDictData = *other._intKeyDictData;
             break;
         default:
