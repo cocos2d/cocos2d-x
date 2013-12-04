@@ -6,6 +6,7 @@
 #include "CustomCommand.h"
 
 NS_CC_BEGIN
+RenderCommandPool<CustomCommand> CustomCommand::_commandPool;
 
 CustomCommand::CustomCommand()
 :RenderCommand()
@@ -44,6 +45,11 @@ void CustomCommand::execute()
     {
         func();
     }
+}
+
+void CustomCommand::releaseToCommandPool()
+{
+    getCommandPool().pushBackCommand(this);
 }
 
 NS_CC_END

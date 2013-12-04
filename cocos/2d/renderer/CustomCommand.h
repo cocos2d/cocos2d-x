@@ -8,16 +8,19 @@
 #define _CC_CUSTOMCOMMAND_H_
 
 #include "RenderCommand.h"
+#include "RenderCommandPool.h"
 
 NS_CC_BEGIN
 using namespace std;
 
 class CustomCommand : public RenderCommand
 {
-public:
+protected:
     CustomCommand();
-    void init(int viewport, int32_t depth);
     ~CustomCommand();
+    
+public:
+    void init(int viewport, int32_t depth);
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
@@ -29,6 +32,7 @@ public:
     void execute();
 
     inline bool isTranslucent() { return true; }
+    virtual void releaseToCommandPool() override;
 
 public:
     function<void()> func;
@@ -37,6 +41,12 @@ protected:
     int _viewport;
 
     int32_t _depth;
+    
+public:
+    friend class RenderCommandPool<CustomCommand>;
+    static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
+protected:
+    static RenderCommandPool<CustomCommand> _commandPool;
 
 };
 
