@@ -58,16 +58,18 @@ class DictMaker : public SAXDelegator
 {
 public:
     SAXResult _resultType;
-    ValueArray _rootArray;
-    ValueDict _rootDict;
-    ValueDict _curDict;
-    std::stack<ValueDict> _dictStack;
+	ValueDict _rootDict;
+	ValueArray _rootArray;
+
     std::string _curKey;   ///< parsed key
     std::string _curValue; // parsed value
     SAXState _state;
-    ValueArray _array;
 
-    std::stack<ValueArray> _arrayStack;
+	ValueDict*  _curDict;
+    ValueArray* _curArray;
+
+	std::stack<ValueDict*> _dictStack;
+    std::stack<ValueArray*> _arrayStack;
     std::stack<SAXState>  _stateStack;
 
 public:
@@ -80,7 +82,7 @@ public:
     {
     }
 
-    ValueDict& dictionaryWithContentsOfFile(const char *pFileName)
+    ValueDict dictionaryWithContentsOfFile(const char *pFileName)
     {
         _resultType = SAX_RESULT_DICT;
         SAXParser parser;
@@ -89,10 +91,10 @@ public:
         parser.setDelegator(this);
 
         parser.parse(pFileName);
-        return _rootDict;
+		return std::move(_rootDict);
     }
 
-    ValueArray& arrayWithContentsOfFile(const char* pFileName)
+    ValueArray arrayWithContentsOfFile(const char* pFileName)
     {
         _resultType = SAX_RESULT_ARRAY;
         SAXParser parser;
@@ -101,20 +103,21 @@ public:
         parser.setDelegator(this);
 
         parser.parse(pFileName);
-        return _array;
+		return std::move(_rootArray);
     }
 
     void startElement(void *ctx, const char *name, const char **atts)
     {
         CC_UNUSED_PARAM(ctx);
         CC_UNUSED_PARAM(atts);
-        std::string sName((char*)name);
+        std::string sName(name);
         if( sName == "dict" )
         {
-            if(_resultType == SAX_RESULT_DICT && _rootDict.empty())
+			if(_resultType == SAX_RESULT_DICT && _rootDict.empty())
             {
-                _rootDict = _curDict;
+                _curDict = &_rootDict;
             }
+
             _state = SAX_DICT;
 
             SAXState preState = SAX_NONE;
@@ -125,16 +128,19 @@ public:
 
             if (SAX_ARRAY == preState)
             {
-                // add the dictionary into the array
-                _array.push_back(Value(_curDict));
+                // add a new dictionary into the array
+                _curArray->push_back(Value(ValueDict()));
+				_curDict = &(_curArray->rbegin())->asDict();
             }
             else if (SAX_DICT == preState)
             {
-                // add the dictionary into the pre dictionary
+                // add a new dictionary into the pre dictionary
                 CCASSERT(! _dictStack.empty(), "The state is wrong!");
-                ValueDict& pPreDict = _dictStack.top();
-                pPreDict[_curKey] = Value(_curDict);
+                ValueDict* preDict = _dictStack.top();
+                (*preDict)[_curKey] = Value(ValueDict());
+				_curDict = &(*preDict)[_curKey].asDict();
             }
+
             // record the dict state
             _stateStack.push(_state);
             _dictStack.push(_curDict);
@@ -159,9 +165,9 @@ public:
         {
             _state = SAX_ARRAY;
 
-            if (_resultType == SAX_RESULT_ARRAY && _rootArray.empty())
+			if (_resultType == SAX_RESULT_ARRAY && _rootArray.empty())
             {
-                _rootArray = _array;
+				_curArray = &_rootArray;
             }
             SAXState preState = SAX_NONE;
             if (! _stateStack.empty())
@@ -171,17 +177,19 @@ public:
 
             if (preState == SAX_DICT)
             {
-                _curDict[_curKey] = Value(_array);
+                (*_curDict)[_curKey] = Value(ValueArray());
+				_curArray = &(*_curDict)[_curKey].asArray();
             }
             else if (preState == SAX_ARRAY)
             {
                 CCASSERT(! _arrayStack.empty(), "The state is wrong!");
-                ValueArray& pPreArray = _arrayStack.top();
-                pPreArray.push_back(Value(_array));
+                ValueArray* preArray = _arrayStack.top();
+                preArray->push_back(Value(ValueArray()));
+				_curArray = &(_curArray->rbegin())->asArray();
             }
             // record the array state
             _stateStack.push(_state);
-            _arrayStack.push(_array);
+            _arrayStack.push(_curArray);
         }
         else
         {
@@ -209,29 +217,29 @@ public:
             _arrayStack.pop();
             if (! _arrayStack.empty())
             {
-                _array = _arrayStack.top();
+                _curArray = _arrayStack.top();
             }
         }
         else if (sName == "true")
         {
             if (SAX_ARRAY == curState)
             {
-                _array.push_back(Value(true));
+                _curArray->push_back(Value(true));
             }
             else if (SAX_DICT == curState)
             {
-                _curDict[_curKey] = Value(true);
+                (*_curDict)[_curKey] = Value(true);
             }
         }
         else if (sName == "false")
         {
             if (SAX_ARRAY == curState)
             {
-                _array.push_back(Value(false));
+                _curArray->push_back(Value(false));
             }
             else if (SAX_DICT == curState)
             {
-                _curDict[_curKey] = Value(false);
+                (*_curDict)[_curKey] = Value(false);
             }
         }
         else if (sName == "string" || sName == "integer" || sName == "real")
@@ -239,20 +247,20 @@ public:
             if (SAX_ARRAY == curState)
             {
                 if (sName == "string")
-                    _array.push_back(Value(_curValue));
+                    _curArray->push_back(Value(_curValue));
                 else if (sName == "integer")
-                    _array.push_back(Value(atoi(_curValue.c_str())));
+                    _curArray->push_back(Value(atoi(_curValue.c_str())));
                 else
-                    _array.push_back(Value(atof(_curValue.c_str())));
+                    _curArray->push_back(Value(atof(_curValue.c_str())));
             }
             else if (SAX_DICT == curState)
             {
                 if (sName == "string")
-                    _curDict[_curKey] = Value(_curValue);
+                    (*_curDict)[_curKey] = Value(_curValue);
                 else if (sName == "integer")
-                    _curDict[_curKey] = Value(atoi(_curValue.c_str()));
+                    (*_curDict)[_curKey] = Value(atoi(_curValue.c_str()));
                 else
-                    _curDict[_curKey] = Value(atof(_curValue.c_str()));
+                    (*_curDict)[_curKey] = Value(atof(_curValue.c_str()));
             }
 
             _curValue.clear();

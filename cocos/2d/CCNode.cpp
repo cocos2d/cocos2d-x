@@ -874,13 +874,6 @@ void Node::visit()
         std::for_each(_children.cbegin()+i, _children.cend(), [](Node* node){
             node->visit();
         });
-        
-//        for( ; i < _children.count(); i++ )
-//        {
-//            auto node = _children[i];
-//            if (node)
-//                node->visit();
-//        }
     }
     else
     {

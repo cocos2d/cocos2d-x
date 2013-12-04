@@ -116,6 +116,15 @@ public:
     {
         *_dictData = v;
     }
+
+	explicit Value(ValueDict&& v)
+    : _arrData(nullptr)
+    , _dictData(new ValueDict())
+    , _intKeyDictData(nullptr)
+    , _type(Type::DICTIONARY)
+    {
+        *_dictData = std::move(v);
+    }
     
     explicit Value(const IntValueDict& v)
     : _arrData(nullptr)
@@ -215,12 +224,13 @@ public:
             default:
                 break;
         }
-        
-        _arrData = nullptr;
-        _dictData = nullptr;
-        _intKeyDictData = nullptr;
-        
         _type = other._type;
+
+        other._arrData = nullptr;
+        other._dictData = nullptr;
+        other._intKeyDictData = nullptr;
+		other._type = Type::NONE;
+        
         return *this;
     }
     
