@@ -130,6 +130,7 @@ void NewRenderTexture::begin()
     GroupCommand* groupCommand = new GroupCommand();
     groupCommand->init(0, _vertexZ);
 
+    Renderer::getInstance()->addCommand(groupCommand);
     Renderer::getInstance()->pushGroup(groupCommand->getRenderQueueID());
 
     CustomCommand* beginCmd = new CustomCommand();
