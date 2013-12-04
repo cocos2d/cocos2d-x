@@ -25,6 +25,7 @@
 #ifndef __CCPHYSICS_SHAPE_H__
 #define __CCPHYSICS_SHAPE_H__
 
+#include "ccConfig.h"
 #ifdef CC_USE_PHYSICS
 
 #include "CCObject.h"
