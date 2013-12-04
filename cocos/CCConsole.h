@@ -23,30 +23,38 @@ class CC_DLL Console : public Object
 {
 
 public:
-    static Console* createWithFileDescriptor(int fd);
+    static Console* create();
 
-    void run();
+    bool listenOnTCP(int port);
+    bool listenOnStdin();
+    bool listenOnFileDescriptor(int fd);
+
     void cancel();
 
-    int getFileDescriptor() const { return _fd; }
-    void setFileDescriptor(int fd) { _fd = fd; }
+    int getFileDescriptor() const { return _listenfd; }
+    void setFileDescriptor(int fd) { _listenfd = fd; }
 
 
 protected:
     Console();
     virtual ~Console();
 
+    ssize_t readline(int fd);
 
     void loop();
+    void parseToken();
 
     // weak ref
     Scheduler *_scheduler;
 
     // file descriptor: socket, console, etc.
-    int _fd;
+    int _listenfd;
+    int _max_fd;
     std::thread _thread;
     bool _running;
     bool _endThread;
+
+    char _buffer[512];
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);

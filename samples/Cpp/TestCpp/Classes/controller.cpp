@@ -15,6 +15,8 @@ struct {
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
 
+    { "ConsoleTest", []() { return new ConsoleTestScene(); } },
+
     //
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
@@ -36,6 +38,7 @@ struct {
 #endif
 	{ "CocosDenshionTest", []() { return new CocosDenshionTestScene(); } },
 	{ "ConfigurationTest", []() { return new ConfigurationTestScene(); } },
+	{ "ConsoleTest", []() { return new ConsoleTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
