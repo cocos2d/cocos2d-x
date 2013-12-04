@@ -46,10 +46,10 @@ public:
     virtual bool isFileExist(const std::string& strFilePath) const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) override;
     
-    virtual ValueMap fileToValueMap(const std::string& filename) override;
+    virtual ValueMap getValueMapFromFile(const std::string& filename) override;
     virtual bool writeToFile(ValueMap& dict, const std::string& fullPath) override;
     
-    virtual ValueVector fileToValueVector(const std::string& filename) override;
+    virtual ValueVector getValueVectorFromFile(const std::string& filename) override;
 };
 
 // end of platform group

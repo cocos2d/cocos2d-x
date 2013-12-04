@@ -300,7 +300,7 @@ public:
      *  Converts the contents of a file to a ValueMap.
      *  @note This method is used internally.
      */
-    virtual ValueMap fileToValueMap(const std::string& filename);
+    virtual ValueMap getValueMapFromFile(const std::string& filename);
     
     /**
      *  Write a ValueMap to a plist file.
@@ -312,7 +312,7 @@ public:
      *  Converts the contents of a file to a ValueVector.
      *  @note This method is used internally.
      */
-    virtual ValueVector fileToValueVector(const std::string& filename);
+    virtual ValueVector getValueVectorFromFile(const std::string& filename);
     
 protected:
     /**

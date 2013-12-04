@@ -226,7 +226,7 @@ void AnimationCache::addAnimationsWithFile(const std::string& plist)
     CCASSERT( plist.size()>0, "Invalid texture file name");
 
     std::string path = FileUtils::getInstance()->fullPathForFilename(plist);
-    ValueMap dict =  FileUtils::getInstance()->fileToValueMap(path);
+    ValueMap dict =  FileUtils::getInstance()->getValueMapFromFile(path);
 
     CCASSERT( !dict.empty(), "CCAnimationCache: File could not be found");
 

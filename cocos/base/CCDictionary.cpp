@@ -444,7 +444,7 @@ static Array* visitArray(const ValueVector& array)
 
 Dictionary* Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return visitDict(FileUtils::getInstance()->fileToValueMap(pFileName));
+    return visitDict(FileUtils::getInstance()->getValueMapFromFile(pFileName));
 }
 
 void Dictionary::acceptVisitor(DataVisitor &visitor)
