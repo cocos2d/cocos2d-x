@@ -49,10 +49,16 @@ public:
     explicit Value(bool v);
     explicit Value(const char* v);
     explicit Value(const std::string& v);
+    
     explicit Value(const ValueArray& v);
+    explicit Value(ValueArray&& v);
+    
     explicit Value(const ValueDict& v);
 	explicit Value(ValueDict&& v);
+    
     explicit Value(const IntValueDict& v);
+    explicit Value(IntValueDict&& v);
+    
     Value(const Value& other);
     Value(Value&& other);
     ~Value();
