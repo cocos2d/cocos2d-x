@@ -61,7 +61,7 @@ public:
      * Creates the animation frame with a spriteframe, number of delay units and a notification user info
      * @since 3.0
      */
-    static AnimationFrame* create(SpriteFrame* spriteFrame, float delayUnits, const ValueDict& userInfo);
+    static AnimationFrame* create(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
 
     SpriteFrame* getSpriteFrame() const { return _spriteFrame; };
     
@@ -81,11 +81,11 @@ public:
     /** @brief Gets user infomation
         A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast.
      */
-    const ValueDict& getUserInfo() const { return _userInfo; };
-    ValueDict& getUserInfo() { return _userInfo; };
+    const ValueMap& getUserInfo() const { return _userInfo; };
+    ValueMap& getUserInfo() { return _userInfo; };
     
     /** Sets user infomation */
-    void setUserInfo(const ValueDict& userInfo)
+    void setUserInfo(const ValueMap& userInfo)
     {
         _userInfo = userInfo;
     }
@@ -106,7 +106,7 @@ protected:
     virtual ~AnimationFrame();
     
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
-    bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueDict& userInfo);
+    bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
     
     /** SpriteFrameName to be used */
     SpriteFrame* _spriteFrame;
@@ -115,7 +115,7 @@ protected:
     float _delayUnits;
 
     /**  A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast. */
-    ValueDict _userInfo;
+    ValueMap _userInfo;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(AnimationFrame);

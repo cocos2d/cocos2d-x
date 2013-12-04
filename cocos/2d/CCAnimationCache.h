@@ -104,7 +104,7 @@ public:
      Make sure that the frames were previously loaded in the SpriteFrameCache.
      @since v1.1
      */
-    void addAnimationsWithDictionary(const ValueDict& dictionary);
+    void addAnimationsWithDictionary(const ValueMap& dictionary);
 
     /** Adds an animation from a plist file.
      Make sure that the frames were previously loaded in the SpriteFrameCache.
@@ -115,8 +115,8 @@ public:
     void addAnimationsWithFile(const std::string& plist);
 
 private:
-    void parseVersion1(const ValueDict& animations);
-    void parseVersion2(const ValueDict& animations);
+    void parseVersion1(const ValueMap& animations);
+    void parseVersion2(const ValueMap& animations);
 
 private:
     Map<std::string, Animation*> _animations;

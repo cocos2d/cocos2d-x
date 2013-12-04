@@ -185,7 +185,7 @@ public:
      *  @param pFilenameLookupDict The dictionary for replacing filename.
      *  @since v2.1
      */
-    virtual void setFilenameLookupDictionary(const ValueDict& filenameLookupDict);
+    virtual void setFilenameLookupDictionary(const ValueMap& filenameLookupDict);
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
@@ -297,22 +297,22 @@ public:
     virtual bool isPopupNotify();
 
     /**
-     *  Converts the contents of a file to a ValueDict.
+     *  Converts the contents of a file to a ValueMap.
      *  @note This method is used internally.
      */
-    virtual ValueDict fileToValueDict(const std::string& filename);
+    virtual ValueMap fileToValueMap(const std::string& filename);
     
     /**
-     *  Write a ValueDict to a plist file.
+     *  Write a ValueMap to a plist file.
      *  @note This method is used internally.
      */
-    virtual bool writeToFile(ValueDict& dict, const std::string& fullPath);
+    virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
     
     /**
-     *  Converts the contents of a file to a ValueArray.
+     *  Converts the contents of a file to a ValueVector.
      *  @note This method is used internally.
      */
-    virtual ValueArray fileToValueArray(const std::string& filename);
+    virtual ValueVector fileToValueVector(const std::string& filename);
     
 protected:
     /**
@@ -369,7 +369,7 @@ protected:
      *
      *  @since v2.1
      */
-    ValueDict _filenameLookupDict;
+    ValueMap _filenameLookupDict;
     
     /** 
      *  The vector contains resolution folders.

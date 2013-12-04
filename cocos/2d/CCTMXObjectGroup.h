@@ -66,9 +66,9 @@ public:
     /** return the dictionary for the specific object name.
     It will return the 1st object found on the array for the given name.
     */
-    ValueDict getObject(const std::string& objectName) const;
+    ValueMap getObject(const std::string& objectName) const;
     
-    CC_DEPRECATED_ATTRIBUTE ValueDict objectNamed(const std::string& objectName) const { return getObject(objectName); };
+    CC_DEPRECATED_ATTRIBUTE ValueMap objectNamed(const std::string& objectName) const { return getObject(objectName); };
     
     /** Gets the offset position of child objects */
     inline const Point& getPositionOffset() const { return _positionOffset; };
@@ -77,20 +77,20 @@ public:
     inline void setPositionOffset(const Point& offset) { _positionOffset = offset; };
     
     /** Gets the list of properties stored in a dictionary */
-    inline const ValueDict& getProperties() const { return _properties; };
-    inline ValueDict& getProperties() { return _properties; };
+    inline const ValueMap& getProperties() const { return _properties; };
+    inline ValueMap& getProperties() { return _properties; };
     
     /** Sets the list of properties */
-    inline void setProperties(const ValueDict& properties) {
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     
     /** Gets the array of the objects */
-    inline const ValueArray& getObjects() const { return _objects; };
-    inline ValueArray& getObjects() { return _objects; };
+    inline const ValueVector& getObjects() const { return _objects; };
+    inline ValueVector& getObjects() { return _objects; };
     
     /** Sets the array of the objects */
-    inline void setObjects(const ValueArray& objects) {
+    inline void setObjects(const ValueVector& objects) {
         _objects = objects;
     };
     
@@ -100,9 +100,9 @@ protected:
     /** offset position of child objects */
     Point _positionOffset;
     /** list of properties stored in a dictionary */
-    ValueDict _properties;
+    ValueMap _properties;
     /** array of the objects */
-    ValueArray _objects;
+    ValueVector _objects;
 };
 
 // end of tilemap_parallax_nodes group

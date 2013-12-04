@@ -2108,7 +2108,7 @@ void Animate::update(float t)
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setDisplayFrame(frameToDisplay);
 
-            const ValueDict& dict = frame->getUserInfo();
+            const ValueMap& dict = frame->getUserInfo();
             if ( !dict.empty() )
             {
                 //TODO: [[NSNotificationCenter defaultCenter] postNotificationName:AnimationFrameDisplayedNotification object:target_ userInfo:dict];

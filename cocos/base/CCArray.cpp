@@ -478,7 +478,7 @@ Array* Array::createWithContentsOfFile(const char* fileName)
 
 Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
 {
-    ValueArray arr = FileUtils::getInstance()->fileToValueArray(fileName);
+    ValueVector arr = FileUtils::getInstance()->fileToValueVector(fileName);
     
     Array* ret = Array::createWithCapacity(arr.size());
     

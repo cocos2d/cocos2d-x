@@ -589,7 +589,7 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 
     for (auto& obj : objects)
     {
-        ValueDict& dict = obj.asDict();
+        ValueMap& dict = obj.asValueMap();
         ////----CCLOG("object: %x", dict);
     }
     
@@ -607,7 +607,7 @@ void TMXOrthoObjectsTest::draw()
 
     for (auto& obj : objects)
     {
-        ValueDict& dict = obj.asDict();
+        ValueMap& dict = obj.asValueMap();
         
         float x = dict["x"].asFloat();
         float y = dict["y"].asFloat();
@@ -657,7 +657,7 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
     //UxMutableDictionary<std::string>* dict;
     for (auto& obj : objects)
     {
-        ValueDict& dict = obj.asDict();
+        ValueMap& dict = obj.asValueMap();
 
         ////----CCLOG("object: %x", dict);
     }        
@@ -671,7 +671,7 @@ void TMXIsoObjectsTest::draw()
     auto& objects = group->getObjects();
     for (auto& obj : objects)
     {
-        ValueDict& dict = obj.asDict();
+        ValueMap& dict = obj.asValueMap();
         float x = dict["x"].asFloat();
         float y = dict["y"].asFloat();
         float width = dict["width"].asFloat();
@@ -1455,7 +1455,7 @@ void TMXGIDObjectsTest::draw()
     auto& objects = group->getObjects();
     for (auto& obj : objects)
     {
-        ValueDict& dict = obj.asDict();
+        ValueMap& dict = obj.asValueMap();
         
         float x = dict["x"].asFloat();
         float y = dict["y"].asFloat();

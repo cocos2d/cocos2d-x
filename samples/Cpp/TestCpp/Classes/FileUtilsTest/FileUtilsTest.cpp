@@ -233,7 +233,7 @@ void TestFilenameLookup::onEnter()
 		
     auto sharedFileUtils = FileUtils::getInstance();
 
-    ValueDict dict;
+    ValueMap dict;
     dict["grossini.bmp"] = Value("Images/grossini.png");
     dict["grossini.xcf"] = Value("Images/grossini.png");
     
@@ -253,7 +253,7 @@ void TestFilenameLookup::onExit()
 	FileUtils *sharedFileUtils = FileUtils::getInstance();
 	
 	// reset filename lookup
-    sharedFileUtils->setFilenameLookupDictionary(ValueDict());
+    sharedFileUtils->setFilenameLookupDictionary(ValueMap());
 	
     FileUtilsDemo::onExit();
 }
@@ -297,7 +297,7 @@ void TestIsFileExist::onExit()
 	FileUtils *sharedFileUtils = FileUtils::getInstance();
 	
 	// reset filename lookup
-    sharedFileUtils->setFilenameLookupDictionary(ValueDict());
+    sharedFileUtils->setFilenameLookupDictionary(ValueMap());
 	
     FileUtilsDemo::onExit();
 }

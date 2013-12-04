@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-AnimationFrame* AnimationFrame::create(SpriteFrame* spriteFrame, float delayUnits, const ValueDict& userInfo)
+AnimationFrame* AnimationFrame::create(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo)
 {
     auto ret = new AnimationFrame();
     if (ret && ret->initWithSpriteFrame(spriteFrame, delayUnits, userInfo))
@@ -53,7 +53,7 @@ AnimationFrame::AnimationFrame()
 
 }
 
-bool AnimationFrame::initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueDict& userInfo)
+bool AnimationFrame::initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo)
 {
     setSpriteFrame(spriteFrame);
     setDelayUnits(delayUnits);
@@ -124,7 +124,7 @@ bool Animation::initWithSpriteFrames(const Vector<SpriteFrame*>& frames, float d
 
     for (auto& spriteFrame : frames)
     {
-        auto animFrame = AnimationFrame::create(spriteFrame, 1, ValueDict());
+        auto animFrame = AnimationFrame::create(spriteFrame, 1, ValueMap());
         _frames.addObject(animFrame);
         _totalDelayUnits++;
     }
@@ -163,7 +163,7 @@ Animation::~Animation(void)
 
 void Animation::addSpriteFrame(SpriteFrame* spriteFrame)
 {
-    AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, 1.0f, ValueDict());
+    AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, 1.0f, ValueMap());
     _frames.addObject(animFrame);
 
     // update duration

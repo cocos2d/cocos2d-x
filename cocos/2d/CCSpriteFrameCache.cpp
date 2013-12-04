@@ -75,7 +75,7 @@ SpriteFrameCache::~SpriteFrameCache(void)
     CC_SAFE_DELETE(_loadedFileNames);
 }
 
-void SpriteFrameCache::addSpriteFramesWithDictionary(ValueDict& dictionary, Texture2D* texture)
+void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D* texture)
 {
     /*
     Supported Zwoptex Formats:
@@ -86,8 +86,8 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueDict& dictionary, Text
     ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
     */
 
-    ValueDict& metadataDict = dictionary["metadata"].asDict();
-    ValueDict& framesDict = dictionary["frames"].asDict();
+    ValueMap& metadataDict = dictionary["metadata"].asValueMap();
+    ValueMap& framesDict = dictionary["frames"].asValueMap();
     int format = 0;
 
     // get the format
@@ -101,7 +101,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueDict& dictionary, Text
 
     for (auto iter = framesDict.begin(); iter != framesDict.end(); ++iter)
     {
-        ValueDict& frameDict = iter->second.asDict();
+        ValueMap& frameDict = iter->second.asValueMap();
         std::string spriteFrameName = iter->first;
         SpriteFrame* spriteFrame = _spriteFrames.getObjectForKey(spriteFrameName);
         if (spriteFrame)
@@ -169,7 +169,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueDict& dictionary, Text
             bool textureRotated = frameDict["textureRotated"].asBool();
 
             // get aliases
-            ValueArray& aliases = frameDict["aliases"].asArray();
+            ValueVector& aliases = frameDict["aliases"].asValueVector();
 
             std::for_each(aliases.cbegin(), aliases.cend(), [this, &spriteFrameName](const Value& value){
                 std::string oneAlias = value.asString();
@@ -199,7 +199,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueDict& dictionary, Text
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist, Texture2D *pobTexture)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
-    ValueDict dict = FileUtils::getInstance()->fileToValueDict(fullPath);
+    ValueMap dict = FileUtils::getInstance()->fileToValueMap(fullPath);
 
     addSpriteFramesWithDictionary(dict, pobTexture);
 }
@@ -226,11 +226,11 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
     if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
     {
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
-        ValueDict dict = FileUtils::getInstance()->fileToValueDict(fullPath);
+        ValueMap dict = FileUtils::getInstance()->fileToValueMap(fullPath);
 
         string texturePath("");
 
-        ValueDict& metadataDict = dict["metadata"].asDict();
+        ValueMap& metadataDict = dict["metadata"].asValueMap();
         if (!metadataDict.empty())
         {
             // try to read  texture file name from meta data
@@ -335,7 +335,7 @@ void SpriteFrameCache::removeSpriteFrameByName(const std::string& name)
 void SpriteFrameCache::removeSpriteFramesFromFile(const std::string& plist)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
-    ValueDict dict = FileUtils::getInstance()->fileToValueDict(fullPath);
+    ValueMap dict = FileUtils::getInstance()->fileToValueMap(fullPath);
     if (dict.empty())
     {
         CCLOG("cocos2d:SpriteFrameCache:removeSpriteFramesFromFile: create dict by %s fail.",plist.c_str());
@@ -351,9 +351,9 @@ void SpriteFrameCache::removeSpriteFramesFromFile(const std::string& plist)
     }
 }
 
-void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueDict& dictionary)
+void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueMap& dictionary)
 {
-    ValueDict framesDict = dictionary["frames"].asDict();
+    ValueMap framesDict = dictionary["frames"].asValueMap();
     std::vector<std::string> keysToRemove;
 
     for (auto iter = framesDict.cbegin(); iter != framesDict.cend(); ++iter)

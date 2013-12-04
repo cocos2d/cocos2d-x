@@ -153,16 +153,16 @@ public:
 private:
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(ValueDict& dictionary, Texture2D *texture);
+    void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
 
     /** Removes multiple Sprite Frames from Dictionary.
     * @since v0.99.5
     */
-    void removeSpriteFramesFromDictionary(ValueDict& dictionary);
+    void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
 protected:
     Map<std::string, SpriteFrame*> _spriteFrames;
-    ValueDict _spriteFramesAliases;
+    ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;
 };
 

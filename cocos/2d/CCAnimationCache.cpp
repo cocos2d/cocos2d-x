@@ -85,14 +85,14 @@ Animation* AnimationCache::getAnimation(const std::string& name)
     return _animations.getObjectForKey(name);
 }
 
-void AnimationCache::parseVersion1(const ValueDict& animations)
+void AnimationCache::parseVersion1(const ValueMap& animations)
 {
     SpriteFrameCache *frameCache = SpriteFrameCache::getInstance();
 
     for (auto iter = animations.cbegin(); iter != animations.cend(); ++iter)
     {
-        const ValueDict& animationDict = iter->second.asDict();
-        const ValueArray& frameNames = animationDict.at("frames").asArray();
+        const ValueMap& animationDict = iter->second.asValueMap();
+        const ValueVector& frameNames = animationDict.at("frames").asValueVector();
         float delay = animationDict.at("delay").asFloat();
         Animation* animation = nullptr;
 
@@ -114,7 +114,7 @@ void AnimationCache::parseVersion1(const ValueDict& animations)
                 continue;
             }
 
-            AnimationFrame* animFrame = AnimationFrame::create(spriteFrame, 1, ValueDict());
+            AnimationFrame* animFrame = AnimationFrame::create(spriteFrame, 1, ValueMap());
             frames.addObject(animFrame);
         }
 
@@ -134,19 +134,19 @@ void AnimationCache::parseVersion1(const ValueDict& animations)
     }
 }
 
-void AnimationCache::parseVersion2(const ValueDict& animations)
+void AnimationCache::parseVersion2(const ValueMap& animations)
 {
     SpriteFrameCache *frameCache = SpriteFrameCache::getInstance();
 
     for (auto iter = animations.cbegin(); iter != animations.cend(); ++iter)
     {
         std::string name = iter->first;
-        const ValueDict& animationDict = iter->second.asDict();
+        const ValueMap& animationDict = iter->second.asValueMap();
 
         const Value& loops = animationDict.at("loops");
         bool restoreOriginalFrame = animationDict.at("restoreOriginalFrame").asBool();
 
-        const ValueArray& frameArray = animationDict.at("frames").asArray();
+        const ValueVector& frameArray = animationDict.at("frames").asValueVector();
 
         if ( frameArray.empty() )
         {
@@ -159,7 +159,7 @@ void AnimationCache::parseVersion2(const ValueDict& animations)
 
         for (auto& obj : frameArray)
         {
-            const ValueDict& entry = obj.asDict();
+            const ValueMap& entry = obj.asValueMap();
             std::string spriteFrameName = entry.at("spriteframe").asString();
             SpriteFrame *spriteFrame = frameCache->getSpriteFrameByName(spriteFrameName);
 
@@ -172,7 +172,7 @@ void AnimationCache::parseVersion2(const ValueDict& animations)
             float delayUnits = entry.at("delayUnits").asFloat();
             const Value& userInfo = entry.at("notification");
 
-            AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, delayUnits, userInfo.asDict());
+            AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, delayUnits, userInfo.asValueMap());
 
             array.addObject(animFrame);
         }
@@ -186,7 +186,7 @@ void AnimationCache::parseVersion2(const ValueDict& animations)
     }
 }
 
-void AnimationCache::addAnimationsWithDictionary(const ValueDict& dictionary)
+void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
 {
     if ( dictionary.find("animations") == dictionary.end() )
     {
@@ -199,9 +199,9 @@ void AnimationCache::addAnimationsWithDictionary(const ValueDict& dictionary)
 
     if( dictionary.find("properties") != dictionary.end() )
     {
-        const ValueDict& properties = dictionary.at("properties").asDict();
+        const ValueMap& properties = dictionary.at("properties").asValueMap();
         version = properties.at("format").asInt();
-        const ValueArray& spritesheets = properties.at("spritesheets").asArray();
+        const ValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 
         std::for_each(spritesheets.cbegin(), spritesheets.cend(), [](const Value& value){
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile(value.asString());
@@ -210,10 +210,10 @@ void AnimationCache::addAnimationsWithDictionary(const ValueDict& dictionary)
 
     switch (version) {
         case 1:
-            parseVersion1(animations.asDict());
+            parseVersion1(animations.asValueMap());
             break;
         case 2:
-            parseVersion2(animations.asDict());
+            parseVersion2(animations.asValueMap());
             break;
         default:
             CCASSERT(false, "Invalid animation format");
@@ -226,7 +226,7 @@ void AnimationCache::addAnimationsWithFile(const std::string& plist)
     CCASSERT( plist.size()>0, "Invalid texture file name");
 
     std::string path = FileUtils::getInstance()->fullPathForFilename(plist);
-    ValueDict dict =  FileUtils::getInstance()->fileToValueDict(path);
+    ValueMap dict =  FileUtils::getInstance()->fileToValueMap(path);
 
     CCASSERT( !dict.empty(), "CCAnimationCache: File could not be found");
 

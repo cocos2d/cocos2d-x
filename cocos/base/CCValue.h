@@ -35,9 +35,9 @@ NS_CC_BEGIN
 
 class Value;
 
-typedef std::vector<Value> ValueArray;
-typedef std::unordered_map<std::string, Value> ValueDict;
-typedef std::unordered_map<int, Value> IntValueDict;
+typedef std::vector<Value> ValueVector;
+typedef std::unordered_map<std::string, Value> ValueMap;
+typedef std::unordered_map<int, Value> IntValueMap;
 
 class Value
 {
@@ -50,14 +50,14 @@ public:
     explicit Value(const char* v);
     explicit Value(const std::string& v);
     
-    explicit Value(const ValueArray& v);
-    explicit Value(ValueArray&& v);
+    explicit Value(const ValueVector& v);
+    explicit Value(ValueVector&& v);
     
-    explicit Value(const ValueDict& v);
-	explicit Value(ValueDict&& v);
+    explicit Value(const ValueMap& v);
+	explicit Value(ValueMap&& v);
     
-    explicit Value(const IntValueDict& v);
-    explicit Value(IntValueDict&& v);
+    explicit Value(const IntValueMap& v);
+    explicit Value(IntValueMap&& v);
     
     Value(const Value& other);
     Value(Value&& other);
@@ -72,14 +72,14 @@ public:
     bool asBool() const;
     std::string asString() const;
     
-    inline ValueArray& asArray() { return *_arrData; }
-    inline const ValueArray& asArray() const { return *_arrData; }
+    inline ValueVector& asValueVector() { return *_vectorData; }
+    inline const ValueVector& asValueVector() const { return *_vectorData; }
     
-    inline ValueDict& asDict() { return *_dictData; }
-    inline const ValueDict& asDict() const { return *_dictData; }
+    inline ValueMap& asValueMap() { return *_mapData; }
+    inline const ValueMap& asValueMap() const { return *_mapData; }
     
-    inline IntValueDict& asIntKeyDict() { return *_intKeyDictData; }
-    inline const IntValueDict& asIntKeyDict() const { return *_intKeyDictData; }
+    inline IntValueMap& asIntKeyMap() { return *_intKeyMapData; }
+    inline const IntValueMap& asIntKeyMap() const { return *_intKeyMapData; }
 
     inline bool isNull() const { return _type == Type::NONE; }
     
@@ -91,9 +91,9 @@ public:
         DOUBLE,
         BOOLEAN,
         STRING,
-        ARRAY,
-        DICTIONARY,
-        INT_KEY_DICT
+        VECTOR,
+        MAP,
+        INT_KEY_MAP
     };
 
     inline Type getType() const { return _type; };
@@ -108,9 +108,9 @@ private:
     }_baseData;
     
     std::string _strData;
-    ValueArray* _arrData;
-    ValueDict* _dictData;
-    IntValueDict* _intKeyDictData;
+    ValueVector* _vectorData;
+    ValueMap* _mapData;
+    IntValueMap* _intKeyMapData;
 
     Type _type;
 };

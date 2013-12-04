@@ -347,7 +347,7 @@ void Menu::alignItemsInColumns(int columns, ...)
 void Menu::alignItemsInColumns(int columns, va_list args)
 {
     CCASSERT(columns >= 0, "Columns must be >= 0");
-    ValueArray rows;
+    ValueVector rows;
     while (columns)
     {
         rows.push_back(Value(columns));
@@ -356,7 +356,7 @@ void Menu::alignItemsInColumns(int columns, va_list args)
     alignItemsInColumnsWithArray(rows);
 }
 
-void Menu::alignItemsInColumnsWithArray(const ValueArray& rows)
+void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
 {
     int height = -5;
     int row = 0;
@@ -447,7 +447,7 @@ void Menu::alignItemsInRows(int rows, ...)
 
 void Menu::alignItemsInRows(int rows, va_list args)
 {
-    ValueArray array;
+    ValueVector array;
     while (rows)
     {
         array.push_back(Value(rows));
@@ -456,7 +456,7 @@ void Menu::alignItemsInRows(int rows, va_list args)
     alignItemsInRowsWithArray(array);
 }
 
-void Menu::alignItemsInRowsWithArray(const ValueArray& columns)
+void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
 {
     vector<int> columnWidths;
     vector<int> columnHeights;

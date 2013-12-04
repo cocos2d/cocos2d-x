@@ -164,8 +164,8 @@ public:
     };
     
     /** properties */
-    inline ValueDict& getProperties() { return _properties; };
-    inline void setProperties(const ValueDict& properties) {
+    inline ValueMap& getProperties() { return _properties; };
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     
@@ -199,10 +199,10 @@ protected:
     /** object groups */
     Vector<TMXObjectGroup*> _objectGroups;
     /** properties */
-    ValueDict _properties;
+    ValueMap _properties;
     
     //! tile properties
-    IntValueDict _tileProperties;
+    IntValueMap _tileProperties;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);

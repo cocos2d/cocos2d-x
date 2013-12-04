@@ -101,10 +101,10 @@ public:
      */
     virtual ~TMXLayerInfo();
 
-    void setProperties(ValueDict properties);
-    ValueDict getProperties();
+    void setProperties(ValueMap properties);
+    ValueMap getProperties();
 
-    ValueDict           _properties;
+    ValueMap           _properties;
     std::string         _name;
     Size                _layerSize;
     unsigned int        *_tiles;
@@ -195,8 +195,8 @@ public:
     /* initializes parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
     bool parseXMLString(const std::string& xmlString);
 
-    IntValueDict& getTileProperties() { return _tileProperties; };
-    void setTileProperties(const IntValueDict& tileProperties) {
+    IntValueMap& getTileProperties() { return _tileProperties; };
+    void setTileProperties(const IntValueMap& tileProperties) {
         _tileProperties = tileProperties;
     };
 
@@ -251,8 +251,8 @@ public:
     inline void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; };
 
     /// properties
-    inline ValueDict getProperties() const { return _properties; };
-    inline void setProperties(ValueDict properties) {
+    inline ValueMap getProperties() const { return _properties; };
+    inline void setProperties(ValueMap properties) {
         _properties = properties;
     };
     
@@ -302,7 +302,7 @@ protected:
     /// is storing characters?
     bool _storingCharacters;
     /// properties
-    ValueDict _properties;
+    ValueMap _properties;
     
     //! tmx filename
     std::string _TMXFileName;
@@ -311,7 +311,7 @@ protected:
     //! current string
     std::string _currentString;
     //! tile properties
-    IntValueDict _tileProperties;
+    IntValueMap _tileProperties;
     unsigned int _currentFirstGID;
 };
 

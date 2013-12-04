@@ -169,7 +169,7 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
 {
     bool bRet = false;
     _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
-    ValueDict dict = FileUtils::getInstance()->fileToValueDict(_plistFile.c_str());
+    ValueMap dict = FileUtils::getInstance()->fileToValueMap(_plistFile.c_str());
 
     CCASSERT( !dict.empty(), "Particles: file not found");
     
@@ -188,12 +188,12 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
     return bRet;
 }
 
-bool ParticleSystem::initWithDictionary(ValueDict& dictionary)
+bool ParticleSystem::initWithDictionary(ValueMap& dictionary)
 {
     return initWithDictionary(dictionary, "");
 }
 
-bool ParticleSystem::initWithDictionary(ValueDict& dictionary, const std::string& dirname)
+bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string& dirname)
 {
     bool bRet = false;
     unsigned char *buffer = nullptr;

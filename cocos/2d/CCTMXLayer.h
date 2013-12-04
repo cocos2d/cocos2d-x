@@ -174,9 +174,9 @@ public:
     inline void setLayerOrientation(unsigned int orientation) { _layerOrientation = orientation; };
     
     /** properties from the layer. They can be added using Tiled */
-    inline const ValueDict& getProperties() const { return _properties; };
-    inline ValueDict& getProperties() { return _properties; };
-    inline void setProperties(const ValueDict& properties) {
+    inline const ValueMap& getProperties() const { return _properties; };
+    inline ValueMap& getProperties() { return _properties; };
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     //
@@ -243,7 +243,7 @@ protected:
     /** Layer orientation, which is the same as the map orientation */
     unsigned int _layerOrientation;
     /** properties from the layer. They can be added using Tiled */
-    ValueDict _properties;
+    ValueMap _properties;
 };
 
 // end of tilemap_parallax_nodes group

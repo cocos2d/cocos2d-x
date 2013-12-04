@@ -378,25 +378,25 @@ Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
     return srcDict->clone();
 }
 
-static Array* visitArray(const ValueArray& array);
+static Array* visitArray(const ValueVector& array);
 
-static Dictionary* visitDict(const ValueDict& dict)
+static Dictionary* visitDict(const ValueMap& dict)
 {
     Dictionary* ret = new Dictionary();
     ret->init();
     
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
-        if (iter->second.getType() == Value::Type::DICTIONARY)
+        if (iter->second.getType() == Value::Type::MAP)
         {
-            const ValueDict& subDict = iter->second.asDict();
+            const ValueMap& subDict = iter->second.asValueMap();
             auto sub = visitDict(subDict);
             ret->setObject(sub, iter->first);
             sub->release();
         }
-        else if (iter->second.getType() == Value::Type::ARRAY)
+        else if (iter->second.getType() == Value::Type::VECTOR)
         {
-            const ValueArray& arr = iter->second.asArray();
+            const ValueVector& arr = iter->second.asValueVector();
             auto sub = visitArray(arr);
             ret->setObject(sub, iter->first);
             sub->release();
@@ -411,22 +411,22 @@ static Dictionary* visitDict(const ValueDict& dict)
     return ret;
 }
 
-static Array* visitArray(const ValueArray& array)
+static Array* visitArray(const ValueVector& array)
 {
     Array* ret = new Array();
     ret->init();
     
     std::for_each(array.begin(), array.end(), [&ret](const Value& value){
-        if (value.getType() == Value::Type::DICTIONARY)
+        if (value.getType() == Value::Type::MAP)
         {
-            const ValueDict& subDict = value.asDict();
+            const ValueMap& subDict = value.asValueMap();
             auto sub = visitDict(subDict);
             ret->addObject(sub);
             sub->release();
         }
-        else if (value.getType() == Value::Type::ARRAY)
+        else if (value.getType() == Value::Type::VECTOR)
         {
-            const ValueArray& arr = value.asArray();
+            const ValueVector& arr = value.asValueVector();
             auto sub = visitArray(arr);
             ret->addObject(sub);
             sub->release();
@@ -444,7 +444,7 @@ static Array* visitArray(const ValueArray& array)
 
 Dictionary* Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return visitDict(FileUtils::getInstance()->fileToValueDict(pFileName));
+    return visitDict(FileUtils::getInstance()->fileToValueMap(pFileName));
 }
 
 void Dictionary::acceptVisitor(DataVisitor &visitor)
@@ -464,7 +464,7 @@ Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 
 bool Dictionary::writeToFile(const char *fullPath)
 {
-    ValueDict dict;
+    ValueMap dict;
     DictElement* element = nullptr;
     CCDICT_FOREACH(this, element)
     {
