@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include <vector>
 #include <unordered_map>
+#include <algorithm>    // std::for_each
 
 NS_CC_BEGIN
 
