@@ -107,7 +107,7 @@ public:
     /** returns the number of objects of the control point array 
      * @js NA
      */
-    unsigned int count() const;
+    size_t count() const;
     
     /** returns a new copy of the array reversed. User is responsible for releasing this copy 
      * @js NA

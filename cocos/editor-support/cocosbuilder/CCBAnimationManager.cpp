@@ -622,9 +622,9 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
     
     Array *actions = Array::create();
     Array *keyframes = channel->getKeyframes();
-    long numKeyframes = keyframes->count();
+    auto numKeyframes = keyframes->count();
 
-    for (long i = 0; i < numKeyframes; ++i)
+    for (size_t i = 0; i < numKeyframes; ++i)
     {
 
         CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->getObjectAtIndex(i);

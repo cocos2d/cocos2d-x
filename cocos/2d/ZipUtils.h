@@ -264,7 +264,7 @@ namespace cocos2d
         *
         * @since v2.0.5
         */
-        unsigned char *getFileData(const std::string &fileName, long *size);
+        unsigned char *getFileData(const std::string &fileName, size_t *size);
 
     private:
         /** Internal data like zip file pointer / file list array and so on */

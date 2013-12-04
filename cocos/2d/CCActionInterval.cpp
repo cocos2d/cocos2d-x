@@ -2100,7 +2100,7 @@ void Animate::update(float t)
     }
 
     Array* frames = _animation->getFrames();
-    long numberOfFrames = frames->count();
+    auto numberOfFrames = frames->count();
     SpriteFrame *frameToDisplay = NULL;
 
     for( int i=_nextFrame; i < numberOfFrames; i++ ) {

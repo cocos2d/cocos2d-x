@@ -518,7 +518,7 @@ unsigned char* FileUtils::getFileData(const char* filename, const char* mode, si
     return buffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, long *size)
+unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, size_t *size)
 {
     unsigned char * buffer = NULL;
     unzFile pFile = NULL;

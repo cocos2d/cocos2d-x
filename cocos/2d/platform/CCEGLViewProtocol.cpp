@@ -198,9 +198,9 @@ const std::string& EGLViewProtocol::getViewName() const
     return _viewName;
 }
 
-void EGLViewProtocol::handleTouchesBegin(int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
 {
-    long id = 0;
+    int id = 0;
     float x = 0.0f;
     float y = 0.0f;
     int nUnusedIndex = 0;
@@ -248,7 +248,7 @@ void EGLViewProtocol::handleTouchesBegin(int num, long ids[], float xs[], float 
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void EGLViewProtocol::handleTouchesMove(int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
 {
     long id = 0;
     float x = 0.0f;
@@ -296,7 +296,7 @@ void EGLViewProtocol::handleTouchesMove(int num, long ids[], float xs[], float y
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[])
 {
     long id = 0;
     float x = 0.0f;
@@ -356,12 +356,12 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
     }
 }
 
-void EGLViewProtocol::handleTouchesEnd(int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::ENDED, num, ids, xs, ys);
 }
 
-void EGLViewProtocol::handleTouchesCancel(int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::CANCELLED, num, ids, xs, ys);
 }

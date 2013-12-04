@@ -87,7 +87,7 @@ void ActionManager::actionAllocWithHashElement(tHashElement *element)
 
 }
 
-void ActionManager::removeActionAtIndex(long index, tHashElement *element)
+void ActionManager::removeActionAtIndex(int index, tHashElement *element)
 {
     Action *action = (Action*)element->actions->arr[index];
 
@@ -304,8 +304,8 @@ Action* ActionManager::getActionByTag(int tag, const Object *target) const
     {
         if (element->actions != NULL)
         {
-            long limit = element->actions->num;
-            for (long i = 0; i < limit; ++i)
+            auto limit = element->actions->num;
+            for (size_t i = 0; i < limit; ++i)
             {
                 Action *action = (Action*)element->actions->arr[i];
 

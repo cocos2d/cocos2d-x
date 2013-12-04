@@ -154,7 +154,7 @@ void PointArray::removeControlPointAtIndex(unsigned int index)
     delete pRemovedPoint;
 }
 
-unsigned int PointArray::count() const
+size_t PointArray::count() const
 {
     return _controlPoints->size();
 }
@@ -177,7 +177,7 @@ PointArray* PointArray::reverse() const
 
 void PointArray::reverseInline()
 {
-    unsigned long l = _controlPoints->size();
+    auto l = _controlPoints->size();
     Point *p1 = nullptr;
     Point *p2 = nullptr;
     int x, y;

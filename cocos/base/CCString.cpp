@@ -221,7 +221,7 @@ String* String::create(const std::string& str)
     return ret;
 }
 
-String* String::createWithData(const unsigned char* data, unsigned long nLen)
+String* String::createWithData(const unsigned char* data, size_t nLen)
 {
     String* ret = NULL;
     if (data != NULL)

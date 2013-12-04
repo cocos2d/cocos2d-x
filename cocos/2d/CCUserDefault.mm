@@ -420,7 +420,7 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
     else
     {
         unsigned char *bytes = {0};
-        unsigned long size = 0;
+        size_t size = 0;
         
         if (data.length > 0) {
             bytes = (unsigned char*)data.bytes;
