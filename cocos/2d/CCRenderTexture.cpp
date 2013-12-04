@@ -411,6 +411,7 @@ void RenderTexture::end()
 	kmGLPopMatrix();
 }
 
+//TODO find a better way to clear the screen, there is no need to rebind render buffer there.
 void RenderTexture::clear(float r, float g, float b, float a)
 {
     this->beginWithClear(r, g, b, a);

@@ -134,10 +134,8 @@ void NewSprite::updateQuadVertices()
 void NewSprite::draw(void)
 {
     updateQuadVertices();
-    if(false == culling())
+    if(!culling())
     {
-        //static int count =0;
-        //CCLOG("culling Sprite New to not visible %d ",++count);
         return;
     }
 
