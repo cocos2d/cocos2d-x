@@ -1031,10 +1031,6 @@
 		1A9DCA4E180E6E42007A3AD4 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5424180E405B000584C8 /* libjs_static.a */; };
 		1AA2063F1848437900053418 /* CCMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA2063E1848437900053418 /* CCMap.h */; };
 		1AA206401848437A00053418 /* CCMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA2063E1848437900053418 /* CCMap.h */; };
-		1AA206431848986D00053418 /* CCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AA206411848986D00053418 /* CCValue.cpp */; };
-		1AA206441848986D00053418 /* CCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AA206411848986D00053418 /* CCValue.cpp */; };
-		1AA206451848986D00053418 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA206421848986D00053418 /* CCValue.h */; };
-		1AA206461848986D00053418 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA206421848986D00053418 /* CCValue.h */; };
 		1AAF528B180E2ECC000584C8 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168B61807AF9C005B8026 /* b2BroadPhase.cpp */; };
 		1AAF528C180E2ECC000584C8 /* b2BroadPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168B71807AF9C005B8026 /* b2BroadPhase.h */; };
 		1AAF528D180E2ECC000584C8 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168B81807AF9C005B8026 /* b2CollideCircle.cpp */; };
@@ -1466,6 +1462,10 @@
 		1AD71F1E180E28C400808F54 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71F07180E28C400808F54 /* value.h */; };
 		1AD71F1F180E28C400808F54 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71F08180E28C400808F54 /* writer.h */; };
 		1AD71F20180E28C400808F54 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71F08180E28C400808F54 /* writer.h */; };
+		1AE3C844184F14F700CF29B5 /* CCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE3C842184F14F700CF29B5 /* CCValue.cpp */; };
+		1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE3C842184F14F700CF29B5 /* CCValue.cpp */; };
+		1AE3C846184F14F700CF29B5 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3C843184F14F700CF29B5 /* CCValue.h */; };
+		1AE3C847184F14F700CF29B5 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3C843184F14F700CF29B5 /* CCValue.h */; };
 		3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
 		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
 		3EEF8BD5183A001B005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
@@ -2511,8 +2511,6 @@
 		1A9DCA47180E6DE3007A3AD4 /* ccTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccTypes.cpp; sourceTree = "<group>"; };
 		1A9DCA48180E6DE3007A3AD4 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		1AA2063E1848437900053418 /* CCMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMap.h; path = ../base/CCMap.h; sourceTree = "<group>"; };
-		1AA206411848986D00053418 /* CCValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCValue.cpp; sourceTree = "<group>"; };
-		1AA206421848986D00053418 /* CCValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCValue.h; sourceTree = "<group>"; };
 		1AAF5351180E3060000584C8 /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
 		1AAF5352180E3060000584C8 /* AssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManager.h; sourceTree = "<group>"; };
 		1AAF5362180E3374000584C8 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
@@ -2646,6 +2644,8 @@
 		1AD71F06180E28C400808F54 /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
 		1AD71F07180E28C400808F54 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		1AD71F08180E28C400808F54 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		1AE3C842184F14F700CF29B5 /* CCValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCValue.cpp; path = ../base/CCValue.cpp; sourceTree = "<group>"; };
+		1AE3C843184F14F700CF29B5 /* CCValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCValue.h; path = ../base/CCValue.h; sourceTree = "<group>"; };
 		3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_gui_auto.cpp; sourceTree = "<group>"; };
 		3EEF8BCC1839F390005E8A6C /* jsb_cocos2dx_gui_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_gui_auto.hpp; sourceTree = "<group>"; };
 		3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_cocos2dx_gui_manual.cpp; path = gui/jsb_cocos2dx_gui_manual.cpp; sourceTree = "<group>"; };
@@ -3471,13 +3471,13 @@
 				1A5700BE180BC6060088DEC7 /* CCSet.h */,
 				1A5700BF180BC6060088DEC7 /* CCString.cpp */,
 				1A5700C0180BC6060088DEC7 /* CCString.h */,
+				1AE3C842184F14F700CF29B5 /* CCValue.cpp */,
+				1AE3C843184F14F700CF29B5 /* CCValue.h */,
 				1A85BA0C1845F31700260FC0 /* CCVector.h */,
 				1A5700C1180BC6060088DEC7 /* etc1.cpp */,
 				1A5700C2180BC6060088DEC7 /* etc1.h */,
 				1A5700C3180BC6060088DEC7 /* s3tc.cpp */,
 				1A5700C4180BC6060088DEC7 /* s3tc.h */,
-				1AA206411848986D00053418 /* CCValue.cpp */,
-				1AA206421848986D00053418 /* CCValue.h */,
 			);
 			name = base;
 			path = ../cocos/2d;
@@ -5342,7 +5342,7 @@
 				1A570150180BC9460088DEC7 /* CCEventListener.h in Headers */,
 				1A570154180BC9460088DEC7 /* CCEventListenerAcceleration.h in Headers */,
 				1A570158180BC9460088DEC7 /* CCEventListenerCustom.h in Headers */,
-				1AA206451848986D00053418 /* CCValue.h in Headers */,
+				1AE3C846184F14F700CF29B5 /* CCValue.h in Headers */,
 				1A57015C180BC9460088DEC7 /* CCEventListenerKeyboard.h in Headers */,
 				1A570160180BC9460088DEC7 /* CCEventListenerTouch.h in Headers */,
 				1A570164180BC9460088DEC7 /* CCEventTouch.h in Headers */,
@@ -6131,7 +6131,7 @@
 				1A8C59FA180E930E00EF57C3 /* CCTransformHelp.h in Headers */,
 				1A8C59FE180E930E00EF57C3 /* CCTween.h in Headers */,
 				1A8C5A02180E930E00EF57C3 /* CCTweenFunction.h in Headers */,
-				1AA206461848986D00053418 /* CCValue.h in Headers */,
+				1AE3C847184F14F700CF29B5 /* CCValue.h in Headers */,
 				1A8C5A06180E930E00EF57C3 /* CCUtilMath.h in Headers */,
 				1A8C5A08180E930E00EF57C3 /* CocoStudio.h in Headers */,
 				1A8C5A0C180E930E00EF57C3 /* CSContentJsonDictionary.h in Headers */,
@@ -6763,7 +6763,7 @@
 				1AD71DC5180E26E600808F54 /* CCBValue.cpp in Sources */,
 				1AD71DC9180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCD180E26E600808F54 /* CCControlLoader.cpp in Sources */,
-				1AA206431848986D00053418 /* CCValue.cpp in Sources */,
+				1AE3C844184F14F700CF29B5 /* CCValue.cpp in Sources */,
 				1AD71DD1180E26E600808F54 /* CCLabelBMFontLoader.cpp in Sources */,
 				1AD71DD5180E26E600808F54 /* CCLabelTTFLoader.cpp in Sources */,
 				1AD71DD9180E26E600808F54 /* CCLayerColorLoader.cpp in Sources */,
@@ -7271,7 +7271,7 @@
 				1AD71DC6180E26E600808F54 /* CCBValue.cpp in Sources */,
 				1AD71DCA180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCE180E26E600808F54 /* CCControlLoader.cpp in Sources */,
-				1AA206441848986D00053418 /* CCValue.cpp in Sources */,
+				1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */,
 				1AD71DD2180E26E600808F54 /* CCLabelBMFontLoader.cpp in Sources */,
 				1AD71DD6180E26E600808F54 /* CCLabelTTFLoader.cpp in Sources */,
 				1AD71DDA180E26E600808F54 /* CCLayerColorLoader.cpp in Sources */,
