@@ -42,13 +42,13 @@ TMXObjectGroup::~TMXObjectGroup()
     CCLOGINFO("deallocing TMXObjectGroup: %p", this);
 }
 
-ValueDict TMXObjectGroup::getObject(const std::string& objectName) const
+ValueMap TMXObjectGroup::getObject(const std::string& objectName) const
 {
     if (_objects.size() > 0)
     {
         for (auto& v : _objects)
         {
-            ValueDict dict = v.asDict();
+            ValueMap dict = v.asValueMap();
             if (dict["name"].asString() == objectName)
             {
                 return dict;
@@ -57,7 +57,7 @@ ValueDict TMXObjectGroup::getObject(const std::string& objectName) const
     }
     
     // object not found
-    return ValueDict();
+    return ValueMap();
 }
 
 Value TMXObjectGroup::getProperty(const std::string& propertyName) const

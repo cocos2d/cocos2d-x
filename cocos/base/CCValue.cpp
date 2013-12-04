@@ -28,143 +28,143 @@
 NS_CC_BEGIN
 
 Value::Value()
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 , _type(Type::NONE)
 {
     
 }
 
 Value::Value(int v)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 , _type(Type::INTEGER)
 {
     _baseData.intVal = v;
 }
 
 Value::Value(float v)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 , _type(Type::FLOAT)
 {
     _baseData.floatVal = v;
 }
 
 Value::Value(double v)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 , _type(Type::DOUBLE)
 {
     _baseData.doubleVal = v;
 }
 
 Value::Value(bool v)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 , _type(Type::BOOLEAN)
 {
     _baseData.boolVal = v;
 }
 
 Value::Value(const char* v)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 , _type(Type::STRING)
 {
     _strData = v;
 }
 
 Value::Value(const std::string& v)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 , _type(Type::STRING)
 {
     _strData = v;
 }
 
-Value::Value(const ValueArray& v)
-: _arrData(new ValueArray())
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
-, _type(Type::ARRAY)
+Value::Value(const ValueVector& v)
+: _vectorData(new ValueVector())
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
+, _type(Type::VECTOR)
 {
-    *_arrData = v;
+    *_vectorData = v;
 }
 
-Value::Value(ValueArray&& v)
-: _arrData(new ValueArray())
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
-, _type(Type::ARRAY)
+Value::Value(ValueVector&& v)
+: _vectorData(new ValueVector())
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
+, _type(Type::VECTOR)
 {
-    *_arrData = std::move(v);
+    *_vectorData = std::move(v);
 }
 
-Value::Value(const ValueDict& v)
-: _arrData(nullptr)
-, _dictData(new ValueDict())
-, _intKeyDictData(nullptr)
-, _type(Type::DICTIONARY)
+Value::Value(const ValueMap& v)
+: _vectorData(nullptr)
+, _mapData(new ValueMap())
+, _intKeyMapData(nullptr)
+, _type(Type::MAP)
 {
-    *_dictData = v;
+    *_mapData = v;
 }
 
-Value::Value(ValueDict&& v)
-: _arrData(nullptr)
-, _dictData(new ValueDict())
-, _intKeyDictData(nullptr)
-, _type(Type::DICTIONARY)
+Value::Value(ValueMap&& v)
+: _vectorData(nullptr)
+, _mapData(new ValueMap())
+, _intKeyMapData(nullptr)
+, _type(Type::MAP)
 {
-    *_dictData = std::move(v);
+    *_mapData = std::move(v);
 }
 
-Value::Value(const IntValueDict& v)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(new IntValueDict())
-, _type(Type::INT_KEY_DICT)
+Value::Value(const IntValueMap& v)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(new IntValueMap())
+, _type(Type::INT_KEY_MAP)
 {
-    *_intKeyDictData = v;
+    *_intKeyMapData = v;
 }
 
-Value::Value(IntValueDict&& v)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(new IntValueDict())
-, _type(Type::INT_KEY_DICT)
+Value::Value(IntValueMap&& v)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(new IntValueMap())
+, _type(Type::INT_KEY_MAP)
 {
-    *_intKeyDictData = std::move(v);
+    *_intKeyMapData = std::move(v);
 }
 
 Value::Value(const Value& other)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 {
     *this = other;
 }
 
 Value::Value(Value&& other)
-: _arrData(nullptr)
-, _dictData(nullptr)
-, _intKeyDictData(nullptr)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 {
     *this = std::move(other);
 }
 
 Value::~Value()
 {
-    CC_SAFE_DELETE(_arrData);
-    CC_SAFE_DELETE(_dictData);
-    CC_SAFE_DELETE(_intKeyDictData);
+    CC_SAFE_DELETE(_vectorData);
+    CC_SAFE_DELETE(_mapData);
+    CC_SAFE_DELETE(_intKeyMapData);
 }
 
 Value& Value::operator= (const Value& other)
@@ -185,20 +185,20 @@ Value& Value::operator= (const Value& other)
         case Type::STRING:
             _strData = other._strData;
             break;
-        case Type::ARRAY:
-            if (_arrData == nullptr)
-                _arrData = new ValueArray();
-            *_arrData = *other._arrData;
+        case Type::VECTOR:
+            if (_vectorData == nullptr)
+                _vectorData = new ValueVector();
+            *_vectorData = *other._vectorData;
             break;
-        case Type::DICTIONARY:
-            if (_dictData == nullptr)
-                _dictData = new ValueDict();
-            *_dictData = *other._dictData;
+        case Type::MAP:
+            if (_mapData == nullptr)
+                _mapData = new ValueMap();
+            *_mapData = *other._mapData;
             break;
-        case Type::INT_KEY_DICT:
-            if (_intKeyDictData == nullptr)
-                _intKeyDictData = new IntValueDict();
-            *_intKeyDictData = *other._intKeyDictData;
+        case Type::INT_KEY_MAP:
+            if (_intKeyMapData == nullptr)
+                _intKeyMapData = new IntValueMap();
+            *_intKeyMapData = *other._intKeyMapData;
             break;
         default:
             break;
@@ -225,26 +225,26 @@ Value& Value::operator= (Value&& other)
         case Type::STRING:
             _strData = other._strData;
             break;
-        case Type::ARRAY:
-            CC_SAFE_DELETE(_arrData);
-            _arrData = other._arrData;
+        case Type::VECTOR:
+            CC_SAFE_DELETE(_vectorData);
+            _vectorData = other._vectorData;
             break;
-        case Type::DICTIONARY:
-            CC_SAFE_DELETE(_dictData);
-            _dictData = other._dictData;
+        case Type::MAP:
+            CC_SAFE_DELETE(_mapData);
+            _mapData = other._mapData;
             break;
-        case Type::INT_KEY_DICT:
-            CC_SAFE_DELETE(_intKeyDictData);
-            _intKeyDictData = other._intKeyDictData;
+        case Type::INT_KEY_MAP:
+            CC_SAFE_DELETE(_intKeyMapData);
+            _intKeyMapData = other._intKeyMapData;
             break;
         default:
             break;
     }
     _type = other._type;
     
-    other._arrData = nullptr;
-    other._dictData = nullptr;
-    other._intKeyDictData = nullptr;
+    other._vectorData = nullptr;
+    other._mapData = nullptr;
+    other._intKeyMapData = nullptr;
     other._type = Type::NONE;
     
     return *this;
@@ -252,7 +252,7 @@ Value& Value::operator= (Value&& other)
 
 int Value::asInt() const
 {
-    CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP, "");
     if (_type == Type::INTEGER)
     {
         return _baseData.intVal;
@@ -283,7 +283,7 @@ int Value::asInt() const
 
 float Value::asFloat() const
 {
-    CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP, "");
     if (_type == Type::FLOAT)
     {
         return _baseData.floatVal;
@@ -314,7 +314,7 @@ float Value::asFloat() const
 
 double Value::asDouble() const
 {
-    CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP, "");
     if (_type == Type::DOUBLE)
     {
         return _baseData.doubleVal;
@@ -345,7 +345,7 @@ double Value::asDouble() const
 
 bool Value::asBool() const
 {
-    CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP, "");
     if (_type == Type::BOOLEAN)
     {
         return _baseData.boolVal;
@@ -376,7 +376,7 @@ bool Value::asBool() const
 
 std::string Value::asString() const
 {
-    CCASSERT(_type != Type::ARRAY && _type != Type::DICTIONARY, "");
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP, "");
     
     if (_type == Type::STRING)
     {

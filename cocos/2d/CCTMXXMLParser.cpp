@@ -59,11 +59,11 @@ TMXLayerInfo::~TMXLayerInfo()
     }
 }
 
-ValueDict TMXLayerInfo::getProperties()
+ValueMap TMXLayerInfo::getProperties()
 {
     return _properties;
 }
-void TMXLayerInfo::setProperties(ValueDict var)
+void TMXLayerInfo::setProperties(ValueMap var)
 {
     _properties = var;
 }
@@ -208,7 +208,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     CC_UNUSED_PARAM(ctx);
     TMXMapInfo *pTMXMapInfo = this;
     std::string elementName = (char*)name;
-    ValueDict attributeDict;
+    ValueMap attributeDict;
     if (atts && atts[0])
     {
         for(int i = 0; atts[i]; i += 2) 
@@ -463,7 +463,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // The value for "type" was blank or not a valid class name
         // Create an instance of TMXObjectInfo to store the object and its properties
-        ValueDict dict;
+        ValueMap dict;
         // Parse everything automatically
         const char* pArray[] = {"name", "type", "width", "height", "gid"};
         
@@ -529,14 +529,14 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             // The parent element is the last object
             TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().getLastObject();
-            ValueDict& dict = objectGroup->getObjects().rbegin()->asDict();
+            ValueMap& dict = objectGroup->getObjects().rbegin()->asValueMap();
 
             std::string propertyName = attributeDict["name"].asString();
             dict[propertyName] = attributeDict["value"];
         }
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyTile ) 
         {
-            IntValueDict& dict = pTMXMapInfo->getTileProperties().at(pTMXMapInfo->getParentGID()).asIntKeyDict();
+            IntValueMap& dict = pTMXMapInfo->getTileProperties().at(pTMXMapInfo->getParentGID()).asIntKeyMap();
 
             int propertyName = attributeDict["name"].asInt();
             dict[propertyName] = attributeDict["value"];
@@ -546,13 +546,13 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     {
         // find parent object's dict and add polygon-points to it
         TMXObjectGroup* objectGroup = _objectGroups.getLastObject();
-        ValueDict& dict = objectGroup->getObjects().rbegin()->asDict();
+        ValueMap& dict = objectGroup->getObjects().rbegin()->asValueMap();
 
         // get points value string
         std::string value = attributeDict["points"].asString();
         if (!value.empty())
         {
-            ValueArray pointsArray;
+            ValueVector pointsArray;
             pointsArray.reserve(10);
 
             // parse points string into a space-separated set of points
@@ -564,7 +564,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 stringstream pointStream(pointPair);
                 string xStr,yStr;
                 
-                ValueDict pointDict;
+                ValueMap pointDict;
 
                 // set x
                 if(std::getline(pointStream, xStr, ','))
@@ -591,13 +591,13 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     {
         // find parent object's dict and add polyline-points to it
         TMXObjectGroup* objectGroup = _objectGroups.getLastObject();
-        ValueDict& dict = objectGroup->getObjects().rbegin()->asDict();
+        ValueMap& dict = objectGroup->getObjects().rbegin()->asValueMap();
         
         // get points value string
         std::string value = attributeDict["points"].asString();
         if (!value.empty())
         {
-            ValueArray pointsArray;
+            ValueVector pointsArray;
             pointsArray.reserve(10);
             
             // parse points string into a space-separated set of points
@@ -609,7 +609,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 stringstream pointStream(pointPair);
                 string xStr,yStr;
                 
-                ValueDict pointDict;
+                ValueMap pointDict;
                 
                 // set x
                 if(std::getline(pointStream, xStr, ','))

@@ -92,12 +92,12 @@ public:
     /** align items in rows of columns */
     void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInColumns(int columns, va_list args);
-    void alignItemsInColumnsWithArray(const ValueArray& rows);
+    void alignItemsInColumnsWithArray(const ValueVector& rows);
 
     /** align items in columns of rows */
     void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInRows(int rows, va_list args);
-    void alignItemsInRowsWithArray(const ValueArray& columns);
+    void alignItemsInRowsWithArray(const ValueVector& columns);
 
     virtual bool isEnabled() const { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };

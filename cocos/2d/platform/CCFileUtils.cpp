@@ -58,18 +58,18 @@ class DictMaker : public SAXDelegator
 {
 public:
     SAXResult _resultType;
-	ValueDict _rootDict;
-	ValueArray _rootArray;
+	ValueMap _rootDict;
+	ValueVector _rootArray;
 
     std::string _curKey;   ///< parsed key
     std::string _curValue; // parsed value
     SAXState _state;
 
-	ValueDict*  _curDict;
-    ValueArray* _curArray;
+	ValueMap*  _curDict;
+    ValueVector* _curArray;
 
-	std::stack<ValueDict*> _dictStack;
-    std::stack<ValueArray*> _arrayStack;
+	std::stack<ValueMap*> _dictStack;
+    std::stack<ValueVector*> _arrayStack;
     std::stack<SAXState>  _stateStack;
 
 public:
@@ -82,7 +82,7 @@ public:
     {
     }
 
-    ValueDict dictionaryWithContentsOfFile(const char *pFileName)
+    ValueMap dictionaryWithContentsOfFile(const char *pFileName)
     {
         _resultType = SAX_RESULT_DICT;
         SAXParser parser;
@@ -94,7 +94,7 @@ public:
 		return std::move(_rootDict);
     }
 
-    ValueArray arrayWithContentsOfFile(const char* pFileName)
+    ValueVector arrayWithContentsOfFile(const char* pFileName)
     {
         _resultType = SAX_RESULT_ARRAY;
         SAXParser parser;
@@ -129,16 +129,16 @@ public:
             if (SAX_ARRAY == preState)
             {
                 // add a new dictionary into the array
-                _curArray->push_back(Value(ValueDict()));
-				_curDict = &(_curArray->rbegin())->asDict();
+                _curArray->push_back(Value(ValueMap()));
+				_curDict = &(_curArray->rbegin())->asValueMap();
             }
             else if (SAX_DICT == preState)
             {
                 // add a new dictionary into the pre dictionary
                 CCASSERT(! _dictStack.empty(), "The state is wrong!");
-                ValueDict* preDict = _dictStack.top();
-                (*preDict)[_curKey] = Value(ValueDict());
-				_curDict = &(*preDict)[_curKey].asDict();
+                ValueMap* preDict = _dictStack.top();
+                (*preDict)[_curKey] = Value(ValueMap());
+				_curDict = &(*preDict)[_curKey].asValueMap();
             }
 
             // record the dict state
@@ -177,15 +177,15 @@ public:
 
             if (preState == SAX_DICT)
             {
-                (*_curDict)[_curKey] = Value(ValueArray());
-				_curArray = &(*_curDict)[_curKey].asArray();
+                (*_curDict)[_curKey] = Value(ValueVector());
+				_curArray = &(*_curDict)[_curKey].asValueVector();
             }
             else if (preState == SAX_ARRAY)
             {
                 CCASSERT(! _arrayStack.empty(), "The state is wrong!");
-                ValueArray* preArray = _arrayStack.top();
-                preArray->push_back(Value(ValueArray()));
-				_curArray = &(_curArray->rbegin())->asArray();
+                ValueVector* preArray = _arrayStack.top();
+                preArray->push_back(Value(ValueVector()));
+				_curArray = &(_curArray->rbegin())->asValueVector();
             }
             // record the array state
             _stateStack.push(_state);
@@ -303,14 +303,14 @@ public:
     }
 };
 
-ValueDict FileUtils::fileToValueDict(const std::string& filename)
+ValueMap FileUtils::fileToValueMap(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
     return std::move(tMaker.dictionaryWithContentsOfFile(fullPath.c_str()));
 }
 
-ValueArray FileUtils::fileToValueArray(const std::string& filename)
+ValueVector FileUtils::fileToValueVector(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
@@ -321,13 +321,13 @@ ValueArray FileUtils::fileToValueArray(const std::string& filename)
 /*
  * forward statement
  */
-static tinyxml2::XMLElement* generateElementForArray(ValueArray& array, tinyxml2::XMLDocument *pDoc);
-static tinyxml2::XMLElement* generateElementForDict(ValueDict& dict, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForArray(ValueVector& array, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForDict(ValueMap& dict, tinyxml2::XMLDocument *pDoc);
 
 /*
  * Use tinyxml2 to write plist files
  */
-bool FileUtils::writeToFile(ValueDict& dict, const std::string &fullPath)
+bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath)
 {
     //CCLOG("tinyxml2 Dictionary %d writeToFile %s", dict->_ID, fullPath.c_str());
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
@@ -404,11 +404,11 @@ static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XM
 
     // object is Array
     if (value.getType() == Value::Type::ARRAY)
-        return generateElementForArray(value.asArray(), pDoc);
+        return generateElementForArray(value.asValueVector(), pDoc);
     
     // object is Dictionary
     if (value.getType() == Value::Type::DICTIONARY)
-        return generateElementForDict(value.asDict(), pDoc);
+        return generateElementForDict(value.asValueMap(), pDoc);
     
     CCLOG("This type cannot appear in property list");
     return nullptr;
@@ -417,7 +417,7 @@ static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XM
 /*
  * Generate tinyxml2::XMLElement for Dictionary through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForDict(ValueDict& dict, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForDict(ValueMap& dict, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
     
@@ -438,7 +438,7 @@ static tinyxml2::XMLElement* generateElementForDict(ValueDict& dict, tinyxml2::X
 /*
  * Generate tinyxml2::XMLElement for Array through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForArray(ValueArray& array, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForArray(ValueVector& array, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
     
@@ -456,9 +456,9 @@ static tinyxml2::XMLElement* generateElementForArray(ValueArray& array, tinyxml2
 NS_CC_BEGIN
 
 /* The subclass FileUtilsApple should override these two method. */
-ValueDict FileUtils::fileToValueDict(const std::string& filename) {return ValueDict();}
-ValueArray FileUtils::fileToValueArray(const std::string& filename) {return ValueArray();}
-bool FileUtils::writeToFile(ValueDict& dict, const std::string &fullPath) {return false;}
+ValueMap FileUtils::fileToValueMap(const std::string& filename) {return ValueMap();}
+ValueVector FileUtils::fileToValueVector(const std::string& filename) {return ValueVector();}
+bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath) {return false;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
@@ -738,7 +738,7 @@ void FileUtils::addSearchPath(const std::string &searchpath)
     _searchPathArray.push_back(path);
 }
 
-void FileUtils::setFilenameLookupDictionary(const ValueDict& filenameLookupDict)
+void FileUtils::setFilenameLookupDictionary(const ValueMap& filenameLookupDict)
 {
     _fullPathCache.clear();    
     _filenameLookupDict = filenameLookupDict;
@@ -749,17 +749,17 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename
     std::string fullPath = fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
-        ValueDict dict = FileUtils::getInstance()->fileToValueDict(fullPath);
+        ValueMap dict = FileUtils::getInstance()->fileToValueMap(fullPath);
         if (!dict.empty())
         {
-            ValueDict& metadata =  dict["metadata"].asDict();
+            ValueMap& metadata =  dict["metadata"].asValueMap();
             int version = metadata["version"].asInt();
             if (version != 1)
             {
                 CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename.c_str());
                 return;
             }
-            setFilenameLookupDictionary( dict["filenames"].asDict());
+            setFilenameLookupDictionary( dict["filenames"].asValueMap());
         }
     }
 }
