@@ -16,7 +16,7 @@
 
 class ArmatureTestScene : public TestScene
 {
-public: 
+public:
 	ArmatureTestScene(bool bPortrait = false);
 
 	virtual void runThisTest();
@@ -114,7 +114,7 @@ public:
     virtual void addArmature(int number);
     virtual void addArmatureToParent(cocostudio::Armature *armature);
     virtual void removeArmatureFromParent(int tag);
-    virtual void refreshTitile();
+    virtual void refreshTitle();
 
 	int armatureCount;
 

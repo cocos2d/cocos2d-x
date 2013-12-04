@@ -26,6 +26,7 @@
 
 #include <climits>
 #include <algorithm>
+#include <cmath>
 
 #include "chipmunk.h"
 
@@ -348,7 +349,7 @@ void PhysicsBody::setPosition(Point position)
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_info->getBody(), PhysicsHelper::float2cpfloat(rotation));
+    cpBodySetAngle(_info->getBody(), PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
 }
 
 Point PhysicsBody::getPosition() const
@@ -359,7 +360,7 @@ Point PhysicsBody::getPosition() const
 
 float PhysicsBody::getRotation() const
 {
-    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) / 3.14f * 180.0f);
+    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) / M_PI * 180.0f);
 }
 
 PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/* = true*/)
