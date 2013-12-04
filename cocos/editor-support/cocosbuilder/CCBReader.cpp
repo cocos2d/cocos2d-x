@@ -293,7 +293,16 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     {
         Node* pNode = (Node*)pElement->getIntKey();
         CCBAnimationManager* manager = static_cast<CCBAnimationManager*>(animationManagers->objectForKey((intptr_t)pNode));
-        pNode->setUserObject(manager);
+        
+        // avoid user object conflict with other implementation
+        auto dict = dynamic_cast<Dictionary*>(pNode->getUserObject());
+        if (dict == nullptr)
+        {
+            dict = Dictionary::create();
+            pNode->setUserObject(dict);
+        }
+        dict->setObject(manager, "ccbmanager");
+        // set ccb manager to dict
 
         if (_jsControlled)
         {
@@ -326,7 +335,13 @@ Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, Obj
 
 void CCBReader::cleanUpNodeGraph(Node *pNode)
 {
-    pNode->setUserObject(NULL);
+    // avoid user object conflict with other implementation
+    auto dict = dynamic_cast<Dictionary*>(pNode->getUserObject());
+    if (dict != nullptr)
+    {
+        dict->removeObjectForKey("ccbmanager");
+    }
+    // remove ccb manager from dict
     
     Object *pChild = NULL;
     CCARRAY_FOREACH(pNode->getChildren(), pChild)
