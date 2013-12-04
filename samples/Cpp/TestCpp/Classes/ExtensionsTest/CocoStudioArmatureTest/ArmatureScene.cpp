@@ -184,7 +184,7 @@ void ArmatureTestLayer::onExit()
     removeAllChildren();
 
     backItem = restartItem = nextItem = nullptr;
-    
+
     Layer::onExit();
 }
 
@@ -371,7 +371,7 @@ void TestPerformance::onEnter()
     decrease->setColor(Color3B(0,200,20));
     MenuItemFont *increase = MenuItemFont::create(" + ", CC_CALLBACK_1(TestPerformance::onIncrease, this));
     increase->setColor(Color3B(0,200,20));
-    
+
     Menu *menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Point(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
@@ -404,7 +404,7 @@ void TestPerformance::onDecrease(Object* pSender)
     {
         removeArmatureFromParent(ArmaturePerformanceTag + armatureCount);
         armatureCount --;
-        refreshTitile();
+        refreshTitle();
     }
 }
 void TestPerformance::addArmature(int number)
@@ -423,7 +423,7 @@ void TestPerformance::addArmature(int number)
         armature->release();
     }
 
-    refreshTitile();
+    refreshTitle();
 }
 void TestPerformance::addArmatureToParent(cocostudio::Armature *armature)
 {
@@ -433,7 +433,7 @@ void TestPerformance::removeArmatureFromParent(int tag)
 {
     removeChildByTag(ArmaturePerformanceTag + armatureCount);
 }
-void TestPerformance::refreshTitile()
+void TestPerformance::refreshTitle()
 {
     char pszCount[255];
     sprintf(pszCount, "%s %i", subtitle().c_str(), armatureCount);
@@ -601,7 +601,7 @@ void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIn
     {
         this->stopAllActions();
 
-        ActionInterval *action =  ShatteredTiles3D::create(0.2f, Size(16,12), 5, false); 
+        ActionInterval *action =  ShatteredTiles3D::create(0.2f, Size(16,12), 5, false);
         action->setTag(FRAME_EVENT_ACTION_TAG);
         this->runAction(action);
     }
@@ -617,7 +617,7 @@ void TestFrameEvent::checkAction(float dt)
 void TestParticleDisplay::onEnter()
 {
     ArmatureTestLayer::onEnter();
-    
+
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesEnded = CC_CALLBACK_2(TestParticleDisplay::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -681,7 +681,7 @@ void TestUseMutiplePicture::onEnter()
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesEnded = CC_CALLBACK_2(TestUseMutiplePicture::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    
+
     displayIndex = 0;
 
     armature = Armature::create("Knight_f/Knight");
@@ -1076,7 +1076,7 @@ std::string TestAnchorPoint::title()
 void TestArmatureNesting::onEnter()
 {
     ArmatureTestLayer::onEnter();
-    
+
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesEnded = CC_CALLBACK_2(TestArmatureNesting::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -1241,7 +1241,7 @@ void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 {
     Point point = touches[0]->getLocation();
 
-    Armature *armature = hero->getMount() == nullptr ? hero : hero->getMount(); 
+    Armature *armature = hero->getMount() == nullptr ? hero : hero->getMount();
 
     //Set armature direction
     if (point.x < armature->getPositionX())

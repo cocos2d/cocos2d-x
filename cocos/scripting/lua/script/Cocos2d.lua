@@ -291,4 +291,72 @@ function cc.c4f( _r,_g,_b,_a )
     return { r = _r, g = _g, b = _b, a = _a }
 end
 
+--Vertex2F
+function cc.vertex2F(_x,_y)
+    return { x = _x, y = _y }
+end
 
+--Vertex3F
+function cc.Vertex3F(_x,_y,_z)
+    return { x = _x, y = _y, z = _z }
+end
+
+--Tex2F
+function cc.tex2F(_u,_v)
+    return { u = _u, v = _v }
+end
+
+--PointSprite
+function cc.PointSprite(_pos,_color,_size)
+    return { pos = _pos, color = _color, size = _size }
+end
+
+--Quad2
+function cc.Quad2(_tl,_tr,_bl,_br)
+    return { tl = _tl, tr = _tr, bl = _bl, br = _br }
+end
+
+--Quad3
+function cc.Quad3(_tl, _tr, _bl, _br)
+    return { tl = _tl, tr = _tr, bl = _bl, br = _br }
+end
+
+--V2F_C4B_T2F
+function cc.V2F_C4B_T2F(_vertices, _colors, _texCoords)
+    return { vertices = _vertices, colors = _colors, texCoords = _texCoords }
+end
+
+--V2F_C4F_T2F
+function cc.V2F_C4F_T2F(_vertices, _colors, _texCoords)
+    return { vertices = _vertices, colors = _colors, texCoords = _texCoords }
+end
+
+--V3F_C4B_T2F
+function cc.V3F_C4B_T2F(_vertices, _colors, _texCoords)
+    return { vertices = _vertices, colors = _colors, texCoords = _texCoords }
+end
+
+--V2F_C4B_T2F_Quad
+function cc.V2F_C4B_T2F_Quad(_bl, _br, _tl, _tr)
+    return { bl = _bl, br = _br, tl = _tl, tr = _tr }
+end
+
+--V3F_C4B_T2F_Quad
+function cc.V3F_C4B_T2F_Quad(_tl, _bl, _tr, _br)
+    return { tl = _tl, bl = _bl, tr = _tr, br = _br }
+end
+
+--V2F_C4F_T2F_Quad
+function cc.V2F_C4F_T2F_Quad(_bl, _br, _tl, _tr)
+    return { bl = _bl, br = _br, tl = _tl, tr = _tr }
+end
+
+--T2F_Quad
+function cc.T2F_Quad(_bl, _br, _tl, _tr)
+    return { bl = _bl, br = _br, tl = _tl, tr = _tr }
+end
+
+--AnimationFrameData
+function cc.AnimationFrameData( _texCoords, _delay, _size)
+    return { texCoords = _texCoords, delay = _delay, size = _size }
+end
