@@ -11,15 +11,15 @@
 #include <thread>
 
 #include <stdio.h>
+#include <netdb.h>
+#include <time.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <arpa/inet.h>
 #include <netinet/in.h>
-#include <sys/types.h>
+#include <sys/select.h>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <sys/time.h>
-#include <time.h>
 
 #include "CCDirector.h"
 #include "CCScheduler.h"
@@ -114,9 +114,6 @@ void Console::cancel()
 {
     if( _running ) {
         _endThread = true;
-        if( _listenfd )
-            write(_listenfd,"\n",1);
-
         _thread.join();
     }
 }
@@ -172,21 +169,22 @@ void Console::loop()
     fd_set read_set, copy_set;
 	struct sockaddr client;
 	socklen_t client_len;
-    int fd;
 	struct timeval timeout, timeout_copy;
 
     FD_ZERO(&read_set);
     FD_SET(_listenfd, &read_set);
-    _max_fd = _listenfd;
+    _maxfd = _listenfd;
 
 	timeout.tv_sec = 0;
-	timeout.tv_usec = 50000; /* 0.05 secons */
+
+    /* 0.016 seconds. Wake up once per frame at 60PFS */
+	timeout.tv_usec = 016000;
 
 	while(!_endThread) {
 
-        copy_set = read_set;
+        FD_COPY(&read_set, &copy_set);
         timeout_copy = timeout;
-		int nready = select(_max_fd+1, &copy_set, NULL, NULL, &timeout_copy);
+		int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
 
 		if( nready == -1 ) {
             /* error ?*/
@@ -203,13 +201,13 @@ void Console::loop()
         if(FD_ISSET(_listenfd, &copy_set)) {
             /* new client */
 			client_len = sizeof( client );
-			fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
+			int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
 
             // add fd to list of FD
 			if( fd != -1 ) {
                 FD_SET(fd, &read_set);
-                if(fd > _max_fd)
-                    _max_fd = fd;
+                _fds.push_back(fd);
+                _maxfd = std::max(_maxfd,fd);
             }
 
 			if(--nready <= 0)
@@ -217,8 +215,8 @@ void Console::loop()
         }
 
         /* input from client */
-        for(fd=0; fd <= _max_fd; fd++) {
-            if( fd != _listenfd && FD_ISSET(fd,&copy_set) ) {
+        for(const auto &fd: _fds) {
+            if(FD_ISSET(fd,&copy_set)) {
                 readline(fd);
                 parseToken();
                 log("read: %s", _buffer);
@@ -226,5 +224,10 @@ void Console::loop()
                     break;
             }
         }
-	}
+    }
+
+    // clean up: ignore stdin, stdout and stderr
+    for(const auto &fd: _fds )
+        close(fd);
+    close(_listenfd);
 }
