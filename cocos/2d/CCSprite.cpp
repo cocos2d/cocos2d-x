@@ -498,8 +498,10 @@ void Sprite::updateTransform(void)
     CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
 
 #ifdef CC_USE_PHYSICS
-    updatePhysicsTransform();
-    setDirty(true);
+    if (updatePhysicsTransform())
+    {
+        setDirty(true);
+    };
 #endif
 
     // recalculate matrix only if it is dirty
