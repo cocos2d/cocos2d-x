@@ -1341,14 +1341,17 @@ Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
 }
 
 #ifdef CC_USE_PHYSICS
-void Node::updatePhysicsTransform()
+bool Node::updatePhysicsTransform()
 {
-    if (_physicsBody)
+    if (_physicsBody != nullptr && _physicsBody->getWorld() != nullptr && !_physicsBody->isResting())
     {
         _position = _physicsBody->getPosition();
         _rotationX = _rotationY = _physicsBody->getRotation();
         _transformDirty = _inverseDirty = true;
+        return true;
     }
+    
+    return false;
 }
 #endif
 
