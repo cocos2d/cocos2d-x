@@ -213,15 +213,7 @@ public:
 	virtual Animation *clone() const override;
 
 protected:
-    
-    /**
-     * @js ctor
-     */
     Animation();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~Animation(void);
     
     /** Initializes a Animation */
