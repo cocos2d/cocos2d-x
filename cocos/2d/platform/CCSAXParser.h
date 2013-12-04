@@ -26,6 +26,7 @@
 
 #include "CCPlatformConfig.h"
 #include "platform/CCCommon.h"
+#include "string.h"  // for size_t
 
 NS_CC_BEGIN
 

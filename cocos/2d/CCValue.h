@@ -35,7 +35,6 @@
 NS_CC_BEGIN
 
 class Value;
-
 typedef std::vector<Value> ValueArray;
 typedef std::unordered_map<std::string, Value> ValueDict;
 typedef std::unordered_map<int, Value> IntValueDict;
@@ -44,65 +43,109 @@ class Value
 {
 public:
     Value()
-    : _type(Type::NONE)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
+    , _type(Type::NONE)
     {
         
     }
     explicit Value(int v)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
+    , _type(Type::INTEGER)
     {
         _baseData.intVal = v;
-        _type = Type::INTEGER;
     }
     explicit Value(float v)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
+    , _type(Type::FLOAT)
     {
         _baseData.floatVal = v;
-        _type = Type::FLOAT;
     }
     explicit Value(double v)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
+    , _type(Type::DOUBLE)
     {
         _baseData.doubleVal = v;
-        _type = Type::DOUBLE;
     }
     explicit Value(bool v)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
+    , _type(Type::BOOLEAN)
     {
         _baseData.boolVal = v;
-        _type = Type::BOOLEAN;
     }
     
     explicit Value(const char* v)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
+    , _type(Type::STRING)
     {
         _strData = v;
-        _type = Type::STRING;
     }
     
     explicit Value(const std::string& v)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
+    , _type(Type::STRING)
     {
         _strData = v;
-        _type = Type::STRING;
     }
     explicit Value(const ValueArray& v)
+    : _arrData(new ValueArray())
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
+    , _type(Type::ARRAY)
     {
-        _arrData = v;
-        _type = Type::ARRAY;
+        *_arrData = v;
     }
     explicit Value(const ValueDict& v)
+    : _arrData(nullptr)
+    , _dictData(new ValueDict())
+    , _intKeyDictData(nullptr)
+    , _type(Type::DICTIONARY)
     {
-        _dictData = v;
-        _type = Type::DICTIONARY;
+        *_dictData = v;
+    }
+    
+    explicit Value(const IntValueDict& v)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(new IntValueDict())
+    , _type(Type::INT_KEY_DICT)
+    {
+        *_intKeyDictData = v;
     }
 
     Value(const Value& other)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
     {
         *this = other;
     }
     Value(Value&& other)
+    : _arrData(nullptr)
+    , _dictData(nullptr)
+    , _intKeyDictData(nullptr)
     {
-        *this = other;
+        *this = std::move(other);
     }
     
     ~Value()
     {
-        
+        CC_SAFE_DELETE(_arrData);
+        CC_SAFE_DELETE(_dictData);
+        CC_SAFE_DELETE(_intKeyDictData);
     }
     
     Value& operator= (const Value& other)
@@ -124,10 +167,13 @@ public:
                 _strData = other._strData;
                 break;
             case Type::ARRAY:
-                _arrData = other._arrData;
+                *_arrData = *other._arrData;
                 break;
             case Type::DICTIONARY:
-                _dictData = other._dictData;
+                *_dictData = *other._dictData;
+                break;
+            case Type::INT_KEY_DICT:
+                *_intKeyDictData = *other._intKeyDictData;
                 break;
             default:
                 break;
@@ -155,14 +201,25 @@ public:
                 _strData = other._strData;
                 break;
             case Type::ARRAY:
+                CC_SAFE_DELETE(_arrData);
                 _arrData = other._arrData;
                 break;
             case Type::DICTIONARY:
+                CC_SAFE_DELETE(_dictData);
                 _dictData = other._dictData;
+                break;
+            case Type::INT_KEY_DICT:
+                CC_SAFE_DELETE(_intKeyDictData);
+                _intKeyDictData = other._intKeyDictData;
                 break;
             default:
                 break;
         }
+        
+        _arrData = nullptr;
+        _dictData = nullptr;
+        _intKeyDictData = nullptr;
+        
         _type = other._type;
         return *this;
     }
@@ -321,27 +378,27 @@ public:
     
     ValueArray& asArray()
     {
-        return _arrData;
+        return *_arrData;
     }
     
     const ValueArray& asArray() const
     {
-        return _arrData;
+        return *_arrData;
     }
     
     ValueDict& asDict()
     {
-        return _dictData;
+        return *_dictData;
     }
     
     const ValueDict& asDict() const
     {
-        return _dictData;
+        return *_dictData;
     }
     
     IntValueDict& asIntKeyDict()
     {
-        return _intKeyDictData;
+        return *_intKeyDictData;
     }
     
     bool isNull() const { return _type == Type::NONE; }
@@ -371,14 +428,12 @@ private:
     }_baseData;
     
     std::string _strData;
-    ValueArray _arrData;
-    ValueDict _dictData;
-    IntValueDict _intKeyDictData;
+    ValueArray* _arrData;
+    ValueDict* _dictData;
+    IntValueDict* _intKeyDictData;
 
     Type _type;
 };
-
-
 
 NS_CC_END
 

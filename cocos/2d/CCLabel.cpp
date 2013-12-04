@@ -373,7 +373,7 @@ Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const F
         {
             spriteToUpdate->setBatchNode(this); 
             spriteToUpdate->setTexture(theTexture);
-            spriteToUpdate->setDisplayFrame(frame);
+            spriteToUpdate->setSpriteFrame(frame);
             spriteToUpdate->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));                                        
         }     
         

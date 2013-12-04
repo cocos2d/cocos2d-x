@@ -49,7 +49,6 @@ AnimationFrame* AnimationFrame::create(SpriteFrame* spriteFrame, float delayUnit
 AnimationFrame::AnimationFrame()
 : _spriteFrame(NULL)
 , _delayUnits(0.0f)
-, _userInfo(NULL)
 {
 
 }
