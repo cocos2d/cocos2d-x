@@ -308,7 +308,7 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
     return "";
 }
 
-ValueMap FileUtilsApple::fileToValueMap(const std::string& filename)
+ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename);
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
@@ -344,7 +344,7 @@ bool FileUtilsApple::writeToFile(ValueMap& dict, const std::string &fullPath)
     return true;
 }
 
-ValueVector FileUtilsApple::fileToValueVector(const std::string& filename)
+ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
 {
     //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
     //    NSString* pathExtension= [pPath pathExtension];

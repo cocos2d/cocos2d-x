@@ -303,14 +303,14 @@ public:
     }
 };
 
-ValueMap FileUtils::fileToValueMap(const std::string& filename)
+ValueMap FileUtils::getValueMapFromFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
     return std::move(tMaker.dictionaryWithContentsOfFile(fullPath.c_str()));
 }
 
-ValueVector FileUtils::fileToValueVector(const std::string& filename)
+ValueVector FileUtils::getValueVectorFromFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
@@ -456,8 +456,8 @@ static tinyxml2::XMLElement* generateElementForArray(ValueVector& array, tinyxml
 NS_CC_BEGIN
 
 /* The subclass FileUtilsApple should override these two method. */
-ValueMap FileUtils::fileToValueMap(const std::string& filename) {return ValueMap();}
-ValueVector FileUtils::fileToValueVector(const std::string& filename) {return ValueVector();}
+ValueMap FileUtils::getValueMapFromFile(const std::string& filename) {return ValueMap();}
+ValueVector FileUtils::getValueVectorFromFile(const std::string& filename) {return ValueVector();}
 bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath) {return false;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
@@ -749,7 +749,7 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename
     std::string fullPath = fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
-        ValueMap dict = FileUtils::getInstance()->fileToValueMap(fullPath);
+        ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
         if (!dict.empty())
         {
             ValueMap& metadata =  dict["metadata"].asValueMap();

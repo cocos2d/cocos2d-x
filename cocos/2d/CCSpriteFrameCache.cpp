@@ -199,7 +199,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist, Texture2D *pobTexture)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
-    ValueMap dict = FileUtils::getInstance()->fileToValueMap(fullPath);
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
     addSpriteFramesWithDictionary(dict, pobTexture);
 }
@@ -226,7 +226,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
     if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
     {
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
-        ValueMap dict = FileUtils::getInstance()->fileToValueMap(fullPath);
+        ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
         string texturePath("");
 
@@ -335,7 +335,7 @@ void SpriteFrameCache::removeSpriteFrameByName(const std::string& name)
 void SpriteFrameCache::removeSpriteFramesFromFile(const std::string& plist)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
-    ValueMap dict = FileUtils::getInstance()->fileToValueMap(fullPath);
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
     if (dict.empty())
     {
         CCLOG("cocos2d:SpriteFrameCache:removeSpriteFramesFromFile: create dict by %s fail.",plist.c_str());
