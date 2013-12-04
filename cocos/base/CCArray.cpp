@@ -105,7 +105,7 @@ Array* Array::createWithArray(Array* otherArray)
     return otherArray->clone();
 }
 
-Array* Array::createWithCapacity(long capacity)
+Array* Array::createWithCapacity(size_t capacity)
 {
     CCASSERT(capacity>=0, "Invalid capacity");
 
@@ -182,7 +182,7 @@ bool Array::initWithObjects(Object* object, ...)
     return ret;
 }
 
-bool Array::initWithCapacity(long capacity)
+bool Array::initWithCapacity(size_t capacity)
 {
     CCASSERT(capacity>=0, "Invalid capacity");
 
@@ -196,11 +196,11 @@ bool Array::initWithArray(Array* otherArray)
     return true;
 }
 
-int Array::getIndexOfObject(Object* object) const
+size_t Array::getIndexOfObject(Object* object) const
 {
     auto it = data.begin();
 
-    for (long i = 0; it != data.end(); ++it, ++i)
+    for (size_t i = 0; it != data.end(); ++it, ++i)
     {
         if (it->get() == object)
         {
@@ -232,13 +232,13 @@ Object* Array::getRandomObject()
 
 bool Array::containsObject(Object* object) const
 {
-    int i = this->getIndexOfObject(object);
-    return (i >=0);
+    auto i = this->getIndexOfObject(object);
+    return (i >= 0);
 }
 
 bool Array::isEqualToArray(Array* otherArray)
 {
-    for (long i = 0; i< this->count(); i++)
+    for (size_t i = 0; i < this->count(); ++i)
     {
         if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
         {
@@ -250,7 +250,7 @@ bool Array::isEqualToArray(Array* otherArray)
 
 void Array::addObject(Object* object)
 {
-    data.push_back( RCPtr<Object>(object) );
+    data.push_back(RCPtr<Object>(object));
 }
 
 void Array::addObjectsFromArray(Array* otherArray)
@@ -258,12 +258,12 @@ void Array::addObjectsFromArray(Array* otherArray)
     data.insert(data.end(), otherArray->data.begin(), otherArray->data.end());
 }
 
-void Array::insertObject(Object* object, int index)
+void Array::insertObject(Object* object, size_t index)
 {
-    data.insert( std::begin(data) + index, RCPtr<Object>(object) );
+    data.insert(std::begin(data) + index, RCPtr<Object>(object));
 }
 
-void Array::setObject(Object* object, int index)
+void Array::setObject(Object* object, size_t index)
 {
     data[index] = RCPtr<Object>(object);
 }
@@ -276,13 +276,13 @@ void Array::removeLastObject(bool releaseObj)
 
 void Array::removeObject(Object* object, bool releaseObj /* ignored */)
 {
-    data.erase( std::remove( data.begin(), data.end(), object ) );
+    data.erase(std::remove(data.begin(), data.end(), object));
 }
 
-void Array::removeObjectAtIndex(long index, bool releaseObj /* ignored */)
+void Array::removeObjectAtIndex(size_t index, bool releaseObj /* ignored */)
 {
     auto obj = data[index];
-    data.erase( data.begin() + index );
+    data.erase(data.begin() + index);
 }
 
 void Array::removeObjectsInArray(Array* otherArray)
@@ -295,7 +295,7 @@ void Array::removeAllObjects()
     data.erase(std::begin(data), std::end(data));
 }
 
-void Array::fastRemoveObjectAtIndex(long index)
+void Array::fastRemoveObjectAtIndex(size_t index)
 {
     removeObjectAtIndex(index);
 }
@@ -307,27 +307,27 @@ void Array::fastRemoveObject(Object* object)
 
 void Array::exchangeObject(Object* object1, Object* object2)
 {
-    int idx1 = getIndexOfObject(object1);
-    int idx2 = getIndexOfObject(object2);
+    auto idx1 = getIndexOfObject(object1);
+    auto idx2 = getIndexOfObject(object2);
 
-    CCASSERT(idx1>=0 && idx2>=2, "invalid object index");
+    CCASSERT(idx1 >= 0 && idx2 >= 2, "invalid object index");
 
-    std::swap( data[idx1], data[idx2] );
+    std::swap(data[idx1], data[idx2]);
 }
 
-void Array::exchangeObjectAtIndex(long index1, long index2)
+void Array::exchangeObjectAtIndex(size_t index1, size_t index2)
 {
-    std::swap( data[index1], data[index2] );
+    std::swap(data[index1], data[index2]);
 }
 
-void Array::replaceObjectAtIndex(long index, Object* object, bool releaseObject /* ignored */)
+void Array::replaceObjectAtIndex(size_t index, Object* object, bool releaseObject /* ignored */)
 {
     data[index] = object;
 }
 
 void Array::reverseObjects()
 {
-    std::reverse( std::begin(data), std::end(data) );
+    std::reverse(std::begin(data), std::end(data));
 }
 
 void Array::reduceMemoryFootprint()
@@ -448,7 +448,7 @@ Array* Array::createWithArray(Array* otherArray)
     return otherArray->clone();
 }
 
-Array* Array::createWithCapacity(long capacity)
+Array* Array::createWithCapacity(size_t capacity)
 {
     CCASSERT(capacity>=0, "Invalid capacity");
 
@@ -531,7 +531,7 @@ bool Array::initWithObjects(Object* object, ...)
     return ret;
 }
 
-bool Array::initWithCapacity(long capacity)
+bool Array::initWithCapacity(size_t capacity)
 {
     CCASSERT(capacity>=0 && !data, "Array cannot be re-initialized");
 
@@ -555,7 +555,7 @@ bool Array::initWithArray(Array* otherArray)
     return ret;
 }
 
-long Array::getIndexOfObject(Object* object) const
+size_t Array::getIndexOfObject(Object* object) const
 {
     return ccArrayGetIndexOfObject(data, object);
 }
@@ -574,7 +574,7 @@ Object* Array::getRandomObject()
         r = 0;
     }
 
-    return data->arr[(long)(data->num * r)];
+    return data->arr[static_cast<size_t>(data->num * r)];
 }
 
 bool Array::containsObject(Object* object) const
@@ -584,7 +584,7 @@ bool Array::containsObject(Object* object) const
 
 bool Array::isEqualToArray(Array* otherArray)
 {
-    for (long i = 0; i< this->count(); i++)
+    for (size_t i = 0; i < this->count(); ++i)
     {
         if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
         {
@@ -606,15 +606,15 @@ void Array::addObjectsFromArray(Array* otherArray)
     ccArrayAppendArrayWithResize(data, otherArray->data);
 }
 
-void Array::insertObject(Object* object, long index)
+void Array::insertObject(Object* object, size_t index)
 {
     CCASSERT(data, "Array not initialized");
     ccArrayInsertObjectAtIndex(data, object, index);
 }
 
-void Array::setObject(Object* object, long index)
+void Array::setObject(Object* object, size_t index)
 {
-    CCASSERT(index>=0 && index < count(), "Invalid index");
+    CCASSERT(index >= 0 && index < count(), "Invalid index");
     
     if (object != data->arr[index])
     {
@@ -627,7 +627,7 @@ void Array::setObject(Object* object, long index)
 void Array::removeLastObject(bool releaseObj)
 {
     CCASSERT(data->num, "no objects added");
-    ccArrayRemoveObjectAtIndex(data, data->num-1, releaseObj);
+    ccArrayRemoveObjectAtIndex(data, data->num - 1, releaseObj);
 }
 
 void Array::removeObject(Object* object, bool releaseObj/* = true*/)
@@ -635,7 +635,7 @@ void Array::removeObject(Object* object, bool releaseObj/* = true*/)
     ccArrayRemoveObject(data, object, releaseObj);
 }
 
-void Array::removeObjectAtIndex(long index, bool releaseObj)
+void Array::removeObjectAtIndex(size_t index, bool releaseObj)
 {
     ccArrayRemoveObjectAtIndex(data, index, releaseObj);
 }
@@ -650,7 +650,7 @@ void Array::removeAllObjects()
     ccArrayRemoveAllObjects(data);
 }
 
-void Array::fastRemoveObjectAtIndex(long index)
+void Array::fastRemoveObjectAtIndex(size_t index)
 {
     ccArrayFastRemoveObjectAtIndex(data, index);
 }
@@ -662,13 +662,13 @@ void Array::fastRemoveObject(Object* object)
 
 void Array::exchangeObject(Object* object1, Object* object2)
 {
-    long index1 = ccArrayGetIndexOfObject(data, object1);
+    auto index1 = ccArrayGetIndexOfObject(data, object1);
     if (index1 == CC_INVALID_INDEX)
     {
         return;
     }
 
-    long index2 = ccArrayGetIndexOfObject(data, object2);
+    auto index2 = ccArrayGetIndexOfObject(data, object2);
     if (index2 == CC_INVALID_INDEX)
     {
         return;
@@ -677,15 +677,15 @@ void Array::exchangeObject(Object* object1, Object* object2)
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
-void Array::exchangeObjectAtIndex(long index1, long index2)
+void Array::exchangeObjectAtIndex(size_t index1, size_t index2)
 {
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
-void Array::replaceObjectAtIndex(long index, Object* object, bool releaseObject/* = true*/)
+void Array::replaceObjectAtIndex(size_t index, Object* object, bool releaseObject/* = true*/)
 {
     ccArrayInsertObjectAtIndex(data, object, index);
-    ccArrayRemoveObjectAtIndex(data, index+1);
+    ccArrayRemoveObjectAtIndex(data, index + 1);
 }
 
 void Array::reverseObjects()
@@ -693,10 +693,10 @@ void Array::reverseObjects()
     if (data->num > 1)
     {
         // floorf(), since in the case of an even number, the number of swaps stays the same
-        long count = (long) floorf(data->num/2.f);
-        long maxIndex = data->num - 1;
+        auto count = static_cast<int>(floorf(data->num/2.f));
+        auto maxIndex = data->num - 1;
 
-        for (long i = 0; i < count ; i++)
+        for (int i = 0; i < count ; ++i)
         {
             ccArraySwapObjectsAtIndexes(data, i, maxIndex);
             --maxIndex;
