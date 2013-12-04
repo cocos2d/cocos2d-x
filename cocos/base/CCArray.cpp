@@ -478,7 +478,15 @@ Array* Array::createWithContentsOfFile(const char* fileName)
 
 Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
 {
-    return nullptr;//FIXME:XXX  FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
+    ValueArray arr = FileUtils::getInstance()->fileToValueArray(fileName);
+    
+    Array* ret = Array::createWithCapacity(arr.size());
+    
+    std::for_each(arr.cbegin(), arr.cend(), [&ret](const Value& value){
+        ret->addObject(String::create(value.asString()));
+    });
+    
+    return ret;
 }
 
 bool Array::init()

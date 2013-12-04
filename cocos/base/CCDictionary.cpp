@@ -464,7 +464,14 @@ Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 
 bool Dictionary::writeToFile(const char *fullPath)
 {
-    return false;//FIXME: XXX FileUtils::getInstance()->writeToFile(this, fullPath);
+    ValueDict dict;
+    DictElement* element = nullptr;
+    CCDICT_FOREACH(this, element)
+    {
+        dict[element->getStrKey()] = Value(static_cast<String*>(element->getObject())->getCString());
+    }
+    
+    return FileUtils::getInstance()->writeToFile(dict, fullPath);
 }
 
 Dictionary* Dictionary::clone() const
