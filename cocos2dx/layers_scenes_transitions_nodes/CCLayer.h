@@ -369,7 +369,7 @@ protected:
 /** @brief CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
 Features:
 - It supports one or more children
-- Only one children will be active a time
+- Only one children will be visible a time
 */
 class CC_DLL CCLayerMultiplex : public CCLayer
 {
@@ -431,6 +431,12 @@ public:
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
     void switchToAndReleaseMe(unsigned int n);
+    
+    /// get layer at specified index
+    CCLayer* layerAt(int n);
+    
+    // get visible layer index
+	int getEnabledLayer();
 };
 
 
