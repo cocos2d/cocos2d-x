@@ -206,7 +206,7 @@ public:
     
     Point getPoint(int i) const;
     void getPoints(Point* outPoints) const;
-    long getPointsCount() const;
+    size_t getPointsCount() const;
     virtual Point getCenter() override;
 protected:
     bool init(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Point& offset = Point::ZERO);
@@ -249,7 +249,7 @@ public:
     static PhysicsShapeEdgeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, const Point& offset = Point::ZERO);
     virtual Point getOffset() override { return _offset; }
     void getPoints(const Point* outPoints) const;
-    long getPointsCount() const;
+    int getPointsCount() const;
     
 protected:
     bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, const Point& offset = Point::ZERO);
@@ -271,7 +271,7 @@ public:
     static PhysicsShapeEdgePolygon* create(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     virtual Point getCenter() override;
     void getPoints(Point* outPoints) const;
-    long getPointsCount() const;
+    size_t getPointsCount() const;
     
 protected:
     bool init(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
@@ -293,7 +293,7 @@ public:
     static PhysicsShapeEdgeChain* create(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     virtual Point getCenter() override;
     void getPoints(Point* outPoints) const;
-    long getPointsCount() const;
+    size_t getPointsCount() const;
     
 protected:
     bool init(const Point* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);

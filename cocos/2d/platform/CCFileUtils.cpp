@@ -488,7 +488,7 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-unsigned char* FileUtils::getFileData(const char* filename, const char* mode, long *size)
+unsigned char* FileUtils::getFileData(const char* filename, const char* mode, size_t *size)
 {
     unsigned char * buffer = NULL;
     CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
@@ -751,7 +751,7 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename
             int version = static_cast<String*>( metadata->objectForKey("version"))->intValue();
             if (version != 1)
             {
-                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename.c_str());
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %d. Filename: %s", version, filename.c_str());
                 return;
             }
             setFilenameLookupDictionary( static_cast<Dictionary*>( dict->objectForKey("filenames")) );

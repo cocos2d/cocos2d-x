@@ -28,18 +28,18 @@
 
 NS_CC_BEGIN
 
-Data::Data(unsigned char *pBytes, const unsigned long nSize)
+Data::Data(unsigned char *bytes, const size_t size)
 {
-    _size = nSize;
+    _size = size;
     _bytes = new unsigned char[_size];
-    memcpy(_bytes, pBytes, _size);
+    memcpy(_bytes, bytes, _size);
 }
 
-Data::Data(Data *pData)
+Data::Data(Data *data)
 {
-    _size = pData->_size;
+    _size = data->_size;
     _bytes = new unsigned char[_size];
-    memcpy(_bytes, pData->_bytes, _size);
+    memcpy(_bytes, data->_bytes, _size);
 }
 
 Data::~Data()
@@ -53,7 +53,7 @@ unsigned char* Data::getBytes() const
     return _bytes;
 }
 
-unsigned long Data::getSize() const
+size_t Data::getSize() const
 {
     return _size;
 }

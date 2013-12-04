@@ -37,7 +37,7 @@ public:
      * @js NA
      * @lua NA
      */
-    Data(unsigned char *pBytes, const unsigned long nSize);
+    Data(unsigned char *pBytes, const size_t size);
     /**
      * @js NA
      * @lua NA
@@ -52,14 +52,14 @@ public:
      * @js NA
      * @lua NA
      */
-    static Data* create(unsigned char *pBytes, const unsigned long nSize)
+    static Data* create(unsigned char *pBytes, const size_t size)
     {
-        Data* pRet = new Data(pBytes, nSize);
-        if (pRet)
+        auto ret = new Data(pBytes, size);
+        if (ret)
         {
-            pRet->autorelease();
+            ret->autorelease();
         }
-        return pRet;
+        return ret;
     }    
     /**
      * @js NA
@@ -70,7 +70,7 @@ public:
      * @js NA
      * @lua NA
      */
-    unsigned long getSize() const;
+    size_t getSize() const;
     
     /** override functions
      * @js NA
@@ -80,7 +80,7 @@ public:
 
 private:
     unsigned char* _bytes;
-    unsigned long _size;
+    size_t _size;
 };
 
 NS_CC_END

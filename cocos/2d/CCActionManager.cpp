@@ -253,7 +253,7 @@ void ActionManager::removeAction(Action *action)
     HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
-        long i = ccArrayGetIndexOfObject(element->actions, action);
+        auto i = ccArrayGetIndexOfObject(element->actions, action);
         if (i != CC_INVALID_INDEX)
         {
             removeActionAtIndex(i, element);
@@ -275,12 +275,12 @@ void ActionManager::removeActionByTag(int tag, Object *target)
 
     if (element)
     {
-        long limit = element->actions->num;
-        for (long i = 0; i < limit; ++i)
+        auto limit = element->actions->num;
+        for (size_t i = 0; i < limit; ++i)
         {
             Action *action = (Action*)element->actions->arr[i];
 
-            if (action->getTag() == (int)tag && action->getOriginalTarget() == target)
+            if (action->getTag() == tag && action->getOriginalTarget() == target)
             {
                 removeActionAtIndex(i, element);
                 break;
@@ -327,7 +327,7 @@ Action* ActionManager::getActionByTag(int tag, const Object *target) const
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
 // and, it is not possible to get the address of a reference
-long ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
+size_t ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
 {
     tHashElement *element = NULL;
     HASH_FIND_PTR(_targets, &target, element);

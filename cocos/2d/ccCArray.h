@@ -79,7 +79,7 @@ void ccArrayEnsureExtraCapacity(ccArray *arr, size_t extra);
 void ccArrayShrink(ccArray *arr);
 
 /** Returns index of first occurrence of object, NSNotFound if object not found. */
-long ccArrayGetIndexOfObject(ccArray *arr, Object* object);
+size_t ccArrayGetIndexOfObject(ccArray *arr, Object* object);
 
 /** Returns a Boolean value that indicates whether object is present in array. */
 bool ccArrayContainsObject(ccArray *arr, Object* object);

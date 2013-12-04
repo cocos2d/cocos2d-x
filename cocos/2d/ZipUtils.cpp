@@ -306,7 +306,7 @@ bool ZipUtils::isCCZFile(const char *path)
     // load file into memory
     unsigned char* compressed = NULL;
 
-    long fileLen = 0;
+    size_t fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
 
     if(compressed == NULL || fileLen == 0)
@@ -338,7 +338,7 @@ bool ZipUtils::isGZipFile(const char *path)
     // load file into memory
     unsigned char* compressed = NULL;
 
-    long fileLen = 0;
+    size_t fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
 
     if(NULL == compressed || 0 == fileLen)
@@ -461,7 +461,7 @@ int ZipUtils::inflateCCZFile(const char *path, unsigned char **out)
     // load file into memory
     unsigned char* compressed = NULL;
     
-    long fileLen = 0;
+    size_t fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
     
     if(NULL == compressed || 0 == fileLen)
