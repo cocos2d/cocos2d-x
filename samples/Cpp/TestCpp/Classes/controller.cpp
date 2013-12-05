@@ -15,8 +15,6 @@ struct {
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
 
-    { "ConsoleTest", []() { return new ConsoleTestScene(); } },
-
     //
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
