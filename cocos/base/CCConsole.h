@@ -26,7 +26,15 @@
 #ifndef __CCCONSOLE_H__
 #define __CCCONSOLE_H__
 
+#if defined(_MSC_VER)
+#include <BaseTsd.h>
+//typedef SSIZE_T ssize_t;
+// ssize_t was redefined as int in libwebsockets.h.
+// Therefore, to avoid conflict, we needs the same definition.
+typedef int ssize_t;
+#else
 #include <sys/select.h>
+#endif
 
 #include <thread>
 #include <vector>
@@ -53,7 +61,7 @@ public:
 
     struct Command {
         const char *name;
-        const std::function<void(int)> callback;
+        std::function<void(int)> callback;
     };
 
     /** creates a new instnace of the Console */
