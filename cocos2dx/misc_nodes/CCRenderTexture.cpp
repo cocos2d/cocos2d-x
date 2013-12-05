@@ -243,12 +243,60 @@ CCRenderTexture * CCRenderTexture::create(int w, int h)
     return NULL;
 }
 
-bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
+CCRenderTexture * CCRenderTexture::createNoScale(int w, int h, CCTexture2DPixelFormat eFormat)
 {
-    return initWithWidthAndHeight(w, h, eFormat, 0);
+    CCRenderTexture *pRet = new CCRenderTexture();
+
+    if(pRet && pRet->initWithWidthAndHeightEx(w, h, eFormat, false))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
 }
 
+CCRenderTexture * CCRenderTexture::createNoScale(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
+{
+    CCRenderTexture *pRet = new CCRenderTexture();
+
+    if(pRet && pRet->initWithWidthAndHeightEx(w, h, eFormat, uDepthStencilFormat, false))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+CCRenderTexture * CCRenderTexture::createNoScale(int w, int h)
+{
+    CCRenderTexture *pRet = new CCRenderTexture();
+
+    if(pRet && pRet->initWithWidthAndHeightEx(w, h, kCCTexture2DPixelFormat_RGBA8888, 0, false))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+bool CCRenderTexture::initWithWidthAndHeightEx(int w, int h, CCTexture2DPixelFormat eFormat, bool bShouldScale)
+{
+    return initWithWidthAndHeightEx(w, h, eFormat, 0, bShouldScale);
+}
+
+bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
+{
+    return initWithWidthAndHeightEx(w, h, eFormat, true);
+}
 bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
+{
+    return initWithWidthAndHeightEx(w, h, eFormat, uDepthStencilFormat, true);
+}
+
+bool CCRenderTexture::initWithWidthAndHeightEx(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat, bool bShouldScale)
 {
     CCAssert(eFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
 
@@ -256,8 +304,11 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
     void *data = NULL;
     do 
     {
-        w = (int)(w * CC_CONTENT_SCALE_FACTOR());
-        h = (int)(h * CC_CONTENT_SCALE_FACTOR());
+        if(bShouldScale)
+        {
+            w = (int)(w * CC_CONTENT_SCALE_FACTOR());
+            h = (int)(h * CC_CONTENT_SCALE_FACTOR());
+        }
 
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 
