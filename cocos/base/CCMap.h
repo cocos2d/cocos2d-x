@@ -69,7 +69,7 @@ public:
     ~Map<K, V>()
     {
         CCLOGINFO("In the destructor of Map!");
-        removeAllObjects();
+        clear();
     }
 
     /** Sets capacity of current array */
@@ -94,7 +94,7 @@ public:
         return _data.empty();
     }
     
-    std::vector<K> getAllKeys() const
+    std::vector<K> keys() const
     {
         std::vector<K> keys;
 
@@ -105,10 +105,10 @@ public:
                 keys.push_back(iter->first);
             }
         }
-        return keys;
+        return std::move(keys);
     }
 
-    std::vector<K> getAllKeysForObject(V object) const
+    std::vector<K> keys(V object) const
     {
         std::vector<K> keys;
         
@@ -120,10 +120,10 @@ public:
             }
         }
         
-        return keys;
+        return std::move(keys);
     }
 
-    V getObjectForKey(const K& key) const
+    V at(const K& key) const
     {
         auto iter = _data.find(key);
         if (iter != _data.end())
@@ -132,14 +132,15 @@ public:
         return nullptr;
     }
     
-    void setObject(V object, const K& key)
+    void insert(const K& key, V object)
     {
-        removeObjectForKey(key);
+        CCASSERT(object != nullptr, "Object is nullptr!");
+        remove(key);
         _data.insert(std::make_pair(key, object));
         object->retain();
     }
 
-    void removeObjectForKey(const K& key)
+    void remove(const K& key)
     {
         auto iter = _data.find(key);
         if (iter != _data.end())
@@ -149,18 +150,18 @@ public:
         }
     }
     
-    void removeObjectsForKeys(const std::vector<K>& keys)
+    void remove(const std::vector<K>& keys)
     {
         std::for_each(keys.cbegin(), keys.cend(), [this](const K& key){
-            removeObjectForKey(key);
+            remove(key);
         });
     }
     
-    void removeAllObjects()
+    void clear()
     {
         for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
         {
-            CC_SAFE_RELEASE(iter->second);
+            iter->second->release();
         }
         
         _data.clear();
@@ -193,7 +194,7 @@ public:
     const_iterator cbegin() const { return _data.cbegin(); }
     const_iterator cend() const { return _data.cend(); }
     
-    // Operator
+// Don't uses operator since we could not decide whether it needs 'retain'/'release'.
 //    V& operator[] ( const K& key )
 //    {
 //        CCLOG("copy: [] ref");
@@ -221,7 +222,7 @@ public:
     Map<K, V>& operator= ( const Map<K, V>& other )
     {
         CCLOG("In the copy assignment operator of Map!");
-        removeAllObjects();
+        clear();
         _data = other._data;
         addRefForAllObjects();
     }
@@ -229,7 +230,7 @@ public:
     Map<K, V>& operator= ( Map<K, V>&& other )
     {
         CCLOG("In the move assignment operator of Map!");
-        _data = other._data;
+        _data = std::move(other._data);
     }
     
 protected:
