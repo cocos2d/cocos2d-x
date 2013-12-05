@@ -28,21 +28,29 @@
 #include <algorithm>
 
 #include <stdio.h>
-#include <netdb.h>
 #include <time.h>
-#include <unistd.h>
 #include <fcntl.h>
+
+#if defined(_MSC_VER)
+#include <io.h>
+#include <WS2tcpip.h>
+
+#define bzero(a, b) memset(a, 0, b);
+
+#else
+#include <netdb.h>
+#include <unistd.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#endif
 
 #include "CCDirector.h"
 #include "CCScheduler.h"
-
 #include "CCScene.h"
 
-using namespace cocos2d;
+NS_CC_BEGIN
 
 Console* Console::create()
 {
@@ -52,13 +60,16 @@ Console* Console::create()
     return ret;
 }
 
-
 Console::Console()
 : _listenfd(-1)
 , _running(false)
 , _endThread(false)
-, _commands{
-    { "fps on", [](int anFd) {
+, _maxCommands(5)
+, _userCommands(nullptr)
+, _maxUserCommands(0)
+{
+	Command commands[] = {     
+	{ "fps on", [](int anFd) {
         Director *dir = Director::getInstance();
         Scheduler *sched = dir->getScheduler();
         sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, true));
@@ -70,11 +81,12 @@ Console::Console()
     } },
     { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1) },
     { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1) },
-    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1) }, }
-, _maxCommands(5)
-, _userCommands(nullptr)
-, _maxUserCommands(0)
-{
+    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1) } };
+
+	for (size_t i = 0; i < sizeof(commands)/sizeof(commands[0]) && i < sizeof(_commands)/sizeof(_commands[0]); ++i)
+	{
+		_commands[i] = commands[i];
+	}
 }
 
 Console::~Console()
@@ -97,6 +109,11 @@ bool Console::listenOnTCP(int port)
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    WSADATA wsaData;
+    n = WSAStartup(MAKEWORD(2, 2),&wsaData);
+#endif
+
     if ( (n = getaddrinfo(NULL, serv, &hints, &res)) != 0) {
         fprintf(stderr,"net_listen error for %s: %s", serv, gai_strerror(n));
         return false;
@@ -109,7 +126,7 @@ bool Console::listenOnTCP(int port)
         if (listenfd < 0)
             continue;       /* error, try next one */
 
-        setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
+        setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&on, sizeof(on));
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
 
@@ -214,11 +231,10 @@ void printSceneGraph(int fd, Node* node, int level)
 
     mydprintf(fd, " %s: z=%d, tag=%d\n", node->description(), node->getZOrder(), node->getTag() );
 
-    auto children = node->getChildren();
-    if( children ) {
-        for(const auto& child: *children )
-            printSceneGraph(fd, (Node*)child, level+1);
-    }
+    auto& children = node->getChildren();
+    children.forEach([&fd, &level](Node* child){
+        printSceneGraph(fd, child, level+1);
+    });
 }
 
 void printSceneGraphBoot(int fd)
@@ -397,3 +413,5 @@ void Console::loop()
 
     _running = false;
 }
+
+NS_CC_END
