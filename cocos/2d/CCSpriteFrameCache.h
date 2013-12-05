@@ -37,13 +37,13 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCTexture2D.h"
 #include "CCObject.h"
+#include "CCValue.h"
+#include "CCMap.h"
 #include <set>
 #include <string>
 
 NS_CC_BEGIN
 
-class Dictionary;
-class Array;
 class Sprite;
 
 /**
@@ -72,7 +72,7 @@ public:
 
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-    SpriteFrameCache() : _spriteFrames(NULL), _spriteFramesAliases(NULL){}
+    SpriteFrameCache(){}
 
 public:
     /**
@@ -115,13 +115,13 @@ public:
      * In the medium term: it will allocate more resources.
      * In the long term: it will be the same.
      */
-    void removeSpriteFrames(void);
+    void removeSpriteFrames();
 
     /** Removes unused sprite frames.
      * Sprite Frames that have a retain count of 1 will be deleted.
      * It is convenient to call this method after when starting a new Scene.
      */
-    void removeUnusedSpriteFrames(void);
+    void removeUnusedSpriteFrames();
 
     /** Deletes an sprite frame from the sprite frame cache. */
     void removeSpriteFrameByName(const std::string& name);
@@ -153,16 +153,16 @@ public:
 private:
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(Dictionary* dictionary, Texture2D *texture);
+    void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
 
     /** Removes multiple Sprite Frames from Dictionary.
     * @since v0.99.5
     */
-    void removeSpriteFramesFromDictionary(Dictionary* dictionary);
+    void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
 protected:
-    Dictionary* _spriteFrames;
-    Dictionary* _spriteFramesAliases;
+    Map<std::string, SpriteFrame*> _spriteFrames;
+    ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;
 };
 

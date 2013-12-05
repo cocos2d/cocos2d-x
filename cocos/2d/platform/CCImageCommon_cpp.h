@@ -1548,7 +1548,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         const unsigned char tgaSuffix[] = ".tga";
         for(int i = 0; i < 4; ++i)
         {
-            if (std::tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
+            if (tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
             {
                 CCLOG("Image WARNING: the image file suffix is not tga, but parsed as a tga image file. FILE: %s", _filePath.c_str());
                 break;
