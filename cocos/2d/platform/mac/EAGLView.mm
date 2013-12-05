@@ -335,7 +335,7 @@ static CCEAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, (long*)ids, xs, ys);
+	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, (int*)ids, xs, ys);
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
@@ -359,7 +359,7 @@ static CCEAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(1, (long*)ids, xs, ys);
+	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(1, (int*)ids, xs, ys);
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
@@ -378,7 +378,7 @@ static CCEAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, (long*)ids, xs, ys);
+	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, (int*)ids, xs, ys);
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {

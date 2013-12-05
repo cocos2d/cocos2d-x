@@ -212,11 +212,11 @@ class CC_DLL MenuItemAtlasFont : public MenuItemLabel
 {
 public:
     /** creates a menu item from a string and atlas with a target/selector */
-    static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap);
+    static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemAtlasFont* create(const char* value, const char* charMapFile, long itemWidth, long itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE static MenuItemAtlasFont* create(const char* value, const char* charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-    static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap, const ccMenuCallback& callback);
+    static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
 protected:
     /**
@@ -230,9 +230,9 @@ protected:
     virtual ~MenuItemAtlasFont(){}
 
     /** initializes a menu item from a string and atlas with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, const char *charMapFile, long itemWidth, long itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string and atlas with a target/selector */
-    bool initWithString(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap, const ccMenuCallback& callback);
+    bool initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MenuItemAtlasFont);
@@ -253,10 +253,10 @@ public:
     static MenuItemFont * create(const std::string& value, const ccMenuCallback& callback);
 
     /** set default font size */
-    static void setFontSize(long size);
+    static void setFontSize(int size);
     /** get default font size */
-    static long getFontSize();
-    CC_DEPRECATED_ATTRIBUTE static unsigned int fontSize() { return MenuItemFont::getFontSize(); };
+    static int getFontSize();
+    CC_DEPRECATED_ATTRIBUTE static int fontSize() { return MenuItemFont::getFontSize(); };
     /** set the default font name */
     static void setFontName(const std::string& name);
     /** get the default font name */
@@ -268,13 +268,13 @@ public:
      * so change the name to setFontSizeObj
      * @js setFontSize
      */
-    void setFontSizeObj(long size);
+    void setFontSizeObj(int size);
     
     /** get font size 
      * @js getFontSize
      */
-    long getFontSizeObj() const;
-    CC_DEPRECATED_ATTRIBUTE unsigned int fontSizeObj() const { return getFontSizeObj(); };
+    int getFontSizeObj() const;
+    CC_DEPRECATED_ATTRIBUTE int fontSizeObj() const { return getFontSizeObj(); };
     
     /** set the font name 
      * c++ can not overload static and non-static member functions with the same parameter types
@@ -309,7 +309,7 @@ protected:
 
     void recreateLabel();
     
-    long _fontSize;
+    int _fontSize;
     std::string _fontName;
 
 private:

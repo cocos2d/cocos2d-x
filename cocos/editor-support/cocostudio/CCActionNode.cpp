@@ -287,7 +287,7 @@ Spawn * ActionNode::refreshActionProperty()
 		}
 
 		Vector<FiniteTimeAction*> cSequenceArray;
-		long frameCount = cArray->count();
+		auto frameCount = cArray->count();
 		for (int i = 0; i < frameCount; i++)
 		{
 			ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(i));
