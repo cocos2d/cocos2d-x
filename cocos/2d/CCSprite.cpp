@@ -613,7 +613,7 @@ void Sprite::draw(void)
     long offset = 0;
     setGLBufferData(&_quad, 4 * kQuadSize, 0);
 #else
-    long offset = (long)&_quad;
+    size_t offset = (size_t)&_quad;
 #endif // EMSCRIPTEN
 
     // vertex
