@@ -5,7 +5,7 @@
 #include <Windows.Phone.Graphics.Interop.h>
 #include <DrawingSurfaceNative.h>
 
-#include "HelloCppComponent.h"
+#include "Cocos2dComponent.h"
 
 class Direct3DContentProvider : public Microsoft::WRL::RuntimeClass<
 		Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::WinRtClassicComMix>,
