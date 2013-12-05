@@ -409,20 +409,44 @@ void ParticleSystemQuad::postStep()
 //    CHECK_GL_ERROR_DEBUG();
 //}
 
-
 void ParticleSystemQuad::draw()
 {
     CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
-    kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
+    //quad command
+    if(_particleIdx > 0)
+    {
+        //transform vertices
+        std::vector<V3F_C4B_T2F_Quad> drawQuads(_particleIdx);
+        memcpy(&drawQuads[0], _quads, sizeof(V3F_C4B_T2F_Quad) * _particleIdx);
+        AffineTransform worldTM = getNodeToWorldTransform();
+        for(int index = 0; index <_particleIdx; ++index)
+        {
+            V3F_C4B_T2F_Quad* quad = _quads + index;
+            
+            Point pt(0,0);
+            pt = PointApplyAffineTransform( Point(quad->bl.vertices.x, quad->bl.vertices.y), worldTM);
+            drawQuads[index].bl.vertices.x = pt.x;
+            drawQuads[index].bl.vertices.y = pt.y;
+            
+            pt = PointApplyAffineTransform( Point(quad->br.vertices.x, quad->br.vertices.y), worldTM);
+            drawQuads[index].br.vertices.x = pt.x;
+            drawQuads[index].br.vertices.y = pt.y;
+            
+            pt = PointApplyAffineTransform( Point(quad->tl.vertices.x, quad->tl.vertices.y), worldTM);
+            drawQuads[index].tl.vertices.x = pt.x;
+            drawQuads[index].tl.vertices.y = pt.y;
+            
+            pt = PointApplyAffineTransform( Point(quad->tr.vertices.x, quad->tr.vertices.y), worldTM);
+            drawQuads[index].tr.vertices.x = pt.x;
+            drawQuads[index].tr.vertices.y = pt.y;
+            
+        }
+        
+        QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
+        cmd->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &drawQuads[0], _particleIdx);
+        Renderer::getInstance()->addCommand(cmd);
+    }
 
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(ParticleSystemQuad::onDraw, this);
-    Renderer::getInstance()->addCommand(cmd);
-
-    //TODO render particle using quad command
-//    QuadCommand* cmd = new QuadCommand(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, _quads, _particleIdx);
-//    Renderer::getInstance()->addCommand(cmd);
 }
 
 void ParticleSystemQuad::onDraw()
