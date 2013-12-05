@@ -976,7 +976,7 @@ void Scheduler::update(float dt)
 
     // Testing size is faster than locking / unlocking.
     // And almost never there will be functions scheduled to be called.
-    if( _functionsToPerform.size() > 0 ) {
+    if( !_functionsToPerform.empty() ) {
         _performMutex.lock();
         for( const auto &function : _functionsToPerform ) {
             function();
