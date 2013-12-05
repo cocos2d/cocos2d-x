@@ -37,152 +37,152 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-static void addValueToDict(id key, id value, Dictionary* pDict);
-static void addObjectToNSDict(const char*key, Object* object, NSMutableDictionary *dict);
+static void addValueToDict(id nsKey, id nsValue, ValueMap& dict);
+static void addObjectToNSDict(const std::string& key, Value& value, NSMutableDictionary *dict);
 
-static void addItemToArray(id item, Array *pArray)
+static void addItemToArray(id item, ValueVector& array)
 {
     // add string value into array
-    if ([item isKindOfClass:[NSString class]]) {
-        String* pValue = new String([item UTF8String]);
-        
-        pArray->addObject(pValue);
-        pValue->release();
+    if ([item isKindOfClass:[NSString class]])
+    {
+        array.push_back(Value([item UTF8String]));
         return;
     }
     
     // add number value into array(such as int, float, bool and so on)
-    if ([item isKindOfClass:[NSNumber class]]) {
-        NSString* pStr = [item stringValue];
-        String* pValue = new String([pStr UTF8String]);
-        
-        pArray->addObject(pValue);
-        pValue->release();
+    if ([item isKindOfClass:[NSNumber class]])
+    {
+        array.push_back(Value([item doubleValue]));
         return;
     }
     
     // add dictionary value into array
-    if ([item isKindOfClass:[NSDictionary class]]) {
-        Dictionary* pDictItem = new Dictionary();
-        pDictItem->init();
-        for (id subKey in [item allKeys]) {
+    if ([item isKindOfClass:[NSDictionary class]])
+    {
+        ValueMap dict;
+        for (id subKey in [item allKeys])
+        {
             id subValue = [item objectForKey:subKey];
-            addValueToDict(subKey, subValue, pDictItem);
+            addValueToDict(subKey, subValue, dict);
         }
-        pArray->addObject(pDictItem);
-        pDictItem->release();
+        
+        array.push_back(Value(dict));
         return;
     }
     
     // add array value into array
-    if ([item isKindOfClass:[NSArray class]]) {
-        Array *pArrayItem = new Array();
-        pArrayItem->init();
-        for (id subItem in item) {
-            addItemToArray(subItem, pArrayItem);
+    if ([item isKindOfClass:[NSArray class]])
+    {
+        ValueVector subArray;
+        for (id subItem in item)
+        {
+            addItemToArray(subItem, subArray);
         }
-        pArray->addObject(pArrayItem);
-        pArrayItem->release();
+        array.push_back(Value(subArray));
         return;
     }
 }
 
-static void addObjectToNSArray(Object *object, NSMutableArray *array)
+static void addObjectToNSArray(Value& value, NSMutableArray *array)
 {
     // add string into array
-    if (String *ccString = dynamic_cast<String *>(object)) {
-        NSString *strElement = [NSString stringWithCString:ccString->getCString() encoding:NSUTF8StringEncoding];
+    if (value.getType() == Value::Type::STRING)
+    {
+        NSString *strElement = [NSString stringWithCString:value.asString().c_str() encoding:NSUTF8StringEncoding];
         [array addObject:strElement];
         return;
     }
     
     // add array into array
-    if (Array *ccArray = dynamic_cast<Array *>(object)) {
+    if (value.getType() == Value::Type::VECTOR)
+    {
         NSMutableArray *arrElement = [NSMutableArray array];
-        Object *element = NULL;
-        CCARRAY_FOREACH(ccArray, element)
-        {
-            addObjectToNSArray(element, arrElement);
-        }
+        
+        ValueVector valueArray = value.asValueVector();
+        
+        std::for_each(valueArray.begin(), valueArray.end(), [=](Value& e){
+            addObjectToNSArray(e, arrElement);
+        });
+        
         [array addObject:arrElement];
         return;
     }
     
     // add dictionary value into array
-    if (Dictionary *ccDict = dynamic_cast<Dictionary *>(object)) {
+    if (value.getType() == Value::Type::MAP)
+    {
         NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
-        DictElement *element = NULL;
-        CCDICT_FOREACH(ccDict, element)
+
+        auto valueDict = value.asValueMap();
+        for (auto iter = valueDict.begin(); iter != valueDict.end(); ++iter)
         {
-            addObjectToNSDict(element->getStrKey(), element->getObject(), dictElement);
+            addObjectToNSDict(iter->first, iter->second, dictElement);
         }
+        
         [array addObject:dictElement];
     }
-
 }
 
-static void addValueToDict(id key, id value, Dictionary* pDict)
+static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
 {
     // the key must be a string
-    CCASSERT([key isKindOfClass:[NSString class]], "The key should be a string!");
-    std::string pKey = [key UTF8String];
-    
-    // the value is a new dictionary
-    if ([value isKindOfClass:[NSDictionary class]]) {
-        Dictionary* pSubDict = new Dictionary();
-        pSubDict->init();
-        for (id subKey in [value allKeys]) {
-            id subValue = [value objectForKey:subKey];
-            addValueToDict(subKey, subValue, pSubDict);
-        }
-        pDict->setObject(pSubDict, pKey.c_str());
-        pSubDict->release();
-        return;
-    }
+    CCASSERT([nsKey isKindOfClass:[NSString class]], "The key should be a string!");
+    std::string key = [nsKey UTF8String];
     
     // the value is a string
-    if ([value isKindOfClass:[NSString class]]) {
-        String* pValue = new String([value UTF8String]);
-        
-        pDict->setObject(pValue, pKey.c_str());
-        pValue->release();
+    if ([nsValue isKindOfClass:[NSString class]])
+    {
+        dict[key] = Value([nsValue UTF8String]);
         return;
     }
     
     // the value is a number
-    if ([value isKindOfClass:[NSNumber class]]) {
-        NSString* pStr = [value stringValue];
-        String* pValue = new String([pStr UTF8String]);
+    if ([nsValue isKindOfClass:[NSNumber class]])
+    {
+        dict[key] = Value([nsValue doubleValue]);
+        return;
+    }
+    
+    // the value is a new dictionary
+    if ([nsValue isKindOfClass:[NSDictionary class]])
+    {
+        ValueMap subDict;
         
-        pDict->setObject(pValue, pKey.c_str());
-        pValue->release();
+        for (id subKey in [nsValue allKeys])
+        {
+            id subValue = [nsValue objectForKey:subKey];
+            addValueToDict(subKey, subValue, subDict);
+        }
+        dict[key] = Value(subDict);
         return;
     }
     
     // the value is a array
-    if ([value isKindOfClass:[NSArray class]]) {
-        Array *pArray = new Array();
-        pArray->init();
-        for (id item in value) {
-            addItemToArray(item, pArray);
+    if ([nsValue isKindOfClass:[NSArray class]])
+    {
+        ValueVector valueArray;
+
+        for (id item in nsValue)
+        {
+            addItemToArray(item, valueArray);
         }
-        pDict->setObject(pArray, pKey.c_str());
-        pArray->release();
+        dict[key] = Value(valueArray);
         return;
     }
 }
 
-static void addObjectToNSDict(const char * key, Object* object, NSMutableDictionary *dict)
+static void addObjectToNSDict(const std::string& key, Value& value, NSMutableDictionary *dict)
 {
-    NSString *NSkey = [NSString stringWithCString:key encoding:NSUTF8StringEncoding];
+    NSString *NSkey = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
     
     // the object is a Dictionary
-    if (Dictionary *ccDict = dynamic_cast<Dictionary *>(object)) {
+    if (value.getType() == Value::Type::MAP)
+    {
         NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
-        DictElement *element = NULL;
-        CCDICT_FOREACH(ccDict, element)
+        ValueMap subDict = value.asValueMap();
+        for (auto iter = subDict.begin(); iter != subDict.end(); ++iter)
         {
-            addObjectToNSDict(element->getStrKey(), element->getObject(), dictElement);
+            addObjectToNSDict(iter->first, iter->second, dictElement);
         }
         
         [dict setObject:dictElement forKey:NSkey];
@@ -190,20 +190,24 @@ static void addObjectToNSDict(const char * key, Object* object, NSMutableDiction
     }
     
     // the object is a String
-    if (String *element = dynamic_cast<String *>(object)) {
-        NSString *strElement = [NSString stringWithCString:element->getCString() encoding:NSUTF8StringEncoding];
+    if (value.getType() == Value::Type::STRING)
+    {
+        NSString *strElement = [NSString stringWithCString:value.asString().c_str() encoding:NSUTF8StringEncoding];
         [dict setObject:strElement forKey:NSkey];
         return;
     }
     
     // the object is a Array
-    if (Array *ccArray = dynamic_cast<Array *>(object)) {
+    if (value.getType() == Value::Type::VECTOR)
+    {
         NSMutableArray *arrElement = [NSMutableArray array];
-        Object *element = NULL;
-        CCARRAY_FOREACH(ccArray, element)
-        {
-            addObjectToNSArray(element, arrElement);
-        }
+        
+        ValueVector array = value.asValueVector();
+        
+        std::for_each(array.begin(), array.end(), [=](Value& v){
+            addObjectToNSArray(v, arrElement);
+        });
+
         [dict setObject:arrElement forKey:NSkey];
         return;
     }
@@ -304,39 +308,33 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
     return "";
 }
 
-Dictionary* FileUtilsApple::createDictionaryWithContentsOfFile(const std::string& filename)
+ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename);
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:path];
     
+    ValueMap ret;
+    
     if (dict != nil)
     {
-        auto ret = new Dictionary();
-        ret->init();
-        
-        for (id key in [dict allKeys]) {
+        for (id key in [dict allKeys])
+        {
             id value = [dict objectForKey:key];
             addValueToDict(key, value, ret);
         }
-        
-        return ret;
     }
-    else
-    {
-        return NULL;
-    }
+    return ret;
 }
 
-bool FileUtilsApple::writeToFile(Dictionary *dict, const std::string &fullPath)
+bool FileUtilsApple::writeToFile(ValueMap& dict, const std::string &fullPath)
 {
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
     
-    DictElement *element = NULL;
-    CCDICT_FOREACH(dict, element)
+    for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
-        addObjectToNSDict(element->getStrKey(), element->getObject(), nsDict);
+        addObjectToNSDict(iter->first, iter->second, nsDict);
     }
     
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
@@ -346,7 +344,7 @@ bool FileUtilsApple::writeToFile(Dictionary *dict, const std::string &fullPath)
     return true;
 }
 
-Array* FileUtilsApple::createArrayWithContentsOfFile(const std::string& filename)
+ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
 {
     //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
     //    NSString* pathExtension= [pPath pathExtension];
@@ -357,8 +355,7 @@ Array* FileUtilsApple::createArrayWithContentsOfFile(const std::string& filename
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSArray* array = [NSArray arrayWithContentsOfFile:path];
     
-    Array* ret = new Array();
-    ret->init();
+    ValueVector ret;
     
     for (id value in array)
     {

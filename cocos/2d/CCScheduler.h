@@ -27,6 +27,10 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
+#include <vector>
+#include <functional>
+#include <mutex>
+
 #include "CCObject.h"
 #include "uthash.h"
 
@@ -257,7 +261,13 @@ public:
       */
     void resumeTargets(Set* targetsToResume);
 
-private:
+    /** calls a function on the cocos2d thread. Useful when you need to call a cocos2d function from another thread.
+     This function is thread safe.
+     @since v3.0
+     */
+    void performFunctionInCocosThread( const std::function<void()> &function);
+
+protected:
     void removeHashElement(struct _hashSelectorEntry *element);
     void removeUpdateFromHash(struct _listEntry *entry);
 
@@ -266,7 +276,7 @@ private:
     void priorityIn(struct _listEntry **list, Object *target, int priority, bool paused);
     void appendIn(struct _listEntry **list, Object *target, bool paused);
 
-protected:
+
     float _timeScale;
 
     //
@@ -284,6 +294,10 @@ protected:
     // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
     bool _updateHashLocked;
     Array* _scriptHandlerEntries;
+
+    // Used for "perform Function"
+    std::vector<std::function<void()>> _functionsToPerform;
+    std::mutex _performMutex;
 };
 
 // end of global group

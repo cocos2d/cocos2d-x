@@ -415,7 +415,7 @@ public:
      @since v2.1
      * @js NA
      */
-    static LayerMultiplex* createWithArray(Array* arrayOfLayers);
+    static LayerMultiplex* createWithArray(const Vector<Layer*>& arrayOfLayers);
 
     /** creates a LayerMultiplex with one or more layers using a variable argument list. 
      * @code
@@ -433,27 +433,7 @@ public:
      * @lua NA
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
-    /**
-     * @js ctor
-     */
-    LayerMultiplex();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerMultiplex();
 
-    virtual bool init();
-    /** initializes a MultiplexLayer with one or more layers using a variable argument list. 
-     * @js NA
-     * @lua NA
-     */
-    bool initWithLayers(Layer* layer, va_list params);
-
-    /** initializes a MultiplexLayer with an array of layers
-     @since v2.1
-     */
-    bool initWithArray(Array* arrayOfLayers);
 
     void addLayer(Layer* layer);
 
@@ -467,8 +447,34 @@ public:
     void switchToAndReleaseMe(int n);
 
 protected:
+    
+    /**
+     * @js ctor
+     */
+    LayerMultiplex();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~LayerMultiplex();
+    
+    virtual bool init();
+    /** initializes a MultiplexLayer with one or more layers using a variable argument list.
+     * @js NA
+     * @lua NA
+     */
+    bool initWithLayers(Layer* layer, va_list params);
+    
+    /** initializes a MultiplexLayer with an array of layers
+     @since v2.1
+     */
+    bool initWithArray(const Vector<Layer*>& arrayOfLayers);
+    
     unsigned int _enabledLayer;
-    Array*     _layers;
+    Vector<Layer*>    _layers;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(LayerMultiplex);
 };
 
 

@@ -338,7 +338,7 @@ void TextureAtlas::insertQuad(V3F_C4B_T2F_Quad *quad, long index)
     CCASSERT( _totalQuads <= _capacity, "invalid totalQuads");
 
     // issue #575. index can be > totalQuads
-    unsigned int remaining = (_totalQuads-1) - index;
+    long remaining = (_totalQuads-1) - index;
 
     // last object doesn't need to be moved
     if( remaining > 0) 

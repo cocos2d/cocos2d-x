@@ -258,7 +258,8 @@ Scheduler::Scheduler(void)
 , _updateHashLocked(false)
 , _scriptHandlerEntries(nullptr)
 {
-
+    // I don't expect to have more than 30 functions to all per frame
+    _functionsToPerform.reserve(30);
 }
 
 Scheduler::~Scheduler(void)
@@ -825,6 +826,15 @@ void Scheduler::resumeTargets(Set* targetsToResume)
     }
 }
 
+void Scheduler::performFunctionInCocosThread(const std::function<void ()> &function)
+{
+    _performMutex.lock();
+
+    _functionsToPerform.push_back(function);
+
+    _performMutex.unlock();
+}
+
 // main loop
 void Scheduler::update(float dt)
 {
@@ -834,6 +844,10 @@ void Scheduler::update(float dt)
     {
         dt *= _timeScale;
     }
+
+    //
+    // Selector callbacks
+    //
 
     // Iterate over all the Updates' selectors
     tListEntry *entry, *tmp;
@@ -904,23 +918,6 @@ void Scheduler::update(float dt)
         }
     }
 
-    // Iterate over all the script callbacks
-    if (_scriptHandlerEntries)
-    {
-        for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
-        {
-            SchedulerScriptHandlerEntry* eachEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
-            if (eachEntry->isMarkedForDeletion())
-            {
-                _scriptHandlerEntries->removeObjectAtIndex(i);
-            }
-            else if (!eachEntry->isPaused())
-            {
-                eachEntry->getTimer()->update(dt);
-            }
-        }
-    }
-
     // delete all updates that are marked for deletion
     // updates with priority < 0
     DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
@@ -950,8 +947,43 @@ void Scheduler::update(float dt)
     }
 
     _updateHashLocked = false;
-
     _currentTarget = nullptr;
+
+    //
+    // Script callbacks
+    //
+
+    // Iterate over all the script callbacks
+    if (_scriptHandlerEntries)
+    {
+        for (auto i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
+        {
+            SchedulerScriptHandlerEntry* eachEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
+            if (eachEntry->isMarkedForDeletion())
+            {
+                _scriptHandlerEntries->removeObjectAtIndex(i);
+            }
+            else if (!eachEntry->isPaused())
+            {
+                eachEntry->getTimer()->update(dt);
+            }
+        }
+    }
+
+    //
+    // Functions allocated from another thread
+    //
+
+    // Testing size is faster than locking / unlocking.
+    // And almost never there will be functions scheduled to be called.
+    if( !_functionsToPerform.empty() ) {
+        _performMutex.lock();
+        for( const auto &function : _functionsToPerform ) {
+            function();
+        }
+        _functionsToPerform.clear();
+        _performMutex.unlock();
+    }
 }
 
 

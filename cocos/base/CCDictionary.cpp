@@ -26,6 +26,7 @@
 #include "CCString.h"
 #include "CCInteger.h"
 #include "platform/CCFileUtils.h"
+#include <algorithm>    // std::for_each
 
 using namespace std;
 
@@ -377,9 +378,73 @@ Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
     return srcDict->clone();
 }
 
+static Array* visitArray(const ValueVector& array);
+
+static Dictionary* visitDict(const ValueMap& dict)
+{
+    Dictionary* ret = new Dictionary();
+    ret->init();
+    
+    for (auto iter = dict.begin(); iter != dict.end(); ++iter)
+    {
+        if (iter->second.getType() == Value::Type::MAP)
+        {
+            const ValueMap& subDict = iter->second.asValueMap();
+            auto sub = visitDict(subDict);
+            ret->setObject(sub, iter->first);
+            sub->release();
+        }
+        else if (iter->second.getType() == Value::Type::VECTOR)
+        {
+            const ValueVector& arr = iter->second.asValueVector();
+            auto sub = visitArray(arr);
+            ret->setObject(sub, iter->first);
+            sub->release();
+        }
+        else
+        {
+            auto str = new String(iter->second.asString());
+            ret->setObject(str, iter->first);
+            str->release();
+        }
+    }
+    return ret;
+}
+
+static Array* visitArray(const ValueVector& array)
+{
+    Array* ret = new Array();
+    ret->init();
+    
+    std::for_each(array.begin(), array.end(), [&ret](const Value& value){
+        if (value.getType() == Value::Type::MAP)
+        {
+            const ValueMap& subDict = value.asValueMap();
+            auto sub = visitDict(subDict);
+            ret->addObject(sub);
+            sub->release();
+        }
+        else if (value.getType() == Value::Type::VECTOR)
+        {
+            const ValueVector& arr = value.asValueVector();
+            auto sub = visitArray(arr);
+            ret->addObject(sub);
+            sub->release();
+        }
+        else
+        {
+            auto str = new String(value.asString());
+            ret->addObject(str);
+            str->release();
+        }
+    });
+    
+    return ret;
+}
+
 Dictionary* Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return FileUtils::getInstance()->createDictionaryWithContentsOfFile(pFileName);
+    return visitDict(FileUtils::getInstance()->getValueMapFromFile(pFileName));
 }
 
 void Dictionary::acceptVisitor(DataVisitor &visitor)
@@ -399,7 +464,14 @@ Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 
 bool Dictionary::writeToFile(const char *fullPath)
 {
-    return FileUtils::getInstance()->writeToFile(this, fullPath);
+    ValueMap dict;
+    DictElement* element = nullptr;
+    CCDICT_FOREACH(this, element)
+    {
+        dict[element->getStrKey()] = Value(static_cast<String*>(element->getObject())->getCString());
+    }
+    
+    return FileUtils::getInstance()->writeToFile(dict, fullPath);
 }
 
 Dictionary* Dictionary::clone() const
