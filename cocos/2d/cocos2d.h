@@ -199,7 +199,7 @@ THE SOFTWARE.
 #include "ccUTF8.h"
 #include "CCNotificationCenter.h"
 #include "CCProfiling.h"
-#include "base/CCConsole.h"
+#include "CCConsole.h"
 #include "CCUserDefault.h"
 #include "CCVertex.h"
 
