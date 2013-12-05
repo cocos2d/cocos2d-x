@@ -51,6 +51,7 @@ using namespace Windows::ApplicationModel::Core;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Phone::UI::Core;
 using namespace Platform;
+using namespace Microsoft::WRL;
 
 
 NS_CC_BEGIN
@@ -122,6 +123,117 @@ bool CCEGLView::Create(CoreWindow^ window)
     return bRet;
 }
 
+bool CCEGLView::Create(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3D11RenderTargetView* renderTargetView)
+{
+
+    bool bRet = false;
+	m_bSupportTouch = true;
+
+    m_d3dContext = context;
+	m_renderTargetView = renderTargetView;
+
+    m_d3dDevice = device;
+ 	esInitContext ( &m_esContext );
+
+	// we need to select the correct DirectX feature level depending on the platform
+	// default is for WP8
+	ANGLE_D3D_FEATURE_LEVEL featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_3;
+
+	switch(device->GetFeatureLevel())
+    {
+	case D3D_FEATURE_LEVEL_11_0:
+		featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_11_0;
+		break;
+	case D3D_FEATURE_LEVEL_10_1:
+		featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_10_1;
+		break;
+
+	case D3D_FEATURE_LEVEL_10_0:
+		featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_10_0;
+		break;
+
+	case D3D_FEATURE_LEVEL_9_3:
+		featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_3;
+		break;
+				
+	case D3D_FEATURE_LEVEL_9_2:
+		featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_2;
+		break;
+					
+	case D3D_FEATURE_LEVEL_9_1:
+		featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_1;
+		break;
+	}		
+
+
+	HRESULT result = CreateWinPhone8XamlWindow(&m_eglPhoneWindow);
+	if (SUCCEEDED(result))
+	{
+		m_eglPhoneWindow->Update(WINRT_EGL_IUNKNOWN(m_d3dDevice.Get()), WINRT_EGL_IUNKNOWN(m_d3dContext.Get()), WINRT_EGL_IUNKNOWN(m_renderTargetView.Get()));
+
+		result = CreateWinrtEglWindow(WINRT_EGL_IUNKNOWN(m_eglPhoneWindow.Get()), featureLevel, m_eglWindow.GetAddressOf());
+		if (SUCCEEDED(result))
+		{
+			m_esContext.hWnd = m_eglWindow;
+
+			//title, width, and height are unused, but included for backwards compatibility
+		    esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
+
+		    m_orientation = DisplayOrientations::None;
+		    m_initialized = false;
+		    bRet = true;
+		}
+	}
+    else
+	{
+		CCLOG("Unable to create Angle EGL Window: %d", result);
+	}
+
+
+    return bRet;
+}
+
+bool CCEGLView::UpdateDevice(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3D11RenderTargetView* renderTargetView)
+{
+    HRESULT result = S_OK;
+
+	if (m_d3dDevice.Get() != device)
+	{
+		m_d3dDevice = device;
+	}
+
+    m_d3dContext = context;
+    m_renderTargetView = renderTargetView;
+
+	ComPtr<ID3D11Resource> renderTargetViewResource;
+	m_renderTargetView->GetResource(&renderTargetViewResource);
+
+	ComPtr<ID3D11Texture2D> backBuffer;
+    result = renderTargetViewResource.As(&backBuffer);
+
+    if(SUCCEEDED(result))
+    {
+	    // Cache the rendertarget dimensions in our helper class for convenient use.
+        D3D11_TEXTURE2D_DESC backBufferDesc;
+        backBuffer->GetDesc(&backBufferDesc);
+
+        if (m_windowBounds.Width  != static_cast<float>(backBufferDesc.Width) ||
+            m_windowBounds.Height != static_cast<float>(backBufferDesc.Height))
+        {
+            m_windowBounds.Width  = static_cast<float>(backBufferDesc.Width);
+            m_windowBounds.Height = static_cast<float>(backBufferDesc.Height);
+        }
+
+	    m_eglPhoneWindow->Update(WINRT_EGL_IUNKNOWN(m_d3dDevice.Get()), WINRT_EGL_IUNKNOWN(m_d3dContext.Get()), WINRT_EGL_IUNKNOWN(m_renderTargetView.Get()));
+    }
+    else
+    {
+		CCLOG("UpdateDevice: invalid renderTargetView. Error: %d", result);
+    }
+
+    return result == S_OK;
+}
+
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
 	m_textInputEnabled = bOpen;
@@ -133,14 +245,14 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 
 void CCEGLView::swapBuffers()
 {
-	eglSwapBuffers(m_esContext.eglDisplay, m_esContext.eglSurface);  
+    eglSwapBuffers(m_esContext.eglDisplay, m_esContext.eglSurface);  
 }
 
 
 bool CCEGLView::isOpenGLReady()
 {
 	// TODO: need to revisit this
-    return (m_window.Get() != nullptr && m_orientation != DisplayOrientations::None);
+    return ((m_window.Get() || m_d3dDevice.Get()) && m_orientation != DisplayOrientations::None);
 }
 
 void CCEGLView::end()
@@ -165,10 +277,16 @@ void CCEGLView::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 
 void CCEGLView::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
+    OnPointerPressed(args);
+}
+
+void CCEGLView::OnPointerPressed(PointerEventArgs^ args)
+{
     int id = args->CurrentPoint->PointerId;
     CCPoint pt = GetCCPoint(args);
     handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
+
 
 void CCEGLView::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
 {
@@ -193,6 +311,11 @@ void CCEGLView::OnWindowClosed(CoreWindow^ sender, CoreWindowEventArgs^ args)
 
 void CCEGLView::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 {
+    OnPointerMoved(args);   
+}
+
+void CCEGLView::OnPointerMoved( PointerEventArgs^ args)
+{
 	auto currentPoint = args->CurrentPoint;
 	if (currentPoint->IsInContact)
 	{
@@ -213,11 +336,15 @@ void CCEGLView::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 
 void CCEGLView::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 {
+    OnPointerReleased(args);
+}
+
+void CCEGLView::OnPointerReleased(PointerEventArgs^ args)
+{
     int id = args->CurrentPoint->PointerId;
     CCPoint pt = GetCCPoint(args);
     handleTouchesEnd(1, &id, &pt.x, &pt.y);
 }
-
 
 
 
@@ -259,6 +386,10 @@ CCEGLView* CCEGLView::sharedOpenGLView()
 int CCEGLView::Run() 
 {
 	m_running = true; 
+
+    if(m_d3dDevice.Get())
+        return 0;
+
 	while (!m_windowClosed)
 	{
 		if (m_windowVisible)
@@ -273,6 +404,11 @@ int CCEGLView::Run()
 	}
 	return 0;
 };
+
+void CCEGLView::Render()
+{
+    OnRendering();
+}
 
 void CCEGLView::OnRendering()
 {
@@ -324,23 +460,44 @@ void CCEGLView::ValidateDevice()
 
 }
 
+// called by size change from WP8 XAML
+void CCEGLView::UpdateForWindowSizeChange(float width, float height)
+{
+    m_windowBounds = Windows::Foundation::Rect(0, 0, width, height);
+    if(width >= height)
+    {
+        m_orientation = DisplayOrientations::Landscape;
+        m_windowBounds = Windows::Foundation::Rect(0, 0, height, width);
+   }
+    else
+    {
+        m_orientation = DisplayOrientations::Portrait;
+    }
+
+    UpdateWindowSize();
+}
+
 void CCEGLView::UpdateForWindowSizeChange()
+{
+
+    m_orientation = DisplayProperties::CurrentOrientation;
+    m_windowBounds = m_window->Bounds;
+    UpdateWindowSize();
+}
+
+void CCEGLView::UpdateWindowSize()
 {
     float width, height;
 
-    m_orientation = DisplayProperties::CurrentOrientation;
-
-    m_windowBounds = m_window->Bounds;
-    
     if(m_orientation == DisplayOrientations::Landscape || m_orientation == DisplayOrientations::LandscapeFlipped)
     {
-        width = ConvertDipsToPixels(m_window->Bounds.Height);
-        height = ConvertDipsToPixels(m_window->Bounds.Width);
+        width = ConvertDipsToPixels(m_windowBounds.Height);
+        height = ConvertDipsToPixels(m_windowBounds.Width);
     }
     else
     {
-        width = ConvertDipsToPixels(m_window->Bounds.Width);
-        height = ConvertDipsToPixels(m_window->Bounds.Height);
+        width = ConvertDipsToPixels(m_windowBounds.Width);
+        height = ConvertDipsToPixels(m_windowBounds.Height);
     }
 
     UpdateOrientationMatrix();
@@ -386,13 +543,11 @@ void CCEGLView::UpdateOrientationMatrix()
 	}
 }
 
-
-
 Point CCEGLView::TransformToOrientation(Point point, bool dipsToPixels)
 {
     Point returnValue;
 
-    switch (DisplayProperties::CurrentOrientation)
+    switch (m_orientation)
     {
     case DisplayOrientations::Portrait:
         returnValue = point;
