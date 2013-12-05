@@ -232,7 +232,7 @@ static Animation* _SkeletonJson_readAnimation (SkeletonJson* self, Json* root, S
 }
 
 SkeletonData* SkeletonJson_readSkeletonDataFile (SkeletonJson* self, const char* path) {
-	int length;
+	ssize_t length;
 	SkeletonData* skeletonData;
 	const char* json = _Util_readFile(path, &length);
 	if (!json) {

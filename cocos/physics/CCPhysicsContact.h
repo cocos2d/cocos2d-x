@@ -45,7 +45,7 @@ typedef Point Vect;
 
 typedef struct PhysicsContactData
 {
-    static const long POINT_MAX = 4;
+    static const int POINT_MAX = 4;
     Point points[POINT_MAX];
     int   count;
     Point normal;

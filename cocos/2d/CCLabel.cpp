@@ -640,7 +640,7 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
     });
 
     V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    long count = _textureAtlas->getTotalQuads();
+    auto count = _textureAtlas->getTotalQuads();
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
     if (_isOpacityModifyRGB)
     {
@@ -706,7 +706,7 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
     });
 
     V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    long count = _textureAtlas->getTotalQuads();
+    auto count = _textureAtlas->getTotalQuads();
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
 
     // special opacity for premultiplied textures

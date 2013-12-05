@@ -203,14 +203,14 @@ Sequence* Sequence::create(const Vector<FiniteTimeAction*>& arrayOfActions)
     Sequence* pRet = NULL;
     do 
     {
-        long count = arrayOfActions.size();
+        auto count = arrayOfActions.size();
         CC_BREAK_IF(count == 0);
 
         auto prev = arrayOfActions.at(0);
 
         if (count > 1)
         {
-            for (long i = 1; i < count; ++i)
+            for (int i = 1; i < count; ++i)
             {
                 prev = createWithTwoActions(prev, arrayOfActions.at(i));
             }
@@ -576,7 +576,7 @@ Spawn* Spawn::create(const Vector<FiniteTimeAction*>& arrayOfActions)
     Spawn* pRet = NULL;
     do 
     {
-        long count = arrayOfActions.size();
+        auto count = arrayOfActions.size();
         CC_BREAK_IF(count == 0);
         auto prev = arrayOfActions.at(0);
         if (count > 1)
@@ -2097,7 +2097,7 @@ void Animate::update(float t)
     }
 
     auto frames = _animation->getFrames();
-    long numberOfFrames = frames.size();
+    auto numberOfFrames = frames.size();
     SpriteFrame *frameToDisplay = NULL;
 
     for( int i=_nextFrame; i < numberOfFrames; i++ ) {
