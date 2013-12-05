@@ -63,21 +63,21 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ConsoleTCP);
 };
 
-class ConsoleStdin : public BaseTestConsole
+class ConsoleCustomCommand : public BaseTestConsole
 {
 public:
-    CREATE_FUNC(ConsoleStdin);
+    CREATE_FUNC(ConsoleCustomCommand);
 
     void onEnter() override;
     virtual std::string title() override;
 
 protected:
-    ConsoleStdin();
-    virtual ~ConsoleStdin();
+    ConsoleCustomCommand();
+    virtual ~ConsoleCustomCommand();
 
     cocos2d::Console *_console;
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(ConsoleStdin);
+    CC_DISALLOW_COPY_AND_ASSIGN(ConsoleCustomCommand);
 };
 
 class ConsoleTestScene : public TestScene

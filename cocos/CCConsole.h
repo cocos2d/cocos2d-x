@@ -49,8 +49,13 @@ NS_CC_BEGIN
  */
 class CC_DLL Console : public Object
 {
-
 public:
+
+    struct Command {
+        const char *name;
+        const std::function<void(int)> callback;
+    };
+
     /** creates a new instnace of the Console */
     static Console* create();
 
@@ -63,6 +68,9 @@ public:
     /** cancels the Console. Cancel will be called at destruction time as well */
     void cancel();
 
+    /** sets user tokens */
+    void setUserCommands( Command* commands, int numberOfCommands);
+
 protected:
     Console();
     virtual ~Console();
@@ -70,7 +78,7 @@ protected:
     void loop();
 
     ssize_t readline(int fd);
-    bool parseToken(int fd);
+    bool parseCommand(int fd);
     void sendPrompt(int fd);
     void addClient();
 
@@ -92,11 +100,8 @@ protected:
 
     char _buffer[512];
 
-    struct Tokens {
-        const char * func_name;
-        const std::function<void(int)> callback;
-    } _tokens[15];
-    int _maxTokens;
+    struct Command _commands[15], *_userCommands;
+    int _maxCommands, _maxUserCommands;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);

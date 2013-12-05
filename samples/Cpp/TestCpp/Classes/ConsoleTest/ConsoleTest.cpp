@@ -25,6 +25,8 @@
 #include "ConsoleTest.h"
 #include "../testResource.h"
 
+#include <unistd.h>
+
 //------------------------------------------------------------------
 //
 // EaseSpriteDemo
@@ -36,7 +38,7 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(ConsoleTCP),
-    CL(ConsoleStdin),
+    CL(ConsoleCustomCommand),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -149,28 +151,36 @@ std::string ConsoleTCP::title()
 
 //------------------------------------------------------------------
 //
-// ConsoleStdin
+// ConsoleCustomCommand
 //
 //------------------------------------------------------------------
 
-ConsoleStdin::ConsoleStdin()
+ConsoleCustomCommand::ConsoleCustomCommand()
 {
     _console = Console::create();
     _console->retain();
+
+    static struct Console::Command commands[] = {
+        {"hello", [](int fd) {
+            const char msg[] = "how are you?\n";
+            write(fd, msg, sizeof(msg));
+        }},
+    };
+    _console->setUserCommands(&commands[0],1);
 }
 
-ConsoleStdin::~ConsoleStdin()
+ConsoleCustomCommand::~ConsoleCustomCommand()
 {
     _console->release();
 }
 
-void ConsoleStdin::onEnter()
+void ConsoleCustomCommand::onEnter()
 {
     BaseTestConsole::onEnter();
-//    _console->listenOnStdin();
+    _console->listenOnTCP(5678);
 }
 
-std::string ConsoleStdin::title()
+std::string ConsoleCustomCommand::title()
 {
-    return "Console STDIN";
+    return "Console Custom Commands";
 }
