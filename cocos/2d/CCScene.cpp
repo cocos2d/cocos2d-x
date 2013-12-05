@@ -132,25 +132,17 @@ void Scene::addChildToPhysicsWorld(Node* child)
 {
     if (_physicsWorld)
     {
-        std::function<void(Object*)> addToPhysicsWorldFunc = nullptr;
-        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Object* obj) -> void
+        std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
+        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
         {
-            
-            if (dynamic_cast<Node*>(obj) != nullptr)
+            if (node->getPhysicsBody())
             {
-                Node* node = dynamic_cast<Node*>(obj);
-                
-                if (node->getPhysicsBody())
-                {
-                    _physicsWorld->addBody(node->getPhysicsBody());
-                }
-                
-                Object* subChild = nullptr;
-                CCARRAY_FOREACH(node->getChildren(), subChild)
-                {
-                    addToPhysicsWorldFunc(subChild);
-                }
+                _physicsWorld->addBody(node->getPhysicsBody());
             }
+            
+            node->getChildren().forEach([addToPhysicsWorldFunc](Node* n){
+                addToPhysicsWorldFunc(n);
+            });
         };
         
         addToPhysicsWorldFunc(child);

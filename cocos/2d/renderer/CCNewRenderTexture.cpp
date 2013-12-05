@@ -67,15 +67,10 @@ void NewRenderTexture::draw()
         //! make sure all children are drawn
         sortAllChildren();
 
-        Object *pElement;
-        CCARRAY_FOREACH(_children, pElement)
+        for(const auto &child: _children)
         {
-            Node *child = static_cast<Node*>(pElement);
-
             if (child != _sprite)
-            {
                 child->visit();
-            }
         }
 
         //End will pop the current render group

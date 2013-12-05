@@ -189,18 +189,18 @@ EventDispatcher::~EventDispatcher()
 
 void EventDispatcher::visitTarget(Node* node)
 {    
-    int i = 0;
-    Array* children = node->getChildren();
-    int childrenCount = children ? children->count() : 0;
+    long i = 0;
+    auto& children = node->getChildren();
+    
+    long childrenCount = children.size();
     
     if(childrenCount > 0)
     {
-        
         Node* child = nullptr;
         // visit children zOrder < 0
         for( ; i < childrenCount; i++ )
         {
-            child = static_cast<Node*>( children->getObjectAtIndex(i) );
+            child = children.at(i);
             
             if ( child && child->getZOrder() < 0 )
                 visitTarget(child);
@@ -212,7 +212,7 @@ void EventDispatcher::visitTarget(Node* node)
         
         for( ; i < childrenCount; i++ )
         {
-            child = static_cast<Node*>( children->getObjectAtIndex(i) );
+            child = children.at(i);
             if (child)
                 visitTarget(child);
         }

@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCSpriteFrame.h"
 #include "CCAnimation.h"
+#include <CCVector.h>
 #include <vector>
 
 NS_CC_BEGIN
@@ -99,7 +100,7 @@ public:
      * in lua :local create(local object1,local object2, ...)
      * @endcode
      */
-    static Sequence* create(Array *arrayOfActions);
+    static Sequence* create(const Vector<FiniteTimeAction*>& arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
     static Sequence* createWithVariableList(FiniteTimeAction *pAction1, va_list args);
     /** creates the action */
@@ -246,7 +247,7 @@ public:
     static Spawn* createWithVariableList(FiniteTimeAction *pAction1, va_list args);
 
     /** helper constructor to create an array of spawned actions given an array */
-    static Spawn* create(Array *arrayOfActions);
+    static Spawn* create(const Vector<FiniteTimeAction*>& arrayOfActions);
 
     /** creates the Spawn action */
     static Spawn* createWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction *pAction2);

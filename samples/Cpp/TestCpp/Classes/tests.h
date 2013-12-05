@@ -2,6 +2,7 @@
 #define _TESTS_H_
 
 #include "NewRendererTest.h"
+#include "ConsoleTest/ConsoleTest.h"
 #include "NewEventDispatcherTest/NewEventDispatcherTest.h"
 #include "ActionsTest/ActionsTest.h"
 #include "TransitionsTest/TransitionsTest.h"

@@ -341,7 +341,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& o
         _scale9Image->addChild(_top, 1, pTop);
         
         // Bottom
-        _bottom = Sprite::Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, true);
+        _bottom = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, true);
         _bottom->retain();
         _scale9Image->addChild(_bottom, 1, pBottom);
         
@@ -699,17 +699,16 @@ void Scale9Sprite::setOpacityModifyRGB(bool var)
         return;
     }
     _opacityModifyRGB = var;
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
+    
+    _scale9Image->getChildren().forEach([this](Node* child){
+        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
+        if (rgba)
         {
-            pNode->setOpacityModifyRGB(_opacityModifyRGB);
+            rgba->setOpacityModifyRGB(_opacityModifyRGB);
         }
-    }
+    });
 }
+
 bool Scale9Sprite::isOpacityModifyRGB() const
 {
     return _opacityModifyRGB;
@@ -789,16 +788,14 @@ void Scale9Sprite::setColor(const Color3B& color)
     }
     
     NodeRGBA::setColor(color);
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
+    
+    _scale9Image->getChildren().forEach([&color](Node* child){
+        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
+        if (rgba)
         {
-            pNode->setColor(color);
+            rgba->setColor(color);
         }
-    }
+    });
 }
 
 const Color3B& Scale9Sprite::getColor() const
@@ -813,16 +810,14 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
         return;
     }
     NodeRGBA::setOpacity(opacity);
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
+    
+    _scale9Image->getChildren().forEach([&opacity](Node* child){
+        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
+        if (rgba)
         {
-            pNode->setOpacity(opacity);
+            rgba->setOpacity(opacity);
         }
-    }
+    });
 }
 
 GLubyte Scale9Sprite::getOpacity() const
@@ -837,16 +832,14 @@ void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
         return;
     }
     NodeRGBA::updateDisplayedColor(parentColor);
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
+    
+    _scale9Image->getChildren().forEach([&parentColor](Node* child){
+        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
+        if (rgba)
         {
-            pNode->updateDisplayedColor(parentColor);
+            rgba->updateDisplayedColor(parentColor);
         }
-    }
+    });
 }
 
 void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
@@ -856,16 +849,14 @@ void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
         return;
     }
     NodeRGBA::updateDisplayedOpacity(parentOpacity);
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
+    
+    _scale9Image->getChildren().forEach([&parentOpacity](Node* child){
+        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
+        if (rgba)
         {
-            pNode->updateDisplayedOpacity(parentOpacity);
+            rgba->updateDisplayedOpacity(parentOpacity);
         }
-    }
+    });
 }
 
 NS_CC_EXT_END
