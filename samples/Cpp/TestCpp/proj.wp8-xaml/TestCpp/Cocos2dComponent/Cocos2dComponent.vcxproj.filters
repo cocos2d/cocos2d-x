@@ -27,12 +27,6 @@
     <ClCompile Include="..\..\..\Classes\TouchesTest\Ball.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\Box2DTest\Box2dTest.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\Box2DTestBed\Box2dView.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\BugsTest\Bug-1159.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
@@ -84,9 +78,6 @@
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\AppDelegate.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
@@ -132,9 +123,6 @@
     <ClCompile Include="..\..\..\Classes\ConfigurationTest\ConfigurationTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\controller.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
@@ -169,9 +157,6 @@
       <Filter>Classes\Tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\GameOverScene.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\Box2DTestBed\GLES-Render.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.cpp">
@@ -276,13 +261,7 @@
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\Box2DTestBed\Test.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\Box2DTestBed\TestEntries.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\testBasic.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.cpp">
@@ -372,18 +351,201 @@
     <ClCompile Include="..\..\..\Classes\UserDefaultTest\UserDefaultTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\VisibleRect.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
     <ClCompile Include="Cocos2dComponent.cpp" />
+    <ClCompile Include="..\..\..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\controller.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\testBasic.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\VisibleRect.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\Box2DTestBed\Box2dView.cpp">
+      <Filter>Classes\Tests\Box2DTestBed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\Box2DTestBed\Test.cpp">
+      <Filter>Classes\Tests\Box2DTestBed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\Box2DTestBed\GLES-Render.cpp">
+      <Filter>Classes\Tests\Box2DTestBed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\Box2DTest\Box2dTest.cpp">
+      <Filter>Classes\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Cocos2dComponent.h" />
     <ClInclude Include="Direct3DContentProvider.h" />
+    <ClInclude Include="..\..\..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\controller.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\testBasic.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\testResource.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\tests.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\VisibleRect.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Box2dView.h">
+      <Filter>Classes\Tests\Box2DTestBed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\GLES-Render.h">
+      <Filter>Classes\Tests\Box2DTestBed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Test.h">
+      <Filter>Classes\Tests\Box2DTestBed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\AddPair.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\ApplyForce.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\BodyTypes.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Breakable.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Bridge.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\BulletTest.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Cantilever.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Car.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Chain.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\CharacterCollision.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\CollisionFiltering.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\CollisionProcessing.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\CompoundShapes.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Confined.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\ContinuousTest.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\DistanceTest.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Dominos.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\DumpShell.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\DynamicTreeTest.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\EdgeShapes.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\EdgeTest.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Gears.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\OneSidedPlatform.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Pinball.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\PolyCollision.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\PolyShapes.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Prismatic.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Pulleys.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Pyramid.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\RayCast.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Revolute.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Rope.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\RopeJoint.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\SensorTest.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\ShapeEditing.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\SliderCrank.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\SphereStack.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\TheoJansen.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Tiles.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\TimeOfImpact.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Tumbler.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\VaryingFriction.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\VaryingRestitution.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\VerticalStack.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Web.h">
+      <Filter>Classes\Tests\Box2DTestBed\Tests</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Classes">
@@ -391,6 +553,12 @@
     </Filter>
     <Filter Include="Classes\Tests">
       <UniqueIdentifier>{d2ab485a-9d59-4c31-b4e5-7a163a3410c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Tests\Box2DTestBed">
+      <UniqueIdentifier>{eb38b12d-a389-4966-adba-b2bbf932051f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Tests\Box2DTestBed\Tests">
+      <UniqueIdentifier>{36814dc0-4082-4307-89d7-50cd14bf9f7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

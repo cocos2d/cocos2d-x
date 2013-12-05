@@ -144,6 +144,60 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Box2dView.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\GLES-Render.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Test.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\AddPair.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\ApplyForce.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\BodyTypes.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Breakable.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Bridge.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\BulletTest.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Cantilever.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Car.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Chain.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\CharacterCollision.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\CollisionFiltering.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\CollisionProcessing.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\CompoundShapes.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Confined.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\ContinuousTest.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\DistanceTest.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Dominos.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\DumpShell.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\DynamicTreeTest.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\EdgeShapes.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\EdgeTest.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Gears.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\OneSidedPlatform.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Pinball.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\PolyCollision.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\PolyShapes.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Prismatic.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Pulleys.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Pyramid.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\RayCast.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Revolute.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Rope.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\RopeJoint.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\SensorTest.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\ShapeEditing.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\SliderCrank.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\SphereStack.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\TheoJansen.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Tiles.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\TimeOfImpact.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Tumbler.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\VaryingFriction.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\VaryingRestitution.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\VerticalStack.h" />
+    <ClInclude Include="..\..\..\Classes\Box2DTestBed\Tests\Web.h" />
+    <ClInclude Include="..\..\..\Classes\controller.h" />
+    <ClInclude Include="..\..\..\Classes\testBasic.h" />
+    <ClInclude Include="..\..\..\Classes\testResource.h" />
+    <ClInclude Include="..\..\..\Classes\tests.h" />
+    <ClInclude Include="..\..\..\Classes\VisibleRect.h" />
     <ClInclude Include="Cocos2dComponent.h" />
     <ClInclude Include="Direct3DContentProvider.h" />
     <ClInclude Include="pch.h" />
@@ -180,6 +234,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\AppDelegate.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -196,6 +252,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\Box2DTestBed\Test.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -308,6 +366,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\controller.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
