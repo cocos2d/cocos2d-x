@@ -52,6 +52,9 @@ class SceneTestScene : public TestScene
 {
 public:
     virtual void runThisTest();
+  
+  virtual void onResumeTransitionDidFinish() override;
+  virtual void onPauseTransitionDidFinish() override;
 };
 
 #endif
