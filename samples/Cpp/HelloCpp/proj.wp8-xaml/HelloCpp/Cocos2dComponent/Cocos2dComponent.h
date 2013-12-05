@@ -2,11 +2,27 @@
 
 #include "pch.h"
 #include <DrawingSurfaceNative.h>
+#include <mutex>
+#include <queue>
 
 #include "../../../Classes/AppDelegate.h"
 
 namespace PhoneDirect3DXamlAppComponent
 {
+
+enum PointerEventType
+{
+    PointerPressed,
+    PointerMoved,
+    PointerReleased,
+};
+
+struct PointerEvent
+{
+    PointerEventType type;
+    Platform::Agile<Windows::UI::Core::PointerEventArgs> args;
+};
+
 
 public delegate void RequestAdditionalFrameHandler();
 
@@ -43,6 +59,9 @@ internal:
 
 private:
 
+    std::queue<PointerEvent> mPointerEvents;
+
+    std::mutex mMutex;
 	// The AppDelegate for the Cocos2D app
 	AppDelegate app;
     bool mInitialized;
