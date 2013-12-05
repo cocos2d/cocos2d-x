@@ -109,6 +109,7 @@ Console::Console()
 , _userCommands(nullptr)
 , _maxUserCommands(0)
 {
+    // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
 	{ "fps on", [](int fd, const char* command) {
         Director *dir = Director::getInstance();
