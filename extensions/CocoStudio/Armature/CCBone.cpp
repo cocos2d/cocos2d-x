@@ -427,6 +427,12 @@ void CCBone::changeDisplayByIndex(int index, bool force)
     m_pDisplayManager->changeDisplayByIndex(index, force);
 }
 
+void CCBone::changeDisplayByName(const char *name, bool force)
+{
+    m_pDisplayManager->changeDisplayByName(name, force);
+}
+
+
 CCArray *CCBone::getColliderBodyList()
 {
     if (CCDecorativeDisplay *decoDisplay = m_pDisplayManager->getCurrentDecorativeDisplay())
@@ -439,6 +445,7 @@ CCArray *CCBone::getColliderBodyList()
     return NULL;
 }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void CCBone::setColliderFilter(CCColliderFilter *filter)
 {
     CCArray *array = m_pDisplayManager->getDecorativeDisplayList();
@@ -463,6 +470,7 @@ CCColliderFilter *CCBone::getColliderFilter()
     }
     return NULL;
 }
+#endif
 
 
 NS_CC_EXT_END
