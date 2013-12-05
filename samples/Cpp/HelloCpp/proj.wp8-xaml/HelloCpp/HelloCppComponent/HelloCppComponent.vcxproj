@@ -147,8 +147,7 @@
     <ClInclude Include="..\..\..\Classes\AppDelegate.h" />
     <ClInclude Include="..\..\..\Classes\AppMacros.h" />
     <ClInclude Include="..\..\..\Classes\HelloWorldScene.h" />
-    <ClInclude Include="HelloCppComponent.h" />
-    <ClInclude Include="DirectXHelper.h" />
+    <ClInclude Include="Cocos2dComponent.h" />
     <ClInclude Include="Direct3DContentProvider.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -165,7 +164,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="HelloCppComponent.cpp" />
+    <ClCompile Include="Cocos2dComponent.cpp" />
     <ClCompile Include="Direct3DContentProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
