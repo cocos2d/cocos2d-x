@@ -312,7 +312,7 @@ void Armature::changeBoneParent(Bone *bone, const char *parentName)
 
     if(bone->getParentBone())
     {
-        bone->getParentBone()->getChildren()->removeObject(bone);
+        bone->getParentBone()->getChildren().removeObject(bone);
         bone->setParentBone(nullptr);
     }
 
@@ -467,7 +467,7 @@ void Armature::draw()
         GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     }
 
-    for (auto object : *_children)
+    for (auto object : _children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
@@ -640,7 +640,7 @@ Rect Armature::getBoundingBox() const
 
     Rect boundingBox = Rect(0, 0, 0, 0);
 
-    for(auto object : *_children)
+    for(auto object : _children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
@@ -672,12 +672,12 @@ Rect Armature::getBoundingBox() const
 
 Bone *Armature::getBoneAtPoint(float x, float y) const 
 {
-    int length = _children->count();
+    long length = _children.size();
     Bone *bs;
 
-    for(int i = length - 1; i >= 0; i--)
+    for(long i = length - 1; i >= 0; i--)
     {
-        bs = static_cast<Bone*>( _children->getObjectAtIndex(i) );
+        bs = static_cast<Bone*>( _children.at(i) );
         if(bs->getDisplayManager()->containPoint(x, y))
         {
             return bs;
@@ -797,7 +797,7 @@ void Armature::setBody(cpBody *body)
     _body = body;
     _body->data = this;
 
-    for(auto object: *_children)
+    for(auto object: _children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
