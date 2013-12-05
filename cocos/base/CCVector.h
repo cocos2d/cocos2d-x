@@ -137,7 +137,7 @@ public:
     }
 
     /** Returns an element with a certain index */
-    T at(long index) const
+    T at(size_t index) const
     {
         CCASSERT( index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
         return _data[index];
