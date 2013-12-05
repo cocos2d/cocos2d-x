@@ -44,6 +44,50 @@
 
 using namespace cocos2d;
 
+
+// helper free functions
+
+// dprintf() is not defined in Android
+// so we add our own 'dpritnf'
+static ssize_t mydprintf(int sock, const char *format, ...)
+{
+    va_list args;
+	char buf[1024];
+
+	va_start(args, format);
+	vsnprintf(buf, sizeof(buf), format, args);
+	va_end(args);
+
+	return write(sock, buf, strlen(buf));
+}
+
+static void printSceneGraph(int fd, Node* node, int level)
+{
+    for(int i=0; i<level; ++i)
+        write(fd, "-", 1);
+
+    mydprintf(fd, " %s: z=%d, tag=%d\n", node->description(), node->getZOrder(), node->getTag());
+
+    auto children = node->getChildren();
+    if( children ) {
+        for(const auto& child: *children)
+            printSceneGraph(fd, static_cast<Node*>(child), level+1);
+    }
+}
+
+static void printSceneGraphBoot(int fd)
+{
+    write(fd,"\n",1);
+    auto scene = Director::getInstance()->getRunningScene();
+    printSceneGraph(fd, scene, 0);
+    write(fd,"\n",1);
+}
+
+
+//
+// Console code
+//
+
 Console* Console::create()
 {
     auto ret = new Console;
@@ -58,19 +102,19 @@ Console::Console()
 , _running(false)
 , _endThread(false)
 , _commands{
-    { "fps on", [](int anFd) {
+    { "fps on", [](int fd, const char* command) {
         Director *dir = Director::getInstance();
         Scheduler *sched = dir->getScheduler();
         sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, true));
     } },
-    { "fps off", [](int anFd) {
+    { "fps off", [](int fd, const char* command) {
         Director *dir = Director::getInstance();
         Scheduler *sched = dir->getScheduler();
         sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, false));
     } },
-    { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1) },
-    { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1) },
-    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1) }, }
+    { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
+    { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1, std::placeholders::_2) },
+    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) }, }
 , _maxCommands(5)
 , _userCommands(nullptr)
 , _maxUserCommands(0)
@@ -89,12 +133,12 @@ bool Console::listenOnTCP(int port)
     struct addrinfo hints, *res, *ressave;
     char serv[30];
 
-    snprintf(serv,sizeof(serv)-1,"%d",(unsigned int) port );
+    snprintf(serv, sizeof(serv)-1, "%d", port );
     serv[sizeof(serv)-1]=0;
 
     bzero(&hints, sizeof(struct addrinfo));
     hints.ai_flags = AI_PASSIVE;
-    hints.ai_family = AF_UNSPEC;
+    hints.ai_family = AF_INET; // AF_UNSPEC: Do we need IPv6 ?
     hints.ai_socktype = SOCK_STREAM;
 
     if ( (n = getaddrinfo(NULL, serv, &hints, &res)) != 0) {
@@ -125,15 +169,21 @@ bool Console::listenOnTCP(int port)
     listen(listenfd, 50);
 
     if (res->ai_family == AF_INET) {
-        char buf2[256] = "";
-        gethostname(buf2, sizeof(buf2)-1);
         char buf[INET_ADDRSTRLEN] = "";
         struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
-        if( inet_ntop(res->ai_family, sin , buf, sizeof(buf)) != NULL )
-            CCLOG("Console: listening on  %s : %d", buf2, ntohs(sin->sin_port));
+        if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != NULL )
+            log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
+        else
+            perror("inet_ntop");
+    } else if (res->ai_family == AF_INET6) {
+        char buf[INET6_ADDRSTRLEN] = "";
+        struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
+        if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != NULL )
+            log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
         else
             perror("inet_ntop");
     }
+
 
     freeaddrinfo(ressave);
 
@@ -168,7 +218,7 @@ void Console::setUserCommands(Command *commands, int numberOfCommands)
 // commands
 //
 
-void Console::commandHelp(int fd)
+void Console::commandHelp(int fd, const char* command)
 {
     const char help[] = "\nAvailable commands:\n";
     write(fd, help, sizeof(help));
@@ -187,49 +237,14 @@ void Console::commandHelp(int fd)
 
 }
 
-void Console::commandExit(int fd)
+void Console::commandExit(int fd, const char *command)
 {
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
     close(fd);
 }
 
-static int mydprintf(int sock, const char *format, ...)
-{
-    va_list args;
-	char buf[1024];
-
-	va_start(args, format);
-	vsnprintf(buf, sizeof(buf), format, args);
-	va_end(args);
-
-	return write(sock, buf, strlen(buf));
-}
-
-
-void printSceneGraph(int fd, Node* node, int level)
-{
-    for(int i=0; i<level; ++i)
-        write(fd, "-", 1);
-
-    mydprintf(fd, " %s: z=%d, tag=%d\n", node->description(), node->getZOrder(), node->getTag() );
-
-    auto children = node->getChildren();
-    if( children ) {
-        for(const auto& child: *children )
-            printSceneGraph(fd, (Node*)child, level+1);
-    }
-}
-
-void printSceneGraphBoot(int fd)
-{
-    write(fd,"\n",1);
-    auto scene = Director::getInstance()->getRunningScene();
-    printSceneGraph(fd, scene, 0);
-    write(fd,"\n",1);
-}
-
-void Console::commandSceneGraph(int fd)
+void Console::commandSceneGraph(int fd, const char *command)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( std::bind(&printSceneGraphBoot, fd) );
@@ -248,7 +263,7 @@ bool Console::parseCommand(int fd)
             // Ideally this loop should execute the function in the cocos2d according to a variable
             // But clang crashes in runtime when doing that (bug in clang, not in the code).
             // So, unfortunately, the only way to fix it was to move that logic to the callback itself
-            _commands[i].callback(fd);
+            _commands[i].callback(fd, _buffer);
             found = true;
             break;
         }
@@ -257,7 +272,7 @@ bool Console::parseCommand(int fd)
     // user commands
     for(int i=0; i < _maxUserCommands && !found; ++i) {
         if( strncmp(_buffer, _userCommands[i].name,strlen(_userCommands[i].name)) == 0 ) {
-            _userCommands[i].callback(fd);
+            _userCommands[i].callback(fd, _buffer);
             found = true;
             break;
         }
