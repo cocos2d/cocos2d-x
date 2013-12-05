@@ -1144,9 +1144,4 @@
       <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\base\CMakeLists.txt">
-      <Filter>base</Filter>
-    </Text>
-  </ItemGroup>
 </Project>
