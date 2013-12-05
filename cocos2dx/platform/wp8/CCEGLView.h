@@ -86,7 +86,17 @@ public:
 	void ShowKeyboard(Windows::Foundation::Rect r);
 	void HideKeyboard(Windows::Foundation::Rect r);
 
+    // WP8 C++ app
     virtual bool Create(Windows::UI::Core::CoreWindow^ window);
+
+    // WP8 XAML app
+    virtual bool Create(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3D11RenderTargetView* renderTargetView);
+    virtual bool UpdateDevice(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3D11RenderTargetView* renderTargetView);
+
+	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
+	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
+	void OnPointerReleased(Windows::UI::Core::PointerEventArgs^ args);
+
 
 	void OnPointerPressed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerWheelChanged(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
@@ -101,6 +111,7 @@ public:
 	Windows::UI::Core::CoreWindow^ getWindow() { return m_window.Get(); };
 	
 	int Run();
+	void Render();
 
     void resize(int width, int height);
     /* 
@@ -110,7 +121,8 @@ public:
 	float getFrameZoomFactor();
     void centerWindow();
 
-    
+ 	void UpdateForWindowSizeChange(float width, float height);
+   
     // static function
     /**
     @brief    get the shared main open gl window
@@ -122,6 +134,7 @@ protected:
 private:
 	void OnRendering();
 	void UpdateForWindowSizeChange();
+	void UpdateWindowSize();
     void UpdateOrientationMatrix();
 
 	void ValidateDevice();
@@ -150,6 +163,12 @@ private:
 
 	ESContext m_esContext;
 	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
+
+// For WP8 XAML
+	Microsoft::WRL::ComPtr<IWinPhone8XamlD3DWindow> m_eglPhoneWindow;
+	Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext1> m_d3dContext;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
 
 	bool m_textInputEnabled;
     WP8Keyboard^ mKeyboard;
