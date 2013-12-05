@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include "CCArray.h"
 #include "CCString.h"
 #include "platform/CCFileUtils.h"
+#include <algorithm>    // std::for_each
 
 NS_CC_BEGIN
-
 
 #if CC_USE_ARRAY_VECTOR
 
