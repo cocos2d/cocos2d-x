@@ -86,7 +86,7 @@ bool Console::listenOnTCP(int port)
 {
     int listenfd, n;
     const int on = 1;
-    struct addrinfo	hints, *res, *ressave;
+    struct addrinfo hints, *res, *ressave;
     char serv[30];
 
     snprintf(serv,sizeof(serv)-1,"%d",(unsigned int) port );
@@ -107,13 +107,13 @@ bool Console::listenOnTCP(int port)
     do {
         listenfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
         if (listenfd < 0)
-            continue;		/* error, try next one */
+            continue;       /* error, try next one */
 
         setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
-            break;			/* success */
+            break;          /* success */
 
-        close(listenfd);	/* bind error, close and try next one */
+        close(listenfd);    /* bind error, close and try next one */
     } while ( (res = res->ai_next) != NULL);
     
     if (res == NULL) {
@@ -272,33 +272,33 @@ void Console::sendPrompt(int fd)
 ssize_t Console::readline(int fd)
 {
     int maxlen = sizeof(_buffer)-1;
-	ssize_t n, rc;
-	char c, *ptr;
+    ssize_t n, rc;
+    char c, *ptr;
 
     ptr = _buffer;
 
-	for( n=1; n<maxlen; n++ ) {
-		if( (rc = read(fd, &c, 1 )) ==1 ) {
-			*ptr++ = c;
-			if( c=='\n' )
-				break;
-		} else if( rc == 0 ) {
-			return 0;
-		} else if( errno == EINTR ) {
+    for( n=1; n<maxlen; n++ ) {
+        if( (rc = read(fd, &c, 1 )) ==1 ) {
+            *ptr++ = c;
+            if( c=='\n' )
+                break;
+        } else if( rc == 0 ) {
+            return 0;
+        } else if( errno == EINTR ) {
             continue;
         } else {
             return -1;
         }
-	}
+    }
 
-	*ptr = 0;
-	return n;
+    *ptr = 0;
+    return n;
 }
 
 void Console::addClient()
 {
     struct sockaddr client;
-	socklen_t client_len;
+    socklen_t client_len;
 
     /* new client */
     client_len = sizeof( client );
@@ -321,7 +321,7 @@ void Console::addClient()
 void Console::loop()
 {
     fd_set copy_set;
-	struct timeval timeout, timeout_copy;
+    struct timeval timeout, timeout_copy;
 
     _running = true;
 
@@ -329,34 +329,33 @@ void Console::loop()
     FD_SET(_listenfd, &_read_set);
     _maxfd = _listenfd;
 
-	timeout.tv_sec = 0;
+    timeout.tv_sec = 0;
 
     /* 0.016 seconds. Wake up once per frame at 60PFS */
-	timeout.tv_usec = 016000;
+    timeout.tv_usec = 016000;
 
-	while(!_endThread) {
+    while(!_endThread) {
 
-        FD_COPY(&_read_set, &copy_set);
+        copy_set = _read_set;
         timeout_copy = timeout;
-		int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
+        int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
 
-		if( nready == -1 ) {
+        if( nready == -1 ) {
             /* error ?*/
-			if(errno != EINTR) {
-				log("Abnormal error in select()\n");
-			}
-			continue;
+            if(errno != EINTR)
+                log("Abnormal error in select()\n");
+            continue;
 
-		} else if( nready == 0 ) {
+        } else if( nready == 0 ) {
             /* timeout ? */
-			continue;
+            continue;
         }
 
         // new client
         if(FD_ISSET(_listenfd, &copy_set)) {
             addClient();
-			if(--nready <= 0)
-				continue;
+            if(--nready <= 0)
+                continue;
         }
 
         // data from client
@@ -372,7 +371,7 @@ void Console::loop()
         }
 
         // remove closed conections
-        for(const auto &fd: to_remove) {
+        for(int fd: to_remove) {
             FD_CLR(fd, &_read_set);
             _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
         }

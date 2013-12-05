@@ -13,6 +13,7 @@ set(COCOS_BASE_SRC
   etc1.cpp
   s3tc.cpp
   atitc.cpp
+  CCConsole.cpp
 )
 
 add_library(cocosbase STATIC
