@@ -131,6 +131,7 @@ platform/CCThread.cpp \
 ../base/CCString.cpp \
 ../base/etc1.cpp \
 ../base/s3tc.cpp \
+../base/CCConsole.cpp \
 ../math/kazmath/src/aabb.c \
 ../math/kazmath/src/mat3.c \
 ../math/kazmath/src/mat4.c \
