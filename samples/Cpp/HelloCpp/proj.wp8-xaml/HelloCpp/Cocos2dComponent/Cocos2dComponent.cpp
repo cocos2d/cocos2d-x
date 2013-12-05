@@ -42,17 +42,32 @@ void Direct3DBackground::SetManipulationHost(DrawingSurfaceManipulationHost^ man
 // Event Handlers
 void Direct3DBackground::OnPointerPressed(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
-	CCEGLView::sharedOpenGLView()->OnPointerPressed(args);
+    std::lock_guard<std::mutex> guard(mMutex);
+
+    PointerEvent e;
+    e.type = PointerEventType::PointerPressed;
+    e.args = args;
+    mPointerEvents.push(e);
 }
 
 void Direct3DBackground::OnPointerMoved(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
-	CCEGLView::sharedOpenGLView()->OnPointerMoved(args);
+    std::lock_guard<std::mutex> guard(mMutex);
+
+    PointerEvent e;
+    e.type = PointerEventType::PointerMoved;
+    e.args = args;
+    mPointerEvents.push(e);
 }
 
 void Direct3DBackground::OnPointerReleased(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
-	CCEGLView::sharedOpenGLView()->OnPointerReleased(args);
+    std::lock_guard<std::mutex> guard(mMutex);
+
+    PointerEvent e;
+    e.type = PointerEventType::PointerReleased;
+    e.args = args;
+    mPointerEvents.push(e);
 }
 
 // Interface With Direct3DContentProvider
@@ -85,6 +100,7 @@ HRESULT Direct3DBackground::PrepareResources(_In_ const LARGE_INTEGER* presentTa
 
 HRESULT Direct3DBackground::Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1* context, _In_ ID3D11RenderTargetView* renderTargetView)
 {
+    std::lock_guard<std::mutex> guard(mMutex);
     if(!mInitialized)
     {
         mInitialized = true;
@@ -103,6 +119,25 @@ HRESULT Direct3DBackground::Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceCo
 		    OrientationChanged = false;
 		    pEGLView->UpdateForWindowSizeChange(WindowBounds.Width, WindowBounds.Height);
 	    }
+
+
+        while(!mPointerEvents.empty())
+        {
+            PointerEvent e = mPointerEvents.front();
+            mPointerEvents.pop();
+            switch(e.type)
+            {
+            case PointerEventType::PointerPressed:
+        	    pEGLView->OnPointerPressed(e.args.Get());
+                break;
+            case PointerEventType::PointerMoved:
+        	    pEGLView->OnPointerMoved(e.args.Get());
+                break;           
+            case PointerEventType::PointerReleased:
+        	    pEGLView->OnPointerReleased(e.args.Get());
+                break;
+            }
+        }
 
 	    pEGLView->UpdateDevice(device, context, renderTargetView);
 	    pEGLView->Render();
