@@ -1,10 +1,26 @@
-//
-//  CCConsole.cpp
-//  cocos2d_libs
-//
-//  Created by Ricardo Quesada on 11/26/13.
-//
-//
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CCConsole.h"
 
@@ -17,7 +33,6 @@
 #include <fcntl.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
-#include <sys/select.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 
@@ -39,12 +54,27 @@ Console::Console()
 : _listenfd(-1)
 , _running(false)
 , _endThread(false)
-{
-    _scheduler = Director::getInstance()->getScheduler();
+, _tokens{
+    { "fps on", [](int anFd) {
+        Director *dir = Director::getInstance();
+        Scheduler *sched = dir->getScheduler();
+        sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, true));
+    } },
+    { "fps off", [](int anFd) {
+        Director *dir = Director::getInstance();
+        Scheduler *sched = dir->getScheduler();
+        sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, false));
+    } },
+    { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1) },
+    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1) },
 }
+{
+    _maxTokens = 4;
+ }
 
 Console::~Console()
 {
+    cancel();
 }
 
 bool Console::listenOnTCP(int port)
@@ -86,24 +116,28 @@ bool Console::listenOnTCP(int port)
         freeaddrinfo(ressave);
         return false;
     }
-    
+
     listen(listenfd, 50);
-    
+
+    if (res->ai_family == AF_INET) {
+        char buf2[256] = "";
+        gethostname(buf2, sizeof(buf2)-1);
+        char buf[INET_ADDRSTRLEN] = "";
+        struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
+        if( inet_ntop(res->ai_family, sin , buf, sizeof(buf)) != NULL )
+            CCLOG("Console: listening on  %s : %d", buf2, ntohs(sin->sin_port));
+        else
+            perror("inet_ntop");
+    }
+
     freeaddrinfo(ressave);
 
-    CCLOG("Console: listening on port %d", port);
     return listenOnFileDescriptor(listenfd);
-}
-
-bool Console::listenOnStdin()
-{
-    return listenOnFileDescriptor(STDIN_FILENO);
 }
 
 bool Console::listenOnFileDescriptor(int fd)
 {
     CCASSERT(!_running, "already running");
-    _running = true;
     _listenfd = fd;
     _thread = std::thread( std::bind( &Console::loop, this) );
 
@@ -118,29 +152,68 @@ void Console::cancel()
     }
 }
 
-void Console::parseToken()
+
+//
+// commands
+//
+
+void Console::commandHelp(int fd)
 {
-    struct _tokens {
-        const char * func_name;
-        std::function<void()> callback;
-    } tokens[] {
-        { "fps on", []() { Director::getInstance()->setDisplayStats(true); } },
-        { "fps off", []() { Director::getInstance()->setDisplayStats(false); } },
-    };
+    const char help[] = "\nAvailable commands:\n";
+    write(fd, help, sizeof(help));
+    for(int i=0; i<_maxTokens; ++i) {
+        write(fd,"\t",1);
+        write(fd, _tokens[i].func_name, strlen(_tokens[i].func_name));
+        write(fd,"\n",1);
+    }
+}
 
-    const int max = sizeof(tokens) / sizeof(tokens[0]);
+void Console::commandExit(int fd)
+{
+    FD_CLR(fd, &_read_set);
+    _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
+    close(fd);
+}
 
-    Scheduler *sched = Director::getInstance()->getScheduler();
-    for( int i=0; i < max; ++i) {
-        if( strncmp(_buffer, tokens[i].func_name,strlen(tokens[i].func_name)) == 0 )
-            sched->performFunctionInCocosThread( tokens[i].callback );
+bool Console::parseToken(int fd)
+{
+    auto r = readline(fd);
+    if(r < 1)
+        return false;
+
+    int i=0;
+    for( ; i < _maxTokens; ++i) {
+        if( strncmp(_buffer, _tokens[i].func_name,strlen(_tokens[i].func_name)) == 0 ) {
+            // XXX TODO FIXME
+            // Ideally this loop should execute the function in the cocos2d according to a variable
+            // But clang crashes in runtime when doing that (bug in clang, not in the code).
+            // So, unfortunately, the only way to fix it was to move that logic to the callback itself
+            _tokens[i].callback(fd);
+            break;
+        }
+    }
+    if(i == _maxTokens) {
+        const char err[] = "Unknown command. Type 'help' for options\n";
+        write(fd, err, sizeof(err));
     }
 
+    sendPrompt(fd);
+
+    return true;
+}
+
+//
+// Helpers
+//
+void Console::sendPrompt(int fd)
+{
+    const char prompt[] = "\n> ";
+    write(fd, prompt, sizeof(prompt));
 }
 
 ssize_t Console::readline(int fd)
 {
-    int maxlen = 512;
+    int maxlen = sizeof(_buffer)-1;
 	ssize_t n, rc;
 	char c, *ptr;
 
@@ -164,15 +237,38 @@ ssize_t Console::readline(int fd)
 	return n;
 }
 
+void Console::addClient()
+{
+    struct sockaddr client;
+	socklen_t client_len;
+
+    /* new client */
+    client_len = sizeof( client );
+    int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
+
+    // add fd to list of FD
+    if( fd != -1 ) {
+        FD_SET(fd, &_read_set);
+        _fds.push_back(fd);
+        _maxfd = std::max(_maxfd,fd);
+
+        sendPrompt(fd);
+    }
+}
+
+//
+// Main Loop
+//
+
 void Console::loop()
 {
-    fd_set read_set, copy_set;
-	struct sockaddr client;
-	socklen_t client_len;
+    fd_set copy_set;
 	struct timeval timeout, timeout_copy;
 
-    FD_ZERO(&read_set);
-    FD_SET(_listenfd, &read_set);
+    _running = true;
+
+    FD_ZERO(&_read_set);
+    FD_SET(_listenfd, &_read_set);
     _maxfd = _listenfd;
 
 	timeout.tv_sec = 0;
@@ -182,7 +278,7 @@ void Console::loop()
 
 	while(!_endThread) {
 
-        FD_COPY(&read_set, &copy_set);
+        FD_COPY(&_read_set, &copy_set);
         timeout_copy = timeout;
 		int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
 
@@ -198,31 +294,29 @@ void Console::loop()
 			continue;
         }
 
+        // new client
         if(FD_ISSET(_listenfd, &copy_set)) {
-            /* new client */
-			client_len = sizeof( client );
-			int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
-
-            // add fd to list of FD
-			if( fd != -1 ) {
-                FD_SET(fd, &read_set);
-                _fds.push_back(fd);
-                _maxfd = std::max(_maxfd,fd);
-            }
-
+            addClient();
 			if(--nready <= 0)
 				continue;
         }
 
-        /* input from client */
+        // data from client
+        std::vector<int> to_remove;
         for(const auto &fd: _fds) {
             if(FD_ISSET(fd,&copy_set)) {
-                readline(fd);
-                parseToken();
-                log("read: %s", _buffer);
+                if( ! parseToken(fd) ) {
+                    to_remove.push_back(fd);
+                }
                 if(--nready <= 0)
                     break;
             }
+        }
+
+        // remove closed conections
+        for(const auto &fd: to_remove) {
+            FD_CLR(fd, &_read_set);
+            _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
         }
     }
 
@@ -230,4 +324,6 @@ void Console::loop()
     for(const auto &fd: _fds )
         close(fd);
     close(_listenfd);
+
+    _running = false;
 }
