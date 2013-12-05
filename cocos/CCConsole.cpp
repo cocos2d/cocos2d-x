@@ -40,11 +40,6 @@
 #include "CCScheduler.h"
 
 #include "CCScene.h"
-#include "CCSprite.h"
-#include "CCLabelBMFont.h"
-#include "CCMenu.h"
-#include "CCMenuItem.h"
-#include "CCLayer.h"
 
 using namespace cocos2d;
 
@@ -61,7 +56,10 @@ Console::Console()
 : _listenfd(-1)
 , _running(false)
 , _endThread(false)
-, _tokens{
+, _userCommands(nullptr)
+, _maxUserCommands(0)
+, _maxCommands(5)
+, _commands{
     { "fps on", [](int anFd) {
         Director *dir = Director::getInstance();
         Scheduler *sched = dir->getScheduler();
@@ -77,8 +75,7 @@ Console::Console()
     { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1) },
 }
 {
-    _maxTokens = 5;
- }
+}
 
 Console::~Console()
 {
@@ -160,6 +157,12 @@ void Console::cancel()
     }
 }
 
+void Console::setUserCommands(Command *commands, int numberOfCommands)
+{
+    _userCommands = commands;
+    _maxUserCommands = numberOfCommands;
+}
+
 
 //
 // commands
@@ -169,11 +172,19 @@ void Console::commandHelp(int fd)
 {
     const char help[] = "\nAvailable commands:\n";
     write(fd, help, sizeof(help));
-    for(int i=0; i<_maxTokens; ++i) {
+    for(int i=0; i<_maxCommands; ++i) {
         write(fd,"\t",1);
-        write(fd, _tokens[i].func_name, strlen(_tokens[i].func_name));
+        write(fd, _commands[i].name, strlen(_commands[i].name));
         write(fd,"\n",1);
     }
+
+    // User commands
+    for(int i=0; i<_maxUserCommands; ++i) {
+        write(fd,"\t",1);
+        write(fd, _userCommands[i].name, strlen(_userCommands[i].name));
+        write(fd,"\n",1);
+    }
+
 }
 
 void Console::commandExit(int fd)
@@ -187,19 +198,8 @@ void printSceneGraph(int fd, Node* node, int level)
 {
     for(int i=0; i<level; ++i)
         write(fd, "-", 1);
-    std::string type = "Node";
-    if( dynamic_cast<Scene*>(node) )
-        type = "Scene";
-    else if( dynamic_cast<Sprite*>(node) )
-        type = "Sprite";
-    else if( dynamic_cast<Layer*>(node) )
-        type = "Label";
-    else if( dynamic_cast<Menu*>(node) )
-        type = "Menu";
-    else if( dynamic_cast<MenuItem*>(node) )
-        type = "MenuItem";
 
-    dprintf(fd, " %s: z=%d, tag=%d\n", type.c_str(), node->getZOrder(), node->getTag() );
+    dprintf(fd, " %s: z=%d, tag=%d\n", node->description(), node->getZOrder(), node->getTag() );
 
     auto children = node->getChildren();
     if( children ) {
@@ -222,24 +222,35 @@ void Console::commandSceneGraph(int fd)
     sched->performFunctionInCocosThread( std::bind(&printSceneGraphBoot, fd) );
 }
 
-bool Console::parseToken(int fd)
+bool Console::parseCommand(int fd)
 {
     auto r = readline(fd);
     if(r < 1)
         return false;
 
-    int i=0;
-    for( ; i < _maxTokens; ++i) {
-        if( strncmp(_buffer, _tokens[i].func_name,strlen(_tokens[i].func_name)) == 0 ) {
+    bool found=false;
+    for(int i=0; i < _maxCommands; ++i) {
+        if( strncmp(_buffer, _commands[i].name,strlen(_commands[i].name)) == 0 ) {
             // XXX TODO FIXME
             // Ideally this loop should execute the function in the cocos2d according to a variable
             // But clang crashes in runtime when doing that (bug in clang, not in the code).
             // So, unfortunately, the only way to fix it was to move that logic to the callback itself
-            _tokens[i].callback(fd);
+            _commands[i].callback(fd);
+            found = true;
             break;
         }
     }
-    if(i == _maxTokens) {
+
+    // user commands
+    for(int i=0; i < _maxUserCommands && !found; ++i) {
+        if( strncmp(_buffer, _userCommands[i].name,strlen(_userCommands[i].name)) == 0 ) {
+            _userCommands[i].callback(fd);
+            found = true;
+            break;
+        }
+    }
+
+    if(!found) {
         const char err[] = "Unknown command. Type 'help' for options\n";
         write(fd, err, sizeof(err));
     }
@@ -352,7 +363,7 @@ void Console::loop()
         std::vector<int> to_remove;
         for(const auto &fd: _fds) {
             if(FD_ISSET(fd,&copy_set)) {
-                if( ! parseToken(fd) ) {
+                if( ! parseCommand(fd) ) {
                     to_remove.push_back(fd);
                 }
                 if(--nready <= 0)
