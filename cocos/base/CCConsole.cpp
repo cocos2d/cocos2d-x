@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCConsole.h"
+#include "base/CCConsole.h"
 
 #include <thread>
 
