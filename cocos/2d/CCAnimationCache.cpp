@@ -69,7 +69,7 @@ AnimationCache::~AnimationCache()
 
 void AnimationCache::addAnimation(Animation *animation, const std::string& name)
 {
-    _animations.setObject(animation, name);
+    _animations.insert(name, animation);
 }
 
 void AnimationCache::removeAnimation(const std::string& name)
@@ -77,12 +77,12 @@ void AnimationCache::removeAnimation(const std::string& name)
     if (name.size()==0)
         return;
 
-    _animations.removeObjectForKey(name);
+    _animations.remove(name);
 }
 
 Animation* AnimationCache::getAnimation(const std::string& name)
 {
-    return _animations.getObjectForKey(name);
+    return _animations.at(name);
 }
 
 void AnimationCache::parseVersion1(const ValueMap& animations)
