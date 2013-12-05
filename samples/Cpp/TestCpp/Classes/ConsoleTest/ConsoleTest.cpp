@@ -161,9 +161,11 @@ ConsoleCustomCommand::ConsoleCustomCommand()
     _console->retain();
 
     static struct Console::Command commands[] = {
-        {"hello", [](int fd) {
-            const char msg[] = "how are you?\n";
+        {"hello", [](int fd, const char* command) {
+            const char msg[] = "how are you?\nYou typed: ";
             write(fd, msg, sizeof(msg));
+            write(fd, command, strlen(command));
+            write(fd, "\n",1);
         }},
     };
     _console->setUserCommands(&commands[0],1);
