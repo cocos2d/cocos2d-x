@@ -153,7 +153,7 @@ public:
     void remove(const std::vector<K>& keys)
     {
         std::for_each(keys.cbegin(), keys.cend(), [this](const K& key){
-            remove(key);
+            this->remove(key);
         });
     }
     

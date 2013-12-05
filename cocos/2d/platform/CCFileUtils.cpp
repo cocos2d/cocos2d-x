@@ -403,11 +403,11 @@ static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XM
     //FIXME:XXX How to deal with Boolean ??
 
     // object is Array
-    if (value.getType() == Value::Type::ARRAY)
+    if (value.getType() == Value::Type::VECTOR)
         return generateElementForArray(value.asValueVector(), pDoc);
     
     // object is Dictionary
-    if (value.getType() == Value::Type::DICTIONARY)
+    if (value.getType() == Value::Type::MAP)
         return generateElementForDict(value.asValueMap(), pDoc);
     
     CCLOG("This type cannot appear in property list");
