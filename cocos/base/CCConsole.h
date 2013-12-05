@@ -61,7 +61,7 @@ public:
 
     struct Command {
         const char *name;
-        std::function<void(int)> callback;
+        std::function<void(int, const char*)> callback;
     };
 
     /** creates a new instnace of the Console */
@@ -91,9 +91,9 @@ protected:
     void addClient();
 
     // Add commands here
-    void commandHelp(int fd);
-    void commandExit(int fd);
-    void commandSceneGraph(int fd);
+    void commandHelp(int fd, const char *command);
+    void commandExit(int fd, const char *command);
+    void commandSceneGraph(int fd, const char *command);
 
     // file descriptor: socket, console, etc.
     int _listenfd;
