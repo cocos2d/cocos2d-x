@@ -53,10 +53,17 @@ protected:
     bool init();
     
     void setupIndices();
+    //Setup VBO or VAO based on OpenGL extensions
+    void setupBuffer();
     void setupVBOAndVAO();
+    void setupVBO();
+    void mapBuffers();
+
     void drawBatchedQuads();
     //Draw the previews queued quads and flush previous context
     void flush();
+
+    void onBackToForeground();
 
 protected:
     stack<int> _commandGroupStack;
