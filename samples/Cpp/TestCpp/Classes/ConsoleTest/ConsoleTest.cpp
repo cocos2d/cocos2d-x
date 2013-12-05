@@ -133,7 +133,6 @@ ConsoleTCP::ConsoleTCP()
 
 ConsoleTCP::~ConsoleTCP()
 {
-    _console->cancel();
     _console->release();
 }
 
@@ -162,14 +161,13 @@ ConsoleStdin::ConsoleStdin()
 
 ConsoleStdin::~ConsoleStdin()
 {
-    _console->cancel();
     _console->release();
 }
 
 void ConsoleStdin::onEnter()
 {
     BaseTestConsole::onEnter();
-    _console->listenOnStdin();
+//    _console->listenOnStdin();
 }
 
 std::string ConsoleStdin::title()
