@@ -60,6 +60,8 @@ THE SOFTWARE.
 #include "CCDictionary.h"
 #include "CCObject.h"
 #include "CCArray.h"
+#include "CCVector.h"
+#include "CCMap.h"
 #include "CCGeometry.h"
 #include "CCSet.h"
 #include "CCAutoreleasePool.h"
@@ -70,6 +72,7 @@ THE SOFTWARE.
 #include "CCString.h"
 #include "CCNS.h"
 #include "CCData.h"
+#include "CCValue.h"
 
 // draw nodes
 #include "CCDrawingPrimitives.h"
