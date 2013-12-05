@@ -82,11 +82,14 @@
     <Filter Include="CocoStudio\GUI\UIWidgets\ScrollWidget">
       <UniqueIdentifier>{68dc89cb-12fd-4f35-87c6-cc576e2d87b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CocoStudio\Json\lib_json">
-      <UniqueIdentifier>{4bb0ed96-fc0d-4823-8489-017d8de70586}</UniqueIdentifier>
-    </Filter>
     <Filter Include="network">
       <UniqueIdentifier>{e31a0268-e818-4b34-a2ab-4f24e46627eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoStudio\Json\rapidjson">
+      <UniqueIdentifier>{4bb0ed96-fc0d-4823-8489-017d8de70586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoStudio\Json\rapidjson\internal">
+      <UniqueIdentifier>{710fdaa4-4b57-4a84-b691-a4802a077fe1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -411,20 +414,8 @@
     <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Json\CSContentJsonDictionary.cpp">
-      <Filter>CocoStudio\Json</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp">
       <Filter>CocoStudio\Json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_value.cpp">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp">
-      <Filter>CocoStudio\Json\lib_json</Filter>
     </ClCompile>
     <ClCompile Include="..\network\HttpClient.cpp">
       <Filter>network</Filter>
@@ -812,41 +803,8 @@
     <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\CSContentJsonDictionary.h">
-      <Filter>CocoStudio\Json</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h">
       <Filter>CocoStudio\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\autolink.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\config.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\features.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\forwards.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_batchallocator.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_lib.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_tool.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\reader.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\value.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h">
-      <Filter>CocoStudio\Json\lib_json</Filter>
     </ClInclude>
     <ClInclude Include="..\network\HttpClient.h">
       <Filter>network</Filter>
@@ -894,19 +852,35 @@
       <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\CocoStudio\Json\lib_json\json_internalarray.inl">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </None>
-    <None Include="..\CocoStudio\Json\lib_json\json_internalmap.inl">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </None>
-    <None Include="..\CocoStudio\Json\lib_json\json_valueiterator.inl">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </None>
-    <None Include="..\CocoStudio\Json\lib_json\sconscript">
-      <Filter>CocoStudio\Json\lib_json</Filter>
-    </None>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\document.h">
+      <Filter>CocoStudio\Json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\filestream.h">
+      <Filter>CocoStudio\Json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\prettywriter.h">
+      <Filter>CocoStudio\Json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\rapidjson.h">
+      <Filter>CocoStudio\Json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\reader.h">
+      <Filter>CocoStudio\Json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\stringbuffer.h">
+      <Filter>CocoStudio\Json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\writer.h">
+      <Filter>CocoStudio\Json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\pow10.h">
+      <Filter>CocoStudio\Json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\stack.h">
+      <Filter>CocoStudio\Json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\strfunc.h">
+      <Filter>CocoStudio\Json\rapidjson\internal</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

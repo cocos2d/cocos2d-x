@@ -137,9 +137,12 @@ public:
     static const char *changeDisplayToTexture(const char *displayName);
 public:
     CCDisplayData();
-    virtual ~CCDisplayData(void);
+    virtual ~CCDisplayData(void) {};
+
+    virtual void copy(CCDisplayData *displayData);
 
     DisplayType displayType;	//! mark which type your display is
+    std::string displayName;
 };
 
 
@@ -153,20 +156,10 @@ public:
     CC_CREATE_NO_PARAM_NO_INIT(CCSpriteDisplayData)
 public:
     CCSpriteDisplayData();
-    virtual ~CCSpriteDisplayData();
+    virtual ~CCSpriteDisplayData() {};
 
-    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
-    void copy(CCSpriteDisplayData *displayData);
+    void copy(CCDisplayData *displayData);
 public:
-    /**
-    * If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
-    * It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use m_strDisplayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
-    *
-    * If DisplayType is CS_DISPLAY_ARMATURE, the name is the CCArmature's name. When CCBone init display and type is CS_DISPLAY_ARMATURE,
-    * then CCBone will create a CCArmature.
-    */
-    std::string displayName;
-
     CCBaseData skinData;
 };
 
@@ -180,20 +173,7 @@ public:
     CC_CREATE_NO_PARAM_NO_INIT(CCArmatureDisplayData)
 public:
     CCArmatureDisplayData();
-    virtual ~CCArmatureDisplayData();
-
-    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
-    void copy(CCArmatureDisplayData *displayData);
-public:
-    /**
-    * If DisplayType is CS_DISPLAY_SPRITE, then CCBone will use this image name to create a CCSprite from CCSpriteFrameCache.
-    * It should note that when use this name to create CCSprite from CCSpriteFrameCache, you should use m_strDisplayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
-    *
-    * If DisplayType is CS_DISPLAY_ARMATURE, the name is the CCArmature's name. When CCBone init display and type is CS_DISPLAY_ARMATURE,
-    * then CCBone will create a CCArmature.
-    */
-    std::string displayName;
-
+    virtual ~CCArmatureDisplayData() {};
 };
 
 /**
@@ -207,12 +187,7 @@ public:
 public:
     CCParticleDisplayData();
     virtual ~CCParticleDisplayData() {};
-
-    void setParam(const char *pszPlist) { this->plist = pszPlist; }
-
-    void copy(CCParticleDisplayData *displayData);
 public:
-    std::string plist;
 };
 
 

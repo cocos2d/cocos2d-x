@@ -223,8 +223,8 @@ static void addData(AsyncStruct *pAsyncStruct)
     unsigned long size;
     pthread_mutex_lock(&s_GetFileDataMutex);
 	unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
-	CCData *data = new CCData(pBytes, size);
-	pAsyncStruct->fileContent = std::string((const char*)data->getBytes(), data->getSize());
+	CCData data(pBytes, size);
+	pAsyncStruct->fileContent = std::string((const char*)data.getBytes(), data.getSize());
     pthread_mutex_unlock(&s_GetFileDataMutex);
 
     // generate data info
@@ -375,8 +375,8 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     dataInfo.asyncStruct = NULL;
     dataInfo.baseFilePath = basefilePath;
 
-	CCData *data = new CCData(pBytes, size);
-	std::string load_str = std::string((const char*)data->getBytes(), data->getSize());
+	CCData data(pBytes, size);
+	std::string load_str = std::string((const char*)data.getBytes(), data.getSize());
     if (str.compare(".xml") == 0)
     {
         CCDataReaderHelper::addDataFromCache(load_str.c_str(), &dataInfo);
@@ -1356,7 +1356,8 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(const rapidjson::Value &json,
     {
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, BONE_DATA, i); //json[BONE_DATA][i];
         CCBoneData *boneData = decodeBone(dic,dataInfo);
-        armatureData->addBoneData(boneData);       
+        armatureData->addBoneData(boneData);  
+        boneData->release();
     }
 
     return armatureData;
@@ -1454,11 +1455,11 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &jso
         {
             if (dataInfo->asyncStruct)
             {
-                ((CCParticleDisplayData *)displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
+                ((CCParticleDisplayData *)displayData)->displayName = dataInfo->asyncStruct->baseFilePath + plist;
             }
             else
             {
-                ((CCParticleDisplayData *)displayData)->plist = dataInfo->baseFilePath + plist;
+                ((CCParticleDisplayData *)displayData)->displayName = dataInfo->baseFilePath + plist;
             }
         }
     }
