@@ -236,11 +236,9 @@ void Renderer::render()
                 if(command->getType() == QUAD_COMMAND)
                 {
                     QuadCommand* cmd = static_cast<QuadCommand*>(command);
-                    
-                    CCASSERT(cmd->getQuadCount()<VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
-                    
+
                     //Batch quads
-                    if(_numQuads + cmd->getQuadCount() < VBO_SIZE)
+                    if(_numQuads + cmd->getQuadCount() <= VBO_SIZE)
                     {
                         memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
                         _numQuads += cmd->getQuadCount();
@@ -248,8 +246,11 @@ void Renderer::render()
                     }
                     else
                     {
+                        CCASSERT(cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+
                         //Draw batched quads if VBO is full
                         drawBatchedQuads();
+                        i--;
                     }
                 }
                 else if(command->getType() == CUSTOM_COMMAND)
