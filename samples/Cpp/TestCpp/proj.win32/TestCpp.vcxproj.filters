@@ -304,6 +304,9 @@
     <Filter Include="Classes\InputTest">
       <UniqueIdentifier>{8e8124bd-adb2-4a8f-8727-9868a9c42d80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ConsoleTest">
+      <UniqueIdentifier>{709f8a27-ecc2-4fe2-abd2-f13da4b70fe8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -702,6 +705,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\InputTest\MouseTest.cpp">
       <Filter>Classes\InputTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp">
+      <Filter>Classes\ConsoleTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1293,6 +1299,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\MotorJoint.h">
       <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h">
+      <Filter>Classes\ConsoleTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
