@@ -115,15 +115,15 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
             }
 
             AnimationFrame* animFrame = AnimationFrame::create(spriteFrame, 1, ValueMap());
-            frames.addObject(animFrame);
+            frames.pushBack(animFrame);
         }
 
-        if ( frames.count() == 0 )
+        if ( frames.size() == 0 )
         {
             CCLOG("cocos2d: AnimationCache: None of the frames for animation '%s' were found in the SpriteFrameCache. Animation is not being added to the Animation Cache.", iter->first.c_str());
             continue;
         }
-        else if ( frames.count() != frameNames.size() )
+        else if ( frames.size() != frameNames.size() )
         {
             CCLOG("cocos2d: AnimationCache: An animation in your dictionary refers to a frame which is not in the SpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", iter->first.c_str());
         }
@@ -174,7 +174,7 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
 
             AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, delayUnits, userInfo.asValueMap());
 
-            array.addObject(animFrame);
+            array.pushBack(animFrame);
         }
 
         float delayPerUnit = animationDict.at("delayPerUnit").asFloat();

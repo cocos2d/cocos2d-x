@@ -814,7 +814,7 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandle
     for (int z=0; z < menuItems->count(); z++)
     {
         MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
-        ret->_subItems.addObject(menuItem);
+        ret->_subItems.pushBack(menuItem);
     }
     
     ret->_selectedIndex = UINT_MAX;
@@ -830,7 +830,7 @@ MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callba
     for (int z=0; z < menuItems->count(); z++)
     {
         MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
-        ret->_subItems.addObject(menuItem);
+        ret->_subItems.pushBack(menuItem);
     }
 
     ret->_selectedIndex = UINT_MAX;
@@ -886,7 +886,7 @@ bool MenuItemToggle::initWithCallback(const ccMenuCallback &callback, MenuItem *
     while(i)
     {
         z++;
-        _subItems.addObject(i);
+        _subItems.pushBack(i);
         i = va_arg(args, MenuItem*);
     }
     _selectedIndex = UINT_MAX;
@@ -908,7 +908,7 @@ bool MenuItemToggle::initWithItem(MenuItem *item)
 
     if (item)
     {
-        _subItems.addObject(item);
+        _subItems.pushBack(item);
     }
     _selectedIndex = UINT_MAX;
     this->setSelectedIndex(0);
@@ -921,7 +921,7 @@ bool MenuItemToggle::initWithItem(MenuItem *item)
 
 void MenuItemToggle::addSubItem(MenuItem *item)
 {
-    _subItems.addObject(item);
+    _subItems.pushBack(item);
 }
 
 MenuItemToggle::~MenuItemToggle()
@@ -933,7 +933,7 @@ MenuItemToggle::~MenuItemToggle()
 
 void MenuItemToggle::setSelectedIndex(unsigned int index)
 {
-    if( index != _selectedIndex && _subItems.count() > 0 )
+    if( index != _selectedIndex && _subItems.size() > 0 )
     {
         _selectedIndex = index;
         MenuItem *currentItem = (MenuItem*)getChildByTag(kCurrentItem);
@@ -942,7 +942,7 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
             currentItem->removeFromParentAndCleanup(false);
         }
 
-        MenuItem* item = _subItems.getObjectAtIndex(_selectedIndex);
+        MenuItem* item = _subItems.at(_selectedIndex);
         this->addChild(item, 0, kCurrentItem);
         Size s = item->getContentSize();
         this->setContentSize(s);
@@ -953,13 +953,13 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
 void MenuItemToggle::selected()
 {
     MenuItem::selected();
-    _subItems.getObjectAtIndex(_selectedIndex)->selected();
+    _subItems.at(_selectedIndex)->selected();
 }
 
 void MenuItemToggle::unselected()
 {
     MenuItem::unselected();
-    _subItems.getObjectAtIndex(_selectedIndex)->unselected();
+    _subItems.at(_selectedIndex)->unselected();
 }
 
 void MenuItemToggle::activate()
@@ -967,7 +967,7 @@ void MenuItemToggle::activate()
     // update index
     if( _enabled ) 
     {
-        unsigned int newIndex = (_selectedIndex + 1) % _subItems.count();
+        unsigned int newIndex = (_selectedIndex + 1) % _subItems.size();
         this->setSelectedIndex(newIndex);
     }
     MenuItem::activate();
@@ -986,7 +986,7 @@ void MenuItemToggle::setEnabled(bool enabled)
 
 MenuItem* MenuItemToggle::getSelectedItem()
 {
-    return _subItems.getObjectAtIndex(_selectedIndex);
+    return _subItems.at(_selectedIndex);
 }
 
 NS_CC_END

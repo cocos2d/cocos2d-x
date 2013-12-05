@@ -1585,7 +1585,7 @@ void SpriteFrameTest::onEnter()
     {
         sprintf(str, "grossini_dance_%02d.png", i);
         auto frame = cache->getSpriteFrameByName( str );
-        animFrames.addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -1608,18 +1608,18 @@ void SpriteFrameTest::onEnter()
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
         auto frame = cache->getSpriteFrameByName(str);
-        moreFrames.addObject(frame);
+        moreFrames.pushBack(frame);
     }
 
 
     for( int i = 1; i < 5; i++) {
         sprintf(str, "grossini_blue_%02d.png",i);
         auto frame = cache->getSpriteFrameByName(str);
-        moreFrames.addObject(frame);
+        moreFrames.pushBack(frame);
     }
 
     // append frames from another batch
-    moreFrames.addObjectsFromArray(animFrames);
+    moreFrames.insert(animFrames);
     auto animMixed = Animation::createWithSpriteFrames(moreFrames, 0.3f);
 
 
@@ -1741,7 +1741,7 @@ void SpriteFrameAliasNameTest::onEnter()
         // Obtain frames by alias name
         sprintf(str, "dance_%02d", i);
         auto frame = cache->getSpriteFrameByName(str);
-        animFrames.addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -1811,7 +1811,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         {
             sprintf(str, "grossini_dance_%02d.png",(i+1));
             auto frame = cache->getSpriteFrameByName(str);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -1888,7 +1888,7 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         {
             sprintf(str, "grossini_dance_%02d.png",(k+1));
             auto frame = cache->getSpriteFrameByName(str);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -1963,7 +1963,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         {
             sprintf(str, "grossini_dance_%02d.png",(i+1));
             auto frame = cache->getSpriteFrameByName(str);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -2040,7 +2040,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         {
             sprintf(str, "grossini_dance_%02d.png",(k+1));
             auto frame = cache->getSpriteFrameByName(str);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -2097,12 +2097,12 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     addChild(sprite);
             
     Vector<SpriteFrame*> animFrames(6);
-    animFrames.addObject(frame0);
-    animFrames.addObject(frame1);
-    animFrames.addObject(frame2);
-    animFrames.addObject(frame3);
-    animFrames.addObject(frame4);
-    animFrames.addObject(frame5);
+    animFrames.pushBack(frame0);
+    animFrames.pushBack(frame1);
+    animFrames.pushBack(frame2);
+    animFrames.pushBack(frame3);
+    animFrames.pushBack(frame4);
+    animFrames.pushBack(frame5);
             
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
     auto animate = Animate::create(animation);
@@ -2191,7 +2191,7 @@ void SpriteHybrid::reparentSprite(float dt)
     ////----CCLOG("New parent is: %x", p2);
     
     p1->getChildren().forEach([&retArray](Node* node){
-        retArray.addObject(node);
+        retArray.pushBack(node);
     });
 
     int i=0;
@@ -2253,7 +2253,7 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     {
         sprintf(str, "grossini_dance_%02d.png",i);
         auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
-        animFrames.addObject(frame);
+        animFrames.pushBack(frame);
     }
     
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
@@ -3393,7 +3393,7 @@ AnimationCacheTest::AnimationCacheTest()
     {
         sprintf(str, "grossini_dance_%02d.png",i);
         auto frame = frameCache->getSpriteFrameByName(str);
-        animFrames.addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
@@ -3404,13 +3404,13 @@ AnimationCacheTest::AnimationCacheTest()
     //
     // create animation "dance gray"
     //
-    animFrames.removeAllObjects();
+    animFrames.clear();
 
     for(int i = 1; i < 15; i++)
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
         auto frame = frameCache->getSpriteFrameByName(str);
-        animFrames.addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
@@ -3421,13 +3421,13 @@ AnimationCacheTest::AnimationCacheTest()
     //
     // create animation "dance blue"
     //
-    animFrames.removeAllObjects();
+    animFrames.clear();
 
     for(int i = 1; i < 4; i++)
     {
         sprintf(str, "grossini_blue_%02d.png",i);
         auto frame = frameCache->getSpriteFrameByName(str);
-        animFrames.addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
@@ -3626,7 +3626,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -3704,7 +3704,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -3779,7 +3779,7 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -3861,7 +3861,7 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -3943,7 +3943,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         {            
             sprintf(tmp, "grossini_dance_%02d.png", i + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -4025,7 +4025,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
         {            
             sprintf(tmp, "grossini_dance_%02d.png", i + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -4109,7 +4109,7 @@ void NodeSort::reorderSprite(float dt)
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     });
     //z-4
-    _node->reorderChild( _node->getChildren().getObjectAtIndex(0), -6);
+    _node->reorderChild( _node->getChildren().at(0), -6);
 
     _node->sortAllChildren();
     
@@ -4304,7 +4304,7 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
             auto frame = cache->getSpriteFrameByName(pngName);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create(Animate::create(animation)));
@@ -4380,7 +4380,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             auto frame = cache->getSpriteFrameByName(pngName);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create(Animate::create(animation)));
@@ -4453,7 +4453,7 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             auto frame = cache->getSpriteFrameByName(pngName);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create(Animate::create(animation)));
@@ -4536,7 +4536,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             auto frame = cache->getSpriteFrameByName(pngName);
-            animFrames.addObject(frame);
+            animFrames.pushBack(frame);
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create(Animate::create(animation)));

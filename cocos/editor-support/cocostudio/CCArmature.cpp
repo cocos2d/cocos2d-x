@@ -672,12 +672,12 @@ Rect Armature::getBoundingBox() const
 
 Bone *Armature::getBoneAtPoint(float x, float y) const 
 {
-    long length = _children.count();
+    long length = _children.size();
     Bone *bs;
 
     for(long i = length - 1; i >= 0; i--)
     {
-        bs = static_cast<Bone*>( _children.getObjectAtIndex(i) );
+        bs = static_cast<Bone*>( _children.at(i) );
         if(bs->getDisplayManager()->containPoint(x, y))
         {
             return bs;

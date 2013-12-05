@@ -134,7 +134,7 @@ void TMXMapInfo::internalInit(const std::string& tmxFileName, const std::string&
         _resources = resourcePath;
     }
     
-    _objectGroups.setCapacity(4);
+    _objectGroups.reserve(4);
 
     // tmp vars
     _currentString = "";
@@ -289,7 +289,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             s.height = attributeDict["tileheight"].asFloat();
             tileset->_tileSize = s;
 
-            pTMXMapInfo->getTilesets().addObject(tileset);
+            pTMXMapInfo->getTilesets().pushBack(tileset);
             tileset->release();
         }
     }
@@ -297,7 +297,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     {
         if (pTMXMapInfo->getParentElement() == TMXPropertyLayer)
         {
-            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
             unsigned int gid = (unsigned int)attributeDict["gid"].asInt();
             int tilesAmount = layerSize.width*layerSize.height;
@@ -331,10 +331,10 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         }
         else
         {
-            TMXTilesetInfo* info = pTMXMapInfo->getTilesets().getLastObject();
+            TMXTilesetInfo* info = pTMXMapInfo->getTilesets().back();
             pTMXMapInfo->setParentGID(info->_firstGid + attributeDict["id"].asInt());
             //FIXME:XXX Why insert an empty dict?
-            pTMXMapInfo->getTileProperties().insert(std::make_pair(pTMXMapInfo->getParentGID(), Value()));
+            pTMXMapInfo->getTileProperties()[pTMXMapInfo->getParentGID()] = Value(ValueMap());
             pTMXMapInfo->setParentElement(TMXPropertyTile);
         }
     }
@@ -365,7 +365,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         float y = attributeDict["y"].asFloat();
         layer->_offset = Point(x,y);
 
-        pTMXMapInfo->getLayers().addObject(layer);
+        pTMXMapInfo->getLayers().pushBack(layer);
         layer->release();
 
         // The parent element is now "layer"
@@ -381,7 +381,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         positionOffset.y = attributeDict["y"].asFloat() * pTMXMapInfo->getTileSize().height;
         objectGroup->setPositionOffset(positionOffset);
 
-        pTMXMapInfo->getObjectGroups().addObject(objectGroup);
+        pTMXMapInfo->getObjectGroups().pushBack(objectGroup);
         objectGroup->release();
 
         // The parent element is now "objectgroup"
@@ -390,7 +390,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "image")
     {
-        TMXTilesetInfo* tileset = pTMXMapInfo->getTilesets().getLastObject();
+        TMXTilesetInfo* tileset = pTMXMapInfo->getTilesets().back();
 
         // build full path
         std::string imagename = attributeDict["source"].asString();
@@ -414,7 +414,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             pTMXMapInfo->setLayerAttribs(pTMXMapInfo->getLayerAttribs() | TMXLayerAttribNone);
             
-            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
             int tilesAmount = layerSize.width*layerSize.height;
 
@@ -459,7 +459,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     } 
     else if (elementName == "object")
     {
-        TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().getLastObject();
+        TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().back();
 
         // The value for "type" was blank or not a valid class name
         // Create an instance of TMXObjectInfo to store the object and its properties
@@ -511,7 +511,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyLayer )
         {
             // The parent element is the last layer
-            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().back();
             Value value = attributeDict["value"];
             std::string key = attributeDict["name"].asString();
             // Add the property to the layer
@@ -520,7 +520,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyObjectGroup ) 
         {
             // The parent element is the last object group
-            TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().getLastObject();
+            TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().back();
             Value value = attributeDict["value"];
             std::string key = attributeDict["name"].asString();
             objectGroup->getProperties().insert(std::make_pair(key, value));
@@ -528,7 +528,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyObject )
         {
             // The parent element is the last object
-            TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().getLastObject();
+            TMXObjectGroup* objectGroup = pTMXMapInfo->getObjectGroups().back();
             ValueMap& dict = objectGroup->getObjects().rbegin()->asValueMap();
 
             std::string propertyName = attributeDict["name"].asString();
@@ -545,7 +545,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polygon") 
     {
         // find parent object's dict and add polygon-points to it
-        TMXObjectGroup* objectGroup = _objectGroups.getLastObject();
+        TMXObjectGroup* objectGroup = _objectGroups.back();
         ValueMap& dict = objectGroup->getObjects().rbegin()->asValueMap();
 
         // get points value string
@@ -590,7 +590,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polyline")
     {
         // find parent object's dict and add polyline-points to it
-        TMXObjectGroup* objectGroup = _objectGroups.getLastObject();
+        TMXObjectGroup* objectGroup = _objectGroups.back();
         ValueMap& dict = objectGroup->getObjects().rbegin()->asValueMap();
         
         // get points value string
@@ -648,7 +648,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
         {
             pTMXMapInfo->setStoringCharacters(false);
             
-            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().back();
             
             std::string currentString = pTMXMapInfo->getCurrentString();
             unsigned char *buffer;
@@ -689,7 +689,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
         }
         else if (pTMXMapInfo->getLayerAttribs() & TMXLayerAttribNone)
         {
-            TMXLayerInfo* layer = pTMXMapInfo->getLayers().getLastObject();
+            TMXLayerInfo* layer = pTMXMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
             int tilesAmount = layerSize.width * layerSize.height;
             

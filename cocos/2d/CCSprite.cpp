@@ -696,7 +696,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 void Sprite::reorderChild(Node *child, int zOrder)
 {
     CCASSERT(child != NULL, "");
-    CCASSERT(_children.containsObject(child), "");
+    CCASSERT(_children.contains(child), "");
 
     if (zOrder == child->getZOrder())
     {
@@ -1060,7 +1060,7 @@ void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, 
 
     CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
-    AnimationFrame* frame = a->getFrames().getObjectAtIndex(frameIndex);
+    AnimationFrame* frame = a->getFrames().at(frameIndex);
 
     CCASSERT(frame, "CCSprite#setDisplayFrame. Invalid frame");
 

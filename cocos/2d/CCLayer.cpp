@@ -978,7 +978,7 @@ LayerMultiplex* LayerMultiplex::createWithArray(const Vector<Layer*>& arrayOfLay
 
 void LayerMultiplex::addLayer(Layer* layer)
 {
-    _layers.addObject(layer);
+    _layers.pushBack(layer);
 }
 
 bool LayerMultiplex::init()
@@ -995,17 +995,17 @@ bool LayerMultiplex::initWithLayers(Layer *layer, va_list params)
 {
     if (Layer::init())
     {
-        _layers.setCapacity(5);
-        _layers.addObject(layer);
+        _layers.reserve(5);
+        _layers.pushBack(layer);
 
         Layer *l = va_arg(params,Layer*);
         while( l ) {
-            _layers.addObject(l);
+            _layers.pushBack(l);
             l = va_arg(params,Layer*);
         }
 
         _enabledLayer = 0;
-        this->addChild(_layers.getObjectAtIndex(_enabledLayer));
+        this->addChild(_layers.at(_enabledLayer));
         return true;
     }
 
@@ -1016,11 +1016,11 @@ bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
 {
     if (Layer::init())
     {
-        _layers.setCapacity(arrayOfLayers.count());
-        _layers.addObjectsFromArray(arrayOfLayers);
+        _layers.reserve(arrayOfLayers.size());
+        _layers.insert(arrayOfLayers);
 
         _enabledLayer = 0;
-        this->addChild(_layers.getObjectAtIndex(_enabledLayer));
+        this->addChild(_layers.at(_enabledLayer));
         return true;
     }
     return false;
@@ -1028,26 +1028,26 @@ bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
 
 void LayerMultiplex::switchTo(int n)
 {
-    CCASSERT( n < _layers.count(), "Invalid index in MultiplexLayer switchTo message" );
+    CCASSERT( n < _layers.size(), "Invalid index in MultiplexLayer switchTo message" );
 
-    this->removeChild(_layers.getObjectAtIndex(_enabledLayer), true);
+    this->removeChild(_layers.at(_enabledLayer), true);
 
     _enabledLayer = n;
 
-    this->addChild(_layers.getObjectAtIndex(n));
+    this->addChild(_layers.at(n));
 }
 
 void LayerMultiplex::switchToAndReleaseMe(int n)
 {
-    CCASSERT( n < _layers.count(), "Invalid index in MultiplexLayer switchTo message" );
+    CCASSERT( n < _layers.size(), "Invalid index in MultiplexLayer switchTo message" );
 
-    this->removeChild(_layers.getObjectAtIndex(_enabledLayer), true);
+    this->removeChild(_layers.at(_enabledLayer), true);
 
-    _layers.replaceObjectAtIndex(_enabledLayer, nullptr);
+    _layers.replace(_enabledLayer, nullptr);
 
     _enabledLayer = n;
 
-    this->addChild(_layers.getObjectAtIndex(n));
+    this->addChild(_layers.at(n));
 }
 
 NS_CC_END

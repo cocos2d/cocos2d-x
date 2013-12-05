@@ -192,7 +192,7 @@ void EventDispatcher::visitTarget(Node* node)
     long i = 0;
     auto& children = node->getChildren();
     
-    long childrenCount = children.count();
+    long childrenCount = children.size();
     
     if(childrenCount > 0)
     {
@@ -200,7 +200,7 @@ void EventDispatcher::visitTarget(Node* node)
         // visit children zOrder < 0
         for( ; i < childrenCount; i++ )
         {
-            child = children.getObjectAtIndex(i);
+            child = children.at(i);
             
             if ( child && child->getZOrder() < 0 )
                 visitTarget(child);
@@ -212,7 +212,7 @@ void EventDispatcher::visitTarget(Node* node)
         
         for( ; i < childrenCount; i++ )
         {
-            child = children.getObjectAtIndex(i);
+            child = children.at(i);
             if (child)
                 visitTarget(child);
         }

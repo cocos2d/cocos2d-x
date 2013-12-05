@@ -203,16 +203,16 @@ Sequence* Sequence::create(const Vector<FiniteTimeAction*>& arrayOfActions)
     Sequence* pRet = NULL;
     do 
     {
-        long count = arrayOfActions.count();
+        long count = arrayOfActions.size();
         CC_BREAK_IF(count == 0);
 
-        auto prev = arrayOfActions.getObjectAtIndex(0);
+        auto prev = arrayOfActions.at(0);
 
         if (count > 1)
         {
             for (long i = 1; i < count; ++i)
             {
-                prev = createWithTwoActions(prev, arrayOfActions.getObjectAtIndex(i));
+                prev = createWithTwoActions(prev, arrayOfActions.at(i));
             }
         }
         else
@@ -576,14 +576,14 @@ Spawn* Spawn::create(const Vector<FiniteTimeAction*>& arrayOfActions)
     Spawn* pRet = NULL;
     do 
     {
-        long count = arrayOfActions.count();
+        long count = arrayOfActions.size();
         CC_BREAK_IF(count == 0);
-        auto prev = arrayOfActions.getObjectAtIndex(0);
+        auto prev = arrayOfActions.at(0);
         if (count > 1)
         {
-            for (int i = 1; i < arrayOfActions.count(); ++i)
+            for (int i = 1; i < arrayOfActions.size(); ++i)
             {
-                prev = createWithTwoActions(prev, arrayOfActions.getObjectAtIndex(i));
+                prev = createWithTwoActions(prev, arrayOfActions.at(i));
             }
         }
         else
@@ -2016,7 +2016,7 @@ bool Animate::initWithAnimation(Animation* animation)
         _origFrame = NULL;
         _executedLoops = 0;
 
-        _splitTimes->reserve(animation->getFrames().count());
+        _splitTimes->reserve(animation->getFrames().size());
 
         float accumUnitsOfTime = 0;
         float newUnitOfTimeValue = singleDuration / animation->getTotalDelayUnits();
@@ -2097,14 +2097,14 @@ void Animate::update(float t)
     }
 
     auto frames = _animation->getFrames();
-    long numberOfFrames = frames.count();
+    long numberOfFrames = frames.size();
     SpriteFrame *frameToDisplay = NULL;
 
     for( int i=_nextFrame; i < numberOfFrames; i++ ) {
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
-            AnimationFrame* frame = frames.getObjectAtIndex(i);
+            AnimationFrame* frame = frames.at(i);
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setDisplayFrame(frameToDisplay);
 
@@ -2125,9 +2125,9 @@ void Animate::update(float t)
 Animate* Animate::reverse() const
 {
     auto oldArray = _animation->getFrames();
-    Vector<AnimationFrame*> newArray(oldArray.count());
+    Vector<AnimationFrame*> newArray(oldArray.size());
    
-    if (oldArray.count() > 0)
+    if (oldArray.size() > 0)
     {
         for (auto iter = oldArray.crbegin(); iter != oldArray.crend(); ++iter)
         {
@@ -2137,7 +2137,7 @@ Animate* Animate::reverse() const
                 break;
             }
 
-            newArray.addObject(animFrame->clone());
+            newArray.pushBack(animFrame->clone());
         }
     }
 

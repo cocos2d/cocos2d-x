@@ -631,7 +631,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
         float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
         lastKeyframeTime = keyframe->getTime();
         if(timeSinceLastKeyframe > 0) {
-            actions.addObject(DelayTime::create(timeSinceLastKeyframe));
+            actions.pushBack(DelayTime::create(timeSinceLastKeyframe));
         }
 	
         Array* keyVal = static_cast<Array *>(keyframe->getValue());
@@ -646,7 +646,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                 CallFunc *callbackClone = (static_cast<CallFunc*>(callback))->clone();
     
                 if(callbackClone != NULL) {
-                    actions.addObject(callbackClone);
+                    actions.pushBack(callbackClone);
                 }
             }
         }
@@ -680,7 +680,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                     {
                         // XXX: how to fix this warning?
                         CallFuncN *callback = CallFuncN::create(target, selCallFunc);
-                        actions.addObject(callback);
+                        actions.pushBack(callback);
                     }
                 }
                 else
@@ -690,7 +690,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
             }
         }
     }
-    if(actions.count() < 1) return NULL;
+    if(actions.size() < 1) return NULL;
     
     return (Object *) Sequence::create(actions);
 }
@@ -709,7 +709,7 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
         float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
         lastKeyframeTime = keyframe->getTime();
         if(timeSinceLastKeyframe > 0) {
-            actions.addObject(DelayTime::create(timeSinceLastKeyframe));
+            actions.pushBack(DelayTime::create(timeSinceLastKeyframe));
         }
 	
         stringstream ss (stringstream::in | stringstream::out);
@@ -729,10 +729,10 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
         ss >> gain;
         ss.flush();
         
-        actions.addObject(CCBSoundEffect::actionWithSoundFile(soundFile, pitch, pan, gain));
+        actions.pushBack(CCBSoundEffect::actionWithSoundFile(soundFile, pitch, pan, gain));
     }
 
-    if(actions.count() < 1) return NULL;
+    if(actions.size() < 1) return NULL;
     
     return Sequence::create(actions);
 }
@@ -754,7 +754,7 @@ void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, 
         
         if (timeFirst > 0)
         {
-            actions.addObject(DelayTime::create(timeFirst));
+            actions.pushBack(DelayTime::create(timeFirst));
         }
         
         for (int i = 0; i < numKeyframes - 1; ++i)
@@ -768,7 +768,7 @@ void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, 
                 // Apply easing
                 action = getEaseAction(action, kf0->getEasingType(), kf0->getEasingOpt());
                 
-                actions.addObject(action);
+                actions.pushBack(action);
             }
         }
         

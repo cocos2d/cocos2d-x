@@ -305,19 +305,19 @@ void Bone::addChildBone(Bone *child)
 
     if(_children.empty())
     {
-        _children.setCapacity(4);
+        _children.reserve(4);
     }
 
-    if (_children.getIndexOfObject(child) == CC_INVALID_INDEX)
+    if (_children.getIndex(child) == CC_INVALID_INDEX)
     {
-        _children.addObject(child);
+        _children.pushBack(child);
         child->setParentBone(this);
     }
 }
 
 void Bone::removeChildBone(Bone *bone, bool recursion)
 {
-    if (!_children.empty() && _children.getIndexOfObject(bone) != CC_INVALID_INDEX )
+    if (!_children.empty() && _children.getIndex(bone) != CC_INVALID_INDEX )
     {
         if(recursion)
         {

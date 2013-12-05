@@ -397,7 +397,7 @@ void Node::setPositionY(float y)
 
 long Node::getChildrenCount() const
 {
-    return _children.count();
+    return _children.size();
 }
 
 /// camera getter: lazy alloc
@@ -589,7 +589,7 @@ const char* Node::description() const
 // lazy allocs
 void Node::childrenAlloc(void)
 {
-    _children.setCapacity(4);
+    _children.reserve(4);
 }
 
 Node* Node::getChildByTag(int aTag)
@@ -683,7 +683,7 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-    long index = _children.getIndexOfObject(child);
+    long index = _children.getIndex(child);
     if( index != CC_INVALID_INDEX )
         this->detachChild( child, index, cleanup );
 }
@@ -736,7 +736,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
             }
         }
         
-        _children.removeAllObjects();
+        _children.clear();
     }
     
 }
@@ -770,7 +770,7 @@ void Node::detachChild(Node *child, long childIndex, bool doCleanup)
     // set parent nil at the end
     child->setParent(nullptr);
 
-    _children.removeObjectAtIndex(childIndex);
+    _children.remove(childIndex);
 }
 
 
@@ -778,7 +778,7 @@ void Node::detachChild(Node *child, long childIndex, bool doCleanup)
 void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
-    _children.addObject(child);
+    _children.pushBack(child);
     child->_setZOrder(z);
 }
 
@@ -795,14 +795,14 @@ void Node::sortAllChildren()
 #if 0
     if (_reorderChildDirty)
     {
-        int i,j,length = _children.count();
+        int i,j,length = _children.size();
 
         // insertion sort
         for(i=1; i<length; i++)
         {
             j = i-1;
-            auto tempI = static_cast<Node*>( _children.getObjectAtIndex(i) );
-            auto tempJ = static_cast<Node*>( _children.getObjectAtIndex(j) );
+            auto tempI = static_cast<Node*>( _children.at(i) );
+            auto tempJ = static_cast<Node*>( _children.at(j) );
 
             //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
             while(j>=0 && ( tempI->_ZOrder < tempJ->_ZOrder || ( tempI->_ZOrder == tempJ->_ZOrder && tempI->_orderOfArrival < tempJ->_orderOfArrival ) ) )
@@ -810,7 +810,7 @@ void Node::sortAllChildren()
                 _children.fastSetObject( tempJ, j+1 );
                 j = j-1;
                 if(j>=0)
-                    tempJ = static_cast<Node*>( _children.getObjectAtIndex(j) );
+                    tempJ = static_cast<Node*>( _children.at(j) );
             }
             _children.fastSetObject(tempI, j+1);
         }
@@ -858,9 +858,9 @@ void Node::visit()
     {
         sortAllChildren();
         // draw children zOrder < 0
-        for( ; i < _children.count(); i++ )
+        for( ; i < _children.size(); i++ )
         {
-            auto node = _children.getObjectAtIndex(i);
+            auto node = _children.at(i);
 
             if ( node && node->_ZOrder < 0 )
                 node->visit();
