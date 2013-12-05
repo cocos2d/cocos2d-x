@@ -68,11 +68,8 @@ static void printSceneGraph(int fd, Node* node, int level)
 
     mydprintf(fd, " %s: z=%d, tag=%d\n", node->description(), node->getZOrder(), node->getTag());
 
-    auto children = node->getChildren();
-    if( children ) {
-        for(const auto& child: *children)
-            printSceneGraph(fd, static_cast<Node*>(child), level+1);
-    }
+    for(const auto& child: node->getChildren())
+        printSceneGraph(fd, child, level+1);
 }
 
 static void printSceneGraphBoot(int fd)
