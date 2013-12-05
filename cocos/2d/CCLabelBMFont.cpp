@@ -911,7 +911,7 @@ void LabelBMFont::updateLabel()
         int skip = 0;
 
         auto children = getChildren();
-        for (int j = 0; j < children.count(); j++)
+        for (int j = 0; j < children.size(); j++)
         {
             Sprite* characterSprite;
             unsigned int justSkipped = 0;

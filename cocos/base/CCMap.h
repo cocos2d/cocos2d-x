@@ -73,18 +73,18 @@ public:
     }
 
     /** Sets capacity of current array */
-    void setCapacity(long capacity)
+    void reserve(long capacity)
     {
         _data.reserve(capacity);
     }
     
     /** Returns capacity of the array */
-    long getCapacity() const
+    size_t capacity() const
     {
         return _data.capacity();
     }
     
-    long count() const
+    size_t size() const
     {
         return _data.size();
     }

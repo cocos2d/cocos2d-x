@@ -95,7 +95,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
     _textureAtlas = new TextureAtlas();
     _textureAtlas->initWithTexture(tex, capacity);
 
-    _children.setCapacity(capacity);
+    _children.reserve(capacity);
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
@@ -184,7 +184,7 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
 
     if (pos != 0)
     {
-        ParticleSystem* p = static_cast<ParticleSystem*>(_children.getObjectAtIndex(pos-1));
+        ParticleSystem* p = static_cast<ParticleSystem*>(_children.at(pos-1));
         atlasIndex = p->getAtlasIndex() + p->getTotalParticles();
     }
     else
@@ -207,12 +207,12 @@ long ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
     CCASSERT( child != NULL, "Argument must be non-nil");
     CCASSERT( child->getParent() == NULL, "child already added. It can't be added again");
 
-    _children.setCapacity(4);
+    _children.reserve(4);
 
     //don't use a lazy insert
     long pos = searchNewPositionInChildrenForZ(z);
 
-    _children.insertObject(child, pos);
+    _children.insert(pos, child);
 
     child->setTag(aTag);
     child->_setZOrder(z);
@@ -232,7 +232,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 {
     CCASSERT( aChild != NULL, "Child must be non-NULL");
     CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
-    CCASSERT( _children.containsObject(aChild), "Child doesn't belong to batch" );
+    CCASSERT( _children.contains(aChild), "Child doesn't belong to batch" );
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
 
@@ -253,8 +253,8 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // reorder _children->array
             child->retain();
-            _children.removeObjectAtIndex(oldIndex);
-            _children.insertObject(child, newIndex);
+            _children.remove(oldIndex);
+            _children.insert(newIndex, child);
             child->release();
 
             // save old altasIndex
@@ -265,9 +265,9 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // Find new AtlasIndex
             int newAtlasIndex = 0;
-            for( int i=0;i < _children.count();i++)
+            for( int i=0;i < _children.size();i++)
             {
-                ParticleSystem* node = static_cast<ParticleSystem*>(_children.getObjectAtIndex(i));
+                ParticleSystem* node = static_cast<ParticleSystem*>(_children.at(i));
                 if( node == child )
                 {
                     newAtlasIndex = child->getAtlasIndex();
@@ -291,11 +291,11 @@ void ParticleBatchNode::getCurrentIndex(long* oldIndex, long* newIndex, Node* ch
     bool foundNewIdx = false;
 
     int  minusOne = 0;
-    long count = _children.count();
+    long count = _children.size();
 
     for( long i=0; i < count; i++ )
     {
-        Node* pNode = _children.getObjectAtIndex(i);
+        Node* pNode = _children.at(i);
 
         // new index
         if( pNode->getZOrder() > z &&  ! foundNewIdx )
@@ -338,11 +338,11 @@ void ParticleBatchNode::getCurrentIndex(long* oldIndex, long* newIndex, Node* ch
 
 long ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
 {
-    long count = _children.count();
+    long count = _children.size();
 
     for( long i=0; i < count; i++ )
     {
-        Node *child = _children.getObjectAtIndex(i);
+        Node *child = _children.at(i);
         if (child->getZOrder() > z)
         {
             return i;
@@ -359,7 +359,7 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
         return;
 
     CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
-    CCASSERT(_children.containsObject(aChild), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
+    CCASSERT(_children.contains(aChild), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
     Node::removeChild(child, cleanup);
@@ -378,7 +378,7 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
 
 void ParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
 {
-    removeChild(_children.getObjectAtIndex(index), doCleanup);
+    removeChild(_children.at(index), doCleanup);
 }
 
 void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)

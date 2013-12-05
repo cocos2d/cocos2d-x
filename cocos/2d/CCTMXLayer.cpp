@@ -556,7 +556,7 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
         return;
     }
 
-    CCASSERT(_children.containsObject(sprite), "Tile does not belong to TMXLayer");
+    CCASSERT(_children.contains(sprite), "Tile does not belong to TMXLayer");
 
     unsigned int atlasIndex = sprite->getAtlasIndex();
     unsigned int zz = (size_t)_atlasIndexArray->arr[atlasIndex];

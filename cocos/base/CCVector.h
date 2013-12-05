@@ -46,13 +46,13 @@ public:
     : _data()
     {
         CCLOGINFO("In the default constructor with capacity of Vector.");
-        setCapacity(capacity);
+        reserve(capacity);
     }
 
     virtual ~Vector<T>()
     {
         CCLOGINFO("In the destructor of Vector.");
-        removeAllObjects();
+        clear();
     }
 
     Vector<T>(const Vector<T>& other)
@@ -72,7 +72,7 @@ public:
     Vector<T>& operator=(const Vector<T>& other)
     {
         CCLOGINFO("In the copy assignment operator!");
-        removeAllObjects();
+        clear();
         _data = other._data;
         addRefForAllObjects();
         return *this;
@@ -85,6 +85,7 @@ public:
         return *this;
     }
     
+// Don't uses operator since we could not decide whether it needs 'retain'/'release'.
 //    T& operator[](long index)
 //    {
 //        return _data[index];
@@ -96,13 +97,13 @@ public:
 //    }
     
     /** Sets capacity of current array */
-    void setCapacity(long capacity)
+    void reserve(long capacity)
     {
         _data.reserve(capacity);
     }
     
     /** Returns capacity of the array */
-    long getCapacity() const
+    long capacity() const
     {
         return _data.capacity();
     }
@@ -110,7 +111,7 @@ public:
     // Querying an Array
 
     /** Returns element count of the array */
-    long count() const
+    size_t size() const
     {
         return _data.size();
     }
@@ -121,9 +122,9 @@ public:
     }
     
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    long getIndexOfObject(T object) const
+    long getIndex(T object) const
     {
-        long i=0;
+        long i = 0;
         for (auto it = _data.begin(); it != _data.end(); ++it, ++i)
         {
             if (*it == object)
@@ -136,14 +137,19 @@ public:
     }
 
     /** Returns an element with a certain index */
-    T getObjectAtIndex(long index) const
+    T at(long index) const
     {
-        CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
+        CCASSERT( index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
         return _data[index];
     }
 
+    T front() const
+    {
+        return _data.front();
+    }
+    
     /** Returns the last element of the array */
-    T getLastObject() const
+    T back() const
     {
         return _data.back();
     }
@@ -160,17 +166,21 @@ public:
     }
 
     /** Returns a Boolean value that indicates whether object is present in array. */
-    bool containsObject(T object) const
+    bool contains(T object) const
     {
         return( std::find(_data.begin(), _data.end(), object) != _data.end() );
     }
 
     /** returns true if the the arrays are equal */
-    bool isEqualToArray(const Vector<T> &otherArray)
+    bool equals(const Vector<T> &other)
     {
-        for (long i = 0; i< this->count(); i++)
+        size_t s = this->size();
+        if (s != other.size())
+            return false;
+        
+        for (long i = 0; i < s; i++)
         {
-            if (!this->getObjectAtIndex(i)->isEqual(otherArray.getObjectAtIndex(i)))
+            if (!this->at(i)->isEqual(other.at(i)))
             {
                 return false;
             }
@@ -181,49 +191,37 @@ public:
     // Adding Objects
 
     /** Add a certain object */
-    void addObject(T object)
+    void pushBack(T object)
     {
+        CCASSERT(object != nullptr, "The object should not be nullptr");
         _data.push_back( object );
         object->retain();
     }
-
+    
     /** Add all elements of an existing array */
-    void addObjectsFromArray(const Vector<T>& otherArray)
+    void insert(const Vector<T>& other)
     {
-        for( auto it = otherArray.begin(); it != otherArray.end(); ++it ) {
+        for( auto it = other.begin(); it != other.end(); ++it ) {
             _data.push_back( *it );
             (*it)->retain();
         }
     }
 
     /** Insert a certain object at a certain index */
-    void insertObject(T object, long index)
+    void insert(long index, T object)
     {
-        CCASSERT(index >= 0 && index <= count(), "Invalid index!");
+        CCASSERT(index >= 0 && index <= size(), "Invalid index!");
+        CCASSERT(object != nullptr, "The object should not be nullptr");
         _data.insert((std::begin(_data) + index), object);
         object->retain();
     }
-
-    /** sets a certain object at a certain index */
-    void setObject(T object, long index)
-    {
-        CCASSERT(index >= 0 && index < count(), "Invalid index!");
-        _data[index]->release();
-        _data[index] = object;
-        object->retain();
-    }
-    /** sets a certain object at a certain index without retaining. Use it with caution */
-    void fastSetObject(T object, long index)
-    {
-        _data[index] = object;
-    }
-
+    
     // Removing Objects
 
     /** Remove last object */
-    void removeLastObject()
+    void popBack()
     {
-        CCASSERT(_data.size(), "no objects added");
+        CCASSERT(!_data.empty(), "no objects added");
         auto last = _data.back();
         _data.pop_back();
         last->release();
@@ -232,20 +230,24 @@ public:
     /** Remove a certain object */
     void removeObject(T object)
     {
-        _data.erase( std::remove( _data.begin(), _data.end(), object ) );
+        CCASSERT(object != nullptr, "The object should not be nullptr");
+        auto iter = std::find(_data.begin(), _data.end(), object);
+        if (iter != _data.end())
+            _data.erase(iter);
         object->release();
     }
 
     /** Removes an element with a certain index */
-    void removeObjectAtIndex(long index)
+    void remove(long index)
     {
+        CCASSERT(!_data.empty() && index >=0 && index < size(), "Invalid index!");
         auto it = std::next( begin(), index );
         (*it)->release();
         _data.erase(it);
     }
 
     /** Removes all objects */
-    void removeAllObjects()
+    void clear()
     {
         for( auto it = std::begin(_data); it != std::end(_data); ++it ) {
             (*it)->release();
@@ -253,26 +255,15 @@ public:
         _data.clear();
     }
 
-    /** Fast way to remove a certain object */
-    void fastRemoveObject(T object) {
-        removeObjectAtIndex(index);
-    }
-
-    /** Fast way to remove an element with a certain index */
-    void fastRemoveObjectAtIndex(long index)
-    {
-        removeObjectAtIndex(index);
-    }
-
     // Rearranging Content
 
     /** Swap two elements */
-    void swapObjects(T object1, T object2)
+    void swap(T object1, T object2)
     {
-        long idx1 = getIndexOfObject(object1);
-        long idx2 = getIndexOfObject(object2);
+        long idx1 = getIndex(object1);
+        long idx2 = getIndex(object2);
 
-        CCASSERT(idx1>=0 && idx2>=2, "invalid object index");
+        CCASSERT(idx1>=0 && idx2>=0, "invalid object index");
 
         std::swap( _data[idx1], _data[idx2] );
     }
@@ -280,36 +271,37 @@ public:
     /** Swap two elements with certain indexes */
     void swap(long index1, long index2)
     {
-        CCASSERT(index1 >=0 && index1 < count() && index2 >= 0 && index2 < count(), "Invalid indices");
+        CCASSERT(index1 >=0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
 
         std::swap( _data[index1], _data[index2] );
     }
 
     /** Replace object at index with another object. */
-    void replaceObjectAtIndex(long index, T object)
+    void replace(long index, T object)
     {
-        if( object != _data[index] ) {
-            object->retain();
-            _data[index]->release();
-            _data[index] = object;
-        }
+        CCASSERT(index >= 0 && index < size(), "Invalid index!");
+        CCASSERT(object != nullptr, "The object should not be nullptr");
+        
+        _data[index]->release();
+        _data[index] = object;
+        object->retain();
     }
 
     /** reverses the array */
-    void reverseObjects()
+    void reverse()
     {
         std::reverse( std::begin(_data), std::end(_data) );
     }
     
     /** Shrinks the array so the memory footprint corresponds with the number of items */
-    void reduceMemoryFootprint()
+    void shrinkToFit()
     {
         _data.shrink_to_fit();
     }
     
     void forEach(std::function<void(T)> callback)
     {
-        if (count() <= 0)
+        if (size() <= 0)
             return;
         
         std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
@@ -319,7 +311,7 @@ public:
   
     void forEachReverse(std::function<void(T)> callback)
     {
-        if (count() <= 0)
+        if (size() <= 0)
             return;
         
         std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){

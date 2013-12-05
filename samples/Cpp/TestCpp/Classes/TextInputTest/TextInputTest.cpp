@@ -166,11 +166,11 @@ void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& in
     // move all the children node of KeyboardNotificationLayer
     auto& children = getChildren();
     Node * node = 0;
-    int count = children.count();
+    int count = children.size();
     Point pos;
     for (int i = 0; i < count; ++i)
     {
-        node = children.getObjectAtIndex(i);
+        node = children.at(i);
         pos = node->getPosition();
         pos.y += adjustVert;
         node->setPosition(pos);

@@ -88,11 +88,11 @@ Menu* Menu::createWithItems(MenuItem* item, va_list args)
     Vector<MenuItem*> items;
     if( item )
     {
-        items.addObject(item);
+        items.pushBack(item);
         MenuItem *i = va_arg(args, MenuItem*);
         while(i)
         {
-            items.addObject(i);
+            items.pushBack(i);
             i = va_arg(args, MenuItem*);
         }
     }

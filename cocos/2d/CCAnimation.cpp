@@ -125,7 +125,7 @@ bool Animation::initWithSpriteFrames(const Vector<SpriteFrame*>& frames, float d
     for (auto& spriteFrame : frames)
     {
         auto animFrame = AnimationFrame::create(spriteFrame, 1, ValueMap());
-        _frames.addObject(animFrame);
+        _frames.pushBack(animFrame);
         _totalDelayUnits++;
     }
 
@@ -164,7 +164,7 @@ Animation::~Animation(void)
 void Animation::addSpriteFrame(SpriteFrame* spriteFrame)
 {
     AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, 1.0f, ValueMap());
-    _frames.addObject(animFrame);
+    _frames.pushBack(animFrame);
 
     // update duration
     _totalDelayUnits++;
