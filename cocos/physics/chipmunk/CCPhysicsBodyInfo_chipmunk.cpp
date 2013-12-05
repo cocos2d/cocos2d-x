@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifdef CC_USE_PHYSICS
 #include "CCPhysicsBodyInfo_chipmunk.h"
+#ifdef CC_USE_PHYSICS
 NS_CC_BEGIN
 
 PhysicsBodyInfo::PhysicsBodyInfo()

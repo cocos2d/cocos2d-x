@@ -69,7 +69,6 @@ Bone::Bone()
     _boneData = nullptr;
     _tween = nullptr;
     _tween = nullptr;
-    _children = nullptr;
     _displayManager = nullptr;
     _ignoreMovementBoneData = false;
     _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
@@ -85,7 +84,6 @@ Bone::Bone()
 Bone::~Bone(void)
 {
     CC_SAFE_DELETE(_tweenData);
-    CC_SAFE_DELETE(_children);
     CC_SAFE_DELETE(_tween);
     CC_SAFE_DELETE(_displayManager);
     CC_SAFE_DELETE(_worldInfo);
@@ -229,14 +227,10 @@ void Bone::update(float delta)
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    if (_children)
-    {
-        for(auto object : *_children)
-        {
-            Bone *childBone = (Bone *)object;
-            childBone->update(delta);
-        }
-    }
+    _children.forEach([&delta](Node* obj){
+        Bone *childBone = static_cast<Bone*>(obj);
+        childBone->update(delta);
+    });
 
     _boneTransformDirty = false;
 }
@@ -309,30 +303,29 @@ void Bone::addChildBone(Bone *child)
     CCASSERT( nullptr != child, "Argument must be non-nil");
     CCASSERT( nullptr == child->_parentBone, "child already added. It can't be added again");
 
-    if(!_children)
+    if(_children.empty())
     {
-        _children = Array::createWithCapacity(4);
-        _children->retain();
+        _children.reserve(4);
     }
 
-    if (_children->getIndexOfObject(child) == CC_INVALID_INDEX)
+    if (_children.getIndex(child) == CC_INVALID_INDEX)
     {
-        _children->addObject(child);
+        _children.pushBack(child);
         child->setParentBone(this);
     }
 }
 
 void Bone::removeChildBone(Bone *bone, bool recursion)
 {
-    if (_children && _children->getIndexOfObject(bone) != CC_INVALID_INDEX )
+    if (!_children.empty() && _children.getIndex(bone) != CC_INVALID_INDEX )
     {
         if(recursion)
         {
-            Array *ccbones = bone->_children;
+            auto ccbones = bone->_children;
             
-            for(auto object : *ccbones)
+            for(auto& object : ccbones)
             {
-                Bone *ccBone = (Bone *)object;
+                Bone *ccBone = static_cast<Bone*>(object);
                 bone->removeChildBone(ccBone, recursion);
             }
         }
@@ -341,7 +334,7 @@ void Bone::removeChildBone(Bone *bone, bool recursion)
 
         bone->getDisplayManager()->setCurrentDecorativeDisplay(nullptr);
 
-        _children->removeObject(bone);
+        _children.removeObject(bone);
     }
 }
 

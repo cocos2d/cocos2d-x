@@ -1528,17 +1528,16 @@ void MultipleParticleSystems::update(float dt)
 {
     auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
-    unsigned int count = 0;
-
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(getChildren(), pObj)
-    {
-        auto item = dynamic_cast<ParticleSystem*>(pObj);
+    unsigned int count = 0; 
+    
+    getChildren().forEach([&count](Node* child){
+        auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    }
+    });
+
     char str[100] = {0};
     sprintf(str, "%4d", count);
     atlas->setString(str);
@@ -1582,15 +1581,15 @@ void MultipleParticleSystemsBatched::update(float dt)
     unsigned count = 0;
 
     auto batchNode = getChildByTag(2);
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(batchNode->getChildren(), pObj)
-    {
-        auto item = dynamic_cast<ParticleSystem*>(pObj);
+    
+    batchNode->getChildren().forEach([&count](Node* child){
+        auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    }
+    });
+
     char str[50] = {0};
     sprintf(str, "%4d", count);
     atlas->setString(str);
@@ -1643,12 +1642,12 @@ void AddAndDeleteParticleSystems::onEnter()
 
 void AddAndDeleteParticleSystems::removeSystem(float dt)
 {
-    int nChildrenCount = _batchNode->getChildren()->count();
-    if (nChildrenCount > 0)
+    int nChildrenCount = _batchNode->getChildren().size();
+    if (nChildrenCount > 0) 
     {
         CCLOG("remove random system");
         unsigned int uRand = rand() % (nChildrenCount - 1);
-        _batchNode->removeChild((Node*)_batchNode->getChildren()->getObjectAtIndex(uRand), true);
+        _batchNode->removeChild(_batchNode->getChildren().at(uRand), true);
 
         auto particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
         //add new
@@ -1671,15 +1670,15 @@ void AddAndDeleteParticleSystems::update(float dt)
     unsigned int count = 0;
 
     auto batchNode = getChildByTag(2);
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(batchNode->getChildren(), pObj)
-    {
-        auto item = dynamic_cast<ParticleSystem*>(pObj);
+    
+    batchNode->getChildren().forEach([&count](Node* child){
+        auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    }
+    });
+
     char str[100] = {0};
     sprintf(str, "%4d", count);
     atlas->setString(str);
@@ -1795,27 +1794,26 @@ void ReorderParticleSystems::onEnter()
 
 void ReorderParticleSystems::reorderSystem(float time)
 {
-    auto system = (ParticleSystem*)_batchNode->getChildren()->getObjectAtIndex(1);
-    _batchNode->reorderChild(system, system->getZOrder() - 1);
+    auto system = static_cast<ParticleSystem*>(_batchNode->getChildren().at(1));
+    _batchNode->reorderChild(system, system->getZOrder() - 1);     
 }
 
 
 void ReorderParticleSystems::update(float dt)
 {
-    auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
+    auto atlas = static_cast<LabelAtlas*>(getChildByTag(kTagParticleCount));
 
     unsigned int count = 0;
 
     auto batchNode = getChildByTag(2);
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(batchNode->getChildren(), pObj)
-    {
-        auto item = dynamic_cast<ParticleSystem*>(pObj);
-        if (item != NULL)
+
+    batchNode->getChildren().forEach([&count](Node* child){
+        auto item = dynamic_cast<ParticleSystem*>(child);
+        if (item != nullptr)
         {
             count += item->getParticleCount();
         }
-    }
+    });
     char str[100] = {0};
     sprintf(str, "%4d", count);
     atlas->setString(str);

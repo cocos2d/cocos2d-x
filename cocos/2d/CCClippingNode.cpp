@@ -39,13 +39,10 @@ static GLint g_sStencilBits = -1;
 static void setProgram(Node *n, GLProgram *p)
 {
     n->setShaderProgram(p);
-    if (!n->getChildren()) return;
     
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(n->getChildren(), pObj)
-    {
-        setProgram(static_cast<Node*>(pObj), p);
-    }
+    n->getChildren().forEach([p](Node* child){
+        setProgram(child, p);
+    });
 }
 
 ClippingNode::ClippingNode()

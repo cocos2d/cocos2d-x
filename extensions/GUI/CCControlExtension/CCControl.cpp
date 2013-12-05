@@ -222,16 +222,14 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
 void Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
 {
     _isOpacityModifyRGB=bOpacityModifyRGB;
-    Object* child;
-    Array* children=getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);        
-        if (pNode)
+    
+    _children.forEach([&](Node* obj){
+        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(obj);
+        if (rgba)
         {
-            pNode->setOpacityModifyRGB(bOpacityModifyRGB);
+            rgba->setOpacityModifyRGB(bOpacityModifyRGB);
         }
-    }
+    });
 }
 
 bool Control::isOpacityModifyRGB() const

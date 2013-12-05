@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifdef CC_USE_PHYSICS
 #include "CCPhysicsWorldInfo_chipmunk.h"
+#ifdef CC_USE_PHYSICS
 #include "CCPhysicsHelper_chipmunk.h"
 #include "CCPhysicsBodyInfo_chipmunk.h"
 #include "CCPhysicsShapeInfo_chipmunk.h"
