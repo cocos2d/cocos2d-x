@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,63 +22,68 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsJointInfo_chipmunk.h"
-#ifdef CC_USE_PHYSICS
-#include <algorithm>
-#include <unordered_map>
+#ifndef _CONSOLE_TEST_H_
+#define _CONSOLE_TEST_H_
 
-NS_CC_BEGIN
+////----#include "cocos2d.h"
+#include "../testBasic.h"
+#include "../BaseTest.h"
 
-std::unordered_map<cpConstraint*, PhysicsJointInfo*> PhysicsJointInfo::_map;
+USING_NS_CC;
 
-PhysicsJointInfo::PhysicsJointInfo(PhysicsJoint* joint)
-: _joint(joint)
+class BaseTestConsole : public BaseTest
 {
-}
+public:
+    BaseTestConsole();
+    ~BaseTestConsole();
 
-PhysicsJointInfo::~PhysicsJointInfo()
+    virtual std::string title();
+    virtual void onEnter();
+
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
+};
+
+class ConsoleTCP : public BaseTestConsole
 {
-    for (cpConstraint* joint : _joints)
-    {
-        cpConstraintFree(joint);
-    }
-}
+public:
+    CREATE_FUNC(ConsoleTCP);
 
-void PhysicsJointInfo::add(cpConstraint* joint)
+    void onEnter() override;
+    virtual std::string title() override;
+
+protected:
+    ConsoleTCP();
+    virtual ~ConsoleTCP();
+
+    cocos2d::Console *_console;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ConsoleTCP);
+};
+
+class ConsoleCustomCommand : public BaseTestConsole
 {
-    if (joint == nullptr) return;
+public:
+    CREATE_FUNC(ConsoleCustomCommand);
 
-    _joints.push_back(joint);
-    _map.insert(std::pair<cpConstraint*, PhysicsJointInfo*>(joint, this));
-}
+    void onEnter() override;
+    virtual std::string title() override;
 
-void PhysicsJointInfo::remove(cpConstraint* joint)
+protected:
+    ConsoleCustomCommand();
+    virtual ~ConsoleCustomCommand();
+
+    cocos2d::Console *_console;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ConsoleCustomCommand);
+};
+
+class ConsoleTestScene : public TestScene
 {
-    if (joint == nullptr) return;
-    
-    auto it = std::find(_joints.begin(), _joints.end(), joint);
-    if (it != _joints.end())
-    {
-        _joints.erase(it);
-        
-        auto mit = _map.find(joint);
-        if (mit != _map.end()) _map.erase(mit);
-        
-        cpConstraintFree(joint);
-    }
-}
+public:
+    virtual void runThisTest();
+};
 
-void PhysicsJointInfo::removeAll()
-{
-    for (cpConstraint* joint : _joints)
-    {
-        auto mit = _map.find(joint);
-        if (mit != _map.end()) _map.erase(mit);
-        cpConstraintFree(joint);
-    }
-    
-    _joints.clear();
-}
-
-NS_CC_END
-#endif // CC_USE_PHYSICS
+#endif // _CONSOLE_TEST_H_

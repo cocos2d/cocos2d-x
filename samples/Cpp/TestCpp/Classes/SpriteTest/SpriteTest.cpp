@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "SpriteTest.h"
 
 #include <algorithm>
@@ -640,23 +664,20 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     }
     
     int CC_UNUSED prev = -1;
-    auto children = asmtest->getChildren();
-    Sprite* child;
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(children, pObject)
-    {
-        child = static_cast<Sprite*>(pObject);
-        if(! child )
-            break;
+    
+    auto& children = asmtest->getChildren();
+
+    children.forEach([&prev](Node* obj){
+        auto child = static_cast<Sprite*>(obj);
 
         int currentIndex = child->getAtlasIndex();
         CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("children %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
-    }
+    });
     
     prev = -1;
-    auto descendants = asmtest->getDescendants();
+    auto& descendants = asmtest->getDescendants();
     std::for_each(descendants.begin(), descendants.end(), [&](Sprite* sprite) {
         int currentIndex = sprite->getAtlasIndex();
         CCASSERT( prev == currentIndex-1, "Child order failed");
@@ -1442,33 +1463,24 @@ void SpriteNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event*
 
     auto node = getChildByTag( kTagSpriteBatchNode );
 
-    auto children = node->getChildren();
+    auto& children = node->getChildren();
     Sprite* sprite;
-    Object* pObject;
 
     if( _usingTexture1 )                          //--> win32 : Let's it make just simple sentence
     {
-        CCARRAY_FOREACH(children, pObject)
-        {
-            sprite = static_cast<Sprite*>( pObject );
-            if(! sprite)
-                break;
-
+        children.forEach([&sprite, this](Node* obj){
+            sprite = static_cast<Sprite*>( obj );
             sprite->setTexture(_texture2);
-        }
+        });
 
         _usingTexture1 = false;
     } 
     else 
     {
-        CCARRAY_FOREACH(children, pObject)
-        {
-            sprite = static_cast<Sprite*>( pObject );
-            if(! sprite)
-                break;
-
+        children.forEach([&sprite, this](Node* obj){
+            sprite = static_cast<Sprite*>( obj );
             sprite->setTexture(_texture1);
-        }
+        });
 
         _usingTexture1 = true;
     }
@@ -1590,14 +1602,14 @@ void SpriteFrameTest::onEnter()
     spritebatch->addChild(_sprite1);
     addChild(spritebatch);
 
-    auto animFrames = Array::createWithCapacity(15);
+    Vector<SpriteFrame*> animFrames(15);
 
     char str[100] = {0};
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_%02d.png", i);
         auto frame = cache->getSpriteFrameByName( str );
-        animFrames->addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -1615,23 +1627,23 @@ void SpriteFrameTest::onEnter()
     addChild(_sprite2);
 
 
-    auto moreFrames = Array::createWithCapacity(20);
+    Vector<SpriteFrame*> moreFrames(20);
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
         auto frame = cache->getSpriteFrameByName(str);
-        moreFrames->addObject(frame);
+        moreFrames.pushBack(frame);
     }
 
 
     for( int i = 1; i < 5; i++) {
         sprintf(str, "grossini_blue_%02d.png",i);
         auto frame = cache->getSpriteFrameByName(str);
-        moreFrames->addObject(frame);
+        moreFrames.pushBack(frame);
     }
 
     // append frames from another batch
-    moreFrames->addObjectsFromArray(animFrames);
+    moreFrames.insert(animFrames);
     auto animMixed = Animation::createWithSpriteFrames(moreFrames, 0.3f);
 
 
@@ -1746,14 +1758,14 @@ void SpriteFrameAliasNameTest::onEnter()
     spriteBatch->addChild(sprite);
     addChild(spriteBatch);
 
-    auto animFrames = Array::createWithCapacity(15);
+    Vector<SpriteFrame*> animFrames(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
         // Obtain frames by alias name
         sprintf(str, "dance_%02d", i);
         auto frame = cache->getSpriteFrameByName(str);
-        animFrames->addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -1817,13 +1829,13 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         
         point->setPosition( sprite->getPosition() );
         
-        auto animFrames = Array::createWithCapacity(14);
+        Vector<SpriteFrame*> animFrames(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
             sprintf(str, "grossini_dance_%02d.png",(i+1));
             auto frame = cache->getSpriteFrameByName(str);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -1894,13 +1906,13 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         
         point->setPosition( sprite->getPosition() );
         
-        auto animFrames = Array::createWithCapacity(14);
+        Vector<SpriteFrame*> animFrames(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
             sprintf(str, "grossini_dance_%02d.png",(k+1));
             auto frame = cache->getSpriteFrameByName(str);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -1969,13 +1981,13 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         
         point->setPosition( sprite->getPosition() );
         
-        auto animFrames = Array::createWithCapacity(14);
+        Vector<SpriteFrame*> animFrames(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
             sprintf(str, "grossini_dance_%02d.png",(i+1));
             auto frame = cache->getSpriteFrameByName(str);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -2046,13 +2058,13 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         
         point->setPosition( sprite->getPosition() );
         
-        auto animFrames = Array::createWithCapacity(14);
+        Vector<SpriteFrame*> animFrames(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
             sprintf(str, "grossini_dance_%02d.png",(k+1));
             auto frame = cache->getSpriteFrameByName(str);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -2108,13 +2120,13 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     sprite->setPosition( Point( s.width/2-80, s.height/2) );
     addChild(sprite);
             
-    auto animFrames = Array::createWithCapacity(6);
-    animFrames->addObject(frame0);
-    animFrames->addObject(frame1);
-    animFrames->addObject(frame2);
-    animFrames->addObject(frame3);
-    animFrames->addObject(frame4);
-    animFrames->addObject(frame5);
+    Vector<SpriteFrame*> animFrames(6);
+    animFrames.pushBack(frame0);
+    animFrames.pushBack(frame1);
+    animFrames.pushBack(frame2);
+    animFrames.pushBack(frame3);
+    animFrames.pushBack(frame4);
+    animFrames.pushBack(frame5);
             
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
     auto animate = Animate::create(animation);
@@ -2195,37 +2207,24 @@ void SpriteHybrid::reparentSprite(float dt)
     auto p1 = getChildByTag(kTagNode);
     auto p2 = getChildByTag( kTagSpriteBatchNode );
     
-    auto retArray = Array::createWithCapacity(250);
+    Vector<Node*> retArray(250);
 
     if( _usingSpriteBatchNode )
         CC_SWAP(p1,p2, Node*);
 
     ////----CCLOG("New parent is: %x", p2);
     
-    Node* node;
-    Object* pObject;
-    auto children = p1->getChildren();
-    CCARRAY_FOREACH(children, pObject)
-    {
-        node = static_cast<Node*>( pObject );
-        if(! node )
-            break;
-
-        retArray->addObject(node);
-    }
+    p1->getChildren().forEach([&retArray](Node* node){
+        retArray.pushBack(node);
+    });
 
     int i=0;
     p1->removeAllChildrenWithCleanup(false);
 
-    CCARRAY_FOREACH(retArray, pObject)
-    {
-        node = static_cast<Node*>( pObject );
-        if(! node)
-            break;
-
+    retArray.forEach([&i, &p2](Node* node){
         p2->addChild(node, i, i);
         i++;
-    }
+    });
 
     _usingSpriteBatchNode = ! _usingSpriteBatchNode;
 }
@@ -2272,13 +2271,13 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     sprite1->addChild(sprite3);
     
     // BEGIN NEW CODE
-    auto animFrames = Array::create();
+    Vector<SpriteFrame*> animFrames(14);
     char str[100] = {0};
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_%02d.png",i);
         auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
-        animFrames->addObject(frame);
+        animFrames.pushBack(frame);
     }
     
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
@@ -3412,13 +3411,13 @@ AnimationCacheTest::AnimationCacheTest()
     //
     // create animation "dance"
     //
-    auto animFrames = Array::createWithCapacity(15);
+    Vector<SpriteFrame*> animFrames(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
         sprintf(str, "grossini_dance_%02d.png",i);
         auto frame = frameCache->getSpriteFrameByName(str);
-        animFrames->addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
@@ -3429,13 +3428,13 @@ AnimationCacheTest::AnimationCacheTest()
     //
     // create animation "dance gray"
     //
-    animFrames->removeAllObjects();
+    animFrames.clear();
 
     for(int i = 1; i < 15; i++)
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
         auto frame = frameCache->getSpriteFrameByName(str);
-        animFrames->addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
@@ -3446,13 +3445,13 @@ AnimationCacheTest::AnimationCacheTest()
     //
     // create animation "dance blue"
     //
-    animFrames->removeAllObjects();
+    animFrames.clear();
 
     for(int i = 1; i < 4; i++)
     {
         sprintf(str, "grossini_blue_%02d.png",i);
         auto frame = frameCache->getSpriteFrameByName(str);
-        animFrames->addObject(frame);
+        animFrames.pushBack(frame);
     }
 
     animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
@@ -3645,13 +3644,13 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
 
         point->setPosition(sprite->getPosition());
 
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -3723,13 +3722,13 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
 
         point->setPosition(sprite->getPosition());
         
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -3798,13 +3797,13 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
 
         point->setPosition(sprite->getPosition());
 
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -3880,13 +3879,13 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 
         point->setPosition(sprite->getPosition());        
 
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", j + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -3962,13 +3961,13 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
 
         point->setPosition(sprite->getPosition());
 
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", i + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -4044,13 +4043,13 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
 
         point->setPosition(sprite->getPosition());        
 
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
             sprintf(tmp, "grossini_dance_%02d.png", i + 1);
             auto frame = cache->getSpriteFrameByName(tmp);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
 
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
@@ -4130,22 +4129,18 @@ void NodeSort::reorderSprite(float dt)
 
     log("Before reorder--");
     
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_node->getChildren(), pObj)
-    {
-        auto child = static_cast<Sprite*>( pObj );
+    _node->getChildren().forEach([](Node* child){
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
-    }
+    });
     //z-4
-    _node->reorderChild( static_cast<Node*>( _node->getChildren()->getObjectAtIndex(0) ), -6);
+    _node->reorderChild( _node->getChildren().at(0), -6);
 
     _node->sortAllChildren();
+    
     log("After reorder--");
-    CCARRAY_FOREACH(_node->getChildren(), pObj)
-    {
-        auto child = static_cast<Sprite*>( pObj );
+    _node->getChildren().forEach([](Node* child){
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
-    }
+    });
 }
 
 /// SpriteBatchNodeReorderSameIndex
@@ -4327,13 +4322,13 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
         
         point->setPosition(sprite->getPosition());
         
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         for(int i = 0; i < 14; i++)
         {
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
             auto frame = cache->getSpriteFrameByName(pngName);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create(Animate::create(animation)));
@@ -4403,13 +4398,13 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         
         point->setPosition(sprite->getPosition());
         
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         for(int j = 0; j < 14; j++)
         {
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             auto frame = cache->getSpriteFrameByName(pngName);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create(Animate::create(animation)));
@@ -4476,13 +4471,13 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         
         point->setPosition(sprite->getPosition());
         
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         for(int j = 0; j < 14; j++)
         {
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             auto frame = cache->getSpriteFrameByName(pngName);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create(Animate::create(animation)));
@@ -4559,13 +4554,13 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         
         point->setPosition(sprite->getPosition());
         
-        auto animFrames = Array::create();
+        Vector<SpriteFrame*> animFrames(14);
         for(int j = 0; j < 14; j++)
         {
             char pngName[30];
             snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             auto frame = cache->getSpriteFrameByName(pngName);
-            animFrames->addObject(frame);
+            animFrames.pushBack(frame);
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(RepeatForever::create(Animate::create(animation)));
