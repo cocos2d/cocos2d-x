@@ -529,16 +529,12 @@ void RenderTexture::draw()
 		//! make sure all children are drawn
         sortAllChildren();
 		
-		Object *pElement;
-		CCARRAY_FOREACH(_children, pElement)
-        {
-            Node *child = static_cast<Node*>(pElement);
-
+        _children.forEach([this](Node* child){
             if (child != _sprite)
             {
                 child->visit();
             }
-		}
+        });
         
         end();
 	}

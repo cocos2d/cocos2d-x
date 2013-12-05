@@ -19,13 +19,9 @@ static GLint layer = -1;
 static void setProgram(Node *n, GLProgram *p)
 {
     n->setShaderProgram(p);
-    if (!n->getChildren()) return;
 
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(n->getChildren(), pObj)
-    {
-        setProgram(static_cast<Node*>(pObj), p);
-    }
+    for(const auto &child : n->getChildren())
+        setProgram(child, p);
 }
 
 NewClippingNode *NewClippingNode::create()

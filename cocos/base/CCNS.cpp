@@ -53,16 +53,16 @@ static inline void split(std::string src, const char* token, strArray& vect)
 // if the form is right,the string will be split into the parameter strs;
 // or the parameter strs will be empty.
 // if the form is right return true,else return false.
-static bool splitWithForm(const char* pStr, strArray& strs)
+static bool splitWithForm(const std::string& str, strArray& strs)
 {
     bool bRet = false;
 
     do 
     {
-        CC_BREAK_IF(!pStr);
+        CC_BREAK_IF(str.empty());
 
         // string is empty
-        std::string content = pStr;
+        std::string content = str;
         CC_BREAK_IF(content.length() == 0);
 
         int nPosLeft  = content.find('{');
@@ -97,14 +97,14 @@ static bool splitWithForm(const char* pStr, strArray& strs)
 
 // implement the functions
 
-Rect RectFromString(const char* pszContent)
+Rect RectFromString(const std::string& str)
 {
     Rect result = Rect::ZERO;
 
     do 
     {
-        CC_BREAK_IF(!pszContent);
-        std::string content = pszContent;
+        CC_BREAK_IF(str.empty());
+        std::string content = str;
 
         // find the first '{' and the third '}'
         int nPosLeft  = content.find('{');
@@ -146,14 +146,14 @@ Rect RectFromString(const char* pszContent)
     return result;
 }
 
-Point PointFromString(const char* pszContent)
+Point PointFromString(const std::string& str)
 {
     Point ret = Point::ZERO;
 
     do 
     {
         strArray strs;
-        CC_BREAK_IF(!splitWithForm(pszContent, strs));
+        CC_BREAK_IF(!splitWithForm(str, strs));
 
         float x = (float) atof(strs[0].c_str());
         float y = (float) atof(strs[1].c_str());
@@ -164,7 +164,7 @@ Point PointFromString(const char* pszContent)
     return ret;
 }
 
-Size SizeFromString(const char* pszContent)
+Size SizeFromString(const std::string& pszContent)
 {
     Size ret = Size::ZERO;
 

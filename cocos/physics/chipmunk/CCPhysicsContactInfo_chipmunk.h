@@ -25,6 +25,7 @@
 #ifndef __CCPHYSICS_CONTACT_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_CONTACT_INFO_CHIPMUNK_H__
 
+#include "ccConfig.h"
 #ifdef CC_USE_PHYSICS
 
 #include "chipmunk.h"

@@ -25,7 +25,8 @@
 #ifndef __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
 
-#if CC_USE_PHYSICS
+#include "ccConfig.h"
+#ifdef CC_USE_PHYSICS
 
 #include <vector>
 #include <unordered_map>
