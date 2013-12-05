@@ -33,7 +33,7 @@
 #include <functional>
 
 #include "ccMacros.h"
-#include "base/CCObject.h"
+#include "CCObject.h"
 
 
 NS_CC_BEGIN
