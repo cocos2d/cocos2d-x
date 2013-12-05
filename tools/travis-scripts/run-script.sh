@@ -74,7 +74,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cd $COCOS2DX_ROOT/build
     mkdir -p linux-build
     cd linux-build
-    cmake ../..
+    cmake ../.. -DBUILD_LIBS_LUA=OFF -DBUILD_HelloLua=OFF -DBUILD_TestLua=OFF
     make -j10
     cd ../../template/multi-platform-cpp
     cmake .
