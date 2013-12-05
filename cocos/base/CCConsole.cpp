@@ -120,9 +120,9 @@ Console::Console()
         Scheduler *sched = dir->getScheduler();
         sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, false));
     } },
-    { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1) },
-    { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1) },
-    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1) } };
+    { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
+    { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1, std::placeholders::_2) },
+    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) } };
 
 	for (size_t i = 0; i < sizeof(commands)/sizeof(commands[0]) && i < sizeof(_commands)/sizeof(_commands[0]); ++i)
 	{
