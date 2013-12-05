@@ -25,7 +25,11 @@
 #include "ConsoleTest.h"
 #include "../testResource.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <unistd.h>
+#else
+#include <io.h>
+#endif
 
 //------------------------------------------------------------------
 //
