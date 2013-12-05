@@ -14,7 +14,7 @@
 #include <vector>
 #include <stack>
 
-#define VBO_SIZE 8192
+#define VBO_SIZE 1024
 #define DEFAULT_RENDER_QUEUE 0
 
 NS_CC_BEGIN
