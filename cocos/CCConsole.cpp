@@ -39,6 +39,13 @@
 #include "CCDirector.h"
 #include "CCScheduler.h"
 
+#include "CCScene.h"
+#include "CCSprite.h"
+#include "CCLabelBMFont.h"
+#include "CCMenu.h"
+#include "CCMenuItem.h"
+#include "CCLayer.h"
+
 using namespace cocos2d;
 
 Console* Console::create()
@@ -65,11 +72,12 @@ Console::Console()
         Scheduler *sched = dir->getScheduler();
         sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, false));
     } },
+    { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1) },
     { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1) },
     { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1) },
 }
 {
-    _maxTokens = 4;
+    _maxTokens = 5;
  }
 
 Console::~Console()
@@ -173,6 +181,45 @@ void Console::commandExit(int fd)
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
     close(fd);
+}
+
+void printSceneGraph(int fd, Node* node, int level)
+{
+    for(int i=0; i<level; ++i)
+        write(fd, "-", 1);
+    std::string type = "Node";
+    if( dynamic_cast<Scene*>(node) )
+        type = "Scene";
+    else if( dynamic_cast<Sprite*>(node) )
+        type = "Sprite";
+    else if( dynamic_cast<Layer*>(node) )
+        type = "Label";
+    else if( dynamic_cast<Menu*>(node) )
+        type = "Menu";
+    else if( dynamic_cast<MenuItem*>(node) )
+        type = "MenuItem";
+
+    dprintf(fd, " %s: z=%d, tag=%d\n", type.c_str(), node->getZOrder(), node->getTag() );
+
+    auto children = node->getChildren();
+    if( children ) {
+        for(const auto& child: *children )
+            printSceneGraph(fd, (Node*)child, level+1);
+    }
+}
+
+void printSceneGraphBoot(int fd)
+{
+    write(fd,"\n",1);
+    auto scene = Director::getInstance()->getRunningScene();
+    printSceneGraph(fd, scene, 0);
+    write(fd,"\n",1);
+}
+
+void Console::commandSceneGraph(int fd)
+{
+    Scheduler *sched = Director::getInstance()->getScheduler();
+    sched->performFunctionInCocosThread( std::bind(&printSceneGraphBoot, fd) );
 }
 
 bool Console::parseToken(int fd)

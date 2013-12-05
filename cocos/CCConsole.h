@@ -77,6 +77,7 @@ protected:
     // Add commands here
     void commandHelp(int fd);
     void commandExit(int fd);
+    void commandSceneGraph(int fd);
 
     // file descriptor: socket, console, etc.
     int _listenfd;
