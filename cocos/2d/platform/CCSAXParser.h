@@ -26,6 +26,7 @@
 
 #include "CCPlatformConfig.h"
 #include "platform/CCCommon.h"
+#include "string.h"  // for size_t
 
 NS_CC_BEGIN
 
@@ -81,7 +82,7 @@ public:
      * @js NA
      * @lua NA
      */
-    bool parse(const char* pXMLData, unsigned int uDataLength);
+    bool parse(const char* pXMLData, size_t uDataLength);
     /**
      * @js NA
      * @lua NA

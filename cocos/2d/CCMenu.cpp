@@ -30,25 +30,12 @@ THE SOFTWARE.
 #include "CCInteger.h"
 #include "CCEventListenerTouch.h"
 
-
 #include <vector>
 #include <stdarg.h>
 
 using namespace std;
 
 NS_CC_BEGIN
-
-static std::vector<unsigned int> ccarray_to_std_vector(Array* pArray)
-{
-    std::vector<unsigned int> ret;
-    Object* pObj;
-    CCARRAY_FOREACH(pArray, pObj)
-    {
-        Integer* pInteger = static_cast<Integer*>(pObj);
-        ret.push_back((unsigned int)pInteger->getValue());
-    }
-    return ret;
-}
 
 enum 
 {
@@ -81,36 +68,36 @@ Menu * Menu::create(MenuItem* item, ...)
     return pRet;
 }
 
-Menu* Menu::createWithArray(Array* pArrayOfItems)
+Menu* Menu::createWithArray(const Vector<MenuItem*>& arrayOfItems)
 {
-    Menu *pRet = new Menu();
-    if (pRet && pRet->initWithArray(pArrayOfItems))
+    auto ret = new Menu();
+    if (ret && ret->initWithArray(arrayOfItems))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
     
-    return pRet;
+    return ret;
 }
 
 Menu* Menu::createWithItems(MenuItem* item, va_list args)
 {
-    Array* pArray = NULL;
+    Vector<MenuItem*> items;
     if( item )
     {
-        pArray = Array::create(item, NULL);
+        items.pushBack(item);
         MenuItem *i = va_arg(args, MenuItem*);
         while(i)
         {
-            pArray->addObject(i);
+            items.pushBack(i);
             i = va_arg(args, MenuItem*);
         }
     }
     
-    return Menu::createWithArray(pArray);
+    return Menu::createWithArray(items);
 }
 
 Menu* Menu::createWithItem(MenuItem* item)
@@ -120,10 +107,10 @@ Menu* Menu::createWithItem(MenuItem* item)
 
 bool Menu::init()
 {
-    return initWithArray(NULL);
+    return initWithArray(Vector<MenuItem*>());
 }
 
-bool Menu::initWithArray(Array* pArrayOfItems)
+bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
 {
     if (Layer::init())
     {
@@ -137,16 +124,12 @@ bool Menu::initWithArray(Array* pArrayOfItems)
 
         setPosition(Point(s.width/2, s.height/2));
         
-        if (pArrayOfItems != NULL)
+        int z=0;
+        
+        for (auto& item : arrayOfItems)
         {
-            int z=0;
-            Object* pObj = NULL;
-            CCARRAY_FOREACH(pArrayOfItems, pObj)
-            {
-                MenuItem* item = static_cast<MenuItem*>(pObj);
-                this->addChild(item, z);
-                z++;
-            }
+            this->addChild(item, z);
+            z++;
         }
     
         _selectedItem = NULL;
@@ -242,7 +225,7 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
         }
     }
     
-    _selectedItem = this->itemForTouch(touch);
+    _selectedItem = this->getItemForTouch(touch);
     if (_selectedItem)
     {
         _state = Menu::State::TRACKING_TOUCH;
@@ -282,7 +265,7 @@ void Menu::onTouchCancelled(Touch* touch, Event* event)
 void Menu::onTouchMoved(Touch* touch, Event* event)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
-    MenuItem *currentItem = this->itemForTouch(touch);
+    MenuItem *currentItem = this->getItemForTouch(touch);
     if (currentItem != _selectedItem)
     {
         if (_selectedItem)
@@ -306,33 +289,23 @@ void Menu::alignItemsVertically()
 void Menu::alignItemsVerticallyWithPadding(float padding)
 {
     float height = -padding;
-    if (_children && _children->count() > 0)
-    {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+    
+    _children.forEach([&](Node* child){
+        if (child)
         {
-            Node* child = dynamic_cast<Node*>(pObject);
-            if (child)
-            {
-                height += child->getContentSize().height * child->getScaleY() + padding;
-            }
+            height += child->getContentSize().height * child->getScaleY() + padding;
         }
-    }
+    });
 
     float y = height / 2.0f;
-    if (_children && _children->count() > 0)
-    {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+    
+    _children.forEach([&](Node* child){
+        if (child)
         {
-            Node* child = dynamic_cast<Node*>(pObject);
-            if (child)
-            {
-                child->setPosition(Point(0, y - child->getContentSize().height * child->getScaleY() / 2.0f));
-                y -= child->getContentSize().height * child->getScaleY() + padding;
-            }
+            child->setPosition(Point(0, y - child->getContentSize().height * child->getScaleY() / 2.0f));
+            y -= child->getContentSize().height * child->getScaleY() + padding;
         }
-    }
+    });
 }
 
 void Menu::alignItemsHorizontally(void)
@@ -342,35 +315,23 @@ void Menu::alignItemsHorizontally(void)
 
 void Menu::alignItemsHorizontallyWithPadding(float padding)
 {
-
     float width = -padding;
-    if (_children && _children->count() > 0)
-    {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+    _children.forEach([&](Node* child){
+        if (child)
         {
-            Node* child = dynamic_cast<Node*>(pObject);
-            if (child)
-            {
-                width += child->getContentSize().width * child->getScaleX() + padding;
-            }
+            width += child->getContentSize().width * child->getScaleX() + padding;
         }
-    }
+    });
 
     float x = -width / 2.0f;
-    if (_children && _children->count() > 0)
-    {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+    
+    _children.forEach([&](Node* child){
+        if (child)
         {
-            Node* child = dynamic_cast<Node*>(pObject);
-            if (child)
-            {
-                child->setPosition(Point(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0));
-                 x += child->getContentSize().width * child->getScaleX() + padding;
-            }
+            child->setPosition(Point(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0));
+            x += child->getContentSize().width * child->getScaleX() + padding;
         }
-    }
+    });
 }
 
 void Menu::alignItemsInColumns(int columns, ...)
@@ -386,54 +347,46 @@ void Menu::alignItemsInColumns(int columns, ...)
 void Menu::alignItemsInColumns(int columns, va_list args)
 {
     CCASSERT(columns >= 0, "Columns must be >= 0");
-    Array* rows = Array::create();
+    ValueVector rows;
     while (columns)
     {
-        rows->addObject(Integer::create(columns));
+        rows.push_back(Value(columns));
         columns = va_arg(args, int);
     }
     alignItemsInColumnsWithArray(rows);
 }
 
-void Menu::alignItemsInColumnsWithArray(Array* rowsArray)
+void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
 {
-    vector<unsigned int> rows = ccarray_to_std_vector(rowsArray);
-
     int height = -5;
-    unsigned int row = 0;
-    unsigned int rowHeight = 0;
-    unsigned int columnsOccupied = 0;
-    unsigned int rowColumns;
+    int row = 0;
+    int rowHeight = 0;
+    int columnsOccupied = 0;
+    int rowColumns = 0;
 
-    if (_children && _children->count() > 0)
-    {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+    _children.forEach([&](Node* child){
+        if (child)
         {
-            Node* child = dynamic_cast<Node*>(pObject);
-            if (child)
+            CCASSERT(row < rows.size(), "");
+            
+            rowColumns = rows[row].asInt();
+            // can not have zero columns on a row
+            CCASSERT(rowColumns, "");
+            
+            float tmp = child->getContentSize().height;
+            rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
+            
+            ++columnsOccupied;
+            if (columnsOccupied >= rowColumns)
             {
-                CCASSERT(row < rows.size(), "");
-
-                rowColumns = rows[row];
-                // can not have zero columns on a row
-                CCASSERT(rowColumns, "");
-
-                float tmp = child->getContentSize().height;
-                rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
-
-                ++columnsOccupied;
-                if (columnsOccupied >= rowColumns)
-                {
-                    height += rowHeight + 5;
-
-                    columnsOccupied = 0;
-                    rowHeight = 0;
-                    ++row;
-                }
+                height += rowHeight + 5;
+                
+                columnsOccupied = 0;
+                rowHeight = 0;
+                ++row;
             }
         }
-    }    
+    });
 
     // check if too many rows/columns for available menu items
     CCASSERT(! columnsOccupied, "");
@@ -447,17 +400,14 @@ void Menu::alignItemsInColumnsWithArray(Array* rowsArray)
     float x = 0.0;
     float y = (float)(height / 2);
 
-    if (_children && _children->count() > 0)
-    {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+    _children.forEach([&](Node* child){
+        if (child)
         {
-            Node* child = dynamic_cast<Node*>(pObject);
             if (child)
             {
                 if (rowColumns == 0)
                 {
-                    rowColumns = rows[row];
+                    rowColumns = rows[row].asInt();
                     w = winSize.width / (1 + rowColumns);
                     x = w;
                 }
@@ -482,7 +432,7 @@ void Menu::alignItemsInColumnsWithArray(Array* rowsArray)
                 }
             }
         }
-    }    
+    });
 }
 
 void Menu::alignItemsInRows(int rows, ...)
@@ -497,65 +447,57 @@ void Menu::alignItemsInRows(int rows, ...)
 
 void Menu::alignItemsInRows(int rows, va_list args)
 {
-    Array* pArray = Array::create();
+    ValueVector array;
     while (rows)
     {
-        pArray->addObject(Integer::create(rows));
+        array.push_back(Value(rows));
         rows = va_arg(args, int);
     }
-    alignItemsInRowsWithArray(pArray);
+    alignItemsInRowsWithArray(array);
 }
 
-void Menu::alignItemsInRowsWithArray(Array* columnArray)
+void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
 {
-    vector<unsigned int> columns = ccarray_to_std_vector(columnArray);
-
-    vector<unsigned int> columnWidths;
-    vector<unsigned int> columnHeights;
+    vector<int> columnWidths;
+    vector<int> columnHeights;
 
     int width = -10;
     int columnHeight = -5;
-    unsigned int column = 0;
-    unsigned int columnWidth = 0;
-    unsigned int rowsOccupied = 0;
-    unsigned int columnRows;
+    int column = 0;
+    int columnWidth = 0;
+    int rowsOccupied = 0;
+    int columnRows;
 
-    if (_children && _children->count() > 0)
-    {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+    _children.forEach([&](Node* child){
+        if (child)
         {
-            Node* child = dynamic_cast<Node*>(pObject);
-            if (child)
+            // check if too many menu items for the amount of rows/columns
+            CCASSERT(column < columns.size(), "");
+
+            columnRows = columns[column].asInt();
+            // can't have zero rows on a column
+            CCASSERT(columnRows, "");
+
+            // columnWidth = fmaxf(columnWidth, [item contentSize].width);
+            float tmp = child->getContentSize().width;
+            columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
+
+            columnHeight += (int)(child->getContentSize().height + 5);
+            ++rowsOccupied;
+
+            if (rowsOccupied >= columnRows)
             {
-                // check if too many menu items for the amount of rows/columns
-                CCASSERT(column < columns.size(), "");
+                columnWidths.push_back(columnWidth);
+                columnHeights.push_back(columnHeight);
+                width += columnWidth + 10;
 
-                columnRows = columns[column];
-                // can't have zero rows on a column
-                CCASSERT(columnRows, "");
-
-                // columnWidth = fmaxf(columnWidth, [item contentSize].width);
-                float tmp = child->getContentSize().width;
-                columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
-
-                columnHeight += (int)(child->getContentSize().height + 5);
-                ++rowsOccupied;
-
-                if (rowsOccupied >= columnRows)
-                {
-                    columnWidths.push_back(columnWidth);
-                    columnHeights.push_back(columnHeight);
-                    width += columnWidth + 10;
-
-                    rowsOccupied = 0;
-                    columnWidth = 0;
-                    columnHeight = -5;
-                    ++column;
-                }
+                rowsOccupied = 0;
+                columnWidth = 0;
+                columnHeight = -5;
+                ++column;
             }
         }
-    }
+    });
 
     // check if too many rows/columns for available menu items.
     CCASSERT(! rowsOccupied, "");
@@ -568,59 +510,52 @@ void Menu::alignItemsInRowsWithArray(Array* columnArray)
     float x = (float)(-width / 2);
     float y = 0.0;
 
-    if (_children && _children->count() > 0)
-    {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+    _children.forEach([&](Node* child){
+        if (child)
         {
-            Node* child = dynamic_cast<Node*>(pObject);
-            if (child)
+            if (columnRows == 0)
             {
-                if (columnRows == 0)
-                {
-                    columnRows = columns[column];
-                    y = (float) columnHeights[column];
-                }
+                columnRows = columns[column].asInt();
+                y = (float) columnHeights[column];
+            }
 
-                // columnWidth = fmaxf(columnWidth, [item contentSize].width);
-                float tmp = child->getContentSize().width;
-                columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
+            // columnWidth = fmaxf(columnWidth, [item contentSize].width);
+            float tmp = child->getContentSize().width;
+            columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
-                child->setPosition(Point(x + columnWidths[column] / 2,
-                                       y - winSize.height / 2));
+            child->setPosition(Point(x + columnWidths[column] / 2,
+                                   y - winSize.height / 2));
 
-                y -= child->getContentSize().height + 10;
-                ++rowsOccupied;
+            y -= child->getContentSize().height + 10;
+            ++rowsOccupied;
 
-                if (rowsOccupied >= columnRows)
-                {
-                    x += columnWidth + 5;
-                    rowsOccupied = 0;
-                    columnRows = 0;
-                    columnWidth = 0;
-                    ++column;
-                }
+            if (rowsOccupied >= columnRows)
+            {
+                x += columnWidth + 5;
+                rowsOccupied = 0;
+                columnRows = 0;
+                columnWidth = 0;
+                ++column;
             }
         }
-    }
+    });
 }
 
-MenuItem* Menu::itemForTouch(Touch *touch)
+MenuItem* Menu::getItemForTouch(Touch *touch)
 {
     Point touchLocation = touch->getLocation();
 
-    if (_children && _children->count() > 0)
+    if (!_children.empty())
     {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH_REVERSE(_children, pObject)
+        for (auto iter = _children.crbegin(); iter != _children.crend(); ++iter)
         {
-            MenuItem* child = dynamic_cast<MenuItem*>(pObject);
+            MenuItem* child = dynamic_cast<MenuItem*>(*iter);
             if (child && child->isVisible() && child->isEnabled())
             {
                 Point local = child->convertToNodeSpace(touchLocation);
                 Rect r = child->rect();
                 r.origin = Point::ZERO;
-
+                
                 if (r.containsPoint(local))
                 {
                     return child;

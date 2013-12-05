@@ -499,15 +499,13 @@ void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        Object *obj = NULL;
-        CCARRAY_FOREACH(_children, obj)
-        {
+        _children.forEach([this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
                 item->updateDisplayedOpacity(_displayedOpacity);
             }
-        }
+        });
     }
 }
 
@@ -519,15 +517,13 @@ void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        Object *obj = NULL;
-        CCARRAY_FOREACH(_children, obj)
-        {
+        _children.forEach([this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
                 item->updateDisplayedColor(_displayedColor);
             }
-        }
+        });
     }
 }
 
@@ -920,19 +916,14 @@ void LayerGradient::setCompressedInterpolation(bool compress)
 
 LayerMultiplex::LayerMultiplex()
 : _enabledLayer(0)
-, _layers(NULL)
 {
 }
+
 LayerMultiplex::~LayerMultiplex()
 {
-    if (_layers)
-    {
-        for (auto& item : *_layers)
-        {
-            static_cast<Layer*>(item)->cleanup();
-        }
-        _layers->release();
-    }
+    _layers.forEach([](Layer* layer){
+        layer->cleanup();
+    });
 }
 
 LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
@@ -971,7 +962,7 @@ LayerMultiplex* LayerMultiplex::create()
     return pRet;
 }
 
-LayerMultiplex* LayerMultiplex::createWithArray(Array* arrayOfLayers)
+LayerMultiplex* LayerMultiplex::createWithArray(const Vector<Layer*>& arrayOfLayers)
 {
     LayerMultiplex* pRet = new LayerMultiplex();
     if (pRet && pRet->initWithArray(arrayOfLayers))
@@ -987,17 +978,13 @@ LayerMultiplex* LayerMultiplex::createWithArray(Array* arrayOfLayers)
 
 void LayerMultiplex::addLayer(Layer* layer)
 {
-    CCASSERT(_layers, "");
-    _layers->addObject(layer);
+    _layers.pushBack(layer);
 }
 
 bool LayerMultiplex::init()
 {
     if (Layer::init())
     {
-        _layers = Array::create();
-        _layers->retain();
-
         _enabledLayer = 0;
         return true;
     }
@@ -1008,34 +995,32 @@ bool LayerMultiplex::initWithLayers(Layer *layer, va_list params)
 {
     if (Layer::init())
     {
-        _layers = Array::createWithCapacity(5);
-        _layers->retain();
-        _layers->addObject(layer);
+        _layers.reserve(5);
+        _layers.pushBack(layer);
 
         Layer *l = va_arg(params,Layer*);
         while( l ) {
-            _layers->addObject(l);
+            _layers.pushBack(l);
             l = va_arg(params,Layer*);
         }
 
         _enabledLayer = 0;
-        this->addChild((Node*)_layers->getObjectAtIndex(_enabledLayer));
+        this->addChild(_layers.at(_enabledLayer));
         return true;
     }
 
     return false;
 }
 
-bool LayerMultiplex::initWithArray(Array* arrayOfLayers)
+bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
 {
     if (Layer::init())
     {
-        _layers = Array::createWithCapacity(arrayOfLayers->count());
-        _layers->addObjectsFromArray(arrayOfLayers);
-        _layers->retain();
+        _layers.reserve(arrayOfLayers.size());
+        _layers.insert(arrayOfLayers);
 
         _enabledLayer = 0;
-        this->addChild((Node*)_layers->getObjectAtIndex(_enabledLayer));
+        this->addChild(_layers.at(_enabledLayer));
         return true;
     }
     return false;
@@ -1043,27 +1028,26 @@ bool LayerMultiplex::initWithArray(Array* arrayOfLayers)
 
 void LayerMultiplex::switchTo(int n)
 {
-    CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
+    CCASSERT( n < _layers.size(), "Invalid index in MultiplexLayer switchTo message" );
 
-    this->removeChild((Node*)_layers->getObjectAtIndex(_enabledLayer), true);
+    this->removeChild(_layers.at(_enabledLayer), true);
 
     _enabledLayer = n;
 
-    this->addChild((Node*)_layers->getObjectAtIndex(n));
+    this->addChild(_layers.at(n));
 }
 
 void LayerMultiplex::switchToAndReleaseMe(int n)
 {
-    CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
+    CCASSERT( n < _layers.size(), "Invalid index in MultiplexLayer switchTo message" );
 
-    this->removeChild((Node*)_layers->getObjectAtIndex(_enabledLayer), true);
+    this->removeChild(_layers.at(_enabledLayer), true);
 
-    //[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
-    _layers->replaceObjectAtIndex(_enabledLayer, NULL);
+    _layers.replace(_enabledLayer, nullptr);
 
     _enabledLayer = n;
 
-    this->addChild((Node*)_layers->getObjectAtIndex(n));
+    this->addChild(_layers.at(n));
 }
 
 NS_CC_END
