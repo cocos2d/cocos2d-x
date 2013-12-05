@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "base/CCConsole.h"
+#include "CCConsole.h"
 
 #include <thread>
 #include <algorithm>
@@ -194,12 +194,25 @@ void Console::commandExit(int fd)
     close(fd);
 }
 
+static int mydprintf(int sock, const char *format, ...)
+{
+    va_list args;
+	char buf[1024];
+
+	va_start(args, format);
+	vsnprintf(buf, sizeof(buf), format, args);
+	va_end(args);
+
+	return write(sock, buf, strlen(buf));
+}
+
+
 void printSceneGraph(int fd, Node* node, int level)
 {
     for(int i=0; i<level; ++i)
         write(fd, "-", 1);
 
-    dprintf(fd, " %s: z=%d, tag=%d\n", node->description(), node->getZOrder(), node->getTag() );
+    mydprintf(fd, " %s: z=%d, tag=%d\n", node->description(), node->getZOrder(), node->getTag() );
 
     auto children = node->getChildren();
     if( children ) {
