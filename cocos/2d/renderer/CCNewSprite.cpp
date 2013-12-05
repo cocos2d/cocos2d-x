@@ -94,37 +94,12 @@ void NewSprite::updateQuadVertices()
         //
         // calculate the Quad based on the Affine Matrix
         //
-        
-        Size size = _rect.size;
-        
-        float x1 = _offsetPosition.x;
-        float y1 = _offsetPosition.y;
-        
-        float x2 = x1 + size.width;
-        float y2 = y1 + size.height;
-        float x = _transformToBatch.tx;
-        float y = _transformToBatch.ty;
-        
-        float cr = _transformToBatch.a;
-        float sr = _transformToBatch.b;
-        float cr2 = _transformToBatch.d;
-        float sr2 = -_transformToBatch.c;
-        float ax = x1 * cr - y1 * sr2 + x;
-        float ay = x1 * sr + y1 * cr2 + y;
-        
-        float bx = x2 * cr - y1 * sr2 + x;
-        float by = x2 * sr + y1 * cr2 + y;
-        
-        float cx = x2 * cr - y2 * sr2 + x;
-        float cy = x2 * sr + y2 * cr2 + y;
-        
-        float dx = x1 * cr - y2 * sr2 + x;
-        float dy = x1 * sr + y2 * cr2 + y;
-        
-        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+        Rect newRect = RectApplyAffineTransform(_rect, _transformToBatch);
+
+        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
+        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
+        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
+        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
 
         _recursiveDirty = false;
         setDirty(false);
@@ -151,24 +126,15 @@ bool NewSprite::culling() const
     Frustum* frustum = Director::getInstance()->getFrustum();
     AffineTransform worldTM = getNodeToWorldTransform();
     //generate aabb
-    Point lowLeft(0,0);
-    Point topRight = lowLeft + Point(getContentSize());
-    Point lowRight(topRight.x,0);
-    Point topLeft(0, topRight.y);
     
-    lowLeft = PointApplyAffineTransform(lowLeft,worldTM);
-    lowRight = PointApplyAffineTransform(lowRight,worldTM);
-    topRight = PointApplyAffineTransform(topRight,worldTM);
-    topLeft = PointApplyAffineTransform(topLeft,worldTM);
-    
-    kmVec3 point = {lowLeft.x, lowLeft.y, _vertexZ};
+    kmVec3 point = {_quad.bl.vertices.x, _quad.bl.vertices.y, _vertexZ};
     
     AABB aabb(point,point);
-    point = {lowRight.x, lowRight.y, _vertexZ};
+    point = {_quad.br.vertices.x, _quad.br.vertices.y, _vertexZ};
     aabb.expand(point);
-    point = {topLeft.x, topLeft.y, _vertexZ};
+    point = {_quad.tl.vertices.x, _quad.tl.vertices.y, _vertexZ};
     aabb.expand(point);
-    point = {topRight.x, topRight.y, _vertexZ};
+    point = {_quad.tr.vertices.x, _quad.tr.vertices.y, _vertexZ};
     aabb.expand(point);
     
     return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);
