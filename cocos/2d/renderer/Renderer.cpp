@@ -9,7 +9,7 @@
 #include "CustomCommand.h"
 #include "QuadCommand.h"
 #include "GroupCommand.h"
-
+#include "CCConfiguration.h"
 
 NS_CC_BEGIN
 using namespace std;
@@ -54,11 +54,11 @@ Renderer::~Renderer()
     
     glDeleteBuffers(2, _buffersVBO);
     
-//    if (Configuration::getInstance()->supportsShareableVAO())
-//    {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
         glDeleteVertexArrays(1, &_quadVAO);
         GL::bindVAO(0);
-//    }
+    }
 }
 
 bool Renderer::init()
@@ -68,11 +68,24 @@ bool Renderer::init()
 
 void Renderer::initGLView()
 {
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // listen the event when app go to background
+    NotificationCenter::getInstance()->addObserver(this,
+                                                           callfuncO_selector(Renderer::onBackToForeground),
+                                                           EVNET_COME_TO_FOREGROUND,
+                                                           NULL);
+#endif
+
     setupIndices();
     
-    setupVBOAndVAO();
+    setupBuffer();
     
     _glViewAssigned = true;
+}
+
+void Renderer::onBackToForeground()
+{
+    setupBuffer();
 }
 
 void Renderer::setupIndices()
@@ -85,6 +98,18 @@ void Renderer::setupIndices()
         _indices[i*6+3] = (GLushort) (i*4+3);
         _indices[i*6+4] = (GLushort) (i*4+2);
         _indices[i*6+5] = (GLushort) (i*4+1);
+    }
+}
+
+void Renderer::setupBuffer()
+{
+    if(Configuration::getInstance()->supportsShareableVAO())
+    {
+        setupVBOAndVAO();
+    }
+    else
+    {
+        setupVBO();
     }
 }
 
@@ -117,6 +142,29 @@ void Renderer::setupVBOAndVAO()
     GL::bindVAO(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void Renderer::setupVBO()
+{
+    glGenBuffers(2, &_buffersVBO[0]);
+
+    mapBuffers();
+}
+
+void Renderer::mapBuffers()
+{
+    // Avoid changing the element buffer for whatever VAO might be bound.
+    GL::bindVAO(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * VBO_SIZE, _quads, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();
 }
@@ -273,18 +321,41 @@ void Renderer::drawBatchedQuads()
         return;
     }
 
-    //Set VBO data
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        //Set VBO data
+        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), NULL, GL_DYNAMIC_DRAW);
-    void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-    memcpy(buf, _quads, sizeof(_quads[0])* (_numQuads));
-    glUnmapBuffer(GL_ARRAY_BUFFER);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), NULL, GL_DYNAMIC_DRAW);
+        void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+        memcpy(buf, _quads, sizeof(_quads[0])* (_numQuads));
+        glUnmapBuffer(GL_ARRAY_BUFFER);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    //Bind VAO
-    GL::bindVAO(_quadVAO);
+        //Bind VAO
+        GL::bindVAO(_quadVAO);
+    }
+    else
+    {
+#define kQuadSize sizeof(_quads[0].bl)
+        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0]) * _numQuads , _quads);
+
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+
+        // vertices
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
+
+        // colors
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
+
+        // tex coords
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+    }
 
     //Start drawing verties in batch
     for(size_t i = _firstCommand; i <= _lastCommand; i++)
@@ -321,8 +392,17 @@ void Renderer::drawBatchedQuads()
         CC_INCREMENT_GL_DRAWS(1);
     }
 
-    //Unbind VAO
-    GL::bindVAO(0);
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        //Unbind VAO
+        GL::bindVAO(0);
+    }
+    else
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+
     
     _firstCommand = _lastCommand;
     _numQuads = 0;
