@@ -38,8 +38,7 @@
 #include "CCScriptSupport.h"
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
-
-#include <vector>
+#include "CCVector.h"
 
 NS_CC_BEGIN
 
@@ -614,10 +613,10 @@ public:
      *
      * @return An array of children
      */
-    virtual Array* getChildren() { return _children; }
-    virtual const Array *getChildren() const { return _children; }
-
-    /**
+    virtual Vector<Node*>& getChildren() { return _children; }
+    virtual const Vector<Node*>& getChildren() const { return _children; }
+    
+    /** 
      * Get the amount of children.
      *
      * @return The amount of children.
@@ -1043,7 +1042,7 @@ public:
      *
      * @return The number of actions that are running plus the ones that are schedule to run
      */
-    unsigned int getNumberOfRunningActions() const;
+    long getNumberOfRunningActions() const;
 
     /** @deprecated Use getNumberOfRunningActions() instead */
     CC_DEPRECATED_ATTRIBUTE unsigned int numberOfRunningActions() const { return getNumberOfRunningActions(); };
@@ -1398,7 +1397,7 @@ protected:
 
     /// lazy allocs
     void childrenAlloc(void);
-
+    
     /// helper that reorder a child
     void insertChild(Node* child, int z);
 
@@ -1440,8 +1439,8 @@ protected:
     GridBase *_grid;                ///< a grid
 
     int _ZOrder;                      ///< z-order value that affects the draw order
-
-    Array *_children;               ///< array of children nodes
+    
+    Vector<Node*> _children;               ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
 
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node

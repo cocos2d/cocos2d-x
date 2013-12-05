@@ -696,7 +696,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 void Sprite::reorderChild(Node *child, int zOrder)
 {
     CCASSERT(child != NULL, "");
-    CCASSERT(_children->containsObject(child), "");
+    CCASSERT(_children.contains(child), "");
 
     if (zOrder == child->getZOrder())
     {
@@ -726,15 +726,13 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
     if (_batchNode)
     {
-        Object* object = NULL;
-        CCARRAY_FOREACH(_children, object)
-        {
-            Sprite* child = dynamic_cast<Sprite*>(object);
-            if (child)
+        _children.forEach([this](Node* child){
+            Sprite* sprite = dynamic_cast<Sprite*>(child);
+            if (sprite)
             {
-                _batchNode->removeSpriteFromAtlas(child);
+                _batchNode->removeSpriteFromAtlas(sprite);
             }
-        }
+        });
     }
 
     Node::removeAllChildrenWithCleanup(cleanup);
@@ -769,12 +767,14 @@ void Sprite::sortAllChildren()
             _children->fastSetObject(tempI, j+1);
         }
 #else
-        std::sort(std::begin(*_children), std::end(*_children), nodeComparisonLess);
+        std::sort(std::begin(_children), std::end(_children), nodeComparisonLess);
 #endif
 
         if ( _batchNode)
         {
-            arrayMakeObjectsPerformSelector(_children, sortAllChildren, Sprite*);
+            _children.forEach([](Node* child){
+                child->sortAllChildren();
+            });
         }
 
         _reorderChildDirty = false;
@@ -809,15 +809,13 @@ void Sprite::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (_hasChildren)
     {
-        Object* object = NULL;
-        CCARRAY_FOREACH(_children, object)
-        {
-            Sprite* child = dynamic_cast<Sprite*>(object);
-            if (child)
+        _children.forEach([](Node* child){
+            Sprite* sp = dynamic_cast<Sprite*>(child);
+            if (sp)
             {
-                child->setDirtyRecursively(true);
+                sp->setDirtyRecursively(true);
             }
-        }
+        });
     }
 }
 
@@ -1062,7 +1060,7 @@ void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, 
 
     CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
-    AnimationFrame* frame = static_cast<AnimationFrame*>( a->getFrames()->getObjectAtIndex(frameIndex) );
+    AnimationFrame* frame = a->getFrames().at(frameIndex);
 
     CCASSERT(frame, "CCSprite#setDisplayFrame. Invalid frame");
 

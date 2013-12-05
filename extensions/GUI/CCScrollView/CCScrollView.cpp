@@ -153,26 +153,16 @@ void ScrollView::pause(Object* sender)
 {
     _container->pause();
 
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->pause();
-    }
+    _container->getChildren().forEach([](Node* child){
+        child->pause();
+    });
 }
 
 void ScrollView::resume(Object* sender)
 {
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->resume();
-    }
+    _container->getChildren().forEach([](Node* child){
+        child->resume();
+    });
 
     _container->resume();
 }
@@ -567,14 +557,14 @@ void ScrollView::visit()
 	this->transform();
     this->beforeDraw();
 
-	if(_children)
+	if (!_children.empty())
     {
 		int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
+			Node *child = _children.at(i);
 			if ( child->getZOrder() < 0 )
             {
 				child->visit();
@@ -589,9 +579,9 @@ void ScrollView::visit()
 		this->draw();
         
 		// draw children zOrder >= 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
+			Node *child = _children.at(i);
 			child->visit();
 		}
         

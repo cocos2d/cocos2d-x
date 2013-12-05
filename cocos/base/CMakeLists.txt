@@ -10,6 +10,7 @@ set(COCOS_BASE_SRC
   CCString.cpp
   CCDataVisitor.cpp
   CCData.cpp
+  CCValue.cpp
   etc1.cpp
   s3tc.cpp
   atitc.cpp

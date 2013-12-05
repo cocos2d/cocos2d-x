@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include "CCArray.h"
 #include "CCString.h"
 #include "platform/CCFileUtils.h"
+#include <algorithm>    // std::for_each
 
 NS_CC_BEGIN
-
 
 #if CC_USE_ARRAY_VECTOR
 
@@ -478,7 +478,15 @@ Array* Array::createWithContentsOfFile(const char* fileName)
 
 Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
 {
-    return FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
+    ValueVector arr = FileUtils::getInstance()->getValueVectorFromFile(fileName);
+    
+    Array* ret = Array::createWithCapacity(arr.size());
+    
+    std::for_each(arr.cbegin(), arr.cend(), [&ret](const Value& value){
+        ret->addObject(String::create(value.asString()));
+    });
+    
+    return ret;
 }
 
 bool Array::init()

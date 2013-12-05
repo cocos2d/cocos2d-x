@@ -137,8 +137,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE Point positionAt(const Point& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** return the value for the specific property name */
-    String* getProperty(const char *propertyName) const;
-    CC_DEPRECATED_ATTRIBUTE String* propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
+    Value getProperty(const std::string& propertyName) const;
+    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
     /** Creates the tiles */
     void setupTiles();
@@ -174,10 +174,9 @@ public:
     inline void setLayerOrientation(unsigned int orientation) { _layerOrientation = orientation; };
     
     /** properties from the layer. They can be added using Tiled */
-    inline Dictionary* getProperties() const { return _properties; };
-    inline void setProperties(Dictionary* properties) {
-        CC_SAFE_RETAIN(properties);
-        CC_SAFE_RELEASE(_properties);
+    inline const ValueMap& getProperties() const { return _properties; };
+    inline ValueMap& getProperties() { return _properties; };
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     //
@@ -244,7 +243,7 @@ protected:
     /** Layer orientation, which is the same as the map orientation */
     unsigned int _layerOrientation;
     /** properties from the layer. They can be added using Tiled */
-    Dictionary* _properties;
+    ValueMap _properties;
 };
 
 // end of tilemap_parallax_nodes group

@@ -481,13 +481,11 @@ public:
      * @js NA
      * @lua NA
      */
-
-    inline Array* getSubItems() const { return _subItems; };
+    inline const Vector<MenuItem*>& getSubItems() const { return _subItems; };
+    inline Vector<MenuItem*>& getSubItems() { return _subItems; };
 
     /** Sets the array that contains the subitems. */
-    inline void setSubItems(Array* items) {
-        CC_SAFE_RETAIN(items);
-        CC_SAFE_RELEASE(_subItems);
+    inline void setSubItems(const Vector<MenuItem*>& items) {
         _subItems = items;
     }
     
@@ -513,7 +511,6 @@ protected:
      */
     MenuItemToggle()
     : _selectedIndex(0)
-    , _subItems(NULL)
     {}
     /**
      * @js NA
@@ -537,7 +534,7 @@ protected:
     /** Array that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
      @since v0.7.2
      */
-    Array* _subItems;
+    Vector<MenuItem*> _subItems;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MenuItemToggle);
