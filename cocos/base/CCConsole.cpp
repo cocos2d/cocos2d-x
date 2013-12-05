@@ -25,6 +25,7 @@
 #include "base/CCConsole.h"
 
 #include <thread>
+#include <algorithm>
 
 #include <stdio.h>
 #include <netdb.h>
@@ -56,9 +57,6 @@ Console::Console()
 : _listenfd(-1)
 , _running(false)
 , _endThread(false)
-, _userCommands(nullptr)
-, _maxUserCommands(0)
-, _maxCommands(5)
 , _commands{
     { "fps on", [](int anFd) {
         Director *dir = Director::getInstance();
@@ -72,8 +70,10 @@ Console::Console()
     } },
     { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1) },
     { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1) },
-    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1) },
-}
+    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1) }, }
+, _maxCommands(5)
+, _userCommands(nullptr)
+, _maxUserCommands(0)
 {
 }
 

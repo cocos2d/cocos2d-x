@@ -100,8 +100,10 @@ protected:
 
     char _buffer[512];
 
-    struct Command _commands[15], *_userCommands;
-    int _maxCommands, _maxUserCommands;
+    struct Command _commands[15];
+    int _maxCommands;
+    struct Command *_userCommands;
+    int _maxUserCommands;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
