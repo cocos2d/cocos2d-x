@@ -722,6 +722,8 @@ Bone *Armature::getParentBone() const
     return _parentBone;
 }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+
 void CCArmature::setColliderFilter(ColliderFilter *filter)
 {
     DictElement *element = nullptr;
@@ -731,6 +733,40 @@ void CCArmature::setColliderFilter(ColliderFilter *filter)
         bone->setColliderFilter(filter);
     }
 }
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+
+void CCArmature::drawContour()
+{
+    DictElement *element = NULL;
+    CCDICT_FOREACH(_boneDic, element)
+    {
+        Bone *bone = static_cast<Bone*>(element->getObject());
+        Array *bodyList = bone->getColliderBodyList();
+        
+        if(!bodyList)
+            continue;
+
+        for (auto object : *bodyList)
+        {
+            ColliderBody *body = static_cast<ColliderBody*>(object);
+            Array *vertexList = body->getCalculatedVertexList();
+
+            int length = vertexList->count();
+            Point *points = new Point[length];
+            for (int i = 0; i<length; i++)
+            {
+                ContourVertex2 *vertex = static_cast<ContourVertex2*>(vertexList->getObjectAtIndex(i));
+                points[i].x = vertex->x;
+                points[i].y = vertex->y;
+            }
+            DrawPrimitives::drawPoly( points, length, true );
+
+            delete points;
+        }
+    }
+}
+
+#endif
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 b2Body *Armature::getBody() const

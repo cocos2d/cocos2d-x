@@ -73,8 +73,6 @@ void ProcessBase::stop()
 {
     _isComplete = true;
     _isPlaying = false;
-    _currentFrame = 0;
-    _currentPercent = 0;
 }
 
 void ProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEasing)
@@ -157,7 +155,7 @@ void ProcessBase::gotoFrame(int frameIndex)
 
 int ProcessBase::getCurrentFrameIndex()
 {
-    _curFrameIndex = _rawDuration * _currentPercent;
+    _curFrameIndex = (_rawDuration-1) * _currentPercent;
     return _curFrameIndex;
 }
 

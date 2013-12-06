@@ -158,58 +158,42 @@ const char *DisplayData::changeDisplayToTexture(const char *displayName)
 
 DisplayData::DisplayData(void)
     : displayType(CS_DISPLAY_MAX)
+    , displayName("")
 {
 }
 
-DisplayData::~DisplayData(void)
+void DisplayData::copy(DisplayData *displayData)
 {
+    displayName = displayData->displayName;
+    displayType = displayData->displayType;
 }
 
 SpriteDisplayData::SpriteDisplayData(void)
-    : displayName("")
 {
     displayType = CS_DISPLAY_SPRITE;
 }
 
-SpriteDisplayData::~SpriteDisplayData()
-{
-}
 
-void SpriteDisplayData::copy(SpriteDisplayData *displayData)
+void SpriteDisplayData::copy(DisplayData *displayData)
 {
-    displayName = displayData->displayName;
-    displayType = displayData->displayType;
+    DisplayData::copy(displayData);
 
-    skinData = displayData->skinData;
+    if (SpriteDisplayData *sdd = dynamic_cast<SpriteDisplayData*>(displayData))
+    {
+        skinData = sdd->skinData;
+    }
 }
 
 ArmatureDisplayData::ArmatureDisplayData(void)
-    : displayName("")
 {
     displayType = CS_DISPLAY_ARMATURE;
 }
 
-ArmatureDisplayData::~ArmatureDisplayData()
-{
-}
-
-void ArmatureDisplayData::copy(ArmatureDisplayData *displayData)
-{
-    displayName = displayData->displayName;
-    displayType = displayData->displayType;
-}
-
 ParticleDisplayData::ParticleDisplayData(void)
-    : plist("")
 {
     displayType = CS_DISPLAY_PARTICLE;
 }
 
-void ParticleDisplayData::copy(ParticleDisplayData *displayData)
-{
-    plist = displayData->plist;
-    displayType = displayData->displayType;
-}
 
 
 BoneData::BoneData(void)

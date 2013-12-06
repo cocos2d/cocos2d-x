@@ -176,7 +176,7 @@ void Tween::gotoAndPlay(int frameIndex)
     _isPlaying = true;
     _isComplete = _isPause = false;
 
-    _currentPercent = (float)_curFrameIndex / (float)_rawDuration;
+    _currentPercent = (float)_curFrameIndex / ((float)_rawDuration-1);
     _currentFrame = _nextFrameIndex * _currentPercent;
 }
 
@@ -394,7 +394,7 @@ float Tween::updateFrameData(float currentPercent)
         currentPercent = fmodf(currentPercent, 1);
     }
 
-    float playedTime = (float)_rawDuration * currentPercent;
+    float playedTime = ((float)_rawDuration-1) * currentPercent;
 
 
     //! If play to current frame's front or back, then find current frame again

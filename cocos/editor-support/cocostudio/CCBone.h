@@ -92,6 +92,7 @@ public:
     void removeDisplay(int index);
 
     void changeDisplayByIndex(int index, bool force);
+    void changeDisplayByName(const char *name, bool force);
 
     /**
      * Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent
@@ -163,8 +164,10 @@ public:
      */
     virtual cocos2d::Array *getColliderBodyList();
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
     virtual ColliderFilter *getColliderFilter();
+#endif
 
     virtual void setBoneData(BoneData *boneData);
     virtual BoneData *getBoneData() const;

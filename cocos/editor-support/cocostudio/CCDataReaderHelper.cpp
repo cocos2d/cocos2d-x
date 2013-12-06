@@ -1366,11 +1366,11 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json, DataInfo 
         {
             if (dataInfo->asyncStruct)
             {
-                static_cast<ParticleDisplayData *>(displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
+                static_cast<ParticleDisplayData *>(displayData)->displayName = dataInfo->asyncStruct->baseFilePath + plist;
             }
             else
             {
-                static_cast<ParticleDisplayData *>(displayData)->plist = dataInfo->baseFilePath + plist;
+                static_cast<ParticleDisplayData *>(displayData)->displayName = dataInfo->baseFilePath + plist;
             }
         }
     }

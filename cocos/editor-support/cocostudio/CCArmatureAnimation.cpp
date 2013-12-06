@@ -56,6 +56,8 @@ ArmatureAnimation::ArmatureAnimation()
     , _toIndex(0)
     , _tweenList(nullptr)
     , _ignoreFrameEvent(false)
+    , _onMovementList(false)
+    , _movementListLoop(false)
     , _userObject(nullptr)
 
     , _movementEventCallFunc(nullptr)
@@ -207,6 +209,7 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     tweenEasing	= (tweenEasing == TWEEN_EASING_MAX) ? _movementData->tweenEasing : tweenEasing;
     loop = (loop < 0) ? _movementData->loop : loop;
 
+    _onMovementList = false;
 
     ProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
@@ -224,7 +227,6 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
         else
         {
             _loopType = ANIMATION_NO_LOOP;
-            _rawDuration --;
         }
         _durationTween = durationTween;
     }
@@ -281,6 +283,40 @@ void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int dura
     play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);
 }
 
+
+void ArmatureAnimation::play(bool loop, const std::string *movementNames, int movementNumber)
+{
+    _movementList.clear();
+    _movementListLoop = loop;
+    _onMovementList = true;
+    _movementIndex = 0;
+
+    for (int i = 0; i<movementNumber; i++)
+    {
+        _movementList.push_back(movementNames[i]);
+    }
+
+    updateMovementList();
+}
+
+void ArmatureAnimation::playByIndex(bool loop, const int *movementIndexes, int movementNumber)
+{
+    _movementList.clear();
+    _movementListLoop = loop;
+    _onMovementList = true;
+    _movementIndex = 0;
+
+    std::vector<std::string> &movName = _animationData->movementNames;
+
+    for (int i = 0; i<movementNumber; i++)
+    {
+        std::string name = movName.at(movementIndexes[i]);
+        _movementList.push_back(name);
+    }
+
+    updateMovementList();
+}
+
 void ArmatureAnimation::gotoAndPlay(int frameIndex)
 {
     if (!_movementData || frameIndex < 0 || frameIndex >= _movementData->duration)
@@ -296,7 +332,7 @@ void ArmatureAnimation::gotoAndPlay(int frameIndex)
     _isComplete = _isPause = false;
 
     ProcessBase::gotoFrame(frameIndex);
-    _currentPercent = (float)_curFrameIndex / (float)_movementData->duration;
+    _currentPercent = (float)_curFrameIndex / ((float)_movementData->duration-1);
     _currentFrame = _nextFrameIndex * _currentPercent;
 
     for(auto object : *_tweenList)
@@ -331,14 +367,24 @@ void ArmatureAnimation::update(float dt)
 
     while (_frameEventQueue.size() > 0)
     {
-        FrameEvent *frameEvent = _frameEventQueue.front();
+        FrameEvent *event = _frameEventQueue.front();
         _frameEventQueue.pop();
 
         _ignoreFrameEvent = true;
-        (_frameEventTarget->*_frameEventCallFunc)(frameEvent->bone, frameEvent->frameEventName, frameEvent->originFrameIndex, frameEvent->currentFrameIndex);
+        (_frameEventTarget->*_frameEventCallFunc)(event->bone, event->frameEventName, event->originFrameIndex, event->currentFrameIndex);
         _ignoreFrameEvent = false;
 
-        CC_SAFE_DELETE(frameEvent);
+        CC_SAFE_DELETE(event);
+    }
+
+    while (_movementEventQueue.size() > 0)
+    {
+        MovementEvent *event = _movementEventQueue.front();
+        _movementEventQueue.pop();
+        
+        (_movementEventTarget->*_movementEventCallFunc)(event->armature, event->movementType, event->movementID);
+        
+        CC_SAFE_DELETE(event);
     }
 }
 
@@ -363,7 +409,7 @@ void ArmatureAnimation::updateHandler()
 
                 if (_movementEventTarget && _movementEventCallFunc)
                 {
-                    (_movementEventTarget->*_movementEventCallFunc)(_armature, START, _movementID.c_str());
+                    movementEvent(_armature, START, _movementID.c_str());
                 }
 
                 break;
@@ -379,8 +425,10 @@ void ArmatureAnimation::updateHandler()
 
             if (_movementEventTarget && _movementEventCallFunc)
             {
-                (_movementEventTarget->*_movementEventCallFunc)(_armature, COMPLETE, _movementID.c_str());
+                movementEvent(_armature, COMPLETE, _movementID.c_str());
             }
+
+            updateMovementList();
         }
         break;
         case ANIMATION_TO_LOOP_FRONT:
@@ -392,7 +440,7 @@ void ArmatureAnimation::updateHandler()
 
             if (_movementEventTarget && _movementEventCallFunc)
             {
-                (_movementEventTarget->*_movementEventCallFunc)(_armature, START, _movementID.c_str());
+                movementEvent(_armature, START, _movementID.c_str());
             }
         }
         break;
@@ -404,7 +452,7 @@ void ArmatureAnimation::updateHandler()
 
             if (_movementEventTarget && _movementEventCallFunc)
             {
-                (_movementEventTarget->*_movementEventCallFunc)(_armature, LOOP_COMPLETE, _movementID.c_str());
+                movementEvent(_armature, LOOP_COMPLETE, _movementID.c_str());
             }
         }
         break;
@@ -453,4 +501,50 @@ void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int o
         _frameEventQueue.push(frameEvent);
     }
 }
+
+
+void CCArmatureAnimation::movementEvent(CCArmature *armature, MovementEventType movementType, const char *movementID)
+{
+    if (_movementEventTarget && _movementEventCallFunc)
+    {
+        MovementEvent *movementEvent = new MovementEvent();
+        movementEvent->armature = armature;
+        movementEvent->movementType = movementType;
+        movementEvent->movementID = movementID;
+        _movementEventQueue.push(movementEvent);
+    }
+}
+
+
+void CCArmatureAnimation::updateMovementList()
+{
+    if (_onMovementList)
+    {
+        if (_movementListLoop)
+        {
+            play(_movementList.at(_movementIndex).c_str(), -1, -1, 0);
+            _movementIndex++;
+
+            if (_movementIndex >= _movementList.size())
+             {
+                 _movementIndex = 0;
+            }
+        }
+        else
+        {
+            if (_movementIndex < _movementList.size())
+            {
+                play(_movementList.at(_movementIndex).c_str(), -1, -1, 0);
+                _movementIndex++;
+            }
+            else
+            {
+                _onMovementList = false;
+            }
+        }
+
+        _onMovementList = true;
+    }
+}
+
 }

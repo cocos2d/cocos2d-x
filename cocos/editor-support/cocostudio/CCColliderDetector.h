@@ -93,8 +93,10 @@ public:
 
     inline ContourData *getContourData() { return _contourData; }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT 
     void setColliderFilter(ColliderFilter *filter);
     ColliderFilter *getColliderFilter();
+#endif
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     virtual void setB2Fixture(b2Fixture *fixture) { _fixture = fixture; }
@@ -102,25 +104,23 @@ public:
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setShape(cpShape *shape) { _shape = shape; }
     virtual cpShape *getShape() const { return _shape; }
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    virtual cocos2d::Array *getCalculatedVertexList() const { return _calculatedVertexList; }
 #endif
 
-#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    virtual const cocos2d::Array *getCalculatedVertexList() const { return _calculatedVertexList; }
-#endif
 private:
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     b2Fixture *_fixture;
+    ColliderFilter *_filter;
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
     cpShape *_shape;
+    ColliderFilter *_filter;
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    cocos2d::Array *_calculatedVertexList;
 #endif
 
     ContourData *_contourData;
-    ColliderFilter *_filter;
-
-#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    cocos2d::Array *_calculatedVertexList;
-#endif
 };
 
 /*
@@ -160,8 +160,10 @@ public:
 
     cocos2d::Array *getColliderBodyList();
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT 
     virtual void setColliderFilter(ColliderFilter *filter);
     virtual ColliderFilter *getColliderFilter();
+#endif
 
     virtual void setBone(Bone *bone) { _bone = bone; }
     virtual Bone *getBone() const { return _bone; }
@@ -175,14 +177,15 @@ public:
 #endif
  protected:
     cocos2d::Array *_colliderBodyList;
-    ColliderFilter *_filter;
 
     Bone *_bone;
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     b2Body *_body;
+    ColliderFilter *_filter;
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
     cpBody *_body;
+    ColliderFilter *_filter;
 #endif
 
 protected:
