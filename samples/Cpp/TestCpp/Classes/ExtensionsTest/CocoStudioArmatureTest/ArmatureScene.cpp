@@ -761,7 +761,7 @@ void TestColliderDetector::onEnter()
     addChild(armature2);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    bullet = PhysicsSprite::createWithSpriteFrameName("25.png");
+    bullet = cocos2d::extension::PhysicsSprite::createWithSpriteFrameName("25.png");
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     bullet = Sprite::createWithSpriteFrameName("25.png");
 #endif
