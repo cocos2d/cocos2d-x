@@ -55,6 +55,12 @@ NS_CC_BEGIN
 const float PHYSICS_INFINITY = INFINITY;
 extern const char* PHYSICSCONTACT_EVENT_NAME;
 
+const int PhysicsWorld::DEBUGDRAW_NONE = 0x00;
+const int PhysicsWorld::DEBUGDRAW_SHAPE = 0x01;
+const int PhysicsWorld::DEBUGDRAW_JOINT = 0x02;
+const int PhysicsWorld::DEBUGDRAW_CONTACT = 0x04;
+const int PhysicsWorld::DEBUGDRAW_ALL = DEBUGDRAW_SHAPE | DEBUGDRAW_JOINT | DEBUGDRAW_CONTACT;
+
 namespace
 {
     typedef struct RayCastCallbackInfo
