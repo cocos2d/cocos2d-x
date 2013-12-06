@@ -10,6 +10,7 @@
 #include "RenderCommand.h"
 #include "CCGLProgram.h"
 #include "RenderCommandPool.h"
+#include "kazmath.h"
 
 NS_CC_BEGIN
 
@@ -17,12 +18,13 @@ NS_CC_BEGIN
 
 class QuadCommand : public RenderCommand
 {
-protected:
+public:
     QuadCommand();
     ~QuadCommand();
     
 public:
-    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount);
+    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount,
+              const kmMat4& mv);
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
@@ -69,6 +71,8 @@ protected:
 
     V3F_C4B_T2F_Quad* _quad;
     int _quadCount;
+    int _capacity;
+
 public:
     friend class RenderCommandPool<QuadCommand>;
     static RenderCommandPool<QuadCommand>& getCommandPool() { return _commandPool; }

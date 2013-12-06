@@ -108,15 +108,17 @@ void NewSprite::updateQuadVertices()
 
 void NewSprite::draw(void)
 {
-    updateQuadVertices();
+//    updateQuadVertices();
     if(!culling())
     {
         return;
     }
 
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
     //TODO implement z order
     QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
-    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1);
+    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
 
     Renderer::getInstance()->addCommand(renderCommand);
 }

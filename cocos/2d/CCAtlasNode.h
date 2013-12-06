@@ -98,7 +98,7 @@ protected:
     bool initWithTileFile(const std::string& tile, long tileWidth, long tileHeight, long itemsToRender);
 
     /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
-    bool initWithTexture(Texture2D* texture, long tileWidth, long tileHeight, long itemsToRender);
+    virtual bool initWithTexture(Texture2D* texture, long tileWidth, long tileHeight, long itemsToRender);
 
     void calculateMaxItems();
     void updateBlendFunc();
