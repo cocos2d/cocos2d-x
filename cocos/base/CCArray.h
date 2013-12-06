@@ -250,7 +250,7 @@ public:
     /** Create an array with a default capacity 
      * @js NA
      */
-    static Array* createWithCapacity(size_t capacity);
+    static Array* createWithCapacity(int capacity);
     /** Create an array with from an existing array 
      * @js NA
      */
@@ -295,7 +295,7 @@ public:
      * @js NA
      * @lua NA
      */
-    bool initWithCapacity(size_t capacity);
+    bool initWithCapacity(int capacity);
     /** Initializes an array with an existing array 
      * @js NA
      * @lua NA
@@ -307,7 +307,7 @@ public:
     /** Returns element count of the array 
      * @js NA
      */
-    size_t count() const
+    int count() const
     {
 #if CC_USE_ARRAY_VECTOR
         return data.size();
@@ -318,7 +318,7 @@ public:
     /** Returns capacity of the array 
      * @js NA
      */
-    size_t capacity() const
+    int capacity() const
     {
 #if CC_USE_ARRAY_VECTOR
         return data.capacity();
@@ -330,17 +330,17 @@ public:
      * @js NA
      * @lua NA
      */
-    size_t getIndexOfObject(Object* object) const;
+    int getIndexOfObject(Object* object) const;
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE size_t indexOfObject(Object* object) const { return getIndexOfObject(object); }
+    CC_DEPRECATED_ATTRIBUTE int indexOfObject(Object* object) const { return getIndexOfObject(object); }
 
     /** Returns an element with a certain index 
      * @js NA
      * @lua NA
      */
-    Object* getObjectAtIndex(size_t index)
+    Object* getObjectAtIndex(int index)
     {
         CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
 #if CC_USE_ARRAY_VECTOR
@@ -349,7 +349,7 @@ public:
         return data->arr[index];
 #endif
     }
-    CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(size_t index) { return getObjectAtIndex(index); }
+    CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(int index) { return getObjectAtIndex(index); }
     /** Returns the last element of the array 
      * @js NA
      */
@@ -401,17 +401,17 @@ public:
     /** Insert a certain object at a certain index 
      * @js NA
      */
-    void insertObject(Object* object, size_t index);
+    void insertObject(Object* object, int index);
     /** sets a certain object at a certain index 
      * @js NA
      * @lua NA
      */
-    void setObject(Object* object, size_t index);
+    void setObject(Object* object, int index);
     /** sets a certain object at a certain index without retaining. Use it with caution 
      * @js NA
      * @lua NA
      */
-    void fastSetObject(Object* object, size_t index)
+    void fastSetObject(Object* object, int index)
     {
 #if CC_USE_ARRAY_VECTOR
         setObject(object, index);
@@ -424,7 +424,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void swap( size_t indexOne, size_t indexTwo )
+    void swap( int indexOne, int indexTwo )
     {
         CCASSERT(indexOne >=0 && indexOne < count() && indexTwo >= 0 && indexTwo < count(), "Invalid indices");
 #if CC_USE_ARRAY_VECTOR
@@ -447,7 +447,7 @@ public:
     /** Remove an element with a certain index 
      * @js NA
      */
-    void removeObjectAtIndex(size_t index, bool releaseObj = true);
+    void removeObjectAtIndex(int index, bool releaseObj = true);
     /** Remove all elements 
      * @js NA
      */
@@ -463,7 +463,7 @@ public:
     /** Fast way to remove an element with a certain index 
      * @js NA
      */
-    void fastRemoveObjectAtIndex(size_t index);
+    void fastRemoveObjectAtIndex(int index);
 
     // Rearranging Content
 
@@ -474,12 +474,12 @@ public:
     /** Swap two elements with certain indexes 
      * @js NA
      */
-    void exchangeObjectAtIndex(size_t index1, size_t index2);
+    void exchangeObjectAtIndex(int index1, int index2);
 
     /** Replace object at index with another object. 
      * @js NA
      */
-    void replaceObjectAtIndex(size_t index, Object* object, bool releaseObject = true);
+    void replaceObjectAtIndex(int index, Object* object, bool releaseObject = true);
 
     /** Revers the array 
      * @js NA

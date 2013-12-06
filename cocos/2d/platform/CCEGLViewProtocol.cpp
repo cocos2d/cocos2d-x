@@ -280,7 +280,7 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
         else
         {
             // It is error, should return.
-            CCLOG("Moving touches with id: %ld error", id);
+            CCLOG("Moving touches with id: %d error", id);
             return;
         }
     }
@@ -333,7 +333,7 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
         } 
         else
         {
-            CCLOG("Ending touches with id: %ld error", id);
+            CCLOG("Ending touches with id: %d error", id);
             return;
         } 
 
