@@ -118,7 +118,11 @@ public:
                     fontName = fontName.substr(0,nFindPos);                
                 }
                 tNewFont.lfCharSet = DEFAULT_CHARSET;
+#ifdef __MINGW32__
+                strcpy(tNewFont.lfFaceName, fontName.c_str());
+#else
                 strcpy_s(tNewFont.lfFaceName, LF_FACESIZE, fontName.c_str());
+#endif
             }
             if (nSize)
             {

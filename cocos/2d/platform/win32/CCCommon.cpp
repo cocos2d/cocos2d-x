@@ -35,7 +35,11 @@ void CCLog(const char * pszFormat, ...)
 
     va_list ap;
     va_start(ap, pszFormat);
+#ifdef __MINGW32__
+    vsnprintf(szBuf, MAX_LEN, pszFormat, ap);
+#else
     vsnprintf_s(szBuf, MAX_LEN, MAX_LEN, pszFormat, ap);
+#endif
     va_end(ap);
 
     WCHAR wszBuf[MAX_LEN] = {0};
@@ -53,7 +57,11 @@ void log(const char * pszFormat, ...)
 
     va_list ap;
     va_start(ap, pszFormat);
+#ifdef __MINGW32__
+    vsnprintf(szBuf, MAX_LEN, pszFormat, ap);
+#else
     vsnprintf_s(szBuf, MAX_LEN, MAX_LEN, pszFormat, ap);
+#endif
     va_end(ap);
 
     WCHAR wszBuf[MAX_LEN] = {0};

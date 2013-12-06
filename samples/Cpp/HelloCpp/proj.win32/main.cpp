@@ -4,6 +4,10 @@
 
 USING_NS_CC;
 
+#ifdef __MINGW32__
+int main(int argc, char **argv)
+{
+#else
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                        HINSTANCE hPrevInstance,
                        LPTSTR    lpCmdLine,
@@ -11,6 +15,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
+#endif
 
     // create the application instance
     AppDelegate app;

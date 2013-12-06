@@ -52,6 +52,14 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <time.h>
 
+// If M_PI still is not defined, define it.
+#ifndef M_PI
+  #define M_PI      3.14159265358
+#endif
+#ifndef M_PI_2
+  #define M_PI_2    1.57079632679
+#endif
+
 // for MIN MAX and sys/time.h on win32 platform
 #ifdef __MINGW32__
 #include <sys/time.h>
@@ -73,12 +81,14 @@ THE SOFTWARE.
 #endif
 
 #define _WINSOCKAPI_
+#ifndef NOMINMAX
 #define NOMINMAX
-// Structure timeval has define in winsock.h, include windows.h for it.
-#include <Windows.h>
+#endif
 
 #ifndef __MINGW32__
 
+// Structure timeval has define in winsock.h, include windows.h for it.
+#include <Windows.h>
 #include <WinSock2.h>
 
 NS_CC_BEGIN
@@ -96,6 +106,8 @@ NS_CC_END
 #else
 
 #include <winsock.h>
+#include <winsock2.h>
+#include <windows.h>
 
 #endif // __MINGW32__
 

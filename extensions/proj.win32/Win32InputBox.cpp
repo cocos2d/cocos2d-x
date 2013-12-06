@@ -70,7 +70,7 @@ static unsigned char definputbox_dlg[] =
     0xff,0xff,0xff,0xff,0xff,0x82,0x00,0x00,0x00,0x00,0x00
 };
 
-static LPCTSTR definputbox_buttonnames[] = { _T("OK"), _T("CANCEL") };
+static LPCSTR definputbox_buttonnames[] = { "OK", "CANCEL" };
 static const INT_PTR definputbox_buttonids[] = { IDOK, IDCANCEL };
 
 static const INT 
@@ -133,7 +133,11 @@ INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param)
   if (param->DlgTemplateName != 0)
   {
     HMODULE hModule = (HMODULE)param->hInstance;
+#ifdef __MINGW32__
+    HRSRC rcDlg = ::FindResource(hModule, (LPWSTR)(ULONG_PTR)(size_t)(param->DlgTemplateName), RT_DIALOG);
+#else
     HRSRC rcDlg = ::FindResource(hModule, MAKEINTRESOURCE(param->DlgTemplateName), RT_DIALOG);
+#endif
     if (rcDlg == NULL)
       return 0;
 
@@ -214,7 +218,7 @@ void CWin32InputBox::InitDialog()
 {
   // Set the button captions
   for (size_t i=0;i<sizeof(definputbox_buttonids)/sizeof(definputbox_buttonids[0]);i++)
-    ::SetDlgItemText(_param->hDlg, (int) definputbox_buttonids[i], definputbox_buttonnames[i]);
+    ::SetDlgItemTextA(_param->hDlg, (int) definputbox_buttonids[i], definputbox_buttonnames[i]);
 
   // Set other controls
   ::SetWindowTextA(_param->hDlg, Utf8ToAnsi(_param->szTitle).c_str());

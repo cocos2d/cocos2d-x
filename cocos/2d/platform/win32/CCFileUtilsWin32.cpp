@@ -55,12 +55,24 @@ static void _checkPath()
     if (0 == s_resourcePath.length())
     {
         WCHAR utf16Path[CC_MAX_PATH] = {0};
-        GetCurrentDirectoryW(sizeof(utf16Path)-1, utf16Path);
+
+#if CC_QTCREATOR_ON_WINDOWS
+        // Use "%executable_dir%/Resources" as root path.
+        HMODULE hModule = GetModuleHandleW(NULL);
+        GetModuleFileNameW(hModule, utf16Path, sizeof(utf16Path) - 1);
+#else
+        // Use "%workir" as root path.
+        GetCurrentDirectoryW(sizeof(utf16Path) - 1, utf16Path);
+#endif
         
         char utf8Path[CC_MAX_PATH] = {0};
         int nNum = WideCharToMultiByte(CP_UTF8, 0, utf16Path, -1, utf8Path, sizeof(utf8Path), NULL, NULL);
 
         s_resourcePath = convertPathFormatToUnixStyle(utf8Path);
+#if CC_QTCREATOR_ON_WINDOWS
+        s_resourcePath = s_resourcePath.substr(0, s_resourcePath.find_last_of('/')) + "/Resources";
+#endif
+        CCLOG("WINDOWS RES PATH '%s'", s_resourcePath.c_str());
         s_resourcePath.append("/");
     }
 }

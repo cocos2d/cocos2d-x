@@ -46,7 +46,7 @@ install_glfw()
   clean_tmp_file
 }
 
-GLFW_INSTALLED=$(whereis libglfw |grep libglfw.so)
+GLFW_INSTALLED=$(whereis libglfw |grep libglfw.so.3)
 if [ "$GLFW_INSTALLED"x = ""x ]; then
   install_glfw
 else

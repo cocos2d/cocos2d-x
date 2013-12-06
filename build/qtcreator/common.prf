@@ -1,0 +1,138 @@
+
+CC_ROOT = $${PWD}/../../
+CC_ARCH_SUFFIX = 32-bit
+contains(QMAKE_HOST.arch, x86_64):CC_ARCH_SUFFIX = 64-bit
+
+CC_OS_TYPE = linux
+win32: CC_OS_TYPE = win32
+macx: CC_OS_TYPE = mac
+
+# @return Path for $TARGET variable rebased to given directory
+# @param dir Directory to put executable file
+defineReplace(cc_get_target_path) {
+    dir = $$1
+    result = $$relative_path($${dir}, $$shadowed($$PWD))
+    win32 {
+        result = ../$${result}
+    }
+    return($$result)
+}
+
+# @return Add include paths to search external library in cocos distribution.
+# @param name Name of library to link with.
+defineReplace(cc_include_library) {
+    name = $$1
+    result = $$clean_path($${CC_ROOT}external/$${name}/include/$${CC_OS_TYPE})
+    return($$result)
+}
+
+# @return Linker commands to link with static library.
+# @param name Name of library to link with.
+defineReplace(cc_prebuilt_library) {
+    relpath = $$1
+    name = $$2
+    isEmpty(name):name = $$1
+    path1 = $${CC_ROOT}external/$${relpath}/prebuilt/$${CC_OS_TYPE}/$${CC_ARCH_SUFFIX}
+    path2 = $${CC_ROOT}external/$${relpath}/prebuilt/$${CC_OS_TYPE}
+    result = -L$$quote($$clean_path($$path1))
+    result = -L$$quote($$clean_path($$path2))
+    win32-msvc*: {
+        result += -l$$quote($$name)
+    } else {
+        result += -Wl,-Bstatic -l$${name} -Wl,-Bdynamic
+    }
+    return($$result)
+}
+
+include(user_configuration.prf)
+include(common_linux.prf)
+include(common_win32.prf)
+
+CONFIG += c++11
+
+*macx-* {
+    QMAKE_CXXFLAGS += -stdlib=libc++
+    CC_OS_TYPE = mac
+    export(CC_OS_TYPE)
+}
+
+CONFIG(debug, debug|release) {
+    DEFINES += COCOS2D_DEBUG=1 _DEBUG
+    CC_BUILD_TYPE = debug
+} else {
+    DEFINES += COCOS2D_DEBUG=0 NDEBUG
+    CC_BUILD_TYPE = release
+}
+
+CC_LIB_LOCATION = $${CC_ROOT}/lib/$${CC_OS_TYPE}/$${CC_BUILD_TYPE}
+
+INCLUDEPATH += \
+    $${CC_ROOT} \
+    $${CC_ROOT}/cocos \
+    $${CC_ROOT}/cocos/base \
+    $${CC_ROOT}/cocos/2d \
+    $${CC_ROOT}/cocos/physics \
+    $${CC_ROOT}/cocos/gui \
+    $${CC_ROOT}/cocos/editor-support \
+    $${CC_ROOT}/cocos/audio/include \
+    $${CC_ROOT}/cocos/math/kazmath/include \
+    $${CC_ROOT}/extensions \
+    $${CC_ROOT}/external \
+    $${CC_ROOT}/external/chipmunk/include/chipmunk \
+    $${CC_ROOT}/external/tinyxml2 \
+    $${CC_ROOT}/external/unzip \
+    $${CC_ROOT}/external/Box2D \
+    $$cc_include_library(webp) \
+    $$cc_include_library(freetype2) \
+    $$cc_include_library(curl) \
+    $$cc_include_library(websockets) \
+    $$cc_include_library(png) \
+    $$cc_include_library(tiff) \
+    $$cc_include_library(jpeg)
+
+cocos2d_qt_api {
+    DEFINES += CC_TARGET_QT5
+    INCLUDEPATH += $${CC_ROOT}/cocos/2d/platform/qt5
+    # Sensors module needed for CCAccelerometer
+    QT += sensors
+    # CocosDenshion (audio library)
+    QT += multimedia
+}
+
+cocos2d_native_api {
+    CONFIG -= qt
+    INCLUDEPATH += \
+        $${CC_ROOT}/cocos/2d/platform/$${CC_OS_TYPE} \
+        $$cc_include_library(glfw3)
+}
+
+cocos2d_chipmunk {
+    DEFINES += CC_ENABLE_CHIPMUNK_INTEGRATION
+}
+
+cocos2d_box2d {
+    DEFINES += CC_ENABLE_BOX2D_INTEGRATION
+}
+
+LINK_AGAINST_COCOS2DX = -L$${CC_LIB_LOCATION} -lcocos2dx $${CC_EXTERNAL_LIBS}
+
+# Disable some warnings to make compiler output easier to read during development
+DISABLED_WARNINGS = \
+    -Wno-ignored-qualifiers \
+    -Wno-unused-parameter \
+    -Wno-sign-compare -Wno-unused-variable
+
+*-g++* {
+    DISABLED_WARNINGS += -Wno-psabi
+    QMAKE_CFLAGS += -std=gnu99
+}
+
+*-g++*|*-clang* {
+    QMAKE_CXXFLAGS_WARN_ON += $${DISABLED_WARNINGS} -Wno-reorder
+    QMAKE_CFLAGS_WARN_ON += $${DISABLED_WARNINGS}
+}
+
+win32-msvc* {
+    QMAKE_CXXFLAGS_WARN_ON += -wd4100 -wd4244
+    QMAKE_CFLAGS_WARN_ON += -wd4100 -wd4244
+}
