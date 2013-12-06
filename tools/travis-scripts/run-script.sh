@@ -53,10 +53,10 @@ elif [ "$PLATFORM"x = "android"x ]; then
     ./android-build.py -n "NDK_BUG=0 -j10" hellocpp testcpp simplegame testjavascript
 
     # Build template
-    echo "Building template ..."
-    cd $COCOS2DX_ROOT/template
-    build_android multi-platform-cpp
-    build_android multi-platform-js
+    # echo "Building template ..."
+    # cd $COCOS2DX_ROOT/template
+    # build_android multi-platform-cpp
+    # build_android multi-platform-js
     # build_android multi-platform-lua
 
 elif [ "$PLATFORM"x = "nacl"x ]; then
