@@ -28,7 +28,7 @@ if [ "$GEN_JSB"x = "YES"x ]; then
     fi
     export NDK_ROOT=$HOME/bin/android-ndk
     cd $COCOS2DX_ROOT/tools/travis-scripts
-    # ./generate-jsbindings.sh
+    ./generate-jsbindings.sh
 elif [ "$PLATFORM"x = "android"x ]; then
     export NDK_ROOT=$HOME/bin/android-ndk
 
@@ -50,13 +50,13 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Build all samples
     echo "Building all samples ..."
     cd $COCOS2DX_ROOT/build
-    ./android-build.py -n "NDK_BUG=0 -j10" hellocpp testcpp simplegame
+    ./android-build.py -n "NDK_BUG=0 -j10" hellocpp testcpp simplegame testjavascipt
 
     # Build template
-    # echo "Building template ..."
-    # cd $COCOS2DX_ROOT/template
-    # build_android multi-platform-cpp
-    # build_android multi-platform-js
+    echo "Building template ..."
+    cd $COCOS2DX_ROOT/template
+    build_android multi-platform-cpp
+    build_android multi-platform-js
     # build_android multi-platform-lua
 
 elif [ "$PLATFORM"x = "nacl"x ]; then
