@@ -83,11 +83,11 @@ typedef PhysicsRectQueryCallbackFunc PhysicsPointQueryCallbackFunc;
 class PhysicsWorld
 {
 public:
-    static const int DEBUGDRAW_NONE = 0x00;
-    static const int DEBUGDRAW_SHAPE = 0x01;
-    static const int DEBUGDRAW_JOINT = 0x02;
-    static const int DEBUGDRAW_CONTACT = 0x04;
-    static const int DEBUGDRAW_ALL = DEBUGDRAW_SHAPE | DEBUGDRAW_JOINT | DEBUGDRAW_CONTACT;
+    static const int DEBUGDRAW_NONE;
+    static const int DEBUGDRAW_SHAPE;
+    static const int DEBUGDRAW_JOINT;
+    static const int DEBUGDRAW_CONTACT;
+    static const int DEBUGDRAW_ALL;
     
 public:
     /** Adds a joint to the physics world.*/
