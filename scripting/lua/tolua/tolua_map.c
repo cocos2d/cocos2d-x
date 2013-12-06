@@ -304,6 +304,13 @@ TOLUA_API void tolua_open (lua_State* L)
         lua_pushstring(L,"tolua_opened");
         lua_pushboolean(L,1);
         lua_rawset(L,LUA_REGISTRYINDEX);
+        
+        
+        /** create value root table
+         */
+        lua_pushstring(L, TOLUA_VALUE_ROOT);
+        lua_newtable(L);
+        lua_rawset(L, LUA_REGISTRYINDEX);
 
 #ifndef LUA_VERSION_NUM /* only prior to lua 5.1 */
         /* create peer object table */
