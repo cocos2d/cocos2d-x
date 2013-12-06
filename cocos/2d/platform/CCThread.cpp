@@ -31,7 +31,7 @@ NS_CC_BEGIN
 
 std::list<std::function<void(void)>>* ThreadHelper::_callbackList = new std::list<std::function<void(void)>>();
 std::mutex* ThreadHelper::_mutex = new std::mutex;
-long ThreadHelper::_callbackNumberPerFrame = 5;
+int ThreadHelper::_callbackNumberPerFrame = 5;
 
 
 void* ThreadHelper::createAutoreleasePool()
@@ -56,7 +56,7 @@ void ThreadHelper::doCallback()
 {
     _mutex->lock();
     auto iter = _callbackList->begin();
-    long i = 0;
+    int i = 0;
     while (iter != _callbackList->end())
     {
         auto f = *iter;
@@ -75,7 +75,7 @@ void ThreadHelper::doCallback()
     _mutex->unlock();
 }
 
-void ThreadHelper::setCallbackNumberPerFrame(long callbackNumberPerFrame)
+void ThreadHelper::setCallbackNumberPerFrame(int callbackNumberPerFrame)
 {
     _callbackNumberPerFrame = callbackNumberPerFrame;
 }
