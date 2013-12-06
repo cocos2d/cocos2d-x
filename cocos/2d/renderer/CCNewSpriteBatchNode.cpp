@@ -63,11 +63,20 @@ void NewSpriteBatchNode::draw()
 
 //    arrayMakeObjectsPerformSelector(_children, updateTransform, NewSprite*);
 
+    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+
     kmMat4 mv;
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
     QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ, _textureAtlas->getTexture()->getName(), _shaderProgram, _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads(), mv);
+    cmd->init(0,
+              _vertexZ,
+              _textureAtlas->getTexture()->getName(),
+              shader,
+              _blendFunc,
+              _textureAtlas->getQuads(),
+              _textureAtlas->getTotalQuads(),
+              mv);
     Renderer::getInstance()->addCommand(cmd);
 }
 

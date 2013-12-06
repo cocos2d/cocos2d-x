@@ -46,6 +46,7 @@ typedef struct _hashUniformEntry
 } tHashUniformEntry;
 
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR = "ShaderPositionTextureColor";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP = "ShaderPositionTextureColor_noMVP";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST = "ShaderPositionTextureColorAlphaTest";
 const char* GLProgram::SHADER_NAME_POSITION_COLOR = "ShaderPositionColor";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE = "ShaderPositionTexture";
@@ -555,7 +556,7 @@ void GLProgram::setUniformsForBuiltins()
 	
 
     if(_flags.usesP)
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], matrixP.mat, 1);
+        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.mat, 1);
 
     if(_flags.usesMV)
         setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MV_MATRIX], matrixMV.mat, 1);

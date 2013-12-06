@@ -285,7 +285,7 @@ Atlas* Atlas_readAtlas (const char* begin, int length, const char* dir) {
 Atlas* Atlas_readAtlasFile (const char* path) {
 	int dirLength;
 	char *dir;
-	int length;
+	ssize_t length;
 	const char* data;
 
 	Atlas* atlas = 0;

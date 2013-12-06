@@ -39,8 +39,6 @@ public:
     NewLabelAtlas() {}
     virtual ~NewLabelAtlas() {}
 
-    virtual bool initWithTexture(Texture2D* texture, long tileWidth, long tileHeight, long itemsToRender);
-
     virtual void draw(void) override;
 
 protected:

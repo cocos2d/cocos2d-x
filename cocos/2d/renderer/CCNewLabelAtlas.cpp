@@ -35,16 +35,6 @@
 
 NS_CC_BEGIN
 
-bool NewLabelAtlas::initWithTexture(Texture2D* texture, long tileWidth, long tileHeight, long itemsToRender)
-{
-    LabelAtlas::initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
-
-    // shader stuff
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-
-    return true;
-}
-
 
 void NewLabelAtlas::draw()
 {
@@ -55,11 +45,20 @@ void NewLabelAtlas::draw()
 //    Renderer::getInstance()->addCommand(&_renderCommand);
 
 
+    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+
     kmMat4 mv;
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
     QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ, _textureAtlas->getTexture()->getName(), _shaderProgram, _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads(), mv);
+    cmd->init(0,
+              _vertexZ,
+              _textureAtlas->getTexture()->getName(),
+              shader,
+              _blendFunc,
+              _textureAtlas->getQuads(),
+              _textureAtlas->getTotalQuads(),
+              mv);
               
     Renderer::getInstance()->addCommand(cmd);
 

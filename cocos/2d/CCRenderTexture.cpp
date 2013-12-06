@@ -198,8 +198,8 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
         // textures must be power of two squared
-        long powW = 0;
-        long powH = 0;
+        int powW = 0;
+        int powH = 0;
 
         if (Configuration::getInstance()->supportsNPOT())
         {
@@ -212,7 +212,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             powH = ccNextPOT(h);
         }
 
-        long dataLen = (long)(powW * powH * 4);
+        auto dataLen = powW * powH * 4;
         data = malloc(dataLen);
         CC_BREAK_IF(! data);
 
