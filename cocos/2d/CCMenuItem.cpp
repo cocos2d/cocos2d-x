@@ -42,7 +42,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
     
-static long _globalFontSize = kItemSize;
+static int _globalFontSize = kItemSize;
 static std::string _globalFontName = "Marker Felt";
 static bool _globalFontNameRelease = false;
 

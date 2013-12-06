@@ -113,7 +113,7 @@ public:
     /** Returns element count of the array */
     int size() const
     {
-        return _data.size();
+        return  static_cast<int>(_data.size());
     }
     
     bool empty() const

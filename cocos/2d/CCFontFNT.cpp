@@ -149,7 +149,7 @@ FontAtlas * FontFNT::createFontAtlas()
     if (!_configuration->_fontDefDictionary)
         return nullptr;
     
-    int numGlyphs = _configuration->_characterSet->size();
+    size_t numGlyphs = _configuration->_characterSet->size();
     if (!numGlyphs)
         return nullptr;
     

@@ -62,7 +62,7 @@ bool LabelAtlas::initWithString(const std::string& string, const std::string& ch
 
 bool LabelAtlas::initWithString(const std::string& string, Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
-    if (AtlasNode::initWithTexture(texture, itemWidth, itemHeight, string.size()))
+    if (AtlasNode::initWithTexture(texture, itemWidth, itemHeight, static_cast<int>(string.size())))
     {
         _mapStartChar = startCharMap;
         this->setString(string);
@@ -179,7 +179,7 @@ void LabelAtlas::updateAtlasValues()
         _textureAtlas->setDirty(true);
         auto totalQuads = _textureAtlas->getTotalQuads();
         if (n > totalQuads) {
-            _textureAtlas->increaseTotalQuadsWith(n - totalQuads);
+            _textureAtlas->increaseTotalQuadsWith(static_cast<int>(n - totalQuads));
         }
     }
 }
@@ -190,7 +190,7 @@ void LabelAtlas::setString(const std::string &label)
     auto len = label.size();
     if (len > _textureAtlas->getTotalQuads())
     {
-        _textureAtlas->resizeCapacity(len);
+        _textureAtlas->resizeCapacity(static_cast<int>(len));
     }
     _string.clear();
     _string = label;
