@@ -50,7 +50,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Build all samples
     echo "Building all samples ..."
     cd $COCOS2DX_ROOT/build
-    ./android-build.py -n "NDK_BUG=0 -j10" hellocpp testcpp simplegame testjavascipt
+    ./android-build.py -n "NDK_BUG=0 -j10" hellocpp testcpp simplegame testjavascript
 
     # Build template
     echo "Building template ..."
