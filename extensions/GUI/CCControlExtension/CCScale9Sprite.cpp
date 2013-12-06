@@ -341,7 +341,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& o
         _scale9Image->addChild(_top, 1, pTop);
         
         // Bottom
-        _bottom = Sprite::Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, true);
+        _bottom = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, true);
         _bottom->retain();
         _scale9Image->addChild(_bottom, 1, pBottom);
         
