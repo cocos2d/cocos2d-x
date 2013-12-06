@@ -60,11 +60,14 @@ void NewSpriteBatchNode::draw()
 
     for(const auto &child: _children)
         child->updateTransform();
-    
+
 //    arrayMakeObjectsPerformSelector(_children, updateTransform, NewSprite*);
 
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
+
     QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ, _textureAtlas->getTexture()->getName(), _shaderProgram, _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads());
+    cmd->init(0, _vertexZ, _textureAtlas->getTexture()->getName(), _shaderProgram, _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads(), mv);
     Renderer::getInstance()->addCommand(cmd);
 }
 

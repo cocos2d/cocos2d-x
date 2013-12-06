@@ -1853,12 +1853,14 @@
 		50A1FF1918290ED4001840C4 /* UIListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1FF1618290ED4001840C4 /* UIListView.cpp */; };
 		50A1FF1A18290ED4001840C4 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A1FF1718290ED4001840C4 /* UIListView.h */; };
 		50A1FF1B18290ED4001840C4 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A1FF1718290ED4001840C4 /* UIListView.h */; };
+		50C5A44718514D2A0071C21B /* CCNewLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */; };
+		50C5A44818514D2A0071C21B /* CCNewLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */; };
+		50C5A44918514D2A0071C21B /* CCNewLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */; };
+		50C5A44A18514D2A0071C21B /* CCNewLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */; };
 		593BDCDE184D0A6E00C21E48 /* CCNewDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */; };
 		593BDCDF184D0A6E00C21E48 /* CCNewDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */; };
 		593BDCE0184D0A6E00C21E48 /* CCNewDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */; };
 		593BDCE1184D0A6E00C21E48 /* CCNewDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */; };
-		593BDCE2184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD0184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp */; };
-		593BDCE3184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD0184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp */; };
 		593BDCE4184D0A6E00C21E48 /* CCNewParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD1184D0A6E00C21E48 /* CCNewParticleSystemQuad.h */; };
 		593BDCE5184D0A6E00C21E48 /* CCNewParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD1184D0A6E00C21E48 /* CCNewParticleSystemQuad.h */; };
 		593BDCE6184D0A6E00C21E48 /* CCNewSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */; };
@@ -3044,6 +3046,8 @@
 		5069133D185016C1009BBDD7 /* CCConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsole.h; path = ../base/CCConsole.h; sourceTree = "<group>"; };
 		50A1FF1618290ED4001840C4 /* UIListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListView.cpp; sourceTree = "<group>"; };
 		50A1FF1718290ED4001840C4 /* UIListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListView.h; sourceTree = "<group>"; };
+		50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewLabelAtlas.cpp; sourceTree = "<group>"; };
+		50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewLabelAtlas.h; sourceTree = "<group>"; };
 		593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewDrawNode.cpp; sourceTree = "<group>"; };
 		593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewDrawNode.h; sourceTree = "<group>"; };
 		593BDCD0184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewParticleSystemQuad.cpp; sourceTree = "<group>"; };
@@ -5319,6 +5323,8 @@
 		74AC83D91006ABC123943F35 /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */,
+				50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */,
 				593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */,
 				593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */,
 				593BDCD0184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp */,
@@ -5454,6 +5460,7 @@
 				1A5700D9180BC6060088DEC7 /* CCData.h in Headers */,
 				1A5700DD180BC6060088DEC7 /* CCDataVisitor.h in Headers */,
 				1A5700E1180BC6060088DEC7 /* CCDictionary.h in Headers */,
+				50C5A44918514D2A0071C21B /* CCNewLabelAtlas.h in Headers */,
 				1A5700E3180BC6060088DEC7 /* CCDouble.h in Headers */,
 				1A5700E5180BC6060088DEC7 /* CCFloat.h in Headers */,
 				1A5700E9180BC6060088DEC7 /* CCGeometry.h in Headers */,
@@ -6157,6 +6164,7 @@
 				1AD71DB0180E26E600808F54 /* CCBFileLoader.h in Headers */,
 				1AD71DB4180E26E600808F54 /* CCBKeyframe.h in Headers */,
 				1AD71DB6180E26E600808F54 /* CCBMemberVariableAssigner.h in Headers */,
+				50C5A44A18514D2A0071C21B /* CCNewLabelAtlas.h in Headers */,
 				1AD71DBA180E26E600808F54 /* CCBReader.h in Headers */,
 				1AD71DBC180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
 				1AD71DC0180E26E600808F54 /* CCBSequence.h in Headers */,
@@ -7029,6 +7037,7 @@
 				1A8C59BB180E930E00EF57C3 /* CCComAttribute.cpp in Sources */,
 				1A8C59BF180E930E00EF57C3 /* CCComAudio.cpp in Sources */,
 				1A8C59C3180E930E00EF57C3 /* CCComController.cpp in Sources */,
+				50C5A44718514D2A0071C21B /* CCNewLabelAtlas.cpp in Sources */,
 				1A8C59C7180E930E00EF57C3 /* CCComRender.cpp in Sources */,
 				593BDCFA184D0A6E00C21E48 /* NewClippingNode.cpp in Sources */,
 				1A8C59CB180E930E00EF57C3 /* CCDataReaderHelper.cpp in Sources */,
@@ -7552,6 +7561,7 @@
 				1A8C59BC180E930E00EF57C3 /* CCComAttribute.cpp in Sources */,
 				1A8C59C0180E930E00EF57C3 /* CCComAudio.cpp in Sources */,
 				1A8C59C4180E930E00EF57C3 /* CCComController.cpp in Sources */,
+				50C5A44818514D2A0071C21B /* CCNewLabelAtlas.cpp in Sources */,
 				1A8C59C8180E930E00EF57C3 /* CCComRender.cpp in Sources */,
 				593BDCFB184D0A6E00C21E48 /* NewClippingNode.cpp in Sources */,
 				1A8C59CC180E930E00EF57C3 /* CCDataReaderHelper.cpp in Sources */,

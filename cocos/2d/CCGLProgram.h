@@ -255,6 +255,7 @@ private:
         unsigned int usesTime:1;
         unsigned int usesMVP:1;
         unsigned int usesMV:1;
+        unsigned int usesP:1;
 		unsigned int usesRandom:1;
 
         // handy way to initialize the bitfield
