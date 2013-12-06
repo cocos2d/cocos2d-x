@@ -1923,6 +1923,10 @@
 		74AC8E3E7D85FB595242AAEC /* MaterialManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC800F4905C8827A44EED3 /* MaterialManager.h */; };
 		74AC8EE0C2AAB82783F47089 /* Frustum.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC840F2F17ED6D0163669F /* Frustum.h */; };
 		74AC8FFBE659C58FAB66458C /* CCNewRenderTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AC8BBFF8202DFA0628CC61 /* CCNewRenderTexture.cpp */; };
+		A023FA34185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
+		A023FA35185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
+		A023FA36185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
+		A023FA37185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B37510711823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */; };
 		B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */; };
@@ -3082,6 +3086,8 @@
 		74AC8EB8FE47EED9B30B7106 /* Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		74AC8F4F7D9E52FCB522B647 /* RenderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderCommand.h; sourceTree = "<group>"; };
 		74AC8FADF4137304F1C5F060 /* CCNewRenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewRenderTexture.h; sourceTree = "<group>"; };
+		A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColor_noMVP_frag.h; sourceTree = "<group>"; };
+		A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColor_noMVP_vert.h; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3764,6 +3770,8 @@
 				1A570244180BCC6F0088DEC7 /* ccShader_PositionTextureA8Color_vert.h */,
 				1A570245180BCC6F0088DEC7 /* ccShader_PositionTextureColor_frag.h */,
 				1A570246180BCC6F0088DEC7 /* ccShader_PositionTextureColor_vert.h */,
+				A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */,
+				A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */,
 				1A570247180BCC6F0088DEC7 /* ccShader_PositionTextureColorAlphaTest_frag.h */,
 				1A570248180BCC6F0088DEC7 /* CCShaderCache.cpp */,
 				1A570249180BCC6F0088DEC7 /* CCShaderCache.h */,
@@ -5438,9 +5446,11 @@
 				1A57006B180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				1A57006F180BC5A10088DEC7 /* CCActionEase.h in Headers */,
 				1A570073180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
+				A023FA34185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */,
 				1A570077180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A57007B180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
+				A023FA36185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */,
 				593BDCF8184D0A6E00C21E48 /* GroupCommand.h in Headers */,
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				1A570087180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
@@ -5992,6 +6002,7 @@
 				46A170BC1807CEA4005B8026 /* mat4.h in Headers */,
 				50A1FF1B18290ED4001840C4 /* UIListView.h in Headers */,
 				46A170411807CC07005B8026 /* CCEGLView.h in Headers */,
+				A023FA37185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */,
 				46A170C21807CEA4005B8026 /* vec2.h in Headers */,
 				46A170301807CBFE005B8026 /* CCEGLViewProtocol.h in Headers */,
 				46A170321807CBFE005B8026 /* CCFileUtils.h in Headers */,
@@ -6295,6 +6306,7 @@
 				1A8C59EA180E930E00EF57C3 /* CCSGUIReader.h in Headers */,
 				1A8C59EE180E930E00EF57C3 /* CCSkin.h in Headers */,
 				B37510801823ACA100B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
+				A023FA35185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */,
 				1A8C59F2180E930E00EF57C3 /* CCSpriteFrameCacheHelper.h in Headers */,
 				1A8C59F6180E930E00EF57C3 /* CCSSceneReader.h in Headers */,
 				1A8C59FA180E930E00EF57C3 /* CCTransformHelp.h in Headers */,
