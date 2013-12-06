@@ -33,6 +33,7 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
     _shader = shader;
 
     if(quadCount > _capacity ) {
+        //TODO find a better way to manage quads, current way will result in memory be wasted
 //        _quad = (V3F_C4B_T2F_Quad*)malloc(sizeof(V3F_C4B_T2F_Quad) * quadCount);
         _quad = (V3F_C4B_T2F_Quad*) realloc(_quad, sizeof(*quad) * quadCount );
         _capacity = quadCount;
