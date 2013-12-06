@@ -7,12 +7,10 @@
 //
 
 #include "CCNewSprite.h"
-#include "RenderCommand.h"
 #include "Renderer.h"
-#include "QuadCommand.h"
-#include "CCMenuItem.h"
 #include "Frustum.h"
 #include "CCDirector.h"
+#include "QuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -108,17 +106,17 @@ void NewSprite::updateQuadVertices()
 
 void NewSprite::draw(void)
 {
-//    updateQuadVertices();
-    if(!culling())
-    {
-        return;
-    }
-
     kmMat4 mv;
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
     //TODO implement z order
     QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
     renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
+
+    if(!culling())
+    {
+        renderCommand->releaseToCommandPool();
+        return;
+    }
 
     Renderer::getInstance()->addCommand(renderCommand);
 }
@@ -126,17 +124,23 @@ void NewSprite::draw(void)
 bool NewSprite::culling() const
 {
     Frustum* frustum = Director::getInstance()->getFrustum();
+    //TODO optimize this transformation, should use parent's transformation instead
     AffineTransform worldTM = getNodeToWorldTransform();
     //generate aabb
-    
-    kmVec3 point = {_quad.bl.vertices.x, _quad.bl.vertices.y, _vertexZ};
+
+    //
+    // calculate the Quad based on the Affine Matrix
+    //
+    Rect newRect = RectApplyAffineTransform(_rect, worldTM);
+
+    kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
     
     AABB aabb(point,point);
-    point = {_quad.br.vertices.x, _quad.br.vertices.y, _vertexZ};
+    point = {newRect.getMaxX(), newRect.getMinY(), _vertexZ};
     aabb.expand(point);
-    point = {_quad.tl.vertices.x, _quad.tl.vertices.y, _vertexZ};
+    point = {newRect.getMinX(), newRect.getMaxY(), _vertexZ};
     aabb.expand(point);
-    point = {_quad.tr.vertices.x, _quad.tr.vertices.y, _vertexZ};
+    point = {newRect.getMaxX(), newRect.getMaxY(), _vertexZ};
     aabb.expand(point);
     
     return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);
