@@ -131,8 +131,8 @@ bool LabelTTF::initWithString(const std::string& string, const std::string& font
     if (Sprite::init())
     {
         // shader program
-        this->setShaderProgram(ShaderCache::getInstance()->getProgram(SHADER_PROGRAM));
-        
+//        this->setShaderProgram(ShaderCache::getInstance()->getProgram(SHADER_PROGRAM));
+
         _dimensions = Size(dimensions.width, dimensions.height);
         _alignment = hAlignment;
         _vAlignment = vAlignment;

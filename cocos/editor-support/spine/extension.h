@@ -96,7 +96,7 @@ namespace spine {
 
 void _AtlasPage_createTexture (AtlasPage* self, const char* path);
 void _AtlasPage_disposeTexture (AtlasPage* self);
-char* _Util_readFile (const char* path, int* length);
+char* _Util_readFile (const char* path, ssize_t* length);
 
 /*
  * Internal API available for extension:

@@ -64,7 +64,7 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, int capacity
 * creation with File Image
 */
 
-SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, long capacity/* = DEFAULT_CAPACITY*/)
+SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, int capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
@@ -76,7 +76,7 @@ SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, long capacity/* 
 /*
 * init with Texture2D
 */
-bool SpriteBatchNode::initWithTexture(Texture2D *tex, long capacity)
+bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
@@ -110,7 +110,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const char* fileImage, long capacity)
+bool SpriteBatchNode::initWithFile(const char* fileImage, int capacity)
 {
     Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
@@ -291,7 +291,7 @@ void SpriteBatchNode::sortAllChildren()
 void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 {
     auto& array = sprite->getChildren();
-    long count = array.size();
+    auto count = array.size();
     
     int oldIndex = 0;
 
@@ -406,7 +406,7 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     // if we're going beyond the current TextureAtlas's capacity,
     // all the previously initialized sprites will need to redo their texture coords
     // this is likely computationally expensive
-    long quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
+    auto quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
 
     CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
         _textureAtlas->getCapacity(),
@@ -483,7 +483,7 @@ int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
 int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 {
     auto& siblings = sprite->getParent()->getChildren();
-    long childIndex = siblings.getIndex(sprite);
+    auto childIndex = siblings.getIndex(sprite);
 
     // ignore parent Z if parent is spriteSheet
     bool ignoreParent = (SpriteBatchNode*)(sprite->getParent()) == this;
@@ -551,7 +551,7 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
     }
 
     _descendants.push_back(sprite);
-    long index = _descendants.size()-1;
+    auto index = _descendants.size()-1;
 
     sprite->setAtlasIndex(index);
 

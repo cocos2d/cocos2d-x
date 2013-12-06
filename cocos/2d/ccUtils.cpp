@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-unsigned long ccNextPOT(unsigned long x)
+int ccNextPOT(int x)
 {
     x = x - 1;
     x = x | (x >> 1);

@@ -38,6 +38,12 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         _capacity = quadCount;
     }
 
+    kmMat4 p, mvp;
+    kmGLGetMatrix(KM_GL_PROJECTION, &p);
+
+    kmMat4Multiply(&mvp, &p, &mv);
+
+
     _quadCount = quadCount;
     memcpy(_quad, quad, sizeof(V3F_C4B_T2F_Quad) * quadCount);
 
@@ -48,7 +54,7 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         vec1.x = q->bl.vertices.x;
         vec1.y = q->bl.vertices.y;
         vec1.z = q->bl.vertices.z;
-        kmVec3Transform(&out1, &vec1, &mv);
+        kmVec3TransformCoord(&out1, &vec1, &mvp);
         q->bl.vertices.x = out1.x;
         q->bl.vertices.y = out1.y;
         q->bl.vertices.z = out1.z;
@@ -57,7 +63,7 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         vec2.x = q->br.vertices.x;
         vec2.y = q->br.vertices.y;
         vec2.z = q->br.vertices.z;
-        kmVec3Transform(&out2, &vec2, &mv);
+        kmVec3TransformCoord(&out2, &vec2, &mvp);
         q->br.vertices.x = out2.x;
         q->br.vertices.y = out2.y;
         q->br.vertices.z = out2.z;
@@ -66,7 +72,7 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         vec3.x = q->tr.vertices.x;
         vec3.y = q->tr.vertices.y;
         vec3.z = q->tr.vertices.z;
-        kmVec3Transform(&out3, &vec3, &mv);
+        kmVec3TransformCoord(&out3, &vec3, &mvp);
         q->tr.vertices.x = out3.x;
         q->tr.vertices.y = out3.y;
         q->tr.vertices.z = out3.z;
@@ -75,7 +81,7 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         vec4.x = q->tl.vertices.x;
         vec4.y = q->tl.vertices.y;
         vec4.z = q->tl.vertices.z;
-        kmVec3Transform(&out4, &vec4, &mv);
+        kmVec3TransformCoord(&out4, &vec4, &mvp);
         q->tl.vertices.x = out4.x;
         q->tl.vertices.y = out4.y;
         q->tl.vertices.z = out4.z;
