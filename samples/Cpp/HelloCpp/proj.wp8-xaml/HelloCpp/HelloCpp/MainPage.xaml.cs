@@ -31,10 +31,11 @@ namespace PhoneDirect3DXamlAppInterop
                 m_d3dBackground = new Direct3DBackground();
 
                 // Set window bounds in dips
+                // since this is a Landscape only app we need to swap width and height
                 m_d3dBackground.WindowBounds = new Windows.Foundation.Size(
-                    (float)Application.Current.Host.Content.ActualWidth,
-                    (float)Application.Current.Host.Content.ActualHeight
-                    );
+                    (float)Application.Current.Host.Content.ActualHeight,
+                    (float)Application.Current.Host.Content.ActualWidth
+                   );
 
                 // Set native resolution in pixels
                 m_d3dBackground.NativeResolution = new Windows.Foundation.Size(

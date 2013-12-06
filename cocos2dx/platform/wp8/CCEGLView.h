@@ -121,6 +121,7 @@ public:
 	float getFrameZoomFactor();
     void centerWindow();
 
+ 	void UpdateOrientation(Windows::Graphics::Display::DisplayOrientations orientation);
  	void UpdateForWindowSizeChange(float width, float height);
    
     // static function
@@ -145,7 +146,9 @@ private:
 	Windows::Foundation::EventRegistrationToken m_eventToken;
 	Windows::Foundation::Point m_lastPoint;
 
-        
+    float m_width;
+    float m_height;
+
     Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
     Windows::Graphics::Display::DisplayOrientations m_orientation;
 	Windows::Foundation::Rect m_keyboardRect;
