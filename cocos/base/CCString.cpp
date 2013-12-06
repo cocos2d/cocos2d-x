@@ -146,9 +146,9 @@ const char* String::getCString() const
     return _string.c_str();
 }
 
-unsigned int String::length() const
+int String::length() const
 {
-    return _string.length();
+    return static_cast<int>(_string.length());
 }
 
 int String::compare(const char * pStr) const
@@ -182,7 +182,7 @@ Array* String::componentsSeparatedByString(const char *delimiter)
 {
     Array* result = Array::create();
     
-    int cutAt;
+    size_t cutAt;
     while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
     {
         if(cutAt > 0)

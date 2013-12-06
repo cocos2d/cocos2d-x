@@ -406,9 +406,9 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     // if we're going beyond the current TextureAtlas's capacity,
     // all the previously initialized sprites will need to redo their texture coords
     // this is likely computationally expensive
-    auto quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
+    int quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
 
-    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
+    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%d] to [%d].",
         _textureAtlas->getCapacity(),
         quantity);
 
@@ -551,7 +551,7 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
     }
 
     _descendants.push_back(sprite);
-    auto index = _descendants.size()-1;
+    int index = static_cast<int>(_descendants.size()-1);
 
     sprite->setAtlasIndex(index);
 

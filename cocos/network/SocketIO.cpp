@@ -182,24 +182,24 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
 
 	std::string res = s.str();
 	std::string sid;
-	int pos = 0;
+	size_t pos = 0;
 	int heartbeat = 0, timeout = 0;
 
 	pos = res.find(":");
-	if(pos >= 0)
+	if(pos != std::string::npos)
     {
 		sid = res.substr(0, pos);
 		res.erase(0, pos+1);
 	}
 
 	pos = res.find(":");
-    if(pos >= 0)
+    if(pos != std::string::npos)
     {
         heartbeat = atoi(res.substr(pos+1, res.size()).c_str());
     }
 
 	pos = res.find(":");
-    if(pos >= 0)
+    if(pos != std::string::npos)
     {
         timeout = atoi(res.substr(pos+1, res.size()).c_str());
     }
@@ -381,21 +381,21 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 	std::string payload, msgid, endpoint, s_data, eventname;
 	payload = data.bytes;
 
-	int pos, pos2;
+	size_t pos, pos2;
 
 	pos = payload.find(":");
-	if(pos >=0 ) {
+	if(pos != std::string::npos ) {
 		payload.erase(0, pos+1);
 	}
 
 	pos = payload.find(":");
-	if(pos > 0 ) {
+	if(pos != std::string::npos ) {
 		msgid = atoi(payload.substr(0, pos+1).c_str());	
 	}
 	payload.erase(0, pos+1);
 
 	pos = payload.find(":");
-	if(pos >= 0)
+	if(pos != std::string::npos)
     {
 		endpoint = payload.substr(0, pos);
 		payload.erase(0, pos+1);
@@ -617,33 +617,33 @@ SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string&
 {
 	std::string host = uri;
 	int port = 0;
-    int pos = 0;
+    size_t pos = 0;
 
 	pos = host.find("//");
-	if (pos >= 0)
+	if (pos != std::string::npos)
     {
 		host.erase(0, pos+2);
 	}
 
 	pos = host.find(":");
-    if (pos >= 0)
+    if (pos != std::string::npos)
     {
         port = atoi(host.substr(pos+1, host.size()).c_str());
     }
 
 	pos = host.find("/", 0);
     std::string path = "/";
-    if (pos >= 0)
+    if (pos != std::string::npos)
     {
         path += host.substr(pos + 1, host.size());
     }
 
 	pos = host.find(":");
-    if (pos >= 0)
+    if (pos != std::string::npos)
     {
         host.erase(pos, host.size());
     }
-    else if ((pos = host.find("/"))>=0)
+    else if ((pos = host.find("/")) != std::string::npos)
     {
     	host.erase(pos, host.size());
     }

@@ -714,7 +714,7 @@ Point PhysicsShapeEdgePolygon::getCenter()
 
 int PhysicsShapeEdgePolygon::getPointsCount() const
 {
-    return _info->getShapes().size() + 1;
+    return static_cast<int>(_info->getShapes().size() + 1);
 }
 
 // PhysicsShapeEdgeChain
@@ -775,7 +775,7 @@ Point PhysicsShapeEdgeChain::getCenter()
 
 int PhysicsShapeEdgeChain::getPointsCount() const
 {
-    return _info->getShapes().size() + 1;
+    return static_cast<int>(_info->getShapes().size() + 1);
 }
 
 void PhysicsShape::setGroup(int group)
