@@ -102,7 +102,7 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
             continue;
         }
 
-        Vector<AnimationFrame*> frames(frameNames.size());
+        Vector<AnimationFrame*> frames(static_cast<int>(frameNames.size()));
 
         for (auto& frameName : frameNames)
         {
@@ -155,7 +155,7 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
         }
 
         // Array of AnimationFrames
-        Vector<AnimationFrame*> array(frameArray.size());
+        Vector<AnimationFrame*> array(static_cast<int>(frameArray.size()));
 
         for (auto& obj : frameArray)
         {

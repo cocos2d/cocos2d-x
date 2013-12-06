@@ -209,18 +209,18 @@ JSBool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc > 0) {
-		cocos2d::Array* array = cocos2d::Array::create();
+		Vector<MenuItem*> items;
 		uint32_t i = 0;
 		while (i < argc) {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
 			proxy = jsb_get_js_proxy(tmpObj);
-			cocos2d::Object *item = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
+			cocos2d::MenuItem *item = (cocos2d::MenuItem*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, item)
-			array->addObject(item);
+			items.pushBack(item);
 			i++;
 		}
-		cocos2d::Menu* ret = cocos2d::Menu::createWithArray(array);
+		cocos2d::Menu* ret = cocos2d::Menu::createWithArray(items);
 		jsval jsret;
 		do {
 			if (ret) {
@@ -267,10 +267,10 @@ JSBool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc > 0) {
-		cocos2d::Array* array = cocos2d::Array::create();
+		Vector<FiniteTimeAction*> array;
         if (argc == 1 && JS_IsArrayObject(cx, JSVAL_TO_OBJECT(argv[0]))) {
             JSBool ok = JS_TRUE;
-            ok &= jsval_to_ccarray(cx, argv[0], &array);
+            ok &= jsval_to_ccvector(cx, argv[0], &array);
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         } else {
             uint32_t i = 0;
@@ -278,9 +278,9 @@ JSBool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
                 js_proxy_t *proxy;
                 JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
                 proxy = jsb_get_js_proxy(tmpObj);
-                cocos2d::Object *item = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
+                cocos2d::FiniteTimeAction *item = (cocos2d::FiniteTimeAction*)(proxy ? proxy->ptr : NULL);
                 TEST_NATIVE_OBJECT(cx, item)
-                array->addObject(item);
+                array.pushBack(item);
                 i++;
             }
         }
@@ -311,10 +311,10 @@ JSBool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc > 0) {
-		cocos2d::Array* array = cocos2d::Array::create();
+		Vector<FiniteTimeAction*> array;
         if (argc == 1 && JS_IsArrayObject(cx, JSVAL_TO_OBJECT(argv[0]))) {
             JSBool ok = JS_TRUE;
-            ok &= jsval_to_ccarray(cx, argv[0], &array);
+            ok &= jsval_to_ccvector(cx, argv[0], &array);
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         } else {
             uint32_t i = 0;
@@ -322,9 +322,9 @@ JSBool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
                 js_proxy_t *proxy;
                 JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
                 proxy = jsb_get_js_proxy(tmpObj);
-                cocos2d::Object *item = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
+                cocos2d::FiniteTimeAction *item = (cocos2d::FiniteTimeAction*)(proxy ? proxy->ptr : NULL);
                 TEST_NATIVE_OBJECT(cx, item)
-                array->addObject(item);
+                array.pushBack(item);
                 i++;
             }
         }
@@ -620,24 +620,34 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
     JSBool ok = JS_TRUE;
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc <= 3) {
-		cocos2d::Array* arg0;
-		if (argc > 0) {
-			ok &= jsval_to_ccarray(cx, argv[0], &arg0);
-            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		}
 		cocos2d::Animation* ret = nullptr;
 		double arg1 = 0.0f;
 		if (argc == 2) {
+            Vector<SpriteFrame*> arg0;
+            if (argc > 0) {
+                ok &= jsval_to_ccvector(cx, argv[0], &arg0);
+                JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+            }
             ok &= JS_ValueToNumber(cx, argv[1], &arg1);
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 			ret = cocos2d::Animation::createWithSpriteFrames(arg0, arg1);
 		} else if (argc == 3) {
+            Vector<AnimationFrame*> arg0;
+            if (argc > 0) {
+                ok &= jsval_to_ccvector(cx, argv[0], &arg0);
+                JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+            }
 			unsigned int loops;
 			ok &= JS_ValueToNumber(cx, argv[1], &arg1);
 			ok &= jsval_to_uint32(cx, argv[2], &loops);
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 			ret = cocos2d::Animation::create(arg0, arg1, loops);
 		} else if (argc == 1) {
+            Vector<SpriteFrame*> arg0;
+            if (argc > 0) {
+                ok &= jsval_to_ccvector(cx, argv[0], &arg0);
+                JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+            }
 			ret = cocos2d::Animation::createWithSpriteFrames(arg0);
 		} else if (argc == 0) {
             ret = cocos2d::Animation::create();
@@ -665,9 +675,9 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 JSBool js_cocos2dx_CCLayerMultiplex_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
-	cocos2d::Array* arg0;
+	Vector<Layer*> arg0;
     JSBool ok = JS_TRUE;
-	ok &= jsvals_variadic_to_ccarray(cx, argv, argc, &arg0);
+	ok &= jsvals_variadic_to_ccvector(cx, argv, argc, &arg0);
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
     
 	cocos2d::LayerMultiplex* ret = cocos2d::LayerMultiplex::createWithArray(arg0);
@@ -2987,11 +2997,11 @@ JSBool js_cocos2dx_CCMenu_alignItemsInRows(JSContext *cx, uint32_t argc, jsval *
 
     jsval *argvp = JS_ARGV(cx,vp);
 
-    Array* pArray = NULL;
-    ok &= jsvals_variadic_to_ccarray(cx, argvp, argc, &pArray);
-    if (ok && pArray)
+    ValueVector items;
+    ok &= jsvals_variadic_to_ccvaluevector(cx, argvp, argc, &items);
+    if (ok)
     {
-        cobj->alignItemsInRowsWithArray(pArray);
+        cobj->alignItemsInRowsWithArray(items);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
@@ -3008,11 +3018,12 @@ JSBool js_cocos2dx_CCMenu_alignItemsInColumns(JSContext *cx, uint32_t argc, jsva
     TEST_NATIVE_OBJECT(cx, cobj)
 
     jsval *argvp = JS_ARGV(cx,vp);
-    Array* pArray = NULL;
-    ok &= jsvals_variadic_to_ccarray(cx, argvp, argc, &pArray);
-    if (ok && pArray)
+
+    ValueVector items;
+    ok &= jsvals_variadic_to_ccvaluevector(cx, argvp, argc, &items);
+    if (ok)
     {
-        cobj->alignItemsInColumnsWithArray(pArray);
+        cobj->alignItemsInColumnsWithArray(items);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }

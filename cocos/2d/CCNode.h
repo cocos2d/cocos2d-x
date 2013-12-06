@@ -620,7 +620,7 @@ public:
      *
      * @return The amount of children.
      */
-    long getChildrenCount() const;
+    int getChildrenCount() const;
 
     /**
      * Sets the parent node
@@ -1041,10 +1041,10 @@ public:
      *
      * @return The number of actions that are running plus the ones that are schedule to run
      */
-    long getNumberOfRunningActions() const;
+    int getNumberOfRunningActions() const;
 
     /** @deprecated Use getNumberOfRunningActions() instead */
-    CC_DEPRECATED_ATTRIBUTE unsigned int numberOfRunningActions() const { return getNumberOfRunningActions(); };
+    CC_DEPRECATED_ATTRIBUTE int numberOfRunningActions() const { return getNumberOfRunningActions(); };
 
     /// @} end of Actions
 
@@ -1419,7 +1419,7 @@ protected:
     void insertChild(Node* child, int z);
 
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
-    void detachChild(Node *child, long index, bool doCleanup);
+    void detachChild(Node *child, int index, bool doCleanup);
 
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;

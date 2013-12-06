@@ -401,7 +401,7 @@ void Node::setPositionY(float y)
     setPosition(Point(_position.x, y));
 }
 
-long Node::getChildrenCount() const
+int Node::getChildrenCount() const
 {
     return _children.size();
 }
@@ -699,7 +699,7 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-    long index = _children.getIndex(child);
+    auto index = _children.getIndex(child);
     if( index != CC_INVALID_INDEX )
         this->detachChild( child, index, cleanup );
 }
@@ -757,7 +757,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
     
 }
 
-void Node::detachChild(Node *child, long childIndex, bool doCleanup)
+void Node::detachChild(Node *child, int childIndex, bool doCleanup)
 {
     // IMPORTANT:
     //  -1st do onExit
@@ -868,7 +868,7 @@ void Node::visit()
      }
 
     this->transform();
-    long i = 0;
+    int i = 0;
 
     if(!_children.empty())
     {
@@ -1071,7 +1071,7 @@ Action * Node::getActionByTag(int tag)
     return _actionManager->getActionByTag(tag, this);
 }
 
-long Node::getNumberOfRunningActions() const
+int Node::getNumberOfRunningActions() const
 {
     return _actionManager->getNumberOfRunningActionsInTarget(this);
 }
