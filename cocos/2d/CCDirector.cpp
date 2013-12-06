@@ -1037,9 +1037,6 @@ void DisplayLinkDirector::mainLoop()
     }
     else if (! _invalid)
     {
-        // invoke call back from other thread
-        ThreadHelper::doCallback();
-        
         drawScene();
      
         // release the objects
