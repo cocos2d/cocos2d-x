@@ -169,8 +169,7 @@ void LabelAtlas::updateAtlasValues()
         quads[i].tr.vertices.x = (float)(i * _itemWidth + _itemWidth);
         quads[i].tr.vertices.y = (float)(_itemHeight);
         quads[i].tr.vertices.z = 0.0f;
-//        Color4B c(_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity);
-        Color4B c(255,255,255,255);
+        Color4B c(_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity);
         quads[i].tl.colors = c;
         quads[i].tr.colors = c;
         quads[i].bl.colors = c;
