@@ -57,6 +57,13 @@ struct FrameEvent
     int currentFrameIndex;
 };
 
+struct MovementEvent
+{
+    Armature *armature;
+    MovementEventType movementType;
+    const char *movementID;
+};
+
 class  ArmatureAnimation : public ProcessBase
 {
 public:
@@ -129,13 +136,17 @@ public:
      *         2  : fade in and out
      *
      */
-    void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
     /**
      * Play animation by index, the other param is the same to play.
      * @param  animationIndex  the animation index you want to play
      */
-    void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+
+
+    virtual void play(bool loop, const std::string *movementNames, int movementNumber);
+    virtual void playByIndex(bool loop, const int *movementIndexes, int movementNumber);
 
     /**
      * Go to specified frame and play current movement.
@@ -255,6 +266,13 @@ protected:
      */
     void frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
+    /**
+     * Emit a movement event
+     */
+    void movementEvent(Armature *armature, MovementEventType movementType, const char *movementID);
+
+    void updateMovementList();
+
     bool isIgnoreFrameEvent() const { return _ignoreFrameEvent; }
 
     friend class Tween;
@@ -278,6 +296,13 @@ protected:
     bool _ignoreFrameEvent;
     
     std::queue<FrameEvent*> _frameEventQueue;
+    std::queue<MovementEvent*> _movementEventQueue;
+
+    std::vector<std::string> _movementList;
+    
+    bool _onMovementList;
+    bool _movementListLoop;
+    unsigned int _movementIndex;
 
     cocos2d::Object *_userObject;
 protected:

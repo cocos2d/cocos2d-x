@@ -179,6 +179,7 @@ void DisplayManager::addDisplay(Node *display, int index)
     else if(Armature *armature = dynamic_cast<Armature *>(display))
     {
         displayData = ArmatureDisplayData::create();
+        displayData->displayName = armature->getName();
         armature->setParentBone(_bone);
     }
     else
@@ -243,9 +244,21 @@ void DisplayManager::changeDisplayByIndex(int index, bool force)
     setCurrentDecorativeDisplay(decoDisplay);
 }
 
+void CCDisplayManager::changeDisplayByName(const char *name, bool force)
+{
+    for (int i = 0; i<_decoDisplayList->count(); i++)
+    {
+        if (static_cast<CCDecorativeDisplay*>(_decoDisplayList->getObjectAtIndex(i))->getDisplayData()->displayName == name)
+        {
+            changeDisplayByIndex(i, force);
+            break;
+        }
+    }
+}
+
 void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 {
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (_currentDecoDisplay && _currentDecoDisplay->getColliderDetector())
     {
         _currentDecoDisplay->getColliderDetector()->setActive(false);
@@ -254,7 +267,7 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 
     _currentDecoDisplay = decoDisplay;
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (_currentDecoDisplay && _currentDecoDisplay->getColliderDetector())
     {
         _currentDecoDisplay->getColliderDetector()->setActive(true);

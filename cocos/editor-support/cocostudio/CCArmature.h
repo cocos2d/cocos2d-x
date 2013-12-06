@@ -186,7 +186,11 @@ public:
 
     virtual cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture) const;
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    virtual void drawContour();
+#endif
 
 
     virtual void setArmatureData(ArmatureData *armatureData) { _armatureData = armatureData; }

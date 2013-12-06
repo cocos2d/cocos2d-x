@@ -91,18 +91,29 @@ ColliderBody::ColliderBody(ContourData *contourData)
     CC_SAFE_RETAIN(_calculatedVertexList);
 #endif
 }
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+ColliderBody::ColliderBody(ContourData *contourData)
+    : _contourData(contourData)
+{
+    CC_SAFE_RETAIN(_contourData);
+    
+    _calculatedVertexList = Array::create();
+    CC_SAFE_RETAIN(_calculatedVertexList);
+}
 #endif
 
 ColliderBody::~ColliderBody()
 {
     CC_SAFE_RELEASE(_contourData);
-    CC_SAFE_DELETE(_filter);
 
-#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    CC_SAFE_DELETE(_filter);
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     CC_SAFE_RELEASE(_calculatedVertexList);
 #endif
 }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void ColliderBody::setColliderFilter(ColliderFilter *filter)
 {
     *_filter = *filter;
@@ -111,6 +122,7 @@ ColliderFilter *ColliderBody::getColliderFilter()
 {
     return _filter;
 }
+#endif
 
 
 
@@ -140,17 +152,22 @@ ColliderDetector *ColliderDetector::create(Bone *bone)
 
 ColliderDetector::ColliderDetector()
     : _colliderBodyList(nullptr)
-    , _filter(nullptr)
     , _active(false)
 {
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     _body = nullptr;
+    _filter = nullptr;
+#endif
 }
 
 ColliderDetector::~ColliderDetector()
 {
     _colliderBodyList->removeAllObjects();
     CC_SAFE_DELETE(_colliderBodyList);
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SAFE_DELETE(_filter);
+#endif
 }
 
 bool ColliderDetector::init()
@@ -159,7 +176,9 @@ bool ColliderDetector::init()
     CCASSERT(_colliderBodyList, "create _colliderBodyList failed!");
     _colliderBodyList->retain();
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     _filter = new ColliderFilter();
+#endif
 
     return true;
 }
@@ -287,6 +306,8 @@ Array *ColliderDetector::getColliderBodyList()
     return _colliderBodyList;
 }
 
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void ColliderDetector::setColliderFilter(ColliderFilter *filter)
 {
     *_filter = *filter;
@@ -313,6 +334,7 @@ ColliderFilter *ColliderDetector::getColliderFilter()
 {
     return _filter;
 }
+#endif
 
 
 Point helpPoint;

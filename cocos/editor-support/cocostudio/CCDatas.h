@@ -146,9 +146,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~DisplayData(void);
+    virtual ~DisplayData(void) {}
+
+    virtual void copy(DisplayData *displayData);
 
     DisplayType displayType;	//! mark which type your display is
+    std::string displayName;
 };
 
 
@@ -169,21 +172,10 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~SpriteDisplayData();
+    virtual ~SpriteDisplayData() {};
 
-    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
-    
-    void copy(SpriteDisplayData *displayData);
+    void copy(DisplayData *displayData);
 public:
-    /**
-    * If DisplayType is CS_DISPLAY_SPRITE, then Bone will use this image name to create a Sprite from CCSpriteFrameCache.
-    * It should note that when use this name to create Sprite from CCSpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
-    *
-    * If DisplayType is CS_DISPLAY_ARMATURE, the name is the Armature's name. When Bone init display and type is CS_DISPLAY_ARMATURE,
-    * then Bone will create a Armature.
-    */
-    std::string displayName;
-
     BaseData skinData;
 };
 
@@ -204,20 +196,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~ArmatureDisplayData();
-
-    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
-    void copy(ArmatureDisplayData *displayData);
-public:
-    /**
-    * If DisplayType is CS_DISPLAY_SPRITE, then Bone will use this image name to create a Sprite from CCSpriteFrameCache.
-    * It should note that when use this name to create Sprite from CCSpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
-    *
-    * If DisplayType is CS_DISPLAY_ARMATURE, the name is the Armature's name. When Bone init display and type is CS_DISPLAY_ARMATURE,
-    * then Bone will create a Armature.
-    */
-    std::string displayName;
-
+    virtual ~ArmatureDisplayData() {}
 };
 
 /**
@@ -238,12 +217,6 @@ public:
      * @lua NA
      */
     virtual ~ParticleDisplayData() {};
-
-    void setParam(const char *pszPlistName) { this->plist = pszPlistName; }
-
-    void copy(ParticleDisplayData *displayData);
-public:
-    std::string plist;
 };
 
 

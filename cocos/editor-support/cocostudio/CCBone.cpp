@@ -435,6 +435,12 @@ void Bone::changeDisplayByIndex(int index, bool force)
     _displayManager->changeDisplayByIndex(index, force);
 }
 
+
+void CCBone::changeDisplayByName(const char *name, bool force)
+{
+    _displayManager->changeDisplayByName(name, force);
+}
+
 Array *Bone::getColliderBodyList()
 {
     if (DecorativeDisplay *decoDisplay = _displayManager->getCurrentDecorativeDisplay())
@@ -448,7 +454,7 @@ Array *Bone::getColliderBodyList()
 }
 
 
-
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void Bone::setColliderFilter(ColliderFilter *filter)
 {
     Array *array = _displayManager->getDecorativeDisplayList();
@@ -473,6 +479,6 @@ ColliderFilter *Bone::getColliderFilter()
     }
     return nullptr;
 }
-
+#endif
 
 }
