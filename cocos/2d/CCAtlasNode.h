@@ -48,7 +48,7 @@ If you are going to render a TextureAtlas consider subclassing AtlasNode (or a s
 All features from Node are valid, plus the following features:
 - opacity and RGB colors
 */
-class CC_DLL AtlasNode : public NodeRGBA, public TextureProtocol
+class CC_DLL AtlasNode : public Node, public TextureProtocol
 {    
 public:
 	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/

@@ -36,7 +36,7 @@ namespace cocostudio {
 
 class Armature;
 
-class Bone : public cocos2d::NodeRGBA
+class Bone : public cocos2d::Node
 {
 public:
     /**

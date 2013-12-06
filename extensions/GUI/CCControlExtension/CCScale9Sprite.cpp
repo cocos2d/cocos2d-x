@@ -701,11 +701,7 @@ void Scale9Sprite::setOpacityModifyRGB(bool var)
     _opacityModifyRGB = var;
     
     _scale9Image->getChildren().forEach([this](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->setOpacityModifyRGB(_opacityModifyRGB);
-        }
+        child->setOpacityModifyRGB(_opacityModifyRGB);
     });
 }
 
@@ -787,14 +783,10 @@ void Scale9Sprite::setColor(const Color3B& color)
         return;
     }
     
-    NodeRGBA::setColor(color);
+    Node::setColor(color);
     
     _scale9Image->getChildren().forEach([&color](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->setColor(color);
-        }
+        child->setColor(color);
     });
 }
 
@@ -809,14 +801,10 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
     {
         return;
     }
-    NodeRGBA::setOpacity(opacity);
+    Node::setOpacity(opacity);
     
     _scale9Image->getChildren().forEach([&opacity](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->setOpacity(opacity);
-        }
+        child->setOpacity(opacity);
     });
 }
 
@@ -831,14 +819,10 @@ void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
     {
         return;
     }
-    NodeRGBA::updateDisplayedColor(parentColor);
+    Node::updateDisplayedColor(parentColor);
     
     _scale9Image->getChildren().forEach([&parentColor](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->updateDisplayedColor(parentColor);
-        }
+        child->updateDisplayedColor(parentColor);
     });
 }
 
@@ -848,14 +832,10 @@ void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
     {
         return;
     }
-    NodeRGBA::updateDisplayedOpacity(parentOpacity);
+    Node::updateDisplayedOpacity(parentOpacity);
     
     _scale9Image->getChildren().forEach([&parentOpacity](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->updateDisplayedOpacity(parentOpacity);
-        }
+        child->updateDisplayedOpacity(parentOpacity);
     });
 }
 

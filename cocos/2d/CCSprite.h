@@ -77,7 +77,7 @@ struct transformValues_;
  *
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */
-class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
+class CC_DLL Sprite : public Node, public TextureProtocol
 {
 public:
 
@@ -421,10 +421,6 @@ public:
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
     virtual void draw(void) override;
-    /// @}
-
-    /// @{
-    /// @name Functions inherited from NodeRGBA
     virtual void setColor(const Color3B& color3) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
     virtual void setOpacity(GLubyte opacity) override;
