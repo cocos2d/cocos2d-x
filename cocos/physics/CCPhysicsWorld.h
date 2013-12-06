@@ -25,6 +25,7 @@
 #ifndef __CCPHYSICS_WORLD_H__
 #define __CCPHYSICS_WORLD_H__
 
+#include "ccConfig.h"
 #ifdef CC_USE_PHYSICS
 
 #include <list>
@@ -82,11 +83,11 @@ typedef PhysicsRectQueryCallbackFunc PhysicsPointQueryCallbackFunc;
 class PhysicsWorld
 {
 public:
-    static const long DEBUGDRAW_NONE = 0x00;
-    static const long DEBUGDRAW_SHAPE = 0x01;
-    static const long DEBUGDRAW_JOINT = 0x02;
-    static const long DEBUGDRAW_CONTACT = 0x04;
-    static const long DEBUGDRAW_ALL = DEBUGDRAW_SHAPE | DEBUGDRAW_JOINT | DEBUGDRAW_CONTACT;
+    static const int DEBUGDRAW_NONE;
+    static const int DEBUGDRAW_SHAPE;
+    static const int DEBUGDRAW_JOINT;
+    static const int DEBUGDRAW_CONTACT;
+    static const int DEBUGDRAW_ALL;
     
 public:
     /** Adds a joint to the physics world.*/

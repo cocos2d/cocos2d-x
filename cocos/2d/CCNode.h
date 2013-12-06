@@ -38,8 +38,7 @@
 #include "CCScriptSupport.h"
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
-
-#include <vector>
+#include "CCVector.h"
 
 NS_CC_BEGIN
 
@@ -614,15 +613,15 @@ public:
      *
      * @return An array of children
      */
-    virtual Array* getChildren() { return _children; }
-    virtual const Array *getChildren() const { return _children; }
-
-    /**
+    virtual Vector<Node*>& getChildren() { return _children; }
+    virtual const Vector<Node*>& getChildren() const { return _children; }
+    
+    /** 
      * Get the amount of children.
      *
      * @return The amount of children.
      */
-    long getChildrenCount() const;
+    int getChildrenCount() const;
 
     /**
      * Sets the parent node
@@ -1043,10 +1042,10 @@ public:
      *
      * @return The number of actions that are running plus the ones that are schedule to run
      */
-    unsigned int getNumberOfRunningActions() const;
+    int getNumberOfRunningActions() const;
 
     /** @deprecated Use getNumberOfRunningActions() instead */
-    CC_DEPRECATED_ATTRIBUTE unsigned int numberOfRunningActions() const { return getNumberOfRunningActions(); };
+    CC_DEPRECATED_ATTRIBUTE int numberOfRunningActions() const { return getNumberOfRunningActions(); };
 
     /// @} end of Actions
 
@@ -1398,12 +1397,12 @@ protected:
 
     /// lazy allocs
     void childrenAlloc(void);
-
+    
     /// helper that reorder a child
     void insertChild(Node* child, int z);
 
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
-    void detachChild(Node *child, long index, bool doCleanup);
+    void detachChild(Node *child, int index, bool doCleanup);
 
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
@@ -1440,8 +1439,8 @@ protected:
     GridBase *_grid;                ///< a grid
 
     int _ZOrder;                      ///< z-order value that affects the draw order
-
-    Array *_children;               ///< array of children nodes
+    
+    Vector<Node*> _children;               ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
 
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node

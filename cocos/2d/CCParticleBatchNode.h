@@ -91,11 +91,11 @@ public:
     /** Inserts a child into the ParticleBatchNode */
     void insertChild(ParticleSystem* system, int index);
 
-    void removeChildAtIndex(unsigned int index, bool doCleanup);
+    void removeChildAtIndex(int index, bool doCleanup);
     void removeAllChildrenWithCleanup(bool doCleanup);
 
     /** disables a particle by inserting a 0'd quad into the texture atlas */
-    void disableParticle(unsigned int particleIndex);
+    void disableParticle(int particleIndex);
 
     /** Gets the texture atlas used for drawing the quads */
     inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; };
@@ -129,10 +129,10 @@ public:
 
 private:
     void updateAllAtlasIndexes();
-    void increaseAtlasCapacityTo(unsigned int quantity);
-    unsigned int searchNewPositionInChildrenForZ(int z);
-    void getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, Node* child, int z);
-    unsigned int addChildHelper(ParticleSystem* child, int z, int aTag);
+    void increaseAtlasCapacityTo(int quantity);
+    int searchNewPositionInChildrenForZ(int z);
+    void getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z);
+    int addChildHelper(ParticleSystem* child, int z, int aTag);
     void updateBlendFunc(void);
     /** the texture atlas used for drawing the quads */
     TextureAtlas* _textureAtlas;

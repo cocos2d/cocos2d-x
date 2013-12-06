@@ -198,21 +198,21 @@ Sequence* Sequence::createWithVariableList(FiniteTimeAction *pAction1, va_list a
     return ((Sequence*)pPrev);
 }
 
-Sequence* Sequence::create(Array* arrayOfActions)
+Sequence* Sequence::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
     Sequence* pRet = NULL;
     do 
     {
-        long count = arrayOfActions->count();
+        auto count = arrayOfActions.size();
         CC_BREAK_IF(count == 0);
 
-        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
+        auto prev = arrayOfActions.at(0);
 
         if (count > 1)
         {
-            for (long i = 1; i < count; ++i)
+            for (int i = 1; i < count; ++i)
             {
-                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
+                prev = createWithTwoActions(prev, arrayOfActions.at(i));
             }
         }
         else
@@ -571,19 +571,19 @@ Spawn* Spawn::createWithVariableList(FiniteTimeAction *pAction1, va_list args)
     return ((Spawn*)pPrev);
 }
 
-Spawn* Spawn::create(Array *arrayOfActions)
+Spawn* Spawn::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
     Spawn* pRet = NULL;
     do 
     {
-        long count = arrayOfActions->count();
+        auto count = arrayOfActions.size();
         CC_BREAK_IF(count == 0);
-        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
+        auto prev = arrayOfActions.at(0);
         if (count > 1)
         {
-            for (int i = 1; i < arrayOfActions->count(); ++i)
+            for (int i = 1; i < arrayOfActions.size(); ++i)
             {
-                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
+                prev = createWithTwoActions(prev, arrayOfActions.at(i));
             }
         }
         else
@@ -591,7 +591,7 @@ Spawn* Spawn::create(Array *arrayOfActions)
             // If only one action is added to Spawn, make up a Spawn by adding a simplest finite time action.
             prev = createWithTwoActions(prev, ExtraAction::create());
         }
-        pRet = (Spawn*)prev;
+        pRet = static_cast<Spawn*>(prev);
     }while (0);
 
     return pRet;
@@ -2003,31 +2003,28 @@ Animate::~Animate()
     CC_SAFE_DELETE(_splitTimes);
 }
 
-bool Animate::initWithAnimation(Animation *pAnimation)
+bool Animate::initWithAnimation(Animation* animation)
 {
-    CCASSERT( pAnimation!=NULL, "Animate: argument Animation must be non-NULL");
+    CCASSERT( animation!=NULL, "Animate: argument Animation must be non-NULL");
 
-    float singleDuration = pAnimation->getDuration();
+    float singleDuration = animation->getDuration();
 
-    if ( ActionInterval::initWithDuration(singleDuration * pAnimation->getLoops() ) ) 
+    if ( ActionInterval::initWithDuration(singleDuration * animation->getLoops() ) )
     {
         _nextFrame = 0;
-        setAnimation(pAnimation);
+        setAnimation(animation);
         _origFrame = NULL;
         _executedLoops = 0;
 
-        _splitTimes->reserve(pAnimation->getFrames()->count());
+        _splitTimes->reserve(animation->getFrames().size());
 
         float accumUnitsOfTime = 0;
-        float newUnitOfTimeValue = singleDuration / pAnimation->getTotalDelayUnits();
+        float newUnitOfTimeValue = singleDuration / animation->getTotalDelayUnits();
 
-        Array* pFrames = pAnimation->getFrames();
-        CCARRAY_VERIFY_TYPE(pFrames, AnimationFrame*);
+        auto frames = animation->getFrames();
 
-        Object* pObj = NULL;
-        CCARRAY_FOREACH(pFrames, pObj)
+        for (auto& frame : frames)
         {
-            AnimationFrame* frame = static_cast<AnimationFrame*>(pObj);
             float value = (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration;
             accumUnitsOfTime += frame->getDelayUnits();
             _splitTimes->push_back(value);
@@ -2099,20 +2096,20 @@ void Animate::update(float t)
         t = fmodf(t, 1.0f);
     }
 
-    Array* frames = _animation->getFrames();
-    long numberOfFrames = frames->count();
+    auto frames = _animation->getFrames();
+    auto numberOfFrames = frames.size();
     SpriteFrame *frameToDisplay = NULL;
 
     for( int i=_nextFrame; i < numberOfFrames; i++ ) {
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
-            AnimationFrame* frame = static_cast<AnimationFrame*>(frames->getObjectAtIndex(i));
+            AnimationFrame* frame = frames.at(i);
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setDisplayFrame(frameToDisplay);
 
-            Dictionary* dict = frame->getUserInfo();
-            if( dict )
+            const ValueMap& dict = frame->getUserInfo();
+            if ( !dict.empty() )
             {
                 //TODO: [[NSNotificationCenter defaultCenter] postNotificationName:AnimationFrameDisplayedNotification object:target_ userInfo:dict];
             }
@@ -2127,27 +2124,24 @@ void Animate::update(float t)
 
 Animate* Animate::reverse() const
 {
-    Array* pOldArray = _animation->getFrames();
-    Array* pNewArray = Array::createWithCapacity(pOldArray->count());
+    auto oldArray = _animation->getFrames();
+    Vector<AnimationFrame*> newArray(oldArray.size());
    
-    CCARRAY_VERIFY_TYPE(pOldArray, AnimationFrame*);
-
-    if (pOldArray->count() > 0)
+    if (oldArray.size() > 0)
     {
-        Object* pObj = NULL;
-        CCARRAY_FOREACH_REVERSE(pOldArray, pObj)
+        for (auto iter = oldArray.crbegin(); iter != oldArray.crend(); ++iter)
         {
-            AnimationFrame* pElement = static_cast<AnimationFrame*>(pObj);
-            if (! pElement)
+            AnimationFrame* animFrame = *iter;
+            if (!animFrame)
             {
                 break;
             }
 
-            pNewArray->addObject(pElement->clone());
+            newArray.pushBack(animFrame->clone());
         }
     }
 
-    Animation *newAnim = Animation::create(pNewArray, _animation->getDelayPerUnit(), _animation->getLoops());
+    Animation *newAnim = Animation::create(newArray, _animation->getDelayPerUnit(), _animation->getLoops());
     newAnim->setRestoreOriginalFrame(_animation->getRestoreOriginalFrame());
     return Animate::create(newAnim);
 }

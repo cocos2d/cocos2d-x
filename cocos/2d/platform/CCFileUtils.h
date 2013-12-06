@@ -29,11 +29,10 @@ THE SOFTWARE.
 #include <unordered_map>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
-class Dictionary;
-class Array;
 /**
  * @addtogroup platform
  * @{
@@ -42,10 +41,7 @@ class Array;
 //! @brief  Helper class to handle file operations
 class CC_DLL FileUtils
 {
-    friend class Array;
-    friend class Dictionary;
 public:
-    
     /**
      *  Gets the instance of FileUtils.
      */
@@ -88,7 +84,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileData(const char* filename, const char* mode, long *size);
+    virtual unsigned char* getFileData(const char* filename, const char* mode, ssize_t *size);
 
     /**
      *  Gets resource file data from a zip file.
@@ -98,7 +94,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileDataFromZip(const char* zipFilePath, const char* filename, long *size);
+    virtual unsigned char* getFileDataFromZip(const char* zipFilePath, const char* filename, ssize_t *size);
 
     
     /** Returns the fullpath for a given filename.
@@ -189,7 +185,7 @@ public:
      *  @param pFilenameLookupDict The dictionary for replacing filename.
      *  @since v2.1
      */
-    virtual void setFilenameLookupDictionary(Dictionary* filenameLookupDict);
+    virtual void setFilenameLookupDictionary(const ValueMap& filenameLookupDict);
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
@@ -300,6 +296,24 @@ public:
     virtual void setPopupNotify(bool notify);
     virtual bool isPopupNotify();
 
+    /**
+     *  Converts the contents of a file to a ValueMap.
+     *  @note This method is used internally.
+     */
+    virtual ValueMap getValueMapFromFile(const std::string& filename);
+    
+    /**
+     *  Write a ValueMap to a plist file.
+     *  @note This method is used internally.
+     */
+    virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
+    
+    /**
+     *  Converts the contents of a file to a ValueVector.
+     *  @note This method is used internally.
+     */
+    virtual ValueVector getValueVectorFromFile(const std::string& filename);
+    
 protected:
     /**
      *  The default constructor.
@@ -347,23 +361,6 @@ protected:
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename);
     
-    /**
-     *  Creates a dictionary by the contents of a file.
-     *  @note This method is used internally.
-     */
-    virtual Dictionary* createDictionaryWithContentsOfFile(const std::string& filename);
-    
-    /**
-     *  Write a dictionary to a plist file.
-     *  @note This method is used internally.
-     */
-    virtual bool writeToFile(Dictionary *dict, const std::string& fullPath);
-    
-    /**
-     *  Creates an array by the contents of a file.
-     *  @note This method is used internally.
-     */
-    virtual Array* createArrayWithContentsOfFile(const std::string& filename);
     
     /** Dictionary used to lookup filenames based on a key.
      *  It is used internally by the following methods:
@@ -372,7 +369,7 @@ protected:
      *
      *  @since v2.1
      */
-    Dictionary* _filenameLookupDict;
+    ValueMap _filenameLookupDict;
     
     /** 
      *  The vector contains resolution folders.

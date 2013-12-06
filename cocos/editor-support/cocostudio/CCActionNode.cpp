@@ -276,7 +276,8 @@ Spawn * ActionNode::refreshActionProperty()
 	{
 		return NULL;
 	}
-	Array* cSpawnArray = Array::create();
+	Vector<FiniteTimeAction*> cSpawnArray;
+    
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
 		Array* cArray = (Array*)(_frameArray->getObjectAtIndex(n));
@@ -285,8 +286,8 @@ Spawn * ActionNode::refreshActionProperty()
 			continue;
 		}
 
-		Array* cSequenceArray = Array::create();
-		int frameCount = cArray->count();
+		Vector<FiniteTimeAction*> cSequenceArray;
+		auto frameCount = cArray->count();
 		for (int i = 0; i < frameCount; i++)
 		{
 			ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(i));
@@ -298,13 +299,13 @@ Spawn * ActionNode::refreshActionProperty()
 				ActionFrame* srcFrame = (ActionFrame*)(cArray->getObjectAtIndex(i-1));
 				float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
 				Action* cAction = frame->getAction(duration);
-				cSequenceArray->addObject(cAction);
+				cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
 			}
 		}
 		Sequence* cSequence = Sequence::create(cSequenceArray);
 		if (cSequence != NULL)
 		{
-			cSpawnArray->addObject(cSequence);
+			cSpawnArray.pushBack(cSequence);
 		}
 	}
 
