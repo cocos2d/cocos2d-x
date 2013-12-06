@@ -764,22 +764,21 @@ bool Scheduler::isTargetPaused(Object *target)
     return false;  // should never get here
 }
 
-Set* Scheduler::pauseAllTargets()
+Vector<Object*> Scheduler::pauseAllTargets()
 {
     return pauseAllTargetsWithMinPriority(PRIORITY_SYSTEM);
 }
 
-Set* Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
+Vector<Object*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
 {
-    Set* idsWithSelectors = new Set();// setWithCapacity:50];
-    idsWithSelectors->autorelease();
+    Vector<Object*> idsWithSelectors(50);
 
     // Custom Selectors
     for(tHashTimerEntry *element = _hashForTimers; element != nullptr;
         element = (tHashTimerEntry*)element->hh.next)
     {
         element->paused = true;
-        idsWithSelectors->addObject(element->target);
+        idsWithSelectors.pushBack(element->target);
     }
 
     // Updates selectors
@@ -791,7 +790,7 @@ Set* Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
             if(entry->priority >= minPriority)
             {
                 entry->paused = true;
-                idsWithSelectors->addObject(entry->target);
+                idsWithSelectors.pushBack(entry->target);
             }
         }
     }
@@ -801,7 +800,7 @@ Set* Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
         DL_FOREACH_SAFE( _updates0List, entry, tmp )
         {
             entry->paused = true;
-            idsWithSelectors->addObject(entry->target);
+            idsWithSelectors.pushBack(entry->target);
         }
     }
 
@@ -810,20 +809,18 @@ Set* Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
         if(entry->priority >= minPriority) 
         {
             entry->paused = true;
-            idsWithSelectors->addObject(entry->target);
+            idsWithSelectors.pushBack(entry->target);
         }
     }
 
-    return idsWithSelectors;
+    return std::move(idsWithSelectors);
 }
 
-void Scheduler::resumeTargets(Set* targetsToResume)
+void Scheduler::resumeTargets(const Vector<Object*>& targetsToResume)
 {
-    SetIterator iter;
-    for (iter = targetsToResume->begin(); iter != targetsToResume->end(); ++iter)
-    {
-        resumeTarget(*iter);
-    }
+    targetsToResume.forEach([this](Object* obj){
+        this->resumeTarget(obj);
+    });
 }
 
 void Scheduler::performFunctionInCocosThread(const std::function<void ()> &function)
