@@ -470,7 +470,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value)
 
     CCLOG("SET DATA ENCODED: --%s", encodedData);
     
-    return setStringForKeyJNI(pKey, encodedData);
+    setStringForKeyJNI(pKey, encodedData);
     
     if (encodedData)
         free(encodedData);
