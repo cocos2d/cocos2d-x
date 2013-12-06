@@ -445,8 +445,10 @@ void ParticleSystemQuad::draw()
         kmMat4 mv;
         kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
+        auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+
         QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-        cmd->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, _quads, _particleIdx, mv);
+        cmd->init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, mv);
         Renderer::getInstance()->addCommand(cmd);
     }
 
