@@ -1490,8 +1490,7 @@ void Node::disableCascadeOpacity()
 {
     _displayedOpacity = _realOpacity;
     
-    _children.forEach([this](Node* child)
-    {
+    _children.forEach([this](Node* child){
         child->disableCascadeOpacity();
     });
 }
@@ -1564,8 +1563,7 @@ void Node::updateCascadeColor()
 
 void Node::disableCascadeColor()
 {
-    _children.forEach([this](Node* child)
-    {
+    _children.forEach([this](Node* child){
         child->disableCascadeColor();
     });
 }
