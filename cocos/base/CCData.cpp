@@ -28,7 +28,7 @@
 
 NS_CC_BEGIN
 
-Data::Data(unsigned char *pBytes, const unsigned long nSize)
+Data::Data(unsigned char *pBytes, ssize_t nSize)
 {
     _size = nSize;
     _bytes = new unsigned char[_size];
@@ -53,7 +53,7 @@ unsigned char* Data::getBytes() const
     return _bytes;
 }
 
-unsigned long Data::getSize() const
+ssize_t Data::getSize() const
 {
     return _size;
 }
