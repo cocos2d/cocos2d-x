@@ -80,6 +80,8 @@ CCEGLView::CCEGLView()
 	, m_windowClosed(false)
 	, m_windowVisible(true)
     , mKeyboard(nullptr)
+    , m_width(0)
+    , m_height(0)
 {
 	s_pEglView = this;
     strcpy_s(m_szViewName, "Cocos2dxWP8");
@@ -119,14 +121,11 @@ bool CCEGLView::Create(CoreWindow^ window)
 		CCLOG("Unable to create Angle EGL Window: %d", result);
 	}
 
-
     return bRet;
 }
 
 bool CCEGLView::Create(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3D11RenderTargetView* renderTargetView)
 {
-
-    bool bRet = false;
 	m_bSupportTouch = true;
 
     m_d3dContext = context;
@@ -181,16 +180,34 @@ bool CCEGLView::Create(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3
 
 		    m_orientation = DisplayOrientations::None;
 		    m_initialized = false;
-		    bRet = true;
 		}
 	}
-    else
+
+	if (SUCCEEDED(result))
+	{
+        ComPtr<ID3D11Resource> renderTargetViewResource;
+	    m_renderTargetView->GetResource(&renderTargetViewResource);
+
+	    ComPtr<ID3D11Texture2D> backBuffer;
+	    result = renderTargetViewResource.As(&backBuffer);
+        if(SUCCEEDED(result))
+        {
+	        // Cache the rendertarget dimensions in our helper class for convenient use.
+            D3D11_TEXTURE2D_DESC backBufferDesc;
+            backBuffer->GetDesc(&backBufferDesc);
+            float width = static_cast<float>(backBufferDesc.Width);
+            float height = static_cast<float>(backBufferDesc.Height);
+            UpdateForWindowSizeChange(width, height);
+        }
+    }
+
+    if (FAILED(result))
 	{
 		CCLOG("Unable to create Angle EGL Window: %d", result);
 	}
 
 
-    return bRet;
+    return SUCCEEDED(result);
 }
 
 bool CCEGLView::UpdateDevice(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3D11RenderTargetView* renderTargetView)
@@ -217,11 +234,11 @@ bool CCEGLView::UpdateDevice(ID3D11Device1* device, ID3D11DeviceContext1* contex
         D3D11_TEXTURE2D_DESC backBufferDesc;
         backBuffer->GetDesc(&backBufferDesc);
 
-        if (m_windowBounds.Width  != static_cast<float>(backBufferDesc.Width) ||
-            m_windowBounds.Height != static_cast<float>(backBufferDesc.Height))
+        float width = static_cast<float>(backBufferDesc.Width);
+        float height = static_cast<float>(backBufferDesc.Height);
+        if (m_width  != width || m_height != height)
         {
-            m_windowBounds.Width  = static_cast<float>(backBufferDesc.Width);
-            m_windowBounds.Height = static_cast<float>(backBufferDesc.Height);
+            UpdateForWindowSizeChange(width, height);
         }
 
 	    m_eglPhoneWindow->Update(WINRT_EGL_IUNKNOWN(m_d3dDevice.Get()), WINRT_EGL_IUNKNOWN(m_d3dContext.Get()), WINRT_EGL_IUNKNOWN(m_renderTargetView.Get()));
@@ -460,28 +477,32 @@ void CCEGLView::ValidateDevice()
 
 }
 
+// called by orientation change from WP8 XAML
+void CCEGLView::UpdateOrientation(DisplayOrientations orientation)
+{
+    if(m_orientation != orientation)
+    {
+        m_orientation = orientation;
+        UpdateWindowSize();
+    }
+}
+
 // called by size change from WP8 XAML
 void CCEGLView::UpdateForWindowSizeChange(float width, float height)
 {
     m_windowBounds = Windows::Foundation::Rect(0, 0, width, height);
-    if(width >= height)
-    {
-        m_orientation = DisplayOrientations::Landscape;
-        m_windowBounds = Windows::Foundation::Rect(0, 0, height, width);
-   }
-    else
-    {
-        m_orientation = DisplayOrientations::Portrait;
-    }
-
+    m_width = width;
+    m_height = height;
     UpdateWindowSize();
 }
 
 void CCEGLView::UpdateForWindowSizeChange()
 {
-
     m_orientation = DisplayProperties::CurrentOrientation;
     m_windowBounds = m_window->Bounds;
+    m_width = ConvertDipsToPixels(m_windowBounds.Height);
+    m_height = ConvertDipsToPixels(m_windowBounds.Width);
+ 
     UpdateWindowSize();
 }
 
@@ -491,13 +512,13 @@ void CCEGLView::UpdateWindowSize()
 
     if(m_orientation == DisplayOrientations::Landscape || m_orientation == DisplayOrientations::LandscapeFlipped)
     {
-        width = ConvertDipsToPixels(m_windowBounds.Height);
-        height = ConvertDipsToPixels(m_windowBounds.Width);
+        width = m_height;
+        height = m_width;
     }
     else
     {
-        width = ConvertDipsToPixels(m_windowBounds.Width);
-        height = ConvertDipsToPixels(m_windowBounds.Height);
+        width = m_width;
+        height = m_height;
     }
 
     UpdateOrientationMatrix();

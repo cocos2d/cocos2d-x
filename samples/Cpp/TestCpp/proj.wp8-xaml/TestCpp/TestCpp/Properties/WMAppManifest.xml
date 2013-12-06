@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{bdb566ed-9953-42ff-b1fe-95986ae100b6}" Title="PhoneDirect3DXamlAppInterop" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="PhoneDirect3DXamlAppInterop author" Description="Sample description" Publisher="PhoneDirect3DXamlAppInterop" PublisherID="{844bb92f-786f-4fe2-a49f-0af5a873e8e8}">
+  <App xmlns="" ProductID="{25daf6e9-c59b-4b00-84fd-5063cb4dc3e3}" Title="PhoneDirect3DXamlAppInterop" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="PhoneDirect3DXamlAppInterop author" Description="Sample description" Publisher="PhoneDirect3DXamlAppInterop" PublisherID="{89618261-8210-44ae-8106-fce04cbc949b}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING"/>
