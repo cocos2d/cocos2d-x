@@ -86,13 +86,14 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
     */
 
-    ValueMap& metadataDict = dictionary["metadata"].asValueMap();
+    
     ValueMap& framesDict = dictionary["frames"].asValueMap();
     int format = 0;
 
     // get the format
-    if (!metadataDict.empty())
+    if (dictionary.find("metadata") != dictionary.end())
     {
+        ValueMap& metadataDict = dictionary["metadata"].asValueMap();
         format = metadataDict["format"].asInt();
     }
 
@@ -230,9 +231,9 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
 
         string texturePath("");
 
-        ValueMap& metadataDict = dict["metadata"].asValueMap();
-        if (!metadataDict.empty())
+        if (dict.find("metadata") != dict.end())
         {
+            ValueMap& metadataDict = dict["metadata"].asValueMap();
             // try to read  texture file name from meta data
             texturePath = metadataDict["textureFileName"].asString();
         }

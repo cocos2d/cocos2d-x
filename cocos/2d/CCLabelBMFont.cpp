@@ -494,7 +494,7 @@ bool LabelBMFont::initWithString(const std::string& theString, const std::string
         texture->autorelease();
     }
 
-    if (SpriteBatchNode::initWithTexture(texture, theString.size()))
+    if (SpriteBatchNode::initWithTexture(texture, static_cast<int>(theString.size())))
     {
         _width = width;
         _alignment = alignment;
@@ -1085,7 +1085,7 @@ void LabelBMFont::updateLabel()
                     lineNumber++;
                     continue;
                 }
-                int index = i + line_length - 1 + lineNumber;
+                int index = static_cast<int>(i + line_length - 1 + lineNumber);
                 if (index < 0) continue;
 
                 Sprite* lastChar = static_cast<Sprite*>( getChildByTag(index) );

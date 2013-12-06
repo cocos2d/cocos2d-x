@@ -1080,7 +1080,7 @@ void EventDispatcher::removeCustomEventListeners(const std::string& customEventN
 
 void EventDispatcher::removeAllEventListeners()
 {
-    std::vector<int> types(_listeners.size());
+    std::vector<EventListener::ListenerID> types(_listeners.size());
 
     for (auto iter = _listeners.begin(); iter != _listeners.end(); ++iter)
     {

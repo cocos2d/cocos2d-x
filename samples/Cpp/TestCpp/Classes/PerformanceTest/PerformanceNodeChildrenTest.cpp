@@ -321,7 +321,7 @@ void IterateSpriteSheetCArray::update(float dt)
 {
     // iterate using fast enumeration protocol
     auto children = batchNode->getChildren();
-    Object* object = NULL;
+//    Object* object = NULL;
 
     CC_PROFILER_START(this->profilerName());
 

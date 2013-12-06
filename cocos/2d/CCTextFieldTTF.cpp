@@ -164,7 +164,7 @@ void TextFieldTTF::insertText(const char * text, int len)
     std::string sInsert(text, len);
 
     // insert \n means input end
-    int nPos = sInsert.find('\n');
+    int nPos = static_cast<int>(sInsert.find('\n'));
     if ((int)sInsert.npos != nPos)
     {
         len = nPos;
@@ -201,7 +201,7 @@ void TextFieldTTF::insertText(const char * text, int len)
 
 void TextFieldTTF::deleteBackward()
 {
-    int nStrLen = _inputText.length();
+    size_t nStrLen = _inputText.length();
     if (! nStrLen)
     {
         // there is no string
@@ -279,7 +279,7 @@ void TextFieldTTF::setString(const std::string &text)
 {
     static char bulletString[] = {(char)0xe2, (char)0x80, (char)0xa2, (char)0x00};
     std::string displayText;
-    int length;
+    size_t length;
 
     if (text.length()>0)
     {

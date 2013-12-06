@@ -134,7 +134,7 @@ void PointArray::insertControlPoint(Point &controlPoint, int index)
 
 Point PointArray::getControlPointAtIndex(int index)
 {
-    index = MIN(_controlPoints->size()-1, MAX(index, 0));
+    index = static_cast<int>(MIN(_controlPoints->size()-1, MAX(index, 0)));
     return *(_controlPoints->at(index));
 }
 
@@ -291,7 +291,7 @@ CardinalSplineTo* CardinalSplineTo::clone() const
 
 void CardinalSplineTo::update(float time)
 {
-    ssize_t p;
+    int p;
     float lt;
 	
 	// eg.
