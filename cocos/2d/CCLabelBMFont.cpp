@@ -531,12 +531,6 @@ LabelBMFont::LabelBMFont()
 , _lineBreakWithoutSpaces(false)
 , _imageOffset(Point::ZERO)
 , _reusedChar(NULL)
-, _displayedOpacity(255)
-, _realOpacity(255)
-, _displayedColor(Color3B::WHITE)
-, _realColor(Color3B::WHITE)
-, _cascadeColorEnabled(true)
-, _cascadeOpacityEnabled(true)
 , _isOpacityModifyRGB(false)
 {
 
@@ -767,57 +761,7 @@ void LabelBMFont::setCString(const char *label)
     setString(label);
 }
 
-//LabelBMFont - RGBAProtocol protocol
-const Color3B& LabelBMFont::getColor() const
-{
-    return _realColor;
-}
-
-const Color3B& LabelBMFont::getDisplayedColor() const
-{
-    return _displayedColor;
-}
-
-void LabelBMFont::setColor(const Color3B& color)
-{
-	_displayedColor = _realColor = color;
-	
-	if( _cascadeColorEnabled ) {
-		Color3B parentColor = Color3B::WHITE;
-        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
-        if (pParent && pParent->isCascadeColorEnabled())
-        {
-            parentColor = pParent->getDisplayedColor();
-        }
-        this->updateDisplayedColor(parentColor);
-	}
-}
-
-GLubyte LabelBMFont::getOpacity(void) const
-{
-    return _realOpacity;
-}
-
-GLubyte LabelBMFont::getDisplayedOpacity(void) const
-{
-    return _displayedOpacity;
-}
-
 /** Override synthesized setOpacity to recurse items */
-void LabelBMFont::setOpacity(GLubyte opacity)
-{
-	_displayedOpacity = _realOpacity = opacity;
-    
-	if( _cascadeOpacityEnabled ) {
-		GLubyte parentOpacity = 255;
-        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
-        if (pParent && pParent->isCascadeOpacityEnabled())
-        {
-            parentOpacity = pParent->getDisplayedOpacity();
-        }
-        this->updateDisplayedOpacity(parentOpacity);
-	}
-}
 
 void LabelBMFont::setOpacityModifyRGB(bool var)
 {
@@ -825,59 +769,13 @@ void LabelBMFont::setOpacityModifyRGB(bool var)
     _children.forEach([this](Node* child){
         if (child)
         {
-            RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(child);
-            if (pRGBAProtocol)
-            {
-                pRGBAProtocol->setOpacityModifyRGB(_isOpacityModifyRGB);
-            }
+            child->setOpacityModifyRGB(_isOpacityModifyRGB);
         }
     });
 }
 bool LabelBMFont::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
-}
-
-void LabelBMFont::updateDisplayedOpacity(GLubyte parentOpacity)
-{
-	_displayedOpacity = _realOpacity * parentOpacity/255.0f;
-    
-    _children.forEach([this](Node* child){
-        Sprite *item = static_cast<Sprite*>( child );
-		item->updateDisplayedOpacity(_displayedOpacity);
-    });
-}
-
-void LabelBMFont::updateDisplayedColor(const Color3B& parentColor)
-{
-	_displayedColor.r = _realColor.r * parentColor.r/255.0f;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0f;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0f;
-    
-    _children.forEach([this](Node* child){
-        Sprite *item = static_cast<Sprite*>( child );
-		item->updateDisplayedColor(_displayedColor);
-    });
-}
-
-bool LabelBMFont::isCascadeColorEnabled() const
-{
-    return false;
-}
-
-void LabelBMFont::setCascadeColorEnabled(bool cascadeColorEnabled)
-{
-    _cascadeColorEnabled = cascadeColorEnabled;
-}
-
-bool LabelBMFont::isCascadeOpacityEnabled() const
-{
-    return false;
-}
-
-void LabelBMFont::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
-{
-    _cascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
 // LabelBMFont - AnchorPoint

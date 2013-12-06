@@ -47,7 +47,6 @@ class GridBase;
 class Point;
 class Touch;
 class Action;
-class RGBAProtocol;
 class LabelProtocol;
 class Scheduler;
 class ActionManager;
@@ -1388,6 +1387,24 @@ public:
     virtual bool updatePhysicsTransform();
 
 #endif
+    
+    // overrides
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled() const;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual bool isCascadeColorEnabled() const;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB() const { return false; };
 
 protected:
     // Nodes should be created using create();
@@ -1406,6 +1423,11 @@ protected:
 
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
+    
+    virtual void updateCascadeOpacity();
+    virtual void disableCascadeOpacity();
+    virtual void updateCascadeColor();
+    virtual void disableCascadeColor();
 
 
     float _rotationX;                 ///< rotation angle on x-axis
@@ -1477,48 +1499,8 @@ protected:
 #ifdef CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
 #endif
-
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(Node);
-};
-
-//#pragma mark - NodeRGBA
-
-/** NodeRGBA is a subclass of Node that implements the RGBAProtocol protocol.
-
- All features from Node are valid, plus the following new features:
- - opacity
- - RGB colors
-
- Opacity/Color propagates into children that conform to the RGBAProtocol if cascadeOpacity/cascadeColor is enabled.
- @since v2.1
- */
-class CC_DLL NodeRGBA : public Node, public RGBAProtocol
-{
-public:
-    // overrides
-    virtual GLubyte getOpacity() const override;
-    virtual GLubyte getDisplayedOpacity() const  override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual bool isCascadeOpacityEnabled() const  override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
-
-    virtual const Color3B& getColor(void) const override;
-    virtual const Color3B& getDisplayedColor() const override;
-    virtual void setColor(const Color3B& color) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual bool isCascadeColorEnabled() const override;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
-
-    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);};
-    virtual bool isOpacityModifyRGB() const override { return false; };
-
-protected:
-    NodeRGBA();
-    virtual ~NodeRGBA();
-    virtual bool init();
-
+    
+    // opacity controls
 	GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
 	Color3B	    _displayedColor;
@@ -1527,7 +1509,7 @@ protected:
     bool        _cascadeOpacityEnabled;
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(NodeRGBA);
+    CC_DISALLOW_COPY_AND_ASSIGN(Node);
 };
 
 // end of base_node group

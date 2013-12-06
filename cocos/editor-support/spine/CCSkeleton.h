@@ -35,7 +35,7 @@ namespace spine {
 /**
 Draws a skeleton.
 */
-class CCSkeleton: public cocos2d::NodeRGBA, public cocos2d::BlendProtocol {
+class CCSkeleton: public cocos2d::Node, public cocos2d::BlendProtocol {
 public:
 	static CCSkeleton* createWithData (SkeletonData* skeletonData, bool ownsSkeletonData = false);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);

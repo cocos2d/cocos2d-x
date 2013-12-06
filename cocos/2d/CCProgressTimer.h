@@ -43,7 +43,7 @@ NS_CC_BEGIN
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CC_DLL ProgressTimer : public NodeRGBA
+class CC_DLL ProgressTimer : public Node
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
 #endif // EMSCRIPTEN

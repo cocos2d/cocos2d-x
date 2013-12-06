@@ -502,7 +502,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *propName, Node *pNode,
             else if (strcmp(propName, "opacity") == 0)
             {
                 int opacity = ((CCBValue*)pValue)->getByteValue();
-                (dynamic_cast<RGBAProtocol*>(pNode))->setOpacity(opacity);
+                pNode->setOpacity(opacity);
             }
             else if (strcmp(propName, "displayFrame") == 0)
             {
@@ -511,7 +511,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *propName, Node *pNode,
             else if (strcmp(propName, "color") == 0)
             {
                 Color3BWapper *color = (Color3BWapper*)pValue;
-                (dynamic_cast<RGBAProtocol*>(pNode))->setColor(color->getColor());
+                pNode->setColor(color->getColor());
             }
             else if (strcmp(propName, "visible") == 0)
             {

@@ -56,7 +56,7 @@ class SpriteFrame;
  *
  *  Subclass MenuItem (or any subclass) to create your custom MenuItem objects.
  */
-class CC_DLL MenuItem : public NodeRGBA
+class CC_DLL MenuItem : public Node
 {
 public:
     /** Creates a MenuItem with no target/selector */

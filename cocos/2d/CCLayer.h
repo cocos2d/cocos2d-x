@@ -184,53 +184,6 @@ private:
 
 };
 
-
-/** LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
- 
- All features from Layer are valid, plus the following new features that propagate into children that conform to the RGBAProtocol:
- - opacity
- - RGB colors
- @since 2.1
- */
-class CC_DLL LayerRGBA : public Layer, public RGBAProtocol
-{
-public:
-    CREATE_FUNC(LayerRGBA);
-
-
-    //
-    // Overrides
-    //
-    virtual GLubyte getOpacity() const override;
-    virtual GLubyte getDisplayedOpacity() const override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual bool isCascadeOpacityEnabled() const override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
-    
-    virtual const Color3B& getColor() const override;
-    virtual const Color3B& getDisplayedColor() const override;
-    virtual void setColor(const Color3B& color) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual bool isCascadeColorEnabled() const override;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
-    
-    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB() const override { return false; }
-
-protected:
-    LayerRGBA();
-    virtual ~LayerRGBA();
-    virtual bool init();
-
-	GLubyte		_displayedOpacity, _realOpacity;
-	Color3B	    _displayedColor, _realColor;
-	bool		_cascadeOpacityEnabled, _cascadeColorEnabled;
-
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(LayerRGBA);
-};
-
 //
 // LayerColor
 //
@@ -240,7 +193,7 @@ All features from Layer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-class CC_DLL LayerColor : public LayerRGBA, public BlendProtocol
+class CC_DLL LayerColor : public Layer, public BlendProtocol
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
 #endif // EMSCRIPTEN

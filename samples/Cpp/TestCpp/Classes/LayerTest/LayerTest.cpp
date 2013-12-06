@@ -112,12 +112,8 @@ void LayerTest::backCallback(Object* sender)
 
 static void setEnableRecursiveCascading(Node* node, bool enable)
 {
-    auto rgba = dynamic_cast<RGBAProtocol*>(node);
-    if (rgba)
-    {
-        rgba->setCascadeColorEnabled(enable);
-        rgba->setCascadeOpacityEnabled(enable);
-    }
+    node->setCascadeColorEnabled(enable);
+    node->setCascadeOpacityEnabled(enable);
     
     node->getChildren().forEach([enable](Node* child){
         setEnableRecursiveCascading(child, enable);
@@ -130,7 +126,7 @@ void LayerTestCascadingOpacityA::onEnter()
     LayerTest::onEnter();
     
     auto s = Director::getInstance()->getWinSize();
-    auto layer1 = LayerRGBA::create();
+    auto layer1 = Layer::create();
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -169,7 +165,7 @@ void LayerTestCascadingOpacityA::onEnter()
 
 std::string LayerTestCascadingOpacityA::title()
 {
-    return "LayerRGBA: cascading opacity";
+    return "Layer: cascading opacity";
 }
 
 
@@ -283,7 +279,7 @@ void LayerTestCascadingColorA::onEnter()
     LayerTest::onEnter();
     
     auto s = Director::getInstance()->getWinSize();
-    auto layer1 = LayerRGBA::create();
+    auto layer1 = Layer::create();
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -325,7 +321,7 @@ void LayerTestCascadingColorA::onEnter()
 
 std::string LayerTestCascadingColorA::title()
 {
-    return "LayerRGBA: cascading color";
+    return "Layer: cascading color";
 }
 
 

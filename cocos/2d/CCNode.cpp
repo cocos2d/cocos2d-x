@@ -132,6 +132,12 @@ Node::Node(void)
 #ifdef CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
+, _displayedOpacity(255)
+, _realOpacity(255)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
+, _cascadeColorEnabled(false)
+, _cascadeOpacityEnabled(false)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -643,6 +649,16 @@ void Node::addChild(Node *child, int zOrder, int tag)
         if (_isTransitionFinished) {
             child->onEnterTransitionDidFinish();
         }
+    }
+    
+    if (_cascadeColorEnabled)
+    {
+        updateCascadeColor();
+    }
+    
+    if (_cascadeOpacityEnabled)
+    {
+        updateCascadeOpacity();
     }
 }
 
@@ -1405,110 +1421,99 @@ PhysicsBody* Node::getPhysicsBody() const
 }
 #endif //CC_USE_PHYSICS
 
-// NodeRGBA
-NodeRGBA::NodeRGBA()
-: _displayedOpacity(255)
-, _realOpacity(255)
-, _displayedColor(Color3B::WHITE)
-, _realColor(Color3B::WHITE)
-, _cascadeColorEnabled(false)
-, _cascadeOpacityEnabled(false)
-{}
-
-NodeRGBA::~NodeRGBA() {}
-
-bool NodeRGBA::init()
-{
-    if (Node::init())
-    {
-        _displayedOpacity = _realOpacity = 255;
-        _displayedColor = _realColor = Color3B::WHITE;
-        _cascadeOpacityEnabled = _cascadeColorEnabled = false;
-        return true;
-    }
-    return false;
-}
-
-GLubyte NodeRGBA::getOpacity(void) const
+GLubyte Node::getOpacity(void) const
 {
 	return _realOpacity;
 }
 
-GLubyte NodeRGBA::getDisplayedOpacity(void) const
+GLubyte Node::getDisplayedOpacity(void) const
 {
 	return _displayedOpacity;
 }
 
-void NodeRGBA::setOpacity(GLubyte opacity)
+void Node::setOpacity(GLubyte opacity)
 {
     _displayedOpacity = _realOpacity = opacity;
     
-	if (_cascadeOpacityEnabled)
-    {
-		GLubyte parentOpacity = 255;
-        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
-        if (pParent && pParent->isCascadeOpacityEnabled())
-        {
-            parentOpacity = pParent->getDisplayedOpacity();
-        }
-        this->updateDisplayedOpacity(parentOpacity);
-	}
+    updateCascadeOpacity();
 }
 
-void NodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
+void Node::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
 	
     if (_cascadeOpacityEnabled)
     {
         _children.forEach([this](Node* child){
-            RGBAProtocol* item = dynamic_cast<RGBAProtocol*>(child);
-            if (item)
-            {
-                item->updateDisplayedOpacity(_displayedOpacity);
-            }
+            child->updateDisplayedOpacity(_displayedOpacity);
         });
     }
 }
 
-bool NodeRGBA::isCascadeOpacityEnabled(void) const
+bool Node::isCascadeOpacityEnabled(void) const
 {
     return _cascadeOpacityEnabled;
 }
 
-void NodeRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 {
+    if (_cascadeColorEnabled == cascadeOpacityEnabled)
+    {
+        return;
+    }
+    
     _cascadeOpacityEnabled = cascadeOpacityEnabled;
+    
+    if (cascadeOpacityEnabled)
+    {
+        updateCascadeOpacity();
+    }
+    else
+    {
+        disableCascadeOpacity();
+    }
 }
 
-const Color3B& NodeRGBA::getColor(void) const
+void Node::updateCascadeOpacity()
+{
+    GLubyte parentOpacity = 255;
+    
+    if (_parent != nullptr && _parent->isCascadeOpacityEnabled())
+    {
+        parentOpacity = _parent->getDisplayedOpacity();
+    }
+    
+    updateDisplayedOpacity(parentOpacity);
+}
+
+void Node::disableCascadeOpacity()
+{
+    _displayedOpacity = _realOpacity;
+    
+    _children.forEach([this](Node* child)
+    {
+        child->disableCascadeOpacity();
+    });
+}
+
+const Color3B& Node::getColor(void) const
 {
 	return _realColor;
 }
 
-const Color3B& NodeRGBA::getDisplayedColor() const
+const Color3B& Node::getDisplayedColor() const
 {
 	return _displayedColor;
 }
 
-void NodeRGBA::setColor(const Color3B& color)
+void Node::setColor(const Color3B& color)
 {
 	_displayedColor = _realColor = color;
 	
-	if (_cascadeColorEnabled)
-    {
-		Color3B parentColor = Color3B::WHITE;
-        RGBAProtocol *parent = dynamic_cast<RGBAProtocol*>(_parent);
-		if (parent && parent->isCascadeColorEnabled())
-        {
-            parentColor = parent->getDisplayedColor(); 
-        }
-        
-        updateDisplayedColor(parentColor);
-	}
+	updateCascadeColor();
 }
 
-void NodeRGBA::updateDisplayedColor(const Color3B& parentColor)
+void Node::updateDisplayedColor(const Color3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
@@ -1517,23 +1522,52 @@ void NodeRGBA::updateDisplayedColor(const Color3B& parentColor)
     if (_cascadeColorEnabled)
     {
         _children.forEach([this](Node* child){
-            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(child);
-            if (item)
-            {
-                item->updateDisplayedColor(_displayedColor);
-            }
+            child->updateDisplayedColor(_displayedColor);
         });
     }
 }
 
-bool NodeRGBA::isCascadeColorEnabled(void) const
+bool Node::isCascadeColorEnabled(void) const
 {
     return _cascadeColorEnabled;
 }
 
-void NodeRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
+void Node::setCascadeColorEnabled(bool cascadeColorEnabled)
 {
+    if (_cascadeColorEnabled == cascadeColorEnabled)
+    {
+        return;
+    }
+    
     _cascadeColorEnabled = cascadeColorEnabled;
+    
+    if (_cascadeColorEnabled)
+    {
+        updateCascadeColor();
+    }
+    else
+    {
+        disableCascadeColor();
+    }
+}
+
+void Node::updateCascadeColor()
+{
+	Color3B parentColor = Color3B::WHITE;
+    if (_parent && _parent->isCascadeColorEnabled())
+    {
+        parentColor = _parent->getDisplayedColor();
+    }
+    
+    updateDisplayedColor(parentColor);
+}
+
+void Node::disableCascadeColor()
+{
+    _children.forEach([this](Node* child)
+    {
+        child->disableCascadeColor();
+    });
 }
 
 NS_CC_END
