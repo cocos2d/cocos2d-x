@@ -72,7 +72,7 @@ public:
      * @lua NA
      @since v3.0
      */
-    static void setCallbackNumberPerFrame(long callbackNumberPerFrame);
+    static void setCallbackNumberPerFrame(int callbackNumberPerFrame);
 
 private:
     // This function will be call by Director to call some call back function on gl thread
@@ -81,7 +81,7 @@ private:
     static std::list<std::function<void(void)>> *_callbackList;
     static std::mutex *_mutex;
     // How many callback functions invoked per frame
-    static long _callbackNumberPerFrame;
+    static int _callbackNumberPerFrame;
 };
 
 // end of platform group

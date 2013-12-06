@@ -42,7 +42,7 @@ static std::mutex       s_responseQueueMutex;
 static std::mutex		s_SleepMutex;
 static std::condition_variable		s_SleepCondition;
 
-static unsigned long    s_asyncRequestCount = 0;
+static int    s_asyncRequestCount = 0;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;

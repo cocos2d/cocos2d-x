@@ -233,12 +233,11 @@ void TestFilenameLookup::onEnter()
 		
     auto sharedFileUtils = FileUtils::getInstance();
 
-    auto dict = Dictionary::create();
-    dict->setObject(String::create("Images/grossini.png"), "grossini.bmp");
-    dict->setObject(String::create("Images/grossini.png"), "grossini.xcf");
+    ValueMap dict;
+    dict["grossini.bmp"] = Value("Images/grossini.png");
+    dict["grossini.xcf"] = Value("Images/grossini.png");
     
     sharedFileUtils->setFilenameLookupDictionary(dict);
-    
     
     // Instead of loading carlitos.xcf, it will load grossini.png
     auto sprite = Sprite::create("grossini.xcf");
@@ -254,7 +253,7 @@ void TestFilenameLookup::onExit()
 	FileUtils *sharedFileUtils = FileUtils::getInstance();
 	
 	// reset filename lookup
-    sharedFileUtils->setFilenameLookupDictionary(Dictionary::create());
+    sharedFileUtils->setFilenameLookupDictionary(ValueMap());
 	
     FileUtilsDemo::onExit();
 }
@@ -298,7 +297,7 @@ void TestIsFileExist::onExit()
 	FileUtils *sharedFileUtils = FileUtils::getInstance();
 	
 	// reset filename lookup
-    sharedFileUtils->setFilenameLookupDictionary(Dictionary::create());
+    sharedFileUtils->setFilenameLookupDictionary(ValueMap());
 	
     FileUtilsDemo::onExit();
 }

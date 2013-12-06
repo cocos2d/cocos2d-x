@@ -248,20 +248,17 @@ void Label::alignText()
     
     LabelTextFormatter::alignText(this);
   
-    int strLen = cc_wcslen(_currentUTF16String);  
-    if (_children && _children->count() != 0)
-    {
-        for (auto child: *_children)
+    int strLen = cc_wcslen(_currentUTF16String);
+    
+    _children.forEach([this, &strLen](Node* child){
+        if (child)
         {
-            Node* pNode = static_cast<Node*>( child );
-            if (pNode)
-            {
-                int tag = pNode->getTag();
-                if(tag < 0 || tag >= strLen)
-                    SpriteBatchNode::removeChild(pNode, true);
-            }
+            int tag = child->getTag();
+            if(tag < 0 || tag >= strLen)
+                SpriteBatchNode::removeChild(child, true);
         }
-    }
+    });
+    
     _reusedLetter->setBatchNode(nullptr);
    
     int vaildIndex = 0;
@@ -376,7 +373,7 @@ Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const F
         {
             spriteToUpdate->setBatchNode(this); 
             spriteToUpdate->setTexture(theTexture);
-            spriteToUpdate->setDisplayFrame(frame);
+            spriteToUpdate->setSpriteFrame(frame);
             spriteToUpdate->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));                                        
         }     
         
@@ -594,21 +591,18 @@ bool Label::isOpacityModifyRGB() const
 void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
 {
     _isOpacityModifyRGB = isOpacityModifyRGB;
-    if (_children && _children->count() != 0)
-    {
-        for (auto child: *_children)
+    
+    _children.forEach([this](Node* child){
+        if (child)
         {
-            Node* pNode = static_cast<Node*>( child );
-            if (pNode)
+            RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(child);
+            if (pRGBAProtocol)
             {
-                RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(pNode);
-                if (pRGBAProtocol)
-                {
-                    pRGBAProtocol->setOpacityModifyRGB(_isOpacityModifyRGB);
-                }
+                pRGBAProtocol->setOpacityModifyRGB(_isOpacityModifyRGB);
             }
         }
-    }
+    });
+    
     _reusedLetter->setOpacityModifyRGB(true);
 }
 
@@ -640,13 +634,13 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _displayedOpacity = _realOpacity * parentOpacity/255.0;
     
-    for (auto child: *_children)
-    {
+    _children.forEach([this](Node* child){
         Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedOpacity(_displayedOpacity);
-	}
+    });
+
     V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    int count = _textureAtlas->getTotalQuads();
+    auto count = _textureAtlas->getTotalQuads();
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
     if (_isOpacityModifyRGB)
     {
@@ -706,14 +700,13 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
     
-	for (auto child: *_children)
-    {
+    _children.forEach([this](Node* child){
         Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedColor(_displayedColor);
-	}
+    });
 
     V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    int count = _textureAtlas->getTotalQuads();
+    auto count = _textureAtlas->getTotalQuads();
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
 
     // special opacity for premultiplied textures
