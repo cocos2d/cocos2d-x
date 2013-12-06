@@ -379,7 +379,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
     setupTileSprite(tile, pos, gid);
 
     // get atlas index
-    unsigned int indexForZ = atlasIndexForNewZ(z);
+    unsigned int indexForZ = atlasIndexForNewZ(static_cast<int>(z));
 
     // Optimization: add the quad without adding a child
     this->insertQuadFromSprite(tile, indexForZ);

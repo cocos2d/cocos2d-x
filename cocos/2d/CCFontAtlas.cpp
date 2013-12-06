@@ -141,7 +141,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     }
 
     float scaleFactor = CC_CONTENT_SCALE_FACTOR();
-    int newLetterCount = fontDefs.size();
+    size_t newLetterCount = fontDefs.size();
     float glyphWidth;
     for (int i = 0; i < newLetterCount; ++i)
     {

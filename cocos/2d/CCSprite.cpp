@@ -677,10 +677,17 @@ void Sprite::draw(void)
 void Sprite::updateQuadVertices()
 {
 
-#ifdef CC_USE_PHYSICS
-    updatePhysicsTransform();
-    setDirty(true);
-#endif
+//#ifdef CC_USE_PHYSICS
+//    updatePhysicsTransform();
+//    setDirty(true);
+//#endif
+#define kQuadSize sizeof(_quad.bl)
+#ifdef EMSCRIPTEN
+    long offset = 0;
+    setGLBufferData(&_quad, 4 * kQuadSize, 0);
+#else
+    size_t offset = (size_t)&_quad;
+#endif // EMSCRIPTEN
 
     //TODO optimize the performance cache affineTransformation
 

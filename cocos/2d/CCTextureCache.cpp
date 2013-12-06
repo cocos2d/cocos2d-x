@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "platform/CCFileUtils.h"
-#include "platform/CCThread.h"
 #include "ccUtils.h"
 #include "CCScheduler.h"
 #include "CCString.h"
@@ -92,18 +91,6 @@ const char* TextureCache::description() const
 {
     return String::createWithFormat("<TextureCache | Number of textures = %lu>", _textures.size() )->getCString();
 }
-
-//Dictionary* TextureCache::snapshotTextures()
-//{ 
-//    Dictionary* pRet = new Dictionary();
-//    DictElement* pElement = NULL;
-//    CCDICT_FOREACH(_textures, pElement)
-//    {
-//        pRet->setObject(pElement->getObject(), pElement->getStrKey());
-//    }
-//    pRet->autorelease();
-//    return pRet;
-//}
 
 void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_CallFuncO selector)
 {

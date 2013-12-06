@@ -114,7 +114,7 @@ public:
     /** get the length of string 
      * @js NA
      */
-    unsigned int length() const;
+    int length() const;
 
     /** compare to a c string 
      * @js NA
