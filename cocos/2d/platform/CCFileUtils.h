@@ -84,7 +84,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileData(const char* filename, const char* mode, long *size);
+    virtual unsigned char* getFileData(const char* filename, const char* mode, ssize_t *size);
 
     /**
      *  Gets resource file data from a zip file.
@@ -94,7 +94,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileDataFromZip(const char* zipFilePath, const char* filename, long *size);
+    virtual unsigned char* getFileDataFromZip(const char* zipFilePath, const char* filename, ssize_t *size);
 
     
     /** Returns the fullpath for a given filename.

@@ -439,7 +439,7 @@ int ZipUtils::inflateCCZBuffer(const unsigned char *buffer, long bufferLen, unsi
     }
 
     unsigned long destlen = len;
-    unsigned long source = (unsigned long) buffer + sizeof(*header);
+    size_t source = (size_t) buffer + sizeof(*header);
     int ret = uncompress(*out, &destlen, (Bytef*)source, bufferLen - sizeof(*header) );
 
     if( ret != Z_OK )
@@ -591,7 +591,7 @@ bool ZipFile::fileExists(const std::string &fileName) const
     return ret;
 }
 
-unsigned char *ZipFile::getFileData(const std::string &fileName, long *size)
+unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
 {
     unsigned char * buffer = NULL;
     if (size)

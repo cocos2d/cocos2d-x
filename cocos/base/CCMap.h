@@ -46,7 +46,7 @@ public:
         CCLOGINFO("In the default constructor of Map!");
     }
     
-    explicit Map<K, V>(long capacity)
+    explicit Map<K, V>(int capacity)
     : _data()
     {
         CCLOGINFO("In the constructor with capacity of Map!");
@@ -73,7 +73,7 @@ public:
     }
 
     /** Sets capacity of current array */
-    void reserve(long capacity)
+    void reserve(int capacity)
     {
         _data.reserve(capacity);
     }

@@ -87,7 +87,7 @@ void ActionManager::actionAllocWithHashElement(tHashElement *element)
 
 }
 
-void ActionManager::removeActionAtIndex(long index, tHashElement *element)
+void ActionManager::removeActionAtIndex(int index, tHashElement *element)
 {
     Action *action = (Action*)element->actions->arr[index];
 
@@ -253,7 +253,7 @@ void ActionManager::removeAction(Action *action)
     HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
-        long i = ccArrayGetIndexOfObject(element->actions, action);
+        auto i = ccArrayGetIndexOfObject(element->actions, action);
         if (i != CC_INVALID_INDEX)
         {
             removeActionAtIndex(i, element);
@@ -275,8 +275,8 @@ void ActionManager::removeActionByTag(int tag, Object *target)
 
     if (element)
     {
-        long limit = element->actions->num;
-        for (long i = 0; i < limit; ++i)
+        auto limit = element->actions->num;
+        for (int i = 0; i < limit; ++i)
         {
             Action *action = (Action*)element->actions->arr[i];
 
@@ -304,8 +304,8 @@ Action* ActionManager::getActionByTag(int tag, const Object *target) const
     {
         if (element->actions != NULL)
         {
-            long limit = element->actions->num;
-            for (long i = 0; i < limit; ++i)
+            auto limit = element->actions->num;
+            for (int i = 0; i < limit; ++i)
             {
                 Action *action = (Action*)element->actions->arr[i];
 
@@ -327,7 +327,7 @@ Action* ActionManager::getActionByTag(int tag, const Object *target) const
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
 // and, it is not possible to get the address of a reference
-long ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
+int ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
 {
     tHashElement *element = NULL;
     HASH_FIND_PTR(_targets, &target, element);
