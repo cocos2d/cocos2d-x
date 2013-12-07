@@ -299,7 +299,6 @@ protected:
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
 
-    kmMat4 _transformMatrix;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 

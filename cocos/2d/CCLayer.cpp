@@ -690,7 +690,6 @@ void LayerColor::updateColor()
 
 void LayerColor::draw()
 {
-    kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
     CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(LayerColor::onDraw, this);
@@ -699,12 +698,6 @@ void LayerColor::draw()
 
 void LayerColor::onDraw()
 {
-    //TODO we can just reuse the base MV matrix instead of save and reset everytime
-    //TODO need to find out where do we set the base MV matrix
-    kmMat4 prevMatrix;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &prevMatrix);
-    kmGLLoadMatrix(&_transformMatrix);
-
     CC_NODE_DRAW_SETUP();
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
@@ -728,8 +721,6 @@ void LayerColor::onDraw()
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     CC_INCREMENT_GL_DRAWS(1);
-
-    kmGLLoadMatrix(&prevMatrix);
 }
 
 void LayerColor::setColor(const Color3B &color)
