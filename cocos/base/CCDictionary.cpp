@@ -88,12 +88,12 @@ unsigned int Dictionary::count()
     return HASH_COUNT(_elements);
 }
 
-Array* Dictionary::allKeys()
+__Array* Dictionary::allKeys()
 {
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
 
-    Array* pArray = Array::createWithCapacity(iKeyCount);
+    __Array* array = __Array::createWithCapacity(iKeyCount);
 
     DictElement *pElement, *tmp;
     if (_dictType == kDictStr)
@@ -101,7 +101,7 @@ Array* Dictionary::allKeys()
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
             String* pOneKey = new String(pElement->_strKey);
-            pArray->addObject(pOneKey);
+            array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
     }
@@ -110,19 +110,19 @@ Array* Dictionary::allKeys()
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
             Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
-            pArray->addObject(pOneKey);
+            array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
     }
     
-    return pArray;
+    return array;
 }
 
-Array* Dictionary::allKeysForObject(Object* object)
+__Array* Dictionary::allKeysForObject(Object* object)
 {
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
-    Array* pArray = Array::create();
+    __Array* array = __Array::create();
 
     DictElement *pElement, *tmp;
 
@@ -133,7 +133,7 @@ Array* Dictionary::allKeysForObject(Object* object)
             if (object == pElement->_object)
             {
                 String* pOneKey = new String(pElement->_strKey);
-                pArray->addObject(pOneKey);
+                array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
         }
@@ -145,12 +145,12 @@ Array* Dictionary::allKeysForObject(Object* object)
             if (object == pElement->_object)
             {
                 Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
-                pArray->addObject(pOneKey);
+                array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
         }
     }
-    return pArray;
+    return array;
 }
 
 Object* Dictionary::objectForKey(const std::string& key)
@@ -303,10 +303,10 @@ void Dictionary::setObjectUnSafe(Object* pObject, const intptr_t key)
     HASH_ADD_PTR(_elements, _intKey, pElement);
 }
 
-void Dictionary::removeObjectsForKeys(Array* pKeyArray)
+void Dictionary::removeObjectsForKeys(__Array* pKey__Array)
 {
     Object* pObj = NULL;
-    CCARRAY_FOREACH(pKeyArray, pObj)
+    CCARRAY_FOREACH(pKey__Array, pObj)
     {
         String* pStr = static_cast<String*>(pObj);
         removeObjectForKey(pStr->getCString());
@@ -378,7 +378,7 @@ Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
     return srcDict->clone();
 }
 
-static Array* visitArray(const ValueVector& array);
+static __Array* visitArray(const ValueVector& array);
 
 static Dictionary* visitDict(const ValueMap& dict)
 {
@@ -411,9 +411,9 @@ static Dictionary* visitDict(const ValueMap& dict)
     return ret;
 }
 
-static Array* visitArray(const ValueVector& array)
+static __Array* visitArray(const ValueVector& array)
 {
-    Array* ret = new Array();
+    __Array* ret = new __Array();
     ret->init();
     
     std::for_each(array.begin(), array.end(), [&ret](const Value& value){
