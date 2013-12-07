@@ -25,9 +25,11 @@ THE SOFTWARE.
 #ifndef __CCVECTOR_H__
 #define __CCVECTOR_H__
 
-#include <vector>
-#include <algorithm>    // std::for_each
 #include "ccMacros.h"
+
+#include <vector>
+#include <functional>
+#include <algorithm>    // std::for_each
 
 NS_CC_BEGIN
 
@@ -299,9 +301,19 @@ public:
         _data.shrink_to_fit();
     }
     
-    void forEach(std::function<void(T)> callback)
+    void forEach(const std::function<void(T)>& callback)
     {
-        if (size() <= 0)
+        if (empty())
+            return;
+        
+        std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
+            callback(obj);
+        });
+    }
+    
+    void forEach(const std::function<void(T)>& callback) const
+    {
+        if (empty())
             return;
         
         std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
@@ -309,9 +321,19 @@ public:
         });
     }
   
-    void forEachReverse(std::function<void(T)> callback)
+    void forEachReverse(const std::function<void(T)>& callback)
     {
-        if (size() <= 0)
+        if (empty())
+            return;
+        
+        std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
+            callback(obj);
+        });
+    }
+    
+    void forEachReverse(const std::function<void(T)>& callback) const
+    {
+        if (empty())
             return;
         
         std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
