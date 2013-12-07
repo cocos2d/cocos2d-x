@@ -230,13 +230,14 @@ public:
     }
 
     /** Remove a certain object */
-    void removeObject(T object)
+    void removeObject(T object, bool toRelease = true)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         auto iter = std::find(_data.begin(), _data.end(), object);
         if (iter != _data.end())
             _data.erase(iter);
-        object->release();
+        if (toRelease)
+            object->release();
     }
 
     /** Removes an element with a certain index */
@@ -338,6 +339,16 @@ public:
         
         std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
             callback(obj);
+        });
+    }
+    
+    void sort(const std::function<bool(T, T)>& callback)
+    {
+        if (empty())
+            return;
+        
+        std::sort(_data.begin(), _data.end(), [&callback](T a, T b) -> bool{
+            return callback(a, b);
         });
     }
     
