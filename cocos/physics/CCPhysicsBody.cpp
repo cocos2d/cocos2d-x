@@ -652,7 +652,7 @@ void PhysicsBody::removeShape(int tag, bool reduceMassAndMoment/* = true*/)
 
 void PhysicsBody::removeShape(PhysicsShape* shape, bool reduceMassAndMoment/* = true*/)
 {
-    if (_shapes->getIndexOfObject(shape) != -1)
+    if (_shapes.getIndex(shape) != -1)
     {
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
@@ -751,9 +751,9 @@ void PhysicsBody::setCategoryBitmask(int bitmask)
 {
     _categoryBitmask = bitmask;
     
-    for (auto shape : *_shapes)
+    for (auto& shape : _shapes)
     {
-        ((PhysicsShape*)shape)->setCategoryBitmask(bitmask);
+        shape->setCategoryBitmask(bitmask);
     }
 }
 
@@ -761,9 +761,9 @@ void PhysicsBody::setContactTestBitmask(int bitmask)
 {
     _contactTestBitmask = bitmask;
     
-    for (auto shape : *_shapes)
+    for (auto& shape : _shapes)
     {
-        ((PhysicsShape*)shape)->setContactTestBitmask(bitmask);
+        shape->setContactTestBitmask(bitmask);
     }
 }
 
@@ -771,17 +771,17 @@ void PhysicsBody::setCollisionBitmask(int bitmask)
 {
     _collisionBitmask = bitmask;
     
-    for (auto shape : *_shapes)
+    for (auto& shape : _shapes)
     {
-        ((PhysicsShape*)shape)->setCollisionBitmask(bitmask);
+        shape->setCollisionBitmask(bitmask);
     }
 }
 
 void PhysicsBody::setGroup(int group)
 {
-    for (auto shape : *_shapes)
+    for (auto& shape : _shapes)
     {
-        ((PhysicsShape*)shape)->setGroup(group);
+        shape->setGroup(group);
     }
 }
 
