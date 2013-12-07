@@ -540,7 +540,6 @@ CC_DEPRECATED_ATTRIBUTE typedef Bool CCBool;
 CC_DEPRECATED_ATTRIBUTE typedef Float CCFloat;
 CC_DEPRECATED_ATTRIBUTE typedef Double CCDouble;
 CC_DEPRECATED_ATTRIBUTE typedef Data CCData;
-CC_DEPRECATED_ATTRIBUTE typedef Array CCArray;
 CC_DEPRECATED_ATTRIBUTE typedef Dictionary CCDictionary;
 CC_DEPRECATED_ATTRIBUTE typedef DataVisitor CCDataVisitor;
 CC_DEPRECATED_ATTRIBUTE typedef PrettyPrinter CCPrettyPrinter;
@@ -1029,6 +1028,7 @@ CC_DEPRECATED_ATTRIBUTE typedef __Set CCSet;
 CC_DEPRECATED_ATTRIBUTE typedef __SetIterator CCSetIterator;
 CC_DEPRECATED_ATTRIBUTE typedef __Set Set;
 CC_DEPRECATED_ATTRIBUTE typedef __SetIterator SetIterator;
+
 
 NS_CC_END
 

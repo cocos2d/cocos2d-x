@@ -60,7 +60,7 @@ void DataVisitor::visit(const String *value)
     visitObject(value);
 }
 
-void DataVisitor::visit(const Array *value)
+void DataVisitor::visit(const __Array *value)
 {
     visitObject(value);
 }
@@ -136,7 +136,7 @@ void PrettyPrinter::visit(const String *p)
     _result += p->getCString();
 }
 
-void PrettyPrinter::visit(const Array *p)
+void PrettyPrinter::visit(const __Array *p)
 {
     _result += "\n";
     _result += _indentStr;

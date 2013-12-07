@@ -97,7 +97,7 @@ public:
     static void rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info);
     static void queryRectCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info);
     static void queryPointFunc(cpShape *shape, cpFloat distance, cpVect point, PointQueryCallbackInfo *info);
-    static void getShapesAtPointFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr);
+    static void getShapesAtPointFunc(cpShape *shape, cpFloat distance, cpVect point, Vector<PhysicsShape*>* arr);
     
 public:
     static bool continues;
@@ -176,13 +176,13 @@ void PhysicsWorldCallback::queryRectCallbackFunc(cpShape *shape, RectQueryCallba
     PhysicsWorldCallback::continues = info->func(*info->world, *it->second->getShape(), info->data);
 }
 
-void PhysicsWorldCallback::getShapesAtPointFunc(cpShape *shape, cpFloat distance, cpVect point, Array *arr)
+void PhysicsWorldCallback::getShapesAtPointFunc(cpShape *shape, cpFloat distance, cpVect point, Vector<PhysicsShape*>* arr)
 {
     auto it = PhysicsShapeInfo::getMap().find(shape);
     
     CC_ASSERT(it != PhysicsShapeInfo::getMap().end());
     
-    arr->addObject(it->second->getShape());
+    arr->pushBack(it->second->getShape());
 }
 
 void PhysicsWorldCallback::queryPointFunc(cpShape *shape, cpFloat distance, cpVect point, PointQueryCallbackInfo *info)
@@ -201,17 +201,17 @@ void PhysicsWorld::debugDraw()
         _debugDraw = new PhysicsDebugDraw(*this);
     }
     
-    if (_debugDraw && _bodies != nullptr)
+    if (_debugDraw && !_bodies.empty())
     {
         if (_debugDraw->begin())
         {
             if (_debugDrawMask & DEBUGDRAW_SHAPE)
             {
-                for (Object* obj : *_bodies)
+                for (Object* obj : _bodies)
                 {
                     PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
                     
-                    for (auto shape : *body->getShapes())
+                    for (auto& shape : body->getShapes())
                     {
                         _debugDraw->drawShape(*dynamic_cast<PhysicsShape*>(shape));
                     }
@@ -392,16 +392,16 @@ void PhysicsWorld::queryPoint(PhysicsPointQueryCallbackFunc func, const Point& p
     }
 }
 
-Array* PhysicsWorld::getShapes(const Point& point) const
+Vector<PhysicsShape*> PhysicsWorld::getShapes(const Point& point) const
 {
-    Array* arr = Array::create();
+    Vector<PhysicsShape*> arr;
     cpSpaceNearestPointQuery(this->_info->getSpace(),
                              PhysicsHelper::point2cpv(point),
                              0,
                              CP_ALL_LAYERS,
                              CP_NO_GROUP,
                              (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::getShapesAtPointFunc,
-                             arr);
+                             &arr);
     
     return arr;
 }
@@ -562,17 +562,8 @@ bool PhysicsWorld::init(Scene& scene)
 {
     do
     {
-        _delayAddBodies = Array::create();
-        _delayRemoveBodies = Array::create();
-        CC_BREAK_IF(_delayAddBodies == nullptr || _delayRemoveBodies == nullptr);
-        _delayAddBodies->retain();
-        _delayRemoveBodies->retain();
-        
         _info = new PhysicsWorldInfo();
         CC_BREAK_IF(_info == nullptr);
-        _bodies = Array::create();
-        CC_BREAK_IF(_bodies == nullptr);
-        _bodies->retain();
         
         _scene = &scene;
         
@@ -606,7 +597,7 @@ void PhysicsWorld::addBody(PhysicsBody* body)
     }
     
     addBodyOrDelay(body);
-    _bodies->addObject(body);
+    _bodies.pushBack(body);
     body->_world = this;
 }
 
@@ -627,7 +618,7 @@ void PhysicsWorld::doAddBody(PhysicsBody* body)
         }
         
         // add shapes to space
-        for (auto shape : *body->getShapes())
+        for (auto& shape : body->getShapes())
         {
             addShape(dynamic_cast<PhysicsShape*>(shape));
         }
@@ -637,17 +628,17 @@ void PhysicsWorld::doAddBody(PhysicsBody* body)
 
 void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
 {
-    if (_delayRemoveBodies->getIndexOfObject(body) != CC_INVALID_INDEX)
+    if (_delayRemoveBodies.getIndex(body) != CC_INVALID_INDEX)
     {
-        _delayRemoveBodies->removeObject(body);
+        _delayRemoveBodies.removeObject(body);
         return;
     }
     
     if (_info->isLocked())
     {
-        if (_delayAddBodies->getIndexOfObject(body) == CC_INVALID_INDEX)
+        if (_delayAddBodies.getIndex(body) == CC_INVALID_INDEX)
         {
-            _delayAddBodies->addObject(body);
+            _delayAddBodies.pushBack(body);
             _delayDirty = true;
         }
     }else
@@ -663,25 +654,24 @@ void PhysicsWorld::updateBodies()
         return;
     }
     
-    for (auto body : *_delayAddBodies)
+    for (auto& body : _delayAddBodies)
     {
-        doAddBody(dynamic_cast<PhysicsBody*>(body));
+        doAddBody(body);
     }
     
-    for (auto body : *_delayRemoveBodies)
+    for (auto& body : _delayRemoveBodies)
     {
-        doRemoveBody(dynamic_cast<PhysicsBody*>(body));
+        doRemoveBody(body);
     }
     
-    _delayAddBodies->removeAllObjects();
-    _delayRemoveBodies->removeAllObjects();
+    _delayAddBodies.clear();
+    _delayRemoveBodies.clear();
 }
 
 void PhysicsWorld::removeBody(int tag)
 {
-    for (Object* obj : *_bodies)
+    for (auto& body : _bodies)
     {
-        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
         if (body->getTag() == tag)
         {
             removeBody(body);
@@ -722,24 +712,24 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     body->_joints.clear();
     
     removeBodyOrDelay(body);
-    _bodies->removeObject(body);
+    _bodies.removeObject(body);
     body->_world = nullptr;
 }
 
 
 void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
 {
-    if (_delayAddBodies->getIndexOfObject(body) != CC_INVALID_INDEX)
+    if (_delayAddBodies.getIndex(body) != CC_INVALID_INDEX)
     {
-        _delayAddBodies->removeObject(body);
+        _delayAddBodies.removeObject(body);
         return;
     }
     
     if (_info->isLocked())
     {
-        if (_delayRemoveBodies->getIndexOfObject(body) == CC_INVALID_INDEX)
+        if (_delayRemoveBodies.getIndex(body) == CC_INVALID_INDEX)
         {
-            _delayRemoveBodies->addObject(body);
+            _delayRemoveBodies.pushBack(body);
             _delayDirty = true;
         }
     }else
