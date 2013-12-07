@@ -256,7 +256,7 @@ Scheduler::Scheduler(void)
 , _currentTarget(nullptr)
 , _currentTargetSalvaged(false)
 , _updateHashLocked(false)
-, _scriptHandlerEntries(nullptr)
+, _scriptHandlerEntries(20)
 {
     // I don't expect to have more than 30 functions to all per frame
     _functionsToPerform.reserve(30);
@@ -265,7 +265,6 @@ Scheduler::Scheduler(void)
 Scheduler::~Scheduler(void)
 {
     unscheduleAll();
-    CC_SAFE_RELEASE(_scriptHandlerEntries);
 }
 
 void Scheduler::removeHashElement(_hashSelectorEntry *element)
@@ -630,10 +629,7 @@ void Scheduler::unscheduleAllWithMinPriority(int minPriority)
         }
     }
 
-    if (_scriptHandlerEntries)
-    {
-        _scriptHandlerEntries->removeAllObjects();
-    }
+    _scriptHandlerEntries.clear();
 }
 
 void Scheduler::unscheduleAllForTarget(Object *target)
@@ -675,20 +671,15 @@ void Scheduler::unscheduleAllForTarget(Object *target)
 unsigned int Scheduler::scheduleScriptFunc(unsigned int handler, float interval, bool paused)
 {
     SchedulerScriptHandlerEntry* entry = SchedulerScriptHandlerEntry::create(handler, interval, paused);
-    if (!_scriptHandlerEntries)
-    {
-        _scriptHandlerEntries = Array::createWithCapacity(20);
-        _scriptHandlerEntries->retain();
-    }
-    _scriptHandlerEntries->addObject(entry);
+    _scriptHandlerEntries.pushBack(entry);
     return entry->getEntryId();
 }
 
 void Scheduler::unscheduleScriptEntry(unsigned int scheduleScriptEntryID)
 {
-    for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
+    for (int i = _scriptHandlerEntries.size() - 1; i >= 0; i--)
     {
-        SchedulerScriptHandlerEntry* entry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
+        SchedulerScriptHandlerEntry* entry = _scriptHandlerEntries.at(i);
         if (entry->getEntryId() == (int)scheduleScriptEntryID)
         {
             entry->markedForDeletion();
@@ -951,14 +942,14 @@ void Scheduler::update(float dt)
     //
 
     // Iterate over all the script callbacks
-    if (_scriptHandlerEntries)
+    if (!_scriptHandlerEntries.empty())
     {
-        for (auto i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
+        for (auto i = _scriptHandlerEntries.size() - 1; i >= 0; i--)
         {
-            SchedulerScriptHandlerEntry* eachEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
+            SchedulerScriptHandlerEntry* eachEntry = _scriptHandlerEntries.at(i);
             if (eachEntry->isMarkedForDeletion())
             {
-                _scriptHandlerEntries->removeObjectAtIndex(i);
+                _scriptHandlerEntries.remove(i);
             }
             else if (!eachEntry->isPaused())
             {

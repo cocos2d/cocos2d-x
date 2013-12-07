@@ -107,6 +107,7 @@ protected:
 struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
+class SchedulerScriptHandlerEntry;
 
 /** @brief Scheduler is responsible for triggering the scheduled callbacks.
 You should not use NSTimer. Instead use this class.
@@ -290,7 +291,7 @@ protected:
     bool _currentTargetSalvaged;
     // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
     bool _updateHashLocked;
-    Array* _scriptHandlerEntries;
+    Vector<SchedulerScriptHandlerEntry*> _scriptHandlerEntries;
 
     // Used for "perform Function"
     std::vector<std::function<void()>> _functionsToPerform;
