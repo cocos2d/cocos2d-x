@@ -17,8 +17,6 @@ class NewDrawNode : public DrawNode
 public:
     static NewDrawNode* create();
 
-    virtual ~NewDrawNode();
-
     virtual bool init();
 
     void draw();
@@ -27,8 +25,8 @@ public:
 
 protected:
     NewDrawNode();
+    virtual ~NewDrawNode();
 
-    kmMat4 _transformMatrix;
 };
 
 NS_CC_END
