@@ -442,80 +442,13 @@ void ParticleSystemQuad::draw()
 //            
 //        }
 
-        kmMat4 mv;
-        kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
         auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
         QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-        cmd->init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, mv);
+        cmd->init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
         Renderer::getInstance()->addCommand(cmd);
     }
 
-}
-
-void ParticleSystemQuad::onDraw()
-{
-    CCASSERT(!_batchNode,"draw should not be called when added to a particleBatchNode");
-
-    kmMat4 prevMatrix;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &prevMatrix);
-    kmGLLoadMatrix(&_transformMatrix);
-
-    CC_NODE_DRAW_SETUP();
-
-    GL::bindTexture2D( _texture->getName() );
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-
-    CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
-
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        //
-        // Using VBO and VAO
-        //
-        GL::bindVAO(_VAOname);
-
-#if CC_REBIND_INDICES_BUFFER
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-#endif
-
-        glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
-
-#if CC_REBIND_INDICES_BUFFER
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-#endif
-    }
-    else
-    {
-        //
-        // Using VBO without VAO
-        //
-
-#define kQuadSize sizeof(_quads[0].bl)
-
-        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-
-        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-        // vertices
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
-        // colors
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
-        // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-
-        glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-
-    CC_INCREMENT_GL_DRAWS(1);
-    CHECK_GL_ERROR_DEBUG();
-
-    kmGLLoadMatrix(&prevMatrix);
 }
 
 void ParticleSystemQuad::setTotalParticles(int tp)

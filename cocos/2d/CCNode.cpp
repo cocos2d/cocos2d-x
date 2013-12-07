@@ -916,6 +916,9 @@ void Node::transform()
 
     kmGLMultMatrix( &transfrom4x4 );
 
+    // saves the MV matrix
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
+
 
     // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
     if ( _camera != NULL && !(_grid != NULL && _grid->isActive()) )
@@ -930,7 +933,6 @@ void Node::transform()
         if( translate )
             kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
     }
-
 }
 
 

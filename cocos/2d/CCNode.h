@@ -39,6 +39,7 @@
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
 #include "CCVector.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -1433,6 +1434,7 @@ protected:
     mutable bool _additionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     mutable bool _transformDirty;             ///< transform dirty flag
     mutable bool _inverseDirty;               ///< inverse transform dirty flag
+    kmMat4  _modelViewTransform;    ///< ModelView transform of the Node.
 
     Camera *_camera;                ///< a camera
 
