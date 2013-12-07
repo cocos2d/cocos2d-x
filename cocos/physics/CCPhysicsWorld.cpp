@@ -933,7 +933,7 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
     }
     
     // remove shaps
-    for (auto shape : *body->getShapes())
+    for (auto& shape : body->getShapes())
     {
         removeShape(dynamic_cast<PhysicsShape*>(shape));
     }
@@ -949,15 +949,14 @@ void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
 
 void PhysicsWorld::removeAllBodies()
 {
-    for (Object* obj : *_bodies)
+    for (auto& obj : _bodies)
     {
         PhysicsBody* child = dynamic_cast<PhysicsBody*>(obj);
         removeBodyOrDelay(child);
         child->_world = nullptr;
     }
     
-    _bodies->removeAllObjects();
-    CC_SAFE_RELEASE(_bodies);
+    _bodies.clear();
 }
 
 void PhysicsWorld::setDebugDrawMask(int mask)
@@ -970,18 +969,18 @@ void PhysicsWorld::setDebugDrawMask(int mask)
     _debugDrawMask = mask;
 }
 
-Array* PhysicsWorld::getAllBodies() const
+const Vector<PhysicsBody*>& PhysicsWorld::getAllBodies() const
 {
     return _bodies;
 }
 
 PhysicsBody* PhysicsWorld::getBody(int tag) const
 {
-    for (auto body : *_bodies)
+    for (auto& body : _bodies)
     {
-        if (((PhysicsBody*)body)->getTag() == tag)
+        if (body->getTag() == tag)
         {
-            return (PhysicsBody*)body;
+            return body;
         }
     }
     
@@ -990,12 +989,10 @@ PhysicsBody* PhysicsWorld::getBody(int tag) const
 
 void PhysicsWorld::setGravity(const Vect& gravity)
 {
-    if (_bodies != nullptr)
+    if (!_bodies.empty())
     {
-        for (auto child : *_bodies)
+        for (auto& body : _bodies)
         {
-            PhysicsBody* body = dynamic_cast<PhysicsBody*>(child);
-            
             // reset gravity for body
             if (!body->isGravityEnabled())
             {
@@ -1016,10 +1013,10 @@ void PhysicsWorld::update(float delta)
         // the updateJoints must run before the updateBodies.
         updateJoints();
         updateBodies();
-        _delayDirty = !(_delayAddBodies->count() == 0 && _delayRemoveBodies->count() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
+        _delayDirty = !(_delayAddBodies.size() == 0 && _delayRemoveBodies.size() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
     }
     
-    for (auto body : *_bodies)
+    for (auto& body : _bodies)
     {
         body->update(delta);
     }
@@ -1036,13 +1033,10 @@ PhysicsWorld::PhysicsWorld()
 : _gravity(Point(0.0f, -98.0f))
 , _speed(1.0f)
 , _info(nullptr)
-, _bodies(nullptr)
 , _scene(nullptr)
 , _delayDirty(false)
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
-, _delayAddBodies(nullptr)
-, _delayRemoveBodies(nullptr)
 {
     
 }
@@ -1051,8 +1045,6 @@ PhysicsWorld::~PhysicsWorld()
 {
     removeAllJoints(true);
     removeAllBodies();
-    CC_SAFE_RELEASE(_delayRemoveBodies);
-    CC_SAFE_RELEASE(_delayAddBodies);
     CC_SAFE_DELETE(_info);
     CC_SAFE_DELETE(_debugDraw);
 }
