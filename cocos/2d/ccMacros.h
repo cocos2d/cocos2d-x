@@ -100,7 +100,7 @@ do { \
     CCASSERT(getShaderProgram(), "No shader program set for this node"); \
     { \
         getShaderProgram()->use(); \
-        getShaderProgram()->setUniformsForBuiltins(); \
+        getShaderProgram()->setUniformsForBuiltins(_modelViewTransform); \
     } \
 } while(0)
 

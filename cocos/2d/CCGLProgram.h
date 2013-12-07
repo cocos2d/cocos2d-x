@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 
 #include "CCGL.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -191,25 +192,26 @@ public:
     void setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4);
 
     /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWith2fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
+    void setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** calls glUniform3fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWith3fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
+    void setUniformLocationWith3fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** calls glUniform4fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWith4fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
+    void setUniformLocationWith4fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** calls glUniformMatrix2fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWithMatrix2fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices);
+    void setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
     /** calls glUniformMatrix3fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWithMatrix3fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices);
+    void setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
     /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices);
+    void setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
     void setUniformsForBuiltins();
+    void setUniformsForBuiltins(const kmMat4 &modelView);
 
     /** returns the vertexShader error log */
     const char* getVertexShaderLog() const;
@@ -240,7 +242,7 @@ public:
     inline const GLuint getProgram() const { return _program; }
 
 private:
-    bool updateUniformLocation(GLint location, GLvoid* data, unsigned int bytes);
+    bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
     const char* description() const;
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
     const char* logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;

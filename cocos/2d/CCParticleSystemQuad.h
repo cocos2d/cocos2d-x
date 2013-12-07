@@ -109,8 +109,6 @@ public:
      */
     virtual void draw() override;
 
-    void onDraw();
-
     /**
      * @js NA
      * @lua NA

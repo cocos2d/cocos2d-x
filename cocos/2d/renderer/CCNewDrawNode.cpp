@@ -42,8 +42,6 @@ bool NewDrawNode::init()
 
 void NewDrawNode::draw()
 {
-    kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
-
     CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(NewDrawNode::onDraw, this);
@@ -52,17 +50,10 @@ void NewDrawNode::draw()
 
 void NewDrawNode::onDraw()
 {
-    kmMat4 prevMatrix;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &prevMatrix);
-    
-    kmGLLoadMatrix(&_transformMatrix);
-
     CC_NODE_DRAW_SETUP();
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
     render();
-
-    kmGLLoadMatrix(&prevMatrix);
 }
 
 NS_CC_END
