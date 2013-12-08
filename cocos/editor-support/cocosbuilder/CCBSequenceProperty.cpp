@@ -14,15 +14,11 @@ CCBSequenceProperty::CCBSequenceProperty()
 
 bool CCBSequenceProperty::init()
 {
-    _keyframes = new Array();
-    _keyframes->init();
-
     return true;
 }
 
 CCBSequenceProperty::~CCBSequenceProperty()
 {
-    CC_SAFE_RELEASE_NULL(_keyframes);
 }
 
 const char* CCBSequenceProperty::getName()
@@ -45,7 +41,7 @@ void CCBSequenceProperty::setType(int type)
     _type = type;
 }
 
-Array* CCBSequenceProperty::getKeyframes()
+cocos2d::Vector<CCBKeyframe*>& CCBSequenceProperty::getKeyframes()
 {
     return _keyframes;
 }
