@@ -664,9 +664,9 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
                 unsigned char *deflated = nullptr;
                 Size s = layer->_layerSize;
                 // int sizeHint = s.width * s.height * sizeof(uint32_t);
-                int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
+                ssize_t sizeHint = s.width * s.height * sizeof(unsigned int);
                 
-                int CC_UNUSED inflatedLen = ZipUtils::inflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+                ssize_t CC_UNUSED inflatedLen = ZipUtils::inflateMemoryWithHint(buffer, len, &deflated, sizeHint);
                 CCASSERT(inflatedLen == sizeHint, "");
                 
                 free(buffer);

@@ -42,7 +42,7 @@ public:
     }
     
     /** creates an emptry Vector */
-    explicit Vector<T>(long capacity)
+    explicit Vector<T>(int capacity)
     : _data()
     {
         CCLOGINFO("In the default constructor with capacity of Vector.");
@@ -86,24 +86,24 @@ public:
     }
     
 // Don't uses operator since we could not decide whether it needs 'retain'/'release'.
-//    T& operator[](long index)
+//    T& operator[](int index)
 //    {
 //        return _data[index];
 //    }
 //    
-//    const T& operator[](long index) const
+//    const T& operator[](int index) const
 //    {
 //        return _data[index];
 //    }
     
     /** Sets capacity of current array */
-    void reserve(long capacity)
+    void reserve(int capacity)
     {
         _data.reserve(capacity);
     }
     
     /** Returns capacity of the array */
-    long capacity() const
+    int capacity() const
     {
         return _data.capacity();
     }
@@ -111,9 +111,9 @@ public:
     // Querying an Array
 
     /** Returns element count of the array */
-    size_t size() const
+    int size() const
     {
-        return _data.size();
+        return  static_cast<int>(_data.size());
     }
     
     bool empty() const
@@ -122,9 +122,9 @@ public:
     }
     
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    long getIndex(T object) const
+    int getIndex(T object) const
     {
-        long i = 0;
+        int i = 0;
         for (auto it = _data.begin(); it != _data.end(); ++it, ++i)
         {
             if (*it == object)
@@ -137,7 +137,7 @@ public:
     }
 
     /** Returns an element with a certain index */
-    T at(size_t index) const
+    T at(int index) const
     {
         CCASSERT( index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
         return _data[index];
@@ -178,7 +178,7 @@ public:
         if (s != other.size())
             return false;
         
-        for (long i = 0; i < s; i++)
+        for (int i = 0; i < s; i++)
         {
             if (!this->at(i)->isEqual(other.at(i)))
             {
@@ -208,7 +208,7 @@ public:
     }
 
     /** Insert a certain object at a certain index */
-    void insert(long index, T object)
+    void insert(int index, T object)
     {
         CCASSERT(index >= 0 && index <= size(), "Invalid index!");
         CCASSERT(object != nullptr, "The object should not be nullptr");
@@ -238,7 +238,7 @@ public:
     }
 
     /** Removes an element with a certain index */
-    void remove(long index)
+    void remove(int index)
     {
         CCASSERT(!_data.empty() && index >=0 && index < size(), "Invalid index!");
         auto it = std::next( begin(), index );
@@ -260,8 +260,8 @@ public:
     /** Swap two elements */
     void swap(T object1, T object2)
     {
-        long idx1 = getIndex(object1);
-        long idx2 = getIndex(object2);
+        auto idx1 = getIndex(object1);
+        auto idx2 = getIndex(object2);
 
         CCASSERT(idx1>=0 && idx2>=0, "invalid object index");
 
@@ -269,7 +269,7 @@ public:
     }
     
     /** Swap two elements with certain indexes */
-    void swap(long index1, long index2)
+    void swap(int index1, int index2)
     {
         CCASSERT(index1 >=0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
 
@@ -277,7 +277,7 @@ public:
     }
 
     /** Replace object at index with another object. */
-    void replace(long index, T object)
+    void replace(int index, T object)
     {
         CCASSERT(index >= 0 && index < size(), "Invalid index!");
         CCASSERT(object != nullptr, "The object should not be nullptr");

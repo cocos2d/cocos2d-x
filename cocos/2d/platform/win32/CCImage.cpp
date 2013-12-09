@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #define __CC_PLATFORM_IMAGE_CPP__
+#if _MSC_VER
+#include <cctype>
+#endif
 #include "platform/CCImageCommon_cpp.h"
 
 NS_CC_BEGIN

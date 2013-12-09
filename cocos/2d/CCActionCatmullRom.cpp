@@ -43,7 +43,7 @@ NS_CC_BEGIN;
  *  Implementation of PointArray
  */
 
-PointArray* PointArray::create(unsigned int capacity)
+PointArray* PointArray::create(int capacity)
 {
     PointArray* pointArray = new PointArray();
     if (pointArray)
@@ -63,7 +63,7 @@ PointArray* PointArray::create(unsigned int capacity)
 }
 
 
-bool PointArray::initWithCapacity(unsigned int capacity)
+bool PointArray::initWithCapacity(int capacity)
 {
     _controlPoints = new vector<Point*>();
     
@@ -126,19 +126,19 @@ void PointArray::addControlPoint(Point controlPoint)
     _controlPoints->push_back(new Point(controlPoint.x, controlPoint.y));
 }
 
-void PointArray::insertControlPoint(Point &controlPoint, unsigned int index)
+void PointArray::insertControlPoint(Point &controlPoint, int index)
 {
     Point *temp = new Point(controlPoint.x, controlPoint.y);
     _controlPoints->insert(_controlPoints->begin() + index, temp);
 }
 
-Point PointArray::getControlPointAtIndex(unsigned int index)
+Point PointArray::getControlPointAtIndex(int index)
 {
-    index = MIN(_controlPoints->size()-1, MAX(index, 0));
+    index = static_cast<int>(MIN(_controlPoints->size()-1, MAX(index, 0)));
     return *(_controlPoints->at(index));
 }
 
-void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, unsigned int index)
+void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, int index)
 {
 
     Point *temp = _controlPoints->at(index);
@@ -146,7 +146,7 @@ void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, unsigned int 
     temp->y = controlPoint.y;
 }
 
-void PointArray::removeControlPointAtIndex(unsigned int index)
+void PointArray::removeControlPointAtIndex(int index)
 {
     vector<Point*>::iterator iter = _controlPoints->begin() + index;
     Point* pRemovedPoint = *iter;
@@ -154,9 +154,9 @@ void PointArray::removeControlPointAtIndex(unsigned int index)
     delete pRemovedPoint;
 }
 
-unsigned int PointArray::count() const
+int PointArray::count() const
 {
-    return _controlPoints->size();
+    return  static_cast<int>(_controlPoints->size());
 }
 
 PointArray* PointArray::reverse() const
@@ -177,11 +177,11 @@ PointArray* PointArray::reverse() const
 
 void PointArray::reverseInline()
 {
-    unsigned long l = _controlPoints->size();
+    auto l = _controlPoints->size();
     Point *p1 = nullptr;
     Point *p2 = nullptr;
     int x, y;
-    for (unsigned int i = 0; i < l/2; ++i)
+    for (int i = 0; i < l/2; ++i)
     {
         p1 = _controlPoints->at(i);
         p2 = _controlPoints->at(l-i-1);
@@ -291,7 +291,7 @@ CardinalSplineTo* CardinalSplineTo::clone() const
 
 void CardinalSplineTo::update(float time)
 {
-    unsigned int p;
+    int p;
     float lt;
 	
 	// eg.

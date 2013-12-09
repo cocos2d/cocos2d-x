@@ -55,7 +55,7 @@ public:
 
     /* override funtions */
     bool init();
-    virtual unsigned char* getFileData(const char* filename, const char* mode, long * size);
+    virtual unsigned char* getFileData(const char* filename, const char* mode, ssize_t * size);
 
     virtual std::string getWritablePath() const;
     virtual bool isFileExist(const std::string& strFilePath) const;
@@ -64,10 +64,10 @@ public:
     /** This function is android specific. It is used for TextureCache::addImageAsync(). 
      Don't use it in your codes.
      */
-    unsigned char* getFileDataForAsync(const char* filename, const char* mode, long * size);
+    unsigned char* getFileDataForAsync(const char* filename, const char* mode, ssize_t * size);
     
 private:
-    unsigned char* doGetFileData(const char* filename, const char* mode, long * size, bool forAsync);
+    unsigned char* doGetFileData(const char* filename, const char* mode, ssize_t * size, bool forAsync);
     static AAssetManager* assetmanager;
 };
 
