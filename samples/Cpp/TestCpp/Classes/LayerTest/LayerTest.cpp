@@ -119,13 +119,9 @@ static void setEnableRecursiveCascading(Node* node, bool enable)
         rgba->setCascadeOpacityEnabled(enable);
     }
     
-    Object* obj;
-    auto children = node->getChildren();
-    CCARRAY_FOREACH(children, obj)
-    {
-        auto child = static_cast<Node*>(obj);
+    node->getChildren().forEach([enable](Node* child){
         setEnableRecursiveCascading(child, enable);
-    }
+    });
 }
 
 // LayerTestCascadingOpacityA

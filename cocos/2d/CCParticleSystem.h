@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "CCProtocols.h"
 #include "CCNode.h"
-#include "CCDictionary.h"
+#include "CCValue.h"
 #include "CCString.h"
 
 NS_CC_BEGIN
@@ -386,12 +386,12 @@ protected:
     /** initializes a QuadParticleSystem from a Dictionary.
      @since v0.99.3
      */
-    bool initWithDictionary(Dictionary *dictionary);
+    bool initWithDictionary(ValueMap& dictionary);
 
     /** initializes a particle system from a NSDictionary and the path from where to load the png
      @since v2.1
      */
-    bool initWithDictionary(Dictionary *dictionary, const std::string& dirname);
+    bool initWithDictionary(ValueMap& dictionary, const std::string& dirname);
 
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(int numberOfParticles);

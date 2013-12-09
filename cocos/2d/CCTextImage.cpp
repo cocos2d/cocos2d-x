@@ -49,7 +49,7 @@ TextPageDef::TextPageDef(int pageNum, int width, int height):   _pageNum(pageNum
 
 TextPageDef::~TextPageDef()
 {
-    int numLines = _lines.size();
+    size_t numLines = _lines.size();
     
     for( int c = 0; c<numLines; ++c )
     {
@@ -122,8 +122,8 @@ TextFontPagesDef::TextFontPagesDef()
 
 TextFontPagesDef::~TextFontPagesDef()
 {
-    int numPages = _pages.size();
-    for( int c = 0; c < numPages; ++c )
+    size_t numPages = _pages.size();
+    for( size_t c = 0; c < numPages; ++c )
     {
         if (_pages[c])
             delete _pages[c];

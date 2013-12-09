@@ -26,6 +26,7 @@
 #include "CCString.h"
 #include "CCInteger.h"
 #include "platform/CCFileUtils.h"
+#include <algorithm>    // std::for_each
 
 using namespace std;
 
@@ -87,12 +88,12 @@ unsigned int Dictionary::count()
     return HASH_COUNT(_elements);
 }
 
-Array* Dictionary::allKeys()
+__Array* Dictionary::allKeys()
 {
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
 
-    Array* pArray = Array::createWithCapacity(iKeyCount);
+    __Array* array = __Array::createWithCapacity(iKeyCount);
 
     DictElement *pElement, *tmp;
     if (_dictType == kDictStr)
@@ -100,7 +101,7 @@ Array* Dictionary::allKeys()
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
             String* pOneKey = new String(pElement->_strKey);
-            pArray->addObject(pOneKey);
+            array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
     }
@@ -108,20 +109,20 @@ Array* Dictionary::allKeys()
     {
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
-            Integer* pOneKey = new Integer(pElement->_intKey);
-            pArray->addObject(pOneKey);
+            Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
+            array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
     }
     
-    return pArray;
+    return array;
 }
 
-Array* Dictionary::allKeysForObject(Object* object)
+__Array* Dictionary::allKeysForObject(Object* object)
 {
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
-    Array* pArray = Array::create();
+    __Array* array = __Array::create();
 
     DictElement *pElement, *tmp;
 
@@ -132,7 +133,7 @@ Array* Dictionary::allKeysForObject(Object* object)
             if (object == pElement->_object)
             {
                 String* pOneKey = new String(pElement->_strKey);
-                pArray->addObject(pOneKey);
+                array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
         }
@@ -143,13 +144,13 @@ Array* Dictionary::allKeysForObject(Object* object)
         {
             if (object == pElement->_object)
             {
-                Integer* pOneKey = new Integer(pElement->_intKey);
-                pArray->addObject(pOneKey);
+                Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
+                array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
         }
     }
-    return pArray;
+    return array;
 }
 
 Object* Dictionary::objectForKey(const std::string& key)
@@ -302,10 +303,10 @@ void Dictionary::setObjectUnSafe(Object* pObject, const intptr_t key)
     HASH_ADD_PTR(_elements, _intKey, pElement);
 }
 
-void Dictionary::removeObjectsForKeys(Array* pKeyArray)
+void Dictionary::removeObjectsForKeys(__Array* pKey__Array)
 {
     Object* pObj = NULL;
-    CCARRAY_FOREACH(pKeyArray, pObj)
+    CCARRAY_FOREACH(pKey__Array, pObj)
     {
         String* pStr = static_cast<String*>(pObj);
         removeObjectForKey(pStr->getCString());
@@ -377,9 +378,73 @@ Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
     return srcDict->clone();
 }
 
+static __Array* visitArray(const ValueVector& array);
+
+static Dictionary* visitDict(const ValueMap& dict)
+{
+    Dictionary* ret = new Dictionary();
+    ret->init();
+    
+    for (auto iter = dict.begin(); iter != dict.end(); ++iter)
+    {
+        if (iter->second.getType() == Value::Type::MAP)
+        {
+            const ValueMap& subDict = iter->second.asValueMap();
+            auto sub = visitDict(subDict);
+            ret->setObject(sub, iter->first);
+            sub->release();
+        }
+        else if (iter->second.getType() == Value::Type::VECTOR)
+        {
+            const ValueVector& arr = iter->second.asValueVector();
+            auto sub = visitArray(arr);
+            ret->setObject(sub, iter->first);
+            sub->release();
+        }
+        else
+        {
+            auto str = new String(iter->second.asString());
+            ret->setObject(str, iter->first);
+            str->release();
+        }
+    }
+    return ret;
+}
+
+static __Array* visitArray(const ValueVector& array)
+{
+    __Array* ret = new __Array();
+    ret->init();
+    
+    std::for_each(array.begin(), array.end(), [&ret](const Value& value){
+        if (value.getType() == Value::Type::MAP)
+        {
+            const ValueMap& subDict = value.asValueMap();
+            auto sub = visitDict(subDict);
+            ret->addObject(sub);
+            sub->release();
+        }
+        else if (value.getType() == Value::Type::VECTOR)
+        {
+            const ValueVector& arr = value.asValueVector();
+            auto sub = visitArray(arr);
+            ret->addObject(sub);
+            sub->release();
+        }
+        else
+        {
+            auto str = new String(value.asString());
+            ret->addObject(str);
+            str->release();
+        }
+    });
+    
+    return ret;
+}
+
 Dictionary* Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return FileUtils::getInstance()->createDictionaryWithContentsOfFile(pFileName);
+    return visitDict(FileUtils::getInstance()->getValueMapFromFile(pFileName));
 }
 
 void Dictionary::acceptVisitor(DataVisitor &visitor)
@@ -399,7 +464,14 @@ Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 
 bool Dictionary::writeToFile(const char *fullPath)
 {
-    return FileUtils::getInstance()->writeToFile(this, fullPath);
+    ValueMap dict;
+    DictElement* element = nullptr;
+    CCDICT_FOREACH(this, element)
+    {
+        dict[element->getStrKey()] = Value(static_cast<String*>(element->getObject())->getCString());
+    }
+    
+    return FileUtils::getInstance()->writeToFile(dict, fullPath);
 }
 
 Dictionary* Dictionary::clone() const

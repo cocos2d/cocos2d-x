@@ -74,10 +74,6 @@ bool Control::init()
         setSelected(false);
         setHighlighted(false);
 
-        // Initialise the tables
-        _dispatchTable = new Dictionary();
-        _dispatchTable->init();
-        
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         auto touchListener = EventListenerTouchOneByOne::create();
         touchListener->onTouchBegan = CC_CALLBACK_2(Control::onTouchBegan, this);
@@ -97,7 +93,12 @@ bool Control::init()
 
 Control::~Control()
 {
-    CC_SAFE_RELEASE(_dispatchTable);
+    for (auto iter = _dispatchTable.begin(); iter != _dispatchTable.end(); ++iter)
+    {
+        delete iter->second;
+    }
+    
+    _dispatchTable.clear();
 }
 
 void Control::sendActionsForControlEvents(EventType controlEvents)
@@ -109,14 +110,12 @@ void Control::sendActionsForControlEvents(EventType controlEvents)
         if (((int)controlEvents & (1 << i)))
         {
             // Call invocations
-            // <Invocation*>
-            Array* invocationList = this->dispatchListforControlEvent((Control::EventType)(1<<i));
-            Object* pObj = NULL;
-            CCARRAY_FOREACH(invocationList, pObj)
-            {
-                Invocation* invocation = static_cast<Invocation*>(pObj);
+            const auto& invocationList = this->dispatchListforControlEvent((Control::EventType)(1<<i));
+            
+            invocationList.forEach([this](Invocation* invocation){
                 invocation->invoke(this);
-            }
+            });
+
             //Call ScriptFunc
             if (kScriptTypeLua == _scriptType)
             {
@@ -161,8 +160,8 @@ void Control::addTargetWithActionForControlEvent(Object* target, Handler action,
     Invocation *invocation = Invocation::create(target, action, controlEvent);
 
     // Add the invocation into the dispatch list for the given control event
-    Array* eventInvocationList = this->dispatchListforControlEvent(controlEvent);
-    eventInvocationList->addObject(invocation);    
+    auto& eventInvocationList = this->dispatchListforControlEvent(controlEvent);
+    eventInvocationList.pushBack(invocation);
 }
 
 void Control::removeTargetWithActionForControlEvents(Object* target, Handler action, EventType controlEvents)
@@ -182,7 +181,7 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
 {
     // Retrieve all invocations for the given control event
     //<Invocation*>
-    Array *eventInvocationList = this->dispatchListforControlEvent(controlEvent);
+    auto& eventInvocationList = this->dispatchListforControlEvent(controlEvent);
     
     //remove all invocations if the target and action are null
     //TODO: should the invocations be deleted, or just removed from the array? Won't that cause issues if you add a single invocation for multiple events?
@@ -190,30 +189,27 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
     if (!target && !action)
     {
         //remove objects
-        eventInvocationList->removeAllObjects();
+        eventInvocationList.clear();
     } 
     else
     {
             //normally we would use a predicate, but this won't work here. Have to do it manually
-            Object* pObj = NULL;
-            CCARRAY_FOREACH(eventInvocationList, pObj)
+        eventInvocationList.forEach([&](Invocation* invocation){
+            bool shouldBeRemoved=true;
+            if (target)
             {
-                Invocation *invocation = static_cast<Invocation*>(pObj);
-                bool shouldBeRemoved=true;
-                if (target)
-                {
-                    shouldBeRemoved=(target==invocation->getTarget());
-                }
-                if (action)
-                {
-                    shouldBeRemoved=(shouldBeRemoved && (action==invocation->getAction()));
-                }
-                // Remove the corresponding invocation object
-                if (shouldBeRemoved)
-                {
-                    eventInvocationList->removeObject(invocation, bDeleteObjects);
-                }
+                shouldBeRemoved=(target==invocation->getTarget());
             }
+            if (action)
+            {
+                shouldBeRemoved=(shouldBeRemoved && (action==invocation->getAction()));
+            }
+            // Remove the corresponding invocation object
+            if (shouldBeRemoved)
+            {
+                eventInvocationList.removeObject(invocation, bDeleteObjects);
+            }
+        });
     }
 }
 
@@ -222,16 +218,14 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
 void Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
 {
     _isOpacityModifyRGB=bOpacityModifyRGB;
-    Object* child;
-    Array* children=getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);        
-        if (pNode)
+    
+    _children.forEach([&](Node* obj){
+        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(obj);
+        if (rgba)
         {
-            pNode->setOpacityModifyRGB(bOpacityModifyRGB);
+            rgba->setOpacityModifyRGB(bOpacityModifyRGB);
         }
-    }
+    });
 }
 
 bool Control::isOpacityModifyRGB() const
@@ -256,17 +250,22 @@ bool Control::isTouchInside(Touch* touch)
     return bBox.containsPoint(touchLocation);
 }
 
-Array* Control::dispatchListforControlEvent(EventType controlEvent)
+Vector<Invocation*>& Control::dispatchListforControlEvent(EventType controlEvent)
 {
-    Array* invocationList = static_cast<Array*>(_dispatchTable->objectForKey((int)controlEvent));
-
+    Vector<Invocation*>* invocationList = nullptr;
+    auto iter = _dispatchTable.find((int)controlEvent);
+    
     // If the invocation list does not exist for the  dispatch table, we create it
-    if (invocationList == NULL)
+    if (iter == _dispatchTable.end())
     {
-        invocationList = Array::createWithCapacity(1);
-        _dispatchTable->setObject(invocationList, (int)controlEvent);
-    }    
-    return invocationList;
+        invocationList = new Vector<Invocation*>();
+        _dispatchTable[(int)controlEvent] = invocationList;
+    }
+    else
+    {
+        invocationList = iter->second;
+    }
+    return *invocationList;
 }
 
 void Control::needsLayout()

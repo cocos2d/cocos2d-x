@@ -59,29 +59,6 @@ public:
      * @lua NA
     */
     static void releaseAutoreleasePool(void *autoreleasePool);
-
-    /** To run a function in gl thread.
-     * @js NA
-     * @lua NA
-     @since v3.0
-     */
-    static void runOnGLThread(std::function<void(void)> f);
-    
-    /** Set how many callback functions being invoked per frame. Default value is 5.
-     * @js NA
-     * @lua NA
-     @since v3.0
-     */
-    static void setCallbackNumberPerFrame(long callbackNumberPerFrame);
-
-private:
-    // This function will be call by Director to call some call back function on gl thread
-    static void doCallback();
-    
-    static std::list<std::function<void(void)>> *_callbackList;
-    static std::mutex *_mutex;
-    // How many callback functions invoked per frame
-    static long _callbackNumberPerFrame;
 };
 
 // end of platform group

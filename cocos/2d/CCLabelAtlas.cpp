@@ -42,7 +42,7 @@ NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
 
-LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& charMapFile, long itemWidth, long itemHeight, long startCharMap)
+LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
     LabelAtlas *pRet = new LabelAtlas();
     if(pRet && pRet->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
@@ -54,15 +54,15 @@ LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& cha
     return NULL;
 }
 
-bool LabelAtlas::initWithString(const std::string& string, const std::string& charMapFile, long itemWidth, long itemHeight, long startCharMap)
+bool LabelAtlas::initWithString(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(charMapFile);
 	return initWithString(string, texture, itemWidth, itemHeight, startCharMap);
 }
 
-bool LabelAtlas::initWithString(const std::string& string, Texture2D* texture, long itemWidth, long itemHeight, long startCharMap)
+bool LabelAtlas::initWithString(const std::string& string, Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
-    if (AtlasNode::initWithTexture(texture, itemWidth, itemHeight, string.size()))
+    if (AtlasNode::initWithTexture(texture, itemWidth, itemHeight, static_cast<int>(string.size())))
     {
         _mapStartChar = startCharMap;
         this->setString(string);
@@ -112,7 +112,7 @@ bool LabelAtlas::initWithString(const std::string& theString, const std::string&
 //CCLabelAtlas - Atlas generation
 void LabelAtlas::updateAtlasValues()
 {
-    size_t n = _string.length();
+    auto n = _string.length();
 
     const unsigned char *s = (unsigned char*)_string.c_str();
 
@@ -127,9 +127,9 @@ void LabelAtlas::updateAtlasValues()
         itemHeightInPixels = _itemHeight;
     }
 
-    CCASSERT( static_cast<long>(n) <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
+    CCASSERT(n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
-    for(long i = 0; i < static_cast<long>(n); i++) {
+    for(int i = 0; i < n; i++) {
 
         unsigned char a = s[i] - _mapStartChar;
         float row = (float) (a % _itemsPerRow);
@@ -177,9 +177,9 @@ void LabelAtlas::updateAtlasValues()
     }
     if (n > 0 ){
         _textureAtlas->setDirty(true);
-        long totalQuads = _textureAtlas->getTotalQuads();
-        if (static_cast<long>(n) > totalQuads) {
-            _textureAtlas->increaseTotalQuadsWith(n - totalQuads);
+        auto totalQuads = _textureAtlas->getTotalQuads();
+        if (n > totalQuads) {
+            _textureAtlas->increaseTotalQuadsWith(static_cast<int>(n - totalQuads));
         }
     }
 }
@@ -187,10 +187,10 @@ void LabelAtlas::updateAtlasValues()
 //CCLabelAtlas - LabelProtocol
 void LabelAtlas::setString(const std::string &label)
 {
-    size_t len = label.size();
-    if (static_cast<long>(len) > _textureAtlas->getTotalQuads())
+    auto len = label.size();
+    if (len > _textureAtlas->getTotalQuads())
     {
-        _textureAtlas->resizeCapacity(len);
+        _textureAtlas->resizeCapacity(static_cast<int>(len));
     }
     _string.clear();
     _string = label;
@@ -200,7 +200,7 @@ void LabelAtlas::setString(const std::string &label)
 
     this->setContentSize(s);
 
-    _quadsToDraw = len;
+    _quadsToDraw = static_cast<int>(len);
 }
 
 const std::string& LabelAtlas::getString(void) const

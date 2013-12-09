@@ -114,7 +114,7 @@ public:
     /** get the length of string 
      * @js NA
      */
-    unsigned int length() const;
+    int length() const;
 
     /** compare to a c string 
      * @js NA
@@ -137,7 +137,7 @@ public:
      * @js NA
      * @lua NA
      */
-    Array* componentsSeparatedByString(const char *delimiter);
+    __Array* componentsSeparatedByString(const char *delimiter);
     
     /* override functions 
      * @js NA
@@ -164,7 +164,7 @@ public:
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
-    static String* createWithData(const unsigned char* pData, unsigned long nLen);
+    static String* createWithData(const unsigned char* pData, int nLen);
 
     /** create a string with a file, 
      *  @return A String pointer which is an autorelease object pointer,

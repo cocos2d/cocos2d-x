@@ -1041,6 +1041,8 @@
 		46A175031807D9E2005B8026 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A174BF1807D934005B8026 /* RootViewController.mm */; };
 		5010FC91180F0F8300B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A174AD1807D934005B8026 /* Default-568h@2x.png */; };
 		5010FC92180F105C00B8E2AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 460E452F1807E712000CDD6D /* Default-568h@2x.png */; };
+		50691336184EB453009BBDD7 /* ConsoleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50691334184EB453009BBDD7 /* ConsoleTest.cpp */; };
+		50691337184EB453009BBDD7 /* ConsoleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50691334184EB453009BBDD7 /* ConsoleTest.cpp */; };
 		50E9E93D182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */; };
 		50E9E93E182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */; };
 		50E9E93F182A274000F6FDF1 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */; };
@@ -2843,6 +2845,8 @@
 		46A174EF1807D9C4005B8026 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		46A174F01807D9C4005B8026 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		46A174F11807D9C4005B8026 /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
+		50691334184EB453009BBDD7 /* ConsoleTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleTest.cpp; sourceTree = "<group>"; };
+		50691335184EB453009BBDD7 /* ConsoleTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleTest.h; sourceTree = "<group>"; };
 		50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIDragPanelTest.cpp; sourceTree = "<group>"; };
 		50E9E939182A274000F6FDF1 /* UIDragPanelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDragPanelTest.h; sourceTree = "<group>"; };
 		50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest.cpp; sourceTree = "<group>"; };
@@ -4044,6 +4048,7 @@
 				1AAF5010180E2C18000584C8 /* ClippingNodeTest */,
 				1AAF5013180E2C18000584C8 /* CocosDenshionTest */,
 				1AAF5016180E2C18000584C8 /* ConfigurationTest */,
+				50691333184EB453009BBDD7 /* ConsoleTest */,
 				1AAF5019180E2C18000584C8 /* controller.cpp */,
 				1AAF501A180E2C18000584C8 /* controller.h */,
 				1AAF501B180E2C18000584C8 /* CurlTest */,
@@ -5437,6 +5442,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		50691333184EB453009BBDD7 /* ConsoleTest */ = {
+			isa = PBXGroup;
+			children = (
+				50691334184EB453009BBDD7 /* ConsoleTest.cpp */,
+				50691335184EB453009BBDD7 /* ConsoleTest.h */,
+			);
+			path = ConsoleTest;
+			sourceTree = "<group>";
+		};
 		50E9E937182A274000F6FDF1 /* UIDragPanelTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -6786,6 +6800,7 @@
 				1AAF5166180E2C1A000584C8 /* Bug-350.cpp in Sources */,
 				1AAF5168180E2C1A000584C8 /* Bug-422.cpp in Sources */,
 				1AAF516A180E2C1A000584C8 /* Bug-458.cpp in Sources */,
+				50691336184EB453009BBDD7 /* ConsoleTest.cpp in Sources */,
 				1AAF516C180E2C1A000584C8 /* QuestionContainerSprite.cpp in Sources */,
 				1AAF516E180E2C1A000584C8 /* Bug-624.cpp in Sources */,
 				1AAF5170180E2C1A000584C8 /* Bug-886.cpp in Sources */,
@@ -7157,6 +7172,7 @@
 				1AAF521B180E2C1A000584C8 /* PerformanceParticleTest.cpp in Sources */,
 				1AAF521D180E2C1A000584C8 /* PerformanceSpriteTest.cpp in Sources */,
 				59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */,
+				50691337184EB453009BBDD7 /* ConsoleTest.cpp in Sources */,
 				1AAF521F180E2C1A000584C8 /* PerformanceTest.cpp in Sources */,
 				1AAF5221180E2C1A000584C8 /* PerformanceTextureTest.cpp in Sources */,
 				1AAF5223180E2C1A000584C8 /* PerformanceTouchesTest.cpp in Sources */,
@@ -8895,7 +8911,6 @@
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
-					CC_USE_PHYSICS,
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
@@ -8921,7 +8936,6 @@
 					NDEBUG,
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
-					CC_USE_PHYSICS,
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;

@@ -64,7 +64,7 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, int capacity
 * creation with File Image
 */
 
-SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, long capacity/* = DEFAULT_CAPACITY*/)
+SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, int capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
@@ -76,7 +76,7 @@ SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, long capacity/* 
 /*
 * init with Texture2D
 */
-bool SpriteBatchNode::initWithTexture(Texture2D *tex, long capacity)
+bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
@@ -92,9 +92,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, long capacity)
 
     updateBlendFunc();
 
-    // no lazy alloc in this node
-    _children = new Array();
-    _children->initWithCapacity(capacity);
+    _children.reserve(capacity);
 
     _descendants.reserve(capacity);
 
@@ -112,7 +110,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const char* fileImage, long capacity)
+bool SpriteBatchNode::initWithFile(const char* fileImage, int capacity)
 {
     Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
@@ -187,7 +185,7 @@ void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
 void SpriteBatchNode::reorderChild(Node *child, int zOrder)
 {
     CCASSERT(child != NULL, "the child should not be null");
-    CCASSERT(_children->containsObject(child), "Child doesn't belong to Sprite");
+    CCASSERT(_children.contains(child), "Child doesn't belong to Sprite");
 
     if (zOrder == child->getZOrder())
     {
@@ -209,7 +207,7 @@ void SpriteBatchNode::removeChild(Node *child, bool cleanup)
         return;
     }
 
-    CCASSERT(_children->containsObject(sprite), "sprite batch node should contain the child");
+    CCASSERT(_children.contains(sprite), "sprite batch node should contain the child");
 
     // cleanup before removing
     removeSpriteFromAtlas(sprite);
@@ -219,8 +217,8 @@ void SpriteBatchNode::removeChild(Node *child, bool cleanup)
 
 void SpriteBatchNode::removeChildAtIndex(int index, bool doCleanup)
 {
-    CCASSERT(index>=0 && index < _children->count(), "Invalid index");
-    removeChild( static_cast<Sprite*>(_children->getObjectAtIndex(index)), doCleanup);
+    CCASSERT(index>=0 && index < _children.size(), "Invalid index");
+    removeChild(_children.at(index), doCleanup);
 }
 
 void SpriteBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
@@ -265,25 +263,25 @@ void SpriteBatchNode::sortAllChildren()
             _children->fastSetObject(tempI, j+1);
         }
 #else
-        std::sort(std::begin(*_children), std::end(*_children), nodeComparisonLess);
+        std::sort(std::begin(_children), std::end(_children), nodeComparisonLess);
 #endif
 
         //sorted now check all children
-        if (_children->count() > 0)
+        if (!_children.empty())
         {
             //first sort all children recursively based on zOrder
-            arrayMakeObjectsPerformSelector(_children, sortAllChildren, Sprite*);
+            _children.forEach([](Node* child){
+                child->sortAllChildren();
+            });
 
             int index=0;
 
-            Object* obj = NULL;
             //fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
             // and at the same time reorder descendants and the quads to the right index
-            CCARRAY_FOREACH(_children, obj)
-            {
-                Sprite* child = static_cast<Sprite*>(obj);
-                updateAtlasIndex(child, &index);
-            }
+            _children.forEach([this, &index](Node* child){
+                Sprite* sp = static_cast<Sprite*>(child);
+                updateAtlasIndex(sp, &index);
+            });
         }
 
         _reorderChildDirty=false;
@@ -292,12 +290,8 @@ void SpriteBatchNode::sortAllChildren()
 
 void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 {
-    int count = 0;
-    Array* array = sprite->getChildren();
-    if (array != NULL)
-    {
-        count = array->count();
-    }
+    auto& array = sprite->getChildren();
+    auto count = array.size();
     
     int oldIndex = 0;
 
@@ -315,7 +309,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
     {
         bool needNewIndex=true;
 
-        if (static_cast<Sprite*>(array->getObjectAtIndex(0) )->getZOrder() >= 0)
+        if (array.at(0)->getZOrder() >= 0)
         {
             //all children are in front of the parent
             oldIndex = sprite->getAtlasIndex();
@@ -330,11 +324,9 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
             needNewIndex = false;
         }
 
-        Object* obj = NULL;
-        CCARRAY_FOREACH(array,obj)
-        {
-            Sprite* child = static_cast<Sprite*>(obj);
-            if (needNewIndex && child->getZOrder() >= 0)
+        array.forEach([&](Node* child){
+            Sprite* sp = static_cast<Sprite*>(child);
+            if (needNewIndex && sp->getZOrder() >= 0)
             {
                 oldIndex = sprite->getAtlasIndex();
                 sprite->setAtlasIndex(*curIndex);
@@ -344,11 +336,10 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
                 }
                 (*curIndex)++;
                 needNewIndex = false;
-
             }
-
-            updateAtlasIndex(child, curIndex);
-        }
+            
+            updateAtlasIndex(sp, curIndex);
+        });
 
         if (needNewIndex)
         {//all children have a zOrder < 0)
@@ -399,7 +390,9 @@ void SpriteBatchNode::draw(void)
 
     CC_NODE_DRAW_SETUP();
 
-    arrayMakeObjectsPerformSelector(_children, updateTransform, Sprite*);
+    _children.forEach([](Node* child){
+        child->updateTransform();
+    });
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
@@ -415,9 +408,9 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     // this is likely computationally expensive
     int quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
 
-    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
-        (long)_textureAtlas->getCapacity(),
-        (long)quantity);
+    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%d] to [%d].",
+        _textureAtlas->getCapacity(),
+        quantity);
 
     if (! _textureAtlas->resizeCapacity(quantity))
     {
@@ -429,22 +422,17 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
 
 int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
 {
-    CCASSERT(index>=0 && index < _children->count(), "Invalid index");
+    CCASSERT(index>=0 && index < _children.size(), "Invalid index");
 
-    Array *children = parent->getChildren();
+    auto& children = parent->getChildren();
 
-    if (children && children->count() > 0)
-    {
-        Object* object = NULL;
-        CCARRAY_FOREACH(children, object)
+    children.forEach([this, &index](Node* child){
+        Sprite* sp = static_cast<Sprite*>(child);
+        if (sp && (sp->getZOrder() < 0))
         {
-            Sprite* child = static_cast<Sprite*>(object);
-            if (child && (child->getZOrder() < 0))
-            {
-                index = rebuildIndexInOrder(child, index);
-            }
+            index = rebuildIndexInOrder(sp, index);
         }
-    }    
+    });
 
     // ignore self (batch node)
     if (! parent->isEqual(this))
@@ -453,61 +441,56 @@ int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
         index++;
     }
 
-    if (children && children->count() > 0)
-    {
-        Object* object = NULL;
-        CCARRAY_FOREACH(children, object)
+    children.forEach([this, &index](Node* child){
+        Sprite* sp = static_cast<Sprite*>(child);
+        if (sp && (sp->getZOrder() >= 0))
         {
-            Sprite* child = static_cast<Sprite*>(object);
-            if (child && (child->getZOrder() >= 0))
-            {
-                index = rebuildIndexInOrder(child, index);
-            }
+            index = rebuildIndexInOrder(sp, index);
         }
-    }
+    });
 
     return index;
 }
 
 int SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
 {
-    Array *children = sprite->getChildren();
+    auto& children = sprite->getChildren();
 
-    if (! children || children->count() == 0)
+    if (children.size() == 0)
     {
         return sprite->getAtlasIndex();
     }
     else
     {
-        return highestAtlasIndexInChild( static_cast<Sprite*>(children->getLastObject()));
+        return highestAtlasIndexInChild( static_cast<Sprite*>(children.back()));
     }
 }
 
 int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
 {
-    Array *children = sprite->getChildren();
+    auto& children = sprite->getChildren();
 
-    if (! children || children->count() == 0)
+    if (children.size() == 0)
     {
         return sprite->getAtlasIndex();
     }
     else
     {
-        return lowestAtlasIndexInChild(static_cast<Sprite*>(children->getObjectAtIndex(0)));
+        return lowestAtlasIndexInChild(static_cast<Sprite*>(children.at(0)));
     }
 }
 
 int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 {
-    Array *siblings = sprite->getParent()->getChildren();
-    int childIndex = siblings->getIndexOfObject(sprite);
+    auto& siblings = sprite->getParent()->getChildren();
+    auto childIndex = siblings.getIndex(sprite);
 
     // ignore parent Z if parent is spriteSheet
     bool ignoreParent = (SpriteBatchNode*)(sprite->getParent()) == this;
     Sprite *prev = NULL;
     if (childIndex > 0 && childIndex != -1)
     {
-        prev = static_cast<Sprite*>(siblings->getObjectAtIndex(childIndex - 1));
+        prev = static_cast<Sprite*>(siblings.at(childIndex - 1));
     }
 
     // first child of the sprite sheet
@@ -568,7 +551,7 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
     }
 
     _descendants.push_back(sprite);
-    int index = _descendants.size()-1;
+    int index = static_cast<int>(_descendants.size()-1);
 
     sprite->setAtlasIndex(index);
 
@@ -576,13 +559,9 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
     _textureAtlas->insertQuad(&quad, index);
 
     // add children recursively
-    
-    Object* obj = nullptr;
-    CCARRAY_FOREACH(sprite->getChildren(), obj)
-    {
-        Sprite* child = static_cast<Sprite*>(obj);
-        appendChild(child);
-    }
+    sprite->getChildren().forEach([this](Node* child){
+        appendChild(static_cast<Sprite*>(child));
+    });
 }
 
 void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
@@ -606,19 +585,14 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     }
 
     // remove children recursively
-    Array *children = sprite->getChildren();
-    if (children && children->count() > 0)
-    {
-        Object* object = NULL;
-        CCARRAY_FOREACH(children, object)
+    auto& children = sprite->getChildren();
+    children.forEach([this](Node* obj){
+        Sprite* child = static_cast<Sprite*>(obj);
+        if (child)
         {
-            Sprite* child = static_cast<Sprite*>(object);
-            if (child)
-            {
-                removeSpriteFromAtlas(child);
-            }
+            removeSpriteFromAtlas(child);
         }
-    }
+    });
 }
 
 void SpriteBatchNode::updateBlendFunc(void)

@@ -70,10 +70,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
     
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
@@ -412,7 +412,7 @@ public:
      @since v2.1
      * @js NA
      */
-    static LayerMultiplex* createWithArray(Array* arrayOfLayers);
+    static LayerMultiplex* createWithArray(const Vector<Layer*>& arrayOfLayers);
 
     /** creates a LayerMultiplex with one or more layers using a variable argument list. 
      * @code
@@ -430,27 +430,7 @@ public:
      * @lua NA
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
-    /**
-     * @js ctor
-     */
-    LayerMultiplex();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerMultiplex();
 
-    virtual bool init();
-    /** initializes a MultiplexLayer with one or more layers using a variable argument list. 
-     * @js NA
-     * @lua NA
-     */
-    bool initWithLayers(Layer* layer, va_list params);
-
-    /** initializes a MultiplexLayer with an array of layers
-     @since v2.1
-     */
-    bool initWithArray(Array* arrayOfLayers);
 
     void addLayer(Layer* layer);
 
@@ -464,8 +444,34 @@ public:
     void switchToAndReleaseMe(int n);
 
 protected:
+    
+    /**
+     * @js ctor
+     */
+    LayerMultiplex();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~LayerMultiplex();
+    
+    virtual bool init();
+    /** initializes a MultiplexLayer with one or more layers using a variable argument list.
+     * @js NA
+     * @lua NA
+     */
+    bool initWithLayers(Layer* layer, va_list params);
+    
+    /** initializes a MultiplexLayer with an array of layers
+     @since v2.1
+     */
+    bool initWithArray(const Vector<Layer*>& arrayOfLayers);
+    
     unsigned int _enabledLayer;
-    Array*     _layers;
+    Vector<Layer*>    _layers;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(LayerMultiplex);
 };
 
 
