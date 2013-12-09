@@ -478,7 +478,7 @@ float CCTween::updateFrameData(float currentPercent)
     CCTweenType tweenType = (m_eFrameTweenEasing != Linear) ? m_eFrameTweenEasing : m_eTweenEasing;
     if (tweenType != TWEEN_EASING_MAX && tweenType != Linear && !m_bPassLastFrame)
     {
-        currentPercent = CCTweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
+        currentPercent = CCTweenFunction::tweenTo(currentPercent, tweenType, m_pFrom->easingParams);
     }
 
     return currentPercent;
