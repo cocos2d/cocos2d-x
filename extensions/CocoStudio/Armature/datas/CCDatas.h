@@ -286,7 +286,7 @@ public:
     */
     int displayIndex;
 
-    CCBlendType blendType;
+    ccBlendFunc blendFunc;
 
     std::string strEvent;
     /**

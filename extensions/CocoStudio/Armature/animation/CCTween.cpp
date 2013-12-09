@@ -339,7 +339,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
         m_pBone->updateZOrder();
 
         //! Update blend type
-        m_pBone->setBlendType(keyFrameData->blendType);
+        m_pBone->setBlendFunc(keyFrameData->blendFunc);
 
         //! Update child armature's movement
         CCArmature *childAramture = m_pBone->getChildArmature();
