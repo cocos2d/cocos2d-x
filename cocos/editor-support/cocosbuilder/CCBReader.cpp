@@ -553,14 +553,14 @@ Node * CCBReader::readNodeGraph(Node * pParent)
     }
 
     // Read animated properties
-    Dictionary *seqs = Dictionary::create();
+    std::unordered_map<int, Map<std::string, CCBSequenceProperty*>> seqs;
     _animatedProps = new set<string>();
     
     int numSequence = readInt(false);
     for (int i = 0; i < numSequence; ++i)
     {
         int seqId = readInt(false);
-        Dictionary *seqNodeProps = Dictionary::create();
+        Map<std::string, CCBSequenceProperty*> seqNodeProps;
         
         int numProps = readInt(false);
         
@@ -582,13 +582,13 @@ Node * CCBReader::readNodeGraph(Node * pParent)
                 seqProp->getKeyframes().pushBack(keyframe);
             }
             
-            seqNodeProps->setObject(seqProp, seqProp->getName());
+            seqNodeProps.insert(seqProp->getName(), seqProp);
         }
         
-        seqs->setObject(seqNodeProps, seqId);
+        seqs[seqId] = seqNodeProps;
     }
     
-    if (seqs->count() > 0)
+    if (!seqs.empty())
     {
         _actionManager->addNode(node, seqs);
     }
@@ -674,7 +674,7 @@ Node * CCBReader::readNodeGraph(Node * pParent)
     }
     
     // Assign custom properties.
-    if (ccNodeLoader->getCustomProperties()->count() > 0)
+    if (!ccNodeLoader->getCustomProperties().empty())
     {
         bool customAssigned = false;
         
@@ -686,15 +686,15 @@ Node * CCBReader::readNodeGraph(Node * pParent)
                 CCBMemberVariableAssigner * targetAsCCBMemberVariableAssigner = dynamic_cast<CCBMemberVariableAssigner *>(target);
                 if(targetAsCCBMemberVariableAssigner != nullptr)
                 {
-                    Dictionary* pCustomPropeties = ccNodeLoader->getCustomProperties();
-                    DictElement* pElement;
-                    CCDICT_FOREACH(pCustomPropeties, pElement)
+                    auto& customPropeties = ccNodeLoader->getCustomProperties();
+                    
+                    for (auto iter = customPropeties.begin(); iter != customPropeties.end(); ++iter)
                     {
-                        customAssigned = targetAsCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), static_cast<CCBValue*>(pElement->getObject()));
+                        customAssigned = targetAsCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, iter->first.c_str(), iter->second);
 
                         if(!customAssigned && this->_CCBMemberVariableAssigner != nullptr)
                         {
-                            customAssigned = this->_CCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), static_cast<CCBValue*>(pElement->getObject()));
+                            customAssigned = this->_CCBMemberVariableAssigner->onAssignCCBCustomProperty(target, iter->first.c_str(), iter->second);
                         }
                     }
                 }
@@ -743,7 +743,7 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
     
     CCBKeyframe::EasingType easingType = static_cast<CCBKeyframe::EasingType>(readInt(false));
     float easingOpt = 0;
-    Object *value = nullptr;
+    Value value;
     
     if (easingType == CCBKeyframe::EasingType::CUBIC_IN
         || easingType == CCBKeyframe::EasingType::CUBIC_OUT
@@ -759,24 +759,28 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
     
     if (type == PropertyType::CHECK)
     {
-        value = CCBValue::create(readBool());
+        value = readBool();
     }
     else if (type == PropertyType::BYTE)
     {
-        value = CCBValue::create(readByte());
+        value = readByte();
     }
     else if (type == PropertyType::COLOR3)
     {
-        int r = readByte();
-        int g = readByte();
-        int b = readByte();
+        unsigned char r = readByte();
+        unsigned char g = readByte();
+        unsigned char b = readByte();
         
-        Color3B c = Color3B(r,g,b);
-        value = Color3BWapper::create(c);
+        ValueMap colorMap;
+        colorMap["r"] = r;
+        colorMap["g"] = g;
+        colorMap["b"] = b;
+        
+        value = colorMap;
     }
     else if (type == PropertyType::DEGREES)
     {
-        value = CCBValue::create(readFloat());
+        value = readFloat();
     }
     else if (type == PropertyType::SCALE_LOCK || type == PropertyType::POSITION
 	     || type == PropertyType::FLOAT_XY)
@@ -784,9 +788,11 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
         float a = readFloat();
         float b = readFloat();
         
-        value = Array::create(CCBValue::create(a),
-                                CCBValue::create(b),
-                                nullptr);
+        ValueVector ab;
+        ab.push_back(Value(a));
+        ab.push_back(Value(b));
+        
+        value = ab;
     }
     else if (type == PropertyType::SPRITEFRAME)
     {
@@ -818,10 +824,13 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
             
             spriteFrame = frameCache->getSpriteFrameByName(spriteFile.c_str());
         }
-        value = spriteFrame;
+        
+        keyframe->setObject(spriteFrame);
+// FIXME:XXX        keyframe->setValue(spriteFrame);
     }
     
-    keyframe->setValue(value);
+    if (!value.isNull())
+        keyframe->setValue(value);
     
     return  keyframe;
 }
@@ -842,15 +851,15 @@ bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq)
       
         int callbackType = readInt(false);
       
-        Array* value = Array::create();
-        value->addObject(String::create(callbackName));
-        value->addObject(String::createWithFormat("%d", callbackType));
+        ValueVector valueVector;
+        valueVector.push_back(Value(callbackName));
+        valueVector.push_back(Value(callbackType));
         
         CCBKeyframe* keyframe = new CCBKeyframe();
         keyframe->autorelease();
         
         keyframe->setTime(time);
-        keyframe->setValue(value);
+        keyframe->setValue(Value(valueVector));
         
         if(_jsControlled) {
             std::stringstream callbackIdentifier;
@@ -881,17 +890,16 @@ bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
         float pitch = readFloat();
         float pan = readFloat();
         float gain = readFloat();
-                
-        Array* value = Array::create();
         
-        value->addObject(String::create(soundFile));
-        value->addObject(String::createWithFormat("%f", pitch));
-        value->addObject(String::createWithFormat("%f", pan));
-        value->addObject(String::createWithFormat("%f", gain));
+        ValueVector vec;
+        vec.push_back(Value(soundFile));
+        vec.push_back(Value(pitch));
+        vec.push_back(Value(pan));
+        vec.push_back(Value(gain));
         
         CCBKeyframe* keyframe = new CCBKeyframe();
         keyframe->setTime(time);
-        keyframe->setValue(value);
+        keyframe->setValue(Value(vec));
         channel->getKeyframes().pushBack(keyframe);
         keyframe->release();
     }

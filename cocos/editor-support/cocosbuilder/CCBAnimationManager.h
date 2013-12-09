@@ -77,8 +77,10 @@ public:
     
     const cocos2d::Size& getContainerSize(cocos2d::Node* pNode);
     
-    void addNode(cocos2d::Node *pNode, cocos2d::Dictionary *pSeq);
-    void setBaseValue(cocos2d::Object *pValue, cocos2d::Node *pNode, const char *propName);
+    void addNode(cocos2d::Node *pNode, const std::unordered_map<int, cocos2d::Map<std::string, CCBSequenceProperty*>>& seq);
+    void setBaseValue(const cocos2d::Value& value, cocos2d::Node *pNode, const std::string& propName);
+    void setObject(cocos2d::Object* obj, cocos2d::Node *pNode, const std::string& propName);
+    
     void moveAnimationsFromNode(cocos2d::Node* fromNode, cocos2d::Node* toNode);
 
     /** @deprecated This interface will be deprecated sooner or later.*/
@@ -113,10 +115,12 @@ public:
     float getSequenceDuration(const char* pSequenceName);
     
 private:
-    cocos2d::Object* getBaseValue(cocos2d::Node *pNode, const char* propName);
+    const cocos2d::Value& getBaseValue(cocos2d::Node *pNode, const std::string& propName);
+    Object* getObject(cocos2d::Node *pNode, const std::string& propName);
+    
     CCBSequence* getSequence(int nSequenceId);
-    cocos2d::ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *propName, cocos2d::Node *pNode);
-    void setAnimatedProperty(const char *propName,cocos2d::Node *pNode, Object *pValue, float fTweenDuraion);
+    cocos2d::ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const std::string& propName, cocos2d::Node *pNode);
+    void setAnimatedProperty(const std::string& propName,cocos2d::Node *pNode, const cocos2d::Value& value, Object* obj, float fTweenDuraion);
     void setFirstFrame(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     cocos2d::ActionInterval* getEaseAction(cocos2d::ActionInterval *pAction, CCBKeyframe::EasingType easingType, float fEasingOpt);
     void runAction(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
@@ -124,8 +128,10 @@ private:
     
 private:
     cocos2d::Vector<CCBSequence*> _sequences;
-    cocos2d::Dictionary *_nodeSequences;
-    cocos2d::Dictionary *_baseValues;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<int, cocos2d::Map<std::string, CCBSequenceProperty*>>> _nodeSequences;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<std::string, cocos2d::Value>> _baseValues;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<std::string, cocos2d::Object*>> _objects;
+    
     int _autoPlaySequenceId;
     
     cocos2d::Node *_rootNode;
