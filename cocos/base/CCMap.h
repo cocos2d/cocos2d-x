@@ -56,14 +56,14 @@ public:
     Map<K, V>(const Map<K, V>& other)
     {
         CCLOGINFO("In the copy constructor of Map!");
-        _data = other;
+        _data = other._data;
         addRefForAllObjects();
     }
     
     Map<K, V>(Map<K, V>&& other)
     {
         CCLOGINFO("In the move constructor of Map!");
-        _data = other;
+        _data = std::move(other._data);
     }
     
     ~Map<K, V>()
