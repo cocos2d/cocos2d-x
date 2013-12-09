@@ -139,8 +139,8 @@ HRESULT Direct3DBackground::Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceCo
         ProcessEvents();
 	    pEGLView->UpdateDevice(device, context, renderTargetView);
 	    pEGLView->Render();
-	    RequestAdditionalFrame();
     }
+    RequestAdditionalFrame();
     return S_OK;
 }
 
