@@ -4,7 +4,6 @@
 #include "extensions/GUI/CCControlExtension/CCInvocation.h"
 #include "cocos2d.h"
 #include "CCBReader.h"
-#include "CCBValue.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
