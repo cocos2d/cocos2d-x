@@ -27,119 +27,123 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-float CCTweenFunction::tweenTo(float from, float change, float time, float duration, CCTweenType tweenType)
+float CCTweenFunction::tweenTo(float time, CCTweenType type, float *easingParam)
 {
     float delta = 0;
 
-    switch (tweenType)
+    switch (type)
     {
     case Linear:
-        delta = linear(time, 0, 1, duration);
+        delta = linear(time, 0, 1, 1);
         break;
 
     case Sine_EaseIn:
-        delta = sineEaseIn(time, 0, 1, duration);
+        delta = sineEaseIn(time, 0, 1, 1);
         break;
     case Sine_EaseOut:
-        delta = sineEaseOut(time, 0, 1, duration);
+        delta = sineEaseOut(time, 0, 1, 1);
         break;
     case Sine_EaseInOut:
-        delta = sineEaseInOut(time, 0, 1, duration);
+        delta = sineEaseInOut(time, 0, 1, 1);
         break;
 
     case Quad_EaseIn:
-        delta = quadEaseIn(time, 0, 1, duration);
+        delta = quadEaseIn(time, 0, 1, 1);
         break;
     case Quad_EaseOut:
-        delta = quadEaseOut(time, 0, 1, duration);
+        delta = quadEaseOut(time, 0, 1, 1);
         break;
     case Quad_EaseInOut:
-        delta = quadEaseInOut(time, 0, 1, duration);
+        delta = quadEaseInOut(time, 0, 1, 1);
         break;
 
     case Cubic_EaseIn:
-        delta = cubicEaseIn(time, 0, 1, duration);
+        delta = cubicEaseIn(time, 0, 1, 1);
         break;
     case Cubic_EaseOut:
-        delta = cubicEaseOut(time, 0, 1, duration);
+        delta = cubicEaseOut(time, 0, 1, 1);
         break;
     case Cubic_EaseInOut:
-        delta = cubicEaseInOut(time, 0, 1, duration);
+        delta = cubicEaseInOut(time, 0, 1, 1);
         break;
 
     case Quart_EaseIn:
-        delta = quartEaseIn(time, 0, 1, duration);
+        delta = quartEaseIn(time, 0, 1, 1);
         break;
     case Quart_EaseOut:
-        delta = quartEaseOut(time, 0, 1, duration);
+        delta = quartEaseOut(time, 0, 1, 1);
         break;
     case Quart_EaseInOut:
-        delta = quartEaseInOut(time, 0, 1, duration);
+        delta = quartEaseInOut(time, 0, 1, 1);
         break;
 
     case Quint_EaseIn:
-        delta = quintEaseIn(time, 0, 1, duration);
+        delta = quintEaseIn(time, 0, 1, 1);
         break;
     case Quint_EaseOut:
-        delta = quintEaseOut(time, 0, 1, duration);
+        delta = quintEaseOut(time, 0, 1, 1);
         break;
     case Quint_EaseInOut:
-        delta = quintEaseInOut(time, 0, 1, duration);
+        delta = quintEaseInOut(time, 0, 1, 1);
         break;
 
     case Expo_EaseIn:
-        delta = expoEaseIn(time, 0, 1, duration);
+        delta = expoEaseIn(time, 0, 1, 1);
         break;
     case Expo_EaseOut:
-        delta = expoEaseOut(time, 0, 1, duration);
+        delta = expoEaseOut(time, 0, 1, 1);
         break;
     case Expo_EaseInOut:
-        delta = expoEaseInOut(time, 0, 1, duration);
+        delta = expoEaseInOut(time, 0, 1, 1);
         break;
 
     case Circ_EaseIn:
-        delta = circEaseIn(time, 0, 1, duration);
+        delta = circEaseIn(time, 0, 1, 1);
         break;
     case Circ_EaseOut:
-        delta = circEaseOut(time, 0, 1, duration);
+        delta = circEaseOut(time, 0, 1, 1);
         break;
     case Circ_EaseInOut:
-        delta = circEaseInOut(time, 0, 1, duration);
+        delta = circEaseInOut(time, 0, 1, 1);
         break;
 
     case Elastic_EaseIn:
-        delta = elasticEaseIn(time, 0, 1, duration);
+        delta = elasticEaseIn(time, 0, 1, 1);
         break;
     case Elastic_EaseOut:
-        delta = elasticEaseOut(time, 0, 1, duration);
+        delta = elasticEaseOut(time, 0, 1, 1);
         break;
     case Elastic_EaseInOut:
-        delta = elasticEaseInOut(time, 0, 1, duration);
+        delta = elasticEaseInOut(time, 0, 1, 1);
         break;
 
 
     case Back_EaseIn:
-        delta = backEaseIn(time, 0, 1, duration);
+        delta = backEaseIn(time, 0, 1, 1);
         break;
     case Back_EaseOut:
-        delta = backEaseOut(time, 0, 1, duration);
+        delta = backEaseOut(time, 0, 1, 1);
         break;
     case Back_EaseInOut:
-        delta = backEaseInOut(time, 0, 1, duration);
+        delta = backEaseInOut(time, 0, 1, 1);
         break;
 
     case Bounce_EaseIn:
-        delta = bounceEaseIn(time, 0, 1, duration);
+        delta = bounceEaseIn(time, 0, 1, 1);
         break;
     case Bounce_EaseOut:
-        delta = bounceEaseOut(time, 0, 1, duration);
+        delta = bounceEaseOut(time, 0, 1, 1);
         break;
     case Bounce_EaseInOut:
-        delta = bounceEaseInOut(time, 0, 1, duration);
+        delta = bounceEaseInOut(time, 0, 1, 1);
+        break;
+
+    case CUSTOM_EASING:
+        delta = customEase(time, 0, 1, 1, easingParam);
         break;
 
     default:
-        delta = sineEaseInOut(time, 0, 1, duration);
+        delta = sineEaseInOut(time, 0, 1, 1);
         break;
     }
 
@@ -408,6 +412,12 @@ float CCTweenFunction::bounceEaseInOut(float t, float b, float c, float d)
         return bounceEaseIn(t * 2, 0, c, d) * .5 + b;
     else
         return bounceEaseOut(t * 2 - d, 0, c, d) * .5 + c * .5 + b;
+}
+
+float CCTweenFunction::customEase(float t, float b, float c, float d, float *easingParam)
+{
+    float tt = 1-t;
+    return easingParam[1]*tt*tt*tt + 3*easingParam[3]*t*tt*tt + 3*easingParam[5]*t*t*tt + 3*easingParam[7]*t*t*t;
 }
 
 

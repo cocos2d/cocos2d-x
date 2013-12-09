@@ -78,6 +78,8 @@ enum CCTweenType
     Bounce_EaseOut,
     Bounce_EaseInOut,
 
+    CUSTOM_EASING,
+
     TWEEN_EASING_MAX = 10000
 };
 /**
@@ -88,7 +90,7 @@ class  CCTweenFunction
 {
 public:
 
-    static float tweenTo(float from, float change, float time, float duration, CCTweenType tweenType);
+    static float tweenTo(float time, CCTweenType type, float *easingParam);
 
     static float linear(float t, float b, float c, float d);
 
@@ -131,6 +133,8 @@ public:
     static float bounceEaseIn(float t, float b, float c, float d);
     static float bounceEaseOut(float t, float b, float c, float d);
     static float bounceEaseInOut(float t, float b, float c, float d);
+
+    static float customEase(float t, float b, float c, float d, float *easingParam);
 };
 
 

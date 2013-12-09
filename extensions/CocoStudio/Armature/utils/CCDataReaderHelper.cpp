@@ -85,6 +85,8 @@ static const char *A_EVENT = "evt";
 static const char *A_SOUND = "sd";
 static const char *A_SOUND_EFFECT = "sdE";
 static const char *A_TWEEN_EASING = "twE";
+static const char *A_EASING_PARAM_NUMBER = "twEPN";
+static const char *A_EASING_PARAM = "twEP";
 //static const char *A_TWEEN_ROTATE = "twR";
 static const char *A_IS_ARMATURE = "isArmature";
 static const char *A_DISPLAY_TYPE = "displayType";
@@ -1666,6 +1668,18 @@ CCFrameData *CCDataReaderHelper::decodeFrame(const rapidjson::Value &json, DataI
     {
         frameData->frameID = DICTOOL->getIntValue_json(json, A_FRAME_INDEX);
     }
+
+    int length = DICTOOL->getArrayCount_json(json, A_EASING_PARAM);
+    if (length != 0)
+    {
+        frameData->easingParams = new float[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            frameData->easingParams[i] = DICTOOL->getFloatValueFromArray_json(json, A_EASING_PARAM, i);
+        }
+    }
+    
 
     return frameData;
 }
