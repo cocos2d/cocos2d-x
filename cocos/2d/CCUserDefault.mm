@@ -73,7 +73,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
     {
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
-		long size;
+		ssize_t size;
 		char* pXmlBuffer = (char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &size);
 		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
@@ -420,11 +420,11 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
     else
     {
         unsigned char *bytes = {0};
-        unsigned long size = 0;
+        int size = 0;
         
         if (data.length > 0) {
             bytes = (unsigned char*)data.bytes;
-            size = data.length;
+            size = static_cast<int>(data.length);
         }
         Data *ret = new Data(bytes, size);
         

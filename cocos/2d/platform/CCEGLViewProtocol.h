@@ -135,10 +135,10 @@ public:
     const std::string& getViewName() const;
 
     /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
-    virtual void handleTouchesBegin(int num, long ids[], float xs[], float ys[]);
-    virtual void handleTouchesMove(int num, long ids[], float xs[], float ys[]);
-    virtual void handleTouchesEnd(int num, long ids[], float xs[], float ys[]);
-    virtual void handleTouchesCancel(int num, long ids[], float xs[], float ys[]);
+    virtual void handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
+    virtual void handleTouchesMove(int num, int ids[], float xs[], float ys[]);
+    virtual void handleTouchesEnd(int num, int ids[], float xs[], float ys[]);
+    virtual void handleTouchesCancel(int num, int ids[], float xs[], float ys[]);
 
     /**
      * Get the opengl view port rectangle.
@@ -157,7 +157,7 @@ public:
 
 
 protected:
-    void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, long ids[], float xs[], float ys[]);
+    void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[]);
 
     EGLTouchDelegate* _delegate;
 

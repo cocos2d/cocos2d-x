@@ -52,7 +52,7 @@ class CC_DLL AtlasNode : public NodeRGBA, public TextureProtocol
 {    
 public:
 	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static AtlasNode * create(const std::string& filename, long tileWidth, long tileHeight, long itemsToRender);
+	static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
 
     /** updates the Atlas (indexed vertex array).
     * Shall be overridden in subclasses
@@ -62,8 +62,8 @@ public:
     void setTextureAtlas(TextureAtlas* textureAtlas);
     TextureAtlas* getTextureAtlas() const;
     
-    void setQuadsToDraw(long quadsToDraw);
-    long getQuadsToDraw() const;
+    void setQuadsToDraw(int quadsToDraw);
+    int getQuadsToDraw() const;
 
     
     // Overrides
@@ -95,10 +95,10 @@ protected:
     virtual ~AtlasNode();
 
     /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-    bool initWithTileFile(const std::string& tile, long tileWidth, long tileHeight, long itemsToRender);
+    bool initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender);
 
     /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
-    bool initWithTexture(Texture2D* texture, long tileWidth, long tileHeight, long itemsToRender);
+    bool initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender);
 
     void calculateMaxItems();
     void updateBlendFunc();
@@ -108,14 +108,14 @@ protected:
     void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
 
     //! chars per row
-    long    _itemsPerRow;
+    int    _itemsPerRow;
     //! chars per column
-    long    _itemsPerColumn;
+    int    _itemsPerColumn;
 
     //! width of each char
-    long    _itemWidth;
+    int    _itemWidth;
     //! height of each char
-    long    _itemHeight;
+    int    _itemHeight;
     
     Color3B    _colorUnmodified;
     
@@ -125,7 +125,7 @@ protected:
     BlendFunc _blendFunc;
 
     // quads to draw
-    long _quadsToDraw;
+    int _quadsToDraw;
     // color uniform
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.

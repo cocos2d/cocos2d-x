@@ -136,7 +136,7 @@ static int readTuple (const char* end, Str tuple[]) {
 }
 
 static char* mallocString (Str* str) {
-	int length = str->end - str->begin;
+	size_t length = str->end - str->begin;
 	char* string = MALLOC(char, length + 1);
 	memcpy(string, str->begin, length);
 	string[length] = '\0';
@@ -144,7 +144,7 @@ static char* mallocString (Str* str) {
 }
 
 static int indexOf (const char** array, int count, Str* str) {
-	int length = str->end - str->begin;
+	size_t length = str->end - str->begin;
 	int i;
 	for (i = count - 1; i >= 0; i--)
 		if (strncmp(array[i], str->begin, length) == 0) return i;
@@ -156,7 +156,7 @@ static int equals (Str* str, const char* other) {
 }
 
 static int toInt (Str* str) {
-	return strtol(str->begin, (char**)&str->end, 10);
+	return  static_cast<int>(strtol(str->begin, (char**)&str->end, 10));
 }
 
 static Atlas* abortAtlas (Atlas* self) {
@@ -171,7 +171,7 @@ static const char* textureFilterNames[] = {"Nearest", "Linear", "MipMap", "MipMa
 Atlas* Atlas_readAtlas (const char* begin, int length, const char* dir) {
 	int count;
 	const char* end = begin + length;
-	int dirLength = strlen(dir);
+	size_t dirLength = strlen(dir);
 	int needsSlash = dirLength > 0 && dir[dirLength - 1] != '/' && dir[dirLength - 1] != '\\';
 
 	Atlas* self = NEW(Atlas);
@@ -285,7 +285,7 @@ Atlas* Atlas_readAtlas (const char* begin, int length, const char* dir) {
 Atlas* Atlas_readAtlasFile (const char* path) {
 	int dirLength;
 	char *dir;
-	int length;
+	ssize_t length;
 	const char* data;
 
 	Atlas* atlas = 0;
@@ -295,13 +295,13 @@ Atlas* Atlas_readAtlasFile (const char* path) {
 	const char* lastBackwardSlash = strrchr(path, '\\');
 	const char* lastSlash = lastForwardSlash > lastBackwardSlash ? lastForwardSlash : lastBackwardSlash;
 	if (lastSlash == path) lastSlash++; /* Never drop starting slash. */
-	dirLength = lastSlash ? lastSlash - path : 0;
+	dirLength = static_cast<int>(lastSlash ? lastSlash - path : 0);
 	dir = MALLOC(char, dirLength + 1);
 	memcpy(dir, path, dirLength);
 	dir[dirLength] = '\0';
 
 	data = _Util_readFile(path, &length);
-	if (data) atlas = Atlas_readAtlas(data, length, dir);
+	if (data) atlas = Atlas_readAtlas(data, static_cast<int>(length), dir);
 
 	FREE(data);
 	FREE(dir);

@@ -385,7 +385,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                     std::string textureData = dictionary["textureImageData"].asString();
                     CCASSERT(!textureData.empty(), "");
                     
-                    long dataLen = textureData.size();
+                    auto dataLen = textureData.size();
                     if (dataLen != 0)
                     {
                         // if it fails, try to get it from the base64-gzipped data    
@@ -393,7 +393,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                         CCASSERT( buffer != nullptr, "CCParticleSystem: error decoding textureImageData");
                         CC_BREAK_IF(!buffer);
                         
-                        int deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
+                        ssize_t deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
                         CCASSERT( deflated != nullptr, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
