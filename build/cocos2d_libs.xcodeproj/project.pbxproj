@@ -1558,16 +1558,12 @@
 		460E47CA1808090D000CDD6D /* CCEditBoxImplWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */; };
 		460E47CB18080913000CDD6D /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1685E1807AF4E005B8026 /* CCScrollView.cpp */; };
 		460E47CC18080913000CDD6D /* CCScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685F1807AF4E005B8026 /* CCScrollView.h */; };
-		460E47CD18080913000CDD6D /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168601807AF4E005B8026 /* CCSorting.cpp */; };
-		460E47CE18080913000CDD6D /* CCSorting.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168611807AF4E005B8026 /* CCSorting.h */; };
 		460E47CF18080913000CDD6D /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168621807AF4E005B8026 /* CCTableView.cpp */; };
 		460E47D018080913000CDD6D /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168631807AF4E005B8026 /* CCTableView.h */; };
 		460E47D118080913000CDD6D /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168641807AF4E005B8026 /* CCTableViewCell.cpp */; };
 		460E47D218080913000CDD6D /* CCTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168651807AF4E005B8026 /* CCTableViewCell.h */; };
 		460E47D318080914000CDD6D /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1685E1807AF4E005B8026 /* CCScrollView.cpp */; };
 		460E47D418080914000CDD6D /* CCScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685F1807AF4E005B8026 /* CCScrollView.h */; };
-		460E47D518080914000CDD6D /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168601807AF4E005B8026 /* CCSorting.cpp */; };
-		460E47D618080914000CDD6D /* CCSorting.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168611807AF4E005B8026 /* CCSorting.h */; };
 		460E47D718080914000CDD6D /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168621807AF4E005B8026 /* CCTableView.cpp */; };
 		460E47D818080914000CDD6D /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168631807AF4E005B8026 /* CCTableView.h */; };
 		460E47D918080914000CDD6D /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168641807AF4E005B8026 /* CCTableViewCell.cpp */; };
@@ -2723,8 +2719,6 @@
 		46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplWin.h; sourceTree = "<group>"; };
 		46A1685E1807AF4E005B8026 /* CCScrollView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
 		46A1685F1807AF4E005B8026 /* CCScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
-		46A168601807AF4E005B8026 /* CCSorting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCSorting.cpp; sourceTree = "<group>"; };
-		46A168611807AF4E005B8026 /* CCSorting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCSorting.h; sourceTree = "<group>"; };
 		46A168621807AF4E005B8026 /* CCTableView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableView.cpp; sourceTree = "<group>"; };
 		46A168631807AF4E005B8026 /* CCTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCTableView.h; sourceTree = "<group>"; };
 		46A168641807AF4E005B8026 /* CCTableViewCell.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableViewCell.cpp; sourceTree = "<group>"; };
@@ -4686,8 +4680,6 @@
 			children = (
 				46A1685E1807AF4E005B8026 /* CCScrollView.cpp */,
 				46A1685F1807AF4E005B8026 /* CCScrollView.h */,
-				46A168601807AF4E005B8026 /* CCSorting.cpp */,
-				46A168611807AF4E005B8026 /* CCSorting.h */,
 				46A168621807AF4E005B8026 /* CCTableView.cpp */,
 				46A168631807AF4E005B8026 /* CCTableView.h */,
 				46A168641807AF4E005B8026 /* CCTableViewCell.cpp */,
@@ -5771,7 +5763,6 @@
 				460E478218080902000CDD6D /* CCControlColourPicker.h in Headers */,
 				460E478518080902000CDD6D /* CCControlHuePicker.h in Headers */,
 				460E479318080902000CDD6D /* CCInvocation.h in Headers */,
-				460E47CE18080913000CDD6D /* CCSorting.h in Headers */,
 				460E478018080902000CDD6D /* CCControlButton.h in Headers */,
 				460E478D18080902000CDD6D /* CCControlStepper.h in Headers */,
 				460E47D218080913000CDD6D /* CCTableViewCell.h in Headers */,
@@ -6156,7 +6147,6 @@
 				460E47A618080904000CDD6D /* CCControlStepper.h in Headers */,
 				460E47D418080914000CDD6D /* CCScrollView.h in Headers */,
 				460E479918080904000CDD6D /* CCControlButton.h in Headers */,
-				460E47D618080914000CDD6D /* CCSorting.h in Headers */,
 				460E47A418080904000CDD6D /* CCControlSlider.h in Headers */,
 				460E479E18080904000CDD6D /* CCControlHuePicker.h in Headers */,
 				460E468218080836000CDD6D /* cocos-ext.h in Headers */,
@@ -7068,7 +7058,6 @@
 				460E478418080902000CDD6D /* CCControlHuePicker.cpp in Sources */,
 				460E478A18080902000CDD6D /* CCControlSlider.cpp in Sources */,
 				460E478818080902000CDD6D /* CCControlSaturationBrightnessPicker.cpp in Sources */,
-				460E47CD18080913000CDD6D /* CCSorting.cpp in Sources */,
 				460E47B91808090B000CDD6D /* CCEditBoxImplTizen.cpp in Sources */,
 				460E47B51808090B000CDD6D /* CCEditBoxImplIOS.mm in Sources */,
 				460E478E18080902000CDD6D /* CCControlSwitch.cpp in Sources */,
@@ -7407,7 +7396,6 @@
 				460E47C61808090D000CDD6D /* CCEditBoxImplNone.cpp in Sources */,
 				460E47D318080914000CDD6D /* CCScrollView.cpp in Sources */,
 				460E47C91808090D000CDD6D /* CCEditBoxImplWin.cpp in Sources */,
-				460E47D518080914000CDD6D /* CCSorting.cpp in Sources */,
 				460E47A918080904000CDD6D /* CCControlUtils.cpp in Sources */,
 				460E47D718080914000CDD6D /* CCTableView.cpp in Sources */,
 				460E479F18080904000CDD6D /* CCControlPotentiometer.cpp in Sources */,

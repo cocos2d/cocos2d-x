@@ -221,16 +221,18 @@ public:
     
     Map<K, V>& operator= ( const Map<K, V>& other )
     {
-        CCLOG("In the copy assignment operator of Map!");
+        CCLOGINFO("In the copy assignment operator of Map!");
         clear();
         _data = other._data;
         addRefForAllObjects();
+        return *this;
     }
 
     Map<K, V>& operator= ( Map<K, V>&& other )
     {
-        CCLOG("In the move assignment operator of Map!");
+        CCLOGINFO("In the move assignment operator of Map!");
         _data = std::move(other._data);
+        return *this;
     }
     
 protected:
@@ -239,7 +241,7 @@ protected:
     {
         for (auto iter = _data.begin(); iter != _data.end(); ++iter)
         {
-            _data->second->retain();
+            iter->second->retain();
         }
     }
     
