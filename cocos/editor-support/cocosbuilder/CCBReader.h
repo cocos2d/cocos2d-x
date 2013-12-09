@@ -294,12 +294,12 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Map<cocos2d::Node*, CCBAnimationManager*>& getAnimationManagers();
+    cocos2d::Dictionary* getAnimationManagers();
     /**
      * @js NA
      * @lua NA
      */
-    void setAnimationManagers(const cocos2d::Map<cocos2d::Node*, CCBAnimationManager*>& x);  // weak reference
+    void setAnimationManagers(cocos2d::Dictionary* x);  // weak reference
     /**
      * @js NA
      * @lua NA
@@ -332,7 +332,7 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Node* readFileWithCleanUp(bool bCleanUp, const cocos2d::Map<cocos2d::Node*, CCBAnimationManager*>& am);
+    cocos2d::Node* readFileWithCleanUp(bool bCleanUp, cocos2d::Dictionary* am);
     
     void addOwnerOutletName(std::string name);
     void addOwnerOutletNode(cocos2d::Node *node);
@@ -367,7 +367,7 @@ private:
     cocos2d::Object *_owner;
     
     CCBAnimationManager *_actionManager; //retain
-    cocos2d::Map<cocos2d::Node*, CCBAnimationManager*> _actionManagers;
+    cocos2d::Dictionary* _actionManagers;
     
     std::set<std::string> *_animatedProps;
     

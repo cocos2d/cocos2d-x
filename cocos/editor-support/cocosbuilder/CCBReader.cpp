@@ -160,12 +160,12 @@ void CCBReader::setAnimationManager(CCBAnimationManager *pAnimationManager)
     CC_SAFE_RETAIN(_actionManager);
 }
 
-Map<Node*, CCBAnimationManager*>& CCBReader::getAnimationManagers()
+Dictionary* CCBReader::getAnimationManagers()
 {
     return _actionManagers;
 }
 
-void CCBReader::setAnimationManagers(const Map<Node*, CCBAnimationManager*>& x)
+void CCBReader::setAnimationManagers(Dictionary* x)
 {
     _actionManagers = x;
 }
@@ -245,7 +245,7 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     _actionManager->setRootContainerSize(parentSize);
     _actionManager->_owner = _owner;
     
-    Map<Node*, CCBAnimationManager*> animationManagers;
+    Dictionary* animationManagers = Dictionary::create();
     Node *pNodeGraph = readFileWithCleanUp(true, animationManagers);
     
     if (pNodeGraph && _actionManager->getAutoPlaySequenceId() != -1)
@@ -256,10 +256,11 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     
     // Assign actionManagers to userObject
     
-    for (auto iter = _actionManagers.begin(); iter != _actionManagers.end(); ++iter)
+    DictElement* pElement = NULL;
+    CCDICT_FOREACH(animationManagers, pElement)
     {
-        Node* pNode = iter->first;
-        CCBAnimationManager* manager = iter->second;
+        Node* pNode = (Node*)pElement->getIntKey();
+        CCBAnimationManager* manager = static_cast<CCBAnimationManager*>(animationManagers->objectForKey((intptr_t)pNode));
         pNode->setUserObject(manager);
 
         if (_jsControlled)
@@ -300,7 +301,7 @@ void CCBReader::cleanUpNodeGraph(Node *node)
     });
 }
 
-Node* CCBReader::readFileWithCleanUp(bool bCleanUp, const Map<Node*, CCBAnimationManager*>& am)
+Node* CCBReader::readFileWithCleanUp(bool bCleanUp, Dictionary* am)
 {
     if (! readHeader())
     {
@@ -321,7 +322,7 @@ Node* CCBReader::readFileWithCleanUp(bool bCleanUp, const Map<Node*, CCBAnimatio
 
     Node *pNode = readNodeGraph(nullptr);
 
-    _actionManagers.insert(pNode, _actionManager);
+    _actionManagers->setObject(_actionManager, intptr_t(pNode));
 
     if (bCleanUp)
     {
@@ -852,8 +853,10 @@ bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq)
         keyframe->setValue(value);
         
         if(_jsControlled) {
-            string callbackIdentifier;
-            _actionManager->getKeyframeCallbacks()->addObject(String::createWithFormat("%d:%s",callbackType, callbackName.c_str()));
+            std::stringstream callbackIdentifier;
+            callbackIdentifier << callbackType;
+            callbackIdentifier << ":" + callbackName;
+            _actionManager->getKeyframeCallbacks().push_back(Value(callbackIdentifier.str()));
         }
     
         channel->getKeyframes().pushBack(keyframe);
@@ -905,7 +908,7 @@ Node * CCBReader::readNodeGraph() {
 
 bool CCBReader::readSequences()
 {
-    Array *sequences = _actionManager->getSequences();
+    auto& sequences = _actionManager->getSequences();
     
     int numSeqs = readInt(false);
     
@@ -922,7 +925,7 @@ bool CCBReader::readSequences()
         if(!readCallbackKeyframesForSeq(seq)) return false;
         if(!readSoundKeyframesForSeq(seq)) return false;
         
-        sequences->addObject(seq);
+        sequences.pushBack(seq);
     }
     
     _actionManager->setAutoPlaySequenceId(readInt(true));
