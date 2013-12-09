@@ -27,8 +27,9 @@ THE SOFTWARE.
 
 #include "CCMenuItem.h"
 #include "CCLayer.h"
-
+#include "CCVector.h"
 #include "CCEventTouch.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
@@ -63,7 +64,7 @@ public:
     static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** creates a Menu with a Array of MenuItem objects */
-    static Menu* createWithArray(Array* pArrayOfItems);
+    static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
 
     /** creates a Menu with it's item, then use addChild() to add 
       * other items. It is used for script, it can't init with undetermined
@@ -91,12 +92,12 @@ public:
     /** align items in rows of columns */
     void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInColumns(int columns, va_list args);
-    void alignItemsInColumnsWithArray(Array* rows);
+    void alignItemsInColumnsWithArray(const ValueVector& rows);
 
     /** align items in columns of rows */
     void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInRows(int rows, va_list args);
-    void alignItemsInRowsWithArray(Array* columns);
+    void alignItemsInRowsWithArray(const ValueVector& columns);
 
     virtual bool isEnabled() const { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };
@@ -129,12 +130,12 @@ protected:
     bool init();
 
     /** initializes a Menu with a NSArray of MenuItem objects */
-    bool initWithArray(Array* pArrayOfItems);
+    bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
 
     /** whether or not the menu will receive events */
     bool _enabled;
 
-    MenuItem* itemForTouch(Touch * touch);
+    MenuItem* getItemForTouch(Touch * touch);
     State _state;
     MenuItem *_selectedItem;
 

@@ -146,9 +146,9 @@ const char* String::getCString() const
     return _string.c_str();
 }
 
-unsigned int String::length() const
+int String::length() const
 {
-    return _string.length();
+    return static_cast<int>(_string.length());
 }
 
 int String::compare(const char * pStr) const
@@ -178,11 +178,11 @@ void String::appendWithFormat(const char* format, ...)
     
 }
 
-Array* String::componentsSeparatedByString(const char *delimiter)
+__Array* String::componentsSeparatedByString(const char *delimiter)
 {
-    Array* result = Array::create();
+    __Array* result = __Array::create();
     
-    int cutAt;
+    size_t cutAt;
     while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
     {
         if(cutAt > 0)
@@ -221,7 +221,7 @@ String* String::create(const std::string& str)
     return ret;
 }
 
-String* String::createWithData(const unsigned char* data, unsigned long nLen)
+String* String::createWithData(const unsigned char* data, int nLen)
 {
     String* ret = NULL;
     if (data != NULL)
@@ -255,11 +255,11 @@ String* String::createWithFormat(const char* format, ...)
 
 String* String::createWithContentsOfFile(const char* filename)
 {
-    long size = 0;
+    ssize_t size = 0;
     unsigned char* data = 0;
     String* ret = NULL;
     data = FileUtils::getInstance()->getFileData(filename, "rb", &size);
-    ret = String::createWithData(data, size);
+    ret = String::createWithData(data, static_cast<int>(size));
     free(data);
     return ret;
 }

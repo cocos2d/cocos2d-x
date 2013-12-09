@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "CCSAXParser.h"
-#include "CCDictionary.h"
 #include "CCFileUtils.h"
 #include "tinyxml2.h"
 
@@ -82,7 +81,7 @@ bool XmlSaxHander::VisitExit( const tinyxml2::XMLElement& element )
 bool XmlSaxHander::Visit( const tinyxml2::XMLText& text )
 {
 	//log("Visit %s",text.Value());
-	SAXParser::textHandler(_ccsaxParserImp, (const CC_XML_CHAR *)text.Value(), strlen(text.Value()));
+	SAXParser::textHandler(_ccsaxParserImp, (const CC_XML_CHAR *)text.Value(), static_cast<int>(strlen(text.Value())));
 	return true;
 }
 
@@ -102,7 +101,7 @@ bool SAXParser::init(const char *pszEncoding)
     return true;
 }
 
-bool SAXParser::parse(const char* pXMLData, unsigned int uDataLength)
+bool SAXParser::parse(const char* pXMLData, size_t uDataLength)
 {
 	tinyxml2::XMLDocument tinyDoc;
 	tinyDoc.Parse(pXMLData, uDataLength);
@@ -115,7 +114,7 @@ bool SAXParser::parse(const char* pXMLData, unsigned int uDataLength)
 bool SAXParser::parse(const char *pszFile)
 {
     bool ret = false;
-    long size = 0;
+    ssize_t size = 0;
     char* pBuffer = (char*)FileUtils::getInstance()->getFileData(pszFile, "rt", &size);
     if (pBuffer != NULL && size > 0)
     {

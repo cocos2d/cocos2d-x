@@ -560,6 +560,12 @@
     <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp">
       <Filter>physics\chipmunk</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCConsole.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCValue.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1124,6 +1130,18 @@
     </ClInclude>
     <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h">
       <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCConsole.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCMap.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCValue.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCVector.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

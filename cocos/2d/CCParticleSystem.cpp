@@ -169,9 +169,9 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
 {
     bool bRet = false;
     _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
-    Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(_plistFile.c_str());
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(_plistFile.c_str());
 
-    CCASSERT( dict != NULL, "Particles: file not found");
+    CCASSERT( !dict.empty(), "Particles: file not found");
     
     // XXX compute path from a path, should define a function somewhere to do it
     string listFilePath = plistFile;
@@ -185,113 +185,110 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
         bRet = this->initWithDictionary(dict, "");
     }
     
-    dict->release();
-
     return bRet;
 }
 
-bool ParticleSystem::initWithDictionary(Dictionary *dictionary)
+bool ParticleSystem::initWithDictionary(ValueMap& dictionary)
 {
     return initWithDictionary(dictionary, "");
 }
 
-bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::string& dirname)
+bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string& dirname)
 {
     bool bRet = false;
-    unsigned char *buffer = NULL;
-    unsigned char *deflated = NULL;
-    Image *image = NULL;
+    unsigned char *buffer = nullptr;
+    unsigned char *deflated = nullptr;
+    Image *image = nullptr;
     do 
     {
-        int maxParticles = dictionary->valueForKey("maxParticles")->intValue();
+        int maxParticles = dictionary["maxParticles"].asInt();
         // self, not super
         if(this->initWithTotalParticles(maxParticles))
         {
             // Emitter name in particle designer 2.0
-            const String * configNameConstStr = dictionary->valueForKey("configName");
-            _configName = configNameConstStr->getCString();
+            _configName = dictionary["configName"].asString();
 
             // angle
-            _angle = dictionary->valueForKey("angle")->floatValue();
-            _angleVar = dictionary->valueForKey("angleVariance")->floatValue();
+            _angle = dictionary["angle"].asFloat();
+            _angleVar = dictionary["angleVariance"].asFloat();
 
             // duration
-            _duration = dictionary->valueForKey("duration")->floatValue();
+            _duration = dictionary["duration"].asFloat();
 
             // blend function 
             if (_configName.length()>0)
             {
-                _blendFunc.src = dictionary->valueForKey("blendFuncSource")->floatValue();
+                _blendFunc.src = dictionary["blendFuncSource"].asFloat();
             }
             else
             {
-                _blendFunc.src = dictionary->valueForKey("blendFuncSource")->intValue();
+                _blendFunc.src = dictionary["blendFuncSource"].asInt();
             }
-            _blendFunc.dst = dictionary->valueForKey("blendFuncDestination")->intValue();
+            _blendFunc.dst = dictionary["blendFuncDestination"].asInt();
 
             // color
-            _startColor.r = dictionary->valueForKey("startColorRed")->floatValue();
-            _startColor.g = dictionary->valueForKey("startColorGreen")->floatValue();
-            _startColor.b = dictionary->valueForKey("startColorBlue")->floatValue();
-            _startColor.a = dictionary->valueForKey("startColorAlpha")->floatValue();
+            _startColor.r = dictionary["startColorRed"].asFloat();
+            _startColor.g = dictionary["startColorGreen"].asFloat();
+            _startColor.b = dictionary["startColorBlue"].asFloat();
+            _startColor.a = dictionary["startColorAlpha"].asFloat();
 
-            _startColorVar.r = dictionary->valueForKey("startColorVarianceRed")->floatValue();
-            _startColorVar.g = dictionary->valueForKey("startColorVarianceGreen")->floatValue();
-            _startColorVar.b = dictionary->valueForKey("startColorVarianceBlue")->floatValue();
-            _startColorVar.a = dictionary->valueForKey("startColorVarianceAlpha")->floatValue();
+            _startColorVar.r = dictionary["startColorVarianceRed"].asFloat();
+            _startColorVar.g = dictionary["startColorVarianceGreen"].asFloat();
+            _startColorVar.b = dictionary["startColorVarianceBlue"].asFloat();
+            _startColorVar.a = dictionary["startColorVarianceAlpha"].asFloat();
 
-            _endColor.r = dictionary->valueForKey("finishColorRed")->floatValue();
-            _endColor.g = dictionary->valueForKey("finishColorGreen")->floatValue();
-            _endColor.b = dictionary->valueForKey("finishColorBlue")->floatValue();
-            _endColor.a = dictionary->valueForKey("finishColorAlpha")->floatValue();
+            _endColor.r = dictionary["finishColorRed"].asFloat();
+            _endColor.g = dictionary["finishColorGreen"].asFloat();
+            _endColor.b = dictionary["finishColorBlue"].asFloat();
+            _endColor.a = dictionary["finishColorAlpha"].asFloat();
 
-            _endColorVar.r = dictionary->valueForKey("finishColorVarianceRed")->floatValue();
-            _endColorVar.g = dictionary->valueForKey("finishColorVarianceGreen")->floatValue();
-            _endColorVar.b = dictionary->valueForKey("finishColorVarianceBlue")->floatValue();
-            _endColorVar.a = dictionary->valueForKey("finishColorVarianceAlpha")->floatValue();
+            _endColorVar.r = dictionary["finishColorVarianceRed"].asFloat();
+            _endColorVar.g = dictionary["finishColorVarianceGreen"].asFloat();
+            _endColorVar.b = dictionary["finishColorVarianceBlue"].asFloat();
+            _endColorVar.a = dictionary["finishColorVarianceAlpha"].asFloat();
 
             // particle size
-            _startSize = dictionary->valueForKey("startParticleSize")->floatValue();
-            _startSizeVar = dictionary->valueForKey("startParticleSizeVariance")->floatValue();
-            _endSize = dictionary->valueForKey("finishParticleSize")->floatValue();
-            _endSizeVar = dictionary->valueForKey("finishParticleSizeVariance")->floatValue();
+            _startSize = dictionary["startParticleSize"].asFloat();
+            _startSizeVar = dictionary["startParticleSizeVariance"].asFloat();
+            _endSize = dictionary["finishParticleSize"].asFloat();
+            _endSizeVar = dictionary["finishParticleSizeVariance"].asFloat();
 
             // position
-            float x = dictionary->valueForKey("sourcePositionx")->floatValue();
-            float y = dictionary->valueForKey("sourcePositiony")->floatValue();
+            float x = dictionary["sourcePositionx"].asFloat();
+            float y = dictionary["sourcePositiony"].asFloat();
             this->setPosition( Point(x,y) );            
-            _posVar.x = dictionary->valueForKey("sourcePositionVariancex")->floatValue();
-            _posVar.y = dictionary->valueForKey("sourcePositionVariancey")->floatValue();
+            _posVar.x = dictionary["sourcePositionVariancex"].asFloat();
+            _posVar.y = dictionary["sourcePositionVariancey"].asFloat();
 
             // Spinning
-            _startSpin = dictionary->valueForKey("rotationStart")->floatValue();
-            _startSpinVar = dictionary->valueForKey("rotationStartVariance")->floatValue();
-            _endSpin= dictionary->valueForKey("rotationEnd")->floatValue();
-            _endSpinVar= dictionary->valueForKey("rotationEndVariance")->floatValue();
+            _startSpin = dictionary["rotationStart"].asFloat();
+            _startSpinVar = dictionary["rotationStartVariance"].asFloat();
+            _endSpin= dictionary["rotationEnd"].asFloat();
+            _endSpinVar= dictionary["rotationEndVariance"].asFloat();
 
-            _emitterMode = (Mode) dictionary->valueForKey("emitterType")->intValue();
+            _emitterMode = (Mode) dictionary["emitterType"].asInt();
 
             // Mode A: Gravity + tangential accel + radial accel
             if (_emitterMode == Mode::GRAVITY)
             {
                 // gravity
-                modeA.gravity.x = dictionary->valueForKey("gravityx")->floatValue();
-                modeA.gravity.y = dictionary->valueForKey("gravityy")->floatValue();
+                modeA.gravity.x = dictionary["gravityx"].asFloat();
+                modeA.gravity.y = dictionary["gravityy"].asFloat();
 
                 // speed
-                modeA.speed = dictionary->valueForKey("speed")->floatValue();
-                modeA.speedVar = dictionary->valueForKey("speedVariance")->floatValue();
+                modeA.speed = dictionary["speed"].asFloat();
+                modeA.speedVar = dictionary["speedVariance"].asFloat();
 
                 // radial acceleration
-                modeA.radialAccel = dictionary->valueForKey("radialAcceleration")->floatValue();
-                modeA.radialAccelVar = dictionary->valueForKey("radialAccelVariance")->floatValue();
+                modeA.radialAccel = dictionary["radialAcceleration"].asFloat();
+                modeA.radialAccelVar = dictionary["radialAccelVariance"].asFloat();
 
                 // tangential acceleration
-                modeA.tangentialAccel = dictionary->valueForKey("tangentialAcceleration")->floatValue();
-                modeA.tangentialAccelVar = dictionary->valueForKey("tangentialAccelVariance")->floatValue();
+                modeA.tangentialAccel = dictionary["tangentialAcceleration"].asFloat();
+                modeA.tangentialAccelVar = dictionary["tangentialAccelVariance"].asFloat();
                 
                 // rotation is dir
-                modeA.rotationIsDir = dictionary->valueForKey("rotationIsDir")->boolValue();
+                modeA.rotationIsDir = dictionary["rotationIsDir"].asBool();
             }
 
             // or Mode B: radius movement
@@ -299,31 +296,31 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
             {
                 if (_configName.length()>0)
                 {
-                    modeB.startRadius = dictionary->valueForKey("maxRadius")->intValue();
+                    modeB.startRadius = dictionary["maxRadius"].asInt();
                 }
                 else
                 {
-                    modeB.startRadius = dictionary->valueForKey("maxRadius")->floatValue();
+                    modeB.startRadius = dictionary["maxRadius"].asFloat();
                 }
-                modeB.startRadiusVar = dictionary->valueForKey("maxRadiusVariance")->floatValue();
+                modeB.startRadiusVar = dictionary["maxRadiusVariance"].asFloat();
                 if (_configName.length()>0)
                 {
-                    modeB.endRadius = dictionary->valueForKey("minRadius")->intValue();
+                    modeB.endRadius = dictionary["minRadius"].asInt();
                 }
                 else
                 {
-                    modeB.endRadius = dictionary->valueForKey("minRadius")->floatValue();
+                    modeB.endRadius = dictionary["minRadius"].asFloat();
                 }
                 modeB.endRadiusVar = 0.0f;
                if (_configName.length()>0)
                 {
-                    modeB.rotatePerSecond = dictionary->valueForKey("rotatePerSecond")->intValue();
+                    modeB.rotatePerSecond = dictionary["rotatePerSecond"].asInt();
                 }
                 else
                 {
-                    modeB.rotatePerSecond = dictionary->valueForKey("rotatePerSecond")->floatValue();
+                    modeB.rotatePerSecond = dictionary["rotatePerSecond"].asFloat();
                 }
-                modeB.rotatePerSecondVar = dictionary->valueForKey("rotatePerSecondVariance")->floatValue();
+                modeB.rotatePerSecondVar = dictionary["rotatePerSecondVariance"].asFloat();
 
             } else {
                 CCASSERT( false, "Invalid emitterType in config file");
@@ -331,8 +328,8 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
             }
 
             // life span
-            _life = dictionary->valueForKey("particleLifespan")->floatValue();
-            _lifeVar = dictionary->valueForKey("particleLifespanVariance")->floatValue();
+            _life = dictionary["particleLifespan"].asFloat();
+            _lifeVar = dictionary["particleLifespanVariance"].asFloat();
 
             // emission Rate
             _emissionRate = _totalParticles / _life;
@@ -345,7 +342,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
 
                 // texture        
                 // Try to get the texture from the cache
-                std::string textureName = dictionary->valueForKey("textureFileName")->getCString();
+                std::string textureName = dictionary["textureFileName"].asString();
                 
                 size_t rPos = textureName.rfind('/');
                
@@ -385,19 +382,19 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
                 }
                 else
                 {                        
-                    const char *textureData = dictionary->valueForKey("textureImageData")->getCString();
-                    CCASSERT(textureData, "");
+                    std::string textureData = dictionary["textureImageData"].asString();
+                    CCASSERT(!textureData.empty(), "");
                     
-                    long dataLen = strlen(textureData);
-                    if(dataLen != 0)
+                    auto dataLen = textureData.size();
+                    if (dataLen != 0)
                     {
                         // if it fails, try to get it from the base64-gzipped data    
-                        int decodeLen = base64Decode((unsigned char*)textureData, (unsigned int)dataLen, &buffer);
-                        CCASSERT( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
+                        int decodeLen = base64Decode((unsigned char*)textureData.c_str(), (unsigned int)dataLen, &buffer);
+                        CCASSERT( buffer != nullptr, "CCParticleSystem: error decoding textureImageData");
                         CC_BREAK_IF(!buffer);
                         
-                        int deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
-                        CCASSERT( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
+                        ssize_t deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
+                        CCASSERT( deflated != nullptr, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
                         // For android, we should retain it in VolatileTexture::addImage which invoked in Director::getInstance()->getTextureCache()->addUIImage()
@@ -413,7 +410,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const std::strin
                 }
                 if (_configName.length()>0)
                 {
-                  _yCoordFlipped = dictionary->valueForKey("yCoordFlipped")->intValue();
+                  _yCoordFlipped = dictionary["yCoordFlipped"].asInt();
                 }
                 CCASSERT( this->_texture != NULL, "CCParticleSystem: error loading the texture");
             }

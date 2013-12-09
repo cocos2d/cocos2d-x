@@ -42,7 +42,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
     
-static long _globalFontSize = kItemSize;
+static int _globalFontSize = kItemSize;
 static std::string _globalFontName = "Marker Felt";
 static bool _globalFontNameRelease = false;
 
@@ -310,13 +310,13 @@ void MenuItemLabel::setEnabled(bool enabled)
 //CCMenuItemAtlasFont
 //
 
-MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap)
+MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap)
 {
     return MenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap, (const ccMenuCallback&)nullptr);
 }
 
 // XXX: deprecated
-MenuItemAtlasFont * MenuItemAtlasFont::create(const char* value, const char* charMapFile, long itemWidth, long itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
+MenuItemAtlasFont * MenuItemAtlasFont::create(const char* value, const char* charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
 {
     MenuItemAtlasFont *ret = new MenuItemAtlasFont();
     ret->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, target, selector);
@@ -324,7 +324,7 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const char* value, const char* cha
     return ret;
 }
 
-MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap, const ccMenuCallback& callback)
+MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
     MenuItemAtlasFont *ret = new MenuItemAtlasFont();
     ret->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, callback);
@@ -333,14 +333,14 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const st
 }
 
 // XXX: deprecated
-bool MenuItemAtlasFont::initWithString(const char* value, const char* charMapFile, long itemWidth, long itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
+bool MenuItemAtlasFont::initWithString(const char* value, const char* charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
 {
 	_target = target;
 	CC_SAFE_RETAIN(_target);
 	return initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, std::bind(selector,target, std::placeholders::_1) );
 }
 
-bool MenuItemAtlasFont::initWithString(const std::string& value, const std::string& charMapFile, long itemWidth, long itemHeight, char startCharMap, const ccMenuCallback& callback)
+bool MenuItemAtlasFont::initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
     CCASSERT( value.size() != 0, "value length must be greater than 0");
     LabelAtlas *label = new LabelAtlas();
@@ -357,12 +357,12 @@ bool MenuItemAtlasFont::initWithString(const std::string& value, const std::stri
 //CCMenuItemFont
 //
 
-void MenuItemFont::setFontSize(long s)
+void MenuItemFont::setFontSize(int s)
 {
     _globalFontSize = s;
 }
 
-long MenuItemFont::getFontSize()
+int MenuItemFont::getFontSize()
 {
     return _globalFontSize;
 }
@@ -449,13 +449,13 @@ void MenuItemFont::recreateLabel()
     this->setLabel(label);
 }
 
-void MenuItemFont::setFontSizeObj(long s)
+void MenuItemFont::setFontSizeObj(int s)
 {
     _fontSize = s;
     recreateLabel();
 }
 
-long MenuItemFont::getFontSizeObj() const
+int MenuItemFont::getFontSizeObj() const
 {
     return _fontSize;
 }
@@ -806,37 +806,21 @@ void MenuItemImage::setDisabledSpriteFrame(SpriteFrame * frame)
 //
 
 // XXX: deprecated
-MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems)
+MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandler selector, const Vector<MenuItem*>& menuItems)
 {
     MenuItemToggle *ret = new MenuItemToggle();
     ret->MenuItem::initWithTarget(target, selector);
-    ret->_subItems = Array::create();
-    ret->_subItems->retain();
-    
-    for (int z=0; z < menuItems->count(); z++)
-    {
-        MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
-        ret->_subItems->addObject(menuItem);
-    }
-    
+    ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
     ret->setSelectedIndex(0);
     return ret;
 }
 
-MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callback, Array* menuItems)
+MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callback, const Vector<MenuItem*>& menuItems)
 {
     MenuItemToggle *ret = new MenuItemToggle();
     ret->MenuItem::initWithCallback(callback);
-    ret->_subItems = Array::create();
-    ret->_subItems->retain();
-
-    for (int z=0; z < menuItems->count(); z++)
-    {
-        MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
-        ret->_subItems->addObject(menuItem);
-    }
-
+    ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
     ret->setSelectedIndex(0);
     return ret;
@@ -884,14 +868,13 @@ bool MenuItemToggle::initWithTarget(Object* target, SEL_MenuHandler selector, Me
 bool MenuItemToggle::initWithCallback(const ccMenuCallback &callback, MenuItem *item, va_list args)
 {
     MenuItem::initWithCallback(callback);
-    this->_subItems = Array::create();
-    this->_subItems->retain();
+
     int z = 0;
     MenuItem *i = item;
     while(i)
     {
         z++;
-        _subItems->addObject(i);
+        _subItems.pushBack(i);
         i = va_arg(args, MenuItem*);
     }
     _selectedIndex = UINT_MAX;
@@ -910,11 +893,10 @@ MenuItemToggle* MenuItemToggle::create(MenuItem *item)
 bool MenuItemToggle::initWithItem(MenuItem *item)
 {
     MenuItem::initWithCallback((const ccMenuCallback&)nullptr);
-    setSubItems(Array::create());
 
     if (item)
     {
-        _subItems->addObject(item);
+        _subItems.pushBack(item);
     }
     _selectedIndex = UINT_MAX;
     this->setSelectedIndex(0);
@@ -927,24 +909,19 @@ bool MenuItemToggle::initWithItem(MenuItem *item)
 
 void MenuItemToggle::addSubItem(MenuItem *item)
 {
-    _subItems->addObject(item);
+    _subItems.pushBack(item);
 }
 
 MenuItemToggle::~MenuItemToggle()
 {
-    if (_subItems)
-    {
-        for (auto& item : *_subItems)
-        {
-            static_cast<MenuItem*>(item)->cleanup();
-        }
-        _subItems->release();
-    }
+    _subItems.forEach([](MenuItem* item){
+        item->cleanup();
+    });
 }
 
 void MenuItemToggle::setSelectedIndex(unsigned int index)
 {
-    if( index != _selectedIndex && _subItems->count() > 0 )
+    if( index != _selectedIndex && _subItems.size() > 0 )
     {
         _selectedIndex = index;
         MenuItem *currentItem = (MenuItem*)getChildByTag(kCurrentItem);
@@ -953,7 +930,7 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
             currentItem->removeFromParentAndCleanup(false);
         }
 
-        MenuItem* item = (MenuItem*)_subItems->getObjectAtIndex(_selectedIndex);
+        MenuItem* item = _subItems.at(_selectedIndex);
         this->addChild(item, 0, kCurrentItem);
         Size s = item->getContentSize();
         this->setContentSize(s);
@@ -964,13 +941,13 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
 void MenuItemToggle::selected()
 {
     MenuItem::selected();
-    static_cast<MenuItem*>(_subItems->getObjectAtIndex(_selectedIndex))->selected();
+    _subItems.at(_selectedIndex)->selected();
 }
 
 void MenuItemToggle::unselected()
 {
     MenuItem::unselected();
-    static_cast<MenuItem*>(_subItems->getObjectAtIndex(_selectedIndex))->unselected();
+    _subItems.at(_selectedIndex)->unselected();
 }
 
 void MenuItemToggle::activate()
@@ -978,7 +955,7 @@ void MenuItemToggle::activate()
     // update index
     if( _enabled ) 
     {
-        unsigned int newIndex = (_selectedIndex + 1) % _subItems->count();
+        unsigned int newIndex = (_selectedIndex + 1) % _subItems.size();
         this->setSelectedIndex(newIndex);
     }
     MenuItem::activate();
@@ -989,21 +966,15 @@ void MenuItemToggle::setEnabled(bool enabled)
     {
         MenuItem::setEnabled(enabled);
 
-        if(_subItems && _subItems->count() > 0)
-        {
-            Object* pObj = NULL;
-            CCARRAY_FOREACH(_subItems, pObj)
-            {
-                MenuItem* pItem = static_cast<MenuItem*>(pObj);
-                pItem->setEnabled(enabled);
-            }
-        }
+        _subItems.forEach([&enabled](MenuItem* item){
+            item->setEnabled(enabled);
+        });
     }
 }
 
 MenuItem* MenuItemToggle::getSelectedItem()
 {
-    return static_cast<MenuItem*>(_subItems->getObjectAtIndex(_selectedIndex));
+    return _subItems.at(_selectedIndex);
 }
 
 NS_CC_END
