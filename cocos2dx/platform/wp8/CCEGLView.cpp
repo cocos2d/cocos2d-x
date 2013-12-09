@@ -490,7 +490,6 @@ void CCEGLView::UpdateOrientation(DisplayOrientations orientation)
 // called by size change from WP8 XAML
 void CCEGLView::UpdateForWindowSizeChange(float width, float height)
 {
-    m_windowBounds = Windows::Foundation::Rect(0, 0, width, height);
     m_width = width;
     m_height = height;
     UpdateWindowSize();
@@ -499,9 +498,8 @@ void CCEGLView::UpdateForWindowSizeChange(float width, float height)
 void CCEGLView::UpdateForWindowSizeChange()
 {
     m_orientation = DisplayProperties::CurrentOrientation;
-    m_windowBounds = m_window->Bounds;
-    m_width = ConvertDipsToPixels(m_windowBounds.Height);
-    m_height = ConvertDipsToPixels(m_windowBounds.Width);
+    m_width = ConvertDipsToPixels(m_window->Bounds.Height);
+    m_height = ConvertDipsToPixels(m_window->Bounds.Width);
  
     UpdateWindowSize();
 }
@@ -564,50 +562,50 @@ void CCEGLView::UpdateOrientationMatrix()
 	}
 }
 
-Point CCEGLView::TransformToOrientation(Point point, bool dipsToPixels)
+CCPoint CCEGLView::TransformToOrientation(Point p)
 {
-    Point returnValue;
+    CCPoint returnValue;
+
+	float x = getScaledDPIValue(p.X);
+	float y = getScaledDPIValue(p.Y);
+
 
     switch (m_orientation)
     {
     case DisplayOrientations::Portrait:
-        returnValue = point;
+        returnValue = CCPoint(x, y);
         break;
     case DisplayOrientations::Landscape:
-        returnValue = Point(point.Y, m_windowBounds.Width - point.X);
+        returnValue = CCPoint(y, m_width - x);
         break;
     case DisplayOrientations::PortraitFlipped:
-        returnValue = Point(m_windowBounds.Width - point.X, m_windowBounds.Height - point.Y);
+        returnValue = CCPoint(m_width - x, m_height - y);
         break;
     case DisplayOrientations::LandscapeFlipped:
-        returnValue = Point(m_windowBounds.Height -point.Y, point.X);
+        returnValue = CCPoint(m_height - y, x);
         break;
     default:
         throw ref new Platform::FailureException();
         break;
     }
 
-    return dipsToPixels ? Point(ConvertDipsToPixels(returnValue.X),
-                                ConvertDipsToPixels(returnValue.Y)) 
-                        : returnValue;
+	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
+	if(zoomFactor > 0.0f) {
+		returnValue.x /= zoomFactor;
+		returnValue.y /= zoomFactor;
+	}
+
+    CCLOG("%.2f %.2f : %.2f %.2f", p.X, p.Y,returnValue.x, returnValue.y);
+
+    return returnValue;
 }
 
 #if 1
 
 CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 
-	auto p = TransformToOrientation(args->CurrentPoint->Position, false);
-	float x = getScaledDPIValue(p.X);
-	float y = getScaledDPIValue(p.Y);
-    CCPoint pt(x, y);
+	return TransformToOrientation(args->CurrentPoint->Position);
 
-	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
-
-	if(zoomFactor > 0.0f) {
-		pt.x /= zoomFactor;
-		pt.y /= zoomFactor;
-	}
-	return pt;
 }
 
 #else

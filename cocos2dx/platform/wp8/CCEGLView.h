@@ -139,7 +139,7 @@ private:
     void UpdateOrientationMatrix();
 
 	void ValidateDevice();
-    Windows::Foundation::Point TransformToOrientation(Windows::Foundation::Point point, bool dipsToPixels);
+    CCPoint TransformToOrientation(Windows::Foundation::Point point);
  	CCPoint GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
        
     Windows::Foundation::Rect m_windowBounds;
