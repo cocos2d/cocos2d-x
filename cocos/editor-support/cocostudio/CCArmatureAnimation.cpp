@@ -503,7 +503,7 @@ void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int o
 }
 
 
-void CCArmatureAnimation::movementEvent(CCArmature *armature, MovementEventType movementType, const char *movementID)
+void ArmatureAnimation::movementEvent(Armature *armature, MovementEventType movementType, const char *movementID)
 {
     if (_movementEventTarget && _movementEventCallFunc)
     {
@@ -516,7 +516,7 @@ void CCArmatureAnimation::movementEvent(CCArmature *armature, MovementEventType 
 }
 
 
-void CCArmatureAnimation::updateMovementList()
+void ArmatureAnimation::updateMovementList()
 {
     if (_onMovementList)
     {
