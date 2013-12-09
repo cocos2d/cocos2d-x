@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Mon Dec  2 10:22:19 2013.
+** Generated automatically by tolua++-1.0.92 on Thu Dec  5 14:37:39 2013.
 */
 
 /****************************************************************************
@@ -310,7 +310,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCComAudio");
  tolua_usertype(tolua_S,"UISlider");
  tolua_usertype(tolua_S,"CCTextureAtlas");
- tolua_usertype(tolua_S,"CCAnimationData");
+ tolua_usertype(tolua_S,"CCDisplayData");
  tolua_usertype(tolua_S,"UICheckBox");
  tolua_usertype(tolua_S,"CCActionManager");
  tolua_usertype(tolua_S,"UIScrollView");
@@ -334,34 +334,33 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCBlendProtocol");
  tolua_usertype(tolua_S,"UIButton");
  tolua_usertype(tolua_S,"CCBaseData");
- tolua_usertype(tolua_S,"UILayoutParameter");
  tolua_usertype(tolua_S,"CCArmatureDataManager");
  tolua_usertype(tolua_S,"UIListView");
- tolua_usertype(tolua_S,"SceneReader");
- tolua_usertype(tolua_S,"CCObject");
+ tolua_usertype(tolua_S,"UILayoutParameter");
+ tolua_usertype(tolua_S,"CCBlendType");
  tolua_usertype(tolua_S,"SEL_TouchEvent");
  tolua_usertype(tolua_S,"DisplayType");
+ tolua_usertype(tolua_S,"SceneReader");
  tolua_usertype(tolua_S,"ActionObject");
- tolua_usertype(tolua_S,"CCColliderFilter");
  tolua_usertype(tolua_S,"ActionManager");
  tolua_usertype(tolua_S,"GUIReader");
  tolua_usertype(tolua_S,"ActionNode");
  tolua_usertype(tolua_S,"CCComAttribute");
- tolua_usertype(tolua_S,"CCDisplayData");
  tolua_usertype(tolua_S,"CCTexture2D");
+ tolua_usertype(tolua_S,"CCAnimationData");
  tolua_usertype(tolua_S,"UIWidget");
  tolua_usertype(tolua_S,"UIRelativeAlign");
  tolua_usertype(tolua_S,"CCSize");
- tolua_usertype(tolua_S,"UILinearLayoutParameter");
- tolua_usertype(tolua_S,"CCBone");
+ tolua_usertype(tolua_S,"UILabel");
+ tolua_usertype(tolua_S,"ccColor4B");
  tolua_usertype(tolua_S,"CCSkin");
  tolua_usertype(tolua_S,"CCArmature");
  tolua_usertype(tolua_S,"CCArray");
  tolua_usertype(tolua_S,"UIImageView");
- tolua_usertype(tolua_S,"UILabel");
+ tolua_usertype(tolua_S,"UILinearLayoutParameter");
  tolua_usertype(tolua_S,"rapidjson::Value");
  tolua_usertype(tolua_S,"CCArmatureAnimation");
- tolua_usertype(tolua_S,"ccColor4B");
+ tolua_usertype(tolua_S,"CCObject");
  tolua_usertype(tolua_S,"UIScrollInterface");
  tolua_usertype(tolua_S,"CCAction");
  tolua_usertype(tolua_S,"UIHelper");
@@ -372,7 +371,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCRect");
  tolua_usertype(tolua_S,"CCInputDelegate");
  tolua_usertype(tolua_S,"CCDisplayManager");
- tolua_usertype(tolua_S,"CCBlendType");
+ tolua_usertype(tolua_S,"CCBone");
 }
 
 /* method: create of class  CCArmature */
@@ -1235,39 +1234,6 @@ static int tolua_CocoStudio_CCArmature_getTexureAtlasWithTexture00(lua_State* to
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getTexureAtlasWithTexture'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setColliderFilter of class  CCArmature */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCArmature_setColliderFilter00
-static int tolua_CocoStudio_CCArmature_setColliderFilter00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCArmature",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCColliderFilter",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CCArmature* self = (CCArmature*)  tolua_tousertype(tolua_S,1,0);
-  CCColliderFilter* filter = ((CCColliderFilter*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setColliderFilter'", NULL);
-#endif
-  {
-   self->setColliderFilter(filter);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setColliderFilter'.",&tolua_err);
  return 0;
 #endif
 }
@@ -26333,7 +26299,6 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setAnimation",tolua_CocoStudio_CCArmature_setAnimation00);
    tolua_function(tolua_S,"getAnimation",tolua_CocoStudio_CCArmature_getAnimation00);
    tolua_function(tolua_S,"getTexureAtlasWithTexture",tolua_CocoStudio_CCArmature_getTexureAtlasWithTexture00);
-   tolua_function(tolua_S,"setColliderFilter",tolua_CocoStudio_CCArmature_setColliderFilter00);
    tolua_function(tolua_S,"getArmatureData",tolua_CocoStudio_CCArmature_getArmatureData00);
    tolua_function(tolua_S,"setArmatureData",tolua_CocoStudio_CCArmature_setArmatureData00);
    tolua_function(tolua_S,"getBatchNode",tolua_CocoStudio_CCArmature_getBatchNode00);
