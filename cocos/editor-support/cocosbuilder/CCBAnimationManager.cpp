@@ -33,9 +33,6 @@ CCBAnimationManager::CCBAnimationManager()
 
 bool CCBAnimationManager::init()
 {
-    _keyframeCallFuncs = new Dictionary();
-    _keyframeCallFuncs->init();
-
     _target = NULL;
     _animationCompleteCallbackFunc = NULL;
     
@@ -68,7 +65,6 @@ CCBAnimationManager::~CCBAnimationManager()
         }
     }
     
-    CC_SAFE_RELEASE(_keyframeCallFuncs);
     CC_SAFE_RELEASE(_target);
 }
 
@@ -640,13 +636,17 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
         CCBReader::TargetType selectorTarget = (CCBReader::TargetType)keyVal[1].asInt();
 	
         if(_jsControlled) {
-            String* callbackName = String::createWithFormat("%d:%s", selectorTarget, selectorName.c_str());
-            Object* callback = _keyframeCallFuncs->objectForKey(callbackName->getCString());
+            std::stringstream callbackName;
+            callbackName << static_cast<int>(selectorTarget);
+            callbackName << ":" + selectorName;
+            
+            auto callback = _keyframeCallFuncs.at(callbackName.str());
             if (nullptr != callback)
             {
-                CallFunc *callbackClone = (static_cast<CallFunc*>(callback))->clone();
+                CallFunc* callbackClone = callback->clone();
     
-                if(callbackClone != NULL) {
+                if (callbackClone != NULL)
+                {
                     actions.pushBack(callbackClone);
                 }
             }
@@ -908,8 +908,9 @@ void CCBAnimationManager::setAnimationCompletedCallback(Object *target, SEL_Call
     _animationCompleteCallbackFunc = callbackFunc;
 }
 
-void CCBAnimationManager::setCallFunc(CallFunc* callFunc, const std::string &callbackNamed) {
-    _keyframeCallFuncs->setObject((Object*)callFunc, callbackNamed);
+void CCBAnimationManager::setCallFunc(CallFunc* callFunc, const std::string &callbackNamed)
+{
+    _keyframeCallFuncs.insert(callbackNamed, callFunc);
 }
 
 void CCBAnimationManager::sequenceCompleted()
