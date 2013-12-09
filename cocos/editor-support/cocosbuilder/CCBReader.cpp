@@ -245,6 +245,7 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     _actionManager->setRootContainerSize(parentSize);
     _actionManager->_owner = _owner;
     
+    Map<Node*, CCBAnimationManager*> animationManagers;
     Node *pNodeGraph = readFileWithCleanUp(true, animationManagers);
     
     if (pNodeGraph && _actionManager->getAutoPlaySequenceId() != -1)
