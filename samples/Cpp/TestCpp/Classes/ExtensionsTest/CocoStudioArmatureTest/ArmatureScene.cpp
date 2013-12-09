@@ -847,7 +847,7 @@ void TestColliderDetector::onExit()
 }
 void TestColliderDetector::draw()
 {
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     kmGLPushMatrix();
     world->DrawDebugData();
     kmGLPopMatrix();

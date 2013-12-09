@@ -199,7 +199,7 @@ void ColliderDetector::addContourData(ContourData *contourData)
 
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    CCArray *calculatedVertexList = colliderBody->getCalculatedVertexList();
+    Array *calculatedVertexList = colliderBody->getCalculatedVertexList();
     
     int num = contourData->vertexList.count();
     for (int i = 0; i < num; i++)
@@ -425,7 +425,7 @@ void ColliderDetector::setBody(b2Body *pBody)
         ColliderBody *colliderBody = (ColliderBody *)object;
 
         ContourData *contourData = colliderBody->getContourData();
-        const Array *array = &contourData->vertexList;
+        Array *array = &contourData->vertexList;
         Object *object = nullptr;
 
         b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.count()];
