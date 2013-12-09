@@ -377,9 +377,13 @@
     <ClCompile Include="..\..\..\Classes\AccelerometerTest\AccelerometerTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dComponent.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dComponent.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Classes">

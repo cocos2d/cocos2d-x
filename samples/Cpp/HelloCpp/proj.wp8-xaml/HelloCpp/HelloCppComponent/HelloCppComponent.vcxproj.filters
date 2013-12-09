@@ -8,26 +8,22 @@
     <ClCompile Include="..\..\..\Classes\HelloWorldScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Direct3DContentProvider.cpp" />
-    <ClCompile Include="Cocos2dComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Classes\HelloWorldScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Classes\AppMacros.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Direct3DContentProvider.h" />
-    <ClInclude Include="Cocos2dComponent.h" />
+    <ClInclude Include="..\..\..\Classes\HelloWorldScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Classes">
-      <UniqueIdentifier>{aaf953e4-1446-4f05-8f45-e1b4d04aaef0}</UniqueIdentifier>
+      <UniqueIdentifier>{f9f8df92-c45f-4fb0-b53e-44782c0e0ea1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
