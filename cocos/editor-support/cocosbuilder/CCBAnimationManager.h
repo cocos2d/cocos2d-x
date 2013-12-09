@@ -146,7 +146,7 @@ private:
     cocos2d::Vector<cocos2d::Node*> _documentCallbackNodes;
     cocos2d::ValueVector _documentCallbackControlEvents;
     cocos2d::ValueVector _keyframeCallbacks;
-    cocos2d::Dictionary *_keyframeCallFuncs;
+    cocos2d::Map<std::string, cocos2d::CallFunc*> _keyframeCallFuncs;
     
     std::string _documentControllerName;
     std::string _lastCompletedSequenceName;
