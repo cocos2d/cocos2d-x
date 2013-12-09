@@ -595,7 +595,7 @@ CCPoint CCEGLView::TransformToOrientation(Point p)
 		returnValue.y /= zoomFactor;
 	}
 
-    CCLOG("%.2f %.2f : %.2f %.2f", p.X, p.Y,returnValue.x, returnValue.y);
+    // CCLOG("%.2f %.2f : %.2f %.2f", p.X, p.Y,returnValue.x, returnValue.y);
 
     return returnValue;
 }
