@@ -137,7 +137,7 @@ public:
      * @js NA
      * @lua NA
      */
-    Array* componentsSeparatedByString(const char *delimiter);
+    __Array* componentsSeparatedByString(const char *delimiter);
     
     /* override functions 
      * @js NA

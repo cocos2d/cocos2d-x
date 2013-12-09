@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "ccTypes.h"
 #include "CCGeometry.h"
-#include "CCArray.h"
+#include "CCVector.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 #include "CCLabelAtlas.h"
@@ -446,7 +446,7 @@ protected:
     bool    _sendCleanupToScene;
 
     /* scheduled scenes */
-    Array* _scenesStack;
+    Vector<Scene*> _scenesStack;
     
     /* last time the main loop was updated */
     struct timeval *_lastUpdate;

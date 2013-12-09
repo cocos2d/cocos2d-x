@@ -529,9 +529,9 @@ void CCBAnimationManager::setAnimatedProperty(const char *propName, Node *pNode,
 
 void CCBAnimationManager::setFirstFrame(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration)
 {
-    Array *keyframes = pSeqProp->getKeyframes();
+    auto& keyframes = pSeqProp->getKeyframes();
     
-    if (keyframes->count() == 0)
+    if (keyframes.empty())
     {
         // Use base value (no animation)
         Object *baseValue = getBaseValue(pNode, pSeqProp->getName());
@@ -541,7 +541,7 @@ void CCBAnimationManager::setFirstFrame(Node *pNode, CCBSequenceProperty *pSeqPr
     else 
     {
         // Use first keyframe
-        CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->getObjectAtIndex(0);
+        CCBKeyframe *keyframe = keyframes.at(0);
         setAnimatedProperty(pSeqProp->getName(), pNode, keyframe->getValue(), fTweenDuration);
     }
 }
@@ -621,13 +621,13 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
     float lastKeyframeTime = 0;
     
     Vector<FiniteTimeAction*> actions;
-    Array *keyframes = channel->getKeyframes();
-    long numKeyframes = keyframes->count();
+    auto& keyframes = channel->getKeyframes();
+    int numKeyframes = keyframes.size();
 
     for (long i = 0; i < numKeyframes; ++i)
     {
 
-        CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->getObjectAtIndex(i);
+        CCBKeyframe *keyframe = keyframes.at(i);
         float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
         lastKeyframeTime = keyframe->getTime();
         if(timeSinceLastKeyframe > 0) {
@@ -700,12 +700,12 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
     float lastKeyframeTime = 0;
     
     Vector<FiniteTimeAction*> actions;
-    Array *keyframes = channel->getKeyframes();
-    long numKeyframes = keyframes->count();
+    auto& keyframes = channel->getKeyframes();
+    int numKeyframes = keyframes.size();
 
-    for (int i = 0; i < numKeyframes; ++i) {
-
-        CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->getObjectAtIndex(i);
+    for (int i = 0; i < numKeyframes; ++i)
+    {
+        CCBKeyframe *keyframe = keyframes.at(i);
         float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
         lastKeyframeTime = keyframe->getTime();
         if(timeSinceLastKeyframe > 0) {
@@ -741,15 +741,15 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
 
 void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration)
 {
-    Array *keyframes = pSeqProp->getKeyframes();
-    long numKeyframes = keyframes->count();
+    auto& keyframes = pSeqProp->getKeyframes();
+    int numKeyframes = keyframes.size();
     
     if (numKeyframes > 1)
     {
         // Make an animation!
         Vector<FiniteTimeAction*> actions;
         
-        CCBKeyframe *keyframeFirst = (CCBKeyframe*)keyframes->getObjectAtIndex(0);
+        CCBKeyframe *keyframeFirst = keyframes.at(0);
         float timeFirst = keyframeFirst->getTime() + fTweenDuration;
         
         if (timeFirst > 0)
@@ -759,8 +759,8 @@ void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, 
         
         for (int i = 0; i < numKeyframes - 1; ++i)
         {
-            CCBKeyframe *kf0 = (CCBKeyframe*)keyframes->getObjectAtIndex(i);
-            CCBKeyframe *kf1 = (CCBKeyframe*)keyframes->getObjectAtIndex(i+1);
+            CCBKeyframe *kf0 = keyframes.at(i);
+            CCBKeyframe *kf1 = keyframes.at(i+1);
             
             ActionInterval *action = getAction(kf0, kf1, pSeqProp->getName(), pNode);
             if (action)

@@ -141,12 +141,12 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
     for (auto iter = animations.cbegin(); iter != animations.cend(); ++iter)
     {
         std::string name = iter->first;
-        const ValueMap& animationDict = iter->second.asValueMap();
+        ValueMap& animationDict = const_cast<ValueMap&>(iter->second.asValueMap());
 
-        const Value& loops = animationDict.at("loops");
-        bool restoreOriginalFrame = animationDict.at("restoreOriginalFrame").asBool();
+        const Value& loops = animationDict["loops"];
+        bool restoreOriginalFrame = animationDict["restoreOriginalFrame"].asBool();
 
-        const ValueVector& frameArray = animationDict.at("frames").asValueVector();
+        ValueVector& frameArray = animationDict["frames"].asValueVector();
 
         if ( frameArray.empty() )
         {
@@ -159,8 +159,8 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
 
         for (auto& obj : frameArray)
         {
-            const ValueMap& entry = obj.asValueMap();
-            std::string spriteFrameName = entry.at("spriteframe").asString();
+            ValueMap& entry = obj.asValueMap();
+            std::string spriteFrameName = entry["spriteframe"].asString();
             SpriteFrame *spriteFrame = frameCache->getSpriteFrameByName(spriteFrameName);
 
             if( ! spriteFrame ) {
@@ -169,15 +169,15 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
                 continue;
             }
 
-            float delayUnits = entry.at("delayUnits").asFloat();
-            const Value& userInfo = entry.at("notification");
+            float delayUnits = entry["delayUnits"].asFloat();
+            Value& userInfo = entry["notification"];
 
             AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, delayUnits, userInfo.asValueMap());
 
             array.pushBack(animFrame);
         }
 
-        float delayPerUnit = animationDict.at("delayPerUnit").asFloat();
+        float delayPerUnit = animationDict["delayPerUnit"].asFloat();
         Animation *animation = Animation::create(array, delayPerUnit, loops.getType() != Value::Type::NONE ? loops.asInt() : 1);
 
         animation->setRestoreOriginalFrame(restoreOriginalFrame);
