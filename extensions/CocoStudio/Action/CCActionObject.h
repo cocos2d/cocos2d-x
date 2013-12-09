@@ -167,6 +167,7 @@ protected:
 	float m_fUnitTime;
 	float m_CurrentTime;
 	CCScheduler *m_pScheduler;
+	CCCallFunc *m_CallBack;
 	float m_fTotalTime;
 };
 
