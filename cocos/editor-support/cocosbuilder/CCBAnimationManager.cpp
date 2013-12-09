@@ -35,30 +35,10 @@ CCBAnimationManager::CCBAnimationManager()
 
 bool CCBAnimationManager::init()
 {
-    _sequences = new Array();
-    _sequences->init();
     _nodeSequences = new Dictionary();
     _nodeSequences->init();
     _baseValues = new Dictionary();
     _baseValues->init();
-    
-    _documentOutletNames = new Array();
-    _documentOutletNames->init();
-    
-    _documentOutletNodes = new Array();
-    _documentOutletNodes->init();
-    
-    _documentCallbackNames = new Array();
-    _documentCallbackNames->init();
-    
-    _documentCallbackNodes = new Array();
-    _documentCallbackNodes->init();
-    
-    _documentCallbackControlEvents = new Array();
-    _documentCallbackControlEvents->init();
-    
-    _keyframeCallbacks = new Array();
-    _keyframeCallbacks->init();
     
     _keyframeCallFuncs = new Dictionary();
     _keyframeCallFuncs->init();
@@ -86,27 +66,20 @@ CCBAnimationManager::~CCBAnimationManager()
     
     _nodeSequences->release();
     _baseValues->release();
-    _sequences->release();
+
     setRootNode(NULL);
     setDelegate(NULL);
-
-    CC_SAFE_RELEASE(_documentOutletNames);
-    CC_SAFE_RELEASE(_documentOutletNodes);
-    CC_SAFE_RELEASE(_documentCallbackNames);
-    CC_SAFE_RELEASE(_documentCallbackNodes);
-    CC_SAFE_RELEASE(_documentCallbackControlEvents);
     
     CC_SAFE_RELEASE(_keyframeCallFuncs);
-    CC_SAFE_RELEASE(_keyframeCallbacks);
     CC_SAFE_RELEASE(_target);
 }
 
-Array* CCBAnimationManager::getSequences()
+Vector<CCBSequence*>& CCBAnimationManager::getSequences()
 {
     return _sequences;
 }
 
-void CCBAnimationManager::setSequences(Array* seq)
+void CCBAnimationManager::setSequences(const Vector<CCBSequence*>& seq)
 {
     _sequences = seq;
 }
@@ -131,63 +104,74 @@ void CCBAnimationManager::setRootNode(Node *pRootNode)
     _rootNode = pRootNode;
 }
 
-void CCBAnimationManager::setDocumentControllerName(const std::string &name) {
+void CCBAnimationManager::setDocumentControllerName(const std::string &name)
+{
     _documentControllerName = name;
 }
 
 
-std::string CCBAnimationManager::getDocumentControllerName() {
+std::string CCBAnimationManager::getDocumentControllerName()
+{
     return _documentControllerName;
 }
 
-void CCBAnimationManager::addDocumentCallbackNode(Node *node) {
-    _documentCallbackNodes->addObject(node);
+void CCBAnimationManager::addDocumentCallbackNode(Node *node)
+{
+    _documentCallbackNodes.pushBack(node);
 }
 
-void CCBAnimationManager::addDocumentCallbackName(std::string name) {
-    String *tmpName = String::create(name);
-    _documentCallbackNames->addObject(tmpName);
+void CCBAnimationManager::addDocumentCallbackName(std::string name)
+{
+    _documentCallbackNames.push_back(Value(name));
 }
 
 void CCBAnimationManager::addDocumentCallbackControlEvents(Control::EventType eventType)
 {
-    _documentCallbackControlEvents->addObject(Integer::create((int)eventType));
+    _documentCallbackControlEvents.push_back(Value(static_cast<int>(eventType)));
 }
 
-Array* CCBAnimationManager::getDocumentCallbackNames() {
+ValueVector& CCBAnimationManager::getDocumentCallbackNames()
+{
     return _documentCallbackNames;
 }
 
-Array* CCBAnimationManager::getDocumentCallbackNodes() {
+Vector<Node*>& CCBAnimationManager::getDocumentCallbackNodes()
+{
     return _documentCallbackNodes;
 }
 
-Array* CCBAnimationManager::getDocumentCallbackControlEvents()
+ValueVector& CCBAnimationManager::getDocumentCallbackControlEvents()
 {
     return _documentCallbackControlEvents;
 }
 
-void CCBAnimationManager::addDocumentOutletNode(Node *node) {
-    _documentOutletNodes->addObject(node);
+void CCBAnimationManager::addDocumentOutletNode(Node *node)
+{
+    _documentOutletNodes.pushBack(node);
 }
 
-void CCBAnimationManager::addDocumentOutletName(std::string name) {
-    _documentOutletNames->addObject(String::create(name));
+void CCBAnimationManager::addDocumentOutletName(std::string name)
+{
+    _documentOutletNames.push_back(Value(name));
 }
 
-Array* CCBAnimationManager::getDocumentOutletNames() {
+ValueVector& CCBAnimationManager::getDocumentOutletNames()
+{
     return _documentOutletNames;
 }
 
-Array* CCBAnimationManager::getDocumentOutletNodes() {
+Vector<Node*>& CCBAnimationManager::getDocumentOutletNodes()
+{
     return _documentOutletNodes;
 }
 
-std::string CCBAnimationManager::getLastCompletedSequenceName() {
+std::string CCBAnimationManager::getLastCompletedSequenceName()
+{
     return _lastCompletedSequenceName;
 }
 
-Array* CCBAnimationManager::getKeyframeCallbacks() {
+ValueVector& CCBAnimationManager::getKeyframeCallbacks()
+{
     return _keyframeCallbacks;
 }
 
@@ -264,11 +248,9 @@ Object* CCBAnimationManager::getBaseValue(Node *pNode, const char* propName)
 
 int CCBAnimationManager::getSequenceId(const char* pSequenceName)
 {
-    Object *pElement = NULL;
     string seqName(pSequenceName);
-    CCARRAY_FOREACH(_sequences, pElement)
+    for (auto& seq : _sequences)
     {
-        CCBSequence *seq = static_cast<CCBSequence*>(pElement);
         if (seqName.compare(seq->getName()) == 0)
         {
             return seq->getSequenceId();
@@ -279,10 +261,8 @@ int CCBAnimationManager::getSequenceId(const char* pSequenceName)
 
 CCBSequence* CCBAnimationManager::getSequence(int nSequenceId)
 {
-    Object *pElement = NULL;
-    CCARRAY_FOREACH(_sequences, pElement)
+    for (auto& seq : _sequences)
     {
-        CCBSequence *seq = static_cast<CCBSequence*>(pElement);
         if (seq->getSequenceId() == nSequenceId)
         {
             return seq;

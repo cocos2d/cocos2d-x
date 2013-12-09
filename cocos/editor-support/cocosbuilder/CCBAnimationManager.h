@@ -36,8 +36,8 @@ public:
     
     virtual bool init();
     
-    cocos2d::Array* getSequences();
-    void setSequences(cocos2d::Array* seq);
+    cocos2d::Vector<CCBSequence*>& getSequences();
+    void setSequences(const cocos2d::Vector<CCBSequence*>& seq);
 
     
     int getAutoPlaySequenceId();
@@ -57,15 +57,15 @@ public:
     void setDocumentControllerName(const std::string &name);
     
     std::string getDocumentControllerName();
-    cocos2d::Array* getDocumentCallbackNames();
-    cocos2d::Array* getDocumentCallbackNodes();
-    cocos2d::Array* getDocumentCallbackControlEvents();
+    cocos2d::ValueVector& getDocumentCallbackNames();
+    cocos2d::Vector<cocos2d::Node*>& getDocumentCallbackNodes();
+    cocos2d::ValueVector& getDocumentCallbackControlEvents();
     
-    cocos2d::Array* getDocumentOutletNames();
-    cocos2d::Array* getDocumentOutletNodes();
+    cocos2d::ValueVector& getDocumentOutletNames();
+    cocos2d::Vector<cocos2d::Node*>& getDocumentOutletNodes();
     std::string getLastCompletedSequenceName();
     
-    cocos2d::Array* getKeyframeCallbacks();
+    cocos2d::ValueVector& getKeyframeCallbacks();
     
     const cocos2d::Size& getRootContainerSize();
     void setRootContainerSize(const cocos2d::Size &rootContainerSize);
@@ -123,7 +123,7 @@ private:
     void sequenceCompleted();
     
 private:
-    cocos2d::Array *_sequences;
+    cocos2d::Vector<CCBSequence*> _sequences;
     cocos2d::Dictionary *_nodeSequences;
     cocos2d::Dictionary *_baseValues;
     int _autoPlaySequenceId;
@@ -135,12 +135,12 @@ private:
     CCBAnimationManagerDelegate *_delegate;
     CCBSequence *_runningSequence;
     
-    cocos2d::Array *_documentOutletNames;
-    cocos2d::Array *_documentOutletNodes;
-    cocos2d::Array *_documentCallbackNames;
-    cocos2d::Array *_documentCallbackNodes;
-    cocos2d::Array *_documentCallbackControlEvents;
-    cocos2d::Array *_keyframeCallbacks;
+    cocos2d::ValueVector _documentOutletNames;
+    cocos2d::Vector<cocos2d::Node*> _documentOutletNodes;
+    cocos2d::ValueVector _documentCallbackNames;
+    cocos2d::Vector<cocos2d::Node*> _documentCallbackNodes;
+    cocos2d::ValueVector _documentCallbackControlEvents;
+    cocos2d::ValueVector _keyframeCallbacks;
     cocos2d::Dictionary *_keyframeCallFuncs;
     
     std::string _documentControllerName;
