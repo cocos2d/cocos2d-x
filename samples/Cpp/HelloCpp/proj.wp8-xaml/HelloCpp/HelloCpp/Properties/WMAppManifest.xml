@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID=" {2604B1FF-3814-4F74-8A66-A874F0C8CE0E}" Title="PhoneDirect3DXamlAppInterop" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="PhoneDirect3DXamlAppInterop author" Description="Sample description" Publisher="PhoneDirect3DXamlAppInterop" PublisherID="{844bb92f-786f-4fe2-a49f-0af5a873e8e8}">
+  <App xmlns="" ProductID="{d90b344f-2fbb-489e-b668-271ae7b196d6}" Title="PhoneDirect3DXamlAppInterop" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="PhoneDirect3DXamlAppInterop author" Description="Sample description" Publisher="PhoneDirect3DXamlAppInterop" PublisherID="{e5cee7c5-82f7-4267-bb45-8a73e00ac090}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
-      <Capability Name="ID_CAP_NETWORKING" />
-      <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
-      <Capability Name="ID_CAP_MEDIALIB_PLAYBACK" />
-      <Capability Name="ID_CAP_SENSORS" />
-      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
+      <Capability Name="ID_CAP_NETWORKING"/>
+      <Capability Name="ID_CAP_MEDIALIB_AUDIO"/>
+      <Capability Name="ID_CAP_MEDIALIB_PLAYBACK"/>
+      <Capability Name="ID_CAP_SENSORS"/>
+      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT"/>
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
@@ -20,16 +20,11 @@
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
           <Title>PhoneDirect3DXamlAppInterop</Title>
-          <BackContent>
-          </BackContent>
-          <BackBackgroundImageURI>
-          </BackBackgroundImageURI>
-          <BackTitle>
-          </BackTitle>
-          <DeviceLockImageURI>
-          </DeviceLockImageURI>
-          <HasLarge>
-          </HasLarge>
+          <BackContent></BackContent>
+          <BackBackgroundImageURI></BackBackgroundImageURI>
+          <BackTitle></BackTitle>
+          <DeviceLockImageURI></DeviceLockImageURI>
+          <HasLarge></HasLarge>
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>
