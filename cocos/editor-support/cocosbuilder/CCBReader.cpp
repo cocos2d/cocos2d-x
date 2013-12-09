@@ -10,7 +10,6 @@
 #include "CCBAnimationManager.h"
 #include "CCBSequenceProperty.h"
 #include "CCBKeyframe.h"
-#include "CCBValue.h"
 
 #include <ctype.h>
 

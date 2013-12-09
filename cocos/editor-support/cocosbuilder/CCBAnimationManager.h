@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
 #include "CCBSequence.h"
-#include "CCBValue.h"
 #include "CCBSequenceProperty.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 

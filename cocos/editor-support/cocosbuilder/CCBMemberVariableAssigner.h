@@ -2,7 +2,6 @@
 #define _CCB_CCBMEMBERVARIABLEASSIGNER_H_
 
 #include "cocos2d.h"
-#include "CCBValue.h"
 
 namespace cocosbuilder {
 
