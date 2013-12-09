@@ -39,7 +39,6 @@ public:
 
 	event RequestAdditionalFrameHandler^ RequestAdditionalFrame;
 
-	property Windows::Foundation::Size RenderResolution;
     property Windows::Graphics::Display::DisplayOrientations WindowOrientation;
 
 protected:

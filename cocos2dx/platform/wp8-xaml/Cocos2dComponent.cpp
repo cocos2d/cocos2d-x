@@ -85,8 +85,6 @@ void Direct3DBackground::Disconnect()
 
 HRESULT Direct3DBackground::PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Inout_ DrawingSurfaceSizeF* desiredRenderTargetSize)
 {
-	desiredRenderTargetSize->width = RenderResolution.Width;
-	desiredRenderTargetSize->height = RenderResolution.Height;
 	return S_OK;
 }
 
