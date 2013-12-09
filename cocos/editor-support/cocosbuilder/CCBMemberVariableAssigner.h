@@ -51,7 +51,7 @@ class CCBMemberVariableAssigner {
          *  @param value                The value of the property.
          *  @return Whether the assignment was successful.
          */
-        virtual bool onAssignCCBCustomProperty(cocos2d::Object* target, const char* memberVariableName, CCBValue* value) { return false; };
+        virtual bool onAssignCCBCustomProperty(cocos2d::Object* target, const char* memberVariableName, const cocos2d::Value& value) { return false; };
 };
 
 }
