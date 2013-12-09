@@ -31,17 +31,11 @@ namespace PhoneDirect3DXamlAppInterop
             {
                 m_d3dBackground = new Direct3DBackground();
 
-                // Set native resolution in pixels
-                m_d3dBackground.RenderResolution = new Windows.Foundation.Size(
-                    (float)Math.Floor(Application.Current.Host.Content.ActualWidth * Application.Current.Host.Content.ScaleFactor / 100.0f + 0.5f),
-                    (float)Math.Floor(Application.Current.Host.Content.ActualHeight * Application.Current.Host.Content.ScaleFactor / 100.0f + 0.5f)
-                    );
-
-                // Hook-up native component to DrawingSurfaceBackgroundGrid
+                  // Hook-up native component to DrawingSurfaceBackgroundGrid
                 DrawingSurfaceBackground.SetBackgroundContentProvider(m_d3dBackground.CreateContentProvider());
                 DrawingSurfaceBackground.SetBackgroundManipulationHandler(m_d3dBackground);
 
-
+                // set the desired screen orientation
                 m_d3dBackground.WindowOrientation = DisplayOrientations.Landscape;
             }
         }
