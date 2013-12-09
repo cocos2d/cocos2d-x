@@ -195,14 +195,13 @@ std::string SchedulerPauseResume::subtitle()
 //------------------------------------------------------------------
 
 SchedulerPauseResumeAll::SchedulerPauseResumeAll()
-: _pausedTargets(NULL)
 {
     
 }
 
 SchedulerPauseResumeAll::~SchedulerPauseResumeAll()
 {
-    CC_SAFE_RELEASE(_pausedTargets);
+
 }
 
 void SchedulerPauseResumeAll::onEnter()
@@ -227,7 +226,7 @@ void SchedulerPauseResumeAll::update(float delta)
 
 void SchedulerPauseResumeAll::onExit()
 {
-    if(_pausedTargets != NULL)
+    if (!_pausedTargets.empty())
     {
         Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
     }
@@ -249,9 +248,8 @@ void SchedulerPauseResumeAll::pause(float dt)
     log("Pausing");
     auto director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargets();
-    CC_SAFE_RETAIN(_pausedTargets);
     
-    unsigned int c = _pausedTargets->count();
+    int c = _pausedTargets.size();
     
     if (c > 2)
     {
@@ -265,7 +263,7 @@ void SchedulerPauseResumeAll::resume(float dt)
     log("Resuming");
     auto director = Director::getInstance();
     director->getScheduler()->resumeTargets(_pausedTargets);
-    CC_SAFE_RELEASE_NULL(_pausedTargets);
+    _pausedTargets.clear();
 }
 
 std::string SchedulerPauseResumeAll::title()
@@ -285,14 +283,13 @@ std::string SchedulerPauseResumeAll::subtitle()
 //------------------------------------------------------------------
 
 SchedulerPauseResumeAllUser::SchedulerPauseResumeAllUser()
-: _pausedTargets(NULL)
 {
 
 }
 
 SchedulerPauseResumeAllUser::~SchedulerPauseResumeAllUser()
 {
-    CC_SAFE_RELEASE(_pausedTargets);
+
 }
 
 void SchedulerPauseResumeAllUser::onEnter()
@@ -314,7 +311,7 @@ void SchedulerPauseResumeAllUser::onEnter()
 
 void SchedulerPauseResumeAllUser::onExit()
 {
-    if(_pausedTargets != NULL)
+    if (!_pausedTargets.empty())
     {
         Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
     }
@@ -336,7 +333,6 @@ void SchedulerPauseResumeAllUser::pause(float dt)
     log("Pausing");
     auto director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
-    CC_SAFE_RETAIN(_pausedTargets);
 }
 
 void SchedulerPauseResumeAllUser::resume(float dt)
@@ -344,7 +340,7 @@ void SchedulerPauseResumeAllUser::resume(float dt)
     log("Resuming");
     auto director = Director::getInstance();
     director->getScheduler()->resumeTargets(_pausedTargets);
-    CC_SAFE_RELEASE_NULL(_pausedTargets);
+    _pausedTargets.clear();
 }
 
 std::string SchedulerPauseResumeAllUser::title()

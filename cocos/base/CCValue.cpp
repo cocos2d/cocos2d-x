@@ -28,9 +28,9 @@
 NS_CC_BEGIN
 
 Value::Value()
-: _vectorData(nullptr)
-, _mapData(nullptr)
-, _intKeyMapData(nullptr)
+: _vectorData(new ValueVector())
+, _mapData(new ValueMap())
+, _intKeyMapData(new IntValueMap())
 , _type(Type::NONE)
 {
     

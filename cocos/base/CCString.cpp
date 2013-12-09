@@ -178,9 +178,9 @@ void String::appendWithFormat(const char* format, ...)
     
 }
 
-Array* String::componentsSeparatedByString(const char *delimiter)
+__Array* String::componentsSeparatedByString(const char *delimiter)
 {
-    Array* result = Array::create();
+    __Array* result = __Array::create();
     
     size_t cutAt;
     while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
