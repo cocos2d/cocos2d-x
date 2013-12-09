@@ -271,6 +271,14 @@ end
 _G["CCFadeIn"] = DeprecatedClass.CCFadeIn()
 --CCFadeIn class will be Deprecated,end
 
+--CCNodeRGBA class will be Deprecated,begin
+function DeprecatedClass.CCNodeRGBA()
+    deprecatedTip("CCNodeRGBA","cc.Node")
+    return cc.Node
+end
+_G["CCNodeRGBA"] = DeprecatedClass.CCNodeRGBA()
+--CCNodeRGBA class will be Deprecated,end
+
 --CCAnimationCache class will be Deprecated,begin
 function DeprecatedClass.CCAnimationCache()
     deprecatedTip("CCAnimationCache","cc.AnimationCache")
@@ -1294,6 +1302,14 @@ function DeprecatedClass.CCCamera()
 end
 _G["CCCamera"] = DeprecatedClass.CCCamera()
 --CCCamera class will be Deprecated,end
+
+--CCLayerRGBA class will be Deprecated,begin
+function DeprecatedClass.CCLayerRGBA()
+    deprecatedTip("CCLayerRGBA","cc.Layer")
+    return cc.Layer
+end
+_G["CCLayerRGBA"] = DeprecatedClass.CCLayerRGBA()
+--CCLayerRGBA class will be Deprecated,end
 
 --CCBezierTo class will be Deprecated,begin
 function DeprecatedClass.CCBezierTo()
