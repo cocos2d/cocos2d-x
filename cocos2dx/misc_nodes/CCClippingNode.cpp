@@ -121,24 +121,45 @@ bool CCClippingNode::init(CCNode *pStencil)
 void CCClippingNode::onEnter()
 {
     CCNode::onEnter();
-    m_pStencil->onEnter();
+    
+    if (m_pStencil != NULL)
+    {
+        m_pStencil->onEnter();
+    }
+    else
+    {
+        CCLOG("CCClippingNode warning: m_pStencil is nil.");
+    }
+    
 }
 
 void CCClippingNode::onEnterTransitionDidFinish()
 {
     CCNode::onEnterTransitionDidFinish();
-    m_pStencil->onEnterTransitionDidFinish();
+    
+    if (m_pStencil != NULL)
+    {
+        m_pStencil->onEnterTransitionDidFinish();
+    }
 }
 
 void CCClippingNode::onExitTransitionDidStart()
 {
-    m_pStencil->onExitTransitionDidStart();
+    if (m_pStencil != NULL)
+    {
+        m_pStencil->onExitTransitionDidStart();
+    }
+    
     CCNode::onExitTransitionDidStart();
 }
 
 void CCClippingNode::onExit()
 {
-    m_pStencil->onExit();
+    if (m_pStencil != NULL)
+    {
+        m_pStencil->onExit();
+    }
+    
     CCNode::onExit();
 }
 
@@ -307,7 +328,10 @@ void CCClippingNode::visit()
     // (according to the stencil test func/op and alpha (or alpha shader) test)
     kmGLPushMatrix();
     transform();
-    m_pStencil->visit();
+    if (m_pStencil != NULL)
+    {
+        m_pStencil->visit();
+    }
     kmGLPopMatrix();
     
     // restore alpha test state
