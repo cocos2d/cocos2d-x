@@ -553,7 +553,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    Set *_pausedTargets;
+    Vector<Node*> _pausedTargets;
 };
 
 #endif

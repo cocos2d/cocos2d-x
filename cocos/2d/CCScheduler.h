@@ -27,12 +27,12 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
-#include <vector>
+#include "CCObject.h"
+#include "CCVector.h"
+#include "uthash.h"
+
 #include <functional>
 #include <mutex>
-
-#include "CCObject.h"
-#include "uthash.h"
 
 NS_CC_BEGIN
 
@@ -41,7 +41,6 @@ NS_CC_BEGIN
  * @{
  */
 
-class Set;
 //
 // Timer
 //
@@ -108,8 +107,7 @@ protected:
 struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
-
-class Array;
+class SchedulerScriptHandlerEntry;
 
 /** @brief Scheduler is responsible for triggering the scheduled callbacks.
 You should not use NSTimer. Instead use this class.
@@ -247,19 +245,19 @@ public:
       You should NEVER call this method, unless you know what you are doing.
      @since v2.0.0
       */
-    Set* pauseAllTargets();
+    Vector<Object*> pauseAllTargets();
 
     /** Pause all selectors from all targets with a minimum priority.
       You should only call this with kPriorityNonSystemMin or higher.
       @since v2.0.0
       */
-    Set* pauseAllTargetsWithMinPriority(int minPriority);
+    Vector<Object*> pauseAllTargetsWithMinPriority(int minPriority);
 
     /** Resume selectors on a set of targets.
      This can be useful for undoing a call to pauseAllSelectors.
      @since v2.0.0
       */
-    void resumeTargets(Set* targetsToResume);
+    void resumeTargets(const Vector<Object*>& targetsToResume);
 
     /** calls a function on the cocos2d thread. Useful when you need to call a cocos2d function from another thread.
      This function is thread safe.
@@ -293,7 +291,7 @@ protected:
     bool _currentTargetSalvaged;
     // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
     bool _updateHashLocked;
-    Array* _scriptHandlerEntries;
+    Vector<SchedulerScriptHandlerEntry*> _scriptHandlerEntries;
 
     // Used for "perform Function"
     std::vector<std::function<void()>> _functionsToPerform;

@@ -207,7 +207,7 @@ public:
      *  @return  The array contains all keys of elements. It's an autorelease object yet.
      * @js NA
      */
-    Array* allKeys();
+    __Array* allKeys();
 
     /** 
      *  Get all keys according to the specified object.
@@ -215,7 +215,7 @@ public:
      *  @return   The array contains all keys for the specified object. It's an autorelease object yet.
      * @js NA
      */
-    Array* allKeysForObject(Object* object);
+    __Array* allKeysForObject(Object* object);
 
     /**
      *  Get the object according to the specified string key.
@@ -302,7 +302,7 @@ public:
      *  Remove an object by the specified string key.
      *
      *  @param key  The string key for searching.
-     *  @see removeObjectForKey(intptr_t), removeObjectsForKeys(Array*),
+     *  @see removeObjectForKey(intptr_t), removeObjectsForKeys(__Array*),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
      */
@@ -312,7 +312,7 @@ public:
      *  Remove an object by the specified integer key.
      *
      *  @param key  The integer key for searching.
-     *  @see removeObjectForKey(const std::string&), removeObjectsForKeys(Array*),
+     *  @see removeObjectForKey(const std::string&), removeObjectsForKeys(__Array*),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
      */
@@ -321,19 +321,19 @@ public:
     /**
      *  Remove objects by an array of keys.
      *
-     *  @param pKeyArray  The array contains keys to be removed.
+     *  @param pKey__Array  The array contains keys to be removed.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
      */
-    void removeObjectsForKeys(Array* pKeyArray);
+    void removeObjectsForKeys(__Array* pKey__Array);
     
     /**
      *  Remove an object by an element.
      *
      *  @param pElement  The element need to be removed.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
-     *       removeObjectsForKeys(Array*), removeAllObjects().
+     *       removeObjectsForKeys(__Array*), removeAllObjects().
      * @js NA
      * @lua NA
      */
@@ -343,7 +343,7 @@ public:
      *  Remove all objects in the dictionary.
      *
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
-     *       removeObjectsForKeys(Array*), removeObjectForElememt(DictElement*).
+     *       removeObjectsForKeys(__Array*), removeObjectForElememt(DictElement*).
      * @js NA
      */
     void removeAllObjects();

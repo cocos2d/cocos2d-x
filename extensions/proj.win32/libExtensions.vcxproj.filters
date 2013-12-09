@@ -24,9 +24,6 @@
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
       <Filter>GUI\CCScrollView</Filter>
     </ClCompile>
-    <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClCompile>
     <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp">
       <Filter>GUI\CCScrollView</Filter>
     </ClCompile>
@@ -94,9 +91,6 @@
     </ClInclude>
     <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
-    <ClInclude Include="..\GUI\CCScrollView\CCSorting.h">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClInclude>
     <ClInclude Include="..\GUI\CCScrollView\CCTableView.h">
       <Filter>GUI\CCScrollView</Filter>
     </ClInclude>
