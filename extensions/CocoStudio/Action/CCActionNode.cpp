@@ -346,25 +346,6 @@ void ActionNode::playAction()
 
 }
 
-void ActionNode::playAction(CCCallFunc* func)
-{
-	if ( m_Object == NULL || m_actionSpawn == NULL)
-	{
-		return;
-	}
-
-	if (m_action!=NULL)
-	{
-		m_action->release();
-	}
-	
-	m_action = CCSequence::create(m_actionSpawn, func, NULL);
-	m_action->retain();
-
-	this->runAction();
-
-}
-
 void ActionNode::runAction()
 {
 	CCNode* cNode = this->getActionNode();
