@@ -64,7 +64,7 @@ void AutoreleasePool::clear()
         int nIndex = _managedObjectArray.size() - 1;
 #endif
 
-        _managedObjectArray.forEachReverse([](Object* obj){
+        _managedObjectArray.forEachReverse([&](Object* obj){
             --(obj->_autoReleaseCount);
             //(*it)->release();
             //delete (*it);

@@ -128,7 +128,7 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
     jsonpath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
     int pos = jsonpath.find_last_of('/');
     m_strFilePath = jsonpath.substr(0,pos+1);
-    long size = 0;
+    ssize_t size = 0;
     des = (char*)(CCFileUtils::getInstance()->getFileData(jsonpath.c_str(),"r" , &size));
     if(nullptr == des || strcmp(des, "") == 0)
     {

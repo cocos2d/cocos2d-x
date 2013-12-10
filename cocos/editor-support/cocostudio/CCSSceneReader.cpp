@@ -47,7 +47,7 @@ namespace cocostudio {
 
     cocos2d::Node* SceneReader::createNodeWithSceneFile(const char* pszFileName)
     {
-        long size = 0;
+        ssize_t size = 0;
         char* pData = 0;
         cocos2d::Node *pNode = nullptr;
         do 
@@ -215,7 +215,7 @@ namespace cocostudio {
                     {
                         file_path = reDir.substr(0, pos+1);
                     }
-                    long size = 0;
+                    ssize_t size = 0;
                     char *des = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(),"r" , &size));
                     JsonDictionary *jsonDict = new JsonDictionary();
                     jsonDict->initWithDescription(des);
@@ -285,7 +285,7 @@ namespace cocostudio {
                     if (nResType == 0)
                     {
                         pAttribute = ComAttribute::create();
-                        long size = 0;
+                        ssize_t size = 0;
                         char* pData = 0;
                         pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(), "r", &size));
                         if(pData != nullptr && strcmp(pData, "") != 0)

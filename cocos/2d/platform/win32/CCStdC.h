@@ -25,6 +25,11 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
+//typedef SSIZE_T ssize_t;
+// ssize_t was redefined as int in libwebsockets.h.
+// Therefore, to avoid conflict, we needs the same definition.
+typedef int ssize_t;
+
 #include "CCPlatformMacros.h"
 #include <float.h>
 
