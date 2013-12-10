@@ -36,9 +36,9 @@ class Integer;
 class Float;
 class Double;
 class String;
-class Array;
+class __Array;
 class Dictionary;
-class Set;
+class __Set;
 class Data;
 
 /**
@@ -77,9 +77,9 @@ public:
     virtual void visit(const Float *p);
     virtual void visit(const Double *p);
     virtual void visit(const String *p);
-    virtual void visit(const Array *p);
+    virtual void visit(const __Array *p);
     virtual void visit(const Dictionary *p);
-    virtual void visit(const Set *p);
+    virtual void visit(const __Set *p);
     virtual void visit(const Data *p);
 };
 
@@ -98,9 +98,9 @@ public:
     virtual void visit(const Float *p);
     virtual void visit(const Double *p);
     virtual void visit(const String *p);
-    virtual void visit(const Array *p);
+    virtual void visit(const __Array *p);
     virtual void visit(const Dictionary *p);
-    virtual void visit(const Set *p);
+    virtual void visit(const __Set *p);
     virtual void visit(const Data *p);
 private:
     void setIndentLevel(int indentLevel);

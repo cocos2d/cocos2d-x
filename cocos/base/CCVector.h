@@ -25,9 +25,11 @@ THE SOFTWARE.
 #ifndef __CCVECTOR_H__
 #define __CCVECTOR_H__
 
-#include <vector>
-#include <algorithm>    // std::for_each
 #include "ccMacros.h"
+
+#include <vector>
+#include <functional>
+#include <algorithm>    // std::for_each
 
 NS_CC_BEGIN
 
@@ -66,7 +68,7 @@ public:
     Vector<T>(Vector<T>&& other)
     {
         CCLOGINFO("In the move constructor of Vector!");
-        _data = other._data;
+        _data = std::move(other._data);
     }
     
     Vector<T>& operator=(const Vector<T>& other)
@@ -81,7 +83,7 @@ public:
     Vector<T>& operator=(Vector<T>&& other)
     {
         CCLOGINFO("In the move assignment operator!");
-        _data = other._data;
+        _data = std::move(other._data);
         return *this;
     }
     
@@ -228,13 +230,14 @@ public:
     }
 
     /** Remove a certain object */
-    void removeObject(T object)
+    void removeObject(T object, bool toRelease = true)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         auto iter = std::find(_data.begin(), _data.end(), object);
         if (iter != _data.end())
             _data.erase(iter);
-        object->release();
+        if (toRelease)
+            object->release();
     }
 
     /** Removes an element with a certain index */
@@ -299,9 +302,19 @@ public:
         _data.shrink_to_fit();
     }
     
-    void forEach(std::function<void(T)> callback)
+    void forEach(const std::function<void(T)>& callback)
     {
-        if (size() <= 0)
+        if (empty())
+            return;
+        
+        std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
+            callback(obj);
+        });
+    }
+    
+    void forEach(const std::function<void(T)>& callback) const
+    {
+        if (empty())
             return;
         
         std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
@@ -309,13 +322,33 @@ public:
         });
     }
   
-    void forEachReverse(std::function<void(T)> callback)
+    void forEachReverse(const std::function<void(T)>& callback)
     {
-        if (size() <= 0)
+        if (empty())
             return;
         
         std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
             callback(obj);
+        });
+    }
+    
+    void forEachReverse(const std::function<void(T)>& callback) const
+    {
+        if (empty())
+            return;
+        
+        std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
+            callback(obj);
+        });
+    }
+    
+    void sort(const std::function<bool(T, T)>& callback)
+    {
+        if (empty())
+            return;
+        
+        std::sort(_data.begin(), _data.end(), [&callback](T a, T b) -> bool{
+            return callback(a, b);
         });
     }
     
