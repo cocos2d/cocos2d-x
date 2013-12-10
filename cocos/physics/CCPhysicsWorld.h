@@ -28,11 +28,11 @@
 #include "ccConfig.h"
 #ifdef CC_USE_PHYSICS
 
-#include <list>
-#include <vector>
-
+#include "CCVector.h"
 #include "CCObject.h"
 #include "CCGeometry.h"
+
+#include <list>
 
 NS_CC_BEGIN
 
@@ -41,7 +41,6 @@ class PhysicsJoint;
 class PhysicsWorldInfo;
 class PhysicsShape;
 class PhysicsContact;
-class Array;
 
 typedef Point Vect;
 
@@ -104,9 +103,9 @@ public:
     void rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data);
     void queryRect(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data);
     void queryPoint(PhysicsPointQueryCallbackFunc func, const Point& point, void* data);
-    Array* getShapes(const Point& point) const;
+    Vector<PhysicsShape*> getShapes(const Point& point) const;
     PhysicsShape* getShape(const Point& point) const;
-    Array* getAllBodies() const;
+    const Vector<PhysicsBody*>& getAllBodies() const;
     PhysicsBody* getBody(int tag) const;
     
     /** Register a listener to receive contact callbacks*/
@@ -156,7 +155,7 @@ protected:
     float _speed;
     PhysicsWorldInfo* _info;
     
-    Array* _bodies;
+    Vector<PhysicsBody*> _bodies;
     std::list<PhysicsJoint*> _joints;
     Scene* _scene;
     
@@ -165,8 +164,8 @@ protected:
     int _debugDrawMask;
     
     
-    Array* _delayAddBodies;
-    Array* _delayRemoveBodies;
+    Vector<PhysicsBody*> _delayAddBodies;
+    Vector<PhysicsBody*> _delayRemoveBodies;
     std::vector<PhysicsJoint*> _delayAddJoints;
     std::vector<PhysicsJoint*> _delayRemoveJoints;
     

@@ -964,33 +964,31 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     {
         //set variables and callback to owner
         //set callback
-        Array *ownerCallbackNames = reader->getOwnerCallbackNames();
-        Array *ownerCallbackNodes = reader->getOwnerCallbackNodes();
-        if (NULL != ownerCallbackNames && ownerCallbackNames->count() > 0 &&
-            NULL != ownerCallbackNodes && ownerCallbackNodes->count() > 0)
+        auto ownerCallbackNames = reader->getOwnerCallbackNames();
+        auto& ownerCallbackNodes = reader->getOwnerCallbackNodes();
+        if (!ownerCallbackNames.empty() && !ownerCallbackNodes.empty())
         {
-            CCASSERT(ownerCallbackNames->count() == ownerCallbackNodes->count(), "");
-            int nCount = ownerCallbackNames->count();
+            CCASSERT(ownerCallbackNames.size() == ownerCallbackNodes.size(), "");
+            int nCount = ownerCallbackNames.size();
             
             for (int i = 0 ; i < nCount; i++)
             {
-                pCCBReader->addOwnerCallbackName((dynamic_cast<String*>(ownerCallbackNames->getObjectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerCallbackNode(dynamic_cast<Node*>(ownerCallbackNodes->getObjectAtIndex(i)) );
+                pCCBReader->addOwnerCallbackName(ownerCallbackNames[i].asString());
+                pCCBReader->addOwnerCallbackNode(ownerCallbackNodes.at(i));
             }
         }
         //set variables
-        Array *ownerOutletNames = reader->getOwnerOutletNames();
-        Array *ownerOutletNodes = reader->getOwnerOutletNodes();
-        if (NULL != ownerOutletNames && ownerOutletNames->count() > 0 &&
-            NULL != ownerOutletNodes && ownerOutletNodes->count() > 0)
+        auto ownerOutletNames = reader->getOwnerOutletNames();
+        auto ownerOutletNodes = reader->getOwnerOutletNodes();
+        if (!ownerOutletNames.empty() && !ownerOutletNodes.empty())
         {
-            CCASSERT(ownerOutletNames->count() == ownerOutletNodes->count(), "");
-            int nCount = ownerOutletNames->count();
+            CCASSERT(ownerOutletNames.size() == ownerOutletNodes.size(), "");
+            int nCount = ownerOutletNames.size();
             
             for (int i = 0 ; i < nCount; i++)
             {
-                pCCBReader->addOwnerOutletName((static_cast<String*>(ownerOutletNames->getObjectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerOutletNode(static_cast<Node*>(ownerOutletNodes->getObjectAtIndex(i)));
+                pCCBReader->addOwnerOutletName(ownerOutletNames.at(i).asString());
+                pCCBReader->addOwnerOutletNode(ownerOutletNodes.at(i));
             }
         }
     }

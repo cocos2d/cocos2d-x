@@ -44,14 +44,15 @@ TMXObjectGroup::~TMXObjectGroup()
 
 ValueMap TMXObjectGroup::getObject(const std::string& objectName) const
 {
-    if (_objects.size() > 0)
+    if (!_objects.empty())
     {
-        for (auto& v : _objects)
+        for (const auto& v : _objects)
         {
-            ValueMap dict = v.asValueMap();
-            if (dict["name"].asString() == objectName)
+            const ValueMap& dict = v.asValueMap();
+            if (dict.find("name") != dict.end())
             {
-                return dict;
+                if (dict.at("name").asString() == objectName)
+                    return dict;
             }
         }
     }
