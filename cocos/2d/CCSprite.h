@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 #include "CCPhysicsBody.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -544,7 +545,7 @@ protected:
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
     bool                _hasChildren;       /// Whether the sprite contains children
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
-    AffineTransform     _transformToBatch;
+    kmMat4              _transformToBatch;
 
     //
     // Data used when the sprite is self-rendered

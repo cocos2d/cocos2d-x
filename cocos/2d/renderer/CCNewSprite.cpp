@@ -92,7 +92,7 @@ void NewSprite::updateQuadVertices()
         //
         // calculate the Quad based on the Affine Matrix
         //
-        Rect newRect = RectApplyAffineTransform(_rect, _transformToBatch);
+        Rect newRect = RectApplyTransform(_rect, _transformToBatch);
 
         _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
         _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
@@ -125,13 +125,13 @@ bool NewSprite::culling() const
 {
     Frustum* frustum = Director::getInstance()->getFrustum();
     //TODO optimize this transformation, should use parent's transformation instead
-    AffineTransform worldTM = getNodeToWorldTransform();
+    kmMat4 worldTM = getNodeToWorldTransform();
     //generate aabb
 
     //
     // calculate the Quad based on the Affine Matrix
     //
-    Rect newRect = RectApplyAffineTransform(_rect, worldTM);
+    Rect newRect = RectApplyTransform(_rect, worldTM);
 
     kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
     
