@@ -40,8 +40,11 @@ public:
      */
     ~CCBKeyframe();
     
-    cocos2d::Object* getValue();
-    void setValue(cocos2d::Object *pValue); // retain
+    const cocos2d::Value& getValue() const;
+    void setValue(const cocos2d::Value& value);
+    
+    cocos2d::Object* getObject() const;
+    void setObject(cocos2d::Object* obj);
     
     float getTime();
     void setTime(float fTime);
@@ -53,7 +56,8 @@ public:
     void setEasingOpt(float fEasingOpt);
     
 private:
-    cocos2d::Object *_value;
+    cocos2d::Value _value;
+    cocos2d::Object* _object;
     float _time;
     EasingType _easingType;
     float _easingOpt;

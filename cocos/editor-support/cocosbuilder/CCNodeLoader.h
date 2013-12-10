@@ -4,7 +4,6 @@
 #include "extensions/GUI/CCControlExtension/CCInvocation.h"
 #include "cocos2d.h"
 #include "CCBReader.h"
-#include "CCBValue.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
@@ -75,7 +74,7 @@ class NodeLoader : public cocos2d::Object {
          * @js NA
          * @lua NA
          */
-        virtual cocos2d::Dictionary* getCustomProperties();
+        virtual cocos2d::ValueMap& getCustomProperties();
     
     protected:
         CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Node);
@@ -141,7 +140,7 @@ class NodeLoader : public cocos2d::Object {
         virtual void onHandlePropTypeCCBFile(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, cocos2d::Node * pCCBFileNode, CCBReader * ccbReader);
 
 protected:
-        cocos2d::Dictionary* _customProperties;
+        cocos2d::ValueMap _customProperties;
 };
 
 }

@@ -32,7 +32,7 @@ class HelloCocosBuilderLayer
         virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
         virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
         virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
-        virtual bool onAssignCCBCustomProperty(Object* pTarget, const char* pMemberVariableName, cocosbuilder::CCBValue* pCCBValue);
+        virtual bool onAssignCCBCustomProperty(Object* pTarget, const char* pMemberVariableName, const cocos2d::Value& pCCBValue);
         virtual void onNodeLoaded(cocos2d::Node * node, cocosbuilder::NodeLoader * nodeLoader);
 
         void onMenuTestClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
