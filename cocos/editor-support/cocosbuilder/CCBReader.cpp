@@ -823,7 +823,6 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
         }
         
         keyframe->setObject(spriteFrame);
-// FIXME:XXX        keyframe->setValue(spriteFrame);
     }
     
     if (!value.isNull())
