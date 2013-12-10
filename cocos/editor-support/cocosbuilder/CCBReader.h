@@ -303,7 +303,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void setAnimationManagers(CCBAnimationManagerMapPtr x);  // weak reference
+    void setAnimationManagers(CCBAnimationManagerMapPtr x);
     /**
      * @js NA
      * @lua NA
@@ -370,8 +370,8 @@ private:
     
     cocos2d::Object *_owner;
     
-    CCBAnimationManager *_actionManager; //retain
-    CCBAnimationManagerMapPtr _actionManagers;
+    CCBAnimationManager* _animationManager; //retain
+    CCBAnimationManagerMapPtr _animationManagers;
     
     std::set<std::string> *_animatedProps;
     
