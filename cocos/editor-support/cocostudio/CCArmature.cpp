@@ -340,7 +340,7 @@ Dictionary *Armature::getBoneDic() const
     return _boneDic;
 }
 
-const AffineTransform& Armature::getNodeToParentTransform() const
+const kmMat4& Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
@@ -388,29 +388,33 @@ const AffineTransform& Armature::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        _transform = AffineTransformMake( cy * _scaleX,  sy * _scaleX,
-                                              -sx * _scaleY, cx * _scaleY,
-                                              x, y );
+        _transform = { cy * _scaleX, sy * _scaleX,     0,  0,
+            -sx * _scaleY, cx * _scaleY,    0,  0,
+            0,  0,  1,  0,
+            x,  y,  0,  1 };
 
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            AffineTransform skewMatrix = AffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(_skewY)),
-                                           tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f,
-                                           0.0f, 0.0f );
-            _transform = AffineTransformConcat(skewMatrix, _transform);
+            kmMat4 skewMatrix = {    1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+                tanf(CC_DEGREES_TO_RADIANS(_skewX)),1, 0, 0,
+                0,  0, 1, 0,
+                0,  0,  0, 1};
+            _transform = TransformConcat(skewMatrix, _transform);
 
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Point::ZERO))
             {
-                _transform = AffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
+                // XXX: Argh, kmMat needs a "translate" method
+                _transform.mat[12] += -_anchorPointInPoints.x;
+                _transform.mat[13] += -_anchorPointInPoints.y;
             }
         }
 
         if (_additionalTransformDirty)
         {
-            _transform = AffineTransformConcat(_transform, _additionalTransform);
+            _transform = TransformConcat(_transform, _additionalTransform);
             _additionalTransformDirty = false;
         }
 
@@ -667,7 +671,7 @@ Rect Armature::getBoundingBox() const
         }
     }
 
-    return RectApplyAffineTransform(boundingBox, getNodeToParentTransform());
+    return RectApplyTransform(boundingBox, getNodeToParentTransform());
 }
 
 Bone *Armature::getBoneAtPoint(float x, float y) const 

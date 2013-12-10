@@ -1245,12 +1245,12 @@ const kmMat4& Node::getNodeToParentTransform() const
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            kmMat4 skewMtrix = {    1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+            kmMat4 skewMatrix = {    1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
                                     tanf(CC_DEGREES_TO_RADIANS(_skewX)),1, 0, 0,
                                     0,  0, 1, 0,
                                     0,  0,  0, 1};
 
-            kmMat4Multiply(&_transform, &skewMtrix, &_transform);
+            kmMat4Multiply(&_transform, &skewMatrix, &_transform);
 
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Point::ZERO))

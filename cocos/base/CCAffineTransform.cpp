@@ -149,6 +149,14 @@ AffineTransform AffineTransformConcat(const AffineTransform& t1, const AffineTra
                                     t1.tx * t2.b + t1.ty * t2.d + t2.ty);                  //ty
 }
 
+kmMat4 TransformConcat(const kmMat4& t1, const kmMat4& t2)
+{
+    kmMat4 ret;
+    kmMat4Multiply(&ret, &t1, &t2);
+    return ret;
+}
+
+
 /* Return true if `t1' and `t2' are equal, false otherwise. */
 bool AffineTransformEqualToTransform(const AffineTransform& t1, const AffineTransform& t2)
 {
