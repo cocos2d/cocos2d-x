@@ -29,11 +29,7 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "ccTypes.h"
-#include "CCObject.h"
-#include "CCTouch.h"
-#include "CCSet.h"
-#include "CCNode.h"
+#include "cocos2d.h"
 #include "CCScriptSupport.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"

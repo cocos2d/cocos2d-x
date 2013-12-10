@@ -68,7 +68,7 @@ public:
     Vector<T>(Vector<T>&& other)
     {
         CCLOGINFO("In the move constructor of Vector!");
-        _data = other._data;
+        _data = std::move(other._data);
     }
     
     Vector<T>& operator=(const Vector<T>& other)
@@ -83,7 +83,7 @@ public:
     Vector<T>& operator=(Vector<T>&& other)
     {
         CCLOGINFO("In the move assignment operator!");
-        _data = other._data;
+        _data = std::move(other._data);
         return *this;
     }
     

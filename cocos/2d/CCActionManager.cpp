@@ -153,7 +153,7 @@ Vector<Node*> ActionManager::pauseAllRunningActions()
         }
     }    
     
-    return std::move(idsWithActions);
+    return idsWithActions;
 }
 
 void ActionManager::resumeTargets(const Vector<Node*>& targetsToResume)

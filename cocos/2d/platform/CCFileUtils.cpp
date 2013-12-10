@@ -91,7 +91,7 @@ public:
         parser.setDelegator(this);
 
         parser.parse(pFileName);
-		return std::move(_rootDict);
+		return _rootDict;
     }
 
     ValueVector arrayWithContentsOfFile(const char* pFileName)
@@ -103,7 +103,7 @@ public:
         parser.setDelegator(this);
 
         parser.parse(pFileName);
-		return std::move(_rootArray);
+		return _rootArray;
     }
 
     void startElement(void *ctx, const char *name, const char **atts)
@@ -307,14 +307,14 @@ ValueMap FileUtils::getValueMapFromFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
-    return std::move(tMaker.dictionaryWithContentsOfFile(fullPath.c_str()));
+    return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
 }
 
 ValueVector FileUtils::getValueVectorFromFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
-    return std::move(tMaker.arrayWithContentsOfFile(fullPath.c_str()));
+    return tMaker.arrayWithContentsOfFile(fullPath.c_str());
 }
 
 

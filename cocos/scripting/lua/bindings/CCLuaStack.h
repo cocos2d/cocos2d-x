@@ -29,8 +29,7 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "ccTypes.h"
-#include "CCObject.h"
+#include "cocos2d.h"
 #include "CCLuaValue.h"
 
 NS_CC_BEGIN

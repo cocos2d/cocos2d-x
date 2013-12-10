@@ -43,6 +43,7 @@ class Value
 {
 public:
     Value();
+    explicit Value(unsigned char v);
     explicit Value(int v);
     explicit Value(float v);
     explicit Value(double v);
@@ -63,9 +64,28 @@ public:
     Value(Value&& other);
     ~Value();
     
+    // assignment operator
     Value& operator= (const Value& other);
     Value& operator= (Value&& other);
     
+    Value& operator= (unsigned char v);
+    Value& operator= (int v);
+    Value& operator= (float v);
+    Value& operator= (double v);
+    Value& operator= (bool v);
+    Value& operator= (const char* v);
+    Value& operator= (const std::string& v);
+    
+    Value& operator= (const ValueVector& v);
+    Value& operator= (ValueVector&& v);
+    
+    Value& operator= (const ValueMap& v);
+	Value& operator= (ValueMap&& v);
+    
+    Value& operator= (const IntValueMap& v);
+    Value& operator= (IntValueMap&& v);
+    
+    unsigned char asByte() const;
     int asInt() const;
     float asFloat() const;
     double asDouble() const;
@@ -86,6 +106,7 @@ public:
     enum class Type
     {
         NONE,
+        BYTE,
         INTEGER,
         FLOAT,
         DOUBLE,
@@ -98,9 +119,13 @@ public:
 
     inline Type getType() const { return _type; };
     
+protected:
+    void clear();
+    
 private:
     union
     {
+        unsigned char byteVal;
         int intVal;
         float floatVal;
         double doubleVal;
