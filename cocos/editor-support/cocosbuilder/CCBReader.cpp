@@ -159,12 +159,12 @@ void CCBReader::setAnimationManager(CCBAnimationManager *pAnimationManager)
     CC_SAFE_RETAIN(_actionManager);
 }
 
-Dictionary* CCBReader::getAnimationManagers()
+CCBReader::CCBAnimationManagerMapPtr CCBReader::getAnimationManagers()
 {
     return _actionManagers;
 }
 
-void CCBReader::setAnimationManagers(Dictionary* x)
+void CCBReader::setAnimationManagers(CCBAnimationManagerMapPtr x)
 {
     _actionManagers = x;
 }
@@ -244,8 +244,7 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     _actionManager->setRootContainerSize(parentSize);
     _actionManager->_owner = _owner;
     
-    Dictionary* animationManagers = Dictionary::create();
-    Node *pNodeGraph = readFileWithCleanUp(true, animationManagers);
+    Node *pNodeGraph = readFileWithCleanUp(true, std::make_shared<CCBAnimationManagerMap>());
     
     if (pNodeGraph && _actionManager->getAutoPlaySequenceId() != -1)
     {
@@ -254,12 +253,11 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     }
     
     // Assign actionManagers to userObject
-    
-    DictElement* pElement = NULL;
-    CCDICT_FOREACH(animationManagers, pElement)
+    for (auto iter = _actionManagers->begin(); iter != _actionManagers->end(); ++iter)
     {
-        Node* pNode = (Node*)pElement->getIntKey();
-        CCBAnimationManager* manager = static_cast<CCBAnimationManager*>(animationManagers->objectForKey((intptr_t)pNode));
+        Node* pNode = iter->first;
+        CCBAnimationManager* manager = iter->second;
+        
         pNode->setUserObject(manager);
 
         if (_jsControlled)
@@ -300,7 +298,7 @@ void CCBReader::cleanUpNodeGraph(Node *node)
     });
 }
 
-Node* CCBReader::readFileWithCleanUp(bool bCleanUp, Dictionary* am)
+Node* CCBReader::readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am)
 {
     if (! readHeader())
     {
@@ -321,7 +319,7 @@ Node* CCBReader::readFileWithCleanUp(bool bCleanUp, Dictionary* am)
 
     Node *pNode = readNodeGraph(nullptr);
 
-    _actionManagers->setObject(_actionManager, intptr_t(pNode));
+    _actionManagers->insert(pNode, _actionManager);
 
     if (bCleanUp)
     {
