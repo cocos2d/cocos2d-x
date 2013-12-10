@@ -1270,10 +1270,6 @@
 		1AD71DC2180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D06180E26E600808F54 /* CCBSequenceProperty.cpp */; };
 		1AD71DC3180E26E600808F54 /* CCBSequenceProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D07180E26E600808F54 /* CCBSequenceProperty.h */; };
 		1AD71DC4180E26E600808F54 /* CCBSequenceProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D07180E26E600808F54 /* CCBSequenceProperty.h */; };
-		1AD71DC5180E26E600808F54 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D08180E26E600808F54 /* CCBValue.cpp */; };
-		1AD71DC6180E26E600808F54 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D08180E26E600808F54 /* CCBValue.cpp */; };
-		1AD71DC7180E26E600808F54 /* CCBValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D09180E26E600808F54 /* CCBValue.h */; };
-		1AD71DC8180E26E600808F54 /* CCBValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D09180E26E600808F54 /* CCBValue.h */; };
 		1AD71DC9180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D0A180E26E600808F54 /* CCControlButtonLoader.cpp */; };
 		1AD71DCA180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D0A180E26E600808F54 /* CCControlButtonLoader.cpp */; };
 		1AD71DCB180E26E600808F54 /* CCControlButtonLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D0B180E26E600808F54 /* CCControlButtonLoader.h */; };
@@ -2612,8 +2608,6 @@
 		1AD71D05180E26E600808F54 /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
 		1AD71D06180E26E600808F54 /* CCBSequenceProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBSequenceProperty.cpp; sourceTree = "<group>"; };
 		1AD71D07180E26E600808F54 /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
-		1AD71D08180E26E600808F54 /* CCBValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBValue.cpp; sourceTree = "<group>"; };
-		1AD71D09180E26E600808F54 /* CCBValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBValue.h; sourceTree = "<group>"; };
 		1AD71D0A180E26E600808F54 /* CCControlButtonLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButtonLoader.cpp; sourceTree = "<group>"; };
 		1AD71D0B180E26E600808F54 /* CCControlButtonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonLoader.h; sourceTree = "<group>"; };
 		1AD71D0C180E26E600808F54 /* CCControlLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlLoader.cpp; sourceTree = "<group>"; };
@@ -4512,8 +4506,6 @@
 				1AD71D05180E26E600808F54 /* CCBSequence.h */,
 				1AD71D06180E26E600808F54 /* CCBSequenceProperty.cpp */,
 				1AD71D07180E26E600808F54 /* CCBSequenceProperty.h */,
-				1AD71D08180E26E600808F54 /* CCBValue.cpp */,
-				1AD71D09180E26E600808F54 /* CCBValue.h */,
 				1AD71D0A180E26E600808F54 /* CCControlButtonLoader.cpp */,
 				1AD71D0B180E26E600808F54 /* CCControlButtonLoader.h */,
 				1AD71D0C180E26E600808F54 /* CCControlLoader.cpp */,
@@ -5595,7 +5587,6 @@
 				1AD71DBB180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
 				1AD71DBF180E26E600808F54 /* CCBSequence.h in Headers */,
 				1AD71DC3180E26E600808F54 /* CCBSequenceProperty.h in Headers */,
-				1AD71DC7180E26E600808F54 /* CCBValue.h in Headers */,
 				1AD71DCB180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
 				1AD71DCF180E26E600808F54 /* CCControlLoader.h in Headers */,
 				1AD71DD3180E26E600808F54 /* CCLabelBMFontLoader.h in Headers */,
@@ -6173,7 +6164,6 @@
 				1AD71DBC180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
 				1AD71DC0180E26E600808F54 /* CCBSequence.h in Headers */,
 				1AD71DC4180E26E600808F54 /* CCBSequenceProperty.h in Headers */,
-				1AD71DC8180E26E600808F54 /* CCBValue.h in Headers */,
 				1AD71DCC180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
 				1AD71DD0180E26E600808F54 /* CCControlLoader.h in Headers */,
 				1AD71DD4180E26E600808F54 /* CCLabelBMFontLoader.h in Headers */,
@@ -6945,7 +6935,6 @@
 				1AD71DB7180E26E600808F54 /* CCBReader.cpp in Sources */,
 				1AD71DBD180E26E600808F54 /* CCBSequence.cpp in Sources */,
 				1AD71DC1180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */,
-				1AD71DC5180E26E600808F54 /* CCBValue.cpp in Sources */,
 				1AD71DC9180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCD180E26E600808F54 /* CCControlLoader.cpp in Sources */,
 				1AE3C844184F14F700CF29B5 /* CCValue.cpp in Sources */,
@@ -7468,7 +7457,6 @@
 				1AD71DB8180E26E600808F54 /* CCBReader.cpp in Sources */,
 				1AD71DBE180E26E600808F54 /* CCBSequence.cpp in Sources */,
 				1AD71DC2180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */,
-				1AD71DC6180E26E600808F54 /* CCBValue.cpp in Sources */,
 				1AD71DCA180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCE180E26E600808F54 /* CCControlLoader.cpp in Sources */,
 				1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */,

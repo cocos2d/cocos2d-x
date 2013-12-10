@@ -68,7 +68,7 @@ function cc.pCross(self,other)
 end
 
 function cc.pDot(self,other)
-    return self.x * other.x - self.y * other.y
+    return self.x * other.x + self.y * other.y
 end
 
 function cc.pToAngleSelf(self)
@@ -139,11 +139,11 @@ end
 function cc.pUnrotate(pt1, pt2)
     return { x = pt1.x * pt2.x + pt1.y * pt2.y, pt1.y * pt2.x - pt1.x * pt2.y }
 end
-
+--Calculates the square length of pt
 function cc.pLengthSQ(pt)
     return cc.pDot(pt)
 end
-
+--Calculates the square distance between pt1 and pt2
 function cc.pDistanceSQ(pt1,pt2)
     return cc.pLengthSQ(cc.pSub(pt1,pt2))
 end

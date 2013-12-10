@@ -36,6 +36,15 @@ Value::Value()
     
 }
 
+Value::Value(unsigned char v)
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
+, _type(Type::BYTE)
+{
+    _baseData.byteVal = v;
+}
+
 Value::Value(int v)
 : _vectorData(nullptr)
 , _mapData(nullptr)
@@ -162,14 +171,15 @@ Value::Value(Value&& other)
 
 Value::~Value()
 {
-    CC_SAFE_DELETE(_vectorData);
-    CC_SAFE_DELETE(_mapData);
-    CC_SAFE_DELETE(_intKeyMapData);
+    clear();
 }
 
 Value& Value::operator= (const Value& other)
 {
     switch (other._type) {
+        case Type::BYTE:
+            _baseData.byteVal = other._baseData.byteVal;
+            break;
         case Type::INTEGER:
             _baseData.intVal = other._baseData.intVal;
             break;
@@ -210,6 +220,9 @@ Value& Value::operator= (const Value& other)
 Value& Value::operator= (Value&& other)
 {
     switch (other._type) {
+        case Type::BYTE:
+            _baseData.byteVal = other._baseData.byteVal;
+            break;
         case Type::INTEGER:
             _baseData.intVal = other._baseData.intVal;
             break;
@@ -250,12 +263,165 @@ Value& Value::operator= (Value&& other)
     return *this;
 }
 
+Value& Value::operator= (unsigned char v)
+{
+    clear();
+    _type = Type::BYTE;
+    _baseData.byteVal = v;
+    return *this;
+}
+
+Value& Value::operator= (int v)
+{
+    clear();
+    _type = Type::INTEGER;
+    _baseData.intVal = v;
+    return *this;
+}
+
+Value& Value::operator= (float v)
+{
+    clear();
+    _type = Type::FLOAT;
+    _baseData.floatVal = v;
+    return *this;
+}
+
+Value& Value::operator= (double v)
+{
+    clear();
+    _type = Type::DOUBLE;
+    _baseData.doubleVal = v;
+    return *this;
+}
+
+Value& Value::operator= (bool v)
+{
+    clear();
+    _type = Type::BOOLEAN;
+    _baseData.boolVal = v;
+    return *this;
+}
+
+Value& Value::operator= (const char* v)
+{
+    clear();
+    _type = Type::STRING;
+    _strData = v ? v : "";
+    return *this;
+}
+
+Value& Value::operator= (const std::string& v)
+{
+    clear();
+    _type = Type::STRING;
+    _strData = v;
+    return *this;
+}
+
+Value& Value::operator= (const ValueVector& v)
+{
+    clear();
+    _type = Type::VECTOR;
+    _vectorData = new ValueVector();
+    *_vectorData = v;
+    return *this;
+}
+
+Value& Value::operator= (ValueVector&& v)
+{
+    clear();
+    _type = Type::VECTOR;
+    _vectorData = new ValueVector();
+    *_vectorData = std::move(v);
+    return *this;
+}
+
+Value& Value::operator= (const ValueMap& v)
+{
+    clear();
+    _type = Type::MAP;
+    _mapData = new ValueMap();
+    *_mapData = v;
+    return *this;
+}
+
+Value& Value::operator= (ValueMap&& v)
+{
+    clear();
+    _type = Type::MAP;
+    _mapData = new ValueMap();
+    *_mapData = std::move(v);
+    return *this;
+}
+
+Value& Value::operator= (const IntValueMap& v)
+{
+    clear();
+    _type = Type::INT_KEY_MAP;
+    _intKeyMapData = new IntValueMap();
+    *_intKeyMapData = v;
+    return *this;
+}
+
+Value& Value::operator= (IntValueMap&& v)
+{
+    clear();
+    _type = Type::INT_KEY_MAP;
+    _intKeyMapData = new IntValueMap();
+    *_intKeyMapData = std::move(v);
+    return *this;
+}
+
+///
+unsigned char Value::asByte() const
+{
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP, "");
+    
+    if (_type == Type::BYTE)
+    {
+        return _baseData.byteVal;
+    }
+    
+    if (_type == Type::INTEGER)
+    {
+        return static_cast<unsigned char>(_baseData.intVal);
+    }
+    
+    if (_type == Type::STRING)
+    {
+        return static_cast<unsigned char>(atoi(_strData.c_str()));
+    }
+    
+    if (_type == Type::FLOAT)
+    {
+        return static_cast<unsigned char>(_baseData.floatVal);
+    }
+    
+    if (_type == Type::DOUBLE)
+    {
+        return static_cast<unsigned char>(_baseData.doubleVal);
+    }
+    
+    if (_type == Type::BOOLEAN)
+    {
+        return _baseData.boolVal ? 1 : 0;
+    }
+    
+    return 0;
+}
+
 int Value::asInt() const
 {
     CCASSERT(_type != Type::VECTOR && _type != Type::MAP, "");
     if (_type == Type::INTEGER)
     {
         return _baseData.intVal;
+    }
+    
+    if (_type == Type::BYTE)
+    {
+        return _baseData.byteVal;
     }
     
     if (_type == Type::STRING)
@@ -265,17 +431,17 @@ int Value::asInt() const
     
     if (_type == Type::FLOAT)
     {
-        return _baseData.floatVal;
+        return static_cast<int>(_baseData.floatVal);
     }
     
     if (_type == Type::DOUBLE)
     {
-        return _baseData.doubleVal;
+        return static_cast<int>(_baseData.doubleVal);
     }
     
     if (_type == Type::BOOLEAN)
     {
-        return _baseData.boolVal;
+        return _baseData.boolVal ? 1 : 0;
     }
     
     return 0;
@@ -289,6 +455,11 @@ float Value::asFloat() const
         return _baseData.floatVal;
     }
     
+    if (_type == Type::BYTE)
+    {
+        return static_cast<float>(_baseData.byteVal);
+    }
+    
     if (_type == Type::STRING)
     {
         return atof(_strData.c_str());
@@ -296,17 +467,17 @@ float Value::asFloat() const
     
     if (_type == Type::INTEGER)
     {
-        return _baseData.intVal;
+        return static_cast<float>(_baseData.intVal);
     }
     
     if (_type == Type::DOUBLE)
     {
-        return _baseData.doubleVal;
+        return static_cast<float>(_baseData.doubleVal);
     }
     
     if (_type == Type::BOOLEAN)
     {
-        return _baseData.boolVal;
+        return _baseData.boolVal ? 1.0f : 0.0f;
     }
     
     return 0.0f;
@@ -320,24 +491,29 @@ double Value::asDouble() const
         return _baseData.doubleVal;
     }
     
+    if (_type == Type::BYTE)
+    {
+        return static_cast<double>(_baseData.byteVal);
+    }
+    
     if (_type == Type::STRING)
     {
-        return (float)atof(_strData.c_str());
+        return static_cast<double>(atof(_strData.c_str()));
     }
     
     if (_type == Type::INTEGER)
     {
-        return _baseData.intVal;
+        return static_cast<double>(_baseData.intVal);
     }
     
     if (_type == Type::FLOAT)
     {
-        return _baseData.floatVal;
+        return static_cast<double>(_baseData.floatVal);
     }
     
     if (_type == Type::BOOLEAN)
     {
-        return _baseData.boolVal;
+        return _baseData.boolVal ? 1.0 : 0.0;
     }
     
     return 0.0;
@@ -349,6 +525,11 @@ bool Value::asBool() const
     if (_type == Type::BOOLEAN)
     {
         return _baseData.boolVal;
+    }
+    
+    if (_type == Type::BYTE)
+    {
+        return _baseData.byteVal == 0 ? false : true;
     }
     
     if (_type == Type::STRING)
@@ -386,6 +567,9 @@ std::string Value::asString() const
     std::stringstream ret;
     
     switch (_type) {
+        case Type::BYTE:
+            ret << _baseData.byteVal;
+            break;
         case Type::INTEGER:
             ret << _baseData.intVal;
             break;
@@ -402,6 +586,16 @@ std::string Value::asString() const
             break;
     }
     return ret.str();
+}
+
+void Value::clear()
+{
+    _type = Type::NONE;
+    _baseData.doubleVal = 0.0;
+    _strData.clear();
+    CC_SAFE_DELETE(_vectorData);
+    CC_SAFE_DELETE(_mapData);
+    CC_SAFE_DELETE(_intKeyMapData);
 }
 
 NS_CC_END

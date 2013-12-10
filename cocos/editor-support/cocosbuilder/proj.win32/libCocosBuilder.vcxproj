@@ -92,7 +92,6 @@
     <ClCompile Include="..\CCBReader.cpp" />
     <ClCompile Include="..\CCBSequence.cpp" />
     <ClCompile Include="..\CCBSequenceProperty.cpp" />
-    <ClCompile Include="..\CCBValue.cpp" />
     <ClCompile Include="..\CCControlButtonLoader.cpp" />
     <ClCompile Include="..\CCControlLoader.cpp" />
     <ClCompile Include="..\CCLabelBMFontLoader.cpp" />
@@ -119,7 +118,6 @@
     <ClInclude Include="..\CCBSelectorResolver.h" />
     <ClInclude Include="..\CCBSequence.h" />
     <ClInclude Include="..\CCBSequenceProperty.h" />
-    <ClInclude Include="..\CCBValue.h" />
     <ClInclude Include="..\CCControlButtonLoader.h" />
     <ClInclude Include="..\CCControlLoader.h" />
     <ClInclude Include="..\CCLabelBMFontLoader.h" />

@@ -403,7 +403,7 @@ Vector<PhysicsShape*> PhysicsWorld::getShapes(const Point& point) const
                              (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::getShapesAtPointFunc,
                              &arr);
     
-    return std::move(arr);
+    return arr;
 }
 
 PhysicsShape* PhysicsWorld::getShape(const Point& point) const
