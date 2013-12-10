@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "CCGeometry.h"
 #include "CCPlatformMacros.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -48,6 +49,9 @@ CC_DLL Size __CCSizeApplyAffineTransform(const Size& size, const AffineTransform
 
 CC_DLL AffineTransform AffineTransformMakeIdentity();
 CC_DLL Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineTransform);
+
+CC_DLL Rect RectApplyTransform(const Rect& rect, const kmMat4& transform);
+CC_DLL Point PointApplyTransform(const Point& point, const kmMat4& transform);
 
 CC_DLL AffineTransform AffineTransformTranslate(const AffineTransform& t, float tx, float ty);
 CC_DLL AffineTransform AffineTransformRotate(const AffineTransform& aTransform, float anAngle);

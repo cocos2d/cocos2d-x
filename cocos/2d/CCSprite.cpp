@@ -524,7 +524,9 @@ void Sprite::updateTransform(void)
             else
             {
                 CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-                _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<Sprite*>(_parent)->_transformToBatch );
+                kmMat4 nodeToParent = getNodeToParentTransform();
+                kmMat4 parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
+                kmMat4Multiply(&_transformToBatch, &nodeToParent, &parentTransform);
             }
 
             //
@@ -538,13 +540,13 @@ void Sprite::updateTransform(void)
 
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
-            float x = _transformToBatch.tx;
-            float y = _transformToBatch.ty;
+            float x = _transformToBatch.mat[12];
+            float y = _transformToBatch.mat[13];
 
-            float cr = _transformToBatch.a;
-            float sr = _transformToBatch.b;
-            float cr2 = _transformToBatch.d;
-            float sr2 = -_transformToBatch.c;
+            float cr = _transformToBatch.mat[0];
+            float sr = _transformToBatch.mat[1];
+            float cr2 = _transformToBatch.mat[5];
+            float sr2 = -_transformToBatch.mat[4];
             float ax = x1 * cr - y1 * sr2 + x;
             float ay = x1 * sr + y1 * cr2 + y;
 
@@ -719,13 +721,13 @@ void Sprite::updateQuadVertices()
 
         float x2 = x1 + size.width;
         float y2 = y1 + size.height;
-        float x = _transformToBatch.tx;
-        float y = _transformToBatch.ty;
+        float x = _transformToBatch.mat[12];
+        float y = _transformToBatch.mat[13];
 
-        float cr = _transformToBatch.a;
-        float sr = _transformToBatch.b;
-        float cr2 = _transformToBatch.d;
-        float sr2 = -_transformToBatch.c;
+        float cr = _transformToBatch.mat[0];
+        float sr = _transformToBatch.mat[1];
+        float cr2 = _transformToBatch.mat[5];
+        float sr2 = -_transformToBatch.mat[4];
         float ax = x1 * cr - y1 * sr2 + x;
         float ay = x1 * sr + y1 * cr2 + y;
 
@@ -1208,7 +1210,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     } else {
 
         // using batch
-        _transformToBatch = AffineTransformIdentity;
+        kmMat4Identity(&_transformToBatch);
         setTextureAtlas(_batchNode->getTextureAtlas()); // weak ref
     }
 }
