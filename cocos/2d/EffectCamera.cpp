@@ -8,6 +8,7 @@
 
 #include "EffectCamera.h"
 #include "kazmath/GL/matrix.h"
+#include <stdlib.h>
 
 NS_CC_BEGIN
 
