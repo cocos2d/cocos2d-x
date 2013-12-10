@@ -54,6 +54,7 @@
 #ifndef SPINE_EXTENSION_H_
 #define SPINE_EXTENSION_H_
 
+// for import ssize_t on win32 platform
 #if defined(_MSC_VER)
 #include "CCStdC.h"
 #endif
