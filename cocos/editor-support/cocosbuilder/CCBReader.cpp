@@ -1016,7 +1016,7 @@ ValueVector CCBReader::getOwnerCallbackNames()
         ret.push_back(Value(*it));
     }
     
-    return std::move(ret);
+    return ret;
 }
 
 Vector<Node*>& CCBReader::getOwnerCallbackNodes()
@@ -1038,7 +1038,7 @@ ValueVector CCBReader::getOwnerOutletNames()
     {
         ret.push_back(Value(*it));
     }
-    return std::move(ret);
+    return ret;
 }
 
 Vector<Node*>& CCBReader::getOwnerOutletNodes()
