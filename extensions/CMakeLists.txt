@@ -18,7 +18,6 @@ set(EXTENSIONS_SRC
   GUI/CCEditBox/CCEditBoxImplTizen.cpp
   GUI/CCEditBox/CCEditBoxImplWin.cpp
   GUI/CCScrollView/CCScrollView.cpp
-  GUI/CCScrollView/CCSorting.cpp
   GUI/CCScrollView/CCTableView.cpp
   GUI/CCScrollView/CCTableViewCell.cpp
   physics-nodes/CCPhysicsDebugNode.cpp
