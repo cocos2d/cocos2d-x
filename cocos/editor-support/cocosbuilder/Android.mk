@@ -11,7 +11,6 @@ CCBKeyframe.cpp \
 CCBReader.cpp \
 CCBSequence.cpp \
 CCBSequenceProperty.cpp \
-CCBValue.cpp \
 CCControlButtonLoader.cpp \
 CCControlLoader.cpp \
 CCLabelBMFontLoader.cpp \
