@@ -40,7 +40,7 @@ NS_CC_BEGIN
 typedef struct _hashElement
 {
     struct _ccArray             *actions;
-    Object                    *target;
+    Node                    *target;
     int                actionIndex;
     Action                    *currentAction;
     bool                        currentActionSalvaged;
@@ -120,7 +120,7 @@ void ActionManager::removeActionAtIndex(int index, tHashElement *element)
 
 // pause / resume
 
-void ActionManager::pauseTarget(Object *target)
+void ActionManager::pauseTarget(Node *target)
 {
     tHashElement *element = NULL;
     HASH_FIND_PTR(_targets, &target, element);
@@ -130,7 +130,7 @@ void ActionManager::pauseTarget(Object *target)
     }
 }
 
-void ActionManager::resumeTarget(Object *target)
+void ActionManager::resumeTarget(Node *target)
 {
     tHashElement *element = NULL;
     HASH_FIND_PTR(_targets, &target, element);
@@ -140,30 +140,27 @@ void ActionManager::resumeTarget(Object *target)
     }
 }
 
-Set* ActionManager::pauseAllRunningActions()
+Vector<Node*> ActionManager::pauseAllRunningActions()
 {
-    Set *idsWithActions = new Set();
-    idsWithActions->autorelease();
+    Vector<Node*> idsWithActions;
     
     for (tHashElement *element=_targets; element != NULL; element = (tHashElement *)element->hh.next) 
     {
         if (! element->paused) 
         {
             element->paused = true;
-            idsWithActions->addObject(element->target);
+            idsWithActions.pushBack(element->target);
         }
     }    
     
-    return idsWithActions;
+    return std::move(idsWithActions);
 }
 
-void ActionManager::resumeTargets(cocos2d::Set *targetsToResume)
-{    
-    SetIterator iter;
-    for (iter = targetsToResume->begin(); iter != targetsToResume->end(); ++iter)
-    {
-        resumeTarget(*iter);
-    }
+void ActionManager::resumeTargets(const Vector<Node*>& targetsToResume)
+{
+    targetsToResume.forEach([this](Node* node){
+        this->resumeTarget(node);
+    });
 }
 
 // run
@@ -196,17 +193,17 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
 
 // remove
 
-void ActionManager::removeAllActions(void)
+void ActionManager::removeAllActions()
 {
     for (tHashElement *element = _targets; element != NULL; )
     {
-        Object *target = element->target;
+        auto target = element->target;
         element = (tHashElement*)element->hh.next;
         removeAllActionsFromTarget(target);
     }
 }
 
-void ActionManager::removeAllActionsFromTarget(Object *target)
+void ActionManager::removeAllActionsFromTarget(Node *target)
 {
     // explicit null handling
     if (target == NULL)
@@ -265,7 +262,7 @@ void ActionManager::removeAction(Action *action)
     }
 }
 
-void ActionManager::removeActionByTag(int tag, Object *target)
+void ActionManager::removeActionByTag(int tag, Node *target)
 {
     CCASSERT(tag != Action::INVALID_TAG, "");
     CCASSERT(target != NULL, "");
@@ -293,7 +290,7 @@ void ActionManager::removeActionByTag(int tag, Object *target)
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
 // and, it is not possible to get the address of a reference
-Action* ActionManager::getActionByTag(int tag, const Object *target) const
+Action* ActionManager::getActionByTag(int tag, const Node *target) const
 {
     CCASSERT(tag != Action::INVALID_TAG, "");
 
@@ -327,7 +324,7 @@ Action* ActionManager::getActionByTag(int tag, const Object *target) const
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
 // and, it is not possible to get the address of a reference
-int ActionManager::getNumberOfRunningActionsInTarget(const Object *target) const
+int ActionManager::getNumberOfRunningActionsInTarget(const Node *target) const
 {
     tHashElement *element = NULL;
     HASH_FIND_PTR(_targets, &target, element);

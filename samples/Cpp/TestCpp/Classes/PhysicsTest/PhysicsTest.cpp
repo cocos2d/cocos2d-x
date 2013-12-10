@@ -360,14 +360,14 @@ Sprite* PhysicsDemo::makeTriangle(Point point, Size size, PhysicsMaterial materi
 bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
 {
     auto location = touch->getLocation();
-    Array* arr = _scene->getPhysicsWorld()->getShapes(location);
+    auto arr = _scene->getPhysicsWorld()->getShapes(location);
     
     PhysicsBody* body = nullptr;
-    for (Object* obj : *arr)
+    for (auto& obj : arr)
     {
-        if ((dynamic_cast<PhysicsShape*>(obj)->getBody()->getTag() & DRAG_BODYS_TAG) != 0)
+        if ((obj->getBody()->getTag() & DRAG_BODYS_TAG) != 0)
         {
-            body = dynamic_cast<PhysicsShape*>(obj)->getBody();
+            body = obj->getBody();
             break;
         }
     }
@@ -1017,9 +1017,8 @@ void PhysicsDemoPump::onEnter()
 
 void PhysicsDemoPump::update(float delta)
 {
-    for (auto obj : *_scene->getPhysicsWorld()->getAllBodies())
+    for (const auto& body : _scene->getPhysicsWorld()->getAllBodies())
     {
-        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
         if (body->getTag() == DRAG_BODYS_TAG && body->getPosition().y < 0.0f)
         {
             body->getNode()->setPosition(VisibleRect::leftTop() + Point(75 + CCRANDOM_0_1() * 90, 0));
