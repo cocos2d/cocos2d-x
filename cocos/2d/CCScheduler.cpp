@@ -804,7 +804,7 @@ Vector<Object*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
         }
     }
 
-    return std::move(idsWithSelectors);
+    return idsWithSelectors;
 }
 
 void Scheduler::resumeTargets(const Vector<Object*>& targetsToResume)

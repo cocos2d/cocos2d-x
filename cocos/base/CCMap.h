@@ -105,7 +105,7 @@ public:
                 keys.push_back(iter->first);
             }
         }
-        return std::move(keys);
+        return keys;
     }
 
     std::vector<K> keys(V object) const
@@ -120,7 +120,7 @@ public:
             }
         }
         
-        return std::move(keys);
+        return keys;
     }
 
     V at(const K& key) const
