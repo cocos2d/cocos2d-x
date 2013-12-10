@@ -51,7 +51,7 @@ public:
         reserve(capacity);
     }
 
-    virtual ~Vector<T>()
+    ~Vector<T>()
     {
         CCLOGINFO("In the destructor of Vector.");
         clear();

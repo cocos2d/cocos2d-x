@@ -31,6 +31,8 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtilsAndroid.h"
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "CCStdC.h"
 #endif
 
 namespace cocos2d
