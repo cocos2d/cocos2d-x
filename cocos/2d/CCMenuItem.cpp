@@ -806,33 +806,21 @@ void MenuItemImage::setDisabledSpriteFrame(SpriteFrame * frame)
 //
 
 // XXX: deprecated
-MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems)
+MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandler selector, const Vector<MenuItem*>& menuItems)
 {
     MenuItemToggle *ret = new MenuItemToggle();
     ret->MenuItem::initWithTarget(target, selector);
-    
-    for (int z=0; z < menuItems->count(); z++)
-    {
-        MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
-        ret->_subItems.pushBack(menuItem);
-    }
-    
+    ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
     ret->setSelectedIndex(0);
     return ret;
 }
 
-MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callback, Array* menuItems)
+MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callback, const Vector<MenuItem*>& menuItems)
 {
     MenuItemToggle *ret = new MenuItemToggle();
     ret->MenuItem::initWithCallback(callback);
-
-    for (int z=0; z < menuItems->count(); z++)
-    {
-        MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
-        ret->_subItems.pushBack(menuItem);
-    }
-
+    ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
     ret->setSelectedIndex(0);
     return ret;

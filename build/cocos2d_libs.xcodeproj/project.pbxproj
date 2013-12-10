@@ -1270,10 +1270,6 @@
 		1AD71DC2180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D06180E26E600808F54 /* CCBSequenceProperty.cpp */; };
 		1AD71DC3180E26E600808F54 /* CCBSequenceProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D07180E26E600808F54 /* CCBSequenceProperty.h */; };
 		1AD71DC4180E26E600808F54 /* CCBSequenceProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D07180E26E600808F54 /* CCBSequenceProperty.h */; };
-		1AD71DC5180E26E600808F54 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D08180E26E600808F54 /* CCBValue.cpp */; };
-		1AD71DC6180E26E600808F54 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D08180E26E600808F54 /* CCBValue.cpp */; };
-		1AD71DC7180E26E600808F54 /* CCBValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D09180E26E600808F54 /* CCBValue.h */; };
-		1AD71DC8180E26E600808F54 /* CCBValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D09180E26E600808F54 /* CCBValue.h */; };
 		1AD71DC9180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D0A180E26E600808F54 /* CCControlButtonLoader.cpp */; };
 		1AD71DCA180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71D0A180E26E600808F54 /* CCControlButtonLoader.cpp */; };
 		1AD71DCB180E26E600808F54 /* CCControlButtonLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D0B180E26E600808F54 /* CCControlButtonLoader.h */; };
@@ -1558,16 +1554,12 @@
 		460E47CA1808090D000CDD6D /* CCEditBoxImplWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */; };
 		460E47CB18080913000CDD6D /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1685E1807AF4E005B8026 /* CCScrollView.cpp */; };
 		460E47CC18080913000CDD6D /* CCScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685F1807AF4E005B8026 /* CCScrollView.h */; };
-		460E47CD18080913000CDD6D /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168601807AF4E005B8026 /* CCSorting.cpp */; };
-		460E47CE18080913000CDD6D /* CCSorting.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168611807AF4E005B8026 /* CCSorting.h */; };
 		460E47CF18080913000CDD6D /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168621807AF4E005B8026 /* CCTableView.cpp */; };
 		460E47D018080913000CDD6D /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168631807AF4E005B8026 /* CCTableView.h */; };
 		460E47D118080913000CDD6D /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168641807AF4E005B8026 /* CCTableViewCell.cpp */; };
 		460E47D218080913000CDD6D /* CCTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168651807AF4E005B8026 /* CCTableViewCell.h */; };
 		460E47D318080914000CDD6D /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1685E1807AF4E005B8026 /* CCScrollView.cpp */; };
 		460E47D418080914000CDD6D /* CCScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685F1807AF4E005B8026 /* CCScrollView.h */; };
-		460E47D518080914000CDD6D /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168601807AF4E005B8026 /* CCSorting.cpp */; };
-		460E47D618080914000CDD6D /* CCSorting.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168611807AF4E005B8026 /* CCSorting.h */; };
 		460E47D718080914000CDD6D /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168621807AF4E005B8026 /* CCTableView.cpp */; };
 		460E47D818080914000CDD6D /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168631807AF4E005B8026 /* CCTableView.h */; };
 		460E47D918080914000CDD6D /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168641807AF4E005B8026 /* CCTableViewCell.cpp */; };
@@ -2548,8 +2540,6 @@
 		1AD71D05180E26E600808F54 /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
 		1AD71D06180E26E600808F54 /* CCBSequenceProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBSequenceProperty.cpp; sourceTree = "<group>"; };
 		1AD71D07180E26E600808F54 /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
-		1AD71D08180E26E600808F54 /* CCBValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBValue.cpp; sourceTree = "<group>"; };
-		1AD71D09180E26E600808F54 /* CCBValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBValue.h; sourceTree = "<group>"; };
 		1AD71D0A180E26E600808F54 /* CCControlButtonLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButtonLoader.cpp; sourceTree = "<group>"; };
 		1AD71D0B180E26E600808F54 /* CCControlButtonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonLoader.h; sourceTree = "<group>"; };
 		1AD71D0C180E26E600808F54 /* CCControlLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlLoader.cpp; sourceTree = "<group>"; };
@@ -2723,8 +2713,6 @@
 		46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplWin.h; sourceTree = "<group>"; };
 		46A1685E1807AF4E005B8026 /* CCScrollView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
 		46A1685F1807AF4E005B8026 /* CCScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
-		46A168601807AF4E005B8026 /* CCSorting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCSorting.cpp; sourceTree = "<group>"; };
-		46A168611807AF4E005B8026 /* CCSorting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCSorting.h; sourceTree = "<group>"; };
 		46A168621807AF4E005B8026 /* CCTableView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableView.cpp; sourceTree = "<group>"; };
 		46A168631807AF4E005B8026 /* CCTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCTableView.h; sourceTree = "<group>"; };
 		46A168641807AF4E005B8026 /* CCTableViewCell.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableViewCell.cpp; sourceTree = "<group>"; };
@@ -4414,8 +4402,6 @@
 				1AD71D05180E26E600808F54 /* CCBSequence.h */,
 				1AD71D06180E26E600808F54 /* CCBSequenceProperty.cpp */,
 				1AD71D07180E26E600808F54 /* CCBSequenceProperty.h */,
-				1AD71D08180E26E600808F54 /* CCBValue.cpp */,
-				1AD71D09180E26E600808F54 /* CCBValue.h */,
 				1AD71D0A180E26E600808F54 /* CCControlButtonLoader.cpp */,
 				1AD71D0B180E26E600808F54 /* CCControlButtonLoader.h */,
 				1AD71D0C180E26E600808F54 /* CCControlLoader.cpp */,
@@ -4686,8 +4672,6 @@
 			children = (
 				46A1685E1807AF4E005B8026 /* CCScrollView.cpp */,
 				46A1685F1807AF4E005B8026 /* CCScrollView.h */,
-				46A168601807AF4E005B8026 /* CCSorting.cpp */,
-				46A168611807AF4E005B8026 /* CCSorting.h */,
 				46A168621807AF4E005B8026 /* CCTableView.cpp */,
 				46A168631807AF4E005B8026 /* CCTableView.h */,
 				46A168641807AF4E005B8026 /* CCTableViewCell.cpp */,
@@ -5452,7 +5436,6 @@
 				1AD71DBB180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
 				1AD71DBF180E26E600808F54 /* CCBSequence.h in Headers */,
 				1AD71DC3180E26E600808F54 /* CCBSequenceProperty.h in Headers */,
-				1AD71DC7180E26E600808F54 /* CCBValue.h in Headers */,
 				1AD71DCB180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
 				1AD71DCF180E26E600808F54 /* CCControlLoader.h in Headers */,
 				1AD71DD3180E26E600808F54 /* CCLabelBMFontLoader.h in Headers */,
@@ -5771,7 +5754,6 @@
 				460E478218080902000CDD6D /* CCControlColourPicker.h in Headers */,
 				460E478518080902000CDD6D /* CCControlHuePicker.h in Headers */,
 				460E479318080902000CDD6D /* CCInvocation.h in Headers */,
-				460E47CE18080913000CDD6D /* CCSorting.h in Headers */,
 				460E478018080902000CDD6D /* CCControlButton.h in Headers */,
 				460E478D18080902000CDD6D /* CCControlStepper.h in Headers */,
 				460E47D218080913000CDD6D /* CCTableViewCell.h in Headers */,
@@ -6012,7 +5994,6 @@
 				1AD71DBC180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
 				1AD71DC0180E26E600808F54 /* CCBSequence.h in Headers */,
 				1AD71DC4180E26E600808F54 /* CCBSequenceProperty.h in Headers */,
-				1AD71DC8180E26E600808F54 /* CCBValue.h in Headers */,
 				1AD71DCC180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
 				1AD71DD0180E26E600808F54 /* CCControlLoader.h in Headers */,
 				1AD71DD4180E26E600808F54 /* CCLabelBMFontLoader.h in Headers */,
@@ -6156,7 +6137,6 @@
 				460E47A618080904000CDD6D /* CCControlStepper.h in Headers */,
 				460E47D418080914000CDD6D /* CCScrollView.h in Headers */,
 				460E479918080904000CDD6D /* CCControlButton.h in Headers */,
-				460E47D618080914000CDD6D /* CCSorting.h in Headers */,
 				460E47A418080904000CDD6D /* CCControlSlider.h in Headers */,
 				460E479E18080904000CDD6D /* CCControlHuePicker.h in Headers */,
 				460E468218080836000CDD6D /* cocos-ext.h in Headers */,
@@ -6770,7 +6750,6 @@
 				1AD71DB7180E26E600808F54 /* CCBReader.cpp in Sources */,
 				1AD71DBD180E26E600808F54 /* CCBSequence.cpp in Sources */,
 				1AD71DC1180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */,
-				1AD71DC5180E26E600808F54 /* CCBValue.cpp in Sources */,
 				1AD71DC9180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCD180E26E600808F54 /* CCControlLoader.cpp in Sources */,
 				1AE3C844184F14F700CF29B5 /* CCValue.cpp in Sources */,
@@ -7068,7 +7047,6 @@
 				460E478418080902000CDD6D /* CCControlHuePicker.cpp in Sources */,
 				460E478A18080902000CDD6D /* CCControlSlider.cpp in Sources */,
 				460E478818080902000CDD6D /* CCControlSaturationBrightnessPicker.cpp in Sources */,
-				460E47CD18080913000CDD6D /* CCSorting.cpp in Sources */,
 				460E47B91808090B000CDD6D /* CCEditBoxImplTizen.cpp in Sources */,
 				460E47B51808090B000CDD6D /* CCEditBoxImplIOS.mm in Sources */,
 				460E478E18080902000CDD6D /* CCControlSwitch.cpp in Sources */,
@@ -7279,7 +7257,6 @@
 				1AD71DB8180E26E600808F54 /* CCBReader.cpp in Sources */,
 				1AD71DBE180E26E600808F54 /* CCBSequence.cpp in Sources */,
 				1AD71DC2180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */,
-				1AD71DC6180E26E600808F54 /* CCBValue.cpp in Sources */,
 				1AD71DCA180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCE180E26E600808F54 /* CCControlLoader.cpp in Sources */,
 				1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */,
@@ -7407,7 +7384,6 @@
 				460E47C61808090D000CDD6D /* CCEditBoxImplNone.cpp in Sources */,
 				460E47D318080914000CDD6D /* CCScrollView.cpp in Sources */,
 				460E47C91808090D000CDD6D /* CCEditBoxImplWin.cpp in Sources */,
-				460E47D518080914000CDD6D /* CCSorting.cpp in Sources */,
 				460E47A918080904000CDD6D /* CCControlUtils.cpp in Sources */,
 				460E47D718080914000CDD6D /* CCTableView.cpp in Sources */,
 				460E479F18080904000CDD6D /* CCControlPotentiometer.cpp in Sources */,

@@ -2170,35 +2170,6 @@ JSBool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_FALSE;
 }
 
-JSBool js_cocos2dx_CCSet_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj;
-	cocos2d::Set* cobj = nullptr;
-
-	if (argc == 0) {
-		cobj = new cocos2d::Set();
-		cobj->autorelease();
-		TypeTest<cocos2d::Set> t;
-        js_type_class_t *typeClass = nullptr;
-        long typeId = t.s_id();
-        auto typeMapIter = _js_global_type_map.find(typeId);
-        
-        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-        typeClass = typeMapIter->second;
-        CCASSERT(typeClass, "The value is null.");
-		obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-		js_proxy_t *proxy = jsb_new_proxy(cobj, obj);
-		JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(cobj).name());
-	}
-	if (cobj) {
-		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-		return JS_TRUE;
-	}
-    
-    JS_ReportError(cx, "Error in js_cocos2dx_CCSet_constructor");
-	return JS_FALSE;
-}
-
 JSBool js_cocos2dx_CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -4150,9 +4121,4 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, ns, "pClamp", js_cocos2dx_ccpClamp, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, ns, "pLengthSQ", js_cocos2dx_ccpLengthSQ, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pLength", js_cocos2dx_ccpLength, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    
-    // add constructor for Set
-    JSFunction *ccSetConstructor = JS_NewFunction(cx, js_cocos2dx_CCSet_constructor, 0, JSPROP_READONLY | JSPROP_PERMANENT, NULL, "constructor");
-    JSObject *ctor = JS_GetFunctionObject(ccSetConstructor);
-    JS_LinkConstructorAndPrototype(cx, ctor, jsb_Set_prototype);
 }

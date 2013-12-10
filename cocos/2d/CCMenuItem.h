@@ -453,8 +453,19 @@ private:
 class CC_DLL MenuItemToggle : public MenuItem
 {
 public:
+    /** creates a menu item from a Array with a target selector
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle * createWithTarget(Object* target, SEL_MenuHandler selector, const Vector<MenuItem*>& menuItems);
+    /** creates a menu item from a list of items with a target/selector
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...)CC_REQUIRES_NULL_TERMINATION;
+    
     /** creates a menu item from a Array with a callable object */
-    static MenuItemToggle * createWithCallback(const ccMenuCallback& callback, Array* menuItems);
+    static MenuItemToggle * createWithCallback(const ccMenuCallback& callback, const Vector<MenuItem*>& menuItems);
     /** creates a menu item from a list of items with a callable object */
     static MenuItemToggle* createWithCallback(const ccMenuCallback& callback, MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
     /** creates a menu item with no target/selector and no items */
@@ -496,16 +507,6 @@ public:
     virtual void setEnabled(bool var) override;
 
 protected:
-    /** creates a menu item from a Array with a target selector
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle * createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems);
-    /** creates a menu item from a list of items with a target/selector
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...)CC_REQUIRES_NULL_TERMINATION;
     /**
      * @js ctor
      */

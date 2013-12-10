@@ -2137,14 +2137,13 @@ string ActionCardinalSpline::subtitle()
  */
 
 PauseResumeActions::PauseResumeActions()
-: _pausedTargets(NULL)
 {
 
 }
 
 PauseResumeActions::~PauseResumeActions()
 {
-    CC_SAFE_RELEASE(_pausedTargets);
+
 }
 
 void PauseResumeActions::onEnter()
@@ -2176,9 +2175,7 @@ void PauseResumeActions::pause(float dt)
     log("Pausing");
     auto director = Director::getInstance();
 
-    CC_SAFE_RELEASE(_pausedTargets);
     _pausedTargets = director->getActionManager()->pauseAllRunningActions();
-    CC_SAFE_RETAIN(_pausedTargets);
 }
 
 void PauseResumeActions::resume(float dt)
@@ -2186,6 +2183,7 @@ void PauseResumeActions::resume(float dt)
     log("Resuming");
     auto director = Director::getInstance();
     director->getActionManager()->resumeTargets(_pausedTargets);
+    _pausedTargets.clear();
 }
 
 //------------------------------------------------------------------
