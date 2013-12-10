@@ -152,8 +152,8 @@ public:
     virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
     virtual bool isTransformDirty() { return _boneTransformDirty; }
 
-    virtual cocos2d::AffineTransform getNodeToArmatureTransform() const;
-    virtual cocos2d::AffineTransform getNodeToWorldTransform() const override;
+    virtual kmMat4 getNodeToArmatureTransform() const;
+    virtual kmMat4 getNodeToWorldTransform() const override;
 
     Node *getDisplayRenderNode();
     DisplayType getDisplayRenderNodeType();
@@ -233,7 +233,7 @@ protected:
     bool _boneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
-    cocos2d::AffineTransform _worldTransform;
+    kmMat4 _worldTransform;
 
     BaseData *_worldInfo;
     
