@@ -74,7 +74,8 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
     return ok;
 }
 
-template <class T> bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret)
+template <class T>
+bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret)
 {
     if (nullptr == L || nullptr == ret)
         return false;
