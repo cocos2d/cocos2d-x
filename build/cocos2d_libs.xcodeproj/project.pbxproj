@@ -1851,6 +1851,22 @@
 		59A79D561821E26E00F19697 /* CCEventMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D4F1821E26E00F19697 /* CCEventMouse.cpp */; };
 		59A79D571821E26E00F19697 /* CCEventMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 59A79D501821E26E00F19697 /* CCEventMouse.h */; };
 		59A79D581821E26E00F19697 /* CCEventMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 59A79D501821E26E00F19697 /* CCEventMouse.h */; };
+		86BCDAFA1856FCF700E66C52 /* EffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 86BCDAF81856FCF700E66C52 /* EffectCamera.h */; };
+		86BCDAFB1856FCF700E66C52 /* EffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 86BCDAF81856FCF700E66C52 /* EffectCamera.h */; };
+		86BCDAFC1856FCF700E66C52 /* EffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 86BCDAF81856FCF700E66C52 /* EffectCamera.h */; };
+		86BCDAFD1856FCF700E66C52 /* EffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 86BCDAF81856FCF700E66C52 /* EffectCamera.h */; };
+		86BCDAFE1856FCF700E66C52 /* EffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 86BCDAF81856FCF700E66C52 /* EffectCamera.h */; };
+		86BCDAFF1856FCF700E66C52 /* EffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 86BCDAF81856FCF700E66C52 /* EffectCamera.h */; };
+		86BCDB001856FCF700E66C52 /* EffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 86BCDAF81856FCF700E66C52 /* EffectCamera.h */; };
+		86BCDB011856FCF700E66C52 /* EffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 86BCDAF81856FCF700E66C52 /* EffectCamera.h */; };
+		86BCDB021856FCF700E66C52 /* EffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */; };
+		86BCDB031856FCF700E66C52 /* EffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */; };
+		86BCDB041856FCF700E66C52 /* EffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */; };
+		86BCDB051856FCF700E66C52 /* EffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */; };
+		86BCDB061856FCF700E66C52 /* EffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */; };
+		86BCDB071856FCF700E66C52 /* EffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */; };
+		86BCDB081856FCF700E66C52 /* EffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */; };
+		86BCDB091856FCF700E66C52 /* EffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B375105B1823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510501823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.cpp */; };
 		B375105C1823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510511823AC9200B3BA6A /* CCPhysicsBodyInfo_box2d.h */; };
@@ -2991,6 +3007,8 @@
 		59A79D4E1821E26E00F19697 /* CCEventListenerMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventListenerMouse.h; sourceTree = "<group>"; };
 		59A79D4F1821E26E00F19697 /* CCEventMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventMouse.cpp; sourceTree = "<group>"; };
 		59A79D501821E26E00F19697 /* CCEventMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventMouse.h; sourceTree = "<group>"; };
+		86BCDAF81856FCF700E66C52 /* EffectCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectCamera.h; sourceTree = "<group>"; };
+		86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectCamera.cpp; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4965,6 +4983,8 @@
 		46A169A11807B037005B8026 /* 2d */ = {
 			isa = PBXGroup;
 			children = (
+				86BCDAF81856FCF700E66C52 /* EffectCamera.h */,
+				86BCDAF91856FCF700E66C52 /* EffectCamera.cpp */,
 				1A9DCA47180E6DE3007A3AD4 /* ccTypes.cpp */,
 				1A9DCA48180E6DE3007A3AD4 /* ccTypes.h */,
 				1A9DCA41180E6D90007A3AD4 /* CCDeprecated.cpp */,
@@ -5427,6 +5447,7 @@
 				1A570267180BCC6F0088DEC7 /* ccShader_PositionTextureColor_vert.h in Headers */,
 				1A570269180BCC6F0088DEC7 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				1A57026D180BCC6F0088DEC7 /* CCShaderCache.h in Headers */,
+				86BCDAFA1856FCF700E66C52 /* EffectCamera.h in Headers */,
 				1A57026F180BCC6F0088DEC7 /* ccShaderEx_SwitchMask_frag.h in Headers */,
 				1A570273180BCC6F0088DEC7 /* ccShaders.h in Headers */,
 				1A570280180BCC900088DEC7 /* CCSprite.h in Headers */,
@@ -5623,6 +5644,7 @@
 				1A3B1F87180E88C300497A22 /* CCLuaStack.h in Headers */,
 				1A3B1F8B180E88C300497A22 /* CCLuaValue.h in Headers */,
 				1A3B1F8F180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */,
+				86BCDB011856FCF700E66C52 /* EffectCamera.h in Headers */,
 				1A3B1F93180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */,
 				1A3B1F97180E88C300497A22 /* lua_cocos2dx_extension_manual.h in Headers */,
 				1A3B1F9B180E88C300497A22 /* lua_cocos2dx_manual.hpp in Headers */,
@@ -5652,6 +5674,7 @@
 				1A3B1F86180E88C300497A22 /* CCLuaStack.h in Headers */,
 				1A3B1F8A180E88C300497A22 /* CCLuaValue.h in Headers */,
 				1A3B1F8E180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */,
+				86BCDAFD1856FCF700E66C52 /* EffectCamera.h in Headers */,
 				1A3B1F92180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */,
 				1A3B1F96180E88C300497A22 /* lua_cocos2dx_extension_manual.h in Headers */,
 				1A3B1F9A180E88C300497A22 /* lua_cocos2dx_manual.hpp in Headers */,
@@ -5786,6 +5809,7 @@
 				460E479118080902000CDD6D /* CCControlUtils.h in Headers */,
 				460E468118080832000CDD6D /* cocos-ext.h in Headers */,
 				460E47B41808090B000CDD6D /* CCEditBoxImplIOS.h in Headers */,
+				86BCDAFB1856FCF700E66C52 /* EffectCamera.h in Headers */,
 				460E47CC18080913000CDD6D /* CCScrollView.h in Headers */,
 				460E47B01808090B000CDD6D /* CCEditBox.h in Headers */,
 				460E478918080902000CDD6D /* CCControlSaturationBrightnessPicker.h in Headers */,
@@ -5826,6 +5850,7 @@
 				1A2C7931181A1257004E5527 /* jsb_cocos2dx_studio_manual.h in Headers */,
 				1A2C789A181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp in Headers */,
 				1A2C794D181A1257004E5527 /* jsb_opengl_manual.h in Headers */,
+				86BCDAFC1856FCF700E66C52 /* EffectCamera.h in Headers */,
 				1A2C7967181A1257004E5527 /* ScriptingCore.h in Headers */,
 				1A2C795B181A1257004E5527 /* js_bindings_system_registration.h in Headers */,
 				1A2C7949181A1257004E5527 /* jsb_opengl_functions.h in Headers */,
@@ -5939,6 +5964,7 @@
 				1A570145180BC9460088DEC7 /* CCEventCustom.h in Headers */,
 				1A570149180BC9460088DEC7 /* CCEventDispatcher.h in Headers */,
 				1A57014D180BC9460088DEC7 /* CCEventKeyboard.h in Headers */,
+				86BCDAFE1856FCF700E66C52 /* EffectCamera.h in Headers */,
 				1A570151180BC9460088DEC7 /* CCEventListener.h in Headers */,
 				1A570155180BC9460088DEC7 /* CCEventListenerAcceleration.h in Headers */,
 				1A570159180BC9460088DEC7 /* CCEventListenerCustom.h in Headers */,
@@ -6193,6 +6219,7 @@
 				460E47C41808090D000CDD6D /* CCEditBoxImplMac.h in Headers */,
 				460E47BF1808090D000CDD6D /* CCEditBoxImpl.h in Headers */,
 				460E47AE18080904000CDD6D /* CCScale9Sprite.h in Headers */,
+				86BCDAFF1856FCF700E66C52 /* EffectCamera.h in Headers */,
 				460E477C180808F7000CDD6D /* ExtensionMacros.h in Headers */,
 				460E47A218080904000CDD6D /* CCControlSaturationBrightnessPicker.h in Headers */,
 				460E479B18080904000CDD6D /* CCControlColourPicker.h in Headers */,
@@ -6333,6 +6360,7 @@
 				1A2C7932181A1257004E5527 /* jsb_cocos2dx_studio_manual.h in Headers */,
 				1A2C789C181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp in Headers */,
 				1A2C794E181A1257004E5527 /* jsb_opengl_manual.h in Headers */,
+				86BCDB001856FCF700E66C52 /* EffectCamera.h in Headers */,
 				1A2C7968181A1257004E5527 /* ScriptingCore.h in Headers */,
 				1A2C795C181A1257004E5527 /* js_bindings_system_registration.h in Headers */,
 				1A2C794A181A1257004E5527 /* jsb_opengl_functions.h in Headers */,
@@ -6646,6 +6674,7 @@
 				46A170CC1807CEBB005B8026 /* ray2.c in Sources */,
 				460E44EF1807DED6000CDD6D /* mat4stack.c in Sources */,
 				46A170581807CC1C005B8026 /* CCEventDispatcherMac.mm in Sources */,
+				86BCDB021856FCF700E66C52 /* EffectCamera.cpp in Sources */,
 				46A170CA1807CEBB005B8026 /* plane.c in Sources */,
 				46A170EA1807CECA005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170141807CBFC005B8026 /* CCFileUtilsApple.mm in Sources */,
@@ -6935,6 +6964,7 @@
 				1585AB5C1828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp in Sources */,
 				1A3B1F9D180E88C300497A22 /* Lua_web_socket.cpp in Sources */,
 				1A3B1FA1180E88C300497A22 /* LuaBasicConversions.cpp in Sources */,
+				86BCDB091856FCF700E66C52 /* EffectCamera.cpp in Sources */,
 				1A3B1FA5180E88C300497A22 /* LuaOpengl.cpp in Sources */,
 				1A3B1FA9180E88C300497A22 /* LuaScriptHandlerMgr.cpp in Sources */,
 				1A2C78A5181A11EC004E5527 /* lua_cocos2dx_auto.cpp in Sources */,
@@ -6967,6 +6997,7 @@
 				1585AB5B1828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp in Sources */,
 				1A3B1F9C180E88C300497A22 /* Lua_web_socket.cpp in Sources */,
 				1A3B1FA0180E88C300497A22 /* LuaBasicConversions.cpp in Sources */,
+				86BCDB051856FCF700E66C52 /* EffectCamera.cpp in Sources */,
 				1A3B1FA4180E88C300497A22 /* LuaOpengl.cpp in Sources */,
 				1A3B1FA8180E88C300497A22 /* LuaScriptHandlerMgr.cpp in Sources */,
 				1A2C78A3181A11EC004E5527 /* lua_cocos2dx_auto.cpp in Sources */,
@@ -7098,6 +7129,7 @@
 				460E47B81808090B000CDD6D /* CCEditBoxImplNone.cpp in Sources */,
 				460E478418080902000CDD6D /* CCControlHuePicker.cpp in Sources */,
 				460E478A18080902000CDD6D /* CCControlSlider.cpp in Sources */,
+				86BCDB031856FCF700E66C52 /* EffectCamera.cpp in Sources */,
 				460E478818080902000CDD6D /* CCControlSaturationBrightnessPicker.cpp in Sources */,
 				460E47CD18080913000CDD6D /* CCSorting.cpp in Sources */,
 				460E47B91808090B000CDD6D /* CCEditBoxImplTizen.cpp in Sources */,
@@ -7133,6 +7165,7 @@
 				1A2C7913181A1257004E5527 /* js_bindings_chipmunk_functions.cpp in Sources */,
 				1A2C7933181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp in Sources */,
 				1A2C7947181A1257004E5527 /* jsb_opengl_functions.cpp in Sources */,
+				86BCDB041856FCF700E66C52 /* EffectCamera.cpp in Sources */,
 				1A2C7927181A1257004E5527 /* js_bindings_ccbreader.cpp in Sources */,
 				1A2C7872181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */,
 				1A2C7939181A1257004E5527 /* js_bindings_core.cpp in Sources */,
@@ -7157,6 +7190,7 @@
 				46A170D61807CEBC005B8026 /* ray2.c in Sources */,
 				460E44F11807DED7000CDD6D /* mat4stack.c in Sources */,
 				46A170D41807CEBC005B8026 /* plane.c in Sources */,
+				86BCDB061856FCF700E66C52 /* EffectCamera.cpp in Sources */,
 				46A1704B1807CC07005B8026 /* EAGLView.mm in Sources */,
 				46A171001807CECB005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170441807CC07005B8026 /* CCES2Renderer.m in Sources */,
@@ -7444,6 +7478,7 @@
 				460E47D518080914000CDD6D /* CCSorting.cpp in Sources */,
 				460E47A918080904000CDD6D /* CCControlUtils.cpp in Sources */,
 				460E47D718080914000CDD6D /* CCTableView.cpp in Sources */,
+				86BCDB071856FCF700E66C52 /* EffectCamera.cpp in Sources */,
 				460E479F18080904000CDD6D /* CCControlPotentiometer.cpp in Sources */,
 				460E479818080904000CDD6D /* CCControlButton.cpp in Sources */,
 				460E47C51808090D000CDD6D /* CCEditBoxImplMac.mm in Sources */,
@@ -7579,6 +7614,7 @@
 				1A2C7914181A1257004E5527 /* js_bindings_chipmunk_functions.cpp in Sources */,
 				1A2C7934181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp in Sources */,
 				1A2C7948181A1257004E5527 /* jsb_opengl_functions.cpp in Sources */,
+				86BCDB081856FCF700E66C52 /* EffectCamera.cpp in Sources */,
 				1A2C7928181A1257004E5527 /* js_bindings_ccbreader.cpp in Sources */,
 				1A2C7874181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */,
 				1A2C793A181A1257004E5527 /* js_bindings_core.cpp in Sources */,

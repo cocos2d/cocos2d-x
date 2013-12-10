@@ -118,6 +118,89 @@ std::string getFileDirectoryJNI() {
     return ret;
 }
 
+
+// swen
+std::string getCachePathJNI() {
+    JniMethodInfo t;
+    std::string ret("");
+    
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getCachePath", "()Ljava/lang/String;")) {
+        jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+        ret = JniHelper::jstring2string(str);
+        t.env->DeleteLocalRef(str);
+    }
+    
+    return ret;
+}
+bool createDirectoryJNI(const char* path) {
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "createDirectory", "(Ljava/lang/String;)Z")) {
+        jstring stringArg = t.env->NewStringUTF(path);
+        jboolean ret = (jboolean)t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg);
+        t.env->DeleteLocalRef(t.classID);
+        t.env->DeleteLocalRef(stringArg);
+        
+        return ret;
+    }
+    return false;
+}
+bool createFileJNI(const char* path, const char* fileName) {
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "createFile", "(Ljava/lang/String;Ljava/lang/String;)Z")) {
+        jstring stringArg1 = t.env->NewStringUTF(path);
+        jstring stringArg2 = t.env->NewStringUTF(fileName);
+        jboolean ret = (jboolean)t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg1, stringArg2);
+        t.env->DeleteLocalRef(t.classID);
+        t.env->DeleteLocalRef(stringArg1);
+        t.env->DeleteLocalRef(stringArg2);
+        
+        return ret;
+    }
+    return false;
+}
+bool removeDirectoryJNI(const char* path) {
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "removeDirectory", "(Ljava/lang/String;)Z")) {
+        jstring stringArg = t.env->NewStringUTF(path);
+        jboolean ret = (jboolean)t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg);
+        t.env->DeleteLocalRef(t.classID);
+        t.env->DeleteLocalRef(stringArg);
+        
+        return ret;
+    }
+    return false;
+}
+bool removeFileJNI(const char* path, const char* fileName) {
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "removeFile", "(Ljava/lang/String;Ljava/lang/String;)Z")) {
+        jstring stringArg1 = t.env->NewStringUTF(path);
+        jstring stringArg2 = t.env->NewStringUTF(fileName);
+        jboolean ret = (jboolean)t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg1, stringArg2);
+        t.env->DeleteLocalRef(t.classID);
+        t.env->DeleteLocalRef(stringArg1);
+        t.env->DeleteLocalRef(stringArg2);
+        
+        return ret;
+    }
+    return false;
+}
+bool moveFileJNI(const char* srcPath, const char* dstPath) {
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "moveFile", "(Ljava/lang/String;Ljava/lang/String;)Z")) {
+        jstring stringArg1 = t.env->NewStringUTF(srcPath);
+        jstring stringArg2 = t.env->NewStringUTF(dstPath);
+        jboolean ret = (jboolean)t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg1, stringArg2);
+        t.env->DeleteLocalRef(t.classID);
+        t.env->DeleteLocalRef(stringArg1);
+        t.env->DeleteLocalRef(stringArg2);
+        
+        return ret;
+    }
+    return false;
+}
+
+
 std::string getCurrentLanguageJNI() {
     JniMethodInfo t;
     std::string ret("");

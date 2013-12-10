@@ -273,6 +273,26 @@ public:
      */
     virtual std::string getWritablePath() const = 0;
     
+    /** 
+     * Returns the application support directory, on iOS it's $APP/Library/Application Support/
+     * on Android, if sdcard exists, it's /sdcard/Android/data/<package_name>/cache/Application Support/
+     * otherwise it's /data/data/<package_name>/cache/Application Support/
+     */
+    virtual std::string getApplicationSupportPath() = 0;
+    /** if a given directory exists */
+    virtual bool isDirectoryExist(const std::string& path) = 0;
+    /** create a directory in gived path */
+    virtual bool createDirecotory(const std::string& path) = 0;
+    /** create a file with give path and file name */
+    virtual bool createFile(const std::string& path, const std::string& fileName) = 0;
+    /** remove a directory */
+    virtual bool removeDirectory(const std::string& path) = 0;
+    /** remove a file */
+    virtual bool removeFile(const std::string& path, const std::string& fileName) = 0;
+    /** move file to a new path (i.e. rename) */
+    virtual bool moveFile(const std::string& srcPath, const std::string& dstPath) = 0;
+    
+    
     /**
      *  Checks whether a file exists.
      *

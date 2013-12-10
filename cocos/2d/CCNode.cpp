@@ -110,6 +110,7 @@ Node::Node(void)
 , _transformDirty(true)
 , _inverseDirty(true)
 , _camera(NULL)
+, _effectCamera(NULL)
 // children (lazy allocs)
 // lazy alloc
 , _grid(NULL)
@@ -164,6 +165,7 @@ Node::~Node()
     
     // attributes
     CC_SAFE_RELEASE(_camera);
+    CC_SAFE_RELEASE(_effectCamera);
 
     CC_SAFE_RELEASE(_grid);
     CC_SAFE_RELEASE(_shaderProgram);
@@ -418,6 +420,13 @@ Camera* Node::getCamera()
     }
     
     return _camera;
+}
+
+EffectCamera* Node::getEffectCamera() {
+    if (!_effectCamera) {
+        _effectCamera = new EffectCamera();
+    }
+    return _effectCamera;
 }
 
 /// grid setter
@@ -944,6 +953,18 @@ void Node::transform()
 
         _camera->locate();
 
+        if( translate )
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
+    }
+    
+    if (_effectCamera != NULL) {
+        bool translate = (_anchorPointInPoints.x != 0.0f || _anchorPointInPoints.y != 0.0f);
+        
+        if( translate )
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(_anchorPointInPoints.y), 0 );
+        
+        _effectCamera->visit();
+        
         if( translate )
             kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
     }

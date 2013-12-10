@@ -229,6 +229,58 @@ FileUtils* FileUtils::getInstance()
     return s_sharedFileUtils;
 }
 
+// self defined functions
+std::string FileUtilsApple::getApplicationSupportPath() {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    std::string strRet = [documentsDirectory UTF8String];
+    strRet.append("/");
+    return strRet;
+}
+bool FileUtilsApple::isDirectoryExist(const std::string& path) {
+    BOOL isDirectory = YES;
+    if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:path.c_str()] isDirectory:&isDirectory]) {
+        return true;
+    }
+    return false;
+}
+bool FileUtilsApple::createDirecotory(const std::string& path) {
+    NSError* error = nil;
+    if (![s_fileManager createDirectoryAtPath:[NSString stringWithUTF8String:path.c_str()] withIntermediateDirectories:YES attributes:nil error:&error]) {
+        return false;
+    }
+    return true;
+}
+bool FileUtilsApple::createFile(const std::string& path, const std::string& fileName) {
+    std::string fullPath = path+fileName;
+    if ([s_fileManager createFileAtPath:[NSString stringWithUTF8String:fullPath.c_str()] contents:nil attributes:nil]) {
+        return true;
+    }
+    return false;
+}
+bool FileUtilsApple::removeDirectory(const std::string& path) {
+    NSError* error;
+    if ([s_fileManager removeItemAtPath:[NSString stringWithUTF8String:path.c_str()] error:&error]) {
+        return true;
+    }
+    return false;
+}
+bool FileUtilsApple::removeFile(const std::string& path, const std::string& fileName) {
+    NSError* error;
+    std::string fullPath = path+fileName;
+    if ([s_fileManager removeItemAtPath:[NSString stringWithUTF8String:fullPath.c_str()] error:&error]) {
+        return true;
+    }
+    return false;
+}
+bool FileUtilsApple::moveFile(const std::string &srcPath, const std::string &dstPath) {
+    NSError* error;
+    if ([s_fileManager moveItemAtPath:[NSString stringWithUTF8String:srcPath.c_str()] toPath:[NSString stringWithUTF8String:dstPath.c_str()] error:&error]) {
+        return true;
+    }
+    return false;
+}
+
 
 std::string FileUtilsApple::getWritablePath() const
 {

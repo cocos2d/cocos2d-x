@@ -45,6 +45,14 @@ class CC_DLL FileUtilsAndroid : public FileUtils
     friend class FileUtils;
     FileUtilsAndroid();
 public:
+    virtual std::string getApplicationSupportPath();
+    virtual bool isDirectoryExist(const std::string& path);
+    virtual bool createDirecotory(const std::string& path);
+    virtual bool createFile(const std::string& path, const std::string& fileName);
+    virtual bool removeDirectory(const std::string& path);
+    virtual bool removeFile(const std::string& path, const std::string& fileName);
+    virtual bool moveFile(const std::string& srcPath, const std::string& dstPath);
+    
     /**
      * @js NA
      * @lua NA

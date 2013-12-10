@@ -39,6 +39,7 @@
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
 #include "CCPhysicsSetting.h"
+#include "EffectCamera.h"
 
 #include <vector>
 
@@ -896,6 +897,19 @@ public:
      */
     virtual Camera* getCamera();
     
+    /**
+     * returns node's effect camera that enable you to scroll, scale, rotate, 
+     * shake node without changing its outer and inner coordinates
+     *
+     @code
+     EffectCamera* camera = node->getEffectCamera();
+     camera->scrollTo(100, 100);
+     camera->shake(30, 60);
+     @endcode
+     *
+     */
+    virtual EffectCamera* getEffectCamera();
+    
     /** 
      * Returns whether or not the node accepts event callbacks.
      * 
@@ -1452,6 +1466,7 @@ protected:
     mutable bool _inverseDirty;               ///< inverse transform dirty flag
 
     Camera *_camera;                ///< a camera
+    EffectCamera *_effectCamera;
     
     GridBase *_grid;                ///< a grid
     

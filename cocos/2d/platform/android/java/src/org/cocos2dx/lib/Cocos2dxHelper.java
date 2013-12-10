@@ -27,6 +27,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.lang.Runnable;
+import java.io.File;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -61,7 +63,10 @@ public class Cocos2dxHelper {
 	private static Activity sActivity = null;
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
 	private static ConcurrentLinkedQueue<Runnable> jobs = new ConcurrentLinkedQueue<Runnable>();
-
+    
+    // swen
+    private static String sCacheDirectory;
+    
     /**
      * Optional meta-that can be in the manifest for this component, specifying
      * the name of the native shared library to load.  If not specified,
@@ -112,6 +117,13 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
 		Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
 		//Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
+        // swen
+        if (pContext.getExternalCacheDir() != null) {
+            Cocos2dxHelper.sCacheDirectory = activity.getExternalCacheDir().getAbsolutePath()+"/Application Support";
+        }
+        else {
+            Cocos2dxHelper.sCacheDirectory = activity.getCacheDir().getAbsolutePath()+"/Application Support";
+        }
 
 		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
 		Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(activity);
@@ -214,6 +226,63 @@ public class Cocos2dxHelper {
 	public static String getCocos2dxWritablePath() {
 		return Cocos2dxHelper.sFileDirectory;
 	}
+    
+    
+    // swen
+    public static String getCachePath() {
+        return Cocos2dxHelper.sCacheDirectory;
+    }
+    public static boolean createDirectory(String path) {
+        File file = new File(path);
+        if (file.mkdirs()) {
+            return true;
+        }
+        return false;
+    }
+    public static boolean createFile(String path, String fileName) {
+        File directory = new File(path);
+        if (!directory.exists()) {
+            if (!directory.mkdirs())
+                return false;
+        }
+        File file = new File(path, fileName);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            }
+            catch (IOException error) {
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+    public static boolean removeDirectory(String path) {
+        File directory = new File(path);
+        if (directory.exists()) {
+            if (!directory.delete())
+                return false;
+        }
+        return true;
+    }
+    public static boolean removeFile(String path, String fileName) {
+        File file = new File(path, fileName);
+        if (file.exists()) {
+            if (!file.delete())
+                return false;
+        }
+        return true;
+    }
+    public static boolean moveFile(String srcPath, String dstPath) {
+        File srcFile = new File(srcPath);
+        File dstFile = new File(dstPath);
+        if (srcFile.exists()) {
+            if (srcFile.renameTo(dstFile))
+                return true;
+        }
+        return false;
+    }
+
 
 	public static String getCurrentLanguage() {
 		return Locale.getDefault().getLanguage();

@@ -76,6 +76,53 @@ bool FileUtilsAndroid::init()
     return FileUtils::init();
 }
 
+// swen
+std::string CCFileUtilsAndroid::getApplicationSupportPath() {
+    string dir("");
+    string tmp = getCachePathJNI();
+    
+    if (tmp.length() > 0) {
+        dir.append(tmp).append("/");
+        return dir;
+    }
+    else {
+        return "";
+    }
+}
+bool CCFileUtilsAndroid::isDirectoryExist(const std::string& path) {
+    return isFileExist(path);
+}
+bool CCFileUtilsAndroid::createDirecotory(const std::string& path) {
+    if (createDirectoryJNI(path.c_str())) {
+        return true;
+    }
+    return false;
+}
+bool CCFileUtilsAndroid::createFile(const std::string& path, const std::string& fileName) {
+    if (createFileJNI(path.c_str(), fileName.c_str())) {
+        return true;
+    }
+    return false;
+}
+bool CCFileUtilsAndroid::removeDirectory(const std::string& path) {
+    if (removeDirectoryJNI(path.c_str())) {
+        return true;
+    }
+    return false;
+}
+bool CCFileUtilsAndroid::removeFile(const std::string& path, const std::string& fileName) {
+    if (removeFileJNI(path.c_str(), fileName.c_str())) {
+        return true;
+    }
+    return false;
+}
+bool CCFileUtilsAndroid::moveFile(const std::string& srcPath, const std::string& dstPath) {
+    if (moveFileJNI(srcPath.c_str(), dstPath.c_str())) {
+        return true;
+    }
+    return false;
+}
+
 bool FileUtilsAndroid::isFileExist(const std::string& strFilePath) const
 {
     if (0 == strFilePath.length())

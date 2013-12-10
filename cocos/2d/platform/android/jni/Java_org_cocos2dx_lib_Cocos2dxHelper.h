@@ -47,4 +47,12 @@ extern void setFloatForKeyJNI(const char* pKey, float value);
 extern void setDoubleForKeyJNI(const char* pKey, double value);
 extern void setStringForKeyJNI(const char* pKey, const char* value);
 
+// swen
+extern std::string getCachePathJNI();
+extern bool createDirectoryJNI(const char* path);
+extern bool createFileJNI(const char* path, const char* fileName);
+extern bool removeDirectoryJNI(const char* path);
+extern bool removeFileJNI(const char* path, const char* fileName);
+extern bool moveFileJNI(const char* srcPath, const char* dstPath);
+
 #endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */
