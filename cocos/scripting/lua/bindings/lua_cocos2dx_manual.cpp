@@ -243,12 +243,7 @@ static int tolua_cocos2d_Menu_create(lua_State* tolua_S)
     argc = lua_gettop(tolua_S) - 1;
     if (argc > 0 )
     {
-        cocos2d::Array* array = cocos2d::Array::create();
-        if (NULL == array)
-        {
-            CCLOG("Menu create method create array fail\n");
-            return 0;
-        }
+        Vector<MenuItem*> items;
         uint32_t i = 1;
         while (i <= argc)
         {
@@ -257,15 +252,15 @@ static int tolua_cocos2d_Menu_create(lua_State* tolua_S)
                 goto tolua_lerror;
 #endif
             
-            cocos2d::Object* item = static_cast<cocos2d::Object*>(tolua_tousertype(tolua_S, 1 + i, NULL));
+            cocos2d::MenuItem* item = static_cast<cocos2d::MenuItem*>(tolua_tousertype(tolua_S, 1 + i, NULL));
             if (NULL != item)
             {
-                array->addObject(item);
+                items.pushBack(item);
                 ++i;
             }
             
         }
-        cocos2d::Menu* tolua_ret = cocos2d::Menu::createWithArray(array);
+        cocos2d::Menu* tolua_ret = cocos2d::Menu::createWithArray(items);
         //UnCheck
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
@@ -317,10 +312,10 @@ static int tolua_cocos2dx_Menu_alignItemsInRows(lua_State* tolua_S)
     argc = lua_gettop(tolua_S) - 1;
     if (argc > 0)
     {
-        Array* array = NULL;
-        if (luavals_variadic_to_array(tolua_S, argc, &array))
+        ValueVector items;
+        if (luavals_variadic_to_ccvaluevector(tolua_S, argc, &items))
         {
-            self->alignItemsInRowsWithArray(array);
+            self->alignItemsInRowsWithArray(items);
         }
         return 0;
     }
@@ -360,10 +355,10 @@ static int tolua_cocos2dx_Menu_alignItemsInColumns(lua_State* tolua_S)
     argc = lua_gettop(tolua_S) - 1;
     if (argc > 0)
     {
-        Array* array = NULL;
-        if (luavals_variadic_to_array(tolua_S, argc, &array))
+        ValueVector items;
+        if (luavals_variadic_to_ccvaluevector(tolua_S, argc, &items))
         {
-            self->alignItemsInColumnsWithArray(array);
+            self->alignItemsInColumnsWithArray(items);
         }
         return 0;
     }
@@ -1718,28 +1713,31 @@ int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
     argc = lua_gettop(tolua_S) - 1;
     if(argc > 0)
     {
-        cocos2d::Array* array = cocos2d::Array::create();
-        if (NULL == array)
+        Vector<FiniteTimeAction*> array;
+
+        if (1 == argc && tolua_istable(tolua_S, 2, 0, &tolua_err))
         {
-            CCLOG("Sequence create method create array fail\n");
-            return 0;
+            luaval_to_ccvector(tolua_S, 2, &array);
         }
-        uint32_t i = 1;
-        while (i <= argc)
+        else
         {
-#if COCOS2D_DEBUG >= 1
-            if (!tolua_isusertype(tolua_S, 1 + i, "Object", 0, &tolua_err))
-                goto tolua_lerror;
-#endif
-            
-            cocos2d::Object* item = static_cast<cocos2d::Object*>(tolua_tousertype(tolua_S, 1 + i, NULL));
-            if (NULL != item)
+            uint32_t i = 1;
+            while (i <= argc)
             {
-                array->addObject(item);
-                ++i;
+#if COCOS2D_DEBUG >= 1
+                if (!tolua_isusertype(tolua_S, 1 + i, "FiniteTimeAction", 0, &tolua_err))
+                    goto tolua_lerror;
+#endif
+                
+                cocos2d::FiniteTimeAction* item = static_cast<cocos2d::FiniteTimeAction*>(tolua_tousertype(tolua_S, 1 + i, NULL));
+                if (NULL != item)
+                {
+                    array.pushBack(item);
+                    ++i;
+                }
             }
-            
         }
+        
         cocos2d::Sequence* tolua_ret = cocos2d::Sequence::create(array);
         //issue 2433 uncheck
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -2089,26 +2087,28 @@ static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
     
     if (argc > 0)
     {
-        cocos2d::Array* array = cocos2d::Array::create();
-        if (NULL  == array)
-        {
-            CCLOG("Spawn create method create array fail\n");
-            return 0;
-        }
-        
+        Vector<FiniteTimeAction*> array;        
         uint32_t i = 1;
-        while (i <= argc)
+        
+        if (1 == argc && tolua_istable(tolua_S, 2, 0, &tolua_err))
         {
-#if COCOS2D_DEBUG >= 1
-            if (!tolua_isusertype(tolua_S, 1 + i, "Object", 0, &tolua_err))
-                goto tolua_lerror;
-#endif
-            
-            cocos2d::Object* item = static_cast<cocos2d::Object*>(tolua_tousertype(tolua_S, 1 + i, NULL));
-            if (NULL != item)
+            luaval_to_ccvector(tolua_S, 2, &array);
+        }
+        else
+        {
+            while (i <= argc)
             {
-                array->addObject(item);
-                ++i;
+#if COCOS2D_DEBUG >= 1
+                if (!tolua_isusertype(tolua_S, 1 + i, "FiniteTimeAction", 0, &tolua_err))
+                    goto tolua_lerror;
+#endif
+                
+                cocos2d::FiniteTimeAction* item = static_cast<cocos2d::FiniteTimeAction*>(tolua_tousertype(tolua_S, 1 + i, NULL));
+                if (NULL != item)
+                {
+                    array.pushBack(item);
+                    ++i;
+                }
             }
         }
         
@@ -2605,7 +2605,7 @@ static int tolua_cocos2dx_LayerMultiplex_create(lua_State* tolua_S)
         return 0;
     
     int argc = 0;
-    Array* array = nullptr;
+    Vector<Layer*> arg0;
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -2616,9 +2616,9 @@ static int tolua_cocos2dx_LayerMultiplex_create(lua_State* tolua_S)
  
     if (argc > 0)
     {
-        if (luavals_variadic_to_array(tolua_S, argc, &array) && nullptr != array  )
+        if (luavals_variadic_to_ccvector(tolua_S, argc, &arg0))
         {
-            LayerMultiplex* tolua_ret =  LayerMultiplex::createWithArray(array);
+            LayerMultiplex* tolua_ret =  LayerMultiplex::createWithArray(arg0);
             int  nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"LayerMultiplex");
