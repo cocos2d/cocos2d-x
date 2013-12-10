@@ -683,8 +683,14 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                     }
                     else
                     {
-                        // XXX: how to fix this warning?
-                        CallFuncN *callback = CallFuncN::create(target, selCallFunc);
+                        auto savedTarget = std::make_shared<Vector<Object*>>();
+                        savedTarget->pushBack(target);
+                        
+                        auto callback = CallFuncN::create([savedTarget, selCallFunc](Node* sender){
+                            auto t = savedTarget->at(0);
+                            (t->*selCallFunc)(sender);
+                        });
+
                         actions.pushBack(callback);
                     }
                 }
