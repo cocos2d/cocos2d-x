@@ -342,7 +342,7 @@ TextLayer::TextLayer(void)
 	LayerColor *background = LayerColor::create( Color4B(32,128,32,255) );
 	this->addChild(background,-20);
     
-    auto _gridNodeTarget = GridNode::create();
+    _gridNodeTarget = GridNode::create();
     auto effect = getAction();
     _gridNodeTarget->runAction(effect);
     addChild(_gridNodeTarget, 0, kTagBackground);
@@ -378,8 +378,8 @@ TextLayer::TextLayer(void)
 void TextLayer::checkAnim(float dt)
 {
     //auto s2 = getChildByTag(kTagBackground);
-    if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getGrid() != NULL)
-        _gridNodeTarget->setGrid(NULL);;
+    if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getNodeGrid() != NULL)
+        _gridNodeTarget->setNodeGrid(NULL);;
 }
 
 
