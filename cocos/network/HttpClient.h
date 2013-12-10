@@ -99,8 +99,9 @@ private:
      * @return bool
      */
     bool lazyInitThreadSemphore();
+    void networkThread();
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
-    void dispatchResponseCallbacks(float delta);
+    void dispatchResponseCallbacks();
     
 private:
     int _timeoutForConnect;
