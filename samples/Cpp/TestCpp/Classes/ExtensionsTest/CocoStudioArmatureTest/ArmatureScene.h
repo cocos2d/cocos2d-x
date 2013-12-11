@@ -165,6 +165,8 @@ public:
     virtual std::string title();
     void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
     void checkAction(float dt);
+protected:
+    GridNode* _gridNode;
 };
 
 
