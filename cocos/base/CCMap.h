@@ -194,11 +194,6 @@ public:
         return 0;
     }
     
-    iterator erase(const_iterator first, const_iterator last)
-    {
-        return _data.erase(first, last);
-    }
-    
     void erase(const std::vector<K>& keys)
     {
         std::for_each(keys.cbegin(), keys.cend(), [this](const K& key){
