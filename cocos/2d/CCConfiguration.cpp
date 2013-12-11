@@ -91,7 +91,7 @@ void Configuration::dumpInfo() const
 {
 	// Dump
     Value forDump = Value(_valueDict);
-    log("%s", forDump.getDescription().c_str());
+    CCLOG("%s", forDump.getDescription().c_str());
 
 	// And Dump some warnings as well
 #if CC_ENABLE_PROFILERS
