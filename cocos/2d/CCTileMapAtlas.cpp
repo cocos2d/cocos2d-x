@@ -250,8 +250,6 @@ void TileMapAtlas::updateAtlasValues()
                     std::string key = StringUtils::toString(x) + "," + StringUtils::toString(y);
                     _posToAtlasIndex[key] = total;
 
-                    StringUtils::toString(String::create("hello"));
-                    
                     total++;
                 }
             }
