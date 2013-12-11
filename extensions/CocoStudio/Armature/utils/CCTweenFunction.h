@@ -33,7 +33,7 @@ NS_CC_EXT_BEGIN
 
 enum CCTweenType
 {
-    TWEEN_EASING_MIN = -1,
+    CUSTOM_EASING = -1,
 
     Linear,
 
@@ -77,8 +77,6 @@ enum CCTweenType
     Bounce_EaseIn,
     Bounce_EaseOut,
     Bounce_EaseInOut,
-
-    CUSTOM_EASING,
 
     TWEEN_EASING_MAX = 10000
 };
