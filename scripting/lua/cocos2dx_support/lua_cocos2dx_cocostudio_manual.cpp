@@ -114,6 +114,7 @@ static void extendUIWidget(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "addTouchEventListener", tolua_Cocos2dx_UIWidget_addTouchEventListener00);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_Cocos2dx_UICheckBox_addEventListenerCheckBox00(lua_State* tolua_S)
@@ -162,6 +163,7 @@ static void extendUICheckBox(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "addEventListenerCheckBox", tolua_Cocos2dx_UICheckBox_addEventListenerCheckBox00);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_Cocos2dx_UISlider_addEventListenerSlider00(lua_State* tolua_S)
@@ -210,6 +212,7 @@ static void extendUISlider(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "addEventListenerSlider", tolua_Cocos2dx_UISlider_addEventListenerSlider00);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_Cocos2dx_UITextField_addEventListenerTextField00(lua_State* tolua_S)
@@ -258,6 +261,7 @@ static void extendUITextFieldr(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "addEventListenerTextField", tolua_Cocos2dx_UITextField_addEventListenerTextField00);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_Cocos2dx_UIPageView_addEventListenerPageView00(lua_State* tolua_S)
@@ -306,6 +310,7 @@ static void extendUIPageView(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "addEventListenerPageView", tolua_Cocos2dx_UIPageView_addEventListenerPageView00);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_Cocos2dx_UIListView_addEventListenerListView00(lua_State* tolua_S)
@@ -354,6 +359,7 @@ static void extendUIListView(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "addEventListenerListView", tolua_Cocos2dx_UIListView_addEventListenerListView00);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_Cocos2dx_UILayoutParameter_setMargin00(lua_State* tolua_S)
@@ -459,6 +465,7 @@ static void extendUILayoutParameter(lua_State* tolua_S)
         tolua_function(tolua_S, "setMargin", tolua_Cocos2dx_UILayoutParameter_setMargin00);
         tolua_function(tolua_S, "getMargin", tolua_Cocos2dx_UILayoutParameter_getMargin00);
     }
+    lua_pop(tolua_S, 1);
 }
 
 class LuaArmatureWrapper:public CCObject
@@ -618,6 +625,7 @@ static void extendCCArmatureAnimation(lua_State* tolua_S)
         tolua_function(tolua_S, "setMovementEventCallFunc", tolua_Cocos2dx_CCArmatureAnimation_setMovementEventCallFunc00);
         tolua_function(tolua_S, "setFrameEventCallFunc", tolua_Cocos2dx_CCArmatureAnimation_setFrameEventCallFunc00);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_Cocos2dx_CCArmatureDataManager_addArmatureFileInfoAsyncCallFunc00(lua_State* tolua_S)
@@ -708,6 +716,7 @@ static void extendCCArmatureDataManager(lua_State* tolua_S)
         tolua_function(tolua_S, "addArmatureFileInfoAsync", tolua_Cocos2dx_CCArmatureDataManager_addArmatureFileInfoAsyncCallFunc00);
         tolua_function(tolua_S, "addArmatureFileInfoAsync", tolua_Cocos2dx_CCArmatureDataManager_addArmatureFileInfoAsyncCallFunc01);
     }
+    lua_pop(tolua_S, 1);
 }
 
 int register_all_cocos2dx_studio_manual(lua_State* tolua_S)
