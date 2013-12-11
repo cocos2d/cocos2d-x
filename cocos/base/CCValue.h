@@ -119,10 +119,11 @@ public:
 
     inline Type getType() const { return _type; };
     
-protected:
-    void clear();
+    std::string getDescription();
     
 private:
+    void clear();
+    
     union
     {
         unsigned char byteVal;

@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class Dictionary;
+class __Dictionary;
 
 /**
  * @addtogroup data_structures
@@ -131,7 +131,7 @@ private:
     Object* _object;    // hash value
 public:
     UT_hash_handle hh;      // makes this class hashable
-    friend class Dictionary; // declare Dictionary as friend class
+    friend class __Dictionary; // declare Dictionary as friend class
 };
 
 /** The macro for traversing dictionary
@@ -171,7 +171,7 @@ public:
  *
  */
 
-class CC_DLL Dictionary : public Object, public Clonable
+class CC_DLL __Dictionary : public Object, public Clonable
 {
 public:
     /**
@@ -179,14 +179,14 @@ public:
      * @js NA
      * @lua NA
      */
-    Dictionary();
+    __Dictionary();
 
     /**
      * The destructor of Dictionary
      * @js NA
      * @lua NA
      */
-    ~Dictionary();
+    ~__Dictionary();
 
     /** Initializes the dictionary. It returns true if the initializations was successful. 
      * @js NA
@@ -364,7 +364,7 @@ public:
      *  @see createWithDictionary(Dictionary*), createWithContentsOfFile(const char*), createWithContentsOfFileThreadSafe(const char*).
      *  @js NA
      */
-    static Dictionary* create();
+    static __Dictionary* create();
 
     /**
      *  Create a dictionary with an existing dictionary.
@@ -374,7 +374,7 @@ public:
      *  @see create(), createWithContentsOfFile(const char*), createWithContentsOfFileThreadSafe(const char*).
      *  @js NA
      */
-    static Dictionary* createWithDictionary(Dictionary* srcDict);
+    static __Dictionary* createWithDictionary(__Dictionary* srcDict);
     
     /**
      *  Create a dictionary with a plist file.
@@ -383,7 +383,7 @@ public:
      *  @see create(), createWithDictionary(Dictionary*), createWithContentsOfFileThreadSafe(const char*).
      *  @js NA
      */
-    static Dictionary* createWithContentsOfFile(const char *pFileName);
+    static __Dictionary* createWithContentsOfFile(const char *pFileName);
     
     /**
      *  Write a dictionary to a plist file.
@@ -407,7 +407,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    static Dictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
+    static __Dictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
 
     /* override functions 
      *  @js NA
@@ -418,7 +418,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    virtual Dictionary* clone() const;
+    virtual __Dictionary* clone() const;
     
 private:
     /** 
@@ -452,6 +452,9 @@ private:
 
 // end of data_structure group
 /// @}
+
+typedef __Dictionary Dictionary;
+
 
 NS_CC_END
 
