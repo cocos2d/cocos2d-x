@@ -412,12 +412,12 @@ Camera* Node::getCamera()
 }
 
 /// grid setter
-void Node::setGrid(GridBase* pGrid)
-{
-    CC_SAFE_RETAIN(pGrid);
-    CC_SAFE_RELEASE(_grid);
-    _grid = pGrid;
-}
+// void Node::setGrid(GridBase* pGrid)
+// {
+//     CC_SAFE_RETAIN(pGrid);
+//     CC_SAFE_RELEASE(_grid);
+//     _grid = pGrid;
+// }
 
 
 /// isVisible getter
