@@ -573,6 +573,7 @@ void TestAnimationEvent::callback2()
 void TestFrameEvent::onEnter()
 {
     ArmatureTestLayer::onEnter();
+    _gridNode = GridNode::create();
     Armature *armature = Armature::create("HeroAnimation");
     armature->getAnimation()->play("attack");
     armature->getAnimation()->setSpeedScale(0.5);
@@ -584,7 +585,8 @@ void TestFrameEvent::onEnter()
      */
     armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestFrameEvent::onFrameEvent));
 
-    addChild(armature);
+    _gridNode->addChild(armature);
+    addChild(_gridNode);
 
     schedule( schedule_selector(TestFrameEvent::checkAction) );
 }
@@ -597,19 +599,19 @@ void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIn
     CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
 
 
-    if (!this->getActionByTag(FRAME_EVENT_ACTION_TAG) || this->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
+    if (!_gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG) || _gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
     {
-        this->stopAllActions();
+        _gridNode->stopAllActions();
 
         ActionInterval *action =  ShatteredTiles3D::create(0.2f, Size(16,12), 5, false);
         action->setTag(FRAME_EVENT_ACTION_TAG);
-        this->runAction(action);
+        _gridNode->runAction(action);
     }
 }
 void TestFrameEvent::checkAction(float dt)
 {
-    if ( this->getNumberOfRunningActions() == 0 && this->getGrid() != nullptr)
-        this->setGrid(nullptr);
+    if ( _gridNode->getNumberOfRunningActions() == 0 && _gridNode->getNodeGrid() != nullptr)
+        _gridNode->setNodeGrid(nullptr);
 }
 
 
