@@ -790,11 +790,6 @@ void Scale9Sprite::setColor(const Color3B& color)
     });
 }
 
-const Color3B& Scale9Sprite::getColor() const
-{
-	return _realColor;
-}
-
 void Scale9Sprite::setOpacity(GLubyte opacity)
 {
     if (!_scale9Image)
@@ -806,11 +801,6 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
     _scale9Image->getChildren().forEach([&opacity](Node* child){
         child->setOpacity(opacity);
     });
-}
-
-GLubyte Scale9Sprite::getOpacity() const
-{
-	return _realOpacity;
 }
 
 void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)

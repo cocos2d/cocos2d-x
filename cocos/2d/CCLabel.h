@@ -67,8 +67,6 @@ public:
     
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
     virtual void setColor(const Color3B& color) override;
     
      // CCLabelTextFormat protocol implementation
@@ -129,7 +127,9 @@ private:
     void resetCurrentString();
 
     Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);
-    
+
+    virtual void updateColor() override;
+
     
     //! used for optimization
     Sprite              *_reusedLetter;
