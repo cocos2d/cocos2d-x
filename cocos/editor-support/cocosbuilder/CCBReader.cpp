@@ -218,7 +218,7 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner,
     }
 
     std::string strPath = FileUtils::getInstance()->fullPathForFilename(strCCBFileName.c_str());
-    long size = 0;
+    ssize_t size = 0;
 
     unsigned char * pBytes = FileUtils::getInstance()->getFileData(strPath.c_str(), "rb", &size);
     Data *data = new Data(pBytes, size);

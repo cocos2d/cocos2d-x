@@ -1991,6 +1991,7 @@ static void extendAnimationDeprecated(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Animation_createWithSpriteFrames_deprecated01);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2d_Sequence_createWithTwoActions(lua_State* tolua_S)
@@ -2058,6 +2059,7 @@ static int extendSequenceDeprecated(lua_State* tolua_S)
         tolua_function(tolua_S, "createWithTwoActions",tolua_cocos2d_Sequence_createWithTwoActions);
         tolua_function(tolua_S, "create", tolua_Cocos2d_Sequence_create_deprecated00);
     }
+    lua_pop(tolua_S, 1);
     
     return 1;
 }
@@ -2159,7 +2161,7 @@ static int extendSpawnDeprecated(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "createWithTwoActions", tolua_cocos2d_Spawn_createWithTwoActions_deprcated00);
     }
-    
+    lua_pop(tolua_S, 1);
     return 1;
 }
 
@@ -2264,7 +2266,7 @@ static int extendMenuDeprecated(lua_State* tolua_S)
         tolua_function(tolua_S, "alignItemsInColumnsWithArray", tolua_cocos2d_Menu_alignItemsInColumnsWithArray00);
         tolua_function(tolua_S, "alignItemsInRowsWithArray", tolua_cocos2d_Menu_alignItemsInRowsWithArray00);
     }
-    
+    lua_pop(tolua_S, 1);
     return 1;
 }
 
@@ -2306,6 +2308,7 @@ static int extendLayerMultiplexDeprecated(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "createWithArray", tolua_cocos2d_LayerMultiplex_createWithArray00);
     }
+    lua_pop(tolua_S, 1);
     return 1;
 }
 

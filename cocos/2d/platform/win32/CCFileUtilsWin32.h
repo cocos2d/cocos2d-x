@@ -58,7 +58,7 @@ protected:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileData(const char* filename, const char* mode, long * size) override;
+    virtual unsigned char* getFileData(const char* filename, const char* mode, ssize_t * size) override;
 
     /**
      *  Gets full path for filename, resolution directory and search path.
