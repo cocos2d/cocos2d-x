@@ -1034,7 +1034,11 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
         frameData->strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
     }
 
-
+    bool tweenFrame = false;
+    if (frameXML->QueryBoolAttribute(A_TWEEN_FRAME, &tweenFrame) == tinyxml2::XML_SUCCESS)
+    {
+        frameData->isTween = tweenFrame;
+    }
 
     if (dataInfo->flashToolVersion >= VERSION_2_0)
     {
