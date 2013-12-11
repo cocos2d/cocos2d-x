@@ -290,14 +290,6 @@ public class Cocos2dxHelper {
         return false;
     }
     public static String getFileMD5FromZip(String path) {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        try (InputStream is = sAssetManager.open(path)) {
-            DigestInputStream dis = new DigestInputStream(is, md);
-        }
-        byte[] digest = md.digest();
-        return digest.toString();
-    }
-    public static String getFileMD5FromZip(String path) {
         MessageDigest md;
         InputStream is;
         try {
