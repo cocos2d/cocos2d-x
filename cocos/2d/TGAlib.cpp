@@ -272,7 +272,7 @@ tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size)
 // this is the function to call when we want to load an image
 tImageTGA * tgaLoad(const char *filename)
 {
-    long size = 0;
+    ssize_t size = 0;
     unsigned char* buffer = FileUtils::getInstance()->getFileData(filename, "rb", &size);
 
     if (buffer != nullptr)
