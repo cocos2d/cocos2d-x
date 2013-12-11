@@ -291,7 +291,9 @@ public:
     virtual bool removeFile(const std::string& path, const std::string& fileName) = 0;
     /** move file to a new path (i.e. rename) */
     virtual bool moveFile(const std::string& srcPath, const std::string& dstPath) = 0;
-    
+    /** get a file MD5 checksum inside apk assets/ directory, only valid for android */
+    virtual std::string getFileMD5FromZip(const std::string& path) = 0;
+
     
     /**
      *  Checks whether a file exists.

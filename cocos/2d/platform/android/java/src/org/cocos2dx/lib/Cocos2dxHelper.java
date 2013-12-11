@@ -29,6 +29,13 @@ import java.util.Locale;
 import java.lang.Runnable;
 import java.io.File;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.DigestInputStream;
+import java.io.InputStream;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import android.util.Log;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -282,7 +289,48 @@ public class Cocos2dxHelper {
         }
         return false;
     }
-
+    public static String getFileMD5FromZip(String path) {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        try (InputStream is = sAssetManager.open(path)) {
+            DigestInputStream dis = new DigestInputStream(is, md);
+        }
+        byte[] digest = md.digest();
+        return digest.toString();
+    }
+    public static String getFileMD5FromZip(String path) {
+        MessageDigest md;
+        InputStream is;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            return "";
+        }
+        try {
+            is = sAssetManager.open(path);
+        } catch (IOException e) {
+            return "";
+        }
+        DigestInputStream dis = new DigestInputStream(is, md);
+        byte[] buffer = new byte[4096];
+        try {
+            while (dis.read(buffer) != -1){}
+        } catch (IOException e) {
+            return "";
+        }
+        
+        byte[] digest = md.digest();
+        // Create Hex String
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < digest.length; i++) {
+            String h = Integer.toHexString(0xFF & digest[i]);
+            while (h.length() < 2) {
+                h = "0" + h;
+            }
+            hexString.append(h);
+        }
+        return hexString.toString();
+    }
+    
 
 	public static String getCurrentLanguage() {
 		return Locale.getDefault().getLanguage();

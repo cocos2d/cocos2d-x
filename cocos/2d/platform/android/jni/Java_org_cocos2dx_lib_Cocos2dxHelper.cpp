@@ -199,6 +199,21 @@ bool moveFileJNI(const char* srcPath, const char* dstPath) {
     }
     return false;
 }
+std::string getFileMD5FromZipJNI(const char* path) {
+    JniMethodInfo t;
+    std::string ret("");
+    
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getFileMD5FromZip", "(Ljava/lang/String;)Ljava/lang/String;")) {
+        jstring stringArg = t.env->NewStringUTF(path);
+        jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, stringArg);
+        t.env->DeleteLocalRef(t.classID);
+        ret = JniHelper::jstring2string(str);
+        t.env->DeleteLocalRef(str);
+        t.env->DeleteLocalRef(stringArg);
+    }
+    
+    return ret;
+}
 
 
 std::string getCurrentLanguageJNI() {

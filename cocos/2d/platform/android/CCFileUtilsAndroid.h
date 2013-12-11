@@ -52,7 +52,8 @@ public:
     virtual bool removeDirectory(const std::string& path);
     virtual bool removeFile(const std::string& path, const std::string& fileName);
     virtual bool moveFile(const std::string& srcPath, const std::string& dstPath);
-    
+    virtual std::string getFileMD5FromZip(const std::string& path);
+
     /**
      * @js NA
      * @lua NA

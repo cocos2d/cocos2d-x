@@ -122,6 +122,10 @@ bool CCFileUtilsAndroid::moveFile(const std::string& srcPath, const std::string&
     }
     return false;
 }
+std::string CCFileUtilsAndroid::getFileMD5FromZip(const std::string& path) {
+    return getFileMD5FromZipJNI(path.c_str());
+}
+
 
 bool FileUtilsAndroid::isFileExist(const std::string& strFilePath) const
 {

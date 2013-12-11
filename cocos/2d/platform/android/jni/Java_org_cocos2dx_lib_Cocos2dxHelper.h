@@ -54,5 +54,6 @@ extern bool createFileJNI(const char* path, const char* fileName);
 extern bool removeDirectoryJNI(const char* path);
 extern bool removeFileJNI(const char* path, const char* fileName);
 extern bool moveFileJNI(const char* srcPath, const char* dstPath);
+extern std::string getFileMD5FromZipJNI(const char* path);
 
 #endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */
