@@ -111,10 +111,6 @@ public:
     // Overrides
     virtual void draw(void) override;
     void setAnchorPoint(const Point& anchorPoint) override;
-    virtual void setColor(const Color3B& color) override;
-    virtual const Color3B& getColor() const override;
-    virtual GLubyte getOpacity() const override;
-    virtual void setOpacity(GLubyte opacity) override;
     
 protected:
     /**
@@ -135,7 +131,7 @@ protected:
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
-    void updateColor(void);
+    virtual void updateColor(void) override;
     Point boundaryTexCoord(char index);
 
     Type _type;

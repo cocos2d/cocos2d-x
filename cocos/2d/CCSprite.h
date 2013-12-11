@@ -421,12 +421,8 @@ public:
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
     virtual void draw(void) override;
-    virtual void setColor(const Color3B& color3) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual void setOpacity(GLubyte opacity) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
     /// @}
 
 protected:
