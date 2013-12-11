@@ -274,7 +274,7 @@ public:
     }
 
     /** Removes an element with a certain index */
-    iterator erase(const_iterator position)
+    iterator erase(iterator position)
     {
         CCASSERT(position >= _data.begin() && position < _data.end(), "Invalid position!");
         (*position)->release();
