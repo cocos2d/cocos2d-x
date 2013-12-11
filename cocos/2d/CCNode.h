@@ -714,18 +714,18 @@ public:
      * @return A Grid object that is used when applying effects
      * @js NA
      */
-    virtual GridBase* getGrid() { return _grid; }
+    //virtual GridBase* getGrid() { return _grid; }
     /**
     * @js NA
     */
-    virtual const GridBase* getGrid() const { return _grid; }
+    //virtual const GridBase* getGrid() const { return _grid; }
 
     /**
      * Changes a grid object that is used when applying effects
      *
      * @param grid  A Grid object that is used when applying effects
      */
-    virtual void setGrid(GridBase *grid);
+    //virtual void setGrid(GridBase *grid);
 
     /// @} end of Grid
 
