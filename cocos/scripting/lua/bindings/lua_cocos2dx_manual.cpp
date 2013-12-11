@@ -3070,6 +3070,7 @@ static void extendGLProgram(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_GLProgram_setUniformLocationF32 );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2dx_Texture2D_setTexParameters(lua_State* tolua_S)
@@ -3209,6 +3210,7 @@ static void extendTexture2D(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_Texture2D_setTexParameters );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendMenuItem(lua_State* tolua_S)
@@ -3224,6 +3226,7 @@ static void extendMenuItem(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItem_unregisterScriptTapHandler);
         lua_rawset(tolua_S, -3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendMenuItemImage(lua_State* tolua_S)
@@ -3236,6 +3239,7 @@ static void extendMenuItemImage(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemImage_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendMenuItemLabel(lua_State* tolua_S)
@@ -3248,6 +3252,7 @@ static void extendMenuItemLabel(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemLabel_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendMenuItemFont(lua_State* tolua_S)
@@ -3260,6 +3265,7 @@ static void extendMenuItemFont(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemFont_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendMenuItemSprite(lua_State* tolua_S)
@@ -3272,6 +3278,7 @@ static void extendMenuItemSprite(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemSprite_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendMenuItemToggle(lua_State* tolua_S)
@@ -3284,6 +3291,7 @@ static void extendMenuItemToggle(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemToggle_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendMenu(lua_State* tolua_S)
@@ -3302,6 +3310,7 @@ static void extendMenu(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_Menu_alignItemsInColumns);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendNode(lua_State* tolua_S)
@@ -3326,6 +3335,7 @@ static void extendNode(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Node_getPosition);
         lua_rawset(tolua_S, -3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendLayer(lua_State* tolua_S)
@@ -3365,6 +3375,7 @@ static void extendLayer(lua_State* tolua_S)
         tolua_function(tolua_S, "isAccelerometerEnabled", lua_cocos2dx_Layer_isAccelerometerEnabled);
         tolua_function(tolua_S, "setAccelerometerInterval", lua_cocos2dx_Layer_setAccelerometerInterval);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendScheduler(lua_State* tolua_S)
@@ -3380,6 +3391,7 @@ static void extendScheduler(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Scheduler_unscheduleScriptEntry);
         lua_rawset(tolua_S, -3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendSequence(lua_State* tolua_S)
@@ -3392,6 +3404,7 @@ static void extendSequence(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Sequence_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendCallFunc(lua_State* tolua_S)
@@ -3404,6 +3417,7 @@ static void extendCallFunc(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CallFunc_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendSpawn(lua_State* tolua_S)
@@ -3416,6 +3430,7 @@ static void extendSpawn(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Spawn_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendCardinalSplineBy(lua_State* tolua_S)
@@ -3428,6 +3443,7 @@ static void extendCardinalSplineBy(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,lua_cocos2d_CardinalSplineBy_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendCatmullRomBy(lua_State* tolua_S)
@@ -3440,6 +3456,7 @@ static void extendCatmullRomBy(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CatmullRomBy_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendCatmullRomTo(lua_State* tolua_S)
@@ -3452,6 +3469,7 @@ static void extendCatmullRomTo(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CatmullRomTo_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendBezierBy(lua_State* tolua_S)
@@ -3464,6 +3482,7 @@ static void extendBezierBy(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_BezierBy_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendBezierTo(lua_State* tolua_S)
@@ -3476,6 +3495,7 @@ static void extendBezierTo(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_BezierTo_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendDrawNode(lua_State* tolua_S)
@@ -3488,6 +3508,7 @@ static void extendDrawNode(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_DrawNode_drawPolygon);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendSprite(lua_State* tolua_S)
@@ -3500,6 +3521,7 @@ static void extendSprite(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_Sprite_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendLayerColor(lua_State* tolua_S)
@@ -3512,6 +3534,7 @@ static void extendLayerColor(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_LayerColor_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendLayerMultiplex(lua_State* tolua_S)
@@ -3524,6 +3547,7 @@ static void extendLayerMultiplex(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_LayerMultiplex_create);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendParticleSystem(lua_State* tolua_S)
@@ -3536,6 +3560,7 @@ static void extendParticleSystem(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_ParticleSystem_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendCamera(lua_State* tolua_S)
@@ -3556,6 +3581,7 @@ static void extendCamera(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getEye );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendFileUtils(lua_State* tolua_S)
@@ -3568,6 +3594,7 @@ static void extendFileUtils(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_FileUtils_getStringFromFile );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendUserDefault(lua_State* tolua_S)
@@ -3580,6 +3607,7 @@ static void extendUserDefault(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_UserDefault_getInstance );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendSpriteBatchNode(lua_State* tolua_S)
@@ -3592,6 +3620,7 @@ static void extendSpriteBatchNode(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_getDescendants );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 
