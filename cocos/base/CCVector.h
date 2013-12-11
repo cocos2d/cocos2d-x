@@ -154,18 +154,23 @@ public:
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
     int getIndex(T object) const
     {
-        int i = 0;
-        for (auto it = _data.begin(); it != _data.end(); ++it, ++i)
-        {
-            if (*it == object)
-            {
-                return i;
-            }
-        }
-        
+        auto iter = std::find(_data.begin(), _data.end(), object);
+        if (iter != _data.end())
+            return iter - _data.begin();
+
         return -1;
     }
 
+    const_iterator find(T object) const
+    {
+        return std::find(_data.begin(), _data.end(), object);
+    }
+    
+    iterator find(T object)
+    {
+        return std::find(_data.begin(), _data.end(), object);
+    }
+    
     /** Returns an element with a certain index */
     T at(int index) const
     {
