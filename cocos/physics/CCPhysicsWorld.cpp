@@ -628,20 +628,22 @@ void PhysicsWorld::doAddBody(PhysicsBody* body)
 
 void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
 {
-    if (_delayRemoveBodies.getIndex(body) != CC_INVALID_INDEX)
+    auto removeBodyIter = _delayRemoveBodies.find(body);
+    if (removeBodyIter != _delayRemoveBodies.end())
     {
-        _delayRemoveBodies.erase(body);
+        _delayRemoveBodies.erase(removeBodyIter);
         return;
     }
     
     if (_info->isLocked())
     {
-        if (_delayAddBodies.getIndex(body) == CC_INVALID_INDEX)
+        if (_delayAddBodies.find(body) == _delayAddBodies.end())
         {
             _delayAddBodies.pushBack(body);
             _delayDirty = true;
         }
-    }else
+    }
+    else
     {
         doAddBody(body);
     }
