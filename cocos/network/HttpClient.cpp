@@ -118,7 +118,7 @@ void HttpClient::networkThread()
         if (!s_requestQueue->empty())
         {
             request = s_requestQueue->at(0);
-            s_requestQueue->remove(0);
+            s_requestQueue->erase(0);
         }
         
         s_requestQueueMutex.unlock();
@@ -480,7 +480,7 @@ void HttpClient::dispatchResponseCallbacks()
     if (!s_responseQueue->empty())
     {
         response = s_responseQueue->at(0);
-        s_responseQueue->remove(0);
+        s_responseQueue->erase(0);
     }
     
     s_responseQueueMutex.unlock();

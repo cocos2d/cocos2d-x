@@ -772,7 +772,7 @@ void Node::detachChild(Node *child, int childIndex, bool doCleanup)
     // set parent nil at the end
     child->setParent(nullptr);
 
-    _children.remove(childIndex);
+    _children.erase(childIndex);
 }
 
 

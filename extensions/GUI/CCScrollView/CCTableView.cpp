@@ -242,7 +242,7 @@ TableViewCell *TableView::dequeueCell()
     } else {
         cell = _cellsFreed.at(0);
         cell->retain();
-        _cellsFreed.remove(0);
+        _cellsFreed.erase(0);
         cell->autorelease();
     }
     return cell;
@@ -397,7 +397,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
     }
 
     _cellsFreed.pushBack(cell);
-    _cellsUsed.removeObject(cell);
+    _cellsUsed.erase(cell);
     _isUsedCellsDirty = true;
     
     _indices->erase(cell->getIdx());
