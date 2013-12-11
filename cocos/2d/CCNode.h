@@ -155,7 +155,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* description(void) const;
+    std::string description(void) const;
 
     /// @} end of initializers
 

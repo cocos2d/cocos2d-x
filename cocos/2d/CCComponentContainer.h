@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_FRAMEWORK_COMCONTAINER_H__
 #define __CC_FRAMEWORK_COMCONTAINER_H__
 
-#include "CCDictionary.h"
+#include "CCMap.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +58,7 @@ private:
     void alloc(void);
     
 private:
-    Dictionary *_components;        ///< Dictionary of components
+    Map<std::string, Component*>* _components;
     Node *_owner;
     
     friend class Node;

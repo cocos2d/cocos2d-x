@@ -581,9 +581,11 @@ void Node::cleanup()
 }
 
 
-const char* Node::description() const
+std::string Node::description() const
 {
-    return String::createWithFormat("<Node | Tag = %d>", _tag)->getCString();
+    std::stringstream ss;
+    ss << "<Node | Tag = " << _tag;
+    return ss.str();
 }
 
 // lazy allocs
