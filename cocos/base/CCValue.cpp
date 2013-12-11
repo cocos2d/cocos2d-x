@@ -27,6 +27,8 @@
 
 NS_CC_BEGIN
 
+const Value Value::Null;
+
 Value::Value()
 : _vectorData(new ValueVector())
 , _mapData(new ValueMap())
