@@ -1428,6 +1428,7 @@ protected:
     virtual void disableCascadeOpacity();
     virtual void updateCascadeColor();
     virtual void disableCascadeColor();
+    virtual void updateColor() {}
 
 
     float _rotationX;                 ///< rotation angle on x-axis
@@ -1501,11 +1502,11 @@ protected:
 #endif
     
     // opacity controls
-	GLubyte		_displayedOpacity;
+    GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
-	Color3B	    _displayedColor;
+    Color3B	    _displayedColor;
     Color3B     _realColor;
-	bool		_cascadeColorEnabled;
+    bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 
 private:
