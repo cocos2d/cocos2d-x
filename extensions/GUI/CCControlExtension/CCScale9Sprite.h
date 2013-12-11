@@ -262,9 +262,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override;
     virtual bool isOpacityModifyRGB(void) const override;
     virtual void setOpacity(GLubyte opacity) override;
-	virtual GLubyte getOpacity() const override;
     virtual void setColor(const Color3B& color) override;
-	virtual const Color3B& getColor() const override;
     virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
 
