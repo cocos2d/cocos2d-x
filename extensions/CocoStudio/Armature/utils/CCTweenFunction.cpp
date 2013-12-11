@@ -33,6 +33,10 @@ float CCTweenFunction::tweenTo(float time, CCTweenType type, float *easingParam)
 
     switch (type)
     {
+    case CUSTOM_EASING:
+        delta = customEase(time, 0, 1, 1, easingParam);
+        break;
+
     case Linear:
         delta = linear(time, 0, 1, 1);
         break;
@@ -136,10 +140,6 @@ float CCTweenFunction::tweenTo(float time, CCTweenType type, float *easingParam)
         break;
     case Bounce_EaseInOut:
         delta = bounceEaseInOut(time, 0, 1, 1);
-        break;
-
-    case CUSTOM_EASING:
-        delta = customEase(time, 0, 1, 1, easingParam);
         break;
 
     default:
@@ -416,8 +416,12 @@ float CCTweenFunction::bounceEaseInOut(float t, float b, float c, float d)
 
 float CCTweenFunction::customEase(float t, float b, float c, float d, float *easingParam)
 {
-    float tt = 1-t;
-    return easingParam[1]*tt*tt*tt + 3*easingParam[3]*t*tt*tt + 3*easingParam[5]*t*t*tt + 3*easingParam[7]*t*t*t;
+    if (easingParam)
+    {
+        float tt = 1-t;
+        return easingParam[1]*tt*tt*tt + 3*easingParam[3]*t*tt*tt + 3*easingParam[5]*t*t*tt + easingParam[7]*t*t*t;
+    }
+    return t;
 }
 
 
