@@ -12,6 +12,10 @@ protected:
 
     std::string    _title;
 
+    Node* _bgNode;
+    Node* _target1;
+    Node* _target2;
+
 public:
     virtual void onEnter();
     ~EffectAdvanceTextLayer(void);
