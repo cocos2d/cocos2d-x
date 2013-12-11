@@ -672,7 +672,7 @@ void PhysicsBody::removeShape(PhysicsShape* shape, bool reduceMassAndMoment/* = 
         // set shape->_body = nullptr make the shape->setBody will not trigger the _body->removeShape function call.
         shape->_body = nullptr;
         shape->setBody(nullptr);
-        _shapes.removeObject(shape);
+        _shapes.erase(shape);
     }
 }
 

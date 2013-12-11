@@ -630,7 +630,7 @@ void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
 {
     if (_delayRemoveBodies.getIndex(body) != CC_INVALID_INDEX)
     {
-        _delayRemoveBodies.removeObject(body);
+        _delayRemoveBodies.erase(body);
         return;
     }
     
@@ -712,7 +712,7 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     body->_joints.clear();
     
     removeBodyOrDelay(body);
-    _bodies.removeObject(body);
+    _bodies.erase(body);
     body->_world = nullptr;
 }
 
@@ -721,7 +721,7 @@ void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
 {
     if (_delayAddBodies.getIndex(body) != CC_INVALID_INDEX)
     {
-        _delayAddBodies.removeObject(body);
+        _delayAddBodies.erase(body);
         return;
     }
     
