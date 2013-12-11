@@ -937,7 +937,7 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
     // remove shaps
     for (auto& shape : body->getShapes())
     {
-        removeShape(dynamic_cast<PhysicsShape*>(shape));
+        removeShape(shape);
     }
     
     // remove body
@@ -951,9 +951,8 @@ void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
 
 void PhysicsWorld::removeAllBodies()
 {
-    for (auto& obj : _bodies)
+    for (auto& child : _bodies)
     {
-        PhysicsBody* child = dynamic_cast<PhysicsBody*>(obj);
         removeBodyOrDelay(child);
         child->_world = nullptr;
     }
