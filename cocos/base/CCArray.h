@@ -552,9 +552,6 @@ public:
 // end of data_structure group
 /// @}
 
-CC_DEPRECATED_ATTRIBUTE typedef __Array CCArray;
-CC_DEPRECATED_ATTRIBUTE typedef __Array Array;
-
 NS_CC_END
 
 #endif // __CCARRAY_H__

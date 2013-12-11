@@ -100,7 +100,7 @@ __Array* __Dictionary::allKeys()
     {
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
-            String* pOneKey = new String(pElement->_strKey);
+            __String* pOneKey = new __String(pElement->_strKey);
             array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
@@ -109,7 +109,7 @@ __Array* __Dictionary::allKeys()
     {
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
-            Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
+            __Integer* pOneKey = new __Integer(static_cast<int>(pElement->_intKey));
             array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
@@ -132,7 +132,7 @@ __Array* __Dictionary::allKeysForObject(Object* object)
         {
             if (object == pElement->_object)
             {
-                String* pOneKey = new String(pElement->_strKey);
+                __String* pOneKey = new __String(pElement->_strKey);
                 array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
@@ -144,7 +144,7 @@ __Array* __Dictionary::allKeysForObject(Object* object)
         {
             if (object == pElement->_object)
             {
-                Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
+                __Integer* pOneKey = new __Integer(static_cast<int>(pElement->_intKey));
                 array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
@@ -189,22 +189,22 @@ Object* __Dictionary::objectForKey(intptr_t key)
     return pRetObject;
 }
 
-const String* __Dictionary::valueForKey(const std::string& key)
+const __String* __Dictionary::valueForKey(const std::string& key)
 {
-    String* pStr = dynamic_cast<String*>(objectForKey(key));
+    __String* pStr = dynamic_cast<__String*>(objectForKey(key));
     if (pStr == NULL)
     {
-        pStr = String::create("");
+        pStr = __String::create("");
     }
     return pStr;
 }
 
-const String* __Dictionary::valueForKey(intptr_t key)
+const __String* __Dictionary::valueForKey(intptr_t key)
 {
-    String* pStr = dynamic_cast<String*>(objectForKey(key));
+    __String* pStr = dynamic_cast<__String*>(objectForKey(key));
     if (pStr == NULL)
     {
-        pStr = String::create("");
+        pStr = __String::create("");
     }
     return pStr;
 }
@@ -308,7 +308,7 @@ void __Dictionary::removeObjectsForKeys(__Array* pKey__Array)
     Object* pObj = NULL;
     CCARRAY_FOREACH(pKey__Array, pObj)
     {
-        String* pStr = static_cast<String*>(pObj);
+        __String* pStr = static_cast<__String*>(pObj);
         removeObjectForKey(pStr->getCString());
     }
 }
@@ -346,11 +346,11 @@ Object* __Dictionary::randomObject()
     
     if (_dictType == kDictInt)
     {
-        return objectForKey( static_cast<Integer*>(key)->getValue());
+        return objectForKey( static_cast<__Integer*>(key)->getValue());
     }
     else if (_dictType == kDictStr)
     {
-        return objectForKey( static_cast<String*>(key)->getCString());
+        return objectForKey( static_cast<__String*>(key)->getCString());
     }
     else
     {
@@ -403,7 +403,7 @@ static __Dictionary* visitDict(const ValueMap& dict)
         }
         else
         {
-            auto str = new String(iter->second.asString());
+            auto str = new __String(iter->second.asString());
             ret->setObject(str, iter->first);
             str->release();
         }
@@ -433,7 +433,7 @@ static __Array* visitArray(const ValueVector& array)
         }
         else
         {
-            auto str = new String(value.asString());
+            auto str = new __String(value.asString());
             ret->addObject(str);
             str->release();
         }
@@ -468,7 +468,7 @@ bool __Dictionary::writeToFile(const char *fullPath)
     DictElement* element = nullptr;
     CCDICT_FOREACH(this, element)
     {
-        dict[element->getStrKey()] = Value(static_cast<String*>(element->getObject())->getCString());
+        dict[element->getStrKey()] = Value(static_cast<__String*>(element->getObject())->getCString());
     }
     
     return FileUtils::getInstance()->writeToFile(dict, fullPath);

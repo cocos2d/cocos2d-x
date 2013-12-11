@@ -155,16 +155,16 @@ public:
  *  Dictionary* pDict = Dictionary::create();
  *
  *  // Insert objects to dictionary
- *  String* pValue1 = String::create("100");
- *  String* pValue2 = String::create("120");
+ *  __String* pValue1 = __String::create("100");
+ *  __String* pValue2 = __String::create("120");
  *  Integer* pValue3 = Integer::create(200);
  *  pDict->setObject(pValue1, "key1");
  *  pDict->setObject(pValue2, "key2");
  *  pDict->setObject(pValue3, "key3");
  *
  *  // Get the object for key
- *  String* pStr1 = (String*)pDict->objectForKey("key1");
- *  log("{ key1: %s }", pStr1->getCString());
+ *  __String* pStr1 = (__String*)pDict->objectForKey("key1");
+ *  log("{ key1: %s }", pStr1->getC__String());
  *  Integer* pInteger = (Integer*)pDict->objectForKey("key3");
  *  log("{ key3: %d }", pInteger->getValue());
  *  @endcode
@@ -224,11 +224,11 @@ public:
      *  @param key  The string key for searching.
      *  @return The object matches the key. You need to force convert it to the type you know.
      *  @code
-     *     // Assume that the elements are String* pointers. Convert it by following code.
-     *     String* pStr = (String*)pDict->objectForKey("key1");
+     *     // Assume that the elements are __String* pointers. Convert it by following code.
+     *     __String* pStr = (__String*)pDict->objectForKey("key1");
      *     // Do something about pStr.
      *     // If you don't know the object type, properly you need to use dynamic_cast<SomeType*> to check it.
-     *     String* pStr2 = dynamic_cast<String*>(pDict->objectForKey("key1"));
+     *     __String* pStr2 = dynamic_cast<__String*>(pDict->objectForKey("key1"));
      *     if (pStr2 != NULL) {
      *          // Do something about pStr2
      *     }
@@ -251,25 +251,25 @@ public:
     
     /** Get the value according to the specified string key.
      *
-     *  @note Be careful to use this function since it assumes the objects in the dictionary are String pointer.
+     *  @note Be careful to use this function since it assumes the objects in the dictionary are __String pointer.
      *  @param key  The string key for searching
-     *  @return An instance of String.
-     *          It will return an empty string if the objects aren't String pointer or the key wasn't found.
+     *  @return An instance of __String.
+     *          It will return an empty string if the objects aren't __String pointer or the key wasn't found.
      *  @see valueForKey(intptr_t)
      *  @js NA
      */
-    const String* valueForKey(const std::string& key);
+    const __String* valueForKey(const std::string& key);
     
     /** Get the value according to the specified integer key.
      *
-     *  @note Be careful to use this function since it assumes the objects in the dictionary are String pointer.
+     *  @note Be careful to use this function since it assumes the objects in the dictionary are __String pointer.
      *  @param key  The string key for searching.
-     *  @return An instance of String.
-     *          It will return an empty string if the objects aren't String pointer or the key wasn't found.
+     *  @return An instance of __String.
+     *          It will return an empty string if the objects aren't __String pointer or the key wasn't found.
      *  @see valueForKey(intptr_t)
      *  @js NA
      */
-    const String* valueForKey(intptr_t key);
+    const __String* valueForKey(intptr_t key);
 
     /** Insert an object to dictionary, and match it with the specified string key.
      *
@@ -452,9 +452,6 @@ private:
 
 // end of data_structure group
 /// @}
-
-typedef __Dictionary Dictionary;
-
 
 NS_CC_END
 
