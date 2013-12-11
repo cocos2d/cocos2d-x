@@ -116,7 +116,7 @@ public:
     bool init();
 
 	/** returns the value of a given key as a double */
-	const Value& getValue(const std::string& key, const Value& defaultValue) const;
+	const Value& getValue(const std::string& key, const Value& defaultValue = Value::Null) const;
 
 	/** sets a new key/value pair  in the configuration dictionary */
 	void setValue(const std::string& key, const Value& value);
