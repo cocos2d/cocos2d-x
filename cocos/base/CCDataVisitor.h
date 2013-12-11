@@ -37,7 +37,7 @@ class Float;
 class Double;
 class String;
 class __Array;
-class Dictionary;
+class __Dictionary;
 class __Set;
 class Data;
 
@@ -52,7 +52,7 @@ class Data;
  * Use cases:
  *  - data serialization,
  *  - pretty printing of Object *
- *  - safe value reading from Array, Dictionary, Set
+ *  - safe value reading from Array, __Dictionary, Set
  *
  * Usage:
  *  1. subclass DataVisitor
@@ -78,7 +78,7 @@ public:
     virtual void visit(const Double *p);
     virtual void visit(const String *p);
     virtual void visit(const __Array *p);
-    virtual void visit(const Dictionary *p);
+    virtual void visit(const __Dictionary *p);
     virtual void visit(const __Set *p);
     virtual void visit(const Data *p);
 };
@@ -99,7 +99,7 @@ public:
     virtual void visit(const Double *p);
     virtual void visit(const String *p);
     virtual void visit(const __Array *p);
-    virtual void visit(const Dictionary *p);
+    virtual void visit(const __Dictionary *p);
     virtual void visit(const __Set *p);
     virtual void visit(const Data *p);
 private:

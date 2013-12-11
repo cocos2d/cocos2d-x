@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include <string>
 #include <functional>
+#include <sstream>
+
 #include "CCObject.h"
 
 NS_CC_BEGIN
@@ -201,6 +203,19 @@ struct StringCompare : public std::binary_function<String *, String *, bool> {
 
 #define StringMake(str) String::create(str)
 #define ccs               StringMake
+
+class StringUtils
+{
+public:
+    
+    template<typename T>
+    static std::string toString(T arg)
+    {
+        std::stringstream ss;
+        ss << arg;
+        return ss.str();
+    }
+};
 
 // end of data_structure group
 /// @}
