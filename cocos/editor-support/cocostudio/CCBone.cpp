@@ -252,26 +252,12 @@ void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
     _realColor = Color3B(255, 255, 255);
     Node::updateDisplayedColor(parentColor);
-    updateColor();
 }
 
 void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _realOpacity = 255;
     Node::updateDisplayedOpacity(parentOpacity);
-    updateColor();
-}
-
-void Bone::setColor(const Color3B& color)
-{
-    Node::setColor(color);
-    updateColor();
-}
-
-void Bone::setOpacity(GLubyte opacity)
-{
-    Node::setOpacity(opacity);
-    updateColor();
 }
 
 void Bone::updateColor()

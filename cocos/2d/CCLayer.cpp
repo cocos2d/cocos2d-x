@@ -576,18 +576,6 @@ void LayerColor::draw()
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void LayerColor::setColor(const Color3B &color)
-{
-    Layer::setColor(color);
-    updateColor();
-}
-
-void LayerColor::setOpacity(GLubyte opacity)
-{
-    Layer::setOpacity(opacity);
-    updateColor();
-}
-
 //
 // LayerGradient
 // 

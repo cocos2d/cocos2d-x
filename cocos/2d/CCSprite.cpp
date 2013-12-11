@@ -982,20 +982,6 @@ void Sprite::updateColor(void)
     // do nothing
 }
 
-void Sprite::setOpacity(GLubyte opacity)
-{
-    Node::setOpacity(opacity);
-
-    updateColor();
-}
-
-void Sprite::setColor(const Color3B& color3)
-{
-    Node::setColor(color3);
-
-    updateColor();
-}
-
 void Sprite::setOpacityModifyRGB(bool modify)
 {
     if (_opacityModifyRGB != modify)
@@ -1008,20 +994,6 @@ void Sprite::setOpacityModifyRGB(bool modify)
 bool Sprite::isOpacityModifyRGB(void) const
 {
     return _opacityModifyRGB;
-}
-
-void Sprite::updateDisplayedColor(const Color3B& parentColor)
-{
-    Node::updateDisplayedColor(parentColor);
-    
-    updateColor();
-}
-
-void Sprite::updateDisplayedOpacity(GLubyte opacity)
-{
-    Node::updateDisplayedOpacity(opacity);
-    
-    updateColor();
 }
 
 // Frames

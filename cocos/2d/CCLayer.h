@@ -261,8 +261,6 @@ public:
     // Overrides
     //
     virtual void draw() override;
-    virtual void setColor(const Color3B &color) override;
-    virtual void setOpacity(GLubyte opacity) override;
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
     /**
@@ -286,7 +284,7 @@ protected:
     bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     bool initWithColor(const Color4B& color);
 
-    virtual void updateColor();
+    virtual void updateColor() override;
 
     BlendFunc _blendFunc;
     Vertex2F _squareVertices[4];

@@ -133,11 +133,8 @@ public:
     void updateDisplayedColor(const cocos2d::Color3B &parentColor) override;
     void updateDisplayedOpacity(GLubyte parentOpacity) override;
 
-    virtual void setColor(const cocos2d::Color3B& color) override;
-    virtual void setOpacity(GLubyte opacity) override;
-
     //! Update color to render display
-    void updateColor();
+    virtual void updateColor() override;
 
     //! Update zorder
     void updateZOrder();
