@@ -1441,7 +1441,8 @@ void Node::setOpacity(GLubyte opacity)
 void Node::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
-	
+    updateColor();
+    
     if (_cascadeOpacityEnabled)
     {
         _children.forEach([this](Node* child){
@@ -1457,7 +1458,7 @@ bool Node::isCascadeOpacityEnabled(void) const
 
 void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 {
-    if (_cascadeColorEnabled == cascadeOpacityEnabled)
+    if (_cascadeOpacityEnabled == cascadeOpacityEnabled)
     {
         return;
     }
@@ -1491,7 +1492,7 @@ void Node::disableCascadeOpacity()
     _displayedOpacity = _realOpacity;
     
     _children.forEach([this](Node* child){
-        child->disableCascadeOpacity();
+        child->updateDisplayedOpacity(255);
     });
 }
 
@@ -1517,6 +1518,7 @@ void Node::updateDisplayedColor(const Color3B& parentColor)
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+    updateColor();
     
     if (_cascadeColorEnabled)
     {
@@ -1564,7 +1566,7 @@ void Node::updateCascadeColor()
 void Node::disableCascadeColor()
 {
     _children.forEach([this](Node* child){
-        child->disableCascadeColor();
+        child->updateDisplayedColor(Color3B::WHITE);
     });
 }
 
