@@ -121,7 +121,7 @@ private:
     
     // variables
     //
-    Array *_observers;
+    __Array *_observers;
     int     _scriptHandler;
 };
 

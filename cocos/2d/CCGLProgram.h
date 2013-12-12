@@ -214,26 +214,13 @@ public:
     void setUniformsForBuiltins(const kmMat4 &modelView);
 
     /** returns the vertexShader error log */
-    const char* getVertexShaderLog() const;
-    /** @deprecated. Use getVertexShaderLog() instead
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE const char* vertexShaderLog() const { return getVertexShaderLog(); }
+    std::string getVertexShaderLog() const;
+
     /** returns the fragmentShader error log */
-    const char* getFragmentShaderLog() const;
-    /** @deprecated. Use getFragmentShaderLog() instead
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE const char* fragmentShaderLog() const{ return getFragmentShaderLog();}
+    std::string getFragmentShaderLog() const;
+
     /** returns the program error log */
-    const char* getProgramLog() const;
-    /** @deprecated. Use getProgramLog() instead
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE const char* programLog() const { return getProgramLog(); }
+    std::string getProgramLog() const;
     
     // reload all shaders, this function is designed for android
     // when opengl context lost, so don't call it.
@@ -245,7 +232,7 @@ private:
     bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
     const char* description() const;
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
-    const char* logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
+    std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
 private:
     GLuint            _program;

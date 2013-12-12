@@ -54,34 +54,30 @@ Configuration::Configuration()
 , _maxSamplesAllowed(0)
 , _maxTextureUnits(0)
 , _glExtensions(nullptr)
-, _valueDict(nullptr)
 {
 }
 
 bool Configuration::init()
 {
-	_valueDict = Dictionary::create();
-	_valueDict->retain();
-
-	_valueDict->setObject(String::create( cocos2dVersion() ), "cocos2d.x.version");
+	_valueDict["cocos2d.x.version"] = Value(cocos2dVersion());
 
 
 #if CC_ENABLE_PROFILERS
-	_valueDict->setObject(Bool::create(true), "cocos2d.x.compiled_with_profiler");
+	_valueDict["cocos2d.x.compiled_with_profiler"] = Value(true);
 #else
-	_valueDict->setObject(Bool::create(false), "cocos2d.x.compiled_with_profiler");
+	_valueDict["cocos2d.x.compiled_with_profiler"] = Value(false);
 #endif
 
 #if CC_ENABLE_GL_STATE_CACHE == 0
-	_valueDict->setObject(Bool::create(false), "cocos2d.x.compiled_with_gl_state_cache");
+	_valueDict["cocos2d.x.compiled_with_gl_state_cache"] = Value(false);
 #else
-	_valueDict->setObject(Bool::create(true), "cocos2d.x.compiled_with_gl_state_cache");
+    _valueDict["cocos2d.x.compiled_with_gl_state_cache"] = Value(true);
 #endif
 
 #ifdef DEBUG
-	_valueDict->setObject(String::create("DEBUG"), "cocos2d.x.build_type");
+	_valueDict["cocos2d.x.build_type"] = Value("DEBUG");
 #else
-	_valueDict->setObject(String::create("RELEASE"), "cocos2d.x.build_type");
+    _valueDict["cocos2d.x.build_type"] = Value("RELEASE");
 #endif
 
 	return true;
@@ -89,17 +85,13 @@ bool Configuration::init()
 
 Configuration::~Configuration()
 {
-	_valueDict->release();
 }
 
 void Configuration::dumpInfo() const
 {
 	// Dump
-	PrettyPrinter visitor(0);
-	_valueDict->acceptVisitor(visitor);
-
-	CCLOG("%s", visitor.getResult().c_str());
-
+    Value forDump = Value(_valueDict);
+    CCLOG("%s", forDump.getDescription().c_str());
 
 	// And Dump some warnings as well
 #if CC_ENABLE_PROFILERS
@@ -117,46 +109,46 @@ void Configuration::dumpInfo() const
 
 void Configuration::gatherGPUInfo()
 {
-	_valueDict->setObject(String::create((const char*)glGetString(GL_VENDOR)), "gl.vendor");
-	_valueDict->setObject(String::create((const char*)glGetString(GL_RENDERER)), "gl.renderer");
-	_valueDict->setObject(String::create((const char*)glGetString(GL_VERSION)), "gl.version");
+	_valueDict["gl.vendor"] = Value((const char*)glGetString(GL_VENDOR));
+	_valueDict["gl.renderer"] = Value((const char*)glGetString(GL_RENDERER));
+	_valueDict["gl.version"] = Value((const char*)glGetString(GL_VERSION));
 
     _glExtensions = (char *)glGetString(GL_EXTENSIONS);
 
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
-	_valueDict->setObject(Integer::create((int)_maxTextureSize), "gl.max_texture_size");
+	_valueDict["gl.max_texture_size"] = Value((int)_maxTextureSize);
 
     glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &_maxTextureUnits);
-	_valueDict->setObject(Integer::create((int)_maxTextureUnits), "gl.max_texture_units");
+	_valueDict["gl.max_texture_units"] = Value((int)_maxTextureUnits);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
-	_valueDict->setObject(Integer::create((int)_maxSamplesAllowed), "gl.max_samples_allowed");
+	_valueDict["gl.max_samples_allowed"] = Value((int)_maxSamplesAllowed);
 #endif
     
     _supportsETC1 = checkForGLExtension("GL_OES_compressed_ETC1_RGB8_texture");
-    _valueDict->setObject(Bool::create(_supportsETC1), "gl.supports_ETC1");
+    _valueDict["gl.supports_ETC1"] = Value(_supportsETC1);
     
     _supportsS3TC = checkForGLExtension("GL_EXT_texture_compression_s3tc");
-    _valueDict->setObject(Bool::create(_supportsS3TC), "gl.supports_S3TC");
+    _valueDict["gl.supports_S3TC"] = Value(_supportsS3TC);
     
     _supportsATITC = checkForGLExtension("GL_AMD_compressed_ATC_texture");
-    _valueDict->setObject(Bool::create(_supportsATITC), "gl.supports_ATITC");
+    _valueDict["gl.supports_ATITC"] = Value(_supportsATITC);
     
     _supportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
-	_valueDict->setObject(Bool::create(_supportsPVRTC), "gl.supports_PVRTC");
+	_valueDict["gl.supports_PVRTC"] = Value(_supportsPVRTC);
 
     _supportsNPOT = true;
-	_valueDict->setObject(Bool::create(_supportsNPOT), "gl.supports_NPOT");
+	_valueDict["gl.supports_NPOT"] = Value(_supportsNPOT);
 	
     _supportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
-	_valueDict->setObject(Bool::create(_supportsBGRA8888), "gl.supports_BGRA8888");
+	_valueDict["gl.supports_BGRA8888"] = Value(_supportsBGRA8888);
 
     _supportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
-	_valueDict->setObject(Bool::create(_supportsDiscardFramebuffer), "gl.supports_discard_framebuffer");
+	_valueDict["gl.supports_discard_framebuffer"] = Value(_supportsDiscardFramebuffer);
 
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
-	_valueDict->setObject(Bool::create(_supportsShareableVAO), "gl.supports_vertex_array_object");
+	_valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
     
     CHECK_GL_ERROR_DEBUG();
 }
@@ -265,78 +257,27 @@ bool Configuration::supportsDiscardFramebuffer() const
 
 bool Configuration::supportsShareableVAO() const
 {
-	#if CC_TEXTURE_ATLAS_USE_VAO
-    	return _supportsShareableVAO;
- 	#else
- 		return false;
- 	#endif
+#if CC_TEXTURE_ATLAS_USE_VAO
+    return _supportsShareableVAO;
+#else
+    return false;
+#endif
 }
 
 //
 // generic getters for properties
 //
-const char *Configuration::getCString(const char *key, const char *defaultValue) const
+const Value& Configuration::getValue(const std::string& key, const Value& defaultValue) const
 {
-	Object *ret = _valueDict->objectForKey(key);
-	if (ret)
-    {
-		if (String *str=dynamic_cast<String*>(ret))
-			return str->getCString();
-
-		CCASSERT(false, "Key found, but from different type");
-	}
-
-	// XXX: Should it throw an exception ?
+    auto iter = _valueDict.find(key);
+    if (iter != _valueDict.end())
+        return _valueDict.at(key);
 	return defaultValue;
 }
 
-/** returns the value of a given key as a boolean */
-bool Configuration::getBool(const char *key, bool defaultValue) const
+void Configuration::setValue(const std::string& key, const Value& value)
 {
-	Object *ret = _valueDict->objectForKey(key);
-	if (ret)
-    {
-		if (Bool *boolobj=dynamic_cast<Bool*>(ret))
-			return boolobj->getValue();
-		if (String *strobj=dynamic_cast<String*>(ret))
-			return strobj->boolValue();
-		CCASSERT(false, "Key found, but from different type");
-	}
-
-	// XXX: Should it throw an exception ?
-	return defaultValue;
-}
-
-/** returns the value of a given key as a double */
-double Configuration::getNumber( const char *key, double defaultValue ) const
-{
-	Object *ret = _valueDict->objectForKey(key);
-	if( ret )
-    {
-		if (Double *obj=dynamic_cast<Double*>(ret))
-			return obj->getValue();
-
-		if (Integer *obj=dynamic_cast<Integer*>(ret))
-			return obj->getValue();
-
-		if (String *strobj=dynamic_cast<String*>(ret))
-			return strobj->doubleValue();
-
-		CCASSERT(false, "Key found, but from different type");
-	}
-
-	// XXX: Should it throw an exception ?
-	return defaultValue;
-}
-
-Object * Configuration::getObject(const char *key) const
-{
-	return _valueDict->objectForKey(key);
-}
-
-void Configuration::setObject(const char *key, Object *value)
-{
-	_valueDict->setObject(value, key);
+	_valueDict[key] = value;
 }
 
 
@@ -345,20 +286,21 @@ void Configuration::setObject(const char *key, Object *value)
 //
 void Configuration::loadConfigFile(const char *filename)
 {
-	Dictionary *dict = Dictionary::createWithContentsOfFile(filename);
-	CCASSERT(dict, "cannot create dictionary");
+	ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(filename);
+	CCASSERT(!dict.empty(), "cannot create dictionary");
 
 	// search for metadata
 	bool validMetadata = false;
-	Object *metadata = dict->objectForKey("metadata");
-	if (metadata && dynamic_cast<Dictionary*>(metadata))
+	auto metadataIter = dict.find("metadata");
+	if (metadataIter != dict.end() && metadataIter->second.getType() == Value::Type::MAP)
     {
-		Object *format_o = static_cast<Dictionary*>(metadata)->objectForKey("format");
-
-		// XXX: cocos2d-x returns Strings when importing from .plist. This bug will be addressed in cocos2d-x v3.x
-		if (format_o && dynamic_cast<String*>(format_o))
+        
+		const auto& metadata = metadataIter->second.asValueMap();
+        auto formatIter = metadata.find("format");
+        
+		if (formatIter != metadata.end())
         {
-			int format = static_cast<String*>(format_o)->intValue();
+			int format = formatIter->second.asInt();
 
 			// Support format: 1
 			if (format == 1)
@@ -374,22 +316,22 @@ void Configuration::loadConfigFile(const char *filename)
 		return;
 	}
 
-	Object *data = dict->objectForKey("data");
-	if (!data || !dynamic_cast<Dictionary*>(data))
+	auto dataIter = dict.find("data");
+	if (dataIter == dict.end() || dataIter->second.getType() != Value::Type::MAP)
     {
 		CCLOG("Expected 'data' dict, but not found. Config file: %s", filename);
 		return;
 	}
 
 	// Add all keys in the existing dictionary
-	Dictionary *data_dict = static_cast<Dictionary*>(data);
-    DictElement* element;
-    CCDICT_FOREACH(data_dict, element)
+    
+	const auto& dataMap = dataIter->second.asValueMap();
+    for (auto dataMapIter = dataMap.begin(); dataMapIter != dataMap.end(); ++dataMapIter)
     {
-		if(! _valueDict->objectForKey( element->getStrKey() ))
-			_valueDict->setObject(element->getObject(), element->getStrKey());
-		else
-			CCLOG("Key already present. Ignoring '%s'", element->getStrKey());
+        if (_valueDict.find(dataMapIter->first) == _valueDict.end())
+            _valueDict[dataMapIter->first] = dataMapIter->second;
+        else
+            CCLOG("Key already present. Ignoring '%s'",dataMapIter->first.c_str());
     }
 }
 

@@ -74,7 +74,7 @@ static void printSceneGraph(int fd, Node* node, int level)
     for(int i=0; i<level; ++i)
         write(fd, "-", 1);
 
-    mydprintf(fd, " %s: z=%d, tag=%d\n", node->description(), node->getZOrder(), node->getTag());
+    mydprintf(fd, " %s: z=%d, tag=%d\n", node->description().c_str(), node->getZOrder(), node->getTag());
 
     for(const auto& child: node->getChildren())
         printSceneGraph(fd, child, level+1);

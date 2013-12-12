@@ -77,7 +77,7 @@ void AnimationCache::removeAnimation(const std::string& name)
     if (name.size()==0)
         return;
 
-    _animations.remove(name);
+    _animations.erase(name);
 }
 
 Animation* AnimationCache::getAnimation(const std::string& name)
